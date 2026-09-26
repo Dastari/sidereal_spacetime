@@ -77,6 +77,9 @@ import { createRenderDiagnostics } from "./diagnostics";
 import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
+import { createVoxelCrewVisual } from "./crew/voxel-crew";
+import { attachVoxelCrewHead, equipVoxelCrewItem, voxelHeadLoadoutFor } from "./crew/voxel-crew-kit";
+import type { CrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { Camera } from "@babylonjs/core/Cameras/camera";
@@ -172,6 +175,8 @@ export interface WorldOptions {
   /** Allow known authored exhaust geometry; accepted telemetry still drives it. */
   authoredFlightEffects?: boolean;
   equipmentPose?: EquipmentPoseConfiguration;
+  /** Crew art bundle. "voxel" is the CHAR-BODY proposal behind an explicit local preview flag. */
+  crewBundle?: CrewBundle;
   onObjectSelected?: (placementId?: string) => void;
   source?: "voxel" | "original" | "engine-original" | "engine-voxel";
   /** "none": the character has no ship. Render the environment and crew only;
@@ -285,7 +290,10 @@ async function buildWorld(
   // Start rendering only once the scene's loaders and wiring are assembled.
   const shipRoot = new TransformNode("ship-frame", scene);
   const environment = createSpaceEnvironment(scene);
-  let crew: Awaited<ReturnType<typeof createCrewVisual>> | undefined;
+  let crew:
+    | Awaited<ReturnType<typeof createCrewVisual>>
+    | Awaited<ReturnType<typeof createVoxelCrewVisual>>
+    | undefined;
   let equipmentPose:
     | ReturnType<
         Awaited<ReturnType<typeof createCrewVisual>>["createPoseController"]
@@ -444,14 +452,27 @@ async function buildWorld(
     await environment.ready;
     options.onLoadStage?.("crew");
     if (!options.source || options.source === "voxel") {
-      crew = await createCrewVisual(
-        scene,
-        shipRoot,
-        options.equipmentPose?.crewUrl,
-      );
-      if (options.equipmentPose) {
-        equipmentPose = crew.createPoseController();
-        equipmentPose.setAimSpace(options.equipmentPose.aimSpace);
+      if (options.crewBundle === "voxel") {
+        // Proposal voxel crew: authored actions drive the arms; the legacy aim-space
+        // controller targets the r008 rig and stays unbound.
+        const voxel = await createVoxelCrewVisual(scene, shipRoot);
+        crew = voxel;
+        // CHAR-HEADS head (face atlas + hair) on the approved r005 body; the body's own head blank
+        // stays visible if the head kit cannot load.
+        attachVoxelCrewHead(scene, voxel, voxelHeadLoadoutFor("male")).catch((error) =>
+          console.warn("voxel crew head kit unavailable", error),
+        );
+      } else {
+        const legacy = await createCrewVisual(
+          scene,
+          shipRoot,
+          options.equipmentPose?.crewUrl,
+        );
+        crew = legacy;
+        if (options.equipmentPose) {
+          equipmentPose = legacy.createPoseController();
+          equipmentPose.setAimSpace(options.equipmentPose.aimSpace);
+        }
       }
       avatar.dispose();
       avatar = crew.root;
@@ -916,6 +937,7 @@ async function buildWorld(
         seated: state.seated ?? false,
         sprinting: state.sprinting ?? false,
         reducedMotion: state.reducedMotion,
+        shotSequence: state.combat?.shotSequence,
       });
     const poseItem = selectedAsset
       ? options.equipmentPose?.items[selectedAsset]
@@ -1127,14 +1149,18 @@ async function buildWorld(
     equipment = undefined;
     crew.customize({ weaponFixture: true });
     if (!selectedAsset) return;
-    createEquipmentVisual(
-      scene,
-      crew.sockets.handR,
-      selectedAsset,
-      selectedAsset && options.equipmentPose?.items[selectedAsset]
-        ? options.equipmentPose.equipmentUrl
-        : undefined,
-    )
+    const voxelCrew = "bundle" in crew && crew.bundle === "voxel" ? crew : undefined;
+    (voxelCrew
+      ? // CHAR-WEAPONS item on socket.hand.R + baked armed clips (support hand solved per frame)
+        (equipVoxelCrewItem(scene, voxelCrew, selectedAsset) as unknown as ReturnType<typeof createEquipmentVisual>)
+      : createEquipmentVisual(
+          scene,
+          crew.sockets.handR,
+          selectedAsset,
+          selectedAsset && options.equipmentPose?.items[selectedAsset]
+            ? options.equipmentPose.equipmentUrl
+            : undefined,
+        ))
       .then((visual) => {
         if (disposed || revision !== equipmentRevision) {
           visual.dispose();
@@ -1186,6 +1212,10 @@ async function buildWorld(
     );
   });
   return {
+    /** Presentation-only crew handle for review harnesses (never simulation state). */
+    getCrewVisual() {
+      return crew;
+    },
     getAntialiasing() {
       return antialiasing.snapshot();
     },

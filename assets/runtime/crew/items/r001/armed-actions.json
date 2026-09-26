@@ -1,0 +1,3082 @@
+{
+ "schema": "sidereal.crew.armed-actions/1",
+ "revision": "r001",
+ "rig": "crew_rig (CHAR-BODY r004, spec_version 2)",
+ "note": "Baked on CHAR-BODY's pose library; support hand solved onto each class item's support socket every frame.",
+ "classes": [
+  {
+   "class": "pistol",
+   "item": "pistol",
+   "family": "pistol"
+  },
+  {
+   "class": "smg",
+   "item": "smg",
+   "family": "pistol"
+  },
+  {
+   "class": "carbine",
+   "item": "compact-carbine",
+   "family": "rifle"
+  },
+  {
+   "class": "rifle",
+   "item": "rifle",
+   "family": "rifle"
+  },
+  {
+   "class": "shotgun",
+   "item": "shotgun",
+   "family": "rifle"
+  },
+  {
+   "class": "heavy",
+   "item": "heavy-gun",
+   "family": "heavy"
+  },
+  {
+   "class": "beam",
+   "item": "beam-rifle",
+   "family": "rifle"
+  },
+  {
+   "class": "rail",
+   "item": "rail-rifle",
+   "family": "rifle"
+  },
+  {
+   "class": "melee",
+   "item": "baton",
+   "family": "melee"
+  },
+  {
+   "class": "tool",
+   "item": "repair-tool",
+   "family": "tool"
+  }
+ ],
+ "clips": [
+  {
+   "action": "pistol.idle_armed",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.walk_armed",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.run_armed",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.aim",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.shoot",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "shoot",
+   "frames": 9,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
+   "supportFramesSolved": 10,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.reload",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "reload",
+   "frames": 28,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
+   "supportFramesSolved": 13,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.draw",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "pistol.holster",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "smg.idle_armed",
+   "class": "smg",
+   "item": "smg",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 3,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.walk_armed",
+   "class": "smg",
+   "item": "smg",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.004,
+   "stance": {
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 3,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.run_armed",
+   "class": "smg",
+   "item": "smg",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 5,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.aim",
+   "class": "smg",
+   "item": "smg",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.shoot",
+   "class": "smg",
+   "item": "smg",
+   "clip": "shoot",
+   "frames": 9,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
+    }
+   },
+   "supportFramesSolved": 10,
+   "bodyPenetrationMaxVoxels": 15,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.reload",
+   "class": "smg",
+   "item": "smg",
+   "clip": "reload",
+   "frames": 28,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0095,
+   "stance": {
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
+    }
+   },
+   "supportFramesSolved": 13,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.draw",
+   "class": "smg",
+   "item": "smg",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 5,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "smg.holster",
+   "class": "smg",
+   "item": "smg",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 5,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "carbine.idle_armed",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 12,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.walk_armed",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0051,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 11,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.run_armed",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0035,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 44,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.aim",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 11,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.shoot",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 26,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.reload",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0009,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 5,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.draw",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 26,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "carbine.holster",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 26,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "rifle.idle_armed",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 18,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.walk_armed",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0058,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 25,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.run_armed",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0033,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 43,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.aim",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 13,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.shoot",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 23,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.reload",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 16,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.draw",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 32,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "rifle.holster",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
+    },
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 32,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "shotgun.idle_armed",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0031,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 9,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.walk_armed",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 22,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.run_armed",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0076,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 58,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.aim",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 10,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.shoot",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 25,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.reload",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.002,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 5,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.draw",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 23,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "shotgun.holster",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 23,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "heavy.idle_armed",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0108,
+   "stance": {
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 123,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.walk_armed",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0138,
+   "stance": {
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 157,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.run_armed",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0098,
+   "stance": {
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 139,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.aim",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 54,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.shoot",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 75,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.reload",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0039,
+   "stance": {
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 50,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.draw",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 51,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "heavy.holster",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 51,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "beam.idle_armed",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
+    },
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 6,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.walk_armed",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
+    },
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 19,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.run_armed",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.006,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
+    },
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 58,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.aim",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0013,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
+    },
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 6,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.shoot",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
+    },
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 18,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.reload",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0017,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
+    },
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 9,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.draw",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
+    },
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 42,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "beam.holster",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
+    },
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 42,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "rail.idle_armed",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 14,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.walk_armed",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0059,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 23,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.run_armed",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0049,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 40,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.aim",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 16,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.shoot",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 24,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.reload",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0054,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 12,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.draw",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 52,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "rail.holster",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
+    },
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 52,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "melee.idle_armed",
+   "class": "melee",
+   "item": "baton",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.walk_armed",
+   "class": "melee",
+   "item": "baton",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.run_armed",
+   "class": "melee",
+   "item": "baton",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.aim",
+   "class": "melee",
+   "item": "baton",
+   "clip": "aim",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.shoot",
+   "class": "melee",
+   "item": "baton",
+   "clip": "shoot",
+   "frames": 24,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 36,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.draw",
+   "class": "melee",
+   "item": "baton",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 44,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "melee.holster",
+   "class": "melee",
+   "item": "baton",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 44,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "tool.idle_armed",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.walk_armed",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.run_armed",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.aim",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "aim",
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 12,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.shoot",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "shoot",
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 12,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.draw",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "tool.holster",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  }
+ ]
+}

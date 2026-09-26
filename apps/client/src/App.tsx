@@ -72,6 +72,7 @@ import {
 } from "./objects";
 import type { CrewAppearance } from "../../../packages/render/src/crew/appearance";
 import type { SceneState } from "../../../packages/render/src";
+import { resolveCrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import {
   createGameUI,
   gameplayIntent,
@@ -778,6 +779,13 @@ export default function App({
               if (!disposed) setLoadStage(stage);
             },
             equipmentPose,
+            crewBundle: resolveCrewBundle({
+              // Proposal voxel crew: local dev or an explicit preview build only; never a default.
+              previewEnabled:
+                import.meta.env.DEV ||
+                import.meta.env.VITE_CREW_VOXEL_PREVIEW === "1",
+              query: new URLSearchParams(window.location.search).get("crew"),
+            }),
             sharedWorld: sharedEnabled
               ? {
                   store: sharedPresentation.store,
