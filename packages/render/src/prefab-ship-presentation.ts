@@ -56,6 +56,9 @@ export async function loadPrefabShipPresentation(
     const meshes = view.root.getChildMeshes();
     fill.includedOnlyMeshes = meshes;
     for (const mesh of meshes) {
+      // Batched ship geometry is frozen for the static editor/harness scene, but
+      // the game ship root moves and turns every frame: keep it following.
+      if (mesh.isWorldMatrixFrozen) mesh.unfreezeWorldMatrix();
       const m = mesh.material;
       if (m instanceof PBRMaterial && (m.metallic ?? 0) > GAME_MAX_METALLIC)
         m.metallic = GAME_MAX_METALLIC;
@@ -67,7 +70,7 @@ export async function loadPrefabShipPresentation(
     scene.onAfterRenderObservable.addOnce(() => {
       const m = view.metrics();
       console.info(
-        `prefab-ship ${doc.id} ${interior ? "deck" : "flight"}: draws=${m.drawCalls} meshes=${m.meshes} instances=${m.instances} triangles=${m.triangles}`,
+        `prefab-ship ${doc.id} ${interior ? "deck" : "flight"}: shipDrawsPerPass=${m.meshes} triangles=${m.triangles} instances=${m.instances}`,
       );
     });
   logMetrics();
