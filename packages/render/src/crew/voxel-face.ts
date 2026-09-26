@@ -20,7 +20,16 @@ export type VoxelFaceLook = -1 | 0 | 1;
  * the CPU from atlas state and uploads it only when the state changes (expression, viseme, blink
  * frame, look, tints). Idle auto-blink every 2-6 s. Precedence: explicit expression > action track.
  */
-export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined, random: () => number = Math.random) {
+export type VoxelFaceComposer = (state: FaceState) => Uint8Array | Uint8ClampedArray;
+const DEFAULT_BLINK = [
+  { eyes: "half", seconds: 1 / 24 },
+  { eyes: "closed", seconds: 1 / 24 },
+  { eyes: "half", seconds: 1 / 24 },
+] as const;
+
+export function createVoxelFace(scene: Scene, initialMaterial: PBRMaterial | undefined, random: () => number = Math.random) {
+  let material = initialMaterial;
+  let composer: VoxelFaceComposer | undefined;
   let atlas: FaceAtlas | undefined;
   let image: FaceAtlasImage | undefined;
   let tints: FaceTints = FACE_DEFAULT_TINTS;
@@ -36,23 +45,24 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
   let lastKey = "";
   let uploads = 0;
 
+  const blinkSeq = () => (composer ? DEFAULT_BLINK : atlas?.blink ?? DEFAULT_BLINK);
   const state = (): FaceState => ({
     expression: explicit ?? track ?? "neutral",
     viseme,
-    blinkEyes: atlas && blinkIndex >= 0 ? atlas.blink[blinkIndex]?.eyes ?? null : null,
+    blinkEyes: blinkIndex >= 0 ? blinkSeq()[blinkIndex]?.eyes ?? null : null,
     look,
   });
 
   const refresh = () => {
-    if (!atlas || !image || !material) return;
+    if (!material || (!composer && (!atlas || !image))) return;
     const s = state();
-    const key = JSON.stringify([s, tints]);
+    const key = JSON.stringify([s, tints, !!composer]);
     if (key === lastKey) return;
     lastKey = key;
-    const pixels = composeFace(atlas, image, s, tints);
+    const pixels = composer ? composer(s) : composeFace(atlas!, image!, s, tints);
     // RawTexture rows start at the bottom; the face canvas row 0 is the top.
     const flipped = new Uint8Array(pixels.length);
-    const n = atlas.cell;
+    const n = Math.round(Math.sqrt(pixels.length / 4));
     for (let r = 0; r < n; r++) flipped.set(pixels.subarray(r * n * 4, (r + 1) * n * 4), (n - 1 - r) * n * 4);
     if (!texture) {
       texture = RawTexture.CreateRGBATexture(flipped, n, n, scene, false, false, Texture.NEAREST_SAMPLINGMODE,
@@ -66,12 +76,13 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
   };
 
   const tick = (dt: number) => {
-    if (!atlas) return;
+    if (!atlas && !composer) return;
     if (blinkIndex >= 0) {
       blinkElapsed += dt;
-      while (blinkIndex >= 0 && blinkElapsed >= atlas.blink[blinkIndex].seconds) {
-        blinkElapsed -= atlas.blink[blinkIndex].seconds;
-        blinkIndex = blinkIndex + 1 < atlas.blink.length ? blinkIndex + 1 : -1;
+      const seq = blinkSeq();
+      while (blinkIndex >= 0 && blinkElapsed >= seq[blinkIndex].seconds) {
+        blinkElapsed -= seq[blinkIndex].seconds;
+        blinkIndex = blinkIndex + 1 < seq.length ? blinkIndex + 1 : -1;
       }
       refresh();
     } else if (autoBlink) {
@@ -84,7 +95,7 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
   };
 
   const blink = () => {
-    if (!atlas) return;
+    if (!atlas && !composer) return;
     blinkIndex = 0;
     blinkElapsed = 0;
     refresh();
@@ -94,6 +105,19 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
     setAtlas(next: FaceAtlas, nextImage: FaceAtlasImage) {
       atlas = next;
       image = nextImage;
+      lastKey = "";
+      refresh();
+    },
+    /**
+     * Drive another face material (e.g. a CHAR-HEADS head) with an external compositor. The
+     * expression / viseme / blink / look state and tracks keep working unchanged.
+     */
+    setComposer(target: PBRMaterial, compose: VoxelFaceComposer) {
+      if (texture && material && material.albedoTexture === texture) material.albedoTexture = null;
+      texture?.dispose();
+      texture = undefined;
+      material = target;
+      composer = compose;
       lastKey = "";
       refresh();
     },
@@ -129,7 +153,7 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
       return state();
     },
     get ready() {
-      return !!atlas && !!image && !!material;
+      return !!material && (!!composer || (!!atlas && !!image));
     },
     get uploads() {
       return uploads;
@@ -139,6 +163,16 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
       texture = undefined;
     },
   };
+}
+
+/** Browser RGBA decode of a PNG (straight alpha, no colour conversion). */
+export async function loadRgbaImage(url: string): Promise<FaceAtlasImage> {
+  const blob = await (await fetch(url)).blob();
+  const bitmap = await createImageBitmap(blob, { premultiplyAlpha: "none", colorSpaceConversion: "none" });
+  const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
+  const ctx = canvas.getContext("2d")!;
+  ctx.drawImage(bitmap, 0, 0);
+  return { width: bitmap.width, height: bitmap.height, data: ctx.getImageData(0, 0, bitmap.width, bitmap.height).data };
 }
 
 /** Browser loader for the atlas JSON + PNG (decoded to RGBA through a 2D canvas). */

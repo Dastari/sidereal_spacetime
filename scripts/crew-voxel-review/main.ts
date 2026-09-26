@@ -5,6 +5,13 @@
  *   /@fs/<repo>/scripts/crew-voxel-review/index.html
  */
 import { createWorld, type SceneState } from "../../packages/render/src/index";
+import type { Scene } from "@babylonjs/core/scene";
+import { Ray } from "@babylonjs/core/Culling/ray";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { prefabById } from "../../packages/content/src/prefabs/index";
+import { defaultPrefabComponentCatalog } from "../../packages/content/src/ship-prefab-catalog";
+import { equipVoxelCrewItem } from "../../packages/render/src/crew/voxel-crew-kit";
 import {
   VOXEL_CREW_ACTIONS,
   VOXEL_CREW_EXTRA_ACTIONS,
@@ -48,6 +55,11 @@ let body = params.get("body") ?? "male";
 let t = 0;
 let shots = 0n;
 const origin = { x: Number(params.get("x") ?? 0), y: Number(params.get("y") ?? 0) };
+const shipId = params.get("ship") === "wren" ? "fed.s.wren" : null;
+let sceneRef: Scene | undefined;
+let deckFloor = 0;
+let walkAxis: "x" | "y" = "y";
+let walkSpan = 3;
 let state: SceneState = {
   heading: 0, x: 0, y: 0, localX: origin.x, localY: origin.y, interior: true, inspect: false, grid: false,
   crewAppearance: { outfit: "engineer", bodyType: body as "male" },
@@ -86,9 +98,11 @@ const tick = () => {
     const speed = m.sprint ? 4.5 : m.override?.crouching || m.override?.carrying ? 1.2 : 2.5;
     t += (1 / 60) * speed;
     // walk a 3 m back-and-forth line along ship-forward so the camera keeps the actor in view
-    const phase = (t / 3) % 2;
-    const d = phase < 1 ? phase * 3 : (2 - phase) * 3;
-    state = { ...state, localX: origin.x, localY: origin.y + d - 1.5 };
+    const phase = (t / walkSpan) % 2;
+    const d = (phase < 1 ? phase : 2 - phase) * walkSpan - walkSpan / 2;
+    state = walkAxis === "y"
+      ? { ...state, localX: origin.x, localY: origin.y + d, heading: phase < 1 ? 0 : Math.PI }
+      : { ...state, localX: origin.x + d, localY: origin.y, heading: phase < 1 ? Math.PI / 2 : -Math.PI / 2 };
   }
   world.update(state);
   const c = crew();
@@ -97,13 +111,44 @@ const tick = () => {
   });
 };
 
+/** Wren prefab (SHIPS-PREFABS dressed deck view) under the game's ship frame, as the client does. */
+async function loadShip(scene: Scene) {
+  if (!shipId) return;
+  const doc = prefabById(shipId)!;
+  const { createPrefabShipView } = await import("../../packages/render/src/prefab-ship/ship-view");
+  const shipRoot = scene.getTransformNodeByName("ship-frame") as TransformNode;
+  const view = await createPrefabShipView(scene, doc, {
+    catalog: defaultPrefabComponentCatalog(), view: "deck", parent: shipRoot, standinComponents: true, roomLights: 2,
+  });
+  view.root.computeWorldMatrix(true);
+  const { min, max } = view.root.getHierarchyBoundingVectors(true);
+  // walk along the longer horizontal axis through the ship centre (ship local: x -> X, y -> -Z)
+  const cx = (min.x + max.x) / 2, cz = (min.z + max.z) / 2;
+  walkAxis = max.x - min.x > max.z - min.z ? "x" : "y";
+  walkSpan = Math.max(1.5, Math.min(4, ((walkAxis === "x" ? max.x - min.x : max.z - min.z) - 4) / 2));
+  origin.x = cx;
+  origin.y = -cz;
+  const meshes = view.root.getChildMeshes();
+  const hit = scene.multiPickWithRay(new Ray(new Vector3(cx, max.y + 1, cz), new Vector3(0, -1, 0), 50), (m) => meshes.includes(m as never));
+  const floors = (hit ?? []).map((h) => h.pickedPoint!.y).filter((y) => y < min.y + 1.2).sort((a, b) => b - a);
+  deckFloor = floors[0] ?? min.y;
+  // the harness has no construction authority: lift the dressed ship so its deck meets the default walking datum
+  view.root.position.y += 0.1875 - deckFloor;
+  (window as { crewReviewShip?: unknown }).crewReviewShip = { min: min.asArray(), max: max.asArray(), deckFloor, walkAxis, walkSpan };
+}
+
 createWorld(canvas, (text) => (status.textContent = text), {
   crewBundle: "voxel",
   signal: controller.signal,
-  onScene: (scene) => scene.onBeforeRenderObservable.add(tick),
+  ...(shipId ? { vessel: "none" as const } : {}),
+  onScene: (scene) => {
+    sceneRef = scene;
+    scene.onBeforeRenderObservable.add(tick);
+  },
 })
-  .then((result) => {
+  .then(async (result) => {
     world = result;
+    if (sceneRef) await loadShip(sceneRef).catch((e) => console.error("ship", e));
     applyMode();
     status.textContent = "voxel crew (proposal, preview only) — actual game renderer, no database";
   })
@@ -154,6 +199,10 @@ Object.assign(window, {
     },
     play(action: VoxelCrewAction) {
       crew()?.play?.(action);
+    },
+    async equip(item: string) {
+      const c = crew();
+      if (c && sceneRef) return equipVoxelCrewItem(sceneRef, c as never, item);
     },
     shoot() {
       shots += 1n;

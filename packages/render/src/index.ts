@@ -78,6 +78,7 @@ import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
 import { createVoxelCrewVisual } from "./crew/voxel-crew";
+import { attachVoxelCrewHead, equipVoxelCrewItem, voxelHeadLoadoutFor } from "./crew/voxel-crew-kit";
 import type { CrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
@@ -454,7 +455,13 @@ async function buildWorld(
       if (options.crewBundle === "voxel") {
         // Proposal voxel crew: authored actions drive the arms; the legacy aim-space
         // controller targets the r008 rig and stays unbound.
-        crew = await createVoxelCrewVisual(scene, shipRoot);
+        const voxel = await createVoxelCrewVisual(scene, shipRoot);
+        crew = voxel;
+        // CHAR-HEADS head (face atlas + hair) on the approved r005 body; the body's own head blank
+        // stays visible if the head kit cannot load.
+        attachVoxelCrewHead(scene, voxel, voxelHeadLoadoutFor("male")).catch((error) =>
+          console.warn("voxel crew head kit unavailable", error),
+        );
       } else {
         const legacy = await createCrewVisual(
           scene,
@@ -1142,14 +1149,18 @@ async function buildWorld(
     equipment = undefined;
     crew.customize({ weaponFixture: true });
     if (!selectedAsset) return;
-    createEquipmentVisual(
-      scene,
-      crew.sockets.handR,
-      selectedAsset,
-      selectedAsset && options.equipmentPose?.items[selectedAsset]
-        ? options.equipmentPose.equipmentUrl
-        : undefined,
-    )
+    const voxelCrew = "bundle" in crew && crew.bundle === "voxel" ? crew : undefined;
+    (voxelCrew
+      ? // CHAR-WEAPONS item on socket.hand.R + baked armed clips (support hand solved per frame)
+        (equipVoxelCrewItem(scene, voxelCrew, selectedAsset) as unknown as ReturnType<typeof createEquipmentVisual>)
+      : createEquipmentVisual(
+          scene,
+          crew.sockets.handR,
+          selectedAsset,
+          selectedAsset && options.equipmentPose?.items[selectedAsset]
+            ? options.equipmentPose.equipmentUrl
+            : undefined,
+        ))
       .then((visual) => {
         if (disposed || revision !== equipmentRevision) {
           visual.dispose();

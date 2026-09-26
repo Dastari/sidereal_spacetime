@@ -418,6 +418,7 @@ export async function createVoxelCrewVisual(
     },
     sockets,
     socketNodes,
+    skeleton: container.skeletons[0],
     itemSockets,
     joints,
     attachPart,
