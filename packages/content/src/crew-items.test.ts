@@ -12,6 +12,8 @@ import {
   crewItemActionPlan,
   crewItemForLegacyAsset,
   crewArmedClip,
+  crewArmedClipInfo,
+  CREW_ARMED_CLIPS,
   crewItemFx,
   crewItemMaterials,
   sampleCrewItemFx,
@@ -110,6 +112,13 @@ describe("crew voxel items r001", () => {
     expect(crewArmedClip(crewItem("rifle"), "walk_armed")).toBe("rifle.walk_armed");
     expect(crewArmedClip(crewItem("baton"), "reload")).toBeNull();
     expect(crewArmedClip(crewItem("cargo-box"), "aim")).toBeNull();
+    for (const c of CREW_ARMED_CLIPS.clips) expect(names.has(c.animation), c.animation).toBe(true);
+    const draw = crewArmedClipInfo(crewItem("rifle"), "draw")!;
+    expect(draw.grabFrame).toBeGreaterThan(0);
+    expect(draw.holsterFrames.length).toBeGreaterThan(0);
+    expect(crewArmedClipInfo(crewItem("pistol"), "shoot")).toMatchObject({ itemClip: "fire", fxFrames: [1] });
+    // the support hand stays on the item in every clip where it is solved
+    for (const c of CREW_ARMED_CLIPS.clips) if (c.supportErrorMaxM !== null) expect(c.supportErrorMaxM, c.animation).toBeLessThan(0.02);
   });
 
   it("maps legacy equipment assets to voxel replacements", () => {

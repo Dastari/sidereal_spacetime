@@ -47,7 +47,7 @@ def args():
     p.add_argument("--armed", action="store_true", help="bake + render the armed animation layer")
     p.add_argument("--armed-clips", default="")
     p.add_argument("--no-armed-render", action="store_true")
-    p.add_argument("--body", default="/root/sidereal-progress/_shared/crew-body-r004/crew-body.blend")
+    p.add_argument("--body", default="/root/sidereal-progress/_shared/crew-body-r005/crew-body.blend")
     return p.parse_args(argv)
 
 

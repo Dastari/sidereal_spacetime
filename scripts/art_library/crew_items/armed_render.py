@@ -208,6 +208,19 @@ def export_actions(o, rig, meta):
                    "note": "Baked on CHAR-BODY's pose library; support hand solved onto each class item's support socket every frame.",
                    "classes": [{"class": c, "item": i, "family": f} for c, i, f in armed.CLASSES], "clips": slim}, fh, indent=1)
         fh.write("\n")
+    content = os.path.join(os.path.dirname(o.content), "crew-items-r001-armed.json")
+    with open(content, "w") as fh:
+        json.dump({"schema": "sidereal.crew.armed-clips/1", "revision": "r001", "glb": "armed-actions.glb",
+                   "bodyRevision": body_frames.BODY_SPEC_REVISION,
+                   "classes": [{"class": c, "item": i, "family": f} for c, i, f in armed.CLASSES],
+                   "clips": [{"animation": m["action"], "class": m["class"], "clip": m["clip"], "frames": m["frames"],
+                              "loop": m["loop"], "grabFrame": m["grabFrame"],
+                              "holsterFrames": [i for i, a in enumerate(m["attach"]) if a == "holster"],
+                              "itemClip": {"shoot": "fire", "reload": "reload"}.get(m["clip"]),
+                              "fxFrames": [1] if m["clip"] == "shoot" and m["class"] not in ("melee", "tool") else [],
+                              "supportErrorMaxM": m["supportErrorMaxM"], "bodyPenetrationMaxVoxels": m["bodyPenetrationMaxVoxels"]}
+                             for m in meta]}, fh, indent=1)
+        fh.write("\n")
     return path
 
 

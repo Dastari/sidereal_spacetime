@@ -163,12 +163,15 @@ class ArmedBaker:
     # A small search (torso blade, barrel yaw, pocket, reach) keeps both hands ON the item
     # (support gap is a hard limit) and minimises item voxels inside the torso/head boxes.
     V = 1 / 32
-    POCKETS = {"shoulder": [(7.0, 5.0, 34.0), (7.5, 4.0, 33.0), (6.5, 5.5, 35.0), (8.0, 3.0, 32.0), (5.5, 6.0, 33.0)],
-               "hip": [(8.0, 4.0, 25.0), (8.5, 1.0, 27.0), (9.0, -1.0, 28.0), (8.0, 2.0, 29.0)]}
+    POCKETS = {"shoulder": [(7.0, 5.0, 34.0), (7.5, 4.0, 33.0), (6.5, 5.5, 35.0), (8.0, 3.0, 32.0), (5.5, 6.0, 33.0),
+                            (8.5, 4.0, 34.0), (9.0, 3.5, 33.0)],
+               # hip pockets sit in FRONT of the torso box (y >= 7): a 0.94 m heavy gun cannot hang
+               # beside a 14-vox chibi torso and still leave the support hand in reach
+               "hip": [(8.0, 4.0, 25.0), (8.5, 1.0, 27.0), (8.0, 2.0, 29.0),
+                       (6.0, 7.0, 26.0), (7.0, 8.0, 25.0), (8.0, 8.0, 26.0), (6.0, 9.0, 24.0), (7.5, 7.0, 28.0)]}
     KINDS = {"aim": {"pitch": (0.0,), "yaw": (0.0, 6.0, 12.0), "blade": (0, -15, -30, -45, -60)},
-             "ready": {"pitch": (-38.0, -30.0, -22.0), "yaw": (30.0, 40.0, 50.0, 60.0), "blade": (0, -10, -20, -30)},
-             "hip_aim": {"pitch": (0.0, -4.0), "yaw": (0.0, 8.0, 16.0), "blade": (0, -15, -30, -45)},
-             "hip_ready": {"pitch": (-12.0, -8.0), "yaw": (0.0, 8.0, 16.0), "blade": (0, -15, -30, -45)},
+             "ready": {"pitch": (-45.0, -38.0, -30.0, -22.0), "yaw": (30.0, 40.0, 50.0, 60.0, 70.0), "blade": (0, -10, -20, -30)},
+             "hip_aim": {"pitch": (0.0, -4.0), "yaw": (-8.0, 0.0, 8.0, 16.0), "blade": (0, -15, -30, -45)},
              "sight": {"pitch": (0.0,), "yaw": (0.0,), "blade": (0, -10, -20)}}
 
     def chest_delta(self):
@@ -246,7 +249,9 @@ class ArmedBaker:
             err_l = (self.socket_L().translation - Ml.translation).length
         return Mr, err_r, err_l, self.penetration(item, self.socket_R())
 
-    def solve_kind(self, cls, item, kind, P_body, two_hand):
+    def solve_kind(self, cls, item, kind, P_bodies, two_hand):
+        """Search stance params that work on EVERY sampled body pose of the clips using this kind
+        (e.g. idle + two walk + two run frames for a carry): errors and penetration are summed."""
         g = self.KINDS[kind]
         best = None
         pockets = [None] if kind == "sight" else self.POCKETS["hip" if kind.startswith("hip") else "shoulder"]
@@ -259,7 +264,11 @@ class ArmedBaker:
                         for reach in reaches:
                             for drop in drops:
                                 st = {"blade": blade, "yaw": yaw, "pitch": pitch, "pocket": pocket, "reach": reach, "drop": drop}
-                                _, er, el, pen = self.evaluate(item, P_body, kind, st, two_hand)
+                                er = el = 0.0
+                                pen = 0
+                                for P_body in P_bodies:
+                                    _, e1, e2, n = self.evaluate(item, P_body, kind, st, two_hand)
+                                    er, el, pen = max(er, e1), max(el, e2), pen + n
                                 score = (5000 * max(0.0, er - 0.004) + 5000 * max(0.0, el - 0.004) + pen
                                          + 0.03 * abs(blade) + 0.02 * abs(yaw) - (0.3 * reach if reach else 0) + 1.0 * drop)
                                 if best is None or score < best[0]:
@@ -279,20 +288,23 @@ class ArmedBaker:
         p = self.poser
         sh = p.M("upper_arm.L").translation
         best = None
-        for k in (0, 1, 2, 3, 4):
+        out_dir = self.chest_delta().to_3x3() @ Vector((1.0, 0.3, 0.0))
+        for k in (0, 1, 2, 3, 4, -1, -2, -3):
             M = Mr.copy()
-            if k:
+            if k > 0:
                 d = (sh - self.support_target(item, Mr).translation).normalized()
                 M.translation = Mr.translation + d * (k * self.V)
+            elif k < 0:
+                M.translation = Mr.translation + out_dir.normalized() * (-k * self.V)
             self.solve_hand("R", M, (1.0, -0.5, -0.4), girdle=True)
             Ml = self.support_target(item, self.socket_R())
             self.solve_hand("L", Ml, (-0.6, -0.4, -1.0), girdle=True)
             gap = (self.socket_L().translation - Ml.translation).length
             pen = self.penetration(item, self.socket_R())
-            score = 5000 * max(0.0, gap - 0.004) + pen + 0.5 * k
+            score = 5000 * max(0.0, gap - 0.004) + pen + 0.5 * abs(k)
             if best is None or score < best[0]:
                 best = (score, M)
-            if gap <= 0.004 and k == 0:
+            if gap <= 0.004 and pen == 0 and k == 0:
                 break
         self.solve_hand("R", best[1], (1.0, -0.5, -0.4), girdle=True)
         return best[1]
@@ -301,7 +313,8 @@ class ArmedBaker:
         if fam == "rifle":
             return "aim" if clip in ("aim", "shoot", "reload") else "ready"
         if fam == "heavy":
-            return "hip_aim"                  # heavy guns ride the hip, level, in every armed clip
+            # heavy guns ride the hip; the carry (idle/walk/run) is solved on its own body pose
+            return "hip_aim"
         if cls == "smg":
             # SMG: stock (rear cap) seated at the shoulder like a carbine; ready = muzzle down
             return "aim" if clip in ("aim", "shoot", "reload") else "ready"
@@ -311,14 +324,18 @@ class ArmedBaker:
 
     def tune(self, cls, item, fam):
         out = {}
-        for clip, base in (("aim", None), ("idle_armed", None)):
+        samples = {}
+        for clip, fracs in (("aim", (0.0,)), ("idle_armed", (0.0,)), ("walk_armed", (0.0, 0.5)), ("run_armed", (0.25, 0.75))):
             kind = self.kinds_for(cls, fam, clip)
-            if not kind or kind in out:
+            if not kind:
                 continue
-            P0 = self.clip_frames(fam, clip)[0][1]
-            P_body, _ = self.strip_weapon(P0)
-            two = item.meta["two_handed"] or fam == "pistol"
-            out[kind] = self.solve_kind(cls, item, kind, P_body, two)
+            frames = self.clip_frames(fam, clip)
+            for fr in fracs:
+                P = frames[int(fr * (len(frames) - 1))][1]
+                samples.setdefault(kind, []).append(self.strip_weapon(self.two_hand_low(dict(P), cls, clip))[0])
+        two = item.meta["two_handed"] or fam == "pistol"
+        for kind, bodies in samples.items():
+            out[kind] = self.solve_kind(cls, item, kind, bodies, two)
         return out
 
     @staticmethod
@@ -422,7 +439,7 @@ class ArmedBaker:
                 P_body, w = self.strip_weapon(P)
                 p.apply(self.blade_body(P_body, st["blade"]))
                 Mr = self.weapon_frame(item, kind, st)
-                if w and w_base and w[0] == w_base[0]:
+                if w and w_base and w[0] == w_base[0] and not (clip == "reload" and kind == "aim"):   # shouldered reloads stay seated
                     # CHAR-BODY's authored motion (breath, recoil kick, reload tilt) as deltas
                     dpos = Vector(w[1:4]) - Vector(w_base[1:4])
                     if w[0] == "c":

@@ -157,7 +157,7 @@
    "files": {
     "lod0": {
      "file": "compact-carbine.glb",
-     "sha256": "5cb2e67a8d0bfbf6491704a1d7c2d67ecc558ff8e83d39105971b3b255f65659",
+     "sha256": "6a8637249f185f14432bee78bcc6f8924a3e6bb7d3748e7c14152484747f080f",
      "bytes": 287520,
      "triangles": 7286,
      "primitives": 12,
@@ -194,7 +194,7 @@
     },
     "lod1": {
      "file": "compact-carbine.lod1.glb",
-     "sha256": "961ac61cbaef292bfb2b63b5b795cede8fa5f50058353318d7e638dcc8bea0a4",
+     "sha256": "f8f43d8fdc0b5a23950c000b89601c2a8534ab9ee38fed241c7c1420c633b0b4",
      "bytes": 56188,
      "triangles": 926,
      "primitives": 12,
@@ -236,7 +236,7 @@
    "files": {
     "lod0": {
      "file": "rifle.glb",
-     "sha256": "4aba63681fac0703e43a74d73fc3ae447d555903ca9f439ba5f362b8ead780f9",
+     "sha256": "2d59edc08b3b45959b0df5cfabb2b2346edb75edc70e197cd50f20f08c3dc44c",
      "bytes": 289388,
      "triangles": 7264,
      "primitives": 12,
@@ -273,7 +273,7 @@
     },
     "lod1": {
      "file": "rifle.lod1.glb",
-     "sha256": "bc50d2890186278c787e551d4705fbdaaa35cad086d9a0854709dcd84374dd41",
+     "sha256": "dd120573c10210184ac83e89f0ff37a5b6e8ac6a2408fd82fadd59df9ab3e414",
      "bytes": 55896,
      "triangles": 904,
      "primitives": 12,
@@ -315,7 +315,7 @@
    "files": {
     "lod0": {
      "file": "shotgun.glb",
-     "sha256": "e18410ca8d7ef404159d9e9c543d51d75df42ce2a65e04f031121937f39935d3",
+     "sha256": "4268f2ce62150d83251cbea93ef7b10995d165489e7369d3936f4fd3212bb908",
      "bytes": 287352,
      "triangles": 7512,
      "primitives": 9,
@@ -349,7 +349,7 @@
     },
     "lod1": {
      "file": "shotgun.lod1.glb",
-     "sha256": "67f946917578ec6956242bdee58ba6fb0879eead37ee54d760826aa33bfa791e",
+     "sha256": "0c1ea23f67ee870d4c611933a887e8639e6e18d7763da576d28871b777647d41",
      "bytes": 55840,
      "triangles": 1016,
      "primitives": 9,
@@ -388,7 +388,7 @@
    "files": {
     "lod0": {
      "file": "heavy-gun.glb",
-     "sha256": "3a5bd79ab2a7c80623124ec2ce0051b3e4bd81c3c0054b6db34d5597edba9f8b",
+     "sha256": "e78453a2ae3f5dd6dcbd970bcb4c66f527197fb7a6027be40e3f988875ec50a9",
      "bytes": 281616,
      "triangles": 7080,
      "primitives": 15,
@@ -424,8 +424,8 @@
     },
     "lod1": {
      "file": "heavy-gun.lod1.glb",
-     "sha256": "39c14ba5eb4cc78dde7872284c7558a32e8366575d76eba113eab1b142092dc7",
-     "bytes": 56092,
+     "sha256": "961ea6bfcd08fb9eaa915f922b7ae5e325d4633f668e5c02946453a852766e85",
+     "bytes": 56096,
      "triangles": 932,
      "primitives": 15,
      "nodes": [
@@ -465,8 +465,8 @@
    "files": {
     "lod0": {
      "file": "beam-rifle.glb",
-     "sha256": "8edad07a720ab017052d5ffd5025cee9325b0899493b52f34c6404322de90467",
-     "bytes": 230304,
+     "sha256": "d2821b52a7dfdb11b611f887a9add589930b049eaaa658738008351b33c7a8b1",
+     "bytes": 230308,
      "triangles": 5890,
      "primitives": 9,
      "nodes": [
@@ -499,8 +499,8 @@
     },
     "lod1": {
      "file": "beam-rifle.lod1.glb",
-     "sha256": "848df2eca702657a977d00aa2dc6009d5f9f6401a29f4aa3402ab5fbc8535ae0",
-     "bytes": 45744,
+     "sha256": "04c42cb3c971ca284fcb25b4e5e445faad7e5932c16cd8cd7ebaf50c5095f88c",
+     "bytes": 45748,
      "triangles": 798,
      "primitives": 9,
      "nodes": [
@@ -538,7 +538,7 @@
    "files": {
     "lod0": {
      "file": "rail-rifle.glb",
-     "sha256": "0133e714c0dbec1ff1fba1e1f608194f591ba527d7b5f49198ca9c5c24e1e5c5",
+     "sha256": "a96a9b976b7a49baf8d1b1c47c7f7bef5f008a594313ac2efab25bcf60aed25a",
      "bytes": 233908,
      "triangles": 5938,
      "primitives": 10,
@@ -572,7 +572,7 @@
     },
     "lod1": {
      "file": "rail-rifle.lod1.glb",
-     "sha256": "352e5c091e7c7595956f5ed3cfc7e6b2dd3c1c8c4c3ab81e3443aad76cc14cc0",
+     "sha256": "fa0d147595798aaa6058ab5cd1f0d4cb4dd03afb196469479c3f5743f45d3ec2",
      "bytes": 45756,
      "triangles": 742,
      "primitives": 10,
@@ -1152,7 +1152,7 @@
    "files": {
     "lod0": {
      "file": "mining-drill.glb",
-     "sha256": "5c3fec605524a5cd7854b3e1e2e73a23e3d6be9c3d9e1cfbe68ec6c768b3c2ee",
+     "sha256": "0d5f4836b42ff120a67b5c6d066ec684e19d7a12c2bca8fa99db438082e436cf",
      "bytes": 192300,
      "triangles": 4828,
      "primitives": 11,
@@ -1186,7 +1186,7 @@
     },
     "lod1": {
      "file": "mining-drill.lod1.glb",
-     "sha256": "2afc342a01409753d0fbd3cb31a865de7099a3fa0375fc68bfa96cf0dd727adb",
+     "sha256": "f7c65248dd9be58628b5e3bb9a718926adeba489a821f8ed1648c587ef63f2c4",
      "bytes": 39316,
      "triangles": 596,
      "primitives": 11,
@@ -2124,9 +2124,9 @@
   "lod0Triangles": 109998,
   "lod1Triangles": 14346,
   "fxTriangles": 6228,
-  "bytes": 5664804
+  "bytes": 5664816
  },
  "content": "packages/content/src/crew-items-r001.json",
  "referenceCrops": "scripts/art_library/crew_items_reference_crops.json",
- "contentSha256": "f53d810bc776af4816afaadf7b1564d7765f1fc25ee98b4ca826949807a9340a"
+ "contentSha256": "74252e229537b3d299b8c9f3a8c888e3b17d4612ac3fdb12b2100b1cb61fdeee"
 }

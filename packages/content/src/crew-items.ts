@@ -8,6 +8,7 @@
  * +Z up) and can also drive the existing r003 equipment pose controller via toEquipmentPoseItem.
  */
 import raw from "./crew-items-r001.json";
+import armedRaw from "./crew-items-r001-armed.json";
 import {
   EQUIPMENT_POSE_PROFILES,
   type EquipmentPoseItem,
@@ -257,5 +258,26 @@ export function crewArmedClip(item: CrewItemDefinition, clip: CrewArmedClip): st
   const cls = crewArmedClass(item);
   if (!cls || (clip === "reload" && (cls === "melee" || cls === "tool"))) return null;
   return `${cls}.${clip}`;
+}
+
+export interface CrewArmedClipInfo {
+  /** glTF animation name in `${CREW_ITEM_CATALOG.assetBase}armed-actions.glb`. */
+  animation: string; class: CrewArmedClass; clip: CrewArmedClip; frames: number; loop: boolean;
+  /** draw/holster: frame the right hand takes or releases the item; outside it the item rides its holster. */
+  grabFrame: number | null; holsterFrames: readonly number[];
+  /** item part clip to play in sync (slide/pump/mag) and frames that spawn the item's fire FX. */
+  itemClip: string | null; fxFrames: readonly number[];
+  /** measured on the body revision below: support-hand gap (m) and item voxels inside the torso/head. */
+  supportErrorMaxM: number | null; bodyPenetrationMaxVoxels: number;
+}
+export const CREW_ARMED_CLIPS = armedRaw as unknown as {
+  schema: "sidereal.crew.armed-clips/1"; revision: string; glb: string; bodyRevision: string;
+  classes: readonly { class: CrewArmedClass; item: string; family: string }[];
+  clips: readonly CrewArmedClipInfo[];
+};
+/** Everything a runtime needs to play an armed clip for an item: animation, item sync, FX and holster frames. */
+export function crewArmedClipInfo(item: CrewItemDefinition, clip: CrewArmedClip): CrewArmedClipInfo | null {
+  const name = crewArmedClip(item, clip);
+  return name ? CREW_ARMED_CLIPS.clips.find((c) => c.animation === name) ?? null : null;
 }
 

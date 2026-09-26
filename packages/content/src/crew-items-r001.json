@@ -7,7 +7,7 @@
  "animationFps": 24,
  "bodySpec": {
   "schema": "sidereal.crew.body-spec/1",
-  "revision": "r004"
+  "revision": "r005"
  },
  "itemFrame": "Blender +X right, +Y forward, +Z up; glTF +X right, +Y up, -Z forward. Origin = primary grip centre.",
  "socketConvention": "item socket nodes: local -Y = outward/forward, +Z = item up (project socket convention).",
@@ -1308,7 +1308,7 @@
     "support": {
      "position": [
       -0.03125,
-      0.1875,
+      0.15625,
       0.015625
      ],
      "direction": [
@@ -1324,7 +1324,7 @@
      "gltfPosition": [
       -0.03125,
       0.015625,
-      -0.1875
+      -0.15625
      ],
      "gltfDirection": [
       0.0,
@@ -1632,7 +1632,7 @@
     "support": {
      "position": [
       -0.03125,
-      0.1875,
+      0.15625,
       0.015625
      ],
      "direction": [
@@ -1648,7 +1648,7 @@
      "gltfPosition": [
       -0.03125,
       0.015625,
-      -0.1875
+      -0.15625
      ],
      "gltfDirection": [
       0.0,
@@ -1953,7 +1953,7 @@
     "support": {
      "position": [
       -0.03125,
-      0.1875,
+      0.15625,
       0.015625
      ],
      "direction": [
@@ -1969,7 +1969,7 @@
      "gltfPosition": [
       -0.03125,
       0.015625,
-      -0.1875
+      -0.15625
      ],
      "gltfDirection": [
       0.0,
@@ -2274,7 +2274,7 @@
     "support": {
      "position": [
       -0.03125,
-      0.1875,
+      0.15625,
       0.015625
      ],
      "direction": [
@@ -2290,7 +2290,7 @@
      "gltfPosition": [
       -0.03125,
       0.015625,
-      -0.1875
+      -0.15625
      ],
      "gltfDirection": [
       0.0,
@@ -2595,7 +2595,7 @@
     "support": {
      "position": [
       -0.03125,
-      0.1875,
+      0.15625,
       0.015625
      ],
      "direction": [
@@ -2611,7 +2611,7 @@
      "gltfPosition": [
       -0.03125,
       0.015625,
-      -0.1875
+      -0.15625
      ],
      "gltfDirection": [
       0.0,
@@ -2909,7 +2909,7 @@
     "support": {
      "position": [
       -0.03125,
-      0.1875,
+      0.15625,
       0.015625
      ],
      "direction": [
@@ -2925,7 +2925,7 @@
      "gltfPosition": [
       -0.03125,
       0.015625,
-      -0.1875
+      -0.15625
      ],
      "gltfDirection": [
       0.0,
@@ -4760,7 +4760,7 @@
     "support": {
      "position": [
       -0.03125,
-      0.1875,
+      0.15625,
       0.015625
      ],
      "direction": [
@@ -4776,7 +4776,7 @@
      "gltfPosition": [
       -0.03125,
       0.015625,
-      -0.1875
+      -0.15625
      ],
      "gltfDirection": [
       0.0,
