@@ -144,7 +144,7 @@ def render_sheet(cat, lib, out, name, rows, samples, tile=(0.84, 1.24), px=150, 
     sc.render.resolution_y = int(len(rows) * px * th / tw)
     cx, cz = (ncol - 1) * tw / 2, -(len(rows) - 1) * th / 2 + 0.22
     p = math.radians(pitch)
-    look.aim(cam, (cx, 0, cz), (0, -dist * math.cos(p), dist * math.sin(p)), ortho=max(width_m, height_m * sc.render.resolution_x / sc.render.resolution_y))
+    look.aim(cam, (cx, 0, cz), (0, -dist * math.cos(p), dist * math.sin(p)), ortho=max(width_m, height_m))   # Blender ortho_scale spans the longer image side
     for other in sc.collection.children:
         if other.name.startswith("SHEET_"):
             other.hide_render = other is not coll
@@ -323,8 +323,8 @@ def render_anim(cat, lib, faces, out, samples):
         if other.name.startswith("SHEET_"):
             other.hide_render = other is not coll
     heads = [
-        ({"head": "male", "faceVariant": "m_classic", "hair": "spiked_quiff", "hairColor": "black", "skin": "sand", "eyes": "brown"}, -0.36),
-        ({"head": "female", "faceVariant": "f_bright", "hair": "side_bob", "hairColor": "violet", "skin": "rose", "eyes": "blue"}, 0.36),
+        ({"head": "male", "faceVariant": "m_classic", "hair": "spiked_quiff", "hairColor": "black", "skin": "sand", "eyes": "brown"}, -0.5),
+        ({"head": "female", "faceVariant": "f_bright", "hair": "side_bob", "hairColor": "violet", "skin": "rose", "eyes": "blue"}, 0.5),
     ]
     rigs = []
     for spec, x in heads:
@@ -333,8 +333,8 @@ def render_anim(cat, lib, faces, out, samples):
         rigs.append((spec, obs, head))
     cam = sc.camera
     sc.render.resolution_x, sc.render.resolution_y = 960, 540
-    look.aim(cam, (0, 0, 0.26), (0, -9.0, 1.6), ortho=1.45)
-    sc.eevee.taa_render_samples = max(8, samples // 2)
+    look.aim(cam, (0, 0, 0.24), (0, -9.0, 1.6), ortho=2.1)
+    sc.eevee.taa_render_samples = max(12, samples)
     fdir = os.path.join(out, "anim_frames")
     os.makedirs(fdir, exist_ok=True)
     tl = face_timeline()
