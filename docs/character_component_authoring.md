@@ -3,11 +3,11 @@
 Status: inventory/shared rig implemented at r002; owner-authorized r008 visual
 calibration installed for both bases, three hairstyles and nine medic pieces.
 Other components retain r002; open comms remains a staged, unissued design.
-Final owner art approval is pending. See the [exact publication and rollback](../assets/art-library/character-components/publications/r008/README.md).
+Final owner art approval is pending. See the [exact publication and rollback](https://wiki.sidereal.dastari.net/Art/Library/Docs/character-components/publications/r008/README).
 Follow the [reference fidelity contract](character_reference_fidelity.md) for
 faces, directional hair, layered armor and the independent visual review gates.
-Start at [the individual component index](../assets/art-library/character-components/INDEX.md)
-and [the family revision ledger](../assets/art-library/designs/crew.base-and-outfits/DESIGN.md).
+Start at [the individual component index](https://github.com/Dastari/sidereal_spacetime/blob/9c58c07774d7d3c4a58a40c49e90f2a2c647249c/assets/art-library/character-components/INDEX.md)
+and [the family revision ledger](https://wiki.sidereal.dastari.net/Art/Library/Docs/designs/crew-base-and-outfits/DESIGN).
 The machine-readable component catalog and per-item evidence index live alongside
 its revision. The previous `assets/source/crew-astra.blend` remains preserved.
 
@@ -119,7 +119,7 @@ command-receipt eviction. New characters receive the delivery with their starter
 kit; existing characters receive it on entering the lab again. If an old inventory
 exceeds the delivery budget, retain it and defer delivery until room is available.
 No additional freestanding cargo containers are created. See the [integration
-handoff](handoffs/character_components.md) for the exact set distribution,
+handoff](https://wiki.sidereal.dastari.net/History/Handoffs/Modular%20characters%20and%20uniform%20delivery%20%E2%80%94%20r002) for the exact set distribution,
 activation, browser evidence and validation limits.
 
 Drag an item from a carried or reachable storage grid to its paper-doll slot to
@@ -143,7 +143,7 @@ then append evidence and feedback before requesting final owner design review.
 
 ## Live equipment posing — 2026-09-09 owner update
 
-The owner subsequently authorized the normal game and paper doll to use the new pose controller without a development query. The installed r008 modular bundle remains the body/armor source; the published r002 handhelds, measured sockets and authored aim-space JSON are paired at `/assets/crew/poses/r002/`. The legacy pose crew GLB is not substituted for modular characters. Preserve the shared rest/deformation contract when authoring later component revisions and validate both bodies with real mixed equipment. See [the live integration record](handoffs/character_pose_live_release.md) for exact publication receipts, validation and open visual limitations. Publication permission is separate from final art sign-off.
+The owner subsequently authorized the normal game and paper doll to use the new pose controller without a development query. The installed r008 modular bundle remains the body/armor source; the published r002 handhelds, measured sockets and authored aim-space JSON are paired at `/assets/crew/poses/r002/`. The legacy pose crew GLB is not substituted for modular characters. Preserve the shared rest/deformation contract when authoring later component revisions and validate both bodies with real mixed equipment. See [the live integration record](https://wiki.sidereal.dastari.net/History/Handoffs/Character%20and%20combat%20pose%20live%20release) for exact publication receipts, validation and open visual limitations. Publication permission is separate from final art sign-off.
 
 ## Inventory storage and cosmetic UI follow-up
 
@@ -154,8 +154,8 @@ Character skin and hair use separately saved color roles; author materials so bo
 This section supersedes the earlier limited cosmetic-palette description for the
 new r009 candidate. The owner-approved r008 character bundle and r003 paired
 handheld/pose deliverables remain immutable history; r009 final owner approval is
-pending. Read the [independent reference and iteration review](handoffs/character_faces_r009_reference_review.md),
-[facial source index](../assets/art-library/FACIAL_REFERENCE_INDEX.md), and the
+pending. Read the [independent reference and iteration review](https://wiki.sidereal.dastari.net/History/Handoffs/Character%20faces%20r009%20%E2%80%94%20independent%20reference%20review),
+[facial source index](https://github.com/Dastari/sidereal_spacetime/blob/9c58c07774d7d3c4a58a40c49e90f2a2c647249c/assets/art-library/FACIAL_REFERENCE_INDEX.md), and the
 current component publication ledger before choosing a native source. The index
 preserves 138 portrait appearances and 17 source graphics. Its eleven new facial
 study queues are reference-only, not implicitly reconstructed or approved.
@@ -233,6 +233,6 @@ actual-renderer stills, including both bodies/all eight hair styles, sampled fit
 paused clips and 128-/256-pixel output. It also has an actual `createGameUI` Crew
 controls review at four viewport sizes; the expanded palette height is measured
 before scroll clamping so the last row remains reachable. See the dated final
-section of the [r009 review](handoffs/character_faces_r009_reference_review.md)
+section of the [r009 review](https://wiki.sidereal.dastari.net/History/Handoffs/Character%20faces%20r009%20%E2%80%94%20independent%20reference%20review)
 for exact asset hashes, the fixed scroll defect and remaining acceptance limits.
 These checks do not change owner approval state or assert continuous playback.

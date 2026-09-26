@@ -2,12 +2,12 @@
 
 This extends [component authoring](character_component_authoring.md). The focused
 medic calibration, captures and exact current revision are linked from the
-[living component index](../assets/art-library/character-components/INDEX.md).
+[living component index](https://github.com/Dastari/sidereal_spacetime/blob/9c58c07774d7d3c4a58a40c49e90f2a2c647249c/assets/art-library/character-components/INDEX.md).
 The installed r008 bundle contains the owner-authorized focused visual swap: two
 bases, three hairstyles and nine medic pieces. Other existing components retain
 r002; open comms remains unissued. Use the ledger to distinguish installed visuals,
 staged designs and final art sign-off. Exact source/export hashes and rollback are
-in the [publication receipt](../assets/art-library/character-components/publications/r008/README.md).
+in the [publication receipt](https://wiki.sidereal.dastari.net/Art/Library/Docs/character-components/publications/r008/README).
 
 ## Read the design before constructing it
 
@@ -107,8 +107,8 @@ permission follows from these models.
 ## Facial reference pass r009 — 2026-09-10
 
 For head/face/hair work, also open [characters-facial-assets.png](../reference/art/characters-facial-assets.png)
-and its [complete exact-crop index](../assets/art-library/FACIAL_REFERENCE_INDEX.md).
-The [independent A–E review](handoffs/character_faces_r009_reference_review.md)
+and its [complete exact-crop index](https://github.com/Dastari/sidereal_spacetime/blob/9c58c07774d7d3c4a58a40c49e90f2a2c647249c/assets/art-library/FACIAL_REFERENCE_INDEX.md).
+The [independent A–E review](https://wiki.sidereal.dastari.net/History/Handoffs/Character%20faces%20r009%20%E2%80%94%20independent%20reference%20review)
 records measured baseline proportions, rejected attempts, corrected native joins,
 actual renderer evidence and limits. The previous r008 character and r003 pose
 approvals remain historical approvals of exact delivered bundles. They do not
@@ -183,6 +183,6 @@ actual-renderer stills, including both bodies/all eight hair styles, sampled fit
 paused clips and 128-/256-pixel output. It also has an actual `createGameUI` Crew
 controls review at four viewport sizes; the expanded palette height is measured
 before scroll clamping so the last row remains reachable. See the dated final
-section of the [r009 review](handoffs/character_faces_r009_reference_review.md)
+section of the [r009 review](https://wiki.sidereal.dastari.net/History/Handoffs/Character%20faces%20r009%20%E2%80%94%20independent%20reference%20review)
 for exact asset hashes, the fixed scroll defect and remaining acceptance limits.
 These checks do not change owner approval state or assert continuous playback.
