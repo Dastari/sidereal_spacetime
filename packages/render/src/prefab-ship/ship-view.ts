@@ -40,7 +40,7 @@ import { setMeshRole, type MeshRole } from "../mesh-roles";
 import { meshBoxes, newBuilder, type GeometryBuilder } from "./box-mesher";
 import { meshPrisms } from "./prism-mesher";
 import { appendTransformed, localToParent, meshGeometry, type MergeGroup } from "./batch";
-import { appendStandin, componentStandin, emitVoxelGlow, type StandinSocket } from "./component-standins";
+import { appendStandin, componentStandin, emitPlume, type StandinSocket } from "./component-standins";
 import { applyDecalTheme, buildDecals, disposeDecals, type DecalHandle } from "./decals";
 import {
   componentMatrix,
@@ -414,7 +414,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     const local = newBuilder();
     const colours: number[] = [];
     const main = !!c.placement.spec?.thrustN;
-    emitVoxelGlow(local, colours, at, radius, (main ? 1.1 : 0.6) * radius + (main ? 0.35 : 0.1));
+    emitPlume(local, colours, at, radius, (main ? 3.2 : 1.2) * radius + (main ? 1.5 : 0.3));
     const base = target.g.positions.length / 3;
     for (let i = 0; i < local.positions.length; i += 3) {
       const p = transformPoint(place, [local.positions[i], local.positions[i + 1], local.positions[i + 2]]);

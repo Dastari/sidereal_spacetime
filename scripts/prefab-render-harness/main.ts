@@ -2,6 +2,8 @@
  * Prefab ship render harness: evidence renders of `createPrefabShipView` with no database.
  *
  * Query: ?prefab=<id>&view=flight|deck&theme=<id>&cam=iso|top|side|rear&w=..&h=..
+ *        &zoom=<factor> &at=x,y,z (Babylon-space target) &dir=x,y,z (camera direction) for close-ups
+ *        &components=/assets/ship-components/<rev>/ (component GLB base URL override)
  *        &lineup=1 (all PREFAB_SHIPS in a row) &standins=1 (force component stand-ins)
  *        &glow=0 &lights=<0-4 deck point lights>
  * Sets window.__prefabReady = true once everything is loaded and a few frames have rendered;
@@ -104,9 +106,14 @@ function placeCamera(camera: FreeCamera, kind: typeof cam, target: Vector3, radi
     side: new Vector3(-1, 0.12, 0),
     rear: new Vector3(0, 0.35, 1),
   };
-  const d = dirs[kind].normalize();
-  camera.upVector = kind === "top" ? new Vector3(-1, 0, 0) : new Vector3(0, 1, 0);
-  camera.position = target.add(d.scale(fit));
+  const vec = (k: string) => {
+    const v = q.get(k)?.split(",").map(Number);
+    return v && v.length === 3 && v.every(Number.isFinite) ? new Vector3(v[0], v[1], v[2]) : null;
+  };
+  const d = (vec("dir") ?? dirs[kind]).normalize();
+  target = vec("at") ?? target;
+  camera.upVector = kind === "top" && !vec("dir") ? new Vector3(-1, 0, 0) : new Vector3(0, 1, 0);
+  camera.position = target.add(d.scale(fit / (Number(q.get("zoom")) || 1)));
   camera.setTarget(target);
 }
 
@@ -152,6 +159,7 @@ async function main() {
       theme,
       parent: anchor,
       standinComponents: q.get("standins") === "1",
+      componentsBaseUrl: q.get("components") ?? undefined,
       batch: q.get("batch") !== "0",
       roomLights: Number(q.get("lights") ?? 0),
     });

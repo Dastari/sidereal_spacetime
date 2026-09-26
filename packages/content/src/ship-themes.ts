@@ -40,7 +40,9 @@ const PBR: Record<"primary" | "secondary" | "accent" | "trim" | "metal" | "dark"
   secondary: [0.42, 0.2, 0.3],
   accent: [0.4, 0.1, 0.35],
   trim: [0.4, 0.45, 0.3],
-  metal: [0.3, 0.85, 0.12],
+  // Rougher than the Blender prototype: flat metal at 0.3 roughness mirrored the sky as glowing
+  // discs under Babylon image-based lighting.
+  metal: [0.5, 0.7, 0.12],
   dark: [0.8, 0.0, 0.0],
 };
 

@@ -155,7 +155,7 @@ async function main() {
   await page("Page.enable");
   await page("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 1, mobile: false });
 
-  const ids = await (async () => {
+  const ids = only?.length ? only : await (async () => {
     // The prefab list comes from the harness page itself so this script never restates content.
     await page("Page.navigate", { url: `${BASE}?list=1` });
     await waitReady(page, "?list=1", 180000);

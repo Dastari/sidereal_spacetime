@@ -239,56 +239,28 @@ export function appendStandin(standin: Standin, m: Mat4, builders: Map<ShipKitSl
  * Presentation-only engine plume in the socket frame: a cone from the nozzle exit along -Y,
  * vertex colours fading from `core` (white-hot) to transparent. Colours are RGBA per vertex.
  */
-export function emitPlume(out: GeometryBuilder, colours: number[], at: readonly [number, number, number], radius: number, length: number, rings = 5, sides = 14) {
-  const base = out.positions.length / 3;
-  for (let k = 0; k <= rings; k++) {
-    const t = k / rings;
-    const r = radius * (1 - 0.85 * t) * (k === 0 ? 0.95 : 1);
-    const fade = Math.pow(1 - t, 1.6);
-    for (let i = 0; i <= sides; i++) {
-      const a = (i / sides) * Math.PI * 2;
-      out.positions.push(at[0] + Math.cos(a) * r, at[1] - t * length, at[2] + Math.sin(a) * r);
-      out.normals.push(Math.cos(a), 0, Math.sin(a));
-      colours.push(fade, fade, fade, fade);
-    }
-  }
-  const row = sides + 1;
-  for (let k = 0; k < rings; k++)
-    for (let i = 0; i < sides; i++) {
-      const a = base + k * row + i;
-      out.indices.push(a, a + 1, a + row + 1, a, a + row + 1, a + row);
-    }
-  out.boxes += 1;
-}
-
 /**
- * Stepped voxel exhaust glow (reference "ion exhaust"): stacked slabs along component -Y, each a
- * cross of two boxes (a blocky disc) shrinking and fading with distance. Additive, so overlaps
- * brighten toward the nozzle; meant to bloom through the glow layer.
+ * Stepped voxel exhaust (presentation only, additive): square slabs on the 1/16 m brick grid that
+ * narrow and fade away from the nozzle along local -Y, with a brighter core for the first half,
+ * matching the stepped blue exhaust of reference/art engine assemblies. Vertex colours carry the
+ * fade; the plume material is additive and unlit. `sides` is kept for call compatibility.
  */
-export function emitVoxelGlow(out: GeometryBuilder, colours: number[], at: readonly [number, number, number], radius: number, length: number, layers = 5) {
-  const step = length / layers;
-  const box = (lo: number[], hi: number[], fade: number) => {
-    const c = [[lo[0], lo[1], lo[2]], [hi[0], lo[1], lo[2]], [hi[0], hi[1], lo[2]], [lo[0], hi[1], lo[2]], [lo[0], lo[1], hi[2]], [hi[0], lo[1], hi[2]], [hi[0], hi[1], hi[2]], [lo[0], hi[1], hi[2]]];
-    const faces: [number[], number[]][] = [
-      [[0, 3, 2, 1], [0, 0, -1]], [[4, 5, 6, 7], [0, 0, 1]], [[0, 1, 5, 4], [0, -1, 0]],
-      [[1, 2, 6, 5], [1, 0, 0]], [[2, 3, 7, 6], [0, 1, 0]], [[3, 0, 4, 7], [-1, 0, 0]],
-    ];
-    for (const [idx, n] of faces) {
-      const base = out.positions.length / 3;
-      for (const i of idx) out.positions.push(...c[i]), out.normals.push(...n), colours.push(fade, fade, fade, fade);
-      out.indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
-    }
+export function emitPlume(out: GeometryBuilder, colours: number[], at: readonly [number, number, number], radius: number, length: number, rings = 6, _sides = 0) {
+  const T = 1 / 16;
+  const snap = (v: number) => Math.max(T, Math.round(v / T) * T);
+  const steps = Math.max(4, rings + 1);
+  const slab = (r: number, y0: number, y1: number, fade: number) => {
+    const before = out.positions.length / 3;
+    emitBox(out, [at[0] - r, at[1] - y1, at[2] - r], [at[0] + r, at[1] - y0, at[2] + r], 0, () => false);
+    for (let i = before; i < out.positions.length / 3; i++) colours.push(fade, fade, fade, fade);
   };
-  for (let k = 0; k < layers; k++) {
-    const t = k / layers;
-    const s = radius * (1.02 - 0.16 * k);
-    // Additive layers stack through each other; keep each faint so the core stays blue, not white.
-    const fade = 0.3 * Math.pow(1 - t, 1.4);
-    const y1 = at[1] - k * step;
-    const y0 = y1 - step * 0.92;
-    box([at[0] - s, y0, at[2] - s * 0.62], [at[0] + s, y1, at[2] + s * 0.62], fade);
-    box([at[0] - s * 0.62, y0, at[2] - s], [at[0] + s * 0.62, y1, at[2] + s], fade);
+  for (let k = 0; k < steps; k++) {
+    const t0 = k / steps;
+    const t1 = (k + 1) / steps;
+    const fade = Math.pow(1 - t0, 1.5);
+    // Additive and double-sided: keep each shell dim so overlapping slabs stay blue, not white.
+    slab(snap(radius * (1 - 0.7 * t0)), t0 * length, t1 * length, fade * 0.22);
+    if (t0 < 0.5) slab(snap(radius * 0.45 * (1 - t0)), t0 * length, t1 * length, fade * 0.3);
   }
   out.boxes += 1;
 }
