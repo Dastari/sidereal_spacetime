@@ -17,7 +17,8 @@
     "./local-light-budget": "./src/local-light-budget.ts",
     "./layout-assembly-preview": "./src/layout-assembly-preview.ts",
     "./floor-finishes": "./src/floor-finishes.ts",
-    "./layout-plane-projection": "./src/layout-plane-projection.ts"
+    "./layout-plane-projection": "./src/layout-plane-projection.ts",
+    "./prefab-ship": "./src/prefab-ship/ship-view.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",
