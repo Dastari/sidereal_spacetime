@@ -13,11 +13,11 @@ from vox import FACE_PLUS_Y, SLOTS, V, mesh_from_grid
 
 BEVEL = {  # (width m, segments): soft rounded part edges, no per-voxel grooves (owner feedback 2026-09-25)
     "head": (0.016, 3), "face": (0.0011, 1), "facialhair": (0.004, 2), "detail": (0.0010, 1), "hair": (0.0055, 1),
-    "acc": (0.005, 2), "helmet": (0.013, 3), "visor": (0.003, 2), "mask": (0.005, 2)}
+    "acc": (0.005, 2), "helmet": (0.013, 3), "visor": (0.003, 2), "mask": (0.005, 2), "hair_lod": (0.0, 0)}
 
 
 TONE = {  # COLOR_0 per-island tone range: hair clumps vary most, the face canvas stays neutral
-    "head": (0.99, 1.0), "hair": (0.82, 1.0), "facialhair": (0.86, 1.0), "acc": (0.93, 1.0), "helmet": (0.95, 1.0)}
+    "head": (0.99, 1.0), "hair": (0.82, 1.0), "hair_lod": (0.93, 0.93), "facialhair": (0.86, 1.0), "acc": (0.93, 1.0), "helmet": (0.95, 1.0)}
 
 
 class Library:
@@ -37,12 +37,15 @@ class Library:
             me.materials.append(self.mats[s])
         ob = bpy.data.objects.new(name, me)
         self.coll.objects.link(ob)
-        look.bevel(ob, *BEVEL[bevel_kind or category])
+        width, segs = BEVEL[bevel_kind or category]
+        if width > 0:
+            look.bevel(ob, width, segs)
         # bake the bevel once: instances share the evaluated mesh (memory/time), export needs no modifiers
         dg = bpy.context.evaluated_depsgraph_get()
         baked = bpy.data.meshes.new_from_object(ob.evaluated_get(dg), preserve_all_data_layers=True, depsgraph=dg)
         baked.name = name
-        ob.modifiers.remove(ob.modifiers["brick"])
+        if "brick" in ob.modifiers:
+            ob.modifiers.remove(ob.modifiers["brick"])
         old = ob.data
         ob.data = baked
         bpy.data.meshes.remove(old)

@@ -16,7 +16,7 @@ import look
 from vox import V
 
 HAIR_ORDER = ["full", "cap", "fringe", "hidden"]
-BROW_SHADE = 0.6          # keep in step with BROW_SHADE in packages/content/src/crew-heads.ts
+BROW_SHADE = 0.45         # keep in step with BROW_SHADE in packages/content/src/crew-heads.ts
 
 
 def shade(hexstr, f):
@@ -371,49 +371,58 @@ HEAD_BONE_Z = 39 / 32.0            # CHAR-BODY r004 head bone rest head (armatur
 
 
 def render_bodies(cat, lib, out, samples):
-    """Head combos on CHAR-BODY r004 bodies (their GEO-crew-head/hair hidden, our parts at the head bone)."""
+    """Head combos on CHAR-BODY r004 bodies, posed from their baked actions (not the rest mesh).
+
+    Each figure loads crew_rig + one variant from crew-body.blend, plays an action frame, hides the body's own
+    head/hair and places our parts with the posed head bone: world = rig @ (pose @ rest^-1) @ T(head rest)."""
+    from mathutils import Matrix
     sc = bpy.context.scene
     coll = bpy.data.collections.new("SHEET_bodies")
     sc.collection.children.link(coll)
     for other in sc.collection.children:
         if other.name.startswith("SHEET_"):
             other.hide_render = other is not coll
+    blend = os.path.join(BODY_DIR, "crew-body.blend")
     looks = [
-        ("male", {"head": "male", "faceVariant": "m_classic", "hair": "spiked_quiff", "hairColor": "black", "skin": "sand", "expression": "happy"}),
-        ("female", {"head": "female", "faceVariant": "f_bright", "hair": "long_side_fringe", "hairColor": "blonde", "skin": "rose", "eyes": "blue"}),
-        ("male", {"head": "male", "faceVariant": "m_bold", "hair": "short_waves", "hairColor": "espresso", "skin": "brown",
-                  "accessories": ["cap"], "facialHair": "short_beard", "expression": "determined"}),
-        ("female", {"head": "female", "faceVariant": "f_sharp", "hair": "high_bun", "hairColor": "crimson", "skin": "tan",
-                    "accessories": ["goggles_up"], "expression": "smug"}),
-        ("male", {"head": "male", "faceVariant": "m_bright", "hair": "afro", "hairColor": "dark_brown", "skin": "deep", "helmet": "open",
-                  "mask": "oxygen_mask"}),
-        ("female", {"head": "female", "faceVariant": "f_classic", "hair": "long_bob", "hairColor": "pink", "skin": "porcelain", "helmet": "pilot",
-                    "visor": "clear", "expression": "surprised"}),
-        ("male", {"head": "male", "faceVariant": "m_classic", "hair": "close_crop", "hairColor": "grey", "skin": "rose", "age": "older",
-                  "facialHair": "long_beard", "accessories": ["round_glasses"]}),
-        ("female", {"head": "female", "faceVariant": "f_bright", "hair": "side_bob", "hairColor": "violet", "skin": "bronze", "helmet": "mining",
-                    "visor": "hud"}),
+        ("male", "idle", 10, {"head": "male", "faceVariant": "m_classic", "hair": "spiked_quiff", "hairColor": "black", "skin": "sand", "expression": "happy"}),
+        ("female", "wave", 14, {"head": "female", "faceVariant": "f_bright", "hair": "long_straight", "hairColor": "plum", "skin": "rose", "eyes": "blue",
+                                "expression": "happy"}),
+        ("male", "idle_armed", 8, {"head": "male", "faceVariant": "m_bold", "hair": "short_waves", "hairColor": "espresso", "skin": "brown",
+                                   "accessories": ["cap"], "facialHair": "short_beard", "expression": "determined"}),
+        ("female", "thumbs_up", 12, {"head": "female", "faceVariant": "f_sharp", "hair": "high_bun", "hairColor": "crimson", "skin": "tan",
+                                     "accessories": ["goggles_up"], "expression": "wink"}),
+        ("male", "emote_confused", 12, {"head": "male", "faceVariant": "m_bright", "hair": "afro", "hairColor": "dark_brown", "skin": "deep",
+                                        "expression": "confused"}),
+        ("female", "cheer", 10, {"head": "female", "faceVariant": "f_classic", "hair": "long_side_fringe", "hairColor": "blonde", "skin": "porcelain",
+                                 "expression": "grin"}),
+        ("male", "idle", 20, {"head": "male", "faceVariant": "m_classic", "hair": "close_crop", "hairColor": "grey", "skin": "rose", "age": "older",
+                              "facialHair": "long_beard", "accessories": ["round_glasses"], "expression": "smug"}),
+        ("female", "idle", 4, {"head": "female", "faceVariant": "f_bright", "hair": "side_bob", "hairColor": "violet", "skin": "bronze",
+                               "helmet": "mining", "visor": "hud"}),
     ]
-    yaw = math.radians(180 + 24)
-    for i, (body, spec) in enumerate(looks):
-        x = i * 0.95
-        before = set(bpy.data.objects)
-        bpy.ops.import_scene.gltf(filepath=os.path.join(BODY_DIR, f"crew-body-{body}.glb"))
-        new = [o for o in bpy.data.objects if o not in before]
-        for o in new:
-            for c in list(o.users_collection):
-                c.objects.unlink(o)
+    head_rest = Matrix.Translation((0, 0, HEAD_BONE_Z))
+    for i, (variant, action, frame, spec) in enumerate(looks):
+        wanted = ["crew_rig"] + [f"GEO-crew-{r}-{variant}" for r in ("base", "hands", "suit", "gear")]
+        with bpy.data.libraries.load(blend, link=False) as (src, dst):
+            dst.objects = [n for n in src.objects if n in wanted]
+            dst.actions = [action] if action in src.actions else []
+        rig = next(o for o in dst.objects if o.type == "ARMATURE")
+        for o in dst.objects:
             coll.objects.link(o)
-            if o.name.startswith(("GEO-crew-head", "GEO-crew-hair-default")):
-                o.hide_render = True
-            if o.parent is None:
-                o.location.x += x
-                o.rotation_euler.z += yaw
-        place(cat, lib, coll, spec, (x, 0, HEAD_BONE_Z), yaw, collar=False)
+        rig.location.x = i * 1.05
+        rig.rotation_euler.z = math.radians(180 - 24)           # the body faces +Y; turn it toward the camera at -Y
+        rig.animation_data_create().action = dst.actions[0] if dst.actions else None
+        sc.frame_set(12)                       # one shared scene frame: every rig holds its action at frame 12
+        bpy.context.view_layer.update()
+        pb = rig.pose.bones["head"]
+        pose = rig.matrix_world @ pb.matrix @ pb.bone.matrix_local.inverted() @ head_rest
+        obs = place(cat, lib, coll, spec, (0, 0, 0), 0.0, collar=False)
+        for o in obs:
+            o.matrix_world = pose @ o.matrix_world
     cam = sc.camera
     n = len(looks)
-    sc.render.resolution_x, sc.render.resolution_y = 2400, 900
-    look.aim(cam, ((n - 1) * 0.95 / 2, 0, 0.92), (0, -14 * math.cos(math.radians(12)), 14 * math.sin(math.radians(12))), ortho=n * 0.95 + 0.2)
+    sc.render.resolution_x, sc.render.resolution_y = 2400, 1000
+    look.aim(cam, ((n - 1) * 1.05 / 2, 0, 0.9), (0, -16 * math.cos(math.radians(10)), 16 * math.sin(math.radians(10))), ortho=n * 1.05 + 0.2)
     sc.eevee.taa_render_samples = samples
     sc.render.filepath = os.path.join(out, "15_on_body.png")
     bpy.ops.render.render(write_still=True)

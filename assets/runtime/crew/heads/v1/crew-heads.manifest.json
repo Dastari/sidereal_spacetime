@@ -1,6 +1,6 @@
 {
  "schema": "sidereal.crew-heads.manifest.v1",
- "catalogRevision": 2,
+ "catalogRevision": 3,
  "voxelMeters": 0.03125,
  "space": {
   "anchorBone": "head",
@@ -58,7 +58,34 @@
   "accessories": "accessories.glb",
   "details": "details.glb",
   "facial-hair": "facial-hair.glb",
-  "hair": "hair.glb",
+  "hair/afro": "hair/afro.glb",
+  "hair/blunt_bob": "hair/blunt_bob.glb",
+  "hair/broad_spikes": "hair/broad_spikes.glb",
+  "hair/close_crop": "hair/close_crop.glb",
+  "hair/curly_top": "hair/curly_top.glb",
+  "hair/flat_top": "hair/flat_top.glb",
+  "hair/gathered_fringe": "hair/gathered_fringe.glb",
+  "hair/hanging_locks": "hair/hanging_locks.glb",
+  "hair/high_bun": "hair/high_bun.glb",
+  "hair/layered_bob": "hair/layered_bob.glb",
+  "hair/long_bob": "hair/long_bob.glb",
+  "hair/long_gathered": "hair/long_gathered.glb",
+  "hair/long_side_fringe": "hair/long_side_fringe.glb",
+  "hair/long_straight": "hair/long_straight.glb",
+  "hair/messy_bun": "hair/messy_bun.glb",
+  "hair/mohawk": "hair/mohawk.glb",
+  "hair/pointed_quiff": "hair/pointed_quiff.glb",
+  "hair/pompadour": "hair/pompadour.glb",
+  "hair/short_spikes": "hair/short_spikes.glb",
+  "hair/short_waves": "hair/short_waves.glb",
+  "hair/side_bob": "hair/side_bob.glb",
+  "hair/side_undercut": "hair/side_undercut.glb",
+  "hair/silver_bob": "hair/silver_bob.glb",
+  "hair/spiked_quiff": "hair/spiked_quiff.glb",
+  "hair/straight_bob": "hair/straight_bob.glb",
+  "hair/swept_quiff": "hair/swept_quiff.glb",
+  "hair/tall_crest": "hair/tall_crest.glb",
+  "hair/topknot_sweep": "hair/topknot_sweep.glb",
   "heads": "heads.glb",
   "helmets": "helmets.glb",
   "masks": "masks.glb"
@@ -965,7 +992,7 @@
   "hair.afro.cap": {
    "node": "hair.afro.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/afro",
    "slots": [
     "hair"
    ],
@@ -983,10 +1010,31 @@
    ],
    "triangles": 4778
   },
+  "hair.afro.cap.lod1": {
+   "node": "hair.afro.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/afro",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.38281,
+     -0.35156,
+     0.10938
+    ],
+    [
+     0.33594,
+     0.26562,
+     0.375
+    ]
+   ],
+   "triangles": 226
+  },
   "hair.afro.fringe": {
    "node": "hair.afro.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/afro",
    "slots": [
     "hair"
    ],
@@ -1004,10 +1052,31 @@
    ],
    "triangles": 344
   },
+  "hair.afro.fringe.lod1": {
+   "node": "hair.afro.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/afro",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.1875,
+     0.35938
+    ],
+    [
+     0.25,
+     0.28125,
+     0.4375
+    ]
+   ],
+   "triangles": 88
+  },
   "hair.afro.full": {
    "node": "hair.afro.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/afro",
    "slots": [
     "hair"
    ],
@@ -1025,10 +1094,31 @@
    ],
    "triangles": 14230
   },
+  "hair.afro.full.lod1": {
+   "node": "hair.afro.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/afro",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.38281,
+     -0.35156,
+     0.10938
+    ],
+    [
+     0.33594,
+     0.28125,
+     0.72656
+    ]
+   ],
+   "triangles": 572
+  },
   "hair.blunt_bob.cap": {
    "node": "hair.blunt_bob.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/blunt_bob",
    "slots": [
     "hair"
    ],
@@ -1036,7 +1126,7 @@
     [
      -0.33984,
      -0.30859,
-     0.04688
+     0.01562
     ],
     [
      0.33984,
@@ -1046,10 +1136,31 @@
    ],
    "triangles": 6520
   },
+  "hair.blunt_bob.cap.lod1": {
+   "node": "hair.blunt_bob.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/blunt_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.30859,
+     0.01562
+    ],
+    [
+     0.33984,
+     0.28125,
+     0.375
+    ]
+   ],
+   "triangles": 448
+  },
   "hair.blunt_bob.fringe": {
    "node": "hair.blunt_bob.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/blunt_bob",
    "slots": [
     "hair"
    ],
@@ -1057,7 +1168,7 @@
     [
      -0.25,
      0.21875,
-     0.04688
+     0.01562
     ],
     [
      0.25,
@@ -1067,10 +1178,31 @@
    ],
    "triangles": 1136
   },
+  "hair.blunt_bob.fringe.lod1": {
+   "node": "hair.blunt_bob.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/blunt_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.21875,
+     0.01562
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 120
+  },
   "hair.blunt_bob.full": {
    "node": "hair.blunt_bob.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/blunt_bob",
    "slots": [
     "hair"
    ],
@@ -1078,7 +1210,7 @@
     [
      -0.33984,
      -0.30859,
-     0.04688
+     0.01562
     ],
     [
      0.33984,
@@ -1088,10 +1220,31 @@
    ],
    "triangles": 14736
   },
+  "hair.blunt_bob.full.lod1": {
+   "node": "hair.blunt_bob.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/blunt_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.30859,
+     0.01562
+    ],
+    [
+     0.33984,
+     0.28125,
+     0.59375
+    ]
+   ],
+   "triangles": 802
+  },
   "hair.broad_spikes.cap": {
    "node": "hair.broad_spikes.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/broad_spikes",
    "slots": [
     "hair"
    ],
@@ -1109,10 +1262,31 @@
    ],
    "triangles": 4152
   },
+  "hair.broad_spikes.cap.lod1": {
+   "node": "hair.broad_spikes.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/broad_spikes",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.28125,
+     0.10938
+    ],
+    [
+     0.33984,
+     0.28125,
+     0.375
+    ]
+   ],
+   "triangles": 256
+  },
   "hair.broad_spikes.fringe": {
    "node": "hair.broad_spikes.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/broad_spikes",
    "slots": [
     "hair"
    ],
@@ -1130,10 +1304,31 @@
    ],
    "triangles": 136
   },
+  "hair.broad_spikes.fringe.lod1": {
+   "node": "hair.broad_spikes.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/broad_spikes",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.21875,
+     0.35938
+    ],
+    [
+     0.25,
+     0.26562,
+     0.4375
+    ]
+   ],
+   "triangles": 40
+  },
   "hair.broad_spikes.full": {
    "node": "hair.broad_spikes.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/broad_spikes",
    "slots": [
     "hair"
    ],
@@ -1151,10 +1346,31 @@
    ],
    "triangles": 25788
   },
+  "hair.broad_spikes.full.lod1": {
+   "node": "hair.broad_spikes.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/broad_spikes",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.28125,
+     0.10938
+    ],
+    [
+     0.33984,
+     0.28125,
+     0.68359
+    ]
+   ],
+   "triangles": 1906
+  },
   "hair.close_crop.cap": {
    "node": "hair.close_crop.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/close_crop",
    "slots": [
     "hair"
    ],
@@ -1172,10 +1388,31 @@
    ],
    "triangles": 44
   },
+  "hair.close_crop.cap.lod1": {
+   "node": "hair.close_crop.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/close_crop",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.26172,
+     -0.23047,
+     0.33594
+    ],
+    [
+     0.26172,
+     0.22656,
+     0.36719
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.close_crop.fringe": {
    "node": "hair.close_crop.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/close_crop",
    "slots": [
     "hair"
    ],
@@ -1193,10 +1430,31 @@
    ],
    "triangles": 44
   },
+  "hair.close_crop.fringe.lod1": {
+   "node": "hair.close_crop.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/close_crop",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.1875,
+     0.21875,
+     0.38281
+    ],
+    [
+     0.1875,
+     0.23438,
+     0.44141
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.close_crop.full": {
    "node": "hair.close_crop.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/close_crop",
    "slots": [
     "hair"
    ],
@@ -1214,10 +1472,31 @@
    ],
    "triangles": 16048
   },
+  "hair.close_crop.full.lod1": {
+   "node": "hair.close_crop.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/close_crop",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.28125,
+     -0.27344,
+     0.46484
+    ],
+    [
+     0.28125,
+     0.25,
+     0.58984
+    ]
+   ],
+   "triangles": 550
+  },
   "hair.curly_top.cap": {
    "node": "hair.curly_top.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/curly_top",
    "slots": [
     "hair"
    ],
@@ -1235,10 +1514,31 @@
    ],
    "triangles": 184
   },
+  "hair.curly_top.cap.lod1": {
+   "node": "hair.curly_top.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/curly_top",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.30078,
+     -0.20312,
+     0.10938
+    ],
+    [
+     0.30078,
+     0.20312,
+     0.375
+    ]
+   ],
+   "triangles": 56
+  },
   "hair.curly_top.fringe": {
    "node": "hair.curly_top.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/curly_top",
    "slots": [
     "hair"
    ],
@@ -1256,10 +1556,31 @@
    ],
    "triangles": 308
   },
+  "hair.curly_top.fringe.lod1": {
+   "node": "hair.curly_top.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/curly_top",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.24609,
+     0.21875,
+     0.40625
+    ],
+    [
+     0.24609,
+     0.28125,
+     0.4375
+    ]
+   ],
+   "triangles": 60
+  },
   "hair.curly_top.full": {
    "node": "hair.curly_top.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/curly_top",
    "slots": [
     "hair"
    ],
@@ -1277,10 +1598,31 @@
    ],
    "triangles": 10890
   },
+  "hair.curly_top.full.lod1": {
+   "node": "hair.curly_top.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/curly_top",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.30078,
+     -0.26562,
+     0.10938
+    ],
+    [
+     0.30078,
+     0.28125,
+     0.67969
+    ]
+   ],
+   "triangles": 496
+  },
   "hair.flat_top.cap": {
    "node": "hair.flat_top.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/flat_top",
    "slots": [
     "hair"
    ],
@@ -1298,10 +1640,31 @@
    ],
    "triangles": 44
   },
+  "hair.flat_top.cap.lod1": {
+   "node": "hair.flat_top.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/flat_top",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.26172,
+     -0.23047,
+     0.33594
+    ],
+    [
+     0.26172,
+     0.22656,
+     0.36719
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.flat_top.fringe": {
    "node": "hair.flat_top.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/flat_top",
    "slots": [
     "hair"
    ],
@@ -1319,10 +1682,31 @@
    ],
    "triangles": 44
   },
+  "hair.flat_top.fringe.lod1": {
+   "node": "hair.flat_top.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/flat_top",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.1875,
+     0.21875,
+     0.38281
+    ],
+    [
+     0.1875,
+     0.23438,
+     0.44141
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.flat_top.full": {
    "node": "hair.flat_top.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/flat_top",
    "slots": [
     "hair"
    ],
@@ -1340,10 +1724,31 @@
    ],
    "triangles": 20664
   },
+  "hair.flat_top.full.lod1": {
+   "node": "hair.flat_top.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/flat_top",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.28125,
+     -0.27344,
+     0.44531
+    ],
+    [
+     0.28125,
+     0.27344,
+     0.71875
+    ]
+   ],
+   "triangles": 750
+  },
   "hair.gathered_fringe.cap": {
    "node": "hair.gathered_fringe.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/gathered_fringe",
    "slots": [
     "hair"
    ],
@@ -1351,7 +1756,7 @@
     [
      -0.36328,
      -0.33203,
-     -0.07812
+     -0.35938
     ],
     [
      0.36328,
@@ -1359,12 +1764,33 @@
      0.375
     ]
    ],
-   "triangles": 9916
+   "triangles": 13084
+  },
+  "hair.gathered_fringe.cap.lod1": {
+   "node": "hair.gathered_fringe.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/gathered_fringe",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.36328,
+     -0.33203,
+     -0.35938
+    ],
+    [
+     0.36328,
+     0.28125,
+     0.375
+    ]
+   ],
+   "triangles": 894
   },
   "hair.gathered_fringe.fringe": {
    "node": "hair.gathered_fringe.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/gathered_fringe",
    "slots": [
     "hair"
    ],
@@ -1382,60 +1808,18 @@
    ],
    "triangles": 1188
   },
-  "hair.gathered_fringe.full": {
-   "node": "hair.gathered_fringe.full",
-   "category": "hair",
-   "glb": "hair",
-   "slots": [
-    "hair"
-   ],
-   "boundsM": [
-    [
-     -0.36328,
-     -0.33203,
-     -0.07812
-    ],
-    [
-     0.36328,
-     0.28125,
-     0.64844
-    ]
-   ],
-   "triangles": 25960
-  },
-  "hair.hanging_locks.cap": {
-   "node": "hair.hanging_locks.cap",
-   "category": "hair",
-   "glb": "hair",
-   "slots": [
-    "hair"
-   ],
-   "boundsM": [
-    [
-     -0.33594,
-     -0.30469,
-     -0.20312
-    ],
-    [
-     0.33594,
-     0.27344,
-     0.375
-    ]
-   ],
-   "triangles": 16174
-  },
-  "hair.hanging_locks.fringe": {
-   "node": "hair.hanging_locks.fringe",
-   "category": "hair",
-   "glb": "hair",
+  "hair.gathered_fringe.fringe.lod1": {
+   "node": "hair.gathered_fringe.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/gathered_fringe",
    "slots": [
     "hair"
    ],
    "boundsM": [
     [
      -0.25,
-     0.1875,
-     -0.09766
+     0.21875,
+     0.27344
     ],
     [
      0.25,
@@ -1443,12 +1827,54 @@
      0.4375
     ]
    ],
-   "triangles": 1120
+   "triangles": 160
   },
-  "hair.hanging_locks.full": {
-   "node": "hair.hanging_locks.full",
+  "hair.gathered_fringe.full": {
+   "node": "hair.gathered_fringe.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/gathered_fringe",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.36328,
+     -0.33203,
+     -0.35938
+    ],
+    [
+     0.36328,
+     0.28125,
+     0.64844
+    ]
+   ],
+   "triangles": 29176
+  },
+  "hair.gathered_fringe.full.lod1": {
+   "node": "hair.gathered_fringe.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/gathered_fringe",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.36328,
+     -0.33203,
+     -0.35938
+    ],
+    [
+     0.36328,
+     0.28125,
+     0.64844
+    ]
+   ],
+   "triangles": 1738
+  },
+  "hair.hanging_locks.cap": {
+   "node": "hair.hanging_locks.cap",
+   "category": "hair",
+   "glb": "hair/hanging_locks",
    "slots": [
     "hair"
    ],
@@ -1456,7 +1882,91 @@
     [
      -0.33594,
      -0.30469,
-     -0.20312
+     -0.39062
+    ],
+    [
+     0.33594,
+     0.27344,
+     0.375
+    ]
+   ],
+   "triangles": 16180
+  },
+  "hair.hanging_locks.cap.lod1": {
+   "node": "hair.hanging_locks.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/hanging_locks",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33594,
+     -0.30469,
+     -0.39062
+    ],
+    [
+     0.33594,
+     0.27344,
+     0.375
+    ]
+   ],
+   "triangles": 1202
+  },
+  "hair.hanging_locks.fringe": {
+   "node": "hair.hanging_locks.fringe",
+   "category": "hair",
+   "glb": "hair/hanging_locks",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     -0.29297,
+     -0.39062
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 1270
+  },
+  "hair.hanging_locks.fringe.lod1": {
+   "node": "hair.hanging_locks.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/hanging_locks",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     -0.29297,
+     -0.39062
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 400
+  },
+  "hair.hanging_locks.full": {
+   "node": "hair.hanging_locks.full",
+   "category": "hair",
+   "glb": "hair/hanging_locks",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33594,
+     -0.30469,
+     -0.39062
     ],
     [
      0.33594,
@@ -1464,12 +1974,33 @@
      0.62109
     ]
    ],
-   "triangles": 20114
+   "triangles": 20122
+  },
+  "hair.hanging_locks.full.lod1": {
+   "node": "hair.hanging_locks.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/hanging_locks",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33594,
+     -0.30469,
+     -0.39062
+    ],
+    [
+     0.33594,
+     0.27344,
+     0.62109
+    ]
+   ],
+   "triangles": 1704
   },
   "hair.high_bun.cap": {
    "node": "hair.high_bun.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/high_bun",
    "slots": [
     "hair"
    ],
@@ -1487,10 +2018,31 @@
    ],
    "triangles": 3812
   },
+  "hair.high_bun.cap.lod1": {
+   "node": "hair.high_bun.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/high_bun",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.31641,
+     -0.20312,
+     0.10938
+    ],
+    [
+     0.31641,
+     0.25,
+     0.375
+    ]
+   ],
+   "triangles": 444
+  },
   "hair.high_bun.fringe": {
    "node": "hair.high_bun.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/high_bun",
    "slots": [
     "hair"
    ],
@@ -1508,10 +2060,31 @@
    ],
    "triangles": 1096
   },
+  "hair.high_bun.fringe.lod1": {
+   "node": "hair.high_bun.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/high_bun",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.1875,
+     0.13672
+    ],
+    [
+     0.25,
+     0.26562,
+     0.4375
+    ]
+   ],
+   "triangles": 216
+  },
   "hair.high_bun.full": {
    "node": "hair.high_bun.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/high_bun",
    "slots": [
     "hair"
    ],
@@ -1529,10 +2102,31 @@
    ],
    "triangles": 10454
   },
+  "hair.high_bun.full.lod1": {
+   "node": "hair.high_bun.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/high_bun",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.31641,
+     -0.20312,
+     0.10938
+    ],
+    [
+     0.31641,
+     0.26562,
+     0.70703
+    ]
+   ],
+   "triangles": 932
+  },
   "hair.layered_bob.cap": {
    "node": "hair.layered_bob.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/layered_bob",
    "slots": [
     "hair"
    ],
@@ -1540,7 +2134,7 @@
     [
      -0.36328,
      -0.33203,
-     0.04688
+     0.01562
     ],
     [
      0.36328,
@@ -1548,12 +2142,33 @@
      0.375
     ]
    ],
-   "triangles": 15456
+   "triangles": 15550
+  },
+  "hair.layered_bob.cap.lod1": {
+   "node": "hair.layered_bob.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/layered_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.36328,
+     -0.33203,
+     0.01562
+    ],
+    [
+     0.36328,
+     0.28125,
+     0.375
+    ]
+   ],
+   "triangles": 854
   },
   "hair.layered_bob.fringe": {
    "node": "hair.layered_bob.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/layered_bob",
    "slots": [
     "hair"
    ],
@@ -1571,52 +2186,10 @@
    ],
    "triangles": 1184
   },
-  "hair.layered_bob.full": {
-   "node": "hair.layered_bob.full",
-   "category": "hair",
-   "glb": "hair",
-   "slots": [
-    "hair"
-   ],
-   "boundsM": [
-    [
-     -0.36328,
-     -0.33203,
-     0.04688
-    ],
-    [
-     0.36328,
-     0.28125,
-     0.59375
-    ]
-   ],
-   "triangles": 26272
-  },
-  "hair.long_bob.cap": {
-   "node": "hair.long_bob.cap",
-   "category": "hair",
-   "glb": "hair",
-   "slots": [
-    "hair"
-   ],
-   "boundsM": [
-    [
-     -0.375,
-     -0.34375,
-     0.01562
-    ],
-    [
-     0.375,
-     0.28125,
-     0.375
-    ]
-   ],
-   "triangles": 7536
-  },
-  "hair.long_bob.fringe": {
-   "node": "hair.long_bob.fringe",
-   "category": "hair",
-   "glb": "hair",
+  "hair.layered_bob.fringe.lod1": {
+   "node": "hair.layered_bob.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/layered_bob",
    "slots": [
     "hair"
    ],
@@ -1624,7 +2197,7 @@
     [
      -0.25,
      0.21875,
-     0.30078
+     0.3125
     ],
     [
      0.25,
@@ -1632,12 +2205,54 @@
      0.4375
     ]
    ],
-   "triangles": 988
+   "triangles": 174
   },
-  "hair.long_bob.full": {
-   "node": "hair.long_bob.full",
+  "hair.layered_bob.full": {
+   "node": "hair.layered_bob.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/layered_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.36328,
+     -0.33203,
+     0.01562
+    ],
+    [
+     0.36328,
+     0.28125,
+     0.59375
+    ]
+   ],
+   "triangles": 26366
+  },
+  "hair.layered_bob.full.lod1": {
+   "node": "hair.layered_bob.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/layered_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.36328,
+     -0.33203,
+     0.01562
+    ],
+    [
+     0.36328,
+     0.28125,
+     0.59375
+    ]
+   ],
+   "triangles": 1324
+  },
+  "hair.long_bob.cap": {
+   "node": "hair.long_bob.cap",
+   "category": "hair",
+   "glb": "hair/long_bob",
    "slots": [
     "hair"
    ],
@@ -1645,7 +2260,91 @@
     [
      -0.375,
      -0.34375,
-     0.01562
+     -0.07812
+    ],
+    [
+     0.375,
+     0.28125,
+     0.375
+    ]
+   ],
+   "triangles": 9880
+  },
+  "hair.long_bob.cap.lod1": {
+   "node": "hair.long_bob.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.375,
+     -0.34375,
+     -0.07812
+    ],
+    [
+     0.375,
+     0.28125,
+     0.375
+    ]
+   ],
+   "triangles": 732
+  },
+  "hair.long_bob.fringe": {
+   "node": "hair.long_bob.fringe",
+   "category": "hair",
+   "glb": "hair/long_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.1875,
+     -0.07812
+    ],
+    [
+     0.25,
+     0.28125,
+     0.4375
+    ]
+   ],
+   "triangles": 1404
+  },
+  "hair.long_bob.fringe.lod1": {
+   "node": "hair.long_bob.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.1875,
+     -0.07812
+    ],
+    [
+     0.25,
+     0.28125,
+     0.4375
+    ]
+   ],
+   "triangles": 164
+  },
+  "hair.long_bob.full": {
+   "node": "hair.long_bob.full",
+   "category": "hair",
+   "glb": "hair/long_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.375,
+     -0.34375,
+     -0.07812
     ],
     [
      0.375,
@@ -1653,12 +2352,33 @@
      0.59375
     ]
    ],
-   "triangles": 16160
+   "triangles": 18504
+  },
+  "hair.long_bob.full.lod1": {
+   "node": "hair.long_bob.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.375,
+     -0.34375,
+     -0.07812
+    ],
+    [
+     0.375,
+     0.28125,
+     0.59375
+    ]
+   ],
+   "triangles": 1130
   },
   "hair.long_gathered.cap": {
    "node": "hair.long_gathered.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/long_gathered",
    "slots": [
     "hair"
    ],
@@ -1666,7 +2386,7 @@
     [
      -0.32812,
      -0.28125,
-     -0.01562
+     -0.32812
     ],
     [
      0.32812,
@@ -1674,12 +2394,33 @@
      0.375
     ]
    ],
-   "triangles": 8258
+   "triangles": 8566
+  },
+  "hair.long_gathered.cap.lod1": {
+   "node": "hair.long_gathered.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_gathered",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.28125,
+     -0.32812
+    ],
+    [
+     0.32812,
+     0.26562,
+     0.375
+    ]
+   ],
+   "triangles": 902
   },
   "hair.long_gathered.fringe": {
    "node": "hair.long_gathered.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/long_gathered",
    "slots": [
     "hair"
    ],
@@ -1697,10 +2438,31 @@
    ],
    "triangles": 2480
   },
+  "hair.long_gathered.fringe.lod1": {
+   "node": "hair.long_gathered.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_gathered",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.1875,
+     0.00391
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 428
+  },
   "hair.long_gathered.full": {
    "node": "hair.long_gathered.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/long_gathered",
    "slots": [
     "hair"
    ],
@@ -1708,7 +2470,7 @@
     [
      -0.32812,
      -0.28125,
-     -0.01562
+     -0.32812
     ],
     [
      0.32812,
@@ -1716,12 +2478,33 @@
      0.64844
     ]
    ],
-   "triangles": 16726
+   "triangles": 17030
+  },
+  "hair.long_gathered.full.lod1": {
+   "node": "hair.long_gathered.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_gathered",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.28125,
+     -0.32812
+    ],
+    [
+     0.32812,
+     0.28125,
+     0.64844
+    ]
+   ],
+   "triangles": 1518
   },
   "hair.long_side_fringe.cap": {
    "node": "hair.long_side_fringe.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/long_side_fringe",
    "slots": [
     "hair"
    ],
@@ -1729,7 +2512,7 @@
     [
      -0.34375,
      -0.3125,
-     -0.26562
+     -0.42188
     ],
     [
      0.34375,
@@ -1737,20 +2520,41 @@
      0.375
     ]
    ],
-   "triangles": 10928
+   "triangles": 11340
+  },
+  "hair.long_side_fringe.cap.lod1": {
+   "node": "hair.long_side_fringe.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_side_fringe",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.34375,
+     -0.3125,
+     -0.42188
+    ],
+    [
+     0.34375,
+     0.27344,
+     0.375
+    ]
+   ],
+   "triangles": 686
   },
   "hair.long_side_fringe.fringe": {
    "node": "hair.long_side_fringe.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/long_side_fringe",
    "slots": [
     "hair"
    ],
    "boundsM": [
     [
      -0.25,
-     0.1875,
-     -0.10938
+     -0.29297,
+     -0.42188
     ],
     [
      0.25,
@@ -1758,12 +2562,33 @@
      0.4375
     ]
    ],
-   "triangles": 1380
+   "triangles": 1552
+  },
+  "hair.long_side_fringe.fringe.lod1": {
+   "node": "hair.long_side_fringe.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_side_fringe",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     -0.29297,
+     -0.42188
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 178
   },
   "hair.long_side_fringe.full": {
    "node": "hair.long_side_fringe.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/long_side_fringe",
    "slots": [
     "hair"
    ],
@@ -1771,7 +2596,7 @@
     [
      -0.34375,
      -0.3125,
-     -0.26562
+     -0.42188
     ],
     [
      0.34375,
@@ -1779,12 +2604,33 @@
      0.59375
     ]
    ],
-   "triangles": 18816
+   "triangles": 19228
+  },
+  "hair.long_side_fringe.full.lod1": {
+   "node": "hair.long_side_fringe.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_side_fringe",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.34375,
+     -0.3125,
+     -0.42188
+    ],
+    [
+     0.34375,
+     0.28125,
+     0.59375
+    ]
+   ],
+   "triangles": 1200
   },
   "hair.long_straight.cap": {
    "node": "hair.long_straight.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/long_straight",
    "slots": [
     "hair"
    ],
@@ -1792,7 +2638,7 @@
     [
      -0.33984,
      -0.30859,
-     -0.23438
+     -0.45312
     ],
     [
      0.33984,
@@ -1800,33 +2646,12 @@
      0.375
     ]
    ],
-   "triangles": 7864
+   "triangles": 10124
   },
-  "hair.long_straight.fringe": {
-   "node": "hair.long_straight.fringe",
-   "category": "hair",
-   "glb": "hair",
-   "slots": [
-    "hair"
-   ],
-   "boundsM": [
-    [
-     -0.25,
-     0.1875,
-     -0.07812
-    ],
-    [
-     0.25,
-     0.27344,
-     0.4375
-    ]
-   ],
-   "triangles": 1088
-  },
-  "hair.long_straight.full": {
-   "node": "hair.long_straight.full",
-   "category": "hair",
-   "glb": "hair",
+  "hair.long_straight.cap.lod1": {
+   "node": "hair.long_straight.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_straight",
    "slots": [
     "hair"
    ],
@@ -1834,7 +2659,70 @@
     [
      -0.33984,
      -0.30859,
-     -0.23438
+     -0.45312
+    ],
+    [
+     0.33984,
+     0.27344,
+     0.375
+    ]
+   ],
+   "triangles": 676
+  },
+  "hair.long_straight.fringe": {
+   "node": "hair.long_straight.fringe",
+   "category": "hair",
+   "glb": "hair/long_straight",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     -0.30859,
+     -0.45312
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 1712
+  },
+  "hair.long_straight.fringe.lod1": {
+   "node": "hair.long_straight.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_straight",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     -0.30859,
+     -0.45312
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 280
+  },
+  "hair.long_straight.full": {
+   "node": "hair.long_straight.full",
+   "category": "hair",
+   "glb": "hair/long_straight",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.30859,
+     -0.45312
     ],
     [
      0.33984,
@@ -1842,12 +2730,33 @@
      0.59375
     ]
    ],
-   "triangles": 15392
+   "triangles": 17652
+  },
+  "hair.long_straight.full.lod1": {
+   "node": "hair.long_straight.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/long_straight",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.30859,
+     -0.45312
+    ],
+    [
+     0.33984,
+     0.28125,
+     0.59375
+    ]
+   ],
+   "triangles": 1120
   },
   "hair.messy_bun.cap": {
    "node": "hair.messy_bun.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/messy_bun",
    "slots": [
     "hair"
    ],
@@ -1865,10 +2774,31 @@
    ],
    "triangles": 3668
   },
+  "hair.messy_bun.cap.lod1": {
+   "node": "hair.messy_bun.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/messy_bun",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.20312,
+     0.10156
+    ],
+    [
+     0.32812,
+     0.25781,
+     0.375
+    ]
+   ],
+   "triangles": 492
+  },
   "hair.messy_bun.fringe": {
    "node": "hair.messy_bun.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/messy_bun",
    "slots": [
     "hair"
    ],
@@ -1886,10 +2816,31 @@
    ],
    "triangles": 1444
   },
+  "hair.messy_bun.fringe.lod1": {
+   "node": "hair.messy_bun.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/messy_bun",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.1875,
+     0.10156
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 266
+  },
   "hair.messy_bun.full": {
    "node": "hair.messy_bun.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/messy_bun",
    "slots": [
     "hair"
    ],
@@ -1907,10 +2858,31 @@
    ],
    "triangles": 14780
   },
+  "hair.messy_bun.full.lod1": {
+   "node": "hair.messy_bun.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/messy_bun",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.28125,
+     0.10156
+    ],
+    [
+     0.32812,
+     0.28125,
+     0.75391
+    ]
+   ],
+   "triangles": 1422
+  },
   "hair.mohawk.cap": {
    "node": "hair.mohawk.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/mohawk",
    "slots": [
     "hair"
    ],
@@ -1928,10 +2900,31 @@
    ],
    "triangles": 44
   },
+  "hair.mohawk.cap.lod1": {
+   "node": "hair.mohawk.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/mohawk",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.26172,
+     -0.23047,
+     0.33594
+    ],
+    [
+     0.26172,
+     0.22656,
+     0.36719
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.mohawk.fringe": {
    "node": "hair.mohawk.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/mohawk",
    "slots": [
     "hair"
    ],
@@ -1949,10 +2942,31 @@
    ],
    "triangles": 44
   },
+  "hair.mohawk.fringe.lod1": {
+   "node": "hair.mohawk.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/mohawk",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.1875,
+     0.21875,
+     0.38281
+    ],
+    [
+     0.1875,
+     0.23438,
+     0.44141
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.mohawk.full": {
    "node": "hair.mohawk.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/mohawk",
    "slots": [
     "hair"
    ],
@@ -1970,10 +2984,31 @@
    ],
    "triangles": 6928
   },
+  "hair.mohawk.full.lod1": {
+   "node": "hair.mohawk.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/mohawk",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.28125,
+     -0.25781,
+     0.48438
+    ],
+    [
+     0.28125,
+     0.26562,
+     0.76562
+    ]
+   ],
+   "triangles": 496
+  },
   "hair.pointed_quiff.cap": {
    "node": "hair.pointed_quiff.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/pointed_quiff",
    "slots": [
     "hair"
    ],
@@ -1991,10 +3026,31 @@
    ],
    "triangles": 800
   },
+  "hair.pointed_quiff.cap.lod1": {
+   "node": "hair.pointed_quiff.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/pointed_quiff",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.20312,
+     0.10938
+    ],
+    [
+     0.32812,
+     0.20312,
+     0.375
+    ]
+   ],
+   "triangles": 88
+  },
   "hair.pointed_quiff.fringe": {
    "node": "hair.pointed_quiff.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/pointed_quiff",
    "slots": [
     "hair"
    ],
@@ -2012,10 +3068,31 @@
    ],
    "triangles": 44
   },
+  "hair.pointed_quiff.fringe.lod1": {
+   "node": "hair.pointed_quiff.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/pointed_quiff",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.1875,
+     0.21875,
+     0.38281
+    ],
+    [
+     0.1875,
+     0.23438,
+     0.44141
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.pointed_quiff.full": {
    "node": "hair.pointed_quiff.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/pointed_quiff",
    "slots": [
     "hair"
    ],
@@ -2033,10 +3110,31 @@
    ],
    "triangles": 13124
   },
+  "hair.pointed_quiff.full.lod1": {
+   "node": "hair.pointed_quiff.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/pointed_quiff",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.28125,
+     0.10938
+    ],
+    [
+     0.32812,
+     0.28125,
+     0.75
+    ]
+   ],
+   "triangles": 1024
+  },
   "hair.pompadour.cap": {
    "node": "hair.pompadour.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/pompadour",
    "slots": [
     "hair"
    ],
@@ -2054,10 +3152,31 @@
    ],
    "triangles": 44
   },
+  "hair.pompadour.cap.lod1": {
+   "node": "hair.pompadour.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/pompadour",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.26172,
+     -0.23047,
+     0.33594
+    ],
+    [
+     0.26172,
+     0.22656,
+     0.36719
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.pompadour.fringe": {
    "node": "hair.pompadour.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/pompadour",
    "slots": [
     "hair"
    ],
@@ -2075,10 +3194,31 @@
    ],
    "triangles": 44
   },
+  "hair.pompadour.fringe.lod1": {
+   "node": "hair.pompadour.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/pompadour",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.1875,
+     0.21875,
+     0.38281
+    ],
+    [
+     0.1875,
+     0.23438,
+     0.44141
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.pompadour.full": {
    "node": "hair.pompadour.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/pompadour",
    "slots": [
     "hair"
    ],
@@ -2096,10 +3236,31 @@
    ],
    "triangles": 14972
   },
+  "hair.pompadour.full.lod1": {
+   "node": "hair.pompadour.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/pompadour",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.28125,
+     -0.28125,
+     0.44531
+    ],
+    [
+     0.28125,
+     0.28906,
+     0.71875
+    ]
+   ],
+   "triangles": 912
+  },
   "hair.short_spikes.cap": {
    "node": "hair.short_spikes.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/short_spikes",
    "slots": [
     "hair"
    ],
@@ -2117,10 +3278,31 @@
    ],
    "triangles": 800
   },
+  "hair.short_spikes.cap.lod1": {
+   "node": "hair.short_spikes.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/short_spikes",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.20312,
+     0.10938
+    ],
+    [
+     0.32812,
+     0.20312,
+     0.375
+    ]
+   ],
+   "triangles": 112
+  },
   "hair.short_spikes.fringe": {
    "node": "hair.short_spikes.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/short_spikes",
    "slots": [
     "hair"
    ],
@@ -2138,10 +3320,31 @@
    ],
    "triangles": 44
   },
+  "hair.short_spikes.fringe.lod1": {
+   "node": "hair.short_spikes.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/short_spikes",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.1875,
+     0.21875,
+     0.38281
+    ],
+    [
+     0.1875,
+     0.23438,
+     0.44141
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.short_spikes.full": {
    "node": "hair.short_spikes.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/short_spikes",
    "slots": [
     "hair"
    ],
@@ -2159,10 +3362,31 @@
    ],
    "triangles": 20276
   },
+  "hair.short_spikes.full.lod1": {
+   "node": "hair.short_spikes.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/short_spikes",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.28125,
+     0.10938
+    ],
+    [
+     0.32812,
+     0.28125,
+     0.69531
+    ]
+   ],
+   "triangles": 1762
+  },
   "hair.short_waves.cap": {
    "node": "hair.short_waves.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/short_waves",
    "slots": [
     "hair"
    ],
@@ -2180,10 +3404,31 @@
    ],
    "triangles": 4312
   },
+  "hair.short_waves.cap.lod1": {
+   "node": "hair.short_waves.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/short_waves",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.28125,
+     0.10938
+    ],
+    [
+     0.33984,
+     0.28125,
+     0.375
+    ]
+   ],
+   "triangles": 292
+  },
   "hair.short_waves.fringe": {
    "node": "hair.short_waves.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/short_waves",
    "slots": [
     "hair"
    ],
@@ -2201,10 +3446,31 @@
    ],
    "triangles": 800
   },
+  "hair.short_waves.fringe.lod1": {
+   "node": "hair.short_waves.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/short_waves",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.21875,
+     0.35938
+    ],
+    [
+     0.25,
+     0.28125,
+     0.4375
+    ]
+   ],
+   "triangles": 100
+  },
   "hair.short_waves.full": {
    "node": "hair.short_waves.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/short_waves",
    "slots": [
     "hair"
    ],
@@ -2222,10 +3488,31 @@
    ],
    "triangles": 14612
   },
+  "hair.short_waves.full.lod1": {
+   "node": "hair.short_waves.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/short_waves",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.28125,
+     0.10938
+    ],
+    [
+     0.33984,
+     0.28125,
+     0.64844
+    ]
+   ],
+   "triangles": 822
+  },
   "hair.side_bob.cap": {
    "node": "hair.side_bob.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/side_bob",
    "slots": [
     "hair"
    ],
@@ -2233,7 +3520,7 @@
     [
      -0.36328,
      -0.33203,
-     0.04688
+     0.01562
     ],
     [
      0.36328,
@@ -2241,12 +3528,33 @@
      0.375
     ]
    ],
-   "triangles": 7208
+   "triangles": 7564
+  },
+  "hair.side_bob.cap.lod1": {
+   "node": "hair.side_bob.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/side_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.36328,
+     -0.33203,
+     0.01562
+    ],
+    [
+     0.36328,
+     0.27344,
+     0.375
+    ]
+   ],
+   "triangles": 704
   },
   "hair.side_bob.fringe": {
    "node": "hair.side_bob.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/side_bob",
    "slots": [
     "hair"
    ],
@@ -2264,10 +3572,31 @@
    ],
    "triangles": 920
   },
+  "hair.side_bob.fringe.lod1": {
+   "node": "hair.side_bob.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/side_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.21875,
+     0.29297
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 136
+  },
   "hair.side_bob.full": {
    "node": "hair.side_bob.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/side_bob",
    "slots": [
     "hair"
    ],
@@ -2275,7 +3604,7 @@
     [
      -0.36328,
      -0.33203,
-     0.04688
+     0.01562
     ],
     [
      0.36328,
@@ -2283,12 +3612,33 @@
      0.59375
     ]
    ],
-   "triangles": 14992
+   "triangles": 15348
+  },
+  "hair.side_bob.full.lod1": {
+   "node": "hair.side_bob.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/side_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.36328,
+     -0.33203,
+     0.01562
+    ],
+    [
+     0.36328,
+     0.28125,
+     0.59375
+    ]
+   ],
+   "triangles": 1252
   },
   "hair.side_undercut.cap": {
    "node": "hair.side_undercut.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/side_undercut",
    "slots": [
     "hair"
    ],
@@ -2306,10 +3656,31 @@
    ],
    "triangles": 1656
   },
+  "hair.side_undercut.cap.lod1": {
+   "node": "hair.side_undercut.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/side_undercut",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.05078,
+     0.33203
+    ],
+    [
+     -0.16797,
+     0.30469,
+     0.375
+    ]
+   ],
+   "triangles": 112
+  },
   "hair.side_undercut.fringe": {
    "node": "hair.side_undercut.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/side_undercut",
    "slots": [
     "hair"
    ],
@@ -2327,10 +3698,31 @@
    ],
    "triangles": 588
   },
+  "hair.side_undercut.fringe.lod1": {
+   "node": "hair.side_undercut.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/side_undercut",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.1875,
+     0.33203
+    ],
+    [
+     -0.06641,
+     0.30469,
+     0.4375
+    ]
+   ],
+   "triangles": 78
+  },
   "hair.side_undercut.full": {
    "node": "hair.side_undercut.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/side_undercut",
    "slots": [
     "hair"
    ],
@@ -2348,10 +3740,31 @@
    ],
    "triangles": 23964
   },
+  "hair.side_undercut.full.lod1": {
+   "node": "hair.side_undercut.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/side_undercut",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.25,
+     0.33203
+    ],
+    [
+     0.30469,
+     0.30469,
+     0.67188
+    ]
+   ],
+   "triangles": 716
+  },
   "hair.silver_bob.cap": {
    "node": "hair.silver_bob.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/silver_bob",
    "slots": [
     "hair"
    ],
@@ -2359,7 +3772,7 @@
     [
      -0.41016,
      -0.375,
-     0.04688
+     0.01562
     ],
     [
      0.41016,
@@ -2367,12 +3780,33 @@
      0.375
     ]
    ],
-   "triangles": 14872
+   "triangles": 15588
+  },
+  "hair.silver_bob.cap.lod1": {
+   "node": "hair.silver_bob.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/silver_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.41016,
+     -0.375,
+     0.01562
+    ],
+    [
+     0.41016,
+     0.26562,
+     0.375
+    ]
+   ],
+   "triangles": 1046
   },
   "hair.silver_bob.fringe": {
    "node": "hair.silver_bob.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/silver_bob",
    "slots": [
     "hair"
    ],
@@ -2390,10 +3824,31 @@
    ],
    "triangles": 804
   },
+  "hair.silver_bob.fringe.lod1": {
+   "node": "hair.silver_bob.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/silver_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.21875,
+     0.29297
+    ],
+    [
+     0.25,
+     0.26562,
+     0.4375
+    ]
+   ],
+   "triangles": 68
+  },
   "hair.silver_bob.full": {
    "node": "hair.silver_bob.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/silver_bob",
    "slots": [
     "hair"
    ],
@@ -2401,7 +3856,7 @@
     [
      -0.41016,
      -0.375,
-     0.04688
+     0.01562
     ],
     [
      0.41016,
@@ -2409,12 +3864,33 @@
      0.59375
     ]
    ],
-   "triangles": 23212
+   "triangles": 23928
+  },
+  "hair.silver_bob.full.lod1": {
+   "node": "hair.silver_bob.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/silver_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.41016,
+     -0.375,
+     0.01562
+    ],
+    [
+     0.41016,
+     0.26562,
+     0.59375
+    ]
+   ],
+   "triangles": 1402
   },
   "hair.spiked_quiff.cap": {
    "node": "hair.spiked_quiff.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/spiked_quiff",
    "slots": [
     "hair"
    ],
@@ -2432,10 +3908,31 @@
    ],
    "triangles": 844
   },
+  "hair.spiked_quiff.cap.lod1": {
+   "node": "hair.spiked_quiff.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/spiked_quiff",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.20312,
+     0.10938
+    ],
+    [
+     0.32812,
+     0.24219,
+     0.375
+    ]
+   ],
+   "triangles": 124
+  },
   "hair.spiked_quiff.fringe": {
    "node": "hair.spiked_quiff.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/spiked_quiff",
    "slots": [
     "hair"
    ],
@@ -2453,10 +3950,31 @@
    ],
    "triangles": 356
   },
+  "hair.spiked_quiff.fringe.lod1": {
+   "node": "hair.spiked_quiff.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/spiked_quiff",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.18359,
+     0.21875,
+     0.36719
+    ],
+    [
+     0.20312,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 48
+  },
   "hair.spiked_quiff.full": {
    "node": "hair.spiked_quiff.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/spiked_quiff",
    "slots": [
     "hair"
    ],
@@ -2474,10 +3992,31 @@
    ],
    "triangles": 18308
   },
+  "hair.spiked_quiff.full.lod1": {
+   "node": "hair.spiked_quiff.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/spiked_quiff",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.32812,
+     -0.28125,
+     0.10938
+    ],
+    [
+     0.32812,
+     0.28125,
+     0.71875
+    ]
+   ],
+   "triangles": 1538
+  },
   "hair.straight_bob.cap": {
    "node": "hair.straight_bob.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/straight_bob",
    "slots": [
     "hair"
    ],
@@ -2485,7 +4024,7 @@
     [
      -0.33984,
      -0.30859,
-     0.04688
+     -0.01562
     ],
     [
      0.33984,
@@ -2493,33 +4032,12 @@
      0.375
     ]
    ],
-   "triangles": 4360
+   "triangles": 7580
   },
-  "hair.straight_bob.fringe": {
-   "node": "hair.straight_bob.fringe",
-   "category": "hair",
-   "glb": "hair",
-   "slots": [
-    "hair"
-   ],
-   "boundsM": [
-    [
-     -0.25,
-     0.21875,
-     0.04688
-    ],
-    [
-     0.25,
-     0.27344,
-     0.4375
-    ]
-   ],
-   "triangles": 920
-  },
-  "hair.straight_bob.full": {
-   "node": "hair.straight_bob.full",
-   "category": "hair",
-   "glb": "hair",
+  "hair.straight_bob.cap.lod1": {
+   "node": "hair.straight_bob.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/straight_bob",
    "slots": [
     "hair"
    ],
@@ -2527,7 +4045,70 @@
     [
      -0.33984,
      -0.30859,
-     0.04688
+     -0.01562
+    ],
+    [
+     0.33984,
+     0.27344,
+     0.375
+    ]
+   ],
+   "triangles": 558
+  },
+  "hair.straight_bob.fringe": {
+   "node": "hair.straight_bob.fringe",
+   "category": "hair",
+   "glb": "hair/straight_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.1875,
+     -0.01562
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 1132
+  },
+  "hair.straight_bob.fringe.lod1": {
+   "node": "hair.straight_bob.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/straight_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     0.1875,
+     -0.01562
+    ],
+    [
+     0.25,
+     0.27344,
+     0.4375
+    ]
+   ],
+   "triangles": 132
+  },
+  "hair.straight_bob.full": {
+   "node": "hair.straight_bob.full",
+   "category": "hair",
+   "glb": "hair/straight_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.30859,
+     -0.01562
     ],
     [
      0.33984,
@@ -2535,12 +4116,33 @@
      0.59375
     ]
    ],
-   "triangles": 12288
+   "triangles": 15508
+  },
+  "hair.straight_bob.full.lod1": {
+   "node": "hair.straight_bob.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/straight_bob",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.33984,
+     -0.30859,
+     -0.01562
+    ],
+    [
+     0.33984,
+     0.28125,
+     0.59375
+    ]
+   ],
+   "triangles": 1056
   },
   "hair.swept_quiff.cap": {
    "node": "hair.swept_quiff.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/swept_quiff",
    "slots": [
     "hair"
    ],
@@ -2558,10 +4160,31 @@
    ],
    "triangles": 800
   },
+  "hair.swept_quiff.cap.lod1": {
+   "node": "hair.swept_quiff.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/swept_quiff",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.31641,
+     -0.20312,
+     0.10938
+    ],
+    [
+     0.31641,
+     0.20312,
+     0.375
+    ]
+   ],
+   "triangles": 112
+  },
   "hair.swept_quiff.fringe": {
    "node": "hair.swept_quiff.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/swept_quiff",
    "slots": [
     "hair"
    ],
@@ -2579,10 +4202,31 @@
    ],
    "triangles": 44
   },
+  "hair.swept_quiff.fringe.lod1": {
+   "node": "hair.swept_quiff.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/swept_quiff",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.1875,
+     0.21875,
+     0.38281
+    ],
+    [
+     0.1875,
+     0.23438,
+     0.44141
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.swept_quiff.full": {
    "node": "hair.swept_quiff.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/swept_quiff",
    "slots": [
     "hair"
    ],
@@ -2600,10 +4244,31 @@
    ],
    "triangles": 17024
   },
+  "hair.swept_quiff.full.lod1": {
+   "node": "hair.swept_quiff.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/swept_quiff",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.31641,
+     -0.28125,
+     0.10938
+    ],
+    [
+     0.31641,
+     0.28125,
+     0.68359
+    ]
+   ],
+   "triangles": 928
+  },
   "hair.tall_crest.cap": {
    "node": "hair.tall_crest.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/tall_crest",
    "slots": [
     "hair"
    ],
@@ -2621,10 +4286,31 @@
    ],
    "triangles": 44
   },
+  "hair.tall_crest.cap.lod1": {
+   "node": "hair.tall_crest.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/tall_crest",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.26172,
+     -0.23047,
+     0.33594
+    ],
+    [
+     0.26172,
+     0.22656,
+     0.36719
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.tall_crest.fringe": {
    "node": "hair.tall_crest.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/tall_crest",
    "slots": [
     "hair"
    ],
@@ -2642,10 +4328,31 @@
    ],
    "triangles": 44
   },
+  "hair.tall_crest.fringe.lod1": {
+   "node": "hair.tall_crest.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/tall_crest",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.1875,
+     0.21875,
+     0.38281
+    ],
+    [
+     0.1875,
+     0.23438,
+     0.44141
+    ]
+   ],
+   "triangles": 12
+  },
   "hair.tall_crest.full": {
    "node": "hair.tall_crest.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/tall_crest",
    "slots": [
     "hair"
    ],
@@ -2663,10 +4370,31 @@
    ],
    "triangles": 11996
   },
+  "hair.tall_crest.full.lod1": {
+   "node": "hair.tall_crest.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/tall_crest",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.28125,
+     -0.27344,
+     0.48438
+    ],
+    [
+     0.28125,
+     0.25,
+     0.75391
+    ]
+   ],
+   "triangles": 938
+  },
   "hair.topknot_sweep.cap": {
    "node": "hair.topknot_sweep.cap",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/topknot_sweep",
    "slots": [
     "hair"
    ],
@@ -2684,10 +4412,31 @@
    ],
    "triangles": 380
   },
+  "hair.topknot_sweep.cap.lod1": {
+   "node": "hair.topknot_sweep.cap.lod1",
+   "category": "hair_lod",
+   "glb": "hair/topknot_sweep",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     0.05078,
+     0.22656,
+     0.32031
+    ],
+    [
+     0.25391,
+     0.29688,
+     0.375
+    ]
+   ],
+   "triangles": 52
+  },
   "hair.topknot_sweep.fringe": {
    "node": "hair.topknot_sweep.fringe",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/topknot_sweep",
    "slots": [
     "hair"
    ],
@@ -2705,10 +4454,31 @@
    ],
    "triangles": 820
   },
+  "hair.topknot_sweep.fringe.lod1": {
+   "node": "hair.topknot_sweep.fringe.lod1",
+   "category": "hair_lod",
+   "glb": "hair/topknot_sweep",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.12109,
+     0.21875,
+     0.32031
+    ],
+    [
+     0.25,
+     0.29688,
+     0.4375
+    ]
+   ],
+   "triangles": 106
+  },
   "hair.topknot_sweep.full": {
    "node": "hair.topknot_sweep.full",
    "category": "hair",
-   "glb": "hair",
+   "glb": "hair/topknot_sweep",
    "slots": [
     "hair"
    ],
@@ -2725,6 +4495,27 @@
     ]
    ],
    "triangles": 9448
+  },
+  "hair.topknot_sweep.full.lod1": {
+   "node": "hair.topknot_sweep.full.lod1",
+   "category": "hair_lod",
+   "glb": "hair/topknot_sweep",
+   "slots": [
+    "hair"
+   ],
+   "boundsM": [
+    [
+     -0.28125,
+     -0.20312,
+     0.32031
+    ],
+    [
+     0.29297,
+     0.29688,
+     0.68359
+    ]
+   ],
+   "triangles": 490
   },
   "head.female": {
    "node": "head.female",

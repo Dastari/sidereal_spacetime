@@ -430,7 +430,7 @@ export type HeadPartRole =
 export interface ResolvedHeadNode {
   /** GLB node name (see the manifest). */
   node: string;
-  /** Key into CREW_HEAD_CATALOG.files. */
+  /** GLB key: a key of CREW_HEAD_CATALOG.files, or `hair/<style>` (one GLB per hair style). */
   file: string;
   role: HeadPartRole;
   /** Slot values for this node's material instances (hex, or a glass preset id for `glass`). */
@@ -468,7 +468,7 @@ export function resolveHeadLoadout(l: HeadLoadout, theme: SlotValues = {}): Reso
   const add = (node: string, file: string, role: HeadPartRole, slots: SlotValues) =>
     nodes.push({ node, file, role, slots });
   add(`head.${l.head}`, "heads", "head", person);
-  if (l.hair && hairMode !== "hidden") add(`hair.${l.hair}.${hairMode}`, "hair", "hair", person);
+  if (l.hair && hairMode !== "hidden") add(`hair.${l.hair}.${hairMode}`, `hair/${l.hair}`, "hair", person);
   if (l.facialHair && !hidden.includes("facialHair"))
     add(`facialhair.${l.facialHair}`, "facial-hair", "facialHair", { ...person, hair: beard.hex });
   for (const id of l.details ?? []) {
@@ -505,7 +505,8 @@ export function resolveHeadLoadout(l: HeadLoadout, theme: SlotValues = {}): Reso
 /** Every GLB node a complete kit must contain, derived from the catalog (used by tests and loaders). */
 export function expectedHeadNodes(): string[] {
   const out: string[] = C.heads.map((h) => `head.${h.id}`);
-  for (const h of C.hairStyles) for (const m of ["full", "cap", "fringe"]) out.push(`hair.${h.id}.${m}`);
+  for (const h of C.hairStyles)
+    for (const m of ["full", "cap", "fringe"]) out.push(`hair.${h.id}.${m}`, `hair.${h.id}.${m}.lod1`);
   for (const f of C.facialHair) out.push(`facialhair.${f.id}`);
   for (const d of C.details) if (d.kind === "overlay") out.push(`detail.${d.id}`);
   for (const a of C.accessories) out.push(`acc.${a.id}`);
@@ -517,8 +518,12 @@ export function expectedHeadNodes(): string[] {
   return out;
 }
 
+/** Hair nodes have a `.lod1` twin (merged strands, no bevel) for distant crew. */
+export const HAIR_LOD_SUFFIX = ".lod1";
+
 export function crewHeadAssetUrl(fileKey: string) {
-  const file = C.files[fileKey];
+  const style = fileKey.startsWith("hair/") ? fileKey.slice(5) : null;
+  const file = style ? (HAIR.has(style) ? C.files.hair.replace("{style}", style) : undefined) : C.files[fileKey];
   if (!file) throw new Error(`unknown crew head file ${fileKey}`);
   return `${CREW_HEAD_ASSET_BASE}${file}?revision=r${String(C.revision).padStart(3, "0")}`;
 }

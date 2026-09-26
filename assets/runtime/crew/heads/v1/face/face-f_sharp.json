@@ -162,9 +162,9 @@
  },
  "tints": {
   "iris": "eye",
-  "brows": "hair*0.6"
+  "brows": "hair*0.45"
  },
- "browShade": 0.6,
+ "browShade": 0.45,
  "animationExpressions": {
   "idle": "neutral",
   "idle_armed": "determined",
@@ -440,8 +440,8 @@
   "brow": {
    "x": 1,
    "len": 4,
-   "t": 1,
-   "row": 6,
+   "t": 2,
+   "row": 5,
    "arch": false
   },
   "mouth": {

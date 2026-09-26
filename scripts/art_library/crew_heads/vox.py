@@ -14,7 +14,7 @@ import numpy as np
 V = 1.0 / 32.0            # metres per character voxel
 SUB = 8                   # paint cells per voxel -> 1/256 m (relief layers never share a front plane)
 CELL = V / SUB
-LO = np.array([-17.0, -17.0, -11.0])   # grid origin in fine voxels (head space)
+LO = np.array([-17.0, -17.0, -16.0])   # grid origin in fine voxels (head space)
 HI = np.array([17.0, 17.0, 28.0])
 SHAPE = tuple(int(v) for v in (HI - LO) * SUB)
 

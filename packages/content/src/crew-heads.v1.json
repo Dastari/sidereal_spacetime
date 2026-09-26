@@ -1,6 +1,6 @@
 {
   "schema": "sidereal.crew-heads.v1",
-  "revision": 2,
+  "revision": 3,
   "status": "proposal: unsigned art, not wired into the live game; the owner has not approved it",
   "voxelMeters": 0.03125,
   "slots": [
@@ -70,7 +70,7 @@
   },
   "files": {
     "heads": "heads.glb",
-    "hair": "hair.glb",
+    "hair": "hair/{style}.glb",
     "facial-hair": "facial-hair.glb",
     "details": "details.glb",
     "accessories": "accessories.glb",

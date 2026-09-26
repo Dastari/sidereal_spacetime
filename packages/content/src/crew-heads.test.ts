@@ -222,7 +222,9 @@ describe("loadout rules", () => {
   });
 
   test("asset urls are revisioned", () => {
-    expect(crewHeadAssetUrl("hair")).toBe(`/assets/crew/heads/v1/hair.glb?revision=r00${C.revision}`);
+    expect(crewHeadAssetUrl("hair/afro")).toBe(`/assets/crew/heads/v1/hair/afro.glb?revision=r00${C.revision}`);
+    expect(crewHeadAssetUrl("heads")).toBe(`/assets/crew/heads/v1/heads.glb?revision=r00${C.revision}`);
+    expect(() => crewHeadAssetUrl("hair/nope")).toThrow();
     expect(crewFaceAtlasUrl("f_bright")).toBe(`/assets/crew/heads/v1/face/face-f_bright.png?revision=r00${C.revision}`);
     expect(() => crewHeadAssetUrl("nope")).toThrow();
   });
@@ -236,10 +238,10 @@ describe("exported kit manifest", () => {
       nodes: Record<string, { glb: string; slots: string[]; triangles: number; boundsM: number[][] }>;
     };
     expect(manifest.catalogRevision).toBe(C.revision);
-    expect(manifest.files).toEqual(C.files);
+    for (const [key, file] of Object.entries(manifest.files)) expect(crewHeadAssetUrl(key)).toContain(`/${file}?`);
     expect(Object.keys(manifest.nodes).sort()).toEqual([...expectedHeadNodes()].sort());
     for (const [name, n] of Object.entries(manifest.nodes)) {
-      expect(C.files[n.glb], name).toBeDefined();
+      expect(manifest.files[n.glb], name).toBeDefined();
       for (const s of n.slots) expect(CREW_HEAD_SLOTS).toContain(s);
       expect(n.triangles, name).toBeGreaterThan(0);
       expect(n.triangles, name).toBeLessThan(30000);
@@ -251,6 +253,13 @@ describe("exported kit manifest", () => {
     }
     expect(manifest.nodes["head.male"].slots).toContain("face");
     for (const p of C.presets)
-      for (const n of resolveHeadLoadout(look(p.look)).nodes) expect(manifest.nodes[n.node], `${p.id}/${n.node}`).toBeDefined();
+      for (const n of resolveHeadLoadout(look(p.look)).nodes) {
+        expect(manifest.nodes[n.node], `${p.id}/${n.node}`).toBeDefined();
+        expect(manifest.nodes[n.node].glb).toBe(n.file);
+      }
+    for (const h of C.hairStyles) {
+      const full = manifest.nodes[`hair.${h.id}.full`].triangles;
+      expect(manifest.nodes[`hair.${h.id}.full.lod1`].triangles, h.id).toBeLessThan(full);
+    }
   });
 });

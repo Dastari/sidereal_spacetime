@@ -92,7 +92,7 @@ def fringe(g, cols, depth=0.75, top=13.0, y=-6.0):
     return g
 
 
-def curtain(g, t, zbot, sides=True, back=True, front_y=-5.0, amp=1.0, seed=2, split=1.5, flare=0.0, ztop=12.5):
+def curtain(g, t, zbot, sides=True, back=True, front_y=-5.0, amp=1.0, seed=2, split=1.5, flare=0.0, ztop=12.5, taper=0.0):
     """Hanging hair beside and behind the head, split into strand islands `split` voxels wide."""
     base = int(g.isl.max()) + 1
 
@@ -100,7 +100,8 @@ def curtain(g, t, zbot, sides=True, back=True, front_y=-5.0, amp=1.0, seed=2, sp
         ax = np.abs(X)
         tt = t + flare * np.clip((ztop - Z) / max(1e-6, ztop - zbot), 0, 1)
         side = sides & (ax >= 6) & (ax < 6 + tt) & (Y > front_y) & (Y < 6 + tt)
-        bk = back & (Y >= 6) & (Y < 6 + tt) & (ax < 6 + tt)
+        f = np.clip((ztop - Z) / max(1e-6, ztop - zbot), 0, 1)
+        bk = back & (Y >= 6) & (Y < 6 + tt) & (ax < 6 + tt - taper * f * f)        # tips taper to a soft V
         return (side | bk) & (Z >= zbot + jag(X, Y, amp, seed)) & (Z < ztop)
 
     g.region(-6 - t - flare, front_y, zbot - 1, 6 + t + flare, 6 + t + flare, ztop, fn, "hair")
@@ -276,7 +277,7 @@ def s_hanging_locks():
     shell(g, t=1.0, top=1.5, front=10.0, side=7.5, back=4.0, seed=21)
     spots = []
     for i, x in enumerate(np.arange(-6.5, 6.6, 1.25)):
-        spots.append((x, 6.75, 12.0, -2.5 - (i % 3) * 0.75))                      # back
+        spots.append((x, 6.75, 12.0, -6.0 - (i % 3) * 1.0))                      # back
     for i, y in enumerate(np.arange(-4.5, 6.0, 1.25)):
         for s in (-1, 1):
             spots.append((s * 6.75, y, 11.5, -1.0 - ((i + (s > 0)) % 3) * 0.75))  # sides
@@ -338,7 +339,7 @@ def _bangs(g, pattern, depth=0.75, y=-6.0):
 def s_side_bob():
     g = Grid("hair.side_bob")
     shell(g, t=1.0, top=1.25, front=10.0, side=4.0, back=2.0, burn=4.0, seed=31)
-    curtain(g, 1.25, 2.5, front_y=-5.5, amp=1.0, seed=31, flare=0.5)
+    curtain(g, 1.25, 0.5, front_y=-5.5, amp=2.0, seed=31, flare=0.5, taper=1.5)
     _bangs(g, [(-5.75, -4.0, 8.0), (-4.0, -2.25, 8.75), (-2.25, -0.5, 9.25), (-0.5, 1.5, 9.75), (1.5, 3.5, 10.25), (3.5, 5.75, 9.0)])
     return g
 
@@ -346,8 +347,8 @@ def s_side_bob():
 def s_layered_bob():
     g = Grid("hair.layered_bob")
     shell(g, t=1.25, top=1.5, front=10.0, side=4.0, back=2.0, burn=4.0, seed=32)
-    curtain(g, 1.0, 3.0, front_y=-5.25, amp=0.5, seed=32)
-    curtain(g, 1.75, 6.0, front_y=-4.0, amp=1.0, seed=33, ztop=12.0)
+    curtain(g, 1.0, 0.5, front_y=-5.25, amp=1.5, seed=32, taper=1.5)
+    curtain(g, 1.75, 3.5, front_y=-4.0, amp=1.5, seed=33, ztop=12.0)
     _bangs(g, [(-5.75, -3.75, 8.5), (-3.75, -1.0, 9.5), (1.0, 3.75, 9.5), (3.75, 5.75, 8.5)])
     return g
 
@@ -355,7 +356,7 @@ def s_layered_bob():
 def s_straight_bob():
     g = Grid("hair.straight_bob")
     shell(g, t=1.0, top=1.25, front=10.0, side=4.0, back=2.0, burn=4.0, seed=34)
-    curtain(g, 1.25, 1.5, front_y=-5.75, amp=0.5, seed=34)
+    curtain(g, 1.25, 0.0, front_y=-5.75, amp=1.0, seed=34, taper=1.0)
     _bangs(g, [(-5.75, -3.5, 7.75), (-3.5, -1.25, 9.0), (-1.25, 1.0, 9.5), (1.0, 5.75, 10.25)])
     return g
 
@@ -363,8 +364,8 @@ def s_straight_bob():
 def s_long_side_fringe():
     g = Grid("hair.long_side_fringe")
     shell(g, t=1.0, top=1.25, front=10.0, side=4.0, back=0.0, burn=4.0, seed=35)
-    curtain(g, 1.25, -2.0, front_y=-5.75, amp=1.5, seed=35, flare=0.25)
-    curtain(g, 1.25, -5.0, sides=False, amp=1.5, seed=36)
+    curtain(g, 1.25, -1.5, front_y=-5.75, amp=2.0, seed=35, flare=0.25)
+    curtain(g, 1.25, -8.5, sides=False, amp=2.5, seed=36, taper=3.5)
     _bangs(g, [(-5.75, -4.0, 6.5), (-4.0, -2.0, 8.0), (-2.0, 0.0, 9.0), (0.0, 2.25, 9.75), (2.25, 5.75, 10.5)])
     return g
 
@@ -382,7 +383,7 @@ def s_long_gathered():
     g = Grid("hair.long_gathered")
     shell(g, t=1.0, top=1.0, front=10.25, side=6.0, back=3.0, burn=5.0, seed=38)
     bun(g, 0.0, 3.5, 12.5, 4.0, 3.0)
-    curtain(g, 1.0, 0.0, sides=False, amp=1.5, seed=38)
+    curtain(g, 1.0, -6.5, sides=False, amp=2.5, seed=38, taper=4.0)
     locs(g, [(-6.0, -5.5, 11.0, 1.0), (-5.0, -6.25, 11.0, 3.0), (6.0, -5.5, 11.0, 0.5), (5.0, -6.25, 11.0, 2.5)], w=1.0)
     _bangs(g, [(-4.25, -2.0, 8.75), (-2.0, 0.25, 9.5), (0.25, 3.0, 9.25)])
     return g
@@ -393,7 +394,8 @@ def s_gathered_fringe():
     shell(g, t=1.25, top=1.25, front=10.0, side=5.0, back=1.0, burn=4.5, seed=39)
     bun(g, -3.25, 3.0, 12.5, 3.5, 3.0)
     bun(g, 3.25, 3.0, 12.5, 3.5, 3.0)
-    curtain(g, 1.25, -1.5, front_y=-4.5, amp=1.5, seed=39, flare=0.5)
+    curtain(g, 1.25, -1.5, front_y=-4.5, amp=2.0, seed=39, flare=0.5)
+    curtain(g, 1.25, -7.0, sides=False, amp=2.5, seed=139, taper=3.5)
     _bangs(g, [(-5.75, -3.25, 7.5), (-3.25, -0.75, 8.75), (-0.75, 1.75, 9.25), (1.75, 5.75, 8.25)])
     return g
 
@@ -401,7 +403,7 @@ def s_gathered_fringe():
 def s_long_bob():
     g = Grid("hair.long_bob")
     shell(g, t=1.5, top=1.5, front=10.0, side=3.0, back=1.0, burn=3.0, seed=40)
-    curtain(g, 1.5, 0.5, front_y=-5.5, amp=1.0, seed=40, flare=0.75)
+    curtain(g, 1.5, -1.25, front_y=-5.5, amp=2.0, seed=40, flare=0.75, taper=1.5)
     _bangs(g, [(-5.75, -3.75, 8.25), (-3.75, -1.25, 9.25), (-1.25, 1.25, 8.75), (1.25, 3.75, 9.25), (3.75, 5.75, 8.25)], depth=1.0)
     return g
 
@@ -420,7 +422,7 @@ def s_messy_bun():
 def s_blunt_bob():
     g = Grid("hair.blunt_bob")
     shell(g, t=1.25, top=1.25, front=10.0, side=3.0, back=1.5, burn=3.0, amp=0.0, seed=42)
-    curtain(g, 1.25, 2.0, front_y=-6.0, amp=0.0, seed=42, split=2.0)
+    curtain(g, 1.25, 0.5, front_y=-6.0, amp=0.0, seed=42, split=2.0)
     _bangs(g, [(-5.75, -2.0, 9.0), (-2.0, 2.0, 9.0), (2.0, 5.75, 9.0)], depth=0.75)
     return g
 
@@ -428,8 +430,8 @@ def s_blunt_bob():
 def s_long_straight():
     g = Grid("hair.long_straight")
     shell(g, t=1.0, top=1.25, front=10.5, side=4.0, back=0.0, burn=4.0, seed=43)
-    curtain(g, 1.25, -1.0, front_y=-5.75, amp=1.0, seed=43)
-    curtain(g, 1.25, -4.5, sides=False, amp=1.0, seed=44)
+    curtain(g, 1.25, -1.5, front_y=-5.75, amp=2.0, seed=43)
+    curtain(g, 1.25, -9.0, sides=False, amp=2.5, seed=44, taper=3.5)
     g.cut(-0.25, -7.5, 13.5, 0.25, 0.0, 15.0)                     # centre parting
     _bangs(g, [(-5.75, -3.0, 7.0), (3.0, 5.75, 7.0)])
     return g
@@ -438,11 +440,11 @@ def s_long_straight():
 def s_silver_bob():
     g = Grid("hair.silver_bob")
     shell(g, t=1.5, top=1.5, front=10.0, side=3.0, back=1.0, burn=3.0, seed=45)
-    curtain(g, 1.5, 2.5, front_y=-5.5, amp=1.0, seed=45, flare=1.25)
+    curtain(g, 1.5, 1.0, front_y=-5.5, amp=1.5, seed=45, flare=1.25)
     for s in (-1, 1):                                              # flicked-out ends
         for y in (-4.0, -1.0, 2.0, 5.0):
             a, b = sorted((s * 7.5, s * 8.75))
-            tuft(g, a, y, 2.5, b, y + 1.75, 3.5)
+            tuft(g, a, y, 1.0, b, y + 1.75, 2.0)
     _bangs(g, [(-5.75, -3.5, 8.0), (-3.5, -1.0, 9.0), (-1.0, 1.5, 9.5), (1.5, 5.75, 8.5)], depth=1.0)
     return g
 

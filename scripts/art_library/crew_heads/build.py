@@ -59,7 +59,11 @@ def build_parts(cat, lib, only):
         if want("hair"):
             for h in cat["hairStyles"]:
                 for mode, grid in ph.hair_variants(h["id"]).items():
-                    lib.add(f"hair.{h['id']}.{mode}", "hair", "hair", grid)
+                    # one GLB per style (clients fetch only the styles in view); lod1 = same silhouette with the
+                    # strand bricks merged and no bevel, for distant crew
+                    lib.add(f"hair.{h['id']}.{mode}", "hair", f"hair/{h['id']}", grid)
+                    grid.isl[grid.isl > 0] = 1
+                    lib.add(f"hair.{h['id']}.{mode}.lod1", "hair_lod", f"hair/{h['id']}", grid)
         if want("gear"):
             for a in cat["accessories"]:
                 lib.add(f"acc.{a['id']}", "acc", "accessories", pg.accessory(a["id"]))
@@ -86,6 +90,7 @@ def export(lib, out):
             lib.objects[n].hide_set(False)
             lib.objects[n].select_set(True)
         path = os.path.join(out, f"{glb}.glb")
+        os.makedirs(os.path.dirname(path), exist_ok=True)
         bpy.ops.export_scene.gltf(filepath=path, export_format="GLB", use_selection=True, export_apply=True,
                                   export_yup=True, export_texcoords=False, export_normals=True, export_materials="EXPORT",
                                   export_extras=False, export_cameras=False, export_lights=False, export_animations=False,

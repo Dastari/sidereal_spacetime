@@ -22,7 +22,10 @@ LOOKS = ["c", "l", "r"]          # internal: viewer-left / viewer-right
 LOOK_NAME = {"c": "c", "l": "r", "r": "l"}   # published names: r = character right (= viewer-left), l = character left
 SCHEMA = "sidereal.crew.face-atlas/1"
 
-DARK = (30, 22, 36, 255)
+DARK = (20, 14, 24, 255)
+LID = (40, 24, 30, 255)
+SHADE = (70, 30, 30, 70)          # nose / under-hair shadow (translucent)
+SHADE2 = (70, 30, 30, 38)
 WHITE = (246, 242, 240, 255)
 GREY = (255, 255, 255, 255)          # tint mask value
 GLINT = (255, 252, 246, 255)
@@ -30,8 +33,8 @@ MOUTH = (78, 28, 40, 255)
 LIP = (196, 78, 98, 255)
 TEETH = (250, 246, 240, 255)
 TONGUE = (222, 96, 112, 255)
-BLUSH = (255, 96, 124, 96)
-BLUSH2 = (255, 88, 118, 150)
+BLUSH = (255, 84, 110, 120)
+BLUSH2 = (255, 70, 100, 175)
 TEAR = (120, 196, 255, 230)
 SWEAT = (160, 216, 255, 235)
 VEIN = (226, 40, 64, 255)
@@ -45,19 +48,20 @@ DIRT = (74, 52, 38, 120)
 
 # ---------------------------------------------------------------------------------------------- variants
 # eye: x = viewer-left eye outer column, w/h size, top row. brow: len, thick, row, arch. mouth: width, row, lip.
-VARIANTS = {
-    "m_classic": dict(label="Masculine, classic", sex="male", eye=dict(x=3, w=2, h=4, top=7, lash=False),
-                      brow=dict(x=2, len=3, t=1, row=5, arch=False), mouth=dict(w=2, row=12, lip=False)),
+VARIANTS = {   # r003: features fill the face like the reference (3x4 eyes, 2 px brows on the eyes, wide mouths)
+    "m_classic": dict(label="Masculine, classic", sex="male", eye=dict(x=2, w=3, h=4, top=7, lash=False),
+                      brow=dict(x=1, len=4, t=2, row=4, arch=False), mouth=dict(w=2, row=12, lip=False)),
     "m_bold": dict(label="Masculine, bold", sex="male", eye=dict(x=2, w=3, h=3, top=8, lash=False),
-                   brow=dict(x=1, len=4, t=2, row=5, arch=False), mouth=dict(w=3, row=12, lip=False)),
-    "m_bright": dict(label="Masculine, bright-eyed", sex="male", eye=dict(x=2, w=3, h=4, top=7, lash=False),
-                     brow=dict(x=2, len=3, t=1, row=5, arch=False), mouth=dict(w=2, row=12, lip=False)),
-    "f_classic": dict(label="Feminine, classic", sex="female", eye=dict(x=3, w=2, h=4, top=7, lash=True),
-                      brow=dict(x=2, len=3, t=1, row=5, arch=True), mouth=dict(w=2, row=12, lip=True)),
-    "f_bright": dict(label="Feminine, bright-eyed", sex="female", eye=dict(x=2, w=3, h=4, top=7, lash=True),
-                     brow=dict(x=2, len=3, t=1, row=5, arch=True), mouth=dict(w=2, row=12, lip=True)),
+                   brow=dict(x=1, len=5, t=2, row=5, arch=False), mouth=dict(w=3, row=12, lip=False)),
+    "m_bright": dict(label="Masculine, bright-eyed", sex="male", eye=dict(x=2, w=3, h=5, top=6, lash=False, iris2=True),
+                     brow=dict(x=1, len=4, t=2, row=3, arch=False), mouth=dict(w=2, row=12, lip=False)),
+    "f_classic": dict(label="Feminine, classic", sex="female", eye=dict(x=2, w=3, h=4, top=7, lash=True),
+                      brow=dict(x=2, len=3, t=2, row=4, arch=True), mouth=dict(w=2, row=12, lip=True)),
+    "f_bright": dict(label="Feminine, bright-eyed", sex="female", eye=dict(x=2, w=3, h=5, top=6, lash=True, iris2=True),
+                     brow=dict(x=2, len=3, t=2, row=3, arch=True), mouth=dict(w=2, row=12, lip=True)),
     "f_sharp": dict(label="Feminine, sharp", sex="female", eye=dict(x=2, w=3, h=3, top=8, lash=True, almond=True),
-                    brow=dict(x=1, len=4, t=1, row=6, arch=False), mouth=dict(w=3, row=12, lip=True)),
+                    brow=dict(x=1, len=4, t=2, row=5, arch=False), mouth=dict(w=3, row=12, lip=True)),
+
 }
 
 EYE_FRAMES = ["open", "half", "closed", "happy", "wide", "narrow", "sad", "scared", "sleepy", "smug", "hurt", "ko", "wink",
@@ -123,7 +127,9 @@ def mirror(c):
 
 # ---------------------------------------------------------------------------------------------- eyes
 def eye_cells(e, frame, side):
-    """Dark (and white) cells of one eye. side 'L' = viewer-left eye (character's right)."""
+    """Cells of one eye (viewer-left eye = character's right; mirrored for the other).
+    r003 reference style: a tall dark block with a white sclera column on the outer side, a dark lid row
+    on top, iris in the lower inner pixels and a 1 px glint (see iris_and_glint)."""
     x, w, h, top = e["x"], e["w"], e["h"], e["top"]
     cells = {}
 
@@ -135,68 +141,77 @@ def eye_cells(e, frame, side):
             for c in range(c0, c0 + ww):
                 put(c, r, col)
 
-    inner = x + w - 1            # toward the nose for the viewer-left eye
+    def block(r0, hh, sclera=True):
+        rect(x, r0, w, hh)
+        if sclera and hh >= 2:
+            for r in range(r0 + 1, r0 + hh):
+                put(x, r, WHITE)
+
+    inner = x + w - 1
     if frame == "open":
-        rect(x, top, w, h)
+        block(top, h)
         if e.get("almond"):
-            cells.pop((x, top), None)
+            put(x, top, (0, 0, 0, 0))
     elif frame == "half":
-        rect(x, top + h // 2, w, h - h // 2)
-        rect(x - (1 if e["lash"] else 0), top + h // 2, 1, 1)
+        block(top + h // 2, h - h // 2)
+        rect(x - 1, top + h // 2, 1, 1)
     elif frame == "closed":
-        rect(x, top + h - 2, w, 1)
+        rect(x - 1, top + h - 2, w + 1, 1)
     elif frame == "happy":
         rect(x, top + 1, w, 1)
         put(x - 1, top + 2)
         put(x + w, top + 2)
     elif frame == "wide":
-        rect(x, top - 1, w, h + 1)
+        block(top - 1, h + 1)
     elif frame == "narrow":
-        rect(x, top + 1, w, max(1, h - 2))
-        put(inner, top)                              # inner corner pulled down reads as a squint
+        block(top + 1, max(2, h - 2))
+        put(inner, top)
+        put(inner - 1, top)
     elif frame == "sad":
-        rect(x, top + 1, w, h - 1)
-        cells.pop((inner, top + 1), None)
+        block(top + 1, h - 1)
+        put(inner, top + 1, WHITE)
         put(x, top)
     elif frame == "scared":
         rect(x, top - 1, w, h + 1, WHITE)
-        put(x + (w - 1) // 2, top + h // 2)
+        rect(x, top - 1, w, 1)
+        put(x + 1, top + h // 2)
+        put(x + 1, top + h // 2 + 1)
     elif frame == "sleepy":
-        rect(x - 1, top + h - 2, w + 1, 1)
+        rect(x - 1, top + h - 2, w + 1, 1, LID)
         rect(x, top + h - 1, w, 1)
     elif frame == "smug":
-        rect(x - 1, top + h // 2, w + 1, 1)
-        rect(x, top + h // 2 + 1, w, h - h // 2 - 1)
+        rect(x - 1, top + h // 2, w + 1, 1, LID)
+        block(top + h // 2 + 1, h - h // 2 - 1, sclera=False)
     elif frame == "hurt":
         mid = top + h // 2
         put(x, mid - 1)
+        put(x + 1, mid - 1)
         put(x + w - 1, mid)
         put(x, mid + 1)
-        if w >= 3:
-            put(x + 1, mid - 1)
-            put(x + 1, mid + 1)
+        put(x + 1, mid + 1)
     elif frame == "ko":
-        mid_r = top + h // 2
-        for c, r in ((x, mid_r - 1), (x + w - 1, mid_r - 1), (x + (w - 1) / 2, mid_r), (x, mid_r + 1), (x + w - 1, mid_r + 1)):
-            put(int(round(c)), r)
+        mid = top + h // 2
+        for c, r in ((x, mid - 1), (x + w - 1, mid - 1), (x + 1, mid), (x, mid + 1), (x + w - 1, mid + 1)):
+            put(c, r)
     elif frame == "wink":
         if side == "L":
-            rect(x, top, w, h)
+            block(top, h)
         else:
             rect(x, top + 1, w, 1)
             put(x - 1, top + 2)
             put(x + w, top + 2)
     elif frame == "confused":
         if side == "L":
-            rect(x, top, w, h)
+            block(top, h)
         else:
-            rect(x, top + 1, w, max(1, h - 2))
-    if e["lash"] and frame in ("open", "wide", "sad", "narrow", "wink", "confused", "smug") and not (frame in ("wink", "confused") and side == "R"):
-        first = min((r for (c, r) in cells), default=top)
+            block(top + 1, max(2, h - 2))
+    if e["lash"] and frame in ("open", "wide", "sad", "narrow", "wink", "confused", "smug", "half") \
+            and not (frame in ("wink", "confused") and side == "R"):
+        first = min((r for (c, r), col in cells.items() if col[3]), default=top)
         put(x - 1, first)
         if frame in ("open", "wide"):
             put(x - 1, first - 1)
-    return cells
+    return {k: v for k, v in cells.items() if v[3]}
 
 
 def draw_eyes(v, frame):
@@ -210,35 +225,36 @@ def draw_eyes(v, frame):
 
 
 def iris_and_glint(v, frame, look):
-    """Iris: bottom rows of each dark eye area, at the viewer-left (l), viewer-right (r) or inner (c) columns.
-    Glint: 1 px at each eye's upper-left as seen by the viewer (the reference highlight)."""
+    """Iris: lower dark pixels of each eye at viewer-left (l), viewer-right (r) or inner (c) columns.
+    Glint: 1 px at the top-left dark pixel below the lid (the reference highlight)."""
     e = v["eye"]
     iris, glint = Canvas(), Canvas()
     for side in ("L", "R"):
         cells = {(c if side == "L" else mirror(c), r) for (c, r), col in eye_cells(e, frame, side).items() if col == DARK}
         if not cells or frame not in IRIS_EYES:
             continue
-        cols = sorted({c for c, _ in cells})
         rows = sorted({r for _, r in cells})
-        if len(rows) >= 2:
-            iw = 2 if len(cols) >= 3 and frame in ("open", "wide") else 1
+        body = [r for r in rows[1:]] or rows            # below the lid row
+        cols = sorted({c for c, r in cells if r in body})
+        if len(body) >= 2 and cols:
+            iw = 2 if (e.get("iris2") and len(cols) >= 2) else 1
             if look == "l":
                 start = cols[0]
             elif look == "r":
                 start = cols[-iw]
             else:
                 start = cols[-iw] if side == "L" else cols[0]
-            for r in rows[-2:]:
+            for r in body[-2:]:
                 for c in range(start, start + iw):
                     if (c, r) in cells:
                         iris.set(c, r, GREY)
-        if len(rows) >= 3:
-            gr = rows[0] + (1 if len(rows) >= 4 else 0)
-            glint.set(min(c for c, r in cells if r == gr), gr, GLINT)
+        if len(body) >= 2 and cols:
+            gr = body[0]
+            gc = min(c for c, r in cells if r == gr)
+            glint.set(gc, gr, GLINT)
     return iris, glint
 
 
-# ---------------------------------------------------------------------------------------------- brows
 def draw_brows(v, frame):
     b = v["brow"]
     cv = Canvas()
@@ -249,7 +265,7 @@ def draw_brows(v, frame):
         for i, dr in enumerate(shape):
             c = x0 + i
             for k in range(t):
-                r = row + dr + k
+                r = max(1 + k, row + dr + k)          # stay on the flat face plane (rows >= 1)
                 cv.set(c if side == "L" else mirror(c), r, GREY)
 
     def flat(d=0):
@@ -279,82 +295,103 @@ def draw_brows(v, frame):
 
 # ---------------------------------------------------------------------------------------------- mouth
 def draw_mouth(v, frame):
+    """r003: closed mouths 2-3 px, open mouths 4-6 px wide, teeth/tongue inside, lips for feminine faces."""
     m = v["mouth"]
     cv = Canvas()
     w, row = m["w"], m["row"]
     line = LIP if m["lip"] else MOUTH
-    c0 = 8 - (w + 1) // 2 if w % 2 else 8 - w // 2       # centred; odd widths lean to viewer-left
+    c0 = 8 - (w + 1) // 2 if w % 2 else 8 - w // 2
     c1 = c0 + w - 1
+
+    def box(x0, y0, ww, hh, col):
+        cv.rect(x0, y0, ww, hh, col)
+
     if frame == "neutral":
-        cv.rect(c0, row, w, 1, line)
+        box(c0, row, w, 1, line)
     elif frame == "smile":
-        cv.rect(c0, row, w, 1, line)
+        box(c0, row, w, 1, line)
         cv.set(c0 - 1, row - 1, line)
         cv.set(c1 + 1, row - 1, line)
-    elif frame == "grin":
-        cv.rect(c0 - 1, row, w + 2, 1, TEETH)
-        cv.rect(c0, row + 1, w, 1, MOUTH)
-        cv.set(c0 - 2, row - 1, line)
-        cv.set(c1 + 2, row - 1, line)
-        cv.set(c0 - 1, row + 1, MOUTH)
-        cv.set(c1 + 1, row + 1, MOUTH)
+    elif frame == "grin":                       # 6 wide, teeth over mouth
+        box(5, row, 6, 2, MOUTH)
+        box(6, row, 4, 1, TEETH)
+        cv.set(4, row - 1, line)
+        cv.set(11, row - 1, line)
+        cv.set(5, row + 1, (0, 0, 0, 0))
+        cv.set(10, row + 1, (0, 0, 0, 0))
     elif frame == "frown":
-        cv.rect(c0, row, w, 1, line)
+        box(c0, row, w, 1, line)
         cv.set(c0 - 1, row + 1, line)
         cv.set(c1 + 1, row + 1, line)
-    elif frame == "open":
-        cv.rect(c0 if w >= 2 else c0 - 1, row, max(2, w), 2, MOUTH)
-        cv.set(c0 + (max(2, w) - 1), row + 1, TONGUE)
-    elif frame == "grimace":
-        cv.rect(c0 - 1, row, w + 2, 1, TEETH)
-        cv.rect(c0 - 1, row + 1, w + 2, 1, MOUTH)
-        cv.set(c0 - 2, row, MOUTH)
-        cv.set(c1 + 2, row, MOUTH)
+    elif frame == "open":                       # surprised "o": 4 x 2
+        box(6, row, 4, 2, MOUTH)
+        box(7, row + 1, 2, 1, TONGUE)
+        cv.set(6, row, (0, 0, 0, 0))
+        cv.set(9, row, (0, 0, 0, 0))
+    elif frame == "grimace":                    # 6 wide gritted teeth
+        box(5, row, 6, 2, MOUTH)
+        box(6, row, 4, 1, TEETH)
+        box(6, row + 1, 4, 1, TEETH)
+        cv.set(7, row + 1, MOUTH)
     elif frame == "flat":
-        cv.rect(c0 - (1 if w < 3 else 0), row, w + (1 if w < 3 else 0), 1, MOUTH)
+        box(6, row, 4, 1, MOUTH)
     elif frame == "wavy":
-        cv.set(c0 - 1, row + 1, line)
-        cv.set(c0, row, line)
-        cv.set(c1, row + 1, line)
-        cv.set(c1 + 1, row, line)
-    elif frame == "scared":
-        cv.rect(c0 - 1, row, w + 2, 2, MOUTH)
-        cv.rect(c0, row, w, 1, TEETH)
-        cv.set(c0 - 1, row + 1, (0, 0, 0, 0))
-        cv.set(c1 + 1, row + 1, (0, 0, 0, 0))
+        cv.set(5, row + 1, line)
+        cv.set(6, row, line)
+        cv.set(7, row, line)
+        cv.set(8, row + 1, line)
+        cv.set(9, row + 1, line)
+        cv.set(10, row, line)
+    elif frame == "scared":                     # 6 wide, wobbly, teeth
+        box(5, row, 6, 2, MOUTH)
+        box(6, row, 4, 1, TEETH)
+        cv.set(5, row, (0, 0, 0, 0))
+        cv.set(10, row + 1, (0, 0, 0, 0))
     elif frame == "smug":
-        cv.rect(c0, row, w, 1, line)
-        cv.set(c1 + 1, row - 1, line)
+        box(c0, row, w + 1, 1, line)
+        cv.set(c0 + w + 1, row - 1, line)
     elif frame == "small_o":
-        cv.set(c0 + (w - 1) // 2, row, MOUTH)
+        box(7, row, 2, 1, MOUTH)
     elif frame == "ko":
-        cv.rect(c0, row, 2, 2, MOUTH)
-        cv.set(c0 + 1, row + 1, TONGUE)
-    elif frame == "viseme_A":
-        cv.rect(c0, row - 1, max(2, w), 3, MOUTH)
-        cv.rect(c0, row + 1, max(2, w), 1, TONGUE)
-    elif frame == "viseme_E":
-        cv.rect(c0 - 1, row, w + 2, 1, TEETH)
-        cv.rect(c0 - 1, row + 1, w + 2, 1, MOUTH)
-    elif frame == "viseme_O":
-        cv.rect(c0, row - 1, max(2, w), 3, MOUTH)
-        cv.set(c0, row - 1, line)
-        cv.set(c0 + max(2, w) - 1, row + 1, line)
+        box(6, row, 4, 2, MOUTH)
+        box(8, row + 1, 2, 1, TONGUE)
+    elif frame == "viseme_A":                   # 4 x 3 open
+        box(6, row - 1, 4, 3, MOUTH)
+        box(7, row + 1, 2, 1, TONGUE)
+        box(7, row - 1, 2, 1, TEETH)
+    elif frame == "viseme_E":                   # 6 x 2 wide, teeth
+        box(5, row, 6, 2, MOUTH)
+        box(5, row, 6, 1, TEETH)
+    elif frame == "viseme_O":                   # 4 x 3 ring
+        box(6, row - 1, 4, 3, MOUTH)
+        cv.set(6, row - 1, (0, 0, 0, 0))
+        cv.set(9, row - 1, (0, 0, 0, 0))
+        cv.set(6, row + 1, (0, 0, 0, 0))
+        cv.set(9, row + 1, (0, 0, 0, 0))
     elif frame == "viseme_MB":
-        cv.rect(c0 - 1, row, w + 2, 1, LIP if m["lip"] else (150, 70, 70, 255))
+        box(6, row, 4, 1, LIP if m["lip"] else (140, 60, 64, 255))
     return cv
 
 
-# ---------------------------------------------------------------------------------------------- extras
 def draw_under(v, frame):
+    """Face shading under every expression: under-hair shadow, nose shadow, cheek blush (r003)."""
     cv = Canvas()
     e = v["eye"]
-    r = e["top"] + e["h"] + 1
-    if frame != "none":
-        col = BLUSH if frame == "blush" else BLUSH2
-        for c in range(e["x"] - 1, e["x"] + e["w"]):
-            cv.set(c, r, col)
-            cv.set(mirror(c), r, col)
+    for c in range(1, 15):
+        cv.set(c, 3, SHADE)
+        cv.set(c, 4, SHADE2)
+    cv.set(8, 10, SHADE2)                        # nose: soft shadow right of centre (key light from the left)
+    cv.set(8, 11, SHADE)
+    cv.set(7, 11, SHADE2)
+    r = e["top"] + e["h"]
+    col = {"none": (255, 110, 120, 60), "blush": BLUSH, "blush_strong": BLUSH2}[frame]
+    for c in range(1, 4):
+        cv.set(c, min(r, 11), col)
+        cv.set(mirror(c), min(r, 11), col)
+    if frame == "blush_strong":
+        for c in range(1, 4):
+            cv.set(c, min(r, 11) + 1, BLUSH)
+            cv.set(mirror(c), min(r, 11) + 1, BLUSH)
     return cv
 
 
@@ -533,7 +570,7 @@ def main():
     anim = json.load(open(a.catalog))["animationExpressions"] if a.catalog else {}
     common = {"schema": SCHEMA, "cell": N, "pxMeters": 1 / 32, "layers": LAYERS, "expressions": expressions_table(), "visemes": VISEMES,
               "blink": BLINK, "blinkSuppressedEyes": NO_BLINK, "looks": {"-1": "r", "0": "c", "1": "l"},
-              "tints": {"iris": "eye", "brows": "hair*0.6"}, "browShade": 0.6, "animationExpressions": anim,
+              "tints": {"iris": "eye", "brows": "hair*0.45"}, "browShade": 0.45, "animationExpressions": anim,
               "canvasHeadSpace": {"x": [8, -8], "z": [16, 0], "flat": {"cols": [1, 14], "rows": [1, 14]},
                                   "note": "column 0 = character right (x=+8), row 0 = top (z=16)"},
               "marksCompose": {"ages": AGE_FRAMES, "marks": MARK_FRAMES, "name": "<age>+<mark>, 'none' parts omitted"}}
