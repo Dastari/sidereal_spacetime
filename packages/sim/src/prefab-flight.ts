@@ -36,6 +36,11 @@ import type {
   PhysicalPartDefinition,
 } from "./flight-definition";
 import { prefabToShipMetres } from "./prefab-construction";
+import { flightDefinitionCatalogHash } from "./flight-definition";
+import { readConstructionDraft } from "./construction-transactions";
+import { prefabComponentCatalogFor } from "./prefab-catalog";
+import { spatialCell, validateSpacePoint } from "./spatial-cells";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
 
 export const PREFAB_FLIGHT_CATALOG_ID = "prefab-physical-v1";
 /** RCS nozzle push directions as game-frame quarter turns (0 pushes fore). */
@@ -224,5 +229,165 @@ export function prefabFlightInput(
     catalog: model.catalog,
     hull: model.hull,
     ...(state.supply ? { supply: state.supply } : {}),
+  };
+}
+
+// ---------------------------------------------------------------- installation plan
+export const PREFAB_FLIGHT_DEFINITION = "prefab-flight-v1";
+
+/** Placed-object id of a prefab flight part on a spawned ship. */
+export const prefabPlacedObjectId = (shipId: string, sourceId: string) => `${shipId}:${sourceId}`;
+
+export interface PrefabFlightInstance {
+  id: string;
+  revision: bigint;
+  blueprintSha256: string;
+  documentJson: string;
+  spawnDeckId: string;
+  name: string;
+}
+
+const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+/** Parse and admit a prefab construction document; returns the prefab and its catalog. */
+export function prefabDocumentOf(documentJson: string) {
+  readConstructionDraft(documentJson);
+  const doc = JSON.parse(documentJson) as { prefab?: { catalog: string; document: ShipPrefabDocumentV1 } };
+  if (!doc.prefab) throw Error("Prefab construction document required");
+  return { document: readShipPrefab(doc.prefab.document), catalog: prefabComponentCatalogFor(doc.prefab.catalog) };
+}
+
+/** Bounded memo: walking marks a ship dirty every tick, so the model is reused per source. */
+const MODEL_MEMO = new Map<string, PrefabFlightModel>();
+export function prefabFlightModelFor(key: string, documentJson: string): PrefabFlightModel {
+  const hit = MODEL_MEMO.get(key);
+  if (hit) return hit;
+  const { document, catalog } = prefabDocumentOf(documentJson);
+  const model = prefabFlightModel(document, catalog);
+  if (MODEL_MEMO.size >= 64) MODEL_MEMO.clear();
+  MODEL_MEMO.set(key, model);
+  return model;
+}
+
+/**
+ * Dormant flight installation for a spawned prefab instance, in the same shape as
+ * `planQualifiedConstructionFlight` so the existing writer, tables and activation apply.
+ * Pins: definitionId = PREFAB_FLIGHT_DEFINITION and definitionSha256 = the prefab physical
+ * catalog hash, which the resolver compares with the compiled definition hash.
+ */
+export function planPrefabConstructionFlight(
+  instance: PrefabFlightInstance,
+  placement: { systemId: string; x: number; y: number; serverTick: bigint },
+  allocate: () => string,
+  reservedIds: readonly string[] = [],
+) {
+  if (instance.revision !== 1n) throw Error("Unrefitted prefab instance required");
+  if (instance.documentJson.length > 1_048_576) throw Error("Bounded construction source required");
+  const model = prefabFlightModelFor(`${instance.id}:${instance.blueprintSha256}`, instance.documentJson);
+  if (!model.station) throw Error("Prefab pilot station required");
+  const computers = model.fittings.filter((f) => f.role === "computer").sort((a, b) => (a.sourceId < b.sourceId ? -1 : 1));
+  const actuators = model.fittings.filter((f) => f.role === "actuator");
+  if (!computers.length || !actuators.length) throw Error("Prefab flight needs a computer core and thrust");
+  validateSpacePoint(placement);
+  if (!placement.systemId || placement.systemId.length > 160 || placement.serverTick < 0n)
+    throw Error("Valid server-selected system sample required");
+  if (reservedIds.length > 16384) throw Error("Flight identity budget exceeded");
+  const used = new Set([instance.id, ...reservedIds].map((s) => s.toLowerCase()));
+  const fresh = () => {
+    const id = allocate();
+    if (!UUID.test(id) || used.has(id.toLowerCase())) throw Error("Fresh flight UUID required");
+    used.add(id.toLowerCase());
+    return id;
+  };
+  const shipId = instance.id;
+  const parts = new Map(model.parts.map((p) => [p.sourceId, p]));
+  const definitions = new Map(model.catalog.definitions.map((d) => [d.id, d]));
+  const computerPart = parts.get(computers[0].sourceId)!;
+  const computerDefinition = definitions.get(computerPart.definitionId) as ComputerDefinition;
+  const station = {
+    id: fresh(),
+    shipId,
+    deckId: instance.spawnDeckId,
+    placedObjectId: prefabPlacedObjectId(shipId, "station"),
+    consolePlacedObjectId: prefabPlacedObjectId(shipId, computers[0].sourceId),
+    localX: model.station[0],
+    localY: model.station[1],
+    occupantId: undefined as string | undefined,
+    operational: false,
+  };
+  const computer = {
+    id: fresh(),
+    shipId,
+    placedObjectId: station.consolePlacedObjectId,
+    sourceDeviceId: computers[0].sourceId,
+    definitionId: computerDefinition.fittingDefinitionId,
+    definitionRevision: computerDefinition.revision,
+    installed: true,
+    powered: true,
+  };
+  const planned = actuators.map((f) => {
+    const part = parts.get(f.sourceId)!;
+    const d = definitions.get(part.definitionId) as ActuatorDefinition;
+    const c = Math.cos(part.rotation);
+    const s = Math.sin(part.rotation);
+    const axis: [number, number] = [c * d.forceAxis[0] - s * d.forceAxis[1], s * d.forceAxis[0] + c * d.forceAxis[1]];
+    return {
+      id: fresh(),
+      shipId,
+      placedObjectId: prefabPlacedObjectId(shipId, f.sourceId),
+      sourceDeviceId: f.sourceId,
+      definitionId: d.fittingDefinitionId,
+      definitionRevision: d.revision,
+      x: part.position[0],
+      y: part.position[1],
+      rotation: Math.atan2(-axis[0], axis[1]),
+      maxThrustN: d.maxThrustN,
+      availability: 1,
+    };
+  });
+  const cell = spatialCell(placement);
+  return {
+    definitionId: PREFAB_FLIGHT_DEFINITION,
+    definitionSha256: flightDefinitionCatalogHash(model.catalog),
+    instanceId: instance.id,
+    instanceRevision: instance.revision,
+    blueprintSha256: instance.blueprintSha256,
+    ship: {
+      id: shipId,
+      name: instance.name,
+      revision: 1n,
+      x: placement.x,
+      y: placement.y,
+      vx: 0,
+      vy: 0,
+      heading: 0,
+      omega: 0,
+      massKg: 0,
+      thrustN: 0,
+      turnAcceleration: 0,
+      tick: placement.serverTick,
+    },
+    motion: {
+      shipId,
+      systemId: placement.systemId,
+      x: placement.x,
+      y: placement.y,
+      vx: 0,
+      vy: 0,
+      heading: 0,
+      omega: 0,
+      serverTick: placement.serverTick,
+      cellX: BigInt(cell.cellX),
+      cellY: BigInt(cell.cellY),
+    },
+    station,
+    computer,
+    actuators: planned,
+    provenance: "versioned-placed-part-installation" as const,
+    routedPowerFuelImplemented: false as const,
+    armorRatingImplemented: false as const,
+    actorMutationRequired: false as const,
+    cargoMutationRequired: false as const,
+    activation: "installed-dormant" as const,
   };
 }
