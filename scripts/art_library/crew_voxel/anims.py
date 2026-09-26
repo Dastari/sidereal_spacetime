@@ -64,7 +64,7 @@ def retarget(P):
 # grip profiles: support-hand socket offset in the primary grip frame (voxels; x along barrel,
 # y = left of the barrel, z = up). Published in the spec for CHAR-WEAPONS.
 GRIP_PROFILES = {
-    "rifle": {"support": (6.0, 1.0, 0.5), "note": "support hand under the foregrip, 6 vox (0.19 m) ahead of and 1 vox left of the main grip (chibi arm reach)"},
+    "rifle": {"support": (5.0, 1.0, 0.5), "note": "support hand under the foregrip, 5 vox (0.16 m) ahead of and 1 vox left of the main grip (chibi arm reach; runtime setSupportTarget IKs to item sockets within ~6 vox)"},
     "pistol": {"support": (-0.5, 2.5, -1.0), "note": "two-handed pistol: support hand wraps the main grip from the left"},
     "tool": {"support": (6.0, 0.0, 1.0), "note": "two-handed tool/device: support hand 6 vox ahead on the body"},
     "one_hand": {"support": None, "note": "support hand free"},
@@ -523,17 +523,17 @@ def lib():
         P["fk:spine"] = (3, 0, -4)
         P["fk:chest"] = (7, 0, -6)
         P["fk:neck"] = (0, 0, 8)
-        P["fk:head"] = (6, 3, 12)
+        P["fk:head"] = (3, 2, 12)
         P["pole.R"] = (1.0, -0.4, -0.6)
         P["pole.L"] = (-0.5, -0.3, -1.0)
         return P
 
-    RIFLE_AIM = ("w", 0.0, 8.5, 42.6, 0, 0, 0, "rifle")   # grip at shoulder/cheek height, arms extended
+    RIFLE_AIM = ("w", 0.0, 9.0, 40.5, 0, 0, 0, "rifle")   # grip at shoulder height, arms extended, rifle below the chin
 
     def aim_rifle_at(ph):
         P = aim_base()
         s, c = math.sin(2 * math.pi * ph), math.cos(2 * math.pi * ph)
-        P["weapon"] = ("w", 0.0 + 0.15 * c, 8.5, 42.6 + 0.2 * s, 0.6 * c, 0.5 * s, 0, "rifle")
+        P["weapon"] = ("w", 0.0 + 0.15 * c, 9.0, 40.5 + 0.2 * s, 0.6 * c, 0.5 * s, 0, "rifle")
         P["pelvis"] = (0, 0, -0.8 - 0.2 * s)
         return P
 
