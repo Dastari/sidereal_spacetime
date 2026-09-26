@@ -10,7 +10,7 @@ import {
   type PrefabMount,
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
-import { memo, useEffect, useImperativeHandle, useMemo, useRef, useState, type Ref } from "react";
+import { memo, useEffect, useId, useImperativeHandle, useMemo, useRef, useState, type Ref } from "react";
 import {
   addMount,
   addRoom,
@@ -87,12 +87,15 @@ interface Props {
 
 function PlanCanvas({ doc, catalog, tools, selection, select, layers, commit, onStatus, handle }: Props) {
   const svg = useRef<SVGSVGElement>(null);
+  const clipId = `pf-deck-clip-${useId().replace(/[^a-zA-Z0-9_-]/g, "")}`;
   const [size, setSize] = useState({ w: 800, h: 600 });
   const [view, setView] = useState<PlanView>({ cx: 10, cy: 5, s: 28 });
   const [hover, setHover] = useState<Pt | null>(null);
   const [stroke, setStroke] = useState<Stroke | null>(null);
   const space = useRef(false);
   const fitted = useRef<string | null>(null);
+  /** True until the user pans or zooms; while set, the plan refits when the viewport resizes (e.g. the 3D preview opens). */
+  const autoFit = useRef(true);
   const mirror = tools.symmetry ? tools.centreline : null;
 
   // ------------------------------------------------------------ preview document during a drag
@@ -105,6 +108,7 @@ function PlanCanvas({ doc, catalog, tools, selection, select, layers, commit, on
   }, [doc, stroke, tools.volume, mirror]);
   const geoms = useMemo(() => geometriesOf(shown), [shown]);
   const interior = useMemo(() => deriveInterior(shown, 0, catalog), [shown, catalog]);
+  const deckOutline = geoms.find((g) => g.volume.id === interior.volume)?.outline ?? null;
   const mounts = useMemo(() => shown.mounts.map((m) => placeMount(m, catalog.get(m.component), geoms)), [shown, catalog, geoms]);
 
   // ------------------------------------------------------------ view
@@ -123,6 +127,7 @@ function PlanCanvas({ doc, catalog, tools, selection, select, layers, commit, on
   const Y = (y: number) => size.h / 2 - (y - view.cy) * view.s;
 
   const fit = () => {
+    autoFit.current = true;
     const xs = [...geoms.flatMap((g) => (g.volume.tiles.length ? [g.bounds[0], g.bounds[2]] : [])), ...mounts.flatMap((m) => [m.rect[0], m.rect[2]])];
     const ys = [...geoms.flatMap((g) => (g.volume.tiles.length ? [g.bounds[1], g.bounds[3]] : [])), ...mounts.flatMap((m) => [m.rect[1], m.rect[3]])];
     if (!xs.length) return setView({ cx: 0, cy: 0, s: 28 });
@@ -132,12 +137,19 @@ function PlanCanvas({ doc, catalog, tools, selection, select, layers, commit, on
   };
   useImperativeHandle(handle, () => ({
     fit,
-    focus: (p) => setView((v) => ({ cx: p[0], cy: p[1], s: Math.max(v.s, 24) })),
-    zoom: (f) => setView((v) => ({ ...v, s: Math.max(3, Math.min(160, v.s * f)) })),
+    focus: (p) => {
+      autoFit.current = false;
+      setView((v) => ({ cx: p[0], cy: p[1], s: Math.max(v.s, 24) }));
+    },
+    zoom: (f) => {
+      autoFit.current = false;
+      setView((v) => ({ ...v, s: Math.max(3, Math.min(160, v.s * f)) }));
+    },
   }));
   // Fit once per opened document, after the first measured layout.
   useEffect(() => {
-    if (fitted.current === doc.id || size.w <= 50) return;
+    if (size.w <= 50) return;
+    if (fitted.current === doc.id && !autoFit.current) return;
     fitted.current = doc.id;
     fit();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -151,6 +163,7 @@ function PlanCanvas({ doc, catalog, tools, selection, select, layers, commit, on
       const r = el.getBoundingClientRect();
       const px = e.clientX - r.left;
       const py = e.clientY - r.top;
+      autoFit.current = false;
       setView((v) => {
         const s = Math.max(3, Math.min(160, v.s * Math.exp(-e.deltaY * 0.0015)));
         const wx = v.cx + (px - size.w / 2) / v.s;
@@ -331,6 +344,7 @@ function PlanCanvas({ doc, catalog, tools, selection, select, layers, commit, on
     setHover(p);
     if (!stroke) return;
     if (stroke.kind === "pan") {
+      autoFit.current = false;
       setView({ ...stroke.view, cx: stroke.view.cx - (e.clientX - stroke.x) / stroke.view.s, cy: stroke.view.cy + (e.clientY - stroke.y) / stroke.view.s });
     } else if (stroke.kind === "paint") {
       const t = tileCandidate(p, tools.shape, tools.rot, tools.reflected);
@@ -476,10 +490,19 @@ function PlanCanvas({ doc, catalog, tools, selection, select, layers, commit, on
           {layers.hull && geoms.filter((g) => g.islands > 1).map((g) => (
             <path key={`isl-${g.volume.id}`} className="pf-islands" d={g.volume.tiles.map((t) => path(placedTilePolygon(t))).join("")} />
           ))}
-          {layers.rooms &&
-            shown.rooms.map((r) => (
-              <path key={r.id} className="pf-room" style={{ fill: ROOM_COLOURS[r.type] ?? "#3a4656" }} d={floorsByRoom.get(r.id) ?? ""} />
-            ))}
+          {/* Partial (sloped or curved) floor cells are whole cells in the data; clip their tint to the deck outline. */}
+          {deckOutline && (
+            <clipPath id={clipId}>
+              <path d={[path(deckOutline.outer), ...deckOutline.holes.map(path)].join("")} clipRule="evenodd" />
+            </clipPath>
+          )}
+          {layers.rooms && (
+            <g clipPath={deckOutline ? `url(#${clipId})` : undefined}>
+              {shown.rooms.map((r) => (
+                <path key={r.id} className="pf-room" style={{ fill: ROOM_COLOURS[r.type] ?? "#3a4656" }} d={floorsByRoom.get(r.id) ?? ""} />
+              ))}
+            </g>
+          )}
           {layers.rooms && shown.rooms.map((r) => <path key={`o-${r.id}`} className="pf-room-rect" d={rectPath(r.rect)} />)}
           {layers.hull && shown.skylights.map((s) => <path key={s.id} className="pf-skylight" d={rectPath([s.at[0], s.at[1], s.at[0] + s.size[0], s.at[1] + s.size[1]])} />)}
           {layers.walls && (
@@ -528,18 +551,21 @@ function PlanCanvas({ doc, catalog, tools, selection, select, layers, commit, on
           )}
         </g>
         <g className="pf-labels" aria-hidden="true">
+          {layers.mounts &&
+            view.s >= 26 &&
+            mounts
+              // Roof and interior parts sit over labelled rooms; name them only when zoomed in far enough not to collide.
+              .filter((m) => (m.mount.attach !== "interior" && m.mount.attach !== "top") || view.s >= 56)
+              .map((m) => (
+                <text key={m.mount.id} x={X((m.rect[0] + m.rect[2]) / 2)} y={Y((m.rect[1] + m.rect[3]) / 2)} className={`pf-mount-label ${m.mount.attach}`}>
+                  {m.mount.component.split(".")[0].slice(0, 10)}
+                </text>
+              ))}
           {layers.rooms &&
             view.s >= 9 &&
             interior.labels.map((l) => (
               <text key={l.room} x={X(l.at[0])} y={Y(l.at[1])} className="pf-room-label" style={{ fontSize: Math.min(13, Math.max(9, view.s * 0.34)) }}>
                 {l.text}
-              </text>
-            ))}
-          {layers.mounts &&
-            view.s >= 26 &&
-            mounts.map((m) => (
-              <text key={m.mount.id} x={X((m.rect[0] + m.rect[2]) / 2)} y={Y((m.rect[1] + m.rect[3]) / 2)} className="pf-mount-label">
-                {m.mount.component.split(".")[0].slice(0, 10)}
               </text>
             ))}
           {structural.length > 0 && (

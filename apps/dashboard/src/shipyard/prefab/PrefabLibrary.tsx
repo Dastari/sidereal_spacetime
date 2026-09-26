@@ -2,6 +2,7 @@
 import { BLUEPRINT_SIZE_CLASS_IDS, G, type BlueprintSizeClassId } from "@sidereal/content/construction-grammar";
 import { SHIP_THEME_IDS, prefabBounds, type PrefabComponentCatalog, type ShipPrefabDocumentV1, type ShipThemeId } from "@sidereal/content/ship-prefab";
 import { SHIP_THEMES } from "@sidereal/content/ship-themes";
+import { STARTER_CANDIDATES } from "@sidereal/content/prefabs";
 import { Copy, FileUp, Plus, Trash2 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { prefabBlueprintSvg } from "../../../../../packages/render/src/prefab-ship/blueprint-svg";
@@ -35,12 +36,15 @@ function Card({ entry, catalog, store }: { entry: LibraryEntry; catalog: PrefabC
   const [x0, y0, x1, y1] = prefabBounds(geometriesOf(d));
   const src = thumbnail(d, catalog);
   return (
-    <article className="pf-card" data-prefab={entry.id}>
+    <article className="pf-card" data-prefab={entry.id} data-starter={STARTER_CANDIDATES.includes(entry.id)}>
       <button className="pf-card-open" onClick={() => store.open(entry.id)} aria-label={`Open ${d.name}`}>
         {src ? <img src={src} alt="" /> : <span className="pf-card-empty">No plan yet</span>}
       </button>
       <div className="pf-card-body">
-        <h2>{d.name}</h2>
+        <h2>
+          {d.name}
+          {STARTER_CANDIDATES.includes(entry.id) && <small>Starter candidate</small>}
+        </h2>
         <p className="pf-card-id">{entry.id}</p>
         <p>
           {[d.role, d.faction].filter(Boolean).join(", ") || "No role set"}. Size {d.sizeClass}, {x1 - x0} x {y1 - y0} m.

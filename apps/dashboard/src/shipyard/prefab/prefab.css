@@ -1,0 +1,1659 @@
+/*
+ * Shipyard prefab editor. Builds on the Creator tokens (editor/theme.css, style.css) and the
+ * shared .layout-* chrome (layout.css, workbench.css). The one expressive surface is the
+ * blueprint plan: a deep drafting-film field where hull, rooms, walls and hardpoints read as
+ * distinct line weights. Everything around it stays quiet.
+ */
+.prefab-editor,
+.prefab-library {
+  --pf-left: 272px;
+  --pf-right: 312px;
+  --pf-plan: #061725;
+  --pf-plan-edge: #0b2233;
+  --pf-grid-minor: rgba(96, 164, 204, 0.13);
+  --pf-grid-major: rgba(106, 180, 222, 0.3);
+  --pf-hull: #27465b;
+  --pf-hull-line: #88bcd6;
+  --pf-plate: #1c3446;
+  --pf-wall: #e6f0f6;
+  --pf-glass: #72dcff;
+  --pf-door: #ffb452;
+  --pf-door-ext: #ff8757;
+  --pf-good: var(--success, #39d799);
+  --pf-bad: #ff6470;
+  --pf-warn: #f4b95f;
+  --pf-sym: #d992ff;
+  --pf-mono: "Barlow", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.prefab-editor kbd,
+.prefab-library kbd {
+  font: 500 10px/1 Barlow, sans-serif;
+  color: var(--muted);
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 3px;
+  padding: 2px 4px;
+  background: var(--creator-input);
+  min-width: 16px;
+  text-align: center;
+}
+
+/* ---------------------------------------------------------------- document bar */
+.prefab-editor .pf-docbar {
+  gap: 12px;
+  min-height: 48px;
+}
+.prefab-editor .pf-docbar .pf-back {
+  min-height: 30px;
+  padding: 4px 9px 4px 5px;
+  gap: 3px;
+  color: var(--muted);
+  background: transparent;
+  border-color: transparent;
+}
+.prefab-editor .pf-docbar .pf-back:hover:not(:disabled) {
+  color: var(--text);
+}
+.pf-title {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.prefab-editor .pf-title h1 {
+  font: 600 19px/1.15 "Barlow Condensed", sans-serif;
+  letter-spacing: 0.01em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pf-title span {
+  font-size: 11px;
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.prefab-editor .layout-save-status[data-state="saved"] i {
+  background: var(--pf-good);
+}
+.prefab-editor .layout-save-status[data-state="pending"] i {
+  background: var(--pf-warn);
+}
+.prefab-editor .layout-save-status[data-state="error"] {
+  color: var(--pf-bad);
+}
+.prefab-editor .layout-save-status[data-state="error"] i {
+  background: var(--pf-bad);
+}
+.prefab-editor .layout-file-menu > summary {
+  list-style: none;
+  font-size: 13px;
+  border-radius: 3px;
+  min-height: 34px;
+  display: flex;
+  align-items: center;
+}
+.prefab-editor .layout-file-menu > summary::-webkit-details-marker {
+  display: none;
+}
+.prefab-editor .layout-file-menu > summary:hover {
+  background: var(--creator-hover);
+  border-color: var(--accent);
+}
+.prefab-editor .layout-file-menu > summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+.prefab-editor .layout-file-menu > div {
+  background: var(--creator-surface);
+}
+
+/* ---------------------------------------------------------------- tool strip */
+.pf-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--line);
+  background: var(--creator-surface);
+  flex-shrink: 0;
+  overflow-x: auto;
+  scrollbar-width: thin;
+}
+.prefab-editor .pf-toolbar button {
+  min-height: 30px;
+  padding: 4px 8px;
+  gap: 6px;
+  font-size: 12px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.pf-tools {
+  display: flex;
+  gap: 2px;
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--creator-input);
+  flex-shrink: 0;
+}
+.prefab-editor .pf-tools button {
+  border-color: transparent;
+  background: transparent;
+  padding: 4px 8px 4px 7px;
+}
+.prefab-editor .pf-tools button[aria-pressed="true"] {
+  border-color: var(--accent);
+  background: var(--creator-active);
+  color: var(--text);
+}
+.prefab-editor .pf-tools button[aria-pressed="true"] svg {
+  color: var(--accent);
+}
+.pf-tools kbd {
+  margin-left: 1px;
+}
+.pf-divider {
+  width: 1px;
+  height: 22px;
+  background: var(--line);
+  flex-shrink: 0;
+}
+.pf-spacer {
+  flex: 1 0 8px;
+}
+.pf-layers {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.prefab-editor .pf-layers button {
+  font-size: 11px;
+  min-height: 26px;
+  padding: 3px 8px;
+}
+.prefab-editor .pf-layers button[aria-pressed="false"] {
+  color: var(--muted);
+  background: transparent;
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in srgb, var(--muted) 60%, transparent);
+}
+.prefab-editor .pf-layers button[aria-pressed="true"] {
+  box-shadow: none;
+}
+.prefab-editor button[data-symmetry][aria-pressed="true"] {
+  border-color: var(--pf-sym);
+  box-shadow: inset 0 -2px var(--pf-sym);
+}
+.pf-centreline {
+  width: 128px;
+  flex-shrink: 0;
+}
+.pf-centreline .pf-field {
+  grid-template-columns: auto 56px;
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------- workspace */
+.pf-workspace {
+  display: grid;
+  grid-template-columns: var(--pf-left) minmax(0, 1fr) var(--pf-right);
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+.prefab-editor .pf-left {
+  grid-column: 1;
+  border-right: 1px solid var(--line);
+}
+.prefab-editor .pf-right {
+  grid-column: 3;
+  border-left: 1px solid var(--line);
+}
+.pf-center {
+  grid-column: 2;
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  background: var(--creator-canvas);
+}
+.prefab-editor[data-preview="true"] .pf-center {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.pf-tool-heading h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.pf-tool-heading .layout-note {
+  margin-top: 0;
+}
+.prefab-editor .layout-section h2 {
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+.prefab-editor .pf-right .layout-tabs button b {
+  font-weight: 600;
+  font-size: 10px;
+  min-width: 18px;
+  padding: 1px 5px;
+  border-radius: 8px;
+  color: var(--creator-input);
+  background: var(--pf-warn);
+}
+.prefab-editor .pf-right .layout-tabs button b.bad {
+  background: var(--pf-bad);
+}
+
+/* ---------------------------------------------------------------- form parts */
+.pf-field {
+  display: grid;
+  gap: 4px;
+  margin: 0 0 9px;
+  min-width: 0;
+  font-size: 12px;
+  border: 0;
+  padding: 0;
+}
+.pf-field > span,
+.pf-field > legend {
+  color: var(--muted);
+  font-size: 11px;
+  padding: 0;
+}
+.pf-field > span small {
+  color: color-mix(in srgb, var(--muted) 70%, transparent);
+}
+.pf-field > small {
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.45;
+}
+.prefab-editor .pf-field textarea,
+.prefab-library .pf-field textarea {
+  resize: vertical;
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--creator-input);
+  padding: 6px 8px;
+  font: inherit;
+  line-height: 1.45;
+}
+.prefab-editor .pf-field :is(input, select, textarea):focus-visible {
+  outline-offset: 0;
+  border-color: var(--accent);
+}
+.pf-number input {
+  text-align: right;
+}
+.pf-inline {
+  display: flex;
+  gap: 5px;
+}
+.prefab-editor .pf-inline button {
+  min-height: 30px;
+  font-size: 12px;
+}
+.pf-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  font-size: 12px;
+  color: var(--text);
+  cursor: pointer;
+}
+.pf-grid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 8px;
+}
+.pf-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin: 8px 0;
+}
+.prefab-editor .pf-row button,
+.prefab-library .pf-row button {
+  min-height: 29px;
+  padding: 4px 9px;
+  font-size: 12px;
+}
+.pf-fields {
+  margin-top: 10px;
+}
+.pf-segmented {
+  display: flex;
+  gap: 0;
+  margin: 6px 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  overflow: hidden;
+  background: var(--creator-input);
+}
+.prefab-editor .pf-segmented button,
+.prefab-library .pf-segmented button {
+  flex: 1;
+  border: 0;
+  border-radius: 0;
+  min-height: 28px;
+  padding: 3px 6px;
+  font-size: 12px;
+  background: transparent;
+  text-transform: capitalize;
+}
+.prefab-editor .pf-segmented button + button,
+.prefab-library .pf-segmented button + button {
+  border-left: 1px solid var(--line);
+}
+.prefab-editor .pf-segmented button[aria-checked="true"],
+.prefab-library .pf-segmented button[aria-checked="true"] {
+  background: var(--creator-active);
+  color: var(--accent);
+  box-shadow: inset 0 -2px var(--accent);
+}
+.prefab-editor .pf-danger,
+.prefab-library .pf-danger {
+  color: #ffb3a8;
+}
+.prefab-editor .pf-danger:hover:not(:disabled),
+.prefab-library .pf-danger:hover:not(:disabled) {
+  border-color: var(--pf-bad);
+  background: #3a1d24;
+}
+.pf-right .layout-section > .pf-danger {
+  margin: 12px 0 4px;
+}
+.prefab-editor .pf-link,
+.prefab-library .pf-link {
+  color: var(--accent);
+  background: none;
+  border: 0;
+  min-height: 0;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.prefab-editor .pf-link:hover:not(:disabled),
+.prefab-library .pf-link:hover:not(:disabled) {
+  background: none;
+  color: var(--text);
+}
+.pf-ok {
+  color: var(--pf-good);
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 10px;
+}
+.pf-error {
+  color: #ff9a8c;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+/* ---------------------------------------------------------------- left: volumes and tiles */
+.pf-volume-list {
+  display: grid;
+  gap: 3px;
+  max-height: 220px;
+  overflow: auto;
+  scrollbar-width: thin;
+}
+.prefab-editor .pf-volume-row {
+  display: grid;
+  grid-template-columns: 12px minmax(0, 1fr) auto;
+  justify-content: stretch;
+  gap: 8px;
+  min-height: 30px;
+  padding: 4px 8px;
+  text-align: left;
+  font-size: 12px;
+  background: transparent;
+}
+.prefab-editor .pf-volume-row[aria-selected="true"] {
+  background: var(--creator-active);
+  box-shadow: inset 2px 0 var(--accent);
+}
+.pf-volume-row span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pf-volume-row small {
+  color: var(--muted);
+  font-size: 11px;
+  white-space: nowrap;
+}
+.pf-kind {
+  width: 12px;
+  height: 8px;
+  border-radius: 1px;
+  background: #4f86a6;
+  box-shadow: 0 0 0 1px #0006;
+}
+.pf-kind.plate {
+  height: 4px;
+  background: repeating-linear-gradient(90deg, #6d98b0 0 3px, transparent 3px 5px);
+}
+.pf-tile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+.prefab-editor .pf-tile-grid button {
+  flex-direction: column;
+  gap: 3px;
+  padding: 5px 2px 4px;
+  min-height: 62px;
+  background: var(--creator-input);
+}
+.pf-tile-grid svg {
+  width: 32px;
+  height: 32px;
+}
+.pf-tile-grid span {
+  font-size: 10px;
+  line-height: 1.15;
+  color: var(--muted);
+  text-align: center;
+}
+.prefab-editor .pf-tile-grid button[aria-pressed="true"] span {
+  color: var(--text);
+}
+.pf-tile-cell {
+  fill: none;
+  stroke: var(--pf-grid-major);
+  stroke-width: 0.04;
+  stroke-dasharray: 0.12 0.1;
+}
+.pf-tile-shape {
+  fill: #5d8aa3;
+  stroke: #cfe6f2;
+  stroke-width: 0.06;
+  stroke-linejoin: round;
+}
+button[aria-pressed="true"] .pf-tile-shape {
+  fill: color-mix(in srgb, var(--accent) 55%, #1a4a60);
+  stroke: #eafaff;
+}
+.pf-tile-inspect {
+  display: grid;
+  place-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: var(--pf-plan);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+.pf-tile-inspect svg {
+  width: 64px;
+  height: 64px;
+}
+
+/* ---------------------------------------------------------------- left: rooms, edges */
+.pf-room-types {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px;
+  margin-bottom: 10px;
+}
+.prefab-editor .pf-room-types button {
+  justify-content: flex-start;
+  gap: 7px;
+  min-height: 28px;
+  padding: 3px 7px;
+  font-size: 12px;
+  text-transform: capitalize;
+  background: var(--creator-input);
+}
+.pf-room-types i {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  flex-shrink: 0;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+}
+.pf-room-types small {
+  margin-left: auto;
+  font-size: 10px;
+  color: var(--accent);
+  text-transform: none;
+}
+.pf-edge-types {
+  display: grid;
+  gap: 3px;
+}
+.prefab-editor .pf-edge-types button {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  grid-template-rows: auto auto;
+  justify-content: stretch;
+  align-items: center;
+  column-gap: 9px;
+  row-gap: 1px;
+  padding: 5px 8px;
+  text-align: left;
+  background: var(--creator-input);
+}
+.pf-edge-types span {
+  font-size: 12px;
+}
+.pf-edge-types small {
+  grid-column: 2;
+  font-size: 10px;
+  color: var(--muted);
+}
+.pf-edge-swatch {
+  grid-row: 1 / span 2;
+  width: 26px;
+  height: 4px;
+  border-radius: 1px;
+  background: var(--pf-wall);
+}
+.pf-edge-swatch.t-wall-glazed,
+.pf-edge-swatch.t-window {
+  background: repeating-linear-gradient(90deg, var(--pf-glass) 0 5px, transparent 5px 7px);
+}
+.pf-edge-swatch.t-window {
+  height: 2px;
+}
+.pf-edge-swatch.t-wall-half {
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #a9bcc8 0 3px, transparent 3px 6px);
+}
+.pf-edge-swatch.t-open {
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #d6c28a 0 2px, transparent 2px 5px);
+}
+.pf-edge-swatch[class*="t-door"] {
+  height: 6px;
+  background: var(--pf-door);
+}
+.pf-edge-swatch.t-door-airlock {
+  background: linear-gradient(90deg, var(--pf-door) 0 40%, var(--pf-door-ext) 40% 60%, var(--pf-door) 60%);
+}
+.pf-edge-swatch.t-door-blast {
+  background: repeating-linear-gradient(135deg, var(--pf-door) 0 3px, #5a3a14 3px 5px);
+}
+.pf-edge-swatch.t-door-forcefield {
+  background: repeating-linear-gradient(90deg, #7af3ff 0 2px, transparent 2px 4px);
+}
+
+/* ---------------------------------------------------------------- left: mount palette */
+.pf-mount-current {
+  background: var(--creator-active);
+}
+.pf-spec-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.pf-size {
+  display: inline-grid;
+  place-items: center;
+  min-width: 26px;
+  font: 600 10px/1 Barlow, sans-serif;
+  padding: 3px 4px;
+  border-radius: 3px;
+  border: 1px solid var(--line);
+  color: var(--text);
+  background: var(--creator-input);
+}
+.pf-size.s-MD {
+  border-color: #3f6f89;
+}
+.pf-size.s-LG {
+  border-color: #5f89a1;
+  color: #cde8f6;
+}
+.pf-size.s-XL {
+  border-color: var(--warm);
+  color: var(--warm);
+}
+.pf-size.over {
+  border-color: var(--pf-bad);
+  color: var(--pf-bad);
+  text-decoration: line-through;
+}
+.prefab-editor .pf-search {
+  margin-bottom: 8px;
+}
+.pf-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin-bottom: 4px;
+}
+.prefab-editor .pf-chips button {
+  min-height: 24px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  text-transform: capitalize;
+  background: transparent;
+}
+.prefab-editor .pf-chips button[aria-checked="true"] {
+  box-shadow: none;
+  color: var(--accent);
+}
+.pf-palette {
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+}
+.pf-palette-group {
+  display: grid;
+  gap: 3px;
+}
+.pf-palette-group h3 {
+  font: 600 11px/1.2 Barlow, sans-serif;
+  color: var(--muted);
+  margin: 0 0 3px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid color-mix(in srgb, var(--line) 60%, transparent);
+}
+.prefab-editor .pf-component {
+  display: grid;
+  grid-template-columns: 4px minmax(0, 1fr) auto;
+  justify-content: stretch;
+  align-items: center;
+  gap: 9px;
+  min-height: 38px;
+  padding: 4px 7px 4px 4px;
+  text-align: left;
+  background: var(--creator-input);
+  border-color: transparent;
+}
+.prefab-editor .pf-component[aria-pressed="true"] {
+  border-color: var(--accent);
+}
+.pf-component i {
+  align-self: stretch;
+  border-radius: 2px;
+}
+.pf-component span {
+  font-size: 12px;
+  line-height: 1.25;
+  min-width: 0;
+}
+.pf-component small {
+  display: block;
+  font-size: 10px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- plan */
+.prefab-plan-wrap {
+  position: relative;
+  grid-row: 1;
+  grid-column: 1;
+  min-width: 0;
+  min-height: 0;
+  overflow: clip;
+  background:
+    radial-gradient(ellipse at 50% 45%, #0a2233 0%, var(--pf-plan) 70%),
+    var(--pf-plan);
+  box-shadow: inset 0 0 0 1px var(--pf-plan-edge);
+  isolation: isolate;
+}
+.prefab-plan {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  user-select: none;
+  outline: none;
+}
+.prefab-plan:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+.pf-world :is(path, circle) {
+  vector-effect: non-scaling-stroke;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+}
+.pf-grid-minor,
+.pf-grid-major,
+.pf-axis {
+  fill: none;
+  shape-rendering: crispEdges;
+}
+.pf-grid-minor {
+  stroke: var(--pf-grid-minor);
+  stroke-width: 1;
+}
+.pf-grid-major {
+  stroke: var(--pf-grid-major);
+  stroke-width: 1;
+}
+.pf-axis {
+  stroke: rgba(54, 200, 244, 0.35);
+  stroke-width: 1;
+  stroke-dasharray: 6 4;
+}
+.pf-limit {
+  fill: none;
+  stroke: rgba(158, 196, 216, 0.45);
+  stroke-width: 1;
+  stroke-dasharray: 10 6;
+}
+.pf-limit.over {
+  stroke: var(--pf-bad);
+  stroke-width: 1.5;
+}
+.pf-volume {
+  fill: var(--pf-hull);
+  fill-rule: evenodd;
+  stroke: var(--pf-hull-line);
+  stroke-width: 1.5;
+}
+.pf-volume.hull.h-deck {
+  fill: #2c5068;
+}
+.pf-volume.hull.h-pod {
+  fill: #253f52;
+}
+.pf-volume.hull.h-cabin {
+  fill: #2a4a5a;
+}
+.pf-volume.plate {
+  fill: var(--pf-plate);
+  stroke: #6d98b0;
+  stroke-width: 1;
+  stroke-dasharray: 5 3;
+}
+.pf-volume.plate.h-plate {
+  fill: #1a2f3f;
+}
+.pf-volume.active {
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-dasharray: none;
+}
+.pf-tiles {
+  fill: rgba(54, 200, 244, 0.05);
+  stroke: rgba(170, 222, 245, 0.55);
+  stroke-width: 1;
+}
+.pf-islands {
+  fill: none;
+  stroke: var(--pf-warn);
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+}
+.pf-room {
+  fill-opacity: 0.62;
+  stroke: none;
+}
+.pf-room-rect {
+  fill: none;
+  stroke: rgba(230, 240, 246, 0.25);
+  stroke-width: 1;
+  stroke-dasharray: 2 4;
+}
+.pf-skylight {
+  fill: rgba(114, 220, 255, 0.22);
+  stroke: var(--pf-glass);
+  stroke-width: 1.5;
+}
+.pf-exterior {
+  fill: none;
+  stroke: var(--pf-wall);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+}
+.pf-partition {
+  fill: none;
+  stroke: #cddbe4;
+  stroke-width: 2.5;
+  stroke-linecap: round;
+}
+.pf-glazed {
+  fill: none;
+  stroke: var(--pf-glass);
+  stroke-width: 2.5;
+  stroke-dasharray: 7 3;
+  stroke-linecap: butt;
+}
+.pf-half {
+  fill: none;
+  stroke: #a9bcc8;
+  stroke-width: 1.5;
+  stroke-dasharray: 3 3;
+  stroke-linecap: butt;
+}
+.pf-open {
+  fill: none;
+  stroke: #d6c28a;
+  stroke-width: 1.5;
+  stroke-dasharray: 1 4;
+  stroke-linecap: round;
+}
+.pf-door {
+  fill: none;
+  stroke: var(--pf-door);
+  stroke-width: 5;
+  stroke-linecap: butt;
+}
+.pf-door.exterior {
+  stroke: var(--pf-door-ext);
+  stroke-width: 6;
+}
+.pf-post {
+  fill: #eef6fa;
+  stroke: none;
+}
+.pf-socket {
+  fill: rgba(159, 183, 255, 0.1);
+  stroke: rgba(159, 183, 255, 0.55);
+  stroke-width: 1;
+  stroke-dasharray: 2 2;
+}
+.pf-station {
+  fill: var(--accent);
+  stroke: #03131d;
+  stroke-width: 1.5;
+}
+.pf-mount {
+  fill-opacity: 0.2;
+  stroke-width: 1.5;
+  stroke-opacity: 0.95;
+}
+.pf-mount.interior {
+  fill-opacity: 0.32;
+  stroke-width: 1;
+}
+.pf-mount.edge {
+  fill-opacity: 0.45;
+  stroke-width: 2;
+}
+.pf-mount.unknown {
+  fill: var(--pf-bad) !important;
+  stroke: var(--pf-bad) !important;
+  stroke-dasharray: 4 3;
+}
+.pf-symmetry {
+  fill: none;
+  stroke: var(--pf-sym);
+  stroke-width: 1.5;
+  stroke-dasharray: 12 4 2 4;
+}
+.pf-hover,
+.pf-hover-line {
+  fill: rgba(230, 240, 246, 0.07);
+  stroke: rgba(230, 240, 246, 0.8);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 3;
+  pointer-events: none;
+}
+.pf-hover-line {
+  fill: none;
+  stroke-width: 7;
+  stroke-opacity: 0.45;
+  stroke-dasharray: none;
+}
+.pf-selection,
+.pf-selection-line {
+  fill: rgba(54, 200, 244, 0.16);
+  stroke: var(--accent);
+  stroke-width: 2.5;
+  pointer-events: none;
+}
+.pf-selection-line {
+  fill: none;
+  stroke-width: 8;
+  stroke-opacity: 0.7;
+}
+.pf-ghost {
+  pointer-events: none;
+}
+.pf-ghost path {
+  fill: rgba(57, 215, 153, 0.28);
+  stroke: var(--pf-good);
+  stroke-width: 2;
+}
+.pf-ghost.bad path {
+  fill: rgba(255, 100, 112, 0.26);
+  stroke: var(--pf-bad);
+  stroke-dasharray: 5 3;
+}
+.pf-ghost.erase path {
+  fill: rgba(255, 100, 112, 0.34);
+  stroke: var(--pf-bad);
+  stroke-dasharray: none;
+}
+.pf-ghost path.line {
+  fill: none;
+  stroke-width: 7;
+  stroke-linecap: butt;
+  stroke-opacity: 0.85;
+  stroke-dasharray: none;
+}
+.pf-labels text {
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: #04121c;
+  stroke-width: 3px;
+  stroke-linejoin: round;
+}
+.pf-room-label {
+  fill: #eef6fa;
+  font: 600 11px Barlow, sans-serif;
+  letter-spacing: 0.04em;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.pf-mount-label {
+  fill: #dbe8f0;
+  font: 500 9px Barlow, sans-serif;
+  text-anchor: middle;
+  dominant-baseline: central;
+  opacity: 0.85;
+}
+.pf-limit-label {
+  fill: rgba(158, 196, 216, 0.75);
+  font: 500 10px Barlow, sans-serif;
+}
+.pf-limit-label.over {
+  fill: var(--pf-bad);
+}
+.prefab-compass {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 64px;
+  height: 64px;
+  pointer-events: none;
+  font-size: 10px;
+  color: #8db2c9;
+  border-left: 1px solid rgba(141, 178, 201, 0.55);
+  border-bottom: 1px solid rgba(141, 178, 201, 0.55);
+}
+.prefab-compass span {
+  position: absolute;
+}
+.prefab-compass .fore {
+  right: -2px;
+  bottom: 3px;
+}
+.prefab-compass .fore::after {
+  content: "";
+  position: absolute;
+  right: -8px;
+  bottom: -7px;
+  border: 4px solid transparent;
+  border-left: 6px solid rgba(141, 178, 201, 0.8);
+}
+.prefab-compass .port {
+  left: 5px;
+  top: -2px;
+}
+.prefab-compass .port::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  top: -9px;
+  border: 4px solid transparent;
+  border-bottom: 6px solid rgba(141, 178, 201, 0.8);
+}
+.prefab-cursor {
+  position: absolute;
+  left: 14px;
+  bottom: 10px;
+  font-size: 11px;
+  color: #8fb4c9;
+  pointer-events: none;
+  white-space: pre;
+}
+.prefab-scale {
+  position: absolute;
+  right: 14px;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #a5c9de;
+  pointer-events: none;
+}
+.prefab-scale i {
+  display: block;
+  height: 5px;
+  max-width: 240px;
+  border: 1px solid #a5c9de;
+  border-top: 0;
+}
+.prefab-ghost-tip {
+  position: absolute;
+  z-index: 3;
+  max-width: 280px;
+  padding: 5px 8px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #ffe1e3;
+  background: #3a121acc;
+  border: 1px solid var(--pf-bad);
+  border-radius: 3px;
+  pointer-events: none;
+  box-shadow: 0 4px 14px #0008;
+}
+
+/* ---------------------------------------------------------------- 3D preview */
+.prefab-preview {
+  grid-row: 1;
+  grid-column: 2;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  min-height: 0;
+  border-left: 1px solid var(--line);
+  background: var(--viewport-background, #07131b);
+}
+.prefab-preview > header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--line);
+  background: var(--creator-surface);
+  min-height: 40px;
+}
+.prefab-preview > header strong {
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.prefab-preview > header .pf-segmented {
+  margin: 0;
+  width: 150px;
+  flex-shrink: 0;
+}
+.pf-preview-metrics {
+  font-size: 10px;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.prefab-preview-canvas {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  overflow: clip;
+}
+.prefab-preview-status {
+  position: absolute;
+  inset: auto 12px 12px;
+  z-index: 2;
+  font-size: 12px;
+  color: var(--muted);
+  padding: 6px 9px;
+  background: var(--creator-input);
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  pointer-events: none;
+  width: fit-content;
+}
+.prefab-preview-status.failed {
+  color: #ffc9b8;
+  border-color: #875e3c;
+  background: #3d2b24;
+}
+section.prefab-preview > .prefab-preview-status:only-child {
+  position: static;
+  margin: auto;
+}
+
+/* ---------------------------------------------------------------- right: stats and issues */
+.pf-stats dl {
+  margin-top: 0;
+  gap: 7px 10px;
+}
+.pf-stats dd[data-tone="good"] {
+  color: var(--pf-good);
+}
+.pf-stats dd[data-tone="bad"] {
+  color: var(--pf-bad);
+  font-weight: 600;
+}
+.pf-stats dt[title] {
+  text-decoration: underline dotted color-mix(in srgb, var(--muted) 60%, transparent);
+  text-underline-offset: 3px;
+  cursor: help;
+}
+.pf-issues li button {
+  display: grid;
+  gap: 2px;
+}
+.prefab-editor .layout-validation li button:hover:not(:disabled) {
+  background: var(--creator-hover);
+}
+.pf-issues small {
+  font-size: 10px;
+  color: #7fa3b8;
+  margin-top: 3px;
+}
+.prefab-editor .layout-validation li button {
+  min-height: 0;
+  border: 0;
+  border-radius: 0;
+  justify-content: flex-start;
+}
+.pf-right .layout-section dl + .layout-note {
+  margin-top: 10px;
+}
+
+/* ---------------------------------------------------------------- keyboard overlay */
+.pf-keys {
+  position: absolute;
+  top: 12px;
+  right: 88px;
+  z-index: 6;
+  width: min(380px, calc(100% - 100px));
+  max-height: calc(100% - 24px);
+  overflow: auto;
+  padding: 12px 14px;
+  background: color-mix(in srgb, var(--creator-surface) 96%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 0 12px 32px #0009;
+}
+.pf-keys header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.pf-keys h2 {
+  font: 600 13px Barlow, sans-serif;
+}
+.prefab-editor .pf-keys header button {
+  min-height: 26px;
+  font-size: 11px;
+}
+.pf-keys dl {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+}
+.pf-keys dl > div {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  align-items: baseline;
+  gap: 10px;
+  font-size: 12px;
+}
+.pf-keys dt {
+  text-align: right;
+}
+.pf-keys dd {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- status bar */
+.prefab-editor .pf-statusbar {
+  gap: 16px;
+  min-height: 30px;
+}
+.pf-statusbar > span {
+  white-space: nowrap;
+}
+.prefab-editor .pf-statusbar > .pf-status {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--text);
+}
+.pf-status[data-tone="ok"] {
+  color: var(--pf-good) !important;
+}
+.pf-status[data-tone="bad"] {
+  color: #ff9aa2 !important;
+}
+.pf-cursor {
+  color: var(--muted);
+}
+.prefab-editor .pf-issue-count {
+  min-height: 22px;
+  padding: 2px 9px;
+  border-radius: 11px;
+  font-size: 11px;
+}
+.pf-issue-count[data-tone="good"] {
+  color: var(--pf-good);
+  border-color: color-mix(in srgb, var(--pf-good) 45%, var(--line));
+}
+.pf-issue-count[data-tone="warn"] {
+  color: var(--pf-warn);
+  border-color: color-mix(in srgb, var(--pf-warn) 45%, var(--line));
+}
+.pf-issue-count[data-tone="bad"] {
+  color: #ffc2c6;
+  border-color: var(--pf-bad);
+  background: #3a1a22;
+}
+
+/* ---------------------------------------------------------------- publish dialog */
+.layout-editor dialog.pf-publish {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  transform: none;
+  width: min(640px, calc(100vw - 32px));
+  height: fit-content;
+  max-height: 86dvh;
+  padding: 0;
+  overflow: auto;
+  box-shadow: 0 24px 80px #000a;
+  border-color: var(--line);
+}
+.pf-dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: var(--creator-surface);
+  z-index: 1;
+}
+.pf-dialog-head h2 {
+  font: 600 20px "Barlow Condensed", sans-serif;
+}
+.layout-editor .pf-publish .pf-dialog-head button {
+  margin: 0;
+  min-height: 28px;
+  font-size: 12px;
+}
+.pf-publish-step {
+  position: relative;
+  padding: 14px 18px 16px 34px;
+  border-bottom: 1px solid var(--line);
+}
+.pf-publish-step:last-child {
+  border-bottom: 0;
+}
+.pf-publish-step::before {
+  content: "";
+  position: absolute;
+  left: 16px;
+  top: 19px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+.pf-publish-step[data-state="pass"]::before {
+  background: var(--pf-good);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pf-good) 25%, transparent);
+}
+.pf-publish-step[data-state="fail"]::before {
+  background: var(--pf-bad);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--pf-bad) 25%, transparent);
+}
+.pf-publish-step[data-state="info"]::before {
+  background: var(--accent);
+}
+.pf-publish-step h3 {
+  font: 600 14px Barlow, sans-serif;
+  margin: 0 0 6px;
+}
+.layout-editor .pf-publish-step p {
+  margin: 0 0 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.pf-publish-step[data-state="pass"] > p {
+  color: var(--pf-good);
+}
+.layout-editor .pf-publish-step button {
+  margin: 4px 6px 0 0;
+  font-size: 12px;
+}
+.pf-publish-step .layout-validation {
+  margin-top: 4px;
+}
+.pf-authority {
+  display: grid;
+  gap: 8px;
+}
+.layout-editor .pf-authority > p {
+  margin: 0;
+}
+.pf-authority .pf-row button {
+  margin: 0;
+}
+.pf-blueprint-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 7px 9px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  font-size: 12px;
+}
+.pf-blueprint-row small {
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+/* ---------------------------------------------------------------- library */
+.prefab-library {
+  overflow: auto;
+}
+.pf-library-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 22px 28px 18px;
+  border-bottom: 1px solid var(--line);
+  background: var(--creator-surface);
+}
+.pf-library-head h1 {
+  font: 600 30px/1.1 "Barlow Condensed", sans-serif;
+  letter-spacing: 0.01em;
+}
+.pf-library-head p {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 4px;
+  max-width: 64ch;
+}
+.pf-library-body {
+  display: grid;
+  grid-template-columns: 300px minmax(0, 1fr);
+  align-items: start;
+  gap: 24px;
+  padding: 22px 28px 40px;
+}
+.pf-new {
+  position: sticky;
+  top: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--creator-surface);
+}
+.pf-new h2 {
+  font: 600 15px Barlow, sans-serif;
+  margin-bottom: 12px;
+}
+.pf-new .pf-field {
+  margin-bottom: 12px;
+}
+.pf-library-lists > h2 {
+  font: 600 15px Barlow, sans-serif;
+  margin: 0 0 12px;
+}
+.pf-library-lists > h2 ~ h2 {
+  margin-top: 28px;
+}
+.pf-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 14px;
+}
+.pf-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--creator-surface);
+  overflow: hidden;
+}
+.pf-card:hover,
+.pf-card:focus-within {
+  border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+}
+.pf-card[data-starter="true"] {
+  border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
+}
+.prefab-library .pf-card-open {
+  display: grid;
+  place-items: center;
+  height: 150px;
+  padding: 10px;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  background:
+    linear-gradient(var(--pf-grid-minor) 1px, transparent 1px) 0 0 / 10px 10px,
+    linear-gradient(90deg, var(--pf-grid-minor) 1px, transparent 1px) 0 0 / 10px 10px,
+    var(--pf-plan);
+}
+.prefab-library .pf-card-open:hover:not(:disabled) {
+  background:
+    linear-gradient(var(--pf-grid-major) 1px, transparent 1px) 0 0 / 10px 10px,
+    linear-gradient(90deg, var(--pf-grid-major) 1px, transparent 1px) 0 0 / 10px 10px,
+    var(--pf-plan);
+}
+.pf-card-open img {
+  max-width: 100%;
+  max-height: 128px;
+  object-fit: contain;
+}
+.pf-card-empty {
+  font-size: 12px;
+  color: var(--muted);
+}
+.pf-card-body {
+  display: grid;
+  gap: 5px;
+  padding: 12px 14px 10px;
+}
+.pf-card-body h2 {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font: 600 18px/1.15 "Barlow Condensed", sans-serif;
+}
+.pf-card-body h2 small {
+  font: 500 10px Barlow, sans-serif;
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
+  border-radius: 3px;
+  padding: 1px 5px;
+}
+.pf-card-body > p {
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.pf-card-body > .pf-card-id {
+  font-size: 11px;
+  color: #7fa3b8;
+}
+.pf-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.pf-card-body .pf-row {
+  margin: 4px 0 0;
+}
+
+/* ---------------------------------------------------------------- theme swatches */
+.pf-swatches {
+  display: inline-flex;
+  gap: 1px;
+  padding: 1px;
+  border: 1px solid var(--line);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+.pf-swatches i {
+  width: 9px;
+  height: 12px;
+}
+.pf-themes {
+  display: grid;
+  gap: 4px;
+}
+.prefab-editor .pf-themes button,
+.prefab-library .pf-themes button {
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 34px;
+  padding: 4px 8px;
+  font-size: 12px;
+  background: var(--creator-input);
+}
+.prefab-editor .pf-themes button[aria-checked="true"],
+.prefab-library .pf-themes button[aria-checked="true"] {
+  border-color: var(--accent);
+  background: var(--creator-active);
+  box-shadow: inset 2px 0 var(--accent);
+}
+.pf-themes.compact {
+  grid-template-columns: 1fr;
+}
+.pf-themes.compact .pf-swatches i {
+  width: 7px;
+  height: 10px;
+}
+
+/* ---------------------------------------------------------------- responsive */
+@media (max-width: 1400px) {
+  .prefab-editor,
+  .prefab-library {
+    --pf-left: 248px;
+    --pf-right: 288px;
+  }
+  .pf-tools kbd {
+    display: none;
+  }
+}
+@media (max-width: 1250px) {
+  .pf-tools span,
+  .pf-toolbar [data-preview-toggle] svg + *,
+  .pf-cursor {
+    display: none;
+  }
+  .prefab-editor .pf-tools button {
+    padding: 4px 7px;
+  }
+  .prefab-editor[data-preview="true"] .pf-center {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .prefab-editor[data-preview="true"] .prefab-preview {
+    grid-row: 2;
+    grid-column: 1;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+}
+@media (max-width: 1000px) {
+  .pf-workspace {
+    grid-template-columns: var(--pf-left) minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 40%);
+  }
+  .prefab-editor .pf-left {
+    grid-row: 1 / span 2;
+  }
+  .pf-center {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .prefab-editor .pf-right {
+    grid-column: 2;
+    grid-row: 2;
+    border-left: 0;
+    border-top: 1px solid var(--line);
+  }
+  .pf-library-body {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pf-new {
+    position: static;
+  }
+}
+@media (max-width: 720px) {
+  .pf-workspace {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(300px, 1fr) auto auto;
+    overflow: auto;
+  }
+  .prefab-editor .pf-left,
+  .prefab-editor .pf-right {
+    grid-column: 1;
+    grid-row: auto;
+    border: 0;
+    border-top: 1px solid var(--line);
+    max-height: 45dvh;
+  }
+  .pf-center {
+    grid-column: 1;
+    grid-row: 1;
+    min-height: 320px;
+  }
+  .prefab-editor .pf-docbar {
+    flex-wrap: wrap;
+  }
+  .prefab-editor .pf-docbar .layout-document-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+  .pf-layers {
+    display: none;
+  }
+  .pf-statusbar > span:last-of-type {
+    display: none;
+  }
+  .pf-library-head,
+  .pf-library-body {
+    padding-inline: 14px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prefab-editor *,
+  .prefab-library * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* The preview owns one canvas per engine lifetime; it fills the panel below the header. */
+.prefab-preview-canvas > canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+  outline: none;
+}
+.prefab-preview-canvas > canvas:focus-visible {
+  box-shadow: inset 0 0 0 2px var(--accent);
+}
+
+/* Inspector: property lists followed by editable fields. */
+.pf-right .layout-section dl + :is(.pf-grid2, .pf-field) {
+  margin-top: 14px;
+}
+.pf-right .layout-section dl {
+  margin-bottom: 4px;
+}
