@@ -13,6 +13,7 @@ import {
   installReplacementWayfarer,
   type WayfarerStarterContext,
 } from "./wayfarer-starter-authority";
+import { prefabSpawnerFor } from "./prefab-ship-authority";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 export type CharacterRow = NonNullable<
@@ -24,6 +25,7 @@ export type PrefabSpawnPose =
   | { kind: "berth" }
   | { kind: "at"; systemId: string; x: number; y: number; heading: number };
 
+/** `name` is the gameplay ship name; "" means the prefab's own name. */
 export type PrefabSpawnRequest = { pose: PrefabSpawnPose; name: string };
 
 /** Server-side spawn path for one published prefab ship (SHIPS-PREFABS
@@ -91,6 +93,11 @@ registerPrefabShipSpawner({
     return { shipId: installed.actor.shipId, deckId: location?.deckId ?? "" };
   },
 });
+
+/** Owner-selected starter ship (2026-09-26): the SHIPS-PREFABS Wren, installed
+ * from its grammar prefab through the trusted prefab path (no Wayfarer pins). */
+export const OWNER_STARTER_PREFAB_ID = "fed.s.wren";
+registerPrefabShipSpawner(prefabSpawnerFor(OWNER_STARTER_PREFAB_ID));
 
 export function parseSpawnPose(json: string): PrefabSpawnPose {
   if (!json) return { kind: "berth" };
@@ -263,7 +270,7 @@ export function assignPrefabShip(ctx: Context, args: AssignPrefabShipArgs) {
     ctx,
     actor,
     spawner,
-    { pose, name: actor.name },
+    { pose, name: "" },
     args.operationId,
     sequence,
   );

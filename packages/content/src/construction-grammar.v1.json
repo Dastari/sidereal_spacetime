@@ -1,0 +1,111 @@
+{
+  "schema": "sidereal.construction-grammar.v1",
+  "status": "Implements docs/shipyard_player_builder_design.md sections 3 and 12 for prefab ships. Read by packages/content (TypeScript) and scripts/art_library/ship_kit_export.py (Python); neither restates these numbers.",
+  "texelsPerMeter": 16,
+  "latticePerMeter": 32,
+  "cellMeters": 1,
+  "frame": "Ship-local metres. +X is fore (bow), +Y is port, +Z is up. Plan cells are 1 m; heights are texels (1/16 m).",
+  "deck": {
+    "pitchTexels": 56,
+    "floorTopTexels": 3,
+    "wallTopTexels": 51,
+    "roofTexels": 54,
+    "interiorCutTexels": 28,
+    "shellCutTexels": 40,
+    "exteriorWallTexels": 4,
+    "partitionTexels": 4,
+    "minCorridorCells": 2
+  },
+  "heightClasses": {
+    "deck": { "z": [5, 54], "kinds": ["hull"], "walkable": true, "massPerM2": 0.12, "label": "Full deck 3.1 m" },
+    "pod": { "z": [9, 50], "kinds": ["hull"], "walkable": false, "massPerM2": 0.1, "label": "Side pod 2.6 m" },
+    "cabin": { "z": [6, 32], "kinds": ["hull"], "walkable": false, "massPerM2": 0.08, "label": "Small-craft cabin 1.6 m" },
+    "wing": { "z": [10, 28], "kinds": ["plate"], "walkable": false, "massPerM2": 0.05, "label": "Wing 1.1 m" },
+    "plate": { "z": [12, 20], "kinds": ["plate"], "walkable": false, "massPerM2": 0.035, "label": "Armour plate 0.5 m" }
+  },
+  "tierRule": {
+    "twoTierMinTexels": 40,
+    "lowerTierTexels": 24,
+    "twoTierRimTexels": 5,
+    "oneTierMinTexels": 16,
+    "oneTierRimTexels": 4,
+    "cassetteMinTexels": 10,
+    "smallSplitMinTexels": 20,
+    "skirtTexels": 5
+  },
+  "shapeTiles": {
+    "square": { "size": [1, 1], "kind": "polygon", "points": [[0, 0], [1, 0], [1, 1], [0, 1]], "label": "Square" },
+    "slope1": { "size": [1, 1], "kind": "polygon", "points": [[0, 0], [1, 0], [0, 1]], "label": "Slope 1:1" },
+    "slope2": { "size": [2, 1], "kind": "polygon", "points": [[0, 0], [2, 0], [0, 1]], "label": "Slope 1:2" },
+    "slope3": { "size": [3, 1], "kind": "polygon", "points": [[0, 0], [3, 0], [0, 1]], "label": "Slope 1:3" },
+    "slope4": { "size": [4, 1], "kind": "polygon", "points": [[0, 0], [4, 0], [0, 1]], "label": "Slope 1:4" },
+    "arc1": { "size": [1, 1], "kind": "arc", "radius": 1, "concave": false, "label": "Arc r1" },
+    "arc2": { "size": [2, 2], "kind": "arc", "radius": 2, "concave": false, "label": "Arc r2" },
+    "arc3": { "size": [3, 3], "kind": "arc", "radius": 3, "concave": false, "label": "Arc r3" },
+    "arc4": { "size": [4, 4], "kind": "arc", "radius": 4, "concave": false, "label": "Arc r4" },
+    "arc2c": { "size": [2, 2], "kind": "arc", "radius": 2, "concave": true, "label": "Concave arc r2" },
+    "arc3c": { "size": [3, 3], "kind": "arc", "radius": 3, "concave": true, "label": "Concave arc r3" },
+    "arc4c": { "size": [4, 4], "kind": "arc", "radius": 4, "concave": true, "label": "Concave arc r4" }
+  },
+  "arcSegmentsPerRadius": 4,
+  "mountSizes": {
+    "SM": { "cells": 1, "label": "Small 1x1" },
+    "MD": { "cells": 2, "label": "Medium 2x2" },
+    "LG": { "cells": 3, "label": "Large 3x3" },
+    "XL": { "cells": 4, "label": "Extra large 4x4, rear only, may overhang the face" }
+  },
+  "blueprintSizeClasses": {
+    "S": { "label": "Small craft", "maxCells": [18, 12], "maxMount": "MD", "maxDecks": 1, "maxMounts": 12 },
+    "M": { "label": "Medium", "maxCells": [30, 18], "maxMount": "LG", "maxDecks": 1, "maxMounts": 24 },
+    "L": { "label": "Large", "maxCells": [48, 24], "maxMount": "XL", "maxDecks": 1, "maxMounts": 40 },
+    "XL": { "label": "Capital / station", "maxCells": [64, 40], "maxMount": "XL", "maxDecks": 1, "maxMounts": 64 }
+  },
+  "edgeTypes": {
+    "wall.full": { "seals": true, "walkable": false, "label": "Full wall" },
+    "wall.glazed": { "seals": true, "walkable": false, "label": "Glazed half wall (seals)" },
+    "wall.half": { "seals": false, "walkable": false, "label": "Half wall / railing (open)" },
+    "window": { "seals": true, "walkable": false, "label": "Interior window" },
+    "open": { "seals": false, "walkable": true, "label": "Open" },
+    "door.standard": { "seals": true, "walkable": true, "door": true, "label": "Standard door" },
+    "door.sliding": { "seals": true, "walkable": true, "door": true, "label": "Sliding door" },
+    "door.airlock": { "seals": true, "walkable": true, "door": true, "label": "Airlock door" },
+    "door.blast": { "seals": true, "walkable": true, "door": true, "label": "Blast door" },
+    "door.forcefield": { "seals": true, "walkable": true, "door": true, "label": "Force field" }
+  },
+  "wallVariants": ["wall", "panel", "light", "screen", "utility", "reinforced"],
+  "floorKinds": ["panel", "reinforced", "grated", "hazard", "glass", "carpet", "carpet2", "tread", "corridor", "hex"],
+  "roomTypes": {
+    "bridge": { "floor": "glass", "walls": ["screen", "panel"], "light": [0.45, 0.75, 1.0], "control": true, "sockets": [["shipyard.equipment.command-console", 24, 10, 16], ["shipyard.equipment.pilot-seat", 10, 10, 20], ["shipyard.equipment.bridge-bank", 32, 8, 18]] },
+    "cockpit": { "floor": "glass", "walls": ["screen"], "light": [0.45, 0.75, 1.0], "control": true, "sockets": [["shipyard.equipment.pilot-seat", 10, 10, 20]] },
+    "quarters": { "floor": "carpet2", "walls": ["panel", "wall"], "light": [1.0, 0.75, 0.5], "sockets": [["shipyard.equipment.crew-bunk", 32, 16, 20], ["shipyard.equipment.wall-locker", 12, 8, 32]] },
+    "lounge": { "floor": "carpet", "walls": ["screen", "panel"], "light": [1.0, 0.5, 0.75], "sockets": [["shipyard.equipment.lounge-sofa", 40, 14, 14]] },
+    "galley": { "floor": "panel", "walls": ["panel", "utility"], "light": [1.0, 0.85, 0.65], "sockets": [["pale-studless.table.standard", 24, 16, 12], ["pale-studless.kitchen.standard", 12, 36, 16]] },
+    "medbay": { "floor": "reinforced", "walls": ["screen", "panel"], "light": [0.8, 0.95, 1.0], "sockets": [["shipyard.equipment.medical-bed", 30, 16, 14]] },
+    "hydro": { "floor": "grated", "walls": ["utility", "light"], "light": [0.75, 1.0, 0.6], "sockets": [["shipyard.equipment.hydroponics", 44, 12, 12]] },
+    "engineering": { "floor": "grated", "walls": ["utility", "reinforced"], "light": [0.5, 0.85, 1.0], "sockets": [["shipyard.equipment.reactor", 30, 30, 36]] },
+    "cargo": { "floor": "tread", "walls": ["reinforced", "utility"], "light": [1.0, 0.8, 0.55], "sockets": [["cargo.standard.medium", 16, 16, 16], ["cargo.standard.medium", 16, 16, 16], ["cargo.fluid.medium", 16, 16, 20]] },
+    "workshop": { "floor": "hex", "walls": ["utility", "panel"], "light": [1.0, 0.8, 0.6], "sockets": [["pale-studless.console.standard", 24, 10, 16]] },
+    "armory": { "floor": "reinforced", "walls": ["reinforced", "panel"], "light": [1.0, 0.45, 0.35], "sockets": [["shipyard.equipment.wall-locker", 12, 8, 32], ["shipyard.equipment.wall-locker", 12, 8, 32]] },
+    "corridor": { "floor": "corridor", "walls": ["light", "wall"], "light": [0.6, 0.8, 1.0], "sockets": [] },
+    "airlock": { "floor": "hazard", "walls": ["reinforced"], "light": [1.0, 0.55, 0.3], "sockets": [] }
+  },
+  "cassettes": {
+    "face": ["panel", "split", "grille", "hatch", "light", "stack", "logo", "armor", "pipes", "module", "beacon"],
+    "windows": ["window", "full", "port"],
+    "pickWidth1": ["grille", "light", "stack", "module", "pipes", "beacon", "@port|armor"],
+    "pickWidth2": ["panel", "split", "hatch", "armor", "module", "pipes", "@window|panel"],
+    "pickWidth3": ["armor", "panel", "split", "pipes"],
+    "pickSmall": ["grille", "light", "pipes", "module", "stack", "beacon"],
+    "packWidths": [1, 2, 2, 3],
+    "smallSplitChance": 0.4
+  },
+  "roof": {
+    "moduleSizes": [[3, 2], [2, 3], [2, 2], [2, 1], [1, 2]],
+    "bigKinds": ["box", "vent", "hatch", "greeble", "pipes", "radiator", "tanks", "cargo"],
+    "thinKinds": ["pipes", "vent", "radiator", "box"],
+    "smallKinds": ["box", "vent", "fan", "sensor", "hatch", "box"],
+    "rimKinds": ["plain", "bump", "lit", "vent", "plain"],
+    "skylightSizes": [[2, 2], [2, 3], [3, 2], [3, 3]]
+  },
+  "decorators": { "federation": "antenna", "riftjack": "spike", "aurelian": "crystal", "industrial": "antenna", "crystalline": "crystal" }
+}
