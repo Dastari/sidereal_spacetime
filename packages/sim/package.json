@@ -64,7 +64,10 @@
     "./layout-opening-treatments": "./src/layout-opening-treatments.ts",
     "./wayfarer-rebuild-contract": "./src/wayfarer-rebuild-contract.ts",
     "./wayfarer-rebuild-game": "./src/wayfarer-rebuild-game.ts",
-    "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts"
+    "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts",
+    "./prefab-flight": "./src/prefab-flight.ts",
+    "./prefab-construction": "./src/prefab-construction.ts",
+    "./prefab-catalog": "./src/prefab-catalog.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

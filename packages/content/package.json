@@ -49,7 +49,16 @@
     "./wayfarer-hull-r005-proof.json": "./src/wayfarer-hull-r005-proof.json",
     "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts",
     "./wayfarer-walking-proof.json": "./src/wayfarer-walking-proof.json",
-    "./celestial-assets": "./src/celestial-assets.ts"
+    "./celestial-assets": "./src/celestial-assets.ts",
+    "./construction-grammar": "./src/construction-grammar.ts",
+    "./ship-prefab": "./src/ship-prefab.ts",
+    "./ship-prefab-components": "./src/ship-prefab-components.ts",
+    "./ship-prefab-catalog": "./src/ship-prefab-catalog.ts",
+    "./ship-components": "./src/ship-components.ts",
+    "./ship-components-source": "./src/ship-components-source.ts",
+    "./construction-grammar.v1.json": "./src/construction-grammar.v1.json",
+    "./ship-components.v1.json": "./src/ship-components.v1.json",
+    "./prefabs": "./src/prefabs/index.ts"
   },
   "dependencies": {}
 }
