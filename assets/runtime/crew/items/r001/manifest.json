@@ -1,0 +1,2132 @@
+{
+ "schema": "sidereal.crew.items/1",
+ "revision": "r001",
+ "status": "proposal (not owner-approved, unpublished)",
+ "generator": "scripts/art_library/crew_items/build.py",
+ "items": [
+  {
+   "id": "pistol",
+   "files": {
+    "lod0": {
+     "file": "pistol.glb",
+     "sha256": "192a99a6e23c3824e46abb046832bc1180707a93b076d617b2b98d664cfab752",
+     "bytes": 180160,
+     "triangles": 4560,
+     "primitives": 13,
+     "nodes": [
+      "item.pistol",
+      "part.mag",
+      "part.slide",
+      "pistol.body",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "pistol.lod1.glb",
+     "sha256": "6ea583ecd32b2652a58ee7f063e0007fcd8a20ded70f77d9f6e2ba88eb815ab2",
+     "bytes": 39708,
+     "triangles": 576,
+     "primitives": 13,
+     "nodes": [
+      "item.pistol",
+      "part.mag",
+      "part.slide",
+      "pistol.body",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "smg",
+   "files": {
+    "lod0": {
+     "file": "smg.glb",
+     "sha256": "bd4c573160fce16342bf38b7e4f28b381371cbef532a187f9fb4d8884249ebc5",
+     "bytes": 240084,
+     "triangles": 6108,
+     "primitives": 12,
+     "nodes": [
+      "item.smg",
+      "part.bolt",
+      "part.mag",
+      "smg.body",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "smg.lod1.glb",
+     "sha256": "1576adda9ddbe51cdbc75d46e959cb179a6ec3c459b5d28f76516c04db119882",
+     "bytes": 48792,
+     "triangles": 784,
+     "primitives": 12,
+     "nodes": [
+      "item.smg",
+      "part.bolt",
+      "part.mag",
+      "smg.body",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "compact-carbine",
+   "files": {
+    "lod0": {
+     "file": "compact-carbine.glb",
+     "sha256": "6a8637249f185f14432bee78bcc6f8924a3e6bb7d3748e7c14152484747f080f",
+     "bytes": 287520,
+     "triangles": 7286,
+     "primitives": 12,
+     "nodes": [
+      "compact-carbine.body",
+      "item.compact-carbine",
+      "part.bolt",
+      "part.mag",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "compact-carbine.lod1.glb",
+     "sha256": "f8f43d8fdc0b5a23950c000b89601c2a8534ab9ee38fed241c7c1420c633b0b4",
+     "bytes": 56188,
+     "triangles": 926,
+     "primitives": 12,
+     "nodes": [
+      "compact-carbine.body",
+      "item.compact-carbine",
+      "part.bolt",
+      "part.mag",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "rifle",
+   "files": {
+    "lod0": {
+     "file": "rifle.glb",
+     "sha256": "2d59edc08b3b45959b0df5cfabb2b2346edb75edc70e197cd50f20f08c3dc44c",
+     "bytes": 289388,
+     "triangles": 7264,
+     "primitives": 12,
+     "nodes": [
+      "item.rifle",
+      "part.bolt",
+      "part.mag",
+      "rifle.body",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "rifle.lod1.glb",
+     "sha256": "dd120573c10210184ac83e89f0ff37a5b6e8ac6a2408fd82fadd59df9ab3e414",
+     "bytes": 55896,
+     "triangles": 904,
+     "primitives": 12,
+     "nodes": [
+      "item.rifle",
+      "part.bolt",
+      "part.mag",
+      "rifle.body",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "shotgun",
+   "files": {
+    "lod0": {
+     "file": "shotgun.glb",
+     "sha256": "4268f2ce62150d83251cbea93ef7b10995d165489e7369d3936f4fd3212bb908",
+     "bytes": 287352,
+     "triangles": 7512,
+     "primitives": 9,
+     "nodes": [
+      "item.shotgun",
+      "part.pump",
+      "shotgun.body",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_b@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "shotgun.lod1.glb",
+     "sha256": "0c1ea23f67ee870d4c611933a887e8639e6e18d7763da576d28871b777647d41",
+     "bytes": 55840,
+     "triangles": 1016,
+     "primitives": 9,
+     "nodes": [
+      "item.shotgun",
+      "part.pump",
+      "shotgun.body",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_b@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "heavy-gun",
+   "files": {
+    "lod0": {
+     "file": "heavy-gun.glb",
+     "sha256": "e78453a2ae3f5dd6dcbd970bcb4c66f527197fb7a6027be40e3f988875ec50a9",
+     "bytes": 281616,
+     "triangles": 7080,
+     "primitives": 15,
+     "nodes": [
+      "heavy-gun.body",
+      "item.heavy-gun",
+      "part.barrels",
+      "part.mag",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_b@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "heavy-gun.lod1.glb",
+     "sha256": "961ea6bfcd08fb9eaa915f922b7ae5e325d4633f668e5c02946453a852766e85",
+     "bytes": 56096,
+     "triangles": 932,
+     "primitives": 15,
+     "nodes": [
+      "heavy-gun.body",
+      "item.heavy-gun",
+      "part.barrels",
+      "part.mag",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_b@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire",
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "beam-rifle",
+   "files": {
+    "lod0": {
+     "file": "beam-rifle.glb",
+     "sha256": "d2821b52a7dfdb11b611f887a9add589930b049eaaa658738008351b33c7a8b1",
+     "bytes": 230308,
+     "triangles": 5890,
+     "primitives": 9,
+     "nodes": [
+      "beam-rifle.body",
+      "item.beam-rifle",
+      "part.cell",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "beam-rifle.lod1.glb",
+     "sha256": "04c42cb3c971ca284fcb25b4e5e445faad7e5932c16cd8cd7ebaf50c5095f88c",
+     "bytes": 45748,
+     "triangles": 798,
+     "primitives": 9,
+     "nodes": [
+      "beam-rifle.body",
+      "item.beam-rifle",
+      "part.cell",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "rail-rifle",
+   "files": {
+    "lod0": {
+     "file": "rail-rifle.glb",
+     "sha256": "a96a9b976b7a49baf8d1b1c47c7f7bef5f008a594313ac2efab25bcf60aed25a",
+     "bytes": 233908,
+     "triangles": 5938,
+     "primitives": 10,
+     "nodes": [
+      "item.rail-rifle",
+      "part.mag",
+      "rail-rifle.body",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "rail-rifle.lod1.glb",
+     "sha256": "fa0d147595798aaa6058ab5cd1f0d4cb4dd03afb196469479c3f5743f45d3ec2",
+     "bytes": 45756,
+     "triangles": 742,
+     "primitives": 10,
+     "nodes": [
+      "item.rail-rifle",
+      "part.mag",
+      "rail-rifle.body",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [
+      "reload"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "stun-gun",
+   "files": {
+    "lod0": {
+     "file": "stun-gun.glb",
+     "sha256": "3dd0f2f671c1209db627c01cb430ba7960caa87078ce266200292bbccb8c28f0",
+     "bytes": 159808,
+     "triangles": 4044,
+     "primitives": 7,
+     "nodes": [
+      "item.stun-gun",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support",
+      "stun-gun.body"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion+stun-gun",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "stun-gun.lod1.glb",
+     "sha256": "15d1bf2586b48193794b1818bdd8bd7054a269ccb3aaeb5b58f4dd85231934ab",
+     "bytes": 31188,
+     "triangles": 532,
+     "primitives": 7,
+     "nodes": [
+      "item.stun-gun",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support",
+      "stun-gun.body"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion+stun-gun",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "baton",
+   "files": {
+    "lod0": {
+     "file": "baton.glb",
+     "sha256": "ebd3d2acf58ef823552eb6a1549d617b9d694bee012062df7b44aef1a27c113f",
+     "bytes": 51048,
+     "triangles": 1296,
+     "primitives": 9,
+     "nodes": [
+      "baton.body",
+      "item.baton",
+      "part.blade",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [
+      "deploy"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "baton.lod1.glb",
+     "sha256": "5da11509da328eac99d6c110ecbf22691de4eec0a4726aef4166cd71e0f8d19c",
+     "bytes": 16060,
+     "triangles": 144,
+     "primitives": 9,
+     "nodes": [
+      "baton.body",
+      "item.baton",
+      "part.blade",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [
+      "deploy"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "grenade",
+   "files": {
+    "lod0": {
+     "file": "grenade.glb",
+     "sha256": "3c9590b36d1cc2c47bd9fb69b4c01799612ffba32ff798832e9a0e2ca9c760d7",
+     "bytes": 117128,
+     "triangles": 2842,
+     "primitives": 6,
+     "nodes": [
+      "grenade.body",
+      "item.grenade",
+      "part.pin",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_b@orion",
+      "slot:metal@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "grenade.lod1.glb",
+     "sha256": "1fa0bd86f5f494f1a15d7427bc7b51be2d6845d150b95444726a9414aaec4536",
+     "bytes": 23560,
+     "triangles": 366,
+     "primitives": 6,
+     "nodes": [
+      "grenade.body",
+      "item.grenade",
+      "part.pin",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_b@orion",
+      "slot:metal@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "medgun",
+   "files": {
+    "lod0": {
+     "file": "medgun.glb",
+     "sha256": "cf25f13af6c1a021699c69d658c35c5e7f4266ff3bebbaf77956bb1de920ad24",
+     "bytes": 196764,
+     "triangles": 4946,
+     "primitives": 10,
+     "nodes": [
+      "item.medgun",
+      "medgun.body",
+      "part.canister",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@medic",
+      "slot:dark@medic",
+      "slot:emit_a@medic",
+      "slot:emit_b@medic",
+      "slot:grip@medic",
+      "slot:metal@medic",
+      "slot:primary@medic",
+      "slot:secondary@medic"
+     ],
+     "animations": [
+      "fire"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "medgun.lod1.glb",
+     "sha256": "b0d650eebfa59595d2584ad9e3a3a921914f0d32c4a1306b00170ae516abf15c",
+     "bytes": 39944,
+     "triangles": 638,
+     "primitives": 10,
+     "nodes": [
+      "item.medgun",
+      "medgun.body",
+      "part.canister",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@medic",
+      "slot:dark@medic",
+      "slot:emit_a@medic",
+      "slot:emit_b@medic",
+      "slot:grip@medic",
+      "slot:metal@medic",
+      "slot:primary@medic",
+      "slot:secondary@medic"
+     ],
+     "animations": [
+      "fire"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "medkit",
+   "files": {
+    "lod0": {
+     "file": "medkit.glb",
+     "sha256": "e8eb5bee2e5a8a5e4f288d6f9e6b659cfa30be2aa362bf850dfe87443ebb9284",
+     "bytes": 102980,
+     "triangles": 2642,
+     "primitives": 4,
+     "nodes": [
+      "item.medkit",
+      "medkit.body",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@medic",
+      "slot:dark@medic",
+      "slot:primary@medic",
+      "slot:secondary@medic"
+     ],
+     "animations": [],
+     "extensionsUsed": []
+    },
+    "lod1": {
+     "file": "medkit.lod1.glb",
+     "sha256": "f7cf008a22485a30ad4042050e340e7eb1ee14ced576188789ddd24e3b1a652a",
+     "bytes": 20384,
+     "triangles": 378,
+     "primitives": 4,
+     "nodes": [
+      "item.medkit",
+      "medkit.body",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@medic",
+      "slot:dark@medic",
+      "slot:primary@medic",
+      "slot:secondary@medic"
+     ],
+     "animations": [],
+     "extensionsUsed": []
+    }
+   }
+  },
+  {
+   "id": "utility-cutter",
+   "files": {
+    "lod0": {
+     "file": "utility-cutter.glb",
+     "sha256": "c508bec6b7803e16a6bd1be5cd240d821a0428f0f2efaa6fca8a7e976a03a51f",
+     "bytes": 129380,
+     "triangles": 3210,
+     "primitives": 7,
+     "nodes": [
+      "item.utility-cutter",
+      "part.blade",
+      "socket.emitter",
+      "socket.grip",
+      "utility-cutter.body"
+     ],
+     "materials": [
+      "slot:dark@engineer",
+      "slot:emit_b@engineer",
+      "slot:glass@engineer",
+      "slot:primary@engineer",
+      "slot:secondary@engineer",
+      "slot:trim@engineer"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "utility-cutter.lod1.glb",
+     "sha256": "0ade3bc5c3fd436aca32a29a3576915cbf4a40172cc6c711d211016568f3a2a2",
+     "bytes": 26792,
+     "triangles": 438,
+     "primitives": 7,
+     "nodes": [
+      "item.utility-cutter",
+      "part.blade",
+      "socket.emitter",
+      "socket.grip",
+      "utility-cutter.body"
+     ],
+     "materials": [
+      "slot:dark@engineer",
+      "slot:emit_b@engineer",
+      "slot:glass@engineer",
+      "slot:primary@engineer",
+      "slot:secondary@engineer",
+      "slot:trim@engineer"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "repair-tool",
+   "files": {
+    "lod0": {
+     "file": "repair-tool.glb",
+     "sha256": "f79d9120f6526f61e72cb1a7443b1ab8caeafc9f83010820165f746105286645",
+     "bytes": 153208,
+     "triangles": 3722,
+     "primitives": 8,
+     "nodes": [
+      "item.repair-tool",
+      "part.emitter",
+      "repair-tool.body",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@engineer",
+      "slot:dark@engineer",
+      "slot:emit_a@engineer",
+      "slot:glass@engineer",
+      "slot:metal@engineer",
+      "slot:primary@engineer",
+      "slot:secondary@engineer"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "repair-tool.lod1.glb",
+     "sha256": "6ab1c3c2220bc4f58518c31ffdd50492884b00c092f84f1790940544175947c1",
+     "bytes": 30852,
+     "triangles": 466,
+     "primitives": 8,
+     "nodes": [
+      "item.repair-tool",
+      "part.emitter",
+      "repair-tool.body",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@engineer",
+      "slot:dark@engineer",
+      "slot:emit_a@engineer",
+      "slot:glass@engineer",
+      "slot:metal@engineer",
+      "slot:primary@engineer",
+      "slot:secondary@engineer"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "welder",
+   "files": {
+    "lod0": {
+     "file": "welder.glb",
+     "sha256": "a22c5cfcff7a1c2e913d8cd4991213fefab3eb401a20a4a6adfc0e3544f2961e",
+     "bytes": 146416,
+     "triangles": 3632,
+     "primitives": 6,
+     "nodes": [
+      "item.welder",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support",
+      "welder.body"
+     ],
+     "materials": [
+      "slot:dark@engineer",
+      "slot:emit_b@engineer",
+      "slot:grip@engineer",
+      "slot:metal@engineer",
+      "slot:primary@engineer",
+      "slot:secondary@engineer"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "welder.lod1.glb",
+     "sha256": "e0ac84779591705855c9d30fa61cb532a2d2e0c7ccc1170630c5fe522797ad5b",
+     "bytes": 27752,
+     "triangles": 436,
+     "primitives": 6,
+     "nodes": [
+      "item.welder",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support",
+      "welder.body"
+     ],
+     "materials": [
+      "slot:dark@engineer",
+      "slot:emit_b@engineer",
+      "slot:grip@engineer",
+      "slot:metal@engineer",
+      "slot:primary@engineer",
+      "slot:secondary@engineer"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "multi-tool",
+   "files": {
+    "lod0": {
+     "file": "multi-tool.glb",
+     "sha256": "4bd008eb15165ef78227e68ced54b08a205712f0b5118ade226ed73a6cc68897",
+     "bytes": 156228,
+     "triangles": 3968,
+     "primitives": 8,
+     "nodes": [
+      "item.multi-tool",
+      "multi-tool.body",
+      "part.head",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@security",
+      "slot:dark@security",
+      "slot:emit_a@security",
+      "slot:metal@security",
+      "slot:secondary@security",
+      "slot:trim@security"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "multi-tool.lod1.glb",
+     "sha256": "aa86d5c7204b5c8f92da2be617a76fbc6f3d2b861fe58673cdea002f2d91534d",
+     "bytes": 32612,
+     "triangles": 524,
+     "primitives": 8,
+     "nodes": [
+      "item.multi-tool",
+      "multi-tool.body",
+      "part.head",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@security",
+      "slot:dark@security",
+      "slot:emit_a@security",
+      "slot:metal@security",
+      "slot:secondary@security",
+      "slot:trim@security"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "mining-drill",
+   "files": {
+    "lod0": {
+     "file": "mining-drill.glb",
+     "sha256": "0d5f4836b42ff120a67b5c6d066ec684e19d7a12c2bca8fa99db438082e436cf",
+     "bytes": 192300,
+     "triangles": 4828,
+     "primitives": 11,
+     "nodes": [
+      "item.mining-drill",
+      "mining-drill.body",
+      "part.bit",
+      "socket.emitter",
+      "socket.eye",
+      "socket.grip",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@salvage",
+      "slot:dark@salvage",
+      "slot:emit_b@salvage",
+      "slot:grip@salvage",
+      "slot:metal@salvage",
+      "slot:primary@salvage",
+      "slot:secondary@salvage",
+      "slot:trim@salvage"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "mining-drill.lod1.glb",
+     "sha256": "f7c65248dd9be58628b5e3bb9a718926adeba489a821f8ed1648c587ef63f2c4",
+     "bytes": 39316,
+     "triangles": 596,
+     "primitives": 11,
+     "nodes": [
+      "item.mining-drill",
+      "mining-drill.body",
+      "part.bit",
+      "socket.emitter",
+      "socket.eye",
+      "socket.grip",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@salvage",
+      "slot:dark@salvage",
+      "slot:emit_b@salvage",
+      "slot:grip@salvage",
+      "slot:metal@salvage",
+      "slot:primary@salvage",
+      "slot:secondary@salvage",
+      "slot:trim@salvage"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "wrench",
+   "files": {
+    "lod0": {
+     "file": "wrench.glb",
+     "sha256": "bf9e7e9b676d5e1ef83743e8ff5a5ddbf6969ea5a817fa3abd9ed4c34598523c",
+     "bytes": 65172,
+     "triangles": 1744,
+     "primitives": 7,
+     "nodes": [
+      "item.wrench",
+      "socket.emitter",
+      "socket.grip",
+      "wrench.body"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:emit_b@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "wrench.lod1.glb",
+     "sha256": "22e2abbc1e4d23fe9c187fe02677cab7777c6287adb8bb54f53838287f98b75c",
+     "bytes": 17372,
+     "triangles": 208,
+     "primitives": 7,
+     "nodes": [
+      "item.wrench",
+      "socket.emitter",
+      "socket.grip",
+      "wrench.body"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:emit_b@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "scanner",
+   "files": {
+    "lod0": {
+     "file": "scanner.glb",
+     "sha256": "59a4f9622705402d68348ad6cdc341064cb21a5709a16f19b3a049c6af9eb3e2",
+     "bytes": 136168,
+     "triangles": 3312,
+     "primitives": 8,
+     "nodes": [
+      "item.scanner",
+      "scanner.body",
+      "socket.display",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion+scanner",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "scanner.lod1.glb",
+     "sha256": "d9b5ed69b85717e7afa7f731223231cc967b0d69c0768a1795c4b1a7e67415d6",
+     "bytes": 27608,
+     "triangles": 424,
+     "primitives": 8,
+     "nodes": [
+      "item.scanner",
+      "scanner.body",
+      "socket.display",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion+scanner",
+      "slot:grip@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "sample-scanner",
+   "files": {
+    "lod0": {
+     "file": "sample-scanner.glb",
+     "sha256": "cd722bb28ae319471ac7b5a9bd1b6ea0350e5670823252bd7364bb3b8e3ca48e",
+     "bytes": 80268,
+     "triangles": 1978,
+     "primitives": 6,
+     "nodes": [
+      "item.sample-scanner",
+      "sample-scanner.body",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "sample-scanner.lod1.glb",
+     "sha256": "1a8f85e6f0ff7004dd2fb29e4415890f1183f98f718d3f71ece69ad3905c49a2",
+     "bytes": 18140,
+     "triangles": 254,
+     "primitives": 6,
+     "nodes": [
+      "item.sample-scanner",
+      "sample-scanner.body",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:glass@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "data-pad",
+   "files": {
+    "lod0": {
+     "file": "data-pad.glb",
+     "sha256": "d87cf9ecadcac0ac48f27a4044387c51dc68d6824ee735b42018f8171722f51c",
+     "bytes": 82716,
+     "triangles": 1908,
+     "primitives": 5,
+     "nodes": [
+      "data-pad.body",
+      "item.data-pad",
+      "socket.display",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "data-pad.lod1.glb",
+     "sha256": "780cd43e22bdd692f03ea39914501fa96804fc97b50ef6188a4260ea1a8c780d",
+     "bytes": 16904,
+     "triangles": 272,
+     "primitives": 5,
+     "nodes": [
+      "data-pad.body",
+      "item.data-pad",
+      "socket.display",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "shield-emitter",
+   "files": {
+    "lod0": {
+     "file": "shield-emitter.glb",
+     "sha256": "611afab49b88ae014c4b7c258780053a60386ce1d6ff211e8bb870fd1dd66174",
+     "bytes": 127056,
+     "triangles": 3202,
+     "primitives": 9,
+     "nodes": [
+      "item.shield-emitter",
+      "part.ring",
+      "shield-emitter.body",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:grip@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "shield-emitter.lod1.glb",
+     "sha256": "b10ca826d630cb396963d4dede674f6a02c0cff73f7c00ae61d9fe32a61cb042",
+     "bytes": 28412,
+     "triangles": 458,
+     "primitives": 9,
+     "nodes": [
+      "item.shield-emitter",
+      "part.ring",
+      "shield-emitter.body",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:grip@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "use"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "flashlight",
+   "files": {
+    "lod0": {
+     "file": "flashlight.glb",
+     "sha256": "32bce6658460760c4b3f5cbcf2071f751e38add3c1918154f649502d876ed74b",
+     "bytes": 52816,
+     "triangles": 1226,
+     "primitives": 5,
+     "nodes": [
+      "flashlight.body",
+      "item.flashlight",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_b@orion+flashlight",
+      "slot:metal@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "flashlight.lod1.glb",
+     "sha256": "ce146dab47941dae3c1f4a3d45e6b203aea1a0d966a4f5d1a2dcf4f8cb915745",
+     "bytes": 12316,
+     "triangles": 150,
+     "primitives": 5,
+     "nodes": [
+      "flashlight.body",
+      "item.flashlight",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:accent@orion",
+      "slot:dark@orion",
+      "slot:emit_b@orion+flashlight",
+      "slot:metal@orion",
+      "slot:secondary@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "grapple",
+   "files": {
+    "lod0": {
+     "file": "grapple.glb",
+     "sha256": "b61fe2fc073213c86b5458d22551945343440201c5ef7e5c6bf5ae45a8f2e23f",
+     "bytes": 84836,
+     "triangles": 1994,
+     "primitives": 10,
+     "nodes": [
+      "grapple.body",
+      "item.grapple",
+      "part.jaw.lower",
+      "part.jaw.upper",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "grapple.lod1.glb",
+     "sha256": "c16578cd607e51637342382a43630eff27e88b35307beb1596cab76ec08446d2",
+     "bytes": 21412,
+     "triangles": 246,
+     "primitives": 10,
+     "nodes": [
+      "grapple.body",
+      "item.grapple",
+      "part.jaw.lower",
+      "part.jaw.upper",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:metal@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [
+      "fire"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "drone",
+   "files": {
+    "lod0": {
+     "file": "drone.glb",
+     "sha256": "08564e3bda999f711b01e96e9057f614dd1580fe4a68cd7fcaabeb1ec9361c77",
+     "bytes": 75708,
+     "triangles": 1824,
+     "primitives": 10,
+     "nodes": [
+      "drone.body",
+      "item.drone",
+      "part.rotor.L",
+      "part.rotor.R",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:dark@security",
+      "slot:emit_a@security",
+      "slot:emit_b@security+drone",
+      "slot:metal@security",
+      "slot:primary@security",
+      "slot:secondary@security",
+      "slot:trim@security"
+     ],
+     "animations": [
+      "idle"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "drone.lod1.glb",
+     "sha256": "13bc1bf651ded4a2599705b4783983f1c8a0da5033636aabdc1e1468dc5b0270",
+     "bytes": 20072,
+     "triangles": 216,
+     "primitives": 10,
+     "nodes": [
+      "drone.body",
+      "item.drone",
+      "part.rotor.L",
+      "part.rotor.R",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:dark@security",
+      "slot:emit_a@security",
+      "slot:emit_b@security+drone",
+      "slot:metal@security",
+      "slot:primary@security",
+      "slot:secondary@security",
+      "slot:trim@security"
+     ],
+     "animations": [
+      "idle"
+     ],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  },
+  {
+   "id": "cargo-box",
+   "files": {
+    "lod0": {
+     "file": "cargo-box.glb",
+     "sha256": "f2ed1313b14b9bdbea159b0583cb2dfd82b288fa61fce5beb06a985aba4de464",
+     "bytes": 116696,
+     "triangles": 2972,
+     "primitives": 5,
+     "nodes": [
+      "cargo-box.body",
+      "item.cargo-box",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@salvage",
+      "slot:dark@salvage",
+      "slot:metal@salvage",
+      "slot:primary@salvage",
+      "slot:secondary@salvage"
+     ],
+     "animations": [],
+     "extensionsUsed": []
+    },
+    "lod1": {
+     "file": "cargo-box.lod1.glb",
+     "sha256": "21f396debb0a60a50386b5386d15c96786e083c1c14fb3537061a1a633a97853",
+     "bytes": 22168,
+     "triangles": 440,
+     "primitives": 5,
+     "nodes": [
+      "cargo-box.body",
+      "item.cargo-box",
+      "socket.grip",
+      "socket.support"
+     ],
+     "materials": [
+      "slot:accent@salvage",
+      "slot:dark@salvage",
+      "slot:metal@salvage",
+      "slot:primary@salvage",
+      "slot:secondary@salvage"
+     ],
+     "animations": [],
+     "extensionsUsed": []
+    }
+   }
+  },
+  {
+   "id": "shield-pack",
+   "files": {
+    "lod0": {
+     "file": "shield-pack.glb",
+     "sha256": "96200362080c733ef7c93ae787e7045ce2c9ba264e9b0062fb37f60994164c3a",
+     "bytes": 124084,
+     "triangles": 3070,
+     "primitives": 5,
+     "nodes": [
+      "item.shield-pack",
+      "shield-pack.body",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    },
+    "lod1": {
+     "file": "shield-pack.lod1.glb",
+     "sha256": "821afe0c11e6a385ea86d5f8dbd0a46a3c72d9f3eb39d696d35969a7adfdddd5",
+     "bytes": 24320,
+     "triangles": 482,
+     "primitives": 5,
+     "nodes": [
+      "item.shield-pack",
+      "shield-pack.body",
+      "socket.emitter",
+      "socket.grip"
+     ],
+     "materials": [
+      "slot:dark@orion",
+      "slot:emit_a@orion",
+      "slot:primary@orion",
+      "slot:secondary@orion",
+      "slot:trim@orion"
+     ],
+     "animations": [],
+     "extensionsUsed": [
+      "KHR_materials_emissive_strength"
+     ]
+    }
+   }
+  }
+ ],
+ "fx": [
+  {
+   "id": "muzzle-flash",
+   "file": "fx/muzzle-flash.glb",
+   "sha256": "c8811b138ba26ef90a16b5d931245970f34b2389191a2b5e7198ff79733cda5c",
+   "bytes": 11972,
+   "triangles": 168,
+   "primitives": 2,
+   "nodes": [
+    "fx.muzzle-flash",
+    "layer.core",
+    "layer.glow"
+   ],
+   "materials": [
+    "fx:core@muzzle-flash",
+    "fx:glow@muzzle-flash"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "laser-bolt",
+   "file": "fx/laser-bolt.glb",
+   "sha256": "da5566a988ade1e1899c5e5eeeb409c9f80d992e3ffcb17fa79e9c76f77778c6",
+   "bytes": 5464,
+   "triangles": 48,
+   "primitives": 2,
+   "nodes": [
+    "fx.laser-bolt",
+    "layer.core",
+    "layer.glow"
+   ],
+   "materials": [
+    "fx:core@laser-bolt",
+    "fx:glow@laser-bolt"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "plasma-bolt",
+   "file": "fx/plasma-bolt.glb",
+   "sha256": "69f5425b826733e0b984688d8bbf095d027518f33b7569c3b9c4d7be673f6106",
+   "bytes": 11936,
+   "triangles": 144,
+   "primitives": 3,
+   "nodes": [
+    "fx.plasma-bolt",
+    "layer.core",
+    "layer.glow",
+    "layer.tail"
+   ],
+   "materials": [
+    "fx:core@plasma-bolt",
+    "fx:glow@plasma-bolt",
+    "fx:tail@plasma-bolt"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "healing-beam",
+   "file": "fx/healing-beam.glb",
+   "sha256": "f0cd526e2c2141376eb60a8f6998c679a73d0489cb5572140227af1bb034093f",
+   "bytes": 9996,
+   "triangles": 132,
+   "primitives": 2,
+   "nodes": [
+    "fx.healing-beam",
+    "layer.core",
+    "layer.glow"
+   ],
+   "materials": [
+    "fx:core@healing-beam",
+    "fx:glow@healing-beam"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "scan-pulse",
+   "file": "fx/scan-pulse.glb",
+   "sha256": "44c06b128ce85ef2eef9b01766209928031580d454a74f69bdf8152c9e7b1ccd",
+   "bytes": 44964,
+   "triangles": 780,
+   "primitives": 2,
+   "nodes": [
+    "fx.scan-pulse",
+    "layer.core",
+    "layer.ring"
+   ],
+   "materials": [
+    "fx:core@scan-pulse",
+    "fx:ring@scan-pulse"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "shield-bubble",
+   "file": "fx/shield-bubble.glb",
+   "sha256": "67234b8b48318f45b735f738416bfcee91aafe8b0ccd19230ea4295ec0c92791",
+   "bytes": 149352,
+   "triangles": 2712,
+   "primitives": 2,
+   "nodes": [
+    "fx.shield-bubble",
+    "layer.edge",
+    "layer.hex"
+   ],
+   "materials": [
+    "fx:edge@shield-bubble",
+    "fx:hex@shield-bubble"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "impact-spark",
+   "file": "fx/impact-spark.glb",
+   "sha256": "1147bd8f11a2e9ed4e146b0a14c53cdbd8ce27e5103947d33a3168b9eb398c78",
+   "bytes": 22968,
+   "triangles": 372,
+   "primitives": 2,
+   "nodes": [
+    "fx.impact-spark",
+    "layer.core",
+    "layer.spark"
+   ],
+   "materials": [
+    "fx:core@impact-spark",
+    "fx:spark@impact-spark"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "smoke-puff",
+   "file": "fx/smoke-puff.glb",
+   "sha256": "fb6277aa7ac4e8f6b0b4481cd17b014660a82b2871847b79605e872e959017c1",
+   "bytes": 11036,
+   "triangles": 156,
+   "primitives": 2,
+   "nodes": [
+    "fx.smoke-puff",
+    "layer.dark",
+    "layer.light"
+   ],
+   "materials": [
+    "fx:dark@smoke-puff",
+    "fx:light@smoke-puff"
+   ],
+   "animations": [],
+   "extensionsUsed": []
+  },
+  {
+   "id": "thruster-glow",
+   "file": "fx/thruster-glow.glb",
+   "sha256": "b9900984b629cefe2bec44432a9e7f518ae1c44f5b8da23c0d07156e023babb8",
+   "bytes": 5212,
+   "triangles": 48,
+   "primitives": 2,
+   "nodes": [
+    "fx.thruster-glow",
+    "layer.core",
+    "layer.glow"
+   ],
+   "materials": [
+    "fx:core@thruster-glow",
+    "fx:glow@thruster-glow"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "pickup-glow",
+   "file": "fx/pickup-glow.glb",
+   "sha256": "0fb0ccfb426c2bf06e6b32b431487582a68ff08d7b449c9e0b621ecb88cadbd0",
+   "bytes": 15112,
+   "triangles": 228,
+   "primitives": 2,
+   "nodes": [
+    "fx.pickup-glow",
+    "layer.column",
+    "layer.edge"
+   ],
+   "materials": [
+    "fx:column@pickup-glow",
+    "fx:edge@pickup-glow"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "repair-sparks",
+   "file": "fx/repair-sparks.glb",
+   "sha256": "c7b0bdc20dbb494c8db8e5b69ba3217c91b195cb5e6c102b577ef9c349d7b022",
+   "bytes": 18948,
+   "triangles": 276,
+   "primitives": 3,
+   "nodes": [
+    "fx.repair-sparks",
+    "layer.core",
+    "layer.plus",
+    "layer.spark"
+   ],
+   "materials": [
+    "fx:core@repair-sparks",
+    "fx:plus@repair-sparks",
+    "fx:spark@repair-sparks"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "teleport",
+   "file": "fx/teleport.glb",
+   "sha256": "385dc77962a5be7aa87c69e6a1c350f1f1ff8a76311734775016001f253758b8",
+   "bytes": 44252,
+   "triangles": 744,
+   "primitives": 3,
+   "nodes": [
+    "fx.teleport",
+    "layer.column",
+    "layer.core",
+    "layer.ring"
+   ],
+   "materials": [
+    "fx:column@teleport",
+    "fx:core@teleport",
+    "fx:ring@teleport"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "tracer",
+   "file": "fx/tracer.glb",
+   "sha256": "a550eaf8a21695ac930a91e50c326be33dec563b9b0b194fd32b982827625d92",
+   "bytes": 5436,
+   "triangles": 48,
+   "primitives": 2,
+   "nodes": [
+    "fx.tracer",
+    "layer.core",
+    "layer.glow"
+   ],
+   "materials": [
+    "fx:core@tracer",
+    "fx:glow@tracer"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "beam-lance",
+   "file": "fx/beam-lance.glb",
+   "sha256": "446c15ba2bb7144e097505a7898ed8bfbd41ead609f47f0c72d859940fbfb459",
+   "bytes": 8704,
+   "triangles": 108,
+   "primitives": 2,
+   "nodes": [
+    "fx.beam-lance",
+    "layer.core",
+    "layer.glow"
+   ],
+   "materials": [
+    "fx:core@beam-lance",
+    "fx:glow@beam-lance"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  },
+  {
+   "id": "stun-arc",
+   "file": "fx/stun-arc.glb",
+   "sha256": "c209a51d65b3a0b16cef22978b63b511783fe5fab7886aaf785c18e74880efd7",
+   "bytes": 17140,
+   "triangles": 264,
+   "primitives": 2,
+   "nodes": [
+    "fx.stun-arc",
+    "layer.core",
+    "layer.glow"
+   ],
+   "materials": [
+    "fx:core@stun-arc",
+    "fx:glow@stun-arc"
+   ],
+   "animations": [],
+   "extensionsUsed": [
+    "KHR_materials_emissive_strength"
+   ]
+  }
+ ],
+ "totals": {
+  "items": 28,
+  "fx": 15,
+  "lod0Triangles": 109998,
+  "lod1Triangles": 14346,
+  "fxTriangles": 6228,
+  "bytes": 5664816
+ },
+ "content": "packages/content/src/crew-items-r001.json",
+ "referenceCrops": "scripts/art_library/crew_items_reference_crops.json",
+ "contentSha256": "74252e229537b3d299b8c9f3a8c888e3b17d4612ac3fdb12b2100b1cb61fdeee"
+}
