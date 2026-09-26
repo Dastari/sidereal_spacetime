@@ -23,7 +23,9 @@ export const VOXEL_CREW_ACTIONS = [
   "thumbs_up", "emote_happy", "emote_sad", "emote_angry", "emote_confused", "celebrate", "hurt",
   "death", "knocked_out", "revive", "jetpack_hover", "climb_ladder",
 ] as const;
-export const VOXEL_CREW_EXTRA_ACTIONS = ["idle_pistol"] as const;
+export const VOXEL_CREW_EXTRA_ACTIONS = [
+  "idle_pistol", "draw_pistol", "holster_pistol", "draw_rifle", "holster_rifle",
+] as const;
 export type VoxelCrewAction =
   | (typeof VOXEL_CREW_ACTIONS)[number]
   | (typeof VOXEL_CREW_EXTRA_ACTIONS)[number];

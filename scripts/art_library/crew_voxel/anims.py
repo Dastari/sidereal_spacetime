@@ -921,6 +921,38 @@ def lib():
 
     fnact("climb_ladder", True, cycle(climb_at, 30), {"ladderYVox": 7.5, "rungSpacingVox": 7,
                                                         "climbSpeed": round(2 * 10 * LEG * VOX / (30 / FPS), 3)})
+
+    # ---------------------------------------------------------------- draw / holster (generic)
+    # pistol: right hip holster (socket.hip.R); rifle: back mount (socket.back). The item switches
+    # parent from the holster socket to itemSockets.R at `attachFrame` (runtime / CHAR-WEAPONS).
+    HIP = ("w", 9.5, -1.5, 25.5, 0, -90, 0)          # hand on the holstered grip (r001 authoring frame)
+    AIMP = aim_pistol_at(0)
+    keys("draw_pistol", False, [
+        (0, dict(B(), **{"hand.R": ("c", 9, 1, 26, 0, -20, 0)}), "io"),
+        (5, dict(B(), **{"hand.R": HIP, "fk:chest": (2, 0, -4)}), "in"),
+        (8, dict(B(), **{"hand.R": ("w", 9.5, -1.5, 27, 0, -80, 0), "fk:chest": (2, 0, -4)}), "snap"),
+        (16, AIMP, "back"),
+    ], {"grip": "pistol", "attachFrame": 7, "holster": "socket.hip.R", "extra": True})
+    keys("holster_pistol", False, [
+        (0, AIMP, "io"),
+        (7, dict(B(), **{"hand.R": ("w", 9.5, -1.5, 27, 0, -80, 0), "fk:chest": (2, 0, -4)}), "io"),
+        (10, dict(B(), **{"hand.R": HIP, "fk:chest": (2, 0, -4)}), "snap"),
+        (18, B(), "io"),
+    ], {"grip": "pistol", "detachFrame": 10, "holster": "socket.hip.R", "extra": True})
+    BACK = ("w", 5, -7, 45, 30, 150, 0)               # hand over the right shoulder on the back-mounted rifle
+    ARMED = idle_armed_at(0)
+    keys("draw_rifle", False, [
+        (0, B(), "io"),
+        (7, dict(B(), **{"hand.R": BACK, "fk:chest": (-4, 0, 10), "fk:head": (0, 0, -6), "pole.R": (1, 0.3, 0.6)}), "in"),
+        (10, dict(B(), **{"hand.R": ("w", 6, -5, 46, 30, 150, 0), "fk:chest": (-4, 0, 10), "pole.R": (1, 0.3, 0.6)}), "snap"),
+        (20, ARMED, "back"),
+    ], {"grip": "rifle", "attachFrame": 9, "holster": "socket.back", "extra": True})
+    keys("holster_rifle", False, [
+        (0, ARMED, "io"),
+        (9, dict(B(), **{"hand.R": ("w", 6, -5, 46, 30, 150, 0), "fk:chest": (-4, 0, 10), "pole.R": (1, 0.3, 0.6)}), "io"),
+        (12, dict(B(), **{"hand.R": BACK, "fk:chest": (-4, 0, 10), "pole.R": (1, 0.3, 0.6)}), "snap"),
+        (22, B(), "io"),
+    ], {"grip": "rifle", "detachFrame": 12, "holster": "socket.back", "extra": True})
     return A
 
 
