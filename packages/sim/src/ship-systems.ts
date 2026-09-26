@@ -1007,6 +1007,75 @@ export function shipComponentFlightInput(
   };
 }
 
+// ----------------------------------------------------------------- wiring
+/** Deterministic default wiring for design tools: every input port on the
+ * listed channels is linked to the nearest compatible output port (placed
+ * ship-frame distance, ties by id), preferring sources with spare capacity.
+ * Shore (docking) and ammo ports are left alone. This proposes logical links
+ * only; physical routes, feedthroughs and authority checks stay separate. */
+export function autoWireShipComponents(
+  catalog: ShipComponentCatalog,
+  hull: ShipHullSystemsProfile,
+  components: readonly ShipComponentPlacement[],
+  channels: readonly ShipComponentChannel[] = ["power", "data", "coolant", "fuel", "ventilation"],
+): ShipComponentConnection[] {
+  if (components.length > SHIP_SYSTEMS_LIMITS.components) throw new Error("Ship systems input budget exceeded");
+  const defs = new Map(catalog.components.map((c) => [c.id, c]));
+  const sockets = new Map(hull.hardpoints.map((h) => [h.id, h.socket]));
+  type End = { p: ShipComponentPlacement; d: ShipComponentDefinition; port: ShipComponentPort; at: [number, number, number] };
+  /** Primary suppliers are tried before flow-through outlets (loop returns). */
+  const primary = (d: ShipComponentDefinition, ch: ShipComponentChannel) =>
+    ch === "power"
+      ? d.power.generationKw > 0 || d.power.maxDischargeKw > 0
+      : ch === "coolant"
+        ? d.fluids.coolantSupplyLps > 0
+        : ch === "fuel"
+          ? d.fluids.fuelCapacityL > 0
+          : ch === "data"
+            ? d.data.supplyKbps > 0
+            : ch === "ventilation"
+              ? d.fluids.airSupplyM3s > 0
+              : true;
+  const ends: End[] = [];
+  for (const p of [...components].sort((a, b) => order(a.id, b.id))) {
+    const d = defs.get(p.componentId);
+    if (!d) continue;
+    const socket = p.hardpointId ? sockets.get(p.hardpointId) : undefined;
+    for (const port of d.ports)
+      if (channels.includes(port.channel) && !port.id.startsWith("shore-"))
+        ends.push({ p, d, port, at: placedShipPort(p, port, socket ? { definition: d, socket } : undefined).position });
+  }
+  const out: ShipComponentConnection[] = [];
+  const load = new Map<string, number>();
+  for (const sink of ends.filter((e) => e.port.direction === "in")) {
+    const candidates = ends
+      .filter((e) => e.p.id !== sink.p.id && shipPortsCompatible(e.port, sink.port).ok)
+      .map((e) => {
+        const key = `${e.p.id}:${e.port.id}`;
+        const spare = e.port.capacity - (load.get(key) ?? 0) >= sink.port.capacity - 1e-9;
+        const dist = Math.hypot(e.at[0] - sink.at[0], e.at[1] - sink.at[1], e.at[2] - sink.at[2]);
+        return { e, key, spare, dist, main: primary(e.d, e.port.channel) };
+      })
+      .sort(
+        (a, b) =>
+          Number(b.main) - Number(a.main) ||
+          Number(b.spare) - Number(a.spare) ||
+          a.dist - b.dist ||
+          order(a.key, b.key),
+      );
+    const pick = candidates[0];
+    if (!pick) continue;
+    load.set(pick.key, (load.get(pick.key) ?? 0) + sink.port.capacity);
+    out.push({
+      id: `${sink.port.channel}:${sink.p.id}:${sink.port.id}`,
+      channel: sink.port.channel,
+      from: { placementId: pick.e.p.id, portId: pick.e.port.id },
+      to: { placementId: sink.p.id, portId: sink.port.id },
+    });
+  }
+  return out;
+}
+
 // ----------------------------------------------------------- service ports
 /** Converts a placed component's typed ports to construction-services ports
  * (integer 1/32 m lattice, per-second service quantities). Ammo feeds are

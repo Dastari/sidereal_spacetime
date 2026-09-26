@@ -14,6 +14,7 @@ import {
   type ShipHardpoint,
 } from "@sidereal/content/ship-components";
 import {
+  autoWireShipComponents,
   compileShipSystems,
   fitShipComponentToHardpoint,
   orientShipVector,
@@ -211,6 +212,21 @@ describe("ports and networks", () => {
     expect(codes(dup)).toContain("duplicate-input");
     const bad = compileShipSystems({ catalog, hull, components, connections: [link("x", "power", "reactor", "power-out", "tank", "fuel-out")] });
     expect(codes(bad)).toContain("incompatible-ports");
+  });
+
+  it("auto-wires reference fits into valid explicit networks", () => {
+    for (const fit of SHIP_COMPONENT_REFERENCE_FITS) {
+      const connections = autoWireShipComponents(catalog, fit.hull, fit.components);
+      const r = compileShipSystems(input(fit, { connections }));
+      expect(r.connectionMode).toBe("explicit");
+      expect(r.issues.filter((i) => i.severity === "error"), fit.id).toEqual([]);
+      expect(codes(r)).not.toContain("unconnected-port");
+      // One feeder per input, and every link joins compatible ports.
+      expect(new Set(connections.map((c) => `${c.to.placementId}:${c.to.portId}`)).size).toBe(connections.length);
+      expect(r.power.modes.cruise.balanceKw).toBeCloseTo(compileShipSystems(input(fit)).power.modes.cruise.balanceKw, 6);
+    }
+    const again = autoWireShipComponents(catalog, REFERENCE_FIT_MD_CORVETTE.hull, [...REFERENCE_FIT_MD_CORVETTE.components].reverse());
+    expect(again).toEqual(autoWireShipComponents(catalog, REFERENCE_FIT_MD_CORVETTE.hull, REFERENCE_FIT_MD_CORVETTE.components));
   });
 
   it("converts ports to construction-services lattice ports", () => {

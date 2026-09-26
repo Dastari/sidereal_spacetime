@@ -121,7 +121,7 @@ describe("ship component catalog v1", () => {
     expect(byId.get("reactor.md")!.art.artLibraryDesignId).toBe("shipyard.equipment.reactor");
     expect(byId.get("console.command.sm")!.art.artLibraryDesignId).toBe("shipyard.equipment.command-console");
     expect(byId.get("airlock.exterior.md")!.art.artLibraryDesignId).toBe("shipyard.structure.external-airlock");
-    expect(byId.get("ion-drive.md")!.art).toMatchObject({ kitKey: "ion.MD", glb: "assets/art-library/ship-components/r001/glb/ion-drive.md.glb" });
+    expect(byId.get("ion-drive.md")!.art).toMatchObject({ kitKey: "ion.MD", glb: "assets/art-library/ship-components/r002/glb/ion-drive.md.glb" });
     expect(byId.get("armor-plate.light.sm")!.art.glb).toBeNull();
   });
 

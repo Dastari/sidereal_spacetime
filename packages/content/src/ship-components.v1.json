@@ -139,7 +139,7 @@
       "economy": {"costCredits":4200,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "ion.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/ion-drive.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/ion-drive.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Electric main drive: efficient on propellant, heavy on power. XL is rear-only and may overhang the hull height."
@@ -248,7 +248,7 @@
       "economy": {"costCredits":9800,"buildTimeS":240,"techTier":2},
       "art": {
         "kitKey": "ion.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/ion-drive.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/ion-drive.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Electric main drive: efficient on propellant, heavy on power. XL is rear-only and may overhang the hull height."
@@ -357,7 +357,7 @@
       "economy": {"costCredits":21000,"buildTimeS":480,"techTier":2},
       "art": {
         "kitKey": "ion.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/ion-drive.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/ion-drive.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Electric main drive: efficient on propellant, heavy on power. XL is rear-only and may overhang the hull height."
@@ -466,7 +466,7 @@
       "economy": {"costCredits":42000,"buildTimeS":900,"techTier":3},
       "art": {
         "kitKey": "ion.XL",
-        "glb": "assets/art-library/ship-components/r001/glb/ion-drive.xl.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/ion-drive.xl.glb",
         "artLibraryDesignId": null
       },
       "notes": "Electric main drive: efficient on propellant, heavy on power. XL is rear-only and may overhang the hull height."
@@ -575,7 +575,7 @@
       "economy": {"costCredits":3200,"buildTimeS":100,"techTier":1},
       "art": {
         "kitKey": "block.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/thrust-block.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/thrust-block.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Chemical/fusion torch block: 45% more thrust than the ion drive of the same size, ~7x the propellant, little power. XL has twin nozzles and is rear-only."
@@ -684,7 +684,7 @@
       "economy": {"costCredits":7600,"buildTimeS":200,"techTier":1},
       "art": {
         "kitKey": "block.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/thrust-block.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/thrust-block.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Chemical/fusion torch block: 45% more thrust than the ion drive of the same size, ~7x the propellant, little power. XL has twin nozzles and is rear-only."
@@ -793,7 +793,7 @@
       "economy": {"costCredits":16500,"buildTimeS":420,"techTier":2},
       "art": {
         "kitKey": "block.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/thrust-block.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/thrust-block.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Chemical/fusion torch block: 45% more thrust than the ion drive of the same size, ~7x the propellant, little power. XL has twin nozzles and is rear-only."
@@ -902,7 +902,7 @@
       "economy": {"costCredits":33000,"buildTimeS":780,"techTier":2},
       "art": {
         "kitKey": "block.XL",
-        "glb": "assets/art-library/ship-components/r001/glb/thrust-block.xl.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/thrust-block.xl.glb",
         "artLibraryDesignId": null
       },
       "notes": "Chemical/fusion torch block: 45% more thrust than the ion drive of the same size, ~7x the propellant, little power. XL has twin nozzles and is rear-only."
@@ -1011,7 +1011,7 @@
       "economy": {"costCredits":1680,"buildTimeS":72,"techTier":1},
       "art": {
         "kitKey": "ion.SM.scrap",
-        "glb": "assets/art-library/ship-components/r001/glb/ion-drive.salvaged.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/ion-drive.salvaged.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Same sockets and envelope as the ion drive. Cheaper, weaker, hotter and more fragile; burns on destruction."
@@ -1120,7 +1120,7 @@
       "economy": {"costCredits":3920,"buildTimeS":144,"techTier":2},
       "art": {
         "kitKey": "ion.MD.scrap",
-        "glb": "assets/art-library/ship-components/r001/glb/ion-drive.salvaged.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/ion-drive.salvaged.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Same sockets and envelope as the ion drive. Cheaper, weaker, hotter and more fragile; burns on destruction."
@@ -1229,7 +1229,7 @@
       "economy": {"costCredits":8400,"buildTimeS":288,"techTier":2},
       "art": {
         "kitKey": "ion.LG.scrap",
-        "glb": "assets/art-library/ship-components/r001/glb/ion-drive.salvaged.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/ion-drive.salvaged.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Same sockets and envelope as the ion drive. Cheaper, weaker, hotter and more fragile; burns on destruction."
@@ -1338,7 +1338,7 @@
       "economy": {"costCredits":16800,"buildTimeS":540,"techTier":3},
       "art": {
         "kitKey": "ion.XL.scrap",
-        "glb": "assets/art-library/ship-components/r001/glb/ion-drive.salvaged.xl.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/ion-drive.salvaged.xl.glb",
         "artLibraryDesignId": null
       },
       "notes": "Same sockets and envelope as the ion drive. Cheaper, weaker, hotter and more fragile; burns on destruction."
@@ -1437,7 +1437,7 @@
       "economy": {"costCredits":10500,"buildTimeS":300,"techTier":4},
       "art": {
         "kitKey": "x.resonance.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/resonance-drive.aurelian.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/resonance-drive.aurelian.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Alien variant: propellant-free (power only), lighter and cooler, explodes when destroyed. Faction-locked tech tier 4."
@@ -1536,7 +1536,7 @@
       "economy": {"costCredits":24500,"buildTimeS":600,"techTier":4},
       "art": {
         "kitKey": "x.resonance.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/resonance-drive.aurelian.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/resonance-drive.aurelian.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Alien variant: propellant-free (power only), lighter and cooler, explodes when destroyed. Faction-locked tech tier 4."
@@ -1635,7 +1635,7 @@
       "economy": {"costCredits":52000,"buildTimeS":1200,"techTier":4},
       "art": {
         "kitKey": "x.resonance.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/resonance-drive.aurelian.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/resonance-drive.aurelian.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Alien variant: propellant-free (power only), lighter and cooler, explodes when destroyed. Faction-locked tech tier 4."
@@ -1734,7 +1734,7 @@
       "economy": {"costCredits":600,"buildTimeS":30,"techTier":1},
       "art": {
         "kitKey": "rcs.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/rcs.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/rcs.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Monopropellant attitude thruster. Both sizes fit a single 1 m cell; RCS clusters share the ship's IFCS computer slot."
@@ -1833,7 +1833,7 @@
       "economy": {"costCredits":1500,"buildTimeS":60,"techTier":1},
       "art": {
         "kitKey": "rcs.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/rcs.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/rcs.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Monopropellant attitude thruster. Both sizes fit a single 1 m cell; RCS clusters share the ship's IFCS computer slot."
@@ -1942,7 +1942,7 @@
       "economy": {"costCredits":3800,"buildTimeS":120,"techTier":2},
       "art": {
         "kitKey": "x.vtol.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/vtol-thruster.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/vtol-thruster.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "FUTURE: vertical gameplay needs its own design and tests (AGENTS.md). Rejected by the compiler unless future parts are allowed; never feeds planar flight."
@@ -2051,7 +2051,7 @@
       "economy": {"costCredits":8800,"buildTimeS":240,"techTier":2},
       "art": {
         "kitKey": "x.vtol.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/vtol-thruster.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/vtol-thruster.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "FUTURE: vertical gameplay needs its own design and tests (AGENTS.md). Rejected by the compiler unless future parts are allowed; never feeds planar flight."
@@ -2143,7 +2143,7 @@
       "economy": {"costCredits":180000,"buildTimeS":3600,"techTier":4},
       "art": {
         "kitKey": "x.warp.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/warp-drive.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/warp-drive.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "FUTURE: jump travel is not designed. Charge draw shown so power planning can reserve it."
@@ -2235,7 +2235,7 @@
       "economy": {"costCredits":400000,"buildTimeS":7200,"techTier":4},
       "art": {
         "kitKey": "x.warp.XL",
-        "glb": "assets/art-library/ship-components/r001/glb/warp-drive.xl.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/warp-drive.xl.glb",
         "artLibraryDesignId": null
       },
       "notes": "FUTURE: jump travel is not designed. Charge draw shown so power planning can reserve it."
@@ -2347,7 +2347,7 @@
       "economy": {"costCredits":9000,"buildTimeS":300,"techTier":1},
       "art": {
         "kitKey": "x.reactor.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/reactor.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/reactor.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Generation is rated output. Waste heat ~20% of delivered power at full load; fuel scales with load. The art-library reactor review lists 1 MW / 200 kW heat, which is not an approved stat."
@@ -2459,7 +2459,7 @@
       "economy": {"costCredits":22000,"buildTimeS":600,"techTier":2},
       "art": {
         "kitKey": "x.reactor.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/reactor.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/reactor.md.glb",
         "artLibraryDesignId": "shipyard.equipment.reactor"
       },
       "notes": "Generation is rated output. Waste heat ~20% of delivered power at full load; fuel scales with load. The art-library reactor review lists 1 MW / 200 kW heat, which is not an approved stat."
@@ -2571,7 +2571,7 @@
       "economy": {"costCredits":52000,"buildTimeS":1200,"techTier":3},
       "art": {
         "kitKey": "x.reactor.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/reactor.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/reactor.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Generation is rated output. Waste heat ~20% of delivered power at full load; fuel scales with load. The art-library reactor review lists 1 MW / 200 kW heat, which is not an approved stat."
@@ -2663,7 +2663,7 @@
       "economy": {"costCredits":2400,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.battery.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/battery.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/battery.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Buffers generation deficits; heat is at maximum discharge."
@@ -2765,7 +2765,7 @@
       "economy": {"costCredits":6000,"buildTimeS":180,"techTier":1},
       "art": {
         "kitKey": "x.battery.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/battery.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/battery.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Buffers generation deficits; heat is at maximum discharge."
@@ -2867,7 +2867,7 @@
       "economy": {"costCredits":14500,"buildTimeS":360,"techTier":1},
       "art": {
         "kitKey": "x.battery.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/battery.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/battery.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Buffers generation deficits; heat is at maximum discharge."
@@ -2959,7 +2959,7 @@
       "economy": {"costCredits":1800,"buildTimeS":60,"techTier":2},
       "art": {
         "kitKey": "x.capacitor.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/capacitor.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/capacitor.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Small store, very high discharge. Pulse weapons (railgun, plasma) need a bank holding at least one shot each."
@@ -3061,7 +3061,7 @@
       "economy": {"costCredits":4400,"buildTimeS":120,"techTier":2},
       "art": {
         "kitKey": "x.capacitor.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/capacitor.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/capacitor.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Small store, very high discharge. Pulse weapons (railgun, plasma) need a bank holding at least one shot each."
@@ -3163,7 +3163,7 @@
       "economy": {"costCredits":10500,"buildTimeS":240,"techTier":3},
       "art": {
         "kitKey": "x.capacitor.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/capacitor.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/capacitor.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Small store, very high discharge. Pulse weapons (railgun, plasma) need a bank holding at least one shot each."
@@ -3227,7 +3227,7 @@
       "economy": {"costCredits":900,"buildTimeS":60,"techTier":1},
       "art": {
         "kitKey": "x.fuel-tank.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/fuel-tank.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/fuel-tank.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Dry mass shown; fuel adds 0.8 kg/L (inventory `liquid:fuel`). Shared by reactors, engines, RCS and aux generators."
@@ -3291,7 +3291,7 @@
       "economy": {"costCredits":2200,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "x.fuel-tank.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/fuel-tank.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/fuel-tank.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Dry mass shown; fuel adds 0.8 kg/L (inventory `liquid:fuel`). Shared by reactors, engines, RCS and aux generators."
@@ -3355,7 +3355,7 @@
       "economy": {"costCredits":5500,"buildTimeS":240,"techTier":1},
       "art": {
         "kitKey": "x.fuel-tank.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/fuel-tank.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/fuel-tank.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Dry mass shown; fuel adds 0.8 kg/L (inventory `liquid:fuel`). Shared by reactors, engines, RCS and aux generators."
@@ -3419,7 +3419,7 @@
       "economy": {"costCredits":900,"buildTimeS":45,"techTier":1},
       "art": {
         "kitKey": "x.solar.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/solar-array.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/solar-array.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Auxiliary; output assumes 1 AU-equivalent light. Fragile."
@@ -3483,7 +3483,7 @@
       "economy": {"costCredits":2300,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.solar.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/solar-array.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/solar-array.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Auxiliary; output assumes 1 AU-equivalent light. Fragile."
@@ -3595,7 +3595,7 @@
       "economy": {"costCredits":2600,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "x.aux-generator.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/aux-generator.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/aux-generator.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Backup/black-start generator for small craft."
@@ -3642,7 +3642,17 @@
           "capacity": 2.4,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,0,0],
+          "position": [-0.4,0,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 2.4,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [0.4,0,0],
           "normal": [0,0,-1]
         }
       ],
@@ -3659,7 +3669,7 @@
       "economy": {"costCredits":1100,"buildTimeS":60,"techTier":1},
       "art": {
         "kitKey": "x.radiator.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/radiator.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/radiator.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Rejects heat only while pumps move coolant to it: effective rejection = min(radiators, pumps x 25 kW per L/s)."
@@ -3706,7 +3716,17 @@
           "capacity": 6.4,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,0,0],
+          "position": [-0.8,0,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 6.4,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [0.8,0,0],
           "normal": [0,0,-1]
         }
       ],
@@ -3723,7 +3743,7 @@
       "economy": {"costCredits":2800,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "x.radiator.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/radiator.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/radiator.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Rejects heat only while pumps move coolant to it: effective rejection = min(radiators, pumps x 25 kW per L/s)."
@@ -3770,7 +3790,17 @@
           "capacity": 16,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,0,0],
+          "position": [-1.2,0,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 16,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [1.2,0,0],
           "normal": [0,0,-1]
         }
       ],
@@ -3787,7 +3817,7 @@
       "economy": {"costCredits":6600,"buildTimeS":240,"techTier":1},
       "art": {
         "kitKey": "x.radiator.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/radiator.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/radiator.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Rejects heat only while pumps move coolant to it: effective rejection = min(radiators, pumps x 25 kW per L/s)."
@@ -3889,7 +3919,7 @@
       "economy": {"costCredits":700,"buildTimeS":45,"techTier":1},
       "art": {
         "kitKey": "x.coolant-pump.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/coolant-pump.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/coolant-pump.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Supplies loop flow (out) and takes the return (in). 1 L/s carries 25 kW."
@@ -3991,7 +4021,7 @@
       "economy": {"costCredits":1600,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.coolant-pump.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/coolant-pump.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/coolant-pump.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Supplies loop flow (out) and takes the return (in). 1 L/s carries 25 kW."
@@ -4093,7 +4123,7 @@
       "economy": {"costCredits":3800,"buildTimeS":180,"techTier":1},
       "art": {
         "kitKey": "x.coolant-pump.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/coolant-pump.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/coolant-pump.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Supplies loop flow (out) and takes the return (in). 1 L/s carries 25 kW."
@@ -4140,7 +4170,17 @@
           "capacity": 4,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,-0.225,0],
+          "position": [-0.36,-0.225,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 4,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [0.36,-0.225,0],
           "normal": [0,0,-1]
         }
       ],
@@ -4157,7 +4197,7 @@
       "economy": {"costCredits":800,"buildTimeS":45,"techTier":1},
       "art": {
         "kitKey": "x.heat-sink.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/heat-sink.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/heat-sink.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Phase-change buffer: time to overheat = storage / heat deficit."
@@ -4204,7 +4244,17 @@
           "capacity": 10,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,-0.225,0],
+          "position": [-0.72,-0.225,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 10,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [0.72,-0.225,0],
           "normal": [0,0,-1]
         }
       ],
@@ -4221,7 +4271,7 @@
       "economy": {"costCredits":2000,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.heat-sink.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/heat-sink.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/heat-sink.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Phase-change buffer: time to overheat = storage / heat deficit."
@@ -4240,7 +4290,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
-        "envelopeM": [[-0.5,-0.5,0],[0.5,0.66,0.95]],
+        "envelopeM": [[-0.5,-0.5,0],[0.5,0.79,1.19]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
         "rearOnly": false
       },
@@ -4329,7 +4379,7 @@
       "economy": {"costCredits":2600,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "wpn.pd.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/point-defense.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/point-defense.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Autonomous under a fire-control slot; intercepts missiles and fighters."
@@ -4348,7 +4398,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1.32,1.9]],
+        "envelopeM": [[-1,-1,0],[1,1.58,2.38]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
         "rearOnly": false
       },
@@ -4447,7 +4497,7 @@
       "economy": {"costCredits":6200,"buildTimeS":180,"techTier":1},
       "art": {
         "kitKey": "wpn.pd.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/point-defense.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/point-defense.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Autonomous under a fire-control slot; intercepts missiles and fighters."
@@ -4466,7 +4516,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
-        "envelopeM": [[-0.5,-0.5,0],[0.5,0.9,1.13]],
+        "envelopeM": [[-0.5,-0.5,0],[0.5,1.23,1.32]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
         "rearOnly": false
       },
@@ -4555,7 +4605,7 @@
       "economy": {"costCredits":3000,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "wpn.autocannon.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/autocannon.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/autocannon.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Versatile ballistic mount; twin barrels fire together (damage per projectile)."
@@ -4574,7 +4624,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1.8,2.26]],
+        "envelopeM": [[-1,-1,0],[1,2.46,2.64]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
         "rearOnly": false
       },
@@ -4673,7 +4723,7 @@
       "economy": {"costCredits":7200,"buildTimeS":180,"techTier":1},
       "art": {
         "kitKey": "wpn.autocannon.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/autocannon.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/autocannon.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Versatile ballistic mount; twin barrels fire together (damage per projectile)."
@@ -4692,7 +4742,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,2.7,3.39]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,3.69,3.96]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
         "rearOnly": false
       },
@@ -4791,7 +4841,7 @@
       "economy": {"costCredits":16000,"buildTimeS":360,"techTier":1},
       "art": {
         "kitKey": "wpn.autocannon.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/autocannon.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/autocannon.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Versatile ballistic mount; twin barrels fire together (damage per projectile)."
@@ -4810,7 +4860,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
-        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5700000000000001,0.95]],
+        "envelopeM": [[-0.5,-0.5,0],[0.5,0.94,1.13]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
         "rearOnly": false
       },
@@ -4899,7 +4949,7 @@
       "economy": {"costCredits":4200,"buildTimeS":120,"techTier":2},
       "art": {
         "kitKey": "wpn.laser.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/laser-cannon.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/laser-cannon.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hitscan (projectile speed 0). No ammunition; 70% of shot energy becomes heat."
@@ -4918,7 +4968,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1.1400000000000001,1.9]],
+        "envelopeM": [[-1,-1,0],[1,1.88,2.26]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
         "rearOnly": false
       },
@@ -5007,7 +5057,7 @@
       "economy": {"costCredits":10000,"buildTimeS":240,"techTier":2},
       "art": {
         "kitKey": "wpn.laser.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/laser-cannon.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/laser-cannon.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hitscan (projectile speed 0). No ammunition; 70% of shot energy becomes heat."
@@ -5026,7 +5076,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,1.71,2.85]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,2.8200000000000003,3.39]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
         "rearOnly": false
       },
@@ -5115,7 +5165,7 @@
       "economy": {"costCredits":23000,"buildTimeS":480,"techTier":3},
       "art": {
         "kitKey": "wpn.laser.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/laser-cannon.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/laser-cannon.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hitscan (projectile speed 0). No ammunition; 70% of shot energy becomes heat."
@@ -5134,7 +5184,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,2.2,1.64]],
+        "envelopeM": [[-1,-1,0],[1,2.46,1.88]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":120},
         "rearOnly": false
       },
@@ -5233,7 +5283,7 @@
       "economy": {"costCredits":22000,"buildTimeS":480,"techTier":3},
       "art": {
         "kitKey": "wpn.railgun.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/railgun.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/railgun.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Pulse weapon: capacitor bank must hold one shot; the reactor pays the average draw. Needs a gunner station."
@@ -5252,7 +5302,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,3.3,2.46]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,3.69,2.82]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":120},
         "rearOnly": false
       },
@@ -5351,7 +5401,7 @@
       "economy": {"costCredits":52000,"buildTimeS":960,"techTier":3},
       "art": {
         "kitKey": "wpn.railgun.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/railgun.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/railgun.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Pulse weapon: capacitor bank must hold one shot; the reactor pays the average draw. Needs a gunner station."
@@ -5370,7 +5420,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
-        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.19]],
+        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.38]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":360},
         "rearOnly": false
       },
@@ -5459,7 +5509,7 @@
       "economy": {"costCredits":5200,"buildTimeS":150,"techTier":2},
       "art": {
         "kitKey": "wpn.missile.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/missile-pod.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/missile-pod.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Salvo launcher (4/8/12 tubes); shots per minute are salvos. Loaded pods explode when destroyed."
@@ -5478,7 +5528,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1,2.38]],
+        "envelopeM": [[-1,-1,0],[1,1,2.76]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":360},
         "rearOnly": false
       },
@@ -5567,7 +5617,7 @@
       "economy": {"costCredits":12000,"buildTimeS":300,"techTier":2},
       "art": {
         "kitKey": "wpn.missile.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/missile-pod.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/missile-pod.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Salvo launcher (4/8/12 tubes); shots per minute are salvos. Loaded pods explode when destroyed."
@@ -5586,7 +5636,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.57]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,4.14]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":360},
         "rearOnly": false
       },
@@ -5685,7 +5735,7 @@
       "economy": {"costCredits":26000,"buildTimeS":600,"techTier":3},
       "art": {
         "kitKey": "wpn.missile.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/missile-pod.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/missile-pod.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Salvo launcher (4/8/12 tubes); shots per minute are salvos. Loaded pods explode when destroyed."
@@ -5793,7 +5843,7 @@
       "economy": {"costCredits":18000,"buildTimeS":480,"techTier":3},
       "art": {
         "kitKey": "x.torpedo.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/torpedo-launcher.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/torpedo-launcher.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Heavy anti-capital strike through a hull face; needs a gunner station and a torpedo rack."
@@ -5911,7 +5961,7 @@
       "economy": {"costCredits":40000,"buildTimeS":900,"techTier":3},
       "art": {
         "kitKey": "x.torpedo.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/torpedo-launcher.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/torpedo-launcher.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Heavy anti-capital strike through a hull face; needs a gunner station and a torpedo rack."
@@ -5930,7 +5980,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
-        "envelopeM": [[-0.5,-0.5,0],[0.5,0.63,1.07]],
+        "envelopeM": [[-0.5,-0.5,0],[0.5,0.8,1.25]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
         "rearOnly": false
       },
@@ -6011,7 +6061,7 @@
       "economy": {"costCredits":2800,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "wpn.flak.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/flak-cannon.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/flak-cannon.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Six-barrel burst cluster; area damage against small craft and missiles."
@@ -6030,7 +6080,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1.26,2.14]],
+        "envelopeM": [[-1,-1,0],[1,1.6,2.5]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
         "rearOnly": false
       },
@@ -6129,7 +6179,7 @@
       "economy": {"costCredits":6600,"buildTimeS":180,"techTier":1},
       "art": {
         "kitKey": "wpn.flak.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/flak-cannon.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/flak-cannon.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Six-barrel burst cluster; area damage against small craft and missiles."
@@ -6148,7 +6198,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,1.8900000000000001,3.21]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,2.4,3.75]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
         "rearOnly": false
       },
@@ -6247,7 +6297,7 @@
       "economy": {"costCredits":14500,"buildTimeS":360,"techTier":1},
       "art": {
         "kitKey": "wpn.flak.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/flak-cannon.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/flak-cannon.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Six-barrel burst cluster; area damage against small craft and missiles."
@@ -6266,7 +6316,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1.1,1.82]],
+        "envelopeM": [[-1,-1,0],[1,1,2.2]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
         "rearOnly": false
       },
@@ -6355,7 +6405,7 @@
       "economy": {"costCredits":14000,"buildTimeS":360,"techTier":3},
       "art": {
         "kitKey": "x.plasma.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/plasma-turret.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/plasma-turret.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Short-range high damage; the hottest weapon per shot (85% of shot energy). Capacitor-fed."
@@ -6374,7 +6424,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,1.65,2.73]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.3]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
         "rearOnly": false
       },
@@ -6463,7 +6513,7 @@
       "economy": {"costCredits":32000,"buildTimeS":720,"techTier":4},
       "art": {
         "kitKey": "x.plasma.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/plasma-turret.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/plasma-turret.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Short-range high damage; the hottest weapon per shot (85% of shot energy). Capacitor-fed."
@@ -6571,7 +6621,7 @@
       "economy": {"costCredits":2200,"buildTimeS":80,"techTier":1},
       "art": {
         "kitKey": "cannon.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/side-cannon.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/side-cannon.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hull-face broadside sponson with a limited 90 degree arc; LG has twin barrels."
@@ -6671,7 +6721,7 @@
       "economy": {"costCredits":5200,"buildTimeS":160,"techTier":1},
       "art": {
         "kitKey": "cannon.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/side-cannon.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/side-cannon.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hull-face broadside sponson with a limited 90 degree arc; LG has twin barrels."
@@ -6789,7 +6839,7 @@
       "economy": {"costCredits":12000,"buildTimeS":320,"techTier":1},
       "art": {
         "kitKey": "cannon.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/side-cannon.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/side-cannon.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hull-face broadside sponson with a limited 90 degree arc; LG has twin barrels."
@@ -6885,7 +6935,7 @@
       "economy": {"costCredits":1200,"buildTimeS":60,"techTier":1},
       "art": {
         "kitKey": "x.magazine-ballistic.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/magazine.ballistic.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/magazine.ballistic.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Armoured locker with a conveyor feed. Capacity by mass (see ammo types)."
@@ -6981,7 +7031,7 @@
       "economy": {"costCredits":2800,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "x.magazine-ballistic.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/magazine.ballistic.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/magazine.ballistic.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Armoured locker with a conveyor feed. Capacity by mass (see ammo types)."
@@ -7077,7 +7127,7 @@
       "economy": {"costCredits":6200,"buildTimeS":240,"techTier":1},
       "art": {
         "kitKey": "x.magazine-ballistic.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/magazine.ballistic.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/magazine.ballistic.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Armoured locker with a conveyor feed. Capacity by mass (see ammo types)."
@@ -7169,7 +7219,7 @@
       "economy": {"costCredits":2600,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "x.magazine-missile.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/magazine.missile.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/magazine.missile.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "16 / 40 standard missiles."
@@ -7261,7 +7311,7 @@
       "economy": {"costCredits":6000,"buildTimeS":240,"techTier":1},
       "art": {
         "kitKey": "x.magazine-missile.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/magazine.missile.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/magazine.missile.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "16 / 40 standard missiles."
@@ -7353,7 +7403,7 @@
       "economy": {"costCredits":7500,"buildTimeS":300,"techTier":1},
       "art": {
         "kitKey": "x.magazine-torpedo.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/magazine.torpedo.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/magazine.torpedo.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Six heavy torpedoes."
@@ -7445,7 +7495,7 @@
       "economy": {"costCredits":6500,"buildTimeS":240,"techTier":2},
       "art": {
         "kitKey": "x.shield-generator.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/shield-generator.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/shield-generator.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Stores shield capacity; idle draw holds the field, active draw recharges it. Needs at least one emitter whose bubble covers the hull."
@@ -7537,7 +7587,7 @@
       "economy": {"costCredits":16000,"buildTimeS":480,"techTier":3},
       "art": {
         "kitKey": "x.shield-generator.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/shield-generator.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/shield-generator.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Stores shield capacity; idle draw holds the field, active draw recharges it. Needs at least one emitter whose bubble covers the hull."
@@ -7629,7 +7679,7 @@
       "economy": {"costCredits":38000,"buildTimeS":960,"techTier":3},
       "art": {
         "kitKey": "x.shield-generator.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/shield-generator.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/shield-generator.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Stores shield capacity; idle draw holds the field, active draw recharges it. Needs at least one emitter whose bubble covers the hull."
@@ -7648,7 +7698,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
-        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.13]],
+        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.38]],
         "clearance": null,
         "rearOnly": false
       },
@@ -7703,7 +7753,7 @@
       "economy": {"costCredits":1800,"buildTimeS":90,"techTier":2},
       "art": {
         "kitKey": "wpn.shield.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/shield-emitter.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/shield-emitter.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Projects the generator's field; the ship bubble radius is the largest emitter radius."
@@ -7722,7 +7772,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1,2.26]],
+        "envelopeM": [[-1,-1,0],[1,1,2.76]],
         "clearance": null,
         "rearOnly": false
       },
@@ -7785,7 +7835,7 @@
       "economy": {"costCredits":4400,"buildTimeS":180,"techTier":2},
       "art": {
         "kitKey": "wpn.shield.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/shield-emitter.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/shield-emitter.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Projects the generator's field; the ship bubble radius is the largest emitter radius."
@@ -7804,7 +7854,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.39]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,4.14]],
         "clearance": null,
         "rearOnly": false
       },
@@ -7877,7 +7927,7 @@
       "economy": {"costCredits":10500,"buildTimeS":360,"techTier":3},
       "art": {
         "kitKey": "wpn.shield.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/shield-emitter.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/shield-emitter.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Projects the generator's field; the ship bubble radius is the largest emitter radius."
@@ -8112,7 +8162,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
-        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.19]],
+        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.44]],
         "clearance": {"kind":"sweep","lengthM":0.6,"arcDeg":360},
         "rearOnly": false
       },
@@ -8175,7 +8225,7 @@
       "economy": {"costCredits":2200,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "wpn.sensor.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/sensor-dish.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/sensor-dish.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Steerable long-range dish; arc is the instantaneous field."
@@ -8194,7 +8244,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1,2.38]],
+        "envelopeM": [[-1,-1,0],[1,1,2.88]],
         "clearance": {"kind":"sweep","lengthM":1.2,"arcDeg":360},
         "rearOnly": false
       },
@@ -8267,7 +8317,7 @@
       "economy": {"costCredits":5400,"buildTimeS":180,"techTier":1},
       "art": {
         "kitKey": "wpn.sensor.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/sensor-dish.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/sensor-dish.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Steerable long-range dish; arc is the instantaneous field."
@@ -8286,7 +8336,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.57]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,4.32]],
         "clearance": {"kind":"sweep","lengthM":1.7999999999999998,"arcDeg":360},
         "rearOnly": false
       },
@@ -8359,7 +8409,7 @@
       "economy": {"costCredits":12500,"buildTimeS":360,"techTier":1},
       "art": {
         "kitKey": "wpn.sensor.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/sensor-dish.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/sensor-dish.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Steerable long-range dish; arc is the instantaneous field."
@@ -8451,7 +8501,7 @@
       "economy": {"costCredits":6800,"buildTimeS":240,"techTier":2},
       "art": {
         "kitKey": "x.radar.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/radar-array.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/radar-array.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Rotating 360 degree search radar."
@@ -8543,7 +8593,7 @@
       "economy": {"costCredits":15000,"buildTimeS":480,"techTier":3},
       "art": {
         "kitKey": "x.radar.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/radar-array.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/radar-array.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Rotating 360 degree search radar."
@@ -8625,7 +8675,7 @@
       "economy": {"costCredits":1900,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.scanner.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/scanner-mast.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/scanner-mast.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Short-range detailed scan (cargo, composition, signatures)."
@@ -8717,7 +8767,7 @@
       "economy": {"costCredits":4600,"buildTimeS":180,"techTier":1},
       "art": {
         "kitKey": "x.scanner.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/scanner-mast.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/scanner-mast.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Short-range detailed scan (cargo, composition, signatures)."
@@ -8736,7 +8786,7 @@
         "frame": "top",
         "sockets": ["top"],
         "cells": [1,1],
-        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.45]],
+        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.69]],
         "clearance": null,
         "rearOnly": false
       },
@@ -8799,7 +8849,7 @@
       "economy": {"costCredits":1400,"buildTimeS":60,"techTier":1},
       "art": {
         "kitKey": "wpn.beacon.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/relay-beacon.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/relay-beacon.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Long-range comm/data relay; not a detection sensor."
@@ -8818,7 +8868,7 @@
         "frame": "top",
         "sockets": ["top"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1,2.9]],
+        "envelopeM": [[-1,-1,0],[1,1,3.38]],
         "clearance": null,
         "rearOnly": false
       },
@@ -8881,7 +8931,7 @@
       "economy": {"costCredits":3400,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "wpn.beacon.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/relay-beacon.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/relay-beacon.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Long-range comm/data relay; not a detection sensor."
@@ -8900,7 +8950,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [1,1],
-        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.07]],
+        "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.32]],
         "clearance": {"kind":"beam","lengthM":120,"arcDeg":30},
         "rearOnly": false
       },
@@ -8973,7 +9023,7 @@
       "economy": {"costCredits":4800,"buildTimeS":180,"techTier":2},
       "art": {
         "kitKey": "wpn.tractor.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/tractor-projector.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/tractor-projector.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Force is applied to both bodies; target mass limit is for full control."
@@ -8992,7 +9042,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1,2.14]],
+        "envelopeM": [[-1,-1,0],[1,1,2.64]],
         "clearance": {"kind":"beam","lengthM":220,"arcDeg":30},
         "rearOnly": false
       },
@@ -9065,7 +9115,7 @@
       "economy": {"costCredits":11500,"buildTimeS":360,"techTier":2},
       "art": {
         "kitKey": "wpn.tractor.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/tractor-projector.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/tractor-projector.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Force is applied to both bodies; target mass limit is for full control."
@@ -9084,7 +9134,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.21]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.96]],
         "clearance": {"kind":"beam","lengthM":350,"arcDeg":30},
         "rearOnly": false
       },
@@ -9157,7 +9207,7 @@
       "economy": {"costCredits":27000,"buildTimeS":720,"techTier":3},
       "art": {
         "kitKey": "wpn.tractor.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/tractor-projector.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/tractor-projector.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Force is applied to both bodies; target mass limit is for full control."
@@ -9249,7 +9299,7 @@
       "economy": {"costCredits":6000,"buildTimeS":240,"techTier":2},
       "art": {
         "kitKey": "x.salvage-arm.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/salvage-arm.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/salvage-arm.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Articulated cutter/grabber for wrecks; operator-driven."
@@ -9341,7 +9391,7 @@
       "economy": {"costCredits":14000,"buildTimeS":480,"techTier":2},
       "art": {
         "kitKey": "x.salvage-arm.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/salvage-arm.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/salvage-arm.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Articulated cutter/grabber for wrecks; operator-driven."
@@ -9360,7 +9410,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [2,2],
-        "envelopeM": [[-1,-1,0],[1,1,2.2]],
+        "envelopeM": [[-1,-1,0],[1,1,2.44]],
         "clearance": null,
         "rearOnly": false
       },
@@ -9423,7 +9473,7 @@
       "economy": {"costCredits":3600,"buildTimeS":150,"techTier":1},
       "art": {
         "kitKey": "wpn.clamp.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/docking-clamp.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/docking-clamp.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hard-docks a craft or container to the hull."
@@ -9442,7 +9492,7 @@
         "frame": "top",
         "sockets": ["top","face","bottom"],
         "cells": [3,3],
-        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.3]],
+        "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.66]],
         "clearance": null,
         "rearOnly": false
       },
@@ -9505,7 +9555,7 @@
       "economy": {"costCredits":8600,"buildTimeS":300,"techTier":1},
       "art": {
         "kitKey": "wpn.clamp.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/docking-clamp.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/docking-clamp.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hard-docks a craft or container to the hull."
@@ -9597,7 +9647,7 @@
       "economy": {"costCredits":3800,"buildTimeS":150,"techTier":1},
       "art": {
         "kitKey": "x.mining-laser.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/mining-laser.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/mining-laser.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Industrial beam; 70% of draw becomes heat. Yield before refining."
@@ -9689,7 +9739,7 @@
       "economy": {"costCredits":9000,"buildTimeS":300,"techTier":1},
       "art": {
         "kitKey": "x.mining-laser.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/mining-laser.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/mining-laser.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Industrial beam; 70% of draw becomes heat. Yield before refining."
@@ -9781,7 +9831,7 @@
       "economy": {"costCredits":21000,"buildTimeS":600,"techTier":1},
       "art": {
         "kitKey": "x.mining-laser.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/mining-laser.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/mining-laser.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Industrial beam; 70% of draw becomes heat. Yield before refining."
@@ -9863,7 +9913,7 @@
       "economy": {"costCredits":12000,"buildTimeS":360,"techTier":3},
       "art": {
         "kitKey": "x.drone-bay.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/drone-bay.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/drone-bay.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Launch hatch plus drone cradles. Drones and their stats are not modelled yet; each drone uses a control slot."
@@ -9955,7 +10005,7 @@
       "economy": {"costCredits":26000,"buildTimeS":720,"techTier":3},
       "art": {
         "kitKey": "x.drone-bay.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/drone-bay.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/drone-bay.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Launch hatch plus drone cradles. Drones and their stats are not modelled yet; each drone uses a control slot."
@@ -10045,7 +10095,7 @@
       "economy": {"costCredits":1500,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.cargo-door.2m",
-        "glb": "assets/art-library/ship-components/r001/glb/cargo-door.2m.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/cargo-door.2m.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hull-edge module that is also a pressure boundary. Bays are pumped down before opening, so no air is lost per cycle."
@@ -10135,7 +10185,7 @@
       "economy": {"costCredits":3400,"buildTimeS":180,"techTier":1},
       "art": {
         "kitKey": "x.cargo-door.4m",
-        "glb": "assets/art-library/ship-components/r001/glb/cargo-door.4m.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/cargo-door.4m.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hull-edge module that is also a pressure boundary. Bays are pumped down before opening, so no air is lost per cycle."
@@ -10225,7 +10275,7 @@
       "economy": {"costCredits":6200,"buildTimeS":300,"techTier":1},
       "art": {
         "kitKey": "x.cargo-door.6m",
-        "glb": "assets/art-library/ship-components/r001/glb/cargo-door.6m.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/cargo-door.6m.glb",
         "artLibraryDesignId": null
       },
       "notes": "Hull-edge module that is also a pressure boundary. Bays are pumped down before opening, so no air is lost per cycle."
@@ -10325,7 +10375,7 @@
       "economy": {"costCredits":3200,"buildTimeS":180,"techTier":1},
       "art": {
         "kitKey": "x.airlock-exterior.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/airlock.exterior.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/airlock.exterior.md.glb",
         "artLibraryDesignId": "shipyard.structure.external-airlock"
       },
       "notes": "Two-door hull airlock; pumps air back (0.3 m3 lost per cycle)."
@@ -10415,7 +10465,7 @@
       "economy": {"costCredits":1200,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.airlock-interior.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/airlock.interior.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/airlock.interior.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Pressure door between compartments on a 2 m module edge."
@@ -10495,7 +10545,7 @@
       "economy": {"costCredits":400,"buildTimeS":40,"techTier":1},
       "art": {
         "kitKey": "x.hatch.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/hatch.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/hatch.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Floor/roof hatch for the multi-deck shaft rules (launch is single-deck)."
@@ -10575,7 +10625,7 @@
       "economy": {"costCredits":600,"buildTimeS":60,"techTier":1},
       "art": {
         "kitKey": "x.hatch-exterior.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/hatch.exterior.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/hatch.exterior.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Emergency/EVA hatch through the hull roof; loses the trunk volume per cycle."
@@ -10705,7 +10755,7 @@
       "economy": {"costCredits":5200,"buildTimeS":240,"techTier":2},
       "art": {
         "kitKey": "x.docking-port.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/docking-port.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/docking-port.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Sealed ship-to-station/ship-to-ship collar with shore power, data, fuel and air pass-through (both directions)."
@@ -10835,7 +10885,7 @@
       "economy": {"costCredits":11500,"buildTimeS":480,"techTier":2},
       "art": {
         "kitKey": "x.docking-port.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/docking-port.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/docking-port.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Sealed ship-to-station/ship-to-ship collar with shore power, data, fuel and air pass-through (both directions)."
@@ -10927,7 +10977,7 @@
       "economy": {"costCredits":3000,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "x.life-support.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/life-support.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/life-support.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Oxygen generation, CO2 scrubbing and circulation. Crew supported is continuous capacity."
@@ -11029,7 +11079,7 @@
       "economy": {"costCredits":7200,"buildTimeS":240,"techTier":1},
       "art": {
         "kitKey": "x.life-support.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/life-support.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/life-support.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Oxygen generation, CO2 scrubbing and circulation. Crew supported is continuous capacity."
@@ -11131,7 +11181,7 @@
       "economy": {"costCredits":16500,"buildTimeS":480,"techTier":1},
       "art": {
         "kitKey": "x.life-support.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/life-support.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/life-support.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Oxygen generation, CO2 scrubbing and circulation. Crew supported is continuous capacity."
@@ -11223,7 +11273,7 @@
       "economy": {"costCredits":700,"buildTimeS":40,"techTier":1},
       "art": {
         "kitKey": "x.air-filter.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/air-filter.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/air-filter.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Extra scrubbing/circulation capacity; does not generate oxygen reserves."
@@ -11307,7 +11357,7 @@
       "economy": {"costCredits":1700,"buildTimeS":80,"techTier":1},
       "art": {
         "kitKey": "x.air-filter.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/air-filter.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/air-filter.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Extra scrubbing/circulation capacity; does not generate oxygen reserves."
@@ -11371,7 +11421,7 @@
       "economy": {"costCredits":500,"buildTimeS":30,"techTier":1},
       "art": {
         "kitKey": "x.oxygen-tank.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/oxygen-tank.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/oxygen-tank.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Emergency reserve used when life support is unpowered."
@@ -11435,7 +11485,7 @@
       "economy": {"costCredits":1300,"buildTimeS":60,"techTier":1},
       "art": {
         "kitKey": "x.oxygen-tank.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/oxygen-tank.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/oxygen-tank.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Emergency reserve used when life support is unpowered."
@@ -11517,7 +11567,7 @@
       "economy": {"costCredits":900,"buildTimeS":60,"techTier":1},
       "art": {
         "kitKey": "x.hydroponics.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/hydroponics.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/hydroponics.sm.glb",
         "artLibraryDesignId": "shipyard.equipment.hydroponics"
       },
       "notes": "Supplementary oxygen/food; mass/power follow the art-library review numbers (not approved)."
@@ -11609,7 +11659,7 @@
       "economy": {"costCredits":9500,"buildTimeS":300,"techTier":3},
       "art": {
         "kitKey": "x.gravity.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/gravity-unit.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/gravity-unit.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "Artificial gravity over the listed deck area. Without it crews walk in magnetic boots (gameplay TBD)."
@@ -11701,7 +11751,7 @@
       "economy": {"costCredits":22000,"buildTimeS":600,"techTier":3},
       "art": {
         "kitKey": "x.gravity.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/gravity-unit.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/gravity-unit.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "Artificial gravity over the listed deck area. Without it crews walk in magnetic boots (gameplay TBD)."
@@ -11783,7 +11833,7 @@
       "economy": {"costCredits":2500,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "x.computer-core.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/computer-core.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/computer-core.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "IFCS flight computer and fire control. A powered core is required for fly-by-wire (maps to the flight compiler's `computer` kind; SM = the existing 500 W lab computer)."
@@ -11865,7 +11915,7 @@
       "economy": {"costCredits":6500,"buildTimeS":240,"techTier":2},
       "art": {
         "kitKey": "x.computer-core.MD",
-        "glb": "assets/art-library/ship-components/r001/glb/computer-core.md.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/computer-core.md.glb",
         "artLibraryDesignId": null
       },
       "notes": "IFCS flight computer and fire control. A powered core is required for fly-by-wire (maps to the flight compiler's `computer` kind; SM = the existing 500 W lab computer)."
@@ -11947,7 +11997,7 @@
       "economy": {"costCredits":15000,"buildTimeS":480,"techTier":3},
       "art": {
         "kitKey": "x.computer-core.LG",
-        "glb": "assets/art-library/ship-components/r001/glb/computer-core.lg.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/computer-core.lg.glb",
         "artLibraryDesignId": null
       },
       "notes": "IFCS flight computer and fire control. A powered core is required for fly-by-wire (maps to the flight compiler's `computer` kind; SM = the existing 500 W lab computer)."
@@ -12029,7 +12079,7 @@
       "economy": {"costCredits":1800,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.console-navigation.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/console.navigation.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/console.navigation.sm.glb",
         "artLibraryDesignId": "shipyard.equipment.pilot-seat"
       },
       "notes": "Occupied valid control station grants piloting (ownership alone does not)."
@@ -12111,7 +12161,7 @@
       "economy": {"costCredits":1800,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.console-command.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/console.command.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/console.command.sm.glb",
         "artLibraryDesignId": "shipyard.equipment.command-console"
       },
       "notes": "Occupied station grants command; required for manual components of that role."
@@ -12193,7 +12243,7 @@
       "economy": {"costCredits":1800,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.console-fire-control.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/console.fire-control.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/console.fire-control.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Occupied station grants fire-control; required for manual components of that role."
@@ -12275,7 +12325,7 @@
       "economy": {"costCredits":1800,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.console-engineering.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/console.engineering.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/console.engineering.sm.glb",
         "artLibraryDesignId": null
       },
       "notes": "Occupied station grants engineering; required for manual components of that role."
@@ -12357,7 +12407,7 @@
       "economy": {"costCredits":1800,"buildTimeS":90,"techTier":1},
       "art": {
         "kitKey": "x.console-sensor.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/console.sensor.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/console.sensor.sm.glb",
         "artLibraryDesignId": "shipyard.equipment.bridge-bank"
       },
       "notes": "Occupied station grants sensors; required for manual components of that role."
@@ -12429,7 +12479,7 @@
       "economy": {"costCredits":600,"buildTimeS":40,"techTier":1},
       "art": {
         "kitKey": "x.crew-bunk.SM",
-        "glb": "assets/art-library/ship-components/r001/glb/crew-bunk.sm.glb",
+        "glb": "assets/art-library/ship-components/r002/glb/crew-bunk.sm.glb",
         "artLibraryDesignId": "shipyard.equipment.crew-bunk"
       },
       "notes": "Two berths. Mass/power follow the art-library review numbers (not approved)."
