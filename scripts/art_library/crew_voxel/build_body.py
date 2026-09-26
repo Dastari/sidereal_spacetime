@@ -120,7 +120,7 @@ def region_of(bone):
 def build_bodies(arm, mats, coll):
     bodies, stats = {}, {}
     for variant in body.VARIANTS:
-        parts, hair = body.build(variant)
+        parts, hair, gear = body.build(variant)
         meshes = {}
         for region in ("body", "head", "hands", "feet"):
             objs = [part_object(f"{variant}.{bone}", part, bone, coll, mats)
@@ -130,11 +130,20 @@ def build_bodies(arm, mats, coll):
             skin(ob, arm)
             ob["crew_part"] = f"{region}.{variant}"
             meshes[region] = ob
+        # the default gear gloves replace the bare hands (armour may hide gear and re-show hands)
+        meshes["hands"].hide_render = True
+        meshes["hands"]["hiddenByGear"] = True
+        gobjs = [part_object(f"{variant}.gear.{bone}", part, bone, coll, mats) for bone, part in gear.items() if part.islands]
+        gob = join(gobjs, f"GEO-crew-gear-{variant}")
+        voxkit.assign_materials(gob, mats)
+        skin(gob, arm)
+        gob["crew_part"] = f"gear.{variant}"
+        meshes["gear"] = gob
         hob = part_object(f"GEO-crew-hair-default-{variant}", hair, "head", coll, mats)
         voxkit.assign_materials(hob, mats)
         skin(hob, arm)
         hob["crew_part"] = f"hair.default.{variant}"
-        bodies[variant] = {"meshes": meshes, "hair": hob, "parts": parts, "hairVol": hair}
+        bodies[variant] = {"meshes": meshes, "hair": hob, "parts": parts, "hairVol": hair, "gear": gear}
         stats[variant] = {"tris": sum(voxkit.tri_count(o.data) for o in meshes.values()),
                           "trisByRegion": {r: voxkit.tri_count(o.data) for r, o in meshes.items()},
                           "hairTris": voxkit.tri_count(hob.data),
@@ -177,6 +186,10 @@ def segment_bounds(bodies):
             lo, hi = part.bounds()
             seg.setdefault(bone, {})[variant] = {"region": region_of(bone), "minVox": lo, "maxVox": hi,
                                                  "min": rig.m(lo), "max": rig.m(hi)}
+        for bone, part in b["gear"].items():
+            if part.islands:
+                glo, ghi = part.bounds()
+                seg.setdefault("gear", {}).setdefault(bone, {})[variant] = {"minVox": glo, "maxVox": ghi}
         lo, hi = hair.bounds()
         seg.setdefault("hair.default", {})[variant] = {"bone": "head", "minVox": lo, "maxVox": hi,
                                                        "min": rig.m(lo), "max": rig.m(hi)}
@@ -262,8 +275,9 @@ def spec_json(arm, socks, seg, stats, actions):
         "segmentGroups": rig.SEGMENTS,
         "bodyMeshRegions": {"body": "GEO-crew-body-<variant>", "head": "GEO-crew-head-<variant>",
                             "hands": "GEO-crew-hands-<variant>", "feet": "GEO-crew-feet-<variant>",
+                            "gear": "GEO-crew-gear-<variant> (default crew harness, pads, gloves, pouches; armour replaces it)",
                             "hair": "GEO-crew-hair-default-<variant>",
-                            "note": "armour/heads declare hidesBodyRegions from {head, hands, feet, hair}; the core body mesh is never hidden, so shells stay >= 1 vox proud"},
+                            "note": "armour/heads declare hidesBodyRegions from {head, hands, feet, hair, gear}; the core body mesh is never hidden, so shells stay >= 1 vox proud of the BODY (gear bounds are in segments.gear)"},
         "equipmentSlots": rig.EQUIPMENT_SLOTS,
         "materialSlots": SLOTS,
         "defaultTheme": {k: [round(c, 4) for c in v] for k, v in voxkit.DEFAULT_THEME.items()},

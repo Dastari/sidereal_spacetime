@@ -199,14 +199,14 @@ def props_for(meta):
 
 
 def contact_sheets(out, arm, bodies, actions, mats, args, variant="male", per_sheet=6, nframes=6,
-                   views=(("3/4", 35, 12), ("side", 90, 6))):
+                   views=(("3/4", -35, 12), ("side", -90, 6))):
     sc = bpy.context.scene
     cam = sc.camera or setup(sc, samples=8, res=(300, 420))
     sc.render.resolution_x, sc.render.resolution_y = 300, 420
     sc.eevee.taa_render_samples = max(8, min(args.samples, 16))
     props = review_props(arm, mats)
     everything = [o for o in sc.objects if o.type == "MESH" and o.name.startswith("GEO-")]
-    show_only(list(bodies[variant]["meshes"].values()) + [bodies[variant]["hair"]], everything)
+    show_only(visible_meshes(bodies[variant]), everything)
     rd = f"{out}/renders/anim"
     os.makedirs(rd, exist_ok=True)
     rows = []
@@ -269,7 +269,7 @@ def turnaround(out, arm, bodies, args):
         arm.animation_data.action = bpy.data.actions["idle"]
         sc.frame_set(0)
     for variant, b in bodies.items():
-        show_only(list(b["meshes"].values()) + [b["hair"]], everything)
+        show_only(visible_meshes(b), everything)
         row = []
         for view in ("front", "front-right", "right", "back", "back-left"):
             aim(cam, VIEWS[view])
@@ -282,11 +282,16 @@ def turnaround(out, arm, bodies, args):
 
 
 REFS = "/root/sidereal-progress/verify/refs/char-body"
+REV = __import__("rig").REVISION
+
+
+def visible_meshes(b):
+    return [o for o in b["meshes"].values() if not o.get("hiddenByGear")] + [b["hair"]]
 POSE_SHEET = [("idle", "idle.png", 4), ("walk", "walk.png", 4), ("run", "run.png", 4),
               ("aim_rifle", "aim.png", 4), ("wave", None, 4)]
 
 
-def pose_sheet(out, arm, bodies, mats, args, variant="male", az=35, el=10):
+def pose_sheet(out, arm, bodies, mats, args, variant="male", az=-40, el=10):
     """Reference strip (top) vs our actual Blender frames (bottom) for idle / walk / run / aim / wave."""
     sc = bpy.context.scene
     cam = sc.camera or setup(sc, samples=16, res=(300, 420))
@@ -294,7 +299,7 @@ def pose_sheet(out, arm, bodies, mats, args, variant="male", az=35, el=10):
     sc.eevee.taa_render_samples = max(16, args.samples)
     props = review_props(arm, mats)
     everything = [o for o in sc.objects if o.type == "MESH" and o.name.startswith("GEO-")]
-    show_only(list(bodies[variant]["meshes"].values()) + [bodies[variant]["hair"]], everything)
+    show_only(visible_meshes(bodies[variant]), everything)
     rd = f"{out}/renders/poses"
     os.makedirs(rd, exist_ok=True)
     rows = []
@@ -316,7 +321,7 @@ def pose_sheet(out, arm, bodies, mats, args, variant="male", az=35, el=10):
             still(p)
             imgs.append(p)
         ours = tile(imgs, n, f"{rd}/{action}_ours.png")
-        ours = label(ours, f"{action.upper()}  r002 (Blender, actual action frames)", ours.replace(".png", "_l.png"))
+        ours = label(ours, f"{action.upper()}  {REV} (Blender, actual action frames)", ours.replace(".png", "_l.png"))
         if ref:
             subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", f"{REFS}/{ref}", "-vf",
                             "scale=1200:-2:flags=lanczos,pad=1200:420:0:(oh-ih)/2:color=0x0b1530",

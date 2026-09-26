@@ -33,19 +33,23 @@ def srgb(h):
     return tuple(round(v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4, 5) for v in c)
 
 
-# r002 base palette, measured from the reference base rig (VERIFY): lavender suit, warm peach skin
+# r003 base palette: the reference "Crew" variant (character-animations-2): saturated orange suit over
+# deep navy harness/plates, sky-blue pads and gloves, pale trims, warm peach skin, brown curls.
 DEFAULT_THEME = {
     "skin": srgb("#f3a98d"),
-    "hair": srgb("#5b2fb0"),
+    "hair": srgb("#6e3a1f"),
     "eye": srgb("#1a1424"),
-    "suit_primary": srgb("#a78db6"),
-    "suit_secondary": srgb("#6c5989"),
-    "accent": srgb("#f08a2c"),
-    "metal": srgb("#e8e4f0"),
-    "dark": srgb("#2a2438"),
+    "suit_primary": srgb("#f06a22"),
+    "suit_secondary": srgb("#27304f"),
+    "accent": srgb("#3f8fe0"),
+    "metal": srgb("#d9dde6"),
+    "dark": srgb("#1c1f2b"),
     "emit": srgb("#38c8ff"),
     "glass": srgb("#7fd0ff"),
 }
+# the r002 lavender base-rig palette, kept as a named theme
+THEME_BASE_RIG = dict(DEFAULT_THEME, suit_primary=srgb("#a78db6"), suit_secondary=srgb("#6c5989"),
+                      accent=srgb("#f08a2c"), metal=srgb("#e8e4f0"), dark=srgb("#2a2438"), hair=srgb("#5b2fb0"))
 BLUSH = srgb("#e9a0a4")  # vertex-colour multiplier target for 'skin:blush' cells (relative to skin)
 # (roughness, metallic, normal strength)
 SLOT_PBR = {

@@ -64,7 +64,7 @@ def retarget(P):
 # grip profiles: support-hand socket offset in the primary grip frame (voxels; x along barrel,
 # y = left of the barrel, z = up). Published in the spec for CHAR-WEAPONS.
 GRIP_PROFILES = {
-    "rifle": {"support": (9.0, 0.0, 0.5), "note": "support hand under the foregrip, 9 vox (0.28 m) ahead of the main grip"},
+    "rifle": {"support": (6.0, 1.0, 0.5), "note": "support hand under the foregrip, 6 vox (0.19 m) ahead of and 1 vox left of the main grip (chibi arm reach)"},
     "pistol": {"support": (-0.5, 2.5, -1.0), "note": "two-handed pistol: support hand wraps the main grip from the left"},
     "tool": {"support": (6.0, 0.0, 1.0), "note": "two-handed tool/device: support hand 6 vox ahead on the body"},
     "one_hand": {"support": None, "note": "support hand free"},
@@ -367,7 +367,7 @@ def blend(A, B, w):
 
 # ====================================================================== cycles
 def gait(phase, step, lift, bob, lean, arm_swing, elbow, pelvis_z=0.0, width=4.5, stance=0.6, knee_out=0.15,
-         sway=0.7, drop=4.0, twist=8.0, bounce_head=2.0):
+         sway=0.7, drop=4.0, twist=8.0, bounce_head=2.0, flight=0.0):
     """Parametric locomotion pose at phase in [0,1): right foot contacts at 0, left at 0.5.
     Principles: hip sway over the stance foot, hip drop on the swing side, pelvis twist with
     counter-rotating chest, a dip just after contact (squash) and a rise at passing, head and
@@ -395,7 +395,18 @@ def gait(phase, step, lift, bob, lean, arm_swing, elbow, pelvis_z=0.0, width=4.5
     lag = math.cos(two * (phase - 0.07))       # trailing (overlap)
     # vertical: lowest shortly after each contact, highest at passing
     v = math.cos(2 * two * (phase - 0.06))
-    P["pelvis"] = (sway * c, 0, pelvis_z - bob * (0.5 + 0.5 * v))
+    # flight: in the airborne windows (between toe-off and the other foot's contact) lift the whole body
+    air = 0.0
+    if flight:
+        for off in (0.0, 0.5):
+            ph = (phase - off - stance) % 1.0
+            if ph < 0.5 - stance:
+                air = max(air, math.sin(math.pi * ph / (0.5 - stance)))
+    P["pelvis"] = (sway * c, 0, pelvis_z - bob * (0.5 + 0.5 * v) + flight * air)
+    if air:
+        for side in ("R", "L"):
+            x, y, z, yaw, pitch = P[f"foot.{side}"]
+            P[f"foot.{side}"] = (x, y, z + flight * air * 0.8, yaw, pitch)
     P["fk:pelvis"] = (0, -drop * c, twist * c)
     P["fk:spine"] = (lean * 0.5, drop * 0.5 * c, -twist * 0.6 * c)
     P["fk:chest"] = (lean * 0.5 + 1.5 * v, drop * 0.4 * c, -twist * 0.9 * c)
@@ -471,9 +482,12 @@ def lib():
     # ---------------------------------------------------------------- locomotion
     fnact("walk", True, cycle(gait, 18, step=15, lift=3.5, bob=1.2, lean=5, arm_swing=28, elbow=18),
           {"nominalSpeed": round(2 * 15 * LEG * VOX / (18 / FPS), 3)})
-    fnact("run", True, cycle(gait, 14, step=24, lift=7.5, bob=2.2, lean=16, arm_swing=50, elbow=75,
-                             pelvis_z=-1.2, stance=0.4, sway=0.4, drop=3, twist=11, bounce_head=3),
-          {"nominalSpeed": round(2 * 24 * LEG * VOX / (14 / FPS), 3)})
+    # run: long stride with a flight phase (each foot grounded 32% -> both airborne ~36%), strong
+    # forward lean, high knees, big arm pump with bent elbows, bounce peaking in flight
+    fnact("run", True, cycle(gait, 14, step=32, lift=11, bob=3.2, lean=26, arm_swing=62, elbow=95,
+                             pelvis_z=-1.0, stance=0.32, sway=0.3, drop=2.5, twist=14, bounce_head=3.5, width=4.0,
+                             flight=3.0),
+          {"nominalSpeed": round(2 * 32 * LEG * VOX / (14 / FPS), 3)})
 
     def crouch_at(ph, moving=False):
         if moving:
@@ -503,20 +517,20 @@ def lib():
         P["foot.L"] = (-4.5, 3.5, 3, -8, 0)
         P["pelvis"] = (0, 0, -0.8)
         P["fk:pelvis"] = (0, 0, -12)
-        P["fk:spine"] = (3, 0, -3)
-        P["fk:chest"] = (2, 0, -3)
+        P["fk:spine"] = (3, 0, -4)
+        P["fk:chest"] = (7, 0, -6)
         P["fk:neck"] = (0, 0, 8)
-        P["fk:head"] = (-2, 3, 9)
+        P["fk:head"] = (6, 3, 12)
         P["pole.R"] = (1.0, -0.4, -0.6)
         P["pole.L"] = (-0.5, -0.3, -1.0)
         return P
 
-    RIFLE_AIM = ("w", 4.5, 10, 37, 0, 0, 0, "rifle")
+    RIFLE_AIM = ("w", 1.0, 9, 42.6, 0, 0, 0, "rifle")   # grip at shoulder/cheek height, arms extended
 
     def aim_rifle_at(ph):
         P = aim_base()
         s, c = math.sin(2 * math.pi * ph), math.cos(2 * math.pi * ph)
-        P["weapon"] = ("w", 4.5 + 0.15 * c, 10, 37 + 0.2 * s, 0.6 * c, 0.5 * s, 0, "rifle")
+        P["weapon"] = ("w", 1.0 + 0.15 * c, 9, 42.6 + 0.2 * s, 0.6 * c, 0.5 * s, 0, "rifle")
         P["pelvis"] = (0, 0, -0.8 - 0.2 * s)
         return P
 
@@ -537,7 +551,7 @@ def lib():
     def aim_pistol_at(ph):
         P = aim_pistol_base()
         s, c = math.sin(2 * math.pi * ph), math.cos(2 * math.pi * ph)
-        P["weapon"] = ("w", 1.0 + 0.15 * c, 14, 38 + 0.2 * s, 0.5 * c, 0.5 * s, 0, "pistol")
+        P["weapon"] = ("w", 1.0 + 0.15 * c, 12, 42.6 + 0.2 * s, 0.5 * c, 0.5 * s, 0, "pistol")
         return P
 
     fnact("aim_pistol", True, cycle(aim_pistol_at, 48), {"grip": "pistol"})
@@ -558,7 +572,7 @@ def lib():
 
     fnact("shoot_rifle", True, shot(aim_rifle_at, RIFLE_AIM, 1.6, 5, 6), {"grip": "rifle", "muzzleFlashFrame": 1,
                                                                         "note": "one shot per loop (6 frames = 4 rps); blend over aim_rifle"})
-    fnact("shoot_pistol", False, shot(aim_pistol_at, ("w", 1.0, 14, 38, 0, 0, 0, "pistol"), 1.2, 14, 9),
+    fnact("shoot_pistol", False, shot(aim_pistol_at, ("w", 1.0, 12, 42.6, 0, 0, 0, "pistol"), 1.2, 14, 9),
           {"grip": "pistol", "muzzleFlashFrame": 1})
 
     # reload (rifle): tilt weapon, left hand to belt pouch, to mag well, slap, back to foregrip
@@ -705,9 +719,9 @@ def lib():
             env = min(1.0, u * 5, (1 - u) * 5)
             w = math.sin(2 * math.pi * 2.5 * u)
             P = dict(E0)
-            P["fk:upper_arm.R"] = (15 * env, -150 * env, 0)
+            P["fk:upper_arm.R"] = (12 * env, -100 * env, 0)
             P["fk:forearm.R"] = (0, 0, 0)
-            P["fk:forearm.R"] = (0, 30 * w * env, 0)
+            P["fk:forearm.R"] = (0, (-62 + 26 * w) * env, 0)
             P["fk:hand.R"] = (0, 15 * w * env, 0)
             P["fk:chest"] = (0, 3 * env, 4 * env)
             P["fk:head"] = (0, -5 * env, 0)
@@ -727,8 +741,8 @@ def lib():
             env = min(1.0, u * 6, (1 - u) * 4)
             pump = 0.5 + 0.5 * math.cos(2 * math.pi * 2 * u)
             P = dict(E0)
-            sym(P, "upper_arm", 20 * env, -(150 - 25 * pump) * env, 0)
-            sym(P, "forearm", 20 * pump * env, 0, 0)
+            sym(P, "upper_arm", 15 * env, -(112 - 18 * pump) * env, 0)
+            sym(P, "forearm", 10 * pump * env, -45 * env, 0)
             P["pelvis"] = (0, 0, -0.3 - 1.2 * env * pump)
             P["fk:head"] = (-12 * env, 0, 0)
             P["fk:chest"] = (-5 * env, 0, 0)
@@ -800,8 +814,8 @@ def lib():
             if air:
                 P["foot.R"] = (4.5, 0.5, 3 + j - 0.6 * j, -6, -20)
                 P["foot.L"] = (-4.5, 0.5, 3 + j - 0.6 * j, 6, -20)
-            P["fk:upper_arm.R"] = (30 * env, -165 * env if u > 0.18 else -20 * env, 0)
-            P["fk:forearm.R"] = (15 * env, 0, 0)
+            P["fk:upper_arm.R"] = (30 * env, -115 * env if u > 0.18 else -20 * env, 0)
+            P["fk:forearm.R"] = (10 * env, -45 * env if u > 0.18 else 0, 0)
             P["fk:upper_arm.L"] = (20 * env, 40 * env, 0)
             P["fk:forearm.L"] = (70 * env, 0, 0)
             P["fk:head"] = (-15 * env if air else 0, 0, 0)
