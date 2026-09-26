@@ -17,6 +17,7 @@ import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Viewport } from "@babylonjs/core/Maths/math.viewport";
 import { FxaaPostProcess } from "@babylonjs/core/PostProcesses/fxaaPostProcess";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
+import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstrumentation";
 import { Layer } from "@babylonjs/core/Layers/layer";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTexture";
@@ -151,6 +152,7 @@ async function main() {
       theme,
       parent: anchor,
       standinComponents: q.get("standins") === "1",
+      batch: q.get("batch") !== "0",
       roomLights: Number(q.get("lights") ?? 0),
     });
     const { beam } = shipExtent(v);
@@ -167,8 +169,15 @@ async function main() {
   const radius = lineup ? Math.hypot(offset / 2, Math.max(...lengths) / 2) : Math.hypot(lengths[0] / 2, shipExtent(views[0]).beam / 2, 2);
   placeCamera(camera, cam, new Vector3(0, 1.2, 0), radius, width / height);
 
+  // Per-frame draw counting: SceneInstrumentation resets the engine counter every frame, and
+  // the glow layer's mask/blur draws are counted separately via its render observables.
+  const instrumentation = new SceneInstrumentation(scene);
+  let glowDraws = 0;
+  let glowStart = 0;
   if (q.get("glow") !== "0") {
     const glow = new GlowLayer("glow", scene, { mainTextureFixedSize: 1024, blurKernelSize: 32 });
+    glow.onBeforeRenderMainTextureObservable.add(() => (glowStart = engine._drawCalls.current));
+    glow.onAfterComposeObservable.add(() => (glowDraws = engine._drawCalls.current - glowStart));
     glow.intensity = 0.7;
     for (const v of views) for (const m of v.emissiveMeshes()) glow.addIncludedOnlyMesh(m);
   }
@@ -191,10 +200,11 @@ async function main() {
       labels.appendChild(div);
     });
   }
-  const metrics = views.map((v, i) => ({ id: docs[i].id, view, ...v.metrics() }));
+  const frameDraws = instrumentation.drawCallsCounter.current;
+  const metrics = views.map((v, i) => ({ id: docs[i].id, view, ...v.metrics(), drawCalls: frameDraws, glowDraws, mainDraws: frameDraws - glowDraws }));
   window.__prefabMetrics = metrics;
   document.getElementById("hud")!.textContent = metrics
-    .map((m) => `${m.id} ${m.view}: ${m.drawCalls} draws (scene), ${m.meshes} meshes, ${m.instances} inst, ${(m.triangles / 1000).toFixed(1)}k tris, ${m.pieces} pieces`)
+    .map((m) => `${m.id} ${m.view}: ${m.drawCalls} draws/frame (main ${m.mainDraws}, glow ${m.glowDraws}), ${m.meshes} meshes, ${m.instances} inst, ${(m.triangles / 1000).toFixed(1)}k tris, ${m.pieces} pieces`)
     .join("\n");
   window.__prefabReady = true;
 }

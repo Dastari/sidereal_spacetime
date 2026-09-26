@@ -173,7 +173,7 @@ async function main() {
     metrics[s.name] = JSON.parse(m.result.value);
     const shot = await page("Page.captureScreenshot", { format: "png" });
     writeFileSync(join(out, `${s.name}.png`), Buffer.from(shot.data, "base64"));
-    const summary = (metrics[s.name] ?? []).map((x) => `${x.drawCalls} draws, ${x.meshes} meshes, ${x.instances} inst, ${(x.triangles / 1000).toFixed(1)}k tris`).join(" | ");
+    const summary = (metrics[s.name] ?? []).map((x) => `${x.drawCalls} draws (main ${x.mainDraws}, glow ${x.glowDraws}), ${x.meshes} meshes, ${x.instances} inst, ${(x.triangles / 1000).toFixed(1)}k tris`).join(" | ");
     console.log(`${s.name}.png  ${((Date.now() - t0) / 1000).toFixed(1)} s  ${summary}`);
     for (const l of new Set(logs)) console.log(`   ${l.slice(0, 300)}`);
   }
