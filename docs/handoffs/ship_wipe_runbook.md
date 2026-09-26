@@ -34,11 +34,11 @@
 
 - **Owner confirmation:** the owner has confirmed the wipe in writing (message or issue). An agent's judgement is not confirmation.
 - **Authority PR:** `feat/ship-removal-operator-tools` has been reviewed and merged into `release/live-authority-20260921`, or the coordinator explicitly uses the PR head.
-- **Owner's starter pick:**
-  - Candidates from SHIPS-PREFABS: `fed.s.wren`, `rj.s.jackal`, `au.s.lumen`.
-  - Step 10 also needs SHIPS-PREFABS to have registered that prefab with `registerPrefabShipSpawner` in a live-compatible authority, recording its `catalogRevision`. See the plan for the integration that is still open.
-  - Without it, stop after step 9. The owner's account then stays shipless; that is safe.
-  - **Never** assign the legacy stand-in `legacy-wayfarer-r002` on live.
+- **Owner's starter pick:** Wren (`fed.s.wren`), chosen 2026-09-26. Build the candidates with the Wren backports stacked on the removal PRs:
+  - `feat/wren-live-backport` on top of `feat/ship-removal-operator-tools`;
+  - `feat/wren-client-backport` on top of `feat/ship-removal-client`.
+
+  In step 2 and step 9 below, diff against those branch heads instead of the plain removal branches. **Never** assign the legacy stand-in `legacy-wayfarer-r002` on live.
 - **Timing:** choose a quiet window. Connected players see their ship disappear immediately at step 7.
 
 ## 1. Cold full-database archive (default on)
@@ -57,14 +57,14 @@ Keep scratch copies on disk, not in `/tmp`.
 
 ```sh
 cd /root/sidereal_spacetime && git fetch origin
-git diff origin/release/live-authority-20260921 origin/feat/ship-removal-operator-tools \
+git diff origin/release/live-authority-20260921 origin/feat/wren-live-backport \
   > /root/sidereal-scratch/ship-removal-authority.patch
 cp -a /root/sidereal-live-map-authority-candidate /root/sidereal-ship-removal-authority-candidate
 cd /root/sidereal-ship-removal-authority-candidate
 patch -p1 --dry-run < /root/sidereal-scratch/ship-removal-authority.patch && patch -p1 < /root/sidereal-scratch/ship-removal-authority.patch
 npm ci --no-audit --no-fund
 npm run typecheck --workspace @sidereal/world
-npx vitest run packages/world/src/ship-wipe      # 10 tests
+npx vitest run packages/world/src/ship-wipe packages/sim/src/prefab   # ship + prefab tests
 python3 scripts/dev.py generate                  # must equal the PR's packages/net/src/generated
 ```
 
@@ -174,7 +174,7 @@ Do **not** expect `world_system.last_simulation_tick` to keep advancing. `stepSh
 Build from the live client source plus the client PR only:
 
 ```sh
-cd /root/sidereal_spacetime && git diff origin/release/live-client-20260922 origin/feat/ship-removal-client \
+cd /root/sidereal_spacetime && git diff origin/release/live-client-20260922 origin/feat/wren-client-backport \
   > /root/sidereal-scratch/ship-removal-client.patch
 cp -a /root/sidereal-shadow-release-20260922 /root/sidereal-ship-removal-client-candidate
 cd /root/sidereal-ship-removal-client-candidate
@@ -194,16 +194,58 @@ These commands restart only the public-client service. Then verify:
 
 The Studio (dashboard) deployment is unchanged; it still publishes the legacy assets for its tools.
 
-## 10. Assign the owner's prefab ship (after SHIPS-PREFABS registers it)
+## 10. Assign Wren (`fed.s.wren`) to the owner's main character
 
-Identify the owner's main character, confirm it with the owner by name and account, and check that `ship_id` is `''`:
+The owner picked **Wren (`fed.s.wren`)** on 2026-09-26. Wren is registered by the backport PR (`feat/wren-live-backport`, stacked on this one). That PR must be in the published authority candidate, together with the client backport `feat/wren-client-backport`.
+
+**Expected identifiers.** These are read from the latest recorded live audit, the private capture `.runtime/releases/live-map-genesis-20260921/after-character.json` (2026-09-21), and from [dastari_owner_refit_20260910.md](dastari_owner_refit_20260910.md), where the owner identified their account as "Dastari". They are not guessed.
+
+| Field | Recorded value |
+|---|---|
+| Character name | `Dastari` |
+| Character ID | `eb9eeb1d-adac-4c78-aff7-7a176f13d650` |
+| Owner identity | `c200bb5ccbff022a55bb86ff9e616c2a29dd6c06ace405ed68d4f4dacf7ccd41` |
+| Ship at the audit (removed by the wipe) | `a432a310-937b-40c3-93ef-d3da495cdb63` |
+
+The other two live characters at that audit were `Desparil` (`565a3642-…`) and `Captain` (`bde33ad7-…`). They stay shipless unless the owner asks otherwise.
+
+**1. Re-confirm the identifiers on live, read-only, right before assigning.** The owner must confirm that `Dastari` is their main character.
 
 ```sh
 .tools/spacetime/spacetime --root-dir=.tools/spacetime sql --server http://127.0.0.1:3100 --yes --no-config \
   sidereal-spacetime-dev "SELECT id, name, owner, ship_id FROM character"
+```
+
+Proceed only if all of these hold:
+- the row with `id = eb9eeb1d-adac-4c78-aff7-7a176f13d650` still has `name = Dastari`;
+- that row's owner is `0xc200bb5c…cd41`;
+- that row's `ship_id` is `''`, which means it is waiting for a ship after the wipe.
+
+If any value differs, stop and ask the owner.
+
+**2. Read the exact Wren arguments from the dry-run ledger.** Do not type them from memory:
+
+```sh
+python3 scripts/ship_wipe.py ledger --server http://127.0.0.1:3100 --database sidereal-spacetime-dev \
+  --operation-id live-20260926-wipe-dry-run | python3 -c "import json,sys; d=json.load(sys.stdin); print([p for p in d['summary']['registeredPrefabs'] if p['prefabId']=='fed.s.wren'])"
+```
+
+The rehearsal (r007) produced these values. The live output must match:
+
+| Field | Value |
+|---|---|
+| `prefabId` | `fed.s.wren` |
+| `catalogRevision` | `ship-components-v1@1` |
+| `blueprintSha256` | `8c3c2f6d104d080d233f9cf70c60f9503ef8b9e0dccf6c14773a729c2b1eb7a3` |
+| `legacy` | `false` |
+
+**3. Assign:**
+
+```sh
 python3 scripts/ship_wipe.py assign --server http://127.0.0.1:3100 --database sidereal-spacetime-dev \
-  --operation-id live-20260926-assign-owner --character-id <owner character id> \
-  --prefab-id <owner-picked prefab id> --catalog-revision <that prefab's catalogRevision> \
+  --operation-id live-20260926-assign-owner-wren \
+  --character-id eb9eeb1d-adac-4c78-aff7-7a176f13d650 \
+  --prefab-id fed.s.wren --catalog-revision ship-components-v1@1 \
   --spawn-pose '{"kind":"berth"}'
 ```
 
@@ -211,20 +253,34 @@ python3 scripts/ship_wipe.py assign --server http://127.0.0.1:3100 --database si
 - **What the reducer verifies, in the same transaction:**
   - the account owns exactly the new ship;
   - `game_ship_access` is active for that character;
-  - the character stands on the returned spawn deck;
+  - the character stands on the Wren spawn deck;
   - world admission exists;
   - the pose matches;
   - map row counts are unchanged.
 
   Anything else rolls back.
 - **Replay:** re-running the same command is a no-op.
-- **Final check:** the owner signs in and sees the ship.
+- **Ledger summary:** records the ship ID, deck ID and pose. The ship is named "Wren".
 
-**Optional, later:** make that prefab the starter for new accounts:
+**4. Owner check.** The owner signs in and:
+- sees "Wren" in the HUD;
+- walks to the control seat (E);
+- takes it and flies.
+
+The rehearsal proved each of these with the owner's own session:
+- board;
+- walk about 1.9 m;
+- sit at the derived station (0, 4);
+- burn to about 6 m/s;
+- turn.
+
+**Known presentation gap:** the game currently draws Wren's deck floor plates only. There is no voxel hull or walls yet, because the SHIPS-PREFABS renderer and the `ship-kit/r001` assets are not wired into the game. Collision and flight are authoritative and work.
+
+**Optional, later:** make Wren the starter for new accounts:
 
 ```sh
-python3 scripts/ship_wipe.py policy --server … --database … --operation-id live-…-policy-starter \
-  --starter-prefab-id <prefab id> --catalog-revision <rev>
+python3 scripts/ship_wipe.py policy --server http://127.0.0.1:3100 --database sidereal-spacetime-dev \
+  --operation-id live-…-policy-starter-wren --starter-prefab-id fed.s.wren --catalog-revision ship-components-v1@1
 ```
 
 ## Rollback and recovery

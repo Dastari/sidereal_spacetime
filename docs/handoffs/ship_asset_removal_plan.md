@@ -189,10 +189,57 @@ Evidence: `ship-wipe-rehearsal-r005.json` and `rehearsal-r005-{seed,wipe}.log` i
   - zero console errors;
   - zero requests for retired ship assets.
 
+## Wren backport (owner pick, 2026-09-26)
+
+The owner picked **Wren (`fed.s.wren`)** as the starter ship. The owner also decided that ship-held items stay archived for now. The SHIPS-PREFABS work (`feat/prefab-ships` @ `0333c49e`, IndigoHarbor) is backported onto the live composition in two branches.
+
+**`feat/wren-live-backport`** is stacked on `feat/ship-removal-operator-tools` and covers the authority side:
+- **content:**
+  - construction grammar;
+  - the `ship-prefab` document and the 12 prefab designs;
+  - the ship-components catalog snapshot and its adapter (`ship-components-v1@1`).
+- **sim:**
+  - prefab construction derivation;
+  - prefab flight model and plan;
+  - `readConstructionDraft` admission of the `prefab` key, with identity maps;
+  - trusted-prefab game access;
+  - prefab pilot pose.
+- **world:**
+  - `installPrefabShip` / `prefabSpawnerFor`;
+  - flight writer, input and resolver prefab branches;
+  - pilot station pose;
+  - berth radius.
+- **Registration:** it registers `fed.s.wren` with the spawner registry.
+- **Dry-run output:** the dry-run lists `registeredPrefabs`, so the operator reads the exact assign arguments from the ledger.
+- **Excluded:** presentation-only modules (dresser, ship-systems, kit, themes).
+
+The IFCS phase 3 flight code on live needed no changes beyond SHIPS-PREFABS' own diffs. The patch applied with three import-style conflicts and typechecks cleanly.
+
+**`feat/wren-client-backport`** is stacked on `feat/ship-removal-client` and carries the same content and sim pieces for the game client. Without them, the client rejects the Wren document with "Unsupported construction contract". Flight compilation stays authority-only.
+
+**Live-shaped rehearsal r007:**
+
+| Step | Result |
+|---|---|
+| Seed and wipe | Unmodified live module seeds 3 accounts; wipe runs as in r005 |
+| Assign | `fed.s.wren` assigned to "Owner Main" by the operator tool, catalog revision `ship-components-v1@1`, blueprint `8c3c2f6d…b7a3`, ship named "Wren" at a canonical berth |
+| Board, walk and seat | Owner's own session walks about 1.9 m and takes the derived seat at (0, 4) |
+| Physics and flight | Mass 18,723 kg; burns to 5.9 m/s and turns |
+| Personal kit | Unchanged |
+| Other accounts | Remain shipless |
+| Replay | No-op |
+
+Evidence: `ship-wipe-rehearsal-r007-wren.json` and `r007-wren-owner-aboard-client.png`. The screenshot shows the game client with "Wren" in the HUD and the "Control seat" prompt.
+
+**Remaining gaps:**
+- The game draws Wren's floor plates only. The voxel hull and walls need the SHIPS-PREFABS Babylon prefab renderer and the `ship-kit/r001` assets wired into the game's construction scene. That work is handed to SHIPS-PREFABS.
+- The standard legacy regression smoke on the backport has so far only hit the load-sensitive walking assertion; it passed on the removal branch.
+
 ## Risks and gaps
 
 - **New players wait for a ship.** By default, after this module is published, new accounts get no ship until an operator assigns one. The legacy Wayfarer is never created again.
-- **No real small prefab can be assigned on live yet.** It depends on SHIPS-PREFABS registering a spawner that the live authority can qualify. Until then the owner's account stays shipless after the wipe; only the legacy stand-in works.
+- **Wren is assignable after the Wren backport PRs are merged (see above).** Other prefabs need their own registration.
+- **Superseded:** It depends on SHIPS-PREFABS registering a spawner that the live authority can qualify. Until then the owner's account stays shipless after the wipe; only the legacy stand-in works.
 - **Identity linking needs a ship:** `request_identity_link` and `accept_identity_link` require exactly one ship. Awaiting-ship characters cannot migrate from a development identity to OIDC until they have a ship. Accounts that are already linked are unaffected.
 - **Passengers aboard at wipe time** lose their visit rows along with every ship. Their characters enter the awaiting-ship state like everyone else.
 - **Not seeded in the rehearsal:** stairs, traversal, airlocks, passengers and cargo carriers. Their rows are covered by whole-table deletion and the unit fixture, not by live-like data.
