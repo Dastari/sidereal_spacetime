@@ -23,7 +23,7 @@ def _export(path, objs, animations):
     bpy.context.view_layer.objects.active = objs[0]
     kw = dict(filepath=path, export_format="GLB", use_selection=True, export_yup=True, export_apply=False,
               export_skins=True, export_extras=True, export_materials="EXPORT", export_image_format="AUTO",
-              export_texcoords=True, export_normals=True, export_tangents=False, export_def_bones=False,
+              export_texcoords=True, export_normals=True, export_vertex_color="ACTIVE", export_tangents=False, export_def_bones=False,
               export_rest_position_armature=True, export_animations=animations)
     if animations:
         kw.update(export_animation_mode="ACTIONS", export_force_sampling=True, export_frame_step=1,
@@ -68,5 +68,5 @@ def export_all(out, arm, bodies, socks, actions, stats):
         "parts": parts,
         "actions": actions,
         "files": files,
-        "textures": {"voxel_tint.png": _sha(f"{out}/voxel_tint.png"), "voxel_normal.png": _sha(f"{out}/voxel_normal.png")},
+        "textures": {},
     }

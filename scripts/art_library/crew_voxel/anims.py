@@ -27,6 +27,40 @@ import rig
 VOX = rig.VOX
 FPS = 24
 
+# Poses are authored in the r001 landmark frame and retargeted to the current rig at solve time:
+# hand / weapon heights map piecewise-linearly between landmarks, foot travel and pelvis offsets
+# scale with leg length. This keeps one editable pose library across body revisions.
+AUTH_Z = [0, 3, 25, 34, 41, 58]          # r001: floor, ankle, hip, chest base, shoulder joint, skull top
+LM = rig.LANDMARKS
+CUR_Z = [0, LM["ankle"], LM["hip"], LM["chestBase"], LM["shoulder"], LM["skullTop"]]
+LEG = (LM["hip"] - LM["ankle"]) / (25 - 3)
+
+
+def zmap(z):
+    for i in range(len(AUTH_Z) - 1):
+        a0, a1 = AUTH_Z[i], AUTH_Z[i + 1]
+        if z <= a1 or i == len(AUTH_Z) - 2:
+            t = (z - a0) / (a1 - a0)
+            return CUR_Z[i] + t * (CUR_Z[i + 1] - CUR_Z[i])
+    return z
+
+
+def retarget(P):
+    Q = dict(P)
+    for k, v in P.items():
+        if k in ("foot.R", "foot.L"):
+            x, y, z, yaw, pitch = v
+            Q[k] = (x, y * LEG, 3 + (z - 3) * LEG, yaw, pitch)
+        elif k == "pelvis":
+            Q[k] = tuple(c * LEG for c in v)
+        elif k in ("hand.R", "hand.L"):
+            sp, x, y, z, *rest = v
+            Q[k] = (sp, x, y, zmap(z), *rest)
+        elif k == "weapon":
+            sp, x, y, z, *rest = v
+            Q[k] = (sp, x, y, zmap(z), *rest)
+    return Q
+
 # grip profiles: support-hand socket offset in the primary grip frame (voxels; x along barrel,
 # y = left of the barrel, z = up). Published in the spec for CHAR-WEAPONS.
 GRIP_PROFILES = {
@@ -161,6 +195,7 @@ class Poser:
 
     # ------------------------------------------------------------------ solve one pose
     def apply(self, P):
+        P = retarget(P)
         self.reset()
         for k, v in P.items():
             if k.startswith("fk:"):
@@ -246,13 +281,26 @@ EASE = {
 
 
 def base_pose():
+    """Relaxed contrapposto (owner: never a stiff statue): weight on the right leg, right hip up and
+    shifted over the foot, left knee soft with the foot turned out and a touch forward, chest
+    counter-tilted, head tilted, arms slightly away from the body, elbows soft, hands turned in."""
     P = {}
-    sym(P, "upper_arm", 0, -7, 0)
-    sym(P, "forearm", 12, 0, 0)
-    sym(P, "hand", 0, 0, 0)
-    P["foot.R"] = (4.5, 0.5, 3, -6, 0)
-    P["foot.L"] = (-4.5, 0.5, 3, 6, 0)
-    P["pelvis"] = (0, 0, -0.3)
+    P["pelvis"] = (0.8, 0, -0.5)
+    P["fk:pelvis"] = (0, -4, 3)
+    P["fk:spine"] = (2, 3, -2)
+    P["fk:chest"] = (1, 2.5, -2)
+    P["fk:neck"] = (0, -2, 0)
+    P["fk:head"] = (-3, -4, 5)
+    P["fk:upper_arm.R"] = (4, -9, 0)
+    P["fk:upper_arm.L"] = (-3, 11, 0)
+    P["fk:forearm.R"] = (14, 0, 0)
+    P["fk:forearm.L"] = (20, 0, 0)
+    P["fk:hand.R"] = (0, 0, 14)
+    P["fk:hand.L"] = (4, 0, -18)
+    P["foot.R"] = (4.2, 0.2, 3, -8, 0)
+    P["foot.L"] = (-5.0, 2.6, 3.4, 14, -6)
+    P["kpole.R"] = (0.1, 1, 0)
+    P["kpole.L"] = (-0.3, 1, 0)
     return P
 
 
@@ -318,41 +366,48 @@ def blend(A, B, w):
 
 
 # ====================================================================== cycles
-def gait(phase, step, lift, bob, lean, arm_swing, elbow, pelvis_z=0.0, width=4.5, stance=0.6, knee_out=0.15):
-    """Parametric locomotion pose at phase in [0,1): right foot contacts at 0, left at 0.5."""
-    P = base_pose()
+def gait(phase, step, lift, bob, lean, arm_swing, elbow, pelvis_z=0.0, width=4.5, stance=0.6, knee_out=0.15,
+         sway=0.7, drop=4.0, twist=8.0, bounce_head=2.0):
+    """Parametric locomotion pose at phase in [0,1): right foot contacts at 0, left at 0.5.
+    Principles: hip sway over the stance foot, hip drop on the swing side, pelvis twist with
+    counter-rotating chest, a dip just after contact (squash) and a rise at passing, head and
+    forearms trail the body (overlap / follow-through), feet travel in arcs with heel-toe roll."""
+    P = {}
     two = 2 * math.pi
     for side, off in (("R", 0.0), ("L", 0.5)):
         ph = (phase + off) % 1.0
         sx = 1 if side == "R" else -1
-        if ph < stance:            # stance: foot slides from front to back
+        if ph < stance:            # stance: foot slides from front to back, heel-strike then toe-off
             u = ph / stance
             y = step * (0.5 - u)
             z = 3.0
-            pitch = 0.0 if u < 0.8 else -18 * (u - 0.8) / 0.2
-        else:                      # swing: back to front with lift
+            pitch = 10 * max(0.0, 1 - u / 0.15) if u < 0.15 else (0.0 if u < 0.75 else -24 * (u - 0.75) / 0.25)
+        else:                      # swing: arc back to front
             u = (ph - stance) / (1 - stance)
             s = u * u * (3 - 2 * u)
             y = step * (-0.5 + s)
-            z = 3.0 + lift * math.sin(math.pi * u)
-            pitch = -18 * (1 - u) + 12 * math.sin(math.pi * u) * (1 - u)
-        P[f"foot.{side}"] = (width * sx, y, z, -5 * sx, pitch)
+            z = 3.0 + lift * math.sin(math.pi * u) ** 0.8
+            pitch = -24 * (1 - u) ** 2 + 10 * u * u
+        P[f"foot.{side}"] = (width * sx, y, z, -6 * sx, pitch)
         P[f"kpole.{side}"] = (knee_out * sx, 1, 0)
         P[f"fk:toe.{side}"] = (min(0.0, -pitch) * 0.9 if ph < stance else 0.0, 0, 0)
-    c = math.cos(two * phase)
-    c2 = math.cos(2 * two * phase)
-    P["pelvis"] = (0, 0, pelvis_z - bob * (0.5 + 0.5 * c2))
-    P["fk:pelvis"] = (0, 2.5 * c, 7 * c)
-    P["fk:spine"] = (lean * 0.5, 0, -3.5 * c)
-    P["fk:chest"] = (lean * 0.5, -1.5 * c, -5 * c)
-    P["fk:neck"] = (-lean * 0.4, 0, 3 * c)
-    P["fk:head"] = (-lean * 0.4, 0, 2 * c)
-    # arms swing opposite to legs: right arm forward when left foot forward (phase 0.5)
-    sym(P, "upper_arm", 0, -8, 0)
-    P["fk:upper_arm.R"] = (-arm_swing * c, -8, 0)
-    P["fk:upper_arm.L"] = (arm_swing * c, 8, 0)
-    P["fk:forearm.R"] = (elbow + 0.4 * elbow * max(0.0, -c), 0, 0)
-    P["fk:forearm.L"] = (elbow + 0.4 * elbow * max(0.0, c), 0, 0)
+    c = math.cos(two * phase)                  # +1 at right contact, -1 at left contact
+    lag = math.cos(two * (phase - 0.07))       # trailing (overlap)
+    # vertical: lowest shortly after each contact, highest at passing
+    v = math.cos(2 * two * (phase - 0.06))
+    P["pelvis"] = (sway * c, 0, pelvis_z - bob * (0.5 + 0.5 * v))
+    P["fk:pelvis"] = (0, -drop * c, twist * c)
+    P["fk:spine"] = (lean * 0.5, drop * 0.5 * c, -twist * 0.6 * c)
+    P["fk:chest"] = (lean * 0.5 + 1.5 * v, drop * 0.4 * c, -twist * 0.9 * c)
+    P["fk:neck"] = (-lean * 0.4, 0, twist * 0.5 * lag)
+    P["fk:head"] = (-lean * 0.4 - bounce_head * v, -drop * 0.3 * lag, twist * 0.4 * lag)
+    # arms swing opposite to legs with the forearm lagging behind the upper arm
+    P["fk:upper_arm.R"] = (-arm_swing * c, -9, 0)
+    P["fk:upper_arm.L"] = (arm_swing * c, 9, 0)
+    P["fk:forearm.R"] = (elbow + 0.5 * elbow * max(0.0, -lag), 0, 0)
+    P["fk:forearm.L"] = (elbow + 0.5 * elbow * max(0.0, lag), 0, 0)
+    P["fk:hand.R"] = (6 * -lag, 0, 12)
+    P["fk:hand.L"] = (6 * lag, 0, -12)
     return P
 
 
@@ -373,13 +428,19 @@ def lib():
 
     # ---------------------------------------------------------------- idles
     def idle_at(ph, amp=1.0):
+        """Breathing (2 per loop) on top of a slow weight shift toward the stance leg and back."""
         P = B()
-        s = math.sin(2 * math.pi * ph)
-        P["pelvis"] = (0, 0, -0.3 - 0.35 * amp * (0.5 + 0.5 * s))
-        P["fk:chest"] = (1.5 * amp * s, 0, 0)
-        P["fk:head"] = (-1.0 * amp * s, 0, 2.0 * math.sin(2 * math.pi * ph * 1 + 1))
-        sym(P, "upper_arm", 0, -7 - 1.5 * amp * s, 0)
-        sym(P, "forearm", 12 + 3 * amp * s, 0, 0)
+        br = math.sin(2 * math.pi * 2 * ph)                  # breath
+        ws = 0.5 - 0.5 * math.cos(2 * math.pi * ph)          # weight shift 0..1..0
+        px, py, pz = P["pelvis"]
+        P["pelvis"] = (px + 0.5 * amp * ws, py, pz - 0.3 * amp * (0.5 + 0.5 * br) - 0.2 * ws)
+        P["fk:pelvis"] = (0, -4 - 1.5 * amp * ws, 3 + 2 * ws)
+        P["fk:chest"] = (1 + 1.6 * amp * br, 2.5 + 1.2 * ws, -2 - 1.5 * ws)
+        P["fk:head"] = (-3 - 1.2 * amp * br, -4 - 2 * ws, 5 - 4 * ws)
+        P["fk:upper_arm.R"] = (4 + amp * br, -9 - 1.5 * amp * br, 0)
+        P["fk:upper_arm.L"] = (-3 - amp * br, 11 + 1.5 * amp * br, 0)
+        P["fk:forearm.R"] = (14 + 3 * amp * br, 0, 0)
+        P["fk:forearm.L"] = (20 + 3 * amp * br, 0, 0)
         return P
 
     fnact("idle", True, cycle(idle_at, 72), {"nominalSpeed": 0})
@@ -408,10 +469,11 @@ def lib():
     fnact("idle_pistol", True, cycle(idle_pistol_at, 72), {"grip": "one_hand", "extra": True})
 
     # ---------------------------------------------------------------- locomotion
-    fnact("walk", True, cycle(gait, 18, step=15, lift=3.0, bob=0.9, lean=4, arm_swing=26, elbow=16),
-          {"nominalSpeed": round(2 * 15 * VOX / (18 / FPS), 3)})
-    fnact("run", True, cycle(gait, 14, step=24, lift=6.5, bob=1.6, lean=14, arm_swing=48, elbow=70,
-                             pelvis_z=-1.0, stance=0.42), {"nominalSpeed": round(2 * 24 * VOX / (14 / FPS), 3)})
+    fnact("walk", True, cycle(gait, 18, step=15, lift=3.5, bob=1.2, lean=5, arm_swing=28, elbow=18),
+          {"nominalSpeed": round(2 * 15 * LEG * VOX / (18 / FPS), 3)})
+    fnact("run", True, cycle(gait, 14, step=24, lift=7.5, bob=2.2, lean=16, arm_swing=50, elbow=75,
+                             pelvis_z=-1.2, stance=0.4, sway=0.4, drop=3, twist=11, bounce_head=3),
+          {"nominalSpeed": round(2 * 24 * LEG * VOX / (14 / FPS), 3)})
 
     def crouch_at(ph, moving=False):
         if moving:
@@ -432,7 +494,7 @@ def lib():
 
     fnact("crouch_idle", True, cycle(crouch_at, 72))
     fnact("crouch_walk", True, cycle(lambda ph: crouch_at(ph, True), 24),
-          {"nominalSpeed": round(2 * 10 * VOX / (24 / FPS), 3)})
+          {"nominalSpeed": round(2 * 10 * LEG * VOX / (24 / FPS), 3)})
 
     # ---------------------------------------------------------------- aiming / shooting
     def aim_base():
@@ -579,7 +641,7 @@ def lib():
         return P
 
     fnact("carry_idle", True, cycle(carry_at, 72), {"carry": "box between hands, centre (0, 9, 29) vox chest-relative"})
-    fnact("carry_walk", True, cycle(lambda ph: carry_at(ph, True), 18), {"nominalSpeed": round(2 * 12 * VOX / (18 / FPS), 3)})
+    fnact("carry_walk", True, cycle(lambda ph: carry_at(ph, True), 18), {"nominalSpeed": round(2 * 12 * LEG * VOX / (18 / FPS), 3)})
 
     # use / interact: reach forward-right and press
     UI = B()
@@ -621,7 +683,7 @@ def lib():
                            "foot.R": (4.5, 4, 3, -4, 0), "foot.L": (-4.5, 4, 3, 4, 0)}), "io"),
         (18, SEAT, "out"),
         (22, SEAT, "io"),
-    ], {"seatHeightVox": 13})
+    ], {"seatHeightVox": 10})
 
     def sit_idle_at(ph):
         P = dict(SEAT)
@@ -630,7 +692,7 @@ def lib():
         P["fk:head"] = (-1 * s, 0, 3 * math.sin(2 * math.pi * ph + 0.7))
         return P
 
-    fnact("sit_idle", True, cycle(sit_idle_at, 72), {"seatHeightVox": 13})
+    fnact("sit_idle", True, cycle(sit_idle_at, 72), {"seatHeightVox": 10})
 
     # ---------------------------------------------------------------- emotes
     E0 = B()
@@ -840,8 +902,8 @@ def lib():
         P["fk:head"] = (-15, 0, 0)
         return P
 
-    fnact("climb_ladder", True, cycle(climb_at, 30), {"ladderYVox": 7.5, "rungSpacingVox": 10,
-                                                        "climbSpeed": round(2 * 10 * VOX / (30 / FPS), 3)})
+    fnact("climb_ladder", True, cycle(climb_at, 30), {"ladderYVox": 7.5, "rungSpacingVox": 7,
+                                                        "climbSpeed": round(2 * 10 * LEG * VOX / (30 / FPS), 3)})
     return A
 
 

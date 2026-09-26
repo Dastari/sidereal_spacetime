@@ -1,143 +1,146 @@
-"""Base crew body volumes (undersuit, glove/boot bases, neutral head blank, default hair).
+"""Base crew body r002 (CHARACTER_SPEC v2, chibi ~2.8 heads): undersuit, glove/boot bases,
+neutral head blank (big dark eyes, highlight, blush) and default clumped hair.
 
-Every volume is authored in rest-pose armature voxels (see rig.py): x right, y forward, z up.
-Right-side parts are authored once at +x and mirrored. Each bone gets its own volume, so the
-body is rigid per bone (weights 1.0), which is what keeps the voxel read under animation.
+Authored in rest-pose armature voxels (1/32 m; x right, y forward, z up). Every bone owns a
+voxkit.Part made of brick ISLANDS: seams (bevels) appear only between authored bricks (collar,
+pockets, cuffs, belt, boots, hair clumps), never between every fine voxel. Silhouette steps use
+2-voxel main blocks; single voxels are used only for detail (eyes, pins, seams, lights).
+Right-side limbs are authored at +x and mirrored.
 
-Variants share the skeleton: 'male', 'female', 'neutral' only differ in torso/hip/arm
-geometry and facial detail. Proportions (1 voxel = 1/32 m):
-  sole 0 | ankle 3 | knee 13 | hip joint 25 | crotch 23 | belt 27-29 | shoulder line 42 |
-  neck 42-44 | head 44-58 (14 vox = 0.44 m, ~4.1 heads) | default hair to 60
+Layout (voxels): sole 0 | boots 0..7 | ankle 3 | knee 10 | crotch 18 | hip joint 19 | belt 22..24 |
+shoulder line 36 | neck 35..38 | skull 37..55 (18 tall, 18 wide, 16 deep) | hair to 58 (1.81 m).
+Legs x 1..7 (gap 2), torso x -7..7, arms x 7..12, hands x 6..13 hanging at z 13..19.
 """
-from voxkit import Vol
+from voxkit import Part, Vol
 
 P, S, A, M, D, K, H, E, EM = ("suit_primary", "suit_secondary", "accent", "metal", "dark", "skin", "hair", "eye", "emit")
+BL = "skin:blush"
 
 VARIANTS = {
-    # chest half-width, waist half-width, hip half-width, bust, deltoid outer, jaw, lashes
-    "male": dict(chest=7, waist=6, hip=7, bust=False, delt=13, jaw=5, lashes=False, brow=2),
-    "female": dict(chest=6, waist=5, hip=7, bust=True, delt=12, jaw=4, lashes=True, brow=1),
-    "neutral": dict(chest=7, waist=6, hip=7, bust=False, delt=12, jaw=5, lashes=False, brow=1),
+    "male": dict(waist=6, bust=False, lashes=False, pockets=True, hair="short"),
+    "female": dict(waist=5, bust=True, lashes=True, pockets=False, hair="long"),
+    "neutral": dict(waist=6, bust=False, lashes=False, pockets=True, hair="short"),
 }
 
 
 def legs():
-    th, sh, ft, to = Vol(), Vol(), Vol(), Vol()
-    # thigh 13..24 (6 wide x 6 deep), outer seam stripe, cargo pocket, hip overlap into pelvis
-    th.box(1, -3, 13, 7, 3, 25, P)
-    th.cut(1, -3, 23, 2, 3, 25)                           # crotch bevel
-    th.paint(6, -1, 14, 7, 0, 23, S)                      # outer seam
-    th.box(7, -2, 16, 8, 2, 20, S).box(7, -2, 20, 8, 2, 21, D)     # thigh pocket + flap
-    th.paint(1, 2, 13, 7, 3, 14, S)                       # hem above knee
-    # shin 3..13: knee pad, boot shaft (boot base), calf
-    sh.box(1, -3, 7, 7, 3, 13, P)
-    sh.box(2, -3, 5, 6, -2, 11, P)                        # calf bulge behind
-    sh.box(2, 3, 10, 6, 4, 14, S).paint(3, 3, 12, 5, 4, 13, A)     # knee pad with accent tab
-    sh.box(1, -3, 3, 7, 3, 7, D)                          # boot shaft
-    sh.box(0, -3, 6, 8, 4, 7, S)                          # boot cuff rim (1 vox proud)
-    sh.paint(3, 2, 4, 5, 3, 6, S)                         # laces strip
-    # foot 0..4 (ankle block + heel), toe 4..8
-    ft.box(1, -4, 0, 7, 4, 4, D).box(1, -4, 0, 7, 4, 1, K)          # boot + sole (sole uses 'skin' ? no)
-    ft.paint(1, -4, 0, 7, 4, 1, M)                        # sole plate reads metal-grey
-    ft.paint(1, -4, 1, 7, -3, 3, S)                       # heel counter
-    to.box(1, 4, 0, 7, 8, 3, D).paint(1, 4, 0, 7, 8, 1, M)
-    to.paint(2, 7, 1, 6, 8, 2, S)                         # toe cap trim
-    to.cut(1, 7, 2, 2, 8, 3).cut(6, 7, 2, 7, 8, 3)        # rounded toe corners
+    th, sh, ft, to = Part(), Part(), Part(), Part()
+    th.brick(1, -3, 10, 7, 4, 19, P)
+    th.paint(6, 0, 11, 7, 1, 18, S)                        # outer trouser seam (fine detail)
+    th.brick(7, -2, 12, 8, 2, 16, P)                       # cargo pocket
+    th.brick(7, -2, 16, 8, 2, 17, S)                       # pocket flap
+    sh.brick(1, -3, 7, 7, 4, 10, P)
+    sh.brick(0, -4, 5, 8, 5, 8, P)                         # trouser hem, flared over the boot top
+    sh.brick(2, 4, 8, 6, 5, 11, S)                         # knee panel
+    sh.brick(1, -4, 3, 8, 5, 6, D)                         # boot shaft (flares 1 outward)
+    sh.brick(1, -4, 6, 8, 5, 7, D)                         # boot rim
+    ft.brick(1, -4, 1, 8, 4, 3, D)                         # boot upper
+    ft.brick(1, -4, 0, 8, 4, 1, D)                         # sole
+    ft.brick(1, -5, 1, 8, -4, 3, S)                        # heel counter
+    to.brick(1, 4, 1, 8, 7, 3, D).cut(1, 6, 2, 8, 7, 3)    # toe cap, stepped front
+    to.brick(1, 4, 0, 8, 7, 1, D)                          # toe sole
     return {"thigh.R": th, "shin.R": sh, "foot.R": ft, "toe.R": to}
 
 
 def arms(v):
-    ua, fa, hd, sd = Vol(), Vol(), Vol(), Vol()
-    d = v["delt"]
-    ua.box(8, -2, 32, 12, 2, 40, P)                       # upper arm 4x4
-    ua.box(7, -3, 38, d, 3, 42, P)                        # deltoid cap
-    ua.cut(d - 1, -3, 41, d, 3, 42).cut(7, -3, 41, 8, -2, 42).cut(7, 2, 41, 8, 3, 42)
-    ua.box(12, -1, 35, 13, 2, 38, A)                      # sleeve patch
-    ua.paint(7, -3, 38, d, 3, 39, S)                      # yoke seam under the cap
-    fa.box(8, -2, 25, 12, 2, 32, P)                       # forearm
-    fa.box(7, -3, 24, 13, 3, 27, S)                       # cuff (1 vox proud)
-    fa.paint(8, 1, 29, 9, 2, 32, S)                       # inner seam
-    fa.box(8, -1, 31, 12, 1, 33, P)                       # elbow overlap
-    # hand (bare hand glove base = skin), closed-ish fist; thumb toward body/forward
-    hd.box(8, -2, 20, 12, 2, 24, K)
-    hd.cut(11, -2, 20, 12, 2, 21)                         # finger taper
-    hd.box(8, 2, 21, 10, 3, 23, K)                        # thumb forward/inside
-    hd.paint(8, -2, 23, 12, 2, 24, S)                     # glove-base wrist band
-    hd.paint(9, 1, 20, 11, 2, 22, K)
-    sd.box(3, -3, 39, 8, 3, 41, P)                        # clavicle/trapezius block (shoulder bone)
-    return {"upper_arm.R": ua, "forearm.R": fa, "hand.R": hd, "shoulder.R": sd}
+    ua, fa, hd = Part(), Part(), Part()
+    ua.brick(7, -3, 31, 12, 3, 36, P).cut(11, -3, 35, 12, 3, 36)   # sleeve cap (stepped outer top)
+    ua.brick(7, -2, 26, 12, 3, 31, P)                               # upper arm 5x5
+    fa.brick(7, -2, 21, 12, 3, 26, P)                               # forearm 5x5
+    fa.brick(6, -3, 19, 13, 4, 21, S)                               # cuff, 1 proud
+    hd.brick(7, -3, 14, 13, 3, 19, K).cut(7, 2, 14, 13, 3, 15)     # chunky fist cube 6x6x5
+    hd.brick(7, 3, 15, 9, 4, 18, K)                                 # thumb, forward-inside
+    return {"upper_arm.R": ua, "forearm.R": fa, "hand.R": hd}
 
 
 def torso(v):
-    c, w, h = v["chest"], v["waist"], v["hip"]
-    pe, sp, ch, nk = Vol(), Vol(), Vol(), Vol()
-    # pelvis 23..29, belt 27..29 (1 vox proud front/back), buckle
-    pe.box(-h, -3, 23, h, 5, 29, P)
-    pe.cut(-h, -3, 23, -h + 1, 5, 24).cut(h - 1, -3, 23, h, 5, 24)
-    pe.box(-h, -4, 27, h, 6, 29, D)
-    pe.box(-2, 6, 27, 2, 7, 29, M).paint(-1, 6, 27, 1, 7, 29, A)
-    pe.box(3, 6, 27, 5, 7, 29, D).box(-5, -5, 27, -3, -4, 29, S)     # belt loops / pouch hint
-    pe.paint(-1, 4, 23, 1, 5, 27, S)                      # fly seam
-    # spine/waist 29..34
-    sp.box(-w, -3, 29, w, 5, 35, P)
-    sp.paint(-1, 4, 29, 1, 5, 35, S)                      # front placket
-    sp.paint(-w, -3, 29, w, 5, 30, S)                     # waist seam above belt
-    # chest 34..42 (9 deep: y -4..5)
-    ch.box(-c, -4, 35, c, 5, 41, P)
-    ch.box(-c + 1, -4, 41, c - 1, 5, 42, P)
-    ch.box(-c + 1, -3, 34, c - 1, 5, 35, P)               # overlap into waist
-    ch.cut(-c, 4, 35, -c + 1, 5, 41).cut(c - 1, 4, 35, c, 5, 41)   # soften front vertical edges
+    w = v["waist"]
+    pe, sp, ch, nk = Part(), Part(), Part(), Part()
+    pe.brick(-7, -4, 18, 7, 5, 23, P).cut(-1, -4, 18, 1, 5, 19)    # hips, crotch notch
+    pe.brick(-7, -5, 22, 7, 6, 24, D)                               # belt (1 proud front/back)
+    pe.brick(-2, 6, 22, 2, 7, 24, M).paint(-1, 6, 22, 1, 7, 24, A)  # buckle
+    pe.brick(3, 6, 22, 5, 7, 24, D)                                 # belt keeper
+    sp.brick(-w, -4, 23, w, 5, 29, P)
+    sp.paint(-1, 4, 23, 0, 5, 29, S)                                # front seam
+    ch.brick(-7, -5, 28, 7, 5, 36, P).cut(-7, -5, 35, -6, 5, 36).cut(6, -5, 35, 7, 5, 36)
+    if v["pockets"]:
+        ch.brick(-6, 5, 29, -2, 6, 32, P)                           # chest pockets + flaps
+        ch.brick(-6, 5, 32, -2, 6, 33, S)
+        ch.brick(2, 5, 29, 6, 6, 32, P)
+        ch.brick(2, 5, 32, 6, 6, 33, S)
+        ch.brick(3, 6, 32, 5, 7, 33, A)                             # name tab
     if v["bust"]:
-        ch.box(-5, 5, 36, 5, 6, 39, P).cut(-5, 5, 36, -4, 6, 37).cut(4, 5, 36, 5, 6, 37)
-        ch.paint(-1, 5, 36, 1, 6, 39, S)
-    ch.paint(-1, 4, 35, 1, 5, 41, S)                      # front placket / zip
-    ch.box(-1, 5, 39, 1, 6, 41, M)                        # zip pull
-    ch.box(-c + 2, 5, 36, -2, 6, 39, S).paint(-c + 2, 5, 38, -2, 6, 39, D)   # chest pocket + flap
-    ch.box(3, 5, 38, 5, 6, 39, A).box(5, 5, 38, 6, 6, 39, EM)               # name badge + status light
-    ch.paint(-c, -4, 40, c, 5, 41, S)                     # shoulder yoke seam
-    ch.box(-3, -5, 36, 3, -4, 40, S).paint(-2, -5, 37, 2, -4, 39, A)        # back plate (O2 port)
-    # collar (chest bone) around the neck
-    ch.box(-4, -4, 41, 4, 4, 43, S).cut(-3, -3, 41, 3, 3, 43)
-    ch.box(-2, 4, 41, 2, 5, 42, S)
-    # neck
-    nk.box(-2, -2, 41, 2, 2, 45, K)
+        ch.brick(-5, 5, 30, 5, 6, 33, P).cut(-5, 5, 30, -4, 6, 31).cut(4, 5, 30, 5, 6, 31)
+        ch.paint(-1, 5, 30, 0, 6, 33, S)
+        ch.brick(3, 6, 33, 5, 7, 34, A)
+    ch.brick(-5, 5, 33, -3, 6, 34, M)                               # rank pins
+    ch.brick(4, 5, 34, 5, 6, 35, EM)                                # status light
+    col = Vol().box(-4, -5, 35, 4, 4, 37, P)                        # standing collar
+    col.cut(-3, -4, 35, 3, 3, 37).cut(-1, 3, 35, 1, 4, 37)
+    ch.island(col)
+    ch.brick(-3, 5, 34, -1, 6, 36, P)                               # lapels
+    ch.brick(1, 5, 34, 3, 6, 36, P)
+    ch.brick(-3, -6, 29, 3, -5, 33, S).paint(-1, -6, 30, 1, -5, 32, A)   # back O2 port
+    nk.brick(-2, -2, 34, 2, 2, 38, K)
     return {"pelvis": pe, "spine": sp, "chest": ch, "neck": nk}
 
 
 def head(v):
-    hd = Vol()
-    j = v["jaw"]
-    hd.box(-7, -6, 46, 7, 6, 57, K)
-    hd.box(-6, -6, 57, 6, 6, 58, K).box(-6, -5, 45, 6, 6, 46, K).box(-j, -4, 44, j, 5, 45, K)
-    for x in (-7, 6):                                     # vertical edge chamfer
-        hd.cut(x, -6, 46, x + 1, -5, 57).cut(x, 5, 46, x + 1, 6, 57)
-    # eyes 2x3, brows, nose, mouth, ears
-    for sx in (-5, 3):
-        hd.paint(sx, 5, 49, sx + 2, 6, 52, E)
-    b = v["brow"]
-    hd.paint(-5, 5, 53, -5 + 2 + (1 if b > 1 else 0), 6, 54, H).paint(3 - (1 if b > 1 else 0), 5, 53, 5, 6, 54, H)
+    hd = Part()
+    sk = Vol().box(-9, -8, 38, 9, 8, 54, K).box(-8, -7, 54, 8, 7, 55, K).box(-8, -7, 37, 8, 7, 38, K)
+    for x in (-9, 8):
+        sk.cut(x, -8, 38, x + 1, -7, 54).cut(x, 7, 38, x + 1, 8, 54)
+    # face (front layer y = 7): big dark eyes 3x4 with a 1-voxel highlight, small mouth, blush
+    for x0 in (-6, 3):
+        sk.paint(x0, 7, 41, x0 + 3, 8, 45, E)
+        sk.paint(x0, 7, 44, x0 + 1, 8, 45, M)
     if v["lashes"]:
-        hd.box(-6, 5, 51, -5, 6, 52, E).box(5, 5, 51, 6, 6, 52, E)
-    hd.box(-1, 6, 48, 1, 7, 50, K)                        # nose
-    hd.paint(-2, 5, 46, 2, 6, 47, "dark" if not v["lashes"] else "accent")   # mouth
-    hd.box(-8, -1, 48, -7, 2, 52, K).box(7, -1, 48, 8, 2, 52, K)             # ears
+        sk.paint(-7, 7, 44, -6, 8, 46, E).paint(6, 7, 44, 7, 8, 46, E)
+    sk.paint(-6, 7, 46, -3, 8, 47, H).paint(3, 7, 46, 6, 8, 47, H)  # brows
+    sk.paint(-1, 7, 39, 1, 8, 40, D)                                  # mouth
+    sk.paint(-8, 7, 40, -6, 8, 41, BL).paint(6, 7, 40, 8, 8, 41, BL)  # blush
+    hd.island(sk)
+    hd.brick(-10, -1, 41, -9, 2, 45, K)                               # ears
+    hd.brick(9, -1, 41, 10, 2, 45, K)
     return {"head": hd}
 
 
+def lock(part, x0, x1, y0, y1, zb, zt, taper=0, axis="x", slot=H):
+    """A chunky hair clump: a block whose last 2 voxels step in by one voxel on the `taper` side
+    (-1 / +1 along `axis`), giving the stepped, swept tip of the reference's hair clumps."""
+    v = Vol().box(x0, y0, zb + 2, x1, y1, zt, slot)
+    if axis == "x":
+        a0, a1 = (x0 + (1 if taper > 0 else 0), x1 - (1 if taper < 0 else 0)) if taper else (x0 + 1, x1 - 1)
+        v.box(a0, y0, zb, a1, y1, zb + 2, slot)
+    else:
+        a0, a1 = (y0 + (1 if taper > 0 else 0), y1 - (1 if taper < 0 else 0)) if taper else (y0 + 1, y1 - 1)
+        v.box(x0, a0, zb, x1, a1, zb + 2, slot)
+    return part.island(v)
+
+
 def hair_default(v):
-    """Default short hair (head bone). CHAR-HEADS replaces it; kept separate so it can be hidden."""
-    hr = Vol()
-    hr.box(-7, -6, 57, 7, 6, 59, H).box(-6, -5, 59, 6, 5, 60, H)
-    hr.box(-8, -6, 52, -7, 5, 58, H).box(7, -6, 52, 8, 5, 58, H)            # sides (above ears)
-    hr.box(-7, -7, 47, 7, -6, 59, H).cut(-7, -7, 47, -6, -6, 50).cut(6, -7, 47, 7, -6, 50)  # back
-    # fringe: jagged front layer
-    for x, lo in zip(range(-7, 7), [55, 54, 55, 56, 54, 55, 56, 55, 54, 56, 55, 54, 55, 56]):
-        hr.box(x, 6, lo, x + 1, 7, 59, H)
-    hr.box(-7, -6, 56, 7, 7, 57, H).cut(-6, -5, 56, 6, 6, 57)                # rim
-    for x, y in ((-4, -2), (-1, 1), (2, -3), (4, 2), (-3, 3), (1, -5)):      # tufts
-        hr.box(x, y, 60, x + 2, y + 2, 61, H)
-    if v["lashes"]:                                                           # longer back/sides
-        hr.box(-8, -7, 44, 8, -5, 52, H).box(-8, -5, 46, -7, 3, 52, H).box(7, -5, 46, 8, 3, 52, H)
+    """One smooth hair mass (cap + sides + back) with a few chunky clumps on the silhouette:
+    fringe locks, side locks, back locks and crown clumps. Big faces, stepped edges, no studs."""
+    hr = Part()
+    long = v["hair"] == "long"
+    mass = Vol().box(-10, -9, 51, 10, 9, 56, H).box(-9, -8, 56, 9, 8, 57, H).box(-7, -6, 57, 7, 6, 58, H)
+    mass.box(-10, -10, 44 if not long else 36, 10, -8, 51, H)          # back
+    for x0, x1 in ((-10, -9), (9, 10)):                                 # sides behind the ears
+        mass.box(x0, -9, 47 if not long else 38, x1, 2, 51, H)
+    hr.island(mass)
+    for x0, y0, w, d in [(-9, -7, 6, 6), (-2, -8, 6, 6), (4, -3, 6, 6), (-8, 1, 6, 6), (0, 2, 6, 5)]:
+        hr.island(Vol().box(x0, y0, 56, x0 + w, y0 + d, 58, H).box(x0 + 1, y0 + 1, 58, x0 + w - 1, y0 + d - 1, 59, H))
+    for x0, x1, zb, t in [(-10, -5, 48, -1), (-5, 0, 47, -1), (0, 5, 48, 1), (5, 10, 49, 1)]:
+        lock(hr, x0, x1, 8, 10, zb, 57, t)                              # fringe
+    for sx in (-1, 1):
+        x0, x1 = (-11, -9) if sx < 0 else (9, 11)
+        for y0, y1, zb in [(-9, -4, 45 if not long else 35), (-4, 1, 46 if not long else 37), (1, 5, 47 if not long else 40)]:
+            lock(hr, x0, x1, y0, y1, zb, 55, -1 if y0 < 0 else 1, axis="y")
+    for x0, x1, zb, t in [(-10, -5, 43, -1), (-5, 0, 42, 1), (0, 5, 44, -1), (5, 10, 43, 1)]:
+        lock(hr, x0, x1, -11, -9, zb if not long else zb - 9, 55, t)    # back
+    if long:
+        lock(hr, -3, 3, -13, -10, 36, 52)                               # ponytail
+        hr.brick(-2, -13, 50, 2, -10, 52, A)                            # hair tie
     return {"hair": hr}
 
 
@@ -145,13 +148,12 @@ def build(variant):
     v = VARIANTS[variant]
     parts = {}
     for grp in (legs(), arms(v)):
-        for k, vol in grp.items():
-            parts[k] = vol
-            m = Vol()
-            for (x, y, z), s in vol.c.items():
-                m.c[(-1 - x, y, z)] = s
-            parts[k[:-2] + ".L"] = m
+        for k, part in grp.items():
+            parts[k] = part
+            parts[k[:-2] + ".L"] = part.mirrored()
+    patch = Part()
+    patch.brick(-13, -1, 31, -12, 2, 34, A)                          # sleeve patch, left arm only
+    parts["upper_arm.L"] = parts["upper_arm.L"].merged(patch)
     parts.update(torso(v))
     parts.update(head(v))
-    # asymmetric badge/pocket are fine (chest is not mirrored). Hair is returned separately.
     return parts, hair_default(v)["hair"]

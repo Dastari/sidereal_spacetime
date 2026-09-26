@@ -37,8 +37,8 @@ def setup(sc, samples=32, res=(640, 900)):
     nt.links.new(sep.outputs["Y"], ramp.inputs["Fac"])
     nt.links.new(ramp.outputs["Color"], bg.inputs["Color"])
     nt.links.new(bg.outputs[0], wo.inputs[0])
-    sc.view_settings.view_transform, sc.view_settings.look = "AgX", "AgX - Base Contrast"
-    sc.view_settings.exposure, sc.view_settings.gamma = 0.1, 1.0
+    sc.view_settings.view_transform, sc.view_settings.look = "Standard", "None"
+    sc.view_settings.exposure, sc.view_settings.gamma = 0.0, 1.05
     sc.use_nodes = True
     ct = sc.node_tree
     ct.nodes.clear()
@@ -46,7 +46,7 @@ def setup(sc, samples=32, res=(640, 900)):
     gl = ct.nodes.new("CompositorNodeGlare")
     gl.glare_type, gl.threshold, gl.size, gl.mix = "FOG_GLOW", 0.9, 7, -0.2
     hs = ct.nodes.new("CompositorNodeHueSat")
-    hs.inputs["Saturation"].default_value = 1.25
+    hs.inputs["Saturation"].default_value = 1.12
     bc = ct.nodes.new("CompositorNodeBrightContrast")
     bc.inputs["Contrast"].default_value = -2.0
     comp = ct.nodes.new("CompositorNodeComposite")
@@ -54,7 +54,8 @@ def setup(sc, samples=32, res=(640, 900)):
     ct.links.new(gl.outputs["Image"], hs.inputs["Image"])
     ct.links.new(hs.outputs["Image"], bc.inputs["Image"])
     ct.links.new(bc.outputs["Image"], comp.inputs["Image"])
-    lights = []
+    LIGHTS.clear()
+    lights = LIGHTS
     for name, energy, col, rot in (("Key", 3.2, (1.0, 0.95, 0.88), (-50, 0, -35)), ("Fill", 1.1, (0.55, 0.6, 1.0), (-60, 0, 110)),
                                    ("Rim", 2.4, (0.6, 0.45, 1.0), (60, 0, 20))):
         L = bpy.data.lights.new(name, "SUN")
@@ -62,6 +63,7 @@ def setup(sc, samples=32, res=(640, 900)):
         ob = bpy.data.objects.new(name, L)
         sc.collection.objects.link(ob)
         ob.rotation_euler = [math.radians(a) for a in rot]
+        ob["base_rot"] = rot
         lights.append(ob)
     # floor disc with a faint glow ring (reference plinth feel)
     bpy.ops.mesh.primitive_cylinder_add(vertices=48, radius=0.55, depth=0.02, location=(0, 0, -0.011))
@@ -81,8 +83,14 @@ def setup(sc, samples=32, res=(640, 900)):
     return cam
 
 
+LIGHTS = []
+
+
 def aim(cam, azimuth, elev=8.0, dist=6.0, target=(0, 0, 0.93), ortho=2.25, lens=None):
     a, e = math.radians(azimuth), math.radians(elev)
+    for L in LIGHTS:  # lighting rig turns with the camera, so back views are lit like front views
+        rx, ry, rz = L["base_rot"]
+        L.rotation_euler = (math.radians(rx), math.radians(ry), math.radians(rz) - a)
     # azimuth 0: camera at +Y (in front of the character, who faces +Y)
     off = Vector((math.sin(a) * math.cos(e), math.cos(a) * math.cos(e), math.sin(e))) * dist
     cam.location = Vector(target) + off
@@ -164,11 +172,11 @@ def review_props(arm, mats):
     c.box(-6, -5, -5, 6, 5, 5, "suit_secondary").paint(-6, -5, -1, 6, 5, 1, "accent")
     make("prop.crate", c)
     s = voxkit.Vol()
-    s.box(-8, -14, 0, 8, 2, 11, "dark").box(-8, -14, 11, 8, 2, 13, "suit_secondary").box(-8, -15, 13, 8, -12, 40, "suit_secondary")
+    s.box(-9, -12, 0, 9, 3, 8, "dark").box(-9, -12, 8, 9, 3, 10, "suit_secondary").box(-9, -13, 10, 9, -10, 32, "suit_secondary")
     make("prop.seat", s)
     lad = voxkit.Vol()
     lad.box(-9, 8, 0, -7, 10, 72, "metal").box(7, 8, 0, 9, 10, 72, "metal")
-    for z in range(4, 72, 10):
+    for z in range(3, 72, 7):
         lad.box(-7, 8, z, 7, 10, z + 1, "dark")
     make("prop.ladder", lad)
     return props
@@ -256,6 +264,10 @@ def turnaround(out, arm, bodies, args):
     rd = f"{out}/renders"
     os.makedirs(rd, exist_ok=True)
     sheet = []
+    if "idle" in bpy.data.actions:             # present the relaxed stance, not the bind pose
+        arm.animation_data_create()
+        arm.animation_data.action = bpy.data.actions["idle"]
+        sc.frame_set(0)
     for variant, b in bodies.items():
         show_only(list(b["meshes"].values()) + [b["hair"]], everything)
         row = []

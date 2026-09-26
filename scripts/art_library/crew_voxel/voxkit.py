@@ -27,23 +27,31 @@ SLOTS = ["skin", "hair", "eye", "suit_primary", "suit_secondary", "accent", "met
 SI = {s: i for i, s in enumerate(SLOTS)}
 
 # default "base crew" slot table (linear RGB). Themes/roles/player colours are further tables.
+def srgb(h):
+    """'#rrggbb' -> linear RGB tuple."""
+    c = [int(h[i:i + 2], 16) / 255 for i in (1, 3, 5)]
+    return tuple(round(v / 12.92 if v <= 0.04045 else ((v + 0.055) / 1.055) ** 2.4, 5) for v in c)
+
+
+# r002 base palette, measured from the reference base rig (VERIFY): lavender suit, warm peach skin
 DEFAULT_THEME = {
-    "skin": (0.80, 0.50, 0.34),
-    "hair": (0.10, 0.045, 0.25),
-    "eye": (0.018, 0.016, 0.024),
-    "suit_primary": (0.50, 0.47, 0.62),
-    "suit_secondary": (0.26, 0.24, 0.36),
-    "accent": (0.90, 0.36, 0.06),
-    "metal": (0.55, 0.56, 0.60),
-    "dark": (0.030, 0.030, 0.045),
-    "emit": (0.10, 0.60, 1.00),
-    "glass": (0.35, 0.70, 1.00),
+    "skin": srgb("#f3a98d"),
+    "hair": srgb("#5b2fb0"),
+    "eye": srgb("#1a1424"),
+    "suit_primary": srgb("#a78db6"),
+    "suit_secondary": srgb("#6c5989"),
+    "accent": srgb("#f08a2c"),
+    "metal": srgb("#e8e4f0"),
+    "dark": srgb("#2a2438"),
+    "emit": srgb("#38c8ff"),
+    "glass": srgb("#7fd0ff"),
 }
+BLUSH = srgb("#e9a0a4")  # vertex-colour multiplier target for 'skin:blush' cells (relative to skin)
 # (roughness, metallic, normal strength)
 SLOT_PBR = {
-    "skin": (0.62, 0.0, 0.25), "hair": (0.72, 0.0, 0.5), "eye": (0.25, 0.0, 0.0),
-    "suit_primary": (0.66, 0.0, 0.4), "suit_secondary": (0.62, 0.0, 0.4), "accent": (0.5, 0.05, 0.4),
-    "metal": (0.34, 0.85, 0.4), "dark": (0.78, 0.0, 0.4), "emit": (0.4, 0.0, 0.0), "glass": (0.05, 0.0, 0.0),
+    "skin": (0.6, 0.0, 0.15), "hair": (0.7, 0.0, 0.3), "eye": (0.2, 0.0, 0.0),
+    "suit_primary": (0.62, 0.0, 0.3), "suit_secondary": (0.6, 0.0, 0.3), "accent": (0.5, 0.0, 0.3),
+    "metal": (0.4, 0.35, 0.2), "dark": (0.7, 0.0, 0.3), "emit": (0.4, 0.0, 0.0), "glass": (0.05, 0.0, 0.0),
 }
 EMISSIVE = {"emit": 6.0}
 
@@ -203,27 +211,23 @@ def box_uv(me):
 
 
 # --------------------------------------------------------------------------- textures
-def voxel_textures(tint_path, normal_path, n=512, cells=32, seed=11):
-    """Tint: per-cell brightness jitter with slightly darker cell rims. Normal: shallow groove
-    between cells + a faint per-cell bevel, packed as an OpenGL (glTF) tangent-space normal map."""
+def voxel_textures(tint_path, normal_path, n=256, cells=16, seed=11):
+    """r002: MAIN-BLOCK variation, not a fine-voxel grid. 16 cells per metre = 2 fine voxels.
+    Tint: soft per-block brightness jitter (no rim lines). Normal: a faint pillow per block so
+    lit faces break up into bricks without reading as graph paper."""
     px = n // cells
     rng = np.random.default_rng(seed)
-    jitter = 1.0 - 0.07 * rng.random((cells, cells)).astype(np.float32)
-    tint = np.kron(jitter, np.ones((px, px), np.float32))
-    i = np.arange(n) % px
-    d = np.minimum(i, px - 1 - i).astype(np.float32)             # distance to cell edge in px
-    dx, dy = np.meshgrid(d, d)
-    edge = np.minimum(dx, dy)
-    tint *= np.where(edge < 1, 0.94, 1.0)
-    t = np.clip(tint, 0, 1)
+    jitter = 1.0 - 0.06 * rng.random((cells, cells)).astype(np.float32)
+    t = np.clip(np.kron(jitter, np.ones((px, px), np.float32)), 0, 1)
     img = bpy.data.images.new("voxel_tint", n, n, alpha=False)
     img.pixels.foreach_set(np.stack([t, t, t, np.ones_like(t)], -1)[::-1].ravel())
     img.filepath_raw, img.file_format = tint_path, "PNG"
     img.save()
-    # height: 1 inside, ramps down over 2 px to the cell edge
-    h = np.clip(edge / 2.0, 0, 1) ** 0.7
+    i = (np.arange(n) % px + 0.5) / px                             # 0..1 inside a block
+    u, v = np.meshgrid(i, i)
+    h = (np.sin(np.pi * u) * np.sin(np.pi * v)) ** 0.25            # flat top, soft falloff at the rim
     gy, gx = np.gradient(h)
-    k = 1.6
+    k = 1.2
     nx, ny, nz = -gx * k, gy * k, np.ones_like(h)
     L = np.sqrt(nx * nx + ny * ny + nz * nz)
     nrm = np.stack([nx / L * 0.5 + 0.5, ny / L * 0.5 + 0.5, nz / L * 0.5 + 0.5, np.ones_like(h)], -1)
@@ -235,8 +239,174 @@ def voxel_textures(tint_path, normal_path, n=512, cells=32, seed=11):
     return img, im2
 
 
-def slot_materials(theme, tint_img, normal_img, prefix="crew"):
-    """One glTF-exportable Principled material per slot."""
+# --------------------------------------------------------------------------- brick islands (r002)
+class Part:
+    """A rigid part made of brick ISLANDS. Each island is a voxel volume meshed and bevelled on its
+    own, so seams appear only between authored bricks (collar, pocket, cuff, hair clump), never
+    between every fine voxel. Paint/cut act across all islands. Slots may carry a modifier
+    ('skin:blush') that keeps the base material but multiplies a vertex colour."""
+
+    def __init__(self):
+        self.islands = []
+
+    def brick(self, x0, y0, z0, x1, y1, z1, slot):
+        v = Vol().box(x0, y0, z0, x1, y1, z1, slot)
+        if v.c:
+            self.islands.append(v)
+        return v
+
+    def island(self, vol):
+        if vol.c:
+            self.islands.append(vol)
+        return vol
+
+    def paint(self, *box):
+        for v in self.islands:
+            v.paint(*box)
+        return self
+
+    def cut(self, *box):
+        for v in self.islands:
+            v.cut(*box)
+        self.islands = [v for v in self.islands if v.c]
+        return self
+
+    def mirrored(self):
+        out = Part()
+        for v in self.islands:
+            m = Vol()
+            m.c = {(-1 - x, y, z): s for (x, y, z), s in v.c.items()}
+            out.islands.append(m)
+        return out
+
+    def merged(self, other):
+        out = Part()
+        out.islands = self.islands + other.islands
+        return out
+
+    def bounds(self):
+        b = [v.bounds() for v in self.islands]
+        lo = [min(x[0][i] for x in b) for i in range(3)]
+        hi = [max(x[1][i] for x in b) for i in range(3)]
+        return lo, hi
+
+    def slots(self):
+        return sorted({s.split(":")[0] for v in self.islands for s in v.c.values()}, key=SI.get)
+
+    def cells(self):
+        return sum(len(v.c) for v in self.islands)
+
+
+MODS = {"blush": BLUSH}
+
+
+def mesh_part(part, name, mats=None, bevel=0.011, segments=2, seed=0, jitter=0.025):
+    """Mesh every island separately (exposed faces, coplanar same-slot faces dissolved), chamfer its
+    edges, give it a per-island colour jitter (vertex colour), then join. Flat shading."""
+    import random
+    rng = random.Random(seed)
+    extra = {}                                   # 'slot:mod' -> temporary material index
+    bm_all = bmesh.new()
+    isl = bm_all.faces.layers.int.new("island")
+    for k, vol in enumerate(part.islands):
+        cells = vol.c
+        vid, verts, faces, fm = {}, [], [], []
+
+        def v(p):
+            i = vid.get(p)
+            if i is None:
+                i = vid[p] = len(verts)
+                verts.append((p[0] * VOXEL, p[1] * VOXEL, p[2] * VOXEL))
+            return i
+        for (x, y, z), s in cells.items():
+            for n, _ax in _DIRS:
+                if (x + n[0], y + n[1], z + n[2]) in cells:
+                    continue
+                faces.append([v(p) for p in _face_quad(x, y, z, n)])
+                if s not in SI and s not in extra:
+                    extra[s] = len(SLOTS) + len(extra)
+                fm.append(SI.get(s, extra.get(s)))
+        bm = bmesh.new()
+        bv = [bm.verts.new(c) for c in verts]
+        for f, mi in zip(faces, fm):
+            face = bm.faces.new([bv[i] for i in f])
+            face.material_index = mi
+        bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-6)
+        bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(1.0), use_dissolve_boundaries=False,
+                                 verts=bm.verts, edges=bm.edges, delimit={"MATERIAL"})
+        if bevel > 0:
+            edges = [e for e in bm.edges if len(e.link_faces) == 2 and e.calc_face_angle(0) > math.radians(30)]
+            if edges:
+                old = set(bm.faces)
+                res = bmesh.ops.bevel(bm, geom=edges, offset=bevel, offset_type="OFFSET", segments=segments,
+                                      profile=0.5, affect="EDGES", clamp_overlap=True, material=-1)
+                # bevel faces inherit the material of the largest original neighbour (no stray slot lines)
+                for f in res["faces"]:
+                    best, area = None, -1.0
+                    for e in f.edges:
+                        for g in e.link_faces:
+                            if g in old and g.calc_area() > area:
+                                best, area = g, g.calc_area()
+                    if best is None:
+                        for v in f.verts:
+                            for g in v.link_faces:
+                                if g in old and g.calc_area() > area:
+                                    best, area = g, g.calc_area()
+                    if best is not None:
+                        f.material_index = best.material_index
+        tmp = bpy.data.meshes.new("_isl")
+        bm.to_mesh(tmp)
+        bm.free()
+        n0 = len(bm_all.faces)
+        bm_all.from_mesh(tmp)
+        bpy.data.meshes.remove(tmp)
+        bm_all.faces.ensure_lookup_table()
+        for f in bm_all.faces[n0:]:
+            f[isl] = k
+    me = bpy.data.meshes.new(name)
+    bm_all.to_mesh(me)
+    bm_all.free()
+    for s in SLOTS:
+        me.materials.append(mats[s] if mats else None)
+    # per-island jitter + modifiers, then fold modifier material indices back onto base slots
+    tone = [1.0 - jitter * rng.random() for _ in part.islands]
+    inv = {i: s for s, i in extra.items()}
+    col = me.color_attributes.new("Col", "BYTE_COLOR", "CORNER")
+    isl_attr = me.attributes["island"].data
+    for p in me.polygons:
+        t = tone[isl_attr[p.index].value]
+        c = (t, t, t)
+        if p.material_index in inv:
+            base, mod = inv[p.material_index].split(":")
+            m = MODS[mod]
+            b = DEFAULT_THEME[base]
+            c = tuple(t * min(1.0, m[i] / max(b[i], 1e-4)) for i in range(3))
+            p.material_index = SI[base]
+        for li in p.loop_indices:
+            col.data[li].color = (*c, 1.0)
+    me.attributes.remove(me.attributes["island"])
+    me.polygons.foreach_set("use_smooth", [True] * len(me.polygons))
+    box_uv(me)
+    return me
+
+
+def soften(ob):
+    """Big faces stay flat, bevels read as soft rounded edges: weighted (face-area) custom normals,
+    baked into the mesh so glTF exports them."""
+    md = ob.modifiers.new("soft", "WEIGHTED_NORMAL")
+    md.mode, md.weight, md.keep_sharp = "FACE_AREA", 100, False
+    dg = bpy.context.evaluated_depsgraph_get()
+    me = bpy.data.meshes.new_from_object(ob.evaluated_get(dg), preserve_all_data_layers=True, depsgraph=dg)
+    old = ob.data
+    ob.modifiers.remove(md)
+    ob.data = me
+    bpy.data.meshes.remove(old)
+    return ob
+
+
+def slot_materials(theme, tint_img=None, normal_img=None, prefix="crew"):
+    """One glTF-exportable Principled material per slot: baseColorFactor x COLOR_0 (island tone,
+    blush, baked AO). r002: no tiling texture or normal map (owner: no visible per-voxel grid)."""
     mats = {}
     for s in SLOTS:
         m = bpy.data.materials.new(f"{prefix}.{s}")
@@ -245,7 +415,7 @@ def slot_materials(theme, tint_img, normal_img, prefix="crew"):
         nt = m.node_tree
         b = nt.nodes["Principled BSDF"]
         col = theme[s]
-        rough, metal, nstr = SLOT_PBR[s]
+        rough, metal, _ = SLOT_PBR[s]
         b.inputs["Roughness"].default_value = rough
         b.inputs["Metallic"].default_value = metal
         if s == "glass":
@@ -254,28 +424,16 @@ def slot_materials(theme, tint_img, normal_img, prefix="crew"):
             m.surface_render_method = "BLENDED"
             mats[s] = m
             continue
-        uvn = nt.nodes.new("ShaderNodeUVMap")
-        uvn.uv_map = "UVMap"
-        tex = nt.nodes.new("ShaderNodeTexImage")
-        tex.image = tint_img
-        tex.interpolation = "Closest"
-        nt.links.new(uvn.outputs["UV"], tex.inputs["Vector"])
         rgb = nt.nodes.new("ShaderNodeRGB")
         rgb.outputs[0].default_value = (*col, 1)
+        vc = nt.nodes.new("ShaderNodeVertexColor")
+        vc.layer_name = "Col"
         mul = nt.nodes.new("ShaderNodeMix")
         mul.data_type, mul.blend_type = "RGBA", "MULTIPLY"
         mul.inputs["Factor"].default_value = 1.0
-        nt.links.new(tex.outputs["Color"], mul.inputs[6])
-        nt.links.new(rgb.outputs[0], mul.inputs[7])
+        nt.links.new(rgb.outputs[0], mul.inputs[6])
+        nt.links.new(vc.outputs["Color"], mul.inputs[7])
         nt.links.new(mul.outputs[2], b.inputs["Base Color"])
-        if nstr > 0:
-            ntex = nt.nodes.new("ShaderNodeTexImage")
-            ntex.image = normal_img
-            nt.links.new(uvn.outputs["UV"], ntex.inputs["Vector"])
-            nm = nt.nodes.new("ShaderNodeNormalMap")
-            nm.inputs["Strength"].default_value = nstr
-            nt.links.new(ntex.outputs["Color"], nm.inputs["Color"])
-            nt.links.new(nm.outputs["Normal"], b.inputs["Normal"])
         if s in EMISSIVE:
             b.inputs["Emission Color"].default_value = (*col, 1)
             b.inputs["Emission Strength"].default_value = EMISSIVE[s]

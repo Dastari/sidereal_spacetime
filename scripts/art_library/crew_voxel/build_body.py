@@ -74,12 +74,14 @@ def build_armature(coll):
     return arm
 
 
-def part_object(name, vol, bone, coll, mats):
-    me = voxkit.mesh_volume(vol, name, mats=mats)
+def part_object(name, part, bone, coll, mats):
+    me = voxkit.mesh_part(part, name, mats=mats, seed=sum(map(ord, name)),
+                          jitter=0.06 if "hair" in name else 0.025)
     ob = bpy.data.objects.new(name, me)
     coll.objects.link(ob)
+    voxkit.soften(ob)
     vg = ob.vertex_groups.new(name=bone)
-    vg.add(list(range(len(me.vertices))), 1.0, "REPLACE")
+    vg.add(list(range(len(ob.data.vertices))), 1.0, "REPLACE")
     return ob
 
 
@@ -121,8 +123,8 @@ def build_bodies(arm, mats, coll):
         parts, hair = body.build(variant)
         meshes = {}
         for region in ("body", "head", "hands", "feet"):
-            objs = [part_object(f"{variant}.{bone}", vol, bone, coll, mats)
-                    for bone, vol in parts.items() if region_of(bone) == region]
+            objs = [part_object(f"{variant}.{bone}", part, bone, coll, mats)
+                    for bone, part in parts.items() if region_of(bone) == region and part.islands]
             ob = join(objs, f"GEO-crew-{region}-{variant}")
             voxkit.assign_materials(ob, mats)
             skin(ob, arm)
@@ -136,7 +138,8 @@ def build_bodies(arm, mats, coll):
         stats[variant] = {"tris": sum(voxkit.tri_count(o.data) for o in meshes.values()),
                           "trisByRegion": {r: voxkit.tri_count(o.data) for r, o in meshes.items()},
                           "hairTris": voxkit.tri_count(hob.data),
-                          "voxels": sum(len(v.c) for v in parts.values()), "hairVoxels": len(hair.c)}
+                          "voxels": sum(p.cells() for p in parts.values()), "hairVoxels": hair.cells(),
+                          "islands": sum(len(p.islands) for p in parts.values()), "hairIslands": len(hair.islands)}
     return bodies, stats
 
 
@@ -168,8 +171,10 @@ def segment_bounds(bodies):
     seg = {}
     for variant, b in bodies.items():
         parts, hair = b["parts"], b["hairVol"]
-        for bone, vol in parts.items():
-            lo, hi = vol.bounds()
+        for bone, part in parts.items():
+            if not part.islands:
+                continue
+            lo, hi = part.bounds()
             seg.setdefault(bone, {})[variant] = {"region": region_of(bone), "minVox": lo, "maxVox": hi,
                                                  "min": rig.m(lo), "max": rig.m(hi)}
         lo, hi = hair.bounds()
@@ -206,7 +211,8 @@ def spec_json(arm, socks, seg, stats, actions):
             "gltf": {"location": rig.gltf(list(loc)), "quaternionXYZW": [round(qg.x, 6), round(qg.y, 6), round(qg.z, 6), round(qg.w, 6)]},
         })
     return {
-        "schema": "sidereal.crew.body-spec/1",
+        "schema": "sidereal.crew.body-spec/2",
+        "spec_version": rig.SPEC_VERSION,
         "revision": rig.REVISION,
         "status": "proposal (not owner-approved); binding interface for character agents",
         "owner": "CHAR-BODY",
@@ -214,15 +220,20 @@ def spec_json(arm, socks, seg, stats, actions):
         "units": "metres",
         "frame": {
             "blender": "Z up, character faces +Y, character RIGHT = +X (.R bones at +X), origin = feet centre on ground",
-            "gltf": "Y up; gltf = (x, z, -y); character faces -Z in glTF. Babylon runtime rotates the visual by PI so it faces the gameplay heading.",
+            "gltf": "Y up; gltf = (x, z, -y); character faces -Z in glTF, which is gameplay forward (no runtime flip).",
         },
         "proportions": {
-            "headTopVox": 58, "headTop": 58 * VOXEL, "hairMaxVox": 61, "headHeightVox": 14, "headWidthVox": 14,
-            "headDepthVox": 12, "neckVox": [42, 44], "shoulderLineVox": 42, "crotchVox": 23, "hipJointVox": 25,
-            "kneeVox": 13, "ankleVox": 3, "beltVox": [27, 29], "elbowVox": 32, "wristVox": 24, "fingertipVox": 20,
-            "torsoHalfWidthVox": {v: body.VARIANTS[v]["chest"] for v in body.VARIANTS},
-            "armCentreXVox": 10, "legCentreXVox": 4, "limbWidthVox": {"upperArm": 4, "forearm": 4, "thigh": 6, "shin": 6},
-            "headsTall": round(58 / 14, 2),
+            "headsTall": round(58 / 21, 2), "headPlusHairFraction": round(21 / 58, 3),
+            "skullVox": {"min": [-9, -8, 37], "max": [9, 8, 55]}, "skullTop": 55 * VOXEL, "hairTopVox": 58,
+            "hairTop": 58 * VOXEL, "helmetMaxTopVox": 60, "neckVox": [35, 38], "shoulderLineVox": 36,
+            "shoulderJointVox": [9.5, 0, 34], "beltVox": [22, 24], "crotchVox": 18, "hipJointVox": [4, 0, 19],
+            "kneeVox": 10, "ankleVox": 3, "elbowVox": 26, "wristVox": 20, "handVox": [13, 19],
+            "torsoVox": {"chest": [-7, 7], "waist": {v: body.VARIANTS[v]["waist"] for v in body.VARIANTS}, "hips": [-7, 7],
+                         "depth": [-5, 5]},
+            "limbsVox": {"arm": "x 7..12 (5x5), cuff x 6..13", "hand": "x 6..13, y -3..4, z 13..19 (7x7x6 cube)",
+                         "leg": "x 1..7 (6 wide, 7 deep), legs gap 2", "boot": "x 1..8, y -5..7, z 0..7"},
+            "outerArmSpanVox": 24, "headWidthOverArmSpan": round(18 / 24, 2), "headWithHairOverArmSpan": round(20 / 24, 2),
+            "mainBlockVox": 2, "note": "CHARACTER_SPEC v2 chibi (reference ~2.8 heads). Legs measured from the reference are ~6.3 vox; spec v2 said ~8, 6 keeps a 2-vox gap inside a 14-vox torso.",
         },
         "armature": {"name": "crew_rig", "boneOrder": rig.BONE_ORDER, "rigidSkinning": "every vertex weight 1.0 to one bone"},
         "bones": bones,
@@ -230,14 +241,19 @@ def spec_json(arm, socks, seg, stats, actions):
         "socketConvention": "local -Y = outward/forward direction of the socket; hand sockets: origin = grip centre, +X along the barrel, +Z toward the top of the weapon. Author parts in rest-pose world space and parent with keep-transform, or place them at socket-local coordinates using matrixWorld.",
         "segments": seg,
         "headSpace": {
-            "originVox": [0, 0, 44], "note": "head bone rest head (neck/skull joint); axes = armature axes (x right, y forward, z up)",
-            "skullVox": {"min": [-7, -6, 0], "max": [7, 6, 14]}, "faceFrontYVox": 6, "noseVox": {"min": [-1, 6, 4], "max": [1, 7, 6]},
-            "eyesVox": {"L": {"min": [-5, 5, 5], "max": [-3, 6, 8]}, "R": {"min": [3, 5, 5], "max": [5, 6, 8]}}, "eyeLineVox": 6.5,
-            "mouthVox": {"min": [-2, 5, 2], "max": [2, 6, 3]}, "earsVox": {"L": {"min": [-8, -1, 4], "max": [-7, 2, 8]}, "R": {"min": [7, -1, 4], "max": [8, 2, 8]}},
-            "hairMaxZVox": 17, "helmetEnvelopeVox": {"min": [-9, -8, -1], "max": [9, 9, 18]},
+            "originVox": [0, 0, 37], "note": "head bone rest head (neck/skull joint), voxels relative to it; axes = armature axes (x right, y forward, z up)",
+            "skullVox": {"min": [-9, -8, 0], "max": [9, 8, 18]}, "jawVox": {"min": [-8, -7, 0], "max": [8, 7, 1]},
+            "faceFrontYVox": 8, "eyesVox": {"L": {"min": [-6, 7, 4], "max": [-3, 8, 8]}, "R": {"min": [3, 7, 4], "max": [6, 8, 8]}},
+            "eyeHighlight": "1 vox at the eye's upper-left corner, slot metal (pale) in the blank", "eyeLineVox": 6,
+            "browsVox": 9, "mouthVox": {"min": [-1, 7, 2], "max": [1, 8, 3]},
+            "blushVox": {"L": {"min": [-8, 7, 3], "max": [-6, 8, 4]}, "R": {"min": [6, 7, 3], "max": [8, 8, 4]}},
+            "blushSlot": "skin with vertex colour multiplier (COLOR_0), no extra material",
+            "earsVox": {"L": {"min": [-10, -1, 4], "max": [-9, 2, 8]}, "R": {"min": [9, -1, 4], "max": [10, 2, 8]}},
+            "hairEnvelopeVox": {"min": [-10, -12, -3], "max": [10, 10, 21]}, "helmetEnvelopeVox": {"min": [-11, -10, -1], "max": [11, 11, 23]},
         },
-        "hand": {"fistVox": {"min": [8, -2, 20], "max": [12, 2, 24]}, "thumbVox": {"min": [8, 2, 21], "max": [10, 3, 23]},
-                 "gripThicknessVox": 2, "note": ".R values; .L mirrors x. Grip passes through the fist centre (socket.hand.R)."},
+        "hand": {"fistVox": {"min": [6, -3, 13], "max": [13, 4, 19]}, "thumbVox": {"min": [6, 4, 15], "max": [8, 5, 18]},
+                 "gripThicknessVox": 2, "gripAxis": "vertical through the fist centre (socket.hand.R at (9.5, 0.5, 16))",
+                 "note": ".R values; .L mirrors x (x -> -1 - x for cell ranges)."},
         "itemFrame": {
             "charWeapons": "item-local (Blender): origin = primary grip centre, +Y barrel/forward, +Z up, +X right",
             "toHandSocket": "item-local -> socket.hand.R local = rotation of -90 deg about socket Z (item +Y -> socket +X)",
@@ -251,7 +267,12 @@ def spec_json(arm, socks, seg, stats, actions):
         "equipmentSlots": rig.EQUIPMENT_SLOTS,
         "materialSlots": SLOTS,
         "defaultTheme": {k: [round(c, 4) for c in v] for k, v in voxkit.DEFAULT_THEME.items()},
-        "materialConvention": "one Principled material per slot named <prefix>.<slot>; baseColorFactor = slot colour; baseColorTexture = shared voxel_tint.png (UV 1 unit = 1 m = 32 cells, box-projected in rest-pose metres); normalTexture = shared voxel_normal.png. Parts built with voxkit.mesh_volume get this for free.",
+        "materialConvention": "one Principled material per slot named <prefix>.<slot>; baseColorFactor = slot colour; COLOR_0 multiplies it (per-brick-island tone 0.975..1, blush, later baked AO). No tiling texture / normal map: surfaces are big smooth faces with softly rounded brick edges (2-segment bevel ~0.35 vox + face-area weighted normals). Build parts with voxkit.Part (brick islands) + voxkit.mesh_part + voxkit.soften.",
+        "styleRules": ["silhouette steps in 2-voxel main blocks; single voxels only for detail (eyes, pins, seams, lights)",
+                       "no per-fine-voxel outlines, grooves or cell colour noise (owner 2026-09-25: you should not see each block)",
+                       "the voxel read comes only from stepped silhouettes and chunky detail pieces; clothing layers overlap softly",
+                       "hair = clumped stepped shells, each clump its own island; no stud grid",
+                       "saturated palette: lavender suit #a78db6 / #6c5989, peach skin #f3a98d with blush"],
         "variants": list(body.VARIANTS),
         "stats": stats,
         "animations": actions,
@@ -270,8 +291,7 @@ def main():
     sc = bpy.context.scene
     sc.render.fps = 24
     coll = sc.collection
-    tint, nrm = voxkit.voxel_textures(f"{out}/voxel_tint.png", f"{out}/voxel_normal.png")
-    mats = voxkit.slot_materials(voxkit.DEFAULT_THEME, tint, nrm)
+    mats = voxkit.slot_materials(voxkit.DEFAULT_THEME)
     arm = build_armature(coll)
     bodies, stats = build_bodies(arm, mats, coll)
     socks = build_sockets(arm, coll)
