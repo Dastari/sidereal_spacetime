@@ -1,0 +1,573 @@
+{
+ "schema": "sidereal.crew.item-holds/1",
+ "revision": "r004",
+ "bodySpec": "CHAR-BODY r004 (spec_version 2)",
+ "frame": "character body frame, Blender axes (+Y facing, +Z up), metres; item origin = grip",
+ "method": "item on socket.hand.R in CHAR-BODY's baked action at the key frame; hand errors measured",
+ "items": {
+  "pistol": {
+   "characterClip": "aim_pistol",
+   "frame": 12,
+   "gripPosition": [
+    0.0786,
+    0.3072,
+    1.1278
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0887,
+    "observedSupportItemVox": [
+     -4.01,
+     1.68,
+     0.01
+    ]
+   }
+  },
+  "smg": {
+   "characterClip": "aim_pistol",
+   "frame": 12,
+   "gripPosition": [
+    0.0786,
+    0.3072,
+    1.1278
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0887,
+    "observedSupportItemVox": [
+     -4.01,
+     1.68,
+     0.01
+    ]
+   }
+  },
+  "compact-carbine": {
+   "characterClip": "aim_rifle",
+   "frame": 12,
+   "gripPosition": [
+    0.0457,
+    0.2623,
+    1.1495
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0246,
+    "observedSupportItemVox": [
+     -1.7,
+     6.33,
+     0.64
+    ]
+   }
+  },
+  "rifle": {
+   "characterClip": "aim_rifle",
+   "frame": 12,
+   "gripPosition": [
+    0.0457,
+    0.2623,
+    1.1495
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0246,
+    "observedSupportItemVox": [
+     -1.7,
+     6.33,
+     0.64
+    ]
+   }
+  },
+  "shotgun": {
+   "characterClip": "aim_rifle",
+   "frame": 12,
+   "gripPosition": [
+    0.0457,
+    0.2623,
+    1.1495
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0246,
+    "observedSupportItemVox": [
+     -1.7,
+     6.33,
+     0.64
+    ]
+   }
+  },
+  "heavy-gun": {
+   "characterClip": "idle_armed",
+   "frame": 20,
+   "gripPosition": [
+    0.1532,
+    0.2421,
+    0.8275
+   ],
+   "rotationWXYZ": [
+    0.950868,
+    -0.267052,
+    0.031443,
+    0.15344
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.1436,
+    "observedSupportItemVox": [
+     -4.82,
+     3.45,
+     0.47
+    ]
+   }
+  },
+  "beam-rifle": {
+   "characterClip": "aim_rifle",
+   "frame": 12,
+   "gripPosition": [
+    0.0457,
+    0.2623,
+    1.1495
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0246,
+    "observedSupportItemVox": [
+     -1.7,
+     6.33,
+     0.64
+    ]
+   }
+  },
+  "rail-rifle": {
+   "characterClip": "aim_rifle",
+   "frame": 12,
+   "gripPosition": [
+    0.0457,
+    0.2623,
+    1.1495
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0246,
+    "observedSupportItemVox": [
+     -1.7,
+     6.33,
+     0.64
+    ]
+   }
+  },
+  "stun-gun": {
+   "characterClip": "aim_pistol",
+   "frame": 12,
+   "gripPosition": [
+    0.0786,
+    0.3072,
+    1.1278
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0887,
+    "observedSupportItemVox": [
+     -4.01,
+     1.68,
+     0.01
+    ]
+   }
+  },
+  "baton": {
+   "characterClip": "melee_swing",
+   "frame": 10,
+   "gripPosition": [
+    -0.125,
+    0.4375,
+    0.7812
+   ],
+   "rotationWXYZ": [
+    0.88321,
+    -0.393626,
+    0.115551,
+    0.22726
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "grenade": {
+   "characterClip": "throw",
+   "frame": 10,
+   "gripPosition": [
+    0.1836,
+    0.3516,
+    1.2776
+   ],
+   "rotationWXYZ": [
+    0.999941,
+    -0.010908,
+    0.0,
+    0.0
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "medgun": {
+   "characterClip": "aim_pistol",
+   "frame": 12,
+   "gripPosition": [
+    0.0786,
+    0.3072,
+    1.1278
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0887,
+    "observedSupportItemVox": [
+     -4.01,
+     1.68,
+     0.01
+    ]
+   }
+  },
+  "medkit": {
+   "characterClip": "use_interact",
+   "frame": 11,
+   "gripPosition": [
+    0.1759,
+    0.4924,
+    1.0196
+   ],
+   "rotationWXYZ": [
+    0.707107,
+    -0.0,
+    -0.707107,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "utility-cutter": {
+   "characterClip": "melee_swing",
+   "frame": 10,
+   "gripPosition": [
+    -0.125,
+    0.4375,
+    0.7812
+   ],
+   "rotationWXYZ": [
+    0.88321,
+    -0.393626,
+    0.115551,
+    0.22726
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "repair-tool": {
+   "characterClip": "repair_loop",
+   "frame": 6,
+   "gripPosition": [
+    0.0938,
+    0.4375,
+    0.8438
+   ],
+   "rotationWXYZ": [
+    0.969846,
+    -0.17101,
+    0.030154,
+    -0.17101
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "welder": {
+   "characterClip": "repair_loop",
+   "frame": 6,
+   "gripPosition": [
+    0.0938,
+    0.4375,
+    0.8438
+   ],
+   "rotationWXYZ": [
+    0.969846,
+    -0.17101,
+    0.030154,
+    -0.17101
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "multi-tool": {
+   "characterClip": "repair_loop",
+   "frame": 6,
+   "gripPosition": [
+    0.0938,
+    0.4375,
+    0.8438
+   ],
+   "rotationWXYZ": [
+    0.969846,
+    -0.17101,
+    0.030154,
+    -0.17101
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "mining-drill": {
+   "characterClip": "aim_rifle",
+   "frame": 12,
+   "gripPosition": [
+    0.0457,
+    0.2623,
+    1.1495
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0246,
+    "observedSupportItemVox": [
+     -1.7,
+     6.33,
+     0.64
+    ]
+   }
+  },
+  "wrench": {
+   "characterClip": "melee_swing",
+   "frame": 10,
+   "gripPosition": [
+    -0.125,
+    0.4375,
+    0.7812
+   ],
+   "rotationWXYZ": [
+    0.88321,
+    -0.393626,
+    0.115551,
+    0.22726
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "scanner": {
+   "characterClip": "use_interact",
+   "frame": 11,
+   "gripPosition": [
+    0.1759,
+    0.4924,
+    1.0196
+   ],
+   "rotationWXYZ": [
+    0.707107,
+    -0.0,
+    -0.707107,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "sample-scanner": {
+   "characterClip": "repair_loop",
+   "frame": 6,
+   "gripPosition": [
+    0.0938,
+    0.4375,
+    0.8438
+   ],
+   "rotationWXYZ": [
+    0.969846,
+    -0.17101,
+    0.030154,
+    -0.17101
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "data-pad": {
+   "characterClip": "use_interact",
+   "frame": 11,
+   "gripPosition": [
+    0.1759,
+    0.4924,
+    1.0196
+   ],
+   "rotationWXYZ": [
+    0.707107,
+    -0.0,
+    -0.707107,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "shield-emitter": {
+   "characterClip": "use_interact",
+   "frame": 11,
+   "gripPosition": [
+    0.1759,
+    0.4924,
+    1.0196
+   ],
+   "rotationWXYZ": [
+    0.707107,
+    -0.0,
+    -0.707107,
+    -0.0
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "flashlight": {
+   "characterClip": "repair_loop",
+   "frame": 6,
+   "gripPosition": [
+    0.0938,
+    0.4375,
+    0.8438
+   ],
+   "rotationWXYZ": [
+    0.969846,
+    -0.17101,
+    0.030154,
+    -0.17101
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "grapple": {
+   "characterClip": "aim_pistol",
+   "frame": 12,
+   "gripPosition": [
+    0.0786,
+    0.3072,
+    1.1278
+   ],
+   "rotationWXYZ": [
+    0.99999,
+    0.004363,
+    0.0,
+    0.0
+   ],
+   "handErrorM": {
+    "R": 0.0,
+    "L": 0.0887,
+    "observedSupportItemVox": [
+     -4.01,
+     1.68,
+     0.01
+    ]
+   }
+  },
+  "drone": {
+   "characterClip": "throw",
+   "frame": 10,
+   "gripPosition": [
+    0.1836,
+    0.3516,
+    1.2776
+   ],
+   "rotationWXYZ": [
+    0.999941,
+    -0.010908,
+    0.0,
+    0.0
+   ],
+   "handErrorM": {
+    "R": 0.0
+   }
+  },
+  "cargo-box": {
+   "characterClip": "carry_idle",
+   "frame": 20,
+   "gripPosition": [
+    0.259,
+    0.2909,
+    0.8122
+   ],
+   "rotationWXYZ": [
+    1.0,
+    0.0,
+    0.0,
+    0.0
+   ],
+   "handErrorM": {
+    "R": 0.0642,
+    "L": 0.076,
+    "observedSupportItemVox": [
+     -15.0,
+     -0.12,
+     -2.21
+    ]
+   }
+  }
+ }
+}
