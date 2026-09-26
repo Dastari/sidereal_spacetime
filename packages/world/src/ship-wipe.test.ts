@@ -531,3 +531,35 @@ test("a spawner that ignores the requested pose is rolled back by the reducer ch
     }),
   ).toThrow("requested pose");
 });
+
+test("operator assigns the owner-picked Wren prefab: owned ship, active access, boarded, personal kit intact", async () => {
+  await import("./prefab-ship-spawners");
+  const { OWNER_STARTER_PREFAB_ID, prefabShipSpawner } = await import("./ship-assign");
+  const { f, a, personalA } = seeded();
+  f.as(SHIP_OPERATOR);
+  wipePlayerShips(f.ctx, { operationId: "wipe-apply-0001", dryRun: false, expectedShips: 2, expectedInstances: 3, expectedCharacters: 2 });
+  const wren = prefabShipSpawner(OWNER_STARTER_PREFAB_ID)!;
+  expect(wren).toMatchObject({ prefabId: "fed.s.wren", legacy: false });
+  assignPrefabShip(f.ctx, {
+    operationId: "assign-wren-01",
+    characterId: a.actor.id,
+    prefabId: "fed.s.wren",
+    expectedCatalogRevision: wren.catalogRevision,
+    spawnPoseJson: "",
+    expectedCharacterShipId: "",
+    allowLegacy: false,
+  });
+  const actor = f.db.character.id.find(a.actor.id);
+  const instance = f.db.constructionInstance.id.find(actor.shipId);
+  expect(instance.blueprintId).toMatch(/^trusted-prefab:fed\.s\.wren:/);
+  expect(instance.blueprintSha256).toBe(wren.blueprintSha256);
+  expect(f.db.ship.id.find(actor.shipId).name).toBe("Wren");
+  expect(f.db.ship.id.find(actor.shipId).owner.toHexString()).toBe(OWNER_A);
+  expect(f.db.gameShipAccess.shipId.find(actor.shipId)).toMatchObject({ characterId: a.actor.id, lifecycle: "active" });
+  expect(f.db.constructionFlightBinding.shipId.find(actor.shipId).lifecycle).toBe("active");
+  expect(f.db.station.shipId.find(actor.shipId).operational).toBe(true);
+  expect(
+    f.db.inventoryItem.rows.filter((r: Row) => r.characterId === a.actor.id).map((r: Row) => r.id).sort(),
+  ).toEqual(personalA);
+  expect(f.db.ship.rows).toHaveLength(1);
+});
