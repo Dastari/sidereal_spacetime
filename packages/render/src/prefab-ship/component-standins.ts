@@ -239,25 +239,29 @@ export function appendStandin(standin: Standin, m: Mat4, builders: Map<ShipKitSl
  * Presentation-only engine plume in the socket frame: a cone from the nozzle exit along -Y,
  * vertex colours fading from `core` (white-hot) to transparent. Colours are RGBA per vertex.
  */
-export function emitPlume(out: GeometryBuilder, colours: number[], at: readonly [number, number, number], radius: number, length: number, rings = 5, sides = 14) {
-  const base = out.positions.length / 3;
-  for (let k = 0; k <= rings; k++) {
-    const t = k / rings;
-    const r = radius * (1 - 0.85 * t) * (k === 0 ? 0.95 : 1);
-    const fade = Math.pow(1 - t, 1.6);
-    for (let i = 0; i <= sides; i++) {
-      const a = (i / sides) * Math.PI * 2;
-      out.positions.push(at[0] + Math.cos(a) * r, at[1] - t * length, at[2] + Math.sin(a) * r);
-      out.normals.push(Math.cos(a), 0, Math.sin(a));
-      colours.push(fade, fade, fade, fade);
-    }
+/**
+ * Stepped voxel exhaust (presentation only, additive): square slabs on the 1/16 m brick grid that
+ * narrow and fade away from the nozzle along local -Y, with a brighter core for the first half,
+ * matching the stepped blue exhaust of reference/art engine assemblies. Vertex colours carry the
+ * fade; the plume material is additive and unlit. `sides` is kept for call compatibility.
+ */
+export function emitPlume(out: GeometryBuilder, colours: number[], at: readonly [number, number, number], radius: number, length: number, rings = 6, _sides = 0) {
+  const T = 1 / 16;
+  const snap = (v: number) => Math.max(T, Math.round(v / T) * T);
+  const steps = Math.max(4, rings + 1);
+  const slab = (r: number, y0: number, y1: number, fade: number) => {
+    const before = out.positions.length / 3;
+    emitBox(out, [at[0] - r, at[1] - y1, at[2] - r], [at[0] + r, at[1] - y0, at[2] + r], 0, () => false);
+    for (let i = before; i < out.positions.length / 3; i++) colours.push(fade, fade, fade, fade);
+  };
+  for (let k = 0; k < steps; k++) {
+    const t0 = k / steps;
+    const t1 = (k + 1) / steps;
+    const fade = Math.pow(1 - t0, 1.5);
+    // Additive and double-sided: keep each shell dim so overlapping slabs stay blue, not white.
+    slab(snap(radius * (1 - 0.7 * t0)), t0 * length, t1 * length, fade * 0.22);
+    if (t0 < 0.5) slab(snap(radius * 0.45 * (1 - t0)), t0 * length, t1 * length, fade * 0.3);
   }
-  const row = sides + 1;
-  for (let k = 0; k < rings; k++)
-    for (let i = 0; i < sides; i++) {
-      const a = base + k * row + i;
-      out.indices.push(a, a + 1, a + row + 1, a, a + row + 1, a + row);
-    }
   out.boxes += 1;
 }
 

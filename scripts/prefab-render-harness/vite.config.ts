@@ -19,8 +19,9 @@ const MOUNTS: [string, string[]][] = [
   ["/assets/ship-kit/", ["assets/runtime/ship-kit"]],
   ["/assets/materials/", ["assets/runtime/materials"]],
   ["/assets/environment/", ["assets/runtime/environment"]],
-  // Component GLBs: the published runtime copy when it exists, else the local art-library export.
+  // Component GLBs: the published runtime copy (any art revision) first, else the art-library export.
   ["/assets/ship-components/r001/", ["assets/runtime/ship-components/r001", "assets/art-library/ship-components/r001/glb"]],
+  ["/assets/ship-components/", ["assets/runtime/ship-components"]],
 ];
 
 const TYPES: Record<string, string> = {

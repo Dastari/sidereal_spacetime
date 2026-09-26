@@ -26,7 +26,7 @@ const only = opt("--only", "")?.split(",").filter(Boolean);
 const W = Number(opt("--w", 1600));
 const H = Number(opt("--h", 900));
 const extra = opt("--extra", "");
-const PORT = 5391;
+const PORT = Number(opt("--port", 5391)); // separate ports keep parallel worktrees from sharing a server
 const BASE = `http://127.0.0.1:${PORT}/`;
 mkdirSync(out, { recursive: true });
 
@@ -146,7 +146,7 @@ async function main() {
   await page("Page.enable");
   await page("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 1, mobile: false });
 
-  const ids = await (async () => {
+  const ids = only?.length ? only : await (async () => {
     // The prefab list comes from the harness page itself so this script never restates content.
     await page("Page.navigate", { url: `${BASE}?list=1` });
     await waitReady(page, "?list=1", 180000);
