@@ -177,9 +177,9 @@ def encode(frame_dir, out_base, loops=2, fps=24):
     mp4 = out_base + ".mp4"
     gif = out_base + ".gif"
     pattern = os.path.join(frame_dir, "%04d.png")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-stream_loop", str(loops - 1), "-framerate", str(fps), "-i", pattern,
+    subprocess.run(["ffmpeg", "-v", "error", "-threads", "2", "-y", "-stream_loop", str(loops - 1), "-framerate", str(fps), "-i", pattern,
                     "-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "20", mp4], check=True)
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", str(fps), "-i", pattern, "-vf",
+    subprocess.run(["ffmpeg", "-v", "error", "-threads", "2", "-y", "-framerate", str(fps), "-i", pattern, "-vf",
                     f"fps={min(fps, 12)},scale=800:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=160[p];[b][p]paletteuse=dither=bayer",
                     "-loop", "0", gif], check=True)
     return mp4, gif
