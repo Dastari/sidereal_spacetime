@@ -76,14 +76,14 @@ export type CrewArmorLoadout = Partial<
 
 export const CREW_ARMOR_REVISION = catalog.revision;
 export const CREW_ARMOR_ASSET_BASE = catalog.assetBase;
-export const CREW_ARMOR_PARTS = catalog.parts as readonly CrewArmorPart[];
-export const CREW_ARMOR_COLOURWAYS = catalog.colourways as Readonly<
+export const CREW_ARMOR_PARTS = catalog.parts as unknown as readonly CrewArmorPart[];
+export const CREW_ARMOR_COLOURWAYS = catalog.colourways as unknown as Readonly<
   Record<string, CrewArmorColourway>
 >;
 export const CREW_ARMOR_PRESETS =
-  catalog.presets as readonly CrewArmorPreset[];
-const FITS = catalog.fits as Readonly<Record<string, string[]>>;
-const LEGACY = catalog.legacyVisuals as Readonly<
+  catalog.presets as unknown as readonly CrewArmorPreset[];
+const FITS = catalog.fits as unknown as Readonly<Record<string, string[]>>;
+const LEGACY = catalog.legacyVisuals as unknown as Readonly<
   Record<string, { part: string; colourway: string }>
 >;
 

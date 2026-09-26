@@ -60,11 +60,12 @@ describe("voxel crew armour attach", () => {
     const skeleton = armour.meshes.find((m) => m.skeleton)!.skeleton!;
     const chestBone = skeleton.bones.find((b) => b.name === "chest")!;
     expect(chestBone.getTransformNode()).toBe(joints.get("chest"));
-    const primary = scene.materials.find(
-      (m) => m.name.startsWith("crew.suit_primary") && armour.meshes.some((x) => x.material === m || x.material?.name === m.name),
-    ) as PBRMaterial | undefined;
+    const primary = armour.meshes
+      .map((m) => m.material)
+      .find((m) => m?.name.startsWith("crew.suit_primary")) as PBRMaterial | undefined;
+    expect(primary).toBeDefined();
     const crimson = Color3.FromHexString("#c8263d").toLinearSpace();
-    if (primary) expect(primary.albedoColor.equalsWithEpsilon(crimson, 1e-3)).toBe(true);
+    expect(primary!.albedoColor.equalsWithEpsilon(crimson, 1e-3)).toBe(true);
     armour.setColourway("cobalt");
     armour.dispose();
     expect(armour.meshes.every((m) => m.isDisposed())).toBe(true);

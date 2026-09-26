@@ -49,14 +49,15 @@ def parse_args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     p = argparse.ArgumentParser()
     p.add_argument("--out", default="/tmp/crew_armor")
-    p.add_argument("--rig-blend", default="")
+    p.add_argument("--body-blend", default="/root/sidereal-progress/_shared/crew-body-r002/crew-body.blend",
+                   help="CHAR-BODY source (rig, body regions, actions); falls back to the ported mannequin")
     p.add_argument("--export", default="")
     p.add_argument("--content-json", default="")
     p.add_argument("--sheets", default="")
     p.add_argument("--check", action="store_true")
     p.add_argument("--refs", default=str(REFS))
     p.add_argument("--samples", type=int, default=32)
-    p.add_argument("--bevel", type=float, default=0.009, help="plate edge bevel (m)")
+    p.add_argument("--bevel", type=float, default=0.011, help="brick-island edge bevel (m), ~0.35 vox like the body")
     p.add_argument("--save-blend", action="store_true")
     return p.parse_args(argv)
 
@@ -67,13 +68,14 @@ def srgb_lin(h):
     return tuple(x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in c)
 
 
-# Character slots (skin/hair/eye) and the default undersuit (lavender-blue, spec v2)
-BASE_THEME = {"skin": "#f2b48f", "hair": "#4b2f8a", "eye": "#15121c", "suit_primary": "#8c90d8",
-              "suit_secondary": "#4c4f94", "accent": "#ff8fa0", "metal": "#b4bbd0", "dark": "#262640",
-              "emit": "#5fd2ff", "glass": "#7fd8ff"}
-SLOT_PBR = {"skin": (0.55, 0.0), "hair": (0.6, 0.0), "eye": (0.2, 0.0), "suit_primary": (0.5, 0.0),
-            "suit_secondary": (0.55, 0.0), "accent": (0.45, 0.05), "metal": (0.32, 0.8), "dark": (0.6, 0.0),
+# Character slots (skin/hair/eye) and the default undersuit: CHAR-BODY r002 base palette.
+BASE_THEME = {"skin": "#f3a98d", "hair": "#5b2fb0", "eye": "#1a1424", "suit_primary": "#a78db6",
+              "suit_secondary": "#6c5989", "accent": "#f08a2c", "metal": "#e8e4f0", "dark": "#2a2438",
+              "emit": "#38c8ff", "glass": "#7fd0ff"}
+SLOT_PBR = {"skin": (0.6, 0.0), "hair": (0.7, 0.0), "eye": (0.2, 0.0), "suit_primary": (0.55, 0.0),
+            "suit_secondary": (0.55, 0.0), "accent": (0.45, 0.05), "metal": (0.35, 0.6), "dark": (0.65, 0.0),
             "emit": (0.4, 0.0), "glass": (0.05, 0.0)}   # roughness, metallic
+EMIT_STRENGTH = 1.8          # saturated, not clipped to white (VERIFY batch 1)
 
 
 def theme(colourway=None, undersuit=None):
@@ -85,51 +87,49 @@ def theme(colourway=None, undersuit=None):
     return t
 
 
-def slot_material(name, slot, hexcol, review=True):
-    """One Principled material per slot. Review renders add a soft height gradient (the owner's
-    'gradient and AO shading'); EEVEE fast-GI supplies AO. The GLB keeps a flat factor."""
+def slot_material(name, slot, hexcol):
+    """CHAR-BODY material convention: baseColorFactor (RGB node) x COLOR_0 (per-island tone)."""
     m = bpy.data.materials.new(name)
     m.use_nodes = True
+    m.use_backface_culling = True
     nt = m.node_tree
     b = nt.nodes["Principled BSDF"]
     col = (*srgb_lin(hexcol), 1)
     rough, metal = SLOT_PBR[slot]
     b.inputs["Roughness"].default_value = rough
     b.inputs["Metallic"].default_value = metal
-    b.inputs["Base Color"].default_value = col
-    if slot == "emit":
-        b.inputs["Emission Color"].default_value = col
-        b.inputs["Emission Strength"].default_value = 5.0
-    elif slot == "glass":
+    if slot == "glass":
+        b.inputs["Base Color"].default_value = col
         b.inputs["Alpha"].default_value = 0.45
         m.surface_render_method = "BLENDED"
-    elif review:
-        tc = nt.nodes.new("ShaderNodeTexCoord")
-        sep = nt.nodes.new("ShaderNodeSeparateXYZ")
-        mr = nt.nodes.new("ShaderNodeMapRange")
-        mr.inputs["From Min"].default_value, mr.inputs["From Max"].default_value = 0.0, 1.8
-        mr.inputs["To Min"].default_value, mr.inputs["To Max"].default_value = 0.82, 1.06
-        rgb = nt.nodes.new("ShaderNodeRGB")
-        rgb.outputs[0].default_value = col
-        mul = nt.nodes.new("ShaderNodeVectorMath")
-        mul.operation = "SCALE"
-        nt.links.new(tc.outputs["Object"], sep.inputs[0])
-        nt.links.new(sep.outputs["Z"], mr.inputs["Value"])
-        nt.links.new(rgb.outputs[0], mul.inputs[0])
-        nt.links.new(mr.outputs[0], mul.inputs["Scale"])
-        nt.links.new(mul.outputs[0], b.inputs["Base Color"])
+        return m
+    rgb = nt.nodes.new("ShaderNodeRGB")
+    rgb.outputs[0].default_value = col
+    vc = nt.nodes.new("ShaderNodeVertexColor")
+    vc.layer_name = "Col"
+    mul = nt.nodes.new("ShaderNodeMix")
+    mul.data_type, mul.blend_type = "RGBA", "MULTIPLY"
+    mul.inputs["Factor"].default_value = 1.0
+    nt.links.new(rgb.outputs[0], mul.inputs[6])
+    nt.links.new(vc.outputs["Color"], mul.inputs[7])
+    nt.links.new(mul.outputs[2], b.inputs["Base Color"])
+    if slot == "emit":
+        b.inputs["Emission Color"].default_value = col
+        b.inputs["Emission Strength"].default_value = EMIT_STRENGTH
+    return m
+
+
+def tinted(mat, hexcol, name):
+    """Copy of a CHAR-BODY slot material with a new base colour (undersuit tints)."""
+    m = mat.copy()
+    m.name = name
+    for n in m.node_tree.nodes:
+        if n.type == "RGB":
+            n.outputs[0].default_value = (*srgb_lin(hexcol), 1)
     return m
 
 
 # ============================================================================================ BUILD
-def placeholder_materials():
-    mats = []
-    for sl in K.SLOTS:
-        m = bpy.data.materials.get(f"slot.{sl}") or bpy.data.materials.new(f"slot.{sl}")
-        mats.append(m)
-    return mats
-
-
 DIRS = [((1, 0, 0), 0), ((-1, 0, 0), 0), ((0, 1, 0), 1), ((0, -1, 0), 1), ((0, 0, 1), 2), ((0, 0, -1), 2)]
 
 
@@ -149,53 +149,102 @@ def _face_quad(x, y, z, n):
     return q
 
 
-def mesh_volume(cells, name):
-    """Exposed-surface mesh of {cell: slot}; coplanar same-slot faces dissolved (CHAR-BODY voxkit algorithm)."""
-    vid, verts, faces, fm = {}, [], [], []
+def mesh_islands(vol, name, bevel, seed=0):
+    """CHAR-BODY voxkit.mesh_part equivalent: every brick island is meshed on its own (exposed faces,
+    coplanar same-slot faces dissolved), its silhouette edges get a soft 2-segment bevel whose faces take
+    the material of the largest neighbour, and it gets a per-island tone in COLOR_0. Joined, then
+    smoothed with face-area weighted normals by the caller (soften)."""
+    import random
+    rng = random.Random(seed)
+    islands = vol.islands() if hasattr(vol, "islands") else [vol.c]
+    bm_all = bmesh.new()
+    tone_layer = bm_all.faces.layers.float.new("tone")
+    for cells in islands:
+        vid, verts, faces, fm = {}, [], [], []
 
-    def v(p):
-        i = vid.get(p)
-        if i is None:
-            i = vid[p] = len(verts)
-            verts.append((p[0] * V, p[1] * V, p[2] * V))
-        return i
-
-    for (x, y, z), s in cells.items():
-        for n, _ax in DIRS:
-            if (x + n[0], y + n[1], z + n[2]) in cells:
-                continue
-            faces.append([v(p) for p in _face_quad(x, y, z, n)])
-            fm.append(K.SI[s])
+        def v(p):
+            i = vid.get(p)
+            if i is None:
+                i = vid[p] = len(verts)
+                verts.append((p[0] * V, p[1] * V, p[2] * V))
+            return i
+        for (x, y, z), s in cells.items():
+            for n, _ax in DIRS:
+                if (x + n[0], y + n[1], z + n[2]) in cells:
+                    continue
+                faces.append([v(p) for p in _face_quad(x, y, z, n)])
+                fm.append(K.SI[s])
+        bm = bmesh.new()
+        bv = [bm.verts.new(c) for c in verts]
+        for f, mi in zip(faces, fm):
+            bm.faces.new([bv[i] for i in f]).material_index = mi
+        bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-6)
+        bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(1.0), use_dissolve_boundaries=False,
+                                 verts=bm.verts, edges=bm.edges, delimit={"MATERIAL"})
+        if bevel > 0:
+            edges = [e for e in bm.edges if len(e.link_faces) == 2 and e.calc_face_angle(0) > math.radians(30)]
+            if edges:
+                old = set(bm.faces)
+                res = bmesh.ops.bevel(bm, geom=edges, offset=bevel, offset_type="OFFSET", segments=2, profile=0.5,
+                                      affect="EDGES", clamp_overlap=True, material=-1)
+                for f in res["faces"]:
+                    best, area = None, -1.0
+                    for e in f.edges:
+                        for g in e.link_faces:
+                            if g in old and g.calc_area() > area:
+                                best, area = g, g.calc_area()
+                    if best is None:
+                        for vv in f.verts:
+                            for g in vv.link_faces:
+                                if g in old and g.calc_area() > area:
+                                    best, area = g, g.calc_area()
+                    if best is not None:
+                        f.material_index = best.material_index
+        tmp = bpy.data.meshes.new("_isl")
+        bm.to_mesh(tmp)
+        bm.free()
+        n0 = len(bm_all.faces)
+        bm_all.from_mesh(tmp)
+        bpy.data.meshes.remove(tmp)
+        bm_all.faces.ensure_lookup_table()
+        t = 1.0 - 0.03 * rng.random()
+        for f in bm_all.faces[n0:]:
+            f[tone_layer] = t
     me = bpy.data.meshes.new(name)
-    me.from_pydata(verts, [], faces)
-    for m in placeholder_materials():        # real slot materials so joins keep per-slot indices
+    bm_all.to_mesh(me)
+    bm_all.free()
+    for m in placeholder_materials():
         me.materials.append(m)
-    me.polygons.foreach_set("material_index", fm)
-    bm = bmesh.new()
-    bm.from_mesh(me)
-    bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(1.0), use_dissolve_boundaries=False,
-                             verts=bm.verts, edges=bm.edges, delimit={"MATERIAL"})
-    bm.to_mesh(me)
-    bm.free()
+    col = me.color_attributes.new("Col", "BYTE_COLOR", "CORNER")
+    tones = me.attributes["tone"].data
+    for p in me.polygons:
+        t = tones[p.index].value
+        for li in p.loop_indices:
+            col.data[li].color = (t, t, t, 1.0)
+    me.attributes.remove(me.attributes["tone"])
+    me.polygons.foreach_set("use_smooth", [True] * len(me.polygons))
     return me
 
 
-def bevelled_object(name, cells, bone, coll, bevel):
-    """One bone volume: soft-bevelled plate edges, smooth shading with hardened normals, rigid weight."""
-    ob = bpy.data.objects.new(name, mesh_volume(cells, name))
+def placeholder_materials():
+    return [bpy.data.materials.get(f"slot.{s}") or bpy.data.materials.new(f"slot.{s}") for s in K.SLOTS]
+
+
+def soften(ob):
+    md = ob.modifiers.new("soft", "WEIGHTED_NORMAL")
+    md.mode, md.weight, md.keep_sharp = "FACE_AREA", 100, False
+    dg = bpy.context.evaluated_depsgraph_get()
+    me = bpy.data.meshes.new_from_object(ob.evaluated_get(dg), preserve_all_data_layers=True, depsgraph=dg)
+    old = ob.data
+    ob.modifiers.remove(md)
+    ob.data = me
+    bpy.data.meshes.remove(old)
+    return ob
+
+
+def part_object(name, vol, bone, coll, bevel):
+    ob = bpy.data.objects.new(name, mesh_islands(vol, name, bevel, seed=hash(name) & 0xFFFF))
     coll.objects.link(ob)
-    if bevel > 0:
-        md = ob.modifiers.new("plate_bevel", "BEVEL")
-        md.width, md.segments, md.limit_method, md.angle_limit = bevel, 2, "ANGLE", math.radians(40)
-        md.use_clamp_overlap = True       # (MITER_ARC / harden_normals leave stray vertices at the origin)
-        dg = bpy.context.evaluated_depsgraph_get()
-        me2 = bpy.data.meshes.new_from_object(ob.evaluated_get(dg), preserve_all_data_layers=True, depsgraph=dg)
-        old = ob.data
-        ob.modifiers.clear()
-        ob.data = me2
-        bpy.data.meshes.remove(old)
-        me2.name = name
-    ob.data.polygons.foreach_set("use_smooth", [True] * len(ob.data.polygons))
     vg = ob.vertex_groups.new(name=bone)
     vg.add(list(range(len(ob.data.vertices))), 1.0, "REPLACE")
     return ob
@@ -204,7 +253,7 @@ def bevelled_object(name, cells, bone, coll, bevel):
 def join(objs, name):
     if len(objs) == 1:
         objs[0].name = name
-        return objs[0]
+        return soften(objs[0])
     bpy.ops.object.select_all(action="DESELECT")
     for o in objs:
         o.select_set(True)
@@ -212,7 +261,7 @@ def join(objs, name):
     bpy.ops.object.join()
     ob = bpy.context.view_layer.objects.active
     ob.name = name
-    return ob
+    return soften(ob)
 
 
 def build_armature(coll, name="crew_rig"):
@@ -234,31 +283,56 @@ def build_armature(coll, name="crew_rig"):
     return arm
 
 
-class Kit:
-    """Template meshes: mannequin regions per variant, armour per part/fit (+ right-side item views)."""
+BODY_REGION_OBJECTS = {"body": "GEO-crew-body-{v}", "head": "GEO-crew-head-{v}", "hands": "GEO-crew-hands-{v}",
+                       "feet": "GEO-crew-feet-{v}", "hair": "GEO-crew-hair-default-{v}"}
 
-    def __init__(self, bevel):
+
+class Kit:
+    """Templates: CHAR-BODY body regions per variant (from crew-body.blend, or the ported mannequin),
+    armour per part/fit (+ right-side item views). Figures copy objects and share mesh data."""
+
+    def __init__(self, bevel, body_blend):
         self.coll = bpy.data.collections.new("TEMPLATES")
         bpy.context.scene.collection.children.link(self.coll)
         self.mats = {}
-        self.arm = build_armature(self.coll, "TPL-crew_rig")
         self.parts = K.build_catalog()
         K.validate(self.parts)
         self.by_id = {p.id: p for p in self.parts}
-        self.body = {}
-        for variant in ("male", "female", "neutral"):
-            for region, vols in K.mannequin(variant).items():
-                objs = [bevelled_object(f"TPL.{variant}.{region}.{b}", v.c, b, self.coll, bevel * 0.8) for b, v in vols.items()]
-                self.body[(variant, region)] = join(objs, f"TPL-crew-{region}-{variant}")
+        self.body, self.body_source = {}, "CHAR-ARMOR port of CHAR-BODY r002 body.py (no blend found)"
+        self.body_arm = None
+        if body_blend and Path(body_blend).exists():
+            names = ["crew_rig"] + [t.format(v=v) for t in BODY_REGION_OBJECTS.values() for v in ("male", "female", "neutral")]
+            with bpy.data.libraries.load(body_blend) as (src, dst):
+                dst.objects = [n for n in names if n in src.objects]
+                dst.actions = list(src.actions)
+            for ob in dst.objects:
+                if ob is None:
+                    continue
+                self.coll.objects.link(ob)
+            self.body_arm = bpy.data.objects.get("crew_rig")
+            if self.body_arm is not None:
+                self.body_arm.name = "BODY-crew_rig"             # frees "crew_rig" for exported armatures
+            for v in ("male", "female", "neutral"):
+                for region, t in BODY_REGION_OBJECTS.items():
+                    ob = bpy.data.objects.get(t.format(v=v))
+                    if ob is not None:
+                        self.body[(v, region)] = ob
+            self.body_source = f"CHAR-BODY {K.BODY_REVISION} crew-body.blend ({body_blend})"
+        if not self.body:
+            for variant in ("male", "female", "neutral"):
+                for region, vols in K.mannequin(variant).items():
+                    objs = [part_object(f"TPL.{variant}.{region}.{b}", v, b, self.coll, bevel) for b, v in vols.items()]
+                    self.body[(variant, region)] = join(objs, f"TPL-crew-{region}-{variant}")
+        self.arm = self.body_arm or build_armature(self.coll, "TPL-crew_rig")
         self.tpl = {}
         for p in self.parts:
             for fit, vols in p.fits.items():
-                objs = [bevelled_object(f"TPL.{p.id}.{fit}.{b}", v.c, b, self.coll, bevel) for b, v in vols.items()]
+                objs = [part_object(f"TPL.{p.id}.{fit}.{b}", v, b, self.coll, bevel) for b, v in vols.items()]
                 ob = join(objs, f"TPL-{p.id}-{fit}")
                 ob.data.name = f"GEO-armor-{p.id}-{fit}"
                 self.tpl[(p.id, fit)] = ob
                 if any(b.endswith(".L") for b in vols):
-                    objs = [bevelled_object(f"TPL.{p.id}.{fit}.{b}.item", v.c, b, self.coll, bevel)
+                    objs = [part_object(f"TPL.{p.id}.{fit}.{b}.item", v, b, self.coll, bevel)
                             for b, v in vols.items() if not b.endswith(".L")]
                     self.tpl[(p.id, fit, "R")] = join(objs, f"ITEM-{p.id}-{fit}")
         for ob in self.coll.objects:
@@ -270,21 +344,40 @@ class Kit:
             self.mats[key] = {s: slot_material(f"{key}.{s}", s, table[s]) for s in K.SLOTS}
         return self.mats[key]
 
+    def body_materials(self, preset):
+        """None = keep CHAR-BODY's own materials; otherwise slot -> material with the undersuit tint."""
+        us = preset.get("undersuit") if preset else None
+        if not us:
+            return None
+        key = "body." + preset["id"]
+        if key not in self.mats:
+            if self.body_arm is not None:
+                self.mats[key] = {s: tinted(bpy.data.materials[f"crew.{s}"], us[s], f"{key}.{s}")
+                                  for s in us if f"crew.{s}" in bpy.data.materials}
+            else:
+                self.mats[key] = self.material_set(key + ".all", theme(None, us))
+        return self.mats[key]
+
 
 def clone(tpl, arm, coll, mats):
+    """Object copy sharing mesh data, skinned to `arm`. mats: {slot: material} overrides (or None)."""
     ob = tpl.copy()
     coll.objects.link(ob)
     ob.hide_render = False
     ob.hide_set(False)
     ob.parent = arm
     ob.matrix_parent_inverse = Matrix.Identity(4)
+    ob.matrix_basis = Matrix.Identity(4)
     for md in list(ob.modifiers):
         ob.modifiers.remove(md)
     md = ob.modifiers.new("crew_rig", "ARMATURE")
     md.object = arm
-    for i, s in enumerate(K.SLOTS):
-        ob.material_slots[i].link = "OBJECT"
-        ob.material_slots[i].material = mats[s]
+    if mats:
+        for slot in ob.material_slots:
+            base = (slot.material.name if slot.material else "").split(".")[-1]
+            if base in mats:
+                slot.link = "OBJECT"
+                slot.material = mats[base]
     return ob
 
 
@@ -293,35 +386,42 @@ FACE_YAW = 180.0     # review scenes: characters (facing +Y) turned to face the 
 
 class Figure:
     def __init__(self, kit, part_ids, colourway, loc, coll, variant="male", body=True, pose="relaxed", yaw=0.0,
-                 scale=1.0, preset=None, item_side=False):
-        self.arm = build_armature(coll)
+                 scale=1.0, preset=None, item_side=False, frame=0.25):
+        if kit.body_arm is not None:
+            self.arm = kit.body_arm.copy()
+            coll.objects.link(self.arm)
+            self.arm.hide_render = False
+            self.arm.hide_set(False)
+        else:
+            self.arm = build_armature(coll)
         self.arm.location = loc
         self.arm.rotation_euler = (0, 0, math.radians(FACE_YAW + yaw))
         self.arm.scale = (scale,) * 3
+        self.arm.show_in_front = False
+        self.arm.hide_render = True
         self.objs = []
         parts = [kit.by_id[i] for i in part_ids]
         hidden = {h for p in parts for h in p.hides}
         if body:
-            us = preset.get("undersuit") if preset else None
-            bmats = kit.material_set("body." + (preset["id"] if us else "base"), theme(None, us))
+            bm = kit.body_materials(preset)
             for region in K.BODY_REGIONS:
                 if region in hidden or (region == "hair" and "head" in hidden):
                     continue
-                self.objs.append(clone(kit.body[(variant, region)], self.arm, coll, bmats))
+                tpl = kit.body.get((variant, region))
+                if tpl is not None:
+                    self.objs.append(clone(tpl, self.arm, coll, bm))
         mats = kit.material_set("cw." + colourway, theme(colourway))
         for p in parts:
             k = (p.id, p.fit_for(variant))
             tpl = kit.tpl.get(k + ("R",)) if item_side else None
-            self.objs.append(clone(tpl or kit.tpl[k], self.arm, coll, mats))
-        apply_pose(self.arm, pose)
+            self.objs.append(clone(tpl or kit.tpl[k], self.arm, coll, {s: mats[s] for s in K.SLOTS}))
+        apply_pose(self.arm, pose, frame)
 
 
 # ============================================================================================ POSES
-# Armature-space axis/angle per bone (applied parent-relative). flex = +X (swings a hanging limb
-# forward; the character faces +Y); abduct = lift outward; twist = about +Z; roll = about +Y (tilt).
-# "relaxed" is the review stance: weight on the right leg, hip tilt, arms off the body, elbows soft,
-# hands turned in, head tilted. The others are placeholder key poses for the clip check until
-# CHAR-BODY's actions exist.
+# CHAR-BODY actions give the poses (relaxed = the idle action). The table below is the fallback when
+# no actions are loaded. Axes: flex = +X (swings a hanging limb forward; the character faces +Y);
+# abduct = lift outward; twist = about the limb; roll = about +Y (tilt).
 POSES = {
     "rest": {},
     "relaxed": {"root": [("drop", 0.5)], "pelvis": [("roll", 4), ("twist", -4)], "spine": [("roll", -3)],
@@ -330,41 +430,42 @@ POSES = {
                 "shin.L": [("flex", -16)], "foot.L": [("flex", 6)],
                 "upper_arm.R": [("abduct", 12), ("flex", 4)], "forearm.R": [("flex", 16)], "hand.R": [("twist", 18)],
                 "upper_arm.L": [("abduct", 10), ("flex", -4)], "forearm.L": [("flex", 22)], "hand.L": [("twist", -18)]},
-    "run": {"thigh.L": [("flex", 55)], "shin.L": [("flex", -85)], "foot.L": [("flex", 10)],
-            "thigh.R": [("flex", -30)], "shin.R": [("flex", -50)],
+    "run": {"thigh.L": [("flex", 55)], "shin.L": [("flex", -85)], "thigh.R": [("flex", -30)], "shin.R": [("flex", -50)],
             "upper_arm.L": [("flex", -40), ("abduct", 8)], "forearm.L": [("flex", 60)],
-            "upper_arm.R": [("flex", 45), ("abduct", 8)], "forearm.R": [("flex", 85)],
-            "spine": [("flex", 8)], "chest": [("twist", -8)], "root": [("drop", 1)]},
+            "upper_arm.R": [("flex", 45), ("abduct", 8)], "forearm.R": [("flex", 85)], "root": [("drop", 1)]},
     "aim_rifle": {"upper_arm.R": [("flex", 70), ("abduct", -10)], "forearm.R": [("flex", 60)],
-                  "upper_arm.L": [("flex", 75), ("abduct", -25)], "forearm.L": [("flex", 35)],
-                  "chest": [("twist", 15)], "spine": [("flex", 6)],
-                  "thigh.L": [("flex", 15)], "shin.L": [("flex", -15)], "thigh.R": [("flex", -8)]},
+                  "upper_arm.L": [("flex", 75), ("abduct", -25)], "forearm.L": [("flex", 35)], "chest": [("twist", 15)]},
     "crouch_idle": {"thigh.L": [("flex", 100), ("abduct", 12)], "shin.L": [("flex", -130)], "foot.L": [("flex", 30)],
                     "thigh.R": [("flex", 70), ("abduct", 12)], "shin.R": [("flex", -110)], "foot.R": [("flex", 40)],
-                    "spine": [("flex", 15)], "chest": [("flex", 8)],
-                    "upper_arm.L": [("flex", 30), ("abduct", 10)], "forearm.L": [("flex", 55)],
-                    "upper_arm.R": [("flex", 25), ("abduct", 10)], "forearm.R": [("flex", 65)], "root": [("drop", 7)]},
+                    "spine": [("flex", 15)], "root": [("drop", 6)]},
     "sit": {"thigh.L": [("flex", 88), ("abduct", 6)], "shin.L": [("flex", -88)],
-            "thigh.R": [("flex", 88), ("abduct", 6)], "shin.R": [("flex", -88)],
-            "upper_arm.L": [("flex", 20), ("abduct", 8)], "forearm.L": [("flex", 60)],
-            "upper_arm.R": [("flex", 20), ("abduct", 8)], "forearm.R": [("flex", 60)], "root": [("drop", 8)]},
+            "thigh.R": [("flex", 88), ("abduct", 6)], "shin.R": [("flex", -88)], "root": [("drop", 8)]},
 }
 KEY_POSES = ["run", "aim_rifle", "crouch_idle", "sit"]
+POSE_ACTION = {"relaxed": "idle"}
 
 
-def apply_pose(arm, pose):
+def apply_pose(arm, pose, frame=0.25):
+    """Static pose. CHAR-BODY actions are sampled at `frame` (fraction of the clip) and baked into the
+    pose bones, so every figure in a sheet can hold a different pose."""
     for pb in arm.pose.bones:
         pb.rotation_mode = "QUATERNION"
         pb.rotation_quaternion = Quaternion()
         pb.location = (0, 0, 0)
+        pb.scale = (1, 1, 1)
     arm.animation_data_clear()
-    act = bpy.data.actions.get(pose)
-    if act is not None and pose not in ("rest", "relaxed"):
+    act = bpy.data.actions.get(POSE_ACTION.get(pose, pose))
+    if act is not None and pose != "rest":
         arm.animation_data_create().action = act
         f0, f1 = act.frame_range
-        bpy.context.scene.frame_set(int(f0 + (f1 - f0) * 0.25))
+        bpy.context.scene.frame_set(int(f0 + (f1 - f0) * frame))
+        basis = {pb.name: pb.matrix_basis.copy() for pb in arm.pose.bones}
+        arm.animation_data_clear()
+        for pb in arm.pose.bones:
+            pb.matrix_basis = basis[pb.name]
+        bpy.context.view_layer.update()
         return
-    for bn, ops in POSES[pose].items():
+    for bn, ops in POSES.get(pose, {}).items():
         pb = arm.pose.bones[bn]
         rest = pb.bone.matrix_local.to_3x3()
         q = Quaternion()
@@ -471,6 +572,7 @@ def export_part(kit, part, outdir, mats):
     bpy.ops.export_scene.gltf(filepath=str(path), export_format="GLB", use_selection=True, export_yup=True,
                               export_apply=False, export_skins=True, export_extras=True, export_materials="EXPORT",
                               export_texcoords=False, export_normals=True, export_tangents=False,
+                              export_vertex_color="ACTIVE",
                               export_def_bones=False, export_rest_position_armature=True, export_animations=False)
     for o in [arm, *objs]:
         bpy.data.objects.remove(o, do_unlink=True)
@@ -481,7 +583,7 @@ def export_part(kit, part, outdir, mats):
 def export_kit(kit, outdir, fit_report):
     outdir = Path(outdir)
     (outdir / "parts").mkdir(parents=True, exist_ok=True)
-    mats = {s: slot_material(f"crew.{s}", s, theme("arctic")[s], review=False) for s in K.SLOTS}
+    mats = {s: bpy.data.materials.get(f"crew.{s}") or slot_material(f"crew.{s}", s, BASE_THEME[s]) for s in K.SLOTS}
     entries = []
     for p in kit.parts:
         path, tris = export_part(kit, p, outdir, mats)
@@ -724,12 +826,12 @@ def sheet_progress(args, kit, out):
     Figure(kit, list(pr["parts"].values()), pr["colourway"], (3.05, 0, -1.72), coll, preset=pr, yaw=-28)
     plinth((3.05, 0, -1.72), coll)
     text("MEDIC (role.medic)", (3.05, 0, 0.32), 0.07, coll)
-    text("CREW ARMOUR r002 (spec v2 proposal)", (1.4, 0, 0.5), 0.075, coll)
+    text("CREW ARMOUR r003 (CHAR-BODY r002 fit, proposal)", (1.4, 0, 0.5), 0.075, coll)
     aim_front(cam, (1.55, 0, -0.75), 4.6, elev=12)
-    render(sc, out / "armor_progress_r002.png")
-    compare(out / "armor_progress_r002.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png",
+    render(sc, out / "armor_progress_r003.png")
+    compare(out / "armor_progress_r003.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png",
                                               Path(args.refs) / "roster-male-03-medic.png"],
-            out / "armor_progress_r002_vs_reference.png")
+            out / "armor_progress_r003_vs_reference.png")
 
 
 TIER_ROWS = [("CHEST", ["armor.chest.jacket", "armor.chest.harness", "armor.chest.plate", "armor.chest.heavy"]),
@@ -749,14 +851,14 @@ def sheet_tiers(args, kit, out):
         z = -r * dz
         text(label, (-0.42, 0, z - 0.03), 0.07, coll, align="RIGHT")
         for c, pid in enumerate(ids):
-            isolated(kit, pid, TIER_CW[c], (c * dx, 0, z), coll, target=0.40)
+            isolated(kit, pid, TIER_CW[c], (c * dx, 0, z), coll, target=0.48)
     for c, t in enumerate(["TIER 0 CIVILIAN", "TIER 1 LIGHT", "TIER 2 STANDARD", "TIER 3 HEAVY"]):
         text(t, (c * dx, 0, 0.3), 0.055, coll)
     y0 = -len(TIER_ROWS) * dz - 1.35
     for c in range(4):
-        Figure(kit, [row[1][c] for row in TIER_ROWS], TIER_CW[c], (c * dx, 0, y0), coll, yaw=-20, scale=0.6)
-    text("CREW ARMOUR TIERS (armor-v1 r002 proposal)", (0.93, 0, 0.45), 0.075, coll)
-    aim_front(cam, (0.93, 0, -2.55), 7.6, elev=12)
+        Figure(kit, [row[1][c] for row in TIER_ROWS], TIER_CW[c], (c * dx, 0, y0), coll, yaw=-20, scale=0.55)
+    text("CREW ARMOUR TIERS (armor-v1 r003 proposal)", (0.93, 0, 0.45), 0.075, coll)
+    aim_front(cam, (0.75, 0, -2.3), 6.0, elev=12)
     render(sc, out / "armor_tier_chart.png")
     compare(out / "armor_tier_chart.png", [Path(args.refs) / "roster-male-armor-tiers.png"], out / "armor_tier_chart_vs_reference.png")
 
@@ -807,14 +909,14 @@ def sheet_back(args, kit, out):
 def sheet_roles(args, kit, out, presets, name, variant="male", pose="relaxed", yaw=-28, ref=None):
     dx = 0.95
     width = max(3.4, len(presets) * dx)
-    sc, cam, coll = fresh_scene(args, (2000, int(2000 * 2.3 / width)))
+    sc, cam, coll = fresh_scene(args, (2000, int(2000 * 2.9 / width)))
     for i, pr in enumerate(presets):
         x = i * dx
         Figure(kit, list(pr["parts"].values()), pr["colourway"], (x, 0, 0), coll, variant=variant, pose=pose, yaw=yaw, preset=pr)
         plinth((x, 0, 0), coll)
         text(pr["name"].upper(), (x, 0.6, 1.98), 0.075, coll)
         text(pr["id"], (x, 0.6, -0.16), 0.045, coll)
-    aim_front(cam, ((len(presets) - 1) * dx / 2, 0, 0.92), width, elev=10)
+    aim_front(cam, ((len(presets) - 1) * dx / 2, 0, 1.0), width, elev=8)
     render(sc, out / name)
     if ref:
         compare(out / name, [Path(args.refs) / ref], out / name.replace(".png", "_vs_reference.png"), height=560)
@@ -854,17 +956,66 @@ def sheet_poses(args, kit, out, ids=("role.marine", "role.engineer", "role.capta
     render(sc, out / "pose_fit_review.png")
 
 
+# ========================================================================================== WARDROBE
+UNIFORMS = [("Uniform: command", "role.captain"), ("Uniform: medical", "role.medic"),
+            ("Uniform: engineering", "role.engineer"), ("Uniform: security", "role.security")]
+TIER_SETS = [(f"Tier {t} {K.TIERS[t]}", [row[1][t] for row in TIER_ROWS], TIER_CW[t]) for t in range(4)]
+VIEWS = [("FRONT", 0.0), ("3/4", -35.0), ("SIDE", -90.0), ("BACK", 180.0)]
+
+
+def wardrobe_outfits():
+    """(label, part ids, colourway, preset-for-undersuit) in review order: base -> uniforms -> tiers -> roles."""
+    by = {p["id"]: p for p in K.PRESETS}
+    out = [("Base body (CHAR-BODY r002 undersuit)", [], "arctic", None)]
+    out += [(label, [], "arctic", by[rid]) for label, rid in UNIFORMS]
+    out += [(label, ids, cwid, None) for label, ids, cwid in TIER_SETS]
+    out += [(f"Set: {pr['name']}", list(pr["parts"].values()), pr["colourway"], pr) for pr in K.PRESETS]
+    return out
+
+
+def sheet_wardrobe(args, kit, out, variant, rows, name):
+    """One row per outfit, four views per row (front, 3/4, side, back)."""
+    dx, dz = 1.15, 2.15
+    h = len(rows) * dz + 0.6
+    w = 2.5 + len(VIEWS) * dx
+    px = 1500
+    sc, cam, coll = fresh_scene(args, (px, int(px * h / w)))
+    for c, (vname, _yaw) in enumerate(VIEWS):
+        text(vname, (c * dx, 0.6, 0.3), 0.12, coll)
+    for r, (label, ids, cwid, pr) in enumerate(rows):
+        z = -(r + 1) * dz + 0.2
+        text(label.upper(), (-0.75, 0.6, z + 0.85), 0.085, coll, align="RIGHT")
+        for c, (_vname, yaw) in enumerate(VIEWS):
+            Figure(kit, ids, cwid, (c * dx, 0, z), coll, variant=variant, yaw=yaw, preset=pr)
+    aim_front(cam, ((len(VIEWS) - 1) * dx / 2 - 1.2, 0, -h / 2 + 0.5), h, elev=6)
+    render(sc, out / name)
+
+
+def sheet_lineup(args, kit, out, variant, rows, name):
+    dx = 1.0
+    n = len(rows)
+    per = (n + 1) // 2
+    w = per * dx + 0.4
+    sc, cam, coll = fresh_scene(args, (2400, int(2400 * 5.0 / w)))
+    for i, (label, ids, cwid, pr) in enumerate(rows):
+        col, row = i % per, i // per
+        x, z = col * dx, -row * 2.5
+        Figure(kit, ids, cwid, (x, 0, z), coll, variant=variant, yaw=-28, preset=pr)
+        plinth((x, 0, z), coll, r=0.42)
+        text(label.replace("Set: ", "").replace("Uniform: ", "").upper()[:22], (x, 0.6, z - 0.22), 0.055, coll)
+    aim_front(cam, ((per - 1) * dx / 2, 0, -0.35), w, elev=8)
+    render(sc, out / name)
+
+
 # ============================================================================================== MAIN
 def main():
     args = parse_args()
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
     bpy.ops.wm.read_factory_settings(use_empty=True)
-    if args.rig_blend and Path(args.rig_blend).exists():
-        with bpy.data.libraries.load(args.rig_blend) as (src, dst):
-            dst.actions = list(src.actions)
-    kit = Kit(args.bevel)
+    kit = Kit(args.bevel, args.body_blend)
     summary = {"kit": K.KIT_ID, "revision": K.REVISION, "specVersion": K.SPEC_VERSION, "parts": len(kit.parts),
+               "body": kit.body_source,
                "actions": sorted(a.name for a in bpy.data.actions)}
     fit = None
     if args.check or args.export:
@@ -900,6 +1051,13 @@ def main():
             sheet_loadouts(args, kit, out)
         elif s == "poses":
             sheet_poses(args, kit, out)
+        elif s in ("wardrobe", "wardrobe-male", "wardrobe-female"):
+            rows = wardrobe_outfits()
+            for variant in (["male", "female"] if s == "wardrobe" else [s.split("-")[1]]):
+                tag = "masculine" if variant == "male" else "feminine"
+                sheet_wardrobe(args, kit, out, variant, rows[:9], f"wardrobe_{tag}_A_base_uniforms_tiers.png")
+                sheet_wardrobe(args, kit, out, variant, rows[9:], f"wardrobe_{tag}_B_role_sets.png")
+                sheet_lineup(args, kit, out, variant, rows, f"wardrobe_{tag}_lineup.png")
         elif s.startswith("role:"):
             sheet_roles(args, kit, out, [by[s[5:]]], f"{s[5:]}.png")
     if args.export:

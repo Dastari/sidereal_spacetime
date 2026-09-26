@@ -37,7 +37,7 @@ class CrewArmorKitTests(unittest.TestCase):
         self.assertEqual(rep["totalPresets"], 0, rep["zFightPresets"])
 
     def test_hanging_hand_zone_is_clear_of_torso_belt_and_leg_armour(self):
-        hand = {(x, y, z) for x in range(8, 16) for y in range(-3, 5) for z in range(15, 21)}
+        hand = {(x, y, z) for x in range(7, 14) for y in range(-4, 5) for z in range(14, 21)}   # r002 fist + cuff
         for p in self.parts:
             if p.slot in ("chest", "belt", "legs"):
                 for fit, vols in p.fits.items():

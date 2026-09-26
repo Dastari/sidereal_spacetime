@@ -101,7 +101,7 @@ export async function attachCrewArmor(
     m.name === keep || m.name.startsWith(`${keep}_primitive`);
   for (const mesh of [...container.meshes])
     if (mesh.getTotalVertices() > 0 && !wanted(mesh)) {
-      container.removeMesh(mesh);
+      container.meshes.splice(container.meshes.indexOf(mesh), 1);
       mesh.dispose(false, false);
     }
   container.addAllToScene();
