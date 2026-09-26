@@ -48,8 +48,12 @@ def load_kit():
 
 
 K = load_kit()
+sys.path.insert(0, str(HERE))
+import ship_component_art as A  # noqa: E402
+A.install(K)
+THEME = "orion"
 Piece, T, SLOTS, SI = K.Piece, K.T, K.SLOTS, K.SI
-EXPORT_REVISION = "r001"
+EXPORT_REVISION = "r002"
 BEVEL = 0.012
 
 
@@ -62,6 +66,7 @@ def args():
     p.add_argument("--no-glb", action="store_true")
     p.add_argument("--sheets", default="")
     p.add_argument("--samples", type=int, default=32)
+    p.add_argument("--sheet-keys", default="", help="comma list: catalog keys, weapons-top, exploded-ion, exploded-weapons, damage, variants")
     return p.parse_args(argv)
 
 
@@ -713,10 +718,10 @@ INTERIOR = {
     "magazine-ballistic": magazine("ballistic"), "magazine-missile": magazine("missile"),
     "magazine-torpedo": magazine("torpedo"), "shield-generator": shield_generator,
     "life-support": life_support, "air-filter": air_filter, "oxygen-tank": oxygen_tank,
-    "hydroponics": hydroponics, "gravity": gravity, "computer-core": computer_core,
-    "console-navigation": console("navigation"), "console-command": console("command"),
-    "console-fire-control": console("fire-control"), "console-engineering": console("engineering"),
-    "console-sensor": console("sensor"), "crew-bunk": crew_bunk, "warp": warp, "hatch": deck_hatch,
+    "hydroponics": lambda w, d, h: A.hydroponics(K, w, d, h), "gravity": gravity, "computer-core": computer_core,
+    "console-navigation": A.console(K, "navigation"), "console-command": A.console(K, "command"),
+    "console-fire-control": A.console(K, "fire-control"), "console-engineering": A.console(K, "engineering"),
+    "console-sensor": A.console(K, "sensor"), "crew-bunk": crew_bunk, "warp": warp, "hatch": deck_hatch,
 }
 TOP = {"plasma": plasma, "mining-laser": mining_laser, "radar": radar, "scanner": scanner, "radiator": radiator,
        "solar": solar, "drone-bay": drone_bay, "vtol": vtol, "hatch-exterior": hatch_exterior}
@@ -725,23 +730,64 @@ EDGE = {"cargo-door": None, "airlock-exterior": None, "airlock-interior": None}
 KIT_CACHE = K.Kit()
 
 
+WEAPON_KEYS = {"wpn.pd": "pd", "wpn.autocannon": "autocannon", "wpn.laser": "laser", "wpn.railgun": "railgun",
+               "wpn.missile": "missile", "wpn.flak": "flak", "x.plasma": "plasma"}
+UTILITY_KEYS = {"wpn.shield": "shield", "wpn.tractor": "tractor", "wpn.sensor": "sensor", "wpn.clamp": "clamp",
+                "wpn.beacon": "beacon"}
+NO_GREEBLE = ("resonance", "vtol", "console-navigation", "console-command", "console-fire-control",
+              "console-engineering", "console-sensor", "hydroponics", "crew-bunk")
+
+
+def build_parts(component):
+    """(parts, labels) for stacked top mounts (r002 weapons and utility mounts), else None."""
+    base, _, sz = component["art"]["kitKey"].rpartition(".")
+    if base in WEAPON_KEYS:
+        return A.weapon(K, WEAPON_KEYS[base], sz)
+    if base in UTILITY_KEYS:
+        return A.remount(K, UTILITY_KEYS[base], sz)
+    return None
+
+
+def copy_piece(piece, pid=None):
+    q = Piece(pid or piece.id, piece.family, piece.mount, piece.size)
+    q.boxes = list(piece.boxes)
+    return q
+
+
 def build_piece(component):
     """Returns (piece in kit convention, convention, z-centre in texels) for a catalog component."""
     key = component["art"]["kitKey"]
     lo, hi = component["mount"]["envelopeM"]
+    stacked = build_parts(component)
+    if stacked:
+        return A.union(K, "r2." + key, stacked[0]), "top", 0
     if not key.startswith("x."):
         piece = K.kit_piece(KIT_CACHE, key)
         conv = piece.mount                                               # "top" | "face"
         zc = piece.size[2] / 2 if conv == "face" else 0
+        if key.startswith("cannon."):                                    # sponsons get the r002 detail pass
+            piece = A.greeble(K, copy_piece(piece, "r2." + key), key, slots=("primary", "secondary", "accent"))
         return piece, conv, zc
     _, kind, size = key.split(".", 2)
+    detail = kind not in NO_GREEBLE
     if kind in INTERIOR:
         w, d, h = (cells_px(hi[i] - lo[i]) for i in range(3))
-        return INTERIOR[kind](w, d, h), "interior", 0
+        if not detail:
+            return INTERIOR[kind](w, d, h), "interior", 0
+        # build inset so the detail pass stays inside the footprint, then re-centre
+        piece = A.greeble(K, INTERIOR[kind](w - 4, d - 4, h - 2), key, slots=("primary", "secondary"), lights=0.08)
+        piece.boxes = [(x0 + 2, y0 + 2, z0, x1 + 2, y1 + 2, z1, s) for x0, y0, z0, x1, y1, z1, s in piece.boxes]
+        piece.size = (w, d, h)
+        return piece, "interior", 0
     if kind in TOP:
-        return TOP[kind](size), "top", 0
+        piece = TOP[kind](size)
+        if detail:
+            A.greeble(K, piece, key, slots=("primary", "secondary"), lights=0.05)
+        return piece, "top", 0
     if kind in FACE:
         piece = FACE[kind](size)
+        if detail:
+            A.greeble(K, piece, key, slots=("primary", "secondary"), lights=0.05, skip_top=True)
         zc = 0 if kind == "docking-port" else piece.size[2] / 2
         return piece, "face", zc
     if kind == "cargo-door":
@@ -771,7 +817,7 @@ def to_catalog(piece, conv, zc):
 
 # =============================================================================== materials and objects
 def slot_materials():
-    th = K.THEMES["federation"]
+    th = K.THEMES[THEME]
     mats = []
     for i, s in enumerate(SLOTS):
         m = bpy.data.materials.new(f"slot{i}_{s}")
@@ -814,9 +860,27 @@ def boxes_mesh(name, boxes):
     return me
 
 
-def component_object(component, mats, coll, bevel=True):
+def clip_boxes(boxes, envelope):
+    """Clips catalog-frame texel boxes to the catalog envelope (metres). The design envelope is
+    authoritative; clipping only trims detail plates that stand proud of the footprint sides."""
+    lo = [v * 16 for v in envelope[0]]
+    hi = [v * 16 for v in envelope[1]]
+    out = []
+    for x0, y0, z0, x1, y1, z1, s in boxes:
+        a = (max(x0, lo[0]), max(y0, lo[1]), max(z0, lo[2]))
+        b = (min(x1, hi[0]), min(y1, hi[1]), min(z1, hi[2]))
+        if all(b[i] - a[i] > 1e-6 for i in range(3)):
+            out.append((*a, *b, s))
+    return out
+
+
+def catalog_boxes(component):
     piece, conv, zc = build_piece(component)
-    boxes = to_catalog(piece, conv, zc)
+    return clip_boxes(to_catalog(piece, conv, zc), component["mount"]["envelopeM"]), conv
+
+
+def component_object(component, mats, coll, bevel=True):
+    boxes, conv = catalog_boxes(component)
     me = boxes_mesh(component["id"], boxes)
     for m in mats:
         me.materials.append(m)

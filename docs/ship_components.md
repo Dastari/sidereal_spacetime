@@ -1,5 +1,261 @@
 # Ship components
 
+Status: **proposed**. Every value is a proposed design value. Nothing here is owner-approved balance, economy or art.
+
+| Area | State |
+| --- | --- |
+| Catalog data, validators, systems compiler, flight adapter | *Implemented* as pure code |
+| Component GLBs | *Proposal art* |
+| Authority, reducers, live resource simulation, runtime publication | *Not implemented* |
+
+Date: 2026-09-25 · Schema: `sidereal.ship-components.v1` · Catalog revision 1.
+
+This is the ship component catalog: engines, power, thermal, weapons, ammunition, defense, sensors, utility tools, edge modules and interior systems. It has 132 entries. It also covers how components hook up to the power, data, coolant, fuel, air and ammo networks, and how a list of placed components compiles into ship stats and feeds the existing flight compiler. Related documents:
+
+- [Shipyard player builder design](shipyard_player_builder_design.md): hardpoint size classes (§12.8, r006, r007) and the prefab and performance rules (§8, P5).
+- [Game scope](game_scope.md): the utility-network requirements.
+- [IFCS integration](ifcs_integration.md): the flight compiler this feeds.
+
+## Where things live
+
+| Piece | Path |
+| --- | --- |
+| Types, units, frames, catalog validator | `packages/content/src/ship-components.ts` |
+| Canonical tables (TypeScript) | `packages/content/src/ship-components-source.ts` |
+| Checked-in snapshot for tools (Blender, docs, other languages) | `packages/content/src/ship-components.v1.json` |
+| SM/MD/LG balance fits | `packages/content/src/ship-components-reference-fits.ts` |
+| Systems compiler, hardpoint fit, port compatibility, auto-wire, flight and service adapters | `packages/sim/src/ship-systems.ts` |
+| Regenerate the JSON and the tables below (`-- --check` to verify) | `npm run ship-components:export` |
+| Headless Blender GLB exporter and manifest | `scripts/art_library/ship_component_export.py` |
+| r002 builders (turret stacks, palette, detail pass, consoles, damage variants) | `scripts/art_library/ship_component_art.py` |
+| Catalog sheets, exploded views, damage and variant rows, network diagram renders | `scripts/art_library/ship_component_sheets.py`, `ship_component_views.py`, `ship_component_network.py` |
+| Exported proposal art (LFS) | `assets/art-library/ship-components/r002/glb/<id>.glb` and `manifest.json` (current); `r001/` is kept as history |
+
+A vitest test keeps the TypeScript tables and the JSON snapshot identical.
+
+## Model
+
+**Ids.** Ids take the form `kind[.variant].size`, for example `ion-drive.md`, `ion-drive.salvaged.xl`, `magazine.missile.lg` or `cargo-door.4m`. They name reusable designs. A placed component has its own placement id; reusing a design never merges gameplay identities.
+
+**Size classes.** Hardpoint cells are SM 1×1, MD 2×2, LG 3×3 and XL 4×4 m.
+- XL propulsion is rear-only (`mount.rearOnly`).
+- A component may sit on a larger hardpoint through an adapter, which raises a warning. It may never sit on a smaller one.
+- Edge sockets are sized by width: SM 2 m, MD 4 m, LG 6 m and XL 8 m. The cargo doors are 2, 4 and 6 m.
+
+**Frames.** All frames are part-local, in metres: +X starboard, +Y forward and +Z up.
+
+| Mount | Origin | Orientation |
+| --- | --- | --- |
+| Face, rear, edge | Hardpoint centre on the hull face | The part stands out along −Y. Thrust acts along +Y. |
+| Top | Hardpoint centre on the roof | The part rises along +Z. Barrels and emitters face +Y. |
+| Interior | Footprint centre on the floor | Access side is +Y. |
+
+- A placement applies the optional mirror first, then counter-clockwise quarter turns: rear 0, starboard 1, fore 2, port 3. This matches `transformFlightVector`.
+- `mount.frame` records the frame a part is authored in.
+- `shipMountRotation(frame, socket)` re-mounts a part onto another socket class, for example a top turret on a hull face or a bottom tractor. It applies before the yaw.
+- In the GLBs, part (x, y, z) becomes glTF (x, z, −y).
+
+**Per-component stats.**
+
+| Group | Fields |
+| --- | --- |
+| Mount | Sockets, cells, envelope, clearance (plume, fire arc, beam, sweep or door swing) |
+| Physical | Mass; integrity (hp, flat armour, destroyed effect, explosion damage) |
+| Crew | Operators, station role; automation `passive`, `computer` (needs a computer-core control slot) or `manual` (needs an occupied console of that role); berths |
+| Power | idle / active / peak kW; generation kW; storage kWh; max discharge and charge kW |
+| Heat | idle / active / peak kW; rejection kW; heat-sink storage MJ |
+| Fluids | Coolant demand and supply L/s; fuel idle and active L/s; tank litres; air supply m³/s; crew supported; O₂ reserve crew-hours |
+| Data | kbit/s demand and supply; control slots provided and used |
+| Type-specific block | `propulsion`, `weapon`, `magazine`, `shield`, `armor`, `sensor`, `tool`, `access`, `control` or `gravity` |
+| Economy | Cost, build time and tech tier. These are placeholders. |
+
+**Damage states.** These are catalog-wide. A component is pristine at ≥75 % hp and scuffed at ≥50 %; both run at full performance. At >0 % it is damaged and runs at 50 %. At 0 it is destroyed.
+
+## Networks and ports
+
+Every rated flow has a typed port. `validateShipComponentCatalog` rejects any component that, for example, consumes power without a `power-in` port or runs hot without a coolant input.
+
+| Channel | Catalog unit | construction-services quantity | Medium / connector | Sheet colour |
+| --- | --- | --- | --- | --- |
+| `power` | kW | J/s (×1000) | `electric-dc` / `pwr-std` | red |
+| `data` | kbit/s | byte/s (×125) | `optical` / `dat-std` | blue |
+| `coolant` | L/s | kg/s (×1.04) | `glycol-water` / `cool-std` | white |
+| `fuel` | L/s | kg/s (×0.8) | `fuel` / `fuel-std` | amber |
+| `ventilation` (air) | m³/s | mol/s (×41.6) | `air` / `atm-std` | yellow |
+| `ammo` | rounds/s | not routed yet | `ballistic` / `missile` / `torpedo`, `feed-std` | violet |
+
+**Port definitions.**
+- Each port has an id, channel, direction (`in`, `out` or `both`), capacity, medium, connector family, part-local position and unit normal.
+- External mounts put their ports on the mount plane with the normal pointing into the hull. Interior parts put them in the floor utility layer with the normal −Z.
+- Capacities cover the rating they serve: power-in ≥ peak, coolant-in ≥ demand, fuel-in ≥ 1.25 × active flow.
+- Docking ports add `shore-*` pass-through ports (`both`).
+
+**Connections.** Connections are explicit logical links from an `out`/`both` port to an `in`/`both` port. Channel, medium and connector family must match, and every input has exactly one feeder.
+
+**Bus mode.** When connections are omitted, `compileShipSystems` treats each channel as one ideal ship bus. This is a design-time estimate.
+
+**Auto-wiring.** `autoWireShipComponents` proposes deterministic links. It prefers primary suppliers (generators and batteries, pumps, tanks, cores, life support), then sources with spare capacity, then the nearest placed port. It falls back to flow-through outlets only for loop returns. All three reference fits auto-wire into explicit networks with no errors.
+
+**Physical routes.** Routes, feedthroughs and pressure boundaries remain construction-services work. `shipComponentServicePorts` converts placed ports to that module's lattice ports.
+
+## How the numbers were chosen
+
+The anchors are the existing IFCS lab values:
+
+| Anchor | Value |
+| --- | --- |
+| Wayfarer mass | 12 t |
+| Main thrust | 36 kN |
+| Profile max acceleration | 3 m/s² |
+| Flight computer | 500 W |
+| Fuel density | 0.8 kg/L |
+| Flight speeds | Tens of m/s |
+
+Ships therefore land between 2 and 4 m/s² forward. Fighters are hardest (≈4 m/s²); frigates and corvettes sit around 2–2.6 m/s².
+
+**Propulsion.**
+
+| Family | Thrust SM / MD / LG / XL | Character |
+| --- | --- | --- |
+| Ion drive | 11 / 24 / 50 / 95 kN | Electric. About 5 kW per kN, heat ≈35 % of draw, very low propellant. The effective Isp is derived, not tuned. |
+| Thrust block | 16 / 34 / 70 / 130 kN | About 45 % more thrust per size, about 7× the propellant, little power, hotter. |
+| Salvaged ion | 85 % of ion thrust | 120 % power, 150 % heat, 70 % hp and 40 % cost. Burns on destruction. |
+| Aurelian resonance | Ion ×1.15 | Propellant-free, cooler, explodes when destroyed. Tech tier 4. |
+| RCS SM / MD | 3 / 9 kN | Both fit in one cell. |
+| VTOL, warp | — | Flagged `future`: vertical and jump gameplay need their own designs (AGENTS.md). |
+
+**Power.**
+- Reactors produce 250 / 700 / 1800 kW. Waste heat is about 20 % of the power delivered, and fuel scales with load.
+- Batteries cover sustained deficits (20 / 60 / 160 kWh).
+- Capacitors hold pulse energy (0.4 / 1.2 / 3.5 kWh at up to 7.5 MW).
+- Pulse weapons (railgun, plasma) need a bank that holds one shot per mount. The reactor pays their average draw.
+
+**Thermal.**
+- 1 L/s of coolant carries 25 kW, which is a water-glycol loop with about a 6 K rise.
+- Components with more than 5 kW of active heat need coolant equal to active heat / 25.
+- Radiators reject 60 / 160 / 400 kW, but only up to what the pumps move. The effective rejection is min(radiators, pumps × 25 kW) + hull passive.
+- Heat sinks buffer deficits: time to overheat = storage / deficit.
+
+**Weapons.**
+- Energy weapons draw energy per shot × shots per second while firing. Heat is 70 % of that for lasers, 45 % for railguns and 85 % for plasma.
+- Ballistic and missile weapons feed from magazines. Capacity is by mass (ammo types list kg per round), and feed rate is limited by the magazine's ammo port.
+- Ranges run from about 600 m (point defense) to 7 km (torpedo). The target and sensor band is 3–10 km.
+
+**Modes.** The compiler evaluates four modes:
+
+| Mode | Loads |
+| --- | --- |
+| `cruise` | Forward main engines, maneuvering thrusters, sensors and life support active; weapons and tools idle |
+| `combat` | Adds weapons and shields; all engines active |
+| `industry` | Tools active, main engines idle |
+| `peak` | Everything at peak |
+
+**Brownout.** Under a deficit, batteries cover up to their discharge limit. Beyond that, loads are supplied in priority order: interior/life support, then thermal/structure/power/ammunition, then sensors, then shields, then propulsion, then weapons, then tools. Starved engines lower the actuator `supply` passed to `compileFlightDefinition`, so brownouts reduce the real flight envelope.
+
+**Balance fits.** The fits below close their cruise budgets. The fighter and corvette are intentionally heat-limited in combat, at 5–7 minutes. The corvette runs combat partly on its battery (about 23 minutes). The frigate needs its capacitor bank for two railguns.
+
+## Validation rules (`compileShipSystems`)
+
+Errors:
+- unknown, duplicate or future components (unless `allowFuture`)
+- missing, unknown, occupied or misaligned hardpoints; socket, size, footprint, rear-only or edge-width violations
+- incompatible or duplicate-input connections; unconnected consumer ports; networks with consumers but no supply
+- no generation, cruise brownout or unsustainable cruise heat
+- fuel burners without a tank
+- computer-controlled parts without a core, or control slots exceeded
+- manual components without their console, or thrust without a navigation console
+- life support below the minimum crew
+- ammunition weapons without magazine stock
+- pulse weapons without enough capacitors
+- shield generators without an emitter
+
+Warnings:
+- combat brownout
+- pump-limited radiators and coolant shortfall
+- combat overheating in under 2 minutes
+- data bandwidth exceeded
+- berths short
+- ammo feed limited
+- emitters without a generator, or a shield bubble smaller than half the hull length
+- undersized adapters
+
+## Art (proposal r002; r001 kept as history)
+
+r002 answers the first independent art review (VERIFY batch 1, 10/27). It is still a proposal awaiting review.
+
+**Turret stack.** Every turret weapon and utility mount (PD, twin autocannon, laser, railgun, missile pod, flak, plasma, shield, tractor, sensor, clamp, beacon) uses the reference stack:
+1. hardpoint connector
+2. two-step bevelled octagonal plinth with inset lights
+3. rotation ring
+4. yoke
+5. housing
+6. real payload:
+   - twin long barrels with recoil sleeves and muzzle brakes
+   - a rail barrel about 2× the housing length
+   - a cooling jacket with a lens
+   - quad or six-barrel clusters
+   - tube caps
+   - a plasma emitter with cooling rings
+7. extras: ammo drum, targeting module or power junction
+
+The parts stay separate so every weapon has an exploded view.
+
+**Palette.** The `orion` theme, which is also the GLB base colour, uses:
+- lavender-grey body
+- charcoal-navy darks
+- crimson accent
+- saturated cyan and amber emissives at lower strength, so they no longer clip to white
+
+The other themes (federation, riftjack, aurelian) swap through the same nine slots.
+
+**Detail pass.** A deterministic pass adds panel plates with 1-texel seams, corner bolts, vents and a few indicator lights. It runs on exposed faces of every non-engine builder. Engines keep the r001 design, which the review rated as the strongest part.
+
+**Interiors.**
+- Consoles have chunky desks, big two-tone multi-cell screens with UI bars, and chairs.
+- Hydroponics has voxel plants. The plants use the accent slot, and the renders theme it green.
+
+**Presentation only (renders, not exported GLBs):**
+- a damage-state row: pristine, scuffed, damaged, destroyed
+- theme variant rows
+- a 1 m grid and a 1.8 m crew figure for scale
+
+**Envelope clipping.** The exporter clips art to the catalog envelope, which is authoritative. The catalog heights and forward reach were updated to the measured r002 art.
+
+### Exporter
+
+
+`ship_component_export.py` builds one GLB per component and size (128 files; armour plates have no mesh because armour is voxel ship structure). It works from the studless brick kit in `scripts/art_library/ship_kit_prototype.py` plus new builders for kinds the kit lacked:
+
+- torpedo launcher, plasma turret, radar array, scanner mast, salvage arm, mining laser, drone bay
+- reactor, battery, capacitor, fuel tank, radiator, coolant pump, heat sink
+- magazines, shield generator, life support, air filter, O₂ tank, hydroponics, gravity unit, computer core, consoles, bunk
+- 2/4/6 m cargo doors, airlocks, hatches, docking ports
+- resonance drive, VTOL, warp
+
+What each GLB contains:
+- Nine material slots in fixed order: `slot0_primary`, `slot1_secondary`, `slot2_accent`, `slot3_trim`, `slot4_metal`, `slot5_dark`, `slot6_emit_a`, `slot7_emit_b`, `slot8_glass`. glTF keeps only the slots a mesh uses; the manifest lists them.
+- The applied brick bevel.
+- `port.<id>` nodes carrying channel, direction and capacity extras.
+- Root extras with the component id and schema.
+
+The manifest records the sha256, bytes, triangle count, measured bounds and envelope fit for each GLB. Every mesh fits its catalog envelope within the bevel tolerance.
+
+Excluded from the GLBs: plumes, labels, decals, damage-state variants and the detail bump, which does not survive glTF.
+
+Runtime publication is separate and belongs to prefab ship integration. None of this art is owner-approved.
+
+## Gaps
+
+- **Not built yet:**
+  - authority and reducers
+  - live fuel and energy deduction
+  - pressure, voltage or thermal solvers
+  - drones, missiles and mines as entities
+  - component damage application
+  - refit jobs and costs
+- **Networks** are logical links. The ammo feed is not a routed channel.
+- **Stats only, no art:** armour classes carry stats but are voxel structure with no component GLB. Future entries (VTOL, warp) are placeholders.
+
 <!-- ship-components:generated:begin -->
 Generated by `npm run ship-components:export` from catalog revision 1: 132 components (propulsion 21, power 15, thermal 8, weapon 23, ammunition 6, defense 10, sensor 9, utility 12, structure 9, interior 19).
 
@@ -12,7 +268,7 @@ Generated by `npm run ship-components:export` from catalog revision 1: 132 compo
 | Total mass t | 8.0 | 27.9 | 100.6 |
 | Thrust fwd / rev / lat kN | 32 / 6 / 6 | 59 / 50 / 18 | 258 / 86 / 36 |
 | Accel fwd / rev / lat m/s² (flight envelope) | 4.01 / 0.75 / 0.75 | 2.11 / 1.79 / 0.64 | 2.56 / 0.85 / 0.36 |
-| Yaw accel rad/s² | 0.259 | 0.170 | 0.040 |
+| Yaw accel rad/s² | 0.256 | 0.170 | 0.040 |
 | Generation kW / battery kWh | 250 / 20 | 700 / 60 | 2500 / 160 |
 | Power cruise: demand kW (balance) | 88.06 (+161.94) | 533.27 (+166.73) | 1516.4 (+983.6) |
 | Power combat: demand kW (balance) | 220.06 (+29.94) | 854.77 (-154.77, battery 1396 s) | 2537.4 (-37.4, battery 15402 s) |

@@ -28,7 +28,7 @@ import {
 export const SHIP_COMPONENT_CATALOG_ID = "ship-components-v1";
 export const SHIP_COMPONENT_CATALOG_REVISION = 1;
 /** Art-library revision directory that holds the exported component GLBs. */
-export const SHIP_COMPONENT_ART_REVISION = "r001";
+export const SHIP_COMPONENT_ART_REVISION = "r002";
 export const shipComponentGlbPath = (id: string) =>
   `assets/art-library/ship-components/${SHIP_COMPONENT_ART_REVISION}/glb/${id}.glb`;
 
@@ -220,8 +220,9 @@ function build(spec: KindSpec): ShipComponentDefinition[] {
         capacity: Math.max(coolantDemand, through),
       });
     const pump = at(spec.coolantSupplyLps, i);
-    if (pump > 0)
-      ports.push({ id: "coolant-out", channel: "coolant", direction: "out", capacity: pump });
+    // Pumps drive the loop; flow-through parts (radiators, sinks) pass it on.
+    if (pump > 0 || through > 0)
+      ports.push({ id: "coolant-out", channel: "coolant", direction: "out", capacity: Math.max(pump, through) });
     const fuelActive = at(spec.fuel?.active, i),
       fuelCap = at(spec.fuel?.capacityL, i);
     if (fuelActive > 0)
@@ -846,8 +847,8 @@ const weaponKinds: WeaponKind[] = [
     name: "Point-defense turret",
     kit: "wpn.pd",
     sizes: SMMD,
-    heightScale: 0.95,
-    forward: 0.16,
+    heightScale: 1.19,
+    forward: 0.29,
     mass: [180, 420],
     hp: [90, 180],
     power: { idle: [1, 2], active: [6, 12] },
@@ -878,8 +879,8 @@ const weaponKinds: WeaponKind[] = [
     name: "Twin autocannon",
     kit: "wpn.autocannon",
     sizes: SML,
-    heightScale: 1.13,
-    forward: 0.4,
+    heightScale: 1.32,
+    forward: 0.73,
     mass: [260, 620, 1400],
     hp: [120, 260, 460],
     power: { idle: [1, 2, 4], active: [6, 12, 22] },
@@ -910,8 +911,8 @@ const weaponKinds: WeaponKind[] = [
     name: "Laser cannon",
     kit: "wpn.laser",
     sizes: SML,
-    heightScale: 0.95,
-    forward: 0.07,
+    heightScale: 1.13,
+    forward: 0.44,
     mass: [300, 700, 1600],
     hp: [110, 240, 420],
     power: {
@@ -947,8 +948,8 @@ const weaponKinds: WeaponKind[] = [
     name: "Railgun mount",
     kit: "wpn.railgun",
     sizes: MDLG,
-    heightScale: 0.82,
-    forward: 0.6,
+    heightScale: 0.94,
+    forward: 0.73,
     mass: [1200, 2600],
     hp: [300, 520],
     power: {
@@ -987,7 +988,7 @@ const weaponKinds: WeaponKind[] = [
     name: "Missile pod",
     kit: "wpn.missile",
     sizes: SML,
-    heightScale: 1.19,
+    heightScale: 1.38,
     forward: 0,
     mass: [350, 800, 1700],
     hp: [110, 230, 400],
@@ -1060,8 +1061,8 @@ const weaponKinds: WeaponKind[] = [
     name: "Flak cannon",
     kit: "wpn.flak",
     sizes: SML,
-    heightScale: 1.07,
-    forward: 0.13,
+    heightScale: 1.25,
+    forward: 0.3,
     mass: [240, 560, 1250],
     hp: [110, 230, 400],
     power: { idle: [1, 2, 3], active: [5, 9, 15] },
@@ -1091,8 +1092,8 @@ const weaponKinds: WeaponKind[] = [
     name: "Plasma turret",
     kit: "x.plasma",
     sizes: MDLG,
-    heightScale: 0.91,
-    forward: 0.05,
+    heightScale: 1.1,
+    forward: 0,
     mass: [800, 1800],
     hp: [240, 420],
     power: {
@@ -1290,7 +1291,7 @@ const shieldEmitterSpec: KindSpec = {
   family: "defense",
   sizes: SML,
   sockets: ["top", "face", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.13)),
+  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.38)),
   massKg: [60, 150, 380],
   hp: [50, 110, 200],
   armor: [1, 2, 3],
@@ -1362,7 +1363,7 @@ const dishSpec: KindSpec = {
   family: "sensor",
   sizes: SML,
   sockets: ["top", "face", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.19)),
+  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.44)),
   clearance: (_i, s) => ({ kind: "sweep", lengthM: SHIP_SIZE_CELLS[s] * 0.6, arcDeg: 360 }),
   massKg: [120, 300, 700],
   hp: [60, 120, 220],
@@ -1422,7 +1423,7 @@ const beaconSpec: KindSpec = {
   family: "sensor",
   sizes: SMMD,
   sockets: ["top"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.45)),
+  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.69)),
   massKg: [70, 180],
   hp: [40, 90],
   crew: { automation: "computer" },
@@ -1444,7 +1445,7 @@ const tractorSpec: KindSpec = {
   family: "utility",
   sizes: SML,
   sockets: ["top", "face", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.07)),
+  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.32)),
   clearance: (i) => ({ kind: "beam", lengthM: [120, 220, 350][i], arcDeg: 30 }),
   massKg: [250, 650, 1500],
   hp: [90, 190, 340],
@@ -1496,7 +1497,7 @@ const clampSpec: KindSpec = {
   family: "utility",
   sizes: MDLG,
   sockets: ["top", "face", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.1)),
+  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.22)),
   massKg: [500, 1200],
   hp: [240, 420],
   armor: [6, 8],
