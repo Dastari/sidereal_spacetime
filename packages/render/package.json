@@ -8,6 +8,7 @@
     "./assembly-editor": "./src/assembly-editor.ts",
     "./equipment": "./src/equipment/index.ts",
     "./crew/appearance": "./src/crew/appearance.ts",
+    "./crew/armor-attach": "./src/crew/armor-attach.ts",
     "./native-stair-scene": "./src/native-stair-scene.ts",
     "./layout-native-floors": "./src/layout-native-floors.ts",
     "./construction-refit-attachments": "./src/construction-refit-attachments.ts",

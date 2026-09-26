@@ -122,6 +122,14 @@ def slot_material(name, slot, hexcol, review=True):
 
 
 # ============================================================================================ BUILD
+def placeholder_materials():
+    mats = []
+    for sl in K.SLOTS:
+        m = bpy.data.materials.get(f"slot.{sl}") or bpy.data.materials.new(f"slot.{sl}")
+        mats.append(m)
+    return mats
+
+
 DIRS = [((1, 0, 0), 0), ((-1, 0, 0), 0), ((0, 1, 0), 1), ((0, -1, 0), 1), ((0, 0, 1), 2), ((0, 0, -1), 2)]
 
 
@@ -160,8 +168,8 @@ def mesh_volume(cells, name):
             fm.append(K.SI[s])
     me = bpy.data.meshes.new(name)
     me.from_pydata(verts, [], faces)
-    for _ in K.SLOTS:
-        me.materials.append(None)
+    for m in placeholder_materials():        # real slot materials so joins keep per-slot indices
+        me.materials.append(m)
     me.polygons.foreach_set("material_index", fm)
     bm = bmesh.new()
     bm.from_mesh(me)
@@ -179,7 +187,7 @@ def bevelled_object(name, cells, bone, coll, bevel):
     if bevel > 0:
         md = ob.modifiers.new("plate_bevel", "BEVEL")
         md.width, md.segments, md.limit_method, md.angle_limit = bevel, 2, "ANGLE", math.radians(40)
-        md.use_clamp_overlap, md.harden_normals, md.miter_outer = True, True, "MITER_ARC"
+        md.use_clamp_overlap = True       # (MITER_ARC / harden_normals leave stray vertices at the origin)
         dg = bpy.context.evaluated_depsgraph_get()
         me2 = bpy.data.meshes.new_from_object(ob.evaluated_get(dg), preserve_all_data_layers=True, depsgraph=dg)
         old = ob.data
@@ -530,7 +538,7 @@ def setup(sc, samples, res):
     sc.render.engine = "BLENDER_EEVEE_NEXT"
     sc.render.resolution_x, sc.render.resolution_y = res
     sc.eevee.taa_render_samples = samples
-    for attr, val in (("use_shadows", True), ("use_raytracing", True), ("use_fast_gi", True), ("fast_gi_distance", 0.4)):
+    for attr, val in (("use_shadows", True), ("use_raytracing", False)):
         if hasattr(sc.eevee, attr):
             setattr(sc.eevee, attr, val)
     w = sc.world or bpy.data.worlds.new("World")

@@ -304,6 +304,9 @@ def chest_vols(c, w, tier, style):
     if tier >= 1:
         ch.box(c - 3, fy + ft, 33, c - 1, fy + ft + 1, 34, EM if tier >= 2 else AC)       # status light
     if tier >= 2:
+        ch.paint(-A, -4, 30, A, 4, 31, EM)                                                  # glowing side vents
+        ch.paint(-c + 1, fy + ft - 1, 31, c - 1, fy + ft, 32, EM)                           # plate split glow
+        ch.paint(-1, by - 1, 29, 1, by, 33, EM)                                             # back spine glow
         ch.box(-4, fy + ft, 29, 4, fy + ft + 1, 30, EM)                                     # light bar
         ch.box(-c + 1, fy + ft, 33, -c + 3, fy + ft + 1, 34, M)                             # bolts
         sp.box(-3, fy + 1, 24, 3, fy + 2, 25, EM)                                           # belly light strip
@@ -381,18 +384,22 @@ def shoulder_vols(tier, style):
     low = 31 - (tier >= 2)
     ua.box(9, y0, low, x1, y1, 36, P).chamfer_outer(x1, y0, y1, low, 36)          # cap (inner face in the deltoid)
     ua.box(8, y0, 36, x1, y1, 37, P).box(7, -4, 36, 8, 4, 37, P)                   # top row over the deltoid
-    ua.box(10, y0 + 1, 37, x1 - 1, y1 - 1, 38 + (tier >= 2), S2)                   # crown beside the head
+    dz = 35 if tier >= 2 else 36                                                   # (light caps hug the deltoid)
+    ua.cut(x1 - 1, y0, dz, x1, y1, 37)                                             # stepped dome: outer edge
+    ua.cut(9, y0, dz, x1, y0 + 1, 37).cut(9, y1 - 1, dz, x1, y1, 37)               # front/back edges
+    ua.box(10, y0 + 2, 37, x1 - 2, y1 - 2, 38 + (tier >= 2), S2)                   # crown beside the head
     ua.box(9, y0 - (tier >= 3), low - 1, x1 + 1, y1 + (tier >= 3), low, S2)        # rim
     ua.box(x1, -2, low + 1, x1 + 1, 2, low + 2, EM)                                # side light
     if tier >= 2:
-        ua.box(x1, y0 + 1, 34, x1 + 1, y1 - 1, 35, EM)                             # light strip
+        ua.box(x1, y0 + 1, 33, x1 + 1, y1 - 1, 34, EM)                             # light strip
+        ua.box(10, y1, 32, x1 - 1, y1 + 1, 33, EM).box(10, y0 - 1, 32, x1 - 1, y0, 33, EM)   # front/back glow
         ua.box(x1, y0 + 1, 35, x1 + 1, y0 + 2, 36, M).box(x1, y1 - 2, 35, x1 + 1, y1 - 1, 36, M)   # bolts
     if tier >= 3:
         ua.box(x1, y0 + 1, low, x1 + 1, y1 - 1, 33, P).paint(x1, y0 + 1, low, x1 + 1, y1 - 1, low + 1, D)
         ua.box(x1 - 3, y0, 39, x1, y1, 40, S2)                                     # ridge
         ua.box(x1 + 1, y0 + 1, low + 1, x1 + 2, y0 + 2, low + 2, M).box(x1 + 1, y1 - 2, low + 1, x1 + 2, y1 - 1, low + 2, M)
     if style == "flight":
-        ua.box(x1, -2, 32, x1 + 1, 2, 34, AC).box(x1 + 1, -1, 32, x1 + 2, 1, 33, EM)   # mission patch
+        ua.box(x1, -2, 31, x1 + 1, 2, 33, AC).box(x1 + 1, -1, 31, x1 + 2, 1, 32, EM)   # mission patch
     return sided({"upper_arm.R": ua})
 
 
@@ -405,13 +412,15 @@ def glove_vols(tier, style):
     hd.box(8, -4, 14, 16, 5, 21, palm).chamfer_outer(16, -4, 5, 14, 21)        # fist (2-vox blocks)
     hd.paint(8, -4, 14, 16, 5, 16, S2 if tier < 2 else palm)                   # finger row
     for y in (-2, 0, 2):
-        hd.paint(8, y, 14, 16, y + 1, 16, D)                                    # finger grooves
+        hd.paint(8, y, 15, 16, y + 1, 16, D).cut(8, y, 14, 16, y + 1, 15)       # finger grooves (stepped tips)
     hd.box(9, 5, 16, 12, 6, 20, palm)                                           # thumb (front)
     hd.box(16, -2, 16, 17, 3, 20, P)                                            # back-of-hand plate
     hd.paint(8, -4, 19, 16, 5, 21, P if tier else S2)                           # cuff band
     if tier >= 1:
         hd.box(16, -3, 15, 17, 4, 16, M)                                        # knuckle bar
         hd.box(17, -1, 17, 18, 2, 19, EM if tier >= 2 else AC)
+    if tier >= 2:
+        hd.paint(8, -4, 19, 16, 5, 20, EM)                                      # glowing cuff seam
     if tier >= 3:
         hd.box(9, 6, 17, 14, 7, 20, P).box(16, -3, 20, 17, 4, 21, EM)           # knuckle guard + wrist glow
     if tier >= 1 or style == "work":
@@ -452,7 +461,8 @@ def boot_vols(tier, style):
             sh.paint(2, 4, z, 7, 5, z + 1, D)                                   # laces
         to.paint(2, 5, 3, 7, 8, 4, D)
     if tier >= 2:
-        sh.box(9, -2, 5, 10, 2, 6, EM)                                          # ankle light strip
+        sh.box(9, -2, 5, 10, 2, 6, EM).paint(0, 4, top - 1, 9, 5, top, EM)     # ankle light + front cuff glow
+        to.paint(1, 8, 2, 8, 9, 3, EM)                                          # toe cap light
         to.box(1, 9, 0, 8, 10, sole + 1, M)                                     # toe guard
         ft.box(9, -2, sole, 10, 2, sole + 2, M)                                 # ankle bolt
     if tier >= 3:
@@ -483,7 +493,8 @@ def legs_vols(tier, style):
     sh.box(2, 6, 8, 7, 7, 11, S2)                                               # guard boss
     if tier >= 2:
         sh.box(3, 7, 9, 6, 8, 10, EM)
-        th.box(1, 4, 12, 8, 5, 17, P).paint(1, 4, 14, 8, 5, 15, D)             # thigh front plate
+        th.box(1, 4, 12, 8, 5, 17, P).paint(1, 4, 14, 8, 5, 15, EM)            # thigh front plate + glow seam
+        sh.paint(1, 5, 9, 8, 6, 10, EM)
         th.box(8, -3, 10, 9, 4, 14, P).paint(8, -3, 12, 9, 4, 13, D)           # outer plate below the hand
         th.box(9, -1, 11, 10, 1, 12, EM)
     else:
@@ -529,7 +540,7 @@ def belt_vols(c, w, tier, style):
         p.box(x0, -7, 19, x0 + 4, -5, 23, S2).paint(x0, -7, 22, x0 + 4, -5, 23, P)
     p.box(-2, -7, 18, 2, -5, 23, S2).paint(-2, -7, 22, 2, -5, 23, P)          # back pouch
     if tier >= 2:
-        p.paint(-8, 6, 20, 8, 7, 21, EM)                                        # front glow line
+        p.paint(-8, 6, 20, 8, 7, 21, EM).paint(-8, 6, 22, 8, 7, 23, EM)         # front glow lines
     if style == "tool":
         p.box(8, -7, 11, 9, -6, 21, M).box(8, -8, 11, 9, -5, 13, M)             # wrench behind the hip
         p.box(-9, -7, 12, -8, -6, 20, AC).box(-9, -7, 20, -8, -6, 22, D)        # screwdriver
@@ -572,6 +583,8 @@ def back_vols(kind, tier):
         if tier >= 2:
             p.paint(-W, yb, bot, W, b0, bot + 1, M)
             p.box(W - 3, yb - 2, top - 6, W - 1, yb - 1, top - 4, EM)                   # glow panel
+            p.paint(-W + 1, yb - 1, bot + 2, -W + 2, yb, top - 3, EM).paint(W - 2, yb - 1, bot + 2, W - 1, yb, top - 3, EM)
+            p.paint(-W, yb, top - 2, W, yb + 1, top - 1, EM)                             # lid light edge
         if tier >= 3:
             p.box(-W - 1, yb - 1, bot - 1, W + 1, b0 - 1, bot, D)
             p.box(-W + 1, yb - 2, bot + 6, W - 1, yb - 1, bot + 7, EM)                  # light bar
@@ -583,7 +596,8 @@ def back_vols(kind, tier):
             x0, x1, yb = cx - r, cx + r, b0 - 2 * r
             p.box(x0, yb, 25, x1, b0, 35, S2).chamfer_z(x0, yb, x1, b0, 25, 35)          # tank
             p.box(x0 + 1, yb + 1, 35, x1 - 1, b0 - 1, 37, M)                              # valve
-            p.paint(x0, yb, 27, x1, b0, 28, AC).paint(x0, yb, 33, x1, b0, 34, AC)         # bands
+            band = EM if twin else AC
+            p.paint(x0, yb, 27, x1, b0, 28, band).paint(x0, yb, 33, x1, b0, 34, band)     # bands
             p.box(cx - 1, yb - 1, 29, cx + 1, yb, 32, EM)                                 # gauge window
         p.box(-6 if twin else -4, b0 - 1, 26, 6 if twin else 4, b0, 35, D)               # frame plate
         p.box(-1, b0 - 5, 24, 1, b0 - 1, 25, D)                                          # hose manifold
@@ -593,7 +607,7 @@ def back_vols(kind, tier):
         depth = 5 if tier < 3 else 6
         p.box(-W + 2, b0 - depth, 25, W - 2, b0, 36, P).chamfer_z(-W + 2, b0 - depth, W - 2, b0, 25, 36)   # fuel core
         p.box(-W + 3, b0 - depth - 1, 27, W - 3, b0 - depth, 34, S2)
-        p.box(-1, b0 - depth - 2, 30, 1, b0 - depth - 1, 33, EM)
+        p.box(-1, b0 - depth - 2, 27, 1, b0 - depth - 1, 34, EM)                          # core light column
         for sx in (-1, 1):                                                                 # twin thrusters
             x0 = W - 3 if sx > 0 else -W
             x1 = x0 + 3
@@ -601,7 +615,8 @@ def back_vols(kind, tier):
             p.paint(x0, b0 - depth + 1, 33, x1, b0 - 1, 35, AC)
             p.box(x0, b0 - depth + 1, 20, x1, b0 - 1, 23, M)                               # nozzle bell
             p.box(x0 + 1, b0 - depth + 2, 19, x1 - 1, b0 - 2, 20, EM)                      # hot throat
-            p.paint(x0, b0 - depth + 1, 29, x1, b0 - depth + 2, 30, EM)                    # side glow
+            p.paint(x0, b0 - depth + 1, 29, x1, b0 - 1, 30, EM)                            # thruster glow ring
+            p.paint(x0, b0 - depth + 1, 25, x1, b0 - 1, 26, EM)
             ex.append(("chest", ((x0 + x1) / 2, (b0 - depth + 1 + b0 - 1) / 2, 19), 1.5))
         if tier >= 3:
             p.box(-W - 1, b0 - 3, 30, -W, b0 - 1, 36, D).box(W, b0 - 3, 30, W + 1, b0 - 1, 36, D)   # fins
