@@ -36,7 +36,7 @@
 - **Authority PR:** `feat/ship-removal-operator-tools` has been reviewed and merged into `release/live-authority-20260921`, or the coordinator explicitly uses the PR head.
 - **Owner's starter pick:** Wren (`fed.s.wren`), chosen 2026-09-26. Build the candidates with the Wren backports stacked on the removal PRs:
   - `feat/wren-live-backport` on top of `feat/ship-removal-operator-tools`;
-  - `feat/wren-client-backport` on top of `feat/ship-removal-client`.
+  - `feat/wren-client-backport` on top of `feat/ship-removal-client`, then `feat/wren-client-render` (#31, the dressed Wren view) on top of that.
 
   In step 2 and step 9 below, diff against those branch heads instead of the plain removal branches. **Never** assign the legacy stand-in `legacy-wayfarer-r002` on live.
 - **Timing:** choose a quiet window. Connected players see their ship disappear immediately at step 7.
@@ -174,14 +174,20 @@ Do **not** expect `world_system.last_simulation_tick` to keep advancing. `stepSh
 Build from the live client source plus the client PR only:
 
 ```sh
-cd /root/sidereal_spacetime && git diff origin/release/live-client-20260922 origin/feat/wren-client-backport \
-  > /root/sidereal-scratch/ship-removal-client.patch
+cd /root/sidereal_spacetime && git diff origin/release/live-client-20260922 origin/feat/wren-client-render \
+  -- . ':!assets' > /root/sidereal-scratch/ship-removal-client.patch
 cp -a /root/sidereal-shadow-release-20260922 /root/sidereal-ship-removal-client-candidate
 cd /root/sidereal-ship-removal-client-candidate
-patch -p1 --dry-run < /root/sidereal-scratch/ship-removal-client.patch && patch -p1 < /root/sidereal-scratch/ship-removal-client.patch
+git apply --check /root/sidereal-scratch/ship-removal-client.patch && git apply /root/sidereal-scratch/ship-removal-client.patch
+# The 217 ship-kit GLBs are LFS objects; copy real bytes from an LFS-smudged checkout of the branch.
+git -C /root/sidereal_spacetime worktree add /root/sidereal-scratch/wren-client-render origin/feat/wren-client-render
+git -C /root/sidereal-scratch/wren-client-render lfs pull --include "assets/runtime/ship-kit/r001/*"
+mkdir -p assets/runtime/ship-kit && cp -r /root/sidereal-scratch/wren-client-render/assets/runtime/ship-kit/r001 assets/runtime/ship-kit/
+head -c 4 assets/runtime/ship-kit/r001/cas.armor.w1.h14.glb; echo; ls assets/runtime/ship-kit/r001 | wc -l   # prints glTF, then 218
 (cd scripts && python3 -m unittest test_prepare_app)
 npm run build:client
 ls apps/client/dist/assets/wayfarer.glb apps/client/dist/assets/assembly/wayfarer.json 2>&1   # both must be absent
+ls apps/client/dist/assets/ship-kit/r001/manifest.json                                           # must exist
 ```
 
 Stage and activate through the guarded public-client commands, exactly as in [shadow_cache_release_20260922.md](shadow_cache_release_20260922.md):
@@ -274,7 +280,7 @@ The rehearsal proved each of these with the owner's own session:
 - burn to about 6 m/s;
 - turn.
 
-**Known presentation gap:** the game currently draws Wren's deck floor plates only. There is no voxel hull or walls yet, because the SHIPS-PREFABS renderer and the `ship-kit/r001` assets are not wired into the game. Collision and flight are authoritative and work.
+**Presentation:** with #31 the game draws the dressed Wren (deck cutaway and roofed flight view). Wren art remains a SHIPS-PREFABS proposal, not owner-approved; components use procedural stand-ins until SHIPS-COMPONENTS publishes GLBs.
 
 **Optional, later:** make Wren the starter for new accounts:
 
