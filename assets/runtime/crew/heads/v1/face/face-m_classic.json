@@ -1,0 +1,452 @@
+{
+ "schema": "sidereal.crew.face-atlas/1",
+ "cell": 16,
+ "pxMeters": 0.03125,
+ "layers": [
+  "under",
+  "marks",
+  "eyes",
+  "iris",
+  "glint",
+  "brows",
+  "mouth",
+  "over"
+ ],
+ "expressions": {
+  "neutral": {
+   "eyes": "open",
+   "iris": "open",
+   "brows": "neutral",
+   "mouth": "neutral",
+   "under": "blush",
+   "over": "none"
+  },
+  "happy": {
+   "eyes": "open",
+   "iris": "open",
+   "brows": "raised",
+   "mouth": "smile",
+   "under": "blush_strong",
+   "over": "none"
+  },
+  "sad": {
+   "eyes": "sad",
+   "iris": "sad",
+   "brows": "sad",
+   "mouth": "frown",
+   "under": "blush",
+   "over": "tears"
+  },
+  "angry": {
+   "eyes": "narrow",
+   "iris": "narrow",
+   "brows": "angry",
+   "mouth": "grimace",
+   "under": "none",
+   "over": "vein"
+  },
+  "surprised": {
+   "eyes": "wide",
+   "iris": "wide",
+   "brows": "raised_high",
+   "mouth": "open",
+   "under": "blush",
+   "over": "none"
+  },
+  "confused": {
+   "eyes": "confused",
+   "iris": "confused",
+   "brows": "confused",
+   "mouth": "wavy",
+   "under": "blush",
+   "over": "sweat"
+  },
+  "hurt": {
+   "eyes": "hurt",
+   "iris": "none",
+   "brows": "angry",
+   "mouth": "grimace",
+   "under": "none",
+   "over": "sweat"
+  },
+  "determined": {
+   "eyes": "narrow",
+   "iris": "narrow",
+   "brows": "determined",
+   "mouth": "flat",
+   "under": "none",
+   "over": "none"
+  },
+  "scared": {
+   "eyes": "scared",
+   "iris": "none",
+   "brows": "scared",
+   "mouth": "scared",
+   "under": "none",
+   "over": "sweat"
+  },
+  "smug": {
+   "eyes": "smug",
+   "iris": "smug",
+   "brows": "smug",
+   "mouth": "smug",
+   "under": "blush",
+   "over": "none"
+  },
+  "sleepy": {
+   "eyes": "sleepy",
+   "iris": "sleepy",
+   "brows": "sleepy",
+   "mouth": "small_o",
+   "under": "blush",
+   "over": "zz"
+  },
+  "knocked_out": {
+   "eyes": "ko",
+   "iris": "none",
+   "brows": "sleepy",
+   "mouth": "ko",
+   "under": "none",
+   "over": "ko"
+  },
+  "wink": {
+   "eyes": "wink",
+   "iris": "wink",
+   "brows": "neutral",
+   "mouth": "smile",
+   "under": "blush",
+   "over": "none"
+  },
+  "grin": {
+   "eyes": "happy",
+   "iris": "none",
+   "brows": "raised",
+   "mouth": "grin",
+   "under": "blush_strong",
+   "over": "none"
+  }
+ },
+ "visemes": {
+  "closed": "neutral",
+  "A": "viseme_A",
+  "E": "viseme_E",
+  "O": "viseme_O",
+  "MB": "viseme_MB"
+ },
+ "blink": [
+  {
+   "eyes": "half",
+   "seconds": 0.041666666666666664
+  },
+  {
+   "eyes": "closed",
+   "seconds": 0.041666666666666664
+  },
+  {
+   "eyes": "half",
+   "seconds": 0.041666666666666664
+  }
+ ],
+ "blinkSuppressedEyes": [
+  "happy",
+  "closed",
+  "hurt",
+  "ko",
+  "sleepy",
+  "wink"
+ ],
+ "looks": {
+  "-1": "r",
+  "0": "c",
+  "1": "l"
+ },
+ "tints": {
+  "iris": "eye",
+  "brows": "hair*0.45"
+ },
+ "browShade": 0.45,
+ "animationExpressions": {
+  "idle": "neutral",
+  "idle_armed": "determined",
+  "walk": "neutral",
+  "run": "determined",
+  "crouch_idle": "determined",
+  "crouch_walk": "determined",
+  "aim_rifle": "determined",
+  "aim_pistol": "determined",
+  "shoot_rifle": "angry",
+  "shoot_pistol": "angry",
+  "reload": "determined",
+  "melee_swing": "angry",
+  "throw": "determined",
+  "pick_up": "neutral",
+  "carry_idle": "neutral",
+  "carry_walk": "neutral",
+  "use_interact": "neutral",
+  "repair_loop": "determined",
+  "sit": "neutral",
+  "sit_idle": "sleepy",
+  "wave": "happy",
+  "point": "determined",
+  "cheer": "grin",
+  "thumbs_up": "wink",
+  "emote_happy": "happy",
+  "emote_sad": "sad",
+  "emote_angry": "angry",
+  "emote_confused": "confused",
+  "celebrate": "happy",
+  "hurt": "hurt",
+  "death": "knocked_out",
+  "knocked_out": "knocked_out",
+  "revive": "surprised",
+  "jetpack_hover": "determined",
+  "climb_ladder": "determined"
+ },
+ "canvasHeadSpace": {
+  "x": [
+   8,
+   -8
+  ],
+  "z": [
+   16,
+   0
+  ],
+  "flat": {
+   "cols": [
+    1,
+    14
+   ],
+   "rows": [
+    1,
+    14
+   ]
+  },
+  "note": "column 0 = character right (x=+8), row 0 = top (z=16)"
+ },
+ "marksCompose": {
+  "ages": [
+   "none",
+   "middle",
+   "older"
+  ],
+  "marks": [
+   "none",
+   "freckles",
+   "warpaint",
+   "tattoo",
+   "scars",
+   "scratch",
+   "dirt",
+   "birthmark"
+  ],
+  "name": "<age>+<mark>, 'none' parts omitted"
+ },
+ "status": "CHAR-HEADS production atlas proposal (unsigned)",
+ "variant": "m_classic",
+ "label": "Masculine, classic",
+ "sex": "male",
+ "image": "face-m_classic.png",
+ "size": [
+  688,
+  128
+ ],
+ "frames": {
+  "under": [
+   "none",
+   "blush",
+   "blush_strong"
+  ],
+  "marks": [
+   "none",
+   "freckles",
+   "warpaint",
+   "tattoo",
+   "scars",
+   "scratch",
+   "dirt",
+   "birthmark",
+   "middle",
+   "middle+freckles",
+   "middle+warpaint",
+   "middle+tattoo",
+   "middle+scars",
+   "middle+scratch",
+   "middle+dirt",
+   "middle+birthmark",
+   "older",
+   "older+freckles",
+   "older+warpaint",
+   "older+tattoo",
+   "older+scars",
+   "older+scratch",
+   "older+dirt",
+   "older+birthmark"
+  ],
+  "eyes": [
+   "open",
+   "half",
+   "closed",
+   "happy",
+   "wide",
+   "narrow",
+   "sad",
+   "scared",
+   "sleepy",
+   "smug",
+   "hurt",
+   "ko",
+   "wink",
+   "confused"
+  ],
+  "iris": [
+   "none",
+   "open@c",
+   "open@r",
+   "open@l",
+   "half@c",
+   "half@r",
+   "half@l",
+   "closed@c",
+   "closed@r",
+   "closed@l",
+   "happy@c",
+   "happy@r",
+   "happy@l",
+   "wide@c",
+   "wide@r",
+   "wide@l",
+   "narrow@c",
+   "narrow@r",
+   "narrow@l",
+   "sad@c",
+   "sad@r",
+   "sad@l",
+   "scared@c",
+   "scared@r",
+   "scared@l",
+   "sleepy@c",
+   "sleepy@r",
+   "sleepy@l",
+   "smug@c",
+   "smug@r",
+   "smug@l",
+   "hurt@c",
+   "hurt@r",
+   "hurt@l",
+   "ko@c",
+   "ko@r",
+   "ko@l",
+   "wink@c",
+   "wink@r",
+   "wink@l",
+   "confused@c",
+   "confused@r",
+   "confused@l"
+  ],
+  "glint": [
+   "none",
+   "open@c",
+   "open@r",
+   "open@l",
+   "half@c",
+   "half@r",
+   "half@l",
+   "closed@c",
+   "closed@r",
+   "closed@l",
+   "happy@c",
+   "happy@r",
+   "happy@l",
+   "wide@c",
+   "wide@r",
+   "wide@l",
+   "narrow@c",
+   "narrow@r",
+   "narrow@l",
+   "sad@c",
+   "sad@r",
+   "sad@l",
+   "scared@c",
+   "scared@r",
+   "scared@l",
+   "sleepy@c",
+   "sleepy@r",
+   "sleepy@l",
+   "smug@c",
+   "smug@r",
+   "smug@l",
+   "hurt@c",
+   "hurt@r",
+   "hurt@l",
+   "ko@c",
+   "ko@r",
+   "ko@l",
+   "wink@c",
+   "wink@r",
+   "wink@l",
+   "confused@c",
+   "confused@r",
+   "confused@l"
+  ],
+  "brows": [
+   "neutral",
+   "raised",
+   "raised_high",
+   "angry",
+   "sad",
+   "determined",
+   "confused",
+   "smug",
+   "scared",
+   "sleepy"
+  ],
+  "mouth": [
+   "none",
+   "neutral",
+   "smile",
+   "grin",
+   "frown",
+   "open",
+   "grimace",
+   "flat",
+   "wavy",
+   "scared",
+   "smug",
+   "small_o",
+   "ko",
+   "viseme_A",
+   "viseme_E",
+   "viseme_O",
+   "viseme_MB"
+  ],
+  "over": [
+   "none",
+   "sweat",
+   "tears",
+   "ko",
+   "vein",
+   "zz"
+  ]
+ },
+ "params": {
+  "eye": {
+   "x": 2,
+   "w": 3,
+   "h": 4,
+   "top": 7,
+   "lash": false
+  },
+  "brow": {
+   "x": 1,
+   "len": 4,
+   "t": 2,
+   "row": 4,
+   "arch": false
+  },
+  "mouth": {
+   "w": 2,
+   "row": 12,
+   "lip": false
+  }
+ }
+}
