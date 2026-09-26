@@ -24,6 +24,12 @@ import {
   type FlightCrewMass,
 } from "../../sim/src/flight-definition";
 import { legacyInventorySnapshot } from "./scoped-inventory-authority";
+import {
+  PREFAB_FLIGHT_DEFINITION,
+  prefabFlightInput,
+  prefabFlightModelFor,
+  prefabPlacedObjectId,
+} from "../../sim/src/prefab-flight";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 function bounded<T>(rows: Iterable<T>, limit: number): T[] {
@@ -74,8 +80,14 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
     instance.idMapJson.length > 1_048_576
   )
     throw Error("flight-document-budget");
-  const variant: WayfarerPhysicalVariant =
-    instance.blueprintSha256 === WAYFARER_REBUILD_SHA256
+  // Prefab ships compile from their grammar data and component stats; the binding's
+  // definition pin selects the path (written only by trusted installation code).
+  const prefab =
+    ctx.db.constructionFlightBinding.shipId.find(shipId)?.definitionId ===
+    PREFAB_FLIGHT_DEFINITION;
+  const variant: WayfarerPhysicalVariant = prefab
+    ? "r001"
+    : instance.blueprintSha256 === WAYFARER_REBUILD_SHA256
       ? "r002"
       : instance.blueprintSha256 === WAYFARER_EXTERIOR_SHA256
         ? "r005"
@@ -258,6 +270,19 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
       position: [root.localX, root.localY],
     });
     roots.add(root.id);
+  }
+  if (prefab) {
+    if (attachments.length || replacements.length)
+      throw Error("prefab-flight-refit-unsupported");
+    const model = prefabFlightModelFor(
+      `${instance.id}:${instance.blueprintSha256}`,
+      instance.documentJson,
+    );
+    return prefabFlightInput(
+      model,
+      (sourceId) => prefabPlacedObjectId(shipId, sourceId),
+      { fittings, cargo, crew },
+    );
   }
   return wayfarerFlightInput(
     document,

@@ -5,6 +5,7 @@ import {
   pilotRecoveryPoint,
   QUALIFIED_PILOT_POSITION,
   type PilotGeometry,
+  type PilotPose,
 } from "../../sim/src/construction-pilot";
 export interface PilotActor {
   id: string;
@@ -25,6 +26,8 @@ export interface PilotStation {
   operational: boolean;
   instanceRevision: bigint;
   revision: bigint;
+  /** Prefab ships: the re-derived seat pose. Absent for the qualified Wayfarer seat. */
+  pose?: PilotPose;
 }
 export interface PilotSeat {
   characterId: string;
@@ -75,6 +78,8 @@ export interface PilotRepository {
   ): void;
   clearInputAndAim(characterId: string): void;
 }
+/** Prefab stations carry their re-derived pose; the Wayfarer seat keeps its constants. */
+const seatOf = (s: PilotStation) => s.pose?.position ?? QUALIFIED_PILOT_POSITION;
 const inScope = (a: PilotActor, s: PilotStation) =>
   a.shipId === s.shipId && a.deckId === s.deckId;
 export function enterConstructionPilot(db: PilotRepository, args: PilotAction) {
@@ -117,7 +122,7 @@ export function enterConstructionPilot(db: PilotRepository, args: PilotAction) {
   const geometry = db.geometry(s),
     q = qualifyPilotGeometry(geometry);
   if (
-    !canApproachPilot(q.frame, a.x, a.y) ||
+    !canApproachPilot(q.frame, a.x, a.y, geometry.pose) ||
     Math.abs(a.height - q.approachHeight) > 0.05
   )
     throw Error("Move to supported pilot approach");
@@ -128,8 +133,8 @@ export function enterConstructionPilot(db: PilotRepository, args: PilotAction) {
       (other) =>
         other.id !== a.id &&
         Math.hypot(
-          other.x - QUALIFIED_PILOT_POSITION[0],
-          other.y - QUALIFIED_PILOT_POSITION[1],
+          other.x - seatOf(s)[0],
+          other.y - seatOf(s)[1],
         ) < 0.6,
     )
   )
@@ -147,8 +152,8 @@ export function enterConstructionPilot(db: PilotRepository, args: PilotAction) {
   });
   db.updateStation({ ...s, occupantId: a.id, revision });
   db.setActorPose(a.id, {
-    x: QUALIFIED_PILOT_POSITION[0],
-    y: QUALIFIED_PILOT_POSITION[1],
+    x: seatOf(s)[0],
+    y: seatOf(s)[1],
     height: q.seatHeight,
   });
   db.clearInputAndAim(a.id);
@@ -178,8 +183,8 @@ export function constructionPilotCanControl(
     seat.deckId === s.deckId &&
     seat.instanceRevision === s.instanceRevision &&
     Math.hypot(
-      a.x - QUALIFIED_PILOT_POSITION[0],
-      a.y - QUALIFIED_PILOT_POSITION[1],
+      a.x - seatOf(s)[0],
+      a.y - seatOf(s)[1],
     ) < 1e-5 &&
     db.hasCurrentAccess(a, s) &&
     db.hasOperationalFlight(s.shipId) &&

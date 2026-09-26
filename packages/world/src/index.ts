@@ -6,6 +6,8 @@ import { replacePlayerWayfarer } from "./wayfarer-replacement";
 import { shipPolicy, shipOperatorOperation, shipWipeArchive } from "./ship-operator-tables";
 import { wipePlayerShips } from "./ship-wipe";
 import { assignPrefabShip } from "./ship-assign";
+// Registers the pinned prefab ship spawners (fed.s.wren) with ship-assign.
+import "./prefab-ship-spawners";
 import {
   isAwaitingShip,
   onboardNewCharacter,
