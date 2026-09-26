@@ -1,0 +1,664 @@
+{
+ "schema": "sidereal.crew.body-manifest/1",
+ "revision": "r004",
+ "family": "crew.body.voxel",
+ "status": "proposal; not published; not owner-approved",
+ "rig": "crew_rig",
+ "sockets": [
+  "socket.back",
+  "socket.belt",
+  "socket.chest",
+  "socket.eyes",
+  "socket.face",
+  "socket.foot.L",
+  "socket.foot.R",
+  "socket.glove.L",
+  "socket.glove.R",
+  "socket.hand.L",
+  "socket.hand.R",
+  "socket.head",
+  "socket.hip.L",
+  "socket.hip.R",
+  "socket.shoulder.L",
+  "socket.shoulder.R"
+ ],
+ "materialSlots": [
+  "skin",
+  "hair",
+  "eye",
+  "suit_primary",
+  "suit_secondary",
+  "accent",
+  "metal",
+  "dark",
+  "emit",
+  "glass",
+  "face"
+ ],
+ "parts": [
+  {
+   "id": "body.male",
+   "meshes": {
+    "base": "GEO-crew-base-male",
+    "hands": "GEO-crew-hands-male",
+    "head": "GEO-crew-head-male",
+    "suit": "GEO-crew-suit-male",
+    "gear": "GEO-crew-gear-male"
+   },
+   "trisDefaultLook": 21516,
+   "trisByRegion": {
+    "base": 3036,
+    "hands": 544,
+    "head": 756,
+    "suit": 6350,
+    "gear": 3684
+   },
+   "slots": [
+    "skin",
+    "metal",
+    "dark",
+    "face"
+   ],
+   "boundsVox": [
+    [
+     -13,
+     -7,
+     0
+    ],
+    [
+     13,
+     7,
+     55
+    ]
+   ],
+   "bounds": [
+    [
+     -0.40625,
+     -0.21875,
+     0.0
+    ],
+    [
+     0.40625,
+     0.21875,
+     1.71875
+    ]
+   ]
+  },
+  {
+   "id": "hair.default.male",
+   "mesh": "GEO-crew-hair-default-male",
+   "tris": 10726,
+   "bone": "head",
+   "slots": [
+    "hair"
+   ],
+   "boundsVox": [
+    [
+     -11,
+     -11,
+     42
+    ],
+    [
+     12,
+     10,
+     59
+    ]
+   ],
+   "bounds": [
+    [
+     -0.34375,
+     -0.34375,
+     1.3125
+    ],
+    [
+     0.375,
+     0.3125,
+     1.84375
+    ]
+   ]
+  },
+  {
+   "id": "body.female",
+   "meshes": {
+    "base": "GEO-crew-base-female",
+    "hands": "GEO-crew-hands-female",
+    "head": "GEO-crew-head-female",
+    "suit": "GEO-crew-suit-female",
+    "gear": "GEO-crew-gear-female"
+   },
+   "trisDefaultLook": 28902,
+   "trisByRegion": {
+    "base": 3152,
+    "hands": 544,
+    "head": 756,
+    "suit": 6186,
+    "gear": 3684
+   },
+   "slots": [
+    "skin",
+    "metal",
+    "dark",
+    "face"
+   ],
+   "boundsVox": [
+    [
+     -13,
+     -7,
+     0
+    ],
+    [
+     13,
+     7,
+     55
+    ]
+   ],
+   "bounds": [
+    [
+     -0.40625,
+     -0.21875,
+     0.0
+    ],
+    [
+     0.40625,
+     0.21875,
+     1.71875
+    ]
+   ]
+  },
+  {
+   "id": "hair.default.female",
+   "mesh": "GEO-crew-hair-default-female",
+   "tris": 18276,
+   "bone": "head",
+   "slots": [
+    "hair",
+    "accent"
+   ],
+   "boundsVox": [
+    [
+     -11,
+     -13,
+     34
+    ],
+    [
+     12,
+     10,
+     60
+    ]
+   ],
+   "bounds": [
+    [
+     -0.34375,
+     -0.40625,
+     1.0625
+    ],
+    [
+     0.375,
+     0.3125,
+     1.875
+    ]
+   ]
+  },
+  {
+   "id": "body.neutral",
+   "meshes": {
+    "base": "GEO-crew-base-neutral",
+    "hands": "GEO-crew-hands-neutral",
+    "head": "GEO-crew-head-neutral",
+    "suit": "GEO-crew-suit-neutral",
+    "gear": "GEO-crew-gear-neutral"
+   },
+   "trisDefaultLook": 21516,
+   "trisByRegion": {
+    "base": 3036,
+    "hands": 544,
+    "head": 756,
+    "suit": 6350,
+    "gear": 3684
+   },
+   "slots": [
+    "skin",
+    "metal",
+    "dark",
+    "face"
+   ],
+   "boundsVox": [
+    [
+     -13,
+     -7,
+     0
+    ],
+    [
+     13,
+     7,
+     55
+    ]
+   ],
+   "bounds": [
+    [
+     -0.40625,
+     -0.21875,
+     0.0
+    ],
+    [
+     0.40625,
+     0.21875,
+     1.71875
+    ]
+   ]
+  },
+  {
+   "id": "hair.default.neutral",
+   "mesh": "GEO-crew-hair-default-neutral",
+   "tris": 10726,
+   "bone": "head",
+   "slots": [
+    "hair"
+   ],
+   "boundsVox": [
+    [
+     -11,
+     -11,
+     42
+    ],
+    [
+     12,
+     10,
+     59
+    ]
+   ],
+   "bounds": [
+    [
+     -0.34375,
+     -0.34375,
+     1.3125
+    ],
+    [
+     0.375,
+     0.3125,
+     1.84375
+    ]
+   ]
+  }
+ ],
+ "actions": [
+  {
+   "name": "idle",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "seconds": 3.0,
+   "extra": false,
+   "nominalSpeed": 0
+  },
+  {
+   "name": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "seconds": 3.0,
+   "extra": false,
+   "grip": "rifle"
+  },
+  {
+   "name": "walk",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "seconds": 0.75,
+   "extra": false,
+   "nominalSpeed": 0.966
+  },
+  {
+   "name": "run",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "seconds": 0.583,
+   "extra": false,
+   "nominalSpeed": 2.649
+  },
+  {
+   "name": "crouch_idle",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "seconds": 3.0,
+   "extra": false
+  },
+  {
+   "name": "crouch_walk",
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "seconds": 1.0,
+   "extra": false,
+   "nominalSpeed": 0.483
+  },
+  {
+   "name": "aim_rifle",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "seconds": 2.0,
+   "extra": false,
+   "grip": "rifle"
+  },
+  {
+   "name": "aim_pistol",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "seconds": 2.0,
+   "extra": false,
+   "grip": "pistol"
+  },
+  {
+   "name": "shoot_rifle",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "seconds": 0.25,
+   "extra": false,
+   "grip": "rifle",
+   "muzzleFlashFrame": 1,
+   "note": "one shot per loop (6 frames = 4 rps); blend over aim_rifle"
+  },
+  {
+   "name": "shoot_pistol",
+   "frames": 9,
+   "fps": 24,
+   "loop": false,
+   "seconds": 0.375,
+   "extra": false,
+   "grip": "pistol",
+   "muzzleFlashFrame": 1
+  },
+  {
+   "name": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.583,
+   "extra": false,
+   "grip": "rifle"
+  },
+  {
+   "name": "melee_swing",
+   "frames": 24,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.0,
+   "extra": false,
+   "grip": "one_hand"
+  },
+  {
+   "name": "throw",
+   "frames": 28,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.167,
+   "extra": false,
+   "releaseFrame": 12
+  },
+  {
+   "name": "pick_up",
+   "frames": 32,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.333,
+   "extra": false,
+   "attach": "item follows socket.hand.R from frame 14"
+  },
+  {
+   "name": "carry_idle",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "seconds": 3.0,
+   "extra": false,
+   "carry": "box between hands, centre (0, 9, 29) vox chest-relative"
+  },
+  {
+   "name": "carry_walk",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "seconds": 0.75,
+   "extra": false,
+   "nominalSpeed": 0.773
+  },
+  {
+   "name": "use_interact",
+   "frames": 24,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.0,
+   "extra": false,
+   "contactFrame": 11
+  },
+  {
+   "name": "repair_loop",
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "seconds": 1.0,
+   "extra": false,
+   "grip": "one_hand",
+   "sparkFrames": [
+    6,
+    18
+   ]
+  },
+  {
+   "name": "sit",
+   "frames": 22,
+   "fps": 24,
+   "loop": false,
+   "seconds": 0.917,
+   "extra": false,
+   "seatHeightVox": 10
+  },
+  {
+   "name": "sit_idle",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "seconds": 3.0,
+   "extra": false,
+   "seatHeightVox": 10
+  },
+  {
+   "name": "wave",
+   "frames": 36,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.5,
+   "extra": false
+  },
+  {
+   "name": "point",
+   "frames": 28,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.167,
+   "extra": false
+  },
+  {
+   "name": "cheer",
+   "frames": 32,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.333,
+   "extra": false
+  },
+  {
+   "name": "thumbs_up",
+   "frames": 24,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.0,
+   "extra": false
+  },
+  {
+   "name": "emote_happy",
+   "frames": 36,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.5,
+   "extra": false
+  },
+  {
+   "name": "emote_sad",
+   "frames": 44,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.833,
+   "extra": false
+  },
+  {
+   "name": "emote_angry",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.583,
+   "extra": false
+  },
+  {
+   "name": "emote_confused",
+   "frames": 34,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.417,
+   "extra": false
+  },
+  {
+   "name": "celebrate",
+   "frames": 36,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.5,
+   "extra": false
+  },
+  {
+   "name": "hurt",
+   "frames": 16,
+   "fps": 24,
+   "loop": false,
+   "seconds": 0.667,
+   "extra": false
+  },
+  {
+   "name": "death",
+   "frames": 40,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.667,
+   "extra": false,
+   "endsLying": true
+  },
+  {
+   "name": "knocked_out",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "seconds": 3.0,
+   "extra": false,
+   "lying": true
+  },
+  {
+   "name": "revive",
+   "frames": 34,
+   "fps": 24,
+   "loop": false,
+   "seconds": 1.417,
+   "extra": false,
+   "startsLying": true
+  },
+  {
+   "name": "jetpack_hover",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "seconds": 2.0,
+   "extra": false,
+   "thrusterSocket": "socket.back"
+  },
+  {
+   "name": "climb_ladder",
+   "frames": 30,
+   "fps": 24,
+   "loop": true,
+   "seconds": 1.25,
+   "extra": false,
+   "ladderYVox": 7.5,
+   "rungSpacingVox": 7,
+   "climbSpeed": 0.386
+  },
+  {
+   "name": "idle_pistol",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "seconds": 3.0,
+   "extra": true,
+   "grip": "one_hand"
+  }
+ ],
+ "files": {
+  "crew-body-male.glb": {
+   "sha256": "32a9915d4a691197582e21a6612327744cbab8c9cf2995943c1f618927a4832d",
+   "bytes": 2367868,
+   "variant": "male"
+  },
+  "crew-body-female.glb": {
+   "sha256": "a58586673e54006d5818b9474d2000e32309cb870259a47e727080f85ca3b4c5",
+   "bytes": 2763372,
+   "variant": "female"
+  },
+  "crew-body-neutral.glb": {
+   "sha256": "02d2bee4e0d0d0c2c0580c6b69f7740a7d7b66e3b0265f1e97dc52e459cbb1b2",
+   "bytes": 2367920,
+   "variant": "neutral"
+  },
+  "crew-body.glb": {
+   "sha256": "2bc9f7a079c898a2292efac8bc2781a623a610f98c6c1ece5ee5436d0b349183",
+   "bytes": 5606848,
+   "variant": "all"
+  }
+ },
+ "textures": {
+  "face/face-default.png": "70312e746a08798269e24e9194ca801e4ea567d6980e13722d8fa42b2b8d24ad",
+  "face/face-atlas.json": "0f36f6fdf1fbaafee1eb87644aba34cb8b9bd1078a2b2d075e8118547a6b1f44"
+ },
+ "gripProfiles": {
+  "rifle": {
+   "support": [
+    6.0,
+    1.0,
+    0.5
+   ],
+   "note": "support hand under the foregrip, 6 vox (0.19 m) ahead of and 1 vox left of the main grip (chibi arm reach)"
+  },
+  "pistol": {
+   "support": [
+    -0.5,
+    2.5,
+    -1.0
+   ],
+   "note": "two-handed pistol: support hand wraps the main grip from the left"
+  },
+  "tool": {
+   "support": [
+    6.0,
+    0.0,
+    1.0
+   ],
+   "note": "two-handed tool/device: support hand 6 vox ahead on the body"
+  },
+  "one_hand": {
+   "support": null,
+   "note": "support hand free"
+  }
+ }
+}

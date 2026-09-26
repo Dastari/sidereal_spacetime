@@ -50,7 +50,8 @@ export function voxelCrewSpeedRatio(clip: VoxelCrewAction, motion: VoxelCrewMoti
   const gameplay = clip === "run" ? SPRINT_SPEED_MPS : WALK_SPEED_MPS;
   const multiplier = Number.isFinite(motion.speed) ? motion.speed! : 1;
   const scale = clip === "crouch_walk" || clip === "carry_walk" ? 0.6 : 1;
-  return clamp(((gameplay * scale) / nominal) * multiplier, 0.6, 1.6);
+  // playback ratio = ground speed / authored stride speed, so the stance foot stays planted
+  return clamp(((gameplay * scale) / nominal) * multiplier, 0.5, 2.0);
 }
 
 /** Pure mapping from gameplay presentation state to the voxel crew's animation layers. */

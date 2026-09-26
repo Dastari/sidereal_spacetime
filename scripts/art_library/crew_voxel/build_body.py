@@ -41,6 +41,7 @@ def parse_args():
     p.add_argument("--shots", default="", help="comma list: turnaround,anim")
     p.add_argument("--only", default="", help="comma list of action names to build (iteration)")
     p.add_argument("--no-export", action="store_true")
+    p.add_argument("--loops", default="", help="comma list of loop clips (loops.LOOPS names)")
     return p.parse_args(argv)
 
 
@@ -345,6 +346,10 @@ def main():
             render.contact_sheets(out, arm, bodies, actions, mats, args)
         if "poses" in shots and actions:
             render.pose_sheet(out, arm, bodies, mats, args)
+        if "loops" in shots and actions:
+            import loops
+            loops.loops(out, arm, bodies, mats, actions, args,
+                        only=set(x for x in args.loops.split(",") if x) or None)
     print("CREW_BODY_DONE", json.dumps(stats))
 
 

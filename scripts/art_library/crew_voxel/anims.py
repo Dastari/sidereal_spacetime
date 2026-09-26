@@ -480,14 +480,17 @@ def lib():
     fnact("idle_pistol", True, cycle(idle_pistol_at, 72), {"grip": "one_hand", "extra": True})
 
     # ---------------------------------------------------------------- locomotion
-    fnact("walk", True, cycle(gait, 18, step=15, lift=3.5, bob=1.2, lean=5, arm_swing=28, elbow=18),
-          {"nominalSpeed": round(2 * 15 * LEG * VOX / (18 / FPS), 3)})
+    # locomotion strides are sized so the in-place cycle matches gameplay speed at a playback ratio
+    # near 1 (walk 2.5 m/s, sprint 4.5 m/s): the stance foot moves back at exactly the ground speed,
+    # so feet stay planted (no sliding) when the runtime scales playback by speed / nominalSpeed.
+    fnact("walk", True, cycle(gait, 14, step=26, lift=4.5, bob=1.4, lean=6, arm_swing=32, elbow=20),
+          {"nominalSpeed": round(2 * 26 * LEG * VOX / (14 / FPS), 3)})
     # run: long stride with a flight phase (each foot grounded 32% -> both airborne ~36%), strong
     # forward lean, high knees, big arm pump with bent elbows, bounce peaking in flight
-    fnact("run", True, cycle(gait, 14, step=32, lift=11, bob=3.2, lean=26, arm_swing=62, elbow=95,
+    fnact("run", True, cycle(gait, 12, step=40, lift=12, bob=3.2, lean=26, arm_swing=62, elbow=95,
                              pelvis_z=-1.0, stance=0.32, sway=0.3, drop=2.5, twist=14, bounce_head=3.5, width=4.0,
                              flight=3.0),
-          {"nominalSpeed": round(2 * 32 * LEG * VOX / (14 / FPS), 3)})
+          {"nominalSpeed": round(2 * 40 * LEG * VOX / (12 / FPS), 3)})
 
     def crouch_at(ph, moving=False):
         if moving:
@@ -921,6 +924,37 @@ def lib():
     return A
 
 
+# Face expression tracks (frame -> expression id of FACE_ATLAS_SPEC); idle carries blink cues.
+EXPRESSION_TRACKS = {
+    "idle": [[0, "neutral"], [30, "blink"], [62, "blink"]],
+    "emote_happy": [[0, "neutral"], [3, "happy"], [33, "neutral"]],
+    "emote_sad": [[0, "neutral"], [6, "sad"], [40, "neutral"]],
+    "emote_angry": [[0, "neutral"], [4, "angry"], [34, "neutral"]],
+    "emote_confused": [[0, "neutral"], [6, "confused"], [30, "neutral"]],
+    "hurt": [[0, "hurt"], [14, "neutral"]],
+    "death": [[0, "hurt"], [14, "scared"], [22, "knocked_out"]],
+    "knocked_out": [[0, "knocked_out"]],
+    "revive": [[0, "knocked_out"], [10, "sleepy"], [26, "neutral"]],
+    "cheer": [[0, "grin"]],
+    "celebrate": [[0, "determined"], [7, "grin"]],
+    "wave": [[0, "happy"]],
+    "thumbs_up": [[0, "neutral"], [5, "wink"], [20, "neutral"]],
+    "point": [[0, "determined"]],
+    "aim_rifle": [[0, "determined"]],
+    "aim_pistol": [[0, "determined"]],
+    "shoot_rifle": [[0, "determined"]],
+    "shoot_pistol": [[0, "determined"]],
+    "melee_swing": [[0, "determined"], [7, "angry"], [20, "determined"]],
+    "throw": [[0, "determined"]],
+    "repair_loop": [[0, "determined"]],
+    "jetpack_hover": [[0, "surprised"]],
+    "sit_idle": [[0, "neutral"], [40, "blink"]],
+    "carry_walk": [[0, "determined"]],
+    "pick_up": [[0, "neutral"], [8, "determined"], [26, "neutral"]],
+    "climb_ladder": [[0, "determined"]],
+}
+
+
 def build_actions(arm, sc, only=None):
     poser = Poser(arm)
     arm.animation_data_create()
@@ -950,6 +984,7 @@ def build_actions(arm, sc, only=None):
         act.use_cyclic = spec["loop"]
         act["loop"] = spec["loop"]
         m = {"name": name, "frames": frames[-1][0] - frames[0][0], "fps": FPS, "loop": spec["loop"],
+             "expressionTrack": EXPRESSION_TRACKS.get(name, [[0, "neutral"]]),
              "seconds": round((frames[-1][0] - frames[0][0]) / FPS, 3), "extra": name not in rig.ACTIONS}
         m.update(spec["meta"])
         meta.append(m)

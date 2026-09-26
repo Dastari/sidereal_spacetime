@@ -14,6 +14,7 @@
     "./construction-floor-interfaces.json": "./src/construction-floor-interfaces.json",
     "./character-components": "./src/character-components.ts",
     "./crew-voxel-bundle": "./src/crew-voxel-bundle.ts",
+    "./crew-voxel-face": "./src/crew-voxel-face.ts",
     "./appearance": "./src/appearance.ts",
     "./inventory": "./src/inventory.ts",
     "./storage-fixtures": "./src/storage-fixtures.ts",

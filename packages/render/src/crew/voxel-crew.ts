@@ -9,12 +9,21 @@ import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import "@babylonjs/loaders/glTF";
 import {
   VOXEL_CREW_ASSET_URL,
+  VOXEL_CREW_DEFAULT_OUTFIT,
+  VOXEL_CREW_FACE_ATLAS_URL,
+  VOXEL_CREW_FACE_IMAGE_URL,
   VOXEL_CREW_SOCKETS,
   VOXEL_CREW_UPPER_BONES,
+  voxelCrewExpressionAt,
+  voxelCrewHiddenRegions,
   type VoxelCrewAction,
+  type VoxelCrewOutfit,
+  type VoxelCrewRegion,
   type VoxelCrewSocket,
   type VoxelCrewVariant,
 } from "@sidereal/content/crew-voxel-bundle";
+import { hexToRgb, type FaceAtlas, type FaceAtlasImage } from "@sidereal/content/crew-voxel-face";
+import { createVoxelFace, loadVoxelFaceAtlas } from "./voxel-face";
 import { setMeshRole } from "../mesh-roles";
 import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 import {
@@ -29,7 +38,7 @@ import {
 import { blendProgress } from "./animation";
 
 type Mask = "full" | "upper" | "lower";
-export type VoxelCrewBodyRegion = "body" | "head" | "hands" | "feet" | "hair";
+export type VoxelCrewBodyRegion = VoxelCrewRegion;
 type Track = { group: AnimationGroup; weight: number; from: number; target: number };
 
 const UPPER = new Set<string>(VOXEL_CREW_UPPER_BONES);
@@ -67,6 +76,11 @@ export async function createVoxelCrewVisual(
   scene: Scene,
   parent: TransformNode,
   assetUrl: string | ArrayBufferView = VOXEL_CREW_ASSET_URL,
+  options: {
+    /** Face atlas; omitted = fetch the default atlas (browser); false = keep the GLB's baked face. */
+    faceAtlas?: { atlas: FaceAtlas; image: FaceAtlasImage } | false;
+    random?: () => number;
+  } = {},
 ) {
   const container: AssetContainer = await SceneLoader.LoadAssetContainerAsync("", assetUrl, scene, undefined, ".glb");
   const root = new TransformNode("crew-placement", scene);
@@ -229,6 +243,12 @@ export async function createVoxelCrewVisual(
   let oneShot: { clip: VoxelCrewAction; layer: "upper" | "full"; group: AnimationGroup } | undefined;
   let layers: VoxelCrewLayers | undefined;
   let variant: VoxelCrewVariant = "male";
+  let outfit: VoxelCrewOutfit = { ...VOXEL_CREW_DEFAULT_OUTFIT };
+  const face = createVoxelFace(
+    scene,
+    container.materials.find((m): m is PBRMaterial => m instanceof PBRMaterial && /^crew\.face(\.\d+)?$/.test(m.name)),
+    options.random,
+  );
 
   const customize = (next: CrewAppearance) => {
     if (disposed) return;
@@ -238,6 +258,7 @@ export async function createVoxelCrewVisual(
       if (!(material instanceof PBRMaterial)) continue;
       material.maxSimultaneousLights = 8;
       const slot = material.name.replace(/^crew\./, "").replace(/\.\d+$/, "");
+      if (slot === "face") continue;
       const hex = colors[slot];
       if (hex && /^#[0-9a-f]{6}$/i.test(hex)) {
         const linear = Color3.FromHexString(hex).toLinearSpace();
@@ -245,6 +266,7 @@ export async function createVoxelCrewVisual(
         if (slot === "emit") material.emissiveColor = linear;
       }
     }
+    face.setTints({ skin: hexToRgb(colors.skin), hair: hexToRgb(colors.hair) });
     variant = voxelCrewVariant(appearance);
     const r = resolveCrewAppearance(appearance);
     const hairHidden = r.hairStyle === "none" || !!r.equippedComponents?.helmet;
@@ -254,15 +276,38 @@ export async function createVoxelCrewVisual(
   let hairHiddenByLook = false;
   const refreshRegions = (hairHidden = hairHiddenByLook) => {
     hairHiddenByLook = hairHidden;
+    const byOutfit = new Set(voxelCrewHiddenRegions(outfit));
     for (const mesh of container.meshes) {
-      const match = /^GEO-crew-(body|head|hands|feet|hair-default)-(male|female|neutral)/.exec(mesh.name);
+      const match = /^GEO-crew-(base|hands|head|suit|gear|hair-default)-(male|female|neutral)/.exec(mesh.name);
       if (!match) continue;
       const region = (match[1] === "hair-default" ? "hair" : match[1]) as VoxelCrewBodyRegion;
       const hidden =
-        hiddenRegions.has(region) || (region === "hair" && (hairHidden || hiddenRegions.has("head")));
+        byOutfit.has(region) ||
+        hiddenRegions.has(region) ||
+        (region === "hair" && (hairHidden || hiddenRegions.has("head")));
       mesh.setEnabled(match[2] === variant && !hidden);
     }
   };
+  // face: the driving clip's expression track each frame, plus the blink timer
+  const faceObserver = scene.onBeforeRenderObservable.add(() => {
+    const dt = Math.min(0.1, scene.getEngine().getDeltaTime() / 1000);
+    const driver = oneShot?.clip ?? (layers ? ("full" in layers ? layers.full : layers.upper) : undefined);
+    if (driver) {
+      const g = oneShot?.group ?? clips.get(driver);
+      const frame = g?.animatables[0]?.masterFrame ?? 0;
+      face.setTrackExpression(voxelCrewExpressionAt(driver, frame - (g?.from ?? 0)));
+    }
+    face.tick(dt);
+  });
+  if (options.faceAtlas) face.setAtlas(options.faceAtlas.atlas, options.faceAtlas.image);
+  else if (options.faceAtlas === undefined && typeof fetch === "function" && typeof OffscreenCanvas !== "undefined")
+    loadVoxelFaceAtlas(VOXEL_CREW_FACE_ATLAS_URL, VOXEL_CREW_FACE_IMAGE_URL)
+      .then(({ atlas, image }) => {
+        if (!disposed) face.setAtlas(atlas, image);
+      })
+      .catch(() => {
+        // keep the GLB's baked neutral face
+      });
 
   let override: Partial<VoxelCrewMotion> | undefined;
   let lastInput: VoxelCrewMotion = { moving: false, seated: false };
@@ -336,12 +381,22 @@ export async function createVoxelCrewVisual(
     itemSockets,
     joints,
     attachPart,
-    /** Hide base regions replaced by attached parts (heads, gloves, boots); the core body stays. */
+    /** Hide regions replaced by attached parts (heads, gloves, boots, armour); see bodyMeshRegions. */
     setHiddenRegions(regions: Iterable<VoxelCrewBodyRegion>) {
       hiddenRegions.clear();
-      for (const r of regions) if (r !== "body") hiddenRegions.add(r);
+      for (const r of regions) hiddenRegions.add(r);
       refreshRegions();
     },
+    /** Wardrobe: a suit replaces the underwear base body; gear gloves replace the bare hands. */
+    setOutfit(next: Partial<VoxelCrewOutfit>) {
+      outfit = { ...outfit, ...next };
+      refreshRegions();
+    },
+    get outfit() {
+      return { ...outfit };
+    },
+    /** Animatable pixel face: setExpression / setViseme / blink / setLook / setAtlas / setTints. */
+    face,
     /** Current full/lower/upper clip selection (diagnostics and tests). */
     get layers() {
       return layers;
@@ -374,6 +429,8 @@ export async function createVoxelCrewVisual(
       if (disposed) return;
       disposed = true;
       scene.onBeforeRenderObservable.remove(blendObserver);
+      scene.onBeforeRenderObservable.remove(faceObserver);
+      face.dispose();
       for (const g of owned) g.dispose();
       for (const part of attached) part.dispose();
       attached.clear();
