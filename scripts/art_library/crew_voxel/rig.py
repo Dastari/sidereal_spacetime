@@ -9,33 +9,34 @@ on every variant. Variants only change geometry inside the segment bounds.
 """
 import math
 
-REVISION = "r003"
+REVISION = "r004"
 SPEC_VERSION = 2
 VOX = 1.0 / 32.0
 
-# r002 = CHARACTER_SPEC v2 chibi proportions (~2.8 heads): skull 37..55, hair to 58 (1.81 m),
-# shoulder line 36, belt 22..24, crotch 18, knee 10, ankle 3. Arms hang to the hip line.
-# name: (head, tail, parent). Only .R is listed for paired bones; .L mirrors x.
+# r004 = CHARACTER_SPEC v2 + OWNER FEEDBACK round 2: head ~10 % smaller (skull 16 x 16 x 14, 39..55),
+# hair to 58 (1.81 m), head+hair 0.33 of height; torso and legs take the difference.
+# Layout: ankle 3 | knee 11 | crotch 19 | hip joint 20 | belt 23..25 | chest base 29 | shoulder joint 35 |
+# shoulder line 37 | neck 37..39 | skull 39..55.
 _BONES = [
     ("root", (0, 0, 0), (0, 6, 0), None),
-    ("pelvis", (0, 0, 19), (0, 0, 23), "root"),
-    ("spine", (0, 0, 23), (0, 0, 28), "pelvis"),
-    ("chest", (0, 0, 28), (0, 0, 36), "spine"),
-    ("neck", (0, 0, 36), (0, 0, 37), "chest"),
-    ("head", (0, 0, 37), (0, 0, 55), "neck"),
-    ("shoulder.R", (2, 0, 33), (9.5, 0, 34), "chest"),
-    ("upper_arm.R", (9.5, 0, 34), (9.5, 0, 26), "shoulder.R"),
-    ("forearm.R", (9.5, 0, 26), (9.5, 0, 20), "upper_arm.R"),
-    ("hand.R", (9.5, 0, 20), (9.5, 0, 13), "forearm.R"),
-    ("thigh.R", (4, 0, 19), (4, 0, 10), "pelvis"),
-    ("shin.R", (4, 0, 10), (4, 0, 3), "thigh.R"),
+    ("pelvis", (0, 0, 20), (0, 0, 24), "root"),
+    ("spine", (0, 0, 24), (0, 0, 29), "pelvis"),
+    ("chest", (0, 0, 29), (0, 0, 37), "spine"),
+    ("neck", (0, 0, 37), (0, 0, 39), "chest"),
+    ("head", (0, 0, 39), (0, 0, 55), "neck"),
+    ("shoulder.R", (2, 0, 34), (9.5, 0, 35), "chest"),
+    ("upper_arm.R", (9.5, 0, 35), (9.5, 0, 27), "shoulder.R"),
+    ("forearm.R", (9.5, 0, 27), (9.5, 0, 21), "upper_arm.R"),
+    ("hand.R", (9.5, 0, 21), (9.5, 0, 14), "forearm.R"),
+    ("thigh.R", (4, 0, 20), (4, 0, 11), "pelvis"),
+    ("shin.R", (4, 0, 11), (4, 0, 3), "thigh.R"),
     ("foot.R", (4, 0, 3), (4, 3, 1), "shin.R"),
     ("toe.R", (4, 3, 1), (4, 6, 1), "foot.R"),
 ]
 
 # Landmarks (voxels) used by the animation library to retarget poses authored on r001.
-LANDMARKS = {"ankle": 3, "knee": 10, "hip": 19, "chestBase": 28, "shoulder": 34, "shoulderLine": 36,
-             "skullBase": 37, "skullTop": 55, "hairTop": 58, "armX": 9.5, "legX": 4}
+LANDMARKS = {"ankle": 3, "knee": 11, "hip": 20, "chestBase": 29, "shoulder": 35, "shoulderLine": 37,
+             "skullBase": 39, "skullTop": 55, "hairTop": 58, "armX": 9.5, "legX": 4}
 
 
 def _mirror(name):
@@ -60,17 +61,17 @@ BONE_ORDER = [b[0] for b in bones()]
 F, B, U, D, R, L = (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1), (1, 0, 0), (-1, 0, 0)
 _SOCKETS = {
     "socket.head": ("head", (0, 0, 55), L, F),          # top of skull; -Y = up, +Z = forward
-    "socket.face": ("head", (0, 8, 44), L, U),          # face plane y=8, eye line; -Y = forward
-    "socket.eyes": ("head", (0, 8, 44.5), L, U),
-    "socket.chest": ("chest", (0, 5, 31), L, U),        # chest front face y=5; -Y = forward
-    "socket.back": ("chest", (0, -5, 31), R, U),         # back face y=-5; -Y = backward
-    "socket.belt": ("pelvis", (0, 0, 23), L, U),         # belt centre line, -Y forward
-    "socket.shoulder.R": ("upper_arm.R", (9.5, 0, 36), F, U),   # top of deltoid, -Y = +X (outward)
-    "socket.hip.R": ("pelvis", (7, 0, 20), F, U),        # -Y = +X (outward, right side)
-    "socket.hand.R": ("hand.R", (9.5, 0.5, 16), F, U),   # fist centre; +X barrel forward, -Y = +X
-    "socket.hand.L": ("hand.L", (-9.5, 0.5, 16), F, U),
+    "socket.face": ("head", (0, 7, 47), L, U),          # face plane y=7 (canvas centre row 7); -Y = forward
+    "socket.eyes": ("head", (0, 7, 45.5), L, U),        # eye line (canvas rows 7..10)
+    "socket.chest": ("chest", (0, 5, 32), L, U),        # chest front face y=5; -Y = forward
+    "socket.back": ("chest", (0, -5, 32), R, U),         # back face y=-5; -Y = backward
+    "socket.belt": ("pelvis", (0, 0, 24), L, U),         # belt centre line, -Y forward
+    "socket.shoulder.R": ("upper_arm.R", (9.5, 0, 37), F, U),   # top of deltoid, -Y = +X (outward)
+    "socket.hip.R": ("pelvis", (7, 0, 21), F, U),        # -Y = +X (outward, right side)
+    "socket.hand.R": ("hand.R", (9.5, 0.5, 18), F, U),   # fist centre; +X barrel forward, -Y = +X
+    "socket.hand.L": ("hand.L", (-9.5, 0.5, 18), F, U),
     "socket.foot.R": ("foot.R", (4, 0, 0), L, U),        # sole centre under ankle, -Y forward
-    "socket.glove.R": ("hand.R", (9.5, 0, 20), L, U),    # wrist centre, -Y forward
+    "socket.glove.R": ("hand.R", (9.5, 0, 21), L, U),    # wrist centre, -Y forward
 }
 
 

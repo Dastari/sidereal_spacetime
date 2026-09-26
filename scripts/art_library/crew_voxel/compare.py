@@ -39,7 +39,7 @@ def main():
         if ob.type == "EMPTY":
             ob.hide_render = True
         if ob.type == "MESH" and ob.name.startswith("GEO-"):
-            ob.hide_render = not ob.name.endswith(f"-{a.variant}") or bool(ob.get("hiddenByGear"))
+            ob.hide_render = not ob.name.endswith(f"-{a.variant}") or bool(ob.get("hiddenByGear")) or bool(ob.get("defaultHidden"))
         elif ob.type == "MESH" and not ob.name.startswith("review_floor"):
             ob.hide_render = True
     if arm:

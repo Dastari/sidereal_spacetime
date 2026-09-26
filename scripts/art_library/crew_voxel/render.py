@@ -286,7 +286,7 @@ REV = __import__("rig").REVISION
 
 
 def visible_meshes(b):
-    return [o for o in b["meshes"].values() if not o.get("hiddenByGear")] + [b["hair"]]
+    return [o for o in b["meshes"].values() if not o.get("defaultHidden")] + [b["hair"]]
 POSE_SHEET = [("idle", "idle.png", 4), ("walk", "walk.png", 4), ("run", "run.png", 4),
               ("aim_rifle", "aim.png", 4), ("wave", None, 4)]
 

@@ -23,7 +23,7 @@ import bpy
 import numpy as np
 
 VOXEL = 1.0 / 32.0
-SLOTS = ["skin", "hair", "eye", "suit_primary", "suit_secondary", "accent", "metal", "dark", "emit", "glass"]
+SLOTS = ["skin", "hair", "eye", "suit_primary", "suit_secondary", "accent", "metal", "dark", "emit", "glass", "face"]
 SI = {s: i for i, s in enumerate(SLOTS)}
 
 # default "base crew" slot table (linear RGB). Themes/roles/player colours are further tables.
@@ -46,6 +46,7 @@ DEFAULT_THEME = {
     "dark": srgb("#1c1f2b"),
     "emit": srgb("#38c8ff"),
     "glass": srgb("#7fd0ff"),
+    "face": srgb("#f3a98d"),
 }
 # the r002 lavender base-rig palette, kept as a named theme
 THEME_BASE_RIG = dict(DEFAULT_THEME, suit_primary=srgb("#a78db6"), suit_secondary=srgb("#6c5989"),
@@ -56,6 +57,7 @@ SLOT_PBR = {
     "skin": (0.6, 0.0, 0.15), "hair": (0.7, 0.0, 0.3), "eye": (0.2, 0.0, 0.0),
     "suit_primary": (0.62, 0.0, 0.3), "suit_secondary": (0.6, 0.0, 0.3), "accent": (0.5, 0.0, 0.3),
     "metal": (0.4, 0.35, 0.2), "dark": (0.7, 0.0, 0.3), "emit": (0.4, 0.0, 0.0), "glass": (0.05, 0.0, 0.0),
+    "face": (0.6, 0.0, 0.0),
 }
 EMISSIVE = {"emit": 6.0}
 
@@ -283,6 +285,14 @@ class Part:
             out.islands.append(m)
         return out
 
+    def shifted(self, dz=0, dy=0, dx=0):
+        out = Part()
+        for v in self.islands:
+            m = Vol()
+            m.c = {(x + dx, y + dy, z + dz): s for (x, y, z), s in v.c.items()}
+            out.islands.append(m)
+        return out
+
     def merged(self, other):
         out = Part()
         out.islands = self.islands + other.islands
@@ -394,6 +404,21 @@ def mesh_part(part, name, mats=None, bevel=0.011, segments=2, seed=0, jitter=0.0
     return me
 
 
+def face_uv(me, skull):
+    """Face canvas UV (FACE_ATLAS_SPEC): the flat front plane is a 16 x 16 px pixel canvas, 1 px = 1
+    fine voxel. u = (x1 - x) / width (column 0 = character's right, i.e. viewer's left), v = (z - z0) / height."""
+    x1, z0 = skull["x1"] * VOXEL, skull["z0"] * VOXEL
+    wdt, hgt = (skull["x1"] - skull["x0"]) * VOXEL, (skull["z1"] - skull["z0"]) * VOXEL
+    uv = me.uv_layers["UVMap"]
+    fi = SI["face"]
+    for p in me.polygons:
+        if p.material_index != fi:
+            continue
+        for li in p.loop_indices:
+            c = me.vertices[me.loops[li].vertex_index].co
+            uv.data[li].uv = (min(1, max(0, (x1 - c.x) / wdt)), min(1, max(0, (c.z - z0) / hgt)))
+
+
 def soften(ob):
     """Big faces stay flat, bevels read as soft rounded edges: weighted (face-area) custom normals,
     baked into the mesh so glTF exports them."""
@@ -408,7 +433,7 @@ def soften(ob):
     return ob
 
 
-def slot_materials(theme, tint_img=None, normal_img=None, prefix="crew"):
+def slot_materials(theme, tint_img=None, normal_img=None, prefix="crew", face_img=None):
     """One glTF-exportable Principled material per slot: baseColorFactor x COLOR_0 (island tone,
     blush, baked AO). r002: no tiling texture or normal map (owner: no visible per-voxel grid)."""
     mats = {}
@@ -426,6 +451,19 @@ def slot_materials(theme, tint_img=None, normal_img=None, prefix="crew"):
             b.inputs["Base Color"].default_value = (*col, 1)
             b.inputs["Alpha"].default_value = 0.45
             m.surface_render_method = "BLENDED"
+            mats[s] = m
+            continue
+        if s == "face" and face_img is not None:
+            # animatable pixel face: runtime replaces this texture with the composed atlas state
+            uvn = nt.nodes.new("ShaderNodeUVMap")
+            uvn.uv_map = "UVMap"
+            tex = nt.nodes.new("ShaderNodeTexImage")
+            tex.name = "face_texture"
+            tex.image = face_img
+            tex.interpolation = "Closest"
+            tex.extension = "EXTEND"
+            nt.links.new(uvn.outputs["UV"], tex.inputs["Vector"])
+            nt.links.new(tex.outputs["Color"], b.inputs["Base Color"])
             mats[s] = m
             continue
         rgb = nt.nodes.new("ShaderNodeRGB")

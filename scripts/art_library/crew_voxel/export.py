@@ -51,7 +51,7 @@ def export_all(out, arm, bodies, socks, actions, stats):
         lo = [min(v.bounds()[0][i] for v in p.values()) for i in range(3)]
         hi = [max(v.bounds()[1][i] for v in p.values()) for i in range(3)]
         parts.append({"id": f"body.{variant}", "meshes": {r: o.name for r, o in b["meshes"].items()},
-                      "tris": stats[variant]["tris"], "trisByRegion": stats[variant]["trisByRegion"],
+                      "trisDefaultLook": stats[variant]["trisDefaultLook"], "trisByRegion": stats[variant]["trisByRegion"],
                       "slots": sorted({s for v in p.values() for s in v.slots()}, key=voxkit.SI.get),
                       "boundsVox": [lo, hi], "bounds": [rig.m(lo), rig.m(hi)]})
         hlo, hhi = hair.bounds()
@@ -68,5 +68,6 @@ def export_all(out, arm, bodies, socks, actions, stats):
         "parts": parts,
         "actions": actions,
         "files": files,
-        "textures": {},
+        "textures": {"face/face-default.png": _sha(f"{out}/face/face-default.png"),
+                     "face/face-atlas.json": _sha(f"{out}/face/face-atlas.json")},
     }
