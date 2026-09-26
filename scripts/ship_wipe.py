@@ -6,7 +6,7 @@ the live database and nothing runs on deploy. Operator reducers are invoked
 with the local SpacetimeDB CLI identity (the deployment owner). Backups are
 written outside git (``.runtime/ship-wipe-backups``, mode 0600).
 
-See docs/operations/ship_wipe_runbook.md.
+See docs/handoffs/ship_wipe_runbook.md.
 """
 import argparse
 import hashlib
@@ -158,8 +158,8 @@ def load_backup(path, database):
 
 
 def policy(args):
-    call(args.server, args.database, 'operator_set_starter_ships', require_operation_id(args.operation_id),
-         args.enabled == 'true')
+    call(args.server, args.database, 'operator_set_starter_prefab', require_operation_id(args.operation_id),
+         args.starter_prefab_id, args.catalog_revision, args.allow_legacy)
     print(json.dumps({'policy': table(args.server, args.database, 'ship_policy'),
                       **ledger(args.server, args.database, args.operation_id)}, indent=1))
 
@@ -191,8 +191,11 @@ def apply(args):
 
 
 def assign(args):
+    pose = args.spawn_pose or ''
+    if pose:
+        json.loads(pose)  # fail fast on malformed JSON before calling the reducer
     call(args.server, args.database, 'operator_assign_prefab_ship', require_operation_id(args.operation_id),
-         args.character_id, args.prefab_id, args.expected_ship_id, args.allow_legacy)
+         args.character_id, args.prefab_id, args.catalog_revision, pose, args.expected_ship_id, args.allow_legacy)
     print(json.dumps(ledger(args.server, args.database, args.operation_id), indent=1))
 
 
@@ -234,9 +237,11 @@ def main():
     p = common(sub.add_parser('export', help='write a private pre-wipe JSON backup'))
     p.add_argument('--out-dir', help='defaults to .runtime/ship-wipe-backups (outside git)')
     p.set_defaults(func=export)
-    p = common(sub.add_parser('policy', help='enable/disable legacy starter ships for new characters'))
+    p = common(sub.add_parser('policy', help='set the starter prefab for new characters ("" = wait for a ship)'))
     p.add_argument('--operation-id', required=True)
-    p.add_argument('--enabled', required=True, choices=['true', 'false'])
+    p.add_argument('--starter-prefab-id', required=True, help='registered prefab id, or "" for none (default policy)')
+    p.add_argument('--catalog-revision', default='', help='expected catalog revision of that prefab')
+    p.add_argument('--allow-legacy', action='store_true', help='isolated legacy regression only; never on live')
     p.set_defaults(func=policy)
     p = common(sub.add_parser('dry-run', help='record wipe counts without changing state'))
     p.add_argument('--operation-id', required=True)
@@ -254,8 +259,10 @@ def main():
     p.add_argument('--operation-id', required=True)
     p.add_argument('--character-id', required=True)
     p.add_argument('--prefab-id', required=True)
+    p.add_argument('--catalog-revision', required=True, help='expected catalog revision of the prefab')
+    p.add_argument('--spawn-pose', default='', help='"" or {"kind":"berth"} or {"kind":"at","systemId":...,"x":...,"y":...,"heading":...}')
     p.add_argument('--expected-ship-id', default='')
-    p.add_argument('--allow-legacy', action='store_true', help='tests only: legacy Wayfarer stand-in')
+    p.add_argument('--allow-legacy', action='store_true', help='isolated legacy regression only; never on live')
     p.set_defaults(func=assign)
     p = common(sub.add_parser('verify', help='compare map state with a backup and report post-wipe invariants'))
     p.add_argument('--backup', required=True)

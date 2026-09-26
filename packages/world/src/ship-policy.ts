@@ -1,43 +1,67 @@
 import { SenderError } from "spacetimedb/server";
 import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
-import { priorOperation, requireShipOperator } from "./ship-operator";
+import { archiveJson, priorOperation, requireShipOperator } from "./ship-operator";
 import { issueWayfarerPersonalKit } from "./wayfarer-personal-kit";
+import { boardPrefabShip, prefabShipSpawner, requireSpawner } from "./ship-assign";
+import { createWayfarerStarterAuthority } from "./wayfarer-starter-authority";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadDb = {
   shipPolicy: {
-    id: { find(id: string): { starterShipsEnabled: boolean } | null | undefined };
+    id: {
+      find(id: string):
+        | { starterPrefabId: string; revision: bigint }
+        | null
+        | undefined;
+    };
   };
 };
 
 export const SHIP_POLICY_ID = "global";
 
-/** Absent policy row keeps the historical behaviour, so publishing this module
- * changes nothing until the operator explicitly disables starter ships. */
-export function starterShipsEnabled(ctx: { db: ReadDb }) {
-  return ctx.db.shipPolicy.id.find(SHIP_POLICY_ID)?.starterShipsEnabled ?? true;
+/** Configured starter prefab, or "" (the default, also when no policy row
+ * exists): new characters never receive a legacy Wayfarer and wait for an
+ * operator-assigned ship. */
+export function starterPrefabId(ctx: { db: ReadDb }) {
+  return ctx.db.shipPolicy.id.find(SHIP_POLICY_ID)?.starterPrefabId ?? "";
 }
 
-/** A character that exists without any ship: after a wipe, or created while
- * starter ships are disabled. It has no frame to walk in and no flight input
- * until an operator assigns a ship. */
+/** Legacy starter configured (isolated legacy regression only). */
+export function legacyStarterConfigured(ctx: { db: ReadDb }) {
+  const id = starterPrefabId(ctx);
+  return !!id && !!prefabShipSpawner(id)?.legacy;
+}
+
+/** A character that exists without any ship: after a wipe, or created while no
+ * starter prefab is configured. No frame, no flight input, until boarded. */
 export function isAwaitingShip(actor: { shipId: string }) {
   return actor.shipId === "";
 }
 
-export function setStarterShipPolicy(
+export function setStarterPrefab(
   ctx: Context,
-  args: { operationId: string; enabled: boolean },
+  args: {
+    operationId: string;
+    prefabId: string;
+    expectedCatalogRevision: string;
+    allowLegacy: boolean;
+  },
 ) {
   requireShipOperator(ctx);
-  const request = JSON.stringify({ enabled: args.enabled });
+  const request = JSON.stringify({
+    prefabId: args.prefabId,
+    expectedCatalogRevision: args.expectedCatalogRevision,
+    allowLegacy: args.allowLegacy,
+  });
   if (priorOperation(ctx.db, ctx.sender, args.operationId, "starter-policy", request))
     return;
+  if (args.prefabId)
+    requireSpawner(args.prefabId, args.expectedCatalogRevision, args.allowLegacy);
   const prior = ctx.db.shipPolicy.id.find(SHIP_POLICY_ID);
   const row = {
     id: SHIP_POLICY_ID,
-    starterShipsEnabled: args.enabled,
+    starterPrefabId: args.prefabId,
     revision: (prior?.revision ?? 0n) + 1n,
     operationId: args.operationId,
     updatedMicros: ctx.timestamp.microsSinceUnixEpoch,
@@ -49,17 +73,16 @@ export function setStarterShipPolicy(
     principal: ctx.sender,
     kind: "starter-policy",
     request,
-    summaryJson: JSON.stringify({
-      starterShipsEnabled: args.enabled,
-      previous: prior ? prior.starterShipsEnabled : null,
-      revision: row.revision.toString(),
+    summaryJson: archiveJson({
+      starterPrefabId: args.prefabId,
+      previous: prior ? prior.starterPrefabId : null,
+      revision: row.revision,
     }),
     createdMicros: ctx.timestamp.microsSinceUnixEpoch,
   });
 }
 
-/** Onboarding while starter ships are disabled: a persistent character with its
- * personal carried kit and no ship, in the awaiting-ship state. */
+/** Persistent character with its personal carried kit and no ship. */
 export function createShiplessCharacter(ctx: Context, name: string) {
   const clean = name.trim();
   if (clean.length < 2 || clean.length > 40)
@@ -83,4 +106,29 @@ export function createShiplessCharacter(ctx: Context, name: string) {
   });
   issueWayfarerPersonalKit(ctx, id);
   return id;
+}
+
+/** New-account onboarding. Never creates a legacy Wayfarer unless the operator
+ * explicitly configured the legacy regression starter. With no starter prefab
+ * (the default) the character waits for an operator-assigned ship. */
+export function onboardNewCharacter(ctx: Context, name: string) {
+  const prefabId = starterPrefabId(ctx);
+  const spawner = prefabId ? prefabShipSpawner(prefabId) : undefined;
+  // Isolated legacy regression only: the historical all-in-one starter writer.
+  if (spawner?.legacy) {
+    createWayfarerStarterAuthority(ctx, name.trim());
+    return [...ctx.db.character.by_owner.filter(ctx.sender)][0]!.id;
+  }
+  const characterId = createShiplessCharacter(ctx, name);
+  if (!spawner) return characterId; // No (or unregistered) starter: wait for a ship.
+  const actor = ctx.db.character.id.find(characterId)!;
+  boardPrefabShip(
+    ctx,
+    actor,
+    spawner,
+    { pose: { kind: "berth" }, name: actor.name },
+    `starter:${characterId}`,
+    { next: 0 },
+  );
+  return characterId;
 }

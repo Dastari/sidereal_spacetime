@@ -36,7 +36,7 @@ import LeaveConstructionReviewReducer from "../leave_construction_review_reducer
 import MoveCargoCarrierReducer from "../move_cargo_carrier_reducer";
 import MoveInventoryItemReducer from "../move_inventory_item_reducer";
 import OperatorAssignPrefabShipReducer from "../operator_assign_prefab_ship_reducer";
-import OperatorSetStarterShipsReducer from "../operator_set_starter_ships_reducer";
+import OperatorSetStarterPrefabReducer from "../operator_set_starter_prefab_reducer";
 import OperatorWipePlayerShipsReducer from "../operator_wipe_player_ships_reducer";
 import PublishConstructionBlueprintReducer from "../publish_construction_blueprint_reducer";
 import RefitExistingWayfarerReducer from "../refit_existing_wayfarer_reducer";
@@ -94,7 +94,7 @@ export type LeaveConstructionReviewParams = __Infer<typeof LeaveConstructionRevi
 export type MoveCargoCarrierParams = __Infer<typeof MoveCargoCarrierReducer>;
 export type MoveInventoryItemParams = __Infer<typeof MoveInventoryItemReducer>;
 export type OperatorAssignPrefabShipParams = __Infer<typeof OperatorAssignPrefabShipReducer>;
-export type OperatorSetStarterShipsParams = __Infer<typeof OperatorSetStarterShipsReducer>;
+export type OperatorSetStarterPrefabParams = __Infer<typeof OperatorSetStarterPrefabReducer>;
 export type OperatorWipePlayerShipsParams = __Infer<typeof OperatorWipePlayerShipsReducer>;
 export type PublishConstructionBlueprintParams = __Infer<typeof PublishConstructionBlueprintReducer>;
 export type RefitExistingWayfarerParams = __Infer<typeof RefitExistingWayfarerReducer>;

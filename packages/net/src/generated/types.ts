@@ -1591,7 +1591,7 @@ export type ShipOperatorOperation = __Infer<typeof ShipOperatorOperation>;
 
 export const ShipPolicy = __t.object("ShipPolicy", {
   id: __t.string(),
-  starterShipsEnabled: __t.bool(),
+  starterPrefabId: __t.string(),
   revision: __t.u64(),
   operationId: __t.string(),
   updatedMicros: __t.u64(),

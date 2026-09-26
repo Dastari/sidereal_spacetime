@@ -1,15 +1,17 @@
-/** Isolated ship-wipe rehearsal. Run through scripts/ship_wipe_rehearsal.py
- * (npm run smoke:ship-wipe), never against a live database. The database was
- * seeded by the full standard smoke under the live baseline module and then
- * upgraded in place to this module; this script adds cargo/ground items,
- * executes the operator runbook tooling and checks invariants through both
- * operator SQL and ordinary player views. */
+/** Isolated ship-wipe rehearsal, post-upgrade half. Run through
+ * scripts/ship_wipe_rehearsal.py (npm run smoke:ship-wipe), never against a
+ * live database. The database was seeded under the live baseline module
+ * (scripts/ship-wipe-seed.ts: starter Wayfarers, ship cargo, a ground drop,
+ * optionally the full standard smoke) and upgraded in place to this module.
+ * This script executes the operator runbook tooling exactly as documented and
+ * checks invariants through operator SQL and ordinary player views. It never
+ * assigns the legacy Wayfarer: the only way back aboard is a registered
+ * non-legacy prefab (SHIPS-PREFABS), which this authority does not have yet. */
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { writeFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { DbConnection, tables } from "../packages/net/src/generated";
-import { walkNative } from "./native-starter-smoke";
 
 const host = process.env.SIDEREAL_SMOKE_URL ?? "";
 const database = process.env.SIDEREAL_SMOKE_DATABASE ?? "";
@@ -18,6 +20,19 @@ if (!host || !database.endsWith("-smoke"))
   throw Error("Ship wipe smoke requires an isolated -smoke database");
 if (new URL(host).port === "3100")
   throw Error("Refusing to rehearse a ship wipe on the live server port");
+const seed = JSON.parse(readFileSync(join(evidenceDirectory, "ship-wipe-seed.json"), "utf8")) as {
+  database: string;
+  accounts: {
+    name: string;
+    token: string;
+    characterId: string;
+    shipId: string;
+    personalKit: string[];
+    cargoItemId?: string;
+    groundItemId?: string;
+  }[];
+};
+if (seed.database !== database) throw Error("Seed evidence belongs to another database");
 
 const wait = async (fn: () => boolean, message: string, ms = 10000) => {
   const end = Date.now() + ms;
@@ -27,32 +42,24 @@ const wait = async (fn: () => boolean, message: string, ms = 10000) => {
   }
   throw Error("Timeout: " + message);
 };
-async function client() {
+async function client(token?: string) {
   let ready = false;
   const connection = DbConnection.builder()
     .withUri(host)
     .withDatabaseName(database)
+    .withToken(token)
     .onConnect((c) => {
       c.subscriptionBuilder()
         .onApplied(() => (ready = true))
         .subscribe([
           tables.ownCharacters,
           tables.ownShips,
-          tables.ownStations,
           tables.ownGameShipAccess,
           tables.ownConstructionLocation,
-          tables.ownConstructionInstances,
           tables.ownWorldAdmission,
           tables.ownInventoryState,
           tables.ownInventoryItems,
-          tables.ownInventoryContainers,
-          tables.ownInventoryHotbar,
           tables.ownGroundItems,
-          tables.ownReachableCargoContainers,
-          tables.ownReachableCargoItems,
-          tables.ownCarriedInventoryRevisions,
-          tables.visibleShipDescriptions,
-          tables.visibleBodyDescriptions,
         ]);
     })
     .build();
@@ -78,74 +85,28 @@ const sqlRows = (query: string) => {
 };
 
 const evidence: Record<string, unknown> = { date: new Date().toISOString(), database };
-const x = await client(),
-  y = await client();
+const owner = seed.accounts[0]!;
+const x = await client(owner.token);
 try {
-  await x.reducers.enterLab({ name: "Wipe Cargo Owner" });
-  await y.reducers.enterLab({ name: "Wipe Bystander" });
-  await x.reducers.claimStarterKit({});
-  await wait(() => x.db.ownShips.count() === 1n && y.db.ownShips.count() === 1n, "new starter ships");
-  await wait(() => x.db.ownInventoryItems.count() === 7n, "starter kit");
-  const kit = () => [...x.db.ownInventoryItems.iter()];
-  const find = (d: string) => kit().find((i) => i.definitionId === d)!;
-  const state = () => [...x.db.ownInventoryState.iter()][0]!;
-  const startKit = kit().map((i) => i.id).sort();
-
-  // Representative ship-held cargo: store the pistol in a native ship container.
-  await x.reducers.claimInputControl({});
-  for (const [px, py] of [[0, -1.5], [0, 3], [-2.4, 3], [-3.5, 2.75]] as const)
-    await walkNative(x, px, py);
-  const cargo = () => [...x.db.ownReachableCargoContainers.iter()].filter((c) => c.placedObjectId);
-  await wait(() => cargo().length === 4, "reachable cargo");
-  const revision = (id: string) =>
-    [...x.db.ownCarriedInventoryRevisions.iter()].find((r) => r.id === id)?.revision ??
-    cargo().find((r) => r.id === id)?.revision;
-  const pistol = find("compact-pistol");
-  const root = cargo()[0]!;
-  await x.reducers.transferScopedCargoItem({
-    operationId: "ship-wipe-smoke-cargo-1",
-    itemId: pistol.id,
-    sourceContainerId: pistol.containerId,
-    destinationContainerId: root.id,
-    x: 0,
-    y: 0,
-    rotated: false,
-    expectedItemRevision: revision(pistol.id)!,
-    expectedSourceRevision: revision(pistol.containerId)!,
-    expectedDestinationRevision: revision(root.id)!,
-    expectedCharacterRevision: state().revision,
-  });
-  await wait(() => !kit().some((i) => i.id === pistol.id), "pistol in ship cargo");
-  // Representative ground item on the deck.
-  const scanner = find("scanner");
-  await x.reducers.dropInventoryItem({
-    itemId: scanner.id,
-    expectedRevision: state().revision,
-    operationId: "ship-wipe-smoke-drop-1",
-  });
-  await wait(() => [...x.db.ownGroundItems.iter()].some((i) => i.id === scanner.id), "ground scanner");
-  // The dropped scanner is still listed as the owner's item while it lies on the
-  // deck; it is ship-held (ground on a ship) and is archived with the ship.
-  const personalBefore = kit().map((i) => i.id).filter((id) => id !== scanner.id).sort();
-  assert.equal(personalBefore.length, 5);
+  await wait(() => x.db.ownShips.count() === 1n, "owner still has the legacy ship before the wipe");
   const actorX = [...x.db.ownCharacters.iter()][0]!;
-  evidence.seed = {
-    cargoItem: pistol.id,
-    groundItem: scanner.id,
-    personalKitBefore: personalBefore.length,
-    starterKit: startKit.length,
-  };
+  assert.equal(actorX.id, owner.characterId);
+
+  // Default policy after the upgrade: new accounts never get a legacy Wayfarer.
+  const early = await client();
+  await early.reducers.enterLab({ name: "Early Newcomer" });
+  await wait(() => early.db.ownCharacters.count() === 1n && early.db.ownInventoryItems.count() === 7n, "shipless onboarding");
+  assert.equal(early.db.ownShips.count(), 0n);
+  assert.equal([...early.db.ownCharacters.iter()][0]!.shipId, "");
+  evidence.defaultOnboardingBeforeWipe = { ships: 0, kit: 7 };
+  early.disconnect();
 
   // Non-operator identities can never reach ship maintenance.
-  await assert.rejects(x.reducers.operatorSetStarterShips({ operationId: "attack-policy-01", enabled: false }));
   await assert.rejects(
-    x.reducers.operatorWipePlayerShips({
-      operationId: "attack-wipe-0001",
-      dryRun: true,
-      expectedShips: 0,
-      expectedInstances: 0,
-      expectedCharacters: 0,
-    }),
+    x.reducers.operatorSetStarterPrefab({ operationId: "attack-policy-01", prefabId: "", expectedCatalogRevision: "", allowLegacy: false }),
+  );
+  await assert.rejects(
+    x.reducers.operatorWipePlayerShips({ operationId: "attack-wipe-0001", dryRun: true, expectedShips: 0, expectedInstances: 0, expectedCharacters: 0 }),
   );
   evidence.nonOperatorRejected = true;
 
@@ -154,19 +115,32 @@ try {
   evidence.backup = { counts: backup.counts, sha256: backup.sha256, bytes: backup.bytes };
   const mode = execFileSync("stat", ["-c", "%a", backup.backup], { encoding: "utf8" }).trim();
   assert.equal(mode, "600", "backup is private");
-  tool("policy", "--operation-id", "rehearsal-policy-off-1", "--enabled", "false");
+  const policy = tool("policy", "--operation-id", "rehearsal-policy-none-1", "--starter-prefab-id", "");
+  assert.equal(policy.summary.starterPrefabId, "");
   const dry = tool("dry-run", "--operation-id", "rehearsal-dry-run-0001");
-  evidence.dryRun = { counts: dry.summary.counts, deleteRows: dry.summary.deleteRows, preservedMapRows: dry.summary.preservedMapRows };
+  evidence.dryRun = {
+    counts: dry.summary.counts,
+    ships: dry.summary.ships,
+    characters: dry.summary.characters,
+    deleteRows: dry.summary.deleteRows,
+    archivedInventory: dry.summary.archivedInventory,
+    preservedMapRows: dry.summary.preservedMapRows,
+  };
   assert.deepEqual(
     { ships: dry.summary.counts.ships, instances: dry.summary.counts.instances, characters: dry.summary.counts.characters },
     backup.counts,
   );
-  assert(dry.summary.deleteRows.inventoryItem >= 2, "cargo and ground items are ship-held");
-  // Stale expectations are refused before any mutation.
+  const reasons = Object.fromEntries(
+    dry.summary.archivedInventory.map((r: { itemId: string; reason: string }) => [r.itemId, r.reason]),
+  );
+  assert.equal(reasons[owner.cargoItemId!], "ship-cargo-container");
+  assert.equal(reasons[owner.groundItemId!], "ground-drop-on-ship-deck");
+  for (const account of seed.accounts)
+    for (const id of account.personalKit) assert(!(id in reasons), "personal item is never archived");
   assert.throws(() =>
     tool("apply", "--operation-id", "rehearsal-apply-stale1", "--expected-ships", "999", "--expected-instances", String(backup.counts.instances), "--expected-characters", String(backup.counts.characters), "--backup", backup.backup, "--confirm-database", database),
   );
-  const applied = tool(
+  const applyArgs = [
     "apply",
     "--operation-id", "rehearsal-apply-00001",
     "--expected-ships", String(backup.counts.ships),
@@ -174,17 +148,23 @@ try {
     "--expected-characters", String(backup.counts.characters),
     "--backup", backup.backup,
     "--confirm-database", database,
-  );
+  ];
+  const applied = tool(...applyArgs);
   evidence.apply = { after: applied.after, archivedRows: applied.summary.archivedRows };
   assert.deepEqual(applied.after, { ships: 0, instances: 0, characters: backup.counts.characters });
-  // Replaying the same operation is a no-op.
-  tool("apply", "--operation-id", "rehearsal-apply-00001", "--expected-ships", String(backup.counts.ships), "--expected-instances", String(backup.counts.instances), "--expected-characters", String(backup.counts.characters), "--backup", backup.backup, "--confirm-database", database);
+  tool(...applyArgs); // Replay is a no-op.
   const verified = tool("verify", "--backup", backup.backup, "--expect-wiped");
   evidence.verify = verified;
   assert.equal(verified.mapUnchanged, true);
   assert.equal(verified.charactersAwaitingShip, backup.counts.characters);
+  // Archived, not hard-deleted: the cargo and ground items are in the archive.
+  const archivedIds = sqlRows("SELECT table_name, action, row_json FROM ship_wipe_archive")
+    .filter((r) => r[0] === "inventoryItem" && r[1] === "deleted")
+    .map((r) => JSON.parse(r[2] as string).id);
+  assert(archivedIds.includes(owner.cargoItemId) && archivedIds.includes(owner.groundItemId));
+  evidence.archivedItemIds = archivedIds;
 
-  // Player views: no ship, same character, same personal UUIDs, no crash on re-entry.
+  // Player views: no ship, same character, same personal UUIDs, no failure on re-entry.
   await wait(() => x.db.ownShips.count() === 0n && x.db.ownGameShipAccess.count() === 0n, "ship gone from views");
   await x.reducers.enterLab({ name: "ignored" });
   await x.reducers.claimStarterKit({});
@@ -192,25 +172,23 @@ try {
   assert.equal(afterX.id, actorX.id);
   assert.equal(afterX.name, actorX.name);
   assert.equal(afterX.shipId, "");
-  assert.deepEqual(kit().map((i) => i.id).sort(), personalBefore);
+  const kit = () => [...x.db.ownInventoryItems.iter()].map((i) => i.id).sort();
+  assert.deepEqual(kit(), owner.personalKit);
   assert.equal(x.db.ownConstructionLocation.count(), 0n);
   assert.equal(x.db.ownWorldAdmission.count(), 0n);
   assert.equal([...x.db.ownGroundItems.iter()].length, 0);
-  // Movement intent from an awaiting-ship character is inert (no frame to walk in).
   await x.reducers.setIntent({ sequence: 999n, throttle: 0, turn: 0, dx: 1, dy: 0, sprint: false });
   await new Promise((r) => setTimeout(r, 300));
   const still = [...x.db.ownCharacters.iter()][0]!;
   assert.deepEqual([still.shipId, still.localX, still.localY], ["", 0, 0]);
-  evidence.playerViewsAfterWipe = { ships: 0, personalKitPreserved: personalBefore.length, character: afterX.id };
+  evidence.playerViewsAfterWipe = { ships: 0, personalKitPreserved: owner.personalKit.length, character: afterX.id };
 
-  // New accounts onboard without a ship while starters are disabled.
+  // New accounts after the wipe also wait for a ship.
   const z = await client();
   await z.reducers.enterLab({ name: "Shipless Newcomer" });
   await wait(() => z.db.ownCharacters.count() === 1n && z.db.ownInventoryItems.count() === 7n, "shipless onboarding");
   await z.reducers.claimStarterKit({});
   assert.equal(z.db.ownShips.count(), 0n);
-  assert.equal([...z.db.ownCharacters.iter()][0]!.shipId, "");
-  evidence.shiplessOnboarding = { ships: 0, kit: 7 };
   z.disconnect();
 
   // The world keeps simulating with zero ships.
@@ -220,30 +198,22 @@ try {
   assert(tick() > t0, "shared world tick advances after the wipe");
   evidence.tickAdvances = true;
 
-  // Assignment (legacy stand-in; the runbook uses the SHIPS-PREFABS prefab ID).
+  // The only way back aboard is a registered non-legacy prefab. None is
+  // registered in this authority yet, and the legacy Wayfarer is refused.
   assert.throws(() =>
-    tool("assign", "--operation-id", "rehearsal-assign-refuse", "--character-id", actorX.id, "--prefab-id", "legacy-wayfarer-r002"),
+    tool("assign", "--operation-id", "rehearsal-assign-unknown", "--character-id", actorX.id, "--prefab-id", "fed.s.wren", "--catalog-revision", "ship-components.v1"),
   );
-  const assigned = tool(
-    "assign",
-    "--operation-id", "rehearsal-assign-00001",
-    "--character-id", actorX.id,
-    "--prefab-id", "legacy-wayfarer-r002",
-    "--allow-legacy",
+  assert.throws(() =>
+    tool("assign", "--operation-id", "rehearsal-assign-legacy", "--character-id", actorX.id, "--prefab-id", "legacy-wayfarer-r002", "--catalog-revision", "legacy-wayfarer"),
   );
-  tool("assign", "--operation-id", "rehearsal-assign-00001", "--character-id", actorX.id, "--prefab-id", "legacy-wayfarer-r002", "--allow-legacy");
-  await wait(
-    () => x.db.ownShips.count() === 1n && x.db.ownGameShipAccess.count() === 1n && x.db.ownConstructionLocation.count() === 1n,
-    "assigned ship visible to its owner",
+  assert.throws(() =>
+    tool("policy", "--operation-id", "rehearsal-policy-legacy", "--starter-prefab-id", "legacy-wayfarer-r002", "--catalog-revision", "legacy-wayfarer"),
   );
-  const boarded = [...x.db.ownCharacters.iter()][0]!;
-  assert.equal(boarded.shipId, assigned.summary.shipId);
-  assert.deepEqual(kit().map((i) => i.id).sort(), personalBefore, "assignment does not duplicate the kit");
-  assert.equal(y.db.ownShips.count(), 0n, "other accounts remain shipless");
-  evidence.assign = { shipId: assigned.summary.shipId, prefabId: assigned.summary.prefabId, deckId: assigned.summary.deckId };
+  assert.equal([...x.db.ownCharacters.iter()][0]!.shipId, "", "still awaiting a ship");
+  evidence.assignment = "refused: no registered non-legacy prefab in this authority (SHIPS-PREFABS pending); legacy refused";
   console.log(JSON.stringify(evidence, null, 1));
   writeFileSync(join(evidenceDirectory, "ship-wipe-smoke.json"), JSON.stringify(evidence, null, 1));
 } finally {
   x.disconnect();
-  y.disconnect();
 }
+process.exit(0);

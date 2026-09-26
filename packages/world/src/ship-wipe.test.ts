@@ -24,10 +24,15 @@ import {
 } from "./ship-wipe";
 import {
   createShiplessCharacter,
-  setStarterShipPolicy,
-  starterShipsEnabled,
+  onboardNewCharacter,
+  setStarterPrefab,
+  starterPrefabId,
 } from "./ship-policy";
-import { assignPrefabShip, LEGACY_WAYFARER_PREFAB_ID } from "./ship-assign";
+import {
+  assignPrefabShip,
+  LEGACY_WAYFARER_PREFAB_ID,
+  registerPrefabShipSpawner,
+} from "./ship-assign";
 
 type Row = Record<string, any>;
 let fixtureSequence = 0;
@@ -262,36 +267,86 @@ const mapState = (f: ReturnType<typeof fixture>) =>
     (_, v) => (typeof v === "bigint" ? v.toString() : v),
   );
 
-test("starter policy defaults on and only the operator can change it", () => {
-  const f = fixture();
-  expect(starterShipsEnabled(f.ctx)).toBe(true);
-  expect(() =>
-    setStarterShipPolicy(f.ctx, { operationId: "policy-off-0001", enabled: false }),
-  ).toThrow("Deployment operator");
-  f.as(SHIP_OPERATOR);
-  setStarterShipPolicy(f.ctx, { operationId: "policy-off-0001", enabled: false });
-  expect(starterShipsEnabled(f.ctx)).toBe(false);
-  const before = f.snapshot();
-  setStarterShipPolicy(f.ctx, { operationId: "policy-off-0001", enabled: false });
-  expect(f.snapshot()).toBe(before);
-  expect(() =>
-    setStarterShipPolicy(f.ctx, { operationId: "policy-off-0001", enabled: true }),
-  ).toThrow("different ship maintenance request");
+/** Minimal non-legacy prefab stand-in: boards the existing character with the
+ * rows the interface contract requires (no Wayfarer involved). */
+const TEST_PREFAB = "test.s.probe";
+const REV = "ship-components.v1:test";
+let probeSequence = 0;
+registerPrefabShipSpawner({
+  prefabId: TEST_PREFAB,
+  catalogRevision: REV,
+  blueprintSha256: "f".repeat(64),
+  legacy: false,
+  description: "unit-test prefab",
+  spawn(ctx: any, actor: any, request: any) {
+    const shipId = `probe-ship-${++probeSequence}`,
+      deckId = `probe-deck-${probeSequence}`;
+    const pose =
+      request.pose.kind === "at"
+        ? request.pose
+        : { systemId: "canonical", x: 100 * probeSequence, y: 0, heading: 0 };
+    ctx.db.ship.insert({ id: shipId, owner: actor.owner, name: request.name + " Probe", revision: 1n });
+    ctx.db.shipWorldMotion.insert({ shipId, systemId: pose.systemId, x: pose.x, y: pose.y, heading: pose.heading });
+    ctx.db.character.id.update({ ...actor, shipId, localX: 1, localY: 2 });
+    ctx.db.constructionLocation.insert({ characterId: actor.id, instanceId: shipId, deckId });
+    ctx.db.input.insert({ characterId: actor.id, dx: 0, dy: 0 });
+    ctx.db.worldAdmission.insert({ characterId: actor.id, owner: actor.owner, shipId, systemId: pose.systemId });
+    ctx.db.gameShipAccess.insert({ shipId, instanceId: shipId, owner: actor.owner, characterId: actor.id, deckId, lifecycle: "active" });
+    return { shipId, deckId };
+  },
 });
 
-test("shipless onboarding creates a character with only the personal kit", () => {
+test("starter prefab defaults to none; only the operator changes it; legacy needs explicit opt-in", () => {
+  const f = fixture();
+  expect(starterPrefabId(f.ctx)).toBe("");
+  const set = (operationId: string, prefabId: string, rev: string, allowLegacy = false) =>
+    setStarterPrefab(f.ctx, { operationId, prefabId, expectedCatalogRevision: rev, allowLegacy });
+  expect(() => set("policy-0000001", TEST_PREFAB, REV)).toThrow("Deployment operator");
+  f.as(SHIP_OPERATOR);
+  expect(() => set("policy-0000001", "missing-prefab", REV)).toThrow("Unknown prefab");
+  expect(() => set("policy-0000001", TEST_PREFAB, "stale")).toThrow("catalog revision");
+  expect(() => set("policy-0000001", LEGACY_WAYFARER_PREFAB_ID, "legacy-wayfarer")).toThrow("legacy ship");
+  set("policy-0000001", TEST_PREFAB, REV);
+  expect(starterPrefabId(f.ctx)).toBe(TEST_PREFAB);
+  const before = f.snapshot();
+  set("policy-0000001", TEST_PREFAB, REV);
+  expect(f.snapshot()).toBe(before);
+  expect(() => set("policy-0000001", "", "")).toThrow("different ship maintenance request");
+  set("policy-0000002", "", "");
+  expect(starterPrefabId(f.ctx)).toBe("");
+});
+
+test("new players never get a legacy Wayfarer by default: shipless with the personal kit", () => {
   const f = fixture();
   f.as(OWNER_A);
-  const id = createShiplessCharacter(f.ctx, "  Nova  ");
+  const id = onboardNewCharacter(f.ctx, "  Nova  ");
   const actor = f.db.character.id.find(id);
   expect(actor).toMatchObject({ name: "Nova", shipId: "", localX: 0, localY: 0 });
   expect(f.db.ship.rows).toEqual([]);
+  expect(f.db.constructionInstance.rows).toEqual([]);
   expect(f.db.inventoryItem.rows.filter((r: Row) => r.characterId === id)).toHaveLength(7);
   expect(f.db.inventoryContainer.rows.every((c: Row) => c.shipId === "")).toBe(true);
   expect(() => createShiplessCharacter(f.ctx, "Again")).toThrow("already has a character");
 });
 
-test("dry-run reports counts and changes nothing but its ledger row", () => {
+test("a configured non-legacy starter prefab boards new players through the spawner", () => {
+  const f = fixture();
+  f.as(SHIP_OPERATOR);
+  setStarterPrefab(f.ctx, { operationId: "policy-0000001", prefabId: TEST_PREFAB, expectedCatalogRevision: REV, allowLegacy: false });
+  f.as(OWNER_B);
+  const id = onboardNewCharacter(f.ctx, "Rook");
+  const actor = f.db.character.id.find(id);
+  expect(actor.shipId).toMatch(/^probe-ship-/);
+  expect(f.db.gameShipAccess.shipId.find(actor.shipId)).toMatchObject({ characterId: id, lifecycle: "active" });
+  expect(
+    f.db.inventoryContainer.rows
+      .filter((c: Row) => c.characterId === id)
+      .every((c: Row) => c.shipId === actor.shipId),
+  ).toBe(true);
+  expect(f.db.constructionInstance.rows).toEqual([]);
+});
+
+test("dry-run reports counts and a per-item manifest and changes nothing but its ledger row", () => {
   const { f } = seeded();
   const args = { operationId: "wipe-dry-0001", dryRun: true, expectedShips: 0, expectedInstances: 0, expectedCharacters: 0 };
   expect(() => wipePlayerShips(f.ctx, args)).toThrow("Deployment operator");
@@ -312,21 +367,27 @@ test("dry-run reports counts and changes nothing but its ledger row", () => {
   expect(summary.deleteRows.inventoryItem).toBe(2);
   expect(summary.deleteRows.inventoryContainer).toBe(9);
   expect(summary.deleteRows.ship).toBe(2);
+  expect(summary.archivedInventory.map((r: Row) => [r.itemId, r.reason]).sort()).toEqual([
+    ["cargo-item", "ship-cargo-container"],
+    ["crate-item", "ground-drop-on-ship-deck"],
+  ]);
+  expect(summary.starterPrefabId).toBe("");
   expect(summary.characters.map((c: Row) => c.archivedItems).sort()).toEqual([0, 2]);
   f.db.shipOperatorOperation.rows.length = 0;
   expect(f.snapshot()).toBe(before);
 });
 
-test("apply requires disabled starters and matching counts, then wipes all ships and preserves characters, personal kit and map", () => {
-  const { f, a, b, personalA } = seeded();
+test("apply refuses a legacy starter or stale counts, then wipes all ships and preserves characters, personal kit and map", () => {
+  const { f, a, personalA } = seeded();
   f.as(SHIP_OPERATOR);
   const expected = { expectedShips: 2, expectedInstances: 3, expectedCharacters: 2 };
   const actorsBefore = f.db.character.rows.map((r: Row) => ({ ...r }));
   const map = mapState(f);
+  setStarterPrefab(f.ctx, { operationId: "policy-legacy-01", prefabId: LEGACY_WAYFARER_PREFAB_ID, expectedCatalogRevision: "legacy-wayfarer", allowLegacy: true });
   expect(() =>
     wipePlayerShips(f.ctx, { operationId: "wipe-apply-0001", dryRun: false, ...expected }),
-  ).toThrow("Disable starter ships");
-  setStarterShipPolicy(f.ctx, { operationId: "policy-off-0001", enabled: false });
+  ).toThrow("legacy starter is configured");
+  setStarterPrefab(f.ctx, { operationId: "policy-none-001", prefabId: "", expectedCatalogRevision: "", allowLegacy: false });
   expect(() =>
     wipePlayerShips(f.ctx, { operationId: "wipe-apply-0001", dryRun: false, ...expected, expectedShips: 3 }),
   ).toThrow("run a new dry-run");
@@ -340,7 +401,6 @@ test("apply requires disabled starters and matching counts, then wipes all ships
     expect(now).toMatchObject({ id: before.id, name: before.name, shipId: "", localX: 0, localY: 0 });
     expect(now.owner.toHexString()).toBe(before.owner.toHexString());
   }
-  // Personal kit (7 items each) survives with identical UUIDs; ship-held rows are archived.
   expect(
     f.db.inventoryItem.rows.filter((r: Row) => r.characterId === a.actor.id).map((r: Row) => r.id).sort(),
   ).toEqual(personalA);
@@ -366,49 +426,108 @@ test("apply requires disabled starters and matching counts, then wipes all ships
   const after = f.snapshot();
   wipePlayerShips(f.ctx, { operationId: "wipe-apply-0001", dryRun: false, ...expected });
   expect(f.snapshot()).toBe(after);
-  // A further wipe on an empty world is valid and archives only character before-images.
   wipePlayerShips(f.ctx, { operationId: "wipe-apply-0002", dryRun: false, expectedShips: 0, expectedInstances: 0, expectedCharacters: 2 });
   expect(counts(f)).toEqual({ ships: 0, instances: 0, characters: 2 });
-  void b;
 });
 
-test("operator assigns a registered prefab to an awaiting character without duplicating the kit", () => {
-  const { f, a, personalA } = seeded();
+test("operator assigns a registered prefab (id, catalog revision, spawn pose) to an awaiting character only", () => {
+  const { f, a, b, personalA } = seeded();
   f.as(SHIP_OPERATOR);
-  setStarterShipPolicy(f.ctx, { operationId: "policy-off-0001", enabled: false });
   wipePlayerShips(f.ctx, { operationId: "wipe-apply-0001", dryRun: false, expectedShips: 2, expectedInstances: 3, expectedCharacters: 2 });
+  const pose = { kind: "at", systemId: "canonical", x: 1234.5, y: -50, heading: 0.5 };
   const args = {
     operationId: "assign-0001",
     characterId: a.actor.id,
-    prefabId: LEGACY_WAYFARER_PREFAB_ID,
+    prefabId: TEST_PREFAB,
+    expectedCatalogRevision: REV,
+    spawnPoseJson: JSON.stringify(pose),
     expectedCharacterShipId: "",
     allowLegacy: false,
   };
   f.as(OWNER_A);
-  expect(() => assignPrefabShip(f.ctx, { ...args, allowLegacy: true })).toThrow("Deployment operator");
+  expect(() => assignPrefabShip(f.ctx, args)).toThrow("Deployment operator");
   f.as(SHIP_OPERATOR);
-  expect(() => assignPrefabShip(f.ctx, args)).toThrow("legacy ship being removed");
   expect(() => assignPrefabShip(f.ctx, { ...args, prefabId: "missing-prefab" })).toThrow("Unknown prefab ship");
-  assignPrefabShip(f.ctx, { ...args, allowLegacy: true });
+  expect(() => assignPrefabShip(f.ctx, { ...args, expectedCatalogRevision: "old" })).toThrow("catalog revision");
+  expect(() =>
+    assignPrefabShip(f.ctx, { ...args, prefabId: LEGACY_WAYFARER_PREFAB_ID, expectedCatalogRevision: "legacy-wayfarer" }),
+  ).toThrow("legacy ship being removed");
+  expect(() => assignPrefabShip(f.ctx, { ...args, spawnPoseJson: '{"kind":"at","x":1}' })).toThrow("Spawn pose");
+  assignPrefabShip(f.ctx, args);
   const actor = f.db.character.id.find(a.actor.id);
-  expect(actor.shipId).not.toBe("");
+  expect(actor.shipId).toMatch(/^probe-ship-/);
   expect(actor.name).toBe("Alpha");
   expect(actor.owner.toHexString()).toBe(OWNER_A);
-  const ship = f.db.ship.id.find(actor.shipId);
-  expect(ship.owner.toHexString()).toBe(OWNER_A);
+  expect(f.db.shipWorldMotion.shipId.find(actor.shipId)).toMatchObject({ x: 1234.5, y: -50, heading: 0.5 });
+  expect(f.db.ship.id.find(actor.shipId).owner.toHexString()).toBe(OWNER_A);
   expect(f.db.gameShipAccess.shipId.find(actor.shipId)).toMatchObject({ characterId: a.actor.id, lifecycle: "active" });
-  expect(f.db.constructionLocation.characterId.find(a.actor.id).instanceId).toBe(actor.shipId);
   expect(
     f.db.inventoryItem.rows.filter((r: Row) => r.characterId === a.actor.id).map((r: Row) => r.id).sort(),
   ).toEqual(personalA);
   expect(
-    f.db.inventoryContainer.rows.filter((c: Row) => c.characterId === a.actor.id).every((c: Row) => c.shipId === actor.shipId),
+    f.db.inventoryContainer.rows
+      .filter((c: Row) => c.characterId === a.actor.id)
+      .every((c: Row) => c.shipId === actor.shipId),
   ).toBe(true);
-  expect(f.db.ship.rows).toHaveLength(1);
+  expect(f.db.character.id.find(b.actor.id).shipId).toBe("");
+  const ledger = JSON.parse(f.db.shipOperatorOperation.operationId.find("assign-0001").summaryJson);
+  expect(ledger).toMatchObject({ prefabId: TEST_PREFAB, catalogRevision: REV, legacy: false, pose: { x: 1234.5 } });
   const after = f.snapshot();
-  assignPrefabShip(f.ctx, { ...args, allowLegacy: true });
+  assignPrefabShip(f.ctx, args);
   expect(f.snapshot()).toBe(after);
+  expect(() => assignPrefabShip(f.ctx, { ...args, operationId: "assign-0002" })).toThrow("Character ship changed");
   expect(() =>
-    assignPrefabShip(f.ctx, { ...args, operationId: "assign-0002", allowLegacy: true }),
-  ).toThrow("Character ship changed");
+    assignPrefabShip(f.ctx, { ...args, operationId: "assign-0003", expectedCharacterShipId: actor.shipId }),
+  ).toThrow("already has a ship");
+});
+
+test("the legacy stand-in is reachable only with an explicit operator opt-in", () => {
+  const { f, a } = seeded();
+  f.as(SHIP_OPERATOR);
+  wipePlayerShips(f.ctx, { operationId: "wipe-apply-0001", dryRun: false, expectedShips: 2, expectedInstances: 3, expectedCharacters: 2 });
+  assignPrefabShip(f.ctx, {
+    operationId: "assign-legacy-1",
+    characterId: a.actor.id,
+    prefabId: LEGACY_WAYFARER_PREFAB_ID,
+    expectedCatalogRevision: "legacy-wayfarer",
+    spawnPoseJson: "",
+    expectedCharacterShipId: "",
+    allowLegacy: true,
+  });
+  const actor = f.db.character.id.find(a.actor.id);
+  expect(f.db.constructionInstance.id.find(actor.shipId)).toBeTruthy();
+  expect(f.db.inventoryItem.rows.filter((r: Row) => r.characterId === a.actor.id)).toHaveLength(7);
+});
+
+test("a spawner that ignores the requested pose is rolled back by the reducer checks", () => {
+  const { f, b } = seeded();
+  f.as(SHIP_OPERATOR);
+  wipePlayerShips(f.ctx, { operationId: "wipe-apply-0001", dryRun: false, expectedShips: 2, expectedInstances: 3, expectedCharacters: 2 });
+  registerPrefabShipSpawner({
+    prefabId: "test.s.liar",
+    catalogRevision: REV,
+    blueprintSha256: "e".repeat(64),
+    legacy: false,
+    description: "ignores pose",
+    spawn(ctx: any, actor: any) {
+      ctx.db.ship.insert({ id: "liar", owner: actor.owner, name: "Liar", revision: 1n });
+      ctx.db.shipWorldMotion.insert({ shipId: "liar", systemId: "canonical", x: 0, y: 0, heading: 0 });
+      ctx.db.character.id.update({ ...actor, shipId: "liar" });
+      ctx.db.constructionLocation.insert({ characterId: actor.id, instanceId: "liar", deckId: "d" });
+      ctx.db.worldAdmission.insert({ characterId: actor.id, shipId: "liar" });
+      ctx.db.gameShipAccess.insert({ shipId: "liar", owner: actor.owner, characterId: actor.id, lifecycle: "active" });
+      return { shipId: "liar", deckId: "d" };
+    },
+  });
+  expect(() =>
+    assignPrefabShip(f.ctx, {
+      operationId: "assign-liar-01",
+      characterId: b.actor.id,
+      prefabId: "test.s.liar",
+      expectedCatalogRevision: REV,
+      spawnPoseJson: JSON.stringify({ kind: "at", systemId: "canonical", x: 9, y: 9, heading: 0 }),
+      expectedCharacterShipId: "",
+      allowLegacy: false,
+    }),
+  ).toThrow("requested pose");
 });

@@ -7,10 +7,9 @@ import { shipPolicy, shipOperatorOperation, shipWipeArchive } from "./ship-opera
 import { wipePlayerShips } from "./ship-wipe";
 import { assignPrefabShip } from "./ship-assign";
 import {
-  createShiplessCharacter,
   isAwaitingShip,
-  setStarterShipPolicy,
-  starterShipsEnabled,
+  onboardNewCharacter,
+  setStarterPrefab,
 } from "./ship-policy";
 import * as rebuiltWayfarer from "./wayfarer-rebuild-installation";
 import { systemZone, shipZoneState, shipZoneProjection } from "./zone-tables";
@@ -531,11 +530,9 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
     });
     return;
   }
-  if (!starterShipsEnabled(ctx)) {
-    createShiplessCharacter(ctx, clean);
-    return;
-  }
-  createWayfarerStarterAuthority(ctx, clean);
+  // Never a legacy Wayfarer by default: with no operator-configured starter
+  // prefab the new character keeps its personal kit and waits for a ship.
+  onboardNewCharacter(ctx, clean);
 });
 export const connectSession = db.clientConnected(connected);
 export const bindGameSession = db.reducer(
@@ -1414,10 +1411,15 @@ export const moveCargoCarrier = db.reducer(
 );
 
 /** Operator-only ship maintenance (deployment identity). See
- * docs/operations/ship_wipe_runbook.md. Never invoked automatically. */
-export const operatorSetStarterShips = db.reducer(
-  { operationId: t.string(), enabled: t.bool() },
-  setStarterShipPolicy,
+ * docs/handoffs/ship_wipe_runbook.md. Never invoked automatically. */
+export const operatorSetStarterPrefab = db.reducer(
+  {
+    operationId: t.string(),
+    prefabId: t.string(),
+    expectedCatalogRevision: t.string(),
+    allowLegacy: t.bool(),
+  },
+  setStarterPrefab,
 );
 export const operatorWipePlayerShips = db.reducer(
   {
@@ -1434,6 +1436,8 @@ export const operatorAssignPrefabShip = db.reducer(
     operationId: t.string(),
     characterId: t.string(),
     prefabId: t.string(),
+    expectedCatalogRevision: t.string(),
+    spawnPoseJson: t.string(),
     expectedCharacterShipId: t.string(),
     allowLegacy: t.bool(),
   },
