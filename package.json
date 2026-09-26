@@ -69,6 +69,8 @@
     "art:roof": "python3 scripts/art_library/run_roof.py",
     "art:side-hull": "python3 scripts/art_library/run_side_hull.py",
     "art:ship-kit": "python3 scripts/art_library/run_ship_kit.py",
+    "prefab:harness": "vite --config scripts/prefab-render-harness/vite.config.ts --port 5391 --strictPort",
+    "prefab:capture": "node scripts/prefab-render-harness/capture.mjs",
     "art:study:hull": "python3 scripts/art_library/run_hull_voxel_study.py",
     "format:check": "node scripts/quality-check.mjs format",
     "format:check:all": "prettier --check \"apps/**/*.{ts,tsx,css,json}\" \"packages/**/*.{ts,tsx,json}\" \"scripts/*.{ts,mjs}\"",
