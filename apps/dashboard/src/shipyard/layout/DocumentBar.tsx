@@ -1,5 +1,14 @@
 import type { LayoutDocument } from "@sidereal/content/ship-layout";
-import { Download, Plus, Redo2, Save, Ship, Undo2, Upload } from "lucide-react";
+import {
+  Blocks,
+  Download,
+  Plus,
+  Redo2,
+  Save,
+  Ship,
+  Undo2,
+  Upload,
+} from "lucide-react";
 import { useRef, useState } from "react";
 import { PublicationDialog } from "./PublicationDialog";
 import type { useLayout } from "./useLayout";
@@ -47,6 +56,16 @@ export function DocumentBar({
         >
           <Redo2 size={16} />
           <span>Redo</span>
+        </button>
+        <button
+          title="Open the prefab ship editor"
+          onClick={() => {
+            history.pushState({}, "", "/shipyard/prefabs");
+            dispatchEvent(new PopStateEvent("popstate"));
+          }}
+        >
+          <Blocks size={16} />
+          <span>Prefab ships</span>
         </button>
         <button onClick={onNew}>
           <Plus size={16} />
