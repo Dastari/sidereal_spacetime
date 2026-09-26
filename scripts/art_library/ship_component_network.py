@@ -13,6 +13,7 @@ fuel amber, air yellow), with risers to the actual port positions.
 import argparse
 import json
 import math
+import os
 import sys
 from pathlib import Path
 
@@ -95,7 +96,7 @@ def main():
     channels = [c for c in a.channels.split(",") if c]
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc = bpy.context.scene
-    detail = K.detail_height("/tmp/_net_detail.png")
+    detail = K.detail_height(scratch_path("detail_height.png"))
     th = K.THEMES["federation"]
     theme_mats = {s: K.slot_material("federation", s, th, detail) for s in K.SLOTS}
     base = X.slot_materials()
@@ -182,3 +183,10 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+def scratch_path(name):
+    """On-disk scratch (never /tmp, which is RAM-backed on the art host)."""
+    d = Path(os.environ.get("SIDEREAL_SCRATCH", str(Path.home() / "sidereal-scratch" / "ship-components")))
+    d.mkdir(parents=True, exist_ok=True)
+    return str(d / name)

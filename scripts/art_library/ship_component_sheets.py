@@ -6,6 +6,7 @@ detail bump, standing labels with key stats, isometric orthographic cameras.
 Nothing here feeds the exported GLBs or the catalog.
 """
 import math
+import os
 from pathlib import Path
 
 import bpy
@@ -119,7 +120,7 @@ def key_stat(c):
 
 
 def display_yaw(frame):
-    return {"face": 0.0, "top": 180.0, "interior": 180.0}[frame]
+    return {"face": 0.0, "top": 135.0, "interior": 180.0}[frame]
 
 
 def label_mats():
@@ -189,9 +190,12 @@ def render(K, catalog, a, exporter):
     comps = {c["id"]: c for c in catalog["components"]}
     bpy.ops.wm.read_factory_settings(use_empty=True)
     sc = bpy.context.scene
-    detail = K.detail_height(str(out / "_detail_height.png"))
-    th = K.THEMES["federation"]
-    theme_mats = {s: K.slot_material("federation", s, th, detail) for s in K.SLOTS}
+    import ship_component_views as V
+    detail = K.detail_height(scratch_path("detail_height.png"))
+    themes = V.Themes(K, detail)
+    theme_mats = themes.get("orion")
+    want = {k for k in getattr(a, "sheet_keys", "").split(",") if k}
+    on = lambda k: not want or k in want
     base_mats = exporter.slot_materials()
     cam = K.setup(sc, a.samples)
     res = (2400, 1350)
@@ -199,6 +203,8 @@ def render(K, catalog, a, exporter):
     lm = label_mats()
     cam_rot = (math.radians(50), 0, math.radians(-14))
     for key, title, rows in SHEETS:
+        if not on(key) and not (key == "weapons" and on("weapons-top")):
+            continue
         coll = bpy.data.collections.new(key)
         sc.collection.children.link(coll)
         objs, front = [], 0.0
@@ -208,7 +214,7 @@ def render(K, catalog, a, exporter):
                 c = comps[cid]
                 ob, _, _ = exporter.component_object(c, base_mats, coll, bevel=True)
                 ob.modifiers["brick"].segments = 2
-                themed(ob, theme_mats)
+                themes.apply(ob, "orion", cid)
                 ob.rotation_euler = (0, 0, math.radians(display_yaw(c["mount"]["frame"])))
                 bpy.context.view_layer.update()
                 pts = [ob.matrix_world @ Vector(v) for v in ob.bound_box]
@@ -227,15 +233,34 @@ def render(K, catalog, a, exporter):
             front += depth + 1.8 + 1.2 * tallest              # next row behind, clear of this row's silhouette
         title_ob = text(title, (0, front + 0.5, 0), 0.8, lm["title"], coll, cam_rot)
         title_ob.data.align_x = "LEFT"
-        view = objs + [ob for ob in coll.objects if ob.type == "FONT"]
+        objs.append(V.crew(K, themes, coll, (-1.2, 1.0, 0)))
+        text("1.8 m crew · 1 m grid", (-1.2, -0.6, 0), 0.22, lm["label.dim"], coll, cam_rot)
         bpy.context.view_layer.update()
-        iso_camera(cam, view, res)
+        xs = [(ob.matrix_world @ Vector(v)).x for ob in objs for v in ob.bound_box]
+        V.grid(coll, -2.5, -1.5, max(xs) + 1, front, V.grid_material())
+        view = objs + [ob for ob in coll.objects if ob.type == "FONT"]
         for other in sc.collection.children:
             other.hide_render = other is not coll
-        sc.render.filepath = str(out / f"catalog_{key}.png")
-        bpy.ops.render.render(write_still=True)
-        print(f"[sheet] {sc.render.filepath}")
-    exploded(K, comps, sc, cam, theme_mats, lm, out, res)
+        if on(key):
+            bpy.context.view_layer.update()
+            iso_camera(cam, view, res)
+            sc.render.filepath = str(out / f"catalog_{key}.png")
+            bpy.ops.render.render(write_still=True)
+            print(f"[sheet] {sc.render.filepath}")
+        if key == "weapons" and on("weapons-top"):
+            iso_camera(cam, view, res, (0, 0, 0))
+            sc.render.filepath = str(out / "catalog_weapons_top-down.png")
+            bpy.ops.render.render(write_still=True)
+            print(f"[sheet] {sc.render.filepath}")
+    base_mats = exporter.slot_materials()
+    if on("exploded-ion"):
+        exploded(K, comps, sc, cam, theme_mats, lm, out, res)
+    if on("exploded-weapons"):
+        V.exploded_weapons(K, exporter, comps, sc, cam, themes, base_mats, lm, out)
+    if on("damage"):
+        V.damage_row(K, exporter, comps, sc, cam, themes, base_mats, lm, out)
+    if on("variants"):
+        V.variants_row(K, exporter, comps, sc, cam, themes, base_mats, lm, out)
 
 
 def exploded(K, comps, sc, cam, theme_mats, lm, out, res):
@@ -310,3 +335,10 @@ def exploded(K, comps, sc, cam, theme_mats, lm, out, res):
     sc.render.filepath = str(out / "exploded_ion-drive-lg_ports.png")
     bpy.ops.render.render(write_still=True)
     print(f"[sheet] {sc.render.filepath}")
+
+
+def scratch_path(name):
+    """On-disk scratch (never /tmp, which is RAM-backed on the art host)."""
+    d = Path(os.environ.get("SIDEREAL_SCRATCH", str(Path.home() / "sidereal-scratch" / "ship-components")))
+    d.mkdir(parents=True, exist_ok=True)
+    return str(d / name)
