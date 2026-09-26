@@ -1104,6 +1104,8 @@ export function validateShipPrefab(doc: ShipPrefabDocumentV1, catalog: PrefabCom
   }
   const stats = prefabStats(doc, catalog);
   if (stats.thrustN <= 0) push("warning", "flight.no-thrust", "No engines: the ship cannot fly", docRef);
+  else if (!doc.mounts.some((m) => (catalog.get(m.component)?.maneuverThrustN ?? 0) > 0))
+    push("warning", "flight.no-maneuver", "No RCS thrusters: the ship cannot brake, strafe or turn in place", docRef);
   if (stats.powerBalanceW < 0) push("warning", "power.deficit", `Power deficit of ${Math.round(-stats.powerBalanceW / 1000)} kW`, docRef);
   if (stats.heatBalanceW > 0) push("warning", "heat.surplus", `Heat surplus of ${Math.round(stats.heatBalanceW / 1000)} kW`, docRef);
   return issues;

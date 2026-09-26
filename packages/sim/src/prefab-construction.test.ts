@@ -5,7 +5,10 @@ import { compileConstruction, readConstructionDraft } from "./construction-trans
 import { compileLayout } from "./layout-compiler";
 import { PREFAB_DECK_ID, prefabConstructionDocument, prefabLayout } from "./prefab-construction";
 import { planConstructionInstance } from "./construction-instance";
-import { canOccupyDeck, compileDeckCollision, resolveDeckCollision } from "./construction-collision";
+import { canOccupyDeck, compileDeckCollision, resolveDeckCollision, sweepDeckCircle } from "./construction-collision";
+import { prefabWalkRoute } from "./prefab-construction";
+import { prefabFlightModel } from "./prefab-flight";
+import { prefabPilotPose } from "./construction-pilot";
 
 const catalog = defaultPrefabComponentCatalog();
 
@@ -85,5 +88,14 @@ describe("prefab instances", () => {
         [],
       );
       expect(canOccupyDeck(frame, { shipId: plan.instanceId, deckId: plan.spawn.deckId, position: plan.spawn.positionM }, 0.3)).toBe(true);
+      // Walk from the spawn to the pilot approach through door passages and sit down.
+      const model = prefabFlightModel(prefab, catalog);
+      const pose = prefabPilotPose(model.station!);
+      let at: [number, number] = [plan.spawn.positionM[0], plan.spawn.positionM[1]];
+      for (const target of [...prefabWalkRoute(prefab, catalog, at, pose.approach), [pose.position[0], pose.position[1]] as [number, number]]) {
+        const swept = sweepDeckCircle(frame, { shipId: plan.instanceId, deckId: plan.spawn.deckId, position: at }, [target[0] - at[0], target[1] - at[1]], 0.3);
+        expect(Math.hypot(swept.position[0] - target[0], swept.position[1] - target[1])).toBeLessThan(1e-5);
+        at = target;
+      }
     });
 });

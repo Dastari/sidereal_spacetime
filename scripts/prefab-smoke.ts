@@ -10,12 +10,13 @@
 import assert from "node:assert/strict";
 import { pathToFileURL } from "node:url";
 import { resolve } from "node:path";
-import { acquireNativePilot, nextSequence, walkNative } from "./native-starter-smoke";
+import { nextSequence, walkNative } from "./native-starter-smoke";
 import { prefabById } from "../packages/content/src/prefabs/index";
 import { prefabStats } from "../packages/content/src/ship-prefab";
 import { defaultPrefabComponentCatalog } from "../packages/content/src/ship-prefab-catalog";
 import { prefabFlightModel } from "../packages/sim/src/prefab-flight";
 import { prefabPilotPose } from "../packages/sim/src/construction-pilot";
+import { prefabWalkRoute } from "../packages/sim/src/prefab-construction";
 
 const host = process.env.SIDEREAL_SMOKE_URL,
   database = process.env.SIDEREAL_SMOKE_DATABASE,
@@ -73,8 +74,19 @@ try {
   await c.reducers.assignPrefabSmokeShip({ prefabId: PREFAB });
   await wait(() => actor()?.shipId && actor().shipId !== before, "boarded prefab ship");
   const shipId = actor().shipId as string;
+  await wait(() => [...c.db.ownGameShipAccess.iter()].some((a: any) => a.shipId === shipId), "prefab game access row", 5000).catch(() => {
+    const dump = (name: string, t: any) => console.log(name, JSON.stringify([...t.iter()], (_, v) => (typeof v === "bigint" ? v.toString() : v)));
+    dump("actor", c.db.ownCharacters);
+    dump("ships", c.db.ownShips);
+    dump("access", c.db.ownGameShipAccess);
+    dump("location", c.db.ownConstructionLocation);
+    dump("admission", c.db.ownWorldAdmission);
+    dump("flights", c.db.ownAuthoredFlights);
+  });
   const access = [...c.db.ownGameShipAccess.iter()].find((a: any) => a.shipId === shipId) as any;
-  assert(access?.lifecycle === "active", "active game ship access for the prefab");
+  assert(access && access.instanceId === shipId, "game ship access projected for the prefab ship");
+  const instanceRow = [...c.db.ownConstructionLocation.iter()][0] as any;
+  assert(instanceRow?.instanceId === shipId, "character located aboard the prefab instance");
   await wait(() => physicsOf(shipId)?.status === "ready", "prefab physical definition ready");
   const prefab = prefabById(PREFAB)!;
   const catalog = defaultPrefabComponentCatalog();
@@ -91,10 +103,15 @@ try {
   // Walk from the spawn to the derived pilot approach (through door passages), then sit.
   const pose = prefabPilotPose(model.station!);
   const spawn = { x: actor().localX, y: actor().localY };
-  // Aft-to-fore along the centre line first, then to the approach point.
-  await walkNative(c, pose.approach[0], spawn.y);
-  await walkNative(c, pose.approach[0], pose.approach[1]);
-  await acquireNativePilot(c);
+  for (const [x, y] of prefabWalkRoute(prefab, catalog, [spawn.x, spawn.y], pose.approach)) await walkNative(c, x, y);
+  // The lab character still owns its original Wayfarer; select the prefab ship's flight row.
+  const seatFlight = flightOf(shipId);
+  await c.reducers.enterAuthoredPilot({
+    stationId: seatFlight.stationId,
+    expectedStationRevision: seatFlight.stationRevision,
+    operationId: crypto.randomUUID(),
+  });
+  await wait(() => flightOf(shipId)?.seatState === "seated", "prefab pilot entry");
   assert(Math.hypot(actor().localX - pose.position[0], actor().localY - pose.position[1]) < 1e-3, "seated at the derived station");
 
   // Fly: forward burn changes velocity; release and turn produce rotation.

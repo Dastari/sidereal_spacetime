@@ -60,7 +60,9 @@ export function prefabSpecFromComponent(c: ShipComponentLike, visual?: Component
     powerDrawW: c.power.activeKw * 1000,
     heatW: c.heat.activeKw * 1000,
     heatRejectionW: c.heat.rejectionKw * 1000,
-    station: c.control?.grants === "flight" ? "pilot" : c.crew.station,
+    // Only control components (consoles) provide stations; crew.station on other parts names
+    // the operator role, not a seat.
+    station: c.control ? (c.control.grants === "flight" ? "pilot" : c.crew.station) : null,
     berths: c.crew.berths,
     visual: visual?.(c),
   };

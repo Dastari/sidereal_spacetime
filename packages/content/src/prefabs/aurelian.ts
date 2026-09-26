@@ -28,6 +28,10 @@ export const AU_LUMEN = prefab({
     edge("g-bridge", [8, 0], [8, 3], "wall.glazed"),
   ],
   mounts: [
+    face("rcs-bow-p", "rcs.sm", "port", [7.5, 6]),
+    face("rcs-bow-s", "rcs.sm", "starboard", [7.5, 0]),
+    face("rcs-stern-p", "rcs.sm", "port", [0.5, 8]),
+    face("rcs-stern-s", "rcs.sm", "starboard", [0.5, -2]),
     face("drive-s", "resonance-drive.aurelian.md", "aft", [0, 1.5]),
     face("drive-p", "resonance-drive.aurelian.md", "aft", [0, 4.5]),
     opening("airlock", "airlock.exterior.md", "starboard", [6, 0]),
@@ -93,6 +97,10 @@ export const AU_CRESCENT = prefab({
     edge("g-bridge-p", [14, 5], [14, 8], "wall.glazed"),
   ],
   mounts: [
+    face("rcs-bow-p", "rcs.sm", "port", [13.5, 8]),
+    face("rcs-bow-s", "rcs.sm", "starboard", [9.5, -2]),
+    face("rcs-stern-p", "rcs.sm", "port", [1.5, 8]),
+    face("rcs-stern-s", "rcs.sm", "starboard", [1.5, 0]),
     face("drive-s", "resonance-drive.aurelian.lg", "aft", [0, 2.5]),
     face("drive-p", "resonance-drive.aurelian.lg", "aft", [0, 5.5]),
     opening("lock", "airlock.exterior.md", "starboard", [13, 0]),
@@ -165,6 +173,10 @@ export const AU_CATHEDRAL = prefab({
     edge("g-bridge-p", [28, 7], [28, 12], "wall.glazed"),
   ],
   mounts: [
+    face("rcs-bow-p", "rcs.sm", "port", [27.5, 12]),
+    face("rcs-bow-s", "rcs.sm", "starboard", [27.5, 0]),
+    face("rcs-stern-p", "rcs.sm", "port", [0.5, 12]),
+    face("rcs-stern-s", "rcs.sm", "starboard", [0.5, 0]),
     face("drive-1", "resonance-drive.aurelian.lg", "aft", [0, 1.5]),
     face("drive-2", "resonance-drive.aurelian.lg", "aft", [0, 4.5]),
     face("drive-3", "resonance-drive.aurelian.lg", "aft", [0, 7.5]),
