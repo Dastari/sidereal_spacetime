@@ -542,8 +542,10 @@ export function planConstructionInstance(
     }
   for (const opening of actual.openings)
     opening.partitionId = mapped(opening.partitionId);
-  for (const room of actual.rooms)
+  for (const room of actual.rooms) {
     room.boundaryIds = room.boundaryIds.map(mapped);
+    if (room.tileIds) room.tileIds = room.tileIds.map(mapped);
+  }
   for (const route of actual.routes) {
     route.from = mapped(route.from);
     route.to = mapped(route.to);
@@ -633,6 +635,13 @@ export function planConstructionInstance(
         id === layout.id ? instanceId : mapped(id),
       ]),
     );
+  }
+  const prefab = (spawned as ConstructionDocument & { prefab?: Record<string, unknown> }).prefab;
+  if (prefab) {
+    // Same identity-substitution contract as wayfarerRebuild/wayfarerExterior.
+    const identities: Record<string, string> = { [layout.id]: instanceId };
+    for (const [sourceId, id] of all) identities[sourceId] = id;
+    prefab.identities = identities;
   }
   // UUID expansion can push a valid source over the parser budget. Validate the
   // exact remapped representation before the world adapter inserts any instance rows.
