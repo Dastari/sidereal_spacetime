@@ -71,6 +71,7 @@
     "./ship-prefab": "./src/ship-prefab.ts",
     "./ship-prefab-components": "./src/ship-prefab-components.ts",
     "./ship-prefab-catalog": "./src/ship-prefab-catalog.ts",
+    "./ship-furniture": "./src/ship-furniture.ts",
     "./ship-kit": "./src/ship-kit.ts",
     "./ship-kit-pieces.v1.json": "./src/ship-kit-pieces.v1.json",
     "./ship-themes": "./src/ship-themes.ts",

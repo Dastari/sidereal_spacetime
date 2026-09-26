@@ -42,6 +42,34 @@ export function slotOfMaterialName(name: string | undefined): ShipKitSlot | null
 /** Emissive intensity for a theme strength (Blender emission strength 6-9 -> 1.5-2.25). */
 export const emissiveIntensity = (strength: number) => Math.min(2.5, strength / 4);
 
+/**
+ * Interior finish (deck view): floors and interior walls use a neutral architectural palette
+ * instead of the hull's dark trim slots, so decks read as light-grey panelled rooms with patterned
+ * mid-grey deck plates (reference cut-away), while hull, accent and emissive slots stay themed.
+ * Linear RGB; emissive and accent slots are never overridden.
+ */
+const INTERIOR: Partial<Record<"floor" | "wall", Partial<Record<ShipKitSlot, [number, number, number]>>>> = {
+  floor: { trim: [0.2, 0.2, 0.235], dark: [0.045, 0.046, 0.062], secondary: [0.11, 0.115, 0.155], metal: [0.32, 0.32, 0.36], primary: [0.36, 0.35, 0.4] },
+  wall: { primary: [0.46, 0.45, 0.5], secondary: [0.075, 0.078, 0.12], trim: [0.2, 0.2, 0.25] },
+};
+
+/** Slot material for a mesh role: interior roles get the architectural palette. */
+export function roleSlotMaterial(scene: Scene, theme: ShipThemeId, slot: ShipKitSlot, role: string): PBRMaterial {
+  const colour = (INTERIOR as Record<string, Partial<Record<ShipKitSlot, [number, number, number]>> | undefined>)[role]?.[slot];
+  if (!colour) return slotMaterial(scene, theme, slot);
+  const key = `interior:${theme}:${role}:${slot}`;
+  const p = pool(scene);
+  const found = p.get(key);
+  if (found) return found as PBRMaterial;
+  const base = slotMaterial(scene, theme, slot);
+  const m = base.clone(`prefab-${theme}-${role}-${slot}`) as PBRMaterial;
+  m.albedoColor = new Color3(...colour);
+  m.roughness = role === "floor" ? 0.62 : 0.55;
+  m.metallic = role === "floor" ? 0.12 : 0.05;
+  p.set(key, m);
+  return m;
+}
+
 /** The pooled material for a theme slot. */
 export function slotMaterial(scene: Scene, theme: ShipThemeId, slot: ShipKitSlot): PBRMaterial {
   const key = `slot:${theme}:${slot}`;
@@ -50,6 +78,7 @@ export function slotMaterial(scene: Scene, theme: ShipThemeId, slot: ShipKitSlot
   if (found) return found as PBRMaterial;
   const t = SHIP_THEMES[theme].slots[slot];
   const m = new PBRMaterial(`prefab-${theme}-${slot}`, scene);
+  m.maxSimultaneousLights = 12; // up to 8 room lights plus scene key/fill lights
   m.albedoColor = new Color3(...t.colour);
   m.metallic = t.metallic;
   m.roughness = t.roughness;

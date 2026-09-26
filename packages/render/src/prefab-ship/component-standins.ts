@@ -261,6 +261,38 @@ export function emitPlume(out: GeometryBuilder, colours: number[], at: readonly 
   out.boxes += 1;
 }
 
+/**
+ * Stepped voxel exhaust glow (reference "ion exhaust"): stacked slabs along component -Y, each a
+ * cross of two boxes (a blocky disc) shrinking and fading with distance. Additive, so overlaps
+ * brighten toward the nozzle; meant to bloom through the glow layer.
+ */
+export function emitVoxelGlow(out: GeometryBuilder, colours: number[], at: readonly [number, number, number], radius: number, length: number, layers = 5) {
+  const step = length / layers;
+  const box = (lo: number[], hi: number[], fade: number) => {
+    const c = [[lo[0], lo[1], lo[2]], [hi[0], lo[1], lo[2]], [hi[0], hi[1], lo[2]], [lo[0], hi[1], lo[2]], [lo[0], lo[1], hi[2]], [hi[0], lo[1], hi[2]], [hi[0], hi[1], hi[2]], [lo[0], hi[1], hi[2]]];
+    const faces: [number[], number[]][] = [
+      [[0, 3, 2, 1], [0, 0, -1]], [[4, 5, 6, 7], [0, 0, 1]], [[0, 1, 5, 4], [0, -1, 0]],
+      [[1, 2, 6, 5], [1, 0, 0]], [[2, 3, 7, 6], [0, 1, 0]], [[3, 0, 4, 7], [-1, 0, 0]],
+    ];
+    for (const [idx, n] of faces) {
+      const base = out.positions.length / 3;
+      for (const i of idx) out.positions.push(...c[i]), out.normals.push(...n), colours.push(fade, fade, fade, fade);
+      out.indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
+    }
+  };
+  for (let k = 0; k < layers; k++) {
+    const t = k / layers;
+    const s = radius * (1.02 - 0.16 * k);
+    // Additive layers stack through each other; keep each faint so the core stays blue, not white.
+    const fade = 0.3 * Math.pow(1 - t, 1.4);
+    const y1 = at[1] - k * step;
+    const y0 = y1 - step * 0.92;
+    box([at[0] - s, y0, at[2] - s * 0.62], [at[0] + s, y1, at[2] + s * 0.62], fade);
+    box([at[0] - s * 0.62, y0, at[2] - s], [at[0] + s * 0.62, y1, at[2] + s], fade);
+  }
+  out.boxes += 1;
+}
+
 /** Append `src` transformed by a proper rotation + translation (normals rotate, winding kept). */
 export function appendTransformed(out: GeometryBuilder, src: GeometryBuilder, m: Mat4) {
   const base = out.positions.length / 3;

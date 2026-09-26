@@ -36,6 +36,8 @@ import {
   type VolumeGeometry,
 } from "@sidereal/content/ship-prefab";
 import { SHIP_KIT_SLOTS, faceKinds, facePieceId, kitId, type ShipKitSlot } from "@sidereal/content/ship-kit";
+import { MitredChain, chainSkinPrisms, slopeWallPrisms, type DressPrism } from "./ship-dresser-prisms";
+export type { DressPrism } from "./ship-dresser-prisms";
 
 export type DressView = "both" | "flight" | "deck";
 
@@ -57,6 +59,8 @@ export interface GeneratedGeometry {
   id: string;
   kind: "hull-body" | "skin" | "floor-slab" | "slope-wall" | "shell-band";
   boxes: DressBox[];
+  /** Angled geometry (mitred prisms along slope/arc edges); meshed flat, never chamfered per texel. */
+  prisms?: DressPrism[];
   view: DressView;
 }
 
@@ -87,6 +91,8 @@ export interface DressedShip {
   objects: (DerivedSocket & { view: DressView })[];
   lights: { at: [number, number, number]; colour: [number, number, number]; intensity: number; view: DressView }[];
   labels: { text: string; at: [number, number, number]; view: DressView }[];
+  /** Deck-view wall base segments (plan metres) for contact shadows on the floor. */
+  contacts: [Pt, Pt][];
   /** Plan bounds (m) of the structure, [x0, y0, x1, y1]. */
   bounds: [number, number, number, number];
   stats: { cassettes: number; roof: number; skins: number; floors: number; walls: number; partitions: number; doors: number; posts: number; sockets: number };
@@ -177,6 +183,68 @@ export function rasterOutline(
 
 function tierInfo(z: [number, number]) {
   return volumeTiers(z[0], z[1]);
+}
+
+/**
+ * Deck-view interior finish on the kit walls: dark caps on every wall top, a light strip on the
+ * inner face of exterior walls, and cyan floor-edge lights along corridor walls.
+ */
+function interiorTrimPrisms(doc: ShipPrefabDocumentV1, interior: NonNullable<ReturnType<typeof deriveInterior>>): DressPrism[] {
+  const ft = G.deck.floorTopTexels;
+  const top = ft + G.deck.interiorCutTexels;
+  const out: DressPrism[] = [];
+  const corridor = new Set(doc.rooms.filter((r) => r.type === "corridor").map((r) => r.id));
+  const seg = (a: Pt, b: Pt, side: 1 | -1) => new MitredChain([[a, b]], side);
+  interior.exteriorWalls.forEach((w, i) => {
+    const inward = seg(w.a, w.b, -1);
+    const L = inward.length;
+    out.push(...inward.band(0, L, -0.5 * TEXEL, 5 * TEXEL, top, top + 1, "dark"));
+    // Light strip on the inner face, centred on each metre.
+    for (let u = 0; u + 0.99 < L; u += 1) if ((i + Math.round(u)) % 2 === 0) out.push(...inward.band(u + 0.2, u + 0.8, 4 * TEXEL, 4.6 * TEXEL, top - 6, top - 5, "emit_a"));
+    if (w.rooms.some((r) => r && corridor.has(r))) out.push(...inward.band(0.1, L - 0.1, 4 * TEXEL, 4.6 * TEXEL, ft, ft + 0.75, "emit_a"));
+  });
+  for (const w of interior.partitions) {
+    const c = seg(w.a, w.b, 1);
+    const L = c.length;
+    out.push(...c.band(0, L, -3 * TEXEL, 3 * TEXEL, top, top + 1, "dark"));
+    // Corridor side(s): floor-edge light 1/2 texel proud of the 4-texel partition.
+    const [left, right] = w.rooms;
+    if (right && corridor.has(right)) out.push(...c.band(0.1, L - 0.1, 2 * TEXEL, 2.6 * TEXEL, ft, ft + 0.75, "emit_a"));
+    if (left && corridor.has(left)) out.push(...c.band(0.1, L - 0.1, -2.6 * TEXEL, -2 * TEXEL, ft, ft + 0.75, "emit_b"));
+  }
+  return out;
+}
+
+/** Directions of the outline edges just before and after a chain (for mitring its ends). */
+function neighbourDirs(outer: readonly Pt[], chain: readonly (readonly [Pt, Pt])[]): [Pt | undefined, Pt | undefined] {
+  const n = outer.length;
+  const same = (a: Pt, b: Pt) => Math.abs(a[0] - b[0]) < 1e-9 && Math.abs(a[1] - b[1]) < 1e-9;
+  const i = outer.findIndex((p) => same(p, chain[0][0]));
+  const j = outer.findIndex((p) => same(p, chain[chain.length - 1][1]));
+  const dir = (a: Pt, b: Pt): Pt => [b[0] - a[0], b[1] - a[1]];
+  return [i >= 0 ? dir(outer[(i - 1 + n) % n], outer[i]) : undefined, j >= 0 ? dir(outer[j], outer[(j + 1) % n]) : undefined];
+}
+
+/** Joins segments sharing endpoints (a -> b -> c ...) into continuous runs, in input order. */
+function slopeRuns(segs: readonly [Pt, Pt][]): [Pt, Pt][][] {
+  const same = (a: Pt, b: Pt) => Math.abs(a[0] - b[0]) < 1e-9 && Math.abs(a[1] - b[1]) < 1e-9;
+  const left = [...segs];
+  const runs: [Pt, Pt][][] = [];
+  while (left.length) {
+    const run: [Pt, Pt][] = [left.shift()!];
+    for (let grew = true; grew; ) {
+      grew = false;
+      for (let k = 0; k < left.length; k++) {
+        if (same(left[k][0], run[run.length - 1][1])) run.push(...left.splice(k, 1));
+        else if (same(left[k][1], run[0][0])) run.unshift(...left.splice(k, 1));
+        else continue;
+        grew = true;
+        break;
+      }
+    }
+    runs.push(run);
+  }
+  return runs;
 }
 
 /** Stepped panel skin following a chain of non-axis edges (slopes/arcs); port of skin_piece. */
@@ -398,15 +466,15 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
     // Slope and arc skins.
     const { axis, chains } = faceChains(outline.outer);
     chains.forEach((ch, ci) => {
-      const boxes = skinBoxes(ch, g.z, outline.outer, hash01(doc.id, vi, ci) * 1e5);
-      if (!boxes.length) return;
+      // Mitred angled panels that follow the true outline, joined into the neighbouring faces.
+      const mitred = new MitredChain(ch, 1, ...neighbourDirs(outline.outer, ch));
+      const seed = hash01(doc.id, vi, ci) * 1e5;
       stats.skins++;
-      if (!isDeck) generated.push({ id: `gen.${doc.id}.${v.id}.skin${ci}`, kind: "skin", boxes, view: "both" });
+      if (!isDeck) generated.push({ id: `gen.${doc.id}.${v.id}.skin${ci}`, kind: "skin", boxes: [], prisms: chainSkinPrisms(mitred, g.z, seed), view: "both" });
       else {
-        generated.push({ id: `gen.${doc.id}.${v.id}.skin${ci}`, kind: "skin", boxes, view: "flight" });
-        const cut = G.deck.shellCutTexels;
-        const clipped = boxes.filter((b) => b[2] < cut).map((b) => [b[0], b[1], b[2], b[3], b[4], Math.min(b[5], cut), b[6]] as DressBox);
-        generated.push({ id: `gen.${doc.id}.${v.id}.skin${ci}.cut`, kind: "skin", boxes: clipped, view: "deck" });
+        generated.push({ id: `gen.${doc.id}.${v.id}.skin${ci}`, kind: "skin", boxes: [], prisms: chainSkinPrisms(mitred, g.z, seed), view: "flight" });
+        const prisms = chainSkinPrisms(mitred, g.z, seed, G.deck.shellCutTexels);
+        generated.push({ id: `gen.${doc.id}.${v.id}.skin${ci}.cut`, kind: "skin", boxes: [], prisms, view: "deck" });
       }
     });
 
@@ -635,7 +703,8 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
     mount: mp.mount.id,
     component: mp.mount.component,
     placement: mp,
-    view: mp.mount.attach === "interior" ? "deck" : mp.mount.attach === "top" && mp.host === deckId ? "flight" : "both",
+    // Edge hatches (airlocks, cargo doors) stand in the hull wall: flight only, the cut-away shows the door opening.
+    view: mp.mount.attach === "interior" ? "deck" : (mp.mount.attach === "top" && mp.host === deckId) || mp.mount.attach === "edge" ? "flight" : "both",
   }));
 
   // Plate decals (number strip on the first plate, emblem on the second).
@@ -660,6 +729,7 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
   const objects: DressedShip["objects"] = [];
   const lights: DressedShip["lights"] = [];
   const labels: DressedShip["labels"] = [];
+  const contacts: [Pt, Pt][] = [];
   if (interior && deck?.outline) {
     const ft = G.deck.floorTopTexels * TEXEL;
     const cutT = G.deck.interiorCutTexels;
@@ -682,16 +752,13 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
       edgePlace(kitId.edge(w.variant, true), w.a, w.b, 4, false);
       stats.walls++;
     }
-    const slopeBoxes: DressBox[] = [];
-    for (const s of interior.exteriorSlopes) {
-      const L = Math.hypot(s.b[0] - s.a[0], s.b[1] - s.a[1]);
-      const left: Pt = [-(s.b[1] - s.a[1]) / L, (s.b[0] - s.a[0]) / L];
-      const t = G.deck.exteriorWallTexels * TEXEL;
-      const band: Pt[] = [s.a, s.b, [s.b[0] + left[0] * t, s.b[1] + left[1] * t], [s.a[0] + left[0] * t, s.a[1] + left[1] * t]];
+    // Angled exterior walls: continuous mitred runs (thick, panelled inner face, dark cap).
+    const slopePrisms: DressPrism[] = [];
+    slopeRuns(interior.exteriorSlopes.map((s) => [s.a, s.b] as [Pt, Pt])).forEach((run, ri) => {
       const ft3 = G.deck.floorTopTexels;
-      slopeBoxes.push(...rasterOutline({ outer: ccw(band), holes: [] }, [ft3, ft3 + 3, ft3 + 14, ft3 + cutT - 2, ft3 + cutT], (_cx, _cy, bi) => (["dark", "secondary", "primary", "dark"] as ShipKitSlot[])[bi]));
-    }
-    if (slopeBoxes.length) generated.push({ id: `gen.${doc.id}.slope-walls`, kind: "slope-wall", boxes: slopeBoxes, view: "deck" });
+      slopePrisms.push(...slopeWallPrisms(new MitredChain(run, -1), ft3, ft3 + cutT, G.deck.exteriorWallTexels, hash01(doc.id, "slope", ri) * 1e5));
+    });
+    if (slopePrisms.length) generated.push({ id: `gen.${doc.id}.slope-walls`, kind: "slope-wall", boxes: [], prisms: slopePrisms, view: "deck" });
     for (const w of interior.partitions) {
       const variant = w.type === "wall.glazed" || w.type === "window" ? "glazed" : w.type === "wall.half" ? "half" : w.variant;
       edgePlace(kitId.edge(variant, true), w.a, w.b, variant === "reinforced" ? 6 : 4, true);
@@ -721,6 +788,9 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
       objects.push({ ...s, view: "deck" });
       stats.sockets++;
     }
+    generated.push({ id: `gen.${doc.id}.interior-trim`, kind: "slope-wall", boxes: [], prisms: interiorTrimPrisms(doc, interior), view: "deck" });
+    for (const w of [...interior.exteriorWalls, ...interior.partitions]) contacts.push([w.a, w.b]);
+    for (const s of interior.exteriorSlopes) contacts.push([s.a, s.b]);
     for (const l of interior.lights) lights.push({ at: [l.at[0], l.at[1], 2.3], colour: l.colour, intensity: Math.min(1.5, 0.25 + l.area * 0.04), view: "deck" });
     for (const l of interior.labels) labels.push({ text: l.text, at: [l.at[0], l.at[1], 2.6], view: "deck" });
   }
@@ -729,7 +799,7 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
   const bounds: [number, number, number, number] = allB.length
     ? [Math.min(...allB.map((b) => b[0])), Math.min(...allB.map((b) => b[1])), Math.max(...allB.map((b) => b[2])), Math.max(...allB.map((b) => b[3]))]
     : [0, 0, 0, 0];
-  return { id: doc.id, theme: doc.theme, markings: doc.markings, kit, generated, decals, components, objects, lights, labels, bounds, stats };
+  return { id: doc.id, theme: doc.theme, markings: doc.markings, kit, generated, decals, components, objects, lights, labels, contacts, bounds, stats };
 }
 
 /**

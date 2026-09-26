@@ -11,7 +11,7 @@ export const FED_WREN = prefab({
   theme: "federation",
   sizeClass: "S",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [9, 0], [11, 2], [11, 4], [9, 6], [0, 6]]), { spine: false, logo: true }),
+    volume("hull", "hull", "deck", polygonTiles([[0, 0], [9, 0], [11, 2], [11, 4], [9, 6], [0, 6]]), { spine: true, logo: true }),
     volume("wing-s", "plate", "wing", polygonTiles([[0, -2], [3, -2], [5, 0], [0, 0]])),
     volume("wing-p", "plate", "wing", polygonTiles([[0, 6], [5, 6], [3, 8], [0, 8]])),
   ],

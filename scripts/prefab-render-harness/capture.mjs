@@ -8,6 +8,10 @@
  * Playwright-cached chrome-headless-shell with SwiftShader WebGL, drives it over the raw Chrome
  * DevTools Protocol, waits for `window.__prefabReady`, and writes PNGs plus metrics.json:
  * per prefab flight-iso, deck-iso, flight-top, deck-top and flight-rear; then lineup.png.
+ *
+ * --game: capture game.html (the real game renderer) instead: per prefab a deck and a 3/4 flight
+ * view plus bow and engine close-ups, orbiting/zooming the game camera with real pointer input.
+ *   node scripts/prefab-render-harness/capture.mjs --game --only fed.s.wren --out DIR [--orbit PX]
  */
 import { spawn } from "node:child_process";
 import { existsSync, mkdirSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
@@ -26,7 +30,12 @@ const only = opt("--only", "")?.split(",").filter(Boolean);
 const W = Number(opt("--w", 1600));
 const H = Number(opt("--h", 900));
 const extra = opt("--extra", "");
-const PORT = 5391;
+const game = args.includes("--game");
+const orbitPx = Number(opt("--orbit", 0));
+const alpha = Number(opt("--alpha", -0.6));
+const beta = Number(opt("--beta", 0.95));
+const radius = Number(opt("--radius", 32));
+const PORT = Number(opt("--port", 5391));
 const BASE = `http://127.0.0.1:${PORT}/`;
 mkdirSync(out, { recursive: true });
 
@@ -155,18 +164,46 @@ async function main() {
   })();
 
   const shots = [];
-  for (const id of ids)
+  if (game)
+    for (const id of ids) {
+      // [name, query, orbit px, wheel dy]: crew position (x starboard, y fore) steers the camera target.
+      // Matching 3/4 review angles via &cam=alpha,beta,radius; crew x/y (starboard/fore metres)
+      // is the camera target, so close-ups move the crew to the bow or the engines.
+      const cam = (r, da = 0) => `${alpha + da},${beta},${r}`;
+      shots.push({ name: `${id}_game_deck`, page: "game.html", query: `prefab=${id}&interior=1&cam=${cam(radius)}` });
+      shots.push({ name: `${id}_game_flight`, page: "game.html", query: `prefab=${id}&interior=0&cam=${cam(radius)}` });
+      shots.push({ name: `${id}_game_bow`, page: "game.html", query: `prefab=${id}&interior=0&cam=${cam(15, 0.5)},0,4` });
+      shots.push({ name: `${id}_game_engines`, page: "game.html", query: `prefab=${id}&interior=0&cam=${cam(15, 2.6)},0,-4.5` });
+      shots.push({ name: `${id}_game_deck_close`, page: "game.html", query: `prefab=${id}&interior=1&cam=${cam(14, 0.3)}` });
+    }
+  else for (const id of ids)
     for (const [view, cam] of [["flight", "iso"], ["deck", "iso"], ["flight", "top"], ["deck", "top"], ["flight", "rear"]])
       shots.push({ name: `${id}_${view}_${cam}`, query: `prefab=${id}&view=${view}&cam=${cam}` });
-  if (!only?.length) shots.push({ name: "lineup", query: "lineup=1&view=flight&cam=iso" });
+  if (!only?.length && !game) shots.push({ name: "lineup", query: "lineup=1&view=flight&cam=iso" });
 
   const metrics = {};
   for (const s of shots) {
     logs.length = 0;
     const t0 = Date.now();
     const search = `?${s.query}&w=${W}&h=${H}${extra ? "&" + extra : ""}`;
-    await page("Page.navigate", { url: BASE + search });
+    await page("Page.navigate", { url: BASE + (s.page ?? "") + search });
     await waitReady(page, search, 300000);
+    if (s.orbit || s.zoom) {
+      const cx = W / 2;
+      const cy = H / 2;
+      const mouse = (type, x, y, extraParams = {}) => page("Input.dispatchMouseEvent", { type, x, y, button: "left", buttons: type === "mouseReleased" ? 0 : 1, ...extraParams });
+      if (s.orbit) {
+        await mouse("mousePressed", cx, cy, { clickCount: 1 });
+        for (let i = 1; i <= 10; i++) await mouse("mouseMoved", cx + (s.orbit * i) / 10, cy);
+        await mouse("mouseReleased", cx + s.orbit, cy, { clickCount: 1 });
+      }
+      for (let left = s.zoom; Math.abs(left) > 0; ) {
+        const step = Math.sign(left) * Math.min(Math.abs(left), 300);
+        await page("Input.dispatchMouseEvent", { type: "mouseWheel", x: cx, y: cy, deltaX: 0, deltaY: step });
+        left -= step;
+      }
+      await sleep(4000);
+    }
     const err = await page("Runtime.evaluate", { expression: "window.__prefabError || ''", returnByValue: true });
     if (err.result.value) console.error(`${s.name}: ${err.result.value}`);
     const m = await page("Runtime.evaluate", { expression: "JSON.stringify(window.__prefabMetrics||null)", returnByValue: true });

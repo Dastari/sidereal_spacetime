@@ -2,6 +2,7 @@
  * Standalone prefab ship render harness (evidence renders, no database, no auth).
  *
  *   npm run prefab:harness   # http://127.0.0.1:5391/?prefab=fed.s.wren&view=flight&cam=iso
+ *                            # http://127.0.0.1:5391/game.html?prefab=fed.s.wren&interior=1 (game renderer)
  *
  * Binds to 127.0.0.1 only. Serves the few runtime asset directories the prefab renderer needs
  * straight from the repository (read-only); everything else under /assets is a hard 404 so a
@@ -21,6 +22,9 @@ const MOUNTS: [string, string[]][] = [
   ["/assets/environment/", ["assets/runtime/environment"]],
   // Component GLBs: the published runtime copy when it exists, else the local art-library export.
   ["/assets/ship-components/r001/", ["assets/runtime/ship-components/r001", "assets/art-library/ship-components/r001/glb"]],
+  ["/assets/ship-components/r002/", ["assets/runtime/ship-components/r002", "assets/art-library/ship-components/r002/glb"]],
+  // game.html (the real game renderer) needs the rest of the published runtime tree.
+  ["/assets/", ["assets/runtime"]],
 ];
 
 const TYPES: Record<string, string> = {
@@ -29,6 +33,9 @@ const TYPES: Record<string, string> = {
   ".png": "image/png",
   ".jpg": "image/jpeg",
   ".hdr": "application/octet-stream",
+  ".svg": "image/svg+xml",
+  ".webp": "image/webp",
+  ".gz": "application/gzip",
 };
 
 function resolveAsset(url: string): string | null {

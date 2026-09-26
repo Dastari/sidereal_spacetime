@@ -39,6 +39,8 @@ KIT_PATH = HERE / "ship_kit_prototype.py"
 def load_kit():
     src = KIT_PATH.read_text()
     head, sep, tail = src.rpartition("\nmain()")
+    if "\nif __name__ == \"__main__\":" in src:          # guarded kit (feat/prefab-ships): import as-is
+        head, sep, tail = src, "guarded", ""
     if not sep or tail.strip():
         raise RuntimeError("ship_kit_prototype.py no longer ends with an unguarded main() call")
     mod = types.ModuleType("ship_kit")

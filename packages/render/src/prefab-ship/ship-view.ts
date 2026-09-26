@@ -28,16 +28,19 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { PointLight } from "@babylonjs/core/Lights/pointLight";
+import { Light } from "@babylonjs/core/Lights/light";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import "@babylonjs/core/Meshes/thinInstanceMesh";
 import { G, TEXEL } from "@sidereal/content/construction-grammar";
 import { SHIP_KIT_SLOTS, type ShipKitManifest, type ShipKitSlot } from "@sidereal/content/ship-kit";
+import { deckObjectVisualUrl } from "@sidereal/content/ship-furniture";
 import { prefabOrigin, type PrefabComponentCatalog, type ShipPrefabDocumentV1, type ShipThemeId } from "@sidereal/content/ship-prefab";
 import { dressShip, type ComponentPlacement, type DressView, type DressedShip } from "@sidereal/sim/ship-dresser";
 import { setMeshRole, type MeshRole } from "../mesh-roles";
 import { meshBoxes, newBuilder, type GeometryBuilder } from "./box-mesher";
+import { meshPrisms } from "./prism-mesher";
 import { appendTransformed, localToParent, meshGeometry, type MergeGroup } from "./batch";
-import { appendStandin, componentStandin, emitPlume, type StandinSocket } from "./component-standins";
+import { appendStandin, componentStandin, emitVoxelGlow, type StandinSocket } from "./component-standins";
 import { applyDecalTheme, buildDecals, disposeDecals, type DecalHandle } from "./decals";
 import {
   componentMatrix,
@@ -52,7 +55,9 @@ import {
   type MountSocket,
 } from "./frames";
 import { loadGlbGeometry, loadJsonOnce, type GlbGeometry } from "./glb-library";
-import { placeholderMaterial, plumeMaterial, slotMaterial, slotOfMaterialName } from "./materials";
+import { placeholderMaterial, plumeMaterial, roleSlotMaterial, slotMaterial, slotOfMaterialName } from "./materials";
+
+const roleOf = (mesh: Mesh): string => (mesh.metadata as { role?: string } | null)?.role ?? "hull";
 
 export type PrefabShipPresentation = "flight" | "deck";
 
@@ -66,10 +71,12 @@ export interface PrefabShipViewOptions {
   componentsBaseUrl?: string;
   /** Initial theme; default the document's theme. */
   theme?: ShipThemeId;
-  /** Real point lights for the brightest deck-view room lights (0-4). Default 0: emissive pools only. */
+  /** Real point lights for the brightest deck-view room lights (0-8). Default: one per room, up to 8. */
   roomLights?: number;
-  /** Skip component GLB lookups and always draw procedural stand-ins. */
+  /** Skip component and furniture GLB lookups and always draw procedural stand-ins. */
   standinComponents?: boolean;
+  /** When set, deck furniture GLBs load from `${furnitureBaseUrl}${basename(url)}`. */
+  furnitureBaseUrl?: string;
   /** Merge static geometry into one mesh per (view, slot, role). Default true; false keeps
    * per-piece thin instances (useful for editors that inspect pieces). */
   batch?: boolean;
@@ -111,6 +118,8 @@ interface Buckets {
   deck: number[];
 }
 const buckets = (): Buckets => ({ both: [], flight: [], deck: [] });
+/** Real room lights per ship; slot materials accept this many plus the scene's own lights. */
+const MAX_ROOM_LIGHTS = 8;
 
 interface InstancedEntry {
   mesh: Mesh;
@@ -192,6 +201,9 @@ function standinSocketOf(c: ComponentPlacement): StandinSocket {
   return c.placement.mount.attach;
 }
 
+/** Component-frame quarter turns that point a deck object's +Y front along its socket facing. */
+const FACING_QT: Record<"fore" | "port" | "aft" | "starboard", number> = { fore: 0, port: 1, aft: 2, starboard: 3 };
+
 function componentUrl(c: ComponentPlacement, base: string | undefined): string | null {
   const url = c.placement.spec?.visual?.url;
   if (!url) return null;
@@ -215,10 +227,10 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
   async function build(d: ShipPrefabDocumentV1): Promise<Built> {
     const dressed = dressShip(d, { catalog: options.catalog });
     const out: Built = { dressed, instanced: [], statics: [], decals: [], lights: [], textures: [], materials: [], componentGlbs: 0, componentStandins: 0 };
-    await Promise.all([buildKit(out), buildComponents(out)]);
+    await Promise.all([buildKit(out), buildComponents(out), buildObjects(out)]);
     buildGenerated(out);
-    buildObjects(out);
     buildLightPools(out);
+    buildContactShadows(out);
     out.decals = buildDecals(scene, frame, dressed, theme).map((h) => ({ ...h, tag: h.decal.view }));
     if (options.batch !== false) batchBuilt(out);
     return out;
@@ -262,7 +274,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     for (const g of groups.values()) {
       if (!g.indices.length) continue;
       const mesh = makeMesh(scene, `${out.dressed.id}:batch:${g.key}`, frame, g);
-      mesh.material = slotMaterial(scene, theme, g.slot);
+      mesh.material = roleSlotMaterial(scene, theme, g.slot, g.role);
       setMeshRole(mesh, g.role);
       // No freezeWorldMatrix: the ship root moves in game, and a frozen world matrix would
       // leave the hull at its spawn pose. Geometry is baked relative to the parent frame.
@@ -295,7 +307,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       const slot = slotOfMaterialName(p.material);
       if (!slot) warnOnce(`material:${geom.url}:${p.material}`, `prefab-ship: ${geom.url} material "${p.material}" is not a theme slot; using primary`);
       const mesh = makeMesh(scene, `${piece ?? geom.url}:${p.material || i}`, frame, p);
-      mesh.material = slotMaterial(scene, theme, slot ?? "primary");
+      mesh.material = roleSlotMaterial(scene, theme, slot ?? "primary", role);
       setMeshRole(mesh, role);
       out.instanced.push({ mesh, slot: slot ?? "primary", piece, matrices, triangles: p.triangles, count: 0 });
     });
@@ -303,12 +315,19 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
 
   function buildGenerated(out: Built) {
     for (const g of out.dressed.generated) {
+      for (const [s, geo] of meshPrisms(g.prisms ?? [])) {
+        const slot = SHIP_KIT_SLOTS[s];
+        const mesh = makeMesh(scene, `${g.id}:prisms:${slot}`, frame, geo);
+        mesh.material = roleSlotMaterial(scene, theme, slot, roleOfGenerated(g.kind));
+        setMeshRole(mesh, roleOfGenerated(g.kind));
+        out.statics.push({ mesh, tag: g.view, slot, triangles: geo.indices.length / 3, kind: "generated" });
+      }
       if (!g.boxes.length) continue;
       const result = meshBoxes(g.boxes);
       for (const s of result.slots) {
         const slot = SHIP_KIT_SLOTS[s.slot];
         const mesh = makeMesh(scene, `${g.id}:${slot}`, frame, s);
-        mesh.material = slotMaterial(scene, theme, slot);
+        mesh.material = roleSlotMaterial(scene, theme, slot, roleOfGenerated(g.kind));
         setMeshRole(mesh, roleOfGenerated(g.kind));
         out.statics.push({ mesh, tag: g.view, slot, triangles: s.triangles, kind: "generated" });
       }
@@ -393,7 +412,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     const local = newBuilder();
     const colours: number[] = [];
     const main = !!c.placement.spec?.thrustN;
-    emitPlume(local, colours, at, radius, (main ? 3.2 : 1.2) * radius + (main ? 1.5 : 0.3));
+    emitVoxelGlow(local, colours, at, radius, (main ? 1.1 : 0.6) * radius + (main ? 0.35 : 0.1));
     const base = target.g.positions.length / 3;
     for (let i = 0; i < local.positions.length; i += 3) {
       const p = transformPoint(place, [local.positions[i], local.positions[i + 1], local.positions[i + 2]]);
@@ -404,11 +423,44 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     target.colours.push(...colours);
   }
 
-  function buildObjects(out: Built) {
+  function objectUrl(designId: string): string | null {
+    const url = deckObjectVisualUrl(designId);
+    if (!url) return null;
+    const base = url.includes("/ship-furniture/") ? options.furnitureBaseUrl : options.componentsBaseUrl;
+    return base ? base + url.split("/").pop() : url;
+  }
+
+  /** Deck furniture: published GLBs where a design has one (ship-furniture.ts), else placeholder boxes. */
+  async function buildObjects(out: Built) {
     const fill: Record<DressView, GeometryBuilder> = { both: newBuilder(), flight: newBuilder(), deck: newBuilder() };
     const edges: Record<DressView, GeometryBuilder> = { both: newBuilder(), flight: newBuilder(), deck: newBuilder() };
     const z0 = G.deck.floorTopTexels * TEXEL;
+    type DeckObject = DressedShip["objects"][number];
+    const byUrl = new Map<string, DeckObject[]>();
+    const placeholders: DeckObject[] = [];
     for (const o of out.dressed.objects) {
+      const url = options.standinComponents ? null : objectUrl(o.designId);
+      if (!url) placeholders.push(o);
+      else byUrl.set(url, [...(byUrl.get(url) ?? []), o]);
+    }
+    await Promise.all(
+      [...byUrl].map(async ([url, list]) => {
+        const geom = await loadGlbGeometry(scene, url);
+        if (!geom) {
+          warnOnce(`object:${url}`, `prefab-ship: deck object GLB ${url} not published; drawing a placeholder`);
+          placeholders.push(...list);
+          return;
+        }
+        const matrices = buckets();
+        for (const o of list) {
+          const anchor: [number, number] = [o.at[0] + o.size[0] / 2, o.at[1] + o.size[1] / 2];
+          const place = componentMatrix(anchor, z0, FACING_QT[o.facing]);
+          pushMatrix(matrices[o.view], multiply(multiply(GLTF_TO_ZUP, mountRotation("interior", "interior")), place));
+        }
+        addInstanced(out, geom, null, matrices, "equipment");
+      }),
+    );
+    for (const o of placeholders) {
       const inset = 0.08;
       const lo = [o.at[0] + inset, o.at[1] + inset, z0 + 0.01];
       const hi = [o.at[0] + o.size[0] - inset, o.at[1] + o.size[1] - inset, z0 + Math.max(0.3, o.heightTexels * TEXEL)];
@@ -442,14 +494,57 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     }
   }
 
+  /**
+   * Soft contact shadows where walls meet the deck (baked-AO stand-in): a translucent black
+   * gradient strip on the floor either side of every deck-view wall run. One mesh, deck view.
+   */
+  function buildContactShadows(out: Built) {
+    if (!out.dressed.contacts.length) return;
+    const g = { positions: [] as number[], normals: [] as number[], indices: [] as number[] };
+    const colours: number[] = [];
+    const z = G.deck.floorTopTexels * TEXEL + 0.012;
+    const W = 0.42;
+    for (const [a, b] of out.dressed.contacts) {
+      const L = Math.hypot(b[0] - a[0], b[1] - a[1]);
+      if (L < 1e-6) continue;
+      const n = [-(b[1] - a[1]) / L, (b[0] - a[0]) / L];
+      for (const side of [1, -1]) {
+        const base = g.positions.length / 3;
+        const o = [n[0] * W * side, n[1] * W * side];
+        for (const [p, far] of [[a, 0], [b, 0], [b, 1], [a, 1]] as const) {
+          g.positions.push(p[0] + o[0] * far, p[1] + o[1] * far, z);
+          g.normals.push(0, 0, 1);
+          colours.push(0, 0, 0, far ? 0 : 0.55);
+        }
+        if (side > 0) g.indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
+        else g.indices.push(base, base + 2, base + 1, base, base + 3, base + 2);
+      }
+    }
+    const mesh = makeMesh(scene, `${out.dressed.id}:contact-shadows`, frame, g, colours);
+    mesh.hasVertexAlpha = true;
+    mesh.isPickable = false;
+    const mat = new StandardMaterial(`${out.dressed.id}:contact-shadows`, scene);
+    mat.disableLighting = true;
+    mat.diffuseColor = Color3.Black();
+    mat.specularColor = Color3.Black();
+    mat.emissiveColor = Color3.Black();
+    mat.disableDepthWrite = true;
+    mat.backFaceCulling = false;
+    mat.alpha = 0.999; // force the transparent pass so vertex alpha blends
+    mesh.material = mat;
+    out.materials.push(mat);
+    setMeshRole(mesh, "effect");
+    out.statics.push({ mesh, tag: "deck", slot: null, triangles: g.indices.length / 3, kind: "pool" });
+  }
+
   function buildLightPools(out: Built) {
     const lights = out.dressed.lights;
     if (!lights.length) return;
     const tex = new DynamicTexture(`prefab-light-pool`, { width: 64, height: 64 }, scene, true);
     const ctx = tex.getContext() as unknown as CanvasRenderingContext2D;
     const grad = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
-    grad.addColorStop(0, "rgba(255,255,255,0.55)");
-    grad.addColorStop(0.5, "rgba(255,255,255,0.18)");
+    grad.addColorStop(0, "rgba(255,255,255,0.8)");
+    grad.addColorStop(0.5, "rgba(255,255,255,0.3)");
     grad.addColorStop(1, "rgba(255,255,255,0)");
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 64, 64);
@@ -501,17 +596,20 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       setMeshRole(mesh, "effect");
       out.statics.push({ mesh, tag, slot: null, triangles: g.indices.length / 3, kind: "pool" });
     }
-    const count = Math.max(0, Math.min(4, options.roomLights ?? 0));
+    // Ceiling lights, one per room: linear falloff to a range sized to the room so small ships
+    // are evenly lit in any scene environment (the game has no IBL inside hulls).
+    const count = Math.max(0, Math.min(MAX_ROOM_LIGHTS, options.roomLights ?? lights.length));
     [...lights]
       .sort((a, b) => b.intensity - a.intensity)
       .slice(0, count)
       .forEach((l, i) => {
         const light = new PointLight(`${out.dressed.id}:room-light:${i}`, new Vector3(l.at[0], l.at[1], l.at[2]), scene);
         light.parent = frame;
-        light.diffuse = new Color3(...l.colour);
+        light.diffuse = new Color3(...l.colour.map((c) => 0.55 + 0.45 * c) as [number, number, number]);
         light.specular = Color3.Black();
-        light.intensity = l.intensity * 4;
-        light.range = 7;
+        light.falloffType = Light.FALLOFF_STANDARD;
+        light.intensity = 1.1 + l.intensity * 0.9;
+        light.range = 4.5 + l.intensity * 3;
         out.lights.push({ light, tag: l.view });
       });
   }
@@ -574,9 +672,9 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     setTheme(t) {
       theme = t;
       if (!built) return;
-      for (const e of built.instanced) if (e.slot) e.mesh.material = slotMaterial(scene, t, e.slot);
+      for (const e of built.instanced) if (e.slot) e.mesh.material = roleSlotMaterial(scene, t, e.slot, roleOf(e.mesh));
       for (const s of built.statics) {
-        if (s.kind === "generated" || s.kind === "standin") s.mesh.material = slotMaterial(scene, t, s.slot!);
+        if (s.kind === "generated" || s.kind === "standin") s.mesh.material = roleSlotMaterial(scene, t, s.slot!, roleOf(s.mesh));
         else if (s.kind === "plume") s.mesh.material = plumeMaterial(scene, t);
         else if (s.kind === "object-fill" || s.kind === "object-frame") s.mesh.material = placeholderMaterial(scene, t, s.kind === "object-frame");
       }
