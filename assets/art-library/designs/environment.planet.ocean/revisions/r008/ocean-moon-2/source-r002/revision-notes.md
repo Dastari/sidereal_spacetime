@@ -1,5 +1,0 @@
-# ocean-moon-2 native r002 — 2026-09-14
-
-Exact reference `planets--ocean-moon-2` only. Predecessor r001 preserved. Native editable Blender meshes, complete GLBs, PBR maps, material roles and UV/normal channels retained. 171,128 triangles at every LOD; stable exact-reference placement IDs. Actual source preview viewed. No runtime visual pass/owner approval/publication or hardware timing claim; root coordinator owns next actual captures and Astra comparison.
-
-Material-only finish. Temp moons broaden green coverage across connected existing upper districts; Ocean2 assigns conspicuous pale-white upper districts while retaining blue crust and sparse green. Full geometry/normals/UVs/indices and all grove transforms match r001 exactly; composition recipe unchanged, using frozen compositor1. Twelve tests pass including geometric equality, >1.7x green triangle coverage, white upper coverage, retained LOD, all36 global primary cavities. Dedicated TSC and all33 GLB complete attribute/material parity pass. No added trees, mainworld islands or water.

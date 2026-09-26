@@ -1,9 +1,0 @@
-# Fog5 native footprint clearance successor
-
-2026-09-14. Preserves original integration and fog5 art. New helper probes the existing authored fog composition to measure each bank’s angular footprint and lowest radial offset. It compares all body triangles’ projected bounds to that footprint, retains explicit terrain placement IDs, and raises the anchor so the lowest fog vertex clears the maximum overlapping native triangle radius by.012. This includes nearby regions and ground instead of assuming the owning chemical floor is the highest terrain. No opacity, material, scale, rotation, UV, topology or bank-count change.
-
-The footprint bound is conservative: a tall chimney touching its rectangle can raise an entire bank, so actual appearance may be elevated. This is an explicit geometry-derived clearance behavior, not a claim that hovering height is artistically accepted. Native radial mapping keeps direction and height offsets unchanged by anchor radius, avoiding iterative rebuilds. Work runs once in the worker at build time; retainedLOD geometry and materials are unchanged.
-
-Two tests plus focused TypeScript pass. Actual Toxic4 seed38 native geometry yields12 bounded anchors with detailed terrain radius/partId/clearance records in anchor-clearance.json. NullEngine rays sample12 points per bank against actual body meshes and require at least100 terrain intersections, all with >.0119 radial separation. Tests verify exactLOD output plus original fog UV/indices/identity preservation. Original first attempt of ray harness lacked materials and returned no pickedPoint; corrected harness uses actual PBRMaterial per native mesh.
-
-Apply proposed-clearance-wiring.patch between captures: it changes only worker helper import/call. No shared worker/viewer changes were made here. Texture/density source is unchanged; actual hardware/visual acceptance remains root’s review task.

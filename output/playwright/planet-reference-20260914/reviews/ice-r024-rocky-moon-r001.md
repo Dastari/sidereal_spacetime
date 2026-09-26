@@ -1,9 +1,0 @@
-# Ice r024 and Rocky moon r001 — 2026-09-14
-
-Independently viewed Ice r024 corrected seed38 two-angle/reference-scale triplet, Rocky moon r001 exact-scale-seed38 triplet, and the exact rocky-moon-1 r000 crop. The Ice exact reference was inspected in preceding reviews. These are isolated SwiftShader appearance checks, not hardware/LOD, all-seed or owner approval.
-
-Ice r024's ground relief is now visibly represented by selected cracks and raised white plates in previously smooth regions. This is technical/source-parity progress. The resulting broad coarse snowbank surfaces nevertheless still dominate at 300px body size; working visual gate remains open. The next change should target intermediate snow ledge and exposed ice grouping on that identified ground, preserving some quiet snow without leaving most of the visible face blank. Do not repeat gorge-only border changes or infer that all blank areas belong to one source. Keep working shaft depth and cavity clearance.
-
-Rocky moon r001 fails the bounded moon visual gate. At its actual approximately 62px capture size, it remains a smooth dark sphere with a handful of isolated pits. The exact 62×64 crop reads as broken, pitted crust with stronger pale cliff-to-dark recess separation. This is a visible macro difference even at the tiny reference scale, not a demand for invented fine detail. Reusing the proven Rocky r010 fractured/crater source with explicitly cool mineral/material treatment is a sensible bounded next revision; do not propagate the isolated-washer foundation to other moons.
-
-Provenance: only exact-scale-seed38-reference-scale.png contains the approximately 62px body. The other two similarly named files are useful large close views, not exact-scale comparisons. No moon variant coverage is granted from the main Rocky working pass or this unsuccessful first candidate. Preserve explicit family/variant recipe and source evidence.

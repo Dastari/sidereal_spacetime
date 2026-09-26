@@ -1,5 +1,0 @@
-# ice-moon-2 native r002 — 2026-09-14
-
-Exact reference `planets--ice-moon-2` only. Predecessor r001 preserved. Native editable Blender meshes, complete GLBs, PBR maps, material roles and UV/normal channels retained. 169,352 triangles at every LOD; stable exact-reference placement IDs. Actual source preview viewed. No runtime visual pass/owner approval/publication or hardware timing claim; root coordinator owns next actual captures and Astra comparison.
-
-Adds medium native snow/blue-shaft ground districts (72/64), bounded upper-region population (10/8), and ground authored subdivisions6/5/4. Adaptive local ground-district tessellation bounds edges to .095 before spherical mapping, reducing stretched triangles at substrate clearance changes. Cavity floors remain. Seven tests pass including both native variant floors and all18 global glacial floors; TSC passes. Strict GLB materials/positions/UVs/textures pass. Greedy ground normal matching ambiguities resolve via exact maximum bipartite matching at unchanged normal1e-4/positionUV1e-5, zero unmatched corners and unchanged kit bytes; per-ground audit JSON/Python preserved.

@@ -1,7 +1,0 @@
-# Rocky r008 native broken-crust fields
-
-Based on actual Rocky7 review: preserve the working central crater floor/wall and replace outer annular shelf districts with four directional broken-crust fields, eight unequal medium ledges, an embedded medium pit and one coherent warm mineral seam. Existing central bowl geometry remains within the original working profile; unneeded outer annuli are contracted beneath its foot, preventing them from filling the new off-center pit. Eight stable region placements use broader .37–.44 scales to connect crust coverage without scattered box filling.
-
-Native PBR albedo/ORM images retain the original lilac/gray/dark/warm pigment palette, with subtle offline-authored grain and fracture marks and no baked directional shadows. Full-color maps use white factors; roughness/metallic maps carry exact surface response. Editable Blender objects, native corner normals and UVs, and all GLBs retained. Native kit and regional previews inspected; global coverage/overlap and visual fidelity require actual parent captures.
-
-Three tests and TypeScript checking pass. NullEngine rays hit both the established deep central floor and new off-center pit before the cleared substrate. All LODs retain every native surface/UV/normal/placement; no threshold regeneration. The11-variant JSON/GLB audit reports zero material differences, attribute gaps or position/normal/UV mismatches. Initial underlying-pit-fill source retained under attempt-01-underlying-pit-fill. No whole-planet acceptance or hardware claim.
