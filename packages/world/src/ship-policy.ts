@@ -126,7 +126,7 @@ export function onboardNewCharacter(ctx: Context, name: string) {
     ctx,
     actor,
     spawner,
-    { pose: { kind: "berth" }, name: actor.name },
+    { pose: { kind: "berth" }, name: "" },
     `starter:${characterId}`,
     { next: 0 },
   );

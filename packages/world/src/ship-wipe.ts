@@ -11,6 +11,7 @@ import {
   requireShipOperator,
 } from "./ship-operator";
 import { legacyStarterConfigured, starterPrefabId } from "./ship-policy";
+import { prefabShipSpawners } from "./ship-assign";
 import {
   legacyInventorySnapshot,
   synchronizeLegacyInventory,
@@ -241,6 +242,14 @@ export function planShipWipe(ctx: Context) {
       preservedMapRows,
       starterPrefabId: starterPrefabId(ctx),
       legacyStarterConfigured: legacyStarterConfigured(ctx),
+      // Values an operator needs for operator_assign_prefab_ship.
+      registeredPrefabs: prefabShipSpawners().map((s) => ({
+        prefabId: s.prefabId,
+        catalogRevision: s.catalogRevision,
+        blueprintSha256: s.blueprintSha256,
+        legacy: s.legacy,
+        description: s.description,
+      })),
     },
   };
 }
