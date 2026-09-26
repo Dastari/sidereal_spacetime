@@ -62,12 +62,22 @@ export async function loadPrefabShipPresentation(
     }
   };
   adapt();
+  // Draw-cost evidence: one line per presentation after its first rendered frame.
+  const logMetrics = () =>
+    scene.onAfterRenderObservable.addOnce(() => {
+      const m = view.metrics();
+      console.info(
+        `prefab-ship ${doc.id} ${interior ? "deck" : "flight"}: draws=${m.drawCalls} meshes=${m.meshes} instances=${m.instances} triangles=${m.triangles}`,
+      );
+    });
+  logMetrics();
   return {
     setInterior(next) {
       if (next === interior) return;
       interior = next;
       view.setView(next ? "deck" : "flight");
       adapt();
+      logMetrics();
     },
     dispose() {
       fill.dispose();

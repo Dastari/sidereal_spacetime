@@ -36,6 +36,7 @@ import { prefabOrigin, type PrefabComponentCatalog, type ShipPrefabDocumentV1, t
 import { dressShip, type ComponentPlacement, type DressView, type DressedShip } from "@sidereal/sim/ship-dresser";
 import { setMeshRole, type MeshRole } from "../mesh-roles";
 import { meshBoxes, newBuilder, type GeometryBuilder } from "./box-mesher";
+import { appendTransformed, localToParent, meshGeometry, type MergeGroup } from "./batch";
 import { appendStandin, componentStandin, emitPlume, type StandinSocket } from "./component-standins";
 import { applyDecalTheme, buildDecals, disposeDecals, type DecalHandle } from "./decals";
 import {
@@ -69,6 +70,9 @@ export interface PrefabShipViewOptions {
   roomLights?: number;
   /** Skip component GLB lookups and always draw procedural stand-ins. */
   standinComponents?: boolean;
+  /** Merge static geometry into one mesh per (view, slot, role). Default true; false keeps
+   * per-piece thin instances (useful for editors that inspect pieces). */
+  batch?: boolean;
 }
 
 export interface PrefabShipMetrics {
@@ -216,7 +220,54 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     buildObjects(out);
     buildLightPools(out);
     out.decals = buildDecals(scene, frame, dressed, theme).map((h) => ({ ...h, tag: h.decal.view }));
+    if (options.batch !== false) batchBuilt(out);
     return out;
+  }
+
+  /**
+   * Bake thin-instanced primitives and static slot meshes into one mesh per
+   * (view tag, slot, role). Plumes, light pools, object placeholders and decals keep their
+   * own materials and stay separate (a handful of draws).
+   */
+  function batchBuilt(out: Built) {
+    const groups = new Map<string, MergeGroup & { tag: DressView; slot: ShipKitSlot; role: MeshRole }>();
+    const group = (tag: DressView, slot: ShipKitSlot, role: MeshRole) => {
+      const key = `${tag}|${slot}|${role}`;
+      let g = groups.get(key);
+      if (!g) groups.set(key, (g = { key, tag, slot, role, positions: [], normals: [], indices: [] }));
+      return g;
+    };
+    for (const e of out.instanced) {
+      const geo = meshGeometry(e.mesh);
+      const role = ((e.mesh.metadata as { role?: MeshRole } | null)?.role ?? "hull") as MeshRole;
+      if (geo)
+        for (const tag of ["both", "flight", "deck"] as const) {
+          const m = e.matrices[tag];
+          for (let i = 0; i < m.length; i += 16) appendTransformed(group(tag, e.slot ?? "primary", role), geo.positions, geo.normals, geo.indices, m.slice(i, i + 16));
+        }
+      e.mesh.dispose();
+    }
+    out.instanced = [];
+    const kept: StaticEntry[] = [];
+    for (const st of out.statics) {
+      if ((st.kind !== "generated" && st.kind !== "standin") || !st.slot) {
+        kept.push(st);
+        continue;
+      }
+      const geo = meshGeometry(st.mesh);
+      const role = ((st.mesh.metadata as { role?: MeshRole } | null)?.role ?? "hull") as MeshRole;
+      if (geo) appendTransformed(group(st.tag, st.slot, role), geo.positions, geo.normals, geo.indices, localToParent(st.mesh));
+      st.mesh.dispose();
+    }
+    for (const g of groups.values()) {
+      if (!g.indices.length) continue;
+      const mesh = makeMesh(scene, `${out.dressed.id}:batch:${g.key}`, frame, g);
+      mesh.material = slotMaterial(scene, theme, g.slot);
+      setMeshRole(mesh, g.role);
+      mesh.freezeWorldMatrix();
+      kept.push({ mesh, tag: g.tag, slot: g.slot, triangles: g.indices.length / 3, kind: "generated" });
+    }
+    out.statics = kept;
   }
 
   async function buildKit(out: Built) {
