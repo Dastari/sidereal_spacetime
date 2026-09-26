@@ -26,7 +26,8 @@ class Fx:
 
     def layer(self, name, color, strength=6.0, alpha=1.0, lit=False):
         if name not in self.layers:
-            self.layers[name] = (Grid(), {"color": list(color), "emissiveStrength": 0.0 if lit else strength,
+            # VERIFY batch 1: strengths ~1/3 of r001 so glows stay saturated instead of clipping white.
+            self.layers[name] = (Grid(), {"color": list(color), "emissiveStrength": 0.0 if lit else round(min(3.0, strength * 0.2), 3),
                                           "alpha": alpha, "lit": lit})
         return self.layers[name][0]
 
@@ -109,19 +110,19 @@ def plasma_bolt():
            keys=[{"t": 0, "scale": [1, 1, 1], "opacity": 1, "emissive": 1}, {"t": 0.5, "scale": [1.1, 1.0, 1.1], "opacity": 1, "emissive": 1.2},
                  {"t": 1, "scale": [1, 1, 1], "opacity": 1, "emissive": 1}],
            light={"color": [0.2, 0.5, 1.0], "intensity": 2.5, "rangeM": 2.0}, refs=["fx.plasma-bolt"])
-    f.layer("core", (0.85, 0.95, 1.0), 14)
-    f.layer("glow", (0.10, 0.45, 1.0), 9, 0.8)
-    f.layer("tail", (0.05, 0.25, 1.0), 6, 0.5)
-    for z in range(-3, 3):
+    f.layer("core", (0.40, 0.75, 1.0), 14)
+    f.layer("glow", (0.06, 0.38, 1.0), 9, 0.75)
+    f.layer("tail", (0.03, 0.20, 1.0), 6, 0.45)
+    for z in range(-2, 2):
         q = z + 0.5
-        half = int(math.floor(math.sqrt(max(0, 9 - q * q)) + 0.5))
-        f.box("glow", -half, 12, z, half, 18, z + 1)
-    f.box("core", -1, 13, -1, 1, 18, 1)
-    for i, (y0, y1, h) in enumerate(((8, 12, 2), (4, 8, 1), (0, 4, 0))):
-        f.box("tail", -h - (1 if h else 0), y0, -h - (1 if h else 0), h + 1, y1, h + 1)
+        half = int(math.floor(math.sqrt(max(0, 4 - q * q)) + 0.5))
+        f.box("glow", -half, 11, z, half, 16, z + 1)
+    f.box("core", -1, 12, -1, 1, 15, 1)
+    for y0, y1, h in ((7, 11, 1), (3, 7, 0)):
+        f.box("tail", -h, y0, -h, h + 1 if h else 1, y1, h + 1 if h else 1)
     r = _rng(11)
-    for _ in range(8):
-        x, y, z = int(r() * 8) - 4, int(r() * 10) + 2, int(r() * 8) - 4
+    for _ in range(6):
+        x, y, z = int(r() * 6) - 3, int(r() * 9) + 2, int(r() * 6) - 3
         f.box("glow", x, y, z, x + 1, y + 1, z + 1)
     return f
 
@@ -129,8 +130,8 @@ def plasma_bolt():
 def beam_lance():
     f = Fx("beam-lance", "BEAM LANCE", "CONTINUOUS", "energy", "beam", "muzzle", C32, 0.25, tint="emit_a", loop=True,
            length=1.0, keys=steady_keys(), light={"color": [0.2, 0.6, 1.0], "intensity": 2.0, "rangeM": 2.0})
-    f.layer("core", (0.9, 0.97, 1.0), 14)
-    f.layer("glow", (0.12, 0.55, 1.0), 8, 0.65)
+    f.layer("core", (0.45, 0.85, 1.0), 14)
+    f.layer("glow", (0.08, 0.45, 1.0), 8, 0.65)
     f.box("core", 0, 0, 0, 1, 32, 1)
     for y in range(0, 32, 4):
         f.box("glow", -1, y, -1, 2, y + 3, 2)
@@ -141,7 +142,7 @@ def healing_beam():
     f = Fx("healing-beam", "HEALING BEAM", "MEDICAL", "medical", "beam", "emitter", C32, 0.4, tint="fixed", loop=True,
            length=1.0, keys=steady_keys(), light={"color": [0.2, 1.0, 0.4], "intensity": 1.5, "rangeM": 2.0},
            refs=["fx.healing-beam"])
-    f.layer("core", (0.8, 1.0, 0.8), 12)
+    f.layer("core", (0.40, 1.0, 0.55), 12)
     f.layer("glow", (0.12, 1.0, 0.30), 8, 0.7)
     f.box("core", 0, 0, 0, 1, 32, 1)
     f.box("glow", -1, 0, 0, 2, 32, 1)
@@ -154,8 +155,8 @@ def stun_arc():
     f = Fx("stun-arc", "STUN ARC", "ELECTRIC", "energy", "beam", "muzzle", C32, 0.18, tint="fixed", length=1.0,
            keys=[{"t": 0, "scale": [1, 1, 1], "opacity": 1, "emissive": 1.3}, {"t": 0.5, "scale": [1, 1, -1], "opacity": 1, "emissive": 1},
                  {"t": 1, "scale": [1, 1, 1], "opacity": 0, "emissive": 0}], refs=[])
-    f.layer("core", (0.85, 1.0, 1.0), 14)
-    f.layer("glow", (0.2, 0.9, 1.0), 8, 0.7)
+    f.layer("core", (0.45, 0.95, 1.0), 14)
+    f.layer("glow", (0.1, 0.7, 1.0), 8, 0.7)
     x, z = 0, 0
     r = _rng(5)
     for y in range(0, 32, 2):
@@ -172,7 +173,7 @@ def scan_pulse():
            keys=[{"t": 0, "scale": [0.15, 0.15, 1], "opacity": 1, "emissive": 1.2}, {"t": 0.6, "scale": [1, 1, 1], "opacity": 0.8, "emissive": 1},
                  {"t": 1, "scale": [1.4, 1.4, 1], "opacity": 0, "emissive": 0}], refs=["fx.scan-pulse"])
     f.layer("ring", (0.15, 0.65, 1.0), 7, 0.85)
-    f.layer("core", (0.8, 0.95, 1.0), 10)
+    f.layer("core", (0.5, 0.85, 1.0), 10)
     for r_out, r_in in ((13, 12), (9, 8), (5, 4)):
         for y in range(-r_out, r_out):
             q = y + 0.5
@@ -191,15 +192,18 @@ def shield_bubble():
            keys=[{"t": 0, "scale": [1, 1, 1], "opacity": 0.8, "emissive": 1}, {"t": 0.5, "scale": [1.02, 1.02, 1.02], "opacity": 1, "emissive": 1.2},
                  {"t": 1, "scale": [1, 1, 1], "opacity": 0.8, "emissive": 1}],
            light={"color": [0.2, 0.5, 1.0], "intensity": 1.0, "rangeM": 3.0}, refs=["fx.shield-bubble"])
-    f.layer("hex", (0.12, 0.45, 1.0), 3, 0.28)
-    f.layer("edge", (0.35, 0.75, 1.0), 6, 0.55)
+    f.layer("hex", (0.05, 0.30, 1.0), 3, 0.16)
+    f.layer("edge", (0.10, 0.55, 1.0), 7, 0.6)
     R = 9.5
     for x in range(-10, 10):
         for y in range(-10, 10):
             for z in range(0, 10):
-                d = math.sqrt((x + 0.5) ** 2 + (y + 0.5) ** 2 + (z + 0.5) ** 2)
+                cx, cy, cz = x + 0.5, y + 0.5, z + 0.5
+                d = math.sqrt(cx * cx + cy * cy + cz * cz)
                 if R - 1 <= d < R:
-                    edge = ((x + y + 2 * z) % 4 == 0) or z == 0
+                    lat = math.degrees(math.asin(min(1.0, cz / d)))
+                    lon = math.degrees(math.atan2(cy, cx)) + (15 if int(lat // 20) % 2 else 0)
+                    edge = z == 0 or abs(lat % 20) < 5 or abs(lon % 30) < 5
                     f.box("edge" if edge else "hex", x, y, z, x + 1, y + 1, z + 1)
     return f
 
@@ -238,9 +242,9 @@ def thruster_glow():
            keys=[{"t": 0, "scale": [1, 1, 1], "opacity": 1, "emissive": 1}, {"t": 0.5, "scale": [0.9, 1.15, 0.9], "opacity": 0.9, "emissive": 1.2},
                  {"t": 1, "scale": [1, 1, 1], "opacity": 1, "emissive": 1}],
            light={"color": [0.3, 0.6, 1.0], "intensity": 1.5, "rangeM": 1.5}, refs=["fx.thruster-glow"])
-    f.layer("core", (0.85, 0.95, 1.0), 12)
-    f.layer("glow", (0.12, 0.45, 1.0), 8, 0.7)
-    for y0, y1, h in ((0, 3, 3), (3, 6, 2), (6, 10, 1)):
+    f.layer("core", (0.35, 0.80, 1.0), 12)
+    f.layer("glow", (0.06, 0.35, 1.0), 8, 0.6)
+    for y0, y1, h in ((0, 3, 2), (3, 6, 2), (6, 9, 1)):
         f.box("glow", -h, -y1, -h, h, -y0, h)
     for y0, y1, h in ((0, 4, 1), (4, 8, 0)):
         f.box("core", -h - 1 if h else 0, -y1, -h - 1 if h else 0, h + 1, -y0, h + 1)
@@ -294,7 +298,7 @@ def teleport():
            light={"color": [0.6, 0.25, 1.0], "intensity": 3.0, "rangeM": 3.0}, refs=["fx.teleport"])
     f.layer("ring", (0.55, 0.20, 1.0), 8, 0.9)
     f.layer("column", (0.65, 0.35, 1.0), 5, 0.4)
-    f.layer("core", (0.9, 0.8, 1.0), 12)
+    f.layer("core", (0.70, 0.45, 1.0), 12)
     for r_out, r_in in ((12, 11), (8, 7)):
         for y in range(-r_out, r_out):
             q = y + 0.5

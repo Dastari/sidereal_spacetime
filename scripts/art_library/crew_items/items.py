@@ -262,24 +262,24 @@ def beam_rifle():
     it = Item("beam-rifle", "Beam rifle", "energy", "rifle")
     X0, X1 = 0, 4
     it.box(X0, 0, 5, X1, 5, 11, "primary").box(X0, 0, 5, X1, 1, 11, "dark")
-    sides(it, X0, X1, 1, 6, 4, 8, "emit_a")
     pistol_grip(it, 1, 3, 6, 6)
     trigger(it, 1, 3, 6, 6)
     it.box(X0, 4, 5, X1, 18, 11, "secondary").box(X0, 5, 10, X1, 18, 11, "primary")
     it.box(X0, 4, 5, X1, 5, 11, "accent")
     sides(it, X0, X1, 11, 6, 17, 9, "dark")
     sides(it, X0, X1, 12, 7, 16, 8, "emit_a")
-    it.box(X0, 5, 5, X1, 17, 6, "emit_a")
     it.box(1, 7, 11, 3, 10, 12, "dark").box(1, 15, 11, 3, 16, 12, "dark").box(1, 8, 12, 3, 9, 13, "emit_a")
-    it.box(1, 18, 6, 3, 27, 10, "secondary")
-    for y in (19, 21, 23):
-        it.box(X0, y, 5, X1, y + 1, 11, "emit_a")
+    # hero detail: translucent blue energy cell with a glowing core, held by charcoal clamps
+    it.box(X0, 18, 5, X1, 25, 11, "glass").box(1, 18, 7, 3, 25, 9, "emit_a")
+    for y in (18, 21, 24):
+        it.box(X0, y, 5, X1, y + 1, 11, "secondary")
+    it.box(1, 18, 11, 3, 25, 12, "dark")
     it.box(X0, 25, 5, X1, 27, 11, "accent").box(1, 26, 7, 3, 27, 9, "emit_a")
     c = it.part("cell", (4.5, 11.5, 8.5))
     it.box(4, 9, 7, 5, 14, 10, "metal").box(4, 10, 8, 5, 13, 9, "emit_a")
     c.key("reload", 0).key("reload", 5, (3, 0, 3)).key("reload", 14, (3, 0, 3)).key("reload", 20)
     it.main()
-    it.socket("grip", (2, 7.5, 3)).socket("support", (2, 18, 8)).socket("muzzle", (2, 27, 8))
+    it.socket("grip", (2, 7.5, 3)).socket("support", (2, 19.5, 8)).socket("muzzle", (2, 27, 8))
     it.socket("stock", (2, 0, 8), (0, -1, 0)).socket("sight", (2, 8.5, 13)).socket("eye", (2, 3, 13))
     return meta(it, label="BEAM RIFLE", sub="ENERGY", refs=["wt.beam-rifle", "role.recon-scout-rifle"], profile="RIFLE",
                 holster="back", two_handed=True,
@@ -312,7 +312,7 @@ def rail_rifle():
 
 
 def stun_gun():
-    it = Item("stun-gun", "Stun gun", "energy", "pistol", overrides={"emit_a": ((0.12, 1.0, 0.25), 9.0)})
+    it = Item("stun-gun", "Stun gun", "energy", "pistol", overrides={"emit_a": ((0.12, 1.0, 0.25), 1.4)})
     X0, X1 = 0, 4
     pistol_grip(it, 1, 3, 2, 6)
     trigger(it, 1, 3, 2, 6)
@@ -396,19 +396,20 @@ def medkit():
 # ============================================================================ TOOLS
 def utility_cutter():
     it = Item("utility-cutter", "Utility cutter", "tool", "melee", theme="engineer")
-    it.box(0, 0, 0, 4, 3, 4, "trim").box(0, 0, 0, 4, 1, 4, "emit_b").box(1, 0, 1, 3, 1, 3, "trim").box(1, -1, 1, 3, 0, 3, "emit_a")
-    it.box(0, 3, 0, 4, 12, 4, "primary")
-    it.box(0, 5, 0, 4, 10, 4, "grip")
-    for y in (6, 8):
-        it.box(0, y, 0, 4, y + 1, 4, "dark")
-    it.box(0, 4, 3, 4, 5, 4, "dark").box(0, 10, 3, 4, 11, 4, "dark")
-    it.box(-1, 11, -1, 5, 13, 5, "secondary").box(1, 12, 5, 3, 13, 6, "dark")
-    b = it.part("blade", (2, 13, 2))
-    it.box(1, 13, -1, 3, 15, 5, "metal").box(1, 15, 0, 3, 17, 5, "metal").box(1, 17, 1, 3, 19, 5, "metal")
-    it.box(1, 19, 2, 3, 20, 5, "metal").box(1, 20, 3, 3, 21, 5, "metal").box(1, 13, 4, 3, 20, 5, "primary")
+    # pale rear cap with a glowing orange face, gold housing with charcoal rib insets, crystal blade
+    it.box(0, 0, 0, 4, 3, 4, "trim").box(1, -1, 1, 3, 0, 3, "emit_b").box(0, 0, 0, 4, 1, 1, "dark")
+    it.box(-1, 3, -1, 5, 12, 5, "primary")
+    for y in (5, 7, 9):
+        sides(it, -1, 5, y, 0, y + 1, 4, "dark", depth=1)
+    it.box(0, 4, 4, 4, 11, 5, "secondary").box(1, 5, 5, 3, 7, 6, "dark")
+    it.box(-1, 3, -1, 5, 4, 5, "secondary").box(-1, 11, -1, 5, 12, 5, "secondary")
+    it.box(0, 12, 0, 4, 14, 4, "dark").box(1, 12, 4, 3, 14, 5, "metal")
+    b = it.part("blade", (2, 14, 2))
+    it.box(1, 14, -1, 3, 16, 5, "glass").box(1, 16, 0, 3, 18, 5, "glass").box(1, 18, 1, 3, 20, 5, "glass")
+    it.box(1, 20, 2, 3, 21, 5, "glass").box(1, 21, 3, 3, 22, 5, "glass").box(1, 14, 4, 3, 21, 5, "trim")
     b.key("use", 0).key("use", 2, (0, 1, 0)).key("use", 4).key("use", 6, (0, 1, 0)).key("use", 8)
     it.main()
-    it.socket("grip", (2, 7.5, 2)).socket("emitter", (2, 21, 3.5))
+    it.socket("grip", (2, 7.5, 2)).socket("emitter", (2, 22, 3.5))
     return meta(it, label="UTILITY CUTTER", sub="MELEE • UTILITY", refs=["wt.utility-cutter"], profile="TOOL",
                 holster="hip.L", fx={"use": "repair-sparks", "impact": "impact-spark"}, replaces="plasma-cutter")
 
@@ -506,7 +507,7 @@ def wrench():
 
 # ============================================================================ UTILITY / DEVICES
 def scanner():
-    it = Item("scanner", "Scanner", "utility", "device", overrides={"emit_a": ((0.2, 1.0, 0.3), 8.0)})
+    it = Item("scanner", "Scanner", "utility", "device", overrides={"emit_a": ((0.2, 1.0, 0.3), 1.4)})
     it.box(1, 2, 0, 4, 4, 6, "grip").box(1, 2, 0, 4, 4, 2, "accent").box(1, 1, 1, 4, 2, 5, "dark")
     it.box(0, 0, 6, 5, 6, 12, "primary").box(0, 0, 6, 5, 6, 7, "secondary")
     it.box(1, 0, 7, 4, 1, 11, "dark").box(2, 0, 7, 3, 1, 10, "emit_a").box(1, 0, 8, 4, 1, 9, "emit_a")
@@ -545,25 +546,30 @@ def data_pad():
 
 def shield_emitter():
     it = Item("shield-emitter", "Shield emitter", "utility", "device", theme="orion")
-    it.box(2, 2, 0, 4, 4, 5, "grip").box(2, 2, 0, 4, 4, 1, "secondary")
-    it.box(0, 0, 5, 6, 6, 11, "secondary")
-    for x in (0, 5):
-        for z in (5, 10):
-            it.box(x, 0, z, x + 1, 6, z + 1, "primary")
-    it.box(-1, 1, 6, 7, 5, 10, "primary").box(1, 1, 4, 5, 5, 12, "primary")
-    it.box(-1, 2, 7, 0, 4, 9, "dark").box(6, 2, 7, 7, 4, 9, "dark")
-    it.box(2, 2, 12, 4, 4, 13, "emit_a")
-    r = it.part("ring", (3, 6.5, 8))
-    it.box(1, 6, 6, 5, 7, 10, "emit_a").box(2, 6, 7, 4, 7, 9, "dark")
+    it.box(3, 2, 0, 5, 4, 5, "grip").box(3, 2, 0, 5, 4, 1, "secondary")
+    # chunky pale body with chamfered corners, charcoal side insets and a glowing top cap
+    it.box(0, 0, 4, 8, 6, 12, "primary")
+    for x in (0, 7):
+        for z in (4, 11):
+            it.cut(x, 0, z, x + 1, 6, z + 1)
+    sides(it, 0, 8, 1, 6, 5, 10, "secondary")
+    sides(it, 0, 8, 2, 7, 4, 9, "dark")
+    it.box(2, 1, 12, 6, 5, 13, "trim").box(3, 2, 12, 5, 4, 14, "emit_a")
+    it.box(1, 6, 5, 7, 7, 11, "secondary")
+    it.box(0, -1, 5, 8, 0, 11, "trim").box(2, -1, 6, 6, 0, 10, "dark")
+    r = it.part("ring", (4, 7.5, 8))
+    it.box(2, 7, 6, 6, 8, 10, "emit_a").box(3, 7, 7, 5, 8, 9, "dark")
+    it.box(1, 7, 7, 2, 8, 9, "secondary").box(6, 7, 7, 7, 8, 9, "secondary")
+    it.box(3, 7, 5, 5, 8, 6, "secondary").box(3, 7, 10, 5, 8, 11, "secondary")
     r.key("use", 0).key("use", 6, rot=(0, 90, 0)).key("use", 12, rot=(0, 180, 0))
     it.main()
-    it.socket("grip", (3, 3, 2.5)).socket("emitter", (3, 7, 8))
+    it.socket("grip", (4, 3, 2.5)).socket("emitter", (4, 8, 8))
     return meta(it, label="SHIELD EMITTER", sub="DEFENSE", refs=["wt.shield-emitter"], profile="FLASHLIGHT",
                 holster="belt", fx={"use": "shield-bubble"})
 
 
 def flashlight():
-    it = Item("flashlight", "Flashlight", "utility", "tool", theme="orion", overrides={"emit_b": ((1.0, 0.55, 0.12), 12.0)})
+    it = Item("flashlight", "Flashlight", "utility", "tool", theme="orion", overrides={"emit_b": ((1.0, 0.55, 0.12), 1.4)})
     it.box(0, 0, 0, 2, 7, 2, "secondary").box(0, 0, 0, 2, 1, 2, "dark")
     it.box(0, 2, 0, 2, 3, 2, "dark").box(0, 4, 0, 2, 5, 2, "dark").box(0, 5, 2, 1, 6, 3, "accent")
     it.box(-1, 7, -1, 3, 10, 3, "metal").box(0, 9, 0, 2, 10, 2, "emit_b").box(-1, 7, -1, 3, 8, 3, "secondary")
@@ -593,7 +599,7 @@ def grapple():
 
 
 def drone():
-    it = Item("drone", "Drone", "utility", "throw", theme="security", overrides={"emit_b": ((0.2, 1.0, 0.35), 7.0)})
+    it = Item("drone", "Drone", "utility", "throw", theme="security", overrides={"emit_b": ((0.2, 1.0, 0.35), 1.4)})
     it.box(2, 2, 2, 6, 6, 6, "primary").box(3, 3, 6, 5, 5, 7, "primary").box(2, 2, 2, 6, 6, 3, "secondary")
     it.box(3, 6, 3, 5, 7, 5, "emit_a").box(3, 1, 3, 5, 2, 5, "dark")
     it.box(3, 3, 1, 5, 5, 2, "trim")

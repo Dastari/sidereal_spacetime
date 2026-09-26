@@ -44,8 +44,8 @@ def slot_material(theme, slot, item=None):
     elif slot == "glass":
         b.inputs["Base Color"].default_value = (*value, 1)
         b.inputs["Emission Color"].default_value = (*value, 1)
-        b.inputs["Emission Strength"].default_value = 0.6
-        b.inputs["Alpha"].default_value = 0.45
+        b.inputs["Emission Strength"].default_value = 0.3
+        b.inputs["Alpha"].default_value = 0.55
         m.surface_render_method = "BLENDED"
     if slot != "glass":
         # Owner feedback 2026-09-25: smooth part faces, no per-voxel grid. Shading gradient comes
@@ -110,24 +110,85 @@ def boxes_mesh(name, boxes, origin, voxel, slots):
     return me
 
 
-def shade(me):
-    """Per-part gradient shading baked into a corner colour attribute 'shade' (glTF COLOR_0):
-    soft vertical light ramp across the part plus ambient occlusion on downward faces."""
+DIRS = ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1))
+
+
+def region_mesh(name, cells, origin, voxel, slots):
+    """Surface mesh per colour region (VERIFY batch-1 fix): faces are emitted only where a voxel
+    borders empty space or another slot, coplanar faces are dissolved into single panels, so a
+    part is one solid island with one soft bevel; seams only appear at colour/part boundaries.
+    Shading = baked per-part vertical ramp x voxel corner ambient occlusion (recess depth)."""
+    import bmesh
+    index = {s: i for i, s in enumerate(slots)}
+    bm = bmesh.new()
+    verts = {}
+    ox, oy, oz = origin
+
+    def vert(slot, p):
+        key = (slot, p)
+        v = verts.get(key)
+        if v is None:
+            v = verts[key] = bm.verts.new(((p[0] - ox) * voxel, (p[1] - oy) * voxel, (p[2] - oz) * voxel))
+        return v
+    for (x, y, z), slot in cells.items():
+        for d in DIRS:
+            if cells.get((x + d[0], y + d[1], z + d[2])) == slot:
+                continue
+            axis = next(i for i in range(3) if d[i])
+            u, w = [i for i in range(3) if i != axis]
+            base = [x, y, z]
+            if d[axis] > 0:
+                base[axis] += 1
+            quad = []
+            for du, dw in ((0, 0), (1, 0), (1, 1), (0, 1)):
+                p = list(base)
+                p[u] += du
+                p[w] += dw
+                quad.append(tuple(p))
+            a, b, c = (Vector(q) for q in quad[:3])
+            if (b - a).cross(c - a).dot(Vector(d)) < 0:
+                quad.reverse()
+            f = bm.faces.new([vert(slot, q) for q in quad])
+            f.material_index = index[slot]
+    bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(1), use_dissolve_boundaries=False,
+                             verts=list(bm.verts), edges=list(bm.edges), delimit={"MATERIAL"})
+    me = bpy.data.meshes.new(name)
+    bm.to_mesh(me)
+    bm.free()
+    me.polygons.foreach_set("use_smooth", [True] * len(me.polygons))
+    shade(me, cells, origin, voxel)
+    return me
+
+
+def shade(me, cells=None, origin=(0, 0, 0), voxel=1.0):
+    """Corner colour 'shade' (glTF COLOR_0): soft vertical ramp across the part, darker downward
+    faces, and voxel-corner AO from the 8 cells around each vertex (concave recesses darken,
+    convex edges brighten slightly)."""
     zs = [v.co.z for v in me.vertices]
     z0, z1 = (min(zs), max(zs)) if zs else (0.0, 1.0)
     span = max(z1 - z0, 1e-6)
     attr = me.color_attributes.new("shade", "BYTE_COLOR", "CORNER")
+    occ = {}
     for p in me.polygons:
-        down = 0.80 if p.normal.z < -0.5 else (1.0 if p.normal.z > 0.5 else 0.93)
+        down = 0.78 if p.normal.z < -0.5 else (1.0 if p.normal.z > 0.5 else 0.92)
         for li in p.loop_indices:
-            t = (me.vertices[me.loops[li].vertex_index].co.z - z0) / span
-            k = (0.84 + 0.16 * t) * down
+            vi = me.loops[li].vertex_index
+            co = me.vertices[vi].co
+            t = (co.z - z0) / span
+            k = (0.82 + 0.18 * t) * down
+            if cells is not None:
+                if vi not in occ:
+                    g = tuple(int(round(co[i] / voxel + origin[i])) for i in range(3))
+                    occ[vi] = sum((g[0] - i, g[1] - j, g[2] - l) in cells for i in (0, 1) for j in (0, 1) for l in (0, 1))
+                n = occ[vi]
+                k *= 1.0 - 0.13 * max(0, n - 4) + 0.04 * max(0, 4 - n)
+            k = min(1.0, k)
             attr.data[li].color = (k, k, k, 1.0)
 
 
 def add_bevel(ob, width=BEVEL_WIDTH):
     md = ob.modifiers.new("brick", "BEVEL")
-    md.width, md.segments, md.limit_method, md.angle_limit = width, 1, "ANGLE", math.radians(30)
+    md.width, md.segments, md.limit_method, md.angle_limit = width, 2, "ANGLE", math.radians(30)
     md.profile = 0.6
     md.harden_normals, md.use_clamp_overlap = True, True
     return md
@@ -140,10 +201,10 @@ def item_meshes(item):
     out = {}
     origin = item.origin()
     for gname, grid, pivot in item.grids():
-        boxes = grid.boxes()
-        slots = [s for s in ITEM_SLOTS if any(b[6] == s for b in boxes)]
+        cells = {k: v[0] for k, v in grid.cells.items()}
+        slots = [s for s in ITEM_SLOTS if s in set(cells.values())]
         base = origin if gname == "body" else pivot
-        me = boxes_mesh(f"{item.id}.{gname}", boxes, base, item.voxel, slots)
+        me = region_mesh(f"{item.id}.{gname}", cells, base, item.voxel, slots)
         loc = (0.0, 0.0, 0.0) if gname == "body" else item.to_metres(pivot)
         out[gname] = (me, slots, loc)
     MESHES[item.id] = out

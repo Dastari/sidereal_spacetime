@@ -65,14 +65,15 @@ def new_scene(name, width, height, samples, transparent=False):
     cam = bpy.data.objects.new(f"{name}.cam", bpy.data.cameras.new(f"{name}.cam"))
     sc.collection.objects.link(cam)
     sc.camera = cam
-    sc.view_settings.view_transform, sc.view_settings.look = "AgX", "AgX - Punchy"
-    sc.view_settings.exposure, sc.view_settings.gamma = 0.5, 1.08
+    # Standard (not AgX) keeps saturated emissive colours from rolling off to white (VERIFY batch 1).
+    sc.view_settings.view_transform, sc.view_settings.look = "Standard", "None"
+    sc.view_settings.exposure, sc.view_settings.gamma = 0.0, 1.0
     sc.use_nodes = True
     ct = sc.node_tree
     ct.nodes.clear()
     rl = ct.nodes.new("CompositorNodeRLayers")
     gl = ct.nodes.new("CompositorNodeGlare")
-    gl.glare_type, gl.threshold, gl.size, gl.mix = "FOG_GLOW", 0.9, 7, -0.4
+    gl.glare_type, gl.threshold, gl.size, gl.mix = "FOG_GLOW", 0.55, 7, -0.15
     hs = ct.nodes.new("CompositorNodeHueSat")
     hs.inputs["Saturation"].default_value = 1.25
     bc = ct.nodes.new("CompositorNodeBrightContrast")
@@ -146,6 +147,10 @@ def tile(coll, cx, cz, w, h, label=None, sub=None):
         text(coll, sub, (cx, 0.5, cz - h * 0.40), 0.058 * w, colour=(0.2, 0.65, 1.0), strength=1.8)
 
 
+# Items whose feature face is +Y (emitter front) turn it toward the camera in sheets.
+DISPLAY_YAW = {"shield-emitter": 35}
+
+
 def view_rotation(yaw=-58, tilt=TILT, roll=0):
     return Matrix.Rotation(math.radians(tilt), 4, "X") @ Matrix.Rotation(math.radians(roll), 4, "Y") @ Matrix.Rotation(math.radians(yaw), 4, "Z")
 
@@ -191,7 +196,7 @@ def sheet_panel(o, items, by_id, order, name, title, subtitle, cols=6):
         cx, cz = 0.5 + c * 1.0, -0.55 - r * 1.0
         it = by_id[iid]
         tile(coll, cx, cz, 0.94, 0.94, it.meta["label"], it.meta["sub"])
-        rot = view_rotation()
+        rot = view_rotation(yaw=DISPLAY_YAW.get(iid, -58))
         m, _ = fit_matrix(it, cx, cz + 0.11, 0.70, rot)
         blend.spawn(it, it.theme, m, coll)
     ortho_front(cam, w / 2 - 0.1, -h / 2 + 0.5, w)
@@ -226,7 +231,7 @@ def sheet_catalog(o, items, by_id):
             _, iid, cx, cz = entry
             it = by_id[iid]
             tile(coll, cx, cz, 0.94, 0.94, it.meta["label"], it.meta["sub"])
-            m, _ = fit_matrix(it, cx, cz + 0.12, 0.62, view_rotation())
+            m, _ = fit_matrix(it, cx, cz + 0.12, 0.62, view_rotation(yaw=DISPLAY_YAW.get(iid, -58)))
             blend.spawn(it, it.theme, m, coll)
     ortho_front(cam, w / 2 - 0.1, (z + 0.3) / 2, w)
     render(sc, os.path.join(o.renders, "catalog.png"))
@@ -247,7 +252,7 @@ def sheet_variants(o, by_id, name, ids):
         for c, iid in enumerate(ids):
             cx = 0.4 + c * 0.8
             plane(coll, cx - 0.38, cz - 0.38, cx + 0.38, cz + 0.38, 1.0, emission_mat("tile", TILE, 1.0))
-            m, _ = fit_matrix(by_id[iid], cx, cz, 0.62, view_rotation())
+            m, _ = fit_matrix(by_id[iid], cx, cz, 0.62, view_rotation(yaw=DISPLAY_YAW.get(iid, -58)))
             blend.spawn(by_id[iid], theme, m, coll)
     ortho_front(cam, w / 2 - 1.1, -h / 2 + 0.5, w)
     render(sc, os.path.join(o.renders, f"{name}.png"))
@@ -302,7 +307,8 @@ def sheet_fx(o, by_id, fxs):
             if fm is not None:
                 blend.spawn_fx(f, fm, coll)
         else:
-            blend.spawn_fx(f, fit_fx(f, cx, cz + 0.08, 0.62, rot), coll)
+            size = 0.42 if fid in ("plasma-bolt", "thruster-glow") else 0.62
+            blend.spawn_fx(f, fit_fx(f, cx, cz + 0.08, size, rot), coll)
     ortho_front(cam, w / 2 - 0.1, -h / 2 + 0.5, w)
     render(sc, os.path.join(o.renders, "fx_library.png"))
 
@@ -397,7 +403,7 @@ def icons(o, items):
     for it in items:
         for ob in list(coll.objects):
             bpy.data.objects.remove(ob, do_unlink=True)
-        m, _ = fit_matrix(it, 0, 0, 0.86, view_rotation())
+        m, _ = fit_matrix(it, 0, 0, 0.86, view_rotation(yaw=DISPLAY_YAW.get(it.id, -58)))
         blend.spawn(it, it.theme, m, coll)
         render(sc, os.path.join(out, f"{it.id}.png"))
 
