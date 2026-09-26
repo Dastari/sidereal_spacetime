@@ -76,6 +76,8 @@ import { createRenderDiagnostics } from "./diagnostics";
 import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
+import { createVoxelCrewVisual } from "./crew/voxel-crew";
+import type { CrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { Camera } from "@babylonjs/core/Cameras/camera";
@@ -164,6 +166,8 @@ export interface WorldOptions {
   /** Allow known authored exhaust geometry; accepted telemetry still drives it. */
   authoredFlightEffects?: boolean;
   equipmentPose?: EquipmentPoseConfiguration;
+  /** Crew art bundle. "voxel" is the CHAR-BODY proposal behind an explicit local preview flag. */
+  crewBundle?: CrewBundle;
   onObjectSelected?: (placementId?: string) => void;
   source?: "voxel" | "original" | "engine-original" | "engine-voxel";
   onScene?: (scene: Scene) => void;
@@ -274,7 +278,10 @@ async function buildWorld(
   // Start rendering only once the scene's loaders and wiring are assembled.
   const shipRoot = new TransformNode("ship-frame", scene);
   const environment = createSpaceEnvironment(scene);
-  let crew: Awaited<ReturnType<typeof createCrewVisual>> | undefined;
+  let crew:
+    | Awaited<ReturnType<typeof createCrewVisual>>
+    | Awaited<ReturnType<typeof createVoxelCrewVisual>>
+    | undefined;
   let equipmentPose:
     | ReturnType<
         Awaited<ReturnType<typeof createCrewVisual>>["createPoseController"]
@@ -418,14 +425,21 @@ async function buildWorld(
     await environment.ready;
     options.onLoadStage?.("crew");
     if (!options.source || options.source === "voxel") {
-      crew = await createCrewVisual(
-        scene,
-        shipRoot,
-        options.equipmentPose?.crewUrl,
-      );
-      if (options.equipmentPose) {
-        equipmentPose = crew.createPoseController();
-        equipmentPose.setAimSpace(options.equipmentPose.aimSpace);
+      if (options.crewBundle === "voxel") {
+        // Proposal voxel crew: authored actions drive the arms; the legacy aim-space
+        // controller targets the r008 rig and stays unbound.
+        crew = await createVoxelCrewVisual(scene, shipRoot);
+      } else {
+        const legacy = await createCrewVisual(
+          scene,
+          shipRoot,
+          options.equipmentPose?.crewUrl,
+        );
+        crew = legacy;
+        if (options.equipmentPose) {
+          equipmentPose = legacy.createPoseController();
+          equipmentPose.setAimSpace(options.equipmentPose.aimSpace);
+        }
       }
       avatar.dispose();
       avatar = crew.root;
@@ -866,6 +880,7 @@ async function buildWorld(
         seated: state.seated ?? false,
         sprinting: state.sprinting ?? false,
         reducedMotion: state.reducedMotion,
+        shotSequence: state.combat?.shotSequence,
       });
     const poseItem = selectedAsset
       ? options.equipmentPose?.items[selectedAsset]
@@ -1127,6 +1142,10 @@ async function buildWorld(
     );
   });
   return {
+    /** Presentation-only crew handle for review harnesses (never simulation state). */
+    getCrewVisual() {
+      return crew;
+    },
     getAntialiasing() {
       return antialiasing.snapshot();
     },
