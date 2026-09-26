@@ -31,7 +31,8 @@ export function bindConstructionLayout(layout: LayoutDocument): {
     document: {
       schema: CONSTRUCTION_SCHEMA,
       compiler: CONSTRUCTION_COMPILER,
-      layout: structuredClone(layout),
+      // SpacetimeDB has no structuredClone global; JSON round-trip is exact for layouts.
+      layout: JSON.parse(JSON.stringify(layout)) as LayoutDocument,
       floorKit: {
         id: PINNED_FLOOR_KIT.id,
         revision: PINNED_FLOOR_KIT.revision,
