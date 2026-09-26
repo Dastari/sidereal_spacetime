@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Prefab ship render harness</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        overflow: hidden;
+        background: #120a24;
+        font-family: "Helvetica Neue", Arial, sans-serif;
+      }
+      canvas {
+        display: block;
+        outline: none;
+      }
+      .label {
+        position: absolute;
+        transform: translate(-50%, 0);
+        color: #e8f4ff;
+        font-size: 15px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-shadow: 0 0 6px #6b3cff, 0 1px 2px #000;
+        white-space: nowrap;
+        pointer-events: none;
+      }
+      .label small {
+        display: block;
+        font-weight: 400;
+        font-size: 11px;
+        color: #b9c8ff;
+        text-align: center;
+      }
+      #hud {
+        position: absolute;
+        left: 12px;
+        bottom: 10px;
+        color: #cfd8ff;
+        font: 12px/1.4 ui-monospace, monospace;
+        text-shadow: 0 1px 2px #000;
+        pointer-events: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="view"></canvas>
+    <div id="labels"></div>
+    <div id="hud"></div>
+    <script type="module" src="./main.ts"></script>
+  </body>
+</html>

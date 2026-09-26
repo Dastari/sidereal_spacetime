@@ -36,6 +36,7 @@ import "./style.css";
 const AssemblyEditor = lazy(() => import("./shipyard/AssemblyEditor"));
 const LayoutEditor = lazy(() => import("./shipyard/layout/LayoutEditor"));
 const PlanetStudio = lazy(() => import("./planet-studio/PlanetStudio"));
+const PrefabShipyard = lazy(() => import("./shipyard/prefab/PrefabShipyard"));
 const tools = [
   [
     "World explorer",
@@ -111,9 +112,21 @@ const tools = [
   ],
 ] as const;
 type Route =
-  "planets" | "dashboard" | "shipyard" | "assembly" | "models" | "components";
+  | "planets"
+  | "dashboard"
+  | "shipyard"
+  | "prefabs"
+  | "assembly"
+  | "models"
+  | "components";
+const ROUTE_PATHS: Partial<Record<Route, string>> = {
+  dashboard: "/",
+  prefabs: "/shipyard/prefabs",
+};
 const currentRoute = (): Route =>
-  location.pathname.includes("shipyard") &&
+  location.pathname.startsWith("/shipyard/prefabs")
+    ? "prefabs"
+    : location.pathname.includes("shipyard") &&
   new URLSearchParams(location.search).has("assembly")
     ? "assembly"
     : location.pathname.includes("planets")
@@ -156,7 +169,7 @@ export default function App() {
     return () => window.removeEventListener("popstate", pop);
   }, []);
   const navigate = (next: Route) => {
-    history.pushState({}, "", next === "dashboard" ? "/" : `/${next}`);
+    history.pushState({}, "", ROUTE_PATHS[next] ?? `/${next}`);
     setRoute(next);
   };
   useEffect(() => {
@@ -220,6 +233,12 @@ export default function App() {
             onClick={() => navigate("shipyard")}
           >
             Shipyard
+          </button>
+          <button
+            className={route === "prefabs" ? "selected" : ""}
+            onClick={() => navigate("prefabs")}
+          >
+            Prefab ships
           </button>
           <button
             className={route === "planets" ? "selected" : ""}
@@ -286,6 +305,8 @@ export default function App() {
           >
             {route === "planets" ? (
               <PlanetStudio />
+            ) : route === "prefabs" ? (
+              <PrefabShipyard />
             ) : route === "shipyard" || route === "assembly" ? (
               route === "assembly" ? (
                 <AssemblyEditor />

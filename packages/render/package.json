@@ -22,7 +22,8 @@
     "./diagnostics": "./src/diagnostics.ts",
     "./mesh-roles": "./src/mesh-roles.ts",
     "./ground-items": "./src/ground-items.ts",
-    "./render-backend": "./src/render-backend.ts"
+    "./render-backend": "./src/render-backend.ts",
+    "./prefab-ship": "./src/prefab-ship/ship-view.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",

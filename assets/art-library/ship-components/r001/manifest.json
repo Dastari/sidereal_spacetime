@@ -1,0 +1,6497 @@
+{
+ "schema": "sidereal.ship-component-art.v1",
+ "revision": "r001",
+ "status": "proposed; not owner-approved; not published",
+ "catalog": {
+  "schema": "sidereal.ship-components.v1",
+  "id": "ship-components-v1",
+  "revision": 1,
+  "sha256": "4e61f682c33bb1396cbf2acadfc811799eba8e8af65cec72713420fa7fb2d8c4"
+ },
+ "generator": {
+  "script": "scripts/art_library/ship_component_export.py",
+  "sha256": "04146500c109dcb46f19b0064557bd3799b2eddd07dcc126aabbd04e3594a6ec",
+  "kit": "scripts/art_library/ship_kit_prototype.py",
+  "kitSha256": "e84194ff3ae3952f6678870007bbec5e26adaa3b40b5e161329d5cdc62d0a33d",
+  "blender": "4.3.2"
+ },
+ "units": "metres; 1 texel = 1/16 m brick grid",
+ "axes": "Blender Z-up part frame (+X starboard, +Y forward, +Z up); glTF is +Y up: (x, y, z) -> (x, z, -y)",
+ "materialSlots": [
+  "slot0_primary",
+  "slot1_secondary",
+  "slot2_accent",
+  "slot3_trim",
+  "slot4_metal",
+  "slot5_dark",
+  "slot6_emit_a",
+  "slot7_emit_b",
+  "slot8_glass"
+ ],
+ "bevel": {
+  "widthM": 0.012,
+  "segments": 1,
+  "angleLimitDeg": 30,
+  "applied": true
+ },
+ "excluded": "plumes, labels, decals and damage-state variants (pristine only)",
+ "components": [
+  {
+   "id": "ion-drive.sm",
+   "kitKey": "ion.SM",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/ion-drive.sm.glb",
+   "sha256": "23f94592a523b7027f3e9ead746139f069c31146e404df4d9a3140568a421ac2",
+   "bytes": 156932,
+   "boxes": 179,
+   "triangles": 7876,
+   "vertices": 4296,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -2.75,
+     -0.5
+    ],
+    [
+     0.5,
+     0.0,
+     0.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -2.75,
+     -0.5
+    ],
+    [
+     0.5,
+     0,
+     0.5
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "ion-drive.md",
+   "kitKey": "ion.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/ion-drive.md.glb",
+   "sha256": "9d176df011716b439676f8e1f4d889a3e4d5feaf3dffb78aecfbe40121ffa6ae",
+   "bytes": 470244,
+   "boxes": 551,
+   "triangles": 24244,
+   "vertices": 13224,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -4.625,
+     -1.0
+    ],
+    [
+     1.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -4.625,
+     -1
+    ],
+    [
+     1,
+     0,
+     1
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "ion-drive.lg",
+   "kitKey": "ion.LG",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/ion-drive.lg.glb",
+   "sha256": "6b742a9712c8fec28a4d6443ff781a6be8f9c69478a4c7200c99fa3ca4f96303",
+   "bytes": 757540,
+   "boxes": 893,
+   "triangles": 39292,
+   "vertices": 21432,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -5.75,
+     -1.5
+    ],
+    [
+     1.5,
+     0.0,
+     1.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -5.75,
+     -1.5
+    ],
+    [
+     1.5,
+     0,
+     1.5
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "ion-drive.xl",
+   "kitKey": "ion.XL",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/ion-drive.xl.glb",
+   "sha256": "06f3cf05eeb96318ff7734b9ecdfa37f34dc4c7e8d8e3fd34bbae7882a82d96e",
+   "bytes": 1220408,
+   "boxes": 1443,
+   "triangles": 63492,
+   "vertices": 34632,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -2.0,
+     -8.25,
+     -2.0
+    ],
+    [
+     2.0,
+     0.0,
+     2.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -2,
+     -8.25,
+     -2
+    ],
+    [
+     2,
+     0,
+     2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "thrust-block.sm",
+   "kitKey": "block.SM",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/thrust-block.sm.glb",
+   "sha256": "b604c76ae28106bdcce97cbd77b35ed65b594f9171916f3cda347df3b5f8d9c7",
+   "bytes": 32624,
+   "boxes": 31,
+   "triangles": 1364,
+   "vertices": 744,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.625,
+     -2.375,
+     -0.5
+    ],
+    [
+     0.625,
+     0.0,
+     0.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.625,
+     -2.375,
+     -0.5
+    ],
+    [
+     0.625,
+     0,
+     0.5
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "thrust-block.md",
+   "kitKey": "block.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/thrust-block.md.glb",
+   "sha256": "f02c8f52ace95ed8d552c2c6ecf4093b5b00c945c2694f278eab4c4ac5487741",
+   "bytes": 52816,
+   "boxes": 55,
+   "triangles": 2420,
+   "vertices": 1320,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.125,
+     -3.5,
+     -0.875
+    ],
+    [
+     1.125,
+     0.0,
+     0.875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.125,
+     -3.5,
+     -0.875
+    ],
+    [
+     1.125,
+     0,
+     0.875
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "thrust-block.lg",
+   "kitKey": "block.LG",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/thrust-block.lg.glb",
+   "sha256": "0980e18a7c830a9cf1452df92c44da85618e200374f1be6332336c84cbb2a427",
+   "bytes": 79700,
+   "boxes": 87,
+   "triangles": 3828,
+   "vertices": 2088,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.625,
+     -4.5,
+     -1.25
+    ],
+    [
+     1.625,
+     0.0,
+     1.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.625,
+     -4.5,
+     -1.25
+    ],
+    [
+     1.625,
+     0,
+     1.25
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "thrust-block.xl",
+   "kitKey": "block.XL",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/thrust-block.xl.glb",
+   "sha256": "14f39845e002fb5481411a5272f86faa41b745c98b6de5b8c7826b1932b35d4f",
+   "bytes": 115820,
+   "boxes": 130,
+   "triangles": 5720,
+   "vertices": 3120,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -2.125,
+     -5.5,
+     -1.625
+    ],
+    [
+     2.125,
+     0.0,
+     1.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -2.125,
+     -5.5,
+     -1.625
+    ],
+    [
+     2.125,
+     0,
+     1.625
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "ion-drive.salvaged.sm",
+   "kitKey": "ion.SM.scrap",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/ion-drive.salvaged.sm.glb",
+   "sha256": "41fa11e8c45b59d704a6892a52058994f24f3f0911a408e306d098bd1db958fd",
+   "bytes": 163680,
+   "boxes": 187,
+   "triangles": 8228,
+   "vertices": 4488,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -2.75,
+     -0.5
+    ],
+    [
+     0.5625,
+     0.0,
+     0.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5625,
+     -2.75,
+     -0.5625
+    ],
+    [
+     0.5625,
+     0,
+     0.5625
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "ion-drive.salvaged.md",
+   "kitKey": "ion.MD.scrap",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/ion-drive.salvaged.md.glb",
+   "sha256": "7ffc2845492e25608d5a980235ca490f83fcc23561020f6e67919704efeefed3",
+   "bytes": 463544,
+   "boxes": 543,
+   "triangles": 23892,
+   "vertices": 13032,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -4.625,
+     -1.0
+    ],
+    [
+     1.0625,
+     0.0,
+     1.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.0625,
+     -4.625,
+     -1.0625
+    ],
+    [
+     1.0625,
+     0,
+     1.0625
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "ion-drive.salvaged.lg",
+   "kitKey": "ion.LG.scrap",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/ion-drive.salvaged.lg.glb",
+   "sha256": "93ddcbd6ac96b46a6466dbbfda725a3b557a7edc8fc220f8eb44a89cfbdb47f5",
+   "bytes": 746648,
+   "boxes": 881,
+   "triangles": 38764,
+   "vertices": 21144,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -5.75,
+     -1.5
+    ],
+    [
+     1.5625,
+     0.0,
+     1.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5625,
+     -5.75,
+     -1.5625
+    ],
+    [
+     1.5625,
+     0,
+     1.5625
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "ion-drive.salvaged.xl",
+   "kitKey": "ion.XL.scrap",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/ion-drive.salvaged.xl.glb",
+   "sha256": "d766c197f1faa7fd8e7e736db5aa29c5393bb9b94eaac5273cc25149042481e4",
+   "bytes": 1237240,
+   "boxes": 1463,
+   "triangles": 64372,
+   "vertices": 35112,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -2.0,
+     -8.25,
+     -2.0
+    ],
+    [
+     2.0625,
+     0.0,
+     2.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -2.0625,
+     -8.25,
+     -2.0625
+    ],
+    [
+     2.0625,
+     0,
+     2.0625
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "resonance-drive.aurelian.sm",
+   "kitKey": "x.resonance.SM",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/resonance-drive.aurelian.sm.glb",
+   "sha256": "b42eba9cb3debafc42b59f0d85297269a26fa89fbbbfd123451d1e5c240afbd9",
+   "bytes": 43328,
+   "boxes": 45,
+   "triangles": 1980,
+   "vertices": 1080,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot8_glass"
+   ],
+   "boundsM": [
+    [
+     -0.5625,
+     -1.8125,
+     -0.5
+    ],
+    [
+     0.5,
+     0.0,
+     0.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5625,
+     -1.875,
+     -0.5625
+    ],
+    [
+     0.5625,
+     0,
+     0.5625
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "resonance-drive.aurelian.md",
+   "kitKey": "x.resonance.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/resonance-drive.aurelian.md.glb",
+   "sha256": "b154525ed278e80d55804f37283a7171d274ffca731ed63e44724ca970e7e6b1",
+   "bytes": 96040,
+   "boxes": 109,
+   "triangles": 4796,
+   "vertices": 2616,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot8_glass"
+   ],
+   "boundsM": [
+    [
+     -1.125,
+     -2.5625,
+     -1.0
+    ],
+    [
+     1.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.125,
+     -2.625,
+     -1.125
+    ],
+    [
+     1.125,
+     0,
+     1.125
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "resonance-drive.aurelian.lg",
+   "kitKey": "x.resonance.LG",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/resonance-drive.aurelian.lg.glb",
+   "sha256": "22f1b8c20ef462044a914118c680d156252c118db964b9e4ee32bfcb9e26ac22",
+   "bytes": 150456,
+   "boxes": 175,
+   "triangles": 7700,
+   "vertices": 4200,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot8_glass"
+   ],
+   "boundsM": [
+    [
+     -1.6875,
+     -3.6875,
+     -1.5
+    ],
+    [
+     1.5,
+     0.0,
+     1.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.6875,
+     -3.75,
+     -1.6875
+    ],
+    [
+     1.6875,
+     0,
+     1.6875
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "rcs.sm",
+   "kitKey": "rcs.SM",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/rcs.sm.glb",
+   "sha256": "791ac8f80c766f4bb4fa45a1b5cf57a9f9f5944d85e273e48d2b40342d279529",
+   "bytes": 9860,
+   "boxes": 8,
+   "triangles": 352,
+   "vertices": 192,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.375,
+     -0.5,
+     -0.375
+    ],
+    [
+     0.375,
+     0.0,
+     0.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.375,
+     -0.5,
+     -0.375
+    ],
+    [
+     0.375,
+     0,
+     0.375
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "rcs.md",
+   "kitKey": "rcs.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/rcs.md.glb",
+   "sha256": "f5b9606aa1c18496f2363d2411c1f9b301c8a5fc7e4c451a1907be55b4395f85",
+   "bytes": 15792,
+   "boxes": 14,
+   "triangles": 616,
+   "vertices": 336,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.625,
+     -1.0,
+     -0.625
+    ],
+    [
+     0.625,
+     0.0,
+     0.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.625,
+     -1,
+     -0.625
+    ],
+    [
+     0.625,
+     0,
+     0.625
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "vtol-thruster.sm",
+   "kitKey": "x.vtol.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/vtol-thruster.sm.glb",
+   "sha256": "3f98d49f6be0aa5beef6275bef109cbd3e670fb3e27497ec6b475b1ea99bed80",
+   "bytes": 38676,
+   "boxes": 40,
+   "triangles": 1760,
+   "vertices": 960,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     0.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     0.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "vtol-thruster.md",
+   "kitKey": "x.vtol.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/vtol-thruster.md.glb",
+   "sha256": "2c2042a7df5f618e6a9402bcec5bf40090df1b5659868be4e59af46fc867fc9b",
+   "bytes": 70572,
+   "boxes": 78,
+   "triangles": 3432,
+   "vertices": 1872,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     1.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     1.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "warp-drive.lg",
+   "kitKey": "x.warp.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/warp-drive.lg.glb",
+   "sha256": "c8da6b4bbbf2e0c0dbf51f26d53e5bbeb4bd91c2669621f12e0eb2926eb1a3ab",
+   "bytes": 394428,
+   "boxes": 461,
+   "triangles": 20284,
+   "vertices": 11064,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -2.0,
+     0.0
+    ],
+    [
+     1.5,
+     2.0,
+     2.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -2,
+     0
+    ],
+    [
+     1.5,
+     2,
+     2.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "warp-drive.xl",
+   "kitKey": "x.warp.XL",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/warp-drive.xl.glb",
+   "sha256": "48e94acae6841387fc853b7b3d873732c6f42bca5c41a4ddc36ba4fa24284922",
+   "bytes": 681704,
+   "boxes": 803,
+   "triangles": 35332,
+   "vertices": 19272,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -2.0,
+     -2.5,
+     0.0
+    ],
+    [
+     2.0,
+     2.5,
+     3.0625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -2,
+     -2.5,
+     0
+    ],
+    [
+     2,
+     2.5,
+     3.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "reactor.sm",
+   "kitKey": "x.reactor.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/reactor.sm.glb",
+   "sha256": "604f573eda02b78812e1ef94bce8dcfcc8f600739e653738ddc53d8860f352b2",
+   "bytes": 109268,
+   "boxes": 121,
+   "triangles": 5324,
+   "vertices": 2904,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.875,
+     0.0
+    ],
+    [
+     0.875,
+     0.875,
+     1.8125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.9,
+     0
+    ],
+    [
+     0.9,
+     0.9,
+     1.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "reactor.md",
+   "kitKey": "x.reactor.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/reactor.md.glb",
+   "sha256": "f041fd26e194daa13863a8e77b81751190564fef75846ed3f9f0a622e3fed4f6",
+   "bytes": 205584,
+   "boxes": 249,
+   "triangles": 10956,
+   "vertices": 5976,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.375,
+     -1.375,
+     0.0
+    ],
+    [
+     1.375,
+     1.375,
+     2.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.4,
+     -1.4,
+     0
+    ],
+    [
+     1.4,
+     1.4,
+     2.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "reactor.lg",
+   "kitKey": "x.reactor.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/reactor.lg.glb",
+   "sha256": "57a711bf6cd5fae7f509f9224b73191c48be759d36eb2617bc544d88ef9a06e5",
+   "bytes": 376948,
+   "boxes": 469,
+   "triangles": 20636,
+   "vertices": 11256,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.875,
+     -1.875,
+     0.0
+    ],
+    [
+     1.875,
+     1.875,
+     2.9375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.9,
+     -1.9,
+     0
+    ],
+    [
+     1.9,
+     1.9,
+     3.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "battery.sm",
+   "kitKey": "x.battery.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/battery.sm.glb",
+   "sha256": "d0e6029fdbabfc889d25bf2da4c888dd09807e9d3aa3b5b0f7c05feb1a7c06c9",
+   "bytes": 19084,
+   "boxes": 17,
+   "triangles": 748,
+   "vertices": 408,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in"
+   ]
+  },
+  {
+   "id": "battery.md",
+   "kitKey": "x.battery.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/battery.md.glb",
+   "sha256": "a233a75ddb888ec88863d8141a10cc030b3f1b8ec21a4601e55862e0804b4cf6",
+   "bytes": 19316,
+   "boxes": 17,
+   "triangles": 748,
+   "vertices": 408,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.875,
+     0.0
+    ],
+    [
+     0.4375,
+     0.875,
+     1.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.9,
+     0
+    ],
+    [
+     0.45,
+     0.9,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "battery.lg",
+   "kitKey": "x.battery.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/battery.lg.glb",
+   "sha256": "ce0e5eeea900f1a5aaa3c103004195e9b89aad046e3ca725d83e07776d31c3f0",
+   "bytes": 26144,
+   "boxes": 27,
+   "triangles": 1188,
+   "vertices": 648,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.875,
+     0.0
+    ],
+    [
+     0.875,
+     0.875,
+     1.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.9,
+     0
+    ],
+    [
+     0.9,
+     0.9,
+     1.8
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "capacitor.sm",
+   "kitKey": "x.capacitor.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/capacitor.sm.glb",
+   "sha256": "fe3080799bd8735626adf73edaf9303da16c724ae4d6fd810cfbfef3c7c5b6cc",
+   "bytes": 23924,
+   "boxes": 23,
+   "triangles": 1012,
+   "vertices": 552,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.375,
+     -0.375,
+     0.0
+    ],
+    [
+     0.375,
+     0.375,
+     1.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.4,
+     -0.4,
+     0
+    ],
+    [
+     0.4,
+     0.4,
+     1
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in"
+   ]
+  },
+  {
+   "id": "capacitor.md",
+   "kitKey": "x.capacitor.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/capacitor.md.glb",
+   "sha256": "e18a046d993086dd8b9caf312a7a24ef54132728724cf044a8876b3d2aa64de6",
+   "bytes": 40744,
+   "boxes": 41,
+   "triangles": 1804,
+   "vertices": 984,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "capacitor.lg",
+   "kitKey": "x.capacitor.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/capacitor.lg.glb",
+   "sha256": "9a9934a36b793d2345a64770c40a8037636ec620ff4fb2d42e6c700fc536a7d6",
+   "bytes": 69316,
+   "boxes": 75,
+   "triangles": 3300,
+   "vertices": 1800,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.875,
+     0.4375,
+     1.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "fuel-tank.sm",
+   "kitKey": "x.fuel-tank.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/fuel-tank.sm.glb",
+   "sha256": "010348c04679bb6deace446022cb225a04e9bd116ef7a84172fb22093dadc0c4",
+   "bytes": 39568,
+   "boxes": 40,
+   "triangles": 1760,
+   "vertices": 960,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.0625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "fuel-out"
+   ]
+  },
+  {
+   "id": "fuel-tank.md",
+   "kitKey": "x.fuel-tank.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/fuel-tank.md.glb",
+   "sha256": "b39f1b6ba0318a5c5eb819a121a8267c09113842aa55eb4e201fc486fc2644ad",
+   "bytes": 46292,
+   "boxes": 48,
+   "triangles": 2112,
+   "vertices": 1152,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.9375,
+     -0.9375,
+     0.0
+    ],
+    [
+     0.9375,
+     0.9375,
+     1.0625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.95,
+     -0.95,
+     0
+    ],
+    [
+     0.95,
+     0.95,
+     1.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "fuel-out"
+   ]
+  },
+  {
+   "id": "fuel-tank.lg",
+   "kitKey": "x.fuel-tank.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/fuel-tank.lg.glb",
+   "sha256": "2bfc0ec4b5591081914b2ea87a49dbd09bacf27dbe5cb14c780a360185d9b377",
+   "bytes": 63096,
+   "boxes": 68,
+   "triangles": 2992,
+   "vertices": 1632,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.4375,
+     -1.4375,
+     0.0
+    ],
+    [
+     1.4375,
+     1.4375,
+     1.3125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.45,
+     -1.45,
+     0
+    ],
+    [
+     1.45,
+     1.45,
+     1.5
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "fuel-out"
+   ]
+  },
+  {
+   "id": "solar-array.sm",
+   "kitKey": "x.solar.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/solar-array.sm.glb",
+   "sha256": "8e907ef4e13fd34f74370b93c93f2a6f20e8fc3d1810898f83d15b9c909401ce",
+   "bytes": 27300,
+   "boxes": 28,
+   "triangles": 1232,
+   "vertices": 672,
+   "materialSlotsUsed": [
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot8_glass"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     0.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     0.5
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-out"
+   ]
+  },
+  {
+   "id": "solar-array.md",
+   "kitKey": "x.solar.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/solar-array.md.glb",
+   "sha256": "d7a943c1e23e1d526a4d3543e08f5a54121aa10d997299a5ac252d062033e755",
+   "bytes": 67600,
+   "boxes": 76,
+   "triangles": 3344,
+   "vertices": 1824,
+   "materialSlotsUsed": [
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot8_glass"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     0.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     0.65
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-out"
+   ]
+  },
+  {
+   "id": "aux-generator.sm",
+   "kitKey": "x.aux-generator.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/aux-generator.sm.glb",
+   "sha256": "d4e6a2e19feabc7f1c0070bf3a5ed513a2220183468b305f5eef671b93b51ae6",
+   "bytes": 22064,
+   "boxes": 19,
+   "triangles": 836,
+   "vertices": 456,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
+  {
+   "id": "radiator.sm",
+   "kitKey": "x.radiator.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/radiator.sm.glb",
+   "sha256": "28d3e7828ea81a8568593906f83f49f64ece72144c226ad5778efb69ae14d7ba",
+   "bytes": 22060,
+   "boxes": 20,
+   "triangles": 880,
+   "vertices": 480,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     0.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     0.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "radiator.md",
+   "kitKey": "x.radiator.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/radiator.md.glb",
+   "sha256": "7bd7b94d50e9c6d629093a243126f6acfe4bbd0890a7a65e7225a4f2c741de66",
+   "bytes": 32120,
+   "boxes": 32,
+   "triangles": 1408,
+   "vertices": 768,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     0.875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     0.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "radiator.lg",
+   "kitKey": "x.radiator.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/radiator.lg.glb",
+   "sha256": "c94cf69d7afe0adfc867a508c6dea6f544ed887fa969d73efd08664cdfbe83a0",
+   "bytes": 40548,
+   "boxes": 42,
+   "triangles": 1848,
+   "vertices": 1008,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.5,
+     1.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.5,
+     1.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "coolant-pump.sm",
+   "kitKey": "x.coolant-pump.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/coolant-pump.sm.glb",
+   "sha256": "aefd5083b543bb60e5d566b5cd26a3d8a51b804fc25c0b28fb3fa88434a40c8b",
+   "bytes": 22520,
+   "boxes": 22,
+   "triangles": 968,
+   "vertices": 528,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.375,
+     -0.375,
+     0.0
+    ],
+    [
+     0.375,
+     0.375,
+     0.875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.4,
+     -0.4,
+     0
+    ],
+    [
+     0.4,
+     0.4,
+     0.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "coolant-out"
+   ]
+  },
+  {
+   "id": "coolant-pump.md",
+   "kitKey": "x.coolant-pump.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/coolant-pump.md.glb",
+   "sha256": "0541f22a414a0b59cb479948b3e044c82636e17b3bee1cd49987819252013734",
+   "bytes": 25060,
+   "boxes": 25,
+   "triangles": 1100,
+   "vertices": 600,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "coolant-out"
+   ]
+  },
+  {
+   "id": "coolant-pump.lg",
+   "kitKey": "x.coolant-pump.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/coolant-pump.lg.glb",
+   "sha256": "46cbf9dadcfa5188658341b249db37b60c2d4b3ef413455e6b1e931a6d42645c",
+   "bytes": 25892,
+   "boxes": 26,
+   "triangles": 1144,
+   "vertices": 624,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.875,
+     0.4375,
+     1.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "coolant-out"
+   ]
+  },
+  {
+   "id": "heat-sink.sm",
+   "kitKey": "x.heat-sink.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/heat-sink.sm.glb",
+   "sha256": "53544e6bd928ee0c36898364048e9a5995e3e6ff5becfb6695be7b63c589787f",
+   "bytes": 16696,
+   "boxes": 15,
+   "triangles": 660,
+   "vertices": 360,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "heat-sink.md",
+   "kitKey": "x.heat-sink.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/heat-sink.md.glb",
+   "sha256": "ad45842b59453024d98b406ce9e26c6766a6e1f6039d75dffe4dba376a7117e5",
+   "bytes": 22576,
+   "boxes": 22,
+   "triangles": 968,
+   "vertices": 528,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.875,
+     0.4375,
+     1.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "point-defense.sm",
+   "kitKey": "wpn.pd.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/point-defense.sm.glb",
+   "sha256": "9197b5faf1c380c9a51ac126a5bf11c4ac4e5855ac9e237df07a5309ced5ed9b",
+   "bytes": 30788,
+   "boxes": 30,
+   "triangles": 1320,
+   "vertices": 720,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.625,
+     0.9375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.66,
+     0.95
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "point-defense.md",
+   "kitKey": "wpn.pd.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/point-defense.md.glb",
+   "sha256": "a0388b92d86e6a7d282c3962102b45feb50e6161300cabbc6859897097174ac3",
+   "bytes": 37752,
+   "boxes": 38,
+   "triangles": 1672,
+   "vertices": 912,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.3125,
+     1.6875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1.32,
+     1.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "autocannon.sm",
+   "kitKey": "wpn.autocannon.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/autocannon.sm.glb",
+   "sha256": "1b9be4041bd8db489edfd1226fd6c81035876863caaf51ee2840d3b1b88e9b71",
+   "bytes": 37916,
+   "boxes": 38,
+   "triangles": 1672,
+   "vertices": 912,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.875,
+     1.125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.9,
+     1.13
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "autocannon.md",
+   "kitKey": "wpn.autocannon.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/autocannon.md.glb",
+   "sha256": "e24da5b5e613d3f8fe0efb2b08e7b6620bc3effab2969945f546f1714fcd9f49",
+   "bytes": 43200,
+   "boxes": 44,
+   "triangles": 1936,
+   "vertices": 1056,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.75,
+     2.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1.8,
+     2.26
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "autocannon.lg",
+   "kitKey": "wpn.autocannon.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/autocannon.lg.glb",
+   "sha256": "d34c4052084203fa499f4259d7c81cd5dcf6893f8ccb757ebea0bf47a5d2ba31",
+   "bytes": 48256,
+   "boxes": 50,
+   "triangles": 2200,
+   "vertices": 1200,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     2.6875,
+     2.9375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     2.7,
+     3.39
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "laser-cannon.sm",
+   "kitKey": "wpn.laser.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/laser-cannon.sm.glb",
+   "sha256": "25504dac9f5b17d5bab23f990cbac8b1d980b850b5d8fc5a0aba7b203c0f2ab1",
+   "bytes": 35840,
+   "boxes": 36,
+   "triangles": 1584,
+   "vertices": 864,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5625,
+     0.9375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5700000000000001,
+     0.95
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "laser-cannon.md",
+   "kitKey": "wpn.laser.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/laser-cannon.md.glb",
+   "sha256": "c958d6a3ae61be4c9b61aaac80da793f7f406ff49fa4159e722d4f4103ccfc35",
+   "bytes": 55148,
+   "boxes": 59,
+   "triangles": 2596,
+   "vertices": 1416,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     1.8125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1.1400000000000001,
+     1.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "laser-cannon.lg",
+   "kitKey": "wpn.laser.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/laser-cannon.lg.glb",
+   "sha256": "5915087962a3ac1545707ce0eba34db58155c19d59ddc00a379ec0411943642e",
+   "bytes": 70292,
+   "boxes": 77,
+   "triangles": 3388,
+   "vertices": 1848,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.5,
+     2.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.71,
+     2.85
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "railgun.md",
+   "kitKey": "wpn.railgun.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/railgun.md.glb",
+   "sha256": "a9a0b3e24cb9d5f7ecc0704bf99c01ba678ce887d1d006b06573a3976b5835ae",
+   "bytes": 39516,
+   "boxes": 41,
+   "triangles": 1804,
+   "vertices": 984,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     2.1875,
+     1.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     2.2,
+     1.64
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "railgun.lg",
+   "kitKey": "wpn.railgun.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/railgun.lg.glb",
+   "sha256": "c3f5394e48c71f8081fa91f3b240ef8dbf176c8d0d5e44e7abfd4bffc291f378",
+   "bytes": 42040,
+   "boxes": 44,
+   "triangles": 1936,
+   "vertices": 1056,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     3.25,
+     2.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     3.3,
+     2.46
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "missile-pod.sm",
+   "kitKey": "wpn.missile.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/missile-pod.sm.glb",
+   "sha256": "55c7871d396a1765d2a29f1dae42a6fd398b815af04860bc1ab41970c6b62f09",
+   "bytes": 32440,
+   "boxes": 32,
+   "triangles": 1408,
+   "vertices": 768,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     1.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.19
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "missile-pod.md",
+   "kitKey": "wpn.missile.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/missile-pod.md.glb",
+   "sha256": "4329882d624943404deba102bcc9b640060358d4097a42e6a1e06cff9d449ba3",
+   "bytes": 43220,
+   "boxes": 46,
+   "triangles": 2024,
+   "vertices": 1104,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     2.125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     2.38
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "missile-pod.lg",
+   "kitKey": "wpn.missile.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/missile-pod.lg.glb",
+   "sha256": "5378407a578a6a6fc0a4ef6875968ad586182582c35ca643824b9036e6a59759",
+   "bytes": 51092,
+   "boxes": 56,
+   "triangles": 2464,
+   "vertices": 1344,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.5,
+     3.0625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.5,
+     3.57
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "torpedo-launcher.md",
+   "kitKey": "x.torpedo.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/torpedo-launcher.md.glb",
+   "sha256": "c2aecd48b28d5a23d0c70ca89435eb8ed0a40b67911a467bc684c02f0bcd16b3",
+   "bytes": 46260,
+   "boxes": 48,
+   "triangles": 2112,
+   "vertices": 1152,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -4.0,
+     -0.7812
+    ],
+    [
+     1.0,
+     0.0,
+     0.7812
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -4.3,
+     -0.9
+    ],
+    [
+     1,
+     0,
+     0.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "torpedo-launcher.lg",
+   "kitKey": "x.torpedo.LG",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/torpedo-launcher.lg.glb",
+   "sha256": "56d913472d57b2d514cbe9228b392025aed2bb9690501088635921724cb9a50b",
+   "bytes": 66648,
+   "boxes": 72,
+   "triangles": 3168,
+   "vertices": 1728,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -6.0,
+     -1.1875
+    ],
+    [
+     1.5,
+     0.0,
+     1.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -6.449999999999999,
+     -1.35
+    ],
+    [
+     1.5,
+     0,
+     1.35
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "flak-cannon.sm",
+   "kitKey": "wpn.flak.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/flak-cannon.sm.glb",
+   "sha256": "4c846b725f4bf9860f307a3db482f91b51af1fd80bb54ba425d3ec0d54c2ed70",
+   "bytes": 35076,
+   "boxes": 36,
+   "triangles": 1584,
+   "vertices": 864,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.625,
+     1.0625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.63,
+     1.07
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "flak-cannon.md",
+   "kitKey": "wpn.flak.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/flak-cannon.md.glb",
+   "sha256": "cf409444fd27c0740c50e12ea0d1806b0e171cd8f2c358f989b454ccb3d973e7",
+   "bytes": 42052,
+   "boxes": 44,
+   "triangles": 1936,
+   "vertices": 1056,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.25,
+     1.8125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1.26,
+     2.14
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "flak-cannon.lg",
+   "kitKey": "wpn.flak.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/flak-cannon.lg.glb",
+   "sha256": "6a7549615e09afbe720a01f8cf8b0cf49d3211f21acba75f26b2c74603875a7e",
+   "bytes": 48780,
+   "boxes": 52,
+   "triangles": 2288,
+   "vertices": 1248,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.875,
+     2.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.8900000000000001,
+     3.21
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "plasma-turret.md",
+   "kitKey": "x.plasma.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/plasma-turret.md.glb",
+   "sha256": "40b5e1288235a34696c8ded969bd55f257ce48b146d2c9bff4c49fb80e5ca3e2",
+   "bytes": 73616,
+   "boxes": 80,
+   "triangles": 3520,
+   "vertices": 1920,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0625,
+     1.8125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1.1,
+     1.82
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "plasma-turret.lg",
+   "kitKey": "x.plasma.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/plasma-turret.lg.glb",
+   "sha256": "0fae96b9f3db97783c82794150293a25b11cebc5592ffb4d5ce76c0756e50a60",
+   "bytes": 98832,
+   "boxes": 110,
+   "triangles": 4840,
+   "vertices": 2640,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.625,
+     2.6875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.65,
+     2.73
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "side-cannon.sm",
+   "kitKey": "cannon.SM",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/side-cannon.sm.glb",
+   "sha256": "611ada1e46cd14a1e4aae51fecbd16620108781d628244812e80ee325690f1be",
+   "bytes": 9020,
+   "boxes": 6,
+   "triangles": 264,
+   "vertices": 144,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -2.125,
+     -0.4375
+    ],
+    [
+     0.5,
+     0.0,
+     0.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -2.15,
+     -0.45
+    ],
+    [
+     0.5,
+     0,
+     0.45
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "side-cannon.md",
+   "kitKey": "cannon.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/side-cannon.md.glb",
+   "sha256": "a1bfcdf5c5a75301d89f45b5be6c847780cdcfd318b0eef062974cf47fef22cf",
+   "bytes": 9008,
+   "boxes": 6,
+   "triangles": 264,
+   "vertices": 144,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -3.1875,
+     -0.5625
+    ],
+    [
+     0.5,
+     0.0,
+     0.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -4.3,
+     -0.9
+    ],
+    [
+     1,
+     0,
+     0.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "side-cannon.lg",
+   "kitKey": "cannon.LG",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/side-cannon.lg.glb",
+   "sha256": "bd0675bf4db3d6a24792f6430b4d1e2249cf136948a00018aec8d23d1e80c628",
+   "bytes": 11052,
+   "boxes": 8,
+   "triangles": 352,
+   "vertices": 192,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -4.25,
+     -0.75
+    ],
+    [
+     1.0,
+     0.0,
+     0.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -6.449999999999999,
+     -1.35
+    ],
+    [
+     1.5,
+     0,
+     1.35
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "ammo-in"
+   ]
+  },
+  {
+   "id": "magazine.ballistic.sm",
+   "kitKey": "x.magazine-ballistic.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/magazine.ballistic.sm.glb",
+   "sha256": "b123a7fd42ec4a88514ff241db8b69e747b2c45f5fe72143374fe6bb13ca561e",
+   "bytes": 23372,
+   "boxes": 22,
+   "triangles": 968,
+   "vertices": 528,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-out"
+   ]
+  },
+  {
+   "id": "magazine.ballistic.md",
+   "kitKey": "x.magazine-ballistic.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/magazine.ballistic.md.glb",
+   "sha256": "ad7bd83dff03b9b5e1e4347ac07861fad48e85eb51491817faec1df0e7a9db5c",
+   "bytes": 34296,
+   "boxes": 35,
+   "triangles": 1540,
+   "vertices": 840,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.875,
+     0.4375,
+     1.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-out"
+   ]
+  },
+  {
+   "id": "magazine.ballistic.lg",
+   "kitKey": "x.magazine-ballistic.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/magazine.ballistic.lg.glb",
+   "sha256": "d2d28c89124ef70d2968a48dde0aacf75817654fe3a262b30275f33da9c71ee7",
+   "bytes": 34288,
+   "boxes": 35,
+   "triangles": 1540,
+   "vertices": 840,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.875,
+     0.0
+    ],
+    [
+     0.875,
+     0.875,
+     1.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.9,
+     0
+    ],
+    [
+     0.9,
+     0.9,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-out"
+   ]
+  },
+  {
+   "id": "magazine.missile.md",
+   "kitKey": "x.magazine-missile.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/magazine.missile.md.glb",
+   "sha256": "d7dd281af0a48d63cb91137c9b431b60396d465e1a22f6e146dde9b71ef358ce",
+   "bytes": 49580,
+   "boxes": 55,
+   "triangles": 2420,
+   "vertices": 1320,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.875,
+     0.4375,
+     1.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-out"
+   ]
+  },
+  {
+   "id": "magazine.missile.lg",
+   "kitKey": "x.magazine-missile.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/magazine.missile.lg.glb",
+   "sha256": "5105e84d3f6cb5b855b8d4d13ea09f8f1ce7c6554b11ad5b2e0e4e1ccbdeab9f",
+   "bytes": 92148,
+   "boxes": 103,
+   "triangles": 4532,
+   "vertices": 2472,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.375,
+     -0.875,
+     0.0
+    ],
+    [
+     1.375,
+     0.875,
+     1.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.4,
+     -0.9,
+     0
+    ],
+    [
+     1.4,
+     0.9,
+     1.8
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-out"
+   ]
+  },
+  {
+   "id": "magazine.torpedo.lg",
+   "kitKey": "x.magazine-torpedo.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/magazine.torpedo.lg.glb",
+   "sha256": "f243dcee8f9de274771a64e23d401711bc8f62f9c9c1ae58a387df9784ccc4cc",
+   "bytes": 85428,
+   "boxes": 95,
+   "triangles": 4180,
+   "vertices": 2280,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.375,
+     -0.875,
+     0.0
+    ],
+    [
+     1.375,
+     0.875,
+     1.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.4,
+     -0.9,
+     0
+    ],
+    [
+     1.4,
+     0.9,
+     1.8
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-out"
+   ]
+  },
+  {
+   "id": "shield-generator.sm",
+   "kitKey": "x.shield-generator.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/shield-generator.sm.glb",
+   "sha256": "0dcd89678e1595f9ea1387315498714c7874bd5a1dc9dde7f07233aa9d5a981f",
+   "bytes": 24120,
+   "boxes": 22,
+   "triangles": 968,
+   "vertices": 528,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "shield-generator.md",
+   "kitKey": "x.shield-generator.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/shield-generator.md.glb",
+   "sha256": "a261b58a4878db43988c8ee2d3e5a7cf7e7c7f4433eb67dc3dc4352a996f7ac7",
+   "bytes": 41960,
+   "boxes": 44,
+   "triangles": 1936,
+   "vertices": 1056,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.875,
+     0.0
+    ],
+    [
+     0.875,
+     0.875,
+     1.875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.9,
+     0
+    ],
+    [
+     0.9,
+     0.9,
+     1.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "shield-generator.lg",
+   "kitKey": "x.shield-generator.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/shield-generator.lg.glb",
+   "sha256": "0f40fdc777397d14f212309b21833e86c0591b495c4bc74f42eef054c2d53a36",
+   "bytes": 81760,
+   "boxes": 92,
+   "triangles": 4048,
+   "vertices": 2208,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.375,
+     -1.375,
+     0.0
+    ],
+    [
+     1.375,
+     1.375,
+     2.375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.4,
+     -1.4,
+     0
+    ],
+    [
+     1.4,
+     1.4,
+     2.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "shield-emitter.sm",
+   "kitKey": "wpn.shield.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/shield-emitter.sm.glb",
+   "sha256": "45132b1206146ec8915f08445081af3691d446372e4335f2f196d625f6a8a7be",
+   "bytes": 34932,
+   "boxes": 36,
+   "triangles": 1584,
+   "vertices": 864,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     1.125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.13
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "shield-emitter.md",
+   "kitKey": "wpn.shield.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/shield-emitter.md.glb",
+   "sha256": "822ae07aa72991dd00e23785648da02728545b20789de22247d3068b92d7381a",
+   "bytes": 43328,
+   "boxes": 46,
+   "triangles": 2024,
+   "vertices": 1104,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     2.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     2.26
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "shield-emitter.lg",
+   "kitKey": "wpn.shield.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/shield-emitter.lg.glb",
+   "sha256": "b49f4410a1583f55b5166205f492c2571c5cd4baee3fa072e6e10e5054de6877",
+   "bytes": 53592,
+   "boxes": 58,
+   "triangles": 2552,
+   "vertices": 1392,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.5,
+     2.875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.5,
+     3.39
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "sensor-dish.sm",
+   "kitKey": "wpn.sensor.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/sensor-dish.sm.glb",
+   "sha256": "de4e0b8d8ad712436afa6ae8c529f0e85f80bc47a207d970543ab34fea950bd5",
+   "bytes": 55080,
+   "boxes": 59,
+   "triangles": 2596,
+   "vertices": 1416,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     1.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.19
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "sensor-dish.md",
+   "kitKey": "wpn.sensor.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/sensor-dish.md.glb",
+   "sha256": "a3c6b8fb723be48fa9015a97f411ad54fccca895c45f45652d0190dd61ddcaa0",
+   "bytes": 100596,
+   "boxes": 113,
+   "triangles": 4972,
+   "vertices": 2712,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     2.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     2.38
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "sensor-dish.lg",
+   "kitKey": "wpn.sensor.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/sensor-dish.lg.glb",
+   "sha256": "d740345f1b33b4fc1d8993acd03da818042112473ec606779a87548db0e8d20a",
+   "bytes": 142632,
+   "boxes": 163,
+   "triangles": 7172,
+   "vertices": 3912,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.5,
+     3.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.5,
+     3.57
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "radar-array.md",
+   "kitKey": "x.radar.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/radar-array.md.glb",
+   "sha256": "0aaa9dded1a0c6803704c15bd1f731549474ef23fa9aca466479fb243c9048a6",
+   "bytes": 34948,
+   "boxes": 35,
+   "triangles": 1540,
+   "vertices": 840,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     1.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     1.8
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "radar-array.lg",
+   "kitKey": "x.radar.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/radar-array.lg.glb",
+   "sha256": "d1b3ea0dc5a944e04fb72f89e864480f9ad8d62a344b8c04c7ed3db3d6d9fb78",
+   "bytes": 66880,
+   "boxes": 73,
+   "triangles": 3212,
+   "vertices": 1752,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.5,
+     2.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.5,
+     2.7
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "scanner-mast.sm",
+   "kitKey": "x.scanner.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/scanner-mast.sm.glb",
+   "sha256": "4874fd1774ede4e5a0027680c5711c951fd4ca0a51a603b8feed7fb5e59bcf4d",
+   "bytes": 29604,
+   "boxes": 30,
+   "triangles": 1320,
+   "vertices": 720,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     1.8125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.82
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "scanner-mast.md",
+   "kitKey": "x.scanner.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/scanner-mast.md.glb",
+   "sha256": "bef643d19c2931e65f4959e3abc590b2163a59064d1dc0a02b2e047d2111fd4c",
+   "bytes": 36464,
+   "boxes": 38,
+   "triangles": 1672,
+   "vertices": 912,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     3.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     3.64
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "relay-beacon.sm",
+   "kitKey": "wpn.beacon.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/relay-beacon.sm.glb",
+   "sha256": "31a57469e44dc35b0dd1897933d831c42293e2f229217eaa08282b106d6f7ca9",
+   "bytes": 29028,
+   "boxes": 28,
+   "triangles": 1232,
+   "vertices": 672,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     1.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.45
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "relay-beacon.md",
+   "kitKey": "wpn.beacon.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/relay-beacon.md.glb",
+   "sha256": "b4b6f63543cb8af5fe104fb95fd9ba10ee4a0fc3408f7802de82de299ef4ea51",
+   "bytes": 34060,
+   "boxes": 34,
+   "triangles": 1496,
+   "vertices": 816,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     2.8125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     2.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "tractor-projector.sm",
+   "kitKey": "wpn.tractor.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/tractor-projector.sm.glb",
+   "sha256": "8b7e2f119a02bd667ea2ed331cfc7228631a757ff73596a65a8c7b07d4dcbecd",
+   "bytes": 39216,
+   "boxes": 40,
+   "triangles": 1760,
+   "vertices": 960,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     1.0625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.07
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "tractor-projector.md",
+   "kitKey": "wpn.tractor.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/tractor-projector.md.glb",
+   "sha256": "fcf5fb983756ae5942e0f76b4f8b2319ab35ca7090dd718a9d33824eedbc782a",
+   "bytes": 57700,
+   "boxes": 62,
+   "triangles": 2728,
+   "vertices": 1488,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     1.9375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     2.14
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "tractor-projector.lg",
+   "kitKey": "wpn.tractor.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/tractor-projector.lg.glb",
+   "sha256": "86a674febc6ff3796e7c04bf4d4265cd375fce312f84e8949d0d260b49d968c1",
+   "bytes": 76192,
+   "boxes": 84,
+   "triangles": 3696,
+   "vertices": 2016,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.5,
+     2.8125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.5,
+     3.21
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "salvage-arm.md",
+   "kitKey": "x.salvage-arm.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/salvage-arm.md.glb",
+   "sha256": "d3f84f2444136d1747f45ce35e53b69cfadfcdb877e5f4fb51c45c70c554741e",
+   "bytes": 28184,
+   "boxes": 27,
+   "triangles": 1188,
+   "vertices": 648,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -3.5,
+     -1.0
+    ],
+    [
+     1.0,
+     0.0,
+     1.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -3.6,
+     -1
+    ],
+    [
+     1,
+     0,
+     1
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "salvage-arm.lg",
+   "kitKey": "x.salvage-arm.LG",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/salvage-arm.lg.glb",
+   "sha256": "eeb358f3850b3eb0b404386c6b1021b02a8f75563645d409cadf5885d20732a2",
+   "bytes": 36980,
+   "boxes": 37,
+   "triangles": 1628,
+   "vertices": 888,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -5.25,
+     -1.5
+    ],
+    [
+     1.5,
+     0.0,
+     1.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -5.4,
+     -1.5
+    ],
+    [
+     1.5,
+     0,
+     1.5
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "docking-clamp.md",
+   "kitKey": "wpn.clamp.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/docking-clamp.md.glb",
+   "sha256": "73b716aba537a0a229a68d4fdf66ccc860f6a6fe0ae042381691afbadddc2fa5",
+   "bytes": 35752,
+   "boxes": 36,
+   "triangles": 1584,
+   "vertices": 864,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     2.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     2.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "docking-clamp.lg",
+   "kitKey": "wpn.clamp.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/docking-clamp.lg.glb",
+   "sha256": "5cb2b41a582c493a5630a61e2c01013e78807b54c3aafa480e24686a49f2f824",
+   "bytes": 39120,
+   "boxes": 40,
+   "triangles": 1760,
+   "vertices": 960,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.5,
+     3.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.5,
+     3.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "mining-laser.sm",
+   "kitKey": "x.mining-laser.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/mining-laser.sm.glb",
+   "sha256": "651dd03a0701faa7fd31af6a4c1dccd38c7b1d7342796274ff1c3f141935ea18",
+   "bytes": 37648,
+   "boxes": 38,
+   "triangles": 1672,
+   "vertices": 912,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     1.0,
+     0.9375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     1,
+     0.95
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "mining-laser.md",
+   "kitKey": "x.mining-laser.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/mining-laser.md.glb",
+   "sha256": "37bedf4c92879db0db923350d1be197b8d81849e0d53a0f9bd7d180bb3566117",
+   "bytes": 51748,
+   "boxes": 54,
+   "triangles": 2376,
+   "vertices": 1296,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.875,
+     1.6875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     2,
+     1.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "mining-laser.lg",
+   "kitKey": "x.mining-laser.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/mining-laser.lg.glb",
+   "sha256": "42824953e1bacbb8ab9d8530f5981f6feb36b547e5c3e0e60b1528b16099e034",
+   "bytes": 65208,
+   "boxes": 70,
+   "triangles": 3080,
+   "vertices": 1680,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     2.75,
+     2.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     3,
+     2.85
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "drone-bay.md",
+   "kitKey": "x.drone-bay.MD",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/drone-bay.md.glb",
+   "sha256": "3f89b0676b0c0681652f5ca2c321dba25d55a27ea7d59cf2dce640a0762fc63d",
+   "bytes": 34248,
+   "boxes": 34,
+   "triangles": 1496,
+   "vertices": 816,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     1.0,
+     1.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     1,
+     1.44
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "drone-bay.lg",
+   "kitKey": "x.drone-bay.LG",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/drone-bay.lg.glb",
+   "sha256": "93a1dd8d3f681d65fe05015daa6f3f018f8155708d300c165928d5876783514f",
+   "bytes": 41164,
+   "boxes": 42,
+   "triangles": 1848,
+   "vertices": 1008,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5,
+     0.0
+    ],
+    [
+     1.5,
+     1.5,
+     2.125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.5,
+     0
+    ],
+    [
+     1.5,
+     1.5,
+     2.16
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "cargo-door.2m",
+   "kitKey": "x.cargo-door.2m",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/cargo-door.2m.glb",
+   "sha256": "6ac4c2eb7e837aa31b737a59f99e5be5e5e095ceb54443893e2015de3d89a86f",
+   "bytes": 29056,
+   "boxes": 28,
+   "triangles": 1232,
+   "vertices": 672,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -0.3125,
+     0.0
+    ],
+    [
+     1.0,
+     0.0,
+     2.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -0.3125,
+     0
+    ],
+    [
+     1,
+     0,
+     2.75
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "cargo-door.4m",
+   "kitKey": "x.cargo-door.4m",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/cargo-door.4m.glb",
+   "sha256": "489072accacc2a1bc73928bf49dc733925d10eed7c72e657af4f8b637c6ba326",
+   "bytes": 39980,
+   "boxes": 41,
+   "triangles": 1804,
+   "vertices": 984,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -2.0,
+     -0.3125,
+     0.0
+    ],
+    [
+     2.0,
+     0.0,
+     3.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -2,
+     -0.3125,
+     0
+    ],
+    [
+     2,
+     0,
+     3.25
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "cargo-door.6m",
+   "kitKey": "x.cargo-door.6m",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/cargo-door.6m.glb",
+   "sha256": "f124d0a848717e7f6d12ed8fde2bcc442901673bc90e89b3d57cad7eacd6b732",
+   "bytes": 48380,
+   "boxes": 51,
+   "triangles": 2244,
+   "vertices": 1224,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -3.0,
+     -0.3125,
+     0.0
+    ],
+    [
+     3.0,
+     0.0,
+     3.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -3,
+     -0.3125,
+     0
+    ],
+    [
+     3,
+     0,
+     3.25
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "airlock.exterior.md",
+   "kitKey": "x.airlock-exterior.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/airlock.exterior.md.glb",
+   "sha256": "2160300918bcd4943cadff57c1a4ffed41671fa8c7e18dd43081fd899571512c",
+   "bytes": 30784,
+   "boxes": 30,
+   "triangles": 1320,
+   "vertices": 720,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.0,
+     0.0
+    ],
+    [
+     1.0,
+     0.0,
+     2.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1,
+     0
+    ],
+    [
+     1,
+     0,
+     2.75
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "air-in"
+   ]
+  },
+  {
+   "id": "airlock.interior.sm",
+   "kitKey": "x.airlock-interior.SM",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/airlock.interior.sm.glb",
+   "sha256": "92a35de89a3da15c9650e85678bcf3efc4a336d5c77e7979eabf2866813fcf2a",
+   "bytes": 16264,
+   "boxes": 16,
+   "triangles": 704,
+   "vertices": 384,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -0.5,
+     0.0
+    ],
+    [
+     1.0,
+     0.0,
+     2.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -0.5,
+     0
+    ],
+    [
+     1,
+     0,
+     2.75
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "hatch.sm",
+   "kitKey": "x.hatch.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/hatch.sm.glb",
+   "sha256": "3efd7a0442ab16938e27192c449945f4e92aa88769a27cb7c5715714a8f6e2f3",
+   "bytes": 18236,
+   "boxes": 18,
+   "triangles": 792,
+   "vertices": 432,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     0.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     0.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in"
+   ]
+  },
+  {
+   "id": "hatch.exterior.sm",
+   "kitKey": "x.hatch-exterior.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/art-library/ship-components/r001/glb/hatch.exterior.sm.glb",
+   "sha256": "611e911f1577d594ac1cd2fee046e5ed782a93630fcdf80da46fa239180c1b0c",
+   "bytes": 29196,
+   "boxes": 30,
+   "triangles": 1320,
+   "vertices": 720,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     0.3125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     0.35
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in"
+   ]
+  },
+  {
+   "id": "docking-port.md",
+   "kitKey": "x.docking-port.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/docking-port.md.glb",
+   "sha256": "0a7740f6ab76d72c37aaf0bdde1bae364dd1e52352b463e441f27c0d10eb6a0f",
+   "bytes": 109608,
+   "boxes": 136,
+   "triangles": 5984,
+   "vertices": 3264,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -1.1875,
+     0.0
+    ],
+    [
+     1.0,
+     0.0,
+     2.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -1.2,
+     0
+    ],
+    [
+     1,
+     0,
+     2.75
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "shore-power",
+    "shore-data",
+    "shore-fuel",
+    "shore-air"
+   ]
+  },
+  {
+   "id": "docking-port.lg",
+   "kitKey": "x.docking-port.LG",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/art-library/ship-components/r001/glb/docking-port.lg.glb",
+   "sha256": "37e77c892e314d8f9e93f1b8f80d7fb125917942d80113d949a70ac3313c41b5",
+   "bytes": 181940,
+   "boxes": 210,
+   "triangles": 9240,
+   "vertices": 5040,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -1.5,
+     -1.5625,
+     0.0
+    ],
+    [
+     1.5,
+     0.0,
+     3.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.5,
+     -1.6,
+     0
+    ],
+    [
+     1.5,
+     0,
+     3.25
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "shore-power",
+    "shore-data",
+    "shore-fuel",
+    "shore-air"
+   ]
+  },
+  {
+   "id": "life-support.sm",
+   "kitKey": "x.life-support.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/life-support.sm.glb",
+   "sha256": "9b89cf0f3e3e9da663b699ab42e9fa39ea1ddb9f7b725fc27e9f9d864d5e1331",
+   "bytes": 19900,
+   "boxes": 17,
+   "triangles": 748,
+   "vertices": 408,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot8_glass"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.8
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "air-out"
+   ]
+  },
+  {
+   "id": "life-support.md",
+   "kitKey": "x.life-support.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/life-support.md.glb",
+   "sha256": "4554986793bc91a48d7c88f224bd60c3e2f1ffc5818ded1ba85b98c6e158e7a4",
+   "bytes": 25172,
+   "boxes": 23,
+   "triangles": 1012,
+   "vertices": 552,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot8_glass"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.875,
+     0.4375,
+     2.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "air-out"
+   ]
+  },
+  {
+   "id": "life-support.lg",
+   "kitKey": "x.life-support.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/life-support.lg.glb",
+   "sha256": "257c7ac0a249ae3b0071014aeee67b6bcd81747bb9944986b873dec3e5da6e9b",
+   "bytes": 25156,
+   "boxes": 23,
+   "triangles": 1012,
+   "vertices": 552,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot8_glass"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.875,
+     0.0
+    ],
+    [
+     0.875,
+     0.875,
+     2.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.9,
+     0
+    ],
+    [
+     0.9,
+     0.9,
+     2.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "air-out"
+   ]
+  },
+  {
+   "id": "air-filter.sm",
+   "kitKey": "x.air-filter.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/air-filter.sm.glb",
+   "sha256": "0196505aeb27bb2d641db77ae5caba58fa56d90f5ed1323b861f7df0141c6048",
+   "bytes": 19976,
+   "boxes": 18,
+   "triangles": 792,
+   "vertices": 432,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "air-out",
+    "air-in"
+   ]
+  },
+  {
+   "id": "air-filter.md",
+   "kitKey": "x.air-filter.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/air-filter.md.glb",
+   "sha256": "80d971292d3cd363f8aaf22e6cebec5caeb567cc36ea18b286822ba3406a1ba3",
+   "bytes": 23340,
+   "boxes": 22,
+   "triangles": 968,
+   "vertices": 528,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.6875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.8
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "air-out",
+    "air-in"
+   ]
+  },
+  {
+   "id": "oxygen-tank.sm",
+   "kitKey": "x.oxygen-tank.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/oxygen-tank.sm.glb",
+   "sha256": "61339fda7639379fcadc3b373163e364debe27756c1f85700c2bdd6638a3f401",
+   "bytes": 35924,
+   "boxes": 37,
+   "triangles": 1628,
+   "vertices": 888,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "air-out"
+   ]
+  },
+  {
+   "id": "oxygen-tank.md",
+   "kitKey": "x.oxygen-tank.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/oxygen-tank.md.glb",
+   "sha256": "dbfe8267e7ac2aa82f994843300cfd6a05a46782aa86e66e0fb31a09266a2483",
+   "bytes": 62360,
+   "boxes": 68,
+   "triangles": 2992,
+   "vertices": 1632,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.875,
+     0.4375,
+     1.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.8
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "air-out"
+   ]
+  },
+  {
+   "id": "hydroponics.sm",
+   "kitKey": "x.hydroponics.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/hydroponics.sm.glb",
+   "sha256": "b78a2486a258f93ff8cd8182ed96b6c64203dfb61ab470465f418d59a294136b",
+   "bytes": 36516,
+   "boxes": 36,
+   "triangles": 1584,
+   "vertices": 864,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b",
+    "slot8_glass"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.875,
+     0.4375,
+     1.875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "air-out"
+   ]
+  },
+  {
+   "id": "gravity-unit.md",
+   "kitKey": "x.gravity.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/gravity-unit.md.glb",
+   "sha256": "05f9a12a5315a0e73c697241b796eaef9c2f26341c8f32ac479344f65da2d0af",
+   "bytes": 55660,
+   "boxes": 59,
+   "triangles": 2596,
+   "vertices": 1416,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.875,
+     0.0
+    ],
+    [
+     0.875,
+     0.875,
+     1.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.9,
+     0
+    ],
+    [
+     0.9,
+     0.9,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "gravity-unit.lg",
+   "kitKey": "x.gravity.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/gravity-unit.lg.glb",
+   "sha256": "6db3765ea38b0c3bd36670ca1b2ac698681f97ff497e0294ebf9b4fb141ad99b",
+   "bytes": 129580,
+   "boxes": 147,
+   "triangles": 6468,
+   "vertices": 3528,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.375,
+     -1.375,
+     0.0
+    ],
+    [
+     1.375,
+     1.375,
+     2.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.4,
+     -1.4,
+     0
+    ],
+    [
+     1.4,
+     1.4,
+     2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in"
+   ]
+  },
+  {
+   "id": "computer-core.sm",
+   "kitKey": "x.computer-core.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/computer-core.sm.glb",
+   "sha256": "7985a7d31e7e0f1c9d4c116d2b0a954c15701854c865b32538a33f274645438d",
+   "bytes": 18028,
+   "boxes": 15,
+   "triangles": 660,
+   "vertices": 360,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-out"
+   ]
+  },
+  {
+   "id": "computer-core.md",
+   "kitKey": "x.computer-core.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/computer-core.md.glb",
+   "sha256": "ab773d999cd75ea08cef79705e65bf76bcf47122fb9c0ddf01771e03535a692b",
+   "bytes": 23472,
+   "boxes": 21,
+   "triangles": 924,
+   "vertices": 504,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.4375,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.4375,
+     0.4375,
+     1.8125
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-out"
+   ]
+  },
+  {
+   "id": "computer-core.lg",
+   "kitKey": "x.computer-core.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/computer-core.lg.glb",
+   "sha256": "1667c96807e403f3ce2045ef5ec05dbf711db9493ba1492656281956d7f1ab0a",
+   "bytes": 48676,
+   "boxes": 51,
+   "triangles": 2244,
+   "vertices": 1224,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.875,
+     -0.4375,
+     0.0
+    ],
+    [
+     0.875,
+     0.4375,
+     2.0
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     2.1
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-out"
+   ]
+  },
+  {
+   "id": "console.navigation.sm",
+   "kitKey": "x.console-navigation.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/console.navigation.sm.glb",
+   "sha256": "b7f59ce53f51efb0b3a806ed5c65e4b06ab6790f8d80451ce8fe3bb9dd98a9c0",
+   "bytes": 20992,
+   "boxes": 19,
+   "triangles": 836,
+   "vertices": 456,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     1.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "console.command.sm",
+   "kitKey": "x.console-command.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/console.command.sm.glb",
+   "sha256": "4ac0ff0389d2dad0b1956218b45e7048b8b81252c9909b42622f5f2d6fc7be0e",
+   "bytes": 17796,
+   "boxes": 16,
+   "triangles": 704,
+   "vertices": 384,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.1875,
+     1.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "console.fire-control.sm",
+   "kitKey": "x.console-fire-control.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/console.fire-control.sm.glb",
+   "sha256": "de2ef14125d6f3997f327318a029f74fa61cd8950bc9efbde4cb453b0c67257c",
+   "bytes": 18220,
+   "boxes": 16,
+   "triangles": 704,
+   "vertices": 384,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.1875,
+     1.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "console.engineering.sm",
+   "kitKey": "x.console-engineering.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/console.engineering.sm.glb",
+   "sha256": "6e00dc0559a21af9e58d045b9c287a51a4d9fff00505f1e52799367631f1f68b",
+   "bytes": 18144,
+   "boxes": 16,
+   "triangles": 704,
+   "vertices": 384,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.1875,
+     1.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "console.sensor.sm",
+   "kitKey": "x.console-sensor.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/console.sensor.sm.glb",
+   "sha256": "47cb3667561f6e25b83fd7f35adcb3d9dd3c668cfb40ecaa3d9f085c55d383f7",
+   "bytes": 18124,
+   "boxes": 16,
+   "triangles": 704,
+   "vertices": 384,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.1875,
+     1.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ]
+  },
+  {
+   "id": "crew-bunk.sm",
+   "kitKey": "x.crew-bunk.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/art-library/ship-components/r001/glb/crew-bunk.sm.glb",
+   "sha256": "867e00e3daf21736592a36946ef54fa5a7f74b0de0e995bbd4500cbd7e8283ea",
+   "bytes": 13040,
+   "boxes": 11,
+   "triangles": 484,
+   "vertices": 264,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.0,
+     -0.5,
+     0.0
+    ],
+    [
+     1.0,
+     0.5,
+     1.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1,
+     -0.5,
+     0
+    ],
+    [
+     1,
+     0.5,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in"
+   ]
+  }
+ ]
+}
