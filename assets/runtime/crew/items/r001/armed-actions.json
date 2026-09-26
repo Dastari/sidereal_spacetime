@@ -65,7 +65,19 @@
    "fps": 24,
    "loop": true,
    "supportErrorMaxM": null,
-   "stance": {},
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
    "supportFramesSolved": 0,
    "bodyPenetrationMaxVoxels": 0,
    "grabFrame": null,
@@ -80,7 +92,19 @@
    "fps": 24,
    "loop": true,
    "supportErrorMaxM": null,
-   "stance": {},
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
    "supportFramesSolved": 0,
    "bodyPenetrationMaxVoxels": 0,
    "grabFrame": null,
@@ -95,7 +119,19 @@
    "fps": 24,
    "loop": true,
    "supportErrorMaxM": null,
-   "stance": {},
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
    "supportFramesSolved": 0,
    "bodyPenetrationMaxVoxels": 0,
    "grabFrame": null,
@@ -110,7 +146,19 @@
    "fps": 24,
    "loop": true,
    "supportErrorMaxM": 0.0,
-   "stance": {},
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
    "supportFramesSolved": 49,
    "bodyPenetrationMaxVoxels": 0,
    "grabFrame": null,
@@ -125,9 +173,21 @@
    "fps": 24,
    "loop": false,
    "supportErrorMaxM": 0.0,
-   "stance": {},
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
    "supportFramesSolved": 10,
-   "bodyPenetrationMaxVoxels": 1,
+   "bodyPenetrationMaxVoxels": 0,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -140,7 +200,19 @@
    "fps": 24,
    "loop": false,
    "supportErrorMaxM": 0.0,
-   "stance": {},
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
    "supportFramesSolved": 13,
    "bodyPenetrationMaxVoxels": 0,
    "grabFrame": null,
@@ -155,7 +227,19 @@
    "fps": 24,
    "loop": false,
    "supportErrorMaxM": null,
-   "stance": {},
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
    "supportFramesSolved": 0,
    "bodyPenetrationMaxVoxels": 0,
    "grabFrame": 6,
@@ -177,7 +261,19 @@
    "fps": 24,
    "loop": false,
    "supportErrorMaxM": null,
-   "stance": {},
+   "stance": {
+    "sight": {
+     "blade": 0,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": null,
+     "reach": 16,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
+    }
+   },
    "supportFramesSolved": 0,
    "bodyPenetrationMaxVoxels": 0,
    "grabFrame": 8,
@@ -200,29 +296,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": 5,
-     "dx": 3,
-     "dy": 3,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 4,
-     "rightErrorM": 0.1948,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 5,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.1675,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
     }
    },
    "supportFramesSolved": 73,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 3,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -234,31 +340,41 @@
    "frames": 18,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.004,
    "stance": {
-    "w": {
-     "tp": 5,
-     "dx": 3,
-     "dy": 3,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 4,
-     "rightErrorM": 0.1948,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 5,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.1675,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
     }
    },
    "supportFramesSolved": 19,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 3,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -272,29 +388,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": 5,
-     "dx": 3,
-     "dy": 3,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 4,
-     "rightErrorM": 0.1948,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 5,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.1675,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
     }
    },
    "supportFramesSolved": 15,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 5,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -308,29 +434,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": 5,
-     "dx": 3,
-     "dy": 3,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 4,
-     "rightErrorM": 0.1948,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 5,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.1675,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
     }
    },
    "supportFramesSolved": 49,
-   "bodyPenetrationMaxVoxels": 4,
+   "bodyPenetrationMaxVoxels": 0,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -344,29 +480,39 @@
    "loop": false,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": 5,
-     "dx": 3,
-     "dy": 3,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 4,
-     "rightErrorM": 0.1948,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 5,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.1675,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
     }
    },
    "supportFramesSolved": 10,
-   "bodyPenetrationMaxVoxels": 5,
+   "bodyPenetrationMaxVoxels": 15,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -378,31 +524,41 @@
    "frames": 28,
    "fps": 24,
    "loop": false,
-   "supportErrorMaxM": 0.0246,
+   "supportErrorMaxM": 0.0095,
    "stance": {
-    "w": {
-     "tp": 5,
-     "dx": 3,
-     "dy": 3,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 4,
-     "rightErrorM": 0.1948,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 5,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.1675,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
     }
    },
    "supportFramesSolved": 13,
-   "bodyPenetrationMaxVoxels": 4,
+   "bodyPenetrationMaxVoxels": 0,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -416,29 +572,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": 5,
-     "dx": 3,
-     "dy": 3,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 4,
-     "rightErrorM": 0.1948,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 5,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.1675,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 2,
+   "bodyPenetrationMaxVoxels": 5,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -459,29 +625,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": 5,
-     "dx": 3,
-     "dy": 3,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 4,
-     "rightErrorM": 0.1948,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": 0,
+     "yaw": 12.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 0
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 5,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.1675,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 30.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 2
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 2,
+   "bodyPenetrationMaxVoxels": 5,
    "grabFrame": 8,
    "attachHolsterFrames": [
     9,
@@ -500,31 +676,41 @@
    "frames": 72,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0007,
+   "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 70,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
     }
    },
    "supportFramesSolved": 73,
-   "bodyPenetrationMaxVoxels": 1,
+   "bodyPenetrationMaxVoxels": 12,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -536,31 +722,41 @@
    "frames": 18,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0051,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 70,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
     }
    },
    "supportFramesSolved": 19,
-   "bodyPenetrationMaxVoxels": 3,
+   "bodyPenetrationMaxVoxels": 11,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -572,31 +768,41 @@
    "frames": 14,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0035,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 70,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
     }
    },
    "supportFramesSolved": 15,
-   "bodyPenetrationMaxVoxels": 4,
+   "bodyPenetrationMaxVoxels": 44,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -610,29 +816,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 70,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
     }
    },
    "supportFramesSolved": 49,
-   "bodyPenetrationMaxVoxels": 83,
+   "bodyPenetrationMaxVoxels": 11,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -646,29 +862,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 70,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
     }
    },
    "supportFramesSolved": 7,
-   "bodyPenetrationMaxVoxels": 77,
+   "bodyPenetrationMaxVoxels": 26,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -680,31 +906,41 @@
    "frames": 38,
    "fps": 24,
    "loop": false,
-   "supportErrorMaxM": 0.0733,
+   "supportErrorMaxM": 0.0009,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 70,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
     }
    },
    "supportFramesSolved": 14,
-   "bodyPenetrationMaxVoxels": 70,
+   "bodyPenetrationMaxVoxels": 5,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -718,29 +954,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 70,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 167,
+   "bodyPenetrationMaxVoxels": 26,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -761,29 +1007,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 70,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -30,
+     "yaw": 60.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.003,
+     "supportErrorM": 0.0,
+     "penetration": 10
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 167,
+   "bodyPenetrationMaxVoxels": 26,
    "grabFrame": 8,
    "attachHolsterFrames": [
     9,
@@ -802,31 +1058,41 @@
    "frames": 72,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0007,
+   "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 79,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
     }
    },
    "supportFramesSolved": 73,
-   "bodyPenetrationMaxVoxels": 1,
+   "bodyPenetrationMaxVoxels": 18,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -838,31 +1104,41 @@
    "frames": 18,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0058,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 79,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
     }
    },
    "supportFramesSolved": 19,
-   "bodyPenetrationMaxVoxels": 2,
+   "bodyPenetrationMaxVoxels": 25,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -874,31 +1150,41 @@
    "frames": 14,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0033,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 79,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
     }
    },
    "supportFramesSolved": 15,
-   "bodyPenetrationMaxVoxels": 4,
+   "bodyPenetrationMaxVoxels": 43,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -912,29 +1198,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 79,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
     }
    },
    "supportFramesSolved": 49,
-   "bodyPenetrationMaxVoxels": 91,
+   "bodyPenetrationMaxVoxels": 13,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -948,29 +1244,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 79,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
     }
    },
    "supportFramesSolved": 7,
-   "bodyPenetrationMaxVoxels": 84,
+   "bodyPenetrationMaxVoxels": 23,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -982,31 +1288,41 @@
    "frames": 38,
    "fps": 24,
    "loop": false,
-   "supportErrorMaxM": 0.0733,
+   "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 79,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
     }
    },
    "supportFramesSolved": 14,
-   "bodyPenetrationMaxVoxels": 79,
+   "bodyPenetrationMaxVoxels": 16,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1020,29 +1336,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 79,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 170,
+   "bodyPenetrationMaxVoxels": 32,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -1063,29 +1389,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 79,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 9
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": 0,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 14
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 170,
+   "bodyPenetrationMaxVoxels": 32,
    "grabFrame": 8,
    "attachHolsterFrames": [
     9,
@@ -1104,31 +1440,41 @@
    "frames": 72,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0007,
+   "supportErrorMaxM": 0.0031,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 87,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 3,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 73,
-   "bodyPenetrationMaxVoxels": 3,
+   "bodyPenetrationMaxVoxels": 9,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1142,29 +1488,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 87,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 3,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 19,
-   "bodyPenetrationMaxVoxels": 3,
+   "bodyPenetrationMaxVoxels": 22,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1176,31 +1532,41 @@
    "frames": 14,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0076,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 87,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 3,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 15,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 58,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1214,29 +1580,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 87,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 3,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 49,
-   "bodyPenetrationMaxVoxels": 101,
+   "bodyPenetrationMaxVoxels": 10,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1250,29 +1626,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 87,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 3,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 7,
-   "bodyPenetrationMaxVoxels": 92,
+   "bodyPenetrationMaxVoxels": 25,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1284,31 +1670,41 @@
    "frames": 38,
    "fps": 24,
    "loop": false,
-   "supportErrorMaxM": 0.0733,
+   "supportErrorMaxM": 0.002,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 87,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 3,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 14,
-   "bodyPenetrationMaxVoxels": 87,
+   "bodyPenetrationMaxVoxels": 5,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1322,29 +1718,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 87,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 3,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 193,
+   "bodyPenetrationMaxVoxels": 23,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -1365,29 +1771,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 87,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 5
     },
-    "c": {
-     "tp": 5,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 3,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0015,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 193,
+   "bodyPenetrationMaxVoxels": 23,
    "grabFrame": 8,
    "attachHolsterFrames": [
     9,
@@ -1406,31 +1822,26 @@
    "frames": 72,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0108,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 201,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
-    },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
     }
    },
    "supportFramesSolved": 73,
-   "bodyPenetrationMaxVoxels": 1,
+   "bodyPenetrationMaxVoxels": 123,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1442,31 +1853,26 @@
    "frames": 18,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0138,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 201,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
-    },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
     }
    },
    "supportFramesSolved": 19,
-   "bodyPenetrationMaxVoxels": 1,
+   "bodyPenetrationMaxVoxels": 157,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1478,31 +1884,26 @@
    "frames": 14,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0098,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 201,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
-    },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
     }
    },
    "supportFramesSolved": 15,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 139,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1514,31 +1915,26 @@
    "frames": 48,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0691,
+   "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 201,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
-    },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
     }
    },
    "supportFramesSolved": 49,
-   "bodyPenetrationMaxVoxels": 63,
+   "bodyPenetrationMaxVoxels": 54,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1550,31 +1946,26 @@
    "frames": 6,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0672,
+   "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 201,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
-    },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
     }
    },
    "supportFramesSolved": 7,
-   "bodyPenetrationMaxVoxels": 114,
+   "bodyPenetrationMaxVoxels": 75,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1586,31 +1977,26 @@
    "frames": 38,
    "fps": 24,
    "loop": false,
-   "supportErrorMaxM": 0.1169,
+   "supportErrorMaxM": 0.0039,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 201,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
-    },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
     }
    },
    "supportFramesSolved": 14,
-   "bodyPenetrationMaxVoxels": 67,
+   "bodyPenetrationMaxVoxels": 50,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1624,29 +2010,24 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 201,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
-    },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 399,
+   "bodyPenetrationMaxVoxels": 51,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -1667,29 +2048,24 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 201,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
-    },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "hip_aim": {
+     "blade": -30,
+     "yaw": 0.0,
+     "pitch": -4.0,
+     "pocket": [
+      8.0,
+      2.0,
+      29.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 50
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 399,
+   "bodyPenetrationMaxVoxels": 51,
    "grabFrame": 8,
    "attachHolsterFrames": [
     9,
@@ -1710,29 +2086,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
     },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 73,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 6,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1746,29 +2132,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
     },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 19,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 19,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1780,31 +2176,41 @@
    "frames": 14,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.006,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
     },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 15,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 58,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1816,31 +2222,41 @@
    "frames": 48,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0013,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
     },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 49,
-   "bodyPenetrationMaxVoxels": 86,
+   "bodyPenetrationMaxVoxels": 6,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1854,29 +2270,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
     },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 7,
-   "bodyPenetrationMaxVoxels": 78,
+   "bodyPenetrationMaxVoxels": 18,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1888,31 +2314,41 @@
    "frames": 38,
    "fps": 24,
    "loop": false,
-   "supportErrorMaxM": 0.0499,
+   "supportErrorMaxM": 0.0017,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
     },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 14,
-   "bodyPenetrationMaxVoxels": 75,
+   "bodyPenetrationMaxVoxels": 9,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1926,29 +2362,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
     },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 192,
+   "bodyPenetrationMaxVoxels": 42,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -1969,29 +2415,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 0.0,
+     "pitch": 0.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0001,
+     "penetration": 3
     },
-    "c": {
-     "tp": 5,
-     "dx": -3,
-     "dy": 3,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 0,
-     "rightErrorM": 0.153,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -20,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      5.5,
+      6.0,
+      33.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 6
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 192,
+   "bodyPenetrationMaxVoxels": 42,
    "grabFrame": 8,
    "attachHolsterFrames": [
     9,
@@ -2010,31 +2466,41 @@
    "frames": 72,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0007,
+   "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
     }
    },
    "supportFramesSolved": 73,
-   "bodyPenetrationMaxVoxels": 1,
+   "bodyPenetrationMaxVoxels": 14,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -2046,31 +2512,41 @@
    "frames": 18,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0059,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
     }
    },
    "supportFramesSolved": 19,
-   "bodyPenetrationMaxVoxels": 2,
+   "bodyPenetrationMaxVoxels": 23,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -2082,31 +2558,41 @@
    "frames": 14,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0049,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
     }
    },
    "supportFramesSolved": 15,
-   "bodyPenetrationMaxVoxels": 4,
+   "bodyPenetrationMaxVoxels": 40,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -2120,29 +2606,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
     }
    },
    "supportFramesSolved": 49,
-   "bodyPenetrationMaxVoxels": 87,
+   "bodyPenetrationMaxVoxels": 16,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -2156,29 +2652,39 @@
    "loop": true,
    "supportErrorMaxM": 0.0,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
     }
    },
    "supportFramesSolved": 7,
-   "bodyPenetrationMaxVoxels": 80,
+   "bodyPenetrationMaxVoxels": 24,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -2190,31 +2696,41 @@
    "frames": 38,
    "fps": 24,
    "loop": false,
-   "supportErrorMaxM": 0.0733,
+   "supportErrorMaxM": 0.0054,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
     }
    },
    "supportFramesSolved": 14,
-   "bodyPenetrationMaxVoxels": 75,
+   "bodyPenetrationMaxVoxels": 12,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -2228,29 +2744,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 168,
+   "bodyPenetrationMaxVoxels": 52,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -2271,29 +2797,39 @@
    "loop": false,
    "supportErrorMaxM": null,
    "stance": {
-    "w": {
-     "tp": -5,
-     "dx": 7,
-     "dy": 5,
-     "dz": -3,
-     "dyaw": 20,
-     "penetration": 75,
-     "rightErrorM": 0.2203,
-     "supportErrorM": 0.0
+    "aim": {
+     "blade": -15,
+     "yaw": 6.0,
+     "pitch": 0.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 10
     },
-    "c": {
-     "tp": -15,
-     "dx": 0,
-     "dy": 1,
-     "dz": 2,
-     "dyaw": 20,
-     "penetration": 1,
-     "rightErrorM": 0.1562,
-     "supportErrorM": 0.0
+    "ready": {
+     "blade": -10,
+     "yaw": 50.0,
+     "pitch": -22.0,
+     "pocket": [
+      6.5,
+      5.5,
+      35.0
+     ],
+     "reach": null,
+     "drop": 0,
+     "rightErrorM": 0.0,
+     "supportErrorM": 0.0,
+     "penetration": 13
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 168,
+   "bodyPenetrationMaxVoxels": 52,
    "grabFrame": 8,
    "attachHolsterFrames": [
     9,

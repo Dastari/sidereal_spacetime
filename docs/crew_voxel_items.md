@@ -101,18 +101,37 @@ FX definitions carry the following:
 
 The output is `assets/runtime/crew/items/r001/armed-actions.glb`, one glTF animation per `<class>.<clip>`, with metadata in `armed-actions.json`.
 
-**How the body moves.** The body comes from CHAR-BODY's own pose library (its `anims.py` Poser, as published in the shared body folder).
+**How the body moves.** The body comes from CHAR-BODY's own pose library (its `anims.py` Poser, published in the shared body folder).
 - `gait` provides foot IK with planted stance feet, hip sway and bob, and a counter-rotating chest.
-- CHAR-BODY's aim, shoot, reload, melee and repair key poses are used as they are.
-- The weapon layer rides the chest (low ready or port arms) over the gait.
-- The support hand is re-solved every frame onto the class item's own support socket. The clavicle swings up to 24° when the chibi arm would otherwise fall short.
-- A per-class stance search (torso blade angle, weapon offset and yaw) keeps both hands on the item and minimises item voxels inside the torso or head.
-- Draw and holster reach to the item's holster, close the hand on it at frame 6, and bring the item to ready. Long guns swing out over the right shoulder.
+- CHAR-BODY's aim, shoot and reload key poses provide the body.
 
-**What gets measured.** Each clip records its maximum support-hand gap and the maximum number of item voxels inside the torso or head boxes, so the evidence carries its own numbers. Current state:
-- Support-hand gaps are 0 during idle, walk, run, aim and shoot, except on the heavy gun, where they reach about 0.07 m.
-- Aimed long guns still put about 80–100 of roughly 1,500 voxels inside the chest box, at the stock and receiver beside the shoulder.
-- Draw and holster pass through the torso box during the swing.
+**How the weapon is placed.** CHAR-WEAPONS positions the weapon with a weapon-frame solver:
+
+| Weapon and state | Placement |
+|---|---|
+| Long guns, aim | Stock seated in a right-shoulder pocket, barrel level, bladed about 15° |
+| Long guns, ready (idle, walk, run) | Stock at the shoulder, muzzle down 22°, across the body |
+| Heavy | Stock at the right hip in every clip |
+| Pistol, aim | Sights on the eye line at arm's length |
+| SMG | Rear cap shouldered like a carbine |
+
+CHAR-BODY's authored weapon motion (breath, recoil kick and reload tilt) is applied as deltas on top of that placement.
+
+**How the arms follow.** Both arms are IK'd onto the item every frame: right hand on the grip, left hand on the item's support socket.
+- The clavicle swings up to 24° when the chibi arm would otherwise fall short.
+- A per-frame settle step slides the weapon up to 4 voxels toward the support shoulder when the gait carries the grip out of reach.
+
+**Draw and holster.**
+- The right hand reaches the item at its holster and closes on it at frame 6.
+- For pistols and tools, the item then comes straight to ready.
+- Long guns rise muzzle-up over the right shoulder, then drop into the ready.
+
+**What gets measured.** Each clip records its maximum support-hand gap and the maximum number of item voxels inside the torso or head boxes. On body r004:
+- The support-hand gap is at most 0.014 m on every clip.
+- Long-gun aim puts about 5–10 item voxels inside the boxes.
+- Long-gun walk and run put 22–58 inside.
+- Draw and holster put 23–52 inside.
+- The heavy gun's hip carry puts 120–160 of its roughly 2,400 voxels inside the torso box during idle and walk.
 
 **Runtime.** `crewArmedClip(item, clip)` in `packages/content/src/crew-items.ts` maps any item to its class clip name. Items outside the representative set use their class clip. For those items, a runtime can re-target the support hand with `createVoxelItemVisual(...).socketWorld("support")`. Animated evidence (MP4 and GIF at the game camera and a 3/4 close-up) is produced by `build.py -- --armed` into the review folder.
 

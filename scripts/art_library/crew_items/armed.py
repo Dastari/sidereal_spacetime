@@ -129,11 +129,6 @@ class ArmedBaker:
         return n
 
     # -------------------------------------------------------------- body poses per family
-    def ready_weapon(self, fam, running=False):
-        if fam in ("rifle", "heavy"):
-            return ("c", 3, 9, 34, 35, -40, 20, "one_hand") if running else ("c", 4, 8, 32, 25, -28, 10, "one_hand")
-        return None
-
     def body_pose(self, fam, clip, ph, f):
         A = self.A
         if clip in ("walk_armed", "run_armed"):
@@ -142,7 +137,6 @@ class ArmedBaker:
                       drop=3, twist=11, bounce_head=3) if run else dict(step=15, lift=3.5, bob=1.2, lean=5, arm_swing=28, elbow=18)
             P = A.gait(ph, **kw)
             if fam in ("rifle", "heavy"):
-                P["weapon"] = self.ready_weapon(fam, run)
                 P["pole.R"], P["pole.L"] = (0.9, -0.6, -0.4), (-0.6, -0.4, -1)
                 for k in ("fk:upper_arm.R", "fk:forearm.R", "fk:hand.R", "fk:upper_arm.L", "fk:forearm.L", "fk:hand.L"):
                     P.pop(k, None)
@@ -160,80 +154,172 @@ class ArmedBaker:
             return P
         return None
 
-    STANCE_GRID = {"tp": (5, -5, -15, -25), "dx": (-3, 0, 3, 5, 7), "dy": (-1, 1, 3, 5), "dz": (-3, 0, 2), "dyaw": (0, 10, 20)}
+    # ------------------------------------------------------------------ weapon-frame solver
+    # Poses are defined by what reads right on screen, then the arms are solved to them:
+    #   long-gun aim   : stock seated in the right shoulder pocket, barrel level toward the target
+    #   long-gun ready : stock still at the shoulder, muzzle down ~35 deg and across the body
+    #   heavy          : stock at the right hip (hip fire), barrel level / slightly down at ready
+    #   pistol/SMG aim : sights on the eye line at arm's length (x = dominant eye)
+    # A small search (torso blade, barrel yaw, pocket, reach) keeps both hands ON the item
+    # (support gap is a hard limit) and minimises item voxels inside the torso/head boxes.
+    V = 1 / 32
+    POCKETS = {"shoulder": [(7.0, 5.0, 34.0), (7.5, 4.0, 33.0), (6.5, 5.5, 35.0), (8.0, 3.0, 32.0), (5.5, 6.0, 33.0)],
+               "hip": [(8.0, 4.0, 25.0), (8.5, 1.0, 27.0), (9.0, -1.0, 28.0), (8.0, 2.0, 29.0)]}
+    KINDS = {"aim": {"pitch": (0.0,), "yaw": (0.0, 6.0, 12.0), "blade": (0, -15, -30, -45, -60)},
+             "ready": {"pitch": (-38.0, -30.0, -22.0), "yaw": (30.0, 40.0, 50.0, 60.0), "blade": (0, -10, -20, -30)},
+             "hip_aim": {"pitch": (0.0, -4.0), "yaw": (0.0, 8.0, 16.0), "blade": (0, -15, -30, -45)},
+             "hip_ready": {"pitch": (-12.0, -8.0), "yaw": (0.0, 8.0, 16.0), "blade": (0, -15, -30, -45)},
+             "sight": {"pitch": (0.0,), "yaw": (0.0,), "blade": (0, -10, -20)}}
+
+    def chest_delta(self):
+        p = self.poser
+        return p.M("chest") @ p.rest["chest"].inverted()
+
+    def bone_delta(self, bone):
+        p = self.poser
+        return p.M(bone) @ p.rest[bone].inverted()
+
+    def rot(self, yaw, pitch, roll=0.0, base=None):
+        R = Matrix.Rotation(math.radians(yaw), 3, "Z") @ Matrix.Rotation(math.radians(pitch), 3, "X")
+        R = R @ (base if base is not None else self.poser.sock["socket.hand.R"].to_3x3())
+        return R @ Matrix.Rotation(math.radians(roll), 3, "X")
+
+    def frame_from_point(self, item, Rsock, socket_name, point):
+        """socket.hand.R frame that puts item socket `socket_name` at `point` (armature metres)."""
+        d = (Vector(item.sockets[socket_name]["position"]) - Vector(item.sockets["grip"]["position"])) * item.voxel
+        off = Vector((d.y, -d.x, d.z))
+        M = Rsock.to_4x4()
+        M.translation = point - Rsock @ off
+        return M
+
+    def eye_point(self):
+        p = self.poser
+        e = p.sock.get("socket.eyes")
+        return (self.bone_delta("head") @ e).translation if e is not None else Vector((0, 7, 45.5)) * self.V
 
     @staticmethod
-    def apply_stance(P, st):
-        """Bladed stance + weapon offset: torso turns (pelvis tp, chest 1.2 tp, head counter-turns to
-        keep the eyes on target) and the weapon frame shifts (voxels) / yaws by the tuned amounts."""
+    def blade_body(P, blade):
+        """Turn hips/torso into a bladed stance; the head counter-turns to keep facing the target."""
         P = dict(P)
-        for bone, k in (("fk:pelvis", 1.0), ("fk:chest", 1.2), ("fk:head", -1.6)):
+        for bone, k in (("fk:pelvis", 0.45), ("fk:spine", 0.25), ("fk:chest", 0.35), ("fk:head", -0.9)):
             x, y, z = P.get(bone, (0, 0, 0))
-            P[bone] = (x, y, z + st["tp"] * k)
-        for key in ("weapon", "hand.R"):
-            w = P.get(key)
-            if w:
-                sp, wx, wy, wz, yaw, pitch, roll, *rest = w
-                P[key] = (sp, wx + st["dx"], wy + st["dy"], wz + st["dz"], yaw + st["dyaw"], pitch,
-                          roll * 0.5 if sp == "c" else roll, *rest)
+            P[bone] = (x, y, z + blade * k)
         return P
 
-    def score_pose(self, item, P, two_hand):
+    @staticmethod
+    def strip_weapon(P):
+        P = dict(P)
+        w = P.pop("weapon", None)
+        P.pop("weapon#w", None)
+        for k in ("fk:upper_arm.R", "fk:forearm.R", "fk:hand.R"):
+            P.pop(k, None)
+        return P, w
+
+    def weapon_frame(self, item, kind, st):
+        """Solved-socket frame for one kind + stance params, on the CURRENT body pose."""
+        if kind == "sight":
+            eye = self.eye_point()
+            R = self.rot(st["yaw"], st["pitch"])
+            fwd = R.col[0].normalized()
+            point = eye + fwd * (st["reach"] * self.V) + Vector((st.get("dx", 1.5) * self.V, 0, -st.get("drop", 0) * self.V))
+            sock = "sight" if "sight" in item.sockets else "muzzle"
+            return self.frame_from_point(item, R, sock, point)
+        pocket_bone = "pelvis" if kind.startswith("hip") else "chest"
+        pocket = self.bone_delta(pocket_bone) @ (Vector(st["pocket"]) * self.V)
+        base = None
+        if kind in ("ready", "hip_ready"):                    # ready carries sway with the torso
+            base = self.chest_delta().to_3x3() @ self.poser.sock["socket.hand.R"].to_3x3()
+        R = self.rot(st["yaw"], st["pitch"], base=base)
+        anchor = "stock" if "stock" in item.sockets else "grip"
+        return self.frame_from_point(item, R, anchor, pocket)
+
+    def evaluate(self, item, P_body, kind, st, two_hand):
         p = self.poser
-        Q = dict(P)
-        if Q.get("weapon"):
-            sp, x, y, z, yaw, pitch, roll, _ = Q["weapon"]
-            Q["weapon"] = (sp, x, y, z, yaw, pitch, roll, "one_hand")
-        p.apply(Q)
-        tgt = Q.get("weapon") or Q.get("hand.R")
-        want = p.hand_target("R", *tgt[:7])
-        Mr = self.socket_R()
-        err_r = (Mr.translation - want.translation).length
+        p.apply(self.blade_body(P_body, st["blade"]))
+        Mr = self.weapon_frame(item, kind, st)
+        self.solve_hand("R", Mr, (1.0, -0.5, -0.4), girdle=True)
+        err_r = (self.socket_R().translation - Mr.translation).length
         err_l = 0.0
         if two_hand:
-            Ml = self.support_target(item, Mr)
-            self.solve_hand("L", Ml, Q.get("pole.L", (-0.6, -0.4, -1)), girdle=True)
+            Ml = self.support_target(item, self.socket_R())
+            self.solve_hand("L", Ml, (-0.6, -0.4, -1.0), girdle=True)
             err_l = (self.socket_L().translation - Ml.translation).length
-        return self.penetration(item, Mr), err_r, err_l
+        return Mr, err_r, err_l, self.penetration(item, self.socket_R())
+
+    def solve_kind(self, cls, item, kind, P_body, two_hand):
+        g = self.KINDS[kind]
+        best = None
+        pockets = [None] if kind == "sight" else self.POCKETS["hip" if kind.startswith("hip") else "shoulder"]
+        reaches = (18, 16, 14, 12, 10, 8) if kind == "sight" else (None,)
+        drops = (0, 2, 4, 6) if kind == "sight" else (0,)
+        for blade in g["blade"]:
+            for yaw in g["yaw"]:
+                for pitch in g["pitch"]:
+                    for pocket in pockets:
+                        for reach in reaches:
+                            for drop in drops:
+                                st = {"blade": blade, "yaw": yaw, "pitch": pitch, "pocket": pocket, "reach": reach, "drop": drop}
+                                _, er, el, pen = self.evaluate(item, P_body, kind, st, two_hand)
+                                score = (5000 * max(0.0, er - 0.004) + 5000 * max(0.0, el - 0.004) + pen
+                                         + 0.03 * abs(blade) + 0.02 * abs(yaw) - (0.3 * reach if reach else 0) + 1.0 * drop)
+                                if best is None or score < best[0]:
+                                    best = (score, st, er, el, pen)
+        _, st, er, el, pen = best
+        print(f"[armed] solve {cls}/{kind}: {st} rightErr {er:.3f} supportErr {el:.3f} pen {pen}")
+        return dict(st, rightErrorM=round(er, 4), supportErrorM=round(el, 4), penetration=pen)
+
+    def settle(self, item, Mr, fam, cls, clip, P):
+        """Per-frame refinement: if the support hand cannot reach this frame's grip (gait arm and
+        chest motion), slide the weapon (up to 4 vox) toward the support shoulder; keep the best."""
+        two = item.meta["two_handed"] or cls == "smg" or (fam == "pistol" and clip in ("aim", "shoot", "reload"))
+        authored_l = bool(P.get("hand.L")) and P.get("hand.L#w", 1.0) > 0.01
+        self.solve_hand("R", Mr, (1.0, -0.5, -0.4), girdle=True)
+        if not two or authored_l:
+            return Mr
+        p = self.poser
+        sh = p.M("upper_arm.L").translation
+        best = None
+        for k in (0, 1, 2, 3, 4):
+            M = Mr.copy()
+            if k:
+                d = (sh - self.support_target(item, Mr).translation).normalized()
+                M.translation = Mr.translation + d * (k * self.V)
+            self.solve_hand("R", M, (1.0, -0.5, -0.4), girdle=True)
+            Ml = self.support_target(item, self.socket_R())
+            self.solve_hand("L", Ml, (-0.6, -0.4, -1.0), girdle=True)
+            gap = (self.socket_L().translation - Ml.translation).length
+            pen = self.penetration(item, self.socket_R())
+            score = 5000 * max(0.0, gap - 0.004) + pen + 0.5 * k
+            if best is None or score < best[0]:
+                best = (score, M)
+            if gap <= 0.004 and k == 0:
+                break
+        self.solve_hand("R", best[1], (1.0, -0.5, -0.4), girdle=True)
+        return best[1]
+
+    def kinds_for(self, cls, fam, clip):
+        if fam == "rifle":
+            return "aim" if clip in ("aim", "shoot", "reload") else "ready"
+        if fam == "heavy":
+            return "hip_aim"                  # heavy guns ride the hip, level, in every armed clip
+        if cls == "smg":
+            # SMG: stock (rear cap) seated at the shoulder like a carbine; ready = muzzle down
+            return "aim" if clip in ("aim", "shoot", "reload") else "ready"
+        if fam == "pistol" and clip in ("aim", "shoot", "reload"):
+            return "sight"
+        return None
 
     def tune(self, cls, item, fam):
-        """Grid-search the stance per class and carry style so both hands reach (right hand on the
-        grip, support hand on the item's support socket) with the least item voxels inside the
-        torso/head. Deterministic; the chosen values and residuals are reported in the manifest."""
-        if fam not in ("rifle", "heavy") and cls != "smg":
-            return {}
-        ctx = {}
-        if fam in ("rifle", "heavy"):
-            ctx["w"] = self.frames_of("aim_rifle")[0][1]
-            ctx["c"] = self.frames_of("idle_armed")[0][1]
-        else:
-            ctx["w"] = self.frames_of("aim_pistol")[0][1]
-            ctx["c"] = self.two_hand_low(self.frames_of("idle_pistol")[0][1], cls, "idle_armed")
         out = {}
-        g = self.STANCE_GRID
-        for space, P0 in ctx.items():
-            best = None
-            for tp in g["tp"]:
-                for dx in g["dx"]:
-                    for dy in g["dy"]:
-                        for dz in g["dz"]:
-                            for dyaw in g["dyaw"]:
-                                st = {"tp": tp, "dx": dx, "dy": dy, "dz": dz, "dyaw": dyaw}
-                                pen, er, el = self.score_pose(item, self.apply_stance(P0, st), True)
-                                score = pen + 40 * er + 5000 * el + 0.02 * abs(tp) + 0.05 * (abs(dx) + abs(dy) + abs(dz))
-                                if best is None or score < best[0]:
-                                    best = (score, st, pen, er, el)
-            out[space] = dict(best[1], penetration=best[2], rightErrorM=round(best[3], 4), supportErrorM=round(best[4], 4))
-            print(f"[armed] tune {cls}/{space}: {out[space]}")
+        for clip, base in (("aim", None), ("idle_armed", None)):
+            kind = self.kinds_for(cls, fam, clip)
+            if not kind or kind in out:
+                continue
+            P0 = self.clip_frames(fam, clip)[0][1]
+            P_body, _ = self.strip_weapon(P0)
+            two = item.meta["two_handed"] or fam == "pistol"
+            out[kind] = self.solve_kind(cls, item, kind, P_body, two)
         return out
-
-    def bladed(self, P, fam, clip, cls):
-        if clip in ("draw", "holster") or not self.stances.get(cls):
-            return P
-        st = self.stances[cls]
-        w = P.get("weapon") or P.get("hand.R")
-        space = w[0] if w else "c"
-        return self.apply_stance(P, st.get(space) or st.get("c"))
 
     @staticmethod
     def two_hand_low(P, cls, clip):
@@ -315,14 +401,45 @@ class ArmedBaker:
         attach, support_err, pen = [], [], []
         ready_Mr = None
         if clip in ("draw", "holster"):
-            p.apply(self.clip_frames(fam, "idle_armed")[0][1])
-            ready_Mr = self.socket_R()
+            rk = self.kinds_for(cls, fam, "idle_armed")
+            P0 = self.clip_frames(fam, "idle_armed")[0][1]
+            if rk and self.stances.get(cls, {}).get(rk):
+                rst = self.stances[cls][rk]
+                p.apply(self.blade_body(self.strip_weapon(P0)[0], rst["blade"]))
+                ready_Mr = self.weapon_frame(item, rk, rst)
+            else:
+                p.apply(P0)
+                ready_Mr = self.socket_R()
+        kind = self.kinds_for(cls, fam, clip)
+        st = self.stances.get(cls, {}).get(kind) if kind else None
+        w_base = None
+        if st:
+            ref = {"aim": "aim", "shoot": "aim", "reload": "aim"}.get(clip, "idle_armed")
+            w_base = self.strip_weapon(self.clip_frames(fam, ref)[0][1])[1]
         for f, P in frames:
-            P = self.bladed(self.two_hand_low(dict(P), cls, clip), fam, clip, cls)
-            if "weapon" in P and P["weapon"] is not None:
-                sp, x, y, z, yaw, pitch, roll, _ = P["weapon"]
-                P["weapon"] = (sp, x, y, z, yaw, pitch, roll, "one_hand")      # support solved below
-            p.apply(P)
+            P = self.two_hand_low(dict(P), cls, clip)
+            if st:
+                P_body, w = self.strip_weapon(P)
+                p.apply(self.blade_body(P_body, st["blade"]))
+                Mr = self.weapon_frame(item, kind, st)
+                if w and w_base and w[0] == w_base[0]:
+                    # CHAR-BODY's authored motion (breath, recoil kick, reload tilt) as deltas
+                    dpos = Vector(w[1:4]) - Vector(w_base[1:4])
+                    if w[0] == "c":
+                        dpos = self.chest_delta().to_3x3() @ dpos
+                    Rd = Matrix.Rotation(math.radians(w[4] - w_base[4]), 3, "Z") @ Matrix.Rotation(math.radians(w[5] - w_base[5]), 3, "X")
+                    R2 = Rd @ Mr.to_3x3() @ Matrix.Rotation(math.radians(w[6] - w_base[6]), 3, "X")
+                    if clip == "shoot":
+                        dpos = dpos * (0.35 if kind.startswith("hip") else 0.5)   # kick goes into the body, not through it
+                    t = Mr.translation + dpos * self.V
+                    Mr = R2.to_4x4()
+                    Mr.translation = t
+                Mr = self.settle(item, Mr, fam, cls, clip, P)
+            else:
+                if "weapon" in P and P["weapon"] is not None:
+                    sp, x, y, z, yaw, pitch, roll, _ = P["weapon"]
+                    P["weapon"] = (sp, x, y, z, yaw, pitch, roll, "one_hand")      # support solved below
+                p.apply(P)
             held = True
             if clip in ("draw", "holster"):
                 t = f if clip == "draw" else DRAW_LEN - f
@@ -335,13 +452,23 @@ class ArmedBaker:
                 else:
                     s = self.A.EASE["io"]((t - GRAB) / (DRAW_LEN - GRAB))
                     if item.meta["holster"].startswith("back"):
-                        # swing the long gun out over the right shoulder instead of through the torso
-                        side = M_h.copy()
-                        side.translation = (p.M("chest") @ p.rest["chest"].inverted()) @ (Vector((13, 2, 40)) * (1 / 32))
-                        Mr = self.A.blend(M_h, side, s / 0.5) if s < 0.5 else self.A.blend(side, ready_Mr, (s - 0.5) / 0.5)
+                        # swing the long gun up and out over the right shoulder, muzzle high, then
+                        # bring it down into the ready (never through the torso)
+                        C = self.chest_delta()
+                        up = self.rot(0, 70, base=C.to_3x3() @ p.sock["socket.hand.R"].to_3x3())
+                        w1 = up.to_4x4()
+                        w1.translation = C @ (Vector((13.0, -2.0, 44.0)) * self.V)
+                        w2 = self.rot(15, 20, base=C.to_3x3() @ p.sock["socket.hand.R"].to_3x3()).to_4x4()
+                        w2.translation = C @ (Vector((12.0, 6.0, 40.0)) * self.V)
+                        if s < 0.4:
+                            Mr = self.A.blend(M_h, w1, s / 0.4)
+                        elif s < 0.7:
+                            Mr = self.A.blend(w1, w2, (s - 0.4) / 0.3)
+                        else:
+                            Mr = self.A.blend(w2, ready_Mr, (s - 0.7) / 0.3)
                     else:
                         Mr = self.A.blend(M_h, ready_Mr, s)
-                self.solve_hand("R", Mr, (1.0, -0.6, -0.3))
+                self.solve_hand("R", Mr, (1.0, -0.6, -0.3), girdle=True)
             Mr = self.socket_R()
             two_hand = item.meta["two_handed"] or (fam == "pistol" and clip in ("aim", "shoot", "reload"))
             if cls == "smg":
@@ -370,7 +497,7 @@ class ArmedBaker:
         return {"action": act.name, "class": cls, "item": item.id, "clip": clip, "frames": frames[-1][0] - frames[0][0],
                 "fps": 24, "loop": loop, "attach": attach,
                 "supportErrorMaxM": round(max(errs), 4) if errs else None,
-                "stance": self.stances.get(cls, {}), "supportFramesSolved": len(errs), "bodyPenetrationMaxVoxels": max(pen) if pen else 0, "grabFrame": GRAB if clip == "draw" else (DRAW_LEN - GRAB if clip == "holster" else None)}
+                "stance": {k: {kk: vv for kk, vv in v.items()} for k, v in self.stances.get(cls, {}).items()}, "supportFramesSolved": len(errs), "bodyPenetrationMaxVoxels": max(pen) if pen else 0, "grabFrame": GRAB if clip == "draw" else (DRAW_LEN - GRAB if clip == "holster" else None)}
 
 
 def bake_all(o, by_id, rig_src):
