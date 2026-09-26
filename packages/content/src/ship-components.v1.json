@@ -3642,7 +3642,17 @@
           "capacity": 2.4,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,0,0],
+          "position": [-0.4,0,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 2.4,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [0.4,0,0],
           "normal": [0,0,-1]
         }
       ],
@@ -3706,7 +3716,17 @@
           "capacity": 6.4,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,0,0],
+          "position": [-0.8,0,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 6.4,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [0.8,0,0],
           "normal": [0,0,-1]
         }
       ],
@@ -3770,7 +3790,17 @@
           "capacity": 16,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,0,0],
+          "position": [-1.2,0,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 16,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [1.2,0,0],
           "normal": [0,0,-1]
         }
       ],
@@ -4140,7 +4170,17 @@
           "capacity": 4,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,-0.225,0],
+          "position": [-0.36,-0.225,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 4,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [0.36,-0.225,0],
           "normal": [0,0,-1]
         }
       ],
@@ -4204,7 +4244,17 @@
           "capacity": 10,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
-          "position": [0,-0.225,0],
+          "position": [-0.72,-0.225,0],
+          "normal": [0,0,-1]
+        },
+        {
+          "id": "coolant-out",
+          "channel": "coolant",
+          "direction": "out",
+          "capacity": 10,
+          "medium": "glycol-water",
+          "connectorFamily": "cool-std",
+          "position": [0.72,-0.225,0],
           "normal": [0,0,-1]
         }
       ],

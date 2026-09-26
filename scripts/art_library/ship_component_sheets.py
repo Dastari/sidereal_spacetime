@@ -164,9 +164,9 @@ def themed(ob, theme_mats):
         ob.material_slots[i].material = theme_mats[name]
 
 
-def iso_camera(cam, objs, res):
+def iso_camera(cam, objs, res, rot=None):
     """Orthographic isometric-style camera fitted to the given objects."""
-    rot = (math.radians(50), 0, math.radians(-14))
+    rot = rot or (math.radians(50), 0, math.radians(-14))
     cam.data.type = "ORTHO"
     cam.rotation_euler = rot
     mw = cam.rotation_euler.to_matrix()

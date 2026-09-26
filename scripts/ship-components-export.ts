@@ -5,6 +5,8 @@
  *
  *   npm run ship-components:export            write files
  *   npm run ship-components:export -- --check fail if files are stale
+ *   npm run ship-components:export -- --diagram out.json [--fit balance.md-corvette]
+ *     also writes auto-wired network data for the Blender port diagram
  */
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -15,8 +17,11 @@ import {
 } from "../packages/content/src/ship-components";
 import { SHIP_COMPONENT_REFERENCE_FITS } from "../packages/content/src/ship-components-reference-fits";
 import {
+  autoWireShipComponents,
   compileShipSystems,
+  placedShipPort,
   shipComponentFlightInput,
+  shipPartToShip,
 } from "../packages/sim/src/ship-systems";
 import { compileFlightDefinition } from "../packages/sim/src/flight-definition";
 
@@ -197,4 +202,50 @@ if (check) {
   writeFileSync(jsonPath, json);
   writeFileSync(docPath, nextDoc);
   console.log(`Wrote ${catalog.components.length} components; updated ${stale.length} file(s).`);
+}
+
+/** Auto-wired network diagram data (ship frame, metres) for
+ * scripts/art_library/ship_component_network.py. */
+const diagramAt = process.argv.indexOf("--diagram");
+if (diagramAt > 0) {
+  const fitAt = process.argv.indexOf("--fit");
+  const fitId = fitAt > 0 ? process.argv[fitAt + 1] : "balance.md-corvette";
+  const fit = SHIP_COMPONENT_REFERENCE_FITS.find((f) => f.id === fitId);
+  if (!fit) throw new Error("Unknown fit " + fitId);
+  const defs = new Map(catalog.components.map((c) => [c.id, c]));
+  const sockets = new Map(fit.hull.hardpoints.map((h) => [h.id, h.socket]));
+  const connections = autoWireShipComponents(catalog, fit.hull, fit.components);
+  const report = compileShipSystems({ catalog, hull: fit.hull, components: fit.components, connections });
+  const mountOf = (p: (typeof fit.components)[number]) => {
+    const socket = p.hardpointId ? sockets.get(p.hardpointId) : undefined;
+    return socket ? { definition: defs.get(p.componentId)!, socket } : undefined;
+  };
+  const placements = fit.components.map((p) => {
+    const m = mountOf(p);
+    return {
+      id: p.id,
+      componentId: p.componentId,
+      origin: [...p.position],
+      basis: [
+        shipPartToShip(p, [1, 0, 0], m, false),
+        shipPartToShip(p, [0, 1, 0], m, false),
+        shipPartToShip(p, [0, 0, 1], m, false),
+      ],
+      ports: Object.fromEntries(defs.get(p.componentId)!.ports.map((port) => [port.id, placedShipPort(p, port, m).position])),
+    };
+  });
+  const out = {
+    fit: { id: fit.id, name: fit.name, hull: fit.hull },
+    status: report.status,
+    issues: report.issues,
+    networks: report.networks,
+    placements,
+    connections: connections.map((c) => ({
+      ...c,
+      a: placements.find((p) => p.id === c.from.placementId)!.ports[c.from.portId],
+      b: placements.find((p) => p.id === c.to.placementId)!.ports[c.to.portId],
+    })),
+  };
+  writeFileSync(resolve(process.argv[diagramAt + 1]), JSON.stringify(out, null, 1));
+  console.log(`Diagram data: ${placements.length} placements, ${connections.length} connections, status ${report.status}`);
 }

@@ -220,8 +220,9 @@ function build(spec: KindSpec): ShipComponentDefinition[] {
         capacity: Math.max(coolantDemand, through),
       });
     const pump = at(spec.coolantSupplyLps, i);
-    if (pump > 0)
-      ports.push({ id: "coolant-out", channel: "coolant", direction: "out", capacity: pump });
+    // Pumps drive the loop; flow-through parts (radiators, sinks) pass it on.
+    if (pump > 0 || through > 0)
+      ports.push({ id: "coolant-out", channel: "coolant", direction: "out", capacity: Math.max(pump, through) });
     const fuelActive = at(spec.fuel?.active, i),
       fuelCap = at(spec.fuel?.capacityL, i);
     if (fuelActive > 0)
