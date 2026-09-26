@@ -264,7 +264,8 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       const mesh = makeMesh(scene, `${out.dressed.id}:batch:${g.key}`, frame, g);
       mesh.material = slotMaterial(scene, theme, g.slot);
       setMeshRole(mesh, g.role);
-      mesh.freezeWorldMatrix();
+      // No freezeWorldMatrix: the ship root moves in game, and a frozen world matrix would
+      // leave the hull at its spawn pose. Geometry is baked relative to the parent frame.
       kept.push({ mesh, tag: g.tag, slot: g.slot, triangles: g.indices.length / 3, kind: "generated" });
     }
     out.statics = kept;
