@@ -12,7 +12,7 @@ import look
 from vox import FACE_PLUS_Y, SLOTS, V, mesh_from_grid
 
 BEVEL = {  # (width m, segments): soft rounded part edges, no per-voxel grooves (owner feedback 2026-09-25)
-    "head": (0.016, 3), "face": (0.0011, 1), "facialhair": (0.004, 2), "detail": (0.0010, 1), "hair": (0.0055, 2),
+    "head": (0.016, 3), "face": (0.0011, 1), "facialhair": (0.004, 2), "detail": (0.0010, 1), "hair": (0.0055, 1),
     "acc": (0.005, 2), "helmet": (0.013, 3), "visor": (0.003, 2), "mask": (0.005, 2)}
 
 
@@ -34,6 +34,14 @@ class Library:
         ob = bpy.data.objects.new(name, me)
         self.coll.objects.link(ob)
         look.bevel(ob, *BEVEL[bevel_kind or category])
+        # bake the bevel once: instances share the evaluated mesh (memory/time), export needs no modifiers
+        dg = bpy.context.evaluated_depsgraph_get()
+        baked = bpy.data.meshes.new_from_object(ob.evaluated_get(dg), preserve_all_data_layers=True, depsgraph=dg)
+        baked.name = name
+        ob.modifiers.remove(ob.modifiers["brick"])
+        old = ob.data
+        ob.data = baked
+        bpy.data.meshes.remove(old)
         lo, hi = grid.bounds_vox()
         if FACE_PLUS_Y:
             lo, hi = [-hi[0], -hi[1], lo[2]], [-lo[0], -lo[1], hi[2]]
@@ -43,13 +51,9 @@ class Library:
         return ob
 
     def stats(self):
-        dg = bpy.context.evaluated_depsgraph_get()
         for name, ob in self.objects.items():
-            ev = ob.evaluated_get(dg)
-            m = ev.to_mesh()
-            m.calc_loop_triangles()
-            self.meta[name]["triangles"] = len(m.loop_triangles)
-            ev.to_mesh_clear()
+            ob.data.calc_loop_triangles()
+            self.meta[name]["triangles"] = len(ob.data.loop_triangles)
         return self.meta
 
     # ------------------------------------------------------------------ review instances
@@ -61,8 +65,6 @@ class Library:
         ob.rotation_mode = "ZXY"
         ob.rotation_euler = (tilt[0], tilt[1], rot_z)
         look.apply_palette(ob, palette)
-        md = src.modifiers["brick"]
-        look.bevel(ob, md.width, md.segments)
         return ob
 
 

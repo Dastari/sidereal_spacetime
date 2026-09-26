@@ -8,7 +8,7 @@
  *
  * Every part is authored rigidly in head space: origin at the `head` bone rest head. The runtime
  * parents the part nodes to the head bone. Skin, hair and eye colours, themes and player colours
- * are slot values (materials are named after the 10 slots), not geometry.
+ * are slot values (materials are named `crew.<slot>` for the 10 slots), not geometry.
  * These cosmetics grant no inventory item, stat or gameplay capability. Helmets, visors and masks
  * are listed here for their visuals only. Equipment authority stays with the inventory/equipment
  * contracts.

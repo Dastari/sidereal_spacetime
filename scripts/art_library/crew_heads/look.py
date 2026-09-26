@@ -73,8 +73,8 @@ def slot_material(slot, value=None, name=None, emit_strength=6.0):
 
 
 def export_materials():
-    """Materials named exactly after the slots (the runtime binds slot tables by material name)."""
-    return {s: slot_material(s, name=s) for s in SLOTS}
+    """Materials named crew.<slot> (same convention as the CHAR-BODY body GLBs; runtime binds slot tables by name)."""
+    return {s: slot_material(s, name=f"crew.{s}") for s in SLOTS}
 
 
 def apply_palette(ob, palette):
