@@ -398,19 +398,25 @@ def console(K, kind):
     def build(w, d, h):
         p = K.Piece(f"x2.console-{kind}", "equipment", "interior", (w, d, h))
         dd = d // 2 + 1
-        # chunky desk: navy plinth, lavender body with navy cheek panels, bright desk strip
+        # r003: lower chunky desk, bright keyboard strip, and a tall terraced screen that tilts back
+        # so its emissive cells read from the game's top-down and iso cameras.
         p.b(1, 1, 0, w - 1, dd, 2, "dark")
-        p.b(0, 0, 2, w, dd, 11, "primary")
-        p.b(0, 1, 3, 1, dd - 1, 10, "secondary").b(w - 1, 1, 3, w, dd - 1, 10, "secondary")
-        p.b(0, 0, 11, w, dd + 1, 12, "secondary")
-        p.b(2, dd - 3, 12, w - 2, dd - 1, 13, glow)                               # keyboard glow
-        for x in range(2, w - 2, 3):
-            p.b(x, dd - 5, 12, x + 2, dd - 4, 13, "metal")
-        # screen stack: big main screen, side screen, header strip
-        p.b(w // 2 - 1, 1, 12, w // 2 + 1, 3, 14, "trim")
-        screen(p, 0, w, 1, 14, h - 1, glow, (kind, 1), K)
-        p.b(1, 1, h - 1, w - 1, 3, h, "trim")
-        p.b(3, 3, h - 1, w - 3, 4, h, "emit_a" if glow == "emit_b" else "emit_b")
+        p.b(0, 0, 2, w, dd, 7, "primary")
+        p.b(0, 1, 3, 1, dd - 1, 6, "secondary").b(w - 1, 1, 3, w, dd - 1, 6, "secondary")
+        p.b(0, 0, 7, w, dd + 1, 8, "secondary")
+        p.b(2, dd - 2, 8, w - 2, dd, 9, glow)                                     # keyboard glow
+        other = "emit_b" if glow == "emit_a" else "emit_a"
+        rows = max(3, (h - 9) // 2)
+        for j in range(rows):
+            z0 = 8 + 2 * j
+            yf = max(3, dd - 1 - j)                                               # step back one texel per row
+            p.b(0, 0, z0, w, yf - 2, z0 + 2, "secondary")                         # bezel / body behind the row
+            p.b(0, yf - 2, z0, 1, yf, z0 + 2, "secondary").b(w - 1, yf - 2, z0, w, yf, z0 + 2, "secondary")
+            s1 = other if j == rows - 1 else glow                                 # header row in the other colour
+            half = (w - 2) // 2
+            for x0, x1 in ((1, 1 + half - 1), (1 + half, w - 1)):
+                p.b(x0, yf - 2, z0, x1, yf, z0 + 2, s1 if (j + x0) % 5 else other)
+        p.b(0, 0, 8 + 2 * rows, w, 2, 9 + 2 * rows, "trim")
         if seat:
             sx0, sx1 = w // 2 - 4, w // 2 + 4
             p.b(w // 2 - 1, d - 6, 0, w // 2 + 1, d - 4, 5, "metal")             # post

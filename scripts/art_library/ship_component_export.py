@@ -38,9 +38,12 @@ KIT_PATH = HERE / "ship_kit_prototype.py"
 
 def load_kit():
     src = KIT_PATH.read_text()
-    head, sep, tail = src.rpartition("\nmain()")
-    if not sep or tail.strip():
-        raise RuntimeError("ship_kit_prototype.py no longer ends with an unguarded main() call")
+    if "if __name__ == \"__main__\":" in src:
+        head = src                                   # guarded kit: import without running main()
+    else:
+        head, sep, tail = src.rpartition("\nmain()")
+        if not sep or tail.strip():
+            raise RuntimeError("ship_kit_prototype.py main() call not found")
     mod = types.ModuleType("ship_kit")
     mod.__file__ = str(KIT_PATH)
     exec(compile(head, str(KIT_PATH), "exec"), mod.__dict__)
@@ -53,7 +56,7 @@ import ship_component_art as A  # noqa: E402
 A.install(K)
 THEME = "orion"
 Piece, T, SLOTS, SI = K.Piece, K.T, K.SLOTS, K.SI
-EXPORT_REVISION = "r002"
+EXPORT_REVISION = "r003"
 BEVEL = 0.012
 
 
@@ -64,6 +67,11 @@ def args():
     p.add_argument("--out", default=str(ROOT / "assets/art-library/ship-components" / EXPORT_REVISION))
     p.add_argument("--only", default="")
     p.add_argument("--no-glb", action="store_true")
+    p.add_argument("--runtime", action="store_true",
+                   help="compact runtime export: merged cuboids, hidden boxes dropped, flat <out>/<id>.glb")
+    p.add_argument("--ids-file", default="", help="JSON list of component ids to export")
+    p.add_argument("--runtime-bevel", type=float, default=0.0,
+                   help="runtime brick bevel in metres (0: none; per-row bevels striate round parts in Babylon)")
     p.add_argument("--sheets", default="")
     p.add_argument("--samples", type=int, default=32)
     p.add_argument("--sheet-keys", default="", help="comma list: catalog keys, weapons-top, exploded-ion, exploded-weapons, damage, variants")
@@ -129,9 +137,15 @@ def reactor(w, d, h):
     zz = z + 3
     for i in range(bands):
         p.disc("z", cx, cy, r, zz, zz + 4, "primary" if i % 2 == 0 else "accent")
-        p.disc("z", cx, cy, r + 1, zz + 4, zz + 6, "emit_a" if i == bands // 2 else "dark")
+        p.disc("z", cx, cy, r + 1, zz + 4, zz + 6, "dark")
+        if i == bands // 2:                                               # one thin reactor ring
+            p.disc("z", cx, cy, r + 1, zz + 4, zz + 5, "emit_a", rin=r - 1)   # hollow: deck cutaways show the body
         zz += 6
-    p.disc("z", cx, cy, r - 2, zz, zz + 3, "metal").disc("z", cx, cy, max(2, r // 2), zz + 3, zz + 5, "emit_a")
+    # r003: navy cap with a small bright core (the r002 core bloomed into a disc in Babylon)
+    # large flat caps stay rough (trim/secondary): a flat metal disc mirrors the environment in Babylon
+    p.disc("z", cx, cy, r - 2, zz, zz + 3, "trim").disc("z", cx, cy, max(2, r // 2), zz + 3, zz + 5, "secondary")
+    p.disc("z", cx, cy, max(2, r // 2) + 1, zz + 3, zz + 4, "metal", rin=max(1, r // 2))
+    p.disc("z", cx, cy, max(1, r // 5), zz + 3, zz + 6, "emit_a")
     for sx in (2, w - 5):                                               # frame posts
         for sy in (2, d - 5):
             p.b(sx, sy, z, sx + 3, sy + 3, zz + 2, "secondary")
@@ -170,7 +184,7 @@ def capacitor(w, d, h):
         r = min(sp, d) // 2 - 2
         p.disc("z", cx, d // 2, r, z, h - 3, "primary")
         for zz in range(z + 3, h - 6, 5):
-            p.disc("z", cx, d // 2, r + 1, zz, zz + 1, "emit_a")
+            p.disc("z", cx, d // 2, r + 1, zz, zz + 1, "emit_a", rin=max(1, r - 1))
         p.disc("z", cx, d // 2, r - 1, h - 3, h - 1, "metal").disc("z", cx, d // 2, max(1, r // 2), h - 1, h, "emit_b")
     p.b(1, 0, z, w - 1, 2, z + 4, "accent")
     return p
@@ -255,7 +269,7 @@ def shield_generator(w, d, h):
     K.extrude(p, "z", cx, cy, K.section_rows(r, max(1, r // 3)), z, z + 3, "secondary")
     K.extrude(p, "z", cx, cy, K.section_rows(r - 2, max(1, r // 3)), z + 3, h - 4, "primary")
     for zz in range(z + 5, h - 6, 4):
-        K.extrude(p, "z", cx, cy, K.section_rows(r - 1, max(1, r // 3)), zz, zz + 1, "emit_a")
+        K.extrude(p, "z", cx, cy, K.section_rows(r - 1, max(1, r // 3), rin=max(1, r - 3)), zz, zz + 1, "emit_a")
     p.disc("z", cx, cy, max(2, r - 4), h - 4, h - 2, "metal").disc("z", cx, cy, max(1, r // 2), h - 2, h, "emit_a")
     p.b(cx - 3, d - 3, z, cx + 3, d, z + 8, "accent").b(cx - 2, d - 1, z + 2, cx + 2, d, z + 6, "emit_b")
     return p
@@ -844,15 +858,25 @@ def slot_materials():
     return mats
 
 
-def boxes_mesh(name, boxes):
+# boxes_mesh face order (-z, +z, -y, +x, +y, -x) as indices into hidden_faces' (-x, +x, -y, +y, -z, +z)
+FACE_TO_HIDDEN = (4, 5, 2, 1, 3, 0)
+
+
+def boxes_mesh(name, boxes, hidden=None):
     verts, faces, idx = [], [], []
-    for x0, y0, z0, x1, y1, z1, slot in boxes:
+    for n, (x0, y0, z0, x1, y1, z1, slot) in enumerate(boxes):
+        keep = [not hidden[n][FACE_TO_HIDDEN[f]] for f in range(6)] if hidden else [True] * 6
+        if not any(keep):
+            continue
         o = len(verts)
         verts += [(x * T, y * T, z * T) for x, y, z in
                   ((x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1))]
-        faces += [(o, o + 3, o + 2, o + 1), (o + 4, o + 5, o + 6, o + 7), (o, o + 1, o + 5, o + 4),
-                  (o + 1, o + 2, o + 6, o + 5), (o + 2, o + 3, o + 7, o + 6), (o + 3, o, o + 4, o + 7)]
-        idx += [SI[slot]] * 6
+        quads = [(o, o + 3, o + 2, o + 1), (o + 4, o + 5, o + 6, o + 7), (o, o + 1, o + 5, o + 4),
+                 (o + 1, o + 2, o + 6, o + 5), (o + 2, o + 3, o + 7, o + 6), (o + 3, o, o + 4, o + 7)]
+        for f in range(6):
+            if keep[f]:
+                faces.append(quads[f])
+                idx.append(SI[slot])
     me = bpy.data.meshes.new(name)
     me.from_pydata(verts, [], faces)
     me.polygons.foreach_set("material_index", idx)
@@ -874,6 +898,35 @@ def clip_boxes(boxes, envelope):
     return out
 
 
+def hidden_faces(boxes):
+    """Runtime culling: for each box, which of its six faces (-x,+x,-y,+y,-z,+z) is fully covered by
+    other opaque boxes (glass never hides). Culled faces are removed before the brick bevel;
+    boundary edges are not bevelled, so hidden seams cost no triangles. Visible surfaces and
+    slots are unchanged."""
+    import numpy as np
+    if not boxes:
+        return []
+    q = [tuple(int(round(v * 2)) for v in b[:6]) for b in boxes]
+    lo = [min(b[i] for b in q) - 1 for i in range(3)]
+    hi = [max(b[i + 3] for b in q) + 1 for i in range(3)]
+    occ = np.zeros(tuple(hi[i] - lo[i] for i in range(3)), dtype=bool)
+    for (x0, y0, z0, x1, y1, z1), b in zip(q, boxes):
+        if b[6] != "glass":
+            occ[x0 - lo[0]:x1 - lo[0], y0 - lo[1]:y1 - lo[1], z0 - lo[2]:z1 - lo[2]] = True
+    out = []
+    for x0, y0, z0, x1, y1, z1 in q:
+        X0, Y0, Z0, X1, Y1, Z1 = x0 - lo[0], y0 - lo[1], z0 - lo[2], x1 - lo[0], y1 - lo[1], z1 - lo[2]
+        out.append((
+            bool(occ[X0 - 1, Y0:Y1, Z0:Z1].all()), bool(occ[X1, Y0:Y1, Z0:Z1].all()),
+            bool(occ[X0:X1, Y0 - 1, Z0:Z1].all()), bool(occ[X0:X1, Y1, Z0:Z1].all()),
+            bool(occ[X0:X1, Y0:Y1, Z0 - 1].all()), bool(occ[X0:X1, Y0:Y1, Z1].all()),
+        ))
+    return out
+
+
+RUNTIME = {"on": False}
+
+
 def catalog_boxes(component):
     piece, conv, zc = build_piece(component)
     return clip_boxes(to_catalog(piece, conv, zc), component["mount"]["envelopeM"]), conv
@@ -881,9 +934,11 @@ def catalog_boxes(component):
 
 def component_object(component, mats, coll, bevel=True):
     boxes, conv = catalog_boxes(component)
-    me = boxes_mesh(component["id"], boxes)
+    me = boxes_mesh(component["id"], boxes, hidden_faces(boxes) if RUNTIME["on"] else None)
     for m in mats:
         me.materials.append(m)
+    if not bevel:                                    # no hardened bevel normals: shade boxes flat
+        me.polygons.foreach_set("use_smooth", [False] * len(me.polygons))
     ob = bpy.data.objects.new(component["id"], me)
     coll.objects.link(ob)
     if bevel:
@@ -937,8 +992,13 @@ def clear_collection(coll):
 
 def export_all(catalog, a):
     out = Path(a.out)
-    (out / "glb").mkdir(parents=True, exist_ok=True)
+    RUNTIME["on"] = a.runtime
+    RUNTIME["bevel"] = a.runtime_bevel
+    gdir = out if a.runtime else out / "glb"
+    gdir.mkdir(parents=True, exist_ok=True)
     only = {s for s in a.only.split(",") if s}
+    if a.ids_file:
+        only |= set(json.loads(Path(a.ids_file).read_text()))
     sc = bpy.context.scene
     coll = bpy.data.collections.new("export")
     sc.collection.children.link(coll)
@@ -952,11 +1012,13 @@ def export_all(catalog, a):
         for k, v in (("componentId", c["id"]), ("sizeClass", c["sizeClass"]), ("schema", catalog["schema"]),
                      ("catalogRevision", catalog["revision"]), ("frame", c["mount"]["frame"]), ("status", "proposed")):
             root[k] = v
-        ob, boxes, conv = component_object(c, mats, coll)
+        ob, boxes, conv = component_object(c, mats, coll, bevel=not a.runtime or a.runtime_bevel > 0)
+        if a.runtime and a.runtime_bevel > 0:
+            ob.modifiers["brick"].width = a.runtime_bevel
         ob.parent = root
         empties = port_empties(c, root, coll)
         tris, verts, lo, hi, used = measure(ob)
-        glb = out / "glb" / f"{c['id']}.glb"
+        glb = gdir / f"{c['id']}.glb"
         if not a.no_glb:
             bpy.ops.object.select_all(action="DESELECT")
             for o in [root, ob, *empties]:
@@ -1002,10 +1064,16 @@ def main():
         "units": "metres; 1 texel = 1/16 m brick grid",
         "axes": "Blender Z-up part frame (+X starboard, +Y forward, +Z up); glTF is +Y up: (x, y, z) -> (x, z, -y)",
         "materialSlots": [f"slot{i}_{s}" for i, s in enumerate(SLOTS)],
-        "bevel": {"widthM": BEVEL, "segments": 1, "angleLimitDeg": 30, "applied": True},
+        "bevel": ({"widthM": a.runtime_bevel, "segments": 1, "angleLimitDeg": 30, "applied": a.runtime_bevel > 0}
+                  if a.runtime else {"widthM": BEVEL, "segments": 1, "angleLimitDeg": 30, "applied": True}),
         "excluded": "plumes, labels, decals and damage-state variants (pristine only)",
+        "runtime": ({"compaction": "box faces fully covered by opaque neighbours removed before the bevel",
+                     "published": "copied to apps by scripts/prepare_app.py PUBLISHED_RUNTIME; br/gz sidecars at build"}
+                    if a.runtime else None),
         "components": rows,
     }
+    if a.runtime:
+        manifest["status"] = "proposed art published to the runtime for review; not owner-approved"
     if not a.only:
         (out / "manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
     print(f"[export] {len(rows)} components")

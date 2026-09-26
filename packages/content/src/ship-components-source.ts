@@ -28,7 +28,7 @@ import {
 export const SHIP_COMPONENT_CATALOG_ID = "ship-components-v1";
 export const SHIP_COMPONENT_CATALOG_REVISION = 1;
 /** Art-library revision directory that holds the exported component GLBs. */
-export const SHIP_COMPONENT_ART_REVISION = "r002";
+export const SHIP_COMPONENT_ART_REVISION = "r003";
 export const shipComponentGlbPath = (id: string) =>
   `assets/art-library/ship-components/${SHIP_COMPONENT_ART_REVISION}/glb/${id}.glb`;
 
