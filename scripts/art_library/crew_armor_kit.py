@@ -1,67 +1,64 @@
-"""Crew voxel armour kit v1: Blender build, fit checks, GLB export and review sheets (headless).
+"""Crew voxel armour kit (armor-v1 r002, spec v2): Blender build, fit checks, GLB export, review sheets.
 
   blender -b --factory-startup -P scripts/art_library/crew_armor_kit.py -- \
-      --out /tmp/armor [--body-kit DIR] [--export assets/runtime/crew/armor-v1] \
-      [--sheets tiers,colourways,back,roles,extras,loadouts,poses] [--check] [--samples 32]
+      --out /tmp/armor [--export assets/runtime/crew/armor-v1 --content-json packages/content/src/crew-armor.json] \
+      [--sheets progress,tiers,colourways,back,roles,roles-female,extras,loadouts,poses] [--check] \
+      [--rig-blend CHAR-BODY.blend] [--refs DIR] [--samples 32]
 
-Geometry comes from crew_armor_parts.py (voxel volumes per bone, rest-pose armature voxels).
-Meshing, rig, materials and the base body come from CHAR-BODY's kit so armour and body share one
-contract: voxkit.mesh_volume (exposed faces, dissolved, chamfered, box UVs in rest-pose metres),
-`crew.<slot>` materials with the shared voxel tint/normal textures, crew_rig with rigid weights.
---body-kit defaults to scripts/art_library/crew_voxel (CHAR-BODY branch) and falls back to the
-shared review copy at /root/sidereal-progress/_shared/crew-body-r001/scripts.
+Geometry comes from crew_armor_parts.py (voxel volumes per bone, rest-pose armature voxels, spec v2).
+Each bone volume is meshed as its exposed surface with coplanar same-slot faces merged, then given a
+soft bevel on the part (owner feedback 2026-09-25: plates read as smooth faces with softly bevelled
+edges; no per-voxel grid lines or cell noise). The voxel read comes from stepped plate silhouettes and
+chunky detail. Materials are one per slot (`crew.<slot>`, flat baseColorFactor + emissive), so
+colourways and player colours are slot tables applied at runtime.
 
---check writes fit_report.json:
-  zFight      same-normal coplanar faces between armour and the body (every variant), and between
-              the parts of each role preset, in the rest pose. Target 0 (ground-plane soles excluded).
-  clip        voxels of worn armour that enter another bone's body/armour cells in key poses
-              (run, aim_rifle, crouch_idle, sit), minus the rest-pose overlap. Uses CHAR-BODY's
-              actions when the rig carries them, else the placeholder poses below.
+The rig and the mannequin body are CHAR-ARMOR's spec-v2 placeholder (crew_armor_parts.BODY) until
+CHAR-BODY republishes CHARACTER_SPEC_BODY.json with spec_version 2; --rig-blend imports CHAR-BODY
+actions for the clip check when they exist on a matching rig.
+
+--check / --export write fit_report.json:
+  zFight   visible same-normal coplanar faces (armour vs body, and between the parts of every preset);
+  clip     armour voxels entering another bone's occupied cells in run / aim_rifle / crouch_idle / sit,
+           minus rest-pose overlap, split into parent/child hinges and everything else, with the bare
+           body's own figure as a floor;
+  emissiveSurface  share of each part's visible faces in the emit slot.
 """
 import argparse
 import hashlib
 import json
 import math
+import subprocess
 import sys
 from pathlib import Path
 
+import bmesh
 import bpy
 import numpy as np
 from mathutils import Matrix, Quaternion, Vector
 
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
+import crew_armor_fit as F  # noqa: E402
 import crew_armor_parts as K  # noqa: E402
 
 V = K.V
-BODY_KIT_CANDIDATES = [HERE / "crew_voxel", Path("/root/sidereal-progress/_shared/crew-body-r001/scripts")]
+REFS = Path("/root/sidereal-progress/char-armor/ref-crops")
 
 
 def parse_args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     p = argparse.ArgumentParser()
     p.add_argument("--out", default="/tmp/crew_armor")
-    p.add_argument("--body-kit", default="")
-    p.add_argument("--rig-blend", default="", help="CHAR-BODY crew-body.blend carrying actions (optional)")
+    p.add_argument("--rig-blend", default="")
     p.add_argument("--export", default="")
-    p.add_argument("--content-json", default="", help="write the runtime content catalog (packages/content/src/crew-armor.json)")
+    p.add_argument("--content-json", default="")
     p.add_argument("--sheets", default="")
     p.add_argument("--check", action="store_true")
+    p.add_argument("--refs", default=str(REFS))
     p.add_argument("--samples", type=int, default=32)
+    p.add_argument("--bevel", type=float, default=0.009, help="plate edge bevel (m)")
     p.add_argument("--save-blend", action="store_true")
     return p.parse_args(argv)
-
-
-def import_body_kit(path):
-    for d in ([Path(path)] if path else []) + BODY_KIT_CANDIDATES:
-        if (d / "voxkit.py").exists() and (d / "rig.py").exists():
-            sys.path.insert(0, str(d))
-            import voxkit, rig, body, build_body  # noqa: E401,E402
-            return voxkit, rig, body, build_body, d
-    raise SystemExit("CHAR-BODY kit (voxkit.py, rig.py, body.py, build_body.py) not found; pass --body-kit")
-
-
-VK = RIG = BODY = BB = None
 
 
 def srgb_lin(h):
@@ -70,70 +67,200 @@ def srgb_lin(h):
     return tuple(x / 12.92 if x <= 0.04045 else ((x + 0.055) / 1.055) ** 2.4 for x in c)
 
 
-def theme_for(colourway):
-    """Armour slot table (linear) for a colourway; character slots keep CHAR-BODY defaults."""
-    t = dict(VK.DEFAULT_THEME)
-    for s, hx in K.COLOURWAYS[colourway].items():
-        if s in t:
-            t[s] = srgb_lin(hx)
+# Character slots (skin/hair/eye) and the default undersuit (lavender-blue, spec v2)
+BASE_THEME = {"skin": "#f2b48f", "hair": "#4b2f8a", "eye": "#15121c", "suit_primary": "#8c90d8",
+              "suit_secondary": "#4c4f94", "accent": "#ff8fa0", "metal": "#b4bbd0", "dark": "#262640",
+              "emit": "#5fd2ff", "glass": "#7fd8ff"}
+SLOT_PBR = {"skin": (0.55, 0.0), "hair": (0.6, 0.0), "eye": (0.2, 0.0), "suit_primary": (0.5, 0.0),
+            "suit_secondary": (0.55, 0.0), "accent": (0.45, 0.05), "metal": (0.32, 0.8), "dark": (0.6, 0.0),
+            "emit": (0.4, 0.0), "glass": (0.05, 0.0)}   # roughness, metallic
+
+
+def theme(colourway=None, undersuit=None):
+    t = dict(BASE_THEME)
+    if colourway:
+        t.update({k: v for k, v in K.COLOURWAYS[colourway].items() if k in t})
+    if undersuit:
+        t.update(undersuit)
     return t
 
 
-def to_vk(vol):
-    v = VK.Vol()
-    v.c = dict(vol.c)
-    return v
+def slot_material(name, slot, hexcol, review=True):
+    """One Principled material per slot. Review renders add a soft height gradient (the owner's
+    'gradient and AO shading'); EEVEE fast-GI supplies AO. The GLB keeps a flat factor."""
+    m = bpy.data.materials.new(name)
+    m.use_nodes = True
+    nt = m.node_tree
+    b = nt.nodes["Principled BSDF"]
+    col = (*srgb_lin(hexcol), 1)
+    rough, metal = SLOT_PBR[slot]
+    b.inputs["Roughness"].default_value = rough
+    b.inputs["Metallic"].default_value = metal
+    b.inputs["Base Color"].default_value = col
+    if slot == "emit":
+        b.inputs["Emission Color"].default_value = col
+        b.inputs["Emission Strength"].default_value = 5.0
+    elif slot == "glass":
+        b.inputs["Alpha"].default_value = 0.45
+        m.surface_render_method = "BLENDED"
+    elif review:
+        tc = nt.nodes.new("ShaderNodeTexCoord")
+        sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+        mr = nt.nodes.new("ShaderNodeMapRange")
+        mr.inputs["From Min"].default_value, mr.inputs["From Max"].default_value = 0.0, 1.8
+        mr.inputs["To Min"].default_value, mr.inputs["To Max"].default_value = 0.82, 1.06
+        rgb = nt.nodes.new("ShaderNodeRGB")
+        rgb.outputs[0].default_value = col
+        mul = nt.nodes.new("ShaderNodeVectorMath")
+        mul.operation = "SCALE"
+        nt.links.new(tc.outputs["Object"], sep.inputs[0])
+        nt.links.new(sep.outputs["Z"], mr.inputs["Value"])
+        nt.links.new(rgb.outputs[0], mul.inputs[0])
+        nt.links.new(mr.outputs[0], mul.inputs["Scale"])
+        nt.links.new(mul.outputs[0], b.inputs["Base Color"])
+    return m
 
 
 # ============================================================================================ BUILD
-class Kit:
-    """Template meshes: body per variant, armour per part/fit; figures copy objects and share mesh data."""
+DIRS = [((1, 0, 0), 0), ((-1, 0, 0), 0), ((0, 1, 0), 1), ((0, -1, 0), 1), ((0, 0, 1), 2), ((0, 0, -1), 2)]
 
-    def __init__(self, out):
+
+def _face_quad(x, y, z, n):
+    nx, ny, nz = n
+    if nx:
+        X = x + (1 if nx > 0 else 0)
+        q = [(X, y, z), (X, y + 1, z), (X, y + 1, z + 1), (X, y, z + 1)]
+    elif ny:
+        Y = y + (1 if ny > 0 else 0)
+        q = [(x, Y, z), (x, Y, z + 1), (x + 1, Y, z + 1), (x + 1, Y, z)]
+    else:
+        Z = z + (1 if nz > 0 else 0)
+        q = [(x, y, Z), (x + 1, y, Z), (x + 1, y + 1, Z), (x, y + 1, Z)]
+    if nx < 0 or ny < 0 or nz < 0:
+        q = q[::-1]
+    return q
+
+
+def mesh_volume(cells, name):
+    """Exposed-surface mesh of {cell: slot}; coplanar same-slot faces dissolved (CHAR-BODY voxkit algorithm)."""
+    vid, verts, faces, fm = {}, [], [], []
+
+    def v(p):
+        i = vid.get(p)
+        if i is None:
+            i = vid[p] = len(verts)
+            verts.append((p[0] * V, p[1] * V, p[2] * V))
+        return i
+
+    for (x, y, z), s in cells.items():
+        for n, _ax in DIRS:
+            if (x + n[0], y + n[1], z + n[2]) in cells:
+                continue
+            faces.append([v(p) for p in _face_quad(x, y, z, n)])
+            fm.append(K.SI[s])
+    me = bpy.data.meshes.new(name)
+    me.from_pydata(verts, [], faces)
+    for _ in K.SLOTS:
+        me.materials.append(None)
+    me.polygons.foreach_set("material_index", fm)
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(1.0), use_dissolve_boundaries=False,
+                             verts=bm.verts, edges=bm.edges, delimit={"MATERIAL"})
+    bm.to_mesh(me)
+    bm.free()
+    return me
+
+
+def bevelled_object(name, cells, bone, coll, bevel):
+    """One bone volume: soft-bevelled plate edges, smooth shading with hardened normals, rigid weight."""
+    ob = bpy.data.objects.new(name, mesh_volume(cells, name))
+    coll.objects.link(ob)
+    if bevel > 0:
+        md = ob.modifiers.new("plate_bevel", "BEVEL")
+        md.width, md.segments, md.limit_method, md.angle_limit = bevel, 2, "ANGLE", math.radians(40)
+        md.use_clamp_overlap, md.harden_normals, md.miter_outer = True, True, "MITER_ARC"
+        dg = bpy.context.evaluated_depsgraph_get()
+        me2 = bpy.data.meshes.new_from_object(ob.evaluated_get(dg), preserve_all_data_layers=True, depsgraph=dg)
+        old = ob.data
+        ob.modifiers.clear()
+        ob.data = me2
+        bpy.data.meshes.remove(old)
+        me2.name = name
+    ob.data.polygons.foreach_set("use_smooth", [True] * len(ob.data.polygons))
+    vg = ob.vertex_groups.new(name=bone)
+    vg.add(list(range(len(ob.data.vertices))), 1.0, "REPLACE")
+    return ob
+
+
+def join(objs, name):
+    if len(objs) == 1:
+        objs[0].name = name
+        return objs[0]
+    bpy.ops.object.select_all(action="DESELECT")
+    for o in objs:
+        o.select_set(True)
+    bpy.context.view_layer.objects.active = objs[0]
+    bpy.ops.object.join()
+    ob = bpy.context.view_layer.objects.active
+    ob.name = name
+    return ob
+
+
+def build_armature(coll, name="crew_rig"):
+    data = bpy.data.armatures.new(name)
+    arm = bpy.data.objects.new(name, data)
+    coll.objects.link(arm)
+    bpy.context.view_layer.objects.active = arm
+    bpy.ops.object.mode_set(mode="EDIT")
+    for n, h, t, _p in K.rig_bones():
+        b = data.edit_bones.new(n)
+        b.head, b.tail = Vector(h) * V, Vector(t) * V
+    for n, _h, _t, p in K.rig_bones():
+        if p:
+            data.edit_bones[n].parent = data.edit_bones[p]
+    for b in data.edit_bones:
+        d = (b.tail - b.head).normalized()
+        b.align_roll(Vector((0, 1, 0)) if abs(d.y) < 0.9 else Vector((0, 0, 1)))
+    bpy.ops.object.mode_set(mode="OBJECT")
+    return arm
+
+
+class Kit:
+    """Template meshes: mannequin regions per variant, armour per part/fit (+ right-side item views)."""
+
+    def __init__(self, bevel):
         self.coll = bpy.data.collections.new("TEMPLATES")
         bpy.context.scene.collection.children.link(self.coll)
-        self.tint, self.nrm = VK.voxel_textures(str(out / "voxel_tint.png"), str(out / "voxel_normal.png"))
-        self.body_mats = VK.slot_materials(VK.DEFAULT_THEME, self.tint, self.nrm, prefix="crew")
-        self.cw_mats = {}
-        self.arm = BB.build_armature(self.coll)
-        self.arm.name = "TPL-crew_rig"
-        self.body_tpl, self.body_cells = {}, {}
-        for variant in BODY.VARIANTS:
-            parts, hair = BODY.build(variant)
-            self.body_cells[variant] = {b: set(v.c) for b, v in parts.items()}
-            objs = [BB.part_object(f"{variant}.{b}", v, b, self.coll, self.body_mats) for b, v in parts.items()]
-            ob = BB.join(objs, f"TPL-crew-body-{variant}")
-            VK.assign_materials(ob, self.body_mats)
-            hob = BB.part_object(f"TPL-crew-hair-default-{variant}", hair, "head", self.coll, self.body_mats)
-            VK.assign_materials(hob, self.body_mats)
-            self.body_tpl[variant] = (ob, hob)
+        self.mats = {}
+        self.arm = build_armature(self.coll, "TPL-crew_rig")
         self.parts = K.build_catalog()
         K.validate(self.parts)
         self.by_id = {p.id: p for p in self.parts}
+        self.body = {}
+        for variant in ("male", "female", "neutral"):
+            for region, vols in K.mannequin(variant).items():
+                objs = [bevelled_object(f"TPL.{variant}.{region}.{b}", v.c, b, self.coll, bevel * 0.8) for b, v in vols.items()]
+                self.body[(variant, region)] = join(objs, f"TPL-crew-{region}-{variant}")
         self.tpl = {}
         for p in self.parts:
             for fit, vols in p.fits.items():
-                objs = [BB.part_object(f"{p.id}.{fit}.{b}", to_vk(v), b, self.coll, self.body_mats) for b, v in vols.items()]
-                ob = BB.join(objs, f"TPL-{p.id}-{fit}") if len(objs) > 1 else objs[0]
-                ob.name = f"TPL-{p.id}-{fit}"
+                objs = [bevelled_object(f"TPL.{p.id}.{fit}.{b}", v.c, b, self.coll, bevel) for b, v in vols.items()]
+                ob = join(objs, f"TPL-{p.id}-{fit}")
                 ob.data.name = f"GEO-armor-{p.id}-{fit}"
-                VK.assign_materials(ob, self.body_mats)
-                ob["armor_part"], ob["armor_fit"] = p.id, fit
                 self.tpl[(p.id, fit)] = ob
-                if any(b.endswith(".L") for b in vols):          # right-side-only copy for item views
-                    objs = [BB.part_object(f"{p.id}.{fit}.{b}.R", to_vk(v), b, self.coll, self.body_mats)
+                if any(b.endswith(".L") for b in vols):
+                    objs = [bevelled_object(f"TPL.{p.id}.{fit}.{b}.item", v.c, b, self.coll, bevel)
                             for b, v in vols.items() if not b.endswith(".L")]
-                    one = BB.join(objs, f"ITEM-{p.id}-{fit}") if len(objs) > 1 else objs[0]
-                    VK.assign_materials(one, self.body_mats)
-                    self.tpl[(p.id, fit, "R")] = one
+                    self.tpl[(p.id, fit, "R")] = join(objs, f"ITEM-{p.id}-{fit}")
         for ob in self.coll.objects:
             ob.hide_render = True
             ob.hide_set(True)
 
-    def mats(self, colourway):
-        if colourway not in self.cw_mats:
-            self.cw_mats[colourway] = VK.slot_materials(theme_for(colourway), self.tint, self.nrm, prefix=f"cw.{colourway}")
-        return self.cw_mats[colourway]
+    def material_set(self, key, table):
+        if key not in self.mats:
+            self.mats[key] = {s: slot_material(f"{key}.{s}", s, table[s]) for s in K.SLOTS}
+        return self.mats[key]
 
 
 def clone(tpl, arm, coll, mats):
@@ -147,7 +274,7 @@ def clone(tpl, arm, coll, mats):
         ob.modifiers.remove(md)
     md = ob.modifiers.new("crew_rig", "ARMATURE")
     md.object = arm
-    for i, s in enumerate(VK.SLOTS):
+    for i, s in enumerate(K.SLOTS):
         ob.material_slots[i].link = "OBJECT"
         ob.material_slots[i].material = mats[s]
     return ob
@@ -156,66 +283,63 @@ def clone(tpl, arm, coll, mats):
 FACE_YAW = 180.0     # review scenes: characters (facing +Y) turned to face the -Y camera
 
 
-def undersuit_mats(kit, preset):
-    """Body undersuit tinted for a role preset (suit_primary/secondary only; skin/hair/eyes untouched)."""
-    tint = preset.get("undersuit") if preset else None
-    if not tint:
-        return kit.body_mats
-    key = "undersuit." + preset["id"]
-    if key not in kit.cw_mats:
-        t = dict(VK.DEFAULT_THEME)
-        for s, hx in tint.items():
-            t[s] = srgb_lin(hx)
-        kit.cw_mats[key] = VK.slot_materials(t, kit.tint, kit.nrm, prefix=key)
-    return kit.cw_mats[key]
-
-
 class Figure:
-    def __init__(self, kit, part_ids, colourway, loc, coll, variant="male", body=True, hair=True, pose="rest", yaw=0.0,
+    def __init__(self, kit, part_ids, colourway, loc, coll, variant="male", body=True, pose="relaxed", yaw=0.0,
                  scale=1.0, preset=None, item_side=False):
-        self.arm = BB.build_armature(coll)
+        self.arm = build_armature(coll)
         self.arm.location = loc
         self.arm.rotation_euler = (0, 0, math.radians(FACE_YAW + yaw))
         self.arm.scale = (scale,) * 3
         self.objs = []
+        parts = [kit.by_id[i] for i in part_ids]
+        hidden = {h for p in parts for h in p.hides}
         if body:
-            ob, hob = kit.body_tpl[variant]
-            self.objs.append(clone(ob, self.arm, coll, undersuit_mats(kit, preset)))
-            if hair:
-                self.objs.append(clone(hob, self.arm, coll, kit.body_mats))
-        mats = kit.mats(colourway)
-        for pid in part_ids:
-            part = kit.by_id[pid]
-            k = (pid, part.fit_for(variant))
+            us = preset.get("undersuit") if preset else None
+            bmats = kit.material_set("body." + (preset["id"] if us else "base"), theme(None, us))
+            for region in K.BODY_REGIONS:
+                if region in hidden or (region == "hair" and "head" in hidden):
+                    continue
+                self.objs.append(clone(kit.body[(variant, region)], self.arm, coll, bmats))
+        mats = kit.material_set("cw." + colourway, theme(colourway))
+        for p in parts:
+            k = (p.id, p.fit_for(variant))
             tpl = kit.tpl.get(k + ("R",)) if item_side else None
             self.objs.append(clone(tpl or kit.tpl[k], self.arm, coll, mats))
         apply_pose(self.arm, pose)
 
 
 # ============================================================================================ POSES
-# Placeholder key poses (armature-space axis/angle per bone, applied parent-relative) used until
-# CHAR-BODY's actions exist. Axes: flex = +X (swings a hanging limb forward, character faces +Y),
-# abduct = lift outward (about +Y for .R, -Y for .L), twist = about +Z.
+# Armature-space axis/angle per bone (applied parent-relative). flex = +X (swings a hanging limb
+# forward; the character faces +Y); abduct = lift outward; twist = about +Z; roll = about +Y (tilt).
+# "relaxed" is the review stance: weight on the right leg, hip tilt, arms off the body, elbows soft,
+# hands turned in, head tilted. The others are placeholder key poses for the clip check until
+# CHAR-BODY's actions exist.
 POSES = {
     "rest": {},
+    "relaxed": {"root": [("drop", 0.5)], "pelvis": [("roll", 4), ("twist", -4)], "spine": [("roll", -3)],
+                "chest": [("roll", -2), ("twist", 5)], "head": [("roll", 6), ("flex", -4)],
+                "thigh.R": [("abduct", 2)], "thigh.L": [("flex", 10), ("abduct", 6), ("twist", 10)],
+                "shin.L": [("flex", -16)], "foot.L": [("flex", 6)],
+                "upper_arm.R": [("abduct", 12), ("flex", 4)], "forearm.R": [("flex", 16)], "hand.R": [("twist", 18)],
+                "upper_arm.L": [("abduct", 10), ("flex", -4)], "forearm.L": [("flex", 22)], "hand.L": [("twist", -18)]},
     "run": {"thigh.L": [("flex", 55)], "shin.L": [("flex", -85)], "foot.L": [("flex", 10)],
             "thigh.R": [("flex", -30)], "shin.R": [("flex", -50)],
-            "upper_arm.L": [("flex", -40), ("abduct", 6)], "forearm.L": [("flex", 60)],
-            "upper_arm.R": [("flex", 45), ("abduct", 6)], "forearm.R": [("flex", 85)],
+            "upper_arm.L": [("flex", -40), ("abduct", 8)], "forearm.L": [("flex", 60)],
+            "upper_arm.R": [("flex", 45), ("abduct", 8)], "forearm.R": [("flex", 85)],
             "spine": [("flex", 8)], "chest": [("twist", -8)], "root": [("drop", 1)]},
-    "aim_rifle": {"upper_arm.R": [("flex", 70), ("abduct", -15)], "forearm.R": [("flex", 60)],
-                  "upper_arm.L": [("flex", 75), ("abduct", -30)], "forearm.L": [("flex", 35)],
+    "aim_rifle": {"upper_arm.R": [("flex", 70), ("abduct", -10)], "forearm.R": [("flex", 60)],
+                  "upper_arm.L": [("flex", 75), ("abduct", -25)], "forearm.L": [("flex", 35)],
                   "chest": [("twist", 15)], "spine": [("flex", 6)],
                   "thigh.L": [("flex", 15)], "shin.L": [("flex", -15)], "thigh.R": [("flex", -8)]},
     "crouch_idle": {"thigh.L": [("flex", 100), ("abduct", 12)], "shin.L": [("flex", -130)], "foot.L": [("flex", 30)],
                     "thigh.R": [("flex", 70), ("abduct", 12)], "shin.R": [("flex", -110)], "foot.R": [("flex", 40)],
                     "spine": [("flex", 15)], "chest": [("flex", 8)],
-                    "upper_arm.L": [("flex", 30), ("abduct", 8)], "forearm.L": [("flex", 55)],
-                    "upper_arm.R": [("flex", 25), ("abduct", 8)], "forearm.R": [("flex", 65)], "root": [("drop", 9)]},
+                    "upper_arm.L": [("flex", 30), ("abduct", 10)], "forearm.L": [("flex", 55)],
+                    "upper_arm.R": [("flex", 25), ("abduct", 10)], "forearm.R": [("flex", 65)], "root": [("drop", 7)]},
     "sit": {"thigh.L": [("flex", 88), ("abduct", 6)], "shin.L": [("flex", -88)],
             "thigh.R": [("flex", 88), ("abduct", 6)], "shin.R": [("flex", -88)],
-            "upper_arm.L": [("flex", 20), ("abduct", 6)], "forearm.L": [("flex", 60)],
-            "upper_arm.R": [("flex", 20), ("abduct", 6)], "forearm.R": [("flex", 60)], "root": [("drop", 11)]},
+            "upper_arm.L": [("flex", 20), ("abduct", 8)], "forearm.L": [("flex", 60)],
+            "upper_arm.R": [("flex", 20), ("abduct", 8)], "forearm.R": [("flex", 60)], "root": [("drop", 8)]},
 }
 KEY_POSES = ["run", "aim_rifle", "crouch_idle", "sit"]
 
@@ -227,7 +351,7 @@ def apply_pose(arm, pose):
         pb.location = (0, 0, 0)
     arm.animation_data_clear()
     act = bpy.data.actions.get(pose)
-    if act is not None and pose != "rest":             # CHAR-BODY action: sample its key pose
+    if act is not None and pose not in ("rest", "relaxed"):
         arm.animation_data_create().action = act
         f0, f1 = act.frame_range
         bpy.context.scene.frame_set(int(f0 + (f1 - f0) * 0.25))
@@ -236,103 +360,40 @@ def apply_pose(arm, pose):
         pb = arm.pose.bones[bn]
         rest = pb.bone.matrix_local.to_3x3()
         q = Quaternion()
+        side = 1 if bn.endswith(".R") else -1
         for kind, deg in ops:
             if kind == "drop":
                 pb.location = rest.inverted() @ Vector((0, 0, -deg * V))
                 continue
-            side = 1 if bn.endswith(".R") else -1
-            axis = {"flex": Vector((1, 0, 0)), "abduct": Vector((0, -side, 0)), "twist": Vector((0, 0, 1))}[kind]
+            axis = {"flex": Vector((1, 0, 0)), "abduct": Vector((0, -side, 0)), "twist": Vector((0, 0, side)),
+                    "roll": Vector((0, 1, 0))}[kind]
             q = Quaternion(axis, math.radians(deg)) @ q
         pb.rotation_quaternion = (rest.inverted() @ q.to_matrix() @ rest).to_quaternion()
     bpy.context.view_layer.update()
 
 
-# ======================================================================================= FIT CHECKS
-DIRS = [((1, 0, 0), 0, 1), ((-1, 0, 0), 0, -1), ((0, 1, 0), 1, 1), ((0, -1, 0), 1, -1), ((0, 0, 1), 2, 1), ((0, 0, -1), 2, -1)]
-
-
-def faces(cells):
-    """Exposed faces of a cell set as keys (boundary x, y, z, axis, sign)."""
-    out = set()
-    for c in cells:
-        for n, ax, sg in DIRS:
-            nb = (c[0] + n[0], c[1] + n[1], c[2] + n[2])
-            if nb in cells:
-                continue
-            k = list(c)
-            if sg > 0:
-                k[ax] += 1
-            out.add((k[0], k[1], k[2], ax, sg))
-    return out
-
-
-def ground(f):
-    return f[3] == 2 and f[4] == -1 and f[2] == 0
-
-
-def buried(f, occ):
-    """The cell on the outward side of the face is occupied, so the face is hidden in the rest pose."""
-    c = list(f[:3])
-    if f[4] < 0:
-        c[f[3]] -= 1
-    return tuple(c) in occ
-
-
-def zfight_report(kit):
-    """Visible same-normal coplanar faces (rest pose): armour vs each body variant, and between the
-    parts of every role preset (worn together on each variant). Hidden (buried) faces are ignored."""
-    rep = {"armourVsBody": {}, "presetPartPairs": {}}
-    cells = {(p.id, fit): set().union(*(set(v.c) for v in vols.values())) for p in kit.parts for fit, vols in p.fits.items()}
-    pfaces = {(p.id, fit): set().union(*(faces(set(v.c)) for v in vols.values())) for p in kit.parts for fit, vols in p.fits.items()}
-    bocc = {var: set().union(*c.values()) for var, c in kit.body_cells.items()}
-    bfaces = {var: set().union(*(faces(c) for c in cs.values())) for var, cs in kit.body_cells.items()}
-    for p in kit.parts:
-        for var in kit.body_cells:
-            k = (p.id, p.fit_for(var))
-            occ = bocc[var] | cells[k]
-            bad = sum(1 for f in pfaces[k] & bfaces[var] if not ground(f) and not buried(f, occ))
-            if bad:
-                rep["armourVsBody"][f"{p.id}@{var}"] = bad
-    for pr in K.PRESETS:
-        for var in ("male", "female"):
-            ks = [(pid, kit.by_id[pid].fit_for(var)) for pid in pr["parts"].values()]
-            occ = bocc[var].union(*(cells[k] for k in ks))
-            for i, a in enumerate(ks):
-                for b in ks[i + 1:]:
-                    n = sum(1 for f in pfaces[a] & pfaces[b] if not ground(f) and not buried(f, occ))
-                    if n:
-                        rep["presetPartPairs"][f"{pr['id']}@{var}: {a[0]} x {b[0]}"] = n
-    rep["totalArmourVsBody"] = sum(rep["armourVsBody"].values())
-    rep["totalPresetPairs"] = sum(rep["presetPartPairs"].values())
-    return rep
-
-
+# ======================================================================================= CLIP CHECK
 def key(cells):
     a = np.asarray(cells, dtype=np.int64) + 512
     return (a[:, 0] << 20) | (a[:, 1] << 10) | a[:, 2]
 
 
 def hinge_pairs():
-    par = {n: p for n, _h, _t, p in RIG.bones()}
+    par = {n: p for n, _h, _t, p in K.rig_bones()}
     return {(a, b) for a, b in par.items() if b} | {(b, a) for a, b in par.items() if b}
 
 
-def clip_report(kit, arm, preset, variant):
-    """Cell-centre samples of worn armour entering another bone's occupied cells (body + worn armour)
-    in each key pose, minus the rest-pose overlap. `hinge` = parent/child bone pairs (rigid voxel
-    hinges overlap by construction); `other` = everything else (limb through torso, leg through leg).
-    `bodySelf*` is the same measure for the bare body's own cells: the floor any armour inherits."""
+def clip_report(arm, preset, variant, by_id):
     hinges = hinge_pairs()
-    occupied = {}
-    sources = []                                    # (kind, part id, bone, cells)
-    for b, cells in kit.body_cells[variant].items():
+    parts = [by_id[i] for i in preset["parts"].values()]
+    occupied, sources = {}, []
+    for (region, b), cells in F.body_for(variant, {h for p in parts for h in p.hides}).items():
         occupied.setdefault(b, set()).update(cells)
         sources.append(("body", "body", b, np.array(list(cells), dtype=np.float64)))
-    for pid in preset["parts"].values():
-        p = kit.by_id[pid]
+    for p in parts:
         for b, v in p.fits[p.fit_for(variant)].items():
             occupied.setdefault(b, set()).update(v.c)
-            sources.append(("armour", pid, b, np.array(list(v.c), dtype=np.float64)))
+            sources.append(("armour", p.id, b, np.array(list(v.c), dtype=np.float64)))
     occ_keys = {b: np.sort(key(list(c))) for b, c in occupied.items()}
     result, base = {}, None
     for pose in ["rest"] + KEY_POSES:
@@ -357,8 +418,7 @@ def clip_report(kit, arm, preset, variant):
         body_new = {k: v for k, v in new.items() if k[0] == "body"}
         split = lambda d, h: int(sum(v for k, v in d.items() if ((k[2], k[3]) in hinges) == h))  # noqa: E731
         result[pose] = {
-            "penetratingVoxels": int(sum(arm_new.values())),
-            "hinge": split(arm_new, True), "other": split(arm_new, False),
+            "penetratingVoxels": int(sum(arm_new.values())), "hinge": split(arm_new, True), "other": split(arm_new, False),
             "bodySelfHinge": split(body_new, True), "bodySelfOther": split(body_new, False),
             "worstOther": {f"{k[1]}@{k[2]} -> {k[3]}": v for k, v in sorted(
                 ((k, v) for k, v in arm_new.items() if (k[2], k[3]) not in hinges), key=lambda kv: -kv[1])[:8]},
@@ -368,25 +428,24 @@ def clip_report(kit, arm, preset, variant):
 
 
 # ============================================================================================ EXPORT
-def export_part(kit, part, outdir):
-    """GLB: crew_rig + one rigid-skinned mesh per fit (+ exhaust empties). Same settings as the body."""
-    scene_coll = bpy.data.collections.new(f"EXPORT-{part.id}")
-    bpy.context.scene.collection.children.link(scene_coll)
-    arm = BB.build_armature(scene_coll)
-    arm.name = "crew_rig"
-    objs = []
-    tris = {}
+def export_part(kit, part, outdir, mats):
+    coll = bpy.data.collections.new(f"EXPORT-{part.id}")
+    bpy.context.scene.collection.children.link(coll)
+    arm = build_armature(coll, "crew_rig")
+    objs, tris = [], {}
     for fit in part.fits:
-        ob = clone(kit.tpl[(part.id, fit)], arm, scene_coll, kit.body_mats)
+        ob = clone(kit.tpl[(part.id, fit)], arm, coll, mats)
         ob.name = f"GEO-armor-{part.id}-{fit}"
-        for i, s in enumerate(VK.SLOTS):            # data-level materials so the GLB carries crew.<slot>
+        for i, s in enumerate(K.SLOTS):
             ob.material_slots[i].link = "DATA"
+            ob.data.materials[i] = mats[s]
         ob["armor_part"], ob["armor_fit"] = part.id, fit
-        tris[fit] = VK.tri_count(ob.data)
+        ob.data.calc_loop_triangles()
+        tris[fit] = len(ob.data.loop_triangles)
         objs.append(ob)
     for n, (bone, (x, y, z), r) in enumerate(part.exhaust):
         e = bpy.data.objects.new(f"EXHAUST-{part.id}-{n}", None)
-        scene_coll.objects.link(e)
+        coll.objects.link(e)
         e.parent, e.parent_type, e.parent_bone = arm, "BONE", bone
         pb = arm.pose.bones[bone]
         bone_mw = arm.matrix_world @ pb.bone.matrix_local @ Matrix.Translation((0, pb.bone.length, 0))
@@ -403,44 +462,46 @@ def export_part(kit, part, outdir):
     bpy.context.view_layer.objects.active = arm
     bpy.ops.export_scene.gltf(filepath=str(path), export_format="GLB", use_selection=True, export_yup=True,
                               export_apply=False, export_skins=True, export_extras=True, export_materials="EXPORT",
-                              export_image_format="AUTO", export_texcoords=True, export_normals=True,
-                              export_tangents=False, export_def_bones=False, export_rest_position_armature=True,
-                              export_animations=False)
+                              export_texcoords=False, export_normals=True, export_tangents=False,
+                              export_def_bones=False, export_rest_position_armature=True, export_animations=False)
     for o in [arm, *objs]:
         bpy.data.objects.remove(o, do_unlink=True)
-    bpy.data.collections.remove(scene_coll)
+    bpy.data.collections.remove(coll)
     return path, tris
 
 
-def export_kit(kit, outdir, fit_report, body_kit_dir):
+def export_kit(kit, outdir, fit_report):
     outdir = Path(outdir)
     (outdir / "parts").mkdir(parents=True, exist_ok=True)
+    mats = {s: slot_material(f"crew.{s}", s, theme("arctic")[s], review=False) for s in K.SLOTS}
     entries = []
     for p in kit.parts:
-        path, tris = export_part(kit, p, outdir)
-        bounds = {}
+        path, tris = export_part(kit, p, outdir, mats)
+        fits = {}
         for fit, vols in p.fits.items():
             lo = [min(v.bounds()[0][i] for v in vols.values()) for i in range(3)]
             hi = [max(v.bounds()[1][i] for v in vols.values()) for i in range(3)]
-            bounds[fit] = {"minVox": lo, "maxVox": hi}
+            fits[fit] = {"mesh": f"GEO-armor-{p.id}-{fit}", "tris": tris[fit], "voxels": p.voxels(fit),
+                         "boundsVox": {"min": lo, "max": hi}}
         entries.append({
             "id": p.id, "slot": p.slot, "tier": p.tier, "tierName": K.TIERS[p.tier], "style": p.style, "name": p.name,
             "glb": f"parts/{p.id}.glb", "sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "bytes": path.stat().st_size,
-            "fits": {fit: {"mesh": f"GEO-armor-{p.id}-{fit}", "tris": tris[fit], "voxels": p.voxels(fit),
-                           "boundsVox": bounds[fit]} for fit in p.fits},
-            "bones": p.bones(), "socket": p.socket, "slots": p.slots_used(), "massKg": p.mass_kg, "grid": list(p.grid),
+            "fits": fits, "bones": p.bones(), "socket": p.socket, "hidesBodyRegions": p.hides, "slots": p.slots_used(),
+            "massKg": p.mass_kg, "grid": list(p.grid),
+            "emissiveSurface": round(F.emissive_surface_share(p), 3),
             **({"exhaust": [{"node": f"EXHAUST-{p.id}-{n}", "bone": b, "restVox": list(c), "radiusM": r * V,
                              "direction": [0, 0, -1]} for n, (b, c, r) in enumerate(p.exhaust)]} if p.exhaust else {}),
         })
-    spec = json.loads((body_kit_dir.parent / "body-spec.json").read_text()) if (body_kit_dir.parent / "body-spec.json").exists() else {}
     manifest = {
-        "schema": "sidereal.crew.armor-manifest/1", "kit": K.KIT_ID, "revision": K.REVISION,
+        "schema": "sidereal.crew.armor-manifest/1", "kit": K.KIT_ID, "revision": K.REVISION, "specVersion": K.SPEC_VERSION,
         "status": "proposal; not published; not owner-approved",
-        "voxelMeters": V, "rig": "crew_rig", "bodyRevision": spec.get("revision", RIG.REVISION),
+        "voxelMeters": V, "rig": "crew_rig",
+        "body": "CHAR-ARMOR spec-v2 placeholder rig/body (crew_armor_parts.BODY) pending CHAR-BODY spec_version 2",
         "frame": "Blender Z up, character faces +Y, .R at +X; glTF = (x, z, -y)",
         "attach": ("Each GLB holds crew_rig plus one rigid-skinned mesh per fit (GEO-armor-<id>-<fit>). Parent the "
                    "meshes to the crew visual root and link each armour skeleton bone to the body's joint node of the "
-                   "same name; recolour by setting albedo/emissive on the crew.<slot> materials from a colourway."),
+                   "same name; recolour by setting albedo/emissive on the crew.<slot> materials from a colourway; hide "
+                   "the body regions listed in hidesBodyRegions."),
         "fits": {k: v["variants"] for k, v in K.FITS.items()},
         "materialSlots": K.SLOTS, "equipmentSlots": K.EQUIPMENT_SLOTS, "tiers": {str(k): v for k, v in K.TIERS.items()},
         "colourways": K.COLOURWAYS, "sheetColourways": K.SHEET_COLOURWAYS, "presets": K.PRESETS,
@@ -451,12 +512,11 @@ def export_kit(kit, outdir, fit_report, body_kit_dir):
 
 
 def content_catalog(manifest):
-    """Compact runtime catalog for packages/content (no fit report / bounds): ids, slots, tiers,
-    fits, bones, sockets, colourways, presets and the legacy-item visual map."""
-    keep = ("id", "slot", "tier", "tierName", "style", "name", "glb", "sha256", "bones", "socket", "slots", "massKg", "grid", "exhaust")
+    keep = ("id", "slot", "tier", "tierName", "style", "name", "glb", "sha256", "bones", "socket", "hidesBodyRegions",
+            "slots", "massKg", "grid", "exhaust")
     return {
-        "schema": 1, "kit": manifest["kit"], "revision": manifest["revision"], "status": manifest["status"],
-        "assetBase": "/assets/crew/armor-v1", "rig": manifest["rig"], "bodyRevision": manifest["bodyRevision"],
+        "schema": 1, "kit": manifest["kit"], "revision": manifest["revision"], "specVersion": manifest["specVersion"],
+        "status": manifest["status"], "assetBase": "/assets/crew/armor-v1", "rig": manifest["rig"],
         "fits": manifest["fits"], "materialSlots": manifest["materialSlots"], "equipmentSlots": manifest["equipmentSlots"],
         "tiers": manifest["tiers"], "colourways": manifest["colourways"], "sheetColourways": manifest["sheetColourways"],
         "presets": manifest["presets"], "legacyVisuals": manifest["legacyVisuals"],
@@ -470,7 +530,7 @@ def setup(sc, samples, res):
     sc.render.engine = "BLENDER_EEVEE_NEXT"
     sc.render.resolution_x, sc.render.resolution_y = res
     sc.eevee.taa_render_samples = samples
-    for attr, val in (("use_shadows", True), ("use_raytracing", False)):
+    for attr, val in (("use_shadows", True), ("use_raytracing", True), ("use_fast_gi", True), ("fast_gi_distance", 0.4)):
         if hasattr(sc.eevee, attr):
             setattr(sc.eevee, attr, val)
     w = sc.world or bpy.data.worlds.new("World")
@@ -481,33 +541,34 @@ def setup(sc, samples, res):
     tc = nt.nodes.new("ShaderNodeTexCoord")
     sep = nt.nodes.new("ShaderNodeSeparateXYZ")
     ramp = nt.nodes.new("ShaderNodeValToRGB")
-    ramp.color_ramp.elements[0].position, ramp.color_ramp.elements[0].color = 0.0, (0.004, 0.008, 0.03, 1)
-    ramp.color_ramp.elements[1].position, ramp.color_ramp.elements[1].color = 1.0, (0.03, 0.03, 0.12, 1)
+    ramp.color_ramp.elements[0].position, ramp.color_ramp.elements[0].color = 0.0, (0.006, 0.01, 0.04, 1)
+    ramp.color_ramp.elements[1].position, ramp.color_ramp.elements[1].color = 1.0, (0.05, 0.04, 0.16, 1)
     bg = nt.nodes.new("ShaderNodeBackground")
+    bg.inputs["Strength"].default_value = 1.4
     wo = nt.nodes.new("ShaderNodeOutputWorld")
     nt.links.new(tc.outputs["Window"], sep.inputs[0])
     nt.links.new(sep.outputs["Y"], ramp.inputs["Fac"])
     nt.links.new(ramp.outputs["Color"], bg.inputs["Color"])
     nt.links.new(bg.outputs[0], wo.inputs[0])
     sc.view_settings.view_transform, sc.view_settings.look = "AgX", "AgX - Base Contrast"
-    sc.view_settings.exposure, sc.view_settings.gamma = 0.25, 1.05
+    sc.view_settings.exposure, sc.view_settings.gamma = 0.35, 1.1
     sc.use_nodes = True
     ct = sc.node_tree
     ct.nodes.clear()
     rl = ct.nodes.new("CompositorNodeRLayers")
     gl = ct.nodes.new("CompositorNodeGlare")
-    gl.glare_type, gl.threshold, gl.size, gl.mix = "FOG_GLOW", 0.9, 7, -0.2
+    gl.glare_type, gl.threshold, gl.size, gl.mix = "FOG_GLOW", 0.9, 7, -0.25
     hs = ct.nodes.new("CompositorNodeHueSat")
-    hs.inputs["Saturation"].default_value = 1.25
+    hs.inputs["Saturation"].default_value = 1.3
     bc = ct.nodes.new("CompositorNodeBrightContrast")
-    bc.inputs["Contrast"].default_value = -2.0
+    bc.inputs["Contrast"].default_value = -4.0
     comp = ct.nodes.new("CompositorNodeComposite")
     for a, b in ((rl, gl), (gl, hs), (hs, bc), (bc, comp)):
         ct.links.new(a.outputs["Image"], b.inputs["Image"])
-    for name, energy, col, rot in (("Key", 3.2, (1.0, 0.95, 0.88), (50, 0, 145)), ("Fill", 1.1, (0.55, 0.6, 1.0), (60, 0, -110)),
-                                   ("Rim", 2.4, (0.6, 0.45, 1.0), (-60, 0, 160))):
+    for name, energy, col, rot, ang in (("Key", 3.0, (1.0, 0.95, 0.9), (50, 0, 150), 20), ("Fill", 1.3, (0.6, 0.65, 1.0), (60, 0, -120), 30),
+                                        ("Rim", 2.6, (0.65, 0.5, 1.0), (-55, 0, 165), 10), ("Top", 0.8, (1, 1, 1), (0, 0, 0), 40)):
         L = bpy.data.lights.new(name, "SUN")
-        L.energy, L.color, L.angle = energy, col, math.radians(8)
+        L.energy, L.color, L.angle = energy, col, math.radians(ang)
         ob = bpy.data.objects.new(name, L)
         sc.collection.objects.link(ob)
         ob.rotation_euler = [math.radians(a) for a in rot]
@@ -518,7 +579,8 @@ def setup(sc, samples, res):
 
 
 def aim_front(cam, target, ortho, elev=6.0, yaw=0.0, dist=30.0):
-    """Camera in front of the review line (at -Y, looking +Y); figures are turned to face it."""
+    """Camera in front of the review line (at -Y, looking +Y); figures are turned to face it.
+    ortho is the width of the wider image dimension (Blender sensor fit)."""
     a, e = math.radians(yaw), math.radians(elev)
     off = Vector((math.sin(a) * math.cos(e), -math.cos(a) * math.cos(e), math.sin(e))) * dist
     cam.location = Vector(target) + off
@@ -540,7 +602,7 @@ def label_mat():
     return m
 
 
-def text(s, loc, size, coll, align="CENTER", white=False):
+def text(s, loc, size, coll, align="CENTER"):
     cu = bpy.data.curves.new("lbl", "FONT")
     cu.body, cu.size, cu.align_x = s, size, align
     cu.materials.append(label_mat())
@@ -551,9 +613,9 @@ def text(s, loc, size, coll, align="CENTER", white=False):
     return ob
 
 
-def plinth(loc, coll, r=0.42):
+def plinth(loc, coll, r=0.46):
     me = bpy.data.meshes.new("plinth")
-    n = 32
+    n = 40
     vs = [(r * math.cos(2 * math.pi * i / n), r * math.sin(2 * math.pi * i / n), z) for z in (-0.02, 0.0) for i in range(n)]
     fs = [tuple(range(n))[::-1], tuple(range(n, 2 * n))] + [(i, (i + 1) % n, n + (i + 1) % n, n + i) for i in range(n)]
     me.from_pydata(vs, [], fs)
@@ -565,7 +627,7 @@ def plinth(loc, coll, r=0.42):
     b = m.node_tree.nodes["Principled BSDF"]
     b.inputs["Base Color"].default_value = (0.02, 0.03, 0.07, 1)
     b.inputs["Emission Color"].default_value = (0.1, 0.35, 1.0, 1)
-    b.inputs["Emission Strength"].default_value = 0.25
+    b.inputs["Emission Strength"].default_value = 0.35
     me.materials.append(m)
     return ob
 
@@ -584,15 +646,13 @@ def world_bounds(objs):
     return lo, hi
 
 
-def isolated(kit, pid, colourway, centre, coll, target=0.34, yaw=-35.0, fit_variant="male"):
-    fig = Figure(kit, [pid], colourway, (0, 0, 0), coll, variant=fit_variant, body=False, yaw=yaw, item_side=True)
+def isolated(kit, pid, colourway, centre, coll, target=0.34, yaw=-35.0):
+    fig = Figure(kit, [pid], colourway, (0, 0, 0), coll, body=False, yaw=yaw, item_side=True, pose="rest")
     bpy.context.view_layer.update()
     lo, hi = world_bounds(fig.objs)
-    size = max(hi - lo)
-    s = min(2.5, target / max(size, 1e-3))
-    c = (lo + hi) / 2
+    s = min(2.5, target / max(max(hi - lo), 1e-3))
     fig.arm.scale = (s, s, s)
-    fig.arm.location = Vector(centre) - c * s
+    fig.arm.location = Vector(centre) - (lo + hi) / 2 * s
     bpy.context.view_layer.update()
     return fig
 
@@ -618,7 +678,52 @@ def fresh_scene(args, res):
     return sc, cam, coll
 
 
+def compare(render_png, refs, dest, height=None):
+    """Render beside the matching reference crop(s), scaled to one height (ffmpeg hstack)."""
+    refs = [Path(r) for r in refs if Path(r).exists()]
+    if not refs:
+        return
+    h = height or 900
+    inputs, filt = [], []
+    for i, pth in enumerate([Path(render_png), *refs]):
+        inputs += ["-i", str(pth)]
+        filt.append(f"[{i}:v]scale=-2:{h}[v{i}]")
+    n = len(refs) + 1
+    fc = ";".join(filt) + ";" + "".join(f"[v{i}]" for i in range(n)) + f"hstack=inputs={n}[o]"
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", *inputs, "-filter_complex", fc, "-map", "[o]", str(dest)], check=True)
+    print("COMPARED", dest)
+
+
 # ============================================================================================ SHEETS
+ROWS4 = [("CHEST", "armor.chest.plate"), ("SHOULDERS", "armor.shoulders.standard"),
+         ("GLOVES", "armor.gloves.standard"), ("BOOTS", "armor.boots.standard")]
+
+
+def sheet_progress(args, kit, out):
+    """First progress sheet: 4 rows x 4 colourways, plus an assembled medic in the relaxed stance."""
+    sc, cam, coll = fresh_scene(args, (1900, 1200))
+    cws = ["arctic", "crimson", "cobalt", "amber"]
+    dx, dz = 0.55, 0.52
+    for r, (label, pid) in enumerate(ROWS4):
+        z = -r * dz
+        text(label, (-0.42, 0, z - 0.03), 0.065, coll, align="RIGHT")
+        for c, cwid in enumerate(cws):
+            isolated(kit, pid, cwid, (c * dx, 0, z), coll, target=0.4)
+    for c, cwid in enumerate(cws):
+        text(K.COLOURWAYS[cwid]["label"].upper(), (c * dx, 0, 0.32), 0.05, coll)
+    by = {p["id"]: p for p in K.PRESETS}
+    pr = by["role.medic"]
+    Figure(kit, list(pr["parts"].values()), pr["colourway"], (3.05, 0, -1.72), coll, preset=pr, yaw=-28)
+    plinth((3.05, 0, -1.72), coll)
+    text("MEDIC (role.medic)", (3.05, 0, 0.32), 0.07, coll)
+    text("CREW ARMOUR r002 (spec v2 proposal)", (1.4, 0, 0.5), 0.075, coll)
+    aim_front(cam, (1.55, 0, -0.75), 4.6, elev=12)
+    render(sc, out / "armor_progress_r002.png")
+    compare(out / "armor_progress_r002.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png",
+                                              Path(args.refs) / "roster-male-03-medic.png"],
+            out / "armor_progress_r002_vs_reference.png")
+
+
 TIER_ROWS = [("CHEST", ["armor.chest.jacket", "armor.chest.harness", "armor.chest.plate", "armor.chest.heavy"]),
              ("SHOULDERS", ["armor.shoulders.cloth", "armor.shoulders.light", "armor.shoulders.standard", "armor.shoulders.heavy"]),
              ("GLOVES", ["armor.gloves.fabric", "armor.gloves.light", "armor.gloves.standard", "armor.gloves.heavy"]),
@@ -630,7 +735,7 @@ TIER_CW = ["civilian", "amber", "cobalt", "crimson"]
 
 
 def sheet_tiers(args, kit, out):
-    sc, cam, coll = fresh_scene(args, (1500, 1900))
+    sc, cam, coll = fresh_scene(args, (1500, 2100))
     dx, dz = 0.62, 0.52
     for r, (label, ids) in enumerate(TIER_ROWS):
         z = -r * dz
@@ -639,22 +744,19 @@ def sheet_tiers(args, kit, out):
             isolated(kit, pid, TIER_CW[c], (c * dx, 0, z), coll, target=0.40)
     for c, t in enumerate(["TIER 0 CIVILIAN", "TIER 1 LIGHT", "TIER 2 STANDARD", "TIER 3 HEAVY"]):
         text(t, (c * dx, 0, 0.3), 0.055, coll)
-    # full-body tier line-up underneath
-    y0 = -len(TIER_ROWS) * dz - 1.45
+    y0 = -len(TIER_ROWS) * dz - 1.35
     for c in range(4):
-        ids = [row[1][c] for row in TIER_ROWS]
-        Figure(kit, ids, TIER_CW[c], (c * dx, 0, y0), coll, yaw=-20, scale=0.62)
-    text("CREW ARMOUR TIERS  (armor-v1 r001 proposal)", (0.93, 0, 0.45), 0.075, coll)
-    aim_front(cam, (0.93, 0, -2.45), 7.3, elev=14)
+        Figure(kit, [row[1][c] for row in TIER_ROWS], TIER_CW[c], (c * dx, 0, y0), coll, yaw=-20, scale=0.6)
+    text("CREW ARMOUR TIERS (armor-v1 r002 proposal)", (0.93, 0, 0.45), 0.075, coll)
+    aim_front(cam, (0.93, 0, -2.55), 7.6, elev=12)
     render(sc, out / "armor_tier_chart.png")
+    compare(out / "armor_tier_chart.png", [Path(args.refs) / "roster-male-armor-tiers.png"], out / "armor_tier_chart_vs_reference.png")
 
 
 def sheet_colourways(args, kit, out):
     sc, cam, coll = fresh_scene(args, (1672, 1180))
-    rows = [("CHEST", "armor.chest.plate"), ("SHOULDERS", "armor.shoulders.standard"),
-            ("GLOVES", "armor.gloves.standard"), ("BOOTS", "armor.boots.standard")]
     dx, dz = 0.52, 0.5
-    for r, (label, pid) in enumerate(rows):
+    for r, (label, pid) in enumerate(ROWS4):
         z = -r * dz
         text(label, (-0.4, 0, z - 0.03), 0.065, coll, align="RIGHT")
         for c, cwid in enumerate(K.SHEET_COLOURWAYS):
@@ -662,8 +764,10 @@ def sheet_colourways(args, kit, out):
     for c, cwid in enumerate(K.SHEET_COLOURWAYS):
         text(K.COLOURWAYS[cwid]["label"].upper(), (c * dx, 0, 0.3), 0.05, coll)
     text("ARMOUR PIECES: 6 COLOURWAYS, ONE GEOMETRY (material slots)", (1.2, 0, 0.45), 0.07, coll)
-    aim_front(cam, (1.2, 0, -0.62), 3.95, elev=14)
+    aim_front(cam, (1.2, 0, -0.62), 3.95, elev=12)
     render(sc, out / "armor_colourway_grid.png")
+    compare(out / "armor_colourway_grid.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png"],
+            out / "armor_colourway_grid_vs_reference.png")
 
 
 def sheet_back(args, kit, out):
@@ -687,23 +791,25 @@ def sheet_back(args, kit, out):
         for c, (pid, cwid) in enumerate(cells):
             isolated(kit, pid, cwid, (c * dx, 0, z), coll, target=0.40, yaw=150 if "back." in pid else -30)
     text("BACK & UTILITY: packs, belts, life support", (1.2, 0, 0.32), 0.07, coll)
-    aim_front(cam, (1.2, 0, -1.0), 4.1, elev=14)
+    aim_front(cam, (1.2, 0, -1.0), 4.1, elev=12)
     render(sc, out / "back_utility_grid.png")
+    compare(out / "back_utility_grid.png", [Path(args.refs) / "equip-back-and-utility.png"], out / "back_utility_grid_vs_reference.png")
 
 
-def sheet_roles(args, kit, out, presets, name, variant="male", pose="rest", yaw=-32):
-    dx = 0.9
+def sheet_roles(args, kit, out, presets, name, variant="male", pose="relaxed", yaw=-28, ref=None):
+    dx = 0.95
     width = max(3.4, len(presets) * dx)
-    sc, cam, coll = fresh_scene(args, (2000, int(2000 * 2.55 / width)))
+    sc, cam, coll = fresh_scene(args, (2000, int(2000 * 2.3 / width)))
     for i, pr in enumerate(presets):
         x = i * dx
-        Figure(kit, list(pr["parts"].values()), pr["colourway"], (x, 0, 0), coll, variant=variant, pose=pose, yaw=yaw,
-               preset=pr)
+        Figure(kit, list(pr["parts"].values()), pr["colourway"], (x, 0, 0), coll, variant=variant, pose=pose, yaw=yaw, preset=pr)
         plinth((x, 0, 0), coll)
-        text(pr["name"].upper(), (x, 0.6, 2.05), 0.075, coll)
-        text(pr["id"], (x, 0.6, -0.18), 0.045, coll)
-    aim_front(cam, ((len(presets) - 1) * dx / 2, 0, 0.98), width, elev=12)
+        text(pr["name"].upper(), (x, 0.6, 1.98), 0.075, coll)
+        text(pr["id"], (x, 0.6, -0.16), 0.045, coll)
+    aim_front(cam, ((len(presets) - 1) * dx / 2, 0, 0.92), width, elev=10)
     render(sc, out / name)
+    if ref:
+        compare(out / name, [Path(args.refs) / ref], out / name.replace(".png", "_vs_reference.png"), height=560)
 
 
 def sheet_loadouts(args, kit, out):
@@ -713,77 +819,83 @@ def sheet_loadouts(args, kit, out):
         pr = by[rid]
         x = i * 2.25
         Figure(kit, list(pr["parts"].values()), pr["colourway"], (x, 0, 0), coll, yaw=-30,
-               pose="aim_rifle" if rid == "role.security" else "rest", preset=pr)
+               pose="aim_rifle" if rid == "role.security" else "relaxed", preset=pr)
         plinth((x, 0, 0), coll)
-        text(pr["name"].upper(), (x + 0.45, 0.6, 2.08), 0.11, coll)
-        items = list(pr["parts"].items())
-        for k, (slot, pid) in enumerate(items):
-            isolated(kit, pid, pr["colourway"], (x + 0.95, 0, 1.78 - k * 0.27), coll, target=0.21)
-            text(slot, (x + 1.2, 0, 1.75 - k * 0.27), 0.04, coll, align="LEFT")
-    aim_front(cam, (2.7, 0, 0.95), 7.2, elev=5)
+        text(pr["name"].upper(), (x + 0.45, 0.6, 2.0), 0.11, coll)
+        for k, (slot, pid) in enumerate(pr["parts"].items()):
+            isolated(kit, pid, pr["colourway"], (x + 0.95, 0, 1.72 - k * 0.26), coll, target=0.21)
+            text(slot, (x + 1.2, 0, 1.69 - k * 0.26), 0.04, coll, align="LEFT")
+    aim_front(cam, (2.7, 0, 0.9), 7.2, elev=5)
     render(sc, out / "loadout_examples.png")
+    compare(out / "loadout_examples.png", [Path(args.refs) / "equip-example-loadouts.png"], out / "loadout_examples_vs_reference.png")
 
 
 def sheet_poses(args, kit, out, ids=("role.marine", "role.engineer", "role.captain", "role.scientist")):
     sc, cam, coll = fresh_scene(args, (1672, 1900))
     by = {p["id"]: p for p in K.PRESETS}
-    poses = ["rest"] + KEY_POSES
+    poses = ["relaxed"] + KEY_POSES
     for r, rid in enumerate(ids):
         pr = by[rid]
         for c, pose in enumerate(poses):
-            Figure(kit, list(pr["parts"].values()), pr["colourway"], (c * 1.05, 0, -r * 2.15), coll, yaw=-55,
+            Figure(kit, list(pr["parts"].values()), pr["colourway"], (c * 1.05, 0, -r * 2.05), coll, yaw=-50,
                    pose=pose, variant="female" if r % 2 else "male", preset=pr)
             if r == 0:
-                text(pose.replace("_", " ").upper(), (c * 1.05, 0.6, 2.1), 0.1, coll)
-        text(pr["name"].upper(), (-0.75, 0.6, -r * 2.15 + 0.9), 0.08, coll, align="RIGHT")
-    aim_front(cam, (1.7, 0, -2.25), 9.6, elev=10, yaw=-8)
+                text(pose.replace("_", " ").upper(), (c * 1.05, 0.6, 2.0), 0.1, coll)
+        text(pr["name"].upper(), (-0.75, 0.6, -r * 2.05 + 0.9), 0.08, coll, align="RIGHT")
+    aim_front(cam, (1.7, 0, -2.2), 9.4, elev=10, yaw=-8)
     render(sc, out / "pose_fit_review.png")
 
 
 # ============================================================================================== MAIN
 def main():
-    global VK, RIG, BODY, BB
     args = parse_args()
     out = Path(args.out)
     out.mkdir(parents=True, exist_ok=True)
-    VK, RIG, BODY, BB, kit_dir = import_body_kit(args.body_kit)
     bpy.ops.wm.read_factory_settings(use_empty=True)
     if args.rig_blend and Path(args.rig_blend).exists():
         with bpy.data.libraries.load(args.rig_blend) as (src, dst):
             dst.actions = list(src.actions)
-    kit = Kit(out)
-    summary = {"kit": K.KIT_ID, "revision": K.REVISION, "bodyKit": str(kit_dir), "parts": len(kit.parts),
-               "actionsFromBody": sorted(a.name for a in bpy.data.actions)}
+    kit = Kit(args.bevel)
+    summary = {"kit": K.KIT_ID, "revision": K.REVISION, "specVersion": K.SPEC_VERSION, "parts": len(kit.parts),
+               "actions": sorted(a.name for a in bpy.data.actions)}
     fit = None
     if args.check or args.export:
-        fit = {"zFight": zfight_report(kit), "clip": {}, "poseSource": "CHAR-BODY actions" if bpy.data.actions else "placeholder key poses"}
-        arm = kit.arm
+        rep = F.report(kit.parts)
+        fit = {"zFight": {k: rep[k] for k in ("zFightSingle", "zFightPresets", "totalSingle", "totalPresets")},
+               "emissiveSurface": rep["emissiveSurface"], "clip": {},
+               "poseSource": "CHAR-BODY actions" if bpy.data.actions else "CHAR-ARMOR placeholder key poses (spec v2 rig)"}
         for pr in K.PRESETS:
             for variant in ("male", "female"):
-                fit["clip"][f"{pr['id']}@{variant}"] = clip_report(kit, arm, pr, variant)
+                fit["clip"][f"{pr['id']}@{variant}"] = clip_report(kit.arm, pr, variant, kit.by_id)
         (out / "fit_report.json").write_text(json.dumps(fit, indent=1))
-        summary["zFight"] = {"armourVsBody": fit["zFight"]["totalArmourVsBody"], "presetPairs": fit["zFight"]["totalPresetPairs"]}
+        summary["zFight"] = [rep["totalSingle"], rep["totalPresets"]]
         summary["clip"] = {k: {p: [v["hinge"], v["other"], v["bodySelfHinge"], v["bodySelfOther"]] for p, v in r.items()}
                            for k, r in fit["clip"].items()}
+    by = {p["id"]: p for p in K.PRESETS}
     for s in [s for s in args.sheets.split(",") if s]:
-        if s == "tiers":
+        if s == "progress":
+            sheet_progress(args, kit, out)
+        elif s == "tiers":
             sheet_tiers(args, kit, out)
         elif s == "colourways":
             sheet_colourways(args, kit, out)
         elif s == "back":
             sheet_back(args, kit, out)
         elif s == "roles":
-            sheet_roles(args, kit, out, K.PRESETS[:10], "role_archetypes_male.png")
+            sheet_roles(args, kit, out, K.PRESETS[:10], "role_archetypes_male.png", ref="roster-male-10-archetypes.png")
         elif s == "roles-female":
-            sheet_roles(args, kit, out, K.PRESETS[:10], "role_archetypes_female.png", variant="female")
+            sheet_roles(args, kit, out, K.PRESETS[:10], "role_archetypes_female.png", variant="female",
+                        ref="roster-female-10-archetypes.png")
         elif s == "extras":
             sheet_roles(args, kit, out, K.PRESETS[10:], "role_extras.png")
         elif s == "loadouts":
             sheet_loadouts(args, kit, out)
         elif s == "poses":
             sheet_poses(args, kit, out)
+        elif s.startswith("role:"):
+            sheet_roles(args, kit, out, [by[s[5:]]], f"{s[5:]}.png")
     if args.export:
-        m = export_kit(kit, args.export, fit, kit_dir)
+        m = export_kit(kit, args.export, fit)
         if args.content_json:
             Path(args.content_json).write_text(json.dumps(content_catalog(m), indent=1) + "\n")
         summary["exported"] = len(m["parts"])

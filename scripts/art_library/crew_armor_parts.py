@@ -1,31 +1,38 @@
-"""Crew voxel armour kit v1 (armor-v1): pure part definitions, no bpy, unit-testable.
+"""Crew voxel armour kit (armor-v1, r002 = spec v2 refit): pure part definitions, no bpy, unit-testable.
 
-Every armour/equipment part is a set of voxel volumes on the 1/32 m character grid: one volume
-per crew_rig bone, rigidly skinned to that bone (weight 1.0). The volumes are authored in the
-CHAR-BODY r001 rest-pose armature frame (CHARACTER_SPEC_BODY.json):
+Every armour/equipment part is a set of voxel volumes on the 1/32 m character grid, one volume per
+crew_rig bone, rigidly skinned to that bone (weight 1.0). Volumes are authored in the rest-pose
+armature frame shared with CHAR-BODY:
     x = character right (+X is .R), y = forward (the character faces +Y), z = up,
     origin = feet centre on the ground, cell (x, y, z) spans [x, x+1) * 1/32 m.
-Right-side parts are authored at +x and mirrored to .L with x -> -1 - x (as the body does).
+Right-side parts are authored at +x and mirrored to .L with x -> -1 - x.
 
-Fit rules (checked by crew_armor_kit.py against the real body volumes):
-- armour never shares a same-normal coplanar face with the body (no z-fighting). It either
-  encloses the body cells it covers (at least 1 voxel proud) or it sits clear of them;
-- torso armour stays clear of the upper-arm swing (arms at x = 8..12, deltoid from x = 7);
-- joints keep a 1-voxel break between parts on different bones.
+Spec v2 (chibi, ~2.8 heads): silhouette and colour blocking use 2-voxel main blocks (1/16 m);
+single 1/32 m voxels are reserved for trims, rivets, badges and lights. T2/T3 carry ~10-20 %
+emissive surface. Colour lives only in the ten shared material slots (colourways/roles/player
+colours are slot tables).
 
-Colour and role live only in the ten shared material slots (skin, hair, eye, suit_primary,
-suit_secondary, accent, metal, dark, emit, glass): colourways, role looks and player colours are
-slot tables. Geometry is shared.
+The body dimensions below (BODY) are CHAR-ARMOR's v2 placeholder built from the v2 numbers in
+CHARACTER_SPEC.md, used until CHAR-BODY republishes CHARACTER_SPEC_BODY.json with spec_version 2.
+Builders read BODY, so a refit is a data change plus the automated fit checks.
 
-Style lineage: scripts/art_library/ship_kit_prototype.py (docs/shipyard-player-builder-design, PR #25)
-boxes/slots/themes/bevel, via CHAR-BODY's voxkit Vol/mesh_volume contract.
+Fit rules (checked by crew_armor_kit.py / test_crew_armor_parts.py):
+- no same-normal coplanar visible face between armour and the body, or between the parts of a
+  preset (no z-fighting): armour encloses the body cells it covers at least 1 voxel proud, or
+  sits clear of them. Gloves/boots replace the hands/feet regions (hidesBodyRegions);
+- the hanging arm/hand zone (x >= 7 beside the hips) stays clear of torso, belt and leg armour;
+- the legs touch at x = 0 at most (nothing crosses the midline).
+
+Style lineage: scripts/art_library/ship_kit_prototype.py (PR #25) boxes/slots/themes, via
+CHAR-BODY's voxkit Vol/mesh_volume contract.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass, field
 
 KIT_ID = "crew.armor-v1"
-REVISION = "r001"
+REVISION = "r002"
+SPEC_VERSION = 2
 V = 1.0 / 32.0
 SLOTS = ["skin", "hair", "eye", "suit_primary", "suit_secondary", "accent", "metal", "dark", "emit", "glass"]
 SI = {s: i for i, s in enumerate(SLOTS)}
@@ -34,10 +41,41 @@ TIERS = {0: "civilian", 1: "light", 2: "standard", 3: "heavy"}
 RIG_BONES = ["root", "pelvis", "spine", "chest", "neck", "head",
              "shoulder.R", "shoulder.L", "upper_arm.R", "upper_arm.L", "forearm.R", "forearm.L",
              "hand.R", "hand.L", "thigh.R", "thigh.L", "shin.R", "shin.L", "foot.R", "foot.L", "toe.R", "toe.L"]
-# Torso fits: CHAR-BODY variants differ only in chest / waist half-width.
+BODY_REGIONS = ["body", "head", "hands", "feet", "hair"]
+# Torso fits: body variants differ in chest / waist half-width.
 FITS = {"wide": {"chest": 7, "waist": 6, "variants": ["male", "neutral"]},
         "narrow": {"chest": 6, "waist": 5, "variants": ["female"]}}
 P, S2, AC, M, D, EM, GL = "suit_primary", "suit_secondary", "accent", "metal", "dark", "emit", "glass"
+SK, HR, EY = "skin", "hair", "eye"
+
+# ============================================================================================ BODY v2
+# Placeholder v2 body (voxels). Segment boxes are (x0, y0, z0, x1, y1, z1); .R side at +x.
+BODY = {
+    "skullTop": 55, "hairTop": 58,
+    "bones": {  # head, tail (voxels, Blender armature frame); .L mirrors x
+        "root": ((0, 0, 0), (0, 6, 0)), "pelvis": ((0, 0, 18), (0, 0, 22)), "spine": ((0, 0, 22), (0, 0, 28)),
+        "chest": ((0, 0, 28), (0, 0, 36)), "neck": ((0, 0, 36), (0, 0, 37)), "head": ((0, 0, 37), (0, 0, 55)),
+        "shoulder.R": ((2, 0, 34), (10.5, 0, 34.5)), "upper_arm.R": ((10.5, 0, 34), (10.5, 0, 27)),
+        "forearm.R": ((10.5, 0, 27), (10.5, 0, 21)), "hand.R": ((11.5, 0, 21), (11.5, 0, 15)),
+        "thigh.R": ((4.5, 0, 18), (4.5, 0, 10)), "shin.R": ((4.5, 0, 10), (4.5, 0, 4)),
+        "foot.R": ((4.5, 0, 4), (4.5, 4, 1)), "toe.R": ((4.5, 4, 1), (4.5, 7, 1)),
+    },
+    "parents": {"pelvis": "root", "spine": "pelvis", "chest": "spine", "neck": "chest", "head": "neck",
+                "shoulder.R": "chest", "upper_arm.R": "shoulder.R", "forearm.R": "upper_arm.R", "hand.R": "forearm.R",
+                "thigh.R": "pelvis", "shin.R": "thigh.R", "foot.R": "shin.R", "toe.R": "foot.R"},
+}
+
+
+def rig_bones():
+    """[(name, head, tail, parent)] for every crew_rig bone (voxels), .L mirrored."""
+    out = []
+    for n, (h, t) in BODY["bones"].items():
+        par = BODY["parents"].get(n)
+        out.append((n, h, t, par))
+        if n.endswith(".R"):
+            mp = par[:-2] + ".L" if par and par.endswith(".R") else par
+            out.append((n[:-2] + ".L", (-h[0], h[1], h[2]), (-t[0], t[1], t[2]), mp))
+    return out
 
 
 # ============================================================================================ VOLUME
@@ -68,22 +106,6 @@ class Vol:
                 for z in range(z0, z1):
                     if (x, y, z) in self.c:
                         self.c[(x, y, z)] = slot
-        return self
-
-    def shell_paint(self, slot, normal, depth=1):
-        """Paint the outermost `depth` cells seen along `normal` (e.g. (0, 1, 0) = front)."""
-        axis = [i for i in range(3) if normal[i]][0]
-        sgn = normal[axis]
-        best = {}
-        for k in self.c:
-            key = tuple(k[i] for i in range(3) if i != axis)
-            v = k[axis] * sgn
-            if key not in best or v > best[key]:
-                best[key] = v
-        for k in list(self.c):
-            key = tuple(k[i] for i in range(3) if i != axis)
-            if best[key] - k[axis] * sgn < depth:
-                self.c[k] = slot
         return self
 
     def chamfer_z(self, x0, y0, x1, y1, z0, z1):
@@ -124,6 +146,7 @@ class Part:
     mass_kg: float = 0.0
     grid: tuple = (2, 2)
     exhaust: list = field(default_factory=list)   # [(bone, (x, y, z) voxels, radius voxels)] presentation only
+    hides: list = field(default_factory=list)     # CHAR-BODY regions replaced by this part
 
     def bones(self):
         return sorted({b for vols in self.fits.values() for b in vols}, key=RIG_BONES.index)
@@ -134,6 +157,11 @@ class Part:
 
     def slots_used(self):
         return sorted({s for vols in self.fits.values() for v in vols.values() for s in v.c.values()}, key=SI.get)
+
+    def emissive_share(self, fit=None):
+        vols = self.fits[fit or next(iter(self.fits))]
+        n = sum(len(v.c) for v in vols.values())
+        return sum(1 for v in vols.values() for s in v.c.values() if s == EM) / max(n, 1)
 
     def fit_for(self, variant):
         if "all" in self.fits:
@@ -154,28 +182,61 @@ def sided(vols_r):
     return out
 
 
-def per_fit(builder, *args):
-    return {name: builder(f["chest"], f["waist"], *args) for name, f in FITS.items()}
+# ======================================================================================== MANNEQUIN
+def mannequin(variant="male"):
+    """CHAR-ARMOR's v2 placeholder body: {region: {bone: Vol}} (review renders and fit checks only)."""
+    c = FITS["narrow" if variant == "female" else "wide"]["chest"]
+    w = c - 1
+    body, head, hands, feet, hair = {}, {}, {}, {}, {}
+    pe = Vol().box(-7, -4, 17, 7, 5, 22, S2).paint(-7, -4, 20, 7, 5, 22, D)          # hips + belt band
+    pe.box(-2, 5, 20, 2, 6, 22, M)                                                     # buckle
+    sp = Vol().box(-w, -4, 22, w, 5, 28, P).paint(-1, 4, 22, 1, 5, 28, S2)
+    ch = Vol().box(-c, -5, 28, c, 5, 36, P).paint(-c, -5, 34, c, 5, 36, S2)             # chest + yoke seam
+    ch.paint(2, 4, 31, 4, 5, 32, AC)                                                  # badge
+    nk = Vol().box(-3, -3, 36, 3, 3, 37, SK)
+    body.update({"pelvis": pe, "spine": sp, "chest": ch, "neck": nk})
+    ua = Vol().box(8, -3, 27, 13, 3, 34, P).box(7, -3, 32, 14, 3, 36, P).paint(7, -3, 32, 14, 3, 33, S2)
+    fa = Vol().box(8, -3, 21, 13, 3, 27, P).paint(8, -3, 21, 13, 3, 22, S2)
+    th = Vol().box(1, -3, 10, 8, 4, 18, S2)
+    sh = Vol().box(1, -3, 4, 8, 4, 10, S2).paint(1, 3, 8, 8, 4, 10, P)
+    body.update(sided({"upper_arm.R": ua, "forearm.R": fa, "thigh.R": th, "shin.R": sh}))
+    hands.update(sided({"hand.R": Vol().box(8, -3, 15, 15, 4, 21, SK)}))
+    feet.update(sided({"foot.R": Vol().box(1, -4, 0, 8, 4, 4, D).paint(1, -4, 0, 8, 4, 1, M),
+                       "toe.R": Vol().box(1, 4, 0, 8, 7, 3, D).paint(1, 4, 0, 8, 7, 1, M)}))
+    hd = Vol().box(-9, -8, 37, 9, 8, 55, SK)
+    for x, y in ((-9, -8), (8, -8), (-9, 7), (8, 7)):
+        hd.cut(x, y, 37, x + 1, y + 1, 55)
+    hd.cut(-9, -8, 37, 9, -7, 39).cut(-9, 7, 37, 9, 8, 38)                            # jaw
+    for sx in (-6, 3):                                                                # big dark eyes + highlight
+        hd.paint(sx, 7, 43, sx + 3, 8, 47, EY).paint(sx + 1, 7, 45, sx + 2, 8, 46, AC)
+    hd.paint(-1, 7, 40, 1, 8, 41, D)                                                  # mouth
+    hd.paint(-8, 7, 41, -6, 8, 42, AC).paint(6, 7, 41, 8, 8, 42, AC)                  # blush
+    head["head"] = hd
+    hr = Vol().box(-10, -9, 49, 10, 7, 56, HR).box(-9, -8, 56, 9, 6, 58, HR)
+    hr.box(-10, -9, 41, -8, 5, 49, HR).box(8, -9, 41, 10, 5, 49, HR).box(-9, -9, 39, 9, -7, 49, HR)
+    for x in range(-9, 9, 2):                                                         # fringe clumps
+        hr.box(x, 7, 50 - (x // 2) % 2 * 2, x + 2, 9, 56, HR)
+    hr.cut(-8, -7, 49, 8, 7, 54)                                                     # hollow shell
+    hair["head"] = hr
+    return {"body": body, "head": head, "hands": hands, "feet": feet, "hair": hair}
 
 
 # ============================================================================================= CHEST
-# Body (male/wide): chest x -7..7, y -5 (back plate) .. 6 (front details), z 34..42, collar ring
-# x/y -4..4 z 41..43; spine x -6..6, y -3..5, z 29..35; deltoid x 7..13, y -3..3, z 38..42.
+# Body (wide): chest x -7..7, y -5..5, z 28..36; waist x -6..6, y -4..5, z 22..28; neck x/y -3..3;
+# deltoid x 7..14, y -3..3, z 32..36; head z 37+ (x -9..9) overhangs the yoke.
 def torso_shell(c, w, tier, base_slot):
-    """Chest + spine shells that enclose the body torso (>= 1 voxel proud)."""
+    """Chest + waist shells enclosing the body torso (>= 1 voxel proud)."""
     ch, sp = Vol(), Vol()
-    fy = 7 + (tier >= 3)                  # front face
+    fy = 6 + (tier >= 3)                  # front face
     by = -6                               # back face (packs mount behind y = -7)
-    A = c + 1                             # side face (clear of the upper arm at x = 8)
-    ch.box(-A, by, 34, A, fy, 42, base_slot)
-    if A > 7:                             # notch for the deltoid swing (wide fit); ends inside the body
-        ch.cut(6, -4, 37, A, 4, 41).cut(-A, -4, 37, -6, 4, 41)
-    ch.chamfer_z(-A, by, A, fy, 34, 42)
-    ch.cut(c - 2, -4, 40, A, 4, 42).cut(-A, -4, 40, -c + 2, 4, 42)   # room for the pauldron top row
-    ch.cut(-5, -4, 40, 5, 5, 42)          # neck well: its floor sits inside the body's chest
-    ch.box(-A + 1, by + 1, 42, A - 1, fy - 1, 43, S2).cut(-5, -4, 42, 5, 5, 43)    # yoke ring
-    sp.box(-w - 1, -4, 30, w + 1, fy - 1, 34, base_slot)
-    sp.chamfer_z(-w - 1, -4, w + 1, fy - 1, 30, 34)
+    A = c + 1                             # side face, clear of the upper arm (x >= 8)
+    ch.box(-A, by, 28, A, fy, 36, base_slot).chamfer_z(-A, by, A, fy, 28, 36)
+    if A > 7:                             # notch for the deltoid; its floor stays inside the body
+        ch.cut(c - 1, -4, 31, A, 4, 36).cut(-A, -4, 31, -c + 1, 4, 36)
+    ch.cut(-4, -4, 35, 4, 4, 36)          # neck well (floor inside the body chest)
+    ch.box(-A + 1, by + 1, 36, A - 1, fy - 1, 37, S2).cut(-4, -4, 36, 4, 4, 37)   # yoke ring under the head
+    sp.box(-w - 1, -5, 23, w + 1, fy, 28, base_slot)
+    sp.cut(-w - 1, fy - 1, 23, -w, fy, 28).cut(w, fy - 1, 23, w + 1, fy, 28)
     return ch, sp, fy, by, A
 
 
@@ -183,437 +244,392 @@ def chest_vols(c, w, tier, style):
     base_slot = S2 if style == "overalls" else P
     ch, sp, fy, by, A = torso_shell(c, w, tier, base_slot)
     vols = {"chest": ch, "spine": sp}
-    if style in ("jacket", "coat", "labcoat", "flight", "overalls"):
-        if style == "overalls":
-            ch.paint(-A, by, 34, A, fy, 42, D)                         # undershirt under the bib
-            ch.paint(-A, by, 34, A, fy, 42, S2)
-            ch.box(-4, fy, 34, 4, fy + 1, 40, P)                        # bib
-            ch.box(-3, fy + 1, 36, 3, fy + 2, 39, D).paint(-2, fy + 1, 38, 2, fy + 2, 39, P)   # bib pocket
-            for x0 in (-6, 5):                                          # braces over the shoulders
-                ch.paint(x0, by, 34, x0 + 1, fy, 43, P)
-                ch.box(x0, fy, 38, x0 + 1, fy + 1, 39, M)                 # brace buckle
-            sp.paint(-w - 1, -4, 30, w + 1, fy - 1, 34, P)
-            sp.box(-3, fy - 1, 30, 3, fy, 33, D).paint(-2, fy - 1, 31, 2, fy, 32, M)
-            return vols
-        # open-front garments: centre placket, lapels, pockets, hems
-        ch.paint(-1, fy - 1, 34, 1, fy, 42, D if style != "flight" else S2)
-        sp.paint(-1, fy - 2, 30, 1, fy - 1, 34, D if style != "flight" else S2)
-        sp.paint(-w - 1, -4, 30, w + 1, fy, 31, S2)                     # hem band
+    if style == "overalls":
+        ch.box(-4, fy, 28, 4, fy + 1, 34, P).box(-3, fy + 1, 30, 3, fy + 2, 32, D)      # bib + pocket
+        ch.paint(-2, fy + 1, 31, 2, fy + 2, 32, P)
+        for x0 in (-5, 4):                                                              # braces
+            ch.paint(x0, by, 28, x0 + 1, fy, 37, P)
+            ch.box(x0, fy, 32, x0 + 1, fy + 1, 33, M)
+        sp.paint(-w - 1, -5, 23, w + 1, fy, 28, P)
+        sp.box(-3, fy, 24, 3, fy + 1, 27, D).paint(-2, fy, 25, 2, fy + 1, 26, M)
+        return vols
+    if style in ("jacket", "coat", "labcoat", "flight"):
+        seam = S2 if style == "flight" else D
+        ch.paint(-1, fy - 1, 28, 1, fy, 36, seam)                          # placket / zip line
+        sp.paint(-1, fy - 1, 23, 1, fy, 28, seam)
+        sp.paint(-w - 1, -5, 23, w + 1, fy, 25, S2)                        # hem band (2-vox block)
         if style in ("jacket", "coat", "labcoat"):
             lap = AC if style == "coat" else S2
-            for k in range(4):                                          # stepped V lapels
-                ch.paint(-2 - k, fy - 1, 41 - k * 1, 2 + k, fy, 42 - k * 1, lap)
-                ch.paint(-1 - k, fy - 1, 41 - k * 1, 1 + k, fy, 42 - k * 1, D if style != "labcoat" else S2)
-            ch.box(-A + 1, by, 42, A - 1, by + 2, 44, lap).cut(-4, by + 1, 42, 4, by + 2, 44)   # raised back collar
+            for k in range(3):                                             # stepped V lapels in 2-vox steps
+                ch.paint(-2 - 2 * k, fy - 1, 34 - 2 * k, 2 + 2 * k, fy, 36 - 2 * k, lap)
+                ch.paint(-1 - 2 * k, fy - 1, 34 - 2 * k, 1 + 2 * k, fy, 36 - 2 * k, D if style != "labcoat" else S2)
         if style == "jacket":
-            ch.box(-A + 2, fy, 36, -2, fy + 1, 39, S2).paint(-A + 2, fy, 38, -2, fy + 1, 39, AC)   # chest pocket + flap
-            sp.box(-w, fy - 1, 30, -2, fy, 33, S2).box(2, fy - 1, 30, w, fy, 33, S2)                   # hand pockets
-            ch.box(3, fy, 38, 5, fy + 1, 39, AC).box(5, fy, 38, 6, fy + 1, 39, EM)                    # name badge + light
-            ch.paint(-A, by, 40, A, fy, 41, S2)                                                       # shoulder seam
-            for z in (35, 37, 39):
-                ch.box(-1, fy, z, 1, fy + 1, z + 1, M)                                                # zip teeth
+            ch.box(-A + 2, fy, 29, -2, fy + 1, 32, S2).paint(-A + 2, fy, 31, -2, fy + 1, 32, AC)   # chest pocket
+            sp.box(-w, fy, 24, -2, fy + 1, 27, S2).box(2, fy, 24, w, fy + 1, 27, S2)             # hand pockets
+            ch.box(3, fy, 31, 5, fy + 1, 32, AC).box(5, fy, 31, 6, fy + 1, 32, EM)              # badge + light
+            for z in (29, 31, 33):
+                ch.box(-1, fy, z, 1, fy + 1, z + 1, M)                                          # zip teeth
         if style == "coat":
-            for z in (35, 37, 39):                                      # double-breasted buttons
+            for z in (29, 31, 33):                                                               # double-breasted
                 ch.box(-4, fy, z, -3, fy + 1, z + 1, M).box(3, fy, z, 4, fy + 1, z + 1, M)
-            sp.box(-4, fy - 1, 31, -3, fy, 32, M).box(3, fy - 1, 31, 4, fy, 32, M)
-            ch.box(3, fy, 40, 6, fy + 1, 41, AC).box(3, fy, 39, 4, fy + 1, 40, EM)      # rank bar + pin
-            ch.paint(-A, by, 34, A, by + 1, 42, S2)                     # back seam
-            ch.box(-A, fy - 2, 35, -A + 1, fy, 41, AC)                  # braided trim at the front edge
-            ch.box(A - 1, fy - 2, 35, A, fy, 41, AC)
-            sp.paint(-w - 1, -4, 33, w + 1, fy, 34, AC)                 # waist band trim
+            ch.box(3, fy, 34, 6, fy + 1, 35, AC).box(3, fy, 33, 4, fy + 1, 34, EM)             # rank bar + pin
+            ch.box(-A, fy - 2, 29, -A + 1, fy, 35, AC).box(A - 1, fy - 2, 29, A, fy, 35, AC)   # braided edges
+            sp.paint(-w - 1, -5, 27, w + 1, fy, 28, AC)                                          # waist trim
+            ch.paint(-A + 1, by, 36, A - 1, fy, 37, AC)                                         # gold collar (yoke)
         if style == "labcoat":
-            ch.box(-A + 1, fy, 35, -3, fy + 1, 38, S2)                  # breast pocket
-            ch.box(-A + 2, fy + 1, 37, -A + 3, fy + 2, 40, AC)          # pens
-            ch.box(-A + 4, fy + 1, 37, -A + 5, fy + 2, 39, EM)
-            ch.box(3, fy, 39, 6, fy + 1, 41, EM)                        # ID badge (glowing)
-            sp.box(-w - 1, fy - 1, 30, -2, fy, 32, S2).box(2, fy - 1, 29, w + 1, fy, 32, S2)
+            ch.box(-A + 1, fy, 29, -3, fy + 1, 32, S2).box(-A + 2, fy + 1, 31, -A + 3, fy + 2, 34, AC)  # pocket + pens
+            ch.box(-A + 4, fy + 1, 31, -A + 5, fy + 2, 33, EM)
+            ch.box(3, fy, 32, 6, fy + 1, 34, EM)                                                 # glowing ID badge
+            sp.box(-w - 1, fy, 23, -2, fy + 1, 26, S2).box(2, fy, 23, w + 1, fy + 1, 26, S2)
         if style == "flight":
-            ch.paint(-A, by, 38, A, fy, 39, AC)                         # chest stripe
-            ch.box(-A + 1, fy, 37, -2, fy + 1, 40, S2).box(-A + 2, fy + 1, 38, -A + 3, fy + 2, 39, EM)  # comms unit
-            for x0 in (-4, 3):                                          # harness straps
-                ch.box(x0, fy, 34, x0 + 1, fy + 1, 42, D)
-                sp.box(x0, fy - 1, 30, x0 + 1, fy, 34, D)
-            sp.box(-2, fy - 1, 30, 2, fy + 1, 33, M).box(-1, fy + 1, 31, 1, fy + 2, 32, EM)       # quick-release
-            ch.box(A - 3, fy, 40, A - 1, fy + 1, 41, AC)                # wings pin
+            ch.paint(-A, by, 31, A, fy, 33, AC)                                                  # chest stripe (2)
+            ch.box(-A + 1, fy, 30, -2, fy + 1, 34, S2).box(-A + 2, fy + 1, 31, -A + 4, fy + 2, 33, EM)  # comms
+            for x0 in (-4, 3):
+                ch.box(x0, fy, 28, x0 + 1, fy + 1, 36, D)                                        # harness straps
+                sp.box(x0, fy, 23, x0 + 1, fy + 1, 28, D)
+            sp.box(-2, fy, 24, 2, fy + 2, 27, M).box(-1, fy + 2, 25, 1, fy + 3, 26, EM)          # quick-release
+            ch.box(A - 3, fy, 34, A - 1, fy + 1, 35, AC)                                         # wings pin
         return vols
 
-    # ---- plated / rigged looks: soft base + raised plates, straps, pouches, lights
+    # ---- plated / rigged looks: base + raised 2-vox plates, seams, lights (T2/T3 ~10-20 % emit)
     ft = 1 if tier < 3 else 2
     if tier >= 2 or style in ("medic", "vest", "hazard"):
-        # front chest plates: split pair with a dark centre seam
-        ch.box(-c, fy, 35, c, fy + ft, 41, P).chamfer_z(-c, fy, c, fy + ft, 35, 41)
-        ch.paint(-1, fy, 35, 1, fy + ft, 41, D)
-        ch.box(-c + 1, by - 1, 35, c - 1, by, 39, P)                    # back plate (below the pack harness)
-        ch.paint(-1, by - 1, 36, 1, by, 39, M)                          # back mount spine
-        ch.paint(-A, -4, 36, A, 4, 37, D)                               # side panel seam
-        for k, z in enumerate(range(30, 34, 2)):                        # abdomen plates
-            sp.box(-w, fy - 1, z, w, fy, z + 2, P if k % 2 == 0 else S2).paint(-w, fy - 1, z + 1, w, fy, z + 2, D)
-        sp.paint(-w - 1, -4, 30, w + 1, -3, 34, P)                     # lower back plate
+        ch.box(-c, fy, 29, c, fy + ft, 35, P).chamfer_z(-c, fy, c, fy + ft, 29, 35)        # front plates
+        ch.paint(-1, fy, 29, 1, fy + ft, 35, D)                                             # centre seam
+        ch.paint(-c, fy, 31, c, fy + ft, 32, S2)                                            # plate split
+        ch.box(-c + 1, by - 1, 29, c - 1, by, 33, P).paint(-1, by - 1, 29, 1, by, 33, M)   # back plate + mount
+        ch.paint(-A, -4, 30, A, 4, 32, D)                                                   # side vents
+        sp.box(-w, fy, 24, w, fy + 1, 26, S2).box(-w + 1, fy, 26, w - 1, fy + 1, 28, P)    # abdomen plates
+        sp.paint(-w - 1, -5, 23, w + 1, -4, 28, P)
     if tier >= 1:
-        ch.box(c - 3, fy + ft, 38, c - 1, fy + ft + 1, 40, EM if tier >= 2 else AC)   # status light
+        ch.box(c - 3, fy + ft, 33, c - 1, fy + ft + 1, 34, EM if tier >= 2 else AC)       # status light
     if tier >= 2:
-        ch.box(-c + 1, fy + ft, 39, -c + 3, fy + ft + 1, 40, M)          # bolt pair
-        ch.box(-A, by, 35, -A + 1, by + 2, 41, M).box(A - 1, by, 35, A, by + 2, 41, M)   # back rails
+        ch.box(-4, fy + ft, 29, 4, fy + ft + 1, 30, EM)                                     # light bar
+        ch.box(-c + 1, fy + ft, 33, -c + 3, fy + ft + 1, 34, M)                             # bolts
+        sp.box(-3, fy + 1, 24, 3, fy + 2, 25, EM)                                           # belly light strip
     if tier >= 3:
-        ch.box(-c - 1, fy + ft - 1, 36, -c + 1, fy + ft + 1, 42, S2)    # bolted flanks
-        ch.box(c - 1, fy + ft - 1, 36, c + 1, fy + ft + 1, 42, S2)
-        ch.box(-3, fy + ft, 35, 3, fy + ft + 1, 37, AC).box(-1, fy + ft + 1, 35, 1, fy + ft + 2, 37, EM)  # reactor core
-        ch.box(-A + 2, by, 42, A - 2, by + 2, 45, S2).cut(-4, by + 1, 42, 4, by + 2, 45)               # rear gorget
-        sp.box(-w, fy - 1, 30, w, fy + 1, 32, P).paint(-w, fy, 30, w, fy + 1, 31, AC)                 # lower abdomen plate
+        ch.box(-c - 1, fy + ft - 1, 30, -c + 1, fy + ft + 1, 36, S2)                       # bolted flanks
+        ch.box(c - 1, fy + ft - 1, 30, c + 1, fy + ft + 1, 36, S2)
+        ch.box(-2, fy + ft, 31, 2, fy + ft + 1, 33, AC).box(-1, fy + ft + 1, 31, 1, fy + ft + 2, 33, EM)   # core
+        ch.box(-c + 1, fy + ft, 34, c - 1, fy + ft + 1, 35, EM)                            # upper light bar
+        sp.box(-w, fy + 1, 26, w, fy + 2, 28, P).paint(-w, fy + 1, 27, w, fy + 2, 28, EM)  # lower plate glow
     if style in ("harness", "tactical"):
-        for x0 in (-4, 3):                                              # webbing straps front + back
-            ch.box(x0, fy, 34, x0 + 1, fy + 1, 42, D)
-            ch.box(x0, by - 1, 34, x0 + 1, by, 42, D)
-            sp.box(x0, fy - 1, 30, x0 + 1, fy, 34, D)
-        ch.box(-A, fy, 37, A, fy + 1, 38, D)                           # chest strap
-        ch.box(-1, fy + 1, 37, 1, fy + 2, 38, M)                        # buckle
-        sp.box(-w, fy - 1, 30, -1, fy + 1, 33, S2).paint(-w, fy, 32, -1, fy + 1, 33, D)   # belly pouches
-        sp.box(1, fy - 1, 30, w, fy + 1, 33, S2).paint(1, fy, 32, w, fy + 1, 33, D)
+        for x0 in (-4, 3):                                                                   # webbing
+            ch.box(x0, fy, 28, x0 + 1, fy + 1, 36, D).box(x0, by - 1, 28, x0 + 1, by, 36, D)
+            sp.box(x0, fy, 23, x0 + 1, fy + 1, 28, D)
+        ch.box(-A, fy, 31, A, fy + 1, 32, D).box(-1, fy + 1, 31, 1, fy + 2, 32, M)          # chest strap + buckle
+        sp.box(-w, fy, 24, -1, fy + 2, 27, S2).paint(-w, fy + 1, 26, -1, fy + 2, 27, D)     # belly pouches
+        sp.box(1, fy, 24, w, fy + 2, 27, S2).paint(1, fy + 1, 26, w, fy + 2, 27, D)
         if style == "tactical":
-            for x0 in (-A + 1, -2, A - 4):                              # magazine pouches
-                ch.box(x0, fy + 1, 34, x0 + 3, fy + 3, 37, S2).paint(x0, fy + 2, 36, x0 + 3, fy + 3, 37, D)
-            ch.box(A - 3, fy + 1, 39, A - 1, fy + 2, 41, EM)            # IR strobe
-            ch.box(-A + 1, fy + 1, 39, -A + 3, fy + 2, 41, AC)          # radio
+            for x0 in (-A + 1, -2, A - 4):                                                   # magazine pouches
+                ch.box(x0, fy + 1, 28, x0 + 3, fy + 3, 31, S2).paint(x0, fy + 2, 30, x0 + 3, fy + 3, 31, D)
+            ch.box(A - 3, fy + 1, 33, A - 1, fy + 2, 35, EM).box(-A + 1, fy + 1, 33, -A + 3, fy + 2, 35, AC)
     if style == "medic":
-        ch.paint(-c, fy, 40, c, fy + ft, 41, AC)                        # red band
-        ch.box(-c + 1, fy + ft, 37, -c + 4, fy + ft + 1, 38, AC)        # cross
-        ch.box(-c + 2, fy + ft, 36, -c + 3, fy + ft + 1, 39, AC)
-        ch.paint(-A, by, 38, A, fy, 39, AC)                             # side stripe
-        sp.box(-w, fy, 30, w, fy + 1, 31, AC)
+        ch.paint(-c, fy, 34, c, fy + ft, 35, AC)                                            # red band
+        ch.box(-c + 1, fy + ft, 32, -c + 4, fy + ft + 1, 33, AC).box(-c + 2, fy + ft, 31, -c + 3, fy + ft + 1, 34, AC)
+        ch.paint(-A, by, 32, A, fy, 33, AC)
+        sp.box(-w, fy + 1, 25, w, fy + 2, 26, AC)
     if style == "vest":
-        ch.box(-c + 1, fy + ft, 38, -c + 3, fy + ft + 1, 40, AC).box(-c + 1, fy + ft + 1, 39, -c + 2, fy + ft + 2, 40, M)  # badge
-        ch.box(-A, fy - 1, 35, A, fy + ft, 36, AC)                      # hi-vis stripe
-        sp.box(-w, fy, 32, w, fy + 1, 33, AC)
-        ch.box(2, fy + ft, 36, 5, fy + ft + 1, 38, D)                   # cuffs pouch
+        ch.box(-c + 1, fy + ft, 32, -c + 3, fy + ft + 1, 34, AC).box(-c + 1, fy + ft + 1, 33, -c + 2, fy + ft + 2, 34, M)
+        ch.box(-A, fy - 1, 28, A, fy + ft, 29, AC)                                          # hi-vis stripe
+        sp.box(-w, fy + 1, 26, w, fy + 2, 27, AC)
     if style == "hazard":
-        for x in range(-w, w, 2):                                       # hazard chevrons at the hem
-            sp.box(x, fy - 1, 30, x + 1, fy + 1, 31, AC)
-        ch.paint(-c, fy, 40, c, fy + ft, 41, AC)
-        ch.box(-2, fy + ft, 37, 2, fy + ft + 1, 39, D).box(-1, fy + ft + 1, 37, 1, fy + ft + 2, 39, EM)  # gauge
+        for x in range(-w, w, 2):                                                           # hazard chevrons
+            sp.box(x, fy, 23, x + 1, fy + 1, 24, AC)
+        ch.paint(-c, fy, 34, c, fy + ft, 35, AC)
+        ch.box(-2, fy + ft, 32, 2, fy + ft + 1, 34, D).box(-1, fy + ft + 1, 32, 1, fy + ft + 2, 34, EM)
     return vols
 
 
 def coat_tails(c, w, style):
-    """Coat skirts: a hip hub (pelvis) and front/back tails per thigh, so the skirt swings with the legs.
-    Above z = 19 the tails leave the outer thigh open: the hanging hand sits there (x >= 7)."""
-    hub = Vol().box(-8, -5, 25, 8, 7, 26, P).box(-8, 5, 24, 8, 7, 25, P).box(-8, -5, 24, 8, -3, 25, P)
-    hub.paint(-8, -5, 25, 8, 7, 26, AC if style == "coat" else S2)
-    drop = 15 if style == "coat" else 14                     # coat to above the knee, lab coat to the knee
+    """Coat skirts: front/back hip panels (pelvis) and front/back tails per thigh so the skirt swings with
+    the legs. The outer thigh above z 15 stays open for the hanging hand."""
+    hub = Vol().box(-8, 5, 16, 8, 6, 19, P).box(-8, -5, 16, 8, -4, 19, P)
     trim = AC if style == "coat" else S2
+    hub.paint(-8, -5, 18, 8, 6, 19, trim)
+    drop = 12 if style == "coat" else 10                 # coat to above the knee, lab coat to the knee
     tail = Vol()
-    tail.box(0, 3, drop, 7, 4, 24, P).box(0, -4, drop, 7, -3, 24, P)          # front + back panels
-    tail.box(0, -4, drop, 1, 4, 24, P)                                        # inner edge
-    tail.box(7, -4, drop, 9, 4, 19, P)                                        # outer wrap below the hand
-    tail.paint(0, -4, drop, 9, 4, drop + 1, trim)                              # hem
-    tail.paint(8, -4, drop, 9, 4, 19, S2)                                     # side seam
+    tail.box(0, 4, drop, 8, 5, 17, P).box(0, -4, drop, 8, -3, 17, P)          # front + back panels
+    tail.box(0, -4, drop, 1, 5, 17, P)                                        # inner edge
+    tail.box(8, -4, drop, 9, 5, 14, P)                                        # outer wrap below the hand
+    tail.paint(0, -4, drop, 9, 5, drop + 1, trim)                             # hem
     if style == "labcoat":
-        tail.box(9, -2, 15, 10, 2, 19, S2).paint(9, -2, 18, 10, 2, 19, AC)   # side pocket
+        tail.box(9, -2, 11, 10, 2, 14, S2).paint(9, -2, 13, 10, 2, 14, AC)   # side pocket
     else:
-        tail.box(0, 4, drop + 2, 1, 5, 23, trim)                              # front braid
+        tail.box(0, 5, drop + 1, 1, 6, 16, trim)                              # front braid
     return {"pelvis": hub, **sided({"thigh.R": tail})}
 
 
 # ========================================================================================= SHOULDERS
-# Body deltoid (upper_arm.R): x 7..13, y -3..3, z 38..42; upper arm x 8..12, y -2..2, z 32..40.
+# Body deltoid (upper_arm.R): x 7..14, y -3..3, z 32..36; upper arm x 8..13, y -3..3, z 27..34.
+# The chibi head (x -9..9 from z 37) overhangs the inner shoulder, so crowns start at x >= 10.
 def shoulder_vols(tier, style):
     ua = Vol()
-    if style == "cloth":
-        ua.box(9, -4, 37, 14, 4, 41, S2).chamfer_outer(14, -4, 4, 37, 41)
-        ua.box(8, -4, 41, 14, 4, 42, S2).box(6, -4, 41, 8, 4, 42, S2).box(7, -3, 42, 13, 3, 43, S2)
-        ua.box(14, -1, 38, 15, 1, 40, D)                                      # sleeve tab
-    elif style == "epaulette":
-        ua.box(9, -4, 37, 14, 4, 41, P).box(8, -4, 41, 14, 4, 42, P).box(6, -4, 41, 8, 4, 42, P)
-        ua.box(7, -4, 42, 14, 4, 43, AC)                                      # gold board
-        for y in range(-4, 4, 2):                                             # fringe
-            ua.box(14, y, 38, 15, y + 1, 43, AC)
-        ua.box(9, -1, 43, 11, 1, 44, M)                                       # rank pip
-    else:
-        g = {1: 0, 2: 1, 3: 2}[tier]
-        x1, y0, y1 = 14 + g, -4 - g, 4 + g
-        low = 37
-        # Cap from x = 9 (inside the deltoid/arm) down past the deltoid's underside, a top row that
-        # wraps the deltoid's top corners (reaching x = 6 only inside the chest-armour notch), crown.
-        ua.box(9, y0, low, x1, y1, 41, P).chamfer_outer(x1, y0, y1, low, 41)
-        ua.box(8, y0, 41, x1, y1, 42, P).box(6, -4, 41, 8, 4, 42, P)
-        ua.box(7, y0 + 1, 42, x1 - 1, y1 - 1, 43 + (tier >= 2), P)           # crown
-        ua.paint(8, y0, 41, x1, y1, 42, S2 if tier >= 2 else P)               # crown seam
-        if tier >= 2:
-            ua.paint(7, y0 + 1, 43, x1 - 1, y1 - 1, 44, S2)
-            ua.box(9, y0 + 2, 44, x1 - 2, y1 - 2, 45, S2)                    # rounded top step
-        ua.box(9, y0 - (tier >= 3), low - 1, x1 + 1, y1 + (tier >= 3), low, S2)   # rim
-        ua.box(x1, -1, low + 1, x1 + 1, 1, low + 2, EM)                       # side light
-        if tier >= 2:
-            ua.box(x1, y0 + 1, 39, x1 + 1, y1 - 1, 40, AC)                    # raised stripe
-            ua.box(x1, y0 + 1, 41, x1 + 1, y0 + 2, 42, M).box(x1, y1 - 2, 41, x1 + 1, y1 - 1, 42, M)   # bolts
-        if tier >= 3:
-            ua.box(x1, y0 + 1, low, x1 + 1, y1 - 1, 39, P).paint(x1, y0 + 1, low + 1, x1 + 1, y1 - 1, low + 2, D)  # outer lame
-            ua.box(x1 - 3, y0, 45, x1, y1, 46, S2)                           # ridge
-            for y in (y0 + 1, y1 - 2):
-                ua.box(x1 + 1, y, low + 1, x1 + 2, y + 1, low + 2, M)         # rivets
-        if style == "flight":
-            ua.box(x1, -2, low + 2, x1 + 1, 2, 41, AC).box(x1 + 1, -1, low + 3, x1 + 2, 1, 40, EM)   # mission patch
+    if style in ("cloth", "epaulette") or tier == 0:
+        top = AC if style == "epaulette" else S2
+        ua.box(9, -4, 31, 15, 4, 36, P if style == "epaulette" else S2).chamfer_outer(15, -4, 4, 31, 36)
+        ua.box(8, -4, 36, 15, 4, 37, top).box(7, -4, 36, 8, 4, 37, top)
+        if style == "epaulette":
+            for y in range(-4, 4, 2):                                             # fringe
+                ua.box(15, y, 30, 16, y + 1, 36, AC)
+            ua.box(11, -1, 37, 13, 1, 38, M)                                      # rank pip
+        else:
+            ua.box(15, -1, 32, 16, 1, 34, D)                                      # sleeve tab
+        return sided({"upper_arm.R": ua})
+    g = {1: 0, 2: 1, 3: 2}[tier]
+    x1, y0, y1 = 15 + g, -4 - g, 4 + g
+    low = 31 - (tier >= 2)
+    ua.box(9, y0, low, x1, y1, 36, P).chamfer_outer(x1, y0, y1, low, 36)          # cap (inner face in the deltoid)
+    ua.box(8, y0, 36, x1, y1, 37, P).box(7, -4, 36, 8, 4, 37, P)                   # top row over the deltoid
+    ua.box(10, y0 + 1, 37, x1 - 1, y1 - 1, 38 + (tier >= 2), S2)                   # crown beside the head
+    ua.box(9, y0 - (tier >= 3), low - 1, x1 + 1, y1 + (tier >= 3), low, S2)        # rim
+    ua.box(x1, -2, low + 1, x1 + 1, 2, low + 2, EM)                                # side light
+    if tier >= 2:
+        ua.box(x1, y0 + 1, 34, x1 + 1, y1 - 1, 35, EM)                             # light strip
+        ua.box(x1, y0 + 1, 35, x1 + 1, y0 + 2, 36, M).box(x1, y1 - 2, 35, x1 + 1, y1 - 1, 36, M)   # bolts
+    if tier >= 3:
+        ua.box(x1, y0 + 1, low, x1 + 1, y1 - 1, 33, P).paint(x1, y0 + 1, low, x1 + 1, y1 - 1, low + 1, D)
+        ua.box(x1 - 3, y0, 39, x1, y1, 40, S2)                                     # ridge
+        ua.box(x1 + 1, y0 + 1, low + 1, x1 + 2, y0 + 2, low + 2, M).box(x1 + 1, y1 - 2, low + 1, x1 + 2, y1 - 1, low + 2, M)
+    if style == "flight":
+        ua.box(x1, -2, 32, x1 + 1, 2, 34, AC).box(x1 + 1, -1, 32, x1 + 2, 1, 33, EM)   # mission patch
     return sided({"upper_arm.R": ua})
 
 
 # ============================================================================================ GLOVES
-# Body hand.R: x 8..12, y -2..2 (+thumb y 2..3), z 20..24; forearm cuff x 7..13, y -3..3, z 24..27.
+# Body hand.R: chunky cube x 8..15, y -3..4, z 15..21 (hidden when gloves are worn);
+# forearm x 8..13, y -3..3, z 21..27. The glove never reaches inward past x = 8 (thigh at x < 8).
 def glove_vols(tier, style):
-    """The hand hangs beside the hip, so glove and bracer never extend inward past x = 7."""
     hd, fa = Vol(), Vol()
     palm = S2 if tier < 2 else D
-    hd.box(7, -3, 21, 13, 4, 24, palm)                                        # palm + knuckles
-    for k, y in enumerate(range(-3, 3)):                                      # fingers (brick columns)
-        hd.box(7, y, 19, 13 if k % 2 == 0 else 12, y + 1, 21, palm)
-    hd.box(8, 3, 20, 11, 5, 23, palm)                                         # thumb, forward/inward
-    hd.box(8, -2, 24, 12, 2, 25, palm)                                        # wrist plug (inside the cuff)
-    hd.box(13, -2, 21, 14, 3, 24, P)                                          # back-of-hand plate
-    hd.paint(7, -3, 23, 13, 4, 24, P if tier else S2)                         # glove band
+    hd.box(8, -4, 14, 16, 5, 21, palm).chamfer_outer(16, -4, 5, 14, 21)        # fist (2-vox blocks)
+    hd.paint(8, -4, 14, 16, 5, 16, S2 if tier < 2 else palm)                   # finger row
+    for y in (-2, 0, 2):
+        hd.paint(8, y, 14, 16, y + 1, 16, D)                                    # finger grooves
+    hd.box(9, 5, 16, 12, 6, 20, palm)                                           # thumb (front)
+    hd.box(16, -2, 16, 17, 3, 20, P)                                            # back-of-hand plate
+    hd.paint(8, -4, 19, 16, 5, 21, P if tier else S2)                           # cuff band
     if tier >= 1:
-        hd.box(13, -3, 20, 14, 4, 21, M)                                      # knuckle bar
-        hd.box(14, 0, 22, 15, 2, 23, EM if tier >= 2 else AC)
+        hd.box(16, -3, 15, 17, 4, 16, M)                                        # knuckle bar
+        hd.box(17, -1, 17, 18, 2, 19, EM if tier >= 2 else AC)
     if tier >= 3:
-        hd.box(13, -3, 19, 14, 4, 20, M)                                      # finger guard
-        hd.box(8, 5, 21, 12, 6, 24, P)                                        # knuckle guard (front)
+        hd.box(9, 6, 17, 14, 7, 20, P).box(16, -3, 20, 17, 4, 21, EM)           # knuckle guard + wrist glow
     if tier >= 1 or style == "work":
-        cu = {0: 3, 1: 3, 2: 4, 3: 4}[tier]
-        top = 27 + cu
-        # bracer on the forearm, sitting on the body cuff (z 27) and enclosing the forearm 1 proud
-        fa.box(7, -3, 27, 13, 3, top, P if tier >= 2 else S2).chamfer_z(7, -3, 13, 3, 27, top)
-        fa.paint(7, -3, top - 1, 13, 3, top, AC)                              # top trim
+        top = 23 + {0: 1, 1: 1, 2: 2, 3: 3}[tier]
+        fa.box(7, -4, 21, 14, 4, top, P if tier >= 2 else S2).chamfer_z(7, -4, 14, 4, 21, top)   # bracer
+        fa.paint(7, -4, top - 1, 14, 4, top, AC)
         if tier >= 2:
-            fa.box(13, -2, 28, 14, 2, top - 1, S2).box(13, -1, 28, 14, 1, 29, EM)   # wrist display
-        if tier >= 3:
-            fa.box(8, 3, 28, 13, 4, top, P)                                   # outer guard (front)
-            fa.box(8, -4, 28, 13, -3, top, P)
+            fa.box(14, -2, 21, 15, 2, top - 1, S2).box(14, -1, 21, 15, 1, 22, EM)   # wrist display
+            fa.box(14, -3, top - 1, 15, 3, top, EM)
         if style == "work":
-            fa.box(7, -4, top - 2, 14, 4, top, D).paint(7, -4, top - 1, 14, 4, top, AC)   # flared gauntlet
+            fa.box(7, -5, top - 2, 15, 5, top, D).paint(7, -5, top - 1, 15, 5, top, AC)   # flared gauntlet
     return sided({"hand.R": hd, **({"forearm.R": fa} if fa.c else {})})
 
 
 # ============================================================================================= BOOTS
-# Body foot.R: x 1..7, y -4..4, z 0..4; toe.R: x 1..7, y 4..8, z 0..3; shin.R boot base x 1..7,
-# y -3..3, z 3..7 with a cuff x 0..8, y -3..4, z 6..7 (left visible as the boot strap); knee pad
-# x 2..6, y 3..4, z 10..14. The legs touch at x = 0, so nothing crosses the midline.
+# Body foot.R x 1..8, y -4..4, z 0..4 and toe.R y 4..7, z 0..3 (hidden when boots are worn);
+# shin.R x 1..8, y -3..4, z 4..10. Boots are a ~0.12 m block plus a shaft on the shin.
 def boot_vols(tier, style):
     ft, to, sh = Vol(), Vol(), Vol()
     sole = 1 + (tier >= 2)
-    ft.box(0, -5, 0, 8, 4, 3, P).paint(0, -5, 0, 8, 4, sole, D)               # shoe body + sole (foot bone)
-    ft.cut(0, -5, sole, 1, -4, 3).cut(7, -5, sole, 8, -4, 3)                  # rounded heel
-    ft.paint(1, -5, sole, 7, -4, 3, S2)                                       # heel counter
-    to.box(0, 4, 0, 8, 9, 4, P).paint(0, 4, 0, 8, 9, sole, D)                 # toe box (toe bone)
-    to.cut(0, 8, sole, 1, 9, 4).cut(7, 8, sole, 8, 9, 4)                      # rounded toe
-    to.paint(1, 8, sole, 7, 9, 4, S2)                                         # toe cap
-    sh.box(0, -5, 3, 8, 5, 6, P).chamfer_z(0, -5, 8, 5, 3, 6)                 # ankle collar (shin bone)
-    sh.paint(0, -5, 5, 8, 5, 6, S2)
-    sh.box(2, 5, 3, 6, 6, 6, D)                                               # tongue / instep
+    ft.box(0, -5, 0, 9, 4, 4, P).paint(0, -5, 0, 9, 4, sole, D)                # heel/instep block (foot bone)
+    ft.cut(0, -5, sole, 1, -4, 4).cut(8, -5, sole, 9, -4, 4)                   # rounded heel
+    ft.paint(1, -5, sole, 8, -4, 4, S2)                                         # heel counter
+    to.box(0, 4, 0, 9, 9, 4, P).paint(0, 4, 0, 9, 9, sole, D)                   # toe box (toe bone)
+    to.cut(0, 8, sole, 1, 9, 4).cut(8, 8, sole, 9, 9, 4)
+    to.paint(1, 8, sole, 8, 9, 4, S2)                                           # toe cap
+    up = {0: 2, 1: 3, 2: 4, 3: 5}[tier] + (1 if style == "dress" else 0)
+    top = 4 + up
+    sh.box(0, -4, 4, 9, 5, top, P).chamfer_z(0, -4, 9, 5, 4, top)              # shaft (shin bone)
+    sh.paint(0, -4, top - 1, 9, 5, top, AC if style == "dress" else S2)        # cuff rim
     if style == "sneaker":
-        ft.paint(0, -5, sole, 8, 4, sole + 1, AC)                             # sole stripe
-        to.paint(0, 4, sole, 8, 9, sole + 1, AC)
-        to.paint(2, 5, 3, 6, 8, 4, S2)                                        # laces
+        ft.paint(0, -5, sole, 9, 4, sole + 1, AC)
+        to.paint(0, 4, sole, 9, 9, sole + 1, AC)
+        to.paint(2, 5, 3, 7, 8, 4, S2)                                          # laces
         return sided({"foot.R": ft, "toe.R": to, "shin.R": sh})
-    up = {0: 2, 1: 2, 2: 3, 3: 3}[tier] + (2 if style == "dress" else 0)
-    top = 7 + up
-    sh.box(0, -4, 7, 8, 5, top, P).chamfer_z(0, -4, 8, 5, 7, top)             # upper shaft above the strap
-    sh.paint(0, -4, top - 1, 8, 5, top, S2 if style != "dress" else AC)       # cuff rim
     if style != "dress":
-        for z in range(7, top - 1, 2):
-            sh.paint(2, 4, z, 6, 5, z + 1, D)                                 # laces
-        to.paint(2, 5, 3, 6, 8, 4, D)
+        for z in range(4, top - 1, 2):
+            sh.paint(2, 4, z, 7, 5, z + 1, D)                                   # laces
+        to.paint(2, 5, 3, 7, 8, 4, D)
     if tier >= 2:
-        sh.box(8, -1, 4, 9, 1, 5, EM)                                         # ankle light
-        to.box(1, 9, 0, 7, 10, sole + 1, M)                                   # toe guard
-        sh.box(8, -2, 7, 9, 2, top - 1, S2)                                   # outer ankle plate
+        sh.box(9, -2, 5, 10, 2, 6, EM)                                          # ankle light strip
+        to.box(1, 9, 0, 8, 10, sole + 1, M)                                     # toe guard
+        ft.box(9, -2, sole, 10, 2, sole + 2, M)                                 # ankle bolt
     if tier >= 3:
-        ft.paint(0, -5, 0, 8, 4, 1, M)                                        # mag sole plate
-        to.paint(0, 4, 0, 8, 9, 1, M)
-        sh.box(8, -1, 8, 9, 1, 9, EM)
-        sh.paint(0, -5, 3, 8, -4, 5, M)                                        # heel spur plate
+        ft.paint(0, -5, 0, 9, 4, 1, M)
+        to.paint(0, 4, 0, 9, 9, 1, M)
+        sh.box(9, -2, 7, 10, 2, 8, EM).box(2, 5, 4, 7, 6, 7, P)                 # glow + greave lip (below knee guards)
+        sh.paint(2, 5, 6, 7, 6, 7, EM)
     if style == "flight":
-        sh.paint(0, -4, 7, 8, 5, 8, AC)
-        sh.box(8, -2, 7, 9, 2, 9, AC)
+        sh.paint(0, -4, top - 3, 9, 5, top - 2, AC).box(9, -2, 6, 10, 2, 8, AC)
     if style == "dress":
-        sh.box(1, 5, top - 2, 7, 6, top - 1, M)                               # buckle strap
+        sh.box(1, 5, top - 2, 8, 6, top - 1, M)                                 # buckle strap
     return sided({"foot.R": ft, "toe.R": to, "shin.R": sh})
 
 
 # ============================================================================================== LEGS
-# Body thigh.R: x 1..7, y -3..3, z 13..25, pocket x 7..8 y -2..2 z 16..21; shin x 1..7, y -3..3.
-# The hanging hand/glove occupies x >= 7, y -3..5, z >= 19: leg armour stays out of that zone.
+# Body thigh.R x 1..8, y -3..4, z 10..18; shin.R x 1..8, y -3..4, z 4..10. The hand hangs at
+# x >= 8, z >= 14: leg armour on the outer thigh stays below z 14.
 def legs_vols(tier, style):
     th, sh = Vol(), Vol()
     if tier == 0:
-        th.box(8, -3, 14, 9, 3, 19, S2).paint(8, -3, 18, 9, 3, 19, D)         # cargo pocket (under the hand)
-        th.box(9, -1, 16, 10, 1, 17, M)                                       # snap
-        th.box(2, 3, 14, 6, 4, 17, S2)                                        # knee patch
-        th.box(1, 3, 21, 4, 4, 23, S2)                                        # front pocket
+        th.box(8, -3, 10, 9, 3, 14, S2).paint(8, -3, 13, 9, 3, 14, D)           # cargo pocket
+        th.box(9, -1, 11, 10, 1, 12, M)
+        th.box(2, 4, 11, 7, 5, 14, S2)                                          # knee patch
+        th.box(1, 4, 15, 4, 5, 17, S2)                                          # front pocket
         return sided({"thigh.R": th})
-    # knee guard on the upper shin (proud of any boot shaft)
-    sh.box(1, 4, 10, 7, 6, 15, P).chamfer_z(1, 4, 7, 6, 10, 15)
-    sh.paint(1, 5, 12, 7, 6, 13, S2)
-    sh.box(2, 6, 11, 6, 7, 14, S2)                                            # guard boss
+    sh.box(1, 4, 7, 8, 6, 12, P).chamfer_z(1, 4, 8, 6, 7, 12)                   # knee guard (2 deep)
+    sh.paint(1, 5, 9, 8, 6, 10, S2)
+    sh.box(2, 6, 8, 7, 7, 11, S2)                                               # guard boss
     if tier >= 2:
-        sh.box(3, 7, 12, 5, 8, 13, EM if tier >= 3 else AC)
-        th.box(1, 3, 15, 7, 4, 23, P).paint(1, 3, 19, 7, 4, 20, D)           # thigh front plates
-        th.box(8, -3, 14, 9, 4, 19, P).paint(8, -3, 16, 9, 4, 17, D)         # outer plate (below the hand)
-        th.box(9, -1, 15, 10, 1, 16, M)
+        sh.box(3, 7, 9, 6, 8, 10, EM)
+        th.box(1, 4, 12, 8, 5, 17, P).paint(1, 4, 14, 8, 5, 15, D)             # thigh front plate
+        th.box(8, -3, 10, 9, 4, 14, P).paint(8, -3, 12, 9, 4, 13, D)           # outer plate below the hand
+        th.box(9, -1, 11, 10, 1, 12, EM)
     else:
-        for z in (14, 17):
-            th.box(0, -4, z, 9, 4, z + 1, D)                                  # thigh straps
-        th.box(9, -2, 14, 10, 2, 18, S2).paint(9, -2, 17, 10, 2, 18, AC)     # thigh pouch
-        th.box(8, -3, 15, 9, 3, 18, S2)
+        th.box(0, -4, 13, 9, 5, 14, D)                                          # thigh strap
+        th.box(9, -2, 10, 10, 2, 14, S2).paint(9, -2, 13, 10, 2, 14, AC)       # thigh pouch
     if tier >= 3:
-        th.box(1, 4, 20, 7, 5, 24, P).paint(1, 4, 20, 7, 5, 21, S2)           # hip lame (front)
-        sh.box(2, 7, 13, 6, 8, 15, P)                                         # raised knee crest
-        th.box(8, -3, 13, 10, 4, 15, S2).paint(9, -3, 13, 10, 4, 14, D)       # lower outer thigh plate
+        th.box(1, 5, 12, 8, 6, 17, P).paint(1, 5, 12, 8, 6, 13, EM)             # layered front plate
+        sh.box(2, 7, 11, 6, 8, 12, P)
     vols = sided({"thigh.R": th, "shin.R": sh})
     if tier >= 3:
         pv = Vol()
-        for x0, x1 in ((-7, -1), (1, 7)):                                     # front tassets from the belt line
-            pv.box(x0, 5, 22, x1, 7, 26, P).paint(x0, 6, 22, x1, 7, 23, S2)
+        for x0, x1 in ((-7, -2), (2, 7)):                                       # front tassets under the belt
+            pv.box(x0, 5, 15, x1, 7, 19, P).paint(x0, 6, 15, x1, 7, 16, S2)
         vols["pelvis"] = pv
     return vols
 
 
 # ============================================================================================== BELT
-# Body pelvis: x -7..7, y -3..5, z 23..29; belt x -7..7, y -4..6, z 27..29 (buckle y 6..7, pouch
-# y -5..-4); spine x -6..6 above. The arms hang at x >= 7 for y -4..5, so the band has arm notches
-# whose floor stays inside the body (x = 5), and pouches/holsters ride front and back.
-def belt_vols(tier, style):
+# Body pelvis x -7..7, y -4..5, z 17..22 (belt band z 20..22); waist x -6..6 above. Arms and
+# gloves hang at x >= 7 for y -5..5, so the band has arm notches whose floor stays inside the body.
+def belt_vols(c, w, tier, style):
     p = Vol()
     band = AC if style == "sash" else D
-    p.box(-8, -6, 26, 8, 8, 30, band).chamfer_z(-8, -6, 8, 8, 26, 30)
-    p.cut(5, -4, 26, 8, 5, 29).cut(-8, -4, 26, -5, 5, 29)                     # arm notches (floor inside the body)
-    p.cut(5, -4, 29, 8, 5, 30).cut(-8, -4, 29, -5, 5, 30)
-    p.cut(4, -3, 29, 5, 5, 30).cut(-5, -3, 29, -4, 5, 30)                     # clear of narrow waists
-    p.box(-2, 8, 26, 2, 9, 30, M if style != "sash" else AC)                  # buckle
-    p.box(-1, 9, 27, 1, 10, 29, EM if tier >= 1 else M)
-    p.paint(-8, -6, 29, 8, 8, 30, S2 if style != "sash" else AC)              # top edge
+    p.box(-8, -5, 19, 8, 7, 23, band).chamfer_z(-8, -5, 8, 7, 19, 23)
+    p.cut(6, -5, 19, 8, 6, 22).cut(-8, -5, 19, -6, 6, 22)                      # arm notches (pelvis ±7)
+    k = w - 1 if w >= 6 else w + 1       # top row: buried in a wide waist, or covering a narrow waist's hip ledge
+    p.cut(k, -5, 22, 8, 6, 23).cut(-8, -5, 22, -k, 6, 23)
+    p.box(-2, 7, 19, 2, 8, 23, M if style != "sash" else AC)                    # buckle
+    p.box(-1, 8, 20, 1, 9, 22, EM if tier >= 1 else M)
+    p.paint(-8, -5, 22, 8, 7, 23, S2 if style != "sash" else AC)               # top edge
     if style == "plain":
-        p.box(4, 8, 27, 5, 9, 29, S2).box(-5, 8, 27, -4, 9, 29, S2)           # belt loops
+        p.box(3, 7, 20, 4, 8, 22, S2).box(-4, 7, 20, -3, 8, 22, S2)             # loops
         return {"pelvis": p}
     if style == "sash":
-        p.box(-7, 8, 29, -4, 9, 33, AC).box(-6, 8, 25, -5, 9, 29, AC)         # sash knot + tail
-        p.box(3, 8, 27, 6, 9, 29, M)
+        p.box(-6, 7, 22, -4, 8, 25, AC).box(-6, 7, 16, -5, 8, 19, AC)           # sash knot + tail
+        p.box(3, 7, 20, 5, 8, 22, M)
         return {"pelvis": p}
     h = 3 if tier < 3 else 4
-    fronts = [-7, 4] if tier <= 1 else [-7, -5, 3, 5]
-    for x0 in fronts:                                                         # front pouches
-        w = 3 if tier <= 1 else 2
-        p.box(x0, 8, 30 - h, x0 + w, 10, 30, S2).paint(x0, 9, 29, x0 + w, 10, 30, P)
-    for x0 in (4, -8):                                                        # hip pouches (back quarters)
-        p.box(x0, -8, 26, x0 + 4, -6, 30, S2).paint(x0, -8, 29, x0 + 4, -6, 30, P)
-    p.box(-2, -8, 25, 2, -6, 30, S2).paint(-2, -8, 29, 2, -6, 30, P)          # back pouch
+    for x0 in ([-6, 3] if tier <= 1 else [-6, -4, 2, 4]):                       # front pouches
+        wd = 3 if tier <= 1 else 2
+        p.box(x0, 7, 23 - h, x0 + wd, 9, 23, S2).paint(x0, 8, 22, x0 + wd, 9, 23, P)
+    for x0 in (4, -8):                                                          # hip pouches (back quarters)
+        p.box(x0, -7, 19, x0 + 4, -5, 23, S2).paint(x0, -7, 22, x0 + 4, -5, 23, P)
+    p.box(-2, -7, 18, 2, -5, 23, S2).paint(-2, -7, 22, 2, -5, 23, P)          # back pouch
+    if tier >= 2:
+        p.paint(-8, 6, 20, 8, 7, 21, EM)                                        # front glow line
     if style == "tool":
-        p.box(8, -7, 18, 9, -6, 29, M).box(8, -8, 18, 9, -5, 20, M)           # wrench behind the hip
-        p.box(-9, -7, 19, -8, -6, 28, AC).box(-9, -7, 28, -8, -6, 30, D)      # screwdriver
-        p.box(-3, 10, 26, -1, 11, 29, EM)                                     # multimeter light
+        p.box(8, -7, 11, 9, -6, 21, M).box(8, -8, 11, 9, -5, 13, M)             # wrench behind the hip
+        p.box(-9, -7, 12, -8, -6, 20, AC).box(-9, -7, 20, -8, -6, 22, D)        # screwdriver
+        p.box(-3, 9, 20, -1, 10, 22, EM)
     if style == "medic":
-        p.box(-7, 10, 27, -4, 11, 28, AC).box(-6, 10, 26, -5, 11, 29, AC)     # red cross tab
+        p.box(-6, 9, 20, -3, 10, 21, AC).box(-5, 9, 19, -4, 10, 22, AC)         # red cross tab
     if style == "holster" or tier >= 2:
-        p.box(8, -8, 18, 11, -5, 27, D).paint(8, -8, 26, 11, -5, 27, M)       # holster behind the arm
+        p.box(8, -8, 11, 11, -5, 20, D).paint(8, -8, 19, 11, -5, 20, M)         # holster behind the arm
     if tier >= 3:
-        p.paint(-8, -6, 26, 8, 8, 27, M)                                      # armoured lower edge
-        p.box(-7, 10, 27, -3, 11, 29, P).box(3, 10, 27, 7, 11, 29, P)        # armoured pouch lids
+        p.paint(-8, -5, 19, 8, 7, 20, M)
+        p.box(-6, 9, 20, -2, 10, 22, P).box(2, 9, 20, 6, 10, 22, P)             # armoured pouch lids
     return {"pelvis": p}
 
 
 # ============================================================================================== BACK
-# Pack front face sits at y = -7: behind tier 0-2 chest armour (back face -6), flush on tier 3 (-7),
-# and clear of the bare body (back plate -5). Packs ride the chest bone (socket.back).
+# Pack front face at y = -7: behind the chest armour back (-6) and bridged to a bare body (-5) by a
+# harness plate that hides inside chest armour. Packs ride the chest bone (socket.back); tops stay
+# at or below z 36 because the chibi head (y -8..8) overhangs from z 37.
 def back_vols(kind, tier):
     p = Vol()
     b0 = -7
     ex = []
-    # harness plate between the pack and the back (hidden inside chest armour, bridges the gap on a bare body)
-    straps = lambda: p.box(-3, b0, 39, 3, -5, 42, D).paint(-3, b0, 41, 3, -5, 42, M)   # noqa: E731
+    harness = lambda: p.box(-3, b0, 31, 3, -5, 35, D).paint(-3, b0, 34, 3, -5, 35, M)   # noqa: E731
     if kind == "backpack":
         depth = {0: 4, 1: 5, 2: 6, 3: 7}[tier]
         W = {0: 5, 1: 6, 2: 6, 3: 7}[tier]
-        top = 42 + (tier >= 2)
-        bot = {0: 33, 1: 32, 2: 30, 3: 29}[tier]
-        p.box(-W, b0 - depth, bot, W, b0, top, P).chamfer_z(-W, b0 - depth, W, b0, bot, top)
-        p.box(-W + 1, b0 - depth - 1, bot + 1, W - 1, b0 - depth, top - 2, P)    # outer panel
-        p.paint(-W + 1, b0 - depth - 1, bot + 1, W - 1, b0 - depth, bot + 2, D)  # panel frame
-        p.paint(-W + 1, b0 - depth - 1, top - 3, W - 1, b0 - depth, top - 2, D)
-        p.paint(-W + 1, b0 - depth - 1, bot + 1, -W + 2, b0 - depth, top - 2, D)
-        p.paint(W - 2, b0 - depth - 1, bot + 1, W - 1, b0 - depth, top - 2, D)
-        p.paint(-W, b0 - depth, top - 1, W, b0, top, S2)                          # lid
-        p.paint(-W, b0 - depth, bot, W, b0, bot + 1, S2)                          # base
-        p.box(-W + 2, b0 - depth - 2, bot + 2, W - 2, b0 - depth - 1, bot + 5, S2)   # front pocket
-        p.paint(-W + 2, b0 - depth - 2, bot + 4, W - 2, b0 - depth - 1, bot + 5, AC)  # pocket flap
-        straps()
+        top, bot = 36, {0: 27, 1: 26, 2: 24, 3: 22}[tier]
+        yb = b0 - depth
+        p.box(-W, yb, bot, W, b0, top, P).chamfer_z(-W, yb, W, b0, bot, top)
+        p.box(-W + 1, yb - 1, bot + 1, W - 1, yb, top - 2, P)                          # outer panel
+        p.paint(-W + 1, yb - 1, bot + 1, W - 1, yb, bot + 2, D).paint(-W + 1, yb - 1, top - 3, W - 1, yb, top - 2, D)
+        p.paint(-W + 1, yb - 1, bot + 1, -W + 2, yb, top - 2, D).paint(W - 2, yb - 1, bot + 1, W - 1, yb, top - 2, D)
+        p.paint(-W, yb, top - 2, W, b0, top, S2)                                        # lid (2-vox)
+        p.box(-W + 2, yb - 2, bot + 2, W - 2, yb - 1, bot + 5, S2).paint(-W + 2, yb - 2, bot + 4, W - 2, yb - 1, bot + 5, AC)
+        harness()
         if tier >= 1:
-            p.box(W, b0 - depth + 1, bot + 1, W + 2, b0 - 1, top - 2, D)           # side bottle
-            p.box(-W - 1, b0 - depth + 1, bot + 2, -W, b0 - 1, top - 3, S2)
-            p.box(-1, b0 - depth - 1, top - 3, 1, b0 - depth, top - 2, EM)
+            p.box(W, yb + 1, bot + 1, W + 2, b0 - 1, top - 3, D)                       # side bottle
+            p.box(-W - 1, yb + 1, bot + 2, -W, b0 - 1, top - 4, S2)
+            p.box(-1, yb - 1, top - 4, 1, yb, top - 3, EM)
         if tier >= 2:
-            p.box(-W, b0 - depth - 1, bot, W, b0 - depth, bot + 1, M)
-            p.box(W - 3, b0 - depth - 2, top - 5, W - 1, b0 - depth - 1, top - 4, EM)
-            p.box(-W - 1, b0 - depth, top, W + 1, b0 - 1, top + 2, D).cut(-W + 1, b0 - depth + 1, top, W - 1, b0 - 2, top + 2)  # bedroll frame
+            p.paint(-W, yb, bot, W, b0, bot + 1, M)
+            p.box(W - 3, yb - 2, top - 6, W - 1, yb - 1, top - 4, EM)                   # glow panel
         if tier >= 3:
-            p.box(-W - 1, b0 - depth - 1, bot - 1, W + 1, b0 - 1, bot, D)
-            p.box(-W, b0 - depth - 2, bot + 6, W, b0 - depth - 1, bot + 7, AC)
-            p.box(W - 1, b0 - depth + 1, top + 2, W, b0 - depth + 2, top + 9, M)  # antenna
-            p.box(W - 1, b0 - depth + 1, top + 9, W, b0 - depth + 2, top + 10, EM)
+            p.box(-W - 1, yb - 1, bot - 1, W + 1, b0 - 1, bot, D)
+            p.box(-W + 1, yb - 2, bot + 6, W - 1, yb - 1, bot + 7, EM)                  # light bar
+            p.box(W - 1, yb + 1, top, W, yb + 2, top + 8, M).box(W - 1, yb + 1, top + 8, W, yb + 2, top + 9, EM)  # antenna
     elif kind == "oxygen":
         twin = tier >= 2
-        centres = [-3, 3] if twin else [0]
-        r = 3 if not twin else 2
-        for cx in centres:
-            x0, x1 = cx - r, cx + r
-            yb = b0 - 2 * r
-            p.box(x0, yb, 31, x1, b0, 43, S2).chamfer_z(x0, yb, x1, b0, 31, 43)       # tank
-            p.box(x0 + 1, yb + 1, 43, x1 - 1, b0 - 1, 45, M)                           # valve
-            p.box(cx - 1 + (not twin), yb + 2, 45, cx + 1 - (not twin) + (not twin), b0 - 2, 46, AC)
-            p.paint(x0, yb, 34, x1, b0, 35, AC).paint(x0, yb, 40, x1, b0, 41, AC)      # bands
-            p.box(cx - 1, yb - 1, 36, cx + 1, yb, 39, EM)                              # gauge window
-        p.box(-6, b0 - 1, 32, 6, b0, 42, D) if twin else p.box(-4, b0 - 1, 32, 4, b0, 42, D)   # frame plate
-        p.box(-1, b0 - 2 * r - 1, 30, 1, b0 - 1, 31, D)                                # hose manifold
-        straps()
+        for cx in ([-3, 3] if twin else [0]):
+            r = 2 if twin else 3
+            x0, x1, yb = cx - r, cx + r, b0 - 2 * r
+            p.box(x0, yb, 25, x1, b0, 35, S2).chamfer_z(x0, yb, x1, b0, 25, 35)          # tank
+            p.box(x0 + 1, yb + 1, 35, x1 - 1, b0 - 1, 37, M)                              # valve
+            p.paint(x0, yb, 27, x1, b0, 28, AC).paint(x0, yb, 33, x1, b0, 34, AC)         # bands
+            p.box(cx - 1, yb - 1, 29, cx + 1, yb, 32, EM)                                 # gauge window
+        p.box(-6 if twin else -4, b0 - 1, 26, 6 if twin else 4, b0, 35, D)               # frame plate
+        p.box(-1, b0 - 5, 24, 1, b0 - 1, 25, D)                                          # hose manifold
+        harness()
     elif kind == "jetpack":
         W = 6 if tier < 3 else 7
         depth = 5 if tier < 3 else 6
-        p.box(-W + 2, b0 - depth, 32, W - 2, b0, 43, P).chamfer_z(-W + 2, b0 - depth, W - 2, b0, 32, 43)   # fuel core
-        p.box(-W + 3, b0 - depth - 1, 34, W - 3, b0 - depth, 41, S2)
-        p.box(-1, b0 - depth - 2, 38, 1, b0 - depth - 1, 40, EM)
-        for sx in (-1, 1):                                                              # twin thrusters
+        p.box(-W + 2, b0 - depth, 25, W - 2, b0, 36, P).chamfer_z(-W + 2, b0 - depth, W - 2, b0, 25, 36)   # fuel core
+        p.box(-W + 3, b0 - depth - 1, 27, W - 3, b0 - depth, 34, S2)
+        p.box(-1, b0 - depth - 2, 30, 1, b0 - depth - 1, 33, EM)
+        for sx in (-1, 1):                                                                 # twin thrusters
             x0 = W - 3 if sx > 0 else -W
             x1 = x0 + 3
-            p.box(x0, b0 - depth + 1, 30, x1, b0 - 1, 42, S2).chamfer_z(x0, b0 - depth + 1, x1, b0 - 1, 30, 42)
-            p.paint(x0, b0 - depth + 1, 41, x1, b0 - 1, 42, AC)
-            p.box(x0, b0 - depth + 1, 27, x1, b0 - 1, 30, M)                            # nozzle bell
-            p.box(x0 + 1, b0 - depth + 2, 26, x1 - 1, b0 - 2, 27, EM)                   # hot throat
-            ex.append(("chest", ((x0 + x1) / 2, (b0 - depth + 1 + b0 - 1) / 2, 26), 1.5))
+            p.box(x0, b0 - depth + 1, 23, x1, b0 - 1, 35, S2).chamfer_z(x0, b0 - depth + 1, x1, b0 - 1, 23, 35)
+            p.paint(x0, b0 - depth + 1, 33, x1, b0 - 1, 35, AC)
+            p.box(x0, b0 - depth + 1, 20, x1, b0 - 1, 23, M)                               # nozzle bell
+            p.box(x0 + 1, b0 - depth + 2, 19, x1 - 1, b0 - 2, 20, EM)                      # hot throat
+            p.paint(x0, b0 - depth + 1, 29, x1, b0 - depth + 2, 30, EM)                    # side glow
+            ex.append(("chest", ((x0 + x1) / 2, (b0 - depth + 1 + b0 - 1) / 2, 19), 1.5))
         if tier >= 3:
-            p.box(-W - 1, b0 - 3, 38, -W, b0 - 1, 44, D).box(W, b0 - 3, 38, W + 1, b0 - 1, 44, D)   # stabiliser fins
-            p.box(-2, b0 - depth - 1, 43, 2, b0 - 1, 45, D)
-        straps()
+            p.box(-W - 1, b0 - 3, 30, -W, b0 - 1, 36, D).box(W, b0 - 3, 30, W + 1, b0 - 1, 36, D)   # fins
+        harness()
     elif kind == "medpack":
-        p.box(-6, b0 - 5, 31, 6, b0, 43, AC).chamfer_z(-6, b0 - 5, 6, b0, 31, 43)
-        p.box(-5, b0 - 6, 32, 5, b0 - 5, 41, S2)
-        p.box(-1, b0 - 7, 33, 1, b0 - 6, 40, AC).box(-3, b0 - 7, 35, 3, b0 - 6, 37, AC)   # cross
-        p.paint(-6, b0 - 5, 42, 6, b0, 43, M)
-        p.box(4, b0 - 6, 40, 5, b0 - 5, 41, EM)
-        straps()
+        p.box(-6, b0 - 5, 24, 6, b0, 36, AC).chamfer_z(-6, b0 - 5, 6, b0, 24, 36)
+        p.box(-5, b0 - 6, 25, 5, b0 - 5, 34, S2)
+        p.box(-1, b0 - 7, 26, 1, b0 - 6, 33, AC).box(-3, b0 - 7, 28, 3, b0 - 6, 31, AC)   # cross (2-vox arms)
+        p.paint(-6, b0 - 5, 34, 6, b0, 36, M)
+        p.box(3, b0 - 6, 32, 5, b0 - 5, 34, EM)
+        harness()
     elif kind == "radio":
-        p.box(-5, b0 - 5, 31, 5, b0, 43, P).chamfer_z(-5, b0 - 5, 5, b0, 31, 43)
-        p.box(-4, b0 - 6, 33, 4, b0 - 5, 40, D).paint(-3, b0 - 6, 38, -1, b0 - 5, 39, EM)
-        p.box(3, b0 - 3, 43, 4, b0 - 2, 57, M).box(3, b0 - 3, 57, 4, b0 - 2, 58, EM)      # whip antenna
-        p.box(-4, b0 - 3, 43, -2, b0 - 1, 45, M)                                            # connector
-        p.paint(-5, b0 - 5, 36, 5, b0, 37, AC)
-        straps()
+        p.box(-5, b0 - 5, 24, 5, b0, 36, P).chamfer_z(-5, b0 - 5, 5, b0, 24, 36)
+        p.box(-4, b0 - 6, 26, 4, b0 - 5, 33, D).paint(-3, b0 - 6, 31, -1, b0 - 5, 32, EM)
+        p.box(3, b0 - 3, 36, 4, b0 - 2, 50, M).box(3, b0 - 3, 50, 4, b0 - 2, 51, EM)       # whip antenna
+        p.paint(-5, b0 - 5, 29, 5, b0, 30, AC)
+        harness()
     elif kind == "toolpack":
-        p.box(-6, b0 - 5, 30, 6, b0, 42, P).chamfer_z(-6, b0 - 5, 6, b0, 30, 42)
-        p.box(-5, b0 - 6, 31, 5, b0 - 5, 36, D).paint(-5, b0 - 6, 35, 5, b0 - 5, 36, AC)
-        p.paint(-6, b0 - 5, 41, 6, b0, 42, S2)
-        p.box(6, b0 - 5, 34, 8, b0 - 1, 45, M).box(6, b0 - 4, 45, 8, b0 - 2, 46, AC)          # welding torch rack
-        p.box(-8, b0 - 4, 32, -6, b0 - 1, 40, AC).paint(-8, b0 - 4, 35, -6, b0 - 1, 37, D)    # cable reel
-        p.box(-2, b0 - 6, 38, 2, b0 - 5, 39, EM)
-        straps()
+        p.box(-6, b0 - 5, 23, 6, b0, 35, P).chamfer_z(-6, b0 - 5, 6, b0, 23, 35)
+        p.box(-5, b0 - 6, 24, 5, b0 - 5, 29, D).paint(-5, b0 - 6, 28, 5, b0 - 5, 29, AC)
+        p.paint(-6, b0 - 5, 33, 6, b0, 35, S2)
+        p.box(6, b0 - 5, 27, 8, b0 - 1, 37, M).box(6, b0 - 4, 37, 8, b0 - 2, 38, AC)       # torch rack
+        p.box(-8, b0 - 4, 25, -6, b0 - 1, 33, AC).paint(-8, b0 - 4, 28, -6, b0 - 1, 30, D)   # cable reel
+        p.box(-2, b0 - 6, 31, 2, b0 - 5, 32, EM)
+        harness()
     return {"chest": p}, ex
 
 
-# ============================================================================================ CATALOG
 CHEST_STYLES = [
     ("jacket", 0, "jacket", "Crew jacket"), ("harness", 1, "harness", "Light harness vest"),
     ("plate", 2, "plate", "Standard plate carrier"), ("heavy", 3, "plate", "Heavy assault cuirass"),
@@ -660,6 +676,7 @@ MASS = {"chest": [1.2, 3.0, 6.5, 11.0], "shoulders": [0.2, 1.0, 2.2, 4.0], "glov
         "back": [0.8, 1.2, 2.4, 4.0]}
 GRID = {"chest": (3, 3), "shoulders": (2, 2), "gloves": (2, 1), "boots": (2, 2), "legs": (2, 3), "belt": (2, 1),
         "back": (3, 4)}
+HIDES = {"gloves": ["hands"], "boots": ["feet"]}   # CHAR-BODY regions a part replaces
 SOCKET = {"chest": "socket.chest", "shoulders": "socket.shoulder", "gloves": "socket.glove", "boots": "socket.foot",
           "legs": None, "belt": "socket.belt", "back": "socket.back"}
 
@@ -668,7 +685,8 @@ def build_catalog():
     parts = []
 
     def add(pid, slot, tier, style, name, fits, exhaust=()):
-        parts.append(Part(pid, slot, tier, style, name, fits, SOCKET[slot], MASS[slot][tier], GRID[slot], list(exhaust)))
+        parts.append(Part(pid, slot, tier, style, name, fits, SOCKET[slot], MASS[slot][tier], GRID[slot], list(exhaust),
+                          list(HIDES.get(slot, ()))))
 
     for sfx, t, st, name in CHEST_STYLES:
         fits = {}
@@ -687,7 +705,8 @@ def build_catalog():
     for sfx, t, st, name in LEG_STYLES:
         add(f"armor.legs.{sfx}", "legs", t, st, name, {"all": legs_vols(t, st)})
     for sfx, t, st, name in BELT_STYLES:
-        add(f"armor.belt.{sfx}", "belt", t, st, name, {"all": belt_vols(t, st)})
+        add(f"armor.belt.{sfx}", "belt", t, st, name,
+            {fn: belt_vols(f["chest"], f["waist"], t, st) for fn, f in FITS.items()})
     for sfx, kind, t, name in BACK_STYLES:
         vols, ex = back_vols(kind, t)
         add(f"armor.back.{sfx}", "back", t, kind, name, {"all": vols}, ex)
@@ -798,6 +817,8 @@ def validate(parts):
     """Structural checks shared by the unit test and the exporter."""
     ids = [p.id for p in parts]
     assert len(ids) == len(set(ids)), "duplicate part ids"
+    for p in parts:
+        assert set(p.hides) <= set(BODY_REGIONS), (p.id, p.hides)
     for p in parts:
         assert p.slot in EQUIPMENT_SLOTS and p.tier in TIERS, p.id
         assert set(p.fits) in ({"all"}, set(FITS)), (p.id, list(p.fits))
