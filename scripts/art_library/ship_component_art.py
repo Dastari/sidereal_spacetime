@@ -24,7 +24,7 @@ def install(K):
         # linear RGB; renders to roughly #ad93cd / #2f2551 / #d42d4f under the kit grade
         primary=(0.46, 0.28, 0.72), secondary=(0.034, 0.020, 0.115), accent=(0.66, 0.022, 0.075),
         trim=(0.060, 0.048, 0.25), metal=(0.56, 0.44, 0.74), dark=(0.010, 0.006, 0.026),
-        emit_a=((0.03, 0.42, 1.0), 3.2), emit_b=((1.0, 0.36, 0.035), 3.0), glass=(0.25, 0.55, 1.0),
+        emit_a=((0.02, 0.40, 1.0), 4.2), emit_b=((1.0, 0.33, 0.02), 4.0), glass=(0.25, 0.55, 1.0),
         wear=0.0, wear_col=(0.05, 0.04, 0.05), on_dark=(0.85, 0.82, 0.92), on_light=(0.06, 0.05, 0.12),
         name="ORION", number="OC-01", emblem="planet")
     K.THEMES["orion-worn"] = dict(K.THEMES["orion"], wear=0.45, wear_col=(0.09, 0.06, 0.05))

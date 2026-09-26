@@ -134,37 +134,37 @@ def exploded_weapons(K, exporter, comps, sc, cam, themes, base_mats, lm, out):
         whole = K.Piece("whole", "mount", "top", parts[0].size)
         for q in parts:
             whole.boxes += q.boxes
-        ob = place_catalog_boxes(exporter, exporter.to_catalog(whole, "top", 0), cid, base_mats, coll)
+        ob = place_catalog_boxes(exporter, exporter.clip_boxes(exporter.to_catalog(whole, "top", 0), c["mount"]["envelopeM"]), cid, base_mats, coll)
         themes.apply(ob)
         ob.rotation_euler = (0, 0, math.radians(TOP_YAW))
         W = K.SIZE_CELLS[c["sizeClass"]]
         ob.location = (0, 0, 0)
         objs.append(ob)
         # exploded: parts lifted along z, stacked at x = +2.6 W
-        ex = 2.9 * W + 1.2
+        ex = 2.3 * W + 0.8
         z = 0.0
         for q, label in zip(parts, labels):
             if not q.boxes:
                 continue
             zs = [b[2] for b in q.boxes] + [b[5] for b in q.boxes]
             z0, z1 = min(zs), max(zs)
-            po = place_catalog_boxes(exporter, exporter.to_catalog(q, "top", 0), q.id, base_mats, coll)
+            po = place_catalog_boxes(exporter, exporter.clip_boxes(exporter.to_catalog(q, "top", 0), c["mount"]["envelopeM"]), q.id, base_mats, coll)
             themes.apply(po)
             po.rotation_euler = (0, 0, math.radians(TOP_YAW))
             po.location = (ex, 0, z - z0 * K.T)
             objs.append(po)
             mid = z + (z1 - z0) * K.T / 2
-            lab = S.text(label, (ex + 1.3 * W + 0.4, -0.6 * W, mid), 0.13 * W + 0.12, lm["label"], coll, ISO)
+            lab = S.text(label, (ex + 0.9 * W + 0.2, -0.4 * W, mid), 0.12 * W + 0.1, lm["label"], coll, ISO)
             lab.data.align_x = "LEFT"
-            z += (z1 - z0) * K.T + 0.35 * W + 0.15
-        S.text("COMPLETE", (0, -1.4 * W - 0.3, 0), 0.14 * W + 0.12, lm["label.dim"], coll, ISO)
-        S.text("EXPLODED VIEW", (ex, -1.4 * W - 0.3, 0), 0.14 * W + 0.12, lm["label.dim"], coll, ISO)
-        t = S.text(f"{title}  {c['sizeClass']}", (-1.2 * W, 1.2 * W, z + 0.4), 0.22 * W + 0.1, lm["title"], coll, ISO)
+            z += (z1 - z0) * K.T + 0.22 * W + 0.1
+        S.text("COMPLETE", (0, -1.0 * W - 0.2, 0), 0.14 * W + 0.12, lm["label.dim"], coll, ISO)
+        S.text("EXPLODED VIEW", (ex, -1.0 * W - 0.2, 0), 0.14 * W + 0.12, lm["label.dim"], coll, ISO)
+        t = S.text(f"{title}  {c['sizeClass']}", (-1.0 * W, 0.8 * W, z + 0.2), 0.22 * W + 0.1, lm["title"], coll, ISO)
         t.data.align_x = "LEFT"
-        t2 = S.text(sub + "  ·  " + S.key_stat(c), (-1.2 * W, 1.2 * W, z - 0.05 * W), 0.12 * W + 0.08, lm["label.dim"], coll, ISO)
+        t2 = S.text(sub + "  ·  " + S.key_stat(c), (-1.0 * W, 0.8 * W, z - 0.2 * W), 0.12 * W + 0.08, lm["label.dim"], coll, ISO)
         t2.data.align_x = "LEFT"
-        g = grid(coll, -1.6 * W, -1.6 * W, ex + 1.6 * W, 1.6 * W, grid_material())
-        objs.append(crew(K, themes, coll, (-1.4 * W - 0.6, 0.6 * W, 0)))
+        g = grid(coll, -1.1 * W, -0.9 * W, ex + 0.8 * W, 0.9 * W, grid_material())
+        objs.append(crew(K, themes, coll, (-1.0 * W - 0.4, 0.4 * W, 0)))
         objs += [o for o in coll.objects if o.type == "FONT"] + [g]
         path = out / f"exploded_{c['kind']}.png"
         shoot(sc, cam, coll, objs, (1600, 1000), path)
@@ -180,8 +180,7 @@ def damage_row(K, exporter, comps, sc, cam, themes, base_mats, lm, out, ids=("au
     y = 0.0
     for cid in ids:
         c = comps[cid]
-        piece, conv, zc = exporter.build_piece(c)
-        boxes = exporter.to_catalog(piece, conv, zc)
+        boxes, conv = exporter.catalog_boxes(c)
         lo, hi = c["mount"]["envelopeM"]
         span = max(hi[0] - lo[0], hi[1] - lo[1]) + 1.6
         for i, st in enumerate(states):
@@ -211,8 +210,7 @@ def variants_row(K, exporter, comps, sc, cam, themes, base_mats, lm, out, cid="a
     sc.collection.children.link(coll)
     objs = []
     c = comps[cid]
-    piece, conv, zc = exporter.build_piece(c)
-    boxes = exporter.to_catalog(piece, conv, zc)
+    boxes, conv = exporter.catalog_boxes(c)
     names = ("orion", "federation", "riftjack", "aurelian")
     for i, th in enumerate(names):
         ob = place_catalog_boxes(exporter, boxes, f"{cid}.{th}", base_mats, coll)

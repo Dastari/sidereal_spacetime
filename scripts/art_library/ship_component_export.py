@@ -860,9 +860,27 @@ def boxes_mesh(name, boxes):
     return me
 
 
-def component_object(component, mats, coll, bevel=True):
+def clip_boxes(boxes, envelope):
+    """Clips catalog-frame texel boxes to the catalog envelope (metres). The design envelope is
+    authoritative; clipping only trims detail plates that stand proud of the footprint sides."""
+    lo = [v * 16 for v in envelope[0]]
+    hi = [v * 16 for v in envelope[1]]
+    out = []
+    for x0, y0, z0, x1, y1, z1, s in boxes:
+        a = (max(x0, lo[0]), max(y0, lo[1]), max(z0, lo[2]))
+        b = (min(x1, hi[0]), min(y1, hi[1]), min(z1, hi[2]))
+        if all(b[i] - a[i] > 1e-6 for i in range(3)):
+            out.append((*a, *b, s))
+    return out
+
+
+def catalog_boxes(component):
     piece, conv, zc = build_piece(component)
-    boxes = to_catalog(piece, conv, zc)
+    return clip_boxes(to_catalog(piece, conv, zc), component["mount"]["envelopeM"]), conv
+
+
+def component_object(component, mats, coll, bevel=True):
+    boxes, conv = catalog_boxes(component)
     me = boxes_mesh(component["id"], boxes)
     for m in mats:
         me.materials.append(m)
