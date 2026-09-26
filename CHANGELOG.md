@@ -1,3 +1,10 @@
+# Unreleased — fed.s.wren assignable on the live authority (2026-09-26)
+
+- Backport the prefab ship path from `feat/prefab-ships` to the live authority base. It covers the construction grammar, the ship-components catalog, prefab construction and flight, non-Wayfarer game ship access, and the prefab pilot pose. It is adapted to IFCS phase 3 (no actuator supply input).
+- Register only `fed.s.wren` through the operator assignment spawner registry. Its catalog, blueprint and flight hashes are pinned, and the spawner rolls back on drift. Explicit spawn poses must name an existing system. The ship is named after the prefab.
+- The isolated ship-wipe rehearsal now assigns the Wren to the owner, then walks to the seat, sits and flies.
+- Candidate only: nothing executed on live. The live client cannot render the prefab yet; that needs a separate client PR.
+
 # Unreleased — operator ship wipe and prefab assignment (2026-09-25)
 
 - Add operator-only, operation-ID-guarded ship maintenance on the live authority composition: starter-ship policy, full player-ship wipe with dry-run, archive and map-preservation checks, and prefab assignment through a spawner registry. Publishing changes nothing until the operator acts.

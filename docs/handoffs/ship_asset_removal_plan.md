@@ -100,16 +100,25 @@ registerPrefabShipSpawner({
 
 - **What the spawner must do:** board the **existing** awaiting character, all in one transaction. It updates `character.shipId/localX/localY` and inserts `construction_location`, `input`, `world_admission` and an active `game_ship_access` row.
 - **What the spawner must never do:** insert a character, a personal kit or a starter receipt, or write map tables.
-- **SHIPS-PREFABS' hook:** their `createPrefabShipAuthority(ctx, { owner, characterId, prefabId, name, pose })` is intended to be registered through this interface.
-- **Registered today:** only `legacy-wayfarer-r002`. It is refused unless `allowLegacy` is set; it exists for unit tests and the legacy regression smoke.
+- **SHIPS-PREFABS' hook:** `installPrefabShip` in `packages/world/src/prefab-ship-authority.ts`, registered by `packages/world/src/prefab-ship-spawners.ts` (imported from `index.ts` right after `./ship-assign`).
+- **Registered today** (branch `feat/prefab-wren-live`, stacked on this PR):
+  - `fed.s.wren` (Wren, the owner's pick). Catalog revision `ship-components-v1@1`; blueprint sha256 `8c3c2f6d104d080d233f9cf70c60f9503ef8b9e0dccf6c14773a729c2b1eb7a3`; flight definition sha256 `e79173313d2abb22cbed92b1a21ff0b81c1f0386d6a448bf76281c2b7e471c59`. The pins live in `prefab-ship-pins.ts`. A golden test asserts they equal the current derivation. After installing, the spawner rechecks the installed blueprint and flight hashes and rolls back on drift. The ship is named "Wren", not after the character.
+  - `legacy-wayfarer-r002`. It is refused unless `allowLegacy` is set; it exists for unit tests and the legacy regression smoke.
+  - The other prefabs (`rj.s.jackal`, `au.s.lumen`, …) ship as content but are not registered. Each needs its own pin and smoke.
 
-**Integration still needed before the owner's ship can be assigned on live.** SHIPS-PREFABS stacks on `ifcs-update`, which is `cd09510c` plus IFCS phases 4–6 plus R16. The live authority is `cd09510c` plus the solar, Studio and Genesis overlays, and this work stacks on it. One of these is required:
-- **(a) A reconciled release:** live overlays + IFCS 4–6 + R16 + prefab work + this removal work. It must be rehearsed as an additive `--delete-data=never` upgrade of the live module, with `npm run smoke` and `npm run smoke:ship-wipe`.
-- **(b) A backport:** port the prefab compile/spawn hook onto `release/live-authority-20260921`.
+**Integration done by the backport, option (b).** `feat/prefab-wren-live` ports the prefab compile/spawn path from `feat/prefab-ships` onto this live base:
+- grammar, component catalog, prefab construction and flight;
+- non-Wayfarer game ship access (the `trusted-prefab:` blueprint ID with the trusted workspace);
+- the prefab flight resolver/writer/input branch;
+- the prefab pilot pose.
 
-The hook also needs:
-- a generic path that qualifies non-Wayfarer game ship access and flight (`sim/game-ship-access.ts:79-81` and the flight resolver accept only Wayfarer hashes on live);
-- client rendering of the prefab through the native construction scene.
+It is adapted to IFCS phase 3, which has no per-actuator `supply` input.
+
+**Still needed for the owner to see the Wren in the game:** the live client (`release/live-client-20260922`) cannot render it yet. That needs a separate client PR with:
+- the prefab ship renderer (`packages/render/src/prefab-ship/*` on `feat/prefab-ships`);
+- publication of the ship-kit and ship-component GLBs.
+
+Until then an assigned Wren is authoritative (it walks, seats and flies in the smoke), but the client shows no hull for it.
 
 ## Client: zero ships and retired assets
 
@@ -178,7 +187,8 @@ This is branch `feat/ship-removal-client`.
 | Owner player view | Same character UUID, no ship, same 5 personal item UUIDs; re-entry and kit claim succeed; movement is inert |
 | Archived pistol and scanner | Present in `ship_wipe_archive` |
 | Scheduled world step | Timer retained, 0 `step_world` errors. `stepSharedWorld` writes no clock row for idle samples, so `last_simulation_tick` does not advance with zero ships; this is expected and not a failure. |
-| Assignment | `fed.s.wren` refused as not registered in this authority; legacy Wayfarer refused as assignment and as starter; the character stays awaiting a ship |
+| Assignment (this PR) | `fed.s.wren` refused as not registered in this authority; legacy Wayfarer refused as assignment and as starter; the character stays awaiting a ship |
+| Assignment (`feat/prefab-wren-live`, rehearsal `wren-r001`) | Refused: unregistered `rj.s.jackal`, a stale catalog revision, and the legacy Wayfarer. `fed.s.wren` assigned at a berth: same character UUID, personal kit preserved, ship "Wren", compiled flight ready (18 723 kg, 10 actuators). The character walked a 5-waypoint door-aware route to the derived pilot approach, took the seat, reached 3.96 m/s, and turned 0.056 rad |
 
 Evidence: `ship-wipe-rehearsal-r005.json` and `rehearsal-r005-{seed,wipe}.log` in `/root/sidereal-progress/ships-removal/`.
 
@@ -192,7 +202,8 @@ Evidence: `ship-wipe-rehearsal-r005.json` and `rehearsal-r005-{seed,wipe}.log` i
 ## Risks and gaps
 
 - **New players wait for a ship.** By default, after this module is published, new accounts get no ship until an operator assigns one. The legacy Wayfarer is never created again.
-- **No real small prefab can be assigned on live yet.** It depends on SHIPS-PREFABS registering a spawner that the live authority can qualify. Until then the owner's account stays shipless after the wipe; only the legacy stand-in works.
+- **The live client cannot render a prefab yet.** With `feat/prefab-wren-live`, `fed.s.wren` can be assigned and flown on the live authority. The client needs the prefab renderer and the ship-kit/component GLB publication in a separate client PR before the owner can see the hull.
+- **A starter prefab on a database without a system:** a berth spawn creates the canonical system if it is missing, and `boardPrefabShip` refuses map writes. Live already has the system, so live is unaffected; this only matters for a brand-new database.
 - **Identity linking needs a ship:** `request_identity_link` and `accept_identity_link` require exactly one ship. Awaiting-ship characters cannot migrate from a development identity to OIDC until they have a ship. Accounts that are already linked are unaffected.
 - **Passengers aboard at wipe time** lose their visit rows along with every ship. Their characters enter the awaiting-ship state like everyone else.
 - **Not seeded in the rehearsal:** stairs, traversal, airlocks, passengers and cargo carriers. Their rows are covered by whole-table deletion and the unit fixture, not by live-like data.

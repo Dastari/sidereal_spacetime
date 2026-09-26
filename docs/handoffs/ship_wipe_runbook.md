@@ -26,7 +26,7 @@
   7. Apply.
   8. Verify.
   9. Deploy the client.
-  10. Assign the owner's prefab (once one is registered).
+  10. Assign the owner's prefab (`fed.s.wren`, registered by `feat/prefab-wren-live`).
 
   The new client must not go live before the wipe, because existing Wayfarer scenes need the retired catalogs. The old client should not stay live long after it.
 
@@ -35,9 +35,10 @@
 - **Owner confirmation:** the owner has confirmed the wipe in writing (message or issue). An agent's judgement is not confirmation.
 - **Authority PR:** `feat/ship-removal-operator-tools` has been reviewed and merged into `release/live-authority-20260921`, or the coordinator explicitly uses the PR head.
 - **Owner's starter pick:**
-  - Candidates from SHIPS-PREFABS: `fed.s.wren`, `rj.s.jackal`, `au.s.lumen`.
-  - Step 10 also needs SHIPS-PREFABS to have registered that prefab with `registerPrefabShipSpawner` in a live-compatible authority, recording its `catalogRevision`. See the plan for the integration that is still open.
-  - Without it, stop after step 9. The owner's account then stays shipless; that is safe.
+  - The owner picked `fed.s.wren` (Wren).
+  - It is registered in the live-compatible authority by `feat/prefab-wren-live` (stacked on this PR) with catalog revision `ship-components-v1@1`.
+  - Step 10 needs that module published. Without it, stop after step 9. The owner's account then stays shipless; that is safe.
+  - The live client still cannot draw the Wren hull (see the plan). The ship is authoritative and flyable, but it is invisible until the client PR lands.
   - **Never** assign the legacy stand-in `legacy-wayfarer-r002` on live.
 - **Timing:** choose a quiet window. Connected players see their ship disappear immediately at step 7.
 
@@ -194,7 +195,7 @@ These commands restart only the public-client service. Then verify:
 
 The Studio (dashboard) deployment is unchanged; it still publishes the legacy assets for its tools.
 
-## 10. Assign the owner's prefab ship (after SHIPS-PREFABS registers it)
+## 10. Assign the owner's prefab ship (`fed.s.wren`)
 
 Identify the owner's main character, confirm it with the owner by name and account, and check that `ship_id` is `''`:
 
@@ -203,7 +204,7 @@ Identify the owner's main character, confirm it with the owner by name and accou
   sidereal-spacetime-dev "SELECT id, name, owner, ship_id FROM character"
 python3 scripts/ship_wipe.py assign --server http://127.0.0.1:3100 --database sidereal-spacetime-dev \
   --operation-id live-20260926-assign-owner --character-id <owner character id> \
-  --prefab-id <owner-picked prefab id> --catalog-revision <that prefab's catalogRevision> \
+  --prefab-id fed.s.wren --catalog-revision ship-components-v1@1 \
   --spawn-pose '{"kind":"berth"}'
 ```
 
@@ -217,6 +218,8 @@ python3 scripts/ship_wipe.py assign --server http://127.0.0.1:3100 --database si
   - map row counts are unchanged.
 
   Anything else rolls back.
+- **Spawner checks:** the Wren spawner also refuses a module whose catalog, blueprint or flight definition hash differs from its pins in `packages/world/src/prefab-ship-pins.ts`.
+- **Ship name:** the ship is named "Wren".
 - **Replay:** re-running the same command is a no-op.
 - **Final check:** the owner signs in and sees the ship.
 
@@ -224,7 +227,7 @@ python3 scripts/ship_wipe.py assign --server http://127.0.0.1:3100 --database si
 
 ```sh
 python3 scripts/ship_wipe.py policy --server … --database … --operation-id live-…-policy-starter \
-  --starter-prefab-id <prefab id> --catalog-revision <rev>
+  --starter-prefab-id fed.s.wren --catalog-revision ship-components-v1@1
 ```
 
 ## Rollback and recovery
