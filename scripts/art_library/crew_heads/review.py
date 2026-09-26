@@ -40,14 +40,29 @@ def palette_hex(cat, kind, pid, fallback):
     return fallback
 
 
-def resolve(cat, spec):
-    """Mirror of resolveHeadLoadout() in packages/content/src/crew-heads.ts (review only)."""
+VARIANT_FOR = {"male": "m_classic", "female": "f_classic"}
+
+
+def normalize(spec):
+    """Accept the legacy baseFace shorthand ("male_adult") alongside head / age / faceVariant."""
+    spec = dict(spec)
+    if "baseFace" in spec:
+        sex, age = spec.pop("baseFace").split("_")
+        spec.setdefault("head", sex)
+        spec.setdefault("age", age)
+    spec.setdefault("head", "male")
+    spec.setdefault("age", "adult")
+    spec.setdefault("faceVariant", VARIANT_FOR[spec["head"]])
+    return spec
+
+
+def resolve(cat, faces, spec):
+    """Mirror of resolveHeadLoadout() + resolveFaceFrames() in packages/content/src/crew-heads.ts (review only)."""
+    spec = normalize(spec)
     acc = by_id(cat["accessories"])
     hel = by_id(cat["helmets"])
     msk = by_id(cat["masks"])
     det = by_id(cat["details"])
-    base = spec.get("baseFace", "male_adult")
-    expr = by_id(cat["expressions"])[spec.get("expression", "neutral")]
     wearing = [acc[a] for a in spec.get("accessories", [])]
     if spec.get("helmet"):
         wearing.append(hel[spec["helmet"]])
@@ -60,25 +75,25 @@ def resolve(cat, spec):
         if HAIR_ORDER.index(m) > HAIR_ORDER.index(mode):
             mode = m
         hides |= set(w.get("hides", []))
-    skin = palette_hex(cat, "skin", spec.get("skin", "tan"), "#b8774f")
+    skin = palette_hex(cat, "skin", spec.get("skin", "tan"), "#c08968")
     hair = palette_hex(cat, "hair", spec.get("hairColor", "dark_brown"), "#4d3024")
     fh = palette_hex(cat, "hair", spec.get("facialHairColor") or spec.get("hairColor", "dark_brown"), hair)
     eye = palette_hex(cat, "eye", spec.get("eyes", "brown"), "#6b3f22")
+    age_mark = by_id(cat["ages"])[spec["age"]]["ageMark"]
+    mark = next((det[d]["atlasMark"] for d in spec.get("details", []) if det[d]["kind"] == "marking"), "none")
+    frames = faces.frames({k: spec[k] for k in ("expression", "viseme", "blink", "look") if spec.get(k) is not None},
+                          age_mark, mark, "mouth" in hides)
+    face_img = faces.image(spec["faceVariant"], frames, skin, eye.split(":")[-1], fh)
     base_pal = {"skin": skin, "hair": hair, "eye": eye}
-    face_pal = {**base_pal, "emit": "soft:" + cat["faceSlotDefaults"]["emit"],
-                "accent": mix(skin, cat["blush"]["hex"], cat["blush"]["amount"])}
     theme = spec.get("theme", {})
-    nodes = [(f"head.{base}", face_pal)]
-    nodes.append((f"face.{base}.eyes.{expr['eyes']}", face_pal))
-    nodes.append((f"face.{base}.brows.{expr['brows']}", {**face_pal, "hair": shade(fh, BROW_SHADE)}))
-    if "mouth" not in hides:
-        nodes.append((f"face.{base}.mouth.{expr['mouth']}", face_pal))
+    nodes = [(f"head.{spec['head']}", {**base_pal, "face": face_img.name})]
     if spec.get("hair") and mode != "hidden":
         nodes.append((f"hair.{spec['hair']}.{mode}", base_pal))
     if spec.get("facialHair") and "facialHair" not in hides:
         nodes.append((f"facialhair.{spec['facialHair']}", {**base_pal, "hair": fh}))
     for d in spec.get("details", []):
-        nodes.append((f"detail.{d}", {**base_pal, **det[d].get("slotDefaults", {})}))
+        if det[d]["kind"] == "overlay":
+            nodes.append((f"detail.{d}", {**base_pal, **det[d].get("slotDefaults", {})}))
     for a in spec.get("accessories", []):
         nodes.append((f"acc.{a}", {**base_pal, **acc[a].get("slotDefaults", {}), **theme}))
     if spec.get("helmet"):
@@ -93,9 +108,12 @@ def resolve(cat, spec):
     return nodes
 
 
+FACES = {}
+
+
 def place(cat, lib, coll, spec, loc, rot_z, collar=True, tilt=(0.0, 0.0)):
     obs = []
-    for node, pal in resolve(cat, spec):
+    for node, pal in resolve(cat, FACES["kit"], spec):
         if node in lib.objects:
             obs.append(lib.inst(node, coll, loc, rot_z, pal, tilt))
     if collar:
@@ -173,9 +191,9 @@ def sheets(cat):
     s = {}
     helmet_visors = ["clear", "tinted", "hud", "mirrored", "ar", "clear", "hud", "tinted"]
     s["00_progress"] = [
-        ("Base faces", [(b["label"], {"baseFace": b["id"], "hair": h, "hairColor": c, "skin": k, "expression": e})
-                        for b, (h, c, k), e in zip(cat["baseFaces"], BASE_MALE[:4] + BASE_FEMALE[:4],
-                                                  ["neutral", "happy", "determined", "neutral", "happy", "neutral", "wink", "neutral"])]),
+        ("Face variants", [(f"{v['label']}", {"head": v["sex"], "faceVariant": v["id"], "hair": h, "hairColor": c, "skin": k, "expression": e})
+                           for v, (h, c, k), e in zip(cat["faceVariants"] + cat["faceVariants"][:2], BASE_MALE[:3] + BASE_FEMALE[:3] + BASE_MALE[3:5],
+                                                      ["neutral", "happy", "determined", "neutral", "happy", "smug", "wink", "surprised"])]),
         ("Hair A", [(f"{h} / {c}", {"baseFace": "male_adult", "hair": h, "hairColor": c, "skin": k}) for h, c, k in BASE_MALE[4:12]]),
         ("Hair B", [(f"{h} / {c}", {"baseFace": "female_adult", "hair": h, "hairColor": c, "skin": k}) for h, c, k in BASE_FEMALE[4:12]]),
         ("Helmets", [(f"{h['label']} / {v if h['visors'] else 'open'}", {"baseFace": "male_adult", "hair": "short_waves", "hairColor": "espresso",
@@ -220,10 +238,19 @@ def sheets(cat):
                                                           "skin": HAIR_SKIN[i % len(HAIR_SKIN)], "accessories": [a["id"]]})
                                             for i, a in enumerate(cat["accessories"])])]
     s["10_specialty"] = [("Specialty looks", [(p["label"], dict(p["look"])) for p in cat["presets"]])]
-    s["11_expressions"] = [("Expressions", [(e["label"], {"baseFace": "male_adult", "hair": "short_waves", "hairColor": "espresso", "skin": "sand",
-                                                          "expression": e["id"]}) for e in cat["expressions"]]),
-                           ("Female", [(e["label"], {"baseFace": "female_adult", "hair": "side_bob", "hairColor": "violet", "skin": "rose",
-                                                     "expression": e["id"]}) for e in cat["expressions"]])]
+    s["11_expressions"] = [
+        (vid, [(e["label"], {"head": sex, "faceVariant": vid, "hair": h, "hairColor": c, "skin": k, "eyes": ey, "expression": e["id"]})
+               for e in cat["expressions"]])
+        for vid, sex, h, c, k, ey in (("m_classic", "male", "short_waves", "espresso", "sand", "brown"),
+                                      ("f_bright", "female", "side_bob", "violet", "rose", "blue"),
+                                      ("m_bold", "male", "spiked_quiff", "black", "bronze", "green"))]
+    s["14_face_variants"] = [
+        (v["label"], [(f"{age['label']} / {e}", {"head": v["sex"], "faceVariant": v["id"], "age": age["id"], "expression": e,
+                                                  "hair": "short_waves" if v["sex"] == "male" else "layered_bob",
+                                                  "hairColor": {"young": "chestnut", "adult": "espresso", "middle": "grey", "older": "white"}[age["id"]],
+                                                  "skin": HAIR_SKIN[i], "eyes": ["brown", "blue", "green", "hazel"][i]})
+                      for i, (age, e) in enumerate(zip(cat["ages"], ["happy", "neutral", "determined", "smug"]))])
+        for v in cat["faceVariants"]]
     closed = [h for h in cat["helmets"] if h["visors"]]
     rows = [("Helmets", [(h["label"], {"baseFace": "male_adult", "hair": "short_waves", "hairColor": "espresso", "skin": "sand",
                                        "helmet": h["id"], "visor": "clear" if h["visors"] else None}) for h in cat["helmets"]])]
@@ -252,6 +279,8 @@ def sheets(cat):
 
 LAYOUT = {  # tile size (m) and pixels per tile column
     "04_eyes": dict(tile=(0.7, 1.05), px=190),
+    "11_expressions": dict(tile=(0.8, 1.2), px=170),
+    "14_face_variants": dict(tile=(0.84, 1.24), px=170),
     "09_accessories": dict(tile=(0.98, 1.3), px=140),
     "10_specialty": dict(tile=(0.94, 1.3), px=150),
     "12_helmets": dict(tile=(0.9, 1.26), px=140),
@@ -259,7 +288,86 @@ LAYOUT = {  # tile size (m) and pixels per tile column
 }
 
 
-def render_all(cat, lib, out, only, samples):
+def face_timeline():
+    """168 frames @ 24 fps: idle (blinks, look left/right), talk (visemes), emote cycle."""
+    frames = []
+    for f in range(48):                                     # idle
+        st = {"expression": "neutral", "look": 1 if 20 <= f < 30 else (-1 if 30 <= f < 40 else 0)}
+        if f in (12, 14) or f in (42, 44):
+            st["blink"] = "half"
+        if f in (13, 43):
+            st["blink"] = "closed"
+        frames.append(("idle", st))
+    talk = ["A", "A", "E", "E", "closed", "O", "O", "MB", "MB", "A", "E", "E", "closed", "closed", "O", "A", "MB", "closed"]
+    for f in range(48):                                     # talk
+        st = {"expression": "happy" if f >= 24 else "neutral", "viseme": talk[(f // 3) % len(talk)]}
+        if f in (30, 32):
+            st["blink"] = "half"
+        if f == 31:
+            st["blink"] = "closed"
+        frames.append(("talk", st))
+    for e in ("happy", "surprised", "angry", "sad", "confused", "scared", "smug", "sleepy", "hurt", "knocked_out"):
+        for f in range(12):
+            frames.append((e, {"expression": e}))
+    return frames
+
+
+def render_anim(cat, lib, faces, out, samples):
+    """Animated evidence: two heads (masculine / feminine variant) through blink, look, talk and an emote cycle.
+    Faces change only through the face canvas (the runtime path); head motion is a preview sway."""
+    import subprocess
+    sc = bpy.context.scene
+    coll = bpy.data.collections.new("SHEET_anim")
+    sc.collection.children.link(coll)
+    for other in sc.collection.children:
+        if other.name.startswith("SHEET_"):
+            other.hide_render = other is not coll
+    heads = [
+        ({"head": "male", "faceVariant": "m_classic", "hair": "spiked_quiff", "hairColor": "black", "skin": "sand", "eyes": "brown"}, -0.36),
+        ({"head": "female", "faceVariant": "f_bright", "hair": "side_bob", "hairColor": "violet", "skin": "rose", "eyes": "blue"}, 0.36),
+    ]
+    rigs = []
+    for spec, x in heads:
+        obs = place(cat, lib, coll, spec, (x, 0, 0), math.radians(180 + 18), collar=True)
+        head = next(o for o in obs if o.name.startswith("head."))
+        rigs.append((spec, obs, head))
+    cam = sc.camera
+    sc.render.resolution_x, sc.render.resolution_y = 960, 540
+    look.aim(cam, (0, 0, 0.26), (0, -9.0, 1.6), ortho=1.45)
+    sc.eevee.taa_render_samples = max(8, samples // 2)
+    fdir = os.path.join(out, "anim_frames")
+    os.makedirs(fdir, exist_ok=True)
+    tl = face_timeline()
+    for i, (clip, st) in enumerate(tl):
+        t = i / 24.0
+        for k, (spec, obs, head) in enumerate(rigs):
+            full = normalize({**spec, **st})
+            frames = faces.frames({kk: full[kk] for kk in ("expression", "viseme", "blink", "look") if full.get(kk) is not None})
+            img = faces.image(full["faceVariant"], frames, palette_hex(cat, "skin", full["skin"], "#c08968"),
+                              palette_hex(cat, "eye", full["eyes"], "#6b3f22").split(":")[-1], palette_hex(cat, "hair", full["hairColor"], "#4d3024"))
+            head.material_slots[10].material = look.slot_material("face", img.name)
+            bob = math.sin(t * 2.2 + k) * 0.035
+            if clip in ("happy", "surprised"):
+                bob += 0.05 * abs(math.sin(t * 9))
+            for o in obs:
+                if o.name.startswith("collar"):
+                    continue
+                o.rotation_euler = (math.radians(-3) + bob * 0.6, math.sin(t * 1.3 + k) * 0.06, math.radians(198) + math.sin(t * 0.9 + k) * 0.12)
+        sc.render.filepath = os.path.join(fdir, f"f{i:04d}.png")
+        bpy.ops.render.render(write_still=True)
+    mp4 = os.path.join(out, "face_anim.mp4")
+    gif = os.path.join(out, "face_anim.gif")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", "24", "-i", os.path.join(fdir, "f%04d.png"), "-c:v", "libx264",
+                    "-pix_fmt", "yuv420p", "-crf", "18", mp4], check=True)
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-framerate", "24", "-i", os.path.join(fdir, "f%04d.png"), "-vf",
+                    "scale=640:-1:flags=lanczos,split[a][b];[a]palettegen=max_colors=160[p];[b][p]paletteuse=dither=bayer", gif], check=True)
+    with open(os.path.join(out, "face_anim.json"), "w") as fh:
+        json.dump({"fps": 24, "frames": len(tl), "clips": [c for c, _ in tl]}, fh)
+    print("rendered animation", mp4, flush=True)
+
+
+def render_all(cat, lib, faces, out, only, samples):
+    FACES["kit"] = faces
     os.makedirs(out, exist_ok=True)
     sc = bpy.context.scene
     look.stage(sc, samples)
@@ -267,3 +375,5 @@ def render_all(cat, lib, out, only, samples):
         if only and name not in only:
             continue
         render_sheet(cat, lib, out, name, rows, samples, **LAYOUT.get(name, {}))
+    if not only or "anim" in only:
+        render_anim(cat, lib, faces, out, samples)

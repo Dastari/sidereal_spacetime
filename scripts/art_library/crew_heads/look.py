@@ -12,10 +12,12 @@ from vox import SLOTS
 DEFAULTS = {
     "skin": "#e0a080", "hair": "#3a2a26", "eye": "#6b4428", "suit_primary": "#e6e3dc", "suit_secondary": "#3a4258",
     "accent": "#d8a13a", "metal": "#9aa3ae", "dark": "#1b1418", "emit": "#39d5ff", "glass": "#6fc4ff",
+    "face": "crew.face.default",
 }
 PBR = {  # roughness, metallic
     "skin": (0.62, 0.0), "hair": (0.55, 0.0), "eye": (0.25, 0.0), "suit_primary": (0.5, 0.0), "suit_secondary": (0.55, 0.0),
     "accent": (0.42, 0.05), "metal": (0.32, 0.85), "dark": (0.6, 0.0), "emit": (0.4, 0.0), "glass": (0.05, 0.0),
+    "face": (0.62, 0.0),
 }
 GLASS_PRESETS = {  # visor / lens glass slot presets: colour, alpha, metallic, emission strength
     "clear": ("#7fd0ff", 0.30, 0.0, 0.6), "tinted": ("#d6247f", 0.72, 0.0, 0.5), "hud": ("#4fb8ff", 0.42, 0.0, 0.8),
@@ -33,8 +35,28 @@ def lin(hexstr):
 _CACHE = {}
 
 
+def _tone(m, colour_socket_value=None, image=None):
+    """Base colour = (slot colour or face image) x COLOR_0 ("Col": per-island tone, like CHAR-BODY)."""
+    nt = m.node_tree
+    b = nt.nodes["Principled BSDF"]
+    vc = nt.nodes.new("ShaderNodeVertexColor")
+    vc.layer_name = "Col"
+    mix = nt.nodes.new("ShaderNodeMix")
+    mix.data_type, mix.blend_type = "RGBA", "MULTIPLY"
+    mix.inputs["Factor"].default_value = 1.0
+    if image is not None:
+        tex = nt.nodes.new("ShaderNodeTexImage")
+        tex.image, tex.interpolation, tex.extension = image, "Closest", "EXTEND"
+        nt.links.new(tex.outputs["Color"], mix.inputs[6])
+    else:
+        mix.inputs[6].default_value = colour_socket_value
+    nt.links.new(vc.outputs["Color"], mix.inputs[7])
+    nt.links.new(mix.outputs[2], b.inputs["Base Color"])
+
+
 def slot_material(slot, value=None, name=None, emit_strength=6.0):
-    """A glTF-friendly Principled material for one slot. `value` is a hex colour or, for glass, a preset id."""
+    """A glTF-friendly Principled material for one slot. `value` is a hex colour, a glass preset id, or for
+    `face` a bpy image name (the composited 16x16 pixel-art face canvas)."""
     value = value or (("clear" if slot == "glass" else DEFAULTS[slot]))
     key = (slot, value, name)
     if key in _CACHE:
@@ -58,10 +80,13 @@ def slot_material(slot, value=None, name=None, emit_strength=6.0):
         col = value.split(":")[-1]
         b.inputs["Base Color"].default_value = (*lin(col), 1)
         b.inputs["Emission Color"].default_value = (*lin(col), 1)
-        # 'soft:' = catchlight/teeth strength (catalog faceEmitStrength), otherwise a lit emitter
         b.inputs["Emission Strength"].default_value = 0.8 if value.startswith("soft:") else emit_strength
+    elif slot == "face":
+        img = bpy.data.images.get(value)
+        _tone(m, image=img)
+        b.inputs["Roughness"].default_value = PBR["skin"][0]
     else:
-        b.inputs["Base Color"].default_value = (*lin(value), 1)
+        _tone(m, (*lin(value), 1))
         b.inputs["Roughness"].default_value = rough
         b.inputs["Metallic"].default_value = metal
         if slot == "skin":

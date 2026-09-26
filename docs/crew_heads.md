@@ -1,69 +1,81 @@
 # Crew head kit v1 (CHAR-HEADS)
 
-Status: **proposal.** The art is unsigned: no owner approval, and no revision is signed off. Nothing here is wired into the live game. The data contract and exported GLBs exist; runtime integration waits on CHAR-BODY's voxel crew runtime (`feat/crew-voxel-body-rig`). Only the owner can approve this per [WORKFLOW.md](../assets/art-library/WORKFLOW.md); passing tests and agent review are not approval.
+Status: **proposal.** The art is unsigned: no owner approval, and no revision is signed off. Nothing here is wired into the live game. The data contract, atlases and exported GLBs exist. Runtime integration (attach, `crew.face` DynamicTexture, the `setExpression` / `setViseme` / `blink` API) is owned by CHAR-BODY's voxel crew runtime and is pending. Only the owner can approve this per the art-library workflow (`assets/art-library/WORKFLOW.md`); passing tests and agent review are not approval.
 
 ## What exists
 
 | Piece | Path | State |
 | --- | --- | --- |
-| Catalog (single source of truth) | `packages/content/src/crew-heads.v1.json` | implemented |
-| TypeScript contract + rules | `packages/content/src/crew-heads.ts` (`@sidereal/content/crew-heads`) | implemented and tested |
-| Headless Blender generator | `scripts/art_library/crew_heads/` | implemented |
-| Exported GLBs + manifest | `assets/runtime/crew/heads/v1/` | generated. The delivery allowlist is not yet updated. |
-| Runtime attach and expression switching | CHAR-BODY runtime | pending |
+| Part catalog and rules | `packages/content/src/crew-heads.v1.json` | implemented |
+| Face atlas contract | `packages/content/src/crew-face-atlas.v1.json` | implemented (draft spec: `FACE_ATLAS_SPEC`) |
+| TypeScript contract | `packages/content/src/crew-heads.ts` (`@sidereal/content/crew-heads`) | implemented and tested |
+| Face atlases (6 variants) | `assets/runtime/crew/heads/v1/face/face-<variant>.png` | generated |
+| Head/hair/gear GLBs + manifest | `assets/runtime/crew/heads/v1/*.glb`, `crew-heads.manifest.json` | generated; the delivery allowlist is not updated yet |
+| Generators | `scripts/art_library/crew_heads/` | implemented |
+| Runtime attach + face texture API | CHAR-BODY runtime | pending |
 
-Run the generator with `npm run art:crew-heads`. It uses headless Blender 4.3 only and never the shared Blender MCP instance. `scripts/art_library/crew_heads/compose.py`, run with the `.tools/art` Python, turns the review renders into labelled contact sheets. Each sheet puts the exact art-library reference crops next to the native render.
+**Generators.**
+- `npm run art:crew-heads` builds and exports the geometry with headless Blender 4.3. It never uses the shared Blender MCP instance.
+- `.tools/art/bin/python scripts/art_library/crew_heads/face_atlas.py --out assets/runtime/crew/heads/v1/face --json packages/content/src/crew-face-atlas.v1.json` regenerates the atlases.
+- `compose.py` lays the review renders out beside the exact art-library reference crops.
 
-## Coverage
+## The animatable face (owner feedback round 2)
+
+- **Canvas.** The face is a 16 × 16 px pixel-art canvas: 1 px = one 1/32 m voxel. It sits on the flat front of the skull in material `crew.face`.
+- **Layers**, bottom to top: `under` (blush), `age`, `marks`, `eyes`, `iris` (× eye colour), `glint`, `brows` (× hair colour × 0.6), `mouth`, `over` (sweat, tears, KO stars, anger vein, sleepy Z).
+- **Expressions (14):** neutral, happy, sad, angry, surprised, confused, hurt, determined, scared, smug, sleepy, knocked_out, wink, grin.
+- **Talk visemes:** closed, A, E, O, MB.
+- **Blink:** half → closed → half, one 1/24 s frame each, every 2–6 s at idle.
+- **Look:** left, centre or right iris.
+- **Action tracks:** every character-spec action maps to an expression.
+- **How it changes at runtime.** `resolveFaceFrames()` picks the frame names and `composeFace()` produces the RGBA canvas. There is no mesh swap, so a change is a 16 × 16 CPU recomposite plus a texture upload.
+- **Face variants (6):**
+  - `m_classic`, `m_bold`, `m_bright`
+  - `f_classic`, `f_bright`, `f_sharp`
+
+  They differ in eye shape and size, lashes, brow weight and arch, and mouth width and lip colour.
+
+## Other coverage
 
 | Category | Count | Notes |
 | --- | --- | --- |
-| Base faces | 8 | male/female × young/adult/middle/older. All share one skull envelope, so every hair style and hat fits every face. |
-| Expression feature sets | 8 eyes, 6 brows, 9 mouths | These combine into 13 expressions: the 8 on the reference sheet plus blink, pain, unconscious, confused and talk. Each of the 35 animation names in the character spec maps to an expression. |
-| Hairstyles | 28 | 15 short (the 13 male-row reference styles plus curly top and afro) and 13 medium/long/updo (the female row). Each has a `full`, `cap` and `fringe` node. |
-| Facial hair | 12 | Includes long, braided and grey beards. Grey is a colour value, not geometry. |
-| Facial details | 12 | Markings sit 1/256 m proud of the skin; overlays (bandage, cyber, eyepatch, monocle, visor implant) stand further out. |
-| Accessories | 24 | Hats, caps, hood, goggles (up/down), glasses, headset, earring, nose ring, cigar, masks, scarf, antennae |
-| Helmets | 9 | open, closed, tactical, hazmat, pilot, mining, security, explorer, engineer |
-| Visors | 5 per closed helmet | clear, tinted, HUD (emissive glyphs), mirrored, AR (emissive reticle). 40 visor nodes in total. |
-| Masks | 2 | oxygen mask and rebreather, for no helmet or the open helmet |
-| Presets | 13 | Specialty looks from the reference: pirate, military, corporate, scientist, and so on |
+| Heads | 2 | masculine and feminine jaw. Every hair style and hat fits both. |
+| Ages | 4 | young, adult, middle, older. Middle and older use the `age` atlas layer; hair colour does the rest. |
+| Hairstyles | 28 | 15 short (the reference male row plus curly top and afro) and 13 medium/long/updo (the female row). Each has `full`, `cap` and `fringe` nodes. |
+| Facial hair | 12 | geometry; beard colour is a slot value |
+| Facial details | 12 | 7 markings (atlas `marks` frames) and 5 overlays (geometry: bandage, cyber, eyepatch, monocle, visor implant) |
+| Accessories | 24 | |
+| Helmets | 9 | 8 closed helmets with 5 visors each (clear, tinted, HUD, mirrored, AR) |
+| Masks | 2 | oxygen mask and rebreather; they hide the canvas mouth |
+| Presets | 13 | specialty looks from the reference |
 
 ## Geometry and frame
 
-- **Head space.** The origin is the `head` bone rest head. Axes are the armature axes: x = character right, y = forward, z = up. The face looks along +Y. Units are metres. In glTF the face looks along -Z.
-- **Skull.** Spec v2 chibi: about 17 × 16 × 18 fine voxels (0.53 × 0.50 × 0.56 m).
-- **Authoring units.** Parts are authored in compact *design units* and mapped to the v2 skull by a piecewise-linear per-axis map (`vox.py`: `SKULL_D`, `SKULL_V`, `KO`). Thicknesses in front of the face are preserved exactly, so swappable face layers never share a front plane:
-  - 1/256 m: markings
-  - 1/128 m: eyes, brows, mouth, age relief
-  - 3/256 m and up: stubble and beards
-  - further out: overlays, eyewear, masks
-- **Surfaces.** Each part is meshed from the voxel volume as brick islands, and a bevel is baked into the mesh.
-  - Large parts get soft, rounded bevels (skull 16 mm, three segments; helmets 13 mm).
-  - The voxel read comes from the stepped hair clumps (about two-voxel strands, some lifted half a voxel), the silhouettes and the chunky details, not from a per-voxel grid.
-- **Materials.** Exactly the 10 character slots, named `crew.<slot>`. Skin, hair and eye colours, themes and player colours are slot values.
-  - Face nodes use `emit` for the soft eye catchlights and the teeth. The catalog gives `faceEmitStrength`.
-  - Face nodes use `accent` for the painted blush, which is skin blended toward `blush.hex`.
-  - Brows are the hair colour × `BROW_SHADE`.
+- **Head space.** The origin is the `head` bone rest head. Axes are the armature axes: x = character right, y = forward, z = up. The face looks along +Y, which is -Z in glTF. Units are metres.
+- **Skull.** Per owner round 2: 16 × 14 × 16 fine voxels, 0.50 × 0.44 × 0.50 m.
+- **Design units.** Parts are authored in compact design units and mapped to the skull by a piecewise per-axis map (`vox.py`: `SKULL_D` → `SKULL_V`). Thicknesses in front of the face are preserved exactly, so swappable layers never share a front plane.
+- **Surfaces.**
+  - Each part is meshed from its voxel volume as brick islands, and a soft bevel is baked into the mesh: skull 16 mm with 3 segments, helmets 13 mm.
+  - COLOR_0 carries a per-island tone. For hair this is 0.82–1.0, so the clumps read as textured locks; the other parts vary only slightly.
+  - The voxel read comes from the hair-clump silhouettes and chunky details, not from a visible grid.
+- **Materials.** `crew.<slot>` for `skin, hair, eye, suit_primary, suit_secondary, accent, metal, dark, emit, glass, face`. Materials are `baseColorFactor × COLOR_0` (the face uses its texture × COLOR_0). Skin, hair and eye colours, themes and player colours are slot values.
 
-## Runtime contract
+## Rules
 
-- `resolveHeadLoadout(loadout, expression, theme)` returns the GLB nodes to show, each with its slot values.
-- `validateHeadLoadout` enforces:
-  - layer conflicts between accessories, helmets and masks (`ears` covers `ear.L`/`ear.R`);
-  - detail zones and the `maxDetails` limit;
-  - visors only on helmets that list them;
-  - masks only with no helmet or an open-face helmet.
-- **Hair variant.** The most restrictive worn item decides it: `full` < `cap` (hats sit from design z 9.5) < `fringe` (hoods, open helmets) < `hidden` (closed helmets).
-- **Hides.** `hides` removes the mouth and/or facial hair nodes, for example under masks and closed helmets.
-- **Expressions.** `expressionNodes(baseFace, expression)` gives the three face nodes. `expressionForAnimation(animation)` maps the spec animation names to expressions. `blink` holds the idle blink timing.
-- Colour fields accept a palette id or any `#rrggbb`. Cyber eyes are emissive.
+`validateHeadLoadout` enforces:
+- layer conflicts between accessories, helmets and masks (`ears` covers `ear.L` and `ear.R`);
+- one atlas marking at a time;
+- detail zones and the `maxDetails` limit;
+- visors only on helmets that list them;
+- masks only with no helmet or an open-face helmet.
 
-These cosmetics grant no inventory item, stat or gameplay capability. Helmets, visors and masks are the visual side of equipment. Equipment authority stays with the inventory contracts.
+The most restrictive worn item picks the hair variant: `full` < `cap` < `fringe` < `hidden`.
+
+These cosmetics grant no inventory item, stat or gameplay capability.
 
 ## Known gaps
 
-- There is no skinned or `crew_rig` export yet: parts are rigid in head space, waiting on CHAR-BODY `spec_version: 2`.
-- Expression switching is node visibility; there are no blend shapes.
-- `hair.glb` is large (~11 MB uncompressed). Compressing it or merging islands per hair variant is a follow-up.
-- The art is iterating against owner feedback: no visible block grid, alive expressions. Progress evidence is in `/root/sidereal-progress/char-heads/`.
+- Parts are rigid in head space, with no skinned `crew_rig` export yet. CHAR-BODY's `attachPart` parents unskinned roots to a socket or joint.
+- The face is the default neutral canvas until CHAR-BODY's runtime drives `crew.face`.
+- `hair.glb` is large (about 10 MB uncompressed). Compression, or merging islands per variant, is a follow-up.
+- All of this is iterating on owner feedback. Evidence is in `/root/sidereal-progress/char-heads/`.

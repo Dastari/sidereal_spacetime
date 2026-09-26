@@ -16,6 +16,10 @@ BEVEL = {  # (width m, segments): soft rounded part edges, no per-voxel grooves 
     "acc": (0.005, 2), "helmet": (0.013, 3), "visor": (0.003, 2), "mask": (0.005, 2)}
 
 
+TONE = {  # COLOR_0 per-island tone range: hair clumps vary most, the face canvas stays neutral
+    "head": (0.99, 1.0), "hair": (0.82, 1.0), "facialhair": (0.86, 1.0), "acc": (0.93, 1.0), "helmet": (0.95, 1.0)}
+
+
 class Library:
     def __init__(self):
         self.coll = bpy.data.collections.new("LIBRARY")
@@ -28,7 +32,7 @@ class Library:
     def add(self, name, category, glb, grid, bevel_kind=None):
         if grid.empty():
             raise ValueError(f"part {name} is empty")
-        me = mesh_from_grid(grid, bpy, bmesh, name)
+        me = mesh_from_grid(grid, bpy, bmesh, name, tone=TONE.get(category, (0.95, 1.0)))
         for s in SLOTS:
             me.materials.append(self.mats[s])
         ob = bpy.data.objects.new(name, me)

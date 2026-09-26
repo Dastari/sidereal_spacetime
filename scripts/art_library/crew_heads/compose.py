@@ -26,7 +26,7 @@ TITLES = {
     "05_hair_short": "5. HAIRSTYLES (SHORT / MALE ROW)", "06_hair_long": "6. HAIRSTYLES (MEDIUM, LONG, UPDO / FEMALE ROW)",
     "07_facial_hair": "7. FACIAL HAIR", "08_details": "8. FACIAL DETAILS", "09_accessories": "9. ACCESSORIES",
     "10_specialty": "10. SPECIALTY / BACKGROUND STYLES", "11_expressions": "11. EXPRESSIONS",
-    "12_helmets": "HELMETS, VISORS, MASKS", "13_hair_under_headwear": "HAIR UNDER HEADWEAR (full / cap / fringe / hidden)",
+    "12_helmets": "HELMETS, VISORS, MASKS", "14_face_variants": "FACE VARIANTS x AGES (animated pixel-art face canvas)", "13_hair_under_headwear": "HAIR UNDER HEADWEAR (full / cap / fringe / hidden)",
 }
 
 
@@ -42,7 +42,8 @@ def ref_for(cat, name, row, col, label):
     """Exact reference crop id for a native tile (None when the reference sheet has no counterpart)."""
     if name == "00_progress":
         if row == 0:
-            return cat["baseFaces"][col]["reference"][0]
+            v = (cat["faceVariants"] + cat["faceVariants"][:2])[col]
+            return f"base-{v['sex']}-head-{col + 1:02d}"
         if row in (1, 2):
             return f"base-{'male' if row == 1 else 'female'}-head-{col + 5:02d}"
         return cat["helmets"][col]["reference"][0]
@@ -73,7 +74,10 @@ def ref_for(cat, name, row, col, label):
         return by_label(cat["presets"])[label]["reference"][0]
     if name == "11_expressions":
         e = by_label(cat["expressions"]).get(label)
-        return e["reference"][0] if (e and e["reference"] and row == 0) else None
+        return e["reference"][0] if (e and e["reference"]) else None
+    if name == "14_face_variants":
+        v = cat["faceVariants"][row]
+        return f"head-age-{['young', 'adult', 'middle-aged', 'older'][col]}-{'upper' if v['sex'] == 'male' else 'lower'}-row"
     if name == "12_helmets":
         if row == 0:
             return by_label(cat["helmets"])[label]["reference"][0]

@@ -18,7 +18,8 @@ LO = np.array([-17.0, -17.0, -11.0])   # grid origin in fine voxels (head space)
 HI = np.array([17.0, 17.0, 28.0])
 SHAPE = tuple(int(v) for v in (HI - LO) * SUB)
 
-SLOTS = ["skin", "hair", "eye", "suit_primary", "suit_secondary", "accent", "metal", "dark", "emit", "glass"]
+SLOTS = ["skin", "hair", "eye", "suit_primary", "suit_secondary", "accent", "metal", "dark", "emit", "glass", "face"]
+# "face" = the flat front face region carrying the animated pixel-art face texture (FACE_ATLAS_SPEC)
 SI = {s: i for i, s in enumerate(SLOTS)}
 
 # --------------------------------------------------------------------------- design -> spec v2 mapping
@@ -28,8 +29,9 @@ SI = {s: i for i, s in enumerate(SLOTS)}
 # thicknesses (relief layers in front of the face are preserved exactly, so swappable face layers never
 # share a front plane; hair/hat/helmet volume elsewhere grows by KO).
 SKULL_D = (6.0, 6.0, 13.0)      # design half-width x, half-depth y, height z
-SKULL_V = (8.5, 8.0, 18.0)      # spec v2 fine voxels
-KO = 1.3                        # outside-skull thickness factor (hair, hats, helmets)
+SKULL_V = (8.0, 7.0, 16.0)      # spec v2 round 2 (head ~10 % smaller): 16 x 14 x 16 fine voxels
+FACE_CANVAS = (16, 16)          # face canvas px = fine voxels (width, height): x -8..8, z 0..16
+KO = 1.5                        # outside-skull thickness factor (hair, hats, helmets; helmets stay inside the r004 envelope)
 KO_FRONT = 1.0                  # in front of the face plane (face relief layers)
 SNAP = 0.125                    # mapped box corners snap to the paint cell
 FACE_PLUS_Y = True              # export frame: armature axes, face +Y (authoring keeps face at -Y)
@@ -191,12 +193,12 @@ class Grid:
         """Exposed faces per island. Returns (verts[m], faces[n,4] vertex indices, material index per face)."""
         occ = np.argwhere(self.isl > 0)
         if not len(occ):
-            return np.zeros((0, 3)), np.zeros((0, 4), np.int64), np.zeros(0, np.int64)
+            return np.zeros((0, 3)), np.zeros((0, 4), np.int64), np.zeros(0, np.int64), np.zeros(0, np.int64), np.zeros(0, np.int64)
         lo, hi = occ.min(0), occ.max(0) + 1
         crop = tuple(slice(a, b) for a, b in zip(lo, hi))
         isl = np.pad(self.isl[crop], 1)
         slot = np.pad(self.slot[crop], 1)
-        quads, mats = [], []
+        quads, mats, ups = [], [], []
         core = (slice(1, -1),) * 3
         for axis in range(3):
             u, v = (axis + 1) % 3, (axis + 2) % 3
@@ -211,6 +213,7 @@ class Grid:
                     continue
                 labels = me[face].astype(np.int64)
                 mats.append(slot[core][face].astype(np.int64))
+                ups.append(np.full(len(cells), sign if axis == 2 else 0, np.int64))
                 base = cells.copy()
                 if sign > 0:
                     base[:, axis] += 1
@@ -226,7 +229,7 @@ class Grid:
                 q = np.stack(corners, 1)                            # n,4,3
                 quads.append((q, labels))
         if not quads:
-            return np.zeros((0, 3)), np.zeros((0, 4), np.int64), np.zeros(0, np.int64)
+            return np.zeros((0, 3)), np.zeros((0, 4), np.int64), np.zeros(0, np.int64), np.zeros(0, np.int64), np.zeros(0, np.int64)
         allq = np.concatenate([q for q, _ in quads])
         lab = np.concatenate([np.repeat(l[:, None], 4, 1) for _, l in quads])
         key = (lab << 30) | (allq[..., 0] << 20) | (allq[..., 1] << 10) | allq[..., 2]
@@ -237,15 +240,36 @@ class Grid:
         if FACE_PLUS_Y:            # spec v2 / CHAR-BODY: character faces +Y, right = +X (a 180 deg turn, winding kept)
             verts[:, 0] *= -1
             verts[:, 1] *= -1
-        return verts, faces, np.concatenate(mats)
+        return verts, faces, np.concatenate(mats), lab[:, 0], np.concatenate(ups)
 
 
-def mesh_from_grid(grid, bpy, bmesh, name=None):
-    """Build a bpy mesh with the 10 slot material indices, dissolved per island and material."""
-    verts, faces, mats = grid.surface()
+def island_tone(labels, ups, tone):
+    """Per-face COLOR_0 value: a deterministic per-island tone (clumps read as separate strands/bricks,
+    like CHAR-BODY's per-island tone) plus a soft top-light / under-shade by face direction."""
+    lo, hi = tone
+    h = (labels * 2654435761) % 1000 / 999.0
+    t = lo + (hi - lo) * h + 0.05 * (ups > 0) - 0.08 * (ups < 0)
+    return np.clip(t, 0.0, 1.0)
+
+
+def mesh_from_grid(grid, bpy, bmesh, name=None, tone=(0.96, 1.0)):
+    """Build a bpy mesh with the slot material indices and COLOR_0 tones, dissolved per island and material."""
+    verts, faces, mats, labels, ups = grid.surface()
     me = bpy.data.meshes.new(name or grid.name)
     me.from_pydata(verts.tolist(), [], faces.tolist())
     me.polygons.foreach_set("material_index", mats.astype(np.int32))
+    col = me.color_attributes.new(name="Col", type="BYTE_COLOR", domain="CORNER")
+    t = np.repeat(island_tone(labels, ups, tone), 4)
+    col.data.foreach_set("color", np.stack([t, t, t, np.ones_like(t)], 1).ravel().astype(np.float32))
+    if (mats == SI["face"]).any():
+        # face canvas UV (FACE_ATLAS_SPEC): u = (8 - x) / 16, v = z / 16 in head-space fine voxels (x = character right)
+        uv = me.uv_layers.new(name="UVMap")
+        co = verts / V
+        loops = np.zeros(len(me.loops), np.int64)
+        me.loops.foreach_get("vertex_index", loops)
+        u = (FACE_CANVAS[0] / 2 - co[loops, 0]) / FACE_CANVAS[0]
+        v = co[loops, 2] / FACE_CANVAS[1]
+        uv.data.foreach_set("uv", np.stack([u, v], 1).ravel().astype(np.float32))
     bm = bmesh.new()
     bm.from_mesh(me)
     bmesh.ops.dissolve_limit(bm, angle_limit=0.001, use_dissolve_boundaries=False, verts=bm.verts[:], edges=bm.edges[:],

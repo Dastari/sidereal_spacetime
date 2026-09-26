@@ -32,6 +32,8 @@ def args():
     p.add_argument("--sheets", default="")
     p.add_argument("--samples", type=int, default=24)
     p.add_argument("--no-export", action="store_true")
+    p.add_argument("--face-atlas", default="packages/content/src/crew-face-atlas.v1.json")
+    p.add_argument("--face-dir", default="assets/runtime/crew/heads/v1/face")
     return p.parse_args(argv)
 
 
@@ -41,22 +43,16 @@ def build_parts(cat, lib, only):
 
     t = time.time()
     if want("heads"):
-        for bf in cat["baseFaces"]:
-            sex, age = bf["sex"], bf["age"]
-            lib.add(f"head.{bf['id']}", "head", "heads", pf.skull(sex, age))
-            for st in cat["faceFeatures"]["eyes"]:
-                lib.add(f"face.{bf['id']}.eyes.{st}", "face", "heads", pf.eyes(sex, age, st))
-            for st in cat["faceFeatures"]["brows"]:
-                lib.add(f"face.{bf['id']}.brows.{st}", "face", "heads", pf.brows(sex, age, st))
-            for st in cat["faceFeatures"]["mouth"]:
-                lib.add(f"face.{bf['id']}.mouth.{st}", "face", "heads", pf.mouth(sex, age, st))
+        for h in cat["heads"]:
+            lib.add(f"head.{h['id']}", "head", "heads", pf.skull(h["id"]))
         print(f"heads built {time.time() - t:.1f}s", flush=True)
     if want("facialhair"):
         for fh in cat["facialHair"]:
             lib.add(f"facialhair.{fh['id']}", "facialhair", "facial-hair", pf.facial_hair(fh["id"]))
     if want("details"):
         for d in cat["details"]:
-            lib.add(f"detail.{d['id']}", "detail", "details", pf.details(d["id"]))
+            if d["kind"] == "overlay":        # markings are face-atlas frames, not geometry
+                lib.add(f"detail.{d['id']}", "detail", "details", pf.details(d["id"]))
     if want("hair") or want("gear"):
         import parts_hair as ph
         import parts_gear as pg
@@ -92,7 +88,8 @@ def export(lib, out):
         path = os.path.join(out, f"{glb}.glb")
         bpy.ops.export_scene.gltf(filepath=path, export_format="GLB", use_selection=True, export_apply=True,
                                   export_yup=True, export_texcoords=False, export_normals=True, export_materials="EXPORT",
-                                  export_extras=False, export_cameras=False, export_lights=False, export_animations=False)
+                                  export_extras=False, export_cameras=False, export_lights=False, export_animations=False,
+                                  export_vertex_color="ACTIVE")
         files[glb] = f"{glb}.glb"
     return files
 
@@ -102,6 +99,9 @@ def main():
     cat = json.load(open(a.catalog))
     only = {s for s in a.only.split(",") if s}
     bpy.ops.wm.read_factory_settings(use_empty=True)
+    import face_np
+    faces = face_np.FaceKit(a.face_atlas, a.face_dir, cat)
+    faces.image("m_classic", faces.frames({"expression": "neutral"}), "#c08968", "#6b3f22", "#4d3024", name="crew.face.default")
     lib = kit.Library()
     build_parts(cat, lib, only)
     meta = lib.stats()
@@ -115,7 +115,7 @@ def main():
         print("exported", files, flush=True)
     if a.review:
         import review
-        review.render_all(cat, lib, a.review, {s for s in a.sheets.split(",") if s}, a.samples)
+        review.render_all(cat, lib, faces, a.review, {s for s in a.sheets.split(",") if s}, a.samples)
 
 
 main()

@@ -506,8 +506,34 @@ def strandify(g, width=1.5, top_width=2.0, band=0.0, seed=7, lift_every=3):
     return g
 
 
+def puff(g, cells=4):
+    """Grow every hair island outward by `cells` paint cells (0.5 voxel for 4) into empty space, keeping the skull
+    and the face canvas clear: chunkier clumps, same silhouettes (owner: chunky clumped hair, not a thin slab)."""
+    from vox import LO, SUB, inv
+    for _ in range(cells):
+        isl = g.isl
+        grow = np.zeros_like(isl)
+        for axis in range(3):
+            for sh in (1, -1):
+                src = np.roll(isl, sh, axis)
+                take = (isl == 0) & (grow == 0) & (src > 0)
+                grow[take] = src[take]
+        idx = np.argwhere(grow > 0)
+        if not len(idx):
+            break
+        X, Y, Z = (inv(LO[a] + (idx[:, a] + 0.5) / SUB, a) for a in range(3))
+        inside_skull = (np.abs(X) < 6) & (np.abs(Y) < 6) & (Z > 0) & (Z < 13)
+        face = (Y < -5.9) & (Z < 9.75) & (np.abs(X) < 5.9)
+        keep = ~inside_skull & ~face
+        idx = idx[keep]
+        g.isl[tuple(idx.T)] = grow[tuple(idx.T)]
+        g.slot[tuple(idx.T)] = 1
+    return g
+
+
 def hair_variants(hid):
     g = STYLES[hid]()
+    puff(g)
     if hid not in NO_STRANDS:
         strandify(g, seed=len(hid))
     cap = g.copy(f"hair.{hid}.cap")
