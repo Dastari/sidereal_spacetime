@@ -1,1 +1,0 @@
-Triangulated source custom-normal storage introduced a maximum signed normal difference of .00346823 on Moon 1 and .00009715 on Moon 2. Preserved attempt2 source/export and failed test report. Final r005 retains native polygons and their exact native evaluated triangle cache, avoiding custom-normal encoding. No audit tolerance was relaxed.

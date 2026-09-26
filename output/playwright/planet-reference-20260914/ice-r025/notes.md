@@ -1,9 +1,0 @@
-# Ice25 — thick snow districts over exposed basal ice
-
-2026-09-14. Implements bounded next step from independent Ice24 open gate. Ground source now uses a physically recessed blue ice sphere atR.982, larger unequal closed white snow districts, thicker blue step walls, broken outline variants,28 shoulders and14 paired shaft groups. White cap heights vary.037–.076 with local shoulders/shafts above them. The ground retains genuine material/geometry boundaries; this is not a uniform tint change. Regional23 shaft/gorge source variants remain exact.
-
-Native PBR definitions and corrected texture bytes remain unchanged. Standard IOR/coat, authored corner normals and UVs preserved. Raw Blender exports retained. Initial greedy ground normal mismatch flags were checked with maximum bipartite matching at the original strict tolerances: all67,320/55,800/52,920 ground corners match, zero unmatched. Regional audits clean; all material/position/UV/texture parity passes.
-
-Seven focused tests and TypeScript pass. Tests preserve exactLOD buffers/identity, regional23 geometry, native relief radius outside regions and material/texture definitions; verify substantial blue basal and elevated white native geometry; and ray-pick both deep floors before actual ground. Ground ray classification now uses placement identity rather than assuming white material identifies ground. The fullLOD test exceeded the default5s while Blender was rendering concurrently; explicit20s harness timeout permits the heavier native fixture. Final complete suite5.89s. No runtime timing claim.
-
-Full body185,544 triangles with the same five native PBR roles. Ground-only preview shows coherent white/blue separation, but large glossy blue interstices may read as water rather than glacial ice at some angles; combined-body independent review remains required. No art acceptance, hardware/LOD-transition performance or publication claimed. Source and composer are frozen for root capture.
