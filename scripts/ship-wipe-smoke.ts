@@ -6,18 +6,22 @@
  * This script executes the operator runbook tooling exactly as documented and
  * checks invariants through operator SQL and ordinary player views. It never
  * assigns the legacy Wayfarer: the only way back aboard is a registered
- * non-legacy prefab. It assigns the owner-picked Wren (fed.s.wren) and proves
- * the owner can board, walk, take the seat and fly it. */
+ * non-legacy prefab. SHIPS-PREFABS registered fed.s.wren; the final stage assigns
+ * it to the owner, who then walks (door-aware route) to the derived pilot
+ * station, takes the seat and flies with the compiled-from-components flight. */
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { DbConnection, tables } from "../packages/net/src/generated";
-import { acquireNativePilot, nextSequence, walkNative } from "./native-starter-smoke";
+import { nextSequence, walkNative } from "./native-starter-smoke";
 import { prefabById } from "../packages/content/src/prefabs/index";
+import { prefabStats } from "../packages/content/src/ship-prefab";
 import { defaultPrefabComponentCatalog } from "../packages/content/src/ship-prefab-catalog";
 import { prefabFlightModel } from "../packages/sim/src/prefab-flight";
 import { prefabPilotPose } from "../packages/sim/src/construction-pilot";
+import { prefabWalkRoute } from "../packages/sim/src/prefab-construction";
+import { FED_WREN_PIN } from "../packages/world/src/prefab-ship-pins";
 
 const host = process.env.SIDEREAL_SMOKE_URL ?? "";
 const database = process.env.SIDEREAL_SMOKE_DATABASE ?? "";
@@ -66,12 +70,10 @@ async function client(token?: string) {
           tables.ownInventoryState,
           tables.ownInventoryItems,
           tables.ownGroundItems,
+          tables.ownStations,
           tables.ownAuthoredFlights,
-          tables.ownAuthoredFlightFittings,
           tables.ownAuthoredFlightPhysics,
           tables.ownAuthoredFlightActuators,
-          tables.ownActuatorOutputs,
-          tables.ownStations,
         ]);
     })
     .build();
@@ -217,96 +219,102 @@ try {
   assert.deepEqual(stepErrors, [], "no scheduled step_world failures");
   evidence.scheduledStepHealthy = { timerRows: 1, stepWorldErrors: 0 };
 
-  // The only way back aboard is a registered non-legacy prefab. The legacy
-  // Wayfarer is refused as assignment and as starter.
-  assert.throws(() =>
-    tool("assign", "--operation-id", "rehearsal-assign-stale", "--character-id", actorX.id, "--prefab-id", "fed.s.wren", "--catalog-revision", "stale-revision"),
-  );
-  assert.throws(() =>
-    tool("assign", "--operation-id", "rehearsal-assign-legacy", "--character-id", actorX.id, "--prefab-id", "legacy-wayfarer-r002", "--catalog-revision", "legacy-wayfarer"),
-  );
+  // The only way back aboard is a registered non-legacy prefab (fed.s.wren).
+  // Unregistered prefabs, stale catalog revisions and the legacy Wayfarer are refused.
+  const assignArgs = (operationId: string, prefabId: string, revision: string) => [
+    "assign", "--operation-id", operationId, "--character-id", actorX.id,
+    "--prefab-id", prefabId, "--catalog-revision", revision,
+  ];
+  assert.throws(() => tool(...assignArgs("rehearsal-assign-unknown", "rj.s.jackal", FED_WREN_PIN.catalogRevision)));
+  assert.throws(() => tool(...assignArgs("rehearsal-assign-stale", "fed.s.wren", "ship-components.v1")));
+  assert.throws(() => tool(...assignArgs("rehearsal-assign-legacy", "legacy-wayfarer-r002", "legacy-wayfarer")));
   assert.throws(() =>
     tool("policy", "--operation-id", "rehearsal-policy-legacy", "--starter-prefab-id", "legacy-wayfarer-r002", "--catalog-revision", "legacy-wayfarer"),
   );
   assert.equal([...x.db.ownCharacters.iter()][0]!.shipId, "", "still awaiting a ship");
 
-  // Owner's pick: Wren. The operator reads prefab id + catalog revision from the
-  // dry-run summary (registeredPrefabs), then assigns it to the owner's character.
-  const wren = dry.summary.registeredPrefabs.find((p: { prefabId: string }) => p.prefabId === "fed.s.wren");
-  assert(wren && !wren.legacy, "Wren is registered and not legacy");
-  const assignArgs = [
-    "assign",
-    "--operation-id", "rehearsal-assign-wren-1",
-    "--character-id", actorX.id,
-    "--prefab-id", "fed.s.wren",
-    "--catalog-revision", wren.catalogRevision,
-    "--spawn-pose", '{"kind":"berth"}',
-  ];
-  const assigned = tool(...assignArgs);
-  tool(...assignArgs); // Replay is a no-op.
-  evidence.assignWren = assigned.summary;
-  await wait(
-    () =>
-      x.db.ownShips.count() === 1n &&
-      x.db.ownGameShipAccess.count() === 1n &&
-      x.db.ownConstructionLocation.count() === 1n,
-    "Wren visible to its owner",
-  );
-  const boarded = [...x.db.ownCharacters.iter()][0]!;
-  assert.equal(boarded.id, actorX.id);
-  assert.equal(boarded.shipId, assigned.summary.shipId);
-  assert.equal([...x.db.ownGameShipAccess.iter()][0]!.shipId, boarded.shipId, "game access projected only while active");
-  assert.deepEqual(kit(), owner.personalKit, "assignment does not duplicate or drop the kit");
+  // Assign the owner's chosen Wren at a server berth.
+  const assigned = tool(...assignArgs("rehearsal-assign-wren-01", "fed.s.wren", FED_WREN_PIN.catalogRevision));
+  assert.equal(assigned.summary.prefabId, "fed.s.wren");
+  assert.equal(assigned.summary.blueprintSha256, FED_WREN_PIN.blueprintSha256);
+  assert.equal(assigned.summary.shipName, "Wren");
+  await wait(() => x.db.ownShips.count() === 1n && [...x.db.ownCharacters.iter()][0]!.shipId !== "", "Wren boarded");
+  const actor = () => [...x.db.ownCharacters.iter()][0]!;
+  const shipId = actor().shipId;
+  const ship = () => [...x.db.ownShips.iter()].find((r) => r.id === shipId)!;
+  const flightOf = () => [...x.db.ownAuthoredFlights.iter()].find((f) => f.shipId === shipId)!;
+  const physicsOf = () => [...x.db.ownAuthoredFlightPhysics.iter()].find((p) => p.shipId === shipId);
+  assert.equal(actor().id, actorX.id, "same character UUID");
+  assert.equal(ship().name, "Wren");
+  assert.deepEqual(kit(), owner.personalKit, "personal kit preserved through assignment");
+  const access = [...x.db.ownGameShipAccess.iter()].find((r) => r.shipId === shipId);
+  assert(access && access.templateSha256 === FED_WREN_PIN.blueprintSha256, "Wren game access");
+  assert.equal([...x.db.ownConstructionLocation.iter()][0]?.instanceId, shipId);
+  await wait(() => physicsOf()?.status === "ready", "Wren compiled flight ready", 15000);
+  const prefab = prefabById("fed.s.wren")!;
+  const catalog = defaultPrefabComponentCatalog();
+  const model = prefabFlightModel(prefab, catalog);
+  const stats = prefabStats(prefab, catalog);
+  const physics = physicsOf()!;
+  assert(Math.abs(physics.massKg - stats.massKg) < 200, `compiled mass ${physics.massKg} ~ prefab stats ${stats.massKg}`);
+  const actuators = [...x.db.ownAuthoredFlightActuators.iter()].filter((r) => r.shipId === shipId);
+  assert.equal(actuators.length, model.fittings.filter((f) => f.role === "actuator").length);
+  assert(flightOf()?.active && flightOf().flightAdmitted, "Wren flight active and admitted");
+
+  // Walk through the door passages to the derived pilot approach, then sit.
+  await x.reducers.claimInputControl({});
+  const pose = prefabPilotPose(model.station!);
+  const route = prefabWalkRoute(prefab, catalog, [actor().localX, actor().localY], pose.approach);
+  for (const [px, py] of route) await walkNative(x, px, py);
+  const seat = flightOf();
+  await x.reducers.enterAuthoredPilot({
+    stationId: seat.stationId,
+    expectedStationRevision: seat.stationRevision,
+    operationId: crypto.randomUUID(),
+  });
+  await wait(() => flightOf()?.seatState === "seated", "Wren pilot entry");
+  assert(Math.hypot(actor().localX - pose.position[0], actor().localY - pose.position[1]) < 1e-3, "seated at the derived station");
+
+  // Fly: a forward burn builds speed, then a turn changes heading.
+  const pause = (ms: number) => new Promise((r) => setTimeout(r, ms));
+  const s0 = { ...ship() };
+  for (let n = 0; n < 20; n++) {
+    await x.reducers.setIntent({ sequence: nextSequence(x), throttle: 1, turn: 0, dx: 0, dy: 0, sprint: false });
+    await pause(60);
+  }
+  const speed = Math.hypot(ship().vx, ship().vy);
+  assert(speed > 0.3, `Wren accelerated (speed ${speed.toFixed(3)} m/s)`);
+  for (let n = 0; n < 15; n++) {
+    await x.reducers.setIntent({ sequence: nextSequence(x), throttle: 0, turn: 1, dx: 0, dy: 0, sprint: false });
+    await pause(60);
+  }
+  const turned = Math.abs(ship().heading - s0.heading);
+  assert(turned > 1e-3, "Wren turned");
+  await x.reducers.setIntent({ sequence: nextSequence(x), throttle: 0, turn: 0, dx: 0, dy: 0, sprint: false });
+  evidence.assignment = {
+    refused: ["unregistered rj.s.jackal", "stale catalog revision", "legacy wayfarer"],
+    prefabId: "fed.s.wren",
+    catalogRevision: FED_WREN_PIN.catalogRevision,
+    blueprintSha256: FED_WREN_PIN.blueprintSha256,
+    shipId,
+    shipName: ship().name,
+    walkWaypoints: route.length,
+    seated: true,
+    massKg: physics.massKg,
+    actuators: actuators.length,
+    speed,
+    headingChange: turned,
+  };
+  console.log(JSON.stringify(evidence, null, 1));
+  // Other accounts stay shipless; only the owner was assigned a ship.
   const others = await Promise.all(seed.accounts.slice(1).map((a) => client(a.token)));
   for (const other of others) {
     assert.equal(other.db.ownShips.count(), 0n, "other accounts stay shipless");
     other.disconnect();
   }
-
-  // Board, walk, pilot and fly with the owner's own session (not the operator).
-  const physics = () => [...x.db.ownAuthoredFlightPhysics.iter()].find((p) => p.shipId === boarded.shipId);
-  const flight = () => [...x.db.ownAuthoredFlights.iter()].find((f) => f.shipId === boarded.shipId);
-  const ship = () => [...x.db.ownShips.iter()].find((s) => s.id === boarded.shipId)!;
-  await wait(() => physics()?.status === "ready", "Wren physical definition ready", 20000);
-  await wait(() => !!flight()?.active && !!flight()?.flightAdmitted, "Wren flight active and admitted", 20000);
-  await x.reducers.claimInputControl({});
-  const model = prefabFlightModel(prefabById("fed.s.wren")!, defaultPrefabComponentCatalog());
-  const pose = prefabPilotPose(model.station!);
-  const spawn = { x: boarded.localX, y: boarded.localY };
-  await walkNative(x, pose.approach[0], spawn.y);
-  const walked = [...x.db.ownCharacters.iter()][0]!;
-  const walkedDistance = Math.hypot(walked.localX - spawn.x, walked.localY - spawn.y);
-  await walkNative(x, pose.approach[0], pose.approach[1]);
-  await acquireNativePilot(x);
-  const seated = [...x.db.ownCharacters.iter()][0]!;
-  assert(Math.hypot(seated.localX - pose.position[0], seated.localY - pose.position[1]) < 1e-3, "seated at the Wren station");
-  const s0 = ship();
-  for (let n = 0; n < 20; n++) {
-    await x.reducers.setIntent({ sequence: nextSequence(x), throttle: 1, turn: 0, dx: 0, dy: 0, sprint: false });
-    await new Promise((r) => setTimeout(r, 60));
-  }
-  const s1 = ship();
-  const speed = Math.hypot(s1.vx, s1.vy);
-  assert(speed > 0.3, `Wren accelerated (speed ${speed.toFixed(3)} m/s)`);
-  for (let n = 0; n < 15; n++) {
-    await x.reducers.setIntent({ sequence: nextSequence(x), throttle: 0, turn: 1, dx: 0, dy: 0, sprint: false });
-    await new Promise((r) => setTimeout(r, 60));
-  }
-  const s2 = ship();
-  assert(Math.abs(s2.heading - s0.heading) > 1e-3, "Wren turned");
-  await x.reducers.setIntent({ sequence: nextSequence(x), throttle: 0, turn: 0, dx: 0, dy: 0, sprint: false });
-  evidence.wrenGameplay = {
-    shipId: boarded.shipId,
-    walkedMetres: Number(walkedDistance.toFixed(3)),
-    seatedAt: [seated.localX, seated.localY],
-    massKg: physics()!.massKg,
-    speedAfterBurnMps: Number(speed.toFixed(3)),
-    headingChangeRad: Number((s2.heading - s0.heading).toFixed(4)),
-    position: [s2.x, s2.y],
-  };
-  console.log(JSON.stringify(evidence, null, 1));
   writeFileSync(join(evidenceDirectory, "ship-wipe-smoke.json"), JSON.stringify(evidence, null, 1));
-  writeFileSync(join(evidenceDirectory, "ship-wipe-owner.json"), JSON.stringify({ token: owner.token, characterId: actorX.id, shipId: boarded.shipId }), { mode: 0o600 });
+  // Private (0600) owner token for isolated client screenshots of the boarded ship.
+  writeFileSync(join(evidenceDirectory, "ship-wipe-owner.json"), JSON.stringify({ token: owner.token, characterId: actorX.id, shipId }), { mode: 0o600 });
 } finally {
   x.disconnect();
 }

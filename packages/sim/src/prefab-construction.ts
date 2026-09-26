@@ -322,3 +322,58 @@ export function restorePrefabSourceIdentities(doc: PrefabConstructionDocument, i
     throw Error("Prefab instances carry no fittings, routes or assemblies");
   return restored;
 }
+
+/**
+ * Walking waypoints (ship-local game metres) from `from` to `to` through interior door
+ * passages: a breadth-first search over rooms, stepping 0.6 m either side of each door
+ * midpoint. Rooms are convex cell rectangles, so straight legs inside a room stay clear.
+ * Used by smoke tests and future NPC/crew routing; presentation and authority unaffected.
+ */
+export function prefabWalkRoute(
+  doc: ShipPrefabDocumentV1,
+  catalog: PrefabComponentCatalog,
+  from: readonly [number, number],
+  to: readonly [number, number],
+): [number, number][] {
+  const toShip = prefabToShipMetres(doc);
+  const [ox, oy] = prefabOrigin(doc);
+  const toPrefab = ([gx, gy]: readonly [number, number]): Pt => [gy + ox, -gx + oy];
+  const interior = deriveInterior(doc, 0, catalog);
+  const cellRoom = new Map(interior.floors.map((f) => [`${f.cell[0]},${f.cell[1]}`, f.room]));
+  const roomAt = (p: Pt) => cellRoom.get(`${Math.floor(p[0])},${Math.floor(p[1])}`) ?? null;
+  const start = roomAt(toPrefab(from));
+  const goal = roomAt(toPrefab(to));
+  if (!start || !goal) throw Error("Route endpoints must stand inside rooms");
+  type Hop = { door: (typeof interior.doors)[number]; next: string };
+  const hops = new Map<string, Hop[]>();
+  for (const door of interior.doors) {
+    if (door.exterior || !door.rooms[0] || !door.rooms[1]) continue;
+    const [a, b] = door.rooms as [string, string];
+    for (const [x, y] of [[a, b], [b, a]] as const) {
+      if (!hops.has(x)) hops.set(x, []);
+      hops.get(x)!.push({ door, next: y });
+    }
+  }
+  const prev = new Map<string, { room: string; door: Hop["door"] } | null>([[start, null]]);
+  const queue = [start];
+  while (queue.length && !prev.has(goal)) {
+    const room = queue.shift()!;
+    for (const hop of hops.get(room) ?? []) {
+      if (prev.has(hop.next)) continue;
+      prev.set(hop.next, { room, door: hop.door });
+      queue.push(hop.next);
+    }
+  }
+  if (!prev.has(goal)) throw Error("No door route between rooms");
+  const steps: { room: string; door: Hop["door"] }[] = [];
+  for (let r = goal; prev.get(r); r = prev.get(r)!.room) steps.unshift({ room: prev.get(r)!.room, door: prev.get(r)!.door });
+  const points: Pt[] = [];
+  for (const { room, door } of steps) {
+    const mid: Pt = [(door.a[0] + door.b[0]) / 2, (door.a[1] + door.b[1]) / 2];
+    const n: Pt = door.a[1] === door.b[1] ? [0, 1] : [1, 0];
+    const side = (s: number): Pt => [mid[0] + n[0] * 0.6 * s, mid[1] + n[1] * 0.6 * s];
+    const near = roomAt([mid[0] + n[0] * 0.5, mid[1] + n[1] * 0.5]) === room ? 1 : -1;
+    points.push(side(near), side(-near));
+  }
+  return [...points.map(toShip), [to[0], to[1]]];
+}
