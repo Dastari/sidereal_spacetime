@@ -56,6 +56,9 @@ def pistol_grip(it, x0, x1, y_back, z_top, slot="grip", back="primary", base="se
     it.box(x0, y_back + 1, z_top - 2, x1, y_back + 2, z_top, back)
     it.box(x0, y_back, z_top - 4, x1, y_back + 1, z_top - 2, back)
     it.box(x0, y_back - 1, z_top - 6, x1, y_back + 2, z_top - 5, base)
+    # grip texture: dark rib bands across the grip front (owner round 2: "grip texture")
+    it.box(x0, y_back + 3, z_top - 2, x1, y_back + 4, z_top - 1, "dark")
+    it.box(x0, y_back + 2, z_top - 4, x1, y_back + 3, z_top - 3, "dark")
 
 
 def trigger(it, x0, x1, y_back, z_bottom_of_receiver, length=4):
@@ -91,6 +94,8 @@ def pistol():
     it.box(1, 2, 0, 3, 5, 1, "dark")
     m.key("reload", 0).key("reload", 5, (0, 0, -7)).key("reload", 14, (0, 0, -7)).key("reload", 20)
     it.main()
+    it.main()
+    sides(it, 0, 4, 3, 7, 12, 8, "emit_a")                           # frame glow trim
     it.socket("grip", (2, 4.5, 4)).socket("muzzle", (2, 17, 10)).socket("support", (2, 3, 2))
     it.socket("sight", (2, 15.5, 13))
     return meta(it, label="PISTOL", sub="SIDEARM", refs=["wt.pistol", "lo.pistol"], profile="PISTOL_ONE_HAND",
@@ -124,6 +129,11 @@ def smg():
     it.box(1, 11, 0, 3, 13, 6, "dark").box(1, 11, 0, 3, 13, 1, "trim").box(1, 11, 3, 3, 13, 4, "secondary")
     m.key("reload", 0).key("reload", 5, (0, 0, -7)).key("reload", 14, (0, 0, -7)).key("reload", 20)
     it.main()
+    it.main()
+    for y in (13, 15):
+        sides(it, 1, 3, y, 7, y + 1, 10, "dark")                     # shroud vents
+    sides(it, 0, 4, 1, 6, 6, 7, "emit_a")                            # receiver glow trim
+    it.box(1, 7, 10, 3, 8, 11, "metal").box(1, 17, 7, 3, 18, 10, "emit_a")   # sight rail pin, muzzle glow
     it.socket("grip", (2, 5, 3)).socket("support", (2, 15, 3.5)).socket("muzzle", (2, 18, 8.5))
     it.socket("stock", (2, -2, 8.5), (0, -1, 0)).socket("sight", (2, 3, 13.5))
     return meta(it, label="SMG", sub="RAPID FIRE", refs=["wt.smg"], profile="PISTOL_TWO_HAND", holster="hip.R",
@@ -167,6 +177,11 @@ def compact_carbine():
     it.box(1, 16, 0, 3, 19, 4, "dark").box(1, 16, 1, 3, 19, 2, "trim")
     m.key("reload", 0).key("reload", 5, (0, -1, -7)).key("reload", 14, (0, -1, -7)).key("reload", 20)
     it.main()
+    it.main()
+    sides(it, 0, 4, 8, 10, 16, 11, "emit_a")                         # receiver glow trim
+    for y in (9, 11):
+        sides(it, 0, 4, y, 7, y + 1, 9, "trim")                      # micro panels
+    it.box(1, 28, 7, 3, 29, 9, "emit_a")                             # muzzle glow
     it.socket("grip", (2, 9.5, 3)).socket("support", (2, 20, 8)).socket("muzzle", (2, 29, 8))
     it.socket("stock", (2, 0, 8), (0, -1, 0)).socket("sight", (2, 11, 13)).socket("eye", (2, 5, 13))
     return meta(it, label="COMPACT CARBINE", sub="VERSATILE", refs=["wt.compact-carbine", "oa.reload"],
@@ -197,6 +212,11 @@ def rifle():
     it.box(1, 17, 1, 3, 20, 4, "dark").box(1, 16, -1, 3, 19, 1, "dark").box(1, 17, 2, 3, 20, 3, "trim")
     m.key("reload", 0).key("reload", 5, (0, -1, -7)).key("reload", 14, (0, -1, -7)).key("reload", 20)
     it.main()
+    it.main()
+    sides(it, 0, 4, 8, 10, 13, 11, "emit_a")                         # receiver glow trim
+    for y in (24, 26):
+        sides(it, 0, 4, y, 8, y + 1, 9, "dark")                      # hand guard vents
+    it.box(1, 28, 7, 3, 29, 9, "emit_a")                             # muzzle glow
     it.socket("grip", (2, 10.5, 3)).socket("support", (2, 21.5, 8)).socket("muzzle", (2, 29, 8))
     it.socket("stock", (2, 0, 8), (0, -1, 0)).socket("sight", (2, 15.5, 13)).socket("eye", (2, 7, 13))
     return meta(it, label="RIFLE", sub="STANDARD ISSUE", refs=["lo.rifle", "role.security-rifle", "an.shoot", "an.equipped"],
@@ -227,6 +247,11 @@ def shotgun():
     p.key("fire", 0).key("fire", 3).key("fire", 6, (0, -3, 0)).key("fire", 10)
     p.key("reload", 0).key("reload", 4, (0, -3, 0)).key("reload", 8).key("reload", 12, (0, -3, 0)).key("reload", 16)
     it.main()
+    it.main()
+    for y in (18, 21, 24):
+        it.box(1, y, 11, 3, y + 1, 12, "dark")                       # top vent slots
+    sides(it, 0, 4, 7, 11, 15, 12, "emit_b")                         # receiver glow trim
+    it.box(1, 28, 9, 3, 29, 11, "emit_b")                            # muzzle glow
     it.socket("grip", (2, 8.5, 3)).socket("support", (2, 19, 5.5)).socket("muzzle", (2, 29, 10))
     it.socket("stock", (2, 0, 7.5), (0, -1, 0)).socket("sight", (2, 26.5, 13.5)).socket("eye", (2, 5, 13.5))
     return meta(it, label="SHOTGUN", sub="CLOSE RANGE", refs=["wt.shotgun", "lo.shotgun"], profile="RIFLE",
@@ -257,6 +282,10 @@ def heavy_gun():
     it.box(1, 14, 0, 5, 18, 6, "secondary").box(1, 14, 4, 5, 18, 5, "trim").box(2, 15, 1, 4, 17, 2, "dark")
     m.key("reload", 0).key("reload", 6, (0, 0, -8)).key("reload", 16, (0, 0, -8)).key("reload", 24)
     it.main()
+    it.main()
+    for y in (6, 8, 10):
+        it.box(1, y, 14, 2, y + 1, 15, "dark").box(4, y, 14, 5, y + 1, 15, "dark")   # top vents
+    sides(it, 0, 6, 5, 7, 17, 8, "emit_b")                           # receiver glow trim
     it.socket("grip", (3, 8, 3)).socket("support", (3, 19.5, 3)).socket("muzzle", (3, 30, 10))
     it.socket("stock", (3, 0, 9.5), (0, -1, 0)).socket("sight", (3, 11, 17.5)).socket("eye", (3, 4, 17))
     return meta(it, label="HEAVY GUN", sub="SUPPRESSION", refs=["lo.heavy-gun", "role.heavy-marine-gun"],
@@ -287,6 +316,10 @@ def beam_rifle():
     it.box(4, 9, 7, 5, 14, 10, "metal").box(4, 10, 8, 5, 13, 9, "emit_a")
     c.key("reload", 0).key("reload", 5, (3, 0, 3)).key("reload", 14, (3, 0, 3)).key("reload", 20)
     it.main()
+    it.main()
+    sides(it, 0, 4, 5, 10, 17, 11, "emit_a")                         # top-edge glow trim
+    for y in (6, 8):
+        sides(it, 0, 4, y, 6, y + 1, 8, "dark")                      # micro vents
     it.socket("grip", (2, 7.5, 3)).socket("support", (2, 19.5, 8)).socket("muzzle", (2, 27, 8))
     it.socket("stock", (2, 0, 8), (0, -1, 0)).socket("sight", (2, 8.5, 13)).socket("eye", (2, 3, 13))
     return meta(it, label="BEAM RIFLE", sub="ENERGY", refs=["wt.beam-rifle", "role.recon-scout-rifle"], profile="RIFLE",
@@ -312,6 +345,10 @@ def rail_rifle():
     it.box(1, 17, 1, 3, 19, 5, "dark").box(1, 17, 2, 3, 19, 3, "emit_a")
     m.key("reload", 0).key("reload", 5, (0, 0, -6)).key("reload", 14, (0, 0, -6)).key("reload", 20)
     it.main()
+    it.main()
+    for y in (3, 5):
+        sides(it, 0, 4, y, 9, y + 1, 10, "dark")                     # stock vents
+    sides(it, 0, 4, 8, 6, 12, 7, "emit_a")                           # receiver glow trim
     it.socket("grip", (2, 10.5, 3)).socket("support", (2, 20.5, 8)).socket("muzzle", (2, 30, 8))
     it.socket("stock", (2, 0, 7.5), (0, -1, 0)).socket("sight", (2, 15.5, 12)).socket("eye", (2, 7, 12))
     return meta(it, label="RAIL RIFLE", sub="HIGH IMPACT", refs=["wt.rail-rifle"], profile="LONG_RIFLE",
@@ -330,6 +367,10 @@ def stun_gun():
     it.box(1, 2, 11, 3, 3, 12, "emit_a").box(1, 5, 11, 3, 6, 12, "emit_a").box(1, 8, 11, 3, 9, 12, "dark")
     it.box(-1, 11, 5, 5, 13, 12, "dark").box(0, 12, 6, 4, 13, 11, "emit_a")
     it.main()
+    it.main()
+    for y in (1, 3):
+        it.box(1, y, 11, 3, y + 1, 12, "dark")                       # top vents
+    sides(it, 0, 4, 8, 10, 11, 11, "emit_a")                         # glow trim to the emitter
     it.socket("grip", (2, 3.5, 3)).socket("muzzle", (2, 13, 8.5)).socket("support", (2, 2, 1.5))
     return meta(it, label="STUN GUN", sub="NON-LETHAL", refs=["lo.stun-gun"], profile="PISTOL_ONE_HAND", holster="hip.L",
                 fx={"fire": "muzzle-flash", "projectile": "stun-arc", "impact": "impact-spark"})
@@ -383,6 +424,10 @@ def medgun():
     it.box(1, 3, 15, 3, 4, 17, "secondary").box(1, 4, 15, 3, 7, 17, "emit_a").box(1, 7, 15, 3, 8, 17, "secondary")
     c.key("fire", 0).key("fire", 6, rot=(0, 20, 0)).key("fire", 12)
     it.main()
+    it.main()
+    for z in (8, 10, 12):
+        it.box(0, 0, z, 4, 1, z + 1, "dark")                         # rear vents
+    sides(it, 0, 4, 9, 13, 11, 14, "emit_a")                         # vial glow trim
     it.socket("grip", (2, 5.5, 3)).socket("muzzle", (2, 14, 10.5)).socket("support", (2, 4, 1.5))
     return meta(it, label="MEDGUN", sub="HEALING", refs=["wt.medgun"], profile="PISTOL_ONE_HAND", holster="hip.R",
                 fx={"fire": "healing-beam", "projectile": "healing-beam", "impact": "pickup-glow"})
@@ -417,6 +462,8 @@ def utility_cutter():
     it.box(1, 20, 2, 3, 21, 5, "glass").box(1, 21, 3, 3, 22, 5, "glass").box(1, 14, 4, 3, 21, 5, "trim")
     b.key("use", 0).key("use", 2, (0, 1, 0)).key("use", 4).key("use", 6, (0, 1, 0)).key("use", 8)
     it.main()
+    it.main()
+    it.box(0, 12, 4, 4, 14, 5, "emit_b")                             # collar glow trim
     it.socket("grip", (2, 7.5, 2)).socket("emitter", (2, 22, 3.5))
     return meta(it, label="UTILITY CUTTER", sub="MELEE • UTILITY", refs=["wt.utility-cutter"], profile="TOOL",
                 holster="hip.L", fx={"use": "repair-sparks", "impact": "impact-spark"}, replaces="plasma-cutter")
@@ -438,6 +485,10 @@ def repair_tool():
     it.box(X0, 13, 8, X1, 16, 12, "emit_a").box(1, 13, 9, 3, 14, 11, "glass")
     e.key("use", 0).key("use", 6, rot=(0, 90, 0)).key("use", 12, rot=(0, 180, 0))
     it.main()
+    it.main()
+    for y in (6, 8):
+        it.box(1, y, 13, 3, y + 1, 14, "dark")                       # top vents
+    sides(it, 0, 4, 1, 12, 5, 13, "emit_a")                          # glow trim
     it.socket("grip", (2, 3.5, 4)).socket("emitter", (2, 16, 10)).socket("support", (2, 2, 1.5))
     return meta(it, label="REPAIR TOOL", sub="ENGINEERING", refs=["wt.repair-tool", "th.repair-tool", "an.use-repair"],
                 profile="TOOL", holster="hip.R", fx={"use": "repair-sparks", "beam": "healing-beam"})
@@ -454,6 +505,9 @@ def welder():
     it.box(1, 1, 12, 3, 7, 14, "primary").box(1, 2, 14, 3, 6, 15, "metal").box(1, 6, 12, 3, 7, 14, "dark")
     it.box(1, 8, 8, 3, 14, 11, "metal").box(X0, 9, 7, X1, 10, 12, "primary").box(X0, 11, 7, X1, 12, 12, "primary")
     it.box(1, 14, 8, 3, 15, 11, "dark").box(1, 15, 9, 3, 16, 10, "emit_b")
+    it.main()
+    sides(it, 0, 4, 2, 11, 7, 12, "emit_b")                          # hot glow trim
+    it.box(1, 12, 8, 3, 13, 10, "emit_b")                            # nozzle glow ring
     it.socket("grip", (2, 3.5, 4.5)).socket("emitter", (2, 16, 9.5)).socket("support", (2, 2, 1.5))
     return meta(it, label="WELDER", sub="FABRICATION", refs=["lo.welder", "th.welder", "role.mechanic-welder"],
                 profile="TOOL", holster="hip.R", fx={"use": "repair-sparks", "glow": "muzzle-flash"})
@@ -474,6 +528,9 @@ def multi_tool():
     it.box(1, 13, 9, 3, 14, 10, "emit_a")
     h.key("use", 0).key("use", 4, rot=(0, 120, 0)).key("use", 8, rot=(0, 240, 0)).key("use", 12, rot=(0, 360, 0))
     it.main()
+    it.main()
+    for y in (2, 4, 6, 8):
+        it.box(1, y, 6, 3, y + 1, 7, "dark")                         # underside vents
     it.socket("grip", (2, 3.5, 3)).socket("emitter", (2, 15, 9.5)).socket("support", (2, 2, 1.5))
     return meta(it, label="MULTI-TOOL", sub="UTILITY", refs=["lo.multi-tool"], profile="TOOL", holster="hip.R",
                 fx={"use": "repair-sparks"})
@@ -522,6 +579,11 @@ def scanner():
     it.box(0, 1, 10, 1, 3, 11, "emit_a")
     it.box(1, 6, 7, 4, 7, 11, "secondary").box(2, 6, 8, 3, 7, 10, "emit_a")
     it.box(4, 3, 12, 5, 4, 14, "metal")
+    it.main()
+    for x0 in (0, 4):
+        it.box(x0, 0, 11, x0 + 1, 6, 12, "trim")                     # corner trims
+    for y in (2, 4):
+        it.box(0, y, 7, 1, y + 1, 9, "dark").box(4, y, 7, 5, y + 1, 9, "dark")   # side vents
     it.socket("grip", (2.5, 3, 3)).socket("emitter", (2.5, 7, 9)).socket("display", (2.5, 0, 9), (0, -1, 0))
     return meta(it, label="SCANNER", sub="INTEL", refs=["wt.scanner"], profile="HANDHELD_DEVICE", holster="belt",
                 fx={"use": "scan-pulse"}, replaces="sample-scanner")

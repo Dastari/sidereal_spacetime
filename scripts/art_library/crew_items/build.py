@@ -44,7 +44,10 @@ def args():
     p.add_argument("--samples", type=int, default=32)
     p.add_argument("--no-export", action="store_true")
     p.add_argument("--holds", default=os.path.join(ROOT, "packages/content/src/crew-items-r001-holds.json"))
-    p.add_argument("--body", default="/root/sidereal-progress/_shared/crew-body-r002/crew-body.blend")
+    p.add_argument("--armed", action="store_true", help="bake + render the armed animation layer")
+    p.add_argument("--armed-clips", default="")
+    p.add_argument("--no-armed-render", action="store_true")
+    p.add_argument("--body", default="/root/sidereal-progress/_shared/crew-body-r004/crew-body.blend")
     return p.parse_args(argv)
 
 
@@ -241,14 +244,16 @@ def content_json(items, fxs):
 def main():
     o = args()
     clean_scene()
-    items = ITEMS.build_all()
-    fxs = FX.build_all()
+    # Refit to the published body spec BEFORE building items: support grips follow its grip profiles.
     spec_path = "/root/sidereal-progress/_shared/CHARACTER_SPEC_BODY.json"
     if os.path.exists(spec_path):
-        issues = body_frames.validate_against(json.load(open(spec_path)))
-        if issues:
-            raise SystemExit("body spec mismatch: " + "; ".join(issues))
-        print("[body] socket frames match CHARACTER_SPEC_BODY.json")
+        spec = json.load(open(spec_path))
+        for issue in body_frames.validate_against(spec):
+            print("[body] refit from published spec:", issue)
+        body_frames.load_spec(spec)
+        print(f"[body] using CHARACTER_SPEC_BODY.json revision {body_frames.BODY_SPEC_REVISION}")
+    items = ITEMS.build_all()
+    fxs = FX.build_all()
     data = content_json(items, fxs)
     if not o.no_export:
         manifest = export_all(o, items, fxs)
@@ -267,6 +272,9 @@ def main():
     if o.renders:
         from crew_items import render
         render.run(o, items, fxs, data)
+    if o.armed:
+        from crew_items import armed_render
+        armed_render.run(o, items, {i.id: i for i in items})
 
 
 if __name__ == "__main__":

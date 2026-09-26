@@ -1,0 +1,2546 @@
+{
+ "schema": "sidereal.crew.armed-actions/1",
+ "revision": "r001",
+ "rig": "crew_rig (CHAR-BODY r004, spec_version 2)",
+ "note": "Baked on CHAR-BODY's pose library; support hand solved onto each class item's support socket every frame.",
+ "classes": [
+  {
+   "class": "pistol",
+   "item": "pistol",
+   "family": "pistol"
+  },
+  {
+   "class": "smg",
+   "item": "smg",
+   "family": "pistol"
+  },
+  {
+   "class": "carbine",
+   "item": "compact-carbine",
+   "family": "rifle"
+  },
+  {
+   "class": "rifle",
+   "item": "rifle",
+   "family": "rifle"
+  },
+  {
+   "class": "shotgun",
+   "item": "shotgun",
+   "family": "rifle"
+  },
+  {
+   "class": "heavy",
+   "item": "heavy-gun",
+   "family": "heavy"
+  },
+  {
+   "class": "beam",
+   "item": "beam-rifle",
+   "family": "rifle"
+  },
+  {
+   "class": "rail",
+   "item": "rail-rifle",
+   "family": "rifle"
+  },
+  {
+   "class": "melee",
+   "item": "baton",
+   "family": "melee"
+  },
+  {
+   "class": "tool",
+   "item": "repair-tool",
+   "family": "tool"
+  }
+ ],
+ "clips": [
+  {
+   "action": "pistol.idle_armed",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.walk_armed",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.run_armed",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.aim",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {},
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.shoot",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "shoot",
+   "frames": 9,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0,
+   "stance": {},
+   "supportFramesSolved": 10,
+   "bodyPenetrationMaxVoxels": 1,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.reload",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "reload",
+   "frames": 28,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0,
+   "stance": {},
+   "supportFramesSolved": 13,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "pistol.draw",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "pistol.holster",
+   "class": "pistol",
+   "item": "pistol",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "smg.idle_armed",
+   "class": "smg",
+   "item": "smg",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": 5,
+     "dx": 3,
+     "dy": 3,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 4,
+     "rightErrorM": 0.1948,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 5,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.1675,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.walk_armed",
+   "class": "smg",
+   "item": "smg",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": 5,
+     "dx": 3,
+     "dy": 3,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 4,
+     "rightErrorM": 0.1948,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 5,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.1675,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.run_armed",
+   "class": "smg",
+   "item": "smg",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": 5,
+     "dx": 3,
+     "dy": 3,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 4,
+     "rightErrorM": 0.1948,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 5,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.1675,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.aim",
+   "class": "smg",
+   "item": "smg",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": 5,
+     "dx": 3,
+     "dy": 3,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 4,
+     "rightErrorM": 0.1948,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 5,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.1675,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 4,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.shoot",
+   "class": "smg",
+   "item": "smg",
+   "clip": "shoot",
+   "frames": 9,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": 5,
+     "dx": 3,
+     "dy": 3,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 4,
+     "rightErrorM": 0.1948,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 5,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.1675,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 10,
+   "bodyPenetrationMaxVoxels": 5,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.reload",
+   "class": "smg",
+   "item": "smg",
+   "clip": "reload",
+   "frames": 28,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0246,
+   "stance": {
+    "w": {
+     "tp": 5,
+     "dx": 3,
+     "dy": 3,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 4,
+     "rightErrorM": 0.1948,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 5,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.1675,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 13,
+   "bodyPenetrationMaxVoxels": 4,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "smg.draw",
+   "class": "smg",
+   "item": "smg",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": 5,
+     "dx": 3,
+     "dy": 3,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 4,
+     "rightErrorM": 0.1948,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 5,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.1675,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 2,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "smg.holster",
+   "class": "smg",
+   "item": "smg",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": 5,
+     "dx": 3,
+     "dy": 3,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 4,
+     "rightErrorM": 0.1948,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 5,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.1675,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 2,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "carbine.idle_armed",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0007,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 70,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 1,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.walk_armed",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 70,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 3,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.run_armed",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 70,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 4,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.aim",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 70,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 83,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.shoot",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 70,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 77,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.reload",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0733,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 70,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 70,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "carbine.draw",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 70,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 167,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "carbine.holster",
+   "class": "carbine",
+   "item": "compact-carbine",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 70,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 167,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "rifle.idle_armed",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0007,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 79,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 1,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.walk_armed",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 79,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 2,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.run_armed",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 79,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 4,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.aim",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 79,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 91,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.shoot",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 79,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 84,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.reload",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0733,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 79,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 79,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rifle.draw",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 79,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 170,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "rifle.holster",
+   "class": "rifle",
+   "item": "rifle",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 79,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 170,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "shotgun.idle_armed",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0007,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 87,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 3,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 3,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.walk_armed",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 87,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 3,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 3,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.run_armed",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 87,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 3,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.aim",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 87,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 3,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 101,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.shoot",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 87,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 3,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 92,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.reload",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0733,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 87,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 3,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 87,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "shotgun.draw",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 87,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 3,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 193,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "shotgun.holster",
+   "class": "shotgun",
+   "item": "shotgun",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 87,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 3,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 193,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "heavy.idle_armed",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 201,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 1,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.walk_armed",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 201,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 1,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.run_armed",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 201,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.aim",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0691,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 201,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 63,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.shoot",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0672,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 201,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 114,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.reload",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.1169,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 201,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 67,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "heavy.draw",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 201,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 399,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "heavy.holster",
+   "class": "heavy",
+   "item": "heavy-gun",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 201,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 399,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "beam.idle_armed",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.walk_armed",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.run_armed",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.aim",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 86,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.shoot",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 78,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.reload",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0499,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 75,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "beam.draw",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 192,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "beam.holster",
+   "class": "beam",
+   "item": "beam-rifle",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": 5,
+     "dx": -3,
+     "dy": 3,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 0,
+     "rightErrorM": 0.153,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 192,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "rail.idle_armed",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0007,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 73,
+   "bodyPenetrationMaxVoxels": 1,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.walk_armed",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 19,
+   "bodyPenetrationMaxVoxels": 2,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.run_armed",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 15,
+   "bodyPenetrationMaxVoxels": 4,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.aim",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "aim",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 49,
+   "bodyPenetrationMaxVoxels": 87,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.shoot",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "shoot",
+   "frames": 6,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": 0.0,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 7,
+   "bodyPenetrationMaxVoxels": 80,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.reload",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "reload",
+   "frames": 38,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": 0.0733,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 14,
+   "bodyPenetrationMaxVoxels": 75,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "rail.draw",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 168,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "rail.holster",
+   "class": "rail",
+   "item": "rail-rifle",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {
+    "w": {
+     "tp": -5,
+     "dx": 7,
+     "dy": 5,
+     "dz": -3,
+     "dyaw": 20,
+     "penetration": 75,
+     "rightErrorM": 0.2203,
+     "supportErrorM": 0.0
+    },
+    "c": {
+     "tp": -15,
+     "dx": 0,
+     "dy": 1,
+     "dz": 2,
+     "dyaw": 20,
+     "penetration": 1,
+     "rightErrorM": 0.1562,
+     "supportErrorM": 0.0
+    }
+   },
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 168,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "melee.idle_armed",
+   "class": "melee",
+   "item": "baton",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.walk_armed",
+   "class": "melee",
+   "item": "baton",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.run_armed",
+   "class": "melee",
+   "item": "baton",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.aim",
+   "class": "melee",
+   "item": "baton",
+   "clip": "aim",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.shoot",
+   "class": "melee",
+   "item": "baton",
+   "clip": "shoot",
+   "frames": 24,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 36,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "melee.draw",
+   "class": "melee",
+   "item": "baton",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 44,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "melee.holster",
+   "class": "melee",
+   "item": "baton",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 44,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  },
+  {
+   "action": "tool.idle_armed",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "idle_armed",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.walk_armed",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "walk_armed",
+   "frames": 18,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.run_armed",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "run_armed",
+   "frames": 14,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.aim",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "aim",
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 12,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.shoot",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "shoot",
+   "frames": 24,
+   "fps": 24,
+   "loop": true,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 12,
+   "grabFrame": null,
+   "attachHolsterFrames": []
+  },
+  {
+   "action": "tool.draw",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "draw",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": 6,
+   "attachHolsterFrames": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+   ]
+  },
+  {
+   "action": "tool.holster",
+   "class": "tool",
+   "item": "repair-tool",
+   "clip": "holster",
+   "frames": 14,
+   "fps": 24,
+   "loop": false,
+   "supportErrorMaxM": null,
+   "stance": {},
+   "supportFramesSolved": 0,
+   "bodyPenetrationMaxVoxels": 0,
+   "grabFrame": 8,
+   "attachHolsterFrames": [
+    9,
+    10,
+    11,
+    12,
+    13,
+    14
+   ]
+  }
+ ]
+}

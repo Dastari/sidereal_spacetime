@@ -1,7 +1,7 @@
 # Crew voxel handhelds, tools and FX (r001)
 
 Status: proposal art. It is exported and has tests, but it is not owner-approved, not published and not the default runtime.
-Last updated: 2026-09-25
+Last updated: 2026-09-26
 Owners: Sidereal art (CHAR-WEAPONS, Agent Mail `CopperHorse`)
 
 This kit replaces the r002/r003 pose-paired handhelds and the twelve `equipment-kit` models with the owner's detailed voxel reference style. The references are:
@@ -90,13 +90,38 @@ FX definitions carry the following:
 
 `sampleCrewItemFx` is the pure sampler. `createVoxelItemFx` applies it in Babylon. FX are presentation only. They are spawned from accepted events or local previews, and they never decide hits, healing or shields.
 
+## Armed animation layer (owner round 2)
+
+`scripts/art_library/crew_items/armed.py` bakes 78 clips onto `crew_rig`. There are ten classes: pistol, SMG, carbine, rifle, shotgun, heavy, beam, rail, melee and tool. Each class gets these clips:
+
+- `idle_armed`, `walk_armed` and `run_armed`
+- `aim` and `shoot`: the shoot clip is melee attack for the melee class and use for the tool class
+- `reload`: not baked for melee or tool
+- `draw` and `holster`
+
+The output is `assets/runtime/crew/items/r001/armed-actions.glb`, one glTF animation per `<class>.<clip>`, with metadata in `armed-actions.json`.
+
+**How the body moves.** The body comes from CHAR-BODY's own pose library (its `anims.py` Poser, as published in the shared body folder).
+- `gait` provides foot IK with planted stance feet, hip sway and bob, and a counter-rotating chest.
+- CHAR-BODY's aim, shoot, reload, melee and repair key poses are used as they are.
+- The weapon layer rides the chest (low ready or port arms) over the gait.
+- The support hand is re-solved every frame onto the class item's own support socket. The clavicle swings up to 24° when the chibi arm would otherwise fall short.
+- A per-class stance search (torso blade angle, weapon offset and yaw) keeps both hands on the item and minimises item voxels inside the torso or head.
+- Draw and holster reach to the item's holster, close the hand on it at frame 6, and bring the item to ready. Long guns swing out over the right shoulder.
+
+**What gets measured.** Each clip records its maximum support-hand gap and the maximum number of item voxels inside the torso or head boxes, so the evidence carries its own numbers. Current state:
+- Support-hand gaps are 0 during idle, walk, run, aim and shoot, except on the heavy gun, where they reach about 0.07 m.
+- Aimed long guns still put about 80–100 of roughly 1,500 voxels inside the chest box, at the stock and receiver beside the shoulder.
+- Draw and holster pass through the torso box during the swing.
+
+**Runtime.** `crewArmedClip(item, clip)` in `packages/content/src/crew-items.ts` maps any item to its class clip name. Items outside the representative set use their class clip. For those items, a runtime can re-target the support hand with `createVoxelItemVisual(...).socketWorld("support")`. Animated evidence (MP4 and GIF at the game camera and a 3/4 close-up) is produced by `build.py -- --armed` into the review folder.
+
 ## Integration status
 
 - **Standalone and tested.** The content validators, the GLB/manifest/content cross-checks and the runtime hook (`createVoxelItemVisual`, `createVoxelItemFx`) are all covered by tests.
 - **CHAR-BODY path.** CHAR-BODY's voxel crew runtime (`feat/crew-voxel-body-rig`, flag `WorldOptions.crewBundle = "voxel"`) parents item roots to `crew.itemSockets.R`, which applies the item +Y → socket +X adapter. That call site belongs to CHAR-BODY. This branch does not change `packages/render/src/index.ts` or `apps/client`.
 - **Default game is unchanged.** It still uses the owner-approved r003 handhelds with the r008 bodies. Switching is a separate owner decision.
-- **Holds.** `crew-items-r001-holds.json` records the solved placement of each held item in the character body frame. These placements come from reach-checked two-bone IK on the CHAR-BODY **r001** rig, and each pose's CHARACTER_SPEC clip is recorded with it. They are proposals for CHAR-BODY to key into real actions.
-- **Pending: spec v2 body.** Spec v2 (chibi, 2.8 heads, 7–8 voxel hands) needs a re-solve once CHAR-BODY publishes the v2 rig. Item scale already targets v2:
+- **Holds.** `crew-items-r001-holds.json` records each item on CHAR-BODY's baked action at a key frame, on the spec-v2 body (revision r004, read from the published spec at build time), with measured hand errors. The build refits socket positions and grip profiles from `CHARACTER_SPEC_BODY.json` automatically. Item scale targets v2:
   - pistol about 0.52–0.56 m, roughly head width;
   - rifles 0.84–0.94 m, roughly 1.5–1.7 × shoulder width;
   - heavy gun 0.94 m.
@@ -104,7 +129,7 @@ FX definitions carry the following:
 ## Honest gaps
 
 - Final art has no owner approval. The existing r003 handheld approval does not transfer to these meshes.
-- Holds are solved on the r001 body, not the v2 chibi body, and nothing has been captured in a browser.
+- Nothing has been captured in a browser. Aimed long guns still clip the chest box, and draw/holster passes through the torso (see Armed animation layer).
 - Content `package.json` exports are unchanged, because that file was reserved by another agent. Consumers import `packages/content/src/crew-items.ts` directly, as the render package already does for `equipment-poses`.
 - Inventory definitions and weapon stats are unchanged. Gameplay authority, ammunition and FX spawning from accepted combat events are not part of this kit.
 - `HEAVY_WEAPON` (the hip stance) exists only in the r003 release code, not on `main`. The heavy gun and mining drill use `RIFLE` until it is ported.

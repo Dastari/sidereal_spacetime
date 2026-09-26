@@ -11,6 +11,7 @@ import {
   crewItem,
   crewItemActionPlan,
   crewItemForLegacyAsset,
+  crewArmedClip,
   crewItemFx,
   crewItemMaterials,
   sampleCrewItemFx,
@@ -97,6 +98,20 @@ describe("crew voxel items r001", () => {
     for (const set of Object.values(ANIMATION_SET_CLIPS)) for (const clip of Object.values(set)) expect(clip).toMatch(/^[a-z_]+$/);
   });
 
+  it("maps items to baked armed clips present in armed-actions.glb", () => {
+    const armed = JSON.parse(readFileSync(join(ASSETS, "armed-actions.json"), "utf8"));
+    const names = new Set(glbJson(join(ASSETS, "armed-actions.glb")).animations.map((a: { name: string }) => a.name));
+    for (const clip of armed.clips) expect(names.has(clip.action), clip.action).toBe(true);
+    for (const item of CREW_ITEMS)
+      for (const clip of ["idle_armed", "walk_armed", "run_armed", "aim", "shoot", "reload", "draw", "holster"] as const) {
+        const name = crewArmedClip(item, clip);
+        if (name) expect(names.has(name), `${item.id} ${name}`).toBe(true);
+      }
+    expect(crewArmedClip(crewItem("rifle"), "walk_armed")).toBe("rifle.walk_armed");
+    expect(crewArmedClip(crewItem("baton"), "reload")).toBeNull();
+    expect(crewArmedClip(crewItem("cargo-box"), "aim")).toBeNull();
+  });
+
   it("maps legacy equipment assets to voxel replacements", () => {
     expect(crewItemForLegacyAsset("compact-pistol")?.id).toBe("pistol");
     expect(crewItemForLegacyAsset("carbine")?.id).toBe("compact-carbine");
@@ -140,7 +155,7 @@ describe("crew voxel items r001", () => {
   });
 
   it("publishes a measured default hold on the CHAR-BODY v2 rig for every held item", () => {
-    expect(holds.revision).toBe("r002");
+    expect(holds.revision).toMatch(/^r\d{3}$/);
     type Hold = { characterClip: string; handErrorM: Record<string, number | number[]>; rotationWXYZ: number[] };
     for (const item of CREW_ITEMS.filter((i) => i.animationSet !== "worn")) {
       const hold = (holds.items as Record<string, Hold>)[item.id];

@@ -73,7 +73,7 @@ def new_scene(name, width, height, samples, transparent=False):
     ct.nodes.clear()
     rl = ct.nodes.new("CompositorNodeRLayers")
     gl = ct.nodes.new("CompositorNodeGlare")
-    gl.glare_type, gl.threshold, gl.size, gl.mix = "FOG_GLOW", 0.55, 7, -0.15
+    gl.glare_type, gl.threshold, gl.size, gl.mix = "FOG_GLOW", 0.5, 8, 0.0
     hs = ct.nodes.new("CompositorNodeHueSat")
     hs.inputs["Saturation"].default_value = 1.25
     bc = ct.nodes.new("CompositorNodeBrightContrast")
@@ -440,7 +440,7 @@ def run(o, items, fxs, data):
     want = set(o.sheets.split(",")) if o.sheets != "all" else {"panel", "catalog", "variants", "fx", "lineup", "anims", "icons", "held"}
     from .items import REFERENCE_PANEL
     if "panel" in want:
-        sheet_panel(o, items, by_id, REFERENCE_PANEL, "weapons_tools_panel", "WEAPONS & TOOLS", "SIMPLE. SWAPPABLE. CREW-READY.  (r002 voxel proposal)")
+        sheet_panel(o, items, by_id, REFERENCE_PANEL, "weapons_tools_panel", "WEAPONS & TOOLS", "SIMPLE. SWAPPABLE. CREW-READY.  (r003 voxel proposal)")
         compose_comparison(o, None)
     if "catalog" in want:
         sheet_catalog(o, items, by_id)

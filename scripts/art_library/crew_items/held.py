@@ -1,9 +1,9 @@
-"""Items held by the CHAR-BODY r002 (spec v2 chibi) rig in its own baked actions.
+"""Items held by the CHAR-BODY r004 (spec v2 chibi) rig in its own baked actions.
 
 No IK and no invented poses: each figure plays one of CHAR-BODY's actions at a key frame, the item
 is placed on socket.hand.R with the item->socket adapter (item +Y -> socket +X), and the support
 hand error is MEASURED as the distance from socket.hand.L to the item's support socket. Items put
-their support grips on the r002 grip-profile offsets, so baked two-handed actions land on them.
+their support grips on the published grip-profile offsets, so baked two-handed actions land on them.
 The measured errors are written to held_poses.json and the content holds file (nothing is hidden).
 """
 import json
@@ -20,10 +20,11 @@ from .render import add_lights, emission_mat, text
 
 ITEM_TO_SOCKET = Matrix.Rotation(math.radians(-90), 4, "Z")     # item +Y -> socket +X
 DISPLAY_YAW = 35
-BODY_OBJECTS = ("crew_rig", "GEO-crew-body-male", "GEO-crew-head-male", "GEO-crew-hands-male",
-                "GEO-crew-feet-male", "GEO-crew-hair-default-male")
+# r004 default look = suit + gear + head + hair (suit hides base, gear hides hands); r002 names kept.
+BODY_OBJECTS = ("crew_rig", "GEO-crew-suit-male", "GEO-crew-gear-male", "GEO-crew-head-male", "GEO-crew-hair-default-male",
+                "GEO-crew-body-male", "GEO-crew-hands-male", "GEO-crew-feet-male")
 
-# Default action + key frame per animation set (CHAR-BODY r002 action names, CHARACTER_SPEC v2).
+# Default action + key frame per animation set (CHAR-BODY action names, CHARACTER_SPEC v2).
 SET_ACTION = {"rifle": ("aim_rifle", 12), "pistol": ("aim_pistol", 12), "tool": ("repair_loop", 6),
               "device": ("use_interact", 11), "melee": ("melee_swing", 10), "throw": ("throw", 10),
               "carry": ("carry_idle", 20)}
@@ -40,11 +41,32 @@ SHOWCASE = [
 ]
 
 
+_BODY_CACHE = {}
+
+
 def load_body(path):
+    """Append the body rig, meshes, sockets and actions once per session (cached)."""
+    if path in _BODY_CACHE:
+        return _BODY_CACHE[path]
     with bpy.data.libraries.load(path) as (src, dst):
-        dst.objects = [n for n in src.objects if n in BODY_OBJECTS or n.startswith("socket.")]
+        layered = "GEO-crew-suit-male" in src.objects
+        want = [n for n in BODY_OBJECTS if not (layered and n == "GEO-crew-hands-male")]
+        dst.objects = [n for n in src.objects if n in want or n.startswith("socket.")]
         dst.actions = list(src.actions)
-    return {ob.name: ob for ob in dst.objects if ob is not None}
+    _BODY_CACHE[path] = {ob.name: ob for ob in dst.objects if ob is not None}
+    return _BODY_CACHE[path]
+
+
+def template_collection(tpl):
+    keep = bpy.data.collections.get("TEMPLATE")
+    if keep is None:
+        keep = bpy.data.collections.new("TEMPLATE")
+        bpy.context.scene.collection.children.link(keep)
+    for ob in tpl.values():
+        if ob.name not in keep.objects:
+            keep.objects.link(ob)
+        ob.hide_render = True
+    return keep
 
 
 def clone_body(tpl, coll, location, yaw, action, frame, scene_frame):
@@ -142,11 +164,8 @@ def run(o, items, by_id):
     from .render import new_scene, render
     tpl = load_body(o.body)
     fx_by = {f.id: f for f in build_fx()}
-    keep = bpy.data.collections.new("TEMPLATE")
-    bpy.context.scene.collection.children.link(keep)
-    for ob in tpl.values():
-        keep.objects.link(ob)
-    report = {"bodySpec": "CHAR-BODY r002 (spec_version 2) crew-body.blend, male",
+    template_collection(tpl)
+    report = {"bodySpec": "CHAR-BODY r004 (spec_version 2) crew-body.blend, male",
               "method": "CHAR-BODY baked actions at key frames; item on socket.hand.R; support error measured", "results": []}
     frame = 100
     for sheet, chunk in (("held_weapons", SHOWCASE[:7]), ("held_tools", SHOWCASE[7:])):
@@ -204,8 +223,8 @@ def run(o, items, by_id):
         json.dump(report, fh, indent=1)
     if getattr(o, "holds", ""):
         with open(o.holds, "w") as fh:
-            json.dump({"schema": "sidereal.crew.item-holds/1", "revision": "r002",
-                       "bodySpec": "CHAR-BODY r002 (spec_version 2)",
+            json.dump({"schema": "sidereal.crew.item-holds/1", "revision": body_frames.BODY_SPEC_REVISION,
+                       "bodySpec": f"CHAR-BODY {body_frames.BODY_SPEC_REVISION} (spec_version 2)",
                        "frame": "character body frame, Blender axes (+Y facing, +Z up), metres; item origin = grip",
                        "method": "item on socket.hand.R in CHAR-BODY's baked action at the key frame; hand errors measured",
                        "items": holds}, fh, indent=1)

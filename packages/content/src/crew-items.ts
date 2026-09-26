@@ -234,3 +234,28 @@ export function sampleCrewItemFx(fx: CrewItemFxDefinition, t: number): CrewItemF
     finished: !fx.loop && t >= fx.durationS,
   };
 }
+
+/** Weapon classes baked into assets/runtime/crew/items/r001/armed-actions.glb (glTF animation
+ * names `<class>.<clip>`), on the CHAR-BODY r002 rig with the support hand solved per frame. */
+export type CrewArmedClass = "pistol" | "smg" | "carbine" | "rifle" | "shotgun" | "heavy" | "beam" | "rail" | "melee" | "tool";
+export type CrewArmedClip = "idle_armed" | "walk_armed" | "run_armed" | "aim" | "shoot" | "reload" | "draw" | "holster";
+const ARMED_BY_ITEM: Readonly<Record<string, CrewArmedClass>> = {
+  pistol: "pistol", "stun-gun": "pistol", medgun: "pistol", grapple: "pistol", smg: "smg",
+  "compact-carbine": "carbine", rifle: "rifle", shotgun: "shotgun", "heavy-gun": "heavy", "mining-drill": "heavy",
+  "beam-rifle": "beam", "rail-rifle": "rail", baton: "melee", "utility-cutter": "melee", wrench: "melee",
+};
+/** Armed class whose baked clips an item plays (null for thrown/carried/worn items). */
+export function crewArmedClass(item: CrewItemDefinition): CrewArmedClass | null {
+  if (ARMED_BY_ITEM[item.id]) return ARMED_BY_ITEM[item.id];
+  if (item.animationSet === "tool" || item.animationSet === "device") return "tool";
+  if (item.animationSet === "rifle") return "rifle";
+  if (item.animationSet === "pistol") return "pistol";
+  return null;
+}
+/** glTF animation name in armed-actions.glb; melee/tool have no reload clip. */
+export function crewArmedClip(item: CrewItemDefinition, clip: CrewArmedClip): string | null {
+  const cls = crewArmedClass(item);
+  if (!cls || (clip === "reload" && (cls === "melee" || cls === "tool"))) return null;
+  return `${cls}.${clip}`;
+}
+

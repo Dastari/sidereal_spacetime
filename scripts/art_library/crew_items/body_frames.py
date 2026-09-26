@@ -1,7 +1,8 @@
 """Character socket frames the item kit binds to (CHAR-BODY spec r001, Blender frame, voxels).
 
 Source: /root/sidereal-progress/_shared/CHARACTER_SPEC_BODY.json (schema sidereal.crew.body-spec/1,
-spec_version 2, revision r002 chibi body; proposal, not owner-approved). Values are copied so the kit builds without the
+spec_version 2, revision r004 chibi body; proposal, not owner-approved). `load_spec` refreshes
+these from the published file at build time so a CHAR-BODY revision bump does not need a code edit. Values are copied so the kit builds without the
 shared folder; build.py re-validates them against that file when it exists.
 
 Socket axes are the socket's local X/Y/Z expressed in the character body frame (rest pose):
@@ -10,16 +11,16 @@ have their origin at the grip centre, +X along the barrel and +Z toward the top 
 """
 import math
 
-BODY_SPEC_REVISION = "r002"
+BODY_SPEC_REVISION = "r004"
 VOX = 1 / 32
 
 SOCKETS = {
-    "socket.hand.R": {"bone": "hand.R", "vox": (9.5, 0.5, 16), "x": (0, 1, 0), "y": (-1, 0, 0), "z": (0, 0, 1)},
-    "socket.hand.L": {"bone": "hand.L", "vox": (-9.5, 0.5, 16), "x": (0, 1, 0), "y": (-1, 0, 0), "z": (0, 0, 1)},
-    "socket.hip.R": {"bone": "pelvis", "vox": (7, 0, 20), "x": (0, 1, 0), "y": (-1, 0, 0), "z": (0, 0, 1)},
-    "socket.hip.L": {"bone": "pelvis", "vox": (-7, 0, 20), "x": (0, -1, 0), "y": (1, 0, 0), "z": (0, 0, 1)},
-    "socket.back": {"bone": "chest", "vox": (0, -5, 31), "x": (1, 0, 0), "y": (0, 1, 0), "z": (0, 0, 1)},
-    "socket.belt": {"bone": "pelvis", "vox": (0, 0, 23), "x": (-1, 0, 0), "y": (0, -1, 0), "z": (0, 0, 1)},
+    "socket.hand.R": {"bone": "hand.R", "vox": (9.5, 0.5, 18), "x": (0, 1, 0), "y": (-1, 0, 0), "z": (0, 0, 1)},
+    "socket.hand.L": {"bone": "hand.L", "vox": (-9.5, 0.5, 18), "x": (0, 1, 0), "y": (-1, 0, 0), "z": (0, 0, 1)},
+    "socket.hip.R": {"bone": "pelvis", "vox": (7, 0, 21), "x": (0, 1, 0), "y": (-1, 0, 0), "z": (0, 0, 1)},
+    "socket.hip.L": {"bone": "pelvis", "vox": (-7, 0, 21), "x": (0, -1, 0), "y": (1, 0, 0), "z": (0, 0, 1)},
+    "socket.back": {"bone": "chest", "vox": (0, -5, 32), "x": (1, 0, 0), "y": (0, 1, 0), "z": (0, 0, 1)},
+    "socket.belt": {"bone": "pelvis", "vox": (0, 0, 24), "x": (-1, 0, 0), "y": (0, -1, 0), "z": (0, 0, 1)},
 }
 
 # Item frame (+X right, +Y forward, +Z up) -> hand socket frame (+X barrel, +Z up): item +Y -> socket +X,
@@ -81,10 +82,33 @@ def holster_local(preset):
             "offset": body_dir_to_socket(sock, preset["offset"])}
 
 
-# CHAR-BODY r002 grip profiles (spec gripProfiles, socket.hand.R frame: +X barrel, +Y left, +Z up),
-# converted to the item frame (item +Y = socket +X, item +X = socket -Y). The baked actions put
-# hand.L here, so items place their support grip on these offsets from the primary grip.
-GRIP_PROFILES_SOCKET = {"rifle": (9.0, 0.0, 0.5), "pistol": (-0.5, 2.5, -1.0), "tool": (6.0, 0.0, 1.0)}
+# Grip profiles (socket.hand.R frame: +X barrel, +Y left, +Z up) shared with CHAR-BODY r004 (spec
+# gripProfiles); converted to the item frame (item +Y = socket +X, item +X = socket -Y). Items put
+# their support grip here and the armed clips solve hand.L onto the item's support socket per frame.
+GRIP_PROFILES_SOCKET = {"rifle": (6.0, 1.0, 0.5), "pistol": (-0.5, 2.5, -1.0), "tool": (6.0, 0.0, 1.0)}
+# Torso / head boxes (armature voxels, rest pose) used for item-into-body clipping checks.
+BODY_BOXES = {"chest": ((-7, -5, 29), (7, 6, 37)), "spine": ((-6, -5, 24), (6, 6, 29)), "head": ((-8, -7, 39), (8, 7, 55))}
+
+
+def load_spec(spec):
+    """Adopt socket positions/axes, grip profiles and torso/head boxes from a published body spec."""
+    global BODY_SPEC_REVISION
+    by = {s["name"]: s for s in spec.get("sockets", [])}
+    for name, s in SOCKETS.items():
+        o = by.get(name)
+        if o:
+            s["vox"] = tuple(float(v) for v in o["locationVox"])
+            for k in ("x", "y", "z"):
+                s[k] = tuple(round(v) for v in o["axes"][k])
+    for name, off in (spec.get("gripProfiles") or {}).items():
+        if name in GRIP_PROFILES_SOCKET and off and off.get("support"):
+            GRIP_PROFILES_SOCKET[name] = tuple(off["support"])
+    seg = spec.get("segments") or {}
+    for bone in BODY_BOXES:
+        m = (seg.get(bone) or {}).get("male")
+        if m:
+            BODY_BOXES[bone] = (tuple(m["minVox"]), tuple(m["maxVox"]))
+    BODY_SPEC_REVISION = spec.get("revision", BODY_SPEC_REVISION)
 
 
 def support_offset_item(profile):
@@ -106,7 +130,4 @@ def validate_against(spec):
         for k in ("x", "y", "z"):
             if tuple(round(v) for v in o["axes"][k]) != s[k]:
                 issues.append(f"{name} axis {k} {o['axes'][k]} != {s[k]}")
-    for name, off in (spec.get("gripProfiles") or {}).items():
-        if name in GRIP_PROFILES_SOCKET and off.get("support") and tuple(off["support"]) != GRIP_PROFILES_SOCKET[name]:
-            issues.append(f"grip profile {name} {off['support']} != {GRIP_PROFILES_SOCKET[name]}")
     return issues
