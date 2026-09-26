@@ -15,29 +15,12 @@ import { registerPrefabShipSpawner } from "./ship-assign";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { PREFAB_FLIGHT_DEFINITION } from "@sidereal/sim/prefab-flight";
 import { installPrefabShip } from "./prefab-ship-authority";
+import {
+  REGISTERED_PREFAB_PINS,
+  type PinnedPrefabShip,
+} from "./prefab-ship-pins";
 
-export interface PinnedPrefabShip {
-  readonly prefabId: string;
-  /** `${SHIP_COMPONENT_CATALOG_ID}@${SHIP_COMPONENT_CATALOG_REVISION}`. */
-  readonly catalogRevision: string;
-  /** sha256 of the canonical prefab construction document (the instance blueprint). */
-  readonly blueprintSha256: string;
-  /** flightDefinitionCatalogHash of the prefab physical catalog (binding definitionSha256). */
-  readonly flightDefinitionSha256: string;
-  readonly description: string;
-}
-
-export const FED_WREN_PIN: PinnedPrefabShip = {
-  prefabId: "fed.s.wren",
-  catalogRevision: "ship-components-v1@1",
-  blueprintSha256:
-    "8c3c2f6d104d080d233f9cf70c60f9503ef8b9e0dccf6c14773a729c2b1eb7a3",
-  flightDefinitionSha256:
-    "e79173313d2abb22cbed92b1a21ff0b81c1f0386d6a448bf76281c2b7e471c59",
-  description: "Wren (Federation courier, size S, prefab r1)",
-};
-
-export const REGISTERED_PREFAB_PINS: readonly PinnedPrefabShip[] = [FED_WREN_PIN];
+export { FED_WREN_PIN, REGISTERED_PREFAB_PINS } from "./prefab-ship-pins";
 
 function registerPinned(pin: PinnedPrefabShip) {
   registerPrefabShipSpawner({
@@ -59,14 +42,18 @@ function registerPinned(pin: PinnedPrefabShip) {
         pose: request.pose,
       });
       const instance = ctx.db.constructionInstance.id.find(result.shipId);
-      const binding = ctx.db.constructionFlightBinding.shipId.find(result.shipId);
+      const binding = ctx.db.constructionFlightBinding.shipId.find(
+        result.shipId,
+      );
       if (instance?.blueprintSha256 !== pin.blueprintSha256)
         throw new SenderError(`${pin.prefabId} blueprint drifted from its pin`);
       if (
         binding?.definitionId !== PREFAB_FLIGHT_DEFINITION ||
         binding.definitionSha256 !== pin.flightDefinitionSha256
       )
-        throw new SenderError(`${pin.prefabId} flight definition drifted from its pin`);
+        throw new SenderError(
+          `${pin.prefabId} flight definition drifted from its pin`,
+        );
       return result;
     },
   });

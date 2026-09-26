@@ -9,7 +9,7 @@ import {
   PilotGeometryError,
   prefabPilotPose,
 } from "../../sim/src/construction-pilot";
-import { PREFAB_FLIGHT_DEFINITION } from "../../sim/src/prefab-flight";
+import { PREFAB_FLIGHT_DEFINITION } from "@sidereal/sim/prefab-flight";
 import type { Infer } from "spacetimedb/server";
 import type { constructionPilotSeat } from "./construction-pilot-tables";
 import type { constructionFlightBinding } from "./construction-flight-tables";

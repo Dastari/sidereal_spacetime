@@ -20,7 +20,7 @@ import {
   type CompiledFlightHull,
 } from "../../sim/src/flight-definition";
 import type { FlightEnvelope } from "../../sim/src/ifcs";
-import { PREFAB_FLIGHT_DEFINITION } from "../../sim/src/prefab-flight";
+import { PREFAB_FLIGHT_DEFINITION } from "@sidereal/sim/prefab-flight";
 /** Prefab physical definitions pair `prefab-component:<id>` with `prefab-fitting:<id>`. */
 const prefabFittingFor = (definitionId: string) =>
   definitionId.startsWith("prefab-component:")

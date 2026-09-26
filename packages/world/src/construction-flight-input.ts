@@ -29,7 +29,7 @@ import {
   prefabFlightInput,
   prefabFlightModelFor,
   prefabPlacedObjectId,
-} from "../../sim/src/prefab-flight";
+} from "@sidereal/sim/prefab-flight";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 function bounded<T>(rows: Iterable<T>, limit: number): T[] {
