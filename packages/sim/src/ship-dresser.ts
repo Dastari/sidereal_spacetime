@@ -122,6 +122,8 @@ export function rasterOutline(
   outline: Outline,
   bands: readonly number[],
   colour: (cx: number, cy: number, band: number) => ShipKitSlot,
+  /** Panel cell size in texels (16 = 1 m bricks; larger merges spans into bigger panels). */
+  cell = 16,
 ): DressBox[] {
   const rings = [outline.outer, ...outline.holes];
   const ys = outline.outer.map((p) => p[1]);
@@ -134,11 +136,11 @@ export function rasterOutline(
       const xa = pyRound(a * 8) * 2;
       const xb = pyRound(b * 8) * 2;
       if (xb <= xa) continue;
-      for (let cx = Math.floor(xa / 16); cx <= Math.floor((xb - 1) / 16); cx++) {
-        const sa = Math.max(xa, cx * 16);
-        const sb = Math.min(xb, cx * 16 + 16);
+      for (let cx = Math.floor(xa / cell); cx <= Math.floor((xb - 1) / cell); cx++) {
+        const sa = Math.max(xa, cx * cell);
+        const sb = Math.min(xb, cx * cell + cell);
         if (sb <= sa) continue;
-        const k = `${cx},${Math.floor(yt / 16)}`;
+        const k = `${cx},${Math.floor(yt / cell)}`;
         if (!cells.has(k)) cells.set(k, new Map());
         const rows = cells.get(k)!;
         if (!rows.has(yt)) rows.set(yt, []);
@@ -160,7 +162,7 @@ export function rasterOutline(
       const [sa, sb] = seg.split(":").map(Number);
       for (let bi = 0; bi + 1 < bands.length; bi++) boxes.push([sa, ya, bands[bi], sb, yb, bands[bi + 1], SLOT[colour(cx, cy, bi)]]);
     };
-    for (let yt = cy * 16; yt < cy * 16 + 16; yt += ROW) {
+    for (let yt = cy * cell; yt < cy * cell + cell; yt += ROW) {
       const segs = new Set((rows.get(yt) ?? []).map(([a, b]) => `${a}:${b}`));
       for (const [seg, ya] of [...open.entries()]) if (!segs.has(seg)) {
         emit(seg, ya, yt);
@@ -168,7 +170,7 @@ export function rasterOutline(
       }
       for (const seg of [...segs].sort()) if (!open.has(seg)) open.set(seg, yt);
     }
-    for (const [seg, ya] of [...open.entries()].sort()) emit(seg, ya, cy * 16 + 16);
+    for (const [seg, ya] of [...open.entries()].sort()) emit(seg, ya, cy * cell + cell);
   }
   return boxes;
 }
@@ -390,7 +392,8 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
         return h < 0.62 ? "primary" : h < 0.84 ? "secondary" : "accent";
       };
     }
-    generated.push({ id: `gen.${doc.id}.${v.id}.body`, kind: "hull-body", boxes: rasterOutline(outline, bands, colour), view: isDeck ? "flight" : "both" });
+    // 3 m panels: larger plates read as the reference's panelled hull instead of a 1 m grid.
+    generated.push({ id: `gen.${doc.id}.${v.id}.body`, kind: "hull-body", boxes: rasterOutline(outline, bands, colour, 48), view: isDeck ? "flight" : "both" });
 
     // Slope and arc skins.
     const { axis, chains } = faceChains(outline.outer);
@@ -588,10 +591,26 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
         }
         stats.roof++;
       }
-      [...rimc].map((c) => c.split(",").map(Number) as [number, number]).sort((a, b) => a[0] - b[0] || a[1] - b[1]).forEach(([cx, cy], k) => {
-        const kind = G.roof.rimKinds[Math.floor(hash01(doc.id, cx, cy, 3) * G.roof.rimKinds.length)];
-        place(kitId.roofRim(kind), cx, cy, zt, 0, roofView);
-        if (doc.theme === "riftjack" && k % 3 === 0) place(kitId.decorator("spike"), cx + 0.3, cy + 0.3, zt + 2 * TEXEL, 0, roofView);
+      // Roof rim: merged dark trim runs (not 1 m tiles), a lit edge line and sparse running
+      // lights, as the reference's charcoal-navy hull edging.
+      const rimCells = [...rimc].map((c) => c.split(",").map(Number) as [number, number]).sort((a, b) => a[1] - b[1] || a[0] - b[0]);
+      const rimBoxes: DressBox[] = [];
+      for (let i = 0; i < rimCells.length; ) {
+        const [x0, y] = rimCells[i];
+        let x1 = x0 + 1;
+        while (i + 1 < rimCells.length && rimCells[i + 1][1] === y && rimCells[i + 1][0] === x1) i++, x1++;
+        i++;
+        rimBoxes.push([x0 * 16, y * 16, z1, x1 * 16, y * 16 + 16, z1 + 2, SLOT.secondary]);
+        rimBoxes.push([x0 * 16 + 1, y * 16 + 1, z1 + 2, x1 * 16 - 1, y * 16 + 15, z1 + 3, SLOT.trim]);
+        for (let x = x0; x < x1; x++) {
+          const h = hash01(doc.id, x, y, 3);
+          if (h < 0.28) rimBoxes.push([x * 16 + 6, y * 16 + 6, z1 + 3, x * 16 + 10, y * 16 + 10, z1 + 4, h < 0.14 ? SLOT.emit_a : SLOT.emit_b]);
+          else if (h < 0.5) rimBoxes.push([x * 16 + 3, y * 16 + 3, z1 + 3, x * 16 + 13, y * 16 + 13, z1 + 5, SLOT.metal]);
+        }
+      }
+      generated.push({ id: `gen.${doc.id}.${v.id}.roof-rim`, kind: "hull-body", boxes: rimBoxes, view: roofView });
+      rimCells.forEach(([cx, cy], k) => {
+        if (doc.theme === "riftjack" && k % 3 === 0) place(kitId.decorator("spike"), cx + 0.3, cy + 0.3, zt + 3 * TEXEL, 0, roofView);
       });
     } else if (doc.theme === "aurelian" || doc.theme === "crystalline") {
       const poly = outline.outer;

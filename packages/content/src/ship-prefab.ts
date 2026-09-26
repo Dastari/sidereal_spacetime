@@ -732,8 +732,9 @@ export function deriveInterior(doc: ShipPrefabDocumentV1, deck = 0, catalog?: Pr
   const posts: Pt[] = [];
   for (const [k, dirs] of [...vertexDirs.entries()].sort()) {
     const walls = dirs.filter((d) => d !== "door");
-    if (!walls.length) continue;
-    if (dirs.length === 2 && new Set(dirs).size === 1) continue;
+    // Posts only where three or four walls meet (T and X junctions): straight runs, L corners,
+    // wall ends and door jambs stay clean so the deck reads as rooms, not a colonnade.
+    if (walls.length < 3) continue;
     posts.push(k.split(",").map(Number) as unknown as Pt);
   }
 

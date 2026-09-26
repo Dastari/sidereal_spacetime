@@ -40,7 +40,7 @@ import ship_kit_prototype as P  # noqa: E402  (module import is side-effect free
 
 T = 1.0 / 16.0
 SLOTS = ["primary", "secondary", "accent", "trim", "metal", "dark", "emit_a", "emit_b", "glass"]
-SHOTS = ["flight_top", "flight_iso", "deck_iso", "deck_top"]
+SHOTS = ["flight_top", "flight_iso", "deck_iso", "deck_top", "deck_walk"]
 # Per-slot outward inflation (m) for generated boxes, as DEFAULT_SLOT_INFLATION in box-mesher.ts.
 INFLATE = [0, 0, 0, 0.0005, 0.0005, 0.00025, 0.00075, 0.00075, -0.00025]
 FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
@@ -655,6 +655,18 @@ def cam_iso(cam, lo, hi, aspect, elev_deg, az_deg, lens=40, fill=0.92):
     cam.rotation_euler = rot.to_euler()
 
 
+def walk_camera(cam, s, dlo, dhi):
+    """Interior walk-through: a low third-person view from behind the deck crew figure, aft and
+    to port, looking fore along the corridor toward the bridge (the reference 3d-rpg framing)."""
+    crew = next((o for o in s.colls["deck"].all_objects if o.name.startswith("crew.deck")), None)
+    target = crew.location.copy() if crew else (dlo + dhi) / 2
+    target.x += 2.2
+    target.z = 1.0
+    cam.data.type, cam.data.lens, cam.data.clip_end = "PERSP", 26, 500
+    cam.location = target + Vector((-6.5, 3.2, 5.6))
+    cam.rotation_euler = (target - cam.location).to_track_quat("-Z", "Y").to_euler()
+
+
 def mask_and_stats(sc, path_png, hide_for_mask):
     """Silhouette mask via a quick Workbench pass (grid/plumes hidden), then VERIFY-style stats on
     the graded PNG: emissive share (max>0.85 & sat>0.45), mean saturation, luma p10/p90, dark share."""
@@ -840,14 +852,20 @@ def main():
         entry = {"counts": s.counts, "build_s": round(s.build_seconds, 1), "shots": {}}
         for shot in shots:
             view = "flight" if shot.startswith("flight") else "deck"
-            s.show(view, scale=True, labels=(shot == "deck_top"))
+            s.show(view, scale=shot != "deck_walk", labels=(shot == "deck_top"))
             aspect = 1.6
-            if shot.endswith("_top"):
+            dlo, dhi = s.bounds(["deck"])
+            if shot == "deck_top":
+                # Tight on the deck itself (floors, walls, crew), not the whole hull and plumes.
+                cam_top(cam, Vector((dlo.x - 0.6, dlo.y - 0.6, 0)), Vector((dhi.x + 0.6, dhi.y + 0.6, 0)), aspect, margin=1.04)
+            elif shot.endswith("_top"):
                 cam_top(cam, Vector((slo.x, lo.y - 0.5, 0)), Vector((shi.x, hi.y + 0.5, 0)), aspect)
             elif shot == "flight_iso":
                 cam_iso(cam, lo, hi, aspect, 35, 50)
+            elif shot == "deck_walk":
+                walk_camera(cam, s, dlo, dhi)
             else:
-                cam_iso(cam, lo, hi, aspect, 52, 40)
+                cam_iso(cam, dlo, dhi, aspect, 50, 35, lens=45, fill=1.0)
             path = os.path.join(args.out, f"{s.id}_{shot}.png")
             secs = render(sc, path, (1600, 1000), args.scale)
             st = mask_and_stats(sc, path, [s.colls["scale"], s.colls["labels"], s.colls["plume_both"], s.colls["plume_flight"]])
