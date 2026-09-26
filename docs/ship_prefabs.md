@@ -93,4 +93,27 @@ Eleven ships across five themes. The three small ships are starter candidates:
 
 ## Implemented versus pending
 
-This section is updated as milestones land. See the PR description for the authoritative state.
+**Implemented and tested** (vitest, isolated smoke):
+- Grammar, prefab document, validation, stats, interior derivation. Twelve developer prefabs validate with no errors or warnings.
+- Kit export: 217 pieces. The dresser port and its determinism tests.
+- Construction wrapper with strict re-derivation. Spawned instances admit through identity maps.
+- Flight compiled from component stats: main drives and four-way RCS nozzles as actuators, computer cores, structure mass and a hull capsule.
+- Generic gates, each keyed to trusted prefab installs; Wayfarer behaviour is unchanged:
+  - game ship access
+  - flight input, resolver and writer
+  - pilot pose
+  - berth radius
+- `installPrefabShip` and `prefabSpawnerFor`, in the SHIPS-REMOVAL `PrefabShipSpawner` shape.
+- Isolated smoke: `python3 scripts/dev.py smoke --smoke-name prefab --fresh-smoke --prefab` (optionally with `SIDEREAL_PREFAB_SMOKE_ID=<id>`). It assigns the ship, walks a door-aware route (`prefabWalkRoute`), takes the pilot seat, accelerates and turns. It passes for Wren, Jackal and Lumen.
+- Shipyard editor at `/shipyard/prefabs`. `authorability.test.ts` rebuilds all 12 prefabs exactly using only editor commands.
+- Babylon `createPrefabShipView` with a database-free harness (`npm run prefab:harness`, `npm run prefab:capture`).
+- Headless Blender review renders: `scripts/prefab-dress-dump.ts` plus `scripts/art_library/render_prefabs.py`.
+
+**Pending:**
+- **Live assignment:** live runs `release/live-authority-20260921`. The backport is a separate PR stacked on SHIPS-REMOVAL's PR #26.
+- **Game client:** the construction scene needs a prefab branch that calls `createPrefabShipView`. The ship-kit and component GLBs need runtime publication; component GLBs are currently served from the art-library export only by the harness.
+- **Doors:** prefab doors derive as passages. Sealed doors and airlocks need game-player door state.
+- **Collision and power:** consoles and bunks have no collision. Device power toggles fail closed for prefab ships.
+- **Deck objects:** art-library objects are placeholders in their sockets.
+- **Draw calls:** about 1,500 for Wren in the harness, including glow and shadow passes. Batching and merging come before M and L ships in game.
+- **Deferred scope:** multi-deck, damage deltas and player refit jobs.
