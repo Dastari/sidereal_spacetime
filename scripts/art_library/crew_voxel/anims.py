@@ -456,12 +456,12 @@ def lib():
 
     fnact("idle", True, cycle(idle_at, 72), {"nominalSpeed": 0})
 
-    RIFLE_LOW = ("c", 4, 8, 32, 25, -28, 10, "rifle")
+    RIFLE_LOW = ("c", 7, 6, 37, 5, -30, 0, "rifle")   # ready carry: stock at shoulder, muzzle low-forward
 
     def idle_armed_at(ph):
         P = idle_at(ph, 0.8)
         s = math.sin(2 * math.pi * ph)
-        P["weapon"] = ("c", 4, 8, 32 + 0.3 * s, 25, -28 + 1.5 * s, 10, "rifle")
+        P["weapon"] = ("c", 7, 6, 37 + 0.3 * s, 5, -30 + 1.5 * s, 0, "rifle")
         P["fk:chest"] = (1.2 * s, 0, -6)
         P["fk:head"] = (0, 0, 5)
         P["pole.R"] = (0.9, -0.6, -0.4)
@@ -554,7 +554,7 @@ def lib():
     def aim_pistol_at(ph):
         P = aim_pistol_base()
         s, c = math.sin(2 * math.pi * ph), math.cos(2 * math.pi * ph)
-        P["weapon"] = ("w", 1.0 + 0.15 * c, 12, 42.6 + 0.2 * s, 0.5 * c, 0.5 * s, 0, "pistol")
+        P["weapon"] = ("w", 1.0 + 0.15 * c, 13, 46.9 + 0.2 * s, 0.5 * c, 0.5 * s, 0, "pistol")   # arm's length, sights at eye line
         return P
 
     fnact("aim_pistol", True, cycle(aim_pistol_at, 48), {"grip": "pistol"})
@@ -575,7 +575,7 @@ def lib():
 
     fnact("shoot_rifle", True, shot(aim_rifle_at, RIFLE_AIM, 1.6, 5, 6), {"grip": "rifle", "muzzleFlashFrame": 1,
                                                                         "note": "one shot per loop (6 frames = 4 rps); blend over aim_rifle"})
-    fnact("shoot_pistol", False, shot(aim_pistol_at, ("w", 1.0, 12, 42.6, 0, 0, 0, "pistol"), 1.2, 14, 9),
+    fnact("shoot_pistol", False, shot(aim_pistol_at, ("w", 1.0, 13, 46.9, 0, 0, 0, "pistol"), 1.2, 14, 9),
           {"grip": "pistol", "muzzleFlashFrame": 1})
 
     # reload (rifle): tilt weapon, left hand to belt pouch, to mag well, slap, back to foregrip
@@ -927,32 +927,44 @@ def lib():
     # parent from the holster socket to itemSockets.R at `attachFrame` (runtime / CHAR-WEAPONS).
     HIP = ("w", 9.5, -1.5, 25.5, 0, -90, 0)          # hand on the holstered grip (r001 authoring frame)
     AIMP = aim_pistol_at(0)
+    OUT_HIP = ("w", 12, 0, 30, 0, -60, 0)            # lifted out beside the hip, clear of the torso
+    FRONT = ("w", 8, 10, 40, 0, -10, 0)              # in front of the chest on the way to the aim
     keys("draw_pistol", False, [
         (0, dict(B(), **{"hand.R": ("c", 9, 1, 26, 0, -20, 0)}), "io"),
         (5, dict(B(), **{"hand.R": HIP, "fk:chest": (2, 0, -4)}), "in"),
-        (8, dict(B(), **{"hand.R": ("w", 9.5, -1.5, 27, 0, -80, 0), "fk:chest": (2, 0, -4)}), "snap"),
-        (16, AIMP, "back"),
+        (8, dict(B(), **{"hand.R": OUT_HIP, "fk:chest": (2, 0, -4), "pole.R": (1, -0.3, 0)}), "out"),
+        (12, dict(B(), **{"hand.R": FRONT, "pole.R": (1, -0.3, -0.3)}), "io"),
+        (18, AIMP, "back"),
     ], {"grip": "pistol", "attachFrame": 7, "holster": "socket.hip.R", "extra": True})
     keys("holster_pistol", False, [
         (0, AIMP, "io"),
-        (7, dict(B(), **{"hand.R": ("w", 9.5, -1.5, 27, 0, -80, 0), "fk:chest": (2, 0, -4)}), "io"),
-        (10, dict(B(), **{"hand.R": HIP, "fk:chest": (2, 0, -4)}), "snap"),
-        (18, B(), "io"),
-    ], {"grip": "pistol", "detachFrame": 10, "holster": "socket.hip.R", "extra": True})
+        (6, dict(B(), **{"hand.R": FRONT, "pole.R": (1, -0.3, -0.3)}), "io"),
+        (10, dict(B(), **{"hand.R": OUT_HIP, "fk:chest": (2, 0, -4), "pole.R": (1, -0.3, 0)}), "io"),
+        (13, dict(B(), **{"hand.R": HIP, "fk:chest": (2, 0, -4)}), "snap"),
+        (21, B(), "io"),
+    ], {"grip": "pistol", "detachFrame": 13, "holster": "socket.hip.R", "extra": True})
     BACK = ("w", 5, -7, 45, 30, 150, 0)               # hand over the right shoulder on the back-mounted rifle
+    SIDE = ("w", 13, -3, 33, 0, 60, 0)               # arm swings out to the side first
+    LIFT = ("w", 6, -5, 46, 30, 150, 0)
+    UP = ("w", 13, 2, 44, 0, 80, 0)                  # rifle carried up beside the head, barrel up
     ARMED = idle_armed_at(0)
+    OUTP = {"pole.R": (1, 0.3, 0.6)}
     keys("draw_rifle", False, [
         (0, B(), "io"),
-        (7, dict(B(), **{"hand.R": BACK, "fk:chest": (-4, 0, 10), "fk:head": (0, 0, -6), "pole.R": (1, 0.3, 0.6)}), "in"),
-        (10, dict(B(), **{"hand.R": ("w", 6, -5, 46, 30, 150, 0), "fk:chest": (-4, 0, 10), "pole.R": (1, 0.3, 0.6)}), "snap"),
-        (20, ARMED, "back"),
-    ], {"grip": "rifle", "attachFrame": 9, "holster": "socket.back", "extra": True})
+        (5, dict(B(), **{"hand.R": SIDE, "pole.R": (1, 0, 0)}), "io"),
+        (9, dict(B(), **{"hand.R": BACK, "fk:chest": (-4, 0, 10), "fk:head": (0, 0, -6), **OUTP}), "in"),
+        (12, dict(B(), **{"hand.R": LIFT, "fk:chest": (-4, 0, 10), **OUTP}), "snap"),
+        (16, dict(B(), **{"hand.R": UP, "pole.R": (1, 0, 0)}), "io"),
+        (24, ARMED, "back"),
+    ], {"grip": "rifle", "attachFrame": 11, "holster": "socket.back", "extra": True})
     keys("holster_rifle", False, [
         (0, ARMED, "io"),
-        (9, dict(B(), **{"hand.R": ("w", 6, -5, 46, 30, 150, 0), "fk:chest": (-4, 0, 10), "pole.R": (1, 0.3, 0.6)}), "io"),
-        (12, dict(B(), **{"hand.R": BACK, "fk:chest": (-4, 0, 10), "pole.R": (1, 0.3, 0.6)}), "snap"),
-        (22, B(), "io"),
-    ], {"grip": "rifle", "detachFrame": 12, "holster": "socket.back", "extra": True})
+        (8, dict(B(), **{"hand.R": UP, "pole.R": (1, 0, 0)}), "io"),
+        (12, dict(B(), **{"hand.R": LIFT, "fk:chest": (-4, 0, 10), **OUTP}), "io"),
+        (15, dict(B(), **{"hand.R": BACK, "fk:chest": (-4, 0, 10), **OUTP}), "snap"),
+        (19, dict(B(), **{"hand.R": SIDE, "pole.R": (1, 0, 0)}), "io"),
+        (26, B(), "io"),
+    ], {"grip": "rifle", "detachFrame": 15, "holster": "socket.back", "extra": True})
     return A
 
 

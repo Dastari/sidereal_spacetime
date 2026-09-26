@@ -1,5 +1,5 @@
 /**
- * Voxel crew bundle (CHAR-BODY r004): 1/32 m voxel body, `crew_rig`, sockets and the baked
+ * Voxel crew bundle (CHAR-BODY r005): 1/32 m voxel body, `crew_rig`, sockets and the baked
  * animation library. PROPOSAL ART — not owner-approved. The legacy r008 modular bundle stays
  * the default; the voxel bundle is only selected through `resolveCrewBundle` when a local
  * preview is explicitly enabled, so nothing live changes without owner approval.
@@ -7,7 +7,7 @@
 export const CREW_BUNDLES = ["legacy", "voxel"] as const;
 export type CrewBundle = (typeof CREW_BUNDLES)[number];
 
-export const VOXEL_CREW_REVISION = "r004";
+export const VOXEL_CREW_REVISION = "r005";
 export const VOXEL_CREW_FACE_ATLAS_URL = `/assets/crew/voxel/${VOXEL_CREW_REVISION}/face/face-atlas.json?revision=${VOXEL_CREW_REVISION}`;
 export const VOXEL_CREW_FACE_IMAGE_URL = `/assets/crew/voxel/${VOXEL_CREW_REVISION}/face/face-default.png?revision=${VOXEL_CREW_REVISION}`;
 export const VOXEL_CREW_ASSET_URL = `/assets/crew/voxel/${VOXEL_CREW_REVISION}/crew-body.glb?revision=${VOXEL_CREW_REVISION}`;

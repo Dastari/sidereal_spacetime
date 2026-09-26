@@ -220,8 +220,13 @@ def spec_json(arm, socks, seg, stats, actions):
             "matrixWorld": [[round(c, 6) for c in row] for row in mw],
             "gltf": {"location": rig.gltf(list(loc)), "quaternionXYZW": [round(qg.x, 6), round(qg.y, 6), round(qg.z, 6), round(qg.w, 6)]},
         })
+    hair_top = max(v["maxVox"][2] for v in seg["hair.default"].values())
+    measured = {v: {"hairTopVox": h["maxVox"][2], "headPlusHairFraction": round((h["maxVox"][2] - 39) / h["maxVox"][2], 3),
+                    "hairWidthVox": h["maxVox"][0] - h["minVox"][0]} for v, h in seg["hair.default"].items()}
     return {
         "schema": "sidereal.crew.body-spec/2",
+        "measured": {"note": "from the exported default hair + skull (chin z 39)", "hairTopMaxVox": hair_top,
+                     "byVariant": measured},
         "spec_version": rig.SPEC_VERSION,
         "revision": rig.REVISION,
         "status": "proposal (not owner-approved); binding interface for character agents",

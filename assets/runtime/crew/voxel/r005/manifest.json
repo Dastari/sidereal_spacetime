@@ -1,6 +1,6 @@
 {
  "schema": "sidereal.crew.body-manifest/1",
- "revision": "r004",
+ "revision": "r005",
  "family": "crew.body.voxel",
  "status": "proposal; not published; not owner-approved",
  "rig": "crew_rig",
@@ -45,7 +45,7 @@
     "suit": "GEO-crew-suit-male",
     "gear": "GEO-crew-gear-male"
    },
-   "trisDefaultLook": 21516,
+   "trisDefaultLook": 20028,
    "trisByRegion": {
     "base": 3036,
     "hands": 544,
@@ -87,33 +87,33 @@
   {
    "id": "hair.default.male",
    "mesh": "GEO-crew-hair-default-male",
-   "tris": 10726,
+   "tris": 9238,
    "bone": "head",
    "slots": [
     "hair"
    ],
    "boundsVox": [
     [
-     -11,
+     -10,
      -11,
      42
     ],
     [
-     12,
      10,
-     59
+     10,
+     58
     ]
    ],
    "bounds": [
     [
-     -0.34375,
+     -0.3125,
      -0.34375,
      1.3125
     ],
     [
-     0.375,
      0.3125,
-     1.84375
+     0.3125,
+     1.8125
     ]
    ]
   },
@@ -126,7 +126,7 @@
     "suit": "GEO-crew-suit-female",
     "gear": "GEO-crew-gear-female"
    },
-   "trisDefaultLook": 28902,
+   "trisDefaultLook": 23606,
    "trisByRegion": {
     "base": 3152,
     "hands": 544,
@@ -168,7 +168,7 @@
   {
    "id": "hair.default.female",
    "mesh": "GEO-crew-hair-default-female",
-   "tris": 18276,
+   "tris": 12980,
    "bone": "head",
    "slots": [
     "hair",
@@ -176,26 +176,26 @@
    ],
    "boundsVox": [
     [
-     -11,
+     -10,
      -13,
-     34
+     33
     ],
     [
-     12,
      10,
-     60
+     10,
+     58
     ]
    ],
    "bounds": [
     [
-     -0.34375,
+     -0.3125,
      -0.40625,
-     1.0625
+     1.03125
     ],
     [
-     0.375,
      0.3125,
-     1.875
+     0.3125,
+     1.8125
     ]
    ]
   },
@@ -208,7 +208,7 @@
     "suit": "GEO-crew-suit-neutral",
     "gear": "GEO-crew-gear-neutral"
    },
-   "trisDefaultLook": 21516,
+   "trisDefaultLook": 20028,
    "trisByRegion": {
     "base": 3036,
     "hands": 544,
@@ -250,33 +250,33 @@
   {
    "id": "hair.default.neutral",
    "mesh": "GEO-crew-hair-default-neutral",
-   "tris": 10726,
+   "tris": 9238,
    "bone": "head",
    "slots": [
     "hair"
    ],
    "boundsVox": [
     [
-     -11,
+     -10,
      -11,
      42
     ],
     [
-     12,
      10,
-     59
+     10,
+     58
     ]
    ],
    "bounds": [
     [
-     -0.34375,
+     -0.3125,
      -0.34375,
      1.3125
     ],
     [
-     0.375,
      0.3125,
-     1.84375
+     0.3125,
+     1.8125
     ]
    ]
   }
@@ -914,23 +914,6 @@
   },
   {
    "name": "draw_pistol",
-   "frames": 16,
-   "fps": 24,
-   "loop": false,
-   "expressionTrack": [
-    [
-     0,
-     "neutral"
-    ]
-   ],
-   "seconds": 0.667,
-   "extra": true,
-   "grip": "pistol",
-   "attachFrame": 7,
-   "holster": "socket.hip.R"
-  },
-  {
-   "name": "holster_pistol",
    "frames": 18,
    "fps": 24,
    "loop": false,
@@ -943,12 +926,29 @@
    "seconds": 0.75,
    "extra": true,
    "grip": "pistol",
-   "detachFrame": 10,
+   "attachFrame": 7,
+   "holster": "socket.hip.R"
+  },
+  {
+   "name": "holster_pistol",
+   "frames": 21,
+   "fps": 24,
+   "loop": false,
+   "expressionTrack": [
+    [
+     0,
+     "neutral"
+    ]
+   ],
+   "seconds": 0.875,
+   "extra": true,
+   "grip": "pistol",
+   "detachFrame": 13,
    "holster": "socket.hip.R"
   },
   {
    "name": "draw_rifle",
-   "frames": 20,
+   "frames": 24,
    "fps": 24,
    "loop": false,
    "expressionTrack": [
@@ -957,15 +957,15 @@
      "neutral"
     ]
    ],
-   "seconds": 0.833,
+   "seconds": 1.0,
    "extra": true,
    "grip": "rifle",
-   "attachFrame": 9,
+   "attachFrame": 11,
    "holster": "socket.back"
   },
   {
    "name": "holster_rifle",
-   "frames": 22,
+   "frames": 26,
    "fps": 24,
    "loop": false,
    "expressionTrack": [
@@ -974,32 +974,32 @@
      "neutral"
     ]
    ],
-   "seconds": 0.917,
+   "seconds": 1.083,
    "extra": true,
    "grip": "rifle",
-   "detachFrame": 12,
+   "detachFrame": 15,
    "holster": "socket.back"
   }
  ],
  "files": {
   "crew-body-male.glb": {
-   "sha256": "6bbd12aebb5beb8b99dec0b29d7063c42a4e1a5fbc69b7c23944ba6e15027f64",
-   "bytes": 2450788,
+   "sha256": "a5a91cb6029e611125aabbec87ae951c39e28ee810531f12e6af19cbf8966866",
+   "bytes": 2391712,
    "variant": "male"
   },
   "crew-body-female.glb": {
-   "sha256": "1c46f9fb47b7a6d32baef519429fcc8469b988166b92828707d0922b4bee53da",
-   "bytes": 2846296,
+   "sha256": "3ab6ba85c4a65fe2a3569fb72d045336fd0da3d5983ef362caaf5257f9668126",
+   "bytes": 2602204,
    "variant": "female"
   },
   "crew-body-neutral.glb": {
-   "sha256": "2870d69d0005d53176aee604dd5685c1c4d6ba476998d776f4d5fa0c8ad1f673",
-   "bytes": 2450844,
+   "sha256": "3438418f26b46748d5bae2b1fca0f2d1fd9b0157a0d0e7d9aabfa4bdac422f56",
+   "bytes": 2391768,
    "variant": "neutral"
   },
   "crew-body.glb": {
-   "sha256": "c7f58fb1b3df6ba84c984067c19316d1bd6e4737ce1c1d6ed0eb03b37d9f4820",
-   "bytes": 5689832,
+   "sha256": "009918f6319650b6ae127cf8039da8a34a44de4f390b847652469843f344fceb",
+   "bytes": 5330764,
    "variant": "all"
   }
  },
@@ -1010,11 +1010,11 @@
  "gripProfiles": {
   "rifle": {
    "support": [
-    6.0,
+    5.0,
     1.0,
     0.5
    ],
-   "note": "support hand under the foregrip, 6 vox (0.19 m) ahead of and 1 vox left of the main grip (chibi arm reach)"
+   "note": "support hand under the foregrip, 5 vox (0.16 m) ahead of and 1 vox left of the main grip (chibi arm reach; runtime setSupportTarget IKs to item sockets within ~6 vox)"
   },
   "pistol": {
    "support": [

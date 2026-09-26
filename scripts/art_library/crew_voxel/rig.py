@@ -9,7 +9,7 @@ on every variant. Variants only change geometry inside the segment bounds.
 """
 import math
 
-REVISION = "r004"
+REVISION = "r005"
 SPEC_VERSION = 2
 VOX = 1.0 / 32.0
 

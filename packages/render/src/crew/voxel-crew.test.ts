@@ -23,7 +23,7 @@ import { selectVoxelCrewLayers, voxelCrewSpeedRatio } from "./voxel-crew-clips";
 
 const asset = () =>
   new Uint8Array(
-    readFileSync(new URL("../../../../assets/runtime/crew/voxel/r004/crew-body.glb", import.meta.url)),
+    readFileSync(new URL("../../../../assets/runtime/crew/voxel/r005/crew-body.glb", import.meta.url)),
   );
 
 const load = async () => {
@@ -234,7 +234,7 @@ describe("voxel crew runtime", () => {
 
 describe("voxel crew assets agree with the content contract", () => {
   const manifest = JSON.parse(
-    readFileSync(new URL("../../../../assets/runtime/crew/voxel/r004/manifest.json", import.meta.url), "utf8"),
+    readFileSync(new URL("../../../../assets/runtime/crew/voxel/r005/manifest.json", import.meta.url), "utf8"),
   ) as { revision: string; actions: { name: string; nominalSpeed?: number; expressionTrack?: [number, string][] }[] };
   it("pins revision, nominal stride speeds and expression tracks to the exported actions", () => {
     expect(manifest.revision).toBe(VOXEL_CREW_REVISION);
@@ -248,12 +248,12 @@ describe("voxel crew assets agree with the content contract", () => {
 
 describe("voxel crew pixel face", () => {
   const atlas = JSON.parse(
-    readFileSync(new URL("../../../../assets/runtime/crew/voxel/r004/face/face-atlas.json", import.meta.url), "utf8"),
+    readFileSync(new URL("../../../../assets/runtime/crew/voxel/r005/face/face-atlas.json", import.meta.url), "utf8"),
   ) as FaceAtlas;
-  const image = decodePng(readFileSync(new URL("../../../../assets/runtime/crew/voxel/r004/face/face-default.png", import.meta.url)));
+  const image = decodePng(readFileSync(new URL("../../../../assets/runtime/crew/voxel/r005/face/face-default.png", import.meta.url)));
 
   it("composes the same neutral face as the Blender pipeline", () => {
-    const reference = decodePng(readFileSync(new URL("../../../../assets/runtime/crew/voxel/r004/face/face-neutral.png", import.meta.url)));
+    const reference = decodePng(readFileSync(new URL("../../../../assets/runtime/crew/voxel/r005/face/face-neutral.png", import.meta.url)));
     const ours = composeFace(atlas, image, { expression: "neutral" });
     let worst = 0;
     for (let i = 0; i < ours.length; i++) worst = Math.max(worst, Math.abs(ours[i] - reference.data[i]));

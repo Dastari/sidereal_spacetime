@@ -214,13 +214,13 @@ def curly_hair(v, seed=3):
     for x in range(-7, 8, 4):                                          # crown
         for y in range(-7, 8, 4):
             edge = (abs(x) > 5) + (abs(y) > 5)
-            clump(x + rng.randint(-1, 1), y + rng.randint(-1, 1), 54 + rng.randint(0, 1) - edge)
+            clump(x + rng.randint(-1, 1), y + rng.randint(-1, 1), 53 + rng.randint(0, 1) - edge)
     for sx in (-1, 1):                                                 # sides
         for y in range(-7, 4, 4):
-            for z in range(47 if not long else 38, 55, 4):
-                clump(sx * (9 + rng.randint(0, 1)), y + rng.randint(-1, 1), z + rng.randint(-1, 1), 3, 4, 4)
+            for z in range(47 if not long else 38, 52, 4):
+                clump(sx * 9, y + rng.randint(-1, 1), z + rng.randint(-1, 1), 2, 4, 4)
     for x in range(-7, 8, 4):                                          # back
-        for z in range(43 if not long else 34, 55, 4):
+        for z in range(43 if not long else 34, 52, 4):
             clump(x + rng.randint(-1, 1), -9 - rng.randint(0, 1), z + rng.randint(-1, 1), 4, 3, 4)
     for x in range(-6, 7, 4):                                          # fringe over the forehead
         clump(x + rng.randint(-1, 1), 8, 51 + rng.randint(0, 1), 4, 3, 4)
