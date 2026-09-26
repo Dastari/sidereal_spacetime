@@ -78,7 +78,8 @@
     "./ground-placement": "./src/ground-placement.ts",
     "./backpack-swap": "./src/backpack-swap.ts",
     "./flight-frame": "./src/flight-frame.ts",
-    "./construction-refit-identities": "./src/construction-refit-identities.ts"
+    "./construction-refit-identities": "./src/construction-refit-identities.ts",
+    "./ship-systems": "./src/ship-systems.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
