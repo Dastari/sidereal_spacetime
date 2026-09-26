@@ -16,6 +16,7 @@ from mathutils import Vector
 import ship_component_sheets as S
 
 ISO = (math.radians(56), 0, math.radians(-38))          # ~34 deg elevation, front-right like the reference
+TOP_YAW = 70.0                                           # barrels toward screen-left and slightly toward the viewer
 WEAPON_VIEWS = [("point-defense.md", "POINT-DEFENSE TURRET", "ANTI-FIGHTER · HIGH RATE"),
                 ("autocannon.md", "TWIN AUTOCANNON", "BALLISTIC · VERSATILE"),
                 ("laser-cannon.md", "LASER CANNON", "ENERGY · PRECISION"),
@@ -135,7 +136,7 @@ def exploded_weapons(K, exporter, comps, sc, cam, themes, base_mats, lm, out):
             whole.boxes += q.boxes
         ob = place_catalog_boxes(exporter, exporter.to_catalog(whole, "top", 0), cid, base_mats, coll)
         themes.apply(ob)
-        ob.rotation_euler = (0, 0, math.radians(135))
+        ob.rotation_euler = (0, 0, math.radians(TOP_YAW))
         W = K.SIZE_CELLS[c["sizeClass"]]
         ob.location = (0, 0, 0)
         objs.append(ob)
@@ -149,7 +150,7 @@ def exploded_weapons(K, exporter, comps, sc, cam, themes, base_mats, lm, out):
             z0, z1 = min(zs), max(zs)
             po = place_catalog_boxes(exporter, exporter.to_catalog(q, "top", 0), q.id, base_mats, coll)
             themes.apply(po)
-            po.rotation_euler = (0, 0, math.radians(135))
+            po.rotation_euler = (0, 0, math.radians(TOP_YAW))
             po.location = (ex, 0, z - z0 * K.T)
             objs.append(po)
             mid = z + (z1 - z0) * K.T / 2
@@ -186,7 +187,7 @@ def damage_row(K, exporter, comps, sc, cam, themes, base_mats, lm, out, ids=("au
         for i, st in enumerate(states):
             ob = place_catalog_boxes(exporter, A_damage(K, boxes, st, cid), f"{cid}.{st}", base_mats, coll)
             themes.apply(ob, "orion" if st == "pristine" else "orion-worn")
-            ob.rotation_euler = (0, 0, math.radians(135 if conv == "top" else 0))
+            ob.rotation_euler = (0, 0, math.radians(TOP_YAW if conv == "top" else 0))
             ob.location = (i * span, y, 0)
             objs.append(ob)
             if cid == ids[0]:
@@ -216,7 +217,7 @@ def variants_row(K, exporter, comps, sc, cam, themes, base_mats, lm, out, cid="a
     for i, th in enumerate(names):
         ob = place_catalog_boxes(exporter, boxes, f"{cid}.{th}", base_mats, coll)
         themes.apply(ob, th)
-        ob.rotation_euler = (0, 0, math.radians(135))
+        ob.rotation_euler = (0, 0, math.radians(TOP_YAW))
         ob.location = (i * 4.2, 0, 0)
         objs.append(ob)
         S.text(th.upper(), (i * 4.2, -2.3, 0), 0.3, lm["label"], coll, ISO)

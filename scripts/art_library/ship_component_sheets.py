@@ -120,7 +120,7 @@ def key_stat(c):
 
 
 def display_yaw(frame):
-    return {"face": 0.0, "top": 135.0, "interior": 180.0}[frame]
+    return {"face": 0.0, "top": 90.0, "interior": 180.0}[frame]      # top mounts: barrels to screen-left
 
 
 def label_mats():

@@ -22,8 +22,8 @@ def install(K):
     """Registers the r002 theme on the loaded kit module and returns helpers."""
     K.THEMES["orion"] = dict(
         # linear RGB; renders to roughly #ad93cd / #2f2551 / #d42d4f under the kit grade
-        primary=(0.40, 0.31, 0.56), secondary=(0.030, 0.024, 0.085), accent=(0.62, 0.030, 0.085),
-        trim=(0.075, 0.070, 0.20), metal=(0.52, 0.46, 0.64), dark=(0.010, 0.008, 0.022),
+        primary=(0.46, 0.28, 0.72), secondary=(0.034, 0.020, 0.115), accent=(0.66, 0.022, 0.075),
+        trim=(0.060, 0.048, 0.25), metal=(0.56, 0.44, 0.74), dark=(0.010, 0.006, 0.026),
         emit_a=((0.03, 0.42, 1.0), 3.2), emit_b=((1.0, 0.36, 0.035), 3.0), glass=(0.25, 0.55, 1.0),
         wear=0.0, wear_col=(0.05, 0.04, 0.05), on_dark=(0.85, 0.82, 0.92), on_light=(0.06, 0.05, 0.12),
         name="ORION", number="OC-01", emblem="planet")
@@ -197,13 +197,13 @@ def weapon(K, kind, sz):
     P = lambda name: K.Piece(f"w2.{kind}.{sz}.{name}", "mount-part", "top", (W, W, 0))
     hou, pay, ext = P("housing"), P("payload"), P("extras")
     labels = ["HARDPOINT CONNECTOR", "STEPPED PLINTH", "ROTATION RING", "YOKE / GIMBAL"]
-    hy = int(W * 0.27)
+    hy = int(W * 0.34)
     zh = z + 1
     gh = 2 * k + 3
     yoke_cheeks(yoke, c, hy, z, gh, k, W)
     if kind == "pd":
         hh = int(W * 0.40)
-        x0, x1 = c - int(W * 0.24), c + int(W * 0.20)
+        x0, x1 = c - int(W * 0.30), c + int(W * 0.22)
         housing_box(K, hou, x0, x1, c - hy + 1, c + hy - 1, zh, zh + hh, k)
         bw = max(1, k // 2 + (1 if k > 1 else 0))
         zc = zh + hh // 2
@@ -217,7 +217,7 @@ def weapon(K, kind, sz):
         labels += ["TURRET HEAD", "QUAD BARREL", "TRACKER"]
     elif kind == "autocannon":
         hh = int(W * 0.42)
-        x0, x1 = c - int(W * 0.30), c + int(W * 0.22)
+        x0, x1 = c - int(W * 0.34), c + int(W * 0.24)
         housing_box(K, hou, x0, x1, c - hy + 1, c + hy - 1, zh, zh + hh, k)
         hou.b(x1 - 3 * k, c - hy, zh + 1, x1 - 2 * k, c + hy, zh + hh - k - 1, "accent")
         bw = max(1, k)
