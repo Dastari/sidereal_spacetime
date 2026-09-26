@@ -24,6 +24,7 @@ import {
 } from "@sidereal/content/crew-voxel-bundle";
 import { hexToRgb, type FaceAtlas, type FaceAtlasImage } from "@sidereal/content/crew-voxel-face";
 import { createVoxelFace, loadVoxelFaceAtlas } from "./voxel-face";
+import { solveTwoBone } from "./voxel-ik";
 import { setMeshRole } from "../mesh-roles";
 import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 import {
@@ -133,6 +134,23 @@ export async function createVoxelCrewVisual(
     if (node) joints.set(bone.name, node);
   }
   const attached = new Set<AssetContainer>();
+  // support-hand IK: after animations, pin socket.hand.L onto the held item's support socket
+  let supportTarget: TransformNode | null = null;
+  let supportError = 0;
+  const rigRoot = nodes.get("crew_rig") ?? visual;
+  const ikObserver = scene.onAfterAnimationsObservable.add(() => {
+    if (!supportTarget || !joints.get("upper_arm.L")) return;
+    supportError = solveTwoBone(
+      {
+        root: rigRoot,
+        upper: joints.get("upper_arm.L")!,
+        lower: joints.get("forearm.L")!,
+        end: joints.get("hand.L")!,
+        effector: socketNodes["socket.hand.L"] ?? joints.get("hand.L")!,
+      },
+      supportTarget.computeWorldMatrix(true),
+    );
+  });
   /**
    * Attach a part container exported with a copy of crew_rig (rigid per-bone skin): its skeleton
    * bones are re-linked to this body's joints so it follows every action. Unskinned roots are
@@ -397,6 +415,17 @@ export async function createVoxelCrewVisual(
     },
     /** Animatable pixel face: setExpression / setViseme / blink / setLook / setAtlas / setTints. */
     face,
+    /**
+     * Support-hand IK: every frame after animations, socket.hand.L is solved onto `target`
+     * (the held item's support socket: same axes as socket.hand.L). null releases the hand.
+     */
+    setSupportTarget(target: TransformNode | null) {
+      supportTarget = target;
+    },
+    /** Remaining support-hand error (m) from the last solve (0 when the grip is reachable). */
+    get supportError() {
+      return supportError;
+    },
     /** Current full/lower/upper clip selection (diagnostics and tests). */
     get layers() {
       return layers;
@@ -430,6 +459,7 @@ export async function createVoxelCrewVisual(
       disposed = true;
       scene.onBeforeRenderObservable.remove(blendObserver);
       scene.onBeforeRenderObservable.remove(faceObserver);
+      scene.onAfterAnimationsObservable.remove(ikObserver);
       face.dispose();
       for (const g of owned) g.dispose();
       for (const part of attached) part.dispose();

@@ -281,6 +281,54 @@ def turnaround(out, arm, bodies, args):
     return f"{out}/turnaround.png"
 
 
+OUTFITS = (("base (underwear)", {"base", "hands", "head"}), ("jumpsuit", {"suit", "hands", "head"}),
+           ("jumpsuit + crew gear", {"suit", "gear", "head"}))
+
+
+def wardrobe_sheet(out, arm, bodies, args, variants=("male", "female")):
+    """Owner round 2: one sheet per body type, base -> uniform -> gear, front / 3/4 / side / back."""
+    sc = bpy.context.scene
+    cam = sc.camera or setup(sc, samples=16, res=(420, 600))
+    sc.render.resolution_x, sc.render.resolution_y = 420, 600
+    if "idle" in bpy.data.actions:
+        arm.animation_data_create()
+        arm.animation_data.action = bpy.data.actions["idle"]
+        sc.frame_set(0)
+    everything = [o for o in sc.objects if o.type == "MESH" and o.name.startswith("GEO-")]
+    rd = f"{out}/renders/wardrobe"
+    os.makedirs(rd, exist_ok=True)
+    sheets = []
+    for variant in variants:
+        b = bodies[variant]
+        rows = []
+        for label_text, regions in OUTFITS:
+            vis = [o for r, o in b["meshes"].items() if r in regions] + [b["hair"]]
+            show_only(vis, everything)
+            imgs = []
+            for view in ("front", "front-left", "left", "back"):
+                aim(cam, VIEWS[view], elev=8, dist=6, target=(0, 0, 0.9), ortho=2.2)
+                p = f"{rd}/{variant}_{label_text.split()[0]}_{view}.png"
+                still(p)
+                imgs.append(p)
+            row = tile(imgs, 4, f"{rd}/{variant}_{label_text.split()[0]}_row.png")
+            rows.append(label(row, f"{variant} - {label_text}".replace("+", "and"), row.replace(".png", "_l.png")))
+        sheet = f"{out}/wardrobe_{variant}.png"
+        tile(rows, 1, sheet)
+        sheets.append(sheet)
+    # lineup: every outfit of every body at 3/4
+    imgs = []
+    for variant in variants:
+        b = bodies[variant]
+        for label_text, regions in OUTFITS:
+            show_only([o for r, o in b["meshes"].items() if r in regions] + [b["hair"]], everything)
+            aim(cam, -30, elev=8, dist=6, target=(0, 0, 0.9), ortho=2.2)
+            p = f"{rd}/lineup_{variant}_{label_text.split()[0]}.png"
+            still(p)
+            imgs.append(p)
+    tile(imgs, len(imgs), f"{out}/wardrobe_lineup.png")
+    return sheets
+
+
 REFS = "/root/sidereal-progress/verify/refs/char-body"
 REV = __import__("rig").REVISION
 

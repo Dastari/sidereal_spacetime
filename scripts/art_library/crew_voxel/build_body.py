@@ -346,6 +346,8 @@ def main():
             render.contact_sheets(out, arm, bodies, actions, mats, args)
         if "poses" in shots and actions:
             render.pose_sheet(out, arm, bodies, mats, args)
+        if "wardrobe" in shots:
+            render.wardrobe_sheet(out, arm, bodies, args)
         if "loops" in shots and actions:
             import loops
             loops.loops(out, arm, bodies, mats, actions, args,

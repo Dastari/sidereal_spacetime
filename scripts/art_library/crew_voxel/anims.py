@@ -528,12 +528,12 @@ def lib():
         P["pole.L"] = (-0.5, -0.3, -1.0)
         return P
 
-    RIFLE_AIM = ("w", 1.0, 9, 42.6, 0, 0, 0, "rifle")   # grip at shoulder/cheek height, arms extended
+    RIFLE_AIM = ("w", 0.0, 8.5, 42.6, 0, 0, 0, "rifle")   # grip at shoulder/cheek height, arms extended
 
     def aim_rifle_at(ph):
         P = aim_base()
         s, c = math.sin(2 * math.pi * ph), math.cos(2 * math.pi * ph)
-        P["weapon"] = ("w", 1.0 + 0.15 * c, 9, 42.6 + 0.2 * s, 0.6 * c, 0.5 * s, 0, "rifle")
+        P["weapon"] = ("w", 0.0 + 0.15 * c, 8.5, 42.6 + 0.2 * s, 0.6 * c, 0.5 * s, 0, "rifle")
         P["pelvis"] = (0, 0, -0.8 - 0.2 * s)
         return P
 

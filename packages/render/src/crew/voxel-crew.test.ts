@@ -5,6 +5,7 @@ import { Scene } from "@babylonjs/core/scene";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { inflateSync } from "node:zlib";
 import {
   VOXEL_CREW_ACTIONS,
@@ -161,6 +162,31 @@ describe("voxel crew runtime", () => {
     bodyForward.normalize();
     expect(Vector3.Dot(forward, bodyForward)).toBeGreaterThan(0.99);
     expect(up.y).toBeGreaterThan(0.99);
+    crew.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
+  it("support-hand IK pins socket.hand.L onto a held item's support socket after animations", async () => {
+    const { engine, scene, crew } = await load();
+    crew.customize({ weapon: "rifle" });
+    crew.update({ moving: false, seated: false, combat: true });
+    for (const node of scene.transformNodes) node.computeWorldMatrix(true);
+    // a rifle foregrip: child of the primary grip socket (same axes as socket.hand.L), 6 vox along
+    // the barrel and 1 vox to the left, like the published rifle grip profile
+    const target = new TransformNode("support-grip", scene);
+    target.parent = crew.socketNodes["socket.hand.R"];
+    target.position.set(6 / 32, 1 / 32, 0.5 / 32);
+    target.rotationQuaternion = Quaternion.Identity();
+    crew.setSupportTarget(target);
+    new FreeCamera("review", new Vector3(0, 1, -4), scene);
+    engine.getDeltaTime = () => 50;         // let the idle_armed -> aim_rifle blend complete
+    for (let i = 0; i < 8; i++) scene.render(); // animations (aim_rifle) then the support-hand solve
+    for (const node of scene.transformNodes) node.computeWorldMatrix(true);
+    const left = crew.socketNodes["socket.hand.L"].getAbsolutePosition();
+    expect(crew.supportError).toBeLessThan(0.002);
+    expect(Vector3.Distance(left, target.getAbsolutePosition())).toBeLessThan(0.005);
+    crew.setSupportTarget(null);
     crew.dispose();
     scene.dispose();
     engine.dispose();
