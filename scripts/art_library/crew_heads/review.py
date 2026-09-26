@@ -366,6 +366,60 @@ def render_anim(cat, lib, faces, out, samples):
     print("rendered animation", mp4, flush=True)
 
 
+BODY_DIR = "/root/sidereal-progress/_shared/crew-body-r004"
+HEAD_BONE_Z = 39 / 32.0            # CHAR-BODY r004 head bone rest head (armature voxels 39)
+
+
+def render_bodies(cat, lib, out, samples):
+    """Head combos on CHAR-BODY r004 bodies (their GEO-crew-head/hair hidden, our parts at the head bone)."""
+    sc = bpy.context.scene
+    coll = bpy.data.collections.new("SHEET_bodies")
+    sc.collection.children.link(coll)
+    for other in sc.collection.children:
+        if other.name.startswith("SHEET_"):
+            other.hide_render = other is not coll
+    looks = [
+        ("male", {"head": "male", "faceVariant": "m_classic", "hair": "spiked_quiff", "hairColor": "black", "skin": "sand", "expression": "happy"}),
+        ("female", {"head": "female", "faceVariant": "f_bright", "hair": "long_side_fringe", "hairColor": "blonde", "skin": "rose", "eyes": "blue"}),
+        ("male", {"head": "male", "faceVariant": "m_bold", "hair": "short_waves", "hairColor": "espresso", "skin": "brown",
+                  "accessories": ["cap"], "facialHair": "short_beard", "expression": "determined"}),
+        ("female", {"head": "female", "faceVariant": "f_sharp", "hair": "high_bun", "hairColor": "crimson", "skin": "tan",
+                    "accessories": ["goggles_up"], "expression": "smug"}),
+        ("male", {"head": "male", "faceVariant": "m_bright", "hair": "afro", "hairColor": "dark_brown", "skin": "deep", "helmet": "open",
+                  "mask": "oxygen_mask"}),
+        ("female", {"head": "female", "faceVariant": "f_classic", "hair": "long_bob", "hairColor": "pink", "skin": "porcelain", "helmet": "pilot",
+                    "visor": "clear", "expression": "surprised"}),
+        ("male", {"head": "male", "faceVariant": "m_classic", "hair": "close_crop", "hairColor": "grey", "skin": "rose", "age": "older",
+                  "facialHair": "long_beard", "accessories": ["round_glasses"]}),
+        ("female", {"head": "female", "faceVariant": "f_bright", "hair": "side_bob", "hairColor": "violet", "skin": "bronze", "helmet": "mining",
+                    "visor": "hud"}),
+    ]
+    yaw = math.radians(180 + 24)
+    for i, (body, spec) in enumerate(looks):
+        x = i * 0.95
+        before = set(bpy.data.objects)
+        bpy.ops.import_scene.gltf(filepath=os.path.join(BODY_DIR, f"crew-body-{body}.glb"))
+        new = [o for o in bpy.data.objects if o not in before]
+        for o in new:
+            for c in list(o.users_collection):
+                c.objects.unlink(o)
+            coll.objects.link(o)
+            if o.name.startswith(("GEO-crew-head", "GEO-crew-hair-default")):
+                o.hide_render = True
+            if o.parent is None:
+                o.location.x += x
+                o.rotation_euler.z += yaw
+        place(cat, lib, coll, spec, (x, 0, HEAD_BONE_Z), yaw, collar=False)
+    cam = sc.camera
+    n = len(looks)
+    sc.render.resolution_x, sc.render.resolution_y = 2400, 900
+    look.aim(cam, ((n - 1) * 0.95 / 2, 0, 0.92), (0, -14 * math.cos(math.radians(12)), 14 * math.sin(math.radians(12))), ortho=n * 0.95 + 0.2)
+    sc.eevee.taa_render_samples = samples
+    sc.render.filepath = os.path.join(out, "15_on_body.png")
+    bpy.ops.render.render(write_still=True)
+    print("rendered sheet 15_on_body", flush=True)
+
+
 def render_all(cat, lib, faces, out, only, samples):
     FACES["kit"] = faces
     os.makedirs(out, exist_ok=True)
@@ -377,3 +431,5 @@ def render_all(cat, lib, faces, out, only, samples):
         render_sheet(cat, lib, out, name, rows, samples, **LAYOUT.get(name, {}))
     if not only or "anim" in only:
         render_anim(cat, lib, faces, out, samples)
+    if (not only or "bodies" in only) and os.path.isdir(BODY_DIR):
+        render_bodies(cat, lib, out, samples)

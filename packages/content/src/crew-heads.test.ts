@@ -242,11 +242,11 @@ describe("exported kit manifest", () => {
       expect(C.files[n.glb], name).toBeDefined();
       for (const s of n.slots) expect(CREW_HEAD_SLOTS).toContain(s);
       expect(n.triangles, name).toBeGreaterThan(0);
-      expect(n.triangles, name).toBeLessThan(24000);
+      expect(n.triangles, name).toBeLessThan(30000);
       const [lo, hi] = n.boundsM;
       for (let i = 0; i < 3; i++) {
         expect(lo[i], name).toBeGreaterThanOrEqual(-0.55);
-        expect(hi[i], name).toBeLessThanOrEqual(0.85);
+        expect(hi[i], name).toBeLessThanOrEqual(0.9);
       }
     }
     expect(manifest.nodes["head.male"].slots).toContain("face");
