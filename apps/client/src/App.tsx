@@ -66,7 +66,6 @@ import { createOperationId } from "./operation-id";
 import { INVENTORY_DEFINITIONS } from "../../../packages/content/src/inventory";
 import {
   objectDetails,
-  loadInspectionCatalog,
   interactionAction,
   interactionLabel,
   type EquipmentCatalog,
@@ -101,7 +100,8 @@ export default function App({
   const localShipId = useRef<string | undefined>(undefined);
   const [selectedObject, setSelectedObject] = useState<string>();
   const [combatEnabled, setCombatEnabled] = useState(false);
-  const [equipmentCatalog, setEquipmentCatalog] = useState<EquipmentCatalog>();
+  // Legacy stock-ship inspection catalog is retired with its assets (see below).
+  const [equipmentCatalog] = useState<EquipmentCatalog>();
   const appearanceWrites = useRef(Promise.resolve());
   const [rendererFailed, setRendererFailed] = useState(false);
   const [status, setStatus] = useState("connecting"),
@@ -255,6 +255,9 @@ export default function App({
       : undefined
   ) as ShipRow | undefined;
   localShipId.current = ship?.id;
+  /** Authoritative awaiting-ship state: wiped, or created while starter ships
+   * are disabled. The character exists with its personal kit but no frame. */
+  const awaitingShip = !!actor && actor.shipId === "";
   const sharedBinding = sharedEnabled ? getSharedWorldBinding(c) : undefined;
   const sharedEntry = useSharedWorldEntry(c, sharedEnabled);
   const sharedEntryActions = useRef(sharedEntry);
@@ -324,6 +327,7 @@ export default function App({
     constructionScene.egress?.proofHash,
     constructionScene.egress?.stairId,
     gameShipAccess?.shipId,
+    awaitingShip,
   ]);
   loadingRef.current = loadedSceneKey !== sceneKey || status !== "ready";
   const authoredFlight = authoredFlightPresentation(
@@ -458,17 +462,9 @@ export default function App({
       : nearStation
         ? "Control seat"
         : undefined;
-  useEffect(() => {
-    const abort = new AbortController();
-    loadInspectionCatalog(abort.signal)
-      .then((catalog) => {
-        if (!abort.signal.aborted) setEquipmentCatalog(catalog);
-      })
-      .catch((error) => {
-        if (!abort.signal.aborted) setError(String(error));
-      });
-    return () => abort.abort();
-  }, []);
+  // The legacy stock-ship inspection catalog (hull/cargo/equipment manifests,
+  // wayfarer.json) belongs to the retired Wayfarer assets that the game client
+  // no longer delivers, so it is never fetched.
   const admittedBodyKeys = new Set(
     c ? [...c.db.ownSpaceBodies.iter()].map((body) => body.key) : [],
   );
@@ -513,7 +509,7 @@ export default function App({
   }, [actor?.connected, actor?.id, ready, c]);
   const uiState: GameUIState = {
     accountKind: auth?.kind === "oidc" ? "oidc" : "development",
-    sharedEntry: sharedEnabled ? sharedEntry.state : undefined,
+    sharedEntry: sharedEnabled && !awaitingShip ? sharedEntry.state : undefined,
     characterAppearance: cosmetics,
     graphics: view.current?.getGraphicsSettings(),
     antialiasing: view.current?.getAntialiasing(),
@@ -549,8 +545,9 @@ export default function App({
     hasActor: !!actor,
     connected: ready && !!actor?.connected,
     actorName: actor?.name ?? "",
-    shipName:
-      (gameShipAccess ? ship?.name : constructionInstance?.name) ??
+    shipName: awaitingShip
+      ? "No ship assigned"
+      : (gameShipAccess ? ship?.name : constructionInstance?.name) ??
       (constructionScene.egress ? "Stairway / safe exit" : (ship?.name ?? "")),
     seated,
     nearStation,
@@ -657,7 +654,7 @@ export default function App({
   const useControlStation = () => {
     const current = connection.current;
     const actorNow = current && [...current.db.ownCharacters.iter()][0];
-    if (!current || !actorNow?.connected) return;
+    if (!current || !actorNow?.connected || actorNow.shipId === "") return;
     const visit = [...current.db.ownConstructionLocation.iter()].find(
       (row) => row.characterId === actorNow.id,
     );
@@ -797,8 +794,16 @@ export default function App({
                           ...fieldBodies(),
                         ]
                       : undefined,
+                  // Retired stock Wayfarer exterior is not delivered to the game.
+                  stockExterior: false,
                 }
               : undefined,
+            // The game never loads the retired legacy stock ship: without an
+            // authorized construction scene the character has no vessel.
+            vessel:
+              constructionScene.construction || constructionScene.egress
+                ? undefined
+                : "none",
             construction: constructionScene.construction
               ? {
                   ...constructionScene.construction,
@@ -830,7 +835,11 @@ export default function App({
                       ),
                     close: () => setSelectedObject(undefined),
                   },
-                  view: () => setInterior((v) => !v),
+                  view: () => {
+                    // No ship: there is no exterior/flight view to switch to.
+                    if (live.current.actor?.shipId === "") return;
+                    setInterior((v) => !v);
+                  },
                   station: useControlStation,
                   enter: (name) =>
                     void perform(() =>
@@ -1297,7 +1306,9 @@ export default function App({
         e.preventDefault();
         keys.clear();
         send();
-        if (!e.repeat) setInterior((v) => !v);
+        // No ship: there is no exterior/flight view to switch to.
+        if (!e.repeat && live.current.actor?.shipId !== "")
+          setInterior((v) => !v);
         return;
       }
       if (e.code === "KeyV" && !e.repeat) {
@@ -1473,8 +1484,25 @@ export default function App({
           </div>
         )}
         <ConstructionReview connection={c} onError={setError} />
-        <ShipRefitPanel connection={c} onError={setError} />
-        <ShipSystemsPanel connection={c} onError={setError} />
+        {!awaitingShip && (
+          <>
+            <ShipRefitPanel connection={c} onError={setError} />
+            <ShipSystemsPanel connection={c} onError={setError} />
+          </>
+        )}
+        {awaitingShip && ready && (
+          <div
+            className="no-ship-notice"
+            role="status"
+            aria-label="No ship assigned"
+          >
+            <strong>No ship assigned</strong>
+            <span>
+              Your character and personal kit are safe. A new ship will be
+              assigned to your account.
+            </span>
+          </div>
+        )}
         <MountedFuelPanel
           connection={c}
           selectedObject={selectedObject}
@@ -1500,6 +1528,7 @@ export default function App({
         <GameLoadingScreen
           stage={status === "ready" ? loadStage : "connecting"}
           shipName={ship?.name ?? ""}
+          awaitingShip={awaitingShip}
           failure={loadFailure}
           onSignOut={onSignOut}
         />

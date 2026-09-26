@@ -16,11 +16,14 @@ export function GameLoadingScreen({
   shipName,
   failure,
   onSignOut,
+  awaitingShip = false,
 }: {
   stage: string;
   shipName: string;
   failure?: string;
   onSignOut: () => void;
+  /** Character exists without a ship (wiped or not yet assigned). */
+  awaitingShip?: boolean;
 }) {
   const panel = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -49,13 +52,23 @@ export function GameLoadingScreen({
         </svg>
         <div className="loading-copy">
           <p className="loading-destination">
-            {shipName || "Your next voyage"}
+            {awaitingShip ? "No ship assigned" : shipName || "Your next voyage"}
           </p>
-          <h1>{failure ? "Unable to board" : "Preparing to board"}</h1>
+          <h1>
+            {failure
+              ? awaitingShip
+                ? "Unable to load"
+                : "Unable to board"
+              : awaitingShip
+                ? "Entering Sidereal"
+                : "Preparing to board"}
+          </h1>
           <p role="status" aria-live="polite">
             {failure
               ? "The game could not finish loading. Retry to download the required assets again."
-              : (stages[stage] ?? stages.ship)}
+              : awaitingShip && stage === "ship"
+                ? "Preparing your character"
+                : (stages[stage] ?? stages.ship)}
           </p>
           {!failure && (
             <div className="loading-track" aria-hidden="true">
@@ -65,7 +78,9 @@ export function GameLoadingScreen({
           <p className="loading-hint">
             {failure
               ? "Your saved character and cargo remain in your account."
-              : "Your ship and equipment will be ready before you enter."}
+              : awaitingShip
+                ? "Your character and personal kit are ready. A ship will be assigned to your account."
+                : "Your ship and equipment will be ready before you enter."}
           </p>
           {failure && (
             <button className="loading-retry" onClick={() => location.reload()}>
@@ -75,7 +90,7 @@ export function GameLoadingScreen({
         </div>
       </div>
       <footer>
-        <span>WASD to move · TAB to change view</span>
+        <span>{awaitingShip ? "WASD to move" : "WASD to move · TAB to change view"}</span>
         <button onClick={onSignOut}>Sign out</button>
       </footer>
     </section>
