@@ -191,12 +191,19 @@ try {
   assert.equal(z.db.ownShips.count(), 0n);
   z.disconnect();
 
-  // The world keeps simulating with zero ships.
-  const tick = () => BigInt(sqlRows("SELECT last_simulation_tick FROM world_system")[0]![0] as number);
-  const t0 = tick();
-  await new Promise((r) => setTimeout(r, 600));
-  assert(tick() > t0, "shared world tick advances after the wipe");
-  evidence.tickAdvances = true;
+  // The scheduled world step keeps running without errors with zero ships.
+  // (stepSharedWorld deliberately writes no clock row for idle samples, so
+  // last_simulation_tick only advances when something moves.)
+  await new Promise((r) => setTimeout(r, 1500));
+  assert.equal(sqlRows("SELECT scheduled_id FROM movement_timer").length, 1, "world timer retained");
+  const logs = execFileSync(
+    ".tools/spacetime/spacetime",
+    ["--root-dir=.tools/spacetime", "logs", "--server", host, "--no-config", database, "-n", "2000"],
+    { encoding: "utf8" },
+  );
+  const stepErrors = logs.split("\n").filter((l) => /ERROR: step_world|panic/i.test(l));
+  assert.deepEqual(stepErrors, [], "no scheduled step_world failures");
+  evidence.scheduledStepHealthy = { timerRows: 1, stepWorldErrors: 0 };
 
   // The only way back aboard is a registered non-legacy prefab. None is
   // registered in this authority yet, and the legacy Wayfarer is refused.
