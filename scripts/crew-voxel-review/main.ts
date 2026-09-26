@@ -58,6 +58,8 @@ const crew = () => world?.getCrewVisual() as
   | (NonNullable<ReturnType<NonNullable<typeof world>["getCrewVisual"]>> & {
       setMotionOverride?: (m?: Partial<VoxelCrewMotion>) => void;
       play?: (a: VoxelCrewAction) => void;
+      setOutfit?: (o: { suit?: boolean; gear?: boolean }) => void;
+      face?: { setExpression(id: string | null): void; setViseme(id: string | null): void; blink(): void };
       layers?: unknown;
       activeClips?: string[];
     })
@@ -103,7 +105,7 @@ createWorld(canvas, (text) => (status.textContent = text), {
   .then((result) => {
     world = result;
     applyMode();
-    status.textContent = "voxel crew r001 (proposal) — actual game renderer, no database";
+    status.textContent = "voxel crew (proposal, preview only) — actual game renderer, no database";
   })
   .catch((error) => {
     status.textContent = String(error);
@@ -125,8 +127,22 @@ document.querySelector("#shoot")!.addEventListener("click", () => {
   shots += 1n;
   applyMode();
 });
+document.querySelector<HTMLSelectElement>("#outfit")!.addEventListener("change", (e) => {
+  const v = (e.target as HTMLSelectElement).value;
+  crew()?.setOutfit?.({ suit: v !== "base", gear: v === "gear" });
+});
+document.querySelector<HTMLSelectElement>("#expression")!.addEventListener("change", (e) => {
+  const v = (e.target as HTMLSelectElement).value;
+  crew()?.face?.setExpression(v === "auto" ? null : v);
+});
 Object.assign(window, {
   crewReview: {
+    setOutfit(v: "base" | "suit" | "gear") {
+      crew()?.setOutfit?.({ suit: v !== "base", gear: v === "gear" });
+    },
+    setExpression(v: string | null) {
+      crew()?.face?.setExpression(v);
+    },
     setMode(next: Mode) {
       mode = next;
       modeSelect.value = next;

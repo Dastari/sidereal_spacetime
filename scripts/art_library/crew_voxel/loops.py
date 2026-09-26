@@ -35,6 +35,26 @@ def face_images(out):
         FACE_IMAGES[key] = img
 
 
+FACE_DYNAMIC = {}
+
+
+def set_face_state(key):
+    """'expr', 'expr+half', or 'expr@VISEME' -> composed face image (cached)."""
+    if key in FACE_IMAGES:
+        return set_face(key)
+    if key not in FACE_DYNAMIC:
+        import face_atlas
+        atlas, layers = face_atlas.build_atlas()
+        expr, _, vis = key.partition("@")
+        p = os.path.join(bpy.app.tempdir or "/root/sidereal-scratch/char-body/tmp", f"face_{expr}_{vis}.png")
+        face_atlas.write_png(p, face_atlas.compose(atlas, layers, {"expression": expr, "viseme": vis or None}))
+        img = bpy.data.images.load(p)
+        FACE_DYNAMIC[key] = img
+    m = bpy.data.materials.get("crew.face")
+    if m:
+        m.node_tree.nodes["face_texture"].image = FACE_DYNAMIC[key]
+
+
 def set_face(key):
     m = bpy.data.materials.get("crew.face")
     if m and key in FACE_IMAGES:
@@ -96,7 +116,16 @@ LOOPS = [
     ("cheer", "cheer", None, None, 1, False),
     ("hurt", "hurt", None, None, 1, False),
     ("death", "death", None, None, 1, False),
+    # rifle class: hold -> aim -> 3 shots -> reload -> aim (support hand IK-baked onto the foregrip)
+    ("rifle_set", [("idle_armed", 24), ("aim_rifle", 20), ("shoot_rifle", 6), ("shoot_rifle", 6),
+                   ("shoot_rifle", 6), ("reload", 38), ("aim_rifle", 16)], None, "prop.rifle", 1, False),
+    # face on the actual head: blink, talk loop (visemes), expression change
+    ("face_talk", "idle", None, None, 1, False),
 ]
+FACE_SCRIPT = (["neutral"] * 6 + ["neutral+half", "neutral+closed", "neutral+half"] + ["neutral"] * 3
+               + ["neutral@A", "neutral@E", "neutral@O", "neutral@MB", "neutral@A", "neutral@O", "neutral@E",
+                  "neutral@closed", "neutral@A", "neutral@MB"] * 1
+               + ["surprised"] * 8 + ["happy"] * 10 + ["happy@A", "happy@E", "happy@O", "happy@closed"] + ["neutral"] * 6)
 VIEWS = (("game", -40, 48, (320, 320), 2.8), ("close", -35, 10, (360, 480), 2.3))
 STEP = 2              # render every 2nd frame, play at 12 fps (same real-time speed)
 
@@ -125,16 +154,30 @@ def loops(out, arm, bodies, mats, actions, args, variant="male", only=None):
     for name, base, upper, prop, cycles, loco in LOOPS:
         if only and name not in only:
             continue
-        if base not in bpy.data.actions or (upper and upper not in bpy.data.actions):
+        seq = base if isinstance(base, list) else None
+        names = [a for a, _ in seq] if seq else [base]
+        if any(a not in bpy.data.actions for a in names) or (upper and upper not in bpy.data.actions):
             continue
         ad.action = None
         for t in list(ad.nla_tracks):
             ad.nla_tracks.remove(t)
-        b = bpy.data.actions[base]
-        f0, f1 = int(b.frame_range[0]), int(b.frame_range[1])
-        span = f1 - f0
-        st = ad.nla_tracks.new().strips.new(base, f0, b)
-        st.repeat = cycles
+        if seq:
+            tr = ad.nla_tracks.new()
+            f0, cur = 0, 0
+            for k, (a, n) in enumerate(seq):
+                act = bpy.data.actions[a]
+                st = tr.strips.new(f"{a}.{k}", cur, act)
+                st.action_frame_end = act.frame_range[0] + min(n, act.frame_range[1] - act.frame_range[0])
+                st.scale = 1.0
+                cur += n
+            span = cur
+            base = seq[0][0]
+        else:
+            b = bpy.data.actions[base]
+            f0, f1 = int(b.frame_range[0]), int(b.frame_range[1])
+            span = f1 - f0
+            st = ad.nla_tracks.new().strips.new(base, f0, b)
+            st.repeat = cycles
         if upper:
             u = upper_only(upper)
             s2 = ad.nla_tracks.new().strips.new(u.name, f0, u)
@@ -145,7 +188,11 @@ def loops(out, arm, bodies, mats, actions, args, variant="male", only=None):
         speed = meta.get(base, {}).get("nominalSpeed", 0) if loco else 0
         total = span * cycles
         track = meta.get(upper or base, {}).get("expressionTrack", [[0, "neutral"]])
-        for view, az, el, res, ortho in VIEWS:
+        views = VIEWS if name != "face_talk" else (("face", -20, 6, (360, 360), 0.9),)
+        if name == "face_talk":
+            span = len(FACE_SCRIPT)
+            total = span
+        for view, az, el, res, ortho in views:
             sc.render.resolution_x, sc.render.resolution_y = res
             fd = f"{rd}/{name}_{view}"
             os.makedirs(fd, exist_ok=True)
@@ -153,8 +200,12 @@ def loops(out, arm, bodies, mats, actions, args, variant="male", only=None):
                 sc.frame_set(f)
                 t = (f - f0) / 24.0
                 arm.location = (0, speed * t, 0)
-                set_face(face_at(track, (f - f0) % span if not upper else (f - f0)))
-                aim(cam, az, elev=el, dist=10, target=(0, speed * t, 0.8), ortho=ortho)
+                if name == "face_talk":
+                    set_face_state(FACE_SCRIPT[f - f0])
+                    aim(cam, az, elev=el, dist=10, target=(0, 0, 1.5), ortho=ortho)
+                else:
+                    set_face(face_at(track, (f - f0) % span if not upper else (f - f0)))
+                    aim(cam, az, elev=el, dist=10, target=(0, speed * t, 0.8), ortho=ortho)
                 still(f"{fd}/{k:04d}.png")
             mp4, gif = f"{rd}/{name}_{view}.mp4", f"{rd}/{name}_{view}.gif"
             subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-framerate", str(24 // STEP), "-i", f"{fd}/%04d.png",

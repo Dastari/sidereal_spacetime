@@ -23,4 +23,6 @@ python3 "$HERE/compose_review.py" "$S/cmp" "$OUT" "$REV" "$REFS"
 run "$HERE/build_body.py" -- --out "$S/${REV}_poses" --no-export --shots poses --samples 16 \
   --only idle,walk,run,aim_rifle,wave
 cp "$S/${REV}_poses/pose_sheet.png" "$OUT/${REV}_pose_sheet.png"
+run "$HERE/build_body.py" -- --out "$S/${REV}_wardrobe" --no-export --shots wardrobe --samples 16 --only idle
+for f in wardrobe_male wardrobe_female wardrobe_lineup; do cp "$S/${REV}_wardrobe/$f.png" "$OUT/${REV}_$f.png"; done
 echo "review pack for $REV written to $OUT"

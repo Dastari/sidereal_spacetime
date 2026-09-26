@@ -168,7 +168,7 @@ def mouth_frames():
     f["v_closed"] = put(blank(), [7, 8], [12], MOUTH)
     f["v_A"] = put(put(blank(), range(6, 10), [12, 13, 14], MOUTH), range(6, 10), [12], TEETH)
     f["v_E"] = put(put(blank(), range(6, 10), [12, 13], MOUTH), range(6, 10), [12], TEETH)
-    f["v_O"] = put(blank(), [7, 8], [12, 13, 14], MOUTH)
+    f["v_O"] = put(put(blank(), [6, 9], [13], MOUTH), [7, 8], [12, 13, 14], MOUTH)   # round O
     f["v_MB"] = put(blank(), range(6, 10), [12], (100, 40, 48, 255))
     return f
 
