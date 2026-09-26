@@ -144,7 +144,7 @@ def app_up(name):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'keycloak-development-review-account', 'keycloak-development-review-grant', 'keycloak-development-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
+    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'keycloak-development-review-account', 'keycloak-development-review-grant', 'keycloak-development-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-crew-items', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
     parser.add_argument('--client-artifact', help='Pinned prebuilt client directory; public-client-stage only')
     parser.add_argument('--client-artifact-sha256', help='Required complete tree digest with --client-artifact')
@@ -281,6 +281,11 @@ def main():
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_voxel_blender.py'])
     elif command == 'export-equipment':
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_equipment_source.py'])
+    elif command == 'export-crew-items':
+        # Proposal art kit (unpublished): GLBs, content JSON, source .blend, icons and review renders.
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python',
+             'scripts/art_library/crew_items/build.py', '--', '--renders', str(ROOT/'.runtime/crew-items-r001-renders'),
+             '--sheets', 'icons,held'])
     elif command == 'export-inventory-icons':
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_inventory_icons.py'])
     elif command == 'export-crew':
