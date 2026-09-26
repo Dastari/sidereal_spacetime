@@ -126,7 +126,7 @@ FACE_SCRIPT = (["neutral"] * 6 + ["neutral+half", "neutral+closed", "neutral+hal
                + ["neutral@A", "neutral@E", "neutral@O", "neutral@MB", "neutral@A", "neutral@O", "neutral@E",
                   "neutral@closed", "neutral@A", "neutral@MB"] * 1
                + ["surprised"] * 8 + ["happy"] * 10 + ["happy@A", "happy@E", "happy@O", "happy@closed"] + ["neutral"] * 6)
-VIEWS = (("game", -40, 48, (320, 320), 2.8), ("close", -35, 10, (360, 480), 2.3))
+VIEWS = (("game", 40, 48, (320, 320), 2.8), ("close", 35, 10, (360, 480), 2.3))   # +az: facing screen-right like the reference sheets
 STEP = 2              # render every 2nd frame, play at 12 fps (same real-time speed)
 
 
@@ -188,7 +188,7 @@ def loops(out, arm, bodies, mats, actions, args, variant="male", only=None):
         speed = meta.get(base, {}).get("nominalSpeed", 0) if loco else 0
         total = span * cycles
         track = meta.get(upper or base, {}).get("expressionTrack", [[0, "neutral"]])
-        views = VIEWS if name != "face_talk" else (("face", -20, 6, (360, 360), 0.9),)
+        views = VIEWS if name != "face_talk" else (("face", 20, 6, (360, 360), 0.9),)
         if name == "face_talk":
             span = len(FACE_SCRIPT)
             total = span

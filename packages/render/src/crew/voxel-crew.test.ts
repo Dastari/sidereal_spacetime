@@ -172,11 +172,11 @@ describe("voxel crew runtime", () => {
     crew.customize({ weapon: "rifle" });
     crew.update({ moving: false, seated: false, combat: true });
     for (const node of scene.transformNodes) node.computeWorldMatrix(true);
-    // a rifle foregrip: child of the primary grip socket (same axes as socket.hand.L), 6 vox along
-    // the barrel and 1 vox to the left, like the published rifle grip profile
+    // a rifle foregrip: child of the primary grip socket (same axes as socket.hand.L), 5 vox along
+    // the barrel and 1 vox to the left (inside the chibi reach at the aim_rifle pose)
     const target = new TransformNode("support-grip", scene);
     target.parent = crew.socketNodes["socket.hand.R"];
-    target.position.set(6 / 32, 1 / 32, 0.5 / 32);
+    target.position.set(5 / 32, 1 / 32, 0.5 / 32);
     target.rotationQuaternion = Quaternion.Identity();
     crew.setSupportTarget(target);
     new FreeCamera("review", new Vector3(0, 1, -4), scene);
@@ -186,6 +186,10 @@ describe("voxel crew runtime", () => {
     const left = crew.socketNodes["socket.hand.L"].getAbsolutePosition();
     expect(crew.supportError).toBeLessThan(0.002);
     expect(Vector3.Distance(left, target.getAbsolutePosition())).toBeLessThan(0.005);
+    // an out-of-reach foregrip reports the residual instead of stretching the arm
+    target.position.set(16 / 32, 1 / 32, 5 / 32);
+    scene.render();
+    expect(crew.supportError).toBeGreaterThan(0.05);
     crew.setSupportTarget(null);
     crew.dispose();
     scene.dispose();

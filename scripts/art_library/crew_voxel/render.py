@@ -199,7 +199,7 @@ def props_for(meta):
 
 
 def contact_sheets(out, arm, bodies, actions, mats, args, variant="male", per_sheet=6, nframes=6,
-                   views=(("3/4", -35, 12), ("side", -90, 6))):
+                   views=(("3/4", 35, 12), ("side", 90, 6))):
     sc = bpy.context.scene
     cam = sc.camera or setup(sc, samples=8, res=(300, 420))
     sc.render.resolution_x, sc.render.resolution_y = 300, 420
@@ -301,16 +301,16 @@ def wardrobe_sheet(out, arm, bodies, args, variants=("male", "female")):
     for variant in variants:
         b = bodies[variant]
         rows = []
-        for label_text, regions in OUTFITS:
+        for oi, (label_text, regions) in enumerate(OUTFITS):
             vis = [o for r, o in b["meshes"].items() if r in regions] + [b["hair"]]
             show_only(vis, everything)
             imgs = []
-            for view in ("front", "front-left", "left", "back"):
+            for view in ("front", "front-right", "right", "back"):
                 aim(cam, VIEWS[view], elev=8, dist=6, target=(0, 0, 0.9), ortho=2.2)
-                p = f"{rd}/{variant}_{label_text.split()[0]}_{view}.png"
+                p = f"{rd}/{variant}_{oi}_{view}.png"
                 still(p)
                 imgs.append(p)
-            row = tile(imgs, 4, f"{rd}/{variant}_{label_text.split()[0]}_row.png")
+            row = tile(imgs, 4, f"{rd}/{variant}_{oi}_row.png")
             rows.append(label(row, f"{variant} - {label_text}".replace("+", "and"), row.replace(".png", "_l.png")))
         sheet = f"{out}/wardrobe_{variant}.png"
         tile(rows, 1, sheet)
@@ -319,10 +319,10 @@ def wardrobe_sheet(out, arm, bodies, args, variants=("male", "female")):
     imgs = []
     for variant in variants:
         b = bodies[variant]
-        for label_text, regions in OUTFITS:
+        for oi, (label_text, regions) in enumerate(OUTFITS):
             show_only([o for r, o in b["meshes"].items() if r in regions] + [b["hair"]], everything)
-            aim(cam, -30, elev=8, dist=6, target=(0, 0, 0.9), ortho=2.2)
-            p = f"{rd}/lineup_{variant}_{label_text.split()[0]}.png"
+            aim(cam, 30, elev=8, dist=6, target=(0, 0, 0.9), ortho=2.2)
+            p = f"{rd}/lineup_{variant}_{oi}.png"
             still(p)
             imgs.append(p)
     tile(imgs, len(imgs), f"{out}/wardrobe_lineup.png")
@@ -339,7 +339,7 @@ POSE_SHEET = [("idle", "idle.png", 4), ("walk", "walk.png", 4), ("run", "run.png
               ("aim_rifle", "aim.png", 4), ("wave", None, 4)]
 
 
-def pose_sheet(out, arm, bodies, mats, args, variant="male", az=-40, el=10):
+def pose_sheet(out, arm, bodies, mats, args, variant="male", az=40, el=10):
     """Reference strip (top) vs our actual Blender frames (bottom) for idle / walk / run / aim / wave."""
     sc = bpy.context.scene
     cam = sc.camera or setup(sc, samples=16, res=(300, 420))
