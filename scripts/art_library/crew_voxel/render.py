@@ -278,5 +278,58 @@ def turnaround(out, arm, bodies, args):
             row.append(p)
         sheet += row
     tile(sheet, 5, f"{out}/turnaround.png")
-    # hero 3/4 perspective of all three variants side by side is done by offsetting the armature copies
     return f"{out}/turnaround.png"
+
+
+REFS = "/root/sidereal-progress/verify/refs/char-body"
+POSE_SHEET = [("idle", "idle.png", 4), ("walk", "walk.png", 4), ("run", "run.png", 4),
+              ("aim_rifle", "aim.png", 4), ("wave", None, 4)]
+
+
+def pose_sheet(out, arm, bodies, mats, args, variant="male", az=35, el=10):
+    """Reference strip (top) vs our actual Blender frames (bottom) for idle / walk / run / aim / wave."""
+    sc = bpy.context.scene
+    cam = sc.camera or setup(sc, samples=16, res=(300, 420))
+    sc.render.resolution_x, sc.render.resolution_y = 300, 420
+    sc.eevee.taa_render_samples = max(16, args.samples)
+    props = review_props(arm, mats)
+    everything = [o for o in sc.objects if o.type == "MESH" and o.name.startswith("GEO-")]
+    show_only(list(bodies[variant]["meshes"].values()) + [bodies[variant]["hair"]], everything)
+    rd = f"{out}/renders/poses"
+    os.makedirs(rd, exist_ok=True)
+    rows = []
+    for action, ref, n in POSE_SHEET:
+        if action not in bpy.data.actions:
+            continue
+        act = bpy.data.actions[action]
+        arm.animation_data.action = act
+        f0, f1 = int(act.frame_range[0]), int(act.frame_range[1])
+        frames = [f0 + round((f1 - f0) * i / n) for i in range(n)]
+        vis = props_for({"name": action, "grip": "rifle" if "rifle" in action else None})
+        for pn, po in props.items():
+            po.hide_render = pn not in vis
+        imgs = []
+        for f in frames:
+            sc.frame_set(f)
+            aim(cam, az, elev=el, dist=8, target=(0, 0, 0.85), ortho=2.3)
+            p = f"{rd}/{action}_{f:03d}.png"
+            still(p)
+            imgs.append(p)
+        ours = tile(imgs, n, f"{rd}/{action}_ours.png")
+        ours = label(ours, f"{action.upper()}  r002 (Blender, actual action frames)", ours.replace(".png", "_l.png"))
+        if ref:
+            subprocess.run(["ffmpeg", "-loglevel", "error", "-y", "-i", f"{REFS}/{ref}", "-vf",
+                            "scale=1200:-2:flags=lanczos,pad=1200:420:0:(oh-ih)/2:color=0x0b1530",
+                            f"{rd}/{action}_ref.png"], check=True)
+            refl = label(f"{rd}/{action}_ref.png", f"{action.upper()}  reference", f"{rd}/{action}_ref_l.png")
+            rows += [refl, ours]
+        else:
+            rows.append(ours)
+    arm.animation_data.action = None
+    for po in props.values():
+        po.hide_render = True
+    ins = sum((["-i", r] for r in rows), [])
+    fc = "".join(f"[{i}:v]" for i in range(len(rows))) + f"vstack=inputs={len(rows)}[v]"
+    subprocess.run(["ffmpeg", "-loglevel", "error", "-y", *ins, "-filter_complex", fc, "-map", "[v]",
+                    f"{out}/pose_sheet.png"], check=True)
+    return f"{out}/pose_sheet.png"

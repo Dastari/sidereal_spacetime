@@ -320,6 +320,8 @@ def main():
             render.turnaround(out, arm, bodies, args)
         if "anim" in shots and actions:
             render.contact_sheets(out, arm, bodies, actions, mats, args)
+        if "poses" in shots and actions:
+            render.pose_sheet(out, arm, bodies, mats, args)
     print("CREW_BODY_DONE", json.dumps(stats))
 
 
