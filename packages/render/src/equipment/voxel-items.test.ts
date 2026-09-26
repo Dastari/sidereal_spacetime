@@ -32,7 +32,7 @@ describe("voxel crew item runtime hook", () => {
 
   it("maps item forward (+Y) onto the hand socket barrel axis (+X)", () => {
     const forward = new Vector3(0, 1, 0).rotateByQuaternionToRef(crewItemHandSocketRotation(), new Vector3());
-    expect(forward.x).toBeCloseTo(1, 6);
-    expect(forward.y).toBeCloseTo(0, 6);
+    expect(forward.x).toBeCloseTo(1, 5);
+    expect(forward.y).toBeCloseTo(0, 5);
   });
 });

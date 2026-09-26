@@ -9,9 +9,9 @@
    "files": {
     "lod0": {
      "file": "pistol.glb",
-     "sha256": "196c39db2185a9cfa7ff1d0303986d752490c48649851810b6ebe82a7212744f",
-     "bytes": 254848,
-     "triangles": 6872,
+     "sha256": "9ad64b9ba3786a3d1cd32059af20fcd2d3c2c7a4a31ec3df1c32c6cea103813d",
+     "bytes": 161804,
+     "triangles": 4036,
      "primitives": 12,
      "nodes": [
       "item.pistol",
@@ -43,9 +43,9 @@
     },
     "lod1": {
      "file": "pistol.lod1.glb",
-     "sha256": "f6799abe804e92d3f18c1c9e4efbf8bbaff5122e75eeafa9d523108803f4c1c7",
-     "bytes": 77860,
-     "triangles": 1800,
+     "sha256": "50722109c7d4695d61fba19982977fa3ae86b1b3ff9636a1047c97ea38fb3bf8",
+     "bytes": 36096,
+     "triangles": 516,
      "primitives": 12,
      "nodes": [
       "item.pistol",
@@ -82,20 +82,20 @@
    "files": {
     "lod0": {
      "file": "smg.glb",
-     "sha256": "e7246898a0b12299abfe322e803d80c137412b7c83e71967beb3558d35b90be0",
-     "bytes": 340512,
-     "triangles": 9412,
+     "sha256": "bdb348820fdbb93ea9f00cb9604afd84e7dbb3f5f7375ce2f88cca205639e410",
+     "bytes": 213440,
+     "triangles": 5424,
      "primitives": 12,
      "nodes": [
       "item.smg",
       "part.bolt",
-      "part.mag.001",
+      "part.mag",
       "smg.body",
-      "socket.grip.001",
-      "socket.muzzle.001",
-      "socket.sight.001",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
       "socket.stock",
-      "socket.support.001"
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -117,20 +117,20 @@
     },
     "lod1": {
      "file": "smg.lod1.glb",
-     "sha256": "8262db9ba561bef8de2e6e6816884dfcb4e56e079d19003039fb714960b8e5e9",
-     "bytes": 100340,
-     "triangles": 2468,
+     "sha256": "09d7b3db4d997e847230e29cda85dcb573d3cedb59c24e82c45d218a6f129e56",
+     "bytes": 44444,
+     "triangles": 708,
      "primitives": 12,
      "nodes": [
       "item.smg",
       "part.bolt",
-      "part.mag.001",
+      "part.mag",
       "smg.body",
-      "socket.grip.001",
-      "socket.muzzle.001",
-      "socket.sight.001",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
       "socket.stock",
-      "socket.support.001"
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -157,21 +157,21 @@
    "files": {
     "lod0": {
      "file": "compact-carbine.glb",
-     "sha256": "9901282395f9c0fe62996648784846646aaa803f2e7483edcb163208493e8a6b",
-     "bytes": 413372,
-     "triangles": 11364,
+     "sha256": "ccccbcc725777f20a6ef7e40e333fb580194e88be31704a5764d1145128eb539",
+     "bytes": 240016,
+     "triangles": 6078,
      "primitives": 11,
      "nodes": [
       "compact-carbine.body",
       "item.compact-carbine",
-      "part.bolt.001",
-      "part.mag.002",
+      "part.bolt",
+      "part.mag",
       "socket.eye",
-      "socket.grip.002",
-      "socket.muzzle.002",
-      "socket.sight.002",
-      "socket.stock.001",
-      "socket.support.002"
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -194,21 +194,21 @@
     },
     "lod1": {
      "file": "compact-carbine.lod1.glb",
-     "sha256": "49485c04e6c053a09819e6e6f70c5e5c64abbd6d71e929b21b0999c900c260fe",
-     "bytes": 124428,
-     "triangles": 3128,
+     "sha256": "cfbd8c7fdc717c182cf7beacb67e9ef452c832080bf7877d3e88e5fc10a4627c",
+     "bytes": 48372,
+     "triangles": 786,
      "primitives": 11,
      "nodes": [
       "compact-carbine.body",
       "item.compact-carbine",
-      "part.bolt.001",
-      "part.mag.002",
+      "part.bolt",
+      "part.mag",
       "socket.eye",
-      "socket.grip.002",
-      "socket.muzzle.002",
-      "socket.sight.002",
-      "socket.stock.001",
-      "socket.support.002"
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -236,21 +236,21 @@
    "files": {
     "lod0": {
      "file": "rifle.glb",
-     "sha256": "8a27911d7d6c730735194b8e9177f010587b1a1e1117b9ea1be0a882e3375d6c",
-     "bytes": 438488,
-     "triangles": 11984,
+     "sha256": "e446d99a074440d9b911e8f58629b6083c41f2ccf407d659b6ce5da426fedf43",
+     "bytes": 262744,
+     "triangles": 6580,
      "primitives": 12,
      "nodes": [
       "item.rifle",
-      "part.bolt.002",
-      "part.mag.003",
+      "part.bolt",
+      "part.mag",
       "rifle.body",
-      "socket.eye.001",
-      "socket.grip.003",
-      "socket.muzzle.003",
-      "socket.sight.003",
-      "socket.stock.002",
-      "socket.support.003"
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -273,21 +273,21 @@
     },
     "lod1": {
      "file": "rifle.lod1.glb",
-     "sha256": "b63d265cb2f396fb5b2b3ce6a5222638dbed612007f253c39af00eb5b285ff5b",
-     "bytes": 130080,
-     "triangles": 3224,
+     "sha256": "b417ab591d9e425ad3a7b2a2eed6e5d9fe35d21add456dd9205a2cf898b140b4",
+     "bytes": 51856,
+     "triangles": 832,
      "primitives": 12,
      "nodes": [
       "item.rifle",
-      "part.bolt.002",
-      "part.mag.003",
+      "part.bolt",
+      "part.mag",
       "rifle.body",
-      "socket.eye.001",
-      "socket.grip.003",
-      "socket.muzzle.003",
-      "socket.sight.003",
-      "socket.stock.002",
-      "socket.support.003"
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -315,20 +315,20 @@
    "files": {
     "lod0": {
      "file": "shotgun.glb",
-     "sha256": "a31e363dadc89bbad60b209364a53a07d7228b9fc74b5cc99e8e0a158673b108",
-     "bytes": 451508,
-     "triangles": 12688,
+     "sha256": "520a87a05e2afaa9cdbc39233249c8caeebcc8a2c790ec903cd631a80fc1efd8",
+     "bytes": 237976,
+     "triangles": 6200,
      "primitives": 9,
      "nodes": [
       "item.shotgun",
       "part.pump",
       "shotgun.body",
-      "socket.eye.002",
-      "socket.grip.004",
-      "socket.muzzle.004",
-      "socket.sight.004",
-      "socket.stock.003",
-      "socket.support.004"
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -349,20 +349,20 @@
     },
     "lod1": {
      "file": "shotgun.lod1.glb",
-     "sha256": "3695fcbbe332f4d18c2d5b76189e960d501570ca821e962a3208b9d4831612f1",
-     "bytes": 138376,
-     "triangles": 3704,
+     "sha256": "dde7d4f78ee6b9efc651bac4ad66b02adeba48eceafbf7a8aa34079c8bd08cc9",
+     "bytes": 47404,
+     "triangles": 836,
      "primitives": 9,
      "nodes": [
       "item.shotgun",
       "part.pump",
       "shotgun.body",
-      "socket.eye.002",
-      "socket.grip.004",
-      "socket.muzzle.004",
-      "socket.sight.004",
-      "socket.stock.003",
-      "socket.support.004"
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -388,21 +388,21 @@
    "files": {
     "lod0": {
      "file": "heavy-gun.glb",
-     "sha256": "cded1a0cf0819e6a23cdcb94cb4baea8392a0b6e1edb3e3e54e452eff0e796ab",
-     "bytes": 489676,
-     "triangles": 14440,
+     "sha256": "5650ceab98e2db179165cb7aa3524b220eb0cd2dd87f17b60218a84ea72934aa",
+     "bytes": 240012,
+     "triangles": 5944,
      "primitives": 15,
      "nodes": [
       "heavy-gun.body",
       "item.heavy-gun",
       "part.barrels",
-      "part.mag.004",
-      "socket.eye.003",
-      "socket.grip.005",
-      "socket.muzzle.005",
-      "socket.sight.005",
-      "socket.stock.004",
-      "socket.support.005"
+      "part.mag",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -424,21 +424,21 @@
     },
     "lod1": {
      "file": "heavy-gun.lod1.glb",
-     "sha256": "2ab330a21430c41edc7dc9f4c65eca55cf3f9e029b42a44e73c2046296702a99",
-     "bytes": 177940,
-     "triangles": 5040,
+     "sha256": "db53801c51ce2b5d39b60c58fd5a28e5e415701ba348e573c10cf506250e670a",
+     "bytes": 50380,
+     "triangles": 816,
      "primitives": 15,
      "nodes": [
       "heavy-gun.body",
       "item.heavy-gun",
       "part.barrels",
-      "part.mag.004",
-      "socket.eye.003",
-      "socket.grip.005",
-      "socket.muzzle.005",
-      "socket.sight.005",
-      "socket.stock.004",
-      "socket.support.005"
+      "part.mag",
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -465,20 +465,20 @@
    "files": {
     "lod0": {
      "file": "beam-rifle.glb",
-     "sha256": "449c584f3b06a031b446fecc08c1671285405f5a097dc1203e12b0f7379767d5",
-     "bytes": 355556,
-     "triangles": 10112,
+     "sha256": "ef395bcc88b2f6d608532bfce40f101f01d1182e1a49f374dc3f4842636ebfe8",
+     "bytes": 177368,
+     "triangles": 4456,
      "primitives": 9,
      "nodes": [
       "beam-rifle.body",
       "item.beam-rifle",
       "part.cell",
-      "socket.eye.004",
-      "socket.grip.006",
-      "socket.muzzle.006",
-      "socket.sight.006",
-      "socket.stock.005",
-      "socket.support.006"
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -499,20 +499,20 @@
     },
     "lod1": {
      "file": "beam-rifle.lod1.glb",
-     "sha256": "6c0826bdd16c1028cf52dbcd059d8134a84217b27fe8f8b0ed75e3c8b124834d",
-     "bytes": 119108,
-     "triangles": 3240,
+     "sha256": "693280233218c0ac81f53ec4de1c0ae90b5747460923a995878eaf5652e2ef90",
+     "bytes": 36920,
+     "triangles": 608,
      "primitives": 9,
      "nodes": [
       "beam-rifle.body",
       "item.beam-rifle",
       "part.cell",
-      "socket.eye.004",
-      "socket.grip.006",
-      "socket.muzzle.006",
-      "socket.sight.006",
-      "socket.stock.005",
-      "socket.support.006"
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -538,20 +538,20 @@
    "files": {
     "lod0": {
      "file": "rail-rifle.glb",
-     "sha256": "b1b7003bc367e06330aa717955f12e19357ffe05409c228180fef0ca6731c278",
-     "bytes": 338156,
-     "triangles": 9492,
+     "sha256": "c89ec3529f7fe8fc35b8ce4631e0f912d16ca7c4df50a6dd7b621f66ecb3cc60",
+     "bytes": 175944,
+     "triangles": 4442,
      "primitives": 10,
      "nodes": [
       "item.rail-rifle",
-      "part.mag.005",
+      "part.mag",
       "rail-rifle.body",
-      "socket.eye.005",
-      "socket.grip.007",
-      "socket.muzzle.007",
-      "socket.sight.007",
-      "socket.stock.006",
-      "socket.support.007"
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -572,20 +572,20 @@
     },
     "lod1": {
      "file": "rail-rifle.lod1.glb",
-     "sha256": "ed002c7b812ac468f60d1888011a5c7bd3c79906abe9fcbbc794e9569101dbdc",
-     "bytes": 112096,
-     "triangles": 2988,
+     "sha256": "effe8b383a07c9addf7fcd0406941f3ce46e7e8358811f5bf57ce30e619e9a0f",
+     "bytes": 36636,
+     "triangles": 550,
      "primitives": 10,
      "nodes": [
       "item.rail-rifle",
-      "part.mag.005",
+      "part.mag",
       "rail-rifle.body",
-      "socket.eye.005",
-      "socket.grip.007",
-      "socket.muzzle.007",
-      "socket.sight.007",
-      "socket.stock.006",
-      "socket.support.007"
+      "socket.eye",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -611,15 +611,15 @@
    "files": {
     "lod0": {
      "file": "stun-gun.glb",
-     "sha256": "8eda0696ab47bb50f2c65e117907a28f842b3e7a91e6ebb9e64ef30351fe9116",
-     "bytes": 217436,
-     "triangles": 6096,
+     "sha256": "6d1beaec03e459fb1cceec81cc4e5424145965c1f79acb67bf80c5deb96c7e19",
+     "bytes": 128632,
+     "triangles": 3268,
      "primitives": 7,
      "nodes": [
       "item.stun-gun",
-      "socket.grip.008",
-      "socket.muzzle.008",
-      "socket.support.008",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support",
       "stun-gun.body"
      ],
      "materials": [
@@ -638,15 +638,15 @@
     },
     "lod1": {
      "file": "stun-gun.lod1.glb",
-     "sha256": "1c7d6f3a21c05c7b9a0d06f416c3c17e4eb3a441a78c26e4e8c0e4d705beda94",
-     "bytes": 66756,
-     "triangles": 1720,
+     "sha256": "c9f65bddc8dfc2c23b66684dc2d0d4ddf12fbf7a96da5a4ea5a9237b1c9d549b",
+     "bytes": 26820,
+     "triangles": 448,
      "primitives": 7,
      "nodes": [
       "item.stun-gun",
-      "socket.grip.008",
-      "socket.muzzle.008",
-      "socket.support.008",
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support",
       "stun-gun.body"
      ],
      "materials": [
@@ -670,16 +670,16 @@
    "files": {
     "lod0": {
      "file": "baton.glb",
-     "sha256": "115329242874bb55a93070697b937eb8ba647b41afad8876a99351b91dcf1d2d",
-     "bytes": 103580,
-     "triangles": 2776,
+     "sha256": "ebd3d2acf58ef823552eb6a1549d617b9d694bee012062df7b44aef1a27c113f",
+     "bytes": 51048,
+     "triangles": 1296,
      "primitives": 9,
      "nodes": [
       "baton.body",
       "item.baton",
       "part.blade",
       "socket.emitter",
-      "socket.grip.009"
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@orion",
@@ -699,16 +699,16 @@
     },
     "lod1": {
      "file": "baton.lod1.glb",
-     "sha256": "1fab123f25d7ccab5afa0d167c4af4b6abd56ff2b3bf6b1f8d736f66c8d60150",
-     "bytes": 35108,
-     "triangles": 808,
+     "sha256": "5da11509da328eac99d6c110ecbf22691de4eec0a4726aef4166cd71e0f8d19c",
+     "bytes": 16060,
+     "triangles": 144,
      "primitives": 9,
      "nodes": [
       "baton.body",
       "item.baton",
       "part.blade",
       "socket.emitter",
-      "socket.grip.009"
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@orion",
@@ -733,15 +733,15 @@
    "files": {
     "lod0": {
      "file": "grenade.glb",
-     "sha256": "9b76c0c7ecab548761cc132e788c1b2dc6fadccc60b41aa3ba2432837175754f",
-     "bytes": 141828,
-     "triangles": 3392,
+     "sha256": "3c9590b36d1cc2c47bd9fb69b4c01799612ffba32ff798832e9a0e2ca9c760d7",
+     "bytes": 117128,
+     "triangles": 2842,
      "primitives": 6,
      "nodes": [
       "grenade.body",
       "item.grenade",
       "part.pin",
-      "socket.grip.010"
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@orion",
@@ -760,15 +760,15 @@
     },
     "lod1": {
      "file": "grenade.lod1.glb",
-     "sha256": "41aca8edc3fc0e581b7628f8d78791597fb3fd09ac780ab37039e07865ca2721",
-     "bytes": 30896,
-     "triangles": 584,
+     "sha256": "1fa0bd86f5f494f1a15d7427bc7b51be2d6845d150b95444726a9414aaec4536",
+     "bytes": 23560,
+     "triangles": 366,
      "primitives": 6,
      "nodes": [
       "grenade.body",
       "item.grenade",
       "part.pin",
-      "socket.grip.010"
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@orion",
@@ -792,17 +792,17 @@
    "files": {
     "lod0": {
      "file": "medgun.glb",
-     "sha256": "bf67b02e7bb55603c2c69ab80b100b0137b7761d195b3c8488c5a14b5a30abf2",
-     "bytes": 253044,
-     "triangles": 6976,
+     "sha256": "587b8bf39e7160cf0aafd607f573a6217445cf87aa264f06217b74b23228d5e1",
+     "bytes": 146176,
+     "triangles": 3672,
      "primitives": 10,
      "nodes": [
       "item.medgun",
       "medgun.body",
       "part.canister",
-      "socket.grip.011",
-      "socket.muzzle.009",
-      "socket.support.009"
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@medic",
@@ -823,17 +823,17 @@
     },
     "lod1": {
      "file": "medgun.lod1.glb",
-     "sha256": "e39018d0d159f8aaa1b39342a1414bcaea3281b67179d8c45357caa543ca4cc4",
-     "bytes": 79068,
-     "triangles": 2072,
+     "sha256": "af62c26f5de9054ef7cd3d433faa22546da70acc179d3cf4c178f22d7a639d24",
+     "bytes": 32280,
+     "triangles": 496,
      "primitives": 10,
      "nodes": [
       "item.medgun",
       "medgun.body",
       "part.canister",
-      "socket.grip.011",
-      "socket.muzzle.009",
-      "socket.support.009"
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@medic",
@@ -859,15 +859,15 @@
    "files": {
     "lod0": {
      "file": "medkit.glb",
-     "sha256": "dddd639550212a8b61449f50d30ec2d8491566760b3e9eab3d19a4f4833f5875",
-     "bytes": 182420,
-     "triangles": 5240,
+     "sha256": "e8eb5bee2e5a8a5e4f288d6f9e6b659cfa30be2aa362bf850dfe87443ebb9284",
+     "bytes": 102980,
+     "triangles": 2642,
      "primitives": 4,
      "nodes": [
       "item.medkit",
       "medkit.body",
-      "socket.emitter.001",
-      "socket.grip.012"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@medic",
@@ -880,15 +880,15 @@
     },
     "lod1": {
      "file": "medkit.lod1.glb",
-     "sha256": "3ff26c21570055aef27253957f94621b8ed101e0406efa6809bdcf2c52dfb192",
-     "bytes": 56272,
-     "triangles": 1560,
+     "sha256": "f7cf008a22485a30ad4042050e340e7eb1ee14ced576188789ddd24e3b1a652a",
+     "bytes": 20384,
+     "triangles": 378,
      "primitives": 4,
      "nodes": [
       "item.medkit",
       "medkit.body",
-      "socket.emitter.001",
-      "socket.grip.012"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@medic",
@@ -906,15 +906,15 @@
    "files": {
     "lod0": {
      "file": "utility-cutter.glb",
-     "sha256": "747c2420e108473cb3be96d926de7c832ac395837b23cc8c769941d6f63550b9",
-     "bytes": 232324,
-     "triangles": 6764,
+     "sha256": "29bd9b834051933c31288e6ce974dc88947db0c1e2fabe3955a06acd958b8ae2",
+     "bytes": 130276,
+     "triangles": 3210,
      "primitives": 8,
      "nodes": [
       "item.utility-cutter",
-      "part.blade.001",
-      "socket.emitter.002",
-      "socket.grip.013",
+      "part.blade",
+      "socket.emitter",
+      "socket.grip",
       "utility-cutter.body"
      ],
      "materials": [
@@ -935,15 +935,15 @@
     },
     "lod1": {
      "file": "utility-cutter.lod1.glb",
-     "sha256": "c4cb2745e76f69a116fe3fbfd33aa586396b6ae2fc793432b407d2d9577a6d03",
-     "bytes": 75564,
-     "triangles": 2068,
+     "sha256": "e547f69a978a85d85d5e6c22632e5cfa4763be66808ba6dc98db9e275389c8a0",
+     "bytes": 27684,
+     "triangles": 438,
      "primitives": 8,
      "nodes": [
       "item.utility-cutter",
-      "part.blade.001",
-      "socket.emitter.002",
-      "socket.grip.013",
+      "part.blade",
+      "socket.emitter",
+      "socket.grip",
       "utility-cutter.body"
      ],
      "materials": [
@@ -969,17 +969,17 @@
    "files": {
     "lod0": {
      "file": "repair-tool.glb",
-     "sha256": "ac4d15646070ed2673a85399ecf2a9f654ba3fcfab8946bec27a57a4dc507088",
-     "bytes": 215784,
-     "triangles": 5980,
+     "sha256": "0a09cdbcc2ac727273cf1640ffebb31c66f27e8a52998eebed583e73acfbdd45",
+     "bytes": 126092,
+     "triangles": 3046,
      "primitives": 8,
      "nodes": [
       "item.repair-tool",
       "part.emitter",
       "repair-tool.body",
-      "socket.emitter.003",
-      "socket.grip.014",
-      "socket.support.010"
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@engineer",
@@ -999,17 +999,17 @@
     },
     "lod1": {
      "file": "repair-tool.lod1.glb",
-     "sha256": "d30801d32b0cfac8029def3e83840bc197f3f9866250ad6cc9d4715a0e7d6f28",
-     "bytes": 68092,
-     "triangles": 1788,
+     "sha256": "54a8ac5b5aab993adb856dbcd43043f0b52e212e92566a2c7c51a44a98e3fd1a",
+     "bytes": 26732,
+     "triangles": 386,
      "primitives": 8,
      "nodes": [
       "item.repair-tool",
       "part.emitter",
       "repair-tool.body",
-      "socket.emitter.003",
-      "socket.grip.014",
-      "socket.support.010"
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@engineer",
@@ -1034,15 +1034,15 @@
    "files": {
     "lod0": {
      "file": "welder.glb",
-     "sha256": "2f8c79fccfbad8cf759d86df9421d4d355690f4620d144d35ba5b3223ffc030d",
-     "bytes": 202268,
-     "triangles": 5724,
+     "sha256": "94f0089b644a50b776dc6ecbaf2b8ea1c77300fe15538ffe06f8c451656e215d",
+     "bytes": 113872,
+     "triangles": 2772,
      "primitives": 6,
      "nodes": [
       "item.welder",
-      "socket.emitter.004",
-      "socket.grip.015",
-      "socket.support.011",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support",
       "welder.body"
      ],
      "materials": [
@@ -1060,15 +1060,15 @@
     },
     "lod1": {
      "file": "welder.lod1.glb",
-     "sha256": "516b5f68598b452a0c5cd50ee2b575e39f155b62d2f5a55857c621207389261e",
-     "bytes": 63184,
-     "triangles": 1704,
+     "sha256": "1ee2dc5ada14f1b102caf1a1607689b789c1fd5fca17ed8ce9208c9c6af220b1",
+     "bytes": 22628,
+     "triangles": 328,
      "primitives": 6,
      "nodes": [
       "item.welder",
-      "socket.emitter.004",
-      "socket.grip.015",
-      "socket.support.011",
+      "socket.emitter",
+      "socket.grip",
+      "socket.support",
       "welder.body"
      ],
      "materials": [
@@ -1091,17 +1091,17 @@
    "files": {
     "lod0": {
      "file": "multi-tool.glb",
-     "sha256": "21e68afa7280448a068df894febdebf64eccae4b1b888b9fec230cbfcc65478f",
-     "bytes": 213540,
-     "triangles": 5792,
+     "sha256": "3abe76d31dba2259054a84091f066bd8edba283aaaae30c3e7c3de64bc1508c8",
+     "bytes": 117108,
+     "triangles": 2840,
      "primitives": 8,
      "nodes": [
       "item.multi-tool",
       "multi-tool.body",
       "part.head",
-      "socket.emitter.005",
-      "socket.grip.016",
-      "socket.support.012"
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@security",
@@ -1120,17 +1120,17 @@
     },
     "lod1": {
      "file": "multi-tool.lod1.glb",
-     "sha256": "7763b9f9a7b6edc2a8f508abac3e804de1372624f12b2772536bce5a4976c74d",
-     "bytes": 67812,
-     "triangles": 1648,
+     "sha256": "29a413ff45887282bc4608313bf640e374b3e8adcb4d9865c6de1e11ecad45fc",
+     "bytes": 25448,
+     "triangles": 376,
      "primitives": 8,
      "nodes": [
       "item.multi-tool",
       "multi-tool.body",
       "part.head",
-      "socket.emitter.005",
-      "socket.grip.016",
-      "socket.support.012"
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@security",
@@ -1154,20 +1154,20 @@
    "files": {
     "lod0": {
      "file": "mining-drill.glb",
-     "sha256": "aba6643dbe00644aee8974cda0b2422cc49d3ec970007ccc047d1b786a1eb364",
-     "bytes": 349236,
-     "triangles": 10312,
+     "sha256": "80f47530d5eed15e578b1e97ed7878dd4528a86edaae6a88435a1ee93a9010d7",
+     "bytes": 183720,
+     "triangles": 4612,
      "primitives": 11,
      "nodes": [
       "item.mining-drill",
       "mining-drill.body",
       "part.bit",
-      "socket.emitter.006",
-      "socket.eye.006",
-      "socket.grip.017",
-      "socket.sight.008",
-      "socket.stock.007",
-      "socket.support.013"
+      "socket.emitter",
+      "socket.eye",
+      "socket.grip",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@salvage",
@@ -1188,20 +1188,20 @@
     },
     "lod1": {
      "file": "mining-drill.lod1.glb",
-     "sha256": "10d531f9cca2070bb9b8b4cf9cfe04d27572ef46da7fa6d9fb52e63e27835b9f",
-     "bytes": 113652,
-     "triangles": 3184,
+     "sha256": "e651c53916b28cfeef2747e1bcbd8293b5b2f023db3b126c19adac56167d399c",
+     "bytes": 38012,
+     "triangles": 572,
      "primitives": 11,
      "nodes": [
       "item.mining-drill",
       "mining-drill.body",
       "part.bit",
-      "socket.emitter.006",
-      "socket.eye.006",
-      "socket.grip.017",
-      "socket.sight.008",
-      "socket.stock.007",
-      "socket.support.013"
+      "socket.emitter",
+      "socket.eye",
+      "socket.grip",
+      "socket.sight",
+      "socket.stock",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@salvage",
@@ -1227,14 +1227,14 @@
    "files": {
     "lod0": {
      "file": "wrench.glb",
-     "sha256": "8900416843a99b42b0ca9afa8e766a6ec126de6239fdc233d1651760fcbfd8ee",
-     "bytes": 125260,
-     "triangles": 3352,
+     "sha256": "bf9e7e9b676d5e1ef83743e8ff5a5ddbf6969ea5a817fa3abd9ed4c34598523c",
+     "bytes": 65172,
+     "triangles": 1744,
      "primitives": 7,
      "nodes": [
       "item.wrench",
-      "socket.emitter.007",
-      "socket.grip.018",
+      "socket.emitter",
+      "socket.grip",
       "wrench.body"
      ],
      "materials": [
@@ -1253,14 +1253,14 @@
     },
     "lod1": {
      "file": "wrench.lod1.glb",
-     "sha256": "65943b1459243eedfa8eb16225ebf746c6c9d25c99af531b9c341d1f115353a2",
-     "bytes": 40272,
-     "triangles": 920,
+     "sha256": "22e2abbc1e4d23fe9c187fe02677cab7777c6287adb8bb54f53838287f98b75c",
+     "bytes": 17372,
+     "triangles": 208,
      "primitives": 7,
      "nodes": [
       "item.wrench",
-      "socket.emitter.007",
-      "socket.grip.018",
+      "socket.emitter",
+      "socket.grip",
       "wrench.body"
      ],
      "materials": [
@@ -1284,16 +1284,16 @@
    "files": {
     "lod0": {
      "file": "scanner.glb",
-     "sha256": "18fd7cba5c3e2040fc6ab9b5728b883d5ae778d4b2f8df959fe65e7e0650324b",
-     "bytes": 131288,
-     "triangles": 3678,
+     "sha256": "c18484f015758f5063c7cffba90481f1b6c3b6d4ec90b2061a83725240ce95c2",
+     "bytes": 89200,
+     "triangles": 2138,
      "primitives": 7,
      "nodes": [
       "item.scanner",
       "scanner.body",
       "socket.display",
-      "socket.emitter.008",
-      "socket.grip.019"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@orion",
@@ -1311,16 +1311,16 @@
     },
     "lod1": {
      "file": "scanner.lod1.glb",
-     "sha256": "17c3f41446bfa4f59b318d969aca30e0581a26ca8ca4b73ecea231752c95dfb0",
-     "bytes": 42032,
-     "triangles": 1028,
+     "sha256": "1e878cecc82501baa7466d45e34188cf6679dab99d12b2803f002f3fff349bdf",
+     "bytes": 19664,
+     "triangles": 280,
      "primitives": 7,
      "nodes": [
       "item.scanner",
       "scanner.body",
       "socket.display",
-      "socket.emitter.008",
-      "socket.grip.019"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@orion",
@@ -1343,16 +1343,16 @@
    "files": {
     "lod0": {
      "file": "sample-scanner.glb",
-     "sha256": "e974d268d7802a4c63b2b53384e08e849340493b720b6444f3cb0c1493b6c5f4",
-     "bytes": 138136,
-     "triangles": 3888,
+     "sha256": "cd722bb28ae319471ac7b5a9bd1b6ea0350e5670823252bd7364bb3b8e3ca48e",
+     "bytes": 80268,
+     "triangles": 1978,
      "primitives": 6,
      "nodes": [
       "item.sample-scanner",
       "sample-scanner.body",
-      "socket.emitter.009",
-      "socket.grip.020",
-      "socket.support.014"
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:dark@orion",
@@ -1369,16 +1369,16 @@
     },
     "lod1": {
      "file": "sample-scanner.lod1.glb",
-     "sha256": "63693474fbf8353ff08dffbd5514d2e374b19250ce2b0233867e5b774260f607",
-     "bytes": 46220,
-     "triangles": 1144,
+     "sha256": "1a8f85e6f0ff7004dd2fb29e4415890f1183f98f718d3f71ece69ad3905c49a2",
+     "bytes": 18140,
+     "triangles": 254,
      "primitives": 6,
      "nodes": [
       "item.sample-scanner",
       "sample-scanner.body",
-      "socket.emitter.009",
-      "socket.grip.020",
-      "socket.support.014"
+      "socket.emitter",
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:dark@orion",
@@ -1400,16 +1400,16 @@
    "files": {
     "lod0": {
      "file": "data-pad.glb",
-     "sha256": "b0d735882c911d4642b0632647e2c65aafc5d09061e89d97342e224bd3b1117d",
-     "bytes": 134344,
-     "triangles": 3484,
+     "sha256": "d87cf9ecadcac0ac48f27a4044387c51dc68d6824ee735b42018f8171722f51c",
+     "bytes": 82716,
+     "triangles": 1908,
      "primitives": 5,
      "nodes": [
       "data-pad.body",
       "item.data-pad",
-      "socket.display.001",
-      "socket.grip.021",
-      "socket.support.015"
+      "socket.display",
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -1425,16 +1425,16 @@
     },
     "lod1": {
      "file": "data-pad.lod1.glb",
-     "sha256": "84553dca9321cd84033433bb91bbe30bf0ac3cc85a4770dfd43748bd17847f1d",
-     "bytes": 38336,
-     "triangles": 956,
+     "sha256": "780cd43e22bdd692f03ea39914501fa96804fc97b50ef6188a4260ea1a8c780d",
+     "bytes": 16904,
+     "triangles": 272,
      "primitives": 5,
      "nodes": [
       "data-pad.body",
       "item.data-pad",
-      "socket.display.001",
-      "socket.grip.021",
-      "socket.support.015"
+      "socket.display",
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@orion",
@@ -1455,16 +1455,16 @@
    "files": {
     "lod0": {
      "file": "shield-emitter.glb",
-     "sha256": "24603a25f38fb9346335f941e45aa10dfaf11e11825e3f4b6f5be44eb0602744",
-     "bytes": 219660,
-     "triangles": 6440,
+     "sha256": "611afab49b88ae014c4b7c258780053a60386ce1d6ff211e8bb870fd1dd66174",
+     "bytes": 127056,
+     "triangles": 3202,
      "primitives": 9,
      "nodes": [
       "item.shield-emitter",
       "part.ring",
       "shield-emitter.body",
-      "socket.emitter.010",
-      "socket.grip.022"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:dark@orion",
@@ -1483,16 +1483,16 @@
     },
     "lod1": {
      "file": "shield-emitter.lod1.glb",
-     "sha256": "527dad1f977bf880c7435156e3385ceec7dafed1b67b4cdec3b80706b1ea6839",
-     "bytes": 73152,
-     "triangles": 1896,
+     "sha256": "b10ca826d630cb396963d4dede674f6a02c0cff73f7c00ae61d9fe32a61cb042",
+     "bytes": 28412,
+     "triangles": 458,
      "primitives": 9,
      "nodes": [
       "item.shield-emitter",
       "part.ring",
       "shield-emitter.body",
-      "socket.emitter.010",
-      "socket.grip.022"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:dark@orion",
@@ -1516,15 +1516,15 @@
    "files": {
     "lod0": {
      "file": "flashlight.glb",
-     "sha256": "6b85196527ddc1437630c2c3a90fd9807c8eeef841806c918734999257b46127",
-     "bytes": 74276,
-     "triangles": 2012,
+     "sha256": "32bce6658460760c4b3f5cbcf2071f751e38add3c1918154f649502d876ed74b",
+     "bytes": 52816,
+     "triangles": 1226,
      "primitives": 5,
      "nodes": [
       "flashlight.body",
       "item.flashlight",
-      "socket.emitter.011",
-      "socket.grip.023"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@orion",
@@ -1540,15 +1540,15 @@
     },
     "lod1": {
      "file": "flashlight.lod1.glb",
-     "sha256": "18bb2feceaa87111205f0773d59ccf3048597076fa9ded14be00b9dfcd8ac8e2",
-     "bytes": 22448,
-     "triangles": 476,
+     "sha256": "ce146dab47941dae3c1f4a3d45e6b203aea1a0d966a4f5d1a2dcf4f8cb915745",
+     "bytes": 12316,
+     "triangles": 150,
      "primitives": 5,
      "nodes": [
       "flashlight.body",
       "item.flashlight",
-      "socket.emitter.011",
-      "socket.grip.023"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:accent@orion",
@@ -1569,18 +1569,18 @@
    "files": {
     "lod0": {
      "file": "grapple.glb",
-     "sha256": "1a11ea2710a6174a3a6f3cd55eb7238b8aea2da03b82a3f4590fc35d437c6ba0",
-     "bytes": 164208,
-     "triangles": 4508,
+     "sha256": "b61fe2fc073213c86b5458d22551945343440201c5ef7e5c6bf5ae45a8f2e23f",
+     "bytes": 84836,
+     "triangles": 1994,
      "primitives": 10,
      "nodes": [
       "grapple.body",
       "item.grapple",
       "part.jaw.lower",
       "part.jaw.upper",
-      "socket.grip.024",
-      "socket.muzzle.010",
-      "socket.support.016"
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support"
      ],
      "materials": [
       "slot:dark@orion",
@@ -1599,18 +1599,18 @@
     },
     "lod1": {
      "file": "grapple.lod1.glb",
-     "sha256": "fa4e6d4f126f0e7142065e4cf16df650ee8ec5d84af9fcf86156e84190fb91da",
-     "bytes": 59560,
-     "triangles": 1420,
+     "sha256": "c16578cd607e51637342382a43630eff27e88b35307beb1596cab76ec08446d2",
+     "bytes": 21412,
+     "triangles": 246,
      "primitives": 10,
      "nodes": [
       "grapple.body",
       "item.grapple",
       "part.jaw.lower",
       "part.jaw.upper",
-      "socket.grip.024",
-      "socket.muzzle.010",
-      "socket.support.016"
+      "socket.grip",
+      "socket.muzzle",
+      "socket.support"
      ],
      "materials": [
       "slot:dark@orion",
@@ -1634,17 +1634,17 @@
    "files": {
     "lod0": {
      "file": "drone.glb",
-     "sha256": "447b851ac89906abe822389440b754697d38b095bf5f9868c4629686969bcc52",
-     "bytes": 123656,
-     "triangles": 3328,
+     "sha256": "08564e3bda999f711b01e96e9057f614dd1580fe4a68cd7fcaabeb1ec9361c77",
+     "bytes": 75708,
+     "triangles": 1824,
      "primitives": 10,
      "nodes": [
       "drone.body",
       "item.drone",
       "part.rotor.L",
       "part.rotor.R",
-      "socket.emitter.012",
-      "socket.grip.025"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:dark@security",
@@ -1664,17 +1664,17 @@
     },
     "lod1": {
      "file": "drone.lod1.glb",
-     "sha256": "64792a048f6d259d2b060ff0e5c0df34a0d0720403ca6159713b1fd5ddfe5881",
-     "bytes": 41344,
-     "triangles": 880,
+     "sha256": "13bc1bf651ded4a2599705b4783983f1c8a0da5033636aabdc1e1468dc5b0270",
+     "bytes": 20072,
+     "triangles": 216,
      "primitives": 10,
      "nodes": [
       "drone.body",
       "item.drone",
       "part.rotor.L",
       "part.rotor.R",
-      "socket.emitter.012",
-      "socket.grip.025"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:dark@security",
@@ -1699,15 +1699,15 @@
    "files": {
     "lod0": {
      "file": "cargo-box.glb",
-     "sha256": "cc936ff7a5ac3f6e3b0c4f7e8a173096e8f4983fbbb3e06fe7610d9833a05c51",
-     "bytes": 416744,
-     "triangles": 12176,
+     "sha256": "f2ed1313b14b9bdbea159b0583cb2dfd82b288fa61fce5beb06a985aba4de464",
+     "bytes": 116696,
+     "triangles": 2972,
      "primitives": 5,
      "nodes": [
       "cargo-box.body",
       "item.cargo-box",
-      "socket.grip.026",
-      "socket.support.017"
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@salvage",
@@ -1721,15 +1721,15 @@
     },
     "lod1": {
      "file": "cargo-box.lod1.glb",
-     "sha256": "c8773083f8e6edb3bb327d657fa14635b1bf7fbcede220defd61eee24b2a35f1",
-     "bytes": 160860,
-     "triangles": 5024,
+     "sha256": "21f396debb0a60a50386b5386d15c96786e083c1c14fb3537061a1a633a97853",
+     "bytes": 22168,
+     "triangles": 440,
      "primitives": 5,
      "nodes": [
       "cargo-box.body",
       "item.cargo-box",
-      "socket.grip.026",
-      "socket.support.017"
+      "socket.grip",
+      "socket.support"
      ],
      "materials": [
       "slot:accent@salvage",
@@ -1748,15 +1748,15 @@
    "files": {
     "lod0": {
      "file": "shield-pack.glb",
-     "sha256": "0e6e59a7aed17aeceb253cb1d921e8d187da97e133854328ae9319b3cc3b941e",
-     "bytes": 229652,
-     "triangles": 6652,
+     "sha256": "96200362080c733ef7c93ae787e7045ce2c9ba264e9b0062fb37f60994164c3a",
+     "bytes": 124084,
+     "triangles": 3070,
      "primitives": 5,
      "nodes": [
       "item.shield-pack",
       "shield-pack.body",
-      "socket.emitter.013",
-      "socket.grip.027"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:dark@orion",
@@ -1772,15 +1772,15 @@
     },
     "lod1": {
      "file": "shield-pack.lod1.glb",
-     "sha256": "746098c109b62f67754d266af7238a6603de3675a301673b653677bb66a44924",
-     "bytes": 78436,
-     "triangles": 2332,
+     "sha256": "821afe0c11e6a385ea86d5f8dbd0a46a3c72d9f3eb39d696d35969a7adfdddd5",
+     "bytes": 24320,
+     "triangles": 482,
      "primitives": 5,
      "nodes": [
       "item.shield-pack",
       "shield-pack.body",
-      "socket.emitter.013",
-      "socket.grip.027"
+      "socket.emitter",
+      "socket.grip"
      ],
      "materials": [
       "slot:dark@orion",
@@ -1822,14 +1822,14 @@
   {
    "id": "laser-bolt",
    "file": "fx/laser-bolt.glb",
-   "sha256": "d27567f6f48f842724d6e69ec06299423bd2a82b8c44914c1830189733562361",
-   "bytes": 5472,
+   "sha256": "da5566a988ade1e1899c5e5eeeb409c9f80d992e3ffcb17fa79e9c76f77778c6",
+   "bytes": 5464,
    "triangles": 48,
    "primitives": 2,
    "nodes": [
     "fx.laser-bolt",
-    "layer.core.001",
-    "layer.glow.001"
+    "layer.core",
+    "layer.glow"
    ],
    "materials": [
     "fx:core@laser-bolt",
@@ -1843,14 +1843,14 @@
   {
    "id": "plasma-bolt",
    "file": "fx/plasma-bolt.glb",
-   "sha256": "198b3fbb26a8eb0a4c66a666b5897ee9ef584504c50bdcc757a259a6cba5fb66",
-   "bytes": 11944,
+   "sha256": "69f5425b826733e0b984688d8bbf095d027518f33b7569c3b9c4d7be673f6106",
+   "bytes": 11936,
    "triangles": 144,
    "primitives": 3,
    "nodes": [
     "fx.plasma-bolt",
-    "layer.core.002",
-    "layer.glow.002",
+    "layer.core",
+    "layer.glow",
     "layer.tail"
    ],
    "materials": [
@@ -1866,14 +1866,14 @@
   {
    "id": "healing-beam",
    "file": "fx/healing-beam.glb",
-   "sha256": "adfae105f667f5174734144d71267af8dbf9d341e588be00302ad4f93b83a9b9",
-   "bytes": 10004,
+   "sha256": "f0cd526e2c2141376eb60a8f6998c679a73d0489cb5572140227af1bb034093f",
+   "bytes": 9996,
    "triangles": 132,
    "primitives": 2,
    "nodes": [
     "fx.healing-beam",
-    "layer.core.003",
-    "layer.glow.003"
+    "layer.core",
+    "layer.glow"
    ],
    "materials": [
     "fx:core@healing-beam",
@@ -1887,13 +1887,13 @@
   {
    "id": "scan-pulse",
    "file": "fx/scan-pulse.glb",
-   "sha256": "8d2f3919e69827f6591caf14ea78c38044a1ee7cbfb756d13af5e08daabbb5b8",
-   "bytes": 44968,
+   "sha256": "44c06b128ce85ef2eef9b01766209928031580d454a74f69bdf8152c9e7b1ccd",
+   "bytes": 44964,
    "triangles": 780,
    "primitives": 2,
    "nodes": [
     "fx.scan-pulse",
-    "layer.core.004",
+    "layer.core",
     "layer.ring"
    ],
    "materials": [
@@ -1929,13 +1929,13 @@
   {
    "id": "impact-spark",
    "file": "fx/impact-spark.glb",
-   "sha256": "82b0a7e0c5ed352edd2bf087fc10576aae61be9f54d6061368054b9993069041",
-   "bytes": 22972,
+   "sha256": "1147bd8f11a2e9ed4e146b0a14c53cdbd8ce27e5103947d33a3168b9eb398c78",
+   "bytes": 22968,
    "triangles": 372,
    "primitives": 2,
    "nodes": [
     "fx.impact-spark",
-    "layer.core.005",
+    "layer.core",
     "layer.spark"
    ],
    "materials": [
@@ -1969,14 +1969,14 @@
   {
    "id": "thruster-glow",
    "file": "fx/thruster-glow.glb",
-   "sha256": "df2872e1c2b002e48e3cf7a800c6e98f9d862bb755f1ce707ac5b9a033c86cf8",
-   "bytes": 5220,
+   "sha256": "b9900984b629cefe2bec44432a9e7f518ae1c44f5b8da23c0d07156e023babb8",
+   "bytes": 5212,
    "triangles": 48,
    "primitives": 2,
    "nodes": [
     "fx.thruster-glow",
-    "layer.core.006",
-    "layer.glow.004"
+    "layer.core",
+    "layer.glow"
    ],
    "materials": [
     "fx:core@thruster-glow",
@@ -1990,14 +1990,14 @@
   {
    "id": "pickup-glow",
    "file": "fx/pickup-glow.glb",
-   "sha256": "5ed0c0a9ca789c33119cada2c80bcdc0bbd0e6660eaafb8a3e0407d3f208a4cd",
-   "bytes": 15116,
+   "sha256": "0fb0ccfb426c2bf06e6b32b431487582a68ff08d7b449c9e0b621ecb88cadbd0",
+   "bytes": 15112,
    "triangles": 228,
    "primitives": 2,
    "nodes": [
     "fx.pickup-glow",
     "layer.column",
-    "layer.edge.001"
+    "layer.edge"
    ],
    "materials": [
     "fx:column@pickup-glow",
@@ -2011,15 +2011,15 @@
   {
    "id": "repair-sparks",
    "file": "fx/repair-sparks.glb",
-   "sha256": "0a98e6df018bdbfbcc3ef04882190e8d6775beaa2596f32d5d2392e512d93990",
-   "bytes": 18956,
+   "sha256": "c7b0bdc20dbb494c8db8e5b69ba3217c91b195cb5e6c102b577ef9c349d7b022",
+   "bytes": 18948,
    "triangles": 276,
    "primitives": 3,
    "nodes": [
     "fx.repair-sparks",
-    "layer.core.007",
+    "layer.core",
     "layer.plus",
-    "layer.spark.001"
+    "layer.spark"
    ],
    "materials": [
     "fx:core@repair-sparks",
@@ -2034,15 +2034,15 @@
   {
    "id": "teleport",
    "file": "fx/teleport.glb",
-   "sha256": "ecda586cea65fe8bf8a6f03f4bb8b0c0f841d5cdea462ce7da813bf6877ac7eb",
-   "bytes": 44264,
+   "sha256": "385dc77962a5be7aa87c69e6a1c350f1f1ff8a76311734775016001f253758b8",
+   "bytes": 44252,
    "triangles": 744,
    "primitives": 3,
    "nodes": [
     "fx.teleport",
-    "layer.column.001",
-    "layer.core.008",
-    "layer.ring.001"
+    "layer.column",
+    "layer.core",
+    "layer.ring"
    ],
    "materials": [
     "fx:column@teleport",
@@ -2057,14 +2057,14 @@
   {
    "id": "tracer",
    "file": "fx/tracer.glb",
-   "sha256": "6f80afe4e91c773f7b992266cc4a80d5480f285ca15a46dd3641bf9a7483b1cc",
-   "bytes": 5444,
+   "sha256": "a550eaf8a21695ac930a91e50c326be33dec563b9b0b194fd32b982827625d92",
+   "bytes": 5436,
    "triangles": 48,
    "primitives": 2,
    "nodes": [
     "fx.tracer",
-    "layer.core.009",
-    "layer.glow.005"
+    "layer.core",
+    "layer.glow"
    ],
    "materials": [
     "fx:core@tracer",
@@ -2078,14 +2078,14 @@
   {
    "id": "beam-lance",
    "file": "fx/beam-lance.glb",
-   "sha256": "7152e8e5294f5d7e47aa9f5b7078938b07c398a386f3358d33cdfd47d4cabb78",
-   "bytes": 8712,
+   "sha256": "446c15ba2bb7144e097505a7898ed8bfbd41ead609f47f0c72d859940fbfb459",
+   "bytes": 8704,
    "triangles": 108,
    "primitives": 2,
    "nodes": [
     "fx.beam-lance",
-    "layer.core.010",
-    "layer.glow.006"
+    "layer.core",
+    "layer.glow"
    ],
    "materials": [
     "fx:core@beam-lance",
@@ -2099,14 +2099,14 @@
   {
    "id": "stun-arc",
    "file": "fx/stun-arc.glb",
-   "sha256": "9861e179f919a68f7a9558b973b8c69e63c6626cbc09d9aca4dcc752e0359386",
-   "bytes": 17148,
+   "sha256": "c209a51d65b3a0b16cef22978b63b511783fe5fab7886aaf785c18e74880efd7",
+   "bytes": 17140,
    "triangles": 264,
    "primitives": 2,
    "nodes": [
     "fx.stun-arc",
-    "layer.core.011",
-    "layer.glow.007"
+    "layer.core",
+    "layer.glow"
    ],
    "materials": [
     "fx:core@stun-arc",
@@ -2121,12 +2121,12 @@
  "totals": {
   "items": 28,
   "fx": 15,
-  "lod0Triangles": 194934,
-  "lod1Triangles": 58804,
+  "lod0Triangles": 95416,
+  "lod1Triangles": 12590,
   "fxTriangles": 6228,
-  "bytes": 9572672
+  "bytes": 5019876
  },
  "content": "packages/content/src/crew-items-r001.json",
  "referenceCrops": "scripts/art_library/crew_items_reference_crops.json",
- "contentSha256": "bb1adb405e30fc6cecee0b19a05617f84c032e9487f6c890848446a0b47ea331"
+ "contentSha256": "caca26894832ba514b2823782cad47c86743a1a4e175b1e005352e992aa5c9b9"
 }

@@ -94,6 +94,10 @@ export interface CrewItemCatalog {
   fx: readonly CrewItemFxDefinition[];
 }
 
+const SOCKET_MAP: Readonly<Partial<Record<CrewItemSocketName, readonly EquipmentSocket[]>>> = {
+  muzzle: ["Aim.Muzzle"], emitter: ["Aim.Direction", "Interaction.Contact"], stock: ["Contact.Shoulder"],
+  sight: ["Sight.Primary"], eye: ["Sight.EyeReference"], display: ["Display.Reference"],
+};
 const CATEGORIES: readonly CrewItemCategory[] = ["ballistic", "energy", "medical", "tool", "utility"];
 const SETS: readonly CrewItemAnimationSet[] = ["rifle", "pistol", "tool", "device", "melee", "throw", "carry", "worn"];
 const CHARACTER_SOCKETS: readonly CharacterSocketName[] = [
@@ -158,10 +162,6 @@ export function crewItemForLegacyAsset(assetId: string): CrewItemDefinition | un
   return CREW_ITEMS.find((item) => item.replacesLegacyAsset === assetId);
 }
 
-const SOCKET_MAP: Readonly<Partial<Record<CrewItemSocketName, readonly EquipmentSocket[]>>> = {
-  muzzle: ["Aim.Muzzle"], emitter: ["Aim.Direction", "Interaction.Contact"], stock: ["Contact.Shoulder"],
-  sight: ["Sight.Primary"], eye: ["Sight.EyeReference"], display: ["Display.Reference"],
-};
 /** Adapter for the existing r003 aim-space pose controller (glTF-authored frame, grip origin). */
 export function toEquipmentPoseItem(item: CrewItemDefinition): EquipmentPoseItem {
   if (!item.poseProfile) throw new Error(`${item.id} has no aim profile`);

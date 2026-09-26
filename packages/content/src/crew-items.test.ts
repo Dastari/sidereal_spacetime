@@ -139,12 +139,17 @@ describe("crew voxel items r001", () => {
     for (const fx of CREW_ITEM_FX) expect(existsSync(join(ASSETS, fx.file))).toBe(true);
   });
 
-  it("publishes a solved default hold for every held item", () => {
+  it("publishes a measured default hold on the CHAR-BODY v2 rig for every held item", () => {
+    expect(holds.revision).toBe("r002");
+    type Hold = { characterClip: string; handErrorM: Record<string, number | number[]>; rotationWXYZ: number[] };
     for (const item of CREW_ITEMS.filter((i) => i.animationSet !== "worn")) {
-      const hold = (holds.items as Record<string, { reachDeficitM: Record<string, number>; rotationWXYZ: number[] }>)[item.id];
+      const hold = (holds.items as Record<string, Hold>)[item.id];
       expect(hold, item.id).toBeDefined();
-      for (const d of Object.values(hold.reachDeficitM)) expect(d).toBeLessThan(0.01);
+      expect(Object.values(ANIMATION_SET_CLIPS).some((set) => Object.values(set).includes(hold.characterClip))).toBe(true);
+      // Primary grip sits on socket.hand.R (carried boxes are centred between both hands).
+      expect(hold.handErrorM.R as number).toBeLessThan(item.supportMode === "carry" ? 0.08 : 1e-3);
       expect(Math.hypot(...hold.rotationWXYZ)).toBeCloseTo(1, 4);
     }
   });
+
 });

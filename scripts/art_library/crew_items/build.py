@@ -44,7 +44,7 @@ def args():
     p.add_argument("--samples", type=int, default=32)
     p.add_argument("--no-export", action="store_true")
     p.add_argument("--holds", default=os.path.join(ROOT, "packages/content/src/crew-items-r001-holds.json"))
-    p.add_argument("--body", default="/root/sidereal-progress/_shared/crew-body-r001/crew-body.blend")
+    p.add_argument("--body", default="/root/sidereal-progress/_shared/crew-body-r002/crew-body.blend")
     return p.parse_args(argv)
 
 
@@ -185,6 +185,13 @@ def export_all(o, items, fxs):
             st = stats(path)
             entry["files"][lod] = {"file": os.path.basename(path), "sha256": sha(path), "bytes": os.path.getsize(path), **st}
         manifest["items"].append(entry)
+        # Object names are global in a .blend: prefix this item's nodes now so the next item's
+        # socket/part nodes export with their exact glTF names (socket.grip, part.mag, ...).
+        stack = list(root.children)
+        while stack:
+            ob = stack.pop()
+            stack.extend(ob.children)
+            ob.name = f"{item.id}:{ob.name}"
         print(f"[items] {item.id}: lod0 {entry['files']['lod0']['triangles']} tris, lod1 {entry['files']['lod1']['triangles']} tris,"
               f" anims {entry['files']['lod0']['animations']}")
     for f in fxs:
@@ -199,6 +206,8 @@ def export_all(o, items, fxs):
             ob.parent = root
         path = os.path.join(o.out, "fx", f"{f.id}.glb")
         export_glb(root, path, animations=False)
+        for ob in list(root.children):
+            ob.name = f"{f.id}:{ob.name}"
         st = stats(path)
         manifest["fx"].append({"id": f.id, "file": f"fx/{f.id}.glb", "sha256": sha(path), "bytes": os.path.getsize(path), **st})
         print(f"[fx] {f.id}: {st['triangles']} tris")

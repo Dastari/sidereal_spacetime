@@ -150,8 +150,15 @@ def region_mesh(name, cells, origin, voxel, slots):
                 quad.reverse()
             f = bm.faces.new([vert(slot, q) for q in quad])
             f.material_index = index[slot]
+    bm.normal_update()
     bmesh.ops.dissolve_limit(bm, angle_limit=math.radians(1), use_dissolve_boundaries=False,
                              verts=list(bm.verts), edges=list(bm.edges), delimit={"MATERIAL"})
+    # Remove leftover valence-2 vertices on straight edges (they only add sliver triangles).
+    straight = [v for v in bm.verts if len(v.link_edges) == 2 and abs(
+        (v.link_edges[0].other_vert(v).co - v.co).normalized().dot((v.link_edges[1].other_vert(v).co - v.co).normalized()) + 1) < 1e-6]
+    if straight:
+        bmesh.ops.dissolve_verts(bm, verts=straight)
+    bm.normal_update()
     me = bpy.data.meshes.new(name)
     bm.to_mesh(me)
     bm.free()

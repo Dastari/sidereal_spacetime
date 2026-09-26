@@ -8,6 +8,7 @@ for the left hand (socket.hand.L). Muzzle / emitter sockets point along +Y unles
 Reference tiles: scripts/art_library/crew_items_reference_crops.json (ids in `refs`).
 Colour/material roles are SLOTS; themes are slot tables (see themes.py).
 """
+from .body_frames import support_offset_item
 from .voxel import Item
 
 # Holster presets: item forward/up expressed in the CHARACTER body frame (Blender: +X right,
@@ -15,9 +16,9 @@ from .voxel import Item
 HOLSTERS = {
     "hip.R": {"socket": "socket.hip.R", "forward": (0, 0, -1), "up": (0, 1, 0), "offset": (0.08, 0.0, -0.02)},
     "hip.L": {"socket": "socket.hip.L", "forward": (0, 0, -1), "up": (0, 1, 0), "offset": (-0.08, 0.0, -0.02)},
-    "back": {"socket": "socket.back", "forward": (-0.5, 0, 0.866), "up": (0, -1, 0), "offset": (0.0, -0.07, -0.08)},
+    "back": {"socket": "socket.back", "forward": (-0.5, 0, 0.866), "up": (0, -1, 0), "offset": (0.0, -0.08, -0.04)},
     "back.tool": {"socket": "socket.back", "forward": (0.5, 0, 0.866), "up": (0, -1, 0), "offset": (0.0, -0.07, -0.12)},
-    "belt": {"socket": "socket.belt", "forward": (0, 0, -1), "up": (0, -1, 0), "offset": (0.2, -0.12, 0.0)},
+    "belt": {"socket": "socket.belt", "forward": (0, 0, -1), "up": (0, -1, 0), "offset": (0.25, -0.08, 0.0)},
     "belt.back": {"socket": "socket.belt", "forward": (0, 1, 0), "up": (0, 0, 1), "offset": (0.0, -0.2, -0.02)},
     "worn.back": {"socket": "socket.back", "forward": (0, 1, 0), "up": (0, 0, 1), "offset": (0.0, 0.0, 0.0)},
     "none": None,
@@ -26,6 +27,13 @@ HOLSTERS = {
 
 def meta(it, *, label, sub, refs, profile, holster, fx=None, two_handed=False, replaces=None,
          support_mode=None, notes=""):
+    # Support grips follow CHAR-BODY r002 grip profiles (the baked actions put hand.L there).
+    grip = it.sockets["grip"]["position"]
+    kind = "rifle" if (it.animation_set == "rifle" or (two_handed and profile in ("RIFLE", "LONG_RIFLE"))) else \
+        ("pistol" if it.animation_set == "pistol" else None)
+    if kind:
+        off = support_offset_item(kind)
+        it.socket("support", tuple(g + o for g, o in zip(grip, off)))
     it.meta.update(label=label, sub=sub, refs=list(refs), pose_profile=profile, holster=holster,
                    fx=dict(fx or {}), two_handed=two_handed, replaces=replaces,
                    support_mode=support_mode or ("foregrip" if two_handed else "free"), notes=notes)

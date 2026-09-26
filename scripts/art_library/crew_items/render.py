@@ -40,7 +40,7 @@ def new_scene(name, width, height, samples, transparent=False):
     previous sheet's objects and hide the export collection."""
     sc = bpy.context.scene
     for coll in list(sc.collection.children):
-        if coll.name == "EXPORT":
+        if coll.name in ("EXPORT", "TEMPLATE"):
             bpy.context.view_layer.layer_collection.children[coll.name].exclude = True
             continue
         for ob in list(coll.objects):
