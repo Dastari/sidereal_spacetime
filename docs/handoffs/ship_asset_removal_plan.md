@@ -1,7 +1,7 @@
 # Ship asset removal and player-ship wipe: plan and implementation
 
 **Status:** implemented and rehearsed on an isolated server. Nothing has been run against the live database or deployed.
-**Date:** 2026-09-25. **Agent Mail:** FuchsiaPanther.
+**Date:** 2026-09-25, updated 2026-09-26. **Agent Mail:** FuchsiaPanther.
 **Runbook:** [ship_wipe_runbook.md](ship_wipe_runbook.md).
 
 ## Owner request
@@ -80,15 +80,36 @@ All three reducers check the existing deployment-operator identity: the CLI iden
 
 | Reducer | Effect |
 |---|---|
-| `operator_set_starter_ships(operationId, enabled)` | Writes the private `ship_policy` row. When the row is absent, starter Wayfarers are still created, so **publishing the module changes nothing by itself**. When disabled, `enter_lab` creates a shipless character with only its personal kit. |
-| `operator_wipe_player_ships(operationId, dryRun, expectedShips, expectedInstances, expectedCharacters)` | **Dry-run** records counts, ships, instances, characters, per-table delete counts and map counts, and changes nothing else. **Apply** requires starters disabled and the expected counts to equal the current counts. It runs as one transaction. |
-| `operator_assign_prefab_ship(operationId, characterId, prefabId, expectedCharacterShipId, allowLegacy)` | Boards an awaiting character on a registered prefab. It then verifies that the ship owner, active `game_ship_access`, construction location and world admission all belong to that character and account. |
+| `operator_set_starter_prefab(operationId, prefabId, expectedCatalogRevision, allowLegacy)` | Writes the private `ship_policy` row. **An empty prefab ID is the default, and also applies when the row is absent.** In that case new characters never get a ship: `enter_lab` creates the character with its 7-item personal kit, and it waits for an operator assignment. A registered non-legacy prefab may be configured as the starter. The legacy Wayfarer can be configured only with `allowLegacy`; the isolated legacy regression smoke does this on its own `-smoke` database, and it is never done on live. |
+| `operator_wipe_player_ships(operationId, dryRun, expectedShips, expectedInstances, expectedCharacters)` | **Dry-run** records counts, ships, instances, characters, per-table delete counts, a per-item `archivedInventory` manifest (with the reason each item is ship-held: `ship-cargo-container`, `ground-drop-on-ship-deck`, `ship-deck-storage` or `ship-deck-container`) and map counts. It changes nothing else. **Apply** refuses while a legacy starter is configured, and requires the expected counts to equal the current counts. It runs as one transaction. |
+| `operator_assign_prefab_ship(operationId, characterId, prefabId, expectedCatalogRevision, spawnPoseJson, expectedCharacterShipId, allowLegacy)` | **The only way back aboard.** It accepts only a character in the awaiting-ship state whose account owns no ship. It refuses an unknown prefab, a catalog-revision mismatch, or a legacy prefab without `allowLegacy`. `spawnPoseJson` is `""` or `{"kind":"berth"}` for a canonical free berth, or `{"kind":"at","systemId","x","y","heading"}` for an exact world pose in metres and radians. After the spawn, in the same transaction, it re-verifies ship ownership, active `game_ship_access`, the construction location on the returned deck, world admission, the pose and unchanged map row counts. |
 
-**Prefab spawner interface for SHIPS-PREFABS.** It lives in `ship-assign.ts`: `registerPrefabShipSpawner({prefabId, legacy, description, blueprintSha256, spawn(ctx, actor) => {shipId}})`.
-- **Registered today:** only `legacy-wayfarer-r002`, a legacy stand-in that is refused unless `allowLegacy` is set. It proves the path in tests and rehearsal.
-- **What the owner's small ship needs:** SHIPS-PREFABS must register it in this live-compatible authority.
-- **Known blocker on live:** `game_ship_access` qualification (`sim/game-ship-access.ts:79-81`) and flight qualification only accept Wayfarer template hashes. A non-Wayfarer prefab needs a generic qualification path first.
-- The interface was proposed on Agent Mail thread `ships-removal`.
+**Prefab spawner interface for SHIPS-PREFABS** (agreed on Agent Mail thread `ships-prefabs`, IndigoHarbor). It lives in `packages/world/src/ship-assign.ts`:
+
+```ts
+type PrefabSpawnPose = { kind: "berth" } | { kind: "at"; systemId: string; x: number; y: number; heading: number };
+registerPrefabShipSpawner({
+  prefabId,          // e.g. "fed.s.wren"
+  catalogRevision,   // ship-components catalog revision the prefab compiled against
+  blueprintSha256,   // published construction blueprint hash
+  legacy: false,
+  description,
+  spawn(ctx, actor, { pose, name }) => { shipId, deckId },
+});
+```
+
+- **What the spawner must do:** board the **existing** awaiting character, all in one transaction. It updates `character.shipId/localX/localY` and inserts `construction_location`, `input`, `world_admission` and an active `game_ship_access` row.
+- **What the spawner must never do:** insert a character, a personal kit or a starter receipt, or write map tables.
+- **SHIPS-PREFABS' hook:** their `createPrefabShipAuthority(ctx, { owner, characterId, prefabId, name, pose })` is intended to be registered through this interface.
+- **Registered today:** only `legacy-wayfarer-r002`. It is refused unless `allowLegacy` is set; it exists for unit tests and the legacy regression smoke.
+
+**Integration still needed before the owner's ship can be assigned on live.** SHIPS-PREFABS stacks on `ifcs-update`, which is `cd09510c` plus IFCS phases 4–6 plus R16. The live authority is `cd09510c` plus the solar, Studio and Genesis overlays, and this work stacks on it. One of these is required:
+- **(a) A reconciled release:** live overlays + IFCS 4–6 + R16 + prefab work + this removal work. It must be rehearsed as an additive `--delete-data=never` upgrade of the live module, with `npm run smoke` and `npm run smoke:ship-wipe`.
+- **(b) A backport:** port the prefab compile/spawn hook onto `release/live-authority-20260921`.
+
+The hook also needs:
+- a generic path that qualifies non-Wayfarer game ship access and flight (`sim/game-ship-access.ts:79-81` and the flight resolver accept only Wayfarer hashes on live);
+- client rendering of the prefab through the native construction scene.
 
 ## Client: zero ships and retired assets
 
@@ -116,50 +137,61 @@ This is branch `feat/ship-removal-client`.
 
 ## Test evidence (isolated server 127.0.0.1:3391; never live)
 
-**Unit tests** (`packages/world/src/ship-wipe.test.ts`, `ship-wipe-tooling.test.ts`): 7 tests pass. They use the real starter writer to install two Wayfarers, then add ship cargo, a deck crate with a hotbar item, ground binding and weapon energy, plus a Studio test instance. They cover:
-- operator-only access;
-- policy idempotency and conflicting operation IDs;
-- shipless onboarding;
-- a dry-run that leaves state unchanged;
-- apply refusals (starters still enabled, count mismatch);
-- a full apply with all invariants;
-- replay no-op;
-- assignment refusals and success without duplicating the kit;
-- Python/TypeScript table-list parity.
+**Unit tests** (`packages/world/src/ship-wipe.test.ts`, `ship-wipe-tooling.test.ts`): 10 pass.
+- **Fixtures:** the real starter writer installs two Wayfarers. The tests then add ship cargo, a deck crate with a hotbar item, a ground binding, weapon energy and a Studio test instance. A minimal non-legacy test prefab exercises the spawner contract.
+- **Starter policy:** defaults to none; only the operator may change it; conflicting operation IDs are refused; legacy requires opt-in.
+- **Onboarding:** new players are shipless by default. A configured non-legacy starter boards them through the spawner.
+- **Dry-run:** changes nothing and emits a per-item manifest with reasons.
+- **Apply:**
+  - refuses while a legacy starter is configured, and refuses count mismatches;
+  - a full apply keeps every invariant, including archive before-images and tagged identity/bigint JSON;
+  - replay is a no-op.
+- **Assignment:**
+  - operator-only;
+  - refuses an unknown prefab, a stale catalog revision, the legacy Wayfarer and a malformed pose;
+  - succeeds at an exact pose without duplicating the kit;
+  - a later assignment to a character that already has a ship is refused.
+- **Legacy opt-in:** the legacy stand-in is reachable only with explicit opt-in.
+- **Pose rollback:** a spawner that ignores the requested pose is rolled back.
+- **Tooling parity:** the Python and TypeScript table lists match.
 
-**Standard `npm run smoke` on the candidate:** passes. One earlier run failed a timing-based corridor-walk assertion unrelated to this change; the unmodified baseline passed, and the candidate rerun passed.
+`packages/world` + `packages/net`: 379 tests pass. Two suites fail at collection (`construction-native-pressure`, `construction-traversal`) because this worktree lacks the live native `assets/`. This failure is pre-existing and unrelated.
 
-**Rehearsal `npm run smoke:ship-wipe -- --label wipe-r002`:**
-1. Seeds a new database with the full standard smoke under the unmodified live baseline module.
-2. Upgrades it in place with `--delete-data=never`.
-3. Adds a cargo item and a ground drop.
-4. Runs the operator tooling exactly as the runbook does.
+**Standard `npm run smoke`** (the legacy regression suite; it opts its own isolated database into the legacy starter): **passes on the final commit** on a quiet host.
+- Earlier runs failed only on timing-based walking assertions at host load 26–29.
+- The unmodified baseline also passed.
+- Log: `/root/sidereal-progress/ships-removal/smoke-final-postreboot.log`.
 
-| Result | Value |
+**Live-shaped rehearsal `npm run smoke:ship-wipe -- --label wipe-r005`** (`--stage seed`, then `--stage wipe`):
+1. The unmodified live baseline module seeds 3 accounts with starter Wayfarers. One account stores its pistol in ship cargo and drops its scanner on the deck.
+2. The database is upgraded in place with `--delete-data=never`.
+3. The operator tooling runs exactly as the runbook describes.
+
+| Check | Result |
 |---|---|
-| Dry-run counts | 12 ships, 12 instances, 12 characters; 82 personal items and 36 personal containers preserved |
-| Archived by apply | 691 rows (2 ship-held items, 49 containers, 1 ground binding) |
-| After apply | 0 ships, 0 instances, 12 characters, all in awaiting-ship state |
-| Map fingerprint | unchanged |
-| Wiped tables | all empty |
-| Backup file | mode 0600 |
-| Replays | no-op |
+| New account after the upgrade, before the wipe | Shipless: 0 ships, 7-item kit |
+| Dry-run | 3 ships, 3 instances, 4 characters; 26 personal items and 12 personal containers preserved |
+| Archived items | Exactly the pistol (`ship-cargo-container`) and the scanner (`ground-drop-on-ship-deck`); no personal item |
+| Apply | 180 rows archived |
+| After apply | 0 ships, 0 instances, 4 characters, all awaiting a ship |
+| Verify | `mapUnchanged`; wiped tables empty; backup file mode 0600; replay no-op |
+| Owner player view | Same character UUID, no ship, same 5 personal item UUIDs; re-entry and kit claim succeed; movement is inert |
+| Archived pistol and scanner | Present in `ship_wipe_archive` |
+| Scheduled world step | Timer retained, 0 `step_world` errors. `stepSharedWorld` writes no clock row for idle samples, so `last_simulation_tick` does not advance with zero ships; this is expected and not a failure. |
+| Assignment | `fed.s.wren` refused as not registered in this authority; legacy Wayfarer refused as assignment and as starter; the character stays awaiting a ship |
 
-The rehearsal also checked, through player views:
-- the former owner's view shows no ship and the same 5 personal UUIDs;
-- re-entry and kit claim do not fail;
-- movement intent is inert;
-- a new account onboards shipless with its 7-item kit;
-- the shared-world tick keeps advancing;
-- non-operator calls are rejected;
-- the legacy stand-in assignment boards the character with an owned ship, access and location, and does not duplicate the kit.
+Evidence: `ship-wipe-rehearsal-r005.json` and `rehearsal-r005-{seed,wipe}.log` in `/root/sidereal-progress/ships-removal/`.
 
-Evidence JSON and log: `/root/sidereal-progress/ships-removal/`.
-
-**Browser check** (headless Chromium against the local dev client on the rehearsal database): a wiped former owner and a new shipless character both load with zero console errors and zero requests for retired assets. Screenshots are in the progress folder.
+**Browser check** (headless Chromium against a local dev client on the rehearsal database):
+- **Before**, live client: the owner is aboard the legacy Wayfarer (`r003-before-wipe-owner-legacy-wayfarer.png`, same seed procedure).
+- **After**, candidate client:
+  - "No ship assigned"; the personal inventory is intact at 8.1 kg without the archived pistol and scanner (`r005-after-wipe-owner-*.png`);
+  - zero console errors;
+  - zero requests for retired ship assets.
 
 ## Risks and gaps
 
+- **New players wait for a ship.** By default, after this module is published, new accounts get no ship until an operator assigns one. The legacy Wayfarer is never created again.
 - **No real small prefab can be assigned on live yet.** It depends on SHIPS-PREFABS registering a spawner that the live authority can qualify. Until then the owner's account stays shipless after the wipe; only the legacy stand-in works.
 - **Identity linking needs a ship:** `request_identity_link` and `accept_identity_link` require exactly one ship. Awaiting-ship characters cannot migrate from a development identity to OIDC until they have a ship. Accounts that are already linked are unaffected.
 - **Passengers aboard at wipe time** lose their visit rows along with every ship. Their characters enter the awaiting-ship state like everyone else.
