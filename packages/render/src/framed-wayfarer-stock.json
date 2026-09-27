@@ -1,0 +1,981 @@
+{
+  "schema": "sidereal.framed-stock-wayfarer.v1",
+  "revision": 1,
+  "sourcePins": {
+    "stockManifestSha256": "6cd837094b61bb6d1e69aefe4629cd9fa7e0f51db02fee80d203a824af756589",
+    "stockTemplateFileSha256": "1f723510ac156089903fbd0d711a2f6adff1da35433e2ac02afde94fa4a00deb",
+    "stockHullManifestFileSha256": "2e275052217da4b20a92ab40a9a9f098dc011557f7611b6b0c6f40f71ea22695",
+    "stockLegacyShellFileSha256": "aa27de4fd09db67428659af8e16479217dd7bebd1f764c13744f62b2d621a6db",
+    "qualifiedExteriorFileSha256": "4e30f7d200312b961655219b623eaca60bf78c827170e8a4dea26cce14e33749",
+    "qualifiedExteriorBlueprintSha256": "02bee325b9eca36084352ed4f662f9f90cdc2a889494d7d30f8a4fc54bfd57f1",
+    "qualifiedCatalogFileSha256": "9fa3db94ed61a84f3e9d52b0d404d1433931747bbd268fceefe6a4e2a6ead237"
+  },
+  "removedPlacementIds": [
+    "superstructure--3--5",
+    "superstructure--2--5",
+    "superstructure--1--5",
+    "superstructure-0--5",
+    "superstructure-1--5",
+    "superstructure-2--5",
+    "superstructure-3--5"
+  ],
+  "assets": [
+    {
+      "id": "part-0211e6d7960f233accb7",
+      "label": "Frontier side armor red-service \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-0fe602115d20ec950357/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-0211e6d7960f233accb7/model.glb",
+        "sha256": "9fc96538375bfdec44b3ac832d9100b1cdfcbd2f751654fa30ff540bddb1440a",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-0211e6d7960f233accb7--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-08dac7402c764c4d89d7",
+      "label": "Frontier side armor utility \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8424999713897705, 1.0, 3.0]
+      },
+      "lights": [
+        {
+          "position": [0.8174999999999999, -0.1, 2.12],
+          "direction": [-0.45, 0, -1],
+          "color": [0.06, 0.7, 1],
+          "intensity": 0.65,
+          "range": 1.5,
+          "angle": 1.35
+        }
+      ],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-e21a69be0c5b6a98e812/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-08dac7402c764c4d89d7/model.glb",
+        "sha256": "c84f5950fa0e31e1f966e043706993f1e2b2edaaf6149aa5f725f93eb472b995",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8424999713897705, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-08dac7402c764c4d89d7--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-151314086c02e30e06f4",
+      "label": "Frontier side armor plain-service \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-dd83177cdf0e1d968cb7/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-151314086c02e30e06f4/model.glb",
+        "sha256": "3e1fa2b7d8b302e602844c9ae0ae38a5c7c2b6090d86b05fe70bbb5852de4afd",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-151314086c02e30e06f4--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-357cf42235c1a190e1d6",
+      "label": "Frontier side armor vent \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [
+        {
+          "position": [0.8174999999999999, -0.1, 2.12],
+          "direction": [-0.45, 0, -1],
+          "color": [0.06, 0.7, 1],
+          "intensity": 0.65,
+          "range": 1.5,
+          "angle": 1.35
+        }
+      ],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-18280ba6cc037eb433dc/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-357cf42235c1a190e1d6/model.glb",
+        "sha256": "3b25ca7fcde2fd054076d0b84fc463701230ef2f68cfbc638a1d44173a7d74a9",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-357cf42235c1a190e1d6--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-393498d8c8af6149ef28",
+      "label": "drives retro  1",
+      "category": "engine",
+      "nodes": ["GEO-part-393498d8c8af6149ef28--drives-retro--1"],
+      "bounds": {
+        "min": [-0.4375, -0.5, 0],
+        "max": [0.5, 0.5625, 0.9375]
+      }
+    },
+    {
+      "id": "part-437732483fa4d7acbcbc",
+      "label": "Outer armor outer-diagonal-cheek / r006",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0, 0, 0],
+        "max": [4.024903774261475, 2.075246572494507, 1.5499999523162842]
+      },
+      "thumbnail": "/assets/assembly/hull/r006/part-437732483fa4d7acbcbc/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-437732483fa4d7acbcbc/clean.glb",
+        "sha256": "6992c7d5fb25376f3d12d881f66ab002108ed275a63661ca84025968ca3cadfe",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [0, 0, 0],
+          "max": [4.024903774261475, 2.075246572494507, 1.5499999523162842]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-4c25a5fd9da0bce537f5",
+      "label": "Pilot hull-straight / r004",
+      "category": "wall",
+      "nodes": [],
+      "bounds": {
+        "min": [0, -0.03700000420212746, 0],
+        "max": [2, 0.375, 1.125]
+      },
+      "thumbnail": "/assets/assembly/hull/r006/part-4c25a5fd9da0bce537f5/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-4c25a5fd9da0bce537f5/clean.glb",
+        "sha256": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [0, -0.03700000420212746, 0],
+          "max": [2, 0.375, 1.125]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-4d754a140cc642ded990",
+      "label": "drives main 3.6",
+      "category": "engine",
+      "nodes": ["GEO-part-4d754a140cc642ded990--drives-main-3.6"],
+      "bounds": {
+        "min": [-1.25, -2.4375, 0],
+        "max": [1.3125, 2.5, 2.6875]
+      }
+    },
+    {
+      "id": "part-540c83fc49ee792d9a4a",
+      "label": "Pilot hull-diagonal45 / r004",
+      "category": "wall",
+      "nodes": [],
+      "bounds": {
+        "min": [0, 0.0176776684820652, 0],
+        "max": [1.982322335243225, 2, 1.125]
+      },
+      "thumbnail": "/assets/assembly/hull/r006/part-540c83fc49ee792d9a4a/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-540c83fc49ee792d9a4a/clean.glb",
+        "sha256": "118f1f2406b0c699517be811d77e585f49d5b9c7d650013f873885dbe74329a5",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [0, 0.0176776684820652, 0],
+          "max": [1.982322335243225, 2, 1.125]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-5b7cee528aeb6959eb7c",
+      "label": "Frontier side armor vent \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [
+        {
+          "position": [0.8174999999999999, -0.1, 2.12],
+          "direction": [-0.45, 0, -1],
+          "color": [0.06, 0.7, 1],
+          "intensity": 0.65,
+          "range": 1.5,
+          "angle": 1.35
+        }
+      ],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-0ac1e39dec34655a366f/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-5b7cee528aeb6959eb7c/model.glb",
+        "sha256": "ae5e7d1e0100d5a1fcf7cc341a2d3504cbd0eb8f98548e9af2f73c3f8aee861f",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-5b7cee528aeb6959eb7c--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-5cd7ebc9a8d894fb2b3a",
+      "label": "Frontier side armor identity \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-1c0570cdd9d7bc9d67da/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-5cd7ebc9a8d894fb2b3a/model.glb",
+        "sha256": "a47626d013c69d22eeef2a6e55b87b4fc70ccecd0f01ff4ae7b84188e03f6627",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-5cd7ebc9a8d894fb2b3a--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-62c859bcc51b318b2c65",
+      "label": "Frontier side armor identity \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-91c8f3d728f25c968810/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-62c859bcc51b318b2c65/model.glb",
+        "sha256": "5f9dcc01666d63a4aa702b92f50a8abb4ccbe99e04b11cb87bb9496ac2c07258",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-62c859bcc51b318b2c65--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-63a0c40bbb71cfeba4dd",
+      "label": "Outer armor outer-bow-bumper / r006",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0, 0, 0],
+        "max": [4, 0.6324999928474426, 1.5499999523162842]
+      },
+      "thumbnail": "/assets/assembly/hull/r006/part-63a0c40bbb71cfeba4dd/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-63a0c40bbb71cfeba4dd/clean.glb",
+        "sha256": "3d0fd05cf021b3b5badf68e2e9f1011b5b621e64355390f61508a18a5e4cf61d",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [0, 0, 0],
+          "max": [4, 0.6324999928474426, 1.5499999523162842]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-64b068a5a6e987c1d518",
+      "label": "Frontier side armor red-service \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-505abaccb2279cad2d0f/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-64b068a5a6e987c1d518/model.glb",
+        "sha256": "00b58ac661647cf4be62502e7e92face84f918524eb43cabc6440fd6b3571037",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-64b068a5a6e987c1d518--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-679e9e22f0af30b070a3",
+      "label": "Frontier side armor vent \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [
+        {
+          "position": [0.8174999999999999, -0.1, 2.12],
+          "direction": [-0.45, 0, -1],
+          "color": [0.06, 0.7, 1],
+          "intensity": 0.65,
+          "range": 1.5,
+          "angle": 1.35
+        }
+      ],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-7b28f47930a6f7cbdf10/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-679e9e22f0af30b070a3/model.glb",
+        "sha256": "b2905c1756dfa3e13467be9e3d35b03017cb38d64d984ffb02e7efeb3322d559",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-679e9e22f0af30b070a3--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-77e9c39b3c50d6dd66f7",
+      "label": "Frontier side armor plain-service \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-66a37b7990899a620125/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-77e9c39b3c50d6dd66f7/model.glb",
+        "sha256": "83162077528937afc25358b0a88e6b58e7151a4981f3030df853b6438ac5fd77",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-77e9c39b3c50d6dd66f7--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-9ab3a7a3dbc68586c530",
+      "label": "Frontier side armor forward-vent \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [
+        {
+          "position": [0.8174999999999999, -0.1, 2.12],
+          "direction": [-0.45, 0, -1],
+          "color": [0.06, 0.7, 1],
+          "intensity": 0.65,
+          "range": 1.5,
+          "angle": 1.35
+        }
+      ],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-b351480b6386fb131dc0/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-9ab3a7a3dbc68586c530/model.glb",
+        "sha256": "c7bb6a556bb6994ace8c1bdbd41ccd5fd4eba7bf8d6fdf1058e70a470854eb40",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-9ab3a7a3dbc68586c530--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-9b292ad82d675d682b8b",
+      "label": "Frontier side armor vent \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [
+        {
+          "position": [0.8174999999999999, -0.1, 2.12],
+          "direction": [-0.45, 0, -1],
+          "color": [0.06, 0.7, 1],
+          "intensity": 0.65,
+          "range": 1.5,
+          "angle": 1.35
+        }
+      ],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-f307639bad50377eba7b/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-9b292ad82d675d682b8b/model.glb",
+        "sha256": "25be3e2df4292455bf63148e6934a73599c2ad6dbe09644118f9b3d63efefc79",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-9b292ad82d675d682b8b--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-a06cfaab58b430855803",
+      "label": "drives maneuver 1  6.5",
+      "category": "engine",
+      "nodes": ["GEO-part-a06cfaab58b430855803--drives-maneuver-1--6.5"],
+      "bounds": {
+        "min": [-0.5625, -0.5, 0],
+        "max": [0.625, 0.5, 0.9375]
+      }
+    },
+    {
+      "id": "part-a9dcbf6707ca20039a5c",
+      "label": "drives maneuver  1  6.5",
+      "category": "engine",
+      "nodes": ["GEO-part-a9dcbf6707ca20039a5c--drives-maneuver--1--6.5"],
+      "bounds": {
+        "min": [-0.5625, -0.5, 0],
+        "max": [0.5625, 0.5, 0.9375]
+      }
+    },
+    {
+      "id": "part-b9ca98146302dec24dd6",
+      "label": "Frontier side armor red-service \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-a754ceb1ebef9f1395d9/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-b9ca98146302dec24dd6/model.glb",
+        "sha256": "9c8a425853a723547b789b872f282ad03e9efafa6d1724ec0364a721b3ec3784",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-b9ca98146302dec24dd6--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-c9e43b70cbc1f9f77b1f",
+      "label": "Frontier side armor forward-vent \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [
+        {
+          "position": [0.8174999999999999, -0.1, 2.12],
+          "direction": [-0.45, 0, -1],
+          "color": [0.06, 0.7, 1],
+          "intensity": 0.65,
+          "range": 1.5,
+          "angle": 1.35
+        }
+      ],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-2143e7c0fcb3b5b3270f/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-c9e43b70cbc1f9f77b1f/model.glb",
+        "sha256": "41127699fdae0a4d31b29a7b9fc1845e3ddfa280f2e7f3f36d1ec857d236dc75",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-c9e43b70cbc1f9f77b1f--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-d16f3e3a2db2188e5ed6",
+      "label": "Frontier side armor red-service \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-3cb4b658b677f06829b6/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-d16f3e3a2db2188e5ed6/model.glb",
+        "sha256": "dec0304492e5f58b968d1c547183132e21f9ee9333b607e195bcf14d1517afe2",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-d16f3e3a2db2188e5ed6--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-d3e5e45b0f3f60b3fa0a",
+      "label": "Frontier side armor twin-vent \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-0558bcda4ab0cb8c9f70/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-d3e5e45b0f3f60b3fa0a/model.glb",
+        "sha256": "3b6ca75b0a2302fb6f2f4456988f9f19d9266602aff0e1e89da921f4427caad9",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-d3e5e45b0f3f60b3fa0a--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-e15ef10ca93701b58ccb",
+      "label": "drives main 0",
+      "category": "engine",
+      "nodes": ["GEO-part-e15ef10ca93701b58ccb--drives-main-0"],
+      "bounds": {
+        "min": [-0.875, -1.875, 0],
+        "max": [0.875, 1.9375, 2.0625]
+      }
+    },
+    {
+      "id": "part-e43ac94780eb7a1adc50",
+      "label": "Frontier side armor utility \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8424999713897705, 1.0, 3.0]
+      },
+      "lights": [
+        {
+          "position": [0.8174999999999999, -0.1, 2.12],
+          "direction": [-0.45, 0, -1],
+          "color": [0.06, 0.7, 1],
+          "intensity": 0.65,
+          "range": 1.5,
+          "angle": 1.35
+        }
+      ],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-8ddb637a40bd23dfd03a/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-e43ac94780eb7a1adc50/model.glb",
+        "sha256": "47ebe1c2493985afacc9e35b18b33ba32ef52a9bb72a0bbf3706d6cde30741cf",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8424999713897705, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-e43ac94780eb7a1adc50--",
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-e8b51ac6443c73becfcb",
+      "label": "drives main  3.6",
+      "category": "engine",
+      "nodes": ["GEO-part-e8b51ac6443c73becfcb--drives-main--3.6"],
+      "bounds": {
+        "min": [-1.25, -2.4375, 0],
+        "max": [1.3125, 2.5, 2.6875]
+      }
+    },
+    {
+      "id": "part-e965a5502d9fe4c25406",
+      "label": "Outer armor outer-shoulder-transition / r006",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0, 0, 0],
+        "max": [0.8140870332717896, 2, 2.9375]
+      },
+      "thumbnail": "/assets/assembly/hull/r006/part-e965a5502d9fe4c25406/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-e965a5502d9fe4c25406/clean.glb",
+        "sha256": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [0, 0, 0],
+          "max": [0.8140870332717896, 2, 2.9375]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-ecd751f76e602db806a3",
+      "label": "Pilot bow-transom / r004",
+      "category": "wall",
+      "nodes": [],
+      "bounds": {
+        "min": [0, -0.03199999779462814, 0],
+        "max": [2, 0.375, 1.125]
+      },
+      "thumbnail": "/assets/assembly/hull/r006/part-ecd751f76e602db806a3/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-ecd751f76e602db806a3/clean.glb",
+        "sha256": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [0, -0.03199999779462814, 0],
+          "max": [2, 0.375, 1.125]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "id": "part-f85394947090b7609d41",
+      "label": "Frontier side armor twin-vent \u00b7 2 \u00d7 3 m",
+      "category": "superstructure",
+      "nodes": [],
+      "bounds": {
+        "min": [0.0, -1.0, 0.0],
+        "max": [0.8075000047683716, 1.0, 3.0]
+      },
+      "lights": [],
+      "thumbnail": "/assets/assembly/side-hull/r003/part-3da4aef9b526b104b324/cutout.png",
+      "visual": {
+        "url": "/assets/assembly/native/side-hull-r005/part-f85394947090b7609d41/model.glb",
+        "sha256": "61b12a335a653486b1d12371ecd5b9159821294a128fda1e00021e56e613aef7",
+        "designId": "shipyard.hull.side-armor",
+        "revision": 5,
+        "bounds": {
+          "min": [0.0, -1.0, 0.0],
+          "max": [0.8075000047683716, 1.0, 3.0]
+        },
+        "nodePrefix": "GEO-part-f85394947090b7609d41--",
+        "damagePreview": "unsupported"
+      }
+    }
+  ],
+  "placements": [
+    {
+      "id": "drives-main--3.6",
+      "assetId": "part-e8b51ac6443c73becfcb",
+      "position": [-3.625, -11.5625, 0.125],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "drives-main-0",
+      "assetId": "part-e15ef10ca93701b58ccb",
+      "position": [0, -11, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "drives-main-3.6",
+      "assetId": "part-4d754a140cc642ded990",
+      "position": [3.625, -11.5625, 0.125],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "drives-maneuver--1--6.5",
+      "assetId": "part-a9dcbf6707ca20039a5c",
+      "position": [-6.375, -6.5, 0.25],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "drives-maneuver--1-6.5",
+      "assetId": "part-a9dcbf6707ca20039a5c",
+      "position": [-6.375, 6.5, 0.25],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "drives-maneuver-1--6.5",
+      "assetId": "part-a06cfaab58b430855803",
+      "position": [6.375, -6.5, 0.25],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "drives-maneuver-1-6.5",
+      "assetId": "part-a06cfaab58b430855803",
+      "position": [6.375, 6.5, 0.25],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "drives-retro--1",
+      "assetId": "part-393498d8c8af6149ef28",
+      "position": [-5.5, 8, 0.3125],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "drives-retro-1",
+      "assetId": "part-393498d8c8af6149ef28",
+      "position": [5.5, 8, 0.3125],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "pilot-r004-bow-transom-15",
+      "assetId": "part-ecd751f76e602db806a3",
+      "position": [1, 13, 0.1875],
+      "rotation": 3.141592653589793,
+      "flipped": false
+    },
+    {
+      "id": "pilot-r004-hull-diagonal45-11",
+      "assetId": "part-540c83fc49ee792d9a4a",
+      "position": [3, 11, 0.1875],
+      "rotation": 1.5707963267948966,
+      "flipped": false
+    },
+    {
+      "id": "pilot-r004-hull-diagonal45-13",
+      "assetId": "part-540c83fc49ee792d9a4a",
+      "position": [-1, 13, 0.1875],
+      "rotation": 3.141592653589793,
+      "flipped": false
+    },
+    {
+      "id": "pilot-r004-hull-straight-07",
+      "assetId": "part-4c25a5fd9da0bce537f5",
+      "position": [3, 9, 0.1875],
+      "rotation": 1.5707963267948966,
+      "flipped": false
+    },
+    {
+      "id": "pilot-r004-hull-straight-09",
+      "assetId": "part-4c25a5fd9da0bce537f5",
+      "position": [-3, 11, 0.1875],
+      "rotation": -1.5707963267948966,
+      "flipped": false
+    },
+    {
+      "id": "pilot-r005-outer-bow-bumper-center",
+      "assetId": "part-63a0c40bbb71cfeba4dd",
+      "position": [-2, 13, -0.25],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "pilot-r005-outer-diagonal-cheek-port",
+      "assetId": "part-437732483fa4d7acbcbc",
+      "position": [-1, 11, -0.25],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "pilot-r005-outer-diagonal-cheek-starboard",
+      "assetId": "part-437732483fa4d7acbcbc",
+      "position": [1, 11, -0.25],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "pilot-r005-outer-shoulder-transition-port",
+      "assetId": "part-e965a5502d9fe4c25406",
+      "position": [-5, 9, -0.25],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "pilot-r005-outer-shoulder-transition-starboard",
+      "assetId": "part-e965a5502d9fe4c25406",
+      "position": [5, 9, -0.25],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "superstructure--3--1",
+      "assetId": "part-08dac7402c764c4d89d7",
+      "position": [-5, -2, 0.1875],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "superstructure--3--2",
+      "assetId": "part-f85394947090b7609d41",
+      "position": [-5, -4, 0.1875],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "superstructure--3--3",
+      "assetId": "part-b9ca98146302dec24dd6",
+      "position": [-5, -6, 0.1875],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "superstructure--3--4",
+      "assetId": "part-357cf42235c1a190e1d6",
+      "position": [-5, -8, 0.1875],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "superstructure--3-0",
+      "assetId": "part-62c859bcc51b318b2c65",
+      "position": [-5, 0, 0.1875],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "superstructure--3-1",
+      "assetId": "part-0211e6d7960f233accb7",
+      "position": [-5, 2, 0.1875],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "superstructure--3-2",
+      "assetId": "part-5b7cee528aeb6959eb7c",
+      "position": [-5, 4, 0.1875],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "superstructure--3-3",
+      "assetId": "part-151314086c02e30e06f4",
+      "position": [-5, 6, 0.1875],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "superstructure--3-4",
+      "assetId": "part-9ab3a7a3dbc68586c530",
+      "position": [-5, 8, 0.1875],
+      "rotation": 0,
+      "flipped": true
+    },
+    {
+      "id": "superstructure-3--1",
+      "assetId": "part-e43ac94780eb7a1adc50",
+      "position": [5, -2, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "superstructure-3--2",
+      "assetId": "part-d3e5e45b0f3f60b3fa0a",
+      "position": [5, -4, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "superstructure-3--3",
+      "assetId": "part-d16f3e3a2db2188e5ed6",
+      "position": [5, -6, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "superstructure-3--4",
+      "assetId": "part-679e9e22f0af30b070a3",
+      "position": [5, -8, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "superstructure-3-0",
+      "assetId": "part-5cd7ebc9a8d894fb2b3a",
+      "position": [5, 0, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "superstructure-3-1",
+      "assetId": "part-64b068a5a6e987c1d518",
+      "position": [5, 2, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "superstructure-3-2",
+      "assetId": "part-9b292ad82d675d682b8b",
+      "position": [5, 4, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "superstructure-3-3",
+      "assetId": "part-77e9c39b3c50d6dd66f7",
+      "position": [5, 6, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    },
+    {
+      "id": "superstructure-3-4",
+      "assetId": "part-c9e43b70cbc1f9f77b1f",
+      "position": [5, 8, 0.1875],
+      "rotation": 0,
+      "flipped": false
+    }
+  ]
+}

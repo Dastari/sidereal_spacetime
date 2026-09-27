@@ -1,0 +1,36 @@
+{
+  "pilot_layout_revision": 3,
+  "scope": "R006 standing crew enclosure, rear partitions/doorway and forward-offset asteroid-contact capsule",
+  "crew_radius_m": 0.3,
+  "canopy_sample_height_m": 2.25,
+  "canopy_inset_m": 0.732,
+  "bridge_center_half_width_m": 1.968,
+  "nose_center_max_y_m": 11.968,
+  "door_clear_width_m": 1.25,
+  "hull_capsule": {
+    "radius": 5.4,
+    "halfLength": 7.125,
+    "longitudinalOffset": 1.125
+  },
+  "state_preservation": "Original station/item/container UUIDs, ship mass/inertia and COM retained; invalid prior crew positions repaired on enterLab",
+  "publication": "Managed non-destructive normal local database update completed; final isolated smoke and actual client boundary review passed",
+  "source_sha256": {
+    "packages/content/src/pilot-layout.ts": "45f6a4961c097ab0b43791a648b33b4a2fdab90337d29a23b834513dc4d995a5",
+    "packages/content/src/interior.ts": "275c2e9dd8b5e75aa9daa4be0a22898e2f3adcd8e4784eef8fe5bf0b8dba1b6d",
+    "packages/content/src/space.ts": "f2b1c049ad22a12ce6f072217f738a1d3358a6b68884e32b19938603e77d8204",
+    "packages/sim/src/collision.ts": "d34ffa5a1cfab225b7c828022c7b6813d1f559c05f17773744506c4b7fbd8322",
+    "packages/world/src/pilot-layout.ts": "8e24a62bdb5520a852e523f3f68184e95424ed9ca073939784cc24e38020dbd7",
+    "packages/sim/src/index.ts": "a6097fe21eb369fc0ee7f22c536db9fe1e0ee1007befe774757d56b828ea9d1b"
+  },
+  "live_validation": {
+    "diagonal_center_sum_m": 12.5405316,
+    "rear_jamb_stop_y_m": 9.300098,
+    "doorway": "Keyboard passage in both directions; original helm remains usable without camera change",
+    "scope": "Actual client diagonal/jamb/doorway/helm; exact straight/nose bounds separately covered by pure/isolated tests",
+    "screenshots": [
+      "output/playwright/native-r006-final-bow-deck.png",
+      "output/playwright/native-r006-final-roof-flight.png",
+      "output/playwright/native-r006-final-doorway.png"
+    ]
+  }
+}

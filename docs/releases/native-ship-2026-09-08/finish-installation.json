@@ -1,0 +1,625 @@
+{
+  "study": {
+    "study": "native-r006-polymer-04",
+    "base_revision": 6,
+    "mapping_sha256": "f9a2bee34286f350c960c1f2e9f95a3840e8fb3553478ba18813ed7809248576",
+    "authorization": "Owner requested continued geometry/plastic integration; local candidate only, not exact final art approval"
+  },
+  "changes": [
+    {
+      "assetId": "part-1d133c308abd8b172d95",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-1d133c308abd8b172d95/clean.glb",
+        "sha256": "f44e4e5312fd0f22efc3a4ad370c3f209526959bc0f8911f8ac2c2aabf6da840",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.625,
+            0,
+            0
+          ],
+          "max": [
+            5.375,
+            3.375,
+            0.2199999988079071
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-1d133c308abd8b172d95/clean.glb",
+        "sha256": "8fdcb8e39c201918e3518613333ce3bd09a59623099760ed70efef0bdee6a31f",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.625,
+            0,
+            0
+          ],
+          "max": [
+            5.375,
+            3.375,
+            0.2199999988079071
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-437732483fa4d7acbcbc",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-437732483fa4d7acbcbc/clean.glb",
+        "sha256": "0e5289689a0a6736caf647c28e89101faab8d9a69eee3757777ec2819ab9f6a9",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            4.024903774261475,
+            2.075246572494507,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-437732483fa4d7acbcbc/clean.glb",
+        "sha256": "6992c7d5fb25376f3d12d881f66ab002108ed275a63661ca84025968ca3cadfe",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            4.024903774261475,
+            2.075246572494507,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-48cf8b9cf29d0b226ec4",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-48cf8b9cf29d0b226ec4/clean.glb",
+        "sha256": "3ad4af2a4707343aa2d551ebca004ab7497d23806c1b72611dea355ced6e00db",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.06499999761581421,
+            0.09198706597089767,
+            -0.0700000450015068
+          ],
+          "max": [
+            2.0061984062194824,
+            0.8948594927787781,
+            1.3825000524520874
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-48cf8b9cf29d0b226ec4/clean.glb",
+        "sha256": "65195aefcb5bf72da62839db8fec6123188af9f5ac17024cbe7d6d2cf8959b79",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.06499999761581421,
+            0.09198706597089767,
+            -0.0700000450015068
+          ],
+          "max": [
+            2.0061984062194824,
+            0.8948594927787781,
+            1.3825000524520874
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-4a1d28344c5ee632b249",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-4a1d28344c5ee632b249/clean.glb",
+        "sha256": "b0769b80a779d5a355794e6c4e4350b63049527cd3a927b28b0c66427e01bd13",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.0061983224004507065,
+            0.09198706597089767,
+            -0.07000003755092621
+          ],
+          "max": [
+            2.0061984062194824,
+            0.8948594927787781,
+            1.382500171661377
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-4a1d28344c5ee632b249/clean.glb",
+        "sha256": "d6859439499041ad474afd3d07b4fa1a67512eb7d90fb99720edfbfe5301a5f4",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.0061983224004507065,
+            0.09198706597089767,
+            -0.07000003755092621
+          ],
+          "max": [
+            2.0061984062194824,
+            0.8948594927787781,
+            1.382500171661377
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-4c25a5fd9da0bce537f5",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-4c25a5fd9da0bce537f5/clean.glb",
+        "sha256": "1896fa473b882e2adf628d333dc7c1022f913a2e430adc5abc259bfd2cb122c2",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.03700000420212746,
+            0
+          ],
+          "max": [
+            2,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-4c25a5fd9da0bce537f5/clean.glb",
+        "sha256": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.03700000420212746,
+            0
+          ],
+          "max": [
+            2,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-540c83fc49ee792d9a4a",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-540c83fc49ee792d9a4a/clean.glb",
+        "sha256": "583228f01e7cfe00b40a892e7a003f09e5d541c27d7db9cf5188d23cf9db279f",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            0.0176776684820652,
+            0
+          ],
+          "max": [
+            1.982322335243225,
+            2,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-540c83fc49ee792d9a4a/clean.glb",
+        "sha256": "118f1f2406b0c699517be811d77e585f49d5b9c7d650013f873885dbe74329a5",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            0.0176776684820652,
+            0
+          ],
+          "max": [
+            1.982322335243225,
+            2,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-624989ddf1192dceee75",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-624989ddf1192dceee75/clean.glb",
+        "sha256": "429ffd9b5bad8a244422e672275859478ab848f44571a489bce05f7716bf0fd9",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.0061983224004507065,
+            0.09198712557554245,
+            -0.0700000450015068
+          ],
+          "max": [
+            2.065000057220459,
+            0.8948594331741333,
+            1.3825000524520874
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-624989ddf1192dceee75/clean.glb",
+        "sha256": "9dcf37d5a749a152be66657b100a8d83c59856b4c3b4dc967387bf000723e792",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.0061983224004507065,
+            0.09198712557554245,
+            -0.0700000450015068
+          ],
+          "max": [
+            2.065000057220459,
+            0.8948594331741333,
+            1.3825000524520874
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-63a0c40bbb71cfeba4dd",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-63a0c40bbb71cfeba4dd/clean.glb",
+        "sha256": "6914e74b75da996d3c3cebf4f5c4c1c802903a1a35b83ed189253cd6e8d2f8ce",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            4,
+            0.6324999928474426,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-63a0c40bbb71cfeba4dd/clean.glb",
+        "sha256": "3d0fd05cf021b3b5badf68e2e9f1011b5b621e64355390f61508a18a5e4cf61d",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            4,
+            0.6324999928474426,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-70c422bca2d395c35ecb",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-70c422bca2d395c35ecb/clean.glb",
+        "sha256": "1bea02f353c4bec1e29101bd7426561b30514cdb08436a8c50e5cd1467480583",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.0820000022649765,
+            0
+          ],
+          "max": [
+            2,
+            0.375,
+            2.4375
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-70c422bca2d395c35ecb/clean.glb",
+        "sha256": "825a836cb96f74363c83c1d5be4efc1a11df0ef71bbdafff8b2abb222cebdad6",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.0820000022649765,
+            0
+          ],
+          "max": [
+            2,
+            0.375,
+            2.4375
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-9f79f3a40a72f9b7ad4a",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-9f79f3a40a72f9b7ad4a/clean.glb",
+        "sha256": "3f6d79ccf378f6c435fea9cd5a76e99a88d42768bf91142fceb437bf0f2d5a34",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            2.115000009536743,
+            2.115000009536743,
+            2.7200000286102295
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+        "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            2.115000009536743,
+            2.115000009536743,
+            2.7200000286102295
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-b3a1decd8a0336ac2030",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-b3a1decd8a0336ac2030/clean.glb",
+        "sha256": "4da7f3d5b03986e4d24947f03651bc444473c18689f913416536cca9caafb4a8",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            2.59375
+          ],
+          "max": [
+            0.375,
+            0.5,
+            3.3125
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-b3a1decd8a0336ac2030/clean.glb",
+        "sha256": "227c3e116f59bdc4bf48ccb456aa8d756067dcfb6223ad3b8adf9743d6cdef55",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            2.59375
+          ],
+          "max": [
+            0.375,
+            0.5,
+            3.3125
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-b70713e9836547941e3f",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-b70713e9836547941e3f/clean.glb",
+        "sha256": "cf2dacb384509d377ab87575c10beeb20e3ae0e47557c26c550448a59790cdc0",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.4204133152961731,
+            0.1051405593752861,
+            -0.07000010460615158
+          ],
+          "max": [
+            1.8948595523834229,
+            2.4204132556915283,
+            1.3825000524520874
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-b70713e9836547941e3f/clean.glb",
+        "sha256": "9495f6771dbeafaa24530562acd95a744414674853d7a13e45d2866f59e42526",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.4204133152961731,
+            0.1051405593752861,
+            -0.07000010460615158
+          ],
+          "max": [
+            1.8948595523834229,
+            2.4204132556915283,
+            1.3825000524520874
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-e7dddd4628bd6be8efb7",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-e7dddd4628bd6be8efb7/clean.glb",
+        "sha256": "7a2e29d2fdd4956180afe7057d42899edd0093ef2410890530a29fcc49b12dac",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.00800000037997961,
+            0
+          ],
+          "max": [
+            1.625,
+            0.382999986410141,
+            2.4375
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-e7dddd4628bd6be8efb7/clean.glb",
+        "sha256": "53d58e142047665409aadeb232a83f0c5a1901da705234f2ffc8bda4f211e5c9",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.00800000037997961,
+            0
+          ],
+          "max": [
+            1.625,
+            0.382999986410141,
+            2.4375
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-e965a5502d9fe4c25406",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-e965a5502d9fe4c25406/clean.glb",
+        "sha256": "a08d4f15fe81f41a4871fe7b3a2dc32de2ee87d22e4baa8411af7c5c5ae7b19c",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            0.8140870332717896,
+            2,
+            2.9375
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-e965a5502d9fe4c25406/clean.glb",
+        "sha256": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            0.8140870332717896,
+            2,
+            2.9375
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    },
+    {
+      "assetId": "part-ecd751f76e602db806a3",
+      "before": {
+        "url": "/assets/assembly/hull/r006/part-ecd751f76e602db806a3/clean.glb",
+        "sha256": "c195fd3c4ec230647a9218cc7279766cecca704bdfb728e6ecc857447071ad9f",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.03199999779462814,
+            0
+          ],
+          "max": [
+            2,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "after": {
+        "url": "/assets/assembly/hull/finish-r004/part-ecd751f76e602db806a3/clean.glb",
+        "sha256": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.03199999779462814,
+            0
+          ],
+          "max": [
+            2,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported"
+      }
+    }
+  ]
+}

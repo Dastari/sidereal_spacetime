@@ -4,22 +4,22 @@ vi.mock("spacetimedb/server", () => ({ SenderError: class extends Error {} }));
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
-import { planConstructionInstance } from "../../sim/src/construction-instance";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 import {
   qualifiedWayfarerWalkingBindings,
   qualifiedWayfarerInstanceObstacles,
-} from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/wayfarer-walking-bindings";
 import {
   compileDeckCollision,
   resolveDeckCollision,
   canOccupyDeck,
-} from "../../sim/src/construction-collision";
+} from "@sidereal/sim/construction-collision";
 import {
   qualifyPilotGeometry,
   type PilotGeometry,
-} from "../../sim/src/construction-pilot";
+} from "@sidereal/sim/construction-pilot";
 import {
   enterConstructionPilot,
   recoverConstructionPilot,

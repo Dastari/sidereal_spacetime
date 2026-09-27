@@ -1,0 +1,110 @@
+{
+  "schema": "sidereal.wayfarer-rebuild-visuals.v1",
+  "revision": "r002",
+  "artApproval": "unapproved",
+  "physicalQualification": "unqualified",
+  "sourcePins": {
+    "assets/art-library/designs/shipyard.structure.wayfarer-transition/revisions/r002/internal-span-0.125-q4.glb": "9ae55fc62ec463eb434ddb7567c625010a96bb469a7a7416c19908ad63d2b390",
+    "assets/art-library/designs/shipyard.structure.wayfarer-transition/revisions/r003/wayfarer-transition.glb": "cf008a583532494febff62ee58ce5cdb2e065d5095a08748efebca54d4ab8922",
+    "assets/art-library/designs/shipyard.structure.wayfarer-transition/REPORT.md": "0fb672326e78b8bf3d6d1d868cbf02b315c58e512cbf19f1382790a926fec590",
+    "assets/art-library/designs/shipyard.structure.wayfarer-transition/delivery-parts.json": "ee126f7312943e84b4205f3e6828799ed5a38d19d25b09901eecd160b0e1bfb7",
+    "assets/art-library/designs/shipyard.structure.wayfarer-transition/revisions/r002/spacer-validation.json": "5e523c04468727c98c4f1b3b7fe7efe0be2e1998a76beb12a557530a18c06143",
+    "assets/art-library/designs/shipyard.structure.wayfarer-transition/revisions/r003/validation.json": "b2ae3c391ad0321299b72276841531627d9b2bc03ac209f84d3f389690b96321"
+  },
+  "parts": [
+    {
+      "key": "wayfarer-rebuild-r001/internal-span-0.125-q4",
+      "family": "wayfarer-rebuild-r001",
+      "profileId": "internal-span-0.125",
+      "kind": "wall",
+      "url": "/assets/construction/wayfarer-rebuild-r002/internal-span-0.125-q4.glb",
+      "sha256": "9ae55fc62ec463eb434ddb7567c625010a96bb469a7a7416c19908ad63d2b390",
+      "sourcePath": "assets/art-library/designs/shipyard.structure.wayfarer-transition/revisions/r002/internal-span-0.125-q4.glb",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4,
+      "nodePrefix": null,
+      "placement": {
+        "positionM": [
+          0,
+          0,
+          0.1875
+        ],
+        "yawRadians": 0
+      },
+      "geometryNote": "Local centered span, Z0..3"
+    },
+    {
+      "key": "wayfarer-rebuild-r001/cockpit-roof-step",
+      "family": "wayfarer-rebuild-r001",
+      "profileId": "cockpit-roof-step",
+      "kind": "roof",
+      "url": "/assets/construction/wayfarer-rebuild-r002/wayfarer-transition.glb",
+      "sha256": "cf008a583532494febff62ee58ce5cdb2e065d5095a08748efebca54d4ab8922",
+      "sourcePath": "assets/art-library/designs/shipyard.structure.wayfarer-transition/revisions/r003/wayfarer-transition.glb",
+      "footprintM": [
+        [
+          -3.125,
+          6.875
+        ],
+        [
+          3.125,
+          6.875
+        ],
+        [
+          3.125,
+          8.75
+        ],
+        [
+          3,
+          8.75
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          -3,
+          7
+        ],
+        [
+          -3,
+          8.75
+        ],
+        [
+          -3.125,
+          8.75
+        ]
+      ],
+      "heightM": 0.5625,
+      "quarterHeight": null,
+      "nodePrefix": null,
+      "placement": {
+        "positionM": [
+          0,
+          0,
+          0
+        ],
+        "yawRadians": 0
+      },
+      "geometryNote": "Ship-local XY and Z2.625..3.1875 baked into GLB node transforms. Install at origin; roof visibility. Not a generic quarter-height wall."
+    }
+  ]
+}

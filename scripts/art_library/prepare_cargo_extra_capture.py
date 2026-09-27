@@ -1,0 +1,30 @@
+"""Isolated actual Shipyard capture for appearance sets and scene fixtures."""
+from pathlib import Path
+import json,sys,hashlib,re
+ROOT=Path(__file__).resolve().parents[2];mode=sys.argv[1];MAIN=ROOT/'.runtime/art-library/cargo'/('r003' if mode=='finishes-r003' else 'r002');BASE=MAIN/'finishes' if mode.startswith('finishes') else ROOT/'.runtime/art-library/cargo'/('loose-extension' if mode=='loose' else 'fluid-extension')/'r001';PW=ROOT/'output/playwright'/('cargo-'+mode);PW.mkdir(exist_ok=True)
+rows=json.loads((BASE/'jobs.json').read_text())
+if mode in ['extension','loose']:rows+=json.loads((BASE/'variant-jobs.json').read_text())
+if mode.startswith('finishes'):rows.append({'slug':'common-scale','design_id':'cargo.review.common-scale','asset_id':'part-eeeecccc00001111','output':str(MAIN),'glb_name':'common-scale.glb','capture_prefix':'runtime-common-scale','specification':{'dimensions_m':[10,4,1.92],'revision':int(MAIN.name[1:])},'bounds_override':{'min':[-8,-2,-.15],'max':[2,2,1.92]},'camera_override':{'height':1.3,'radius':22,'target':[-2.5,.7,0]}})
+assets=[];parts=[];paths={};capture_rows=[]
+for i,j in enumerate(rows):
+ out=Path(j['output']);slug=j.get('slug',j.get('id'));tag=re.sub('[^a-z0-9-]','-',slug);spec=j.get('specification') or json.loads((out/'specification.json').read_text());v=json.loads((out/'validation-blender.json').read_text()) if (out/'validation-blender.json').exists() else {};bounds=j.get('bounds_override') or v['bounds_m'];glb=out/j.get('glb_name','glb.glb');sha=hashlib.sha256(glb.read_bytes()).hexdigest();url='/assets/assembly/cargo-extra/'+tag+'.glb';paths[url]=str(glb)
+ assets.append({'id':j['asset_id'],'label':tag+' | unsigned','category':'cargo','nodes':[],'bounds':bounds,'lights':[],'visual':{'url':url,'sha256':sha,'designId':j['design_id'],'revision':spec['revision'],'bounds':bounds,'damagePreview':'unsupported'}})
+ parts.append({'id':'cargo-review-'+tag,'assetId':j['asset_id'],'position':[0,0,0],'rotation':0,'flipped':False,'removedCells':[]})
+ w,d,h=spec['dimensions_m'];params={'slug':tag,'height':h,'radius':max(w,d,h)*2.8+.9,'target':[0,h*.49,0]};params.update(j.get('camera_override',{}));prefix=j.get('capture_prefix','runtime');close=out/(prefix+'.png' if prefix!='runtime' else 'runtime-close.png');top=out/(prefix+'-top.png' if prefix!='runtime' else 'runtime-top.png')
+ script='''async(page)=>{
+ await page.waitForFunction(()=>window.__cargoScene?.isReady(),{},{timeout:90000});
+ const stats=await page.evaluate(({slug,height,radius,target})=>{const s=window.__cargoScene,e=s.getEngine(),c=s.activeCamera;e.stopRenderLoop();
+ for(const n of s.transformNodes)if(n.name.startsWith('placement-cargo-review-'))n.setEnabled(n.name==='placement-cargo-review-'+slug);
+ c.lowerRadiusLimit=.2;c.radius=radius;c.alpha=1.0;c.lowerBetaLimit=.0001;c.upperBetaLimit=Math.PI/2;c.beta=.955316618;c.target.set(...target);s.render();
+ const selected=s.meshes.filter(m=>m.name.startsWith('cargo-review-'+slug+'--'));if(!selected.length||selected.some(m=>!m.isEnabled()))throw Error('Missing visible review geometry');
+ return {url:location.href,camera:{alpha:c.alpha,beta:c.beta,radius:c.radius,target:c.target.asArray()},renderer:e.webGLVersion,viewport:[innerWidth,innerHeight],visibleMeshes:selected.length,triangles:selected.reduce((a,m)=>a+m.getTotalIndices()/3,0),materials:[...new Set(selected.map(m=>m.material))].map(m=>({name:m?.name,alpha:m?.alpha,metallic:m?.metallic,roughness:m?.roughness,emission:m?.emissiveColor?.asArray()}))};},PARAM);
+ await page.screenshot({path:CLOSE,timeout:90000});await page.evaluate(()=>{const s=window.__cargoScene;s.activeCamera.beta=.0001;s.render();});await page.screenshot({path:TOP,timeout:90000});return stats;
+}'''.replace('PARAM',json.dumps(params)).replace('CLOSE',json.dumps(str(close))).replace('TOP',json.dumps(str(top)))
+ (PW/(tag+'.js')).write_text(script);capture_rows.append({'tag':tag,'script':str(PW/(tag+'.js')),'close':str(close),'top':str(top),'output':str(out),'glb_sha256':sha,'log':str(PW/(tag+'-capture.log')),'design_id':j['design_id'],'revision':spec['revision']})
+(PW/'catalog.json').write_text(json.dumps({'schema':'sidereal.part-catalog.v1','assets':assets}));(PW/'wayfarer.json').write_text(json.dumps({'schema':'sidereal.assembly-draft.v1','id':'cargo-extra-review','name':'Unsigned cargo appearances','parts':parts}));paths.update({'/assets/assembly/catalog.json':str(PW/'catalog.json'),'/assets/assembly/wayfarer.json':str(PW/'wayfarer.json'),'/assets/assembly/catalog.voxels.json':str(ROOT/'.runtime/art-library/cargo/r002/catalog.voxels.json'),'/assets/assembly/parts.glb':str(ROOT/'.runtime/art-library/cargo/r002/empty.glb')})
+setup='''async(page)=>{
+ await page.unrouteAll({behavior:'wait'});for(const [url,path] of Object.entries(PATHS))await page.route('**'+url,r=>r.fulfill({path,contentType:path.endsWith('.json')?'application/json':'model/gltf-binary'}));
+ await page.route('**/packages/render/src/assembly-editor.ts*',async route=>{const response=await route.fetch();let body=await response.text();if(!body.includes('scene.useRightHandedSystem'))throw Error('Hook changed');body=body.replace('scene.useRightHandedSystem','window.__cargoScene=scene; scene.useRightHandedSystem');await route.fulfill({response,body});});
+ await page.goto('http://localhost:5174/shipyard',{waitUntil:'domcontentloaded',timeout:90000});await page.evaluate(()=>localStorage.removeItem('sidereal.assembly.draft.v1'));await page.reload();await page.getByText('Select a part to inspect or move it',{exact:true}).waitFor({timeout:90000});
+ await page.waitForFunction(()=>window.__cargoScene?.transformNodes.filter(n=>n.name.startsWith('placement-cargo-review-')).length===COUNT&&window.__cargoScene.isReady(),{},{timeout:90000});await page.evaluate(()=>window.__cargoScene.getEngine().stopRenderLoop());return {url:page.url(),count:COUNT};
+}'''.replace('PATHS',json.dumps(paths)).replace('COUNT',str(len(rows)));(PW/'setup.js').write_text(setup);(PW/'captures.json').write_text(json.dumps(capture_rows,indent=2));print('Prepared',len(rows),'captures in',PW)

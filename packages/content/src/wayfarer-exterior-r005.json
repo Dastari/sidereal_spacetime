@@ -1,0 +1,4107 @@
+{
+  "compiler": "construction-1",
+  "floorKit": {
+    "id": "shipyard.floor.mapped-deck-kit",
+    "revision": "r002-interface-1",
+    "sha256": "25ede9372bc0d62eb1fb9c2f0ec03209bf49b0df5c78bbcafc5e902985ef0c04"
+  },
+  "floors": [
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1--1",
+      "origin": [
+        -96,
+        -96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1--2",
+      "origin": [
+        -96,
+        -160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1--3",
+      "origin": [
+        -96,
+        -224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1--4",
+      "origin": [
+        -96,
+        -288,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-0",
+      "origin": [
+        -96,
+        -32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-1",
+      "origin": [
+        -96,
+        32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-2",
+      "origin": [
+        -96,
+        96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-3",
+      "origin": [
+        -96,
+        160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--1-4",
+      "origin": [
+        -96,
+        224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2--1",
+      "origin": [
+        -160,
+        -96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2--2",
+      "origin": [
+        -160,
+        -160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2--3",
+      "origin": [
+        -160,
+        -224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2--4",
+      "origin": [
+        -160,
+        -288,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-0",
+      "origin": [
+        -160,
+        -32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-1",
+      "origin": [
+        -160,
+        32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-2",
+      "origin": [
+        -160,
+        96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-3",
+      "origin": [
+        -160,
+        160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor--2-4",
+      "origin": [
+        -160,
+        224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0--1",
+      "origin": [
+        -32,
+        -96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0--2",
+      "origin": [
+        -32,
+        -160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0--3",
+      "origin": [
+        -32,
+        -224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0--4",
+      "origin": [
+        -32,
+        -288,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0-0",
+      "origin": [
+        -32,
+        -32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0-1",
+      "origin": [
+        -32,
+        32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0-2",
+      "origin": [
+        -32,
+        96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-0-3",
+      "origin": [
+        -32,
+        160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1--1",
+      "origin": [
+        32,
+        -96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1--2",
+      "origin": [
+        32,
+        -160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1--3",
+      "origin": [
+        32,
+        -224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1--4",
+      "origin": [
+        32,
+        -288,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-0",
+      "origin": [
+        32,
+        -32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-1",
+      "origin": [
+        32,
+        32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-2",
+      "origin": [
+        32,
+        96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-3",
+      "origin": [
+        32,
+        160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-1-4",
+      "origin": [
+        32,
+        224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2--1",
+      "origin": [
+        96,
+        -96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2--2",
+      "origin": [
+        96,
+        -160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2--3",
+      "origin": [
+        96,
+        -224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2--4",
+      "origin": [
+        96,
+        -288,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-0",
+      "origin": [
+        96,
+        -32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-1",
+      "origin": [
+        96,
+        32,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-2",
+      "origin": [
+        96,
+        96,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-3",
+      "origin": [
+        96,
+        160,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "floor-2-4",
+      "origin": [
+        96,
+        224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-corner45-05",
+      "origin": [
+        32,
+        352,
+        0
+      ],
+      "partId": "triangle-45",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-corner45-06",
+      "origin": [
+        -32,
+        352,
+        0
+      ],
+      "partId": "triangle-45",
+      "quarterTurns": 1,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-00",
+      "origin": [
+        -96,
+        288,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-01",
+      "origin": [
+        -32,
+        288,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-02",
+      "origin": [
+        32,
+        288,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-03",
+      "origin": [
+        -32,
+        352,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    },
+    {
+      "deckId": "wayfarer-main-deck",
+      "id": "pilot-r004-floor-square-04",
+      "origin": [
+        -32,
+        224,
+        0
+      ],
+      "partId": "square-2m",
+      "quarterTurns": 0,
+      "reflected": false
+    }
+  ],
+  "layout": {
+    "appearance": {
+      "accent": "#45d8f5",
+      "kit": "Unassigned / draft proxy",
+      "primary": "#6d8795"
+    },
+    "assembly": {
+      "parts": [
+        {
+          "assetId": "part-c0b6b036f5b3dd8bd2f3",
+          "flipped": false,
+          "id": "equipment-control-seat",
+          "position": [
+            0,
+            10.25,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-d9f37a5f7ea6e8d13254",
+          "flipped": false,
+          "id": "equipment-control-console",
+          "position": [
+            0,
+            11.25,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker--4.7--6",
+          "position": [
+            -4.6875,
+            -6,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker--4.7--2",
+          "position": [
+            -4.6875,
+            -2,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker--4.7-2",
+          "position": [
+            -4.6875,
+            2,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker-4.7--6",
+          "position": [
+            4.6875,
+            -6,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker-4.7--2",
+          "position": [
+            4.6875,
+            -2,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c03ec0260cd7329050a8",
+          "flipped": false,
+          "id": "equipment-locker-4.7-2",
+          "position": [
+            4.6875,
+            2,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-357cf42235c1a190e1d6",
+          "flipped": true,
+          "id": "superstructure--3--4",
+          "position": [
+            -5,
+            -8,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b9ca98146302dec24dd6",
+          "flipped": true,
+          "id": "superstructure--3--3",
+          "position": [
+            -5,
+            -6,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-f85394947090b7609d41",
+          "flipped": true,
+          "id": "superstructure--3--2",
+          "position": [
+            -5,
+            -4,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-08dac7402c764c4d89d7",
+          "flipped": true,
+          "id": "superstructure--3--1",
+          "position": [
+            -5,
+            -2,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-62c859bcc51b318b2c65",
+          "decals": [
+            {
+              "color": "#d2d5e0",
+              "face": "left",
+              "id": "side-registration--1",
+              "kind": "text",
+              "position": [
+                -0.5270000000000001,
+                0,
+                1.42
+              ],
+              "rotation": 0,
+              "size": [
+                1.45,
+                0.58
+              ],
+              "text": "WF-01"
+            }
+          ],
+          "flipped": true,
+          "id": "superstructure--3-0",
+          "position": [
+            -5,
+            0,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0211e6d7960f233accb7",
+          "flipped": true,
+          "id": "superstructure--3-1",
+          "position": [
+            -5,
+            2,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-5b7cee528aeb6959eb7c",
+          "flipped": true,
+          "id": "superstructure--3-2",
+          "position": [
+            -5,
+            4,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-151314086c02e30e06f4",
+          "flipped": true,
+          "id": "superstructure--3-3",
+          "position": [
+            -5,
+            6,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-9ab3a7a3dbc68586c530",
+          "flipped": true,
+          "id": "superstructure--3-4",
+          "position": [
+            -5,
+            8,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-679e9e22f0af30b070a3",
+          "flipped": false,
+          "id": "superstructure-3--4",
+          "position": [
+            5,
+            -8,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-d16f3e3a2db2188e5ed6",
+          "flipped": false,
+          "id": "superstructure-3--3",
+          "position": [
+            5,
+            -6,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-d3e5e45b0f3f60b3fa0a",
+          "flipped": false,
+          "id": "superstructure-3--2",
+          "position": [
+            5,
+            -4,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e43ac94780eb7a1adc50",
+          "flipped": false,
+          "id": "superstructure-3--1",
+          "position": [
+            5,
+            -2,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-5cd7ebc9a8d894fb2b3a",
+          "decals": [
+            {
+              "color": "#d2d5e0",
+              "face": "right",
+              "id": "side-registration-1",
+              "kind": "text",
+              "position": [
+                0.5270000000000001,
+                0,
+                1.42
+              ],
+              "rotation": 0,
+              "size": [
+                1.45,
+                0.58
+              ],
+              "text": "WF-01"
+            }
+          ],
+          "flipped": false,
+          "id": "superstructure-3-0",
+          "position": [
+            5,
+            0,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-64b068a5a6e987c1d518",
+          "flipped": false,
+          "id": "superstructure-3-1",
+          "position": [
+            5,
+            2,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-9b292ad82d675d682b8b",
+          "flipped": false,
+          "id": "superstructure-3-2",
+          "position": [
+            5,
+            4,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-77e9c39b3c50d6dd66f7",
+          "flipped": false,
+          "id": "superstructure-3-3",
+          "position": [
+            5,
+            6,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c9e43b70cbc1f9f77b1f",
+          "flipped": false,
+          "id": "superstructure-3-4",
+          "position": [
+            5,
+            8,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-77728ecc8ad36b0ff45f",
+          "flipped": false,
+          "id": "room-engineering",
+          "position": [
+            -3.6875,
+            -6,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acbbef7209c4ef100693",
+          "flipped": false,
+          "id": "room-hydroponics-tray--2.4",
+          "position": [
+            -3.6875,
+            -2.375,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acbbef7209c4ef100693",
+          "flipped": false,
+          "id": "room-hydroponics-tray--1.5",
+          "position": [
+            -3.6875,
+            -1.5,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-acbbef7209c4ef100693",
+          "flipped": false,
+          "id": "room-hydroponics-tray--0.6",
+          "position": [
+            -3.6875,
+            -0.625,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-c06e4f5f6f6dace38e41",
+          "flipped": false,
+          "id": "room-storage-container-2.15-0.25",
+          "position": [
+            -4.0625,
+            2.0625,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-5382f8dbbeb54e663d33",
+          "flipped": false,
+          "id": "room-storage-container-2.15-1",
+          "position": [
+            -3.3125,
+            2.0625,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-c06e4f5f6f6dace38e41",
+          "flipped": false,
+          "id": "room-storage-container-3.5-0.25",
+          "position": [
+            -4.0625,
+            3.4375,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-5382f8dbbeb54e663d33",
+          "flipped": false,
+          "id": "room-storage-container-3.5-1",
+          "position": [
+            -3.3125,
+            3.4375,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-c41467ac46f6b350df24",
+          "flipped": false,
+          "id": "room-crew",
+          "position": [
+            3.6875,
+            -6,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-cc610ba071b8eb38ab8c",
+          "flipped": false,
+          "id": "room-medbay",
+          "position": [
+            3.6875,
+            -1.5,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-73df516feb786d73fc5e",
+          "flipped": false,
+          "id": "room-lounge",
+          "position": [
+            3.6875,
+            3,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-75910d7a0d27dfc17aaf",
+          "flipped": false,
+          "id": "equipment-bridge-bank--1.3",
+          "position": [
+            -1.3125,
+            11.25,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-0f14bf002f4c11854337",
+          "flipped": false,
+          "id": "equipment-bridge-bank-1.3",
+          "position": [
+            1.25,
+            11.25,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e8b51ac6443c73becfcb",
+          "flipped": false,
+          "id": "drives-main--3.6",
+          "position": [
+            -3.625,
+            -11.5625,
+            0.125
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4d754a140cc642ded990",
+          "flipped": false,
+          "id": "drives-main-3.6",
+          "position": [
+            3.625,
+            -11.5625,
+            0.125
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e15ef10ca93701b58ccb",
+          "flipped": false,
+          "id": "drives-main-0",
+          "position": [
+            0,
+            -11,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a9dcbf6707ca20039a5c",
+          "flipped": false,
+          "id": "drives-maneuver--1--6.5",
+          "position": [
+            -6.375,
+            -6.5,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a9dcbf6707ca20039a5c",
+          "flipped": false,
+          "id": "drives-maneuver--1-6.5",
+          "position": [
+            -6.375,
+            6.5,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a06cfaab58b430855803",
+          "flipped": false,
+          "id": "drives-maneuver-1--6.5",
+          "position": [
+            6.375,
+            -6.5,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-a06cfaab58b430855803",
+          "flipped": false,
+          "id": "drives-maneuver-1-6.5",
+          "position": [
+            6.375,
+            6.5,
+            0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-393498d8c8af6149ef28",
+          "flipped": false,
+          "id": "drives-retro--1",
+          "position": [
+            -5.5,
+            8,
+            0.3125
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-393498d8c8af6149ef28",
+          "flipped": false,
+          "id": "drives-retro-1",
+          "position": [
+            5.5,
+            8,
+            0.3125
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-4c25a5fd9da0bce537f5",
+          "flipped": false,
+          "id": "pilot-r004-hull-straight-07",
+          "position": [
+            3,
+            9,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-48cf8b9cf29d0b226ec4",
+          "flipped": false,
+          "id": "pilot-r004-canopy-side-08",
+          "position": [
+            3,
+            9,
+            1.3125
+          ],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-4c25a5fd9da0bce537f5",
+          "flipped": false,
+          "id": "pilot-r004-hull-straight-09",
+          "position": [
+            -3,
+            11,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": -1.5707963267948966
+        },
+        {
+          "assetId": "part-624989ddf1192dceee75",
+          "flipped": false,
+          "id": "pilot-r004-canopy-side-left-10",
+          "position": [
+            -3,
+            11,
+            1.3125
+          ],
+          "removedCells": [],
+          "rotation": -1.5707963267948966
+        },
+        {
+          "assetId": "part-540c83fc49ee792d9a4a",
+          "flipped": false,
+          "id": "pilot-r004-hull-diagonal45-11",
+          "position": [
+            3,
+            11,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-b70713e9836547941e3f",
+          "flipped": false,
+          "id": "pilot-r004-canopy-diagonal45-12",
+          "position": [
+            3,
+            11,
+            1.3125
+          ],
+          "removedCells": [],
+          "rotation": 1.5707963267948966
+        },
+        {
+          "assetId": "part-540c83fc49ee792d9a4a",
+          "flipped": false,
+          "id": "pilot-r004-hull-diagonal45-13",
+          "position": [
+            -1,
+            13,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-b70713e9836547941e3f",
+          "flipped": false,
+          "id": "pilot-r004-canopy-diagonal45-14",
+          "position": [
+            -1,
+            13,
+            1.3125
+          ],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-ecd751f76e602db806a3",
+          "flipped": false,
+          "id": "pilot-r004-bow-transom-15",
+          "position": [
+            1,
+            13,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-4a1d28344c5ee632b249",
+          "flipped": false,
+          "id": "pilot-r004-canopy-nose-16",
+          "position": [
+            1,
+            13,
+            1.3125
+          ],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-9f79f3a40a72f9b7ad4a",
+          "flipped": false,
+          "id": "pilot-r004-corner-buttress-17",
+          "position": [
+            3,
+            9,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-9f79f3a40a72f9b7ad4a",
+          "flipped": true,
+          "id": "pilot-r004-corner-buttress-18",
+          "position": [
+            -3,
+            9,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-70c422bca2d395c35ecb",
+          "flipped": false,
+          "id": "pilot-r004-airlock-frame-22",
+          "position": [
+            1,
+            9,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 3.141592653589793
+        },
+        {
+          "assetId": "part-1d133c308abd8b172d95",
+          "flipped": false,
+          "id": "pilot-r004-pilot-roof-25",
+          "position": [
+            -3,
+            9,
+            2.625
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-14404bc85f3a72ad3ab8",
+          "flipped": false,
+          "id": "pilot-context-vestibule-roof-0",
+          "position": [
+            -3,
+            7,
+            2.625
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-14404bc85f3a72ad3ab8",
+          "decals": [
+            {
+              "color": "#292d3b",
+              "face": "top",
+              "id": "frontier-ship-name",
+              "kind": "text",
+              "position": [
+                1,
+                1.5,
+                0.3
+              ],
+              "rotation": 0,
+              "size": [
+                5.3,
+                1.35
+              ],
+              "text": "WAYFARER"
+            }
+          ],
+          "flipped": false,
+          "id": "pilot-context-vestibule-roof-1",
+          "position": [
+            -1,
+            7,
+            2.625
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-14404bc85f3a72ad3ab8",
+          "flipped": false,
+          "id": "pilot-context-vestibule-roof-2",
+          "position": [
+            1,
+            7,
+            2.625
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e965a5502d9fe4c25406",
+          "flipped": false,
+          "id": "pilot-r005-outer-shoulder-transition-starboard",
+          "position": [
+            5,
+            9,
+            -0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e965a5502d9fe4c25406",
+          "flipped": true,
+          "id": "pilot-r005-outer-shoulder-transition-port",
+          "position": [
+            -5,
+            9,
+            -0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b3a1decd8a0336ac2030",
+          "flipped": false,
+          "id": "pilot-r005-outer-roof-collar-starboard",
+          "position": [
+            5,
+            9,
+            -0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-b3a1decd8a0336ac2030",
+          "flipped": true,
+          "id": "pilot-r005-outer-roof-collar-port",
+          "position": [
+            -5,
+            9,
+            -0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-437732483fa4d7acbcbc",
+          "flipped": false,
+          "id": "pilot-r005-outer-diagonal-cheek-starboard",
+          "position": [
+            1,
+            11,
+            -0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-437732483fa4d7acbcbc",
+          "flipped": true,
+          "id": "pilot-r005-outer-diagonal-cheek-port",
+          "position": [
+            -1,
+            11,
+            -0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-63a0c40bbb71cfeba4dd",
+          "flipped": false,
+          "id": "pilot-r005-outer-bow-bumper-center",
+          "position": [
+            -2,
+            13,
+            -0.25
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e7dddd4628bd6be8efb7",
+          "flipped": false,
+          "id": "pilot-r004-rear-partition-23",
+          "position": [
+            -2.625,
+            8.625,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        },
+        {
+          "assetId": "part-e7dddd4628bd6be8efb7",
+          "flipped": false,
+          "id": "pilot-r004-rear-partition-24",
+          "position": [
+            1,
+            8.625,
+            0.1875
+          ],
+          "removedCells": [],
+          "rotation": 0
+        }
+      ],
+      "revisions": {
+        "part-0f14bf002f4c11854337": "5bbe40f3637bc640bc26557c3c20e3d9e452587395b0ca7c05d45793ef5e014a",
+        "part-14404bc85f3a72ad3ab8": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-1d133c308abd8b172d95": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-393498d8c8af6149ef28": "retained-part-library-v1",
+        "part-437732483fa4d7acbcbc": "6992c7d5fb25376f3d12d881f66ab002108ed275a63661ca84025968ca3cadfe",
+        "part-48cf8b9cf29d0b226ec4": "65195aefcb5bf72da62839db8fec6123188af9f5ac17024cbe7d6d2cf8959b79",
+        "part-4a1d28344c5ee632b249": "d6859439499041ad474afd3d07b4fa1a67512eb7d90fb99720edfbfe5301a5f4",
+        "part-4c25a5fd9da0bce537f5": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
+        "part-4d754a140cc642ded990": "retained-part-library-v1",
+        "part-5382f8dbbeb54e663d33": "9c3e1914626d0149e298d7cdcfe70fe88c64f68df36a761994f4f9dc97453cd6",
+        "part-540c83fc49ee792d9a4a": "118f1f2406b0c699517be811d77e585f49d5b9c7d650013f873885dbe74329a5",
+        "part-624989ddf1192dceee75": "9dcf37d5a749a152be66657b100a8d83c59856b4c3b4dc967387bf000723e792",
+        "part-63a0c40bbb71cfeba4dd": "3d0fd05cf021b3b5badf68e2e9f1011b5b621e64355390f61508a18a5e4cf61d",
+        "part-70c422bca2d395c35ecb": "825a836cb96f74363c83c1d5be4efc1a11df0ef71bbdafff8b2abb222cebdad6",
+        "part-73df516feb786d73fc5e": "3692ffd29f75026ef856af18a0a59538814b4836e8315d98c48e3c76d00735a8",
+        "part-75910d7a0d27dfc17aaf": "be3a73faed7b4a2c9e4c7b89477df3c1424284dd3e71ca84438fb049a8b3b5a8",
+        "part-77728ecc8ad36b0ff45f": "02ada2cf811e7893ffd98d8b6231974d111238e2dddf0ecd96739ff6b68a2cd3",
+        "part-9f79f3a40a72f9b7ad4a": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+        "part-a06cfaab58b430855803": "retained-part-library-v1",
+        "part-a9dcbf6707ca20039a5c": "retained-part-library-v1",
+        "part-acbbef7209c4ef100693": "1e96a18539191ea08d48b4134c2820043674f2c3b0960ce583ae1620ba5a81a8",
+        "part-b3a1decd8a0336ac2030": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+        "part-b70713e9836547941e3f": "9495f6771dbeafaa24530562acd95a744414674853d7a13e45d2866f59e42526",
+        "part-c03ec0260cd7329050a8": "f527af1e44fc1570355c2268055b7b31343c45849a807b40993cf516c263093a",
+        "part-c06e4f5f6f6dace38e41": "2c7f3a8a9c39ed54af84b5a42694188db99fd94c706071384dec3bf8c394e5bf",
+        "part-c0b6b036f5b3dd8bd2f3": "da38770d060f4c5397b2d0ae8ab01258d42ea1f12884cac3ed628c3b110c5a9c",
+        "part-c41467ac46f6b350df24": "a5b58c4707df1e37aa70fa40e7d052e63be141df7703cd75337abe0e7610b4c7",
+        "part-cc610ba071b8eb38ab8c": "a8e5d2fa478e42723ffc82a845b223051a8f8878ece3c9ea80eb75e4a5021a3b",
+        "part-d9f37a5f7ea6e8d13254": "713d8a83c902d24bb59e278eb2436b087ebdf06fbbbbbd5daa7d2340fc782a49",
+        "part-e15ef10ca93701b58ccb": "retained-part-library-v1",
+        "part-e7dddd4628bd6be8efb7": "53d58e142047665409aadeb232a83f0c5a1901da705234f2ffc8bda4f211e5c9",
+        "part-e8b51ac6443c73becfcb": "retained-part-library-v1",
+        "part-e965a5502d9fe4c25406": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+        "part-ecd751f76e602db806a3": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d",
+        "part-357cf42235c1a190e1d6": "3b25ca7fcde2fd054076d0b84fc463701230ef2f68cfbc638a1d44173a7d74a9",
+        "part-b9ca98146302dec24dd6": "9c8a425853a723547b789b872f282ad03e9efafa6d1724ec0364a721b3ec3784",
+        "part-f85394947090b7609d41": "61b12a335a653486b1d12371ecd5b9159821294a128fda1e00021e56e613aef7",
+        "part-08dac7402c764c4d89d7": "c84f5950fa0e31e1f966e043706993f1e2b2edaaf6149aa5f725f93eb472b995",
+        "part-62c859bcc51b318b2c65": "5f9dcc01666d63a4aa702b92f50a8abb4ccbe99e04b11cb87bb9496ac2c07258",
+        "part-0211e6d7960f233accb7": "9fc96538375bfdec44b3ac832d9100b1cdfcbd2f751654fa30ff540bddb1440a",
+        "part-5b7cee528aeb6959eb7c": "ae5e7d1e0100d5a1fcf7cc341a2d3504cbd0eb8f98548e9af2f73c3f8aee861f",
+        "part-151314086c02e30e06f4": "3e1fa2b7d8b302e602844c9ae0ae38a5c7c2b6090d86b05fe70bbb5852de4afd",
+        "part-9ab3a7a3dbc68586c530": "c7bb6a556bb6994ace8c1bdbd41ccd5fd4eba7bf8d6fdf1058e70a470854eb40",
+        "part-679e9e22f0af30b070a3": "b2905c1756dfa3e13467be9e3d35b03017cb38d64d984ffb02e7efeb3322d559",
+        "part-d16f3e3a2db2188e5ed6": "dec0304492e5f58b968d1c547183132e21f9ee9333b607e195bcf14d1517afe2",
+        "part-d3e5e45b0f3f60b3fa0a": "3b6ca75b0a2302fb6f2f4456988f9f19d9266602aff0e1e89da921f4427caad9",
+        "part-e43ac94780eb7a1adc50": "47ebe1c2493985afacc9e35b18b33ba32ef52a9bb72a0bbf3706d6cde30741cf",
+        "part-5cd7ebc9a8d894fb2b3a": "a47626d013c69d22eeef2a6e55b87b4fc70ccecd0f01ff4ae7b84188e03f6627",
+        "part-64b068a5a6e987c1d518": "00b58ac661647cf4be62502e7e92face84f918524eb43cabc6440fd6b3571037",
+        "part-9b292ad82d675d682b8b": "25be3e2df4292455bf63148e6934a73599c2ad6dbe09644118f9b3d63efefc79",
+        "part-77e9c39b3c50d6dd66f7": "83162077528937afc25358b0a88e6b58e7151a4981f3030df853b6438ac5fd77",
+        "part-c9e43b70cbc1f9f77b1f": "41127699fdae0a4d31b29a7b9fc1845e3ddfa280f2e7f3f36d1ec857d236dc75"
+      },
+      "schema": "sidereal.layout-assembly.v1",
+      "source": {
+        "documentId": "wayfarer-study",
+        "name": "Wayfarer"
+      }
+    },
+    "compiler": "floorplan-1",
+    "decks": [
+      {
+        "ceiling": 102,
+        "elevation": 0,
+        "holes": [],
+        "id": "wayfarer-main-deck",
+        "name": "Main deck",
+        "order": 0,
+        "roof": false
+      }
+    ],
+    "dependencies": [
+      {
+        "id": "floor-shapes",
+        "revision": "lattice-shapes-1"
+      }
+    ],
+    "fittings": [],
+    "id": "wayfarer-semantic-rebuild-r002",
+    "kind": "ship",
+    "legacy": null,
+    "name": "Wayfarer · semantic rebuild r002",
+    "nodes": [],
+    "openings": [
+      {
+        "a": [
+          -48,
+          -48
+        ],
+        "b": [
+          -48,
+          -16
+        ],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "port-door--1",
+        "kind": "passage",
+        "partitionId": "port-corridor",
+        "sill": 0
+      },
+      {
+        "a": [
+          -48,
+          -176
+        ],
+        "b": [
+          -48,
+          -144
+        ],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "port-door--5",
+        "kind": "passage",
+        "partitionId": "port-corridor",
+        "sill": 0
+      },
+      {
+        "a": [
+          -48,
+          80
+        ],
+        "b": [
+          -48,
+          112
+        ],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "port-door-3",
+        "kind": "passage",
+        "partitionId": "port-corridor",
+        "sill": 0
+      },
+      {
+        "a": [
+          -48,
+          208
+        ],
+        "b": [
+          -48,
+          240
+        ],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "port-door-7",
+        "kind": "passage",
+        "partitionId": "port-corridor",
+        "sill": 0
+      },
+      {
+        "a": [
+          64,
+          -48
+        ],
+        "b": [
+          64,
+          -16
+        ],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-door--1",
+        "kind": "passage",
+        "partitionId": "starboard-corridor",
+        "sill": 0
+      },
+      {
+        "a": [
+          64,
+          -176
+        ],
+        "b": [
+          64,
+          -144
+        ],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-door--5",
+        "kind": "passage",
+        "partitionId": "starboard-corridor",
+        "sill": 0
+      },
+      {
+        "a": [
+          64,
+          80
+        ],
+        "b": [
+          64,
+          112
+        ],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-door-3",
+        "kind": "passage",
+        "partitionId": "starboard-corridor",
+        "sill": 0
+      },
+      {
+        "a": [
+          64,
+          208
+        ],
+        "b": [
+          64,
+          240
+        ],
+        "clearance": 64,
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-door-7",
+        "kind": "passage",
+        "partitionId": "starboard-corridor",
+        "sill": 0
+      }
+    ],
+    "partitions": [
+      {
+        "a": [
+          -48,
+          -224
+        ],
+        "b": [
+          -48,
+          256
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-corridor",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          -160,
+          -128
+        ],
+        "b": [
+          -48,
+          -128
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider--4",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          -160,
+          -224
+        ],
+        "b": [
+          -48,
+          -224
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider--7",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          -160,
+          32
+        ],
+        "b": [
+          -48,
+          32
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider-1",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          -160,
+          160
+        ],
+        "b": [
+          -48,
+          160
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider-5",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          -160,
+          256
+        ],
+        "b": [
+          -48,
+          256
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "port-divider-8",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          64,
+          -224
+        ],
+        "b": [
+          64,
+          256
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-corridor",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          64,
+          -128
+        ],
+        "b": [
+          160,
+          -128
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider--4",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          64,
+          -224
+        ],
+        "b": [
+          160,
+          -224
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider--7",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          64,
+          32
+        ],
+        "b": [
+          160,
+          32
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider-1",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          64,
+          160
+        ],
+        "b": [
+          160,
+          160
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider-5",
+        "seal": "design-sealed"
+      },
+      {
+        "a": [
+          64,
+          256
+        ],
+        "b": [
+          160,
+          256
+        ],
+        "deckId": "wayfarer-main-deck",
+        "id": "starboard-divider-8",
+        "seal": "design-sealed"
+      }
+    ],
+    "playableDeckId": "wayfarer-main-deck",
+    "rooms": [
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:bridge",
+        "name": "bridge",
+        "seed": [
+          0,
+          320
+        ],
+        "type": "bridge",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:central-corridor",
+        "name": "central corridor",
+        "seed": [
+          0,
+          0
+        ],
+        "type": "central corridor",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:crew",
+        "name": "crew",
+        "seed": [
+          112,
+          -192
+        ],
+        "type": "crew",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:engineering",
+        "name": "engineering",
+        "seed": [
+          -112,
+          -192
+        ],
+        "type": "engineering",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:hydroponics",
+        "name": "hydroponics",
+        "seed": [
+          -112,
+          -64
+        ],
+        "type": "hydroponics",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:lounge",
+        "name": "lounge",
+        "seed": [
+          112,
+          104
+        ],
+        "type": "lounge",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:medbay",
+        "name": "medbay",
+        "seed": [
+          112,
+          -64
+        ],
+        "type": "medbay",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:port-service",
+        "name": "port service",
+        "seed": [
+          -112,
+          192
+        ],
+        "type": "port service",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:starboard-service",
+        "name": "starboard service",
+        "seed": [
+          112,
+          192
+        ],
+        "type": "starboard service",
+        "wallTheme": "inset250"
+      },
+      {
+        "access": "crew",
+        "boundaryIds": [],
+        "deckId": "wayfarer-main-deck",
+        "floorTheme": "native-floor-r002",
+        "id": "room:storage",
+        "name": "storage",
+        "seed": [
+          -112,
+          104
+        ],
+        "type": "storage",
+        "wallTheme": "inset250"
+      }
+    ],
+    "routes": [],
+    "schema": "sidereal.layout-draft.v1",
+    "source": null,
+    "structure": {
+      "armor": [],
+      "boundaryTreatments": [
+        {
+          "a": [
+            -48,
+            -144
+          ],
+          "b": [
+            -48,
+            -48
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,-144:-48,-48:treatment:-48,-144:-48,-48",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            -48,
+            -16
+          ],
+          "b": [
+            -48,
+            80
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,-16:-48,80:treatment:-48,-16:-48,80",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            -48,
+            -224
+          ],
+          "b": [
+            -48,
+            -176
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,-224:-48,-176:treatment:-48,-224:-48,-176",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            -48,
+            112
+          ],
+          "b": [
+            -48,
+            208
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,112:-48,208:treatment:-48,112:-48,208",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            -48,
+            240
+          ],
+          "b": [
+            -48,
+            256
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-corridor:-48,240:-48,256:treatment:-48,240:-48,256",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            -160,
+            -128
+          ],
+          "b": [
+            -48,
+            -128
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider--4:-160,-128:-48,-128:treatment:-160,-128:-48,-128",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider--4",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            -160,
+            -224
+          ],
+          "b": [
+            -48,
+            -224
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider--7:-160,-224:-48,-224:treatment:-160,-224:-48,-224",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider--7",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            -160,
+            32
+          ],
+          "b": [
+            -48,
+            32
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider-1:-160,32:-48,32:treatment:-160,32:-48,32",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider-1",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            -160,
+            160
+          ],
+          "b": [
+            -48,
+            160
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider-5:-160,160:-48,160:treatment:-160,160:-48,160",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider-5",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            -160,
+            256
+          ],
+          "b": [
+            -48,
+            256
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:port-divider-8:-160,256:-48,256:treatment:-160,256:-48,256",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "port-divider-8",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            -144
+          ],
+          "b": [
+            64,
+            -48
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,-144:64,-48:treatment:64,-144:64,-48",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            -16
+          ],
+          "b": [
+            64,
+            80
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,-16:64,80:treatment:64,-16:64,80",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            -224
+          ],
+          "b": [
+            64,
+            -176
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,-224:64,-176:treatment:64,-224:64,-176",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            112
+          ],
+          "b": [
+            64,
+            208
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,112:64,208:treatment:64,112:64,208",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            240
+          ],
+          "b": [
+            64,
+            256
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-corridor:64,240:64,256:treatment:64,240:64,256",
+          "reservationSide": "right",
+          "source": "partition",
+          "sourceAnchorId": "starboard-corridor",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            -128
+          ],
+          "b": [
+            160,
+            -128
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider--4:64,-128:160,-128:treatment:64,-128:160,-128",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider--4",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            -224
+          ],
+          "b": [
+            160,
+            -224
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider--7:64,-224:160,-224:treatment:64,-224:160,-224",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider--7",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            32
+          ],
+          "b": [
+            160,
+            32
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider-1:64,32:160,32:treatment:64,32:160,32",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider-1",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            160
+          ],
+          "b": [
+            160,
+            160
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider-5:64,160:160,160:treatment:64,160:160,160",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider-5",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            64,
+            256
+          ],
+          "b": [
+            160,
+            256
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "treatment:partition:starboard-divider-8:64,256:160,256:treatment:64,256:160,256",
+          "reservationSide": "left",
+          "source": "partition",
+          "sourceAnchorId": "starboard-divider-8",
+          "treatment": "bulkhead"
+        },
+        {
+          "a": [
+            96,
+            288
+          ],
+          "b": [
+            96,
+            352
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:starboard-side",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:96,288:96,352",
+          "treatment": "cockpit-glass"
+        },
+        {
+          "a": [
+            -96,
+            288
+          ],
+          "b": [
+            -96,
+            352
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:port-side",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:-96,288:-96,352",
+          "treatment": "cockpit-glass"
+        },
+        {
+          "a": [
+            96,
+            352
+          ],
+          "b": [
+            32,
+            416
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:starboard-diagonal",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:32,416:96,352",
+          "treatment": "cockpit-glass"
+        },
+        {
+          "a": [
+            -32,
+            416
+          ],
+          "b": [
+            -96,
+            352
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:port-diagonal",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:-96,352:-32,416",
+          "treatment": "cockpit-glass"
+        },
+        {
+          "a": [
+            32,
+            416
+          ],
+          "b": [
+            -32,
+            416
+          ],
+          "deckId": "wayfarer-main-deck",
+          "id": "cockpit:nose",
+          "source": "perimeter",
+          "sourceAnchorId": "wayfarer-main-deck:-32,416:32,416",
+          "treatment": "cockpit-glass"
+        }
+      ],
+      "deckProfiles": [
+        {
+          "clearHeight": 96,
+          "deckId": "wayfarer-main-deck",
+          "floorThickness": 6,
+          "pitch": 112,
+          "roofThickness": 4,
+          "serviceVoid": 6
+        }
+      ],
+      "grid": 16,
+      "hull": {
+        "height": 112,
+        "id": "wayfarer-structural-envelope",
+        "length": 704,
+        "name": "Wayfarer",
+        "origin": [
+          -160,
+          -288,
+          0
+        ],
+        "revision": "r002",
+        "width": 320
+      },
+      "navigationReservations": [
+        {
+          "deckId": "wayfarer-main-deck",
+          "id": "navigation-reservation:pilot-r004-floor-corner45-05",
+          "reason": "nonwalkable",
+          "vertices": [
+            [
+              32,
+              352
+            ],
+            [
+              96,
+              352
+            ],
+            [
+              32,
+              416
+            ]
+          ]
+        },
+        {
+          "deckId": "wayfarer-main-deck",
+          "id": "navigation-reservation:pilot-r004-floor-corner45-06",
+          "reason": "nonwalkable",
+          "vertices": [
+            [
+              -96,
+              352
+            ],
+            [
+              -32,
+              352
+            ],
+            [
+              -32,
+              416
+            ]
+          ]
+        }
+      ],
+      "schema": "sidereal.layout-structure.v2",
+      "tileStyles": {},
+      "wallConvention": "inset250-v1",
+      "wallFaces": {}
+    },
+    "tiles": [
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            -96
+          ],
+          [
+            -32,
+            -96
+          ],
+          [
+            -32,
+            -32
+          ],
+          [
+            -96,
+            -32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            -160
+          ],
+          [
+            -32,
+            -160
+          ],
+          [
+            -32,
+            -96
+          ],
+          [
+            -96,
+            -96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            -224
+          ],
+          [
+            -32,
+            -224
+          ],
+          [
+            -32,
+            -160
+          ],
+          [
+            -96,
+            -160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            -288
+          ],
+          [
+            -32,
+            -288
+          ],
+          [
+            -32,
+            -224
+          ],
+          [
+            -96,
+            -224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            -32
+          ],
+          [
+            -32,
+            -32
+          ],
+          [
+            -32,
+            32
+          ],
+          [
+            -96,
+            32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            32
+          ],
+          [
+            -32,
+            32
+          ],
+          [
+            -32,
+            96
+          ],
+          [
+            -96,
+            96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            96
+          ],
+          [
+            -32,
+            96
+          ],
+          [
+            -32,
+            160
+          ],
+          [
+            -96,
+            160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            160
+          ],
+          [
+            -32,
+            160
+          ],
+          [
+            -32,
+            224
+          ],
+          [
+            -96,
+            224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--1-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            224
+          ],
+          [
+            -32,
+            224
+          ],
+          [
+            -32,
+            288
+          ],
+          [
+            -96,
+            288
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -160,
+            -96
+          ],
+          [
+            -96,
+            -96
+          ],
+          [
+            -96,
+            -32
+          ],
+          [
+            -160,
+            -32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -160,
+            -160
+          ],
+          [
+            -96,
+            -160
+          ],
+          [
+            -96,
+            -96
+          ],
+          [
+            -160,
+            -96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -160,
+            -224
+          ],
+          [
+            -96,
+            -224
+          ],
+          [
+            -96,
+            -160
+          ],
+          [
+            -160,
+            -160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -160,
+            -288
+          ],
+          [
+            -96,
+            -288
+          ],
+          [
+            -96,
+            -224
+          ],
+          [
+            -160,
+            -224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -160,
+            -32
+          ],
+          [
+            -96,
+            -32
+          ],
+          [
+            -96,
+            32
+          ],
+          [
+            -160,
+            32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -160,
+            32
+          ],
+          [
+            -96,
+            32
+          ],
+          [
+            -96,
+            96
+          ],
+          [
+            -160,
+            96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -160,
+            96
+          ],
+          [
+            -96,
+            96
+          ],
+          [
+            -96,
+            160
+          ],
+          [
+            -160,
+            160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -160,
+            160
+          ],
+          [
+            -96,
+            160
+          ],
+          [
+            -96,
+            224
+          ],
+          [
+            -160,
+            224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor--2-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -160,
+            224
+          ],
+          [
+            -96,
+            224
+          ],
+          [
+            -96,
+            288
+          ],
+          [
+            -160,
+            288
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            -96
+          ],
+          [
+            32,
+            -96
+          ],
+          [
+            32,
+            -32
+          ],
+          [
+            -32,
+            -32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            -160
+          ],
+          [
+            32,
+            -160
+          ],
+          [
+            32,
+            -96
+          ],
+          [
+            -32,
+            -96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            -224
+          ],
+          [
+            32,
+            -224
+          ],
+          [
+            32,
+            -160
+          ],
+          [
+            -32,
+            -160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            -288
+          ],
+          [
+            32,
+            -288
+          ],
+          [
+            32,
+            -224
+          ],
+          [
+            -32,
+            -224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            -32
+          ],
+          [
+            32,
+            -32
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            -32,
+            32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            32
+          ],
+          [
+            32,
+            32
+          ],
+          [
+            32,
+            96
+          ],
+          [
+            -32,
+            96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            96
+          ],
+          [
+            32,
+            96
+          ],
+          [
+            32,
+            160
+          ],
+          [
+            -32,
+            160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-0-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            160
+          ],
+          [
+            32,
+            160
+          ],
+          [
+            32,
+            224
+          ],
+          [
+            -32,
+            224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            -96
+          ],
+          [
+            96,
+            -96
+          ],
+          [
+            96,
+            -32
+          ],
+          [
+            32,
+            -32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            -160
+          ],
+          [
+            96,
+            -160
+          ],
+          [
+            96,
+            -96
+          ],
+          [
+            32,
+            -96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            -224
+          ],
+          [
+            96,
+            -224
+          ],
+          [
+            96,
+            -160
+          ],
+          [
+            32,
+            -160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            -288
+          ],
+          [
+            96,
+            -288
+          ],
+          [
+            96,
+            -224
+          ],
+          [
+            32,
+            -224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            -32
+          ],
+          [
+            96,
+            -32
+          ],
+          [
+            96,
+            32
+          ],
+          [
+            32,
+            32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            32
+          ],
+          [
+            96,
+            32
+          ],
+          [
+            96,
+            96
+          ],
+          [
+            32,
+            96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            96
+          ],
+          [
+            96,
+            96
+          ],
+          [
+            96,
+            160
+          ],
+          [
+            32,
+            160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            160
+          ],
+          [
+            96,
+            160
+          ],
+          [
+            96,
+            224
+          ],
+          [
+            32,
+            224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-1-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            224
+          ],
+          [
+            96,
+            224
+          ],
+          [
+            96,
+            288
+          ],
+          [
+            32,
+            288
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            96,
+            -96
+          ],
+          [
+            160,
+            -96
+          ],
+          [
+            160,
+            -32
+          ],
+          [
+            96,
+            -32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            96,
+            -160
+          ],
+          [
+            160,
+            -160
+          ],
+          [
+            160,
+            -96
+          ],
+          [
+            96,
+            -96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            96,
+            -224
+          ],
+          [
+            160,
+            -224
+          ],
+          [
+            160,
+            -160
+          ],
+          [
+            96,
+            -160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2--4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            96,
+            -288
+          ],
+          [
+            160,
+            -288
+          ],
+          [
+            160,
+            -224
+          ],
+          [
+            96,
+            -224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-0",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            96,
+            -32
+          ],
+          [
+            160,
+            -32
+          ],
+          [
+            160,
+            32
+          ],
+          [
+            96,
+            32
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-1",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            96,
+            32
+          ],
+          [
+            160,
+            32
+          ],
+          [
+            160,
+            96
+          ],
+          [
+            96,
+            96
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-2",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            96,
+            96
+          ],
+          [
+            160,
+            96
+          ],
+          [
+            160,
+            160
+          ],
+          [
+            96,
+            160
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-3",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            96,
+            160
+          ],
+          [
+            160,
+            160
+          ],
+          [
+            160,
+            224
+          ],
+          [
+            96,
+            224
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "floor-2-4",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            96,
+            224
+          ],
+          [
+            160,
+            224
+          ],
+          [
+            160,
+            288
+          ],
+          [
+            96,
+            288
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-corner45-05",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "triangle",
+        "vertices": [
+          [
+            32,
+            352
+          ],
+          [
+            96,
+            352
+          ],
+          [
+            32,
+            416
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-corner45-06",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "triangle",
+        "vertices": [
+          [
+            -96,
+            352
+          ],
+          [
+            -32,
+            352
+          ],
+          [
+            -32,
+            416
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-00",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -96,
+            288
+          ],
+          [
+            -32,
+            288
+          ],
+          [
+            -32,
+            352
+          ],
+          [
+            -96,
+            352
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-01",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            288
+          ],
+          [
+            32,
+            288
+          ],
+          [
+            32,
+            352
+          ],
+          [
+            -32,
+            352
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-02",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            32,
+            288
+          ],
+          [
+            96,
+            288
+          ],
+          [
+            96,
+            352
+          ],
+          [
+            32,
+            352
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-03",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            352
+          ],
+          [
+            32,
+            352
+          ],
+          [
+            32,
+            416
+          ],
+          [
+            -32,
+            416
+          ]
+        ]
+      },
+      {
+        "deckId": "wayfarer-main-deck",
+        "id": "pilot-r004-floor-square-04",
+        "material": "native-floor-r002",
+        "revision": "lattice-shapes-1",
+        "shape": "rectangle",
+        "vertices": [
+          [
+            -32,
+            224
+          ],
+          [
+            32,
+            224
+          ],
+          [
+            32,
+            288
+          ],
+          [
+            -32,
+            288
+          ]
+        ]
+      }
+    ],
+    "serviceConnections": [
+      {
+        "id": "power:drives-main--3.6",
+        "channel": "power",
+        "fromDeviceId": "room-engineering",
+        "fromPortId": "power-out",
+        "toDeviceId": "drives-main--3.6",
+        "toPortId": "power-in"
+      },
+      {
+        "id": "power:drives-main-0",
+        "channel": "power",
+        "fromDeviceId": "room-engineering",
+        "fromPortId": "power-out",
+        "toDeviceId": "drives-main-0",
+        "toPortId": "power-in"
+      },
+      {
+        "id": "power:drives-main-3.6",
+        "channel": "power",
+        "fromDeviceId": "room-engineering",
+        "fromPortId": "power-out",
+        "toDeviceId": "drives-main-3.6",
+        "toPortId": "power-in"
+      },
+      {
+        "id": "power:drives-maneuver--1--6.5",
+        "channel": "power",
+        "fromDeviceId": "room-engineering",
+        "fromPortId": "power-out",
+        "toDeviceId": "drives-maneuver--1--6.5",
+        "toPortId": "power-in"
+      },
+      {
+        "id": "power:drives-maneuver--1-6.5",
+        "channel": "power",
+        "fromDeviceId": "room-engineering",
+        "fromPortId": "power-out",
+        "toDeviceId": "drives-maneuver--1-6.5",
+        "toPortId": "power-in"
+      },
+      {
+        "id": "power:drives-maneuver-1--6.5",
+        "channel": "power",
+        "fromDeviceId": "room-engineering",
+        "fromPortId": "power-out",
+        "toDeviceId": "drives-maneuver-1--6.5",
+        "toPortId": "power-in"
+      },
+      {
+        "id": "power:drives-maneuver-1-6.5",
+        "channel": "power",
+        "fromDeviceId": "room-engineering",
+        "fromPortId": "power-out",
+        "toDeviceId": "drives-maneuver-1-6.5",
+        "toPortId": "power-in"
+      },
+      {
+        "id": "power:drives-retro--1",
+        "channel": "power",
+        "fromDeviceId": "room-engineering",
+        "fromPortId": "power-out",
+        "toDeviceId": "drives-retro--1",
+        "toPortId": "power-in"
+      },
+      {
+        "id": "power:drives-retro-1",
+        "channel": "power",
+        "fromDeviceId": "room-engineering",
+        "fromPortId": "power-out",
+        "toDeviceId": "drives-retro-1",
+        "toPortId": "power-in"
+      }
+    ]
+  },
+  "schema": "sidereal.construction.v1",
+  "wayfarerExterior": {
+    "revision": "r005",
+    "baseSourceSha256": "56e485c9a9d49b5aa0c5e44a47f88916296896717df386b7240baf408e28ae44",
+    "nativeProofSha256": "b5e24f46fc7aebe525b94656b017d281ecf15593b0dd3b7f61f17a1b28647aae",
+    "identities": {
+      "wayfarer-semantic-rebuild-r002": "wayfarer-semantic-rebuild-r002",
+      "wayfarer-main-deck": "wayfarer-main-deck",
+      "floor--1--1": "floor--1--1",
+      "floor--1--2": "floor--1--2",
+      "floor--1--3": "floor--1--3",
+      "floor--1--4": "floor--1--4",
+      "floor--1-0": "floor--1-0",
+      "floor--1-1": "floor--1-1",
+      "floor--1-2": "floor--1-2",
+      "floor--1-3": "floor--1-3",
+      "floor--1-4": "floor--1-4",
+      "floor--2--1": "floor--2--1",
+      "floor--2--2": "floor--2--2",
+      "floor--2--3": "floor--2--3",
+      "floor--2--4": "floor--2--4",
+      "floor--2-0": "floor--2-0",
+      "floor--2-1": "floor--2-1",
+      "floor--2-2": "floor--2-2",
+      "floor--2-3": "floor--2-3",
+      "floor--2-4": "floor--2-4",
+      "floor-0--1": "floor-0--1",
+      "floor-0--2": "floor-0--2",
+      "floor-0--3": "floor-0--3",
+      "floor-0--4": "floor-0--4",
+      "floor-0-0": "floor-0-0",
+      "floor-0-1": "floor-0-1",
+      "floor-0-2": "floor-0-2",
+      "floor-0-3": "floor-0-3",
+      "floor-1--1": "floor-1--1",
+      "floor-1--2": "floor-1--2",
+      "floor-1--3": "floor-1--3",
+      "floor-1--4": "floor-1--4",
+      "floor-1-0": "floor-1-0",
+      "floor-1-1": "floor-1-1",
+      "floor-1-2": "floor-1-2",
+      "floor-1-3": "floor-1-3",
+      "floor-1-4": "floor-1-4",
+      "floor-2--1": "floor-2--1",
+      "floor-2--2": "floor-2--2",
+      "floor-2--3": "floor-2--3",
+      "floor-2--4": "floor-2--4",
+      "floor-2-0": "floor-2-0",
+      "floor-2-1": "floor-2-1",
+      "floor-2-2": "floor-2-2",
+      "floor-2-3": "floor-2-3",
+      "floor-2-4": "floor-2-4",
+      "pilot-r004-floor-corner45-05": "pilot-r004-floor-corner45-05",
+      "pilot-r004-floor-corner45-06": "pilot-r004-floor-corner45-06",
+      "pilot-r004-floor-square-00": "pilot-r004-floor-square-00",
+      "pilot-r004-floor-square-01": "pilot-r004-floor-square-01",
+      "pilot-r004-floor-square-02": "pilot-r004-floor-square-02",
+      "pilot-r004-floor-square-03": "pilot-r004-floor-square-03",
+      "pilot-r004-floor-square-04": "pilot-r004-floor-square-04",
+      "port-corridor": "port-corridor",
+      "port-divider--4": "port-divider--4",
+      "port-divider--7": "port-divider--7",
+      "port-divider-1": "port-divider-1",
+      "port-divider-5": "port-divider-5",
+      "port-divider-8": "port-divider-8",
+      "starboard-corridor": "starboard-corridor",
+      "starboard-divider--4": "starboard-divider--4",
+      "starboard-divider--7": "starboard-divider--7",
+      "starboard-divider-1": "starboard-divider-1",
+      "starboard-divider-5": "starboard-divider-5",
+      "starboard-divider-8": "starboard-divider-8",
+      "port-door--1": "port-door--1",
+      "port-door--5": "port-door--5",
+      "port-door-3": "port-door-3",
+      "port-door-7": "port-door-7",
+      "starboard-door--1": "starboard-door--1",
+      "starboard-door--5": "starboard-door--5",
+      "starboard-door-3": "starboard-door-3",
+      "starboard-door-7": "starboard-door-7",
+      "room:bridge": "room:bridge",
+      "room:central-corridor": "room:central-corridor",
+      "room:crew": "room:crew",
+      "room:engineering": "room:engineering",
+      "room:hydroponics": "room:hydroponics",
+      "room:lounge": "room:lounge",
+      "room:medbay": "room:medbay",
+      "room:port-service": "room:port-service",
+      "room:starboard-service": "room:starboard-service",
+      "room:storage": "room:storage",
+      "equipment-control-seat": "equipment-control-seat",
+      "equipment-control-console": "equipment-control-console",
+      "equipment-locker--4.7--6": "equipment-locker--4.7--6",
+      "equipment-locker--4.7--2": "equipment-locker--4.7--2",
+      "equipment-locker--4.7-2": "equipment-locker--4.7-2",
+      "equipment-locker-4.7--6": "equipment-locker-4.7--6",
+      "equipment-locker-4.7--2": "equipment-locker-4.7--2",
+      "equipment-locker-4.7-2": "equipment-locker-4.7-2",
+      "superstructure--3--4": "superstructure--3--4",
+      "superstructure--3--3": "superstructure--3--3",
+      "superstructure--3--2": "superstructure--3--2",
+      "superstructure--3--1": "superstructure--3--1",
+      "superstructure--3-0": "superstructure--3-0",
+      "superstructure--3-1": "superstructure--3-1",
+      "superstructure--3-2": "superstructure--3-2",
+      "superstructure--3-3": "superstructure--3-3",
+      "superstructure--3-4": "superstructure--3-4",
+      "superstructure-3--4": "superstructure-3--4",
+      "superstructure-3--3": "superstructure-3--3",
+      "superstructure-3--2": "superstructure-3--2",
+      "superstructure-3--1": "superstructure-3--1",
+      "superstructure-3-0": "superstructure-3-0",
+      "superstructure-3-1": "superstructure-3-1",
+      "superstructure-3-2": "superstructure-3-2",
+      "superstructure-3-3": "superstructure-3-3",
+      "superstructure-3-4": "superstructure-3-4",
+      "room-engineering": "room-engineering",
+      "room-hydroponics-tray--2.4": "room-hydroponics-tray--2.4",
+      "room-hydroponics-tray--1.5": "room-hydroponics-tray--1.5",
+      "room-hydroponics-tray--0.6": "room-hydroponics-tray--0.6",
+      "room-storage-container-2.15-0.25": "room-storage-container-2.15-0.25",
+      "room-storage-container-2.15-1": "room-storage-container-2.15-1",
+      "room-storage-container-3.5-0.25": "room-storage-container-3.5-0.25",
+      "room-storage-container-3.5-1": "room-storage-container-3.5-1",
+      "room-crew": "room-crew",
+      "room-medbay": "room-medbay",
+      "room-lounge": "room-lounge",
+      "equipment-bridge-bank--1.3": "equipment-bridge-bank--1.3",
+      "equipment-bridge-bank-1.3": "equipment-bridge-bank-1.3",
+      "drives-main--3.6": "drives-main--3.6",
+      "drives-main-3.6": "drives-main-3.6",
+      "drives-main-0": "drives-main-0",
+      "drives-maneuver--1--6.5": "drives-maneuver--1--6.5",
+      "drives-maneuver--1-6.5": "drives-maneuver--1-6.5",
+      "drives-maneuver-1--6.5": "drives-maneuver-1--6.5",
+      "drives-maneuver-1-6.5": "drives-maneuver-1-6.5",
+      "drives-retro--1": "drives-retro--1",
+      "drives-retro-1": "drives-retro-1",
+      "pilot-r004-hull-straight-07": "pilot-r004-hull-straight-07",
+      "pilot-r004-canopy-side-08": "pilot-r004-canopy-side-08",
+      "pilot-r004-hull-straight-09": "pilot-r004-hull-straight-09",
+      "pilot-r004-canopy-side-left-10": "pilot-r004-canopy-side-left-10",
+      "pilot-r004-hull-diagonal45-11": "pilot-r004-hull-diagonal45-11",
+      "pilot-r004-canopy-diagonal45-12": "pilot-r004-canopy-diagonal45-12",
+      "pilot-r004-hull-diagonal45-13": "pilot-r004-hull-diagonal45-13",
+      "pilot-r004-canopy-diagonal45-14": "pilot-r004-canopy-diagonal45-14",
+      "pilot-r004-bow-transom-15": "pilot-r004-bow-transom-15",
+      "pilot-r004-canopy-nose-16": "pilot-r004-canopy-nose-16",
+      "pilot-r004-corner-buttress-17": "pilot-r004-corner-buttress-17",
+      "pilot-r004-corner-buttress-18": "pilot-r004-corner-buttress-18",
+      "pilot-r004-airlock-frame-22": "pilot-r004-airlock-frame-22",
+      "pilot-r004-pilot-roof-25": "pilot-r004-pilot-roof-25",
+      "pilot-context-vestibule-roof-0": "pilot-context-vestibule-roof-0",
+      "pilot-context-vestibule-roof-1": "pilot-context-vestibule-roof-1",
+      "pilot-context-vestibule-roof-2": "pilot-context-vestibule-roof-2",
+      "pilot-r005-outer-shoulder-transition-starboard": "pilot-r005-outer-shoulder-transition-starboard",
+      "pilot-r005-outer-shoulder-transition-port": "pilot-r005-outer-shoulder-transition-port",
+      "pilot-r005-outer-roof-collar-starboard": "pilot-r005-outer-roof-collar-starboard",
+      "pilot-r005-outer-roof-collar-port": "pilot-r005-outer-roof-collar-port",
+      "pilot-r005-outer-diagonal-cheek-starboard": "pilot-r005-outer-diagonal-cheek-starboard",
+      "pilot-r005-outer-diagonal-cheek-port": "pilot-r005-outer-diagonal-cheek-port",
+      "pilot-r005-outer-bow-bumper-center": "pilot-r005-outer-bow-bumper-center",
+      "pilot-r004-rear-partition-23": "pilot-r004-rear-partition-23",
+      "pilot-r004-rear-partition-24": "pilot-r004-rear-partition-24",
+      "treatment:partition:port-corridor:-48,-144:-48,-48:treatment:-48,-144:-48,-48": "treatment:partition:port-corridor:-48,-144:-48,-48:treatment:-48,-144:-48,-48",
+      "treatment:partition:port-corridor:-48,-16:-48,80:treatment:-48,-16:-48,80": "treatment:partition:port-corridor:-48,-16:-48,80:treatment:-48,-16:-48,80",
+      "treatment:partition:port-corridor:-48,-224:-48,-176:treatment:-48,-224:-48,-176": "treatment:partition:port-corridor:-48,-224:-48,-176:treatment:-48,-224:-48,-176",
+      "treatment:partition:port-corridor:-48,112:-48,208:treatment:-48,112:-48,208": "treatment:partition:port-corridor:-48,112:-48,208:treatment:-48,112:-48,208",
+      "treatment:partition:port-corridor:-48,240:-48,256:treatment:-48,240:-48,256": "treatment:partition:port-corridor:-48,240:-48,256:treatment:-48,240:-48,256",
+      "treatment:partition:port-divider--4:-160,-128:-48,-128:treatment:-160,-128:-48,-128": "treatment:partition:port-divider--4:-160,-128:-48,-128:treatment:-160,-128:-48,-128",
+      "treatment:partition:port-divider--7:-160,-224:-48,-224:treatment:-160,-224:-48,-224": "treatment:partition:port-divider--7:-160,-224:-48,-224:treatment:-160,-224:-48,-224",
+      "treatment:partition:port-divider-1:-160,32:-48,32:treatment:-160,32:-48,32": "treatment:partition:port-divider-1:-160,32:-48,32:treatment:-160,32:-48,32",
+      "treatment:partition:port-divider-5:-160,160:-48,160:treatment:-160,160:-48,160": "treatment:partition:port-divider-5:-160,160:-48,160:treatment:-160,160:-48,160",
+      "treatment:partition:port-divider-8:-160,256:-48,256:treatment:-160,256:-48,256": "treatment:partition:port-divider-8:-160,256:-48,256:treatment:-160,256:-48,256",
+      "treatment:partition:starboard-corridor:64,-144:64,-48:treatment:64,-144:64,-48": "treatment:partition:starboard-corridor:64,-144:64,-48:treatment:64,-144:64,-48",
+      "treatment:partition:starboard-corridor:64,-16:64,80:treatment:64,-16:64,80": "treatment:partition:starboard-corridor:64,-16:64,80:treatment:64,-16:64,80",
+      "treatment:partition:starboard-corridor:64,-224:64,-176:treatment:64,-224:64,-176": "treatment:partition:starboard-corridor:64,-224:64,-176:treatment:64,-224:64,-176",
+      "treatment:partition:starboard-corridor:64,112:64,208:treatment:64,112:64,208": "treatment:partition:starboard-corridor:64,112:64,208:treatment:64,112:64,208",
+      "treatment:partition:starboard-corridor:64,240:64,256:treatment:64,240:64,256": "treatment:partition:starboard-corridor:64,240:64,256:treatment:64,240:64,256",
+      "treatment:partition:starboard-divider--4:64,-128:160,-128:treatment:64,-128:160,-128": "treatment:partition:starboard-divider--4:64,-128:160,-128:treatment:64,-128:160,-128",
+      "treatment:partition:starboard-divider--7:64,-224:160,-224:treatment:64,-224:160,-224": "treatment:partition:starboard-divider--7:64,-224:160,-224:treatment:64,-224:160,-224",
+      "treatment:partition:starboard-divider-1:64,32:160,32:treatment:64,32:160,32": "treatment:partition:starboard-divider-1:64,32:160,32:treatment:64,32:160,32",
+      "treatment:partition:starboard-divider-5:64,160:160,160:treatment:64,160:160,160": "treatment:partition:starboard-divider-5:64,160:160,160:treatment:64,160:160,160",
+      "treatment:partition:starboard-divider-8:64,256:160,256:treatment:64,256:160,256": "treatment:partition:starboard-divider-8:64,256:160,256:treatment:64,256:160,256",
+      "cockpit:starboard-side": "cockpit:starboard-side",
+      "cockpit:port-side": "cockpit:port-side",
+      "cockpit:starboard-diagonal": "cockpit:starboard-diagonal",
+      "cockpit:port-diagonal": "cockpit:port-diagonal",
+      "cockpit:nose": "cockpit:nose",
+      "navigation-reservation:pilot-r004-floor-corner45-05": "navigation-reservation:pilot-r004-floor-corner45-05",
+      "navigation-reservation:pilot-r004-floor-corner45-06": "navigation-reservation:pilot-r004-floor-corner45-06",
+      "power:drives-main--3.6": "power:drives-main--3.6",
+      "power:drives-main-0": "power:drives-main-0",
+      "power:drives-main-3.6": "power:drives-main-3.6",
+      "power:drives-maneuver--1--6.5": "power:drives-maneuver--1--6.5",
+      "power:drives-maneuver--1-6.5": "power:drives-maneuver--1-6.5",
+      "power:drives-maneuver-1--6.5": "power:drives-maneuver-1--6.5",
+      "power:drives-maneuver-1-6.5": "power:drives-maneuver-1-6.5",
+      "power:drives-retro--1": "power:drives-retro--1",
+      "power:drives-retro-1": "power:drives-retro-1"
+    }
+  }
+}

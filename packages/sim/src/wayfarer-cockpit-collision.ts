@@ -1,6 +1,6 @@
-import proof from "../../content/src/wayfarer-cockpit-partition-proof.json";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
-import type { Point } from "../../content/src/ship-layout";
+import proof from "@sidereal/content/wayfarer-cockpit-partition-proof.json";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
+import type { Point } from "@sidereal/content/ship-layout";
 import type { WayfarerConversionCandidate } from "./wayfarer-conversion-candidate";
 import type { SpawnObjectCollisionBinding } from "./construction-instance";
 import { cross, area2 } from "./layout-geometry";

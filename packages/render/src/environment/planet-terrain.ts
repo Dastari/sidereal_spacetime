@@ -53,7 +53,10 @@ function quad(
   outward: Vec,
   optics: [number, number] = [0.35, 0.2],
 ) {
-  if (g.countOnly) { g.faces++; return; }
+  if (g.countOnly) {
+    g.faces++;
+    return;
+  }
   const u = p[1].map((v, i) => v - p[0][i]),
     v = p[2].map((v, i) => v - p[0][i]);
   let normal: Vec = normalize([
@@ -228,7 +231,8 @@ export function buildLayeredTerrain(
     resolution,
     samples: 6 * resolution * resolution,
   };
-  for (const g of [out.terrain, out.lava, out.ice, out.spill, out.water]) g.countOnly = countOnly;
+  for (const g of [out.terrain, out.lava, out.ice, out.spill, out.water])
+    g.countOnly = countOnly;
   out.ice.iceOptics = [];
   const treesPerFace = new Uint16Array(6),
     crystalsPerFace = new Uint16Array(6);
@@ -429,13 +433,27 @@ export function buildLayeredTerrain(
  * A worst-case quadratic clamp would visibly reduce recipes which fit the cap.
  * Count the recipe's actual quads (including cliff bands), retaining the historical
  * candidate sequence but never generating/discarding an over-budget mesh. */
-export function terrainResolution(recipe: PlanetRecipe, requested: number): number {
+export function terrainResolution(
+  recipe: PlanetRecipe,
+  requested: number,
+): number {
   if (6 * requested * requested * 37 <= MAX_TERRAIN_FACES) return requested;
   let n = requested;
   for (;;) {
     const g = buildLayeredTerrain(recipe, n, true);
-    if ([g.terrain.faces + g.ice.faces, g.water.faces, g.lava.faces, g.spill.faces].every(f => f <= MAX_TERRAIN_FACES)) return n;
-    if (n <= 24) throw new RangeError("Terrain exceeds quad cap at minimum legacy resolution");
-    n = Math.max(24, Math.floor(n * .75));
+    if (
+      [
+        g.terrain.faces + g.ice.faces,
+        g.water.faces,
+        g.lava.faces,
+        g.spill.faces,
+      ].every((f) => f <= MAX_TERRAIN_FACES)
+    )
+      return n;
+    if (n <= 24)
+      throw new RangeError(
+        "Terrain exceeds quad cap at minimum legacy resolution",
+      );
+    n = Math.max(24, Math.floor(n * 0.75));
   }
 }

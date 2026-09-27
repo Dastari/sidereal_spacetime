@@ -57,7 +57,7 @@ test("static spots cache across ship motion, while at most two actor maps refres
     scene = new Scene(engine),
     root = new TransformNode("ship", scene);
   const wall = CreateBox("GEO-partitions", {}, scene);
-  wall.metadata = {role:"wall",shadowStructural:true};
+  wall.metadata = { role: "wall", shadowStructural: true };
   wall.parent = root;
   wall.position.set(-3, 1, 6);
   const distant = CreateBox("native-distant", {}, scene);
@@ -108,7 +108,7 @@ test("cutaway retains physical proxies and edits while cabin lighting is hidden 
     scene = new Scene(engine);
   const root = new TransformNode("ship", scene);
   const wall = CreateBox("GEO-partitions", {}, scene);
-  wall.metadata = {role:"wall",shadowStructural:true};
+  wall.metadata = { role: "wall", shadowStructural: true };
   wall.parent = root;
   wall.position.set(-3, 1, 6);
   const prop = CreateBox("opaque-prop", {}, scene);

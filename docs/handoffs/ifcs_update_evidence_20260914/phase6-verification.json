@@ -1,0 +1,200 @@
+{
+  "phase": 6,
+  "sharedCheckoutCheck": {
+    "files": 346,
+    "tests": 2055,
+    "documents": 88,
+    "log": "phase6-check-verified.log"
+  },
+  "independentStagedSource": {
+    "files": 280,
+    "tests": 1523,
+    "typecheck": "passed",
+    "build": "passed",
+    "documentation": "33 preexisting missing links",
+    "missingLinks": [
+      "README.md missing docs/visual_theme.md",
+      "README.md missing docs/voxel_construction.md",
+      "AGENTS.md missing docs/blender_asset_migration.md",
+      "AGENTS.md missing assets/art-library/INDEX.md",
+      "AGENTS.md missing assets/art-library/WORKFLOW.md",
+      "PIVOT.md missing docs/blender_asset_migration.md",
+      "PIVOT.md missing docs/visual_theme.md",
+      "PIVOT.md missing docs/art_reference_guide.md",
+      "PIVOT.md missing docs/voxel_construction.md",
+      "PIVOT.md missing docs/space_environment.md",
+      "docs/ship_construction_rebuild.md missing voxel_construction.md",
+      "docs/rendering_performance_plan.md missing handoffs/render_light_budget.md",
+      "docs/rendering_performance_plan.md missing handoffs/render_performance_resume.md",
+      "docs/rendering_performance_plan.md missing ../output/playwright/render-plan/phase-1a/",
+      "docs/public_game_routing.md missing handoffs/public_login_verification.md",
+      "docs/implementation_plan.md missing visual_theme.md",
+      "docs/implementation_plan.md missing voxel_construction.md",
+      "docs/implementation_plan.md missing handoffs/2026-09-08_astra_visual_iteration.md",
+      "docs/implementation_plan.md missing inventory_authority.md",
+      "docs/implementation_plan.md missing handoffs/2026-09-08_astra_visual_iteration.md",
+      "docs/implementation_plan.md missing releases/native-ship-2026-09-08/README.md",
+      "docs/implementation_plan.md missing handoffs/character_components.md",
+      "docs/implementation_plan.md missing ../assets/art-library/character-components/INDEX.md",
+      "docs/graphics_ui.md missing visual_theme.md",
+      "docs/graphics_ui.md missing space_environment.md",
+      "docs/graphics_ui.md missing visual_theme.md",
+      "docs/graphics_ui.md missing handoffs/character_ui_refresh.md",
+      "docs/graphics_ui.md missing ../assets/art-library/designs/ui.character-status-and-equipment/DESIGN.md",
+      "docs/authoring.md missing ship_layout_editor_design.md",
+      "docs/authoring.md missing handoffs/ship_layout_editor_implementation_prompt.md",
+      "docs/authentication.md missing handoffs/public_login_verification.md",
+      "docs/authentication.md missing character_persistence.md",
+      "docs/assets.md missing blender_asset_migration.md"
+    ]
+  },
+  "standardSmoke": {
+    "database": "sidereal-spacetime-dev-ifcs-phase6-final-r0001-smoke",
+    "result": "passed",
+    "source": "independent final staged source",
+    "clientDeadColumnsAbsent": true
+  },
+  "schema": {
+    "removedTables": [],
+    "changedBaseRows": [],
+    "changedViews": [
+      "ownShips"
+    ],
+    "shipPrivate": {
+      "Private": []
+    },
+    "ownShips": {
+      "Array": {
+        "Product": {
+          "elements": [
+            {
+              "name": {
+                "some": "id"
+              },
+              "algebraic_type": {
+                "String": []
+              }
+            },
+            {
+              "name": {
+                "some": "owner"
+              },
+              "algebraic_type": {
+                "Product": {
+                  "elements": [
+                    {
+                      "name": {
+                        "some": "__identity__"
+                      },
+                      "algebraic_type": {
+                        "U256": []
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            {
+              "name": {
+                "some": "name"
+              },
+              "algebraic_type": {
+                "String": []
+              }
+            },
+            {
+              "name": {
+                "some": "revision"
+              },
+              "algebraic_type": {
+                "U64": []
+              }
+            },
+            {
+              "name": {
+                "some": "x"
+              },
+              "algebraic_type": {
+                "F64": []
+              }
+            },
+            {
+              "name": {
+                "some": "y"
+              },
+              "algebraic_type": {
+                "F64": []
+              }
+            },
+            {
+              "name": {
+                "some": "vx"
+              },
+              "algebraic_type": {
+                "F64": []
+              }
+            },
+            {
+              "name": {
+                "some": "vy"
+              },
+              "algebraic_type": {
+                "F64": []
+              }
+            },
+            {
+              "name": {
+                "some": "heading"
+              },
+              "algebraic_type": {
+                "F64": []
+              }
+            },
+            {
+              "name": {
+                "some": "omega"
+              },
+              "algebraic_type": {
+                "F64": []
+              }
+            },
+            {
+              "name": {
+                "some": "tick"
+              },
+              "algebraic_type": {
+                "U64": []
+              }
+            }
+          ]
+        }
+      }
+    },
+    "primaryKey": {
+      "view_source_name": "ownShips",
+      "columns": [
+        "id"
+      ]
+    }
+  },
+  "sharedPublication": "Only phase 3 was published to the shared database; phases 4\u20136 isolated only",
+  "fixtureScan": "No LAB_FLIGHT_ reference in live world/render or compiled world bundle; no non-test content/flight import remains",
+  "installationProtocolSha256": "8aee8337485375adcea4b3408ffc4589f08da8391057d9ef407fd8d002c311d0",
+  "qualityGates": {
+    "lint": "passed, zero new/changed violations",
+    "format": "passed, zero new/changed violations",
+    "python": "62 tests: 60 pass, 2 missing owner-managed art dependency errors",
+    "nativeJson": "13 exact immutable authored/proof snapshots restored and preserved byte-for-byte",
+    "workingEdits": "30 independently edited files preserved by selective staging",
+    "ruleTests": 2
+  },
+  "twoClientSmoke": {
+    "database": "sidereal-spacetime-dev-ifcs-phase6-passenger-r0001-smoke",
+    "source": "independent staged source",
+    "result": "passed"
+  },
+  "fullBuilds": [
+    "phase6-build-workspace-final.log",
+    "phase6-build-verified.log"
+  ]
+}

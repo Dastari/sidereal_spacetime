@@ -16,7 +16,7 @@
     "@sidereal/canvas-ui": "0.1.2"
   },
   "scripts": {
-    "build": "python3 ../../scripts/prepare_app.py client && vite build",
+    "build": "python3 ../../scripts/prepare_app.py client && vite build && node ../../scripts/precompress_assets.mjs dist",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   }
 }
