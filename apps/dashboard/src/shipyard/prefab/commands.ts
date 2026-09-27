@@ -4,6 +4,7 @@
  * normalise or repair other data; validation stays with `validateShipPrefab`.
  */
 import {
+  G,
   placedTilePolygon,
   placedTileSize,
   insidePolygon,
@@ -245,8 +246,10 @@ export function placeEdge(doc: Doc, edge: Omit<PrefabEdge, "id" | "deck">, mirro
     const mirrored = mirror !== null ? doc.edges.find((e) => e !== exact && sameEdge(e, mirrorEdge(edge, mirror)) && e.type === edge.type) : undefined;
     return { doc: { ...doc, edges: doc.edges.filter((e) => e !== exact && e !== mirrored) } };
   }
-  const keys = new Set(set.flatMap((e) => unitSegments(e.a, e.b).map(segKey)));
-  const kept = doc.edges.filter((e) => !unitSegments(e.a, e.b).some((s) => keys.has(segKey(s))));
+  // Exterior runs (canopy glass) follow the outline and never displace lattice edges.
+  const exterior = !!G.edgeTypes[edge.type].exterior;
+  const keys = new Set(exterior ? [] : set.flatMap((e) => unitSegments(e.a, e.b).map(segKey)));
+  const kept = exterior ? doc.edges : doc.edges.filter((e) => !G.edgeTypes[e.type].exterior && unitSegments(e.a, e.b).some((s) => keys.has(segKey(s))) ? false : true);
   const created: PrefabEdge[] = [];
   for (const e of set) {
     const base = e.type.startsWith("door") ? "door" : e.type.replace(/\./g, "-");

@@ -99,15 +99,16 @@ describe("construction grammar shape tiles", () => {
 
 describe("construction grammar tiers and hashing", () => {
   it("tiers the full deck like the prototype", () => {
-    expect(volumeTiers(5, 54)).toEqual({ tiers: [[5, 29], [29, 49]], rim: [49, 54] });
+    // r007 low-profile deck (owner proportions, 2026-09-27): two tiers, 4-texel rim.
+    expect(volumeTiers(5, 43)).toEqual({ tiers: [[5, 23], [23, 39]], rim: [39, 43] });
     expect(volumeTiers(10, 28)).toEqual({ tiers: [[10, 24]], rim: [24, 28] });
     expect(volumeTiers(12, 20)).toEqual({ tiers: [[12, 20]], rim: null });
   });
   it("enumerates a bounded set of cassette heights", () => {
     const h = cassetteHeights();
     expect(h.cassettes.length).toBeLessThan(12);
-    expect(h.cassettes).toContain(24);
-    expect(h.rims).toEqual([4, 5]);
+    expect(h.cassettes).toContain(18);
+    expect(h.rims).toEqual([4]);
   });
   it("hash01 matches the Python prototype H", () => {
     // Values printed by the Python prototype's H().

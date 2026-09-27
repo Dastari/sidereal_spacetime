@@ -47,6 +47,7 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 import ship_kit_prototype as proto  # noqa: E402  (importable: main() is guarded)
+import ship_kit_modules as modules  # noqa: E402  (r002 universal hull modules: swept closed solids)
 
 SCHEMA = "sidereal.ship-kit-manifest.v1"
 FRAME = "piece-local metres: prototype +X/+Y plan, +Z up; glTF Y-up (x, z, -y)"
@@ -65,7 +66,8 @@ def parse_args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     p = argparse.ArgumentParser()
     p.add_argument("--pieces", default=str(ROOT / "packages/content/src/ship-kit-pieces.v1.json"))
-    p.add_argument("--out", default=str(ROOT / "assets/runtime/ship-kit/r001"))
+    p.add_argument("--out", default=str(ROOT / "assets/runtime/ship-kit/r002"))
+    p.add_argument("--blend", default="", help="save the editable Blender source of every piece here")
     p.add_argument("--sheet", default="")
     p.add_argument("--only", default="")
     p.add_argument("--skip-export", action="store_true", help="verify / render existing GLBs only")
@@ -114,6 +116,12 @@ def slot_materials(theme="federation"):
 
 # ------------------------------------------------------------------------------ pieces
 def build_piece(spec):
+    if spec["builder"] in modules.BUILDERS:
+        piece = modules.BUILDERS[spec["builder"]](*spec["args"])
+        piece.id = spec["id"]
+        if not piece.faces:
+            raise ValueError(f"{spec['id']}: module {spec['builder']}{tuple(spec['args'])} produced no faces")
+        return piece
     piece = getattr(proto, spec["builder"])(*spec["args"])
     piece.id = spec["id"]
     if not piece.boxes:
@@ -198,9 +206,40 @@ def conflict_report(boxes):
                 min_sep_mm=min(seps) if seps else None, seps=seps)
 
 
+def module_object(piece, mats):
+    """Swept-solid module (ship_kit_modules): texel verts -> metres, outward normals, same bevel."""
+    import bmesh
+    me = bpy.data.meshes.new(piece.id)
+    me.from_pydata([(x * T, y * T, z * T) for x, y, z in piece.verts], [], piece.faces)
+    # Bevel corner patches on non-orthogonal joins take material index 0; lead with "dark" so they
+    # read as shadowed seams instead of stray light plates. Runtime maps slots by material name.
+    order = ["dark"] + [s for s in SLOTS if s != "dark"]
+    for s in order:
+        me.materials.append(mats[SLOTS.index(s)])
+    me.polygons.foreach_set("material_index", [order.index(s) for s in piece.slots])
+    bm = bmesh.new()
+    bm.from_mesh(me)
+    bmesh.ops.remove_doubles(bm, verts=bm.verts, dist=1e-6)
+    bmesh.ops.dissolve_degenerate(bm, dist=1e-5, edges=bm.edges)
+    bmesh.ops.recalc_face_normals(bm, faces=bm.faces)
+    bm.to_mesh(me)
+    bm.free()
+    me.polygons.foreach_set("use_smooth", [True] * len(me.polygons))
+    me.update()
+    ob = bpy.data.objects.new(piece.id, me)
+    bpy.context.scene.collection.objects.link(ob)
+    md = ob.modifiers.new("brick", "BEVEL")
+    md.width, md.segments = BEVEL["width"], BEVEL["segments"]
+    md.limit_method, md.angle_limit = "ANGLE", math.radians(BEVEL["angle_deg"])
+    md.harden_normals, md.use_clamp_overlap = True, True
+    return ob
+
+
 def piece_object(piece, mats):
     """ship_kit_prototype.piece_mesh vertex/face layout with the coplanar offsets, culled hidden faces
     and the per-box chamfer bevel."""
+    if isinstance(piece, modules.MeshPiece):
+        return module_object(piece, mats)
     verts, faces, mat_idx = [], [], []
     drop = hidden_faces(piece.boxes)
     for i, (bx, e) in enumerate(zip(piece.boxes, box_offsets(piece.boxes))):
@@ -274,7 +313,7 @@ def glb_stats(path):
                 material_names=names)
 
 
-def export_all(specs, out, only, prior):
+def export_all(specs, out, only, prior, keep=None):
     mats = slot_materials()
     entries, failures = dict(prior), []
     for spec in specs:
@@ -290,8 +329,23 @@ def export_all(specs, out, only, prior):
         export_glb(ob, path)
         me = ob.data
         used = sorted({SLOTS[p.material_index] for p in me.polygons}, key=SLOTS.index)
-        bpy.data.objects.remove(ob)
-        bpy.data.meshes.remove(me)
+        module_bounds = None
+        if isinstance(piece, modules.MeshPiece):
+            # Swept modules: the exported (bevelled) mesh is the truth for slots and bounds.
+            ev = ob.evaluated_get(bpy.context.evaluated_depsgraph_get())
+            em = ev.to_mesh()
+            used = sorted({em.materials[p.material_index].name.split(".")[0] for p in em.polygons}, key=SLOTS.index)
+            xs = [v.co for v in em.vertices]
+            module_bounds = [round(min(c[i] for c in xs) / T, 4) for i in range(3)] + [round(max(c[i] for c in xs) / T, 4) for i in range(3)]
+            ev.to_mesh_clear()
+        if keep is not None:
+            # Keep the editable object (live bevel modifier) for the .blend source, laid out on a grid.
+            k = len(keep)
+            ob.location = ((k % 20) * 6.0, (k // 20) * 6.0, 0.0)
+            keep.append(ob)
+        else:
+            bpy.data.objects.remove(ob)
+            bpy.data.meshes.remove(me)
         st = glb_stats(path)
         if st["materials"] != used:
             failures.append(f"{spec['id']}: GLB materials {st['materials']} != used slots {used}")
@@ -302,7 +356,8 @@ def export_all(specs, out, only, prior):
             "file": f"{spec['id']}.glb",
             "sha256": st["sha256"],
             "triangles": st["triangles"],
-            "bounds": [min(b[0] for b in bx), min(b[1] for b in bx), min(b[2] for b in bx),
+            "bounds": module_bounds if module_bounds is not None else
+                      [min(b[0] for b in bx), min(b[1] for b in bx), min(b[2] for b in bx),
                        max(b[3] for b in bx), max(b[4] for b in bx), max(b[5] for b in bx)],
             "slots": used,
             "decals": [{"kind": k, "rect": list(r), "plane": pl} for k, r, pl in piece.decals],
@@ -312,6 +367,7 @@ def export_all(specs, out, only, prior):
 
 
 def coplanar_summary(specs):
+    specs = [s for s in specs if s["builder"] not in modules.BUILDERS]   # swept modules have no box overlays
     per = {s["id"]: conflict_report(build_piece(s).boxes) for s in specs}
     seps = [r["min_sep_mm"] for r in per.values() if r["min_sep_mm"] is not None]
     return {"piecesWithRaw": sum(1 for r in per.values() if r["raw"]), "raw": sum(r["raw"] for r in per.values()),
@@ -361,7 +417,9 @@ def verify(out, manifest, specs):
         else:
             me = obs[0].data
             me.calc_loop_triangles()
-            if len(me.loop_triangles) != e["triangles"]:
+            # Swept modules: the importer drops the odd zero-area bevel sliver; allow a tiny delta.
+            slack = max(2, e["triangles"] // 1000) if spec["builder"] in modules.BUILDERS else 0
+            if abs(len(me.loop_triangles) - e["triangles"]) > slack:
                 problems.append(f"{spec['id']}: re-import {len(me.loop_triangles)} tris != {e['triangles']}")
             names = sorted({m.name.split(".")[0] for m in me.materials if m}, key=SLOTS.index)
             if names != e["slots"]:
@@ -481,7 +539,20 @@ def main():
     if a.skip_export:
         manifest = json.loads(mpath.read_text())
     else:
-        entries, failures = export_all(specs, out, only, prior)
+        keep = [] if a.blend and not only else None
+        entries, failures = export_all(specs, out, only, prior, keep)
+        if keep:
+            # Editable Blender source: every piece as a mesh object with its live bevel modifier.
+            coll = bpy.data.collections.new(f"ship-kit-{doc['revision']}")
+            bpy.context.scene.collection.children.link(coll)
+            for ob in keep:
+                bpy.context.scene.collection.objects.unlink(ob)
+                coll.objects.link(ob)
+            blend = resolve(a.blend)
+            blend.parent.mkdir(parents=True, exist_ok=True)
+            bpy.ops.wm.save_as_mainfile(filepath=str(blend), compress=True)
+            print(f"SHIP_KIT_BLEND {blend}")
+            clear_scene()
         if not only:
             for stale in sorted(set(p.name for p in out.glob("*.glb")) - {f"{i}.glb" for i in ids}):
                 (out / stale).unlink()

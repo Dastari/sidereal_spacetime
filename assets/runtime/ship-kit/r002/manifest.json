@@ -1,0 +1,9488 @@
+{
+ "frame": "piece-local metres: prototype +X/+Y plan, +Z up; glTF Y-up (x, z, -y)",
+ "pieces": {
+  "canopy.arc1.cabin": {
+   "bounds": [
+    -0.1644,
+    -0.1644,
+    1.0,
+    19.9456,
+    19.9456,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc1.cabin.glb",
+   "sha256": "5251d33fa4dddecb8ff94a4f3f6b48bdd5da3f95b3efb69ac63d62813ef107c0",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1030,
+   "voxelAligned": false
+  },
+  "canopy.arc1.deck": {
+   "bounds": [
+    -0.1644,
+    -0.1644,
+    -0.0,
+    19.9456,
+    19.9456,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.arc1.deck.glb",
+   "sha256": "a29f47119750f761aecb3e1bf2aa949b1b3a95fff9ad09f9b84d1383e62370cd",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1030,
+   "voxelAligned": false
+  },
+  "canopy.arc1.deck.cut": {
+   "bounds": [
+    -0.2466,
+    -0.2466,
+    -0.0,
+    19.9456,
+    19.9456,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc1.deck.cut.glb",
+   "sha256": "8add8eb361ebdaa68f7ae945c6d1ab13ce1dbeb797f0884ca104efe3f9599441",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 874,
+   "voxelAligned": false
+  },
+  "canopy.arc1.plate": {
+   "bounds": [
+    -0.1644,
+    -0.1644,
+    12.0,
+    19.4524,
+    19.4524,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.arc1.plate.glb",
+   "sha256": "07b433dacf3a4eb54e4dc63de3b9f27f61202a0c9b1a18382ec1d970172e0498",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 754,
+   "voxelAligned": false
+  },
+  "canopy.arc1.pod": {
+   "bounds": [
+    -0.1644,
+    -0.1644,
+    3.0,
+    19.9456,
+    19.9456,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.arc1.pod.glb",
+   "sha256": "fb69e7201a26d0014a106dd82ae0a99eefb16c2dea6d8f13f99bb5b6e3f582dd",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1030,
+   "voxelAligned": false
+  },
+  "canopy.arc1.wing": {
+   "bounds": [
+    -0.1644,
+    -0.1644,
+    10.0,
+    19.9456,
+    19.9456,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.arc1.wing.glb",
+   "sha256": "360d3659b78eb67b9fc3cdf6e3cd28fff8e292528941c161f7532dedeee16d19",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 951,
+   "voxelAligned": false
+  },
+  "canopy.arc2.cabin": {
+   "bounds": [
+    -0.083,
+    -0.083,
+    1.0,
+    35.9862,
+    35.9862,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2.cabin.glb",
+   "sha256": "19fb4f94a09c379a11d1dfed5c585efe4b44095c19ac7d45ef43ff2d29669549",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1759,
+   "voxelAligned": false
+  },
+  "canopy.arc2.deck": {
+   "bounds": [
+    -0.083,
+    -0.083,
+    -0.0,
+    35.9862,
+    35.9862,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2.deck.glb",
+   "sha256": "f1e0115288a03d3516d97bf68be615330f2865f4c5aa576100fdf45eb5f55fe7",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1759,
+   "voxelAligned": false
+  },
+  "canopy.arc2.deck.cut": {
+   "bounds": [
+    -0.1246,
+    -0.1246,
+    -0.0,
+    35.9862,
+    35.9862,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2.deck.cut.glb",
+   "sha256": "807c5b4836a85c3da058f18136c9389fc3c4b54ba76f52347a38fb350371e2dc",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1492,
+   "voxelAligned": false
+  },
+  "canopy.arc2.plate": {
+   "bounds": [
+    -0.083,
+    -0.083,
+    12.0,
+    35.4879,
+    35.4879,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2.plate.glb",
+   "sha256": "17d2f7fc8dab7e4958a090705ecd10f1bda9c641b37181f842bb723a59597d04",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1300,
+   "voxelAligned": false
+  },
+  "canopy.arc2.pod": {
+   "bounds": [
+    -0.083,
+    -0.083,
+    3.0,
+    35.9862,
+    35.9862,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2.pod.glb",
+   "sha256": "b88350262a050f658932eb85f916beba0180dc008390e92df81d51a3bf104f46",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1759,
+   "voxelAligned": false
+  },
+  "canopy.arc2.wing": {
+   "bounds": [
+    -0.083,
+    -0.083,
+    10.0,
+    35.9862,
+    35.9862,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2.wing.glb",
+   "sha256": "8bea4694fde483f0efef31f7d55fed95e41526637921194f7e0d2178f16d2ae3",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1631,
+   "voxelAligned": false
+  },
+  "canopy.arc2c.cabin": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    1.0,
+    32.9965,
+    32.9965,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2c.cabin.glb",
+   "sha256": "2d7a79bbb2524163553ad0dc9c7c51ebcd3c26883a5e960e5017365104dc0e6f",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1759,
+   "voxelAligned": false
+  },
+  "canopy.arc2c.deck": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    -0.0,
+    32.9965,
+    32.9965,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2c.deck.glb",
+   "sha256": "9795c8638ea47c92fd35986c32bdbffb085e72d85ab9f67bbf4dabc8a1e9cb68",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1759,
+   "voxelAligned": false
+  },
+  "canopy.arc2c.deck.cut": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    -0.0,
+    33.4948,
+    33.4948,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2c.deck.cut.glb",
+   "sha256": "3cf95163da7e8a5e168beee5a86392406306053b9148a4a5badc3c738e571965",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1491,
+   "voxelAligned": false
+  },
+  "canopy.arc2c.plate": {
+   "bounds": [
+    -0.2907,
+    -0.2907,
+    12.0,
+    32.9965,
+    32.9965,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2c.plate.glb",
+   "sha256": "b25397ae12ad156039b0cd1c72fe4d4de24a9d771409e39e6296d438dc9b4713",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1299,
+   "voxelAligned": false
+  },
+  "canopy.arc2c.pod": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    3.0,
+    32.9965,
+    32.9965,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2c.pod.glb",
+   "sha256": "de81a432240fb76952d422d8bea6f9f4daea36d1b5ce58d39c227c2745e26d6d",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1759,
+   "voxelAligned": false
+  },
+  "canopy.arc2c.wing": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    10.0,
+    32.9965,
+    32.9965,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.arc2c.wing.glb",
+   "sha256": "3af13f87bcb11ee6f9949c27c9cba0351fd64b65508bed232fbdd58c063d6545",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1631,
+   "voxelAligned": false
+  },
+  "canopy.arc3.cabin": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    1.0,
+    51.9882,
+    51.9882,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3.cabin.glb",
+   "sha256": "4eedd2dc14ae662959b89292a909bc7d2f572026a3b1d17511aeb9811bdfc3eb",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2489,
+   "voxelAligned": false
+  },
+  "canopy.arc3.deck": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    -0.0,
+    51.9882,
+    51.9882,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3.deck.glb",
+   "sha256": "5bef76c38792f9e5a0ba166e9d6558028eb7001b99006cf7a8f04228a6907227",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2489,
+   "voxelAligned": false
+  },
+  "canopy.arc3.deck.cut": {
+   "bounds": [
+    -0.115,
+    -0.115,
+    -0.0,
+    51.9882,
+    51.9882,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3.deck.cut.glb",
+   "sha256": "1a8305552f53f15a37dbd2b7c112806b5e4073d159496e994da9b0188cb22a5c",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2110,
+   "voxelAligned": false
+  },
+  "canopy.arc3.plate": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    12.0,
+    51.4897,
+    51.4897,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3.plate.glb",
+   "sha256": "9b9eb5cb409c0609b6b6c718729f2212015342f7cbc54c51610d15f1efa9ca3c",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1845,
+   "voxelAligned": false
+  },
+  "canopy.arc3.pod": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    3.0,
+    51.9882,
+    51.9882,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3.pod.glb",
+   "sha256": "fede6655dd60a70cde3755af7121e61b927236fc06cd0cf45467f496fe06a82a",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2489,
+   "voxelAligned": false
+  },
+  "canopy.arc3.wing": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    10.0,
+    51.9882,
+    51.9882,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3.wing.glb",
+   "sha256": "976b652826754e1c88163ed36ff7cf2a232c4fd9f8aa96e745c7c8eb1ea41868",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2314,
+   "voxelAligned": false
+  },
+  "canopy.arc3c.cabin": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    1.0,
+    48.9971,
+    48.9971,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3c.cabin.glb",
+   "sha256": "6b18e104dda8eb2cab1acaadd601ba106cfe0bc8522c12c44b3b3d6ea46d1442",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2489,
+   "voxelAligned": false
+  },
+  "canopy.arc3c.deck": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    -0.0,
+    48.9971,
+    48.9971,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3c.deck.glb",
+   "sha256": "9cb53c03a7e69e94440eb6bdda4cf396372e6bfa6bc5a60e9402f5b6258d743c",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2489,
+   "voxelAligned": false
+  },
+  "canopy.arc3c.deck.cut": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    -0.0,
+    49.4956,
+    49.4956,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3c.deck.cut.glb",
+   "sha256": "d4fb3a5095c6a953f187fbfc115f80e7180c6ea955d64bd2feb0050e56bcd35d",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2110,
+   "voxelAligned": false
+  },
+  "canopy.arc3c.plate": {
+   "bounds": [
+    -0.2684,
+    -0.2684,
+    12.0,
+    48.9971,
+    48.9971,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3c.plate.glb",
+   "sha256": "7cd54d3aad6e6f86598d96426fd72b41d6f1f4412ab44d61b542d9be3563632c",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 1844,
+   "voxelAligned": false
+  },
+  "canopy.arc3c.pod": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    3.0,
+    48.9971,
+    48.9971,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3c.pod.glb",
+   "sha256": "216681102e925a2efb9731b720219419b1b405cdb17bf972021f99727264c175",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2489,
+   "voxelAligned": false
+  },
+  "canopy.arc3c.wing": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    10.0,
+    48.9971,
+    48.9971,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.arc3c.wing.glb",
+   "sha256": "a3b7c497554d9da97378691a445f5d1c355ed9c990b27600ad8e8e50d079cc1e",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2313,
+   "voxelAligned": false
+  },
+  "canopy.arc4.cabin": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    1.0,
+    67.9882,
+    67.9882,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4.cabin.glb",
+   "sha256": "ee7a920f58f592587f696408389e50fffa64965224cf0e76e5bddc127da38199",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 3232,
+   "voxelAligned": false
+  },
+  "canopy.arc4.deck": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    -0.0,
+    67.9882,
+    67.9882,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4.deck.glb",
+   "sha256": "3d1dfbd9a379fb4e42d5ad190d64d47f60b2be25e50db0d1f96e67b082722c5b",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 3232,
+   "voxelAligned": false
+  },
+  "canopy.arc4.deck.cut": {
+   "bounds": [
+    -0.115,
+    -0.115,
+    -0.0,
+    67.9882,
+    67.9882,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4.deck.cut.glb",
+   "sha256": "42506c60b6e28a506eb5c74074f440482560c7e81e08afd9ce64a1f9cab5dc5d",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2748,
+   "voxelAligned": false
+  },
+  "canopy.arc4.plate": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    12.0,
+    67.4897,
+    67.4897,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4.plate.glb",
+   "sha256": "9308321e9143cd9252163ec115d2b70c0bf3f8e120877436bed944c05f4bcd1f",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2404,
+   "voxelAligned": false
+  },
+  "canopy.arc4.pod": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    3.0,
+    67.9882,
+    67.9882,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4.pod.glb",
+   "sha256": "a68f1652db39ebdf68d83d6f8ed463630625a0465678eb06b45930a7fc49582c",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 3232,
+   "voxelAligned": false
+  },
+  "canopy.arc4.wing": {
+   "bounds": [
+    -0.0767,
+    -0.0767,
+    10.0,
+    67.9882,
+    67.9882,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4.wing.glb",
+   "sha256": "1a579167da4daaee130c05a93e446696aa21a652e308935025af837ab6db8a20",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 3008,
+   "voxelAligned": false
+  },
+  "canopy.arc4c.cabin": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    1.0,
+    64.9971,
+    64.9971,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4c.cabin.glb",
+   "sha256": "019a6cc831f5d29d05cd2359ac492d3598bac60135fd10562bebaa31ed49e381",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 3233,
+   "voxelAligned": false
+  },
+  "canopy.arc4c.deck": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    -0.0,
+    64.9971,
+    64.9971,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4c.deck.glb",
+   "sha256": "361a3674350f23f0eca32012c8cc425cec7cf14e970e57827016f216356b3076",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 3233,
+   "voxelAligned": false
+  },
+  "canopy.arc4c.deck.cut": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    -0.0,
+    65.4956,
+    65.4956,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4c.deck.cut.glb",
+   "sha256": "2398c0f644da7ebe387a185a1ee6940ea387198f23aac0d97447cbcda1d745c2",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2748,
+   "voxelAligned": false
+  },
+  "canopy.arc4c.plate": {
+   "bounds": [
+    -0.2684,
+    -0.2684,
+    12.0,
+    64.9971,
+    64.9971,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4c.plate.glb",
+   "sha256": "73ad34824e68f873fe846e52fd7330965e68c9526e09883b490ee4dae2a34733",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 2404,
+   "voxelAligned": false
+  },
+  "canopy.arc4c.pod": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    3.0,
+    64.9971,
+    64.9971,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4c.pod.glb",
+   "sha256": "a698f6d7783578e5cb317e535bd7b5822c38633590a7820759dbd2fa2fbc75ea",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 3233,
+   "voxelAligned": false
+  },
+  "canopy.arc4c.wing": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    10.0,
+    64.9971,
+    64.9971,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.arc4c.wing.glb",
+   "sha256": "ae6f71ba2b5226f2df174a909998f541515acede81b0d2fb350d2d7afc7250b6",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 3010,
+   "voxelAligned": false
+  },
+  "canopy.slope1.cabin": {
+   "bounds": [
+    -0.7071,
+    -0.7071,
+    1.0,
+    18.8284,
+    18.8284,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.slope1.cabin.glb",
+   "sha256": "caa26b8c398b9ad740b9a54a4d987ed764fa165eb4120b3e3484fdd506cab12d",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 605,
+   "voxelAligned": false
+  },
+  "canopy.slope1.deck": {
+   "bounds": [
+    -0.7071,
+    -0.7071,
+    -0.0,
+    18.8284,
+    18.8284,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.slope1.deck.glb",
+   "sha256": "17a54aa1b9fad3ad553e60f29c921ed89d8b0e6c383f52e597311960f41935d7",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 605,
+   "voxelAligned": false
+  },
+  "canopy.slope1.deck.cut": {
+   "bounds": [
+    -0.9723,
+    -0.9723,
+    -0.125,
+    18.74,
+    18.74,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.slope1.deck.cut.glb",
+   "sha256": "a434ae440cd6de098f3e13bd21093f039bde6045cb7a2476ee7f2b32e5d7a472",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 527,
+   "voxelAligned": false
+  },
+  "canopy.slope1.plate": {
+   "bounds": [
+    -0.7071,
+    -0.7071,
+    12.0,
+    18.4749,
+    18.4749,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.slope1.plate.glb",
+   "sha256": "dbd97c9d564513f8917b3a6d3cb3e30fa21c595e0e9d95f5b42d2ca88f6fd6b3",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 466,
+   "voxelAligned": false
+  },
+  "canopy.slope1.pod": {
+   "bounds": [
+    -0.7071,
+    -0.7071,
+    3.0,
+    18.8284,
+    18.8284,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.slope1.pod.glb",
+   "sha256": "455c7a1bfb055fb01befb6751e9e121459563dd178873fa53a6541c1ffa85b1b",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 605,
+   "voxelAligned": false
+  },
+  "canopy.slope1.wing": {
+   "bounds": [
+    -0.6187,
+    -0.6187,
+    10.0,
+    18.74,
+    18.74,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.slope1.wing.glb",
+   "sha256": "b964c9c3865ae4b3bccd16ffa749587f8e985debdec256da9b5de2fa97c334c2",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 560,
+   "voxelAligned": false
+  },
+  "canopy.slope2.cabin": {
+   "bounds": [
+    -0.4472,
+    -0.8944,
+    1.0,
+    33.7889,
+    19.5777,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.slope2.cabin.glb",
+   "sha256": "30af1c27710efb1660bed8304df51b1fc5e2ac39668fde1dd94d6a076db066c1",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 648,
+   "voxelAligned": false
+  },
+  "canopy.slope2.deck": {
+   "bounds": [
+    -0.4472,
+    -0.8944,
+    -0.0,
+    33.7889,
+    19.5777,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.slope2.deck.glb",
+   "sha256": "53659d275216d066a76e7b3d73bcc850c9392717ea5fd982e04377efc7020c86",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 648,
+   "voxelAligned": false
+  },
+  "canopy.slope2.deck.cut": {
+   "bounds": [
+    -0.6708,
+    -1.3416,
+    -0.0,
+    33.7889,
+    19.5777,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.slope2.deck.cut.glb",
+   "sha256": "8dfc98819f015285913f7e5bc2f24cabea2c5e4401762b31370940e0d7ef8412",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 570,
+   "voxelAligned": false
+  },
+  "canopy.slope2.plate": {
+   "bounds": [
+    -0.4472,
+    -0.8944,
+    12.0,
+    33.5652,
+    19.1305,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.slope2.plate.glb",
+   "sha256": "8be27dae8678d026ac15f1162ee98aab34bdebf56ae4d0723a733654a053b467",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 510,
+   "voxelAligned": false
+  },
+  "canopy.slope2.pod": {
+   "bounds": [
+    -0.4472,
+    -0.8944,
+    3.0,
+    33.7889,
+    19.5777,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.slope2.pod.glb",
+   "sha256": "b967afe0ac511e0c442215b138fcb7a4cf50a489d01b5c076f2c52b21d117065",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 648,
+   "voxelAligned": false
+  },
+  "canopy.slope2.wing": {
+   "bounds": [
+    -0.4472,
+    -0.8944,
+    10.0,
+    33.7889,
+    19.5777,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.slope2.wing.glb",
+   "sha256": "a0d58c999540a4fd6d7f2274d6f45a1f86b271ac4880625770fd0232e69be005",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 605,
+   "voxelAligned": false
+  },
+  "canopy.slope3.cabin": {
+   "bounds": [
+    -0.3162,
+    -0.9487,
+    1.0,
+    49.2649,
+    19.7947,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.slope3.cabin.glb",
+   "sha256": "48c44d493b0e7fd02ccefa2c028b24417ff8181b6d4c462f8db8b6e6f0e121dd",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 737,
+   "voxelAligned": false
+  },
+  "canopy.slope3.deck": {
+   "bounds": [
+    -0.3162,
+    -0.9487,
+    -0.0,
+    49.2649,
+    19.7947,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.slope3.deck.glb",
+   "sha256": "dae326504b8fd69bf758dd08939a14eeb289f90b83f0c492821551b0151e00e1",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 737,
+   "voxelAligned": false
+  },
+  "canopy.slope3.deck.cut": {
+   "bounds": [
+    -0.4743,
+    -1.423,
+    -0.0,
+    49.2649,
+    19.7947,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.slope3.deck.cut.glb",
+   "sha256": "726fdffbdaabeea91eae0d118121f24705465fb98e4613d903fa04099682d858",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 659,
+   "voxelAligned": false
+  },
+  "canopy.slope3.plate": {
+   "bounds": [
+    -0.3162,
+    -0.9487,
+    12.0,
+    49.1068,
+    19.3204,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.slope3.plate.glb",
+   "sha256": "391501fd1a5009315d7ca29a704219eec6f0e8cb49881dbe2cd942b8d62df86b",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 599,
+   "voxelAligned": false
+  },
+  "canopy.slope3.pod": {
+   "bounds": [
+    -0.3162,
+    -0.9487,
+    3.0,
+    49.2649,
+    19.7947,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.slope3.pod.glb",
+   "sha256": "070170f44a64fbb625b0df5cde0dcb25d0c47f9a24f6dc2ed20bd13f5cac911c",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 737,
+   "voxelAligned": false
+  },
+  "canopy.slope3.wing": {
+   "bounds": [
+    -0.3162,
+    -0.9487,
+    10.0,
+    49.2649,
+    19.7947,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.slope3.wing.glb",
+   "sha256": "2e2ccdc41eb013221352907c01fa17c7f4213b1e301cea2889aab003f7e6d9e1",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 692,
+   "voxelAligned": false
+  },
+  "canopy.slope4.cabin": {
+   "bounds": [
+    -0.2425,
+    -0.9701,
+    1.0,
+    64.9701,
+    19.8806,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.slope4.cabin.glb",
+   "sha256": "c0a9ba357fe16d3f07d4142417f54dac280e06339063db319f48ea7a157cf9a1",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 825,
+   "voxelAligned": false
+  },
+  "canopy.slope4.deck": {
+   "bounds": [
+    -0.2425,
+    -0.9701,
+    -0.0,
+    64.9701,
+    19.8806,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.slope4.deck.glb",
+   "sha256": "645cf0b190dbbfa887390f1153e670efa0990b48d3e1c447eabc020dc8b43a05",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 825,
+   "voxelAligned": false
+  },
+  "canopy.slope4.deck.cut": {
+   "bounds": [
+    -0.3638,
+    -1.4552,
+    -0.0,
+    64.9701,
+    19.8806,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.slope4.deck.cut.glb",
+   "sha256": "2001a4ccab7c4ba588edfdc40b27e96241401f5b5c8b6d0396008136b52f1c58",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 747,
+   "voxelAligned": false
+  },
+  "canopy.slope4.plate": {
+   "bounds": [
+    -0.2425,
+    -0.9701,
+    12.0,
+    64.8489,
+    19.3955,
+    20.0
+   ],
+   "decals": [],
+   "file": "canopy.slope4.plate.glb",
+   "sha256": "effc968a47bb4b535eb30f52c7f38029b01cf41aaad94eda650207a3597a31e4",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 687,
+   "voxelAligned": false
+  },
+  "canopy.slope4.pod": {
+   "bounds": [
+    -0.2425,
+    -0.9701,
+    3.0,
+    64.9701,
+    19.8806,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.slope4.pod.glb",
+   "sha256": "417a7585ed872e7b2c48adb4eb5ac4f112abda31b30fffcb4a71e824cbbbcec5",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 825,
+   "voxelAligned": false
+  },
+  "canopy.slope4.wing": {
+   "bounds": [
+    -0.2425,
+    -0.9701,
+    10.0,
+    64.9701,
+    19.8806,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.slope4.wing.glb",
+   "sha256": "f4fb4b83693a0094c71e2bada88e5d0349a2e3b4ff9b29e0eeb871d51dbdeea3",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 780,
+   "voxelAligned": false
+  },
+  "canopy.straight.w1.cabin": {
+   "bounds": [
+    -0.125,
+    -1.0,
+    0.875,
+    16.125,
+    4.0,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.straight.w1.cabin.glb",
+   "sha256": "b18faedb862d2a8d93c29b641877df4fd3f51683cd595be68421d76b60b0119f",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 560,
+   "voxelAligned": false
+  },
+  "canopy.straight.w1.deck": {
+   "bounds": [
+    -0.125,
+    -1.0,
+    -0.125,
+    16.125,
+    4.0,
+    43.0
+   ],
+   "decals": [],
+   "file": "canopy.straight.w1.deck.glb",
+   "sha256": "1e667db71b253dd5f2eb726190d8752f1d9a93eddffbe342a50c6a47d8ffa1ef",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 560,
+   "voxelAligned": false
+  },
+  "canopy.straight.w1.deck.cut": {
+   "bounds": [
+    -0.0,
+    -1.5,
+    -0.0,
+    16.0,
+    4.0,
+    32.0
+   ],
+   "decals": [],
+   "file": "canopy.straight.w1.deck.cut.glb",
+   "sha256": "75fd330e1a01d0646ebc5d48126faf8bedbc7f4acf9297316ced82780db39625",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 483,
+   "voxelAligned": false
+  },
+  "canopy.straight.w1.plate": {
+   "bounds": [
+    -0.125,
+    -1.0,
+    12.0,
+    16.125,
+    3.5,
+    20.125
+   ],
+   "decals": [],
+   "file": "canopy.straight.w1.plate.glb",
+   "sha256": "23862f460a8163b71c0808d72f633392dad3b33bdf31a5e3f8f9731455ec5cbf",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 422,
+   "voxelAligned": false
+  },
+  "canopy.straight.w1.pod": {
+   "bounds": [
+    -0.125,
+    -1.0,
+    2.875,
+    16.125,
+    4.0,
+    39.0
+   ],
+   "decals": [],
+   "file": "canopy.straight.w1.pod.glb",
+   "sha256": "73624e31c0dbc89e17d04a5c35f2e0de6bdd3a278c2d9a4448328b58f3d7dafa",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 560,
+   "voxelAligned": false
+  },
+  "canopy.straight.w1.wing": {
+   "bounds": [
+    -0.0,
+    -1.0,
+    10.0,
+    16.0,
+    4.0,
+    28.0
+   ],
+   "decals": [],
+   "file": "canopy.straight.w1.wing.glb",
+   "sha256": "dadfd25f42f2c9a6fea46ac181bd40064d7e77f95e1748ca10127a8a26393777",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 516,
+   "voxelAligned": false
+  },
+  "cas.armor.w1.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.armor.w1.h14.glb",
+   "sha256": "c0af04e9c317d84669d7c436f016de6107cccbffb5c92c0671df44546f90eb9c",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 334,
+   "voxelAligned": true
+  },
+  "cas.armor.w1.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.armor.w1.h18.glb",
+   "sha256": "0a0573cc2c0a217bb0851e4631791da263468825a4a377d8a7cddbf7d5c1ae8a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 334,
+   "voxelAligned": true
+  },
+  "cas.armor.w1.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.armor.w1.h22.glb",
+   "sha256": "e9d740c5643445d8371afc3671e25af915e9d7205956e2423615801702dbb1ef",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 334,
+   "voxelAligned": true
+  },
+  "cas.armor.w2.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.armor.w2.h14.glb",
+   "sha256": "d0e9b38e8e9c724b8c851417d73e73fa66191aea82a4653e4b9c200496b6485d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 456,
+   "voxelAligned": true
+  },
+  "cas.armor.w2.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "cas.armor.w2.h16.glb",
+   "sha256": "cd9bca71d395a20e76ec843c8e0e41c5ba662d811e95a2b4ecf4e748c42baabb",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 456,
+   "voxelAligned": true
+  },
+  "cas.armor.w2.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.armor.w2.h18.glb",
+   "sha256": "bc01a12cdcb3cb55ac92722538a7d71cbdda84221b3f18801c80e764dd9b66db",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 456,
+   "voxelAligned": true
+  },
+  "cas.armor.w2.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.armor.w2.h22.glb",
+   "sha256": "950435b852f051e1687ca10718a12cdc6d9e4ef8e3d5d5cf31f9bf650017a7c6",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 456,
+   "voxelAligned": true
+  },
+  "cas.armor.w3.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.armor.w3.h14.glb",
+   "sha256": "d76b5e30aaa3816fe87fea35c2dbb19561e3c82c6a8fdd0e5acd1086de337809",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 582,
+   "voxelAligned": true
+  },
+  "cas.armor.w3.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "cas.armor.w3.h16.glb",
+   "sha256": "9ae52fe32d1ae8b59be752606d45b15e9c0c22b08579e235d95d7c70fd5f7df2",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 582,
+   "voxelAligned": true
+  },
+  "cas.armor.w3.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.armor.w3.h18.glb",
+   "sha256": "38251fa2e37f5754e2b6ebc0087a3c8e24a47c0d0f015337b3067afc6b6c810a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 582,
+   "voxelAligned": true
+  },
+  "cas.armor.w3.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.armor.w3.h22.glb",
+   "sha256": "4c76baca88991fa1fc79dc0dd10a8640d597113f78f53292c495f1c26090c431",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 582,
+   "voxelAligned": true
+  },
+  "cas.beacon.w1.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    11
+   ],
+   "decals": [],
+   "file": "cas.beacon.w1.h11.glb",
+   "sha256": "2cf25ca0d9db7ceff75fce3286fc253b84b86c7e5c0e7e4db3c6e82fc01cdfaf",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "cas.beacon.w1.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    14
+   ],
+   "decals": [],
+   "file": "cas.beacon.w1.h14.glb",
+   "sha256": "f82e8ab599694f499109c156e173c62606faf32ea0e8c93fc960b92fe1e6291a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "cas.beacon.w1.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    16
+   ],
+   "decals": [],
+   "file": "cas.beacon.w1.h16.glb",
+   "sha256": "56c51c4aa0390eb26a0eb4d4b651b0029f0290fa929d067f57ba3f8fa177d4d2",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "cas.beacon.w1.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    18
+   ],
+   "decals": [],
+   "file": "cas.beacon.w1.h18.glb",
+   "sha256": "4f6856456b81d71388224bb5aa431b03f765152350febae57ccee0f81187a0d9",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "cas.beacon.w1.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    22
+   ],
+   "decals": [],
+   "file": "cas.beacon.w1.h22.glb",
+   "sha256": "60893a14cf205f05cb75208b6b0fd8bd8c29104a365ff585a5fe8704a682d7fe",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "cas.beacon.w2.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    6,
+    11
+   ],
+   "decals": [],
+   "file": "cas.beacon.w2.h11.glb",
+   "sha256": "c5f9976c6f18aa5aa24c59deb6aa791e5fe9d1c241c59b5eb636f8bd8c974c00",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "cas.grille.w1.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    3,
+    11
+   ],
+   "decals": [],
+   "file": "cas.grille.w1.h11.glb",
+   "sha256": "609f760aea55899306d005839704a10a704dcdd926b184b27b089e9ea425cbfc",
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 166,
+   "voxelAligned": true
+  },
+  "cas.grille.w1.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    3,
+    14
+   ],
+   "decals": [],
+   "file": "cas.grille.w1.h14.glb",
+   "sha256": "c862136f55f4c81c93c3d2ef6176c1017f84bb6b8c93a376b636b54791ebddb2",
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 176,
+   "voxelAligned": true
+  },
+  "cas.grille.w1.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    3,
+    16
+   ],
+   "decals": [],
+   "file": "cas.grille.w1.h16.glb",
+   "sha256": "efc00f6434bad866030fa832250993490c9998b0a08643ee3452c04db365d357",
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 186,
+   "voxelAligned": true
+  },
+  "cas.grille.w1.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    3,
+    18
+   ],
+   "decals": [],
+   "file": "cas.grille.w1.h18.glb",
+   "sha256": "5c0d94821be6b5a2cb9d69549b073004e358a71106eec1b9ef32a1ee53aea1b8",
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 196,
+   "voxelAligned": true
+  },
+  "cas.grille.w1.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    3,
+    22
+   ],
+   "decals": [],
+   "file": "cas.grille.w1.h22.glb",
+   "sha256": "8106a3078c02b6c2776242263ca8af8cafee85aa7c2b446397b4e0c95c8c06d2",
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 216,
+   "voxelAligned": true
+  },
+  "cas.grille.w2.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    3,
+    11
+   ],
+   "decals": [],
+   "file": "cas.grille.w2.h11.glb",
+   "sha256": "715274638a5edd611f89485a1c6d493e8e3ae67e495a40edfb6110e6a673c8c6",
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 166,
+   "voxelAligned": true
+  },
+  "cas.hatch.w2.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    14
+   ],
+   "decals": [],
+   "file": "cas.hatch.w2.h14.glb",
+   "sha256": "824b53a8d8f5eed276d7018d733b8f542b75127a6c5708b707f80b5a0e4c81fa",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 320,
+   "voxelAligned": true
+  },
+  "cas.hatch.w2.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    16
+   ],
+   "decals": [],
+   "file": "cas.hatch.w2.h16.glb",
+   "sha256": "16df8e25db3e1ee4042c75475bc06bc8e4974ebbf55ee2d8e19ef6c3a44c85dd",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 320,
+   "voxelAligned": true
+  },
+  "cas.hatch.w2.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    18
+   ],
+   "decals": [],
+   "file": "cas.hatch.w2.h18.glb",
+   "sha256": "32e69f503d64e37f3d7416b4024fa1179811528f8117f29a81ff0af5e5bb90af",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 320,
+   "voxelAligned": true
+  },
+  "cas.hatch.w2.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    22
+   ],
+   "decals": [],
+   "file": "cas.hatch.w2.h22.glb",
+   "sha256": "dac21f36443f05beb81f63044be9e4abfaa7fa7a18921e7404bbd553f749ccba",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 320,
+   "voxelAligned": true
+  },
+  "cas.light.w1.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    11
+   ],
+   "decals": [],
+   "file": "cas.light.w1.h11.glb",
+   "sha256": "687bdfdc8279780a412b7e7100d8ff8bfa696d379ceddcd53e95175693e56929",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 164,
+   "voxelAligned": true
+  },
+  "cas.light.w1.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    14
+   ],
+   "decals": [],
+   "file": "cas.light.w1.h14.glb",
+   "sha256": "4ffbc18596feb195e2b70987fed5c3b7f0e7a5f052164eaecf9d3f41996291ca",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 164,
+   "voxelAligned": true
+  },
+  "cas.light.w1.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    16
+   ],
+   "decals": [],
+   "file": "cas.light.w1.h16.glb",
+   "sha256": "7abd3ff5a95fda019a26feb1c98450161d9c723325071cdaed5230a47f50ec10",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 164,
+   "voxelAligned": true
+  },
+  "cas.light.w1.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    18
+   ],
+   "decals": [],
+   "file": "cas.light.w1.h18.glb",
+   "sha256": "9ecd66aba2d4895ed94dc42767b67c2ffb8d03c162450e5e955625761b9458f1",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 164,
+   "voxelAligned": true
+  },
+  "cas.light.w1.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    22
+   ],
+   "decals": [],
+   "file": "cas.light.w1.h22.glb",
+   "sha256": "27c0a6412317514b1c089de72ac4a43cea5374b45a1b0dd97565615effb3c873",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 164,
+   "voxelAligned": true
+  },
+  "cas.light.w2.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    11
+   ],
+   "decals": [],
+   "file": "cas.light.w2.h11.glb",
+   "sha256": "bac3d59f41fb21bc8c31f44203c7bc7813fb6e7096e9dc1e6bd47c7a93bc6351",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 164,
+   "voxelAligned": true
+  },
+  "cas.logo.w3.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    3,
+    16
+   ],
+   "decals": [
+    {
+     "kind": "name",
+     "plane": "face",
+     "rect": [
+      3,
+      3,
+      45,
+      13
+     ]
+    }
+   ],
+   "file": "cas.logo.w3.h16.glb",
+   "sha256": "eb810c84b1162e231803dcf7ac2140272017e25428ab94593f6c311d793400d7",
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "triangles": 124,
+   "voxelAligned": true
+  },
+  "cas.module.w1.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    11
+   ],
+   "decals": [],
+   "file": "cas.module.w1.h11.glb",
+   "sha256": "b30d282d41a57bc5a177ea8319c98d79cd3f979b2139f63ecc9bee2fd601d7aa",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 244,
+   "voxelAligned": true
+  },
+  "cas.module.w1.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    14
+   ],
+   "decals": [],
+   "file": "cas.module.w1.h14.glb",
+   "sha256": "83eb11d4600e0b9b246981f7610bf80e271bcc6f899eda09d633a2f33e80cbc3",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 298,
+   "voxelAligned": true
+  },
+  "cas.module.w1.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    16
+   ],
+   "decals": [],
+   "file": "cas.module.w1.h16.glb",
+   "sha256": "b7a224713706b8a36edd162cc8d92ff472164951a74b9ac02ec1f1a352b65db3",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 238,
+   "voxelAligned": true
+  },
+  "cas.module.w1.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    18
+   ],
+   "decals": [],
+   "file": "cas.module.w1.h18.glb",
+   "sha256": "ec2cbea125b34ed19a88cb932cb2ba96589e7d5180708fcc16dab60b7b7868a4",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 328,
+   "voxelAligned": true
+  },
+  "cas.module.w1.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    5,
+    22
+   ],
+   "decals": [],
+   "file": "cas.module.w1.h22.glb",
+   "sha256": "6d38a7664b867784164068b3764da51ad463301ca889b42a5354c32f63063311",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 358,
+   "voxelAligned": true
+  },
+  "cas.module.w2.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    11
+   ],
+   "decals": [],
+   "file": "cas.module.w2.h11.glb",
+   "sha256": "64ad25d88b1b4921a79c2f3e5a7ff3a990d55c8668017023015d1ec6b72ebb4a",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 244,
+   "voxelAligned": true
+  },
+  "cas.module.w2.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    14
+   ],
+   "decals": [],
+   "file": "cas.module.w2.h14.glb",
+   "sha256": "c9102664c19febe041f3c4bd868a596f69b4751f9a4498571b23d8fdcc18eb24",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 298,
+   "voxelAligned": true
+  },
+  "cas.module.w2.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    16
+   ],
+   "decals": [],
+   "file": "cas.module.w2.h16.glb",
+   "sha256": "1c5d6c61be3be51c9ebdd41883d82a3d9f999c1a5ad20e97390fe8b4a41a1de0",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 238,
+   "voxelAligned": true
+  },
+  "cas.module.w2.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    18
+   ],
+   "decals": [],
+   "file": "cas.module.w2.h18.glb",
+   "sha256": "4fc9715e4174eda305035a55d3731c23d6a28b733a841238553e6eb49d5567a3",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 328,
+   "voxelAligned": true
+  },
+  "cas.module.w2.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    5,
+    22
+   ],
+   "decals": [],
+   "file": "cas.module.w2.h22.glb",
+   "sha256": "d61d6cb8dd8d5f0ab7bcf0ba54557be1e08446bd475589d1f8ec9eef5823d990",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 358,
+   "voxelAligned": true
+  },
+  "cas.panel.w2.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.panel.w2.h14.glb",
+   "sha256": "170c1de64bd77930b125a84eb7c402ff10b4dd852d36f2de8ba57829201e7848",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 268,
+   "voxelAligned": true
+  },
+  "cas.panel.w2.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "cas.panel.w2.h16.glb",
+   "sha256": "865e7ca72cfc6db24e8cd20ef418e5883e99c59d02cb59120c17d46868818868",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 268,
+   "voxelAligned": true
+  },
+  "cas.panel.w2.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.panel.w2.h18.glb",
+   "sha256": "828f0332f5d577d6a7956efc99ef78ca9208d1d65ff3c41d1cddb83621abfa7a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 270,
+   "voxelAligned": true
+  },
+  "cas.panel.w2.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.panel.w2.h22.glb",
+   "sha256": "5bd7c54b245780a536925cd64fc726cbb27378c5933479b000c1f8105f2fd662",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 270,
+   "voxelAligned": true
+  },
+  "cas.panel.w3.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.panel.w3.h14.glb",
+   "sha256": "aaf2f8ed11e48b183c738a56226296ca50757ab200193e0982acac4585a6ac65",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 268,
+   "voxelAligned": true
+  },
+  "cas.panel.w3.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "cas.panel.w3.h16.glb",
+   "sha256": "3ea1ff59c845bcbb7ddf0d581d8d9303d3f9ec34d6fca7113a3a26d2634ea6db",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 268,
+   "voxelAligned": true
+  },
+  "cas.panel.w3.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.panel.w3.h18.glb",
+   "sha256": "62fa045c7f90fc4087749afb66603d37532324bec07a46994d9df933913f3a6a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 270,
+   "voxelAligned": true
+  },
+  "cas.panel.w3.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.panel.w3.h22.glb",
+   "sha256": "9feedae278ac14bfe2c823bba38c8e4526e24b2af50c2cc03e2aac92126b7d5f",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 270,
+   "voxelAligned": true
+  },
+  "cas.pipes.w1.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    4,
+    11
+   ],
+   "decals": [],
+   "file": "cas.pipes.w1.h11.glb",
+   "sha256": "f3c269491dba18408ac51c9a8701836ef0ec7b73a14e4c7af6534c629cb5a670",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 240,
+   "voxelAligned": true
+  },
+  "cas.pipes.w1.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.pipes.w1.h14.glb",
+   "sha256": "b1717aeb6cd7c30356a15046db20b820b8fa19ed43624cbb87dafad8d17c20ce",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 258,
+   "voxelAligned": true
+  },
+  "cas.pipes.w1.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "cas.pipes.w1.h16.glb",
+   "sha256": "aa5c0812e60df489a0554cbf2280e5122fa5e948854df3bac39b0f10472f8361",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 281,
+   "voxelAligned": true
+  },
+  "cas.pipes.w1.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.pipes.w1.h18.glb",
+   "sha256": "d217ef10a32568236a84a75f832f427e7f71e050fa713a62a673fdb29194167a",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 288,
+   "voxelAligned": true
+  },
+  "cas.pipes.w1.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.pipes.w1.h22.glb",
+   "sha256": "ce8107c594f2598ceefc8a499997288f35265bd598d4dad011cc20357be76864",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 318,
+   "voxelAligned": true
+  },
+  "cas.pipes.w2.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    11
+   ],
+   "decals": [],
+   "file": "cas.pipes.w2.h11.glb",
+   "sha256": "6edfad5182e49a516cd65d6928ef950fb9ac6df9c4815038268aab461f461a11",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 300,
+   "voxelAligned": true
+  },
+  "cas.pipes.w2.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.pipes.w2.h14.glb",
+   "sha256": "c51b3d8f821fe1c75792f07fbd566a10492655e44d968a7a1a2b1d8bd5f1c13d",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 328,
+   "voxelAligned": true
+  },
+  "cas.pipes.w2.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "cas.pipes.w2.h16.glb",
+   "sha256": "8109927dad9c31f83742d2a0fedb29c048565a85981ac2cbaafb71e7234f93d8",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 348,
+   "voxelAligned": true
+  },
+  "cas.pipes.w2.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.pipes.w2.h18.glb",
+   "sha256": "f48d1b3a07619348f21aad48f4d657d0564cb971d4b7407fd17e3961f4b11fb4",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 358,
+   "voxelAligned": true
+  },
+  "cas.pipes.w2.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.pipes.w2.h22.glb",
+   "sha256": "7988108011fb6fdd7193595624fbf2edaedf5dd9cdd9d02c04792429c1397293",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 388,
+   "voxelAligned": true
+  },
+  "cas.pipes.w3.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.pipes.w3.h14.glb",
+   "sha256": "db64c5412a67d7adb92848c2af522dddcac0df620b43fb7dbb324fd6b1921dae",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 404,
+   "voxelAligned": true
+  },
+  "cas.pipes.w3.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "cas.pipes.w3.h16.glb",
+   "sha256": "a73c3692ba5b956d58a9b5164ed1aa05c3200cec1ec3d9d1e1b9a24bc9422fc5",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 424,
+   "voxelAligned": true
+  },
+  "cas.pipes.w3.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.pipes.w3.h18.glb",
+   "sha256": "eb24d0db5261bb404f06240656f00af73955487e63be962dee9b637cc199677f",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 434,
+   "voxelAligned": true
+  },
+  "cas.pipes.w3.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.pipes.w3.h22.glb",
+   "sha256": "34eb14b37ed1f01985732334b0f7fd81e5b4351a58ce8f3b2569c370e831d501",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 464,
+   "voxelAligned": true
+  },
+  "cas.split.w2.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.split.w2.h14.glb",
+   "sha256": "d8eb1faaa9b4e45138c6475a0a5e2ff5e75680a085ef188d1c0e3353d9dc793e",
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 192,
+   "voxelAligned": true
+  },
+  "cas.split.w2.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "cas.split.w2.h16.glb",
+   "sha256": "cacf48f8a20cefd2c37d9535d3dd78eaeea6f69624c3c350b381442e19fc8ad1",
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 192,
+   "voxelAligned": true
+  },
+  "cas.split.w2.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.split.w2.h18.glb",
+   "sha256": "4ec34e3810ecde69059e9d7de5b167958fab5fba5fd418e54ca24cb41f38b073",
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 222,
+   "voxelAligned": true
+  },
+  "cas.split.w2.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.split.w2.h22.glb",
+   "sha256": "8f3fecd272a0795a4f6444bdf2733e4b6de1db261e5edc429a38225f44f415b1",
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 222,
+   "voxelAligned": true
+  },
+  "cas.split.w3.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    14
+   ],
+   "decals": [],
+   "file": "cas.split.w3.h14.glb",
+   "sha256": "e6cc1fae09876ee75674d1ea186a00aa4ccc75e0a7b3827e6083072d1288c3b5",
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 192,
+   "voxelAligned": true
+  },
+  "cas.split.w3.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "cas.split.w3.h16.glb",
+   "sha256": "c3c7de637da2c6f531c85d561f0222da69a883d31df1fdb3a3ea68183616b10a",
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 192,
+   "voxelAligned": true
+  },
+  "cas.split.w3.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "cas.split.w3.h18.glb",
+   "sha256": "b76dcbec6d25738638f3c61757bc351ab80aa17a184ac1ccc2974b4468a30b48",
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 222,
+   "voxelAligned": true
+  },
+  "cas.split.w3.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    22
+   ],
+   "decals": [],
+   "file": "cas.split.w3.h22.glb",
+   "sha256": "d8bb99c30b2935f64300a9572b30e2dfe2c7bdbf0a4833457e3a71c52dc7272f",
+   "slots": [
+    "primary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 222,
+   "voxelAligned": true
+  },
+  "cas.stack.w1.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    11
+   ],
+   "decals": [],
+   "file": "cas.stack.w1.h11.glb",
+   "sha256": "94f7cb66611bf38cd6be158013c3f36ecb8cd75e0aa318a201fc248a776caf36",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 178,
+   "voxelAligned": true
+  },
+  "cas.stack.w1.h14": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    14
+   ],
+   "decals": [],
+   "file": "cas.stack.w1.h14.glb",
+   "sha256": "b0d231e223ad7904941f5702cf66bf7035b5d7628e6c3a00ab72431e0afa8e5a",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 164,
+   "voxelAligned": true
+  },
+  "cas.stack.w1.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    16
+   ],
+   "decals": [],
+   "file": "cas.stack.w1.h16.glb",
+   "sha256": "bb7d69c1b0d188341f96cdb9d98ec60ef0a203b8c2de2315eae65a91a135ab70",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 164,
+   "voxelAligned": true
+  },
+  "cas.stack.w1.h18": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    18
+   ],
+   "decals": [],
+   "file": "cas.stack.w1.h18.glb",
+   "sha256": "2bfe5d694e5f13d95c9018e890821e95e291c8a9bc1461074866ce1a6798d873",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "cas.stack.w1.h22": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    6,
+    22
+   ],
+   "decals": [],
+   "file": "cas.stack.w1.h22.glb",
+   "sha256": "c06eea163738df7abe2bb301cf6f32f600dfa7259d4e5261a8790ee69bcf93c5",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "cas.stack.w2.h11": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    6,
+    11
+   ],
+   "decals": [],
+   "file": "cas.stack.w2.h11.glb",
+   "sha256": "25803782ba6d4ff1c8bd095950224772f770aa4b2ce7def60593f45971dcfa10",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 178,
+   "voxelAligned": true
+  },
+  "deco.antenna": {
+   "bounds": [
+    0,
+    0,
+    0,
+    4,
+    4,
+    18
+   ],
+   "decals": [],
+   "file": "deco.antenna.glb",
+   "sha256": "dd9814e95f8c8eb2a9af245f0915bf78106d91b90f08b7448f1bf72977ef996d",
+   "slots": [
+    "secondary",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 90,
+   "voxelAligned": true
+  },
+  "deco.crystal": {
+   "bounds": [
+    0,
+    0,
+    0,
+    6,
+    6,
+    20
+   ],
+   "decals": [],
+   "file": "deco.crystal.glb",
+   "sha256": "86818758c6e27587143c07068f3568be38fabc4bff4dba1a441c4c8ba9402901",
+   "slots": [
+    "trim",
+    "emit_a"
+   ],
+   "triangles": 104,
+   "voxelAligned": true
+  },
+  "deco.spike": {
+   "bounds": [
+    0,
+    0,
+    0,
+    6,
+    6,
+    14
+   ],
+   "decals": [],
+   "file": "deco.spike.glb",
+   "sha256": "14d372f25a8a3629dcc56f3ffb270e55fd3eae7e6a882b20f7eb7b25b7de979d",
+   "slots": [
+    "trim",
+    "metal"
+   ],
+   "triangles": 104,
+   "voxelAligned": true
+  },
+  "ext.airlock": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    7,
+    40
+   ],
+   "decals": [],
+   "file": "ext.airlock.glb",
+   "sha256": "ea82d5a063922a1fa3e1e29c557823dba3e4986ab8d1b4a0928d4bc9f6370302",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1242,
+   "voxelAligned": true
+  },
+  "face.arc1.cabin": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    1.0,
+    19.9456,
+    19.9456,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc1.cabin.glb",
+   "sha256": "cccbfa97170f4bc2247a4b0af267060d9c07b3043a43e0a7938ff6376c80feef",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1756,
+   "voxelAligned": false
+  },
+  "face.arc1.deck": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    -0.0,
+    20.0375,
+    20.155,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.arc1.deck.glb",
+   "sha256": "a11656ac6db00083934e186109fc6ecab8788d98764d328015dc2d500006571a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1924,
+   "voxelAligned": false
+  },
+  "face.arc1.deck.cut": {
+   "bounds": [
+    -0.2466,
+    -0.2466,
+    -0.0,
+    19.9456,
+    20.155,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc1.deck.cut.glb",
+   "sha256": "edbb4b56a865019c3dd231d7b934c638878002a5763af78af6fd4047409dc4cd",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1768,
+   "voxelAligned": false
+  },
+  "face.arc1.plate": {
+   "bounds": [
+    0.0316,
+    0.0316,
+    12.0,
+    18.7024,
+    19.6746,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.arc1.plate.glb",
+   "sha256": "e308f1b0c2fd51b32ad7f4827d52aeb4721529b6a32467233708dbe76ef63b37",
+   "slots": [
+    "primary",
+    "secondary",
+    "dark"
+   ],
+   "triangles": 332,
+   "voxelAligned": false
+  },
+  "face.arc1.pod": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    3.0,
+    19.9456,
+    20.155,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.arc1.pod.glb",
+   "sha256": "2fdd728483888ecd3a95af4165ce142945a62fd0e0f85ee63b91b53ebb5afb7b",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1804,
+   "voxelAligned": false
+  },
+  "face.arc1.wing": {
+   "bounds": [
+    -0.0,
+    0.0,
+    10.0,
+    19.9456,
+    19.9456,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.arc1.wing.glb",
+   "sha256": "0efb71098e9ff97f4c5fa3c426b210b0e1da6aea5b5d94f1e30249b1266c582a",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1200,
+   "voxelAligned": false
+  },
+  "face.arc2.cabin": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    1.0,
+    35.9862,
+    35.9862,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc2.cabin.glb",
+   "sha256": "c34be4e7346a537a1c91a7c47260a6fc648b5394791d80ee82726634425c3d89",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1716,
+   "voxelAligned": false
+  },
+  "face.arc2.deck": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    -0.0,
+    35.9862,
+    35.9862,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.arc2.deck.glb",
+   "sha256": "3b8394a5636a03146a068fcb4d8eb616c3def8912a31bb222168a80cc29558b8",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 2080,
+   "voxelAligned": false
+  },
+  "face.arc2.deck.cut": {
+   "bounds": [
+    -0.1246,
+    -0.1246,
+    -0.0,
+    35.9862,
+    35.9862,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc2.deck.cut.glb",
+   "sha256": "4f558f3cfc229c066602503bb140bb0ae9da6dcf9eed0a89972d347fae51c341",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1944,
+   "voxelAligned": false
+  },
+  "face.arc2.plate": {
+   "bounds": [
+    0.0159,
+    0.0159,
+    12.0,
+    35.3387,
+    35.9492,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.arc2.plate.glb",
+   "sha256": "acf530958d1013734a4ccf42400a47f8a033f53e8e3f4f0873f1b522df2f0def",
+   "slots": [
+    "primary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "triangles": 688,
+   "voxelAligned": false
+  },
+  "face.arc2.pod": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    3.0,
+    35.9862,
+    35.9862,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.arc2.pod.glb",
+   "sha256": "4b68da49241a50929e574ee0d9f53b661b2386075984629f3bb0b30b59ae8242",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 2020,
+   "voxelAligned": false
+  },
+  "face.arc2.wing": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    10.0,
+    35.9862,
+    35.9862,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.arc2.wing.glb",
+   "sha256": "84a8345b1aa08f7ae948c85c322089d457fd5db2dc75e540f82e574522c68ba7",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1284,
+   "voxelAligned": false
+  },
+  "face.arc2c.cabin": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    1.0,
+    32.0,
+    32.0,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc2c.cabin.glb",
+   "sha256": "03d6630a03717e7fa623f29c9177416171b1d214c7215e59a30b1cfbedfe0b89",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1092,
+   "voxelAligned": false
+  },
+  "face.arc2c.deck": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    -0.0,
+    32.0,
+    32.0,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.arc2c.deck.glb",
+   "sha256": "07e3aa3777e47e9e777a4b2c298f508a4475fa01f8e331153b170991da7a81f2",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1972,
+   "voxelAligned": false
+  },
+  "face.arc2c.deck.cut": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    -0.0,
+    33.4948,
+    33.4948,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc2c.deck.cut.glb",
+   "sha256": "36aa37299b722feaa7f71c55cf513cb4419b0756e290e803d5c9af3c4a784f0d",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1716,
+   "voxelAligned": false
+  },
+  "face.arc2c.plate": {
+   "bounds": [
+    -0.1086,
+    -0.1086,
+    12.0,
+    31.9841,
+    31.9841,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.arc2c.plate.glb",
+   "sha256": "02ad91b637cd0557721fc339ff8dead0d4dc7faf54a55754ab8182352d2daa40",
+   "slots": [
+    "accent",
+    "dark"
+   ],
+   "triangles": 612,
+   "voxelAligned": false
+  },
+  "face.arc2c.pod": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    3.0,
+    32.0,
+    32.0,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.arc2c.pod.glb",
+   "sha256": "a3a9f18f390af1f46ca5c4b41508d058d0b65f253493f9c5182f2ec053b33942",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1792,
+   "voxelAligned": false
+  },
+  "face.arc2c.wing": {
+   "bounds": [
+    -0.3322,
+    -0.3322,
+    10.0,
+    32.0,
+    32.0,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.arc2c.wing.glb",
+   "sha256": "1dabfad1f77485fc4d6a45f12ce0bd54f6b0d331f751c2ec471840f03763b588",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 964,
+   "voxelAligned": false
+  },
+  "face.arc3.cabin": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    1.0,
+    52.3682,
+    52.4178,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc3.cabin.glb",
+   "sha256": "4351121a02c3a01538b0c09f27f5b1bce5ee456118aa84a119371aa50bce85af",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1700,
+   "voxelAligned": false
+  },
+  "face.arc3.deck": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    -0.0,
+    52.3682,
+    52.4178,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.arc3.deck.glb",
+   "sha256": "21d652bb1c32f7af7016de5807f69ac1a754b80c54ec6d26f75a2429ab7b1e1f",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 3152,
+   "voxelAligned": false
+  },
+  "face.arc3.deck.cut": {
+   "bounds": [
+    -0.115,
+    -0.115,
+    -0.0,
+    52.3682,
+    52.4178,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc3.deck.cut.glb",
+   "sha256": "26bc794d08203156296a6d0f1408c812b7f490d8e1fe0be580ed91383f61fe21",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 2745,
+   "voxelAligned": false
+  },
+  "face.arc3.plate": {
+   "bounds": [
+    0.0147,
+    0.0147,
+    12.0,
+    52.3535,
+    51.986,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.arc3.plate.glb",
+   "sha256": "503f49bcf44cdc409317e9444a2a7d4df655dfb1ad573566bc6f52f26fac7a8d",
+   "slots": [
+    "primary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1024,
+   "voxelAligned": false
+  },
+  "face.arc3.pod": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    3.0,
+    52.3682,
+    52.4178,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.arc3.pod.glb",
+   "sha256": "f98cfea07fdf27d5989aba9567f00cac6b31cebe0afcf98b9831a1eaddf558b3",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 2640,
+   "voxelAligned": false
+  },
+  "face.arc3.wing": {
+   "bounds": [
+    0.0147,
+    0.0147,
+    10.0,
+    52.3535,
+    52.403,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.arc3.wing.glb",
+   "sha256": "65963742d3bf6c720f5babac15c763ecf31e78494b93400526535f566310446c",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1524,
+   "voxelAligned": false
+  },
+  "face.arc3c.cabin": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    1.0,
+    48.0,
+    48.0,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc3c.cabin.glb",
+   "sha256": "71c20e9077fba6b713d080609ce73733a8f33279bbc3a1cf2e87f05f0ba00fea",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1580,
+   "voxelAligned": false
+  },
+  "face.arc3c.deck": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    -0.0,
+    48.0,
+    48.0,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.arc3c.deck.glb",
+   "sha256": "b364334a9ad0eecb1f9424199180c9911cf314bdc8ce1854e42a7d0383636aca",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 2564,
+   "voxelAligned": false
+  },
+  "face.arc3c.deck.cut": {
+   "bounds": [
+    -0.2921,
+    -0.2921,
+    -0.192,
+    49.4809,
+    49.4809,
+    32.192
+   ],
+   "decals": [],
+   "file": "face.arc3c.deck.cut.glb",
+   "sha256": "a929d1c8c6d762b1f0dd0281bca564549965de86fcaa5884c76bb8e6b92d535d",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 2292,
+   "voxelAligned": false
+  },
+  "face.arc3c.plate": {
+   "bounds": [
+    -0.1003,
+    -0.1003,
+    12.0,
+    47.9853,
+    47.9853,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.arc3c.plate.glb",
+   "sha256": "d120239329d5acf262414c55a0cc79eebe0519aee0fb3748696522e833f7c809",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1084,
+   "voxelAligned": false
+  },
+  "face.arc3c.pod": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    3.0,
+    48.0,
+    48.0,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.arc3c.pod.glb",
+   "sha256": "904c67c94797a81c33079bcdb2efc80878302190fb9bed9ec5a4f851ebccb3c0",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 2384,
+   "voxelAligned": false
+  },
+  "face.arc3c.wing": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    10.0,
+    48.0,
+    48.0,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.arc3c.wing.glb",
+   "sha256": "2b31a64b7c516bf8493fa5260c313533935ce0b16e5dd06d2459c1226ec614cb",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1404,
+   "voxelAligned": false
+  },
+  "face.arc4.cabin": {
+   "bounds": [
+    -0.0147,
+    -0.0147,
+    0.808,
+    67.9922,
+    68.3801,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc4.cabin.glb",
+   "sha256": "61e8b49b5603fda4a805a55879b26bdf5db7e3dc18189df241e09c9804981e3b",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 2252,
+   "voxelAligned": false
+  },
+  "face.arc4.deck": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    -0.0,
+    68.0069,
+    68.3948,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.arc4.deck.glb",
+   "sha256": "5c056a6747b2a112cee207159b9d14293c02741913d30c807af547c62e1f709a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 4980,
+   "voxelAligned": false
+  },
+  "face.arc4.deck.cut": {
+   "bounds": [
+    -0.115,
+    -0.115,
+    -0.0,
+    68.0069,
+    68.3948,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc4.deck.cut.glb",
+   "sha256": "ea14e23f82dbf944dc082c98cfae616c66c4d41652fad109609444abf0e07653",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 4108,
+   "voxelAligned": false
+  },
+  "face.arc4.plate": {
+   "bounds": [
+    0.0147,
+    0.0147,
+    12.0,
+    67.9922,
+    68.3567,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.arc4.plate.glb",
+   "sha256": "13c49cb4837ed1b3fdd060bae828ed93ec4697b77f7af968d253cc5c2009c5d9",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1440,
+   "voxelAligned": false
+  },
+  "face.arc4.pod": {
+   "bounds": [
+    -0.0147,
+    -0.0147,
+    2.808,
+    67.9922,
+    68.3801,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.arc4.pod.glb",
+   "sha256": "67ea2ce0c03fe966bb5f1a8fbd5ab53cfb7ee339b50938cabd508f79e555438b",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 3316,
+   "voxelAligned": false
+  },
+  "face.arc4.wing": {
+   "bounds": [
+    0.0147,
+    0.0147,
+    10.0,
+    67.9922,
+    68.3801,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.arc4.wing.glb",
+   "sha256": "1a932815cabf465939ec96ac5f4dd044c583c761931ff3cb896a9d0e0b6a71d8",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 2028,
+   "voxelAligned": false
+  },
+  "face.arc4c.cabin": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    1.0,
+    64.0,
+    64.0,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc4c.cabin.glb",
+   "sha256": "5b3d1f67a1967179c24e15ddc09e930646f727e22dc4e81fcab610ca344466a7",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 3916,
+   "voxelAligned": false
+  },
+  "face.arc4c.deck": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    -0.0,
+    64.0,
+    64.0,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.arc4c.deck.glb",
+   "sha256": "8bd4fe0db4a9556cb989ec51afa86fd7db6dc207cd19110c2374edc470be0940",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 4964,
+   "voxelAligned": false
+  },
+  "face.arc4c.deck.cut": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    -0.0,
+    65.4956,
+    65.4956,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.arc4c.deck.cut.glb",
+   "sha256": "0e73a57ae8b3d0d5cfac0af38890afb4b4ed582984ca7ece61f05d2df9a8564e",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 4540,
+   "voxelAligned": false
+  },
+  "face.arc4c.plate": {
+   "bounds": [
+    -0.1003,
+    -0.1003,
+    12.0,
+    63.9853,
+    63.9853,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.arc4c.plate.glb",
+   "sha256": "f16bd4481695ed49f997c2afb896dbcb140aba0f7918a146ffafeeeb3fc9ea54",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "triangles": 1608,
+   "voxelAligned": false
+  },
+  "face.arc4c.pod": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    3.0,
+    64.0,
+    64.0,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.arc4c.pod.glb",
+   "sha256": "26dc2d98515422723d0f057510989a169943a837d39910e2d1357735ac7401a5",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 4664,
+   "voxelAligned": false
+  },
+  "face.arc4c.wing": {
+   "bounds": [
+    -0.3068,
+    -0.3068,
+    10.0,
+    64.0,
+    64.0,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.arc4c.wing.glb",
+   "sha256": "4e45bcc1d425f31dfca97bf956b3e79e0db2a0c6d601c8a11ba6ea85cf5f0a2b",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 3020,
+   "voxelAligned": false
+  },
+  "face.slope1.cabin": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    1.0,
+    18.8284,
+    18.8284,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.slope1.cabin.glb",
+   "sha256": "b418052ee0f723dc4c83d27c486385c5dd8b79d117f50aa79074ba6fe2ba4d1a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 298,
+   "voxelAligned": false
+  },
+  "face.slope1.deck": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    -0.0,
+    18.8284,
+    18.8284,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.slope1.deck.glb",
+   "sha256": "be084539e9d0090055b3f013a02d2f57d89d63cf4220529f2aaa05d49f3408ca",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 474,
+   "voxelAligned": false
+  },
+  "face.slope1.deck.cut": {
+   "bounds": [
+    -1.0607,
+    -1.0607,
+    -0.0,
+    18.8284,
+    18.8284,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.slope1.deck.cut.glb",
+   "sha256": "4398d8496eb0a62ad3964aa5f42d1810f12d1a832477310420852fbd106ad241",
+   "slots": [
+    "primary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 396,
+   "voxelAligned": false
+  },
+  "face.slope1.plate": {
+   "bounds": [
+    0.1358,
+    0.1358,
+    12.0,
+    17.2784,
+    17.2784,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.slope1.plate.glb",
+   "sha256": "5f2efa520452273cd3a45b5fa57e3c58055690f37e617756ae40c1bdffe08743",
+   "slots": [
+    "primary",
+    "dark"
+   ],
+   "triangles": 132,
+   "voxelAligned": false
+  },
+  "face.slope1.pod": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    3.0,
+    18.8284,
+    18.8284,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.slope1.pod.glb",
+   "sha256": "c9fbfc64c9a1655c235141a33f3d58b4e660fec9ac113022a8d1590b22dcf3e5",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 430,
+   "voxelAligned": false
+  },
+  "face.slope1.wing": {
+   "bounds": [
+    -0.0,
+    0.0,
+    10.0,
+    18.8284,
+    18.8284,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.slope1.wing.glb",
+   "sha256": "a6598631c6e5b8e5134d6d32d01ee814b09719bbf0e3b2f46f1c709254e286b0",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 254,
+   "voxelAligned": false
+  },
+  "face.slope2.cabin": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    1.0,
+    33.7889,
+    19.5777,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.slope2.cabin.glb",
+   "sha256": "495f4cd9bdddd0b2125bd651b2319d28d79270abcae5a10a20668017c777d3f9",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 430,
+   "voxelAligned": false
+  },
+  "face.slope2.deck": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    -0.0,
+    33.7889,
+    19.5777,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.slope2.deck.glb",
+   "sha256": "67f9d413a23810c55f3556513832922b07a9aaae6413508c31d642d9caf1e6dc",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 694,
+   "voxelAligned": false
+  },
+  "face.slope2.deck.cut": {
+   "bounds": [
+    -0.6708,
+    -1.3416,
+    -0.0,
+    33.7889,
+    19.5777,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.slope2.deck.cut.glb",
+   "sha256": "61bdf79f45cd8f494bdb214d4c6a716c015eda3aeec500ee10c86f7c1c4e2bd9",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 616,
+   "voxelAligned": false
+  },
+  "face.slope2.plate": {
+   "bounds": [
+    0.0859,
+    0.0859,
+    12.0,
+    33.0322,
+    18.3738,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.slope2.plate.glb",
+   "sha256": "f5694b409af627581983d6491f148f5388ff2d5167e99d142ea013677be0cf2f",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "face.slope2.pod": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    3.0,
+    33.7889,
+    19.5777,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.slope2.pod.glb",
+   "sha256": "b767f32a463d9b28c76a1bc507fc962c409705a20a7f1f07bdb1a76a3384d40a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 650,
+   "voxelAligned": false
+  },
+  "face.slope2.wing": {
+   "bounds": [
+    -0.0859,
+    -0.1717,
+    10.0,
+    33.703,
+    19.4918,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.slope2.wing.glb",
+   "sha256": "1e8292e02f2aad770b746f78f4ea5de6b3273e9702fe553b205c8802c4a8dd80",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 386,
+   "voxelAligned": false
+  },
+  "face.slope3.cabin": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    1.0,
+    49.2649,
+    19.7947,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.slope3.cabin.glb",
+   "sha256": "ca8427dc7c519b06730856db0374015e3f996e2ded32c55dc58f9a45db269e9c",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 474,
+   "voxelAligned": false
+  },
+  "face.slope3.deck": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    -0.0,
+    49.2649,
+    19.7947,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.slope3.deck.glb",
+   "sha256": "f3c032e2d35d45f274628a4214bc681c326e86759fe6451e2a895b0478a9af4c",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 826,
+   "voxelAligned": false
+  },
+  "face.slope3.deck.cut": {
+   "bounds": [
+    -0.4136,
+    -1.3623,
+    -0.192,
+    49.2042,
+    19.734,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.slope3.deck.cut.glb",
+   "sha256": "e1d2dc7ce5879e9d7639c5b723ce74ca9536087cfa78bd4ed2b5744bd6fcc9bb",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 704,
+   "voxelAligned": false
+  },
+  "face.slope3.plate": {
+   "bounds": [
+    0.0607,
+    0.0607,
+    12.0,
+    48.4136,
+    19.1016,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.slope3.plate.glb",
+   "sha256": "a42940dbff0661180440797d3eba3d84a26d1241796ac11ec526ddaf7e54c08d",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "dark"
+   ],
+   "triangles": 308,
+   "voxelAligned": false
+  },
+  "face.slope3.pod": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    3.0,
+    49.2649,
+    19.7947,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.slope3.pod.glb",
+   "sha256": "cbdfeec14904d02d7a6a427ae74984a4ec01082d30ceb7e1e39ab1e2ac50ebf3",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 738,
+   "voxelAligned": false
+  },
+  "face.slope3.wing": {
+   "bounds": [
+    -0.0,
+    0.0,
+    10.0,
+    49.2649,
+    19.7947,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.slope3.wing.glb",
+   "sha256": "98fa2a9216e43af79d3dfbae36a06321290e372d5066d09777be1169d55719d6",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 430,
+   "voxelAligned": false
+  },
+  "face.slope4.cabin": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    1.0,
+    64.9701,
+    19.8806,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.slope4.cabin.glb",
+   "sha256": "4b29af578937f638447b54d428781763063ccd718b3cea9b6aad53810fed5ea5",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1530,
+   "voxelAligned": false
+  },
+  "face.slope4.deck": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    -0.0,
+    64.9701,
+    19.8806,
+    43.0
+   ],
+   "decals": [],
+   "file": "face.slope4.deck.glb",
+   "sha256": "9cda6387c0f836b8fc7cbb27bcf544fe264ac469d129d94356d3a420d727c6cb",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1926,
+   "voxelAligned": false
+  },
+  "face.slope4.deck.cut": {
+   "bounds": [
+    -0.3638,
+    -1.4552,
+    -0.0,
+    64.9701,
+    19.8806,
+    32.0
+   ],
+   "decals": [],
+   "file": "face.slope4.deck.cut.glb",
+   "sha256": "fba4d3a60bef0651b00bf54ce23636b6f68a5fad74553f4b02ddc8f00f811756",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1760,
+   "voxelAligned": false
+  },
+  "face.slope4.plate": {
+   "bounds": [
+    0.0466,
+    0.0466,
+    12.0,
+    64.3172,
+    18.3788,
+    20.0
+   ],
+   "decals": [],
+   "file": "face.slope4.plate.glb",
+   "sha256": "90af99dfd7e0e826642f99a7483d648f2c3a433aecaeab5139539d54cdbde785",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 440,
+   "voxelAligned": false
+  },
+  "face.slope4.pod": {
+   "bounds": [
+    -0.0,
+    -0.0,
+    3.0,
+    64.9701,
+    19.8806,
+    39.0
+   ],
+   "decals": [],
+   "file": "face.slope4.pod.glb",
+   "sha256": "3a6be6224c77c7a7b6444be1886004b070a976e2b21951ef89a7795ff2ad59ef",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1794,
+   "voxelAligned": false
+  },
+  "face.slope4.wing": {
+   "bounds": [
+    0.0,
+    -0.0,
+    10.0,
+    64.9701,
+    19.8806,
+    28.0
+   ],
+   "decals": [],
+   "file": "face.slope4.wing.glb",
+   "sha256": "42481f09bcffae26d7dbc219dbb26a69859ae8af500fa146be58d7918dd9d147",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1134,
+   "voxelAligned": false
+  },
+  "hull.arc1.cabin": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    15.9684,
+    15.9684,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc1.cabin.glb",
+   "sha256": "1ff516dba8c4a3b85768aef6cce15781f1580b2e7905018b17fab43bd5acace1",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 168,
+   "voxelAligned": false
+  },
+  "hull.arc1.cabin.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    15.9684,
+    15.9684,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc1.cabin.cockpit.glb",
+   "sha256": "e102b0b024705806d62a5d80eacc6481c7c84646a8ca55b3cb07a526f514f922",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 224,
+   "voxelAligned": false
+  },
+  "hull.arc1.deck": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    15.9684,
+    15.9684,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc1.deck.glb",
+   "sha256": "c698f5cff5aed1b40e5fbde26982a3cf504fecd92447a6e6e2290533237be9bd",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 168,
+   "voxelAligned": false
+  },
+  "hull.arc1.deck.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    15.9684,
+    15.9684,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc1.deck.cockpit.glb",
+   "sha256": "c607df42253f5a409ddc7718c0165b406c1204e160f025055557b8513d8d0ed7",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 224,
+   "voxelAligned": false
+  },
+  "hull.arc1.plate": {
+   "bounds": [
+    0.0,
+    0.0,
+    12.0,
+    15.9684,
+    15.9684,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.arc1.plate.glb",
+   "sha256": "7aa24e04eda3e2493191ff7d83ace90fe93c85a46c17880c0a7aec10ef5f9ecd",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 168,
+   "voxelAligned": false
+  },
+  "hull.arc1.pod": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    15.9684,
+    15.9684,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc1.pod.glb",
+   "sha256": "1c500a9c164e3d1507769bb35e68943cab73137efb102c8027c0106a1ecae7e6",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 168,
+   "voxelAligned": false
+  },
+  "hull.arc1.pod.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    15.9684,
+    15.9684,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc1.pod.cockpit.glb",
+   "sha256": "a1cc2e8b399718c06257d8b0083564733950de317d2199aa8fa1fd3429048ac7",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 224,
+   "voxelAligned": false
+  },
+  "hull.arc1.wing": {
+   "bounds": [
+    0.0,
+    0.0,
+    10.0,
+    15.9684,
+    15.9684,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.arc1.wing.glb",
+   "sha256": "ce6a5960ffd5258dabcf789146822be1521679acad6027478995249d8be7f1f3",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 168,
+   "voxelAligned": false
+  },
+  "hull.arc2.cabin": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    31.9841,
+    31.9841,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc2.cabin.glb",
+   "sha256": "b652f15d7984623ecd50673710f0eb60f7d8b3e3597b27492a188c6fafb190e9",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc2.cabin.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    31.9841,
+    31.9841,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc2.cabin.cockpit.glb",
+   "sha256": "9f56a404ded6ecb8d608fd3dbf7c77e3c5fcbc1f327a9dfa93b97b6e12fb6604",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 544,
+   "voxelAligned": false
+  },
+  "hull.arc2.deck": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    31.9841,
+    31.9841,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc2.deck.glb",
+   "sha256": "da27574ee8ddfdcb646274a1a13367903c20893ca43e0d67ea0984892fd27dec",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc2.deck.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    31.9841,
+    31.9841,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc2.deck.cockpit.glb",
+   "sha256": "1e6566dc4ed035ddf73e5d3b26dc4ebc68000aa64c2c8749b2cb29ba5ea83d55",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 544,
+   "voxelAligned": false
+  },
+  "hull.arc2.plate": {
+   "bounds": [
+    0.0,
+    0.0,
+    12.0,
+    31.9841,
+    31.9841,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.arc2.plate.glb",
+   "sha256": "5443bf5bec0b161fc0138fcef779adbc699e2b613ad54be18d0792c64409aa8a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc2.pod": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    31.9841,
+    31.9841,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc2.pod.glb",
+   "sha256": "907f22ed300b72ddab6bff91175cb1e8d8e23c26858be07a24ee6de12f8230e0",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc2.pod.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    31.9841,
+    31.9841,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc2.pod.cockpit.glb",
+   "sha256": "1fcab26d1bae57d4724a60a650551881bc83e11b95cddb8dc53025d3480f86e0",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 544,
+   "voxelAligned": false
+  },
+  "hull.arc2.wing": {
+   "bounds": [
+    0.0,
+    0.0,
+    10.0,
+    31.9841,
+    31.9841,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.arc2.wing.glb",
+   "sha256": "5f07677f015ed5a59998e6be1a172ed66c9d8aa57d56a60d75071610a3c2a6eb",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc2c.cabin": {
+   "bounds": [
+    0.1069,
+    -1.3413,
+    1.0,
+    32.35,
+    32.7423,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc2c.cabin.glb",
+   "sha256": "57a7e9ff721ea1ea4225df9fe0d52404478f8dca5be05fef574b525eafb6291a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc2c.cabin.cockpit": {
+   "bounds": [
+    0.1069,
+    -1.3413,
+    1.0,
+    38.3722,
+    38.9669,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc2c.cabin.cockpit.glb",
+   "sha256": "1d7d4434e36f3d67055b6190fd807f3259382c8a8cdcb0b1f0f6bff825635d0d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 536,
+   "voxelAligned": false
+  },
+  "hull.arc2c.deck": {
+   "bounds": [
+    0.1069,
+    -1.3413,
+    0.0,
+    32.35,
+    32.7423,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc2c.deck.glb",
+   "sha256": "e8022876257cc54339bb91d7f2270906e1ee448fcb3be22454cb48af34d4074e",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc2c.deck.cockpit": {
+   "bounds": [
+    0.1069,
+    -1.3413,
+    0.0,
+    38.3722,
+    38.9669,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc2c.deck.cockpit.glb",
+   "sha256": "e663c1c0ed9f0623dcba502f57ee386efed0395a5f28cd95f63af8a23ee00f02",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 536,
+   "voxelAligned": false
+  },
+  "hull.arc2c.plate": {
+   "bounds": [
+    0.1069,
+    -1.3413,
+    12.0,
+    32.35,
+    32.7423,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.arc2c.plate.glb",
+   "sha256": "bf34babeb2a4b6576adbe2311e0bc52a5c24db799380a7374068d5364cf1e994",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc2c.pod": {
+   "bounds": [
+    0.1069,
+    -1.3413,
+    3.0,
+    32.35,
+    32.7423,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc2c.pod.glb",
+   "sha256": "b2fee9d36a1c8dd77a8fcbd3057962139effd46228c6ac07de7f85f97e896a3f",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc2c.pod.cockpit": {
+   "bounds": [
+    0.1069,
+    -1.3413,
+    3.0,
+    38.3722,
+    38.9669,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc2c.pod.cockpit.glb",
+   "sha256": "e2dd2f8337548446d7bab5870d7e016580241a55cd25ecccb3b576b8caa59dee",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 536,
+   "voxelAligned": false
+  },
+  "hull.arc2c.wing": {
+   "bounds": [
+    0.1069,
+    -1.3413,
+    10.0,
+    32.35,
+    32.7423,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.arc2c.wing.glb",
+   "sha256": "67593dbc5368544c002a5fa7620bae7af23f799af81a4b9b674d6a734a63be19",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 264,
+   "voxelAligned": false
+  },
+  "hull.arc3.cabin": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    47.9853,
+    47.9853,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc3.cabin.glb",
+   "sha256": "fd4ff2a2bbe67ee680de3f78d155b96e0011eee0ab5f74f00f92a9ece834588d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc3.cabin.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    47.9974,
+    47.9974,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc3.cabin.cockpit.glb",
+   "sha256": "5c989a669b504b916d49ff38e0fdf4b53736250deb2323df2620b6ee4795873d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 736,
+   "voxelAligned": false
+  },
+  "hull.arc3.deck": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    47.9853,
+    47.9853,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc3.deck.glb",
+   "sha256": "e004b77f6c19da04a326bc360160cc1fccffbd8e9478edc90ad3c4d8bfd86ae0",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc3.deck.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    47.9974,
+    47.9974,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc3.deck.cockpit.glb",
+   "sha256": "e0f9dcc9fae545c426d8df00017fb8eac3b55f4c0ef37dce304d0cc01b80ea00",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 736,
+   "voxelAligned": false
+  },
+  "hull.arc3.plate": {
+   "bounds": [
+    0.0,
+    0.0,
+    12.0,
+    47.9853,
+    47.9853,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.arc3.plate.glb",
+   "sha256": "c6883700ed1a9a1482f3a8d0c68b3937ac85e8f04b0224a6725b85f17eca1b1e",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc3.pod": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    47.9853,
+    47.9853,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc3.pod.glb",
+   "sha256": "a5f7ca05c5dcff5198b90c9ccf4e9a7c00446cfd26229442041b087c7b597ffd",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc3.pod.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    47.9974,
+    47.9974,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc3.pod.cockpit.glb",
+   "sha256": "bd744595f3ee9118190b99ec662424d56041d77cfb478beed3af0d91140d5b0f",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 736,
+   "voxelAligned": false
+  },
+  "hull.arc3.wing": {
+   "bounds": [
+    0.0,
+    0.0,
+    10.0,
+    47.9853,
+    47.9853,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.arc3.wing.glb",
+   "sha256": "d031a2283b8968b64907730a4fe249c0fa3ca23f855f4ac8ab9b4b611cb85ac1",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc3c.cabin": {
+   "bounds": [
+    0.147,
+    -1.964,
+    1.0,
+    48.3945,
+    48.7431,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc3c.cabin.glb",
+   "sha256": "1e82fdcef8a964a2d5df9948f710370a54c386efd4778a370b505bff7bd4e9e7",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc3c.cabin.cockpit": {
+   "bounds": [
+    0.147,
+    -1.964,
+    1.0,
+    54.4314,
+    54.9681,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc3c.cabin.cockpit.glb",
+   "sha256": "ca643eea32080b0e4d58ca5da553ddc83d7c5b3d6f60621dd87c231b8b38577a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 728,
+   "voxelAligned": false
+  },
+  "hull.arc3c.deck": {
+   "bounds": [
+    0.147,
+    -1.964,
+    0.0,
+    48.3945,
+    48.7431,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc3c.deck.glb",
+   "sha256": "e27f9eaf34b778e8b53f76dbb0d6c01d15a5b1bc1f3a43e5437db7c5137c50bd",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc3c.deck.cockpit": {
+   "bounds": [
+    0.147,
+    -1.964,
+    0.0,
+    54.4314,
+    54.9681,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc3c.deck.cockpit.glb",
+   "sha256": "fc7adbcf2c5a5ab0963f77546a12c7e85b54edcadba2b6cf8f36f7f9cb1f1319",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 728,
+   "voxelAligned": false
+  },
+  "hull.arc3c.plate": {
+   "bounds": [
+    0.147,
+    -1.964,
+    12.0,
+    48.3945,
+    48.7431,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.arc3c.plate.glb",
+   "sha256": "dd6a2fda80edb40783b7190f7dd5612ec3c750fe6b1cf0d5c00e9f2c39740bfd",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc3c.pod": {
+   "bounds": [
+    0.147,
+    -1.964,
+    3.0,
+    48.3945,
+    48.7431,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc3c.pod.glb",
+   "sha256": "b5b3dfadb03aec93c7d3d5571fafa3ade8491a3137898d0cbd672ef1bcec0375",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc3c.pod.cockpit": {
+   "bounds": [
+    0.147,
+    -1.964,
+    3.0,
+    54.4314,
+    54.9681,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc3c.pod.cockpit.glb",
+   "sha256": "9606eb3a6004538f97aebdd1b6eb7e7612b255de83876609f365b083b93a301a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 728,
+   "voxelAligned": false
+  },
+  "hull.arc3c.wing": {
+   "bounds": [
+    0.147,
+    -1.964,
+    10.0,
+    48.3945,
+    48.7431,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.arc3c.wing.glb",
+   "sha256": "2ea99670a1cd5f160748734d4b9e896366ba6fe13eaed875a38522b2bf5f4ef4",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 360,
+   "voxelAligned": false
+  },
+  "hull.arc4.cabin": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    63.9853,
+    63.9853,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc4.cabin.glb",
+   "sha256": "4ce7e32b3ccd64cf30fbc631d4e19084cbb837e417c53133166f53ed0f59bc72",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.arc4.cabin.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    63.9999,
+    63.9999,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc4.cabin.cockpit.glb",
+   "sha256": "4ca9d2ccb0e403da144ab2898437093f1fe780b1e8c453a98730f78912596d0e",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 928,
+   "voxelAligned": false
+  },
+  "hull.arc4.deck": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    63.9853,
+    63.9853,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc4.deck.glb",
+   "sha256": "02b3390e6833a338554d3039790c00a990fcf5c3bceac8957ab24a9a9612b8e0",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.arc4.deck.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    63.9999,
+    63.9999,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc4.deck.cockpit.glb",
+   "sha256": "92fa43f5035bead45218bf2ea52ebca1c1d2838246ce3a80640d91d2646d5a4d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 928,
+   "voxelAligned": false
+  },
+  "hull.arc4.plate": {
+   "bounds": [
+    0.0,
+    0.0,
+    12.0,
+    63.9853,
+    63.9853,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.arc4.plate.glb",
+   "sha256": "cbab61cd27bdeb886b0e8cb369c6c36f5a96cd53c2c6e5afe2473efae8c028e3",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.arc4.pod": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    63.9853,
+    63.9853,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc4.pod.glb",
+   "sha256": "ca3ef3fe58a26dd68aab827b3f24d1b00338c250debaee9414e3d2a6e738d821",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.arc4.pod.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    63.9999,
+    63.9999,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc4.pod.cockpit.glb",
+   "sha256": "24a96f887a2fa710bea10107071905f9533d25ec9d7a989b13b503b8ef0ff377",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 928,
+   "voxelAligned": false
+  },
+  "hull.arc4.wing": {
+   "bounds": [
+    0.0,
+    0.0,
+    10.0,
+    63.9853,
+    63.9853,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.arc4.wing.glb",
+   "sha256": "833c8bf8ac243c4d464a134197681cfcec6b40295fea039621d888059aec762e",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.arc4c.cabin": {
+   "bounds": [
+    0.1726,
+    -2.2895,
+    1.0,
+    64.4218,
+    64.7437,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc4c.cabin.glb",
+   "sha256": "6e51179e7252b2bcb939200ccf9ac5f30c3594401e73d4c7de2cb9730c28ff02",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.arc4c.cabin.cockpit": {
+   "bounds": [
+    0.1726,
+    -2.2895,
+    1.0,
+    70.4633,
+    70.9661,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.arc4c.cabin.cockpit.glb",
+   "sha256": "eb211bdd020d2e16400db7fc356b97c62cc4045979470e1bdb8c69dd8a4fce85",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 920,
+   "voxelAligned": false
+  },
+  "hull.arc4c.deck": {
+   "bounds": [
+    0.1726,
+    -2.2895,
+    0.0,
+    64.4218,
+    64.7437,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc4c.deck.glb",
+   "sha256": "c1cb2301612bcdb733988b8bebf7ad44cdd7bab9aa9aadee998ea48f2e22287c",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.arc4c.deck.cockpit": {
+   "bounds": [
+    0.1726,
+    -2.2895,
+    0.0,
+    70.4633,
+    70.9661,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.arc4c.deck.cockpit.glb",
+   "sha256": "d90de93faf5716f0d8cadf88bd9ab9cf57eb3b9e0e80ebd5a8ed7d7b4f6e8929",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 920,
+   "voxelAligned": false
+  },
+  "hull.arc4c.plate": {
+   "bounds": [
+    0.1726,
+    -2.2895,
+    12.0,
+    64.4218,
+    64.7437,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.arc4c.plate.glb",
+   "sha256": "4a56fad24080d5a70b970d4c762c6f61461d93ac91b301ef43b1eb39ee850cd2",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.arc4c.pod": {
+   "bounds": [
+    0.1726,
+    -2.2895,
+    3.0,
+    64.4218,
+    64.7437,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc4c.pod.glb",
+   "sha256": "64e082e9ad453e5efab1138a15d920443b7e67926b285c2df0741224c0f378ee",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.arc4c.pod.cockpit": {
+   "bounds": [
+    0.1726,
+    -2.2895,
+    3.0,
+    70.4633,
+    70.9661,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.arc4c.pod.cockpit.glb",
+   "sha256": "e4142e3b530082bffdd53679d69200fd4b47c6da0ea4571f3415cc762429c79d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 920,
+   "voxelAligned": false
+  },
+  "hull.arc4c.wing": {
+   "bounds": [
+    0.1726,
+    -2.2895,
+    10.0,
+    64.4218,
+    64.7437,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.arc4c.wing.glb",
+   "sha256": "f11f04fe2696aa82af0dcdb024f1d0bab19cb7d994feb3331ad1133a7ff126b6",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "hull.slope1.cabin": {
+   "bounds": [
+    0.0,
+    -0.5137,
+    1.0,
+    15.8642,
+    15.8642,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.slope1.cabin.glb",
+   "sha256": "0501a9d06593cb0a4d5d45c49db312e45c1573204e2b4adf2c590fc0563394ef",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope1.cabin.cockpit": {
+   "bounds": [
+    0.0,
+    -4.7679,
+    1.0,
+    15.8642,
+    15.8642,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.slope1.cabin.cockpit.glb",
+   "sha256": "54974ce0635f045ba9e60b3333a971ca3185cf9c0c2f0beba765a190b62f821e",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 184,
+   "voxelAligned": false
+  },
+  "hull.slope1.deck": {
+   "bounds": [
+    0.0,
+    -0.5137,
+    0.0,
+    15.8642,
+    15.8642,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.slope1.deck.glb",
+   "sha256": "a87e1e8d82a423cf35ee046b821ff756eb1831293e8ab2edc54063655d072161",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope1.deck.cockpit": {
+   "bounds": [
+    0.0,
+    -4.7679,
+    0.0,
+    15.8642,
+    15.8642,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.slope1.deck.cockpit.glb",
+   "sha256": "d90a2a37a7afff77406f8b39e2b8f77faed60882433cfa2df0569216bcafb989",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 184,
+   "voxelAligned": false
+  },
+  "hull.slope1.plate": {
+   "bounds": [
+    0.0,
+    -0.5137,
+    12.0,
+    15.8642,
+    15.8642,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.slope1.plate.glb",
+   "sha256": "9739ead13e49205192b4581efdaf9d8f391d988cbf4934a1df5f85c0fd8dadff",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope1.pod": {
+   "bounds": [
+    0.0,
+    -0.5137,
+    3.0,
+    15.8642,
+    15.8642,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.slope1.pod.glb",
+   "sha256": "3a18dd8bbe03c74808cf5559bcd7b9c218caf740119e88ec82d9e26dc266a26a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope1.pod.cockpit": {
+   "bounds": [
+    0.0,
+    -4.7679,
+    3.0,
+    15.8642,
+    15.8642,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.slope1.pod.cockpit.glb",
+   "sha256": "496cc7a592114abc920fe89383dc1d1742e8ec50b13c4fda3035dff4a43c4da1",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 184,
+   "voxelAligned": false
+  },
+  "hull.slope1.wing": {
+   "bounds": [
+    0.0,
+    -0.5137,
+    10.0,
+    15.8642,
+    15.8642,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.slope1.wing.glb",
+   "sha256": "4ba2f18f078acf67e408c1dc06eb9e29b93ce3e1857ea6a90abcc3e0f1824191",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope2.cabin": {
+   "bounds": [
+    0.0,
+    -0.662,
+    1.0,
+    31.8283,
+    15.9141,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.slope2.cabin.glb",
+   "sha256": "d55c334392878fff37f6800cad9f18568ca7680cf9b6112f162fb04cbd460c20",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope2.cabin.cockpit": {
+   "bounds": [
+    0.0,
+    -6.1751,
+    1.0,
+    31.8283,
+    15.9141,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.slope2.cabin.cockpit.glb",
+   "sha256": "208bb01e2b30d549b0f2577500ed70d4b833992240cd1dd9a224157f24aacf12",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 192,
+   "voxelAligned": false
+  },
+  "hull.slope2.deck": {
+   "bounds": [
+    0.0,
+    -0.662,
+    0.0,
+    31.8283,
+    15.9141,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.slope2.deck.glb",
+   "sha256": "8dcf219638a5893cc248547b1e088dff81ebc4312b63bf82c3d6503cc2f25b26",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope2.deck.cockpit": {
+   "bounds": [
+    0.0,
+    -6.1751,
+    0.0,
+    31.8283,
+    15.9141,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.slope2.deck.cockpit.glb",
+   "sha256": "d7181967b5b142d0fe3ba6078bc59d698238951cbb6988b38f0bd55fd1c51258",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 192,
+   "voxelAligned": false
+  },
+  "hull.slope2.plate": {
+   "bounds": [
+    0.0,
+    -0.662,
+    12.0,
+    31.8283,
+    15.9141,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.slope2.plate.glb",
+   "sha256": "4d39dc80a3fe6568deaebbc401687b29ca7dc6a5ae63dad78f90b7c6af77b3b6",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope2.pod": {
+   "bounds": [
+    0.0,
+    -0.662,
+    3.0,
+    31.8283,
+    15.9141,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.slope2.pod.glb",
+   "sha256": "37ea2dbe672bc177d2b2406331361f1e0303f2740591f5e51217cebfeb27b665",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope2.pod.cockpit": {
+   "bounds": [
+    0.0,
+    -6.1751,
+    3.0,
+    31.8283,
+    15.9141,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.slope2.pod.cockpit.glb",
+   "sha256": "ca77c54157192848b6a85871c920541e783aafd095c5f3c151f9cddf4891e309",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 192,
+   "voxelAligned": false
+  },
+  "hull.slope2.wing": {
+   "bounds": [
+    0.0,
+    -0.662,
+    10.0,
+    31.8283,
+    15.9141,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.slope2.wing.glb",
+   "sha256": "e4167d327843f6e1cac653c2f2d7d2b2495f6e8a8a3ef2e4ef95c53eec3d9b35",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope3.cabin": {
+   "bounds": [
+    0.0,
+    -0.7055,
+    1.0,
+    47.8179,
+    15.9393,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.slope3.cabin.glb",
+   "sha256": "8a0d0aca9f814925bfe020a5313210120d754b29c0ab3993f6bfcb9a4423ce0d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope3.cabin.cockpit": {
+   "bounds": [
+    0.0,
+    -0.7055,
+    1.0,
+    47.8179,
+    15.9393,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.slope3.cabin.cockpit.glb",
+   "sha256": "a4ac0901a716c01f77c3af33a3e6f9d7f0d2126e93a458dfe44df16cc1ec3316",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 128,
+   "voxelAligned": false
+  },
+  "hull.slope3.deck": {
+   "bounds": [
+    0.0,
+    -0.7055,
+    0.0,
+    47.8179,
+    15.9393,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.slope3.deck.glb",
+   "sha256": "5c9a4cc2683022286421147db75a468d83c5b2a9f03b01a91c6c3d6754c70d24",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope3.deck.cockpit": {
+   "bounds": [
+    0.0,
+    -0.7055,
+    0.0,
+    47.8179,
+    15.9393,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.slope3.deck.cockpit.glb",
+   "sha256": "e32b04f87c4ba8a28e4ba41b6300fb7cc1ed02b7eb5728e96bd589fcd7064e3f",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 128,
+   "voxelAligned": false
+  },
+  "hull.slope3.plate": {
+   "bounds": [
+    0.0,
+    -0.7055,
+    12.0,
+    47.8179,
+    15.9393,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.slope3.plate.glb",
+   "sha256": "1ae611d47f441a957081fa99a13e105b28cea63480e8564de37f9ec043e26142",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope3.pod": {
+   "bounds": [
+    0.0,
+    -0.7055,
+    3.0,
+    47.8179,
+    15.9393,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.slope3.pod.glb",
+   "sha256": "d6c9718f3fc293eba2207f4567c6893d32cdabe08d3b6a42aec33de6939129a8",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope3.pod.cockpit": {
+   "bounds": [
+    0.0,
+    -0.7055,
+    3.0,
+    47.8179,
+    15.9393,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.slope3.pod.cockpit.glb",
+   "sha256": "92b42215e5d32593e9d175c8a5c9e585e1085bbd84188a23720a013f5b2377c0",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 128,
+   "voxelAligned": false
+  },
+  "hull.slope3.wing": {
+   "bounds": [
+    0.0,
+    -0.7055,
+    10.0,
+    47.8179,
+    15.9393,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.slope3.wing.glb",
+   "sha256": "4728332b80e122a82da4e91d5123b7ab4fc8289a292faf88b96fea7f7496343d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope4.cabin": {
+   "bounds": [
+    0.0,
+    -0.7231,
+    1.0,
+    63.8137,
+    15.9534,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.slope4.cabin.glb",
+   "sha256": "a2dcbe5ad5006296d083eecae8f0ecf38fa7a94fc2b1704fd4106e7a45385b6d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope4.cabin.cockpit": {
+   "bounds": [
+    0.0,
+    -0.7231,
+    1.0,
+    63.8137,
+    15.9534,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.slope4.cabin.cockpit.glb",
+   "sha256": "09cab14d54ac1e93e01e6f7f84fbfec75b9d98d328052332e9f37eada71b0eae",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 128,
+   "voxelAligned": false
+  },
+  "hull.slope4.deck": {
+   "bounds": [
+    0.0,
+    -0.7231,
+    0.0,
+    63.8137,
+    15.9534,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.slope4.deck.glb",
+   "sha256": "e940721be77cc83fbc123e316c2221fd5dc4b7409c1d106bff5bc27a70a99b8a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope4.deck.cockpit": {
+   "bounds": [
+    0.0,
+    -0.7231,
+    0.0,
+    63.8137,
+    15.9534,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.slope4.deck.cockpit.glb",
+   "sha256": "4d030c30e29d428ae19ce40f08ef5be774ff459ab669cec74097f4c8aaac4903",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 128,
+   "voxelAligned": false
+  },
+  "hull.slope4.plate": {
+   "bounds": [
+    0.0,
+    -0.7231,
+    12.0,
+    63.8137,
+    15.9534,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.slope4.plate.glb",
+   "sha256": "d0ff14278fb3defa476ffc03969eaa090758bc83f6a3ea8ea70eeedb8f548d1f",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope4.pod": {
+   "bounds": [
+    0.0,
+    -0.7231,
+    3.0,
+    63.8137,
+    15.9534,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.slope4.pod.glb",
+   "sha256": "ef80d8c41b26225776c5cb296d3b1aacf02e0ef40354ee0b89e553d96a35214a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.slope4.pod.cockpit": {
+   "bounds": [
+    0.0,
+    -0.7231,
+    3.0,
+    63.8137,
+    15.9534,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.slope4.pod.cockpit.glb",
+   "sha256": "adb7f0af4919cf3f5deb05ca78bb8f86e61ad9dea5939ac29980c0c599f68c3f",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 128,
+   "voxelAligned": false
+  },
+  "hull.slope4.wing": {
+   "bounds": [
+    0.0,
+    -0.7231,
+    10.0,
+    63.8137,
+    15.9534,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.slope4.wing.glb",
+   "sha256": "2e2d490e92dab9a74ade64052878dc87f4751d2693696923d167ecf76e001f75",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 96,
+   "voxelAligned": false
+  },
+  "hull.square.cabin": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    16.0,
+    16.0,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.square.cabin.glb",
+   "sha256": "58aa6fa8a910052301ff7e886550b1897ed3ca4fdfd1f97d7961db6ef72ab327",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 132,
+   "voxelAligned": false
+  },
+  "hull.square.cabin.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    1.0,
+    16.0,
+    16.0,
+    32.0
+   ],
+   "decals": [],
+   "file": "hull.square.cabin.cockpit.glb",
+   "sha256": "00c6a84d4e9ee82851f82557ff2e52cbdbf842333a692c13a813c4f92ca1020e",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 176,
+   "voxelAligned": false
+  },
+  "hull.square.deck": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    16.0,
+    16.0,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.square.deck.glb",
+   "sha256": "ef5d1ff2f7236c3f1caaba3ce16aa3e7ffc67c77e71b48ae351a725643c32a86",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 132,
+   "voxelAligned": false
+  },
+  "hull.square.deck.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    16.0,
+    16.0,
+    43.0
+   ],
+   "decals": [],
+   "file": "hull.square.deck.cockpit.glb",
+   "sha256": "b9c63e73f4f5f207f30d5d2cd8372e35e353e9471e3ee7c2c05a4b9b640e722b",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 176,
+   "voxelAligned": false
+  },
+  "hull.square.plate": {
+   "bounds": [
+    0.0,
+    0.0,
+    12.0,
+    16.0,
+    16.0,
+    20.0
+   ],
+   "decals": [],
+   "file": "hull.square.plate.glb",
+   "sha256": "aedde9b26a1c0faa07af656cce3d2ec4f586027456ba08fdbfdfc26df349d50d",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 132,
+   "voxelAligned": false
+  },
+  "hull.square.pod": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    16.0,
+    16.0,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.square.pod.glb",
+   "sha256": "bcd3ca40086fc4b883c52589fe14bb21a3a713ca17221a5ac0be4a59cde77543",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 132,
+   "voxelAligned": false
+  },
+  "hull.square.pod.cockpit": {
+   "bounds": [
+    0.0,
+    0.0,
+    3.0,
+    16.0,
+    16.0,
+    39.0
+   ],
+   "decals": [],
+   "file": "hull.square.pod.cockpit.glb",
+   "sha256": "5cc4bdbd15d130fcb1c8b3541fc85da2b688fe26c6294e216c0efbf7156df00e",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 176,
+   "voxelAligned": false
+  },
+  "hull.square.wing": {
+   "bounds": [
+    0.0,
+    0.0,
+    10.0,
+    16.0,
+    16.0,
+    28.0
+   ],
+   "decals": [],
+   "file": "hull.square.wing.glb",
+   "sha256": "b200fca419784599e9f96644d644f705825e574887bce702c38260c9eb4d2a90",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim"
+   ],
+   "triangles": 132,
+   "voxelAligned": false
+  },
+  "int.door.airlock": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    42
+   ],
+   "decals": [],
+   "file": "int.door.airlock.glb",
+   "sha256": "e14c3a231ed9e352ba26a4130d13231a626b33ff5affd95d3e06bf3b40e026ff",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 1270,
+   "voxelAligned": true
+  },
+  "int.door.airlock.cut": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    29
+   ],
+   "decals": [],
+   "file": "int.door.airlock.cut.glb",
+   "sha256": "b81d864b15111da3afda163b14c4b2a43a600c977a462c9433ce5c8f6ae03b03",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 336,
+   "voxelAligned": true
+  },
+  "int.door.blast": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    42
+   ],
+   "decals": [],
+   "file": "int.door.blast.glb",
+   "sha256": "e5244fe7e96d75e4b195907dc71a136340c4a5024704bfadd253cfb848641237",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 408,
+   "voxelAligned": true
+  },
+  "int.door.blast.cut": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    29
+   ],
+   "decals": [],
+   "file": "int.door.blast.cut.glb",
+   "sha256": "835220dfdc4934f48e3178c01bc463a45a6a200b47f5b497ca0a772fc84861a8",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a",
+    "emit_b"
+   ],
+   "triangles": 336,
+   "voxelAligned": true
+  },
+  "int.door.forcefield": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    42
+   ],
+   "decals": [],
+   "file": "int.door.forcefield.glb",
+   "sha256": "45cc851903083ff3f34807bd41869a3f9a2555d69f4f66dca17f33611523d00e",
+   "slots": [
+    "secondary",
+    "trim",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 358,
+   "voxelAligned": true
+  },
+  "int.door.forcefield.cut": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    29
+   ],
+   "decals": [],
+   "file": "int.door.forcefield.cut.glb",
+   "sha256": "139931fc5f56cea4eac9da195374f2b876834c7117e3c3401684d5c79b98f528",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 336,
+   "voxelAligned": true
+  },
+  "int.door.sliding": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    42
+   ],
+   "decals": [],
+   "file": "int.door.sliding.glb",
+   "sha256": "bc57ef025ad0bbb9a094f3c5d25c30813cd5b99278ec2168bd4d02c6dcc870f0",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 418,
+   "voxelAligned": true
+  },
+  "int.door.sliding.cut": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    29
+   ],
+   "decals": [],
+   "file": "int.door.sliding.cut.glb",
+   "sha256": "cd2f22da77457ceff83acb56d6db429894fe2cc8e1564af241aff9a3795ecf63",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 336,
+   "voxelAligned": true
+  },
+  "int.door.standard": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    42
+   ],
+   "decals": [],
+   "file": "int.door.standard.glb",
+   "sha256": "ffcc1628ab2a7bf573a376bc6d0632f086168a3f9d5a5d2b638b1ca9ddb64a60",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 406,
+   "voxelAligned": true
+  },
+  "int.door.standard.cut": {
+   "bounds": [
+    0,
+    -2,
+    0,
+    32,
+    8,
+    29
+   ],
+   "decals": [],
+   "file": "int.door.standard.cut.glb",
+   "sha256": "104a4ea22a09fb7e9b1497497e258c3b902818f7e211b84be2d72dfe2e014c76",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 336,
+   "voxelAligned": true
+  },
+  "int.edge.glazed": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    37
+   ],
+   "decals": [],
+   "file": "int.edge.glazed.glb",
+   "sha256": "774919239b88d561233d7f67cc06de2c9107235439658fc013fda639ca6e9d75",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "glass"
+   ],
+   "triangles": 170,
+   "voxelAligned": true
+  },
+  "int.edge.glazed.cut": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    28
+   ],
+   "decals": [],
+   "file": "int.edge.glazed.cut.glb",
+   "sha256": "13ab770731ef60fcd22044bc6efb633b999145960eef652e850f1039c107aa0b",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "glass"
+   ],
+   "triangles": 160,
+   "voxelAligned": true
+  },
+  "int.edge.half": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    25
+   ],
+   "decals": [],
+   "file": "int.edge.half.glb",
+   "sha256": "66f33ce306e346c17cb5030406c6a311d53a53497c6a748161ccf465748aafdc",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal"
+   ],
+   "triangles": 166,
+   "voxelAligned": true
+  },
+  "int.edge.half.cut": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    25
+   ],
+   "decals": [],
+   "file": "int.edge.half.cut.glb",
+   "sha256": "a210fd657b1d12e08242a563220705050c959815c24b2fa9f317153dfb19c3cc",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal"
+   ],
+   "triangles": 166,
+   "voxelAligned": true
+  },
+  "int.edge.light": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    37
+   ],
+   "decals": [],
+   "file": "int.edge.light.glb",
+   "sha256": "dbc10eb681826a3c74954fe355a10c4e89e31e917e4bdd6a47427a13ae9f8468",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 292,
+   "voxelAligned": true
+  },
+  "int.edge.light.cut": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    28
+   ],
+   "decals": [],
+   "file": "int.edge.light.cut.glb",
+   "sha256": "54099e5371a4ebe7ed8c4eb854480bdc1c8415052139fb935b88ecbffa26e9b1",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 266,
+   "voxelAligned": true
+  },
+  "int.edge.panel": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    37
+   ],
+   "decals": [],
+   "file": "int.edge.panel.glb",
+   "sha256": "4e6a66a128dcc3362c859b386634495bfa11dba2dc7401e6e93bb82a122e4871",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 348,
+   "voxelAligned": true
+  },
+  "int.edge.panel.cut": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    28
+   ],
+   "decals": [],
+   "file": "int.edge.panel.cut.glb",
+   "sha256": "97424950d0c256ce56c55df4b603dadba8c57bdf30a617390b7ecfd2c16de1d3",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 322,
+   "voxelAligned": true
+  },
+  "int.edge.reinforced": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    7,
+    37
+   ],
+   "decals": [],
+   "file": "int.edge.reinforced.glb",
+   "sha256": "1c24642fa66f58c041b400a9c47b451ac1537a03421553328bf533a5410434d6",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 988,
+   "voxelAligned": true
+  },
+  "int.edge.reinforced.cut": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    7,
+    28
+   ],
+   "decals": [],
+   "file": "int.edge.reinforced.cut.glb",
+   "sha256": "f15bba34269cba0a5316bdce9c3d1f987631ae0184c8ba54c307aef98c89d8a3",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 802,
+   "voxelAligned": true
+  },
+  "int.edge.screen": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    37
+   ],
+   "decals": [],
+   "file": "int.edge.screen.glb",
+   "sha256": "22dc9e90077b7ad1fdc6efbff2fac3e2fe7eee6554910ba11300a1dc07763792",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 292,
+   "voxelAligned": true
+  },
+  "int.edge.screen.cut": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    28
+   ],
+   "decals": [],
+   "file": "int.edge.screen.cut.glb",
+   "sha256": "dac21e4d0b500a7d9a99675ff0bc38a82202cc81cfd518253d2ad26527c0e864",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 266,
+   "voxelAligned": true
+  },
+  "int.edge.utility": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    7,
+    37
+   ],
+   "decals": [],
+   "file": "int.edge.utility.glb",
+   "sha256": "2cce0cd1a706f738cd4d691cd11a65b65b4a509430b04919dbb1d0bec0b0e370",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 450,
+   "voxelAligned": true
+  },
+  "int.edge.utility.cut": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    7,
+    28
+   ],
+   "decals": [],
+   "file": "int.edge.utility.cut.glb",
+   "sha256": "5874fe1b56ef292aa97d52e1b0c1a46878129dabb6f91ee7b8a4f77a94d15639",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 444,
+   "voxelAligned": true
+  },
+  "int.edge.wall": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    37
+   ],
+   "decals": [],
+   "file": "int.edge.wall.glb",
+   "sha256": "087fdeb91374bcf06452f77d4fd751dc51f0d572ec4721c6a4fcb08ab18ae620",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark"
+   ],
+   "triangles": 228,
+   "voxelAligned": true
+  },
+  "int.edge.wall.cut": {
+   "bounds": [
+    0,
+    -1,
+    0,
+    16,
+    5,
+    28
+   ],
+   "decals": [],
+   "file": "int.edge.wall.cut.glb",
+   "sha256": "68e174cf1a3ec704381292ff5703f40a21b3e22d620144c3c420a37f72e7aee6",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark"
+   ],
+   "triangles": 222,
+   "voxelAligned": true
+  },
+  "int.fixture.ceiling-light": {
+   "bounds": [
+    3,
+    3,
+    0,
+    13,
+    13,
+    1
+   ],
+   "decals": [],
+   "file": "int.fixture.ceiling-light.glb",
+   "sha256": "a571d36225d585be2eb137b8a04df088706ebac89d30a69ae0edf545c3d0ef4e",
+   "slots": [
+    "secondary",
+    "emit_a"
+   ],
+   "triangles": 48,
+   "voxelAligned": true
+  },
+  "int.fixture.floor-light": {
+   "bounds": [
+    0,
+    0,
+    0,
+    8,
+    2,
+    1
+   ],
+   "decals": [],
+   "file": "int.fixture.floor-light.glb",
+   "sha256": "d561bde72647872d26487e52bb482f86f1a40929006bf445f7ceb0ba2ddfe2a1",
+   "slots": [
+    "emit_b"
+   ],
+   "triangles": 44,
+   "voxelAligned": true
+  },
+  "int.fixture.wall-lamp": {
+   "bounds": [
+    0,
+    0,
+    0,
+    6,
+    3,
+    6
+   ],
+   "decals": [],
+   "file": "int.fixture.wall-lamp.glb",
+   "sha256": "50f255afc575afe93e8cc76fb6515d9bc5a312afc4adaaa64f47c09225214e55",
+   "slots": [
+    "secondary",
+    "trim",
+    "emit_b"
+   ],
+   "triangles": 76,
+   "voxelAligned": true
+  },
+  "int.floor.carpet": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    3
+   ],
+   "decals": [],
+   "file": "int.floor.carpet.glb",
+   "sha256": "92a4fed1c566ff6864de17f0a72312ddc112d943c4e59c233e96f467618fa84d",
+   "slots": [
+    "accent",
+    "dark"
+   ],
+   "triangles": 60,
+   "voxelAligned": true
+  },
+  "int.floor.carpet2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    4
+   ],
+   "decals": [],
+   "file": "int.floor.carpet2.glb",
+   "sha256": "27913f9199599718b9239bbe35548e0872367849dcd5348366f8fbab6ed11ef6",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark"
+   ],
+   "triangles": 90,
+   "voxelAligned": true
+  },
+  "int.floor.corridor": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    3
+   ],
+   "decals": [],
+   "file": "int.floor.corridor.glb",
+   "sha256": "b382c73f0164de41e01cc87ada74f2a757a1b326b47980cc40dc94263f410647",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 96,
+   "voxelAligned": true
+  },
+  "int.floor.glass": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    3
+   ],
+   "decals": [],
+   "file": "int.floor.glass.glb",
+   "sha256": "59d6fb007265d54f5bc6b6bff211e86a82aa65fd1fa2c09c1f41fd05940ce284",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 106,
+   "voxelAligned": true
+  },
+  "int.floor.grated": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    3
+   ],
+   "decals": [],
+   "file": "int.floor.grated.glb",
+   "sha256": "2c5907ec841a60dacef3f6853013df6d9cb09ede5b373fe683e905cfdb0c63bc",
+   "slots": [
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 254,
+   "voxelAligned": true
+  },
+  "int.floor.hazard": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    4
+   ],
+   "decals": [],
+   "file": "int.floor.hazard.glb",
+   "sha256": "05ddd1e9608d2d45026723caf8df93182d23c229fb543549b37a1a85456677da",
+   "slots": [
+    "trim",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 260,
+   "voxelAligned": true
+  },
+  "int.floor.hex": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    3
+   ],
+   "decals": [],
+   "file": "int.floor.hex.glb",
+   "sha256": "21a18319ad1cc0b3cc99fd8c690e61fd816088946df58a1f36a4527744f27b5a",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "int.floor.panel": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    3
+   ],
+   "decals": [],
+   "file": "int.floor.panel.glb",
+   "sha256": "84a3480087128e75223a317ccb5585eba2efedd3d32020f096af83cb435698cf",
+   "slots": [
+    "trim",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "int.floor.reinforced": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    4
+   ],
+   "decals": [],
+   "file": "int.floor.reinforced.glb",
+   "sha256": "1bda8614a7360263fa595da8bb3c1c0d2760f89779a72be6875fc50cbc99c1f5",
+   "slots": [
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "int.floor.tread": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    4
+   ],
+   "decals": [],
+   "file": "int.floor.tread.glb",
+   "sha256": "916f67b17630cd7c22f902f49e2bf3fc2dcf8f4e24754eb184d2712899822b55",
+   "slots": [
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 360,
+   "voxelAligned": true
+  },
+  "int.floorpart.arc1": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    15.9684,
+    15.9684,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.arc1.glb",
+   "sha256": "3427f2ff696164f479c674e9aa49433456216cb20c762502ce2d49f7a1de4873",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 112,
+   "voxelAligned": false
+  },
+  "int.floorpart.arc2": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    31.9841,
+    31.9841,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.arc2.glb",
+   "sha256": "db76f2f4fa7e5820705c85bf2e29f7cb5f396fcbeb726d82e1342ef3225cb3c1",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 312,
+   "voxelAligned": false
+  },
+  "int.floorpart.arc2c": {
+   "bounds": [
+    0.046,
+    0.046,
+    0.0,
+    32.0,
+    32.7436,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.arc2c.glb",
+   "sha256": "49a58950641ac111bd820023fc2b7e8420ae0f593a93eee61cc04d311807ba4f",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 260,
+   "voxelAligned": false
+  },
+  "int.floorpart.arc3": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    47.9853,
+    47.9853,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.arc3.glb",
+   "sha256": "7157073dc407c7a6fd6387b847d3eff28a5416b200d136b65d6faacdab97d33e",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 468,
+   "voxelAligned": false
+  },
+  "int.floorpart.arc3c": {
+   "bounds": [
+    0.1914,
+    0.1898,
+    0.0,
+    48.2452,
+    48.0,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.arc3c.glb",
+   "sha256": "cb31a3f26cdb143664bc47d502aff9248bbe3a9c1280c5aa4ead2ab649ead45c",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 456,
+   "voxelAligned": false
+  },
+  "int.floorpart.arc4": {
+   "bounds": [
+    0.0,
+    0.0,
+    0.0,
+    63.9943,
+    63.9943,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.arc4.glb",
+   "sha256": "113b73c1918488713a7af7b4e8e2f8bd6a967396d3b70310f87324dc7e9eb440",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 712,
+   "voxelAligned": false
+  },
+  "int.floorpart.arc4c": {
+   "bounds": [
+    0.1571,
+    0.1557,
+    0.0,
+    64.2476,
+    64.0,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.arc4c.glb",
+   "sha256": "f5f418aa7114744080a3598c32156b865578a3f5503285c556d6400643172661",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 660,
+   "voxelAligned": false
+  },
+  "int.floorpart.slope1": {
+   "bounds": [
+    0.0,
+    -0.5137,
+    0.0,
+    15.8642,
+    15.8642,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.slope1.glb",
+   "sha256": "bc30038c63fb7ab1d9325725aadffaaab54a6979042649caef33241c127854d7",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 64,
+   "voxelAligned": false
+  },
+  "int.floorpart.slope2": {
+   "bounds": [
+    0.0,
+    -0.6526,
+    0.0,
+    31.8283,
+    15.9141,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.slope2.glb",
+   "sha256": "316b6d220541b739121cfbae46a5abdd1feadb3e315fd99781289dcb5b50ea7c",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 130,
+   "voxelAligned": false
+  },
+  "int.floorpart.slope3": {
+   "bounds": [
+    0.0,
+    -0.6929,
+    0.0,
+    47.8179,
+    15.9393,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.slope3.glb",
+   "sha256": "a34b5fc26c96abffebb7ec883f955dac3b2047f9d5698cde5b431459af25cb93",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 196,
+   "voxelAligned": false
+  },
+  "int.floorpart.slope4": {
+   "bounds": [
+    0.0,
+    -0.7089,
+    0.0,
+    63.8137,
+    15.9534,
+    3.0
+   ],
+   "decals": [],
+   "file": "int.floorpart.slope4.glb",
+   "sha256": "3acec92059f2db07197bafbebb3a161e60de88de0feda20565ef4453ea31a247",
+   "slots": [
+    "trim",
+    "dark"
+   ],
+   "triangles": 262,
+   "voxelAligned": false
+  },
+  "int.post": {
+   "bounds": [
+    0,
+    0,
+    0,
+    6,
+    6,
+    37
+   ],
+   "decals": [],
+   "file": "int.post.glb",
+   "sha256": "c80daed59714d943f4361b5c88ee6d822e51cdcebb1b1473255d377891f7c2a1",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark"
+   ],
+   "triangles": 64,
+   "voxelAligned": true
+  },
+  "int.post.cut": {
+   "bounds": [
+    -1,
+    -1,
+    0,
+    7,
+    7,
+    30
+   ],
+   "decals": [],
+   "file": "int.post.cut.glb",
+   "sha256": "25fedbc6447c07a80186571a97901141b5d28d564aa380fc9c664cfe0db5781f",
+   "slots": [
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 124,
+   "voxelAligned": true
+  },
+  "post.hull.cabin": {
+   "bounds": [
+    -3.9265,
+    -3.9265,
+    1.0,
+    3.9265,
+    3.9265,
+    32.0
+   ],
+   "decals": [],
+   "file": "post.hull.cabin.glb",
+   "sha256": "cf439d6444a4fc2b6ed28a66a1249687e7f9673f50d07bb7ffc68b15db899bb7",
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "triangles": 184,
+   "voxelAligned": false
+  },
+  "post.hull.deck": {
+   "bounds": [
+    -3.9265,
+    -3.9265,
+    0.0,
+    3.9265,
+    3.9265,
+    43.0
+   ],
+   "decals": [],
+   "file": "post.hull.deck.glb",
+   "sha256": "ead58dc0dea100b0b77e900739050430a1e6092ef97234dc8349f1c33d5b1ba4",
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "triangles": 184,
+   "voxelAligned": false
+  },
+  "post.hull.deck.cut": {
+   "bounds": [
+    -3.9265,
+    -3.9265,
+    0.0,
+    3.9265,
+    3.9265,
+    32.0
+   ],
+   "decals": [],
+   "file": "post.hull.deck.cut.glb",
+   "sha256": "cddbcce85edf742bbdc32416aecb1a08003c6b2257624c162b5d9eba2e1b32f1",
+   "slots": [
+    "secondary",
+    "dark"
+   ],
+   "triangles": 184,
+   "voxelAligned": false
+  },
+  "post.hull.plate": {
+   "bounds": [
+    -3.9265,
+    -3.9265,
+    12.0,
+    3.9265,
+    3.9265,
+    20.0
+   ],
+   "decals": [],
+   "file": "post.hull.plate.glb",
+   "sha256": "6f6570a2ac69f08fee8b626365f512ff947c4f1b4e07dc400c9a547fdb6f9923",
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "triangles": 184,
+   "voxelAligned": false
+  },
+  "post.hull.pod": {
+   "bounds": [
+    -3.9265,
+    -3.9265,
+    3.0,
+    3.9265,
+    3.9265,
+    39.0
+   ],
+   "decals": [],
+   "file": "post.hull.pod.glb",
+   "sha256": "74bf12465d5a460d517ae57e8832e2c4f83412f584afa9d96d9e65183cb66552",
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "triangles": 184,
+   "voxelAligned": false
+  },
+  "post.hull.wing": {
+   "bounds": [
+    -3.9265,
+    -3.9265,
+    10.0,
+    3.9265,
+    3.9265,
+    28.0
+   ],
+   "decals": [],
+   "file": "post.hull.wing.glb",
+   "sha256": "3da208b0a5c54b7a07b187104b4af130ff68d3b9f600c07bb1b09004a0b410dd",
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "triangles": 184,
+   "voxelAligned": false
+  },
+  "rim.h4": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    3,
+    4
+   ],
+   "decals": [],
+   "file": "rim.h4.glb",
+   "sha256": "a5ce0494d65c91d0ad16b6adcf1e46ab08fa0f2f85eb2761b28ded21277c247f",
+   "slots": [
+    "secondary",
+    "metal"
+   ],
+   "triangles": 74,
+   "voxelAligned": true
+  },
+  "rim.h4.lit": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    3,
+    4
+   ],
+   "decals": [],
+   "file": "rim.h4.lit.glb",
+   "sha256": "dce43050ecd3c777f5a62ec3c8197783bc1f316247e5275e974b74b48a67b87b",
+   "slots": [
+    "secondary",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 104,
+   "voxelAligned": true
+  },
+  "roof.box.w1.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    32,
+    7
+   ],
+   "decals": [],
+   "file": "roof.box.w1.d2.glb",
+   "sha256": "be5086b59c8c81ce47a953e7c7b9b2c831f76f3655e61cd652e32792c9c789a4",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 242,
+   "voxelAligned": true
+  },
+  "roof.box.w2.d1": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    16,
+    7
+   ],
+   "decals": [],
+   "file": "roof.box.w2.d1.glb",
+   "sha256": "85ebbaffff1e09ff553d49af63cbcf53c8324f681773884f738f97acc3fc64da",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 216,
+   "voxelAligned": true
+  },
+  "roof.box.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    7
+   ],
+   "decals": [],
+   "file": "roof.box.w2.d2.glb",
+   "sha256": "066ea0ed8f0a533ceddcbb2b61db43e8525a2d9402f53e4c38872845ee32efa5",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 266,
+   "voxelAligned": true
+  },
+  "roof.box.w2.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    48,
+    7
+   ],
+   "decals": [],
+   "file": "roof.box.w2.d3.glb",
+   "sha256": "7dfa63996702528254c8997af4485f3fdd7620d9850b7a000cbbbc36ecab0262",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 306,
+   "voxelAligned": true
+  },
+  "roof.box.w3.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    32,
+    7
+   ],
+   "decals": [],
+   "file": "roof.box.w3.d2.glb",
+   "sha256": "dec79e9f0a71641b720ed5b5eedaf9053242fdb574ed28a577ab17253df9fa40",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 266,
+   "voxelAligned": true
+  },
+  "roof.cargo.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    9
+   ],
+   "decals": [],
+   "file": "roof.cargo.w2.d2.glb",
+   "sha256": "c4aa4f4c46295bcc63d28ca32877d30ebdea3366233e2976d88934b84a8ed38b",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal"
+   ],
+   "triangles": 684,
+   "voxelAligned": true
+  },
+  "roof.cargo.w2.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    48,
+    9
+   ],
+   "decals": [],
+   "file": "roof.cargo.w2.d3.glb",
+   "sha256": "5211d7e70f5d98e2fdb673927b21aa95eb788218a4c8896f5e7a6a7fb6b48549",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal"
+   ],
+   "triangles": 1004,
+   "voxelAligned": true
+  },
+  "roof.cargo.w3.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    32,
+    9
+   ],
+   "decals": [],
+   "file": "roof.cargo.w3.d2.glb",
+   "sha256": "b2101cfb8d0c60af1f996d3c5ef832c01679da05dc2e558e26c168a7e5bf887d",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal"
+   ],
+   "triangles": 1004,
+   "voxelAligned": true
+  },
+  "roof.greeble.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    10
+   ],
+   "decals": [],
+   "file": "roof.greeble.w2.d2.glb",
+   "sha256": "c43ef1963851e11608832bb7ee1c35124166e560540ad9845e5542d637e31c8f",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 334,
+   "voxelAligned": true
+  },
+  "roof.greeble.w2.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    48,
+    10
+   ],
+   "decals": [],
+   "file": "roof.greeble.w2.d3.glb",
+   "sha256": "4559390f1f3ce8b8eaad230ee0176c35d518c0d6e5efc45ae0151c1bf02f37a2",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 334,
+   "voxelAligned": true
+  },
+  "roof.greeble.w3.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    32,
+    10
+   ],
+   "decals": [],
+   "file": "roof.greeble.w3.d2.glb",
+   "sha256": "689509629f51974df375b78515fc16c319c624bacfcc7f6c64cf5310aeb85ad1",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 334,
+   "voxelAligned": true
+  },
+  "roof.hatch.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    9
+   ],
+   "decals": [],
+   "file": "roof.hatch.w2.d2.glb",
+   "sha256": "689d547938ea378a2b1f8d4889d34a4bc3ad77573872a129dd9c5cb7f94a27e0",
+   "slots": [
+    "primary",
+    "accent",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "roof.hatch.w2.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    48,
+    9
+   ],
+   "decals": [],
+   "file": "roof.hatch.w2.d3.glb",
+   "sha256": "a513dae27ee5be96ca6c3b0e53075435f5a99fd1e4a66f5953149ec2064de02e",
+   "slots": [
+    "primary",
+    "accent",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "roof.hatch.w3.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    32,
+    9
+   ],
+   "decals": [],
+   "file": "roof.hatch.w3.d2.glb",
+   "sha256": "3e8065db0a0bea53e9100d53258c75cad617f417bc44637968cb91a064934507",
+   "slots": [
+    "primary",
+    "accent",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "roof.logo.w4.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    64,
+    32,
+    3
+   ],
+   "decals": [
+    {
+     "kind": "emblem",
+     "plane": "top",
+     "rect": [
+      3,
+      3,
+      61,
+      29
+     ]
+    }
+   ],
+   "file": "roof.logo.w4.d2.glb",
+   "sha256": "8d83806020d6c924e845284af8eea3a8f317bf62b40739f41dfa73aa35dabb51",
+   "slots": [
+    "secondary",
+    "trim"
+   ],
+   "triangles": 124,
+   "voxelAligned": true
+  },
+  "roof.pipes.w1.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    32,
+    6
+   ],
+   "decals": [],
+   "file": "roof.pipes.w1.d2.glb",
+   "sha256": "143da890261b5f8e2d0d662e66a2da74bacc3a04dc0a8892e8eb36fdb515382c",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 327,
+   "voxelAligned": true
+  },
+  "roof.pipes.w2.d1": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    16,
+    6
+   ],
+   "decals": [],
+   "file": "roof.pipes.w2.d1.glb",
+   "sha256": "0833a97347a9314352e11098feeef056970f8fb544c0e06b4d7c9844a600c8b7",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 267,
+   "voxelAligned": true
+  },
+  "roof.pipes.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    6
+   ],
+   "decals": [],
+   "file": "roof.pipes.w2.d2.glb",
+   "sha256": "1dcce6cc6191104cad7e7c94e85d95e572640235fd19fb7ae5257a117a5b910f",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 387,
+   "voxelAligned": true
+  },
+  "roof.pipes.w2.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    48,
+    6
+   ],
+   "decals": [],
+   "file": "roof.pipes.w2.d3.glb",
+   "sha256": "5cba0836866bd3704ca438cfa0992922040867e4a7a7a37627effbfec21cdbcb",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 477,
+   "voxelAligned": true
+  },
+  "roof.pipes.w3.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    32,
+    6
+   ],
+   "decals": [],
+   "file": "roof.pipes.w3.d2.glb",
+   "sha256": "7803ec1c624516b589b516ea485040719570a449717d369350fd667ba3dbee83",
+   "slots": [
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 447,
+   "voxelAligned": true
+  },
+  "roof.radiator.w1.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    32,
+    5
+   ],
+   "decals": [],
+   "file": "roof.radiator.w1.d2.glb",
+   "sha256": "730c19ed8581ee2986ffed389c5152d83ea600b13974b89d0832836389a388a7",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "triangles": 588,
+   "voxelAligned": true
+  },
+  "roof.radiator.w2.d1": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    16,
+    5
+   ],
+   "decals": [],
+   "file": "roof.radiator.w2.d1.glb",
+   "sha256": "f6b0d6dbbc09da9227df0ab1101b69fddfbe92450982c713da5ca57cda9185e3",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "triangles": 348,
+   "voxelAligned": true
+  },
+  "roof.radiator.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    5
+   ],
+   "decals": [],
+   "file": "roof.radiator.w2.d2.glb",
+   "sha256": "4588a881e089de5ac470fc750c0851e773a30de8e22882578f43d61619f2545b",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "triangles": 588,
+   "voxelAligned": true
+  },
+  "roof.radiator.w2.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    48,
+    5
+   ],
+   "decals": [],
+   "file": "roof.radiator.w2.d3.glb",
+   "sha256": "b8801856bb8b5d3a55c05813e90616305270fa24267cb93df94289a652dc2191",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "triangles": 828,
+   "voxelAligned": true
+  },
+  "roof.radiator.w3.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    32,
+    5
+   ],
+   "decals": [],
+   "file": "roof.radiator.w3.d2.glb",
+   "sha256": "e19ce4fdc241f48754575a9f12a21ee3f6373b3e6cf7282ce5e09409d920a5f2",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "triangles": 588,
+   "voxelAligned": true
+  },
+  "roof.rim.bump": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    3
+   ],
+   "decals": [],
+   "file": "roof.rim.bump.glb",
+   "sha256": "e987e31fcbd6123ceeccfd2b9024c48aa2b30e0adb7cdbd958db18a940fb3200",
+   "slots": [
+    "primary",
+    "metal"
+   ],
+   "triangles": 74,
+   "voxelAligned": true
+  },
+  "roof.rim.lit": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    4
+   ],
+   "decals": [],
+   "file": "roof.rim.lit.glb",
+   "sha256": "b59cdab7ff94fd75ccc7fd345e067c10fd715d536a3500c282016dba3ffb844e",
+   "slots": [
+    "primary",
+    "trim",
+    "emit_b"
+   ],
+   "triangles": 104,
+   "voxelAligned": true
+  },
+  "roof.rim.plain": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    2
+   ],
+   "decals": [],
+   "file": "roof.rim.plain.glb",
+   "sha256": "e735d4f916363e1a5f0edeef1e63761d18002af281e13c4fee567fb0ad157501",
+   "slots": [
+    "primary"
+   ],
+   "triangles": 44,
+   "voxelAligned": true
+  },
+  "roof.rim.vent": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    4
+   ],
+   "decals": [],
+   "file": "roof.rim.vent.glb",
+   "sha256": "d62059b9b98e8c30dfc3c269f2a79319f6280f8c54c1de18e1e0c8d3a67f1d2d",
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 194,
+   "voxelAligned": true
+  },
+  "roof.skylight.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    4
+   ],
+   "decals": [],
+   "file": "roof.skylight.w2.d2.glb",
+   "sha256": "fee0c6573641ba1353e3cbe753871e8c22f6ed30bf517ba063467e8fd1a01d35",
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 230,
+   "voxelAligned": true
+  },
+  "roof.skylight.w2.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    48,
+    4
+   ],
+   "decals": [],
+   "file": "roof.skylight.w2.d3.glb",
+   "sha256": "34bd76cfe15c185aed3d8315cfe5a8b7e5630a8cb1eeba8b1e58d12d240e86db",
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 230,
+   "voxelAligned": true
+  },
+  "roof.skylight.w3.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    32,
+    4
+   ],
+   "decals": [],
+   "file": "roof.skylight.w3.d2.glb",
+   "sha256": "5b7abfe03f2157c12002502e7e5675582dc4da39f2596d01e2666571a3bf2050",
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 230,
+   "voxelAligned": true
+  },
+  "roof.skylight.w3.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    48,
+    4
+   ],
+   "decals": [],
+   "file": "roof.skylight.w3.d3.glb",
+   "sha256": "4f6aeb9fa089aa4bac2b83c6a116373c84f92b6a2d7aae955e65a319b931e29e",
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 230,
+   "voxelAligned": true
+  },
+  "roof.small.box": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    6
+   ],
+   "decals": [],
+   "file": "roof.small.box.glb",
+   "sha256": "b7945d86012e8debdaa00fef32e4d9b16031e1d9cb91fa52c462ed4befcf2a6a",
+   "slots": [
+    "primary",
+    "metal",
+    "emit_b"
+   ],
+   "triangles": 134,
+   "voxelAligned": true
+  },
+  "roof.small.fan": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    4
+   ],
+   "decals": [],
+   "file": "roof.small.fan.glb",
+   "sha256": "629d1f06941ced08d823c87259c7b46e4e3aa8de3d91f36f5789c80f0e404618",
+   "slots": [
+    "primary",
+    "trim",
+    "metal",
+    "dark"
+   ],
+   "triangles": 656,
+   "voxelAligned": true
+  },
+  "roof.small.hatch": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    5
+   ],
+   "decals": [],
+   "file": "roof.small.hatch.glb",
+   "sha256": "92b839fd81d187c3cdeb194db976fd79a6b140b5b92803a2d3a2ce20f707fc6a",
+   "slots": [
+    "primary",
+    "accent",
+    "metal"
+   ],
+   "triangles": 104,
+   "voxelAligned": true
+  },
+  "roof.small.sensor": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    9
+   ],
+   "decals": [],
+   "file": "roof.small.sensor.glb",
+   "sha256": "8943039984469df4bc32176be451c281d5905a2568733e1677e8d331b06acfc4",
+   "slots": [
+    "primary",
+    "secondary",
+    "metal",
+    "emit_a"
+   ],
+   "triangles": 134,
+   "voxelAligned": true
+  },
+  "roof.small.vent": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    16,
+    4
+   ],
+   "decals": [],
+   "file": "roof.small.vent.glb",
+   "sha256": "9e13efad6e14405249c79fb9c110271577850a9377c07713165a20becf9e0f3d",
+   "slots": [
+    "primary",
+    "metal",
+    "dark"
+   ],
+   "triangles": 224,
+   "voxelAligned": true
+  },
+  "roof.spine.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    3
+   ],
+   "decals": [],
+   "file": "roof.spine.w2.d2.glb",
+   "sha256": "de34c1da32d4883fdd96b9c651a11f22102a5ae7457062ef1e272c11f45b2b6c",
+   "slots": [
+    "secondary",
+    "trim",
+    "emit_a"
+   ],
+   "triangles": 464,
+   "voxelAligned": true
+  },
+  "roof.tanks.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    15
+   ],
+   "decals": [],
+   "file": "roof.tanks.w2.d2.glb",
+   "sha256": "8af5cc65bda9fed1c827436f29263e192beebf4a54b882d486ceb1feace412eb",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "emit_b"
+   ],
+   "triangles": 510,
+   "voxelAligned": true
+  },
+  "roof.tanks.w2.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    48,
+    11
+   ],
+   "decals": [],
+   "file": "roof.tanks.w2.d3.glb",
+   "sha256": "94f78de3fb3e82ecb1aa4aefb61379c7487675bec2b2497e2f3b55b9d0adfebb",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "emit_b"
+   ],
+   "triangles": 766,
+   "voxelAligned": true
+  },
+  "roof.tanks.w3.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    32,
+    15
+   ],
+   "decals": [],
+   "file": "roof.tanks.w3.d2.glb",
+   "sha256": "881c7869df693c98dcb195f86f1a0d2409ed5cb815a4291f034ce77ebaa82336",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "emit_b"
+   ],
+   "triangles": 510,
+   "voxelAligned": true
+  },
+  "roof.vent.w1.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    32,
+    4
+   ],
+   "decals": [],
+   "file": "roof.vent.w1.d2.glb",
+   "sha256": "6d4aa21cb332ac3e31224c8f59c3f750b4a8f313ce47f850d2ad1b383b90dda3",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 266,
+   "voxelAligned": true
+  },
+  "roof.vent.w2.d1": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    16,
+    4
+   ],
+   "decals": [],
+   "file": "roof.vent.w2.d1.glb",
+   "sha256": "e22a3fbf9016405de1ab01f7f23c66ab18e5fc3a5621aa0579ee072a51e071e5",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 186,
+   "voxelAligned": true
+  },
+  "roof.vent.w2.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    32,
+    4
+   ],
+   "decals": [],
+   "file": "roof.vent.w2.d2.glb",
+   "sha256": "d84f6272bca10918330970fa8b39da7b98b382cbb2e7ee4947dc9d7875143180",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 266,
+   "voxelAligned": true
+  },
+  "roof.vent.w2.d3": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    48,
+    4
+   ],
+   "decals": [],
+   "file": "roof.vent.w2.d3.glb",
+   "sha256": "b4643b976b4ac102a7c4ce3fd668a4b093d4918687351b0a898763efd4010999",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 346,
+   "voxelAligned": true
+  },
+  "roof.vent.w3.d2": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    32,
+    4
+   ],
+   "decals": [],
+   "file": "roof.vent.w3.d2.glb",
+   "sha256": "189cb8145fbc6443a2d698eb3bd047cdee80e76b7af08e9239a473e3213428f4",
+   "slots": [
+    "secondary",
+    "trim",
+    "metal",
+    "dark",
+    "emit_b"
+   ],
+   "triangles": 266,
+   "voxelAligned": true
+  },
+  "shell.straight": {
+   "bounds": [
+    0.0,
+    -5.5,
+    0.0,
+    16.0,
+    3.0,
+    32.0
+   ],
+   "decals": [],
+   "file": "shell.straight.glb",
+   "sha256": "57f75e9a674803c4dac93e49d4ab19dc6daeef57c62e8022e70b12c1abe51dec",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 248,
+   "voxelAligned": false
+  },
+  "shellwall.arc1": {
+   "bounds": [
+    -0.8726,
+    -0.8726,
+    0.0,
+    18.9276,
+    18.9276,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.arc1.glb",
+   "sha256": "bacfd57853eb4703cb207e0d8c4c53bb6cfed45123cecf16d28f9a59926c9ea7",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 556,
+   "voxelAligned": false
+  },
+  "shellwall.arc2": {
+   "bounds": [
+    -0.4408,
+    -0.4408,
+    0.0,
+    34.9737,
+    34.9737,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.arc2.glb",
+   "sha256": "83205087b66644a75847ee365e182af5020c89f612051cf50dc711e31c724765",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1004,
+   "voxelAligned": false
+  },
+  "shellwall.arc2c": {
+   "bounds": [
+    -0.2332,
+    -0.2332,
+    0.0,
+    37.4651,
+    37.4651,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.arc2c.glb",
+   "sha256": "bd080ee47e3ab0cd887c891549fcb214856708c6f7b49caf6438ad880a62f54f",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1004,
+   "voxelAligned": false
+  },
+  "shellwall.arc3": {
+   "bounds": [
+    -0.4071,
+    -0.4071,
+    0.0,
+    50.9764,
+    50.9764,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.arc3.glb",
+   "sha256": "940672fbcdd645da8bb8da233e87b9fe2ab5ab1dc270f4e70831f40516386dd4",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1460,
+   "voxelAligned": false
+  },
+  "shellwall.arc3c": {
+   "bounds": [
+    -0.2154,
+    -0.2154,
+    0.0,
+    53.4691,
+    53.4691,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.arc3c.glb",
+   "sha256": "3269cc09c2e625ed2e57c0e428d3cefccf498d9fef4bd7f298c239e9c0ed6d9f",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1460,
+   "voxelAligned": false
+  },
+  "shellwall.arc4": {
+   "bounds": [
+    -0.4071,
+    -0.4071,
+    0.0,
+    66.9764,
+    66.9764,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.arc4.glb",
+   "sha256": "db007257741dc03775b950d4f103ff3bb9fdbc1257537ccbbb7eae0ea8237841",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1940,
+   "voxelAligned": false
+  },
+  "shellwall.arc4c": {
+   "bounds": [
+    -0.2154,
+    -0.2154,
+    0.0,
+    69.4691,
+    69.4691,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.arc4c.glb",
+   "sha256": "a4a8bc828b1f205e59f989f323f6791f3c8f9448beab9dcfae2e38503fb4d43a",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1940,
+   "voxelAligned": false
+  },
+  "shellwall.slope1": {
+   "bounds": [
+    -3.7533,
+    -3.7533,
+    0.0,
+    17.9856,
+    17.9856,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.slope1.glb",
+   "sha256": "9f10497dc23bad7d72fc59b33668d42c1db1cc441d858f0a475c49bad9964719",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 336,
+   "voxelAligned": false
+  },
+  "shellwall.slope2": {
+   "bounds": [
+    -2.3738,
+    -4.8335,
+    0.0,
+    33.2558,
+    18.5974,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.slope2.glb",
+   "sha256": "951d9148751c07a10971806e03d67e04f9ab71739456ee5918c10a8eda0f4c6b",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 424,
+   "voxelAligned": false
+  },
+  "shellwall.slope3": {
+   "bounds": [
+    -1.6785,
+    -5.157,
+    0.0,
+    48.888,
+    18.7853,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.slope3.glb",
+   "sha256": "65d89b1a75a85464985fb9b985463a365974a424b291092fecd1d8779da0aa77",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 512,
+   "voxelAligned": false
+  },
+  "shellwall.slope4": {
+   "bounds": [
+    -1.2874,
+    -5.2892,
+    0.0,
+    64.681,
+    18.8639,
+    32.0
+   ],
+   "decals": [],
+   "file": "shellwall.slope4.glb",
+   "sha256": "997649f1610591af8bb2dc833a69c2e3a86b7a28510f391d39bedb63c417d807",
+   "slots": [
+    "primary",
+    "secondary",
+    "trim",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 600,
+   "voxelAligned": false
+  },
+  "win.band.w2.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "win.band.w2.h16.glb",
+   "sha256": "36b71dc914fabe3f647dc9339c9243479aff4567aeef575056cdba7edecc6670",
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 192,
+   "voxelAligned": true
+  },
+  "win.full.w2.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    32,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "win.full.w2.h16.glb",
+   "sha256": "a994f48289163eed8f94e40197b98658a8d1ac131922abe924fde7e616850df6",
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 202,
+   "voxelAligned": true
+  },
+  "win.full.w3.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    48,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "win.full.w3.h16.glb",
+   "sha256": "231c9f572588f5253b169f40a8643660e3bad354296ebb86807f087fd2f2ae18",
+   "slots": [
+    "secondary",
+    "dark",
+    "emit_a",
+    "glass"
+   ],
+   "triangles": 218,
+   "voxelAligned": true
+  },
+  "win.port.w1.h16": {
+   "bounds": [
+    0,
+    0,
+    0,
+    16,
+    4,
+    16
+   ],
+   "decals": [],
+   "file": "win.port.w1.h16.glb",
+   "sha256": "fd90378f889e165cd13da470f58cf639d7c5f93de3117e42d4b5f4b5f8679dfd",
+   "slots": [
+    "secondary",
+    "trim",
+    "glass"
+   ],
+   "triangles": 446,
+   "voxelAligned": true
+  }
+ },
+ "revision": "r002",
+ "schema": "sidereal.ship-kit-manifest.v1",
+ "slots": [
+  "primary",
+  "secondary",
+  "accent",
+  "trim",
+  "metal",
+  "dark",
+  "emit_a",
+  "emit_b",
+  "glass"
+ ]
+}

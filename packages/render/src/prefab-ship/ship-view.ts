@@ -32,13 +32,12 @@ import { Light } from "@babylonjs/core/Lights/light";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import "@babylonjs/core/Meshes/thinInstanceMesh";
 import { G, TEXEL } from "@sidereal/content/construction-grammar";
-import { SHIP_KIT_SLOTS, type ShipKitManifest, type ShipKitSlot } from "@sidereal/content/ship-kit";
+import { SHIP_KIT_REVISION, SHIP_KIT_SLOTS, type ShipKitManifest, type ShipKitSlot } from "@sidereal/content/ship-kit";
 import { deckObjectVisualUrl } from "@sidereal/content/ship-furniture";
 import { prefabOrigin, type PrefabComponentCatalog, type ShipPrefabDocumentV1, type ShipThemeId } from "@sidereal/content/ship-prefab";
 import { dressShip, type ComponentPlacement, type DressView, type DressedShip } from "@sidereal/sim/ship-dresser";
 import { setMeshRole, type MeshRole } from "../mesh-roles";
 import { meshBoxes, newBuilder, type GeometryBuilder } from "./box-mesher";
-import { meshPrisms } from "./prism-mesher";
 import { appendTransformed, localToParent, meshGeometry, type MergeGroup } from "./batch";
 import { appendStandin, componentStandin, emitPlume, type StandinSocket } from "./component-standins";
 import { applyDecalTheme, buildDecals, disposeDecals, type DecalHandle } from "./decals";
@@ -65,7 +64,7 @@ export type PrefabShipPresentation = "flight" | "deck";
 export interface PrefabShipViewOptions {
   catalog: PrefabComponentCatalog;
   view: PrefabShipPresentation;
-  /** Kit GLB directory, with trailing slash. Default "/assets/ship-kit/r001/". */
+  /** Kit GLB directory, with trailing slash. Default "/assets/ship-kit/<SHIP_KIT_REVISION>/". */
   kitBaseUrl?: string;
   parent?: TransformNode;
   /** When set, component GLBs load from `${componentsBaseUrl}${basename(spec.visual.url)}`. */
@@ -95,7 +94,12 @@ export interface PrefabShipMetrics {
   /** Enabled meshes of this view; each is one draw call per render pass. */
   meshes: number;
   kitTriangles: number;
+  /** Visible TypeScript-generated structure/stand-in triangles (hull visuals must keep this at 0). */
   generatedTriangles: number;
+  /** Visible triangles from Blender GLBs (kit, components, furniture), batched or instanced. */
+  glbTriangles: number;
+  /** Presentation effects: plumes, light pools, contact shadows, labels, placeholders. */
+  effectTriangles: number;
   componentGlbs: number;
   componentStandins: number;
 }
@@ -137,6 +141,8 @@ interface StaticEntry {
   slot: ShipKitSlot | null;
   triangles: number;
   kind: "generated" | "standin" | "plume" | "object-fill" | "object-frame" | "pool" | "decal";
+  /** Batched meshes: triangles that came from Blender GLBs vs TypeScript-generated geometry. */
+  origin?: { glb: number; ts: number };
 }
 
 interface Built {
@@ -214,7 +220,7 @@ function componentUrl(c: ComponentPlacement, base: string | undefined): string |
 
 export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocumentV1, options: PrefabShipViewOptions): Promise<PrefabShipView> {
   if (!scene.useRightHandedSystem) throw Error("createPrefabShipView requires a right-handed scene (scene.useRightHandedSystem = true)");
-  const kitBase = options.kitBaseUrl ?? "/assets/ship-kit/r001/";
+  const kitBase = options.kitBaseUrl ?? `/assets/ship-kit/${SHIP_KIT_REVISION}/`;
   const root = new TransformNode(`prefab-ship:${doc.id}`, scene);
   if (options.parent) root.parent = options.parent;
   const frame = new TransformNode(`prefab-ship:${doc.id}:prefab-frame`, scene);
@@ -244,11 +250,11 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
    * own materials and stay separate (a handful of draws).
    */
   function batchBuilt(out: Built) {
-    const groups = new Map<string, MergeGroup & { tag: DressView; slot: ShipKitSlot; role: MeshRole }>();
+    const groups = new Map<string, MergeGroup & { tag: DressView; slot: ShipKitSlot; role: MeshRole; glb: number; ts: number }>();
     const group = (tag: DressView, slot: ShipKitSlot, role: MeshRole) => {
       const key = `${tag}|${slot}|${role}`;
       let g = groups.get(key);
-      if (!g) groups.set(key, (g = { key, tag, slot, role, positions: [], normals: [], indices: [] }));
+      if (!g) groups.set(key, (g = { key, tag, slot, role, positions: [], normals: [], indices: [], glb: 0, ts: 0 }));
       return g;
     };
     for (const e of out.instanced) {
@@ -257,7 +263,11 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       if (geo)
         for (const tag of ["both", "flight", "deck"] as const) {
           const m = e.matrices[tag];
-          for (let i = 0; i < m.length; i += 16) appendTransformed(group(tag, e.slot ?? "primary", role), geo.positions, geo.normals, geo.indices, m.slice(i, i + 16));
+          for (let i = 0; i < m.length; i += 16) {
+            const g = group(tag, e.slot ?? "primary", role);
+            appendTransformed(g, geo.positions, geo.normals, geo.indices, m.slice(i, i + 16));
+            g.glb += geo.indices.length / 3;
+          }
         }
       e.mesh.dispose();
     }
@@ -270,7 +280,11 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       }
       const geo = meshGeometry(st.mesh);
       const role = ((st.mesh.metadata as { role?: MeshRole } | null)?.role ?? "hull") as MeshRole;
-      if (geo) appendTransformed(group(st.tag, st.slot, role), geo.positions, geo.normals, geo.indices, localToParent(st.mesh));
+      if (geo) {
+        const g = group(st.tag, st.slot, role);
+        appendTransformed(g, geo.positions, geo.normals, geo.indices, localToParent(st.mesh));
+        g.ts += geo.indices.length / 3;
+      }
       st.mesh.dispose();
     }
     for (const g of groups.values()) {
@@ -280,7 +294,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       setMeshRole(mesh, g.role);
       // No freezeWorldMatrix: the ship root moves in game, and a frozen world matrix would
       // leave the hull at its spawn pose. Geometry is baked relative to the parent frame.
-      kept.push({ mesh, tag: g.tag, slot: g.slot, triangles: g.indices.length / 3, kind: "generated" });
+      kept.push({ mesh, tag: g.tag, slot: g.slot, triangles: g.indices.length / 3, kind: "generated", origin: { glb: g.glb, ts: g.ts } });
     }
     out.statics = kept;
   }
@@ -291,7 +305,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     for (const k of out.dressed.kit) {
       let b = byPiece.get(k.piece);
       if (!b) byPiece.set(k.piece, (b = buckets()));
-      pushMatrix(b[k.view], kitInstanceMatrix(k.x, k.y, k.z, k.rotDeg));
+      pushMatrix(b[k.view], kitInstanceMatrix(k.x, k.y, k.z, k.rotDeg, k.mirror));
     }
     await Promise.all(
       [...byPiece].map(async ([piece, matrices]) => {
@@ -317,13 +331,6 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
 
   function buildGenerated(out: Built) {
     for (const g of out.dressed.generated) {
-      for (const [s, geo] of meshPrisms(g.prisms ?? [])) {
-        const slot = SHIP_KIT_SLOTS[s];
-        const mesh = makeMesh(scene, `${g.id}:prisms:${slot}`, frame, geo);
-        mesh.material = roleSlotMaterial(scene, theme, slot, roleOfGenerated(g.kind));
-        setMeshRole(mesh, roleOfGenerated(g.kind));
-        out.statics.push({ mesh, tag: g.view, slot, triangles: geo.indices.length / 3, kind: "generated" });
-      }
       if (!g.boxes.length) continue;
       const result = meshBoxes(g.boxes);
       for (const s of result.slots) {
@@ -740,10 +747,12 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       const b = built;
       const engine = scene.getEngine();
       const drawCalls = engine._drawCalls?.current ?? 0;
-      if (!b) return { drawCalls, instances: 0, triangles: 0, pieces: 0, meshes: 0, kitTriangles: 0, generatedTriangles: 0, componentGlbs: 0, componentStandins: 0 };
+      if (!b) return { drawCalls, instances: 0, triangles: 0, pieces: 0, meshes: 0, kitTriangles: 0, generatedTriangles: 0, glbTriangles: 0, effectTriangles: 0, componentGlbs: 0, componentStandins: 0 };
       let instances = 0;
       let kitTriangles = 0;
       let generatedTriangles = 0;
+      let glbTriangles = 0;
+      let effectTriangles = 0;
       let triangles = 0;
       let meshes = 0;
       const pieces = new Set<string>();
@@ -752,6 +761,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
           instances += e.count;
           meshes++;
           triangles += e.triangles * e.count;
+          glbTriangles += e.triangles * e.count;
           if (e.piece) {
             pieces.add(e.piece);
             kitTriangles += e.triangles * e.count;
@@ -761,14 +771,18 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
         if (s.mesh.isEnabled()) {
           meshes++;
           triangles += s.triangles;
-          if (s.kind === "generated") generatedTriangles += s.triangles;
+          if (s.origin) {
+            glbTriangles += s.origin.glb;
+            generatedTriangles += s.origin.ts;
+          } else if (s.kind === "generated" || s.kind === "standin") generatedTriangles += s.triangles;
+          else effectTriangles += s.triangles;
         }
       for (const d of b.decals)
         if (d.mesh.isEnabled()) {
           meshes++;
           triangles += 2;
         }
-      return { drawCalls, instances, triangles, pieces: pieces.size, meshes, kitTriangles, generatedTriangles, componentGlbs: b.componentGlbs, componentStandins: b.componentStandins };
+      return { drawCalls, instances, triangles, pieces: pieces.size, meshes, kitTriangles, generatedTriangles, glbTriangles, effectTriangles, componentGlbs: b.componentGlbs, componentStandins: b.componentStandins };
     },
     emissiveMeshes() {
       if (!built) return [];

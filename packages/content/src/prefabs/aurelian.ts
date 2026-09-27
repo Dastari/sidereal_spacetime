@@ -26,6 +26,7 @@ export const AU_LUMEN = prefab({
     door("d-sanctum", [4, 3], [6, 3], "door.sliding"),
     door("d-bridge", [8, 3], [8, 5], "door.forcefield"),
     edge("g-bridge", [8, 0], [8, 3], "wall.glazed"),
+    edge("canopy-bow", [8, 0], [8, 6], "canopy"),
   ],
   mounts: [
     face("rcs-bow-p", "rcs.sm", "port", [7.5, 6]),

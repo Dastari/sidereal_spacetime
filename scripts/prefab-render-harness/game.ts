@@ -71,18 +71,37 @@ async function main() {
   const instrumentation = new SceneInstrumentation(scene!);
   for (let i = 0; i < 30; i++) await new Promise((r) => requestAnimationFrame(r));
   const ship = scene!.getTransformNodeByName(`prefab-ship:${doc.id}`);
+  const frameDraws = instrumentation.drawCallsCounter.current;
+  // Ship share of the frame: draws with the prefab view hidden for a few frames.
+  ship?.setEnabled(false);
+  for (let i = 0; i < 4; i++) await new Promise((r) => requestAnimationFrame(r));
+  const withoutShip = instrumentation.drawCallsCounter.current;
+  ship?.setEnabled(true);
+  for (let i = 0; i < 4; i++) await new Promise((r) => requestAnimationFrame(r));
   window.__prefabMetrics = [
     {
       id: doc.id,
       view: interior ? "deck" : "flight",
-      drawCalls: instrumentation.drawCallsCounter.current,
+      drawCalls: frameDraws,
+      shipDraws: frameDraws - withoutShip,
       meshes: ship?.getChildMeshes().filter((m) => m.isEnabled() && m.isVisible).length ?? 0,
       lights: scene!.lights.filter((l) => l.isEnabled()).map((l) => `${l.getClassName()}:${l.name}:${l.intensity.toFixed(2)}:${"direction" in l ? ((l as unknown as { direction?: Vector3 }).direction?.asArray().map((v) => v.toFixed(2)).join(",") ?? "") : ""}`),
+      // Mesh origin of the visible ship: Blender GLB vs TypeScript-generated vs effects.
+      origin: (scene!.getTransformNodeByName("ship-frame")?.metadata as { prefabView?: { metrics(): unknown } } | null)?.prefabView?.metrics(),
+      // Non-ship active meshes by name prefix (what the rest of the frame is spent on).
+      others: Object.entries(
+        scene!
+          .getActiveMeshes()
+          .data.slice(0, scene!.getActiveMeshes().length)
+          .filter((m) => !ship || !m.isDescendantOf(ship))
+          .reduce<Record<string, number>>((acc, m) => ((acc[m.name.split(/[:_.\-\d]/)[0] || m.name] = (acc[m.name.split(/[:_.\-\d]/)[0] || m.name] ?? 0) + 1), acc), {}),
+      ).sort((a, b) => b[1] - a[1]).slice(0, 12),
+      activeMeshes: scene!.getActiveMeshes().length,
       environmentIntensity: scene!.environmentIntensity,
       exposure: scene!.imageProcessingConfiguration.exposure,
     },
   ];
-  document.getElementById("hud")!.textContent = `${doc.id} ${interior ? "deck" : "flight"} (game renderer): ${instrumentation.drawCallsCounter.current} draws/frame`;
+  document.getElementById("hud")!.textContent = `${doc.id} ${interior ? "deck" : "flight"} (game renderer): ${frameDraws} draws/frame, ship ${frameDraws - withoutShip}`;
   window.__prefabReady = true;
 }
 

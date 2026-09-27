@@ -88,8 +88,12 @@ export function rotZTranslate(deg: number, t: Vec3): Mat4 {
  * Kit placement instance matrix: glTF piece coordinates -> prefab frame. Rotation is about the
  * piece origin (the placement point), matching the dresser and the Python prototype.
  */
-export function kitInstanceMatrix(x: number, y: number, z: number, rotDeg: number): Mat4 {
-  return multiply(GLTF_TO_ZUP, rotZTranslate(rotDeg, [x, y, z]));
+const MIRROR_X: Mat4 = basisMatrix([-1, 0, 0], [0, 1, 0], [0, 0, 1]);
+
+/** Kit piece -> prefab frame; `mirror` reflects piece-local X before the rotation (tile modules). */
+export function kitInstanceMatrix(x: number, y: number, z: number, rotDeg: number, mirror = false): Mat4 {
+  const zup = mirror ? multiply(GLTF_TO_ZUP, MIRROR_X) : GLTF_TO_ZUP;
+  return multiply(zup, rotZTranslate(rotDeg, [x, y, z]));
 }
 
 /** Component frame at quarterTurns 0 -> prefab axes: +Y forward -> +X fore, +X starboard -> -Y. */

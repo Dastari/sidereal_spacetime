@@ -13,10 +13,10 @@
  * - roof/plan pieces: +X/+Y in plan, +Z up from the mounting plane; placed at the min corner.
  * - interior edge pieces: +X along the edge, +Y across (thickness), +Z up from the floor top.
  */
-import { G, cassetteHeights, volumeTiers, HEIGHT_CLASS_IDS } from "./construction-grammar";
+import { G, cassetteHeights, volumeTiers, HEIGHT_CLASS_IDS, SHAPE_TILE_IDS } from "./construction-grammar";
 
 export const SHIP_KIT_SCHEMA = "sidereal.ship-kit-pieces.v1" as const;
-export const SHIP_KIT_REVISION = "r001" as const;
+export const SHIP_KIT_REVISION = "r002" as const;
 export const SHIP_KIT_SLOTS = ["primary", "secondary", "accent", "trim", "metal", "dark", "emit_a", "emit_b", "glass"] as const;
 export type ShipKitSlot = (typeof SHIP_KIT_SLOTS)[number];
 
@@ -32,12 +32,16 @@ export type ShipKitFamily =
   | "door"
   | "post"
   | "fixture"
-  | "exterior";
+  | "exterior"
+  | "hull-module"
+  | "face-module"
+  | "canopy"
+  | "shell";
 
 export interface ShipKitPieceSpec {
   id: string;
   family: ShipKitFamily;
-  mount: "face" | "top" | "plan" | "edge" | "vertex" | "ceiling";
+  mount: "face" | "top" | "plan" | "edge" | "vertex" | "ceiling" | "tile";
   /** Python builder in ship_kit_prototype.py and its positional arguments. */
   builder: string;
   args: (string | number | boolean | null)[];
@@ -59,7 +63,18 @@ export const kitId = {
   post: (cut: boolean) => `int.post${cut ? ".cut" : ""}`,
   fixture: (kind: string) => `int.fixture.${kind}`,
   exterior: (kind: string) => `ext.${kind}`,
+  /** r002 universal hull modules, in the unrotated shape-tile frame (placed with the tile's turns/mirror). */
+  hull: (shape: string, heightClass: string, cockpit = false) => `hull.${shape}.${heightClass}${cockpit ? ".cockpit" : ""}`,
+  face: (shape: string, heightClass: string, cut: boolean) => `face.${shape}.${heightClass}${cut ? ".cut" : ""}`,
+  canopy: (shape: string, heightClass: string, cut: boolean) => `canopy.${shape}.${heightClass}${cut ? ".cut" : ""}`,
+  shellWall: (shape: string) => `shellwall.${shape}`,
+  shellStraight: () => "shell.straight",
+  hullPost: (heightClass: string, cut: boolean) => `post.hull.${heightClass}${cut ? ".cut" : ""}`,
+  floorPart: (shape: string) => `int.floorpart.${shape}`,
 } as const;
+
+/** Shape tiles with a non-axis (angled or curved) edge: every tile except the square. */
+export const ANGLED_SHAPES = SHAPE_TILE_IDS.filter((s) => s !== "square");
 
 /** Width (cells) the face picker may choose, and the kinds resolved for a tier. */
 export function faceKinds(width: number, upper: boolean, windows: boolean): string[] {
@@ -136,6 +151,30 @@ export function enumerateShipKitPieces(): ShipKitPieceSpec[] {
   add({ id: kitId.fixture("wall-lamp"), family: "fixture", mount: "edge", builder: "iwall_lamp", args: [] });
   add({ id: kitId.fixture("floor-light"), family: "fixture", mount: "plan", builder: "ifloor_light", args: [] });
   add({ id: kitId.exterior("airlock"), family: "exterior", mount: "face", builder: "airlock", args: [] });
+  // r002 universal hull modules (ship_kit_modules.py): every shape tile on every height class.
+  const cut = G.deck.shellCutTexels;
+  for (const hc of HEIGHT_CLASS_IDS) {
+    for (const shape of SHAPE_TILE_IDS) {
+      add({ id: kitId.hull(shape, hc), family: "hull-module", mount: "tile", builder: "hull_body", args: [shape, hc] });
+      if (G.heightClasses[hc].kinds.includes("hull"))
+        add({ id: kitId.hull(shape, hc, true), family: "hull-module", mount: "tile", builder: "hull_cockpit", args: [shape, hc] });
+    }
+    for (const shape of ANGLED_SHAPES) {
+      add({ id: kitId.face(shape, hc, false), family: "face-module", mount: "tile", builder: "face_module", args: [shape, hc, null] });
+      add({ id: kitId.canopy(shape, hc, false), family: "canopy", mount: "tile", builder: "canopy_module", args: [shape, hc, null] });
+    }
+    add({ id: kitId.canopy("straight.w1", hc, false), family: "canopy", mount: "face", builder: "canopy_straight", args: [hc, null] });
+    add({ id: kitId.hullPost(hc, false), family: "post", mount: "vertex", builder: "corner_post", args: [hc, null] });
+  }
+  for (const shape of ANGLED_SHAPES) {
+    add({ id: kitId.face(shape, "deck", true), family: "face-module", mount: "tile", builder: "face_module", args: [shape, "deck", cut] });
+    add({ id: kitId.canopy(shape, "deck", true), family: "canopy", mount: "tile", builder: "canopy_module", args: [shape, "deck", cut] });
+    add({ id: kitId.shellWall(shape), family: "shell", mount: "tile", builder: "shellwall", args: [shape] });
+    add({ id: kitId.floorPart(shape), family: "floor", mount: "tile", builder: "floor_part", args: [shape] });
+  }
+  add({ id: kitId.canopy("straight.w1", "deck", true), family: "canopy", mount: "face", builder: "canopy_straight", args: ["deck", cut] });
+  add({ id: kitId.shellStraight(), family: "shell", mount: "face", builder: "shell_straight", args: [] });
+  add({ id: kitId.hullPost("deck", true), family: "post", mount: "vertex", builder: "corner_post", args: ["deck", cut] });
   return [...out.values()];
 }
 

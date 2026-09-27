@@ -174,6 +174,7 @@ async function main() {
       shots.push({ name: `${id}_game_flight`, page: "game.html", query: `prefab=${id}&interior=0&cam=${cam(radius)}` });
       shots.push({ name: `${id}_game_bow`, page: "game.html", query: `prefab=${id}&interior=0&cam=${cam(15, 0.5)},0,4` });
       shots.push({ name: `${id}_game_engines`, page: "game.html", query: `prefab=${id}&interior=0&cam=${cam(15, 2.6)},0,-4.5` });
+      shots.push({ name: `${id}_game_side`, page: "game.html", query: `prefab=${id}&interior=0&cam=${-Math.PI / 2},1.5,${radius}` });
       shots.push({ name: `${id}_game_deck_close`, page: "game.html", query: `prefab=${id}&interior=1&cam=${cam(14, 0.3)}` });
     }
   else for (const id of ids)
@@ -181,6 +182,9 @@ async function main() {
       shots.push({ name: `${id}_${view}_${cam}`, query: `prefab=${id}&view=${view}&cam=${cam}` });
   if (!only?.length && !game) shots.push({ name: "lineup", query: "lineup=1&view=flight&cam=iso" });
 
+  // --shots deck,flight,...: keep only these shot suffixes (game mode).
+  const keepShots = opt("--shots", "")?.split(",").filter(Boolean);
+  if (keepShots?.length) shots.splice(0, shots.length, ...shots.filter((s) => keepShots.some((k) => s.name.endsWith(`_game_${k}`))));
   const metrics = {};
   for (const s of shots) {
     logs.length = 0;

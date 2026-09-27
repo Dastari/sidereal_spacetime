@@ -14,6 +14,8 @@ import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 export interface PrefabShipViewHandle {
   setInterior(interior: boolean): void;
   dispose(): void;
+  /** Mesh-origin and draw metrics of the dressed view (evidence/diagnostics). */
+  metrics(): ReturnType<import("./prefab-ship/ship-view").PrefabShipView["metrics"]>;
 }
 
 /** The game's space scene has no image-based environment, so metallic PBR slots
@@ -88,7 +90,7 @@ export async function loadPrefabShipPresentation(
       );
     });
   logMetrics();
-  return {
+  const handle: PrefabShipViewHandle = {
     setInterior(next) {
       if (next === interior) return;
       interior = next;
@@ -96,10 +98,14 @@ export async function loadPrefabShipPresentation(
       adapt();
       logMetrics();
     },
+    metrics: () => view.metrics(),
     dispose() {
       if (glow) for (const mesh of glowing) glow.removeIncludedOnlyMesh(mesh as Mesh);
       fill.dispose();
       view.dispose();
     },
   };
+  // Diagnostics hook (review harnesses read mesh-origin metrics from the ship frame).
+  shipRoot.metadata = { ...shipRoot.metadata, prefabView: handle };
+  return handle;
 }

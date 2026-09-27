@@ -1,6 +1,6 @@
 {
  "schema": "sidereal.ship-kit-pieces.v1",
- "revision": "r001",
+ "revision": "r002",
  "slots": [
   "primary",
   "secondary",
@@ -15,759 +15,386 @@
  "texelsPerMeter": 16,
  "pieces": [
   {
-   "id": "cas.grille.w1.h24",
+   "id": "cas.grille.w1.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_grille",
    "args": [
     16,
-    24
+    18
    ]
   },
   {
-   "id": "cas.light.w1.h24",
+   "id": "cas.light.w1.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_light",
    "args": [
     16,
-    24
+    18
    ]
   },
   {
-   "id": "cas.stack.w1.h24",
+   "id": "cas.stack.w1.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_stack",
    "args": [
     16,
-    24
+    18
    ]
   },
   {
-   "id": "cas.module.w1.h24",
+   "id": "cas.module.w1.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_module",
    "args": [
     16,
-    24
+    18
    ]
   },
   {
-   "id": "cas.pipes.w1.h24",
+   "id": "cas.pipes.w1.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_pipes",
    "args": [
     16,
-    24
+    18
    ]
   },
   {
-   "id": "cas.beacon.w1.h24",
+   "id": "cas.beacon.w1.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_beacon",
    "args": [
     16,
-    24
+    18
    ]
   },
   {
-   "id": "cas.armor.w1.h24",
+   "id": "cas.armor.w1.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_armor",
    "args": [
     16,
-    24
+    18
    ]
   },
   {
-   "id": "cas.panel.w2.h24",
+   "id": "cas.panel.w2.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_panel",
    "args": [
     32,
-    24
+    18
    ]
   },
   {
-   "id": "cas.split.w2.h24",
+   "id": "cas.split.w2.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_split",
    "args": [
     32,
-    24
+    18
    ]
   },
   {
-   "id": "cas.hatch.w2.h24",
+   "id": "cas.hatch.w2.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_hatch",
    "args": [
     32,
-    24
+    18
    ]
   },
   {
-   "id": "cas.armor.w2.h24",
+   "id": "cas.armor.w2.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_armor",
    "args": [
     32,
-    24
+    18
    ]
   },
   {
-   "id": "cas.module.w2.h24",
+   "id": "cas.module.w2.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_module",
    "args": [
     32,
-    24
+    18
    ]
   },
   {
-   "id": "cas.pipes.w2.h24",
+   "id": "cas.pipes.w2.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_pipes",
    "args": [
     32,
-    24
+    18
    ]
   },
   {
-   "id": "cas.armor.w3.h24",
+   "id": "cas.armor.w3.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_armor",
    "args": [
     48,
-    24
+    18
    ]
   },
   {
-   "id": "cas.panel.w3.h24",
+   "id": "cas.panel.w3.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_panel",
    "args": [
     48,
-    24
+    18
    ]
   },
   {
-   "id": "cas.split.w3.h24",
+   "id": "cas.split.w3.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_split",
    "args": [
     48,
-    24
+    18
    ]
   },
   {
-   "id": "cas.pipes.w3.h24",
+   "id": "cas.pipes.w3.h18",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_pipes",
    "args": [
     48,
-    24
+    18
    ]
   },
   {
-   "id": "cas.grille.w1.h12",
+   "id": "cas.grille.w1.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_grille",
    "args": [
     16,
-    12
+    16
    ]
   },
   {
-   "id": "cas.light.w1.h12",
+   "id": "cas.light.w1.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_light",
    "args": [
     16,
-    12
+    16
    ]
   },
   {
-   "id": "cas.pipes.w1.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_pipes",
-   "args": [
-    16,
-    12
-   ]
-  },
-  {
-   "id": "cas.module.w1.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_module",
-   "args": [
-    16,
-    12
-   ]
-  },
-  {
-   "id": "cas.stack.w1.h12",
+   "id": "cas.stack.w1.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_stack",
    "args": [
     16,
-    12
+    16
    ]
   },
   {
-   "id": "cas.beacon.w1.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_beacon",
-   "args": [
-    16,
-    12
-   ]
-  },
-  {
-   "id": "cas.grille.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_grille",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "cas.light.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_light",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "cas.pipes.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_pipes",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "cas.module.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_module",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "cas.stack.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_stack",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "cas.beacon.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_beacon",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "cas.grille.w1.h20",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_grille",
-   "args": [
-    16,
-    20
-   ]
-  },
-  {
-   "id": "cas.light.w1.h20",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_light",
-   "args": [
-    16,
-    20
-   ]
-  },
-  {
-   "id": "cas.stack.w1.h20",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_stack",
-   "args": [
-    16,
-    20
-   ]
-  },
-  {
-   "id": "cas.module.w1.h20",
+   "id": "cas.module.w1.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_module",
    "args": [
     16,
-    20
+    16
    ]
   },
   {
-   "id": "cas.pipes.w1.h20",
+   "id": "cas.pipes.w1.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_pipes",
    "args": [
     16,
-    20
+    16
    ]
   },
   {
-   "id": "cas.beacon.w1.h20",
+   "id": "cas.beacon.w1.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_beacon",
    "args": [
     16,
-    20
+    16
    ]
   },
   {
-   "id": "win.port.w1.h20",
+   "id": "win.port.w1.h16",
    "family": "glazing",
    "mount": "face",
    "builder": "cas_port",
    "args": [
     16,
-    20
+    16
    ]
   },
   {
-   "id": "cas.panel.w2.h20",
+   "id": "cas.panel.w2.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_panel",
    "args": [
     32,
-    20
+    16
    ]
   },
   {
-   "id": "cas.split.w2.h20",
+   "id": "cas.split.w2.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_split",
    "args": [
     32,
-    20
+    16
    ]
   },
   {
-   "id": "cas.hatch.w2.h20",
+   "id": "cas.hatch.w2.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_hatch",
    "args": [
     32,
-    20
+    16
    ]
   },
   {
-   "id": "cas.armor.w2.h20",
+   "id": "cas.armor.w2.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_armor",
    "args": [
     32,
-    20
+    16
    ]
   },
   {
-   "id": "cas.module.w2.h20",
+   "id": "cas.module.w2.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_module",
    "args": [
     32,
-    20
+    16
    ]
   },
   {
-   "id": "cas.pipes.w2.h20",
+   "id": "cas.pipes.w2.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_pipes",
    "args": [
     32,
-    20
+    16
    ]
   },
   {
-   "id": "win.band.w2.h20",
+   "id": "win.band.w2.h16",
    "family": "glazing",
    "mount": "face",
    "builder": "cas_window",
    "args": [
     32,
-    20,
+    16,
     "band"
    ]
   },
   {
-   "id": "win.full.w2.h20",
+   "id": "win.full.w2.h16",
    "family": "glazing",
    "mount": "face",
    "builder": "cas_window",
    "args": [
     32,
-    20,
+    16,
     "full"
    ]
   },
   {
-   "id": "cas.armor.w3.h20",
+   "id": "cas.armor.w3.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_armor",
    "args": [
     48,
-    20
+    16
    ]
   },
   {
-   "id": "cas.panel.w3.h20",
+   "id": "cas.panel.w3.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_panel",
    "args": [
     48,
-    20
+    16
    ]
   },
   {
-   "id": "cas.split.w3.h20",
+   "id": "cas.split.w3.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_split",
    "args": [
     48,
-    20
+    16
    ]
   },
   {
-   "id": "cas.pipes.w3.h20",
+   "id": "cas.pipes.w3.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_pipes",
    "args": [
     48,
-    20
+    16
    ]
   },
   {
-   "id": "win.full.w3.h20",
+   "id": "win.full.w3.h16",
    "family": "glazing",
    "mount": "face",
    "builder": "cas_window",
    "args": [
     48,
-    20,
+    16,
     "full"
    ]
   },
   {
-   "id": "cas.logo.w3.h20",
+   "id": "cas.logo.w3.h16",
    "family": "cassette",
    "mount": "face",
    "builder": "cas_logo",
    "args": [
     48,
-    20
-   ]
-  },
-  {
-   "id": "cas.grille.w1.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_grille",
-   "args": [
-    16,
-    10
-   ]
-  },
-  {
-   "id": "cas.light.w1.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_light",
-   "args": [
-    16,
-    10
-   ]
-  },
-  {
-   "id": "cas.pipes.w1.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_pipes",
-   "args": [
-    16,
-    10
-   ]
-  },
-  {
-   "id": "cas.module.w1.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_module",
-   "args": [
-    16,
-    10
-   ]
-  },
-  {
-   "id": "cas.stack.w1.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_stack",
-   "args": [
-    16,
-    10
-   ]
-  },
-  {
-   "id": "cas.beacon.w1.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_beacon",
-   "args": [
-    16,
-    10
-   ]
-  },
-  {
-   "id": "cas.grille.w2.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_grille",
-   "args": [
-    32,
-    10
-   ]
-  },
-  {
-   "id": "cas.light.w2.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_light",
-   "args": [
-    32,
-    10
-   ]
-  },
-  {
-   "id": "cas.pipes.w2.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_pipes",
-   "args": [
-    32,
-    10
-   ]
-  },
-  {
-   "id": "cas.module.w2.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_module",
-   "args": [
-    32,
-    10
-   ]
-  },
-  {
-   "id": "cas.stack.w2.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_stack",
-   "args": [
-    32,
-    10
-   ]
-  },
-  {
-   "id": "cas.beacon.w2.h10",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_beacon",
-   "args": [
-    32,
-    10
-   ]
-  },
-  {
-   "id": "win.port.w1.h12",
-   "family": "glazing",
-   "mount": "face",
-   "builder": "cas_port",
-   "args": [
-    16,
-    12
-   ]
-  },
-  {
-   "id": "cas.panel.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_panel",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "cas.split.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_split",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "cas.hatch.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_hatch",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "cas.armor.w2.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_armor",
-   "args": [
-    32,
-    12
-   ]
-  },
-  {
-   "id": "win.band.w2.h12",
-   "family": "glazing",
-   "mount": "face",
-   "builder": "cas_window",
-   "args": [
-    32,
-    12,
-    "band"
-   ]
-  },
-  {
-   "id": "win.full.w2.h12",
-   "family": "glazing",
-   "mount": "face",
-   "builder": "cas_window",
-   "args": [
-    32,
-    12,
-    "full"
-   ]
-  },
-  {
-   "id": "cas.armor.w3.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_armor",
-   "args": [
-    48,
-    12
-   ]
-  },
-  {
-   "id": "cas.panel.w3.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_panel",
-   "args": [
-    48,
-    12
-   ]
-  },
-  {
-   "id": "cas.split.w3.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_split",
-   "args": [
-    48,
-    12
-   ]
-  },
-  {
-   "id": "cas.pipes.w3.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_pipes",
-   "args": [
-    48,
-    12
-   ]
-  },
-  {
-   "id": "win.full.w3.h12",
-   "family": "glazing",
-   "mount": "face",
-   "builder": "cas_window",
-   "args": [
-    48,
-    12,
-    "full"
-   ]
-  },
-  {
-   "id": "cas.logo.w3.h12",
-   "family": "cassette",
-   "mount": "face",
-   "builder": "cas_logo",
-   "args": [
-    48,
-    12
+    16
    ]
   },
   {
@@ -1249,28 +876,6 @@
    "args": [
     16,
     4,
-    true
-   ]
-  },
-  {
-   "id": "rim.h5",
-   "family": "rim",
-   "mount": "face",
-   "builder": "cas_rim",
-   "args": [
-    16,
-    5,
-    false
-   ]
-  },
-  {
-   "id": "rim.h5.lit",
-   "family": "rim",
-   "mount": "face",
-   "builder": "cas_rim",
-   "args": [
-    16,
-    5,
     true
    ]
   },
@@ -2208,6 +1813,2743 @@
    "mount": "face",
    "builder": "airlock",
    "args": []
+  },
+  {
+   "id": "hull.square.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "square",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.square.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "square",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.slope1.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope1",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.slope1.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope1",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.slope2.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope2",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.slope2.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope2",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.slope3.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope3",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.slope3.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope3",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.slope4.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope4",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.slope4.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope4",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc1.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc1",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc1.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc1",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc2.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc2.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc2",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc3.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc3.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc3",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc4.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc4.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc4",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc2c.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2c",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc2c.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc2c",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc3c.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3c",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc3c.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc3c",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc4c.deck",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4c",
+    "deck"
+   ]
+  },
+  {
+   "id": "hull.arc4c.deck.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc4c",
+    "deck"
+   ]
+  },
+  {
+   "id": "face.slope1.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope1",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope1.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope1",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.slope2.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope2",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope2.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope2",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.slope3.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope3",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope3.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope3",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.slope4.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope4",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope4.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope4",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.arc1.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc1",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc1.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc1",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2c.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2c",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2c.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2c",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3c.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3c",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3c.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3c",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4c.deck",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4c",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4c.deck",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4c",
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "canopy.straight.w1.deck",
+   "family": "canopy",
+   "mount": "face",
+   "builder": "canopy_straight",
+   "args": [
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "post.hull.deck",
+   "family": "post",
+   "mount": "vertex",
+   "builder": "corner_post",
+   "args": [
+    "deck",
+    null
+   ]
+  },
+  {
+   "id": "hull.square.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "square",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.square.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "square",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.slope1.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope1",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.slope1.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope1",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.slope2.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope2",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.slope2.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope2",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.slope3.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope3",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.slope3.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope3",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.slope4.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope4",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.slope4.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope4",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc1.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc1",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc1.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc1",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc2.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc2.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc2",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc3.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc3.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc3",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc4.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc4.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc4",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc2c.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2c",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc2c.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc2c",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc3c.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3c",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc3c.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc3c",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc4c.pod",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4c",
+    "pod"
+   ]
+  },
+  {
+   "id": "hull.arc4c.pod.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc4c",
+    "pod"
+   ]
+  },
+  {
+   "id": "face.slope1.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope1",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope1.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope1",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.slope2.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope2",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope2.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope2",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.slope3.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope3",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope3.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope3",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.slope4.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope4",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope4.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope4",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.arc1.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc1",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc1.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc1",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2c.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2c",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2c.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2c",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3c.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3c",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3c.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3c",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4c.pod",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4c",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4c.pod",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4c",
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "canopy.straight.w1.pod",
+   "family": "canopy",
+   "mount": "face",
+   "builder": "canopy_straight",
+   "args": [
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "post.hull.pod",
+   "family": "post",
+   "mount": "vertex",
+   "builder": "corner_post",
+   "args": [
+    "pod",
+    null
+   ]
+  },
+  {
+   "id": "hull.square.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "square",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.square.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "square",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.slope1.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope1",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.slope1.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope1",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.slope2.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope2",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.slope2.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope2",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.slope3.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope3",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.slope3.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope3",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.slope4.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope4",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.slope4.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "slope4",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc1.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc1",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc1.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc1",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc2.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc2.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc2",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc3.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc3.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc3",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc4.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc4.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc4",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc2c.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2c",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc2c.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc2c",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc3c.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3c",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc3c.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc3c",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc4c.cabin",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4c",
+    "cabin"
+   ]
+  },
+  {
+   "id": "hull.arc4c.cabin.cockpit",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_cockpit",
+   "args": [
+    "arc4c",
+    "cabin"
+   ]
+  },
+  {
+   "id": "face.slope1.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope1",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope1.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope1",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.slope2.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope2",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope2.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope2",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.slope3.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope3",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope3.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope3",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.slope4.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope4",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope4.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope4",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.arc1.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc1",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc1.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc1",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2c.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2c",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2c.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2c",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3c.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3c",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3c.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3c",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4c.cabin",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4c",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4c.cabin",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4c",
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "canopy.straight.w1.cabin",
+   "family": "canopy",
+   "mount": "face",
+   "builder": "canopy_straight",
+   "args": [
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "post.hull.cabin",
+   "family": "post",
+   "mount": "vertex",
+   "builder": "corner_post",
+   "args": [
+    "cabin",
+    null
+   ]
+  },
+  {
+   "id": "hull.square.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "square",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.slope1.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope1",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.slope2.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope2",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.slope3.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope3",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.slope4.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope4",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.arc1.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc1",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.arc2.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.arc3.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.arc4.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.arc2c.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2c",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.arc3c.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3c",
+    "wing"
+   ]
+  },
+  {
+   "id": "hull.arc4c.wing",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4c",
+    "wing"
+   ]
+  },
+  {
+   "id": "face.slope1.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope1",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope1.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope1",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.slope2.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope2",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope2.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope2",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.slope3.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope3",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope3.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope3",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.slope4.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope4",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope4.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope4",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.arc1.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc1",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc1.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc1",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2c.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2c",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2c.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2c",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3c.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3c",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3c.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3c",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4c.wing",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4c",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4c.wing",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4c",
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "canopy.straight.w1.wing",
+   "family": "canopy",
+   "mount": "face",
+   "builder": "canopy_straight",
+   "args": [
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "post.hull.wing",
+   "family": "post",
+   "mount": "vertex",
+   "builder": "corner_post",
+   "args": [
+    "wing",
+    null
+   ]
+  },
+  {
+   "id": "hull.square.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "square",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.slope1.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope1",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.slope2.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope2",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.slope3.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope3",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.slope4.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "slope4",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.arc1.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc1",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.arc2.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.arc3.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.arc4.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.arc2c.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc2c",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.arc3c.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc3c",
+    "plate"
+   ]
+  },
+  {
+   "id": "hull.arc4c.plate",
+   "family": "hull-module",
+   "mount": "tile",
+   "builder": "hull_body",
+   "args": [
+    "arc4c",
+    "plate"
+   ]
+  },
+  {
+   "id": "face.slope1.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope1",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope1.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope1",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.slope2.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope2",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope2.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope2",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.slope3.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope3",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope3.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope3",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.slope4.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope4",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.slope4.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope4",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.arc1.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc1",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc1.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc1",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.arc2c.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2c",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc2c.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2c",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.arc3c.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3c",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc3c.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3c",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.arc4c.plate",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4c",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.arc4c.plate",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4c",
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "canopy.straight.w1.plate",
+   "family": "canopy",
+   "mount": "face",
+   "builder": "canopy_straight",
+   "args": [
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "post.hull.plate",
+   "family": "post",
+   "mount": "vertex",
+   "builder": "corner_post",
+   "args": [
+    "plate",
+    null
+   ]
+  },
+  {
+   "id": "face.slope1.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope1",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.slope1.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope1",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.slope1",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "slope1"
+   ]
+  },
+  {
+   "id": "int.floorpart.slope1",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "slope1"
+   ]
+  },
+  {
+   "id": "face.slope2.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope2",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.slope2.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope2",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.slope2",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "slope2"
+   ]
+  },
+  {
+   "id": "int.floorpart.slope2",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "slope2"
+   ]
+  },
+  {
+   "id": "face.slope3.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope3",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.slope3.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope3",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.slope3",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "slope3"
+   ]
+  },
+  {
+   "id": "int.floorpart.slope3",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "slope3"
+   ]
+  },
+  {
+   "id": "face.slope4.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "slope4",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.slope4.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "slope4",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.slope4",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "slope4"
+   ]
+  },
+  {
+   "id": "int.floorpart.slope4",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "slope4"
+   ]
+  },
+  {
+   "id": "face.arc1.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc1",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.arc1.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc1",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.arc1",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "arc1"
+   ]
+  },
+  {
+   "id": "int.floorpart.arc1",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "arc1"
+   ]
+  },
+  {
+   "id": "face.arc2.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.arc2.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.arc2",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "arc2"
+   ]
+  },
+  {
+   "id": "int.floorpart.arc2",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "arc2"
+   ]
+  },
+  {
+   "id": "face.arc3.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.arc3.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.arc3",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "arc3"
+   ]
+  },
+  {
+   "id": "int.floorpart.arc3",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "arc3"
+   ]
+  },
+  {
+   "id": "face.arc4.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.arc4.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.arc4",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "arc4"
+   ]
+  },
+  {
+   "id": "int.floorpart.arc4",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "arc4"
+   ]
+  },
+  {
+   "id": "face.arc2c.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc2c",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.arc2c.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc2c",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.arc2c",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "arc2c"
+   ]
+  },
+  {
+   "id": "int.floorpart.arc2c",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "arc2c"
+   ]
+  },
+  {
+   "id": "face.arc3c.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc3c",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.arc3c.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc3c",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.arc3c",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "arc3c"
+   ]
+  },
+  {
+   "id": "int.floorpart.arc3c",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "arc3c"
+   ]
+  },
+  {
+   "id": "face.arc4c.deck.cut",
+   "family": "face-module",
+   "mount": "tile",
+   "builder": "face_module",
+   "args": [
+    "arc4c",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "canopy.arc4c.deck.cut",
+   "family": "canopy",
+   "mount": "tile",
+   "builder": "canopy_module",
+   "args": [
+    "arc4c",
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shellwall.arc4c",
+   "family": "shell",
+   "mount": "tile",
+   "builder": "shellwall",
+   "args": [
+    "arc4c"
+   ]
+  },
+  {
+   "id": "int.floorpart.arc4c",
+   "family": "floor",
+   "mount": "tile",
+   "builder": "floor_part",
+   "args": [
+    "arc4c"
+   ]
+  },
+  {
+   "id": "canopy.straight.w1.deck.cut",
+   "family": "canopy",
+   "mount": "face",
+   "builder": "canopy_straight",
+   "args": [
+    "deck",
+    32
+   ]
+  },
+  {
+   "id": "shell.straight",
+   "family": "shell",
+   "mount": "face",
+   "builder": "shell_straight",
+   "args": []
+  },
+  {
+   "id": "post.hull.deck.cut",
+   "family": "post",
+   "mount": "vertex",
+   "builder": "corner_post",
+   "args": [
+    "deck",
+    32
+   ]
   }
  ]
 }

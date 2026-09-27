@@ -12,6 +12,7 @@ import {
   G,
   TEXEL,
   axisFaces,
+  ccw,
   fullCells,
   hash01,
   insideOutline,
@@ -315,8 +316,11 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
       };
       const a = pt(r.a, `${p}.a`);
       const b = pt(r.b, `${p}.b`);
-      if ((a[0] !== b[0]) === (a[1] !== b[1])) fail(p, "edge must be axis-aligned with non-zero length");
-      return { id: str(r.id, `${p}.id`, ID), deck: int(r.deck, `${p}.deck`, 0, 7), a, b, type: oneOf(r.type, `${p}.type`, EDGE_TYPE_IDS) };
+      const type = oneOf(r.type, `${p}.type`, EDGE_TYPE_IDS);
+      // Exterior runs (canopy) join two hull outline vertices in any direction; lattice edges are axis-aligned.
+      if (G.edgeTypes[type].exterior ? a[0] === b[0] && a[1] === b[1] : (a[0] !== b[0]) === (a[1] !== b[1]))
+        fail(p, G.edgeTypes[type].exterior ? "canopy run needs two distinct outline vertices" : "edge must be axis-aligned with non-zero length");
+      return { id: str(r.id, `${p}.id`, ID), deck: int(r.deck, `${p}.deck`, 0, 7), a, b, type };
     }),
     mounts: arr(o.mounts, "mounts", SHIP_PREFAB_LIMITS.mounts).map((v, i) => {
       const p = `mounts[${i}]`;
@@ -558,7 +562,7 @@ export interface DerivedInterior {
   floors: DerivedFloor[];
   /** Exterior boundary walls, 250 mm inward. Non-axis runs are generated stepped walls. */
   exteriorWalls: DerivedEdge[];
-  exteriorSlopes: { a: Pt; b: Pt; room: string | null }[];
+  exteriorSlopes: { a: Pt; b: Pt; room: string | null; glass?: boolean }[];
   partitions: DerivedEdge[];
   doors: DerivedDoor[];
   posts: Pt[];
@@ -568,6 +572,30 @@ export interface DerivedInterior {
   compartments: DerivedCompartment[];
   /** Pilot station (control seat centre, metres) when a control room exists. */
   station: { at: [number, number]; room: string } | null;
+}
+
+/**
+ * Outline segments covered by canopy edges (type "canopy"): each runs counter-clockwise along the
+ * loop from vertex a to vertex b. Axis segments are split into whole metres like exterior walls.
+ */
+export function canopySegments(doc: ShipPrefabDocumentV1, loop: readonly Pt[]): [Pt, Pt][] {
+  const out: [Pt, Pt][] = [];
+  const at = (p: readonly number[]) => loop.findIndex((q) => Math.abs(q[0] - p[0]) < 1e-6 && Math.abs(q[1] - p[1]) < 1e-6);
+  for (const e of doc.edges) {
+    if (!G.edgeTypes[e.type]?.exterior) continue;
+    const ia = at(e.a);
+    const ib = at(e.b);
+    if (ia < 0 || ib < 0 || ia === ib) continue;
+    for (let i = ia; i !== ib; i = (i + 1) % loop.length) {
+      const p = loop[i];
+      const q = loop[(i + 1) % loop.length];
+      const axis = Math.abs(p[0] - q[0]) < 1e-9 || Math.abs(p[1] - q[1]) < 1e-9;
+      const whole = [p, q].every((v) => Math.abs(v[0] - Math.round(v[0])) < 1e-9 && Math.abs(v[1] - Math.round(v[1])) < 1e-9);
+      if (axis && whole) out.push(...unitSegments(p, q));
+      else out.push([p, q]);
+    }
+  }
+  return out;
 }
 
 const ekey = (a: Pt, b: Pt) => {
@@ -621,7 +649,17 @@ export function deriveInterior(doc: ShipPrefabDocumentV1, deck = 0, catalog?: Pr
     }
   const roomAt = (x: number, y: number) => cellRoom.get(`${Math.floor(x)},${Math.floor(y)}`) ?? null;
 
-  // Exterior walls along the outline (outer + holes), inward.
+  // Exterior walls along the outline (outer + holes), inward. Canopy runs are glazed and seal.
+  const glassRuns = [outline.outer, ...outline.holes].flatMap((loop) => canopySegments(doc, loop));
+  const glass = {
+    has: (a: Pt, b: Pt) =>
+      glassRuns.some(([p, q]) => {
+        const [dx, dy] = [q[0] - p[0], q[1] - p[1]];
+        const L2 = dx * dx + dy * dy;
+        const on = (v: Pt) => Math.abs(dx * (v[1] - p[1]) - dy * (v[0] - p[0])) < 1e-6 * Math.sqrt(L2) && (dx * (v[0] - p[0]) + dy * (v[1] - p[1])) / L2 > -1e-6 && (dx * (v[0] - p[0]) + dy * (v[1] - p[1])) / L2 < 1 + 1e-6;
+        return L2 > 1e-9 && on(a) && on(b);
+      }),
+  };
   const exteriorWalls: DerivedEdge[] = [];
   const exteriorSlopes: DerivedInterior["exteriorSlopes"] = [];
   const exteriorKeys = new Set<string>();
@@ -634,7 +672,7 @@ export function deriveInterior(doc: ShipPrefabDocumentV1, deck = 0, catalog?: Pr
       const left: Pt = [-(q[1] - p[1]) / L, (q[0] - p[0]) / L];
       if (!axis || Math.abs(p[0] - Math.round(p[0])) > 1e-9 || Math.abs(p[1] - Math.round(p[1])) > 1e-9) {
         const mid: Pt = [(p[0] + q[0]) / 2 + left[0] * 0.3, (p[1] + q[1]) / 2 + left[1] * 0.3];
-        exteriorSlopes.push({ a: p, b: q, room: roomAt(mid[0], mid[1])?.id ?? null });
+        exteriorSlopes.push({ a: p, b: q, room: roomAt(mid[0], mid[1])?.id ?? null, glass: glass.has(p, q) });
         continue;
       }
       for (const [a, b] of unitSegments(p, q)) {
@@ -643,7 +681,8 @@ export function deriveInterior(doc: ShipPrefabDocumentV1, deck = 0, catalog?: Pr
         const styles = room ? G.roomTypes[room.type].walls : (["wall"] as WallVariantId[]);
         const variant = hash01("ext2", a[0], a[1]) < 0.7 ? styles[Math.floor(hash01("ext", a[0], a[1]) * styles.length)] : "wall";
         exteriorKeys.add(ekey(a, b));
-        exteriorWalls.push({ a, b, type: "wall.full", variant, rooms: [room?.id ?? null, null], exterior: true });
+        const glazed = glass.has(a, b);
+        exteriorWalls.push({ a, b, type: glazed ? "canopy" : "wall.full", variant: glazed ? "glazed" : variant, rooms: [room?.id ?? null, null], exterior: true });
       }
     }
   }
@@ -961,11 +1000,11 @@ export function validateMount(
     else {
       const g = geoms.find((v) => v.volume.id === place.host)!;
       const overhang = Math.max(0, g.z[0] - place.z[0]) + Math.max(0, place.z[1] - g.z[1]);
-      // Grammar rule (design r006): XL rear mounts may overhang freely, other rear drives by
-      // at most 0.5 m in total; side and fore face mounts must fit the face band.
-      const allowed = rear && spec.sizeClass === "XL" ? Infinity : rear ? 8 : 0;
+      // Grammar rule (r007, low-profile decks): rear drives are nacelles and may overhang the
+      // face band freely; side and fore face mounts may overhang it by at most 0.625 m in total.
+      const allowed = rear ? Infinity : 10;
       if (overhang > allowed)
-        err("mount.face-height", `${spec.label} is taller than the ${g.volume.height} face (only rear drives may overhang, XL freely, others by 0.5 m)`);
+        err("mount.face-height", `${spec.label} is taller than the ${g.volume.height} face (rear drives may overhang freely, others by 0.625 m)`);
       // The face must be exposed: nothing else occupies the strip just outside it.
       const [nx, ny] = NORMAL_VECTOR[mount.normal!];
       const mid: Pt = [mount.at[0] + nx * 0.3, mount.at[1] + ny * 0.3];
@@ -1051,9 +1090,17 @@ export function validateShipPrefab(doc: ShipPrefabDocumentV1, catalog: PrefabCom
         ] as [Pt, Pt][])
           roomEdgeKeys.add(ekey(a, b));
   const edgeClaims = new Map<string, string>();
+  const outerLoop = deck?.outline ? ccw(deck.outline.outer) : [];
   for (const e of doc.edges) {
     const ref = { kind: "edge" as const, id: e.id };
     const spec = G.edgeTypes[e.type];
+    if (spec.exterior) {
+      // Canopy runs follow the hull outline between two of its vertices (any direction).
+      const on = (p: readonly number[]) => outerLoop.some((q) => Math.abs(q[0] - p[0]) < 1e-6 && Math.abs(q[1] - p[1]) < 1e-6);
+      if (!on(e.a) || !on(e.b) || (e.a[0] === e.b[0] && e.a[1] === e.b[1]))
+        push("error", "edge.canopy-placement", `${spec.label} must run along the deck hull outline between two of its vertices`, ref);
+      continue;
+    }
     const segs = unitSegments(e.a, e.b);
     if (spec.door && segs.length !== 2) push("error", "edge.door-module", "Doors span exactly two cells (2 m module)", ref);
     for (const [a, b] of segs) {
