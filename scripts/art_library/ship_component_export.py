@@ -928,7 +928,75 @@ def hidden_faces(boxes):
     return out
 
 
+def trim_buried_emissive(boxes):
+    """Runtime: remove the parts of emissive boxes that lie inside opaque boxes. Glow layers draw
+    emissive meshes without opaque occluders, so buried emissive volume (e.g. a full-length reactor
+    gap cylinder under a nacelle band) would bloom through the housing. Visible emissive surfaces
+    are unchanged; kept voxels are merged back into boxes per slot."""
+    import numpy as np
+    emit = [b for b in boxes if b[6] in ("emit_a", "emit_b")]
+    if not emit:
+        return boxes
+    solid = [b for b in boxes if b[6] not in ("emit_a", "emit_b", "glass")]
+    q = lambda b: tuple(int(round(v * 2)) for v in b[:6])
+    lo = [min(q(b)[i] for b in boxes) for i in range(3)]
+    hi = [max(q(b)[i + 3] for b in boxes) for i in range(3)]
+    occ = np.zeros(tuple(hi[i] - lo[i] for i in range(3)), dtype=bool)
+    for b in solid:
+        x0, y0, z0, x1, y1, z1 = q(b)
+        occ[x0 - lo[0]:x1 - lo[0], y0 - lo[1]:y1 - lo[1], z0 - lo[2]:z1 - lo[2]] = True
+    out = list(solid) + [b for b in boxes if b[6] == "glass"]
+    for slot in ("emit_a", "emit_b"):
+        keep = np.zeros(occ.shape, dtype=bool)
+        for b in emit:
+            if b[6] != slot:
+                continue
+            x0, y0, z0, x1, y1, z1 = q(b)
+            sl = (slice(x0 - lo[0], x1 - lo[0]), slice(y0 - lo[1], y1 - lo[1]), slice(z0 - lo[2], z1 - lo[2]))
+            keep[sl] |= ~occ[sl]
+        done = np.zeros(occ.shape, dtype=bool)
+        for x, y, z in np.argwhere(keep):
+            if done[x, y, z]:
+                continue
+            x1 = x + 1
+            while x1 < keep.shape[0] and keep[x1, y, z] and not done[x1, y, z]:
+                x1 += 1
+            y1 = y + 1
+            while y1 < keep.shape[1] and keep[x:x1, y1, z].all() and not done[x:x1, y1, z].any():
+                y1 += 1
+            z1 = z + 1
+            while z1 < keep.shape[2] and keep[x:x1, y:y1, z1].all() and not done[x:x1, y:y1, z1].any():
+                z1 += 1
+            done[x:x1, y:y1, z:z1] = True
+            out.append(((x + lo[0]) / 2, (y + lo[1]) / 2, (z + lo[2]) / 2,
+                        (x1 + lo[0]) / 2, (y1 + lo[1]) / 2, (z1 + lo[2]) / 2, slot))
+    return out
+
+
 RUNTIME = {"on": False}
+# Nacelles built from stepped round sections (axis along part Y through x = z = 0).
+ROUND_DRIVES = ("ion-drive", "resonance-drive")
+
+
+def radial_normals(me, radial=0.7):
+    """Runtime shading for stepped round nacelles: side and top faces get normals blended toward the
+    radial direction from the nacelle axis, so bands and ribs light like rings on a cylinder instead
+    of flat terraces. End faces (along the axis) keep their flat normals; geometry is unchanged."""
+    me.polygons.foreach_set("use_smooth", [True] * len(me.polygons))
+    loops = []
+    for poly in me.polygons:
+        n = poly.normal
+        for li in poly.loop_indices:
+            if abs(n.y) > 0.5:
+                loops.append(tuple(n))
+                continue
+            v = me.vertices[me.loops[li].vertex_index].co
+            r = Vector((v.x, 0.0, v.z))
+            if r.length < 1e-6:
+                loops.append(tuple(n))
+                continue
+            loops.append(tuple((n * (1 - radial) + r.normalized() * radial).normalized()))
+    me.normals_split_custom_set(loops)
 
 
 def catalog_boxes(component):
@@ -938,11 +1006,15 @@ def catalog_boxes(component):
 
 def component_object(component, mats, coll, bevel=True):
     boxes, conv = catalog_boxes(component)
+    if RUNTIME["on"]:
+        boxes = trim_buried_emissive(boxes)
     me = boxes_mesh(component["id"], boxes, hidden_faces(boxes) if RUNTIME["on"] else None)
     for m in mats:
         me.materials.append(m)
     if not bevel:                                    # no hardened bevel normals: shade boxes flat
         me.polygons.foreach_set("use_smooth", [False] * len(me.polygons))
+        if RUNTIME["on"] and component["kind"] in ROUND_DRIVES:
+            radial_normals(me)
     ob = bpy.data.objects.new(component["id"], me)
     coll.objects.link(ob)
     if bevel:
