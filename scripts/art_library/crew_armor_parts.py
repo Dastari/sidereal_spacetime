@@ -1,6 +1,6 @@
 """Crew voxel armour kit (armor-v1 r003): pure part definitions, no bpy, unit-testable.
 
-Fitted to CHAR-BODY r002 (CHARACTER_SPEC_BODY.json spec_version 2, chibi ~2.8 heads). Every part is
+Fitted to CHAR-BODY r004 (CHARACTER_SPEC_BODY.json spec_version 2 + owner round 2, ~3 heads). Every part is
 a set of voxel volumes on the 1/32 m grid, one volume per crew_rig bone, rigidly skinned to that bone.
 Authoring frame = CHAR-BODY rest-pose armature voxels: x = character right (+X is .R), y = forward
 (the character faces +Y), z = up, origin = feet centre on the ground; cell (x, y, z) spans
@@ -23,12 +23,14 @@ Fit rules (checked by crew_armor_fit.py against mannequin(), a port of CHAR-BODY
 """
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass, field
+from pathlib import Path
 
 KIT_ID = "crew.armor-v1"
-REVISION = "r003"
+REVISION = "r004"
 SPEC_VERSION = 2
-BODY_REVISION = "r002"
+BODY_REVISION = "r004"
 V = 1.0 / 32.0
 SLOTS = ["skin", "hair", "eye", "suit_primary", "suit_secondary", "accent", "metal", "dark", "emit", "glass"]
 SI = {s: i for i, s in enumerate(SLOTS)}
@@ -37,7 +39,7 @@ TIERS = {0: "civilian", 1: "light", 2: "standard", 3: "heavy"}
 RIG_BONES = ["root", "pelvis", "spine", "chest", "neck", "head",
              "shoulder.R", "shoulder.L", "upper_arm.R", "upper_arm.L", "forearm.R", "forearm.L",
              "hand.R", "hand.L", "thigh.R", "thigh.L", "shin.R", "shin.L", "foot.R", "foot.L", "toe.R", "toe.L"]
-BODY_REGIONS = ["body", "head", "hands", "feet", "hair"]
+BODY_REGIONS = ["base", "suit", "gear", "head", "hands", "hair"]   # CHAR-BODY r004 layers
 # Torso fits: CHAR-BODY variants differ only in waist half-width (chest is +-7 on all).
 FITS = {"wide": {"chest": 7, "waist": 6, "variants": ["male", "neutral"]},
         "narrow": {"chest": 7, "waist": 5, "variants": ["female"]}}
@@ -46,12 +48,12 @@ SK, HR, EY = "skin", "hair", "eye"
 
 # ============================================================================================== RIG
 BODY = {
-    "bones": {  # CHAR-BODY r002 bone head/tail (voxels); .L mirrors x
-        "root": ((0, 0, 0), (0, 6, 0)), "pelvis": ((0, 0, 19), (0, 0, 23)), "spine": ((0, 0, 23), (0, 0, 28)),
-        "chest": ((0, 0, 28), (0, 0, 36)), "neck": ((0, 0, 36), (0, 0, 37)), "head": ((0, 0, 37), (0, 0, 55)),
-        "shoulder.R": ((2, 0, 33), (9.5, 0, 34)), "upper_arm.R": ((9.5, 0, 34), (9.5, 0, 26)),
-        "forearm.R": ((9.5, 0, 26), (9.5, 0, 20)), "hand.R": ((9.5, 0, 20), (9.5, 0, 13)),
-        "thigh.R": ((4, 0, 19), (4, 0, 10)), "shin.R": ((4, 0, 10), (4, 0, 3)),
+    "bones": {  # CHAR-BODY r004 bone head/tail (voxels); .L mirrors x
+        "root": ((0, 0, 0), (0, 6, 0)), "pelvis": ((0, 0, 20), (0, 0, 24)), "spine": ((0, 0, 24), (0, 0, 29)),
+        "chest": ((0, 0, 29), (0, 0, 37)), "neck": ((0, 0, 37), (0, 0, 39)), "head": ((0, 0, 39), (0, 0, 55)),
+        "shoulder.R": ((2, 0, 34), (9.5, 0, 35)), "upper_arm.R": ((9.5, 0, 35), (9.5, 0, 27)),
+        "forearm.R": ((9.5, 0, 27), (9.5, 0, 21)), "hand.R": ((9.5, 0, 21), (9.5, 0, 14)),
+        "thigh.R": ((4, 0, 20), (4, 0, 11)), "shin.R": ((4, 0, 11), (4, 0, 3)),
         "foot.R": ((4, 0, 3), (4, 3, 1)), "toe.R": ((4, 3, 1), (4, 6, 1)),
     },
     "parents": {"pelvis": "root", "spine": "pelvis", "chest": "spine", "neck": "chest", "head": "neck",
@@ -192,55 +194,26 @@ def sided(vols_r):
 
 
 # ======================================================================================== MANNEQUIN
+BODY_SNAPSHOT = Path(__file__).resolve().parent / "crew_armor_body.json"
+_BODY_CACHE = {}
+
+
 def mannequin(variant="male"):
-    """Port of CHAR-BODY r002 body.py volumes, grouped by body mesh region: {region: {bone: Vol}}.
-    Used for the fit checks and as a render fallback when crew-body.blend is not available."""
-    female = variant == "female"
-    w = 5 if female else 6
-    body, head, hands, feet, hair = {}, {}, {}, {}, {}
-    th = Vol().box(1, -3, 10, 7, 4, 19, P).box(7, -2, 12, 8, 2, 16, P).box(7, -2, 16, 8, 2, 17, S2)
-    sh = Vol().box(1, -3, 7, 7, 4, 10, P).box(0, -4, 5, 8, 5, 8, P).box(2, 4, 8, 6, 5, 11, S2)
-    sh.box(1, -4, 3, 8, 5, 6, D).box(1, -4, 6, 8, 5, 7, D)
-    ft = Vol().box(1, -4, 1, 8, 4, 3, D).box(1, -4, 0, 8, 4, 1, D).box(1, -5, 1, 8, -4, 3, S2)
-    to = Vol().box(1, 4, 1, 8, 7, 3, D).cut(1, 6, 2, 8, 7, 3).box(1, 4, 0, 8, 7, 1, D)
-    ua = Vol().box(7, -3, 31, 12, 3, 36, P).cut(11, -3, 35, 12, 3, 36).box(7, -2, 26, 12, 3, 31, P)
-    fa = Vol().box(7, -2, 21, 12, 3, 26, P).box(6, -3, 19, 13, 4, 21, S2)
-    hd = Vol().box(7, -3, 14, 13, 3, 19, SK).cut(7, 2, 14, 13, 3, 15).box(7, 3, 15, 9, 4, 18, SK)
-    body.update(sided({"thigh.R": th, "shin.R": sh, "upper_arm.R": ua, "forearm.R": fa}))
-    body["upper_arm.L"].box(-13, -1, 31, -12, 2, 34, AC)                               # sleeve patch
-    hands.update(sided({"hand.R": hd}))
-    feet.update(sided({"foot.R": ft, "toe.R": to}))
-    pe = Vol().box(-7, -4, 18, 7, 5, 23, P).cut(-1, -4, 18, 1, 5, 19).box(-7, -5, 22, 7, 6, 24, D)
-    pe.box(-2, 6, 22, 2, 7, 24, M).box(3, 6, 22, 5, 7, 24, D)
-    sp = Vol().box(-w, -4, 23, w, 5, 29, P)
-    ch = Vol().box(-7, -5, 28, 7, 5, 36, P).cut(-7, -5, 35, -6, 5, 36).cut(6, -5, 35, 7, 5, 36)
-    if not female:
-        ch.box(-6, 5, 29, -2, 6, 32, P).box(-6, 5, 32, -2, 6, 33, S2).box(2, 5, 29, 6, 6, 32, P)
-        ch.box(2, 5, 32, 6, 6, 33, S2).box(3, 6, 32, 5, 7, 33, AC)
-    else:
-        ch.box(-5, 5, 30, 5, 6, 33, P).cut(-5, 5, 30, -4, 6, 31).cut(4, 5, 30, 5, 6, 31).box(3, 6, 33, 5, 7, 34, AC)
-    ch.box(-5, 5, 33, -3, 6, 34, M).box(4, 5, 34, 5, 6, 35, EM)
-    ch.box(-4, -5, 35, 4, 4, 37, P).cut(-3, -4, 35, 3, 3, 37).cut(-1, 3, 35, 1, 4, 37)   # collar
-    ch.box(-3, 5, 34, -1, 6, 36, P).box(1, 5, 34, 3, 6, 36, P)                          # lapels
-    ch.box(-3, -6, 29, 3, -5, 33, S2)                                                   # back O2 port
-    nk = Vol().box(-2, -2, 34, 2, 2, 38, SK)
-    body.update({"pelvis": pe, "spine": sp, "chest": ch, "neck": nk})
-    sk = Vol().box(-9, -8, 38, 9, 8, 54, SK).box(-8, -7, 54, 8, 7, 55, SK).box(-8, -7, 37, 8, 7, 38, SK)
-    for x in (-9, 8):
-        sk.cut(x, -8, 38, x + 1, -7, 54).cut(x, 7, 38, x + 1, 8, 54)
-    sk.box(-10, -1, 41, -9, 2, 45, SK).box(9, -1, 41, 10, 2, 45, SK)
-    for x0 in (-6, 3):
-        sk.paint(x0, 7, 41, x0 + 3, 8, 45, EY)
-    head["head"] = sk
-    hr = Vol().box(-10, -9, 51, 10, 9, 56, HR).box(-9, -8, 56, 9, 8, 57, HR).box(-7, -6, 57, 7, 6, 58, HR)
-    hr.box(-10, -10, 36 if female else 44, 10, -8, 51, HR)
-    for x0, x1 in ((-10, -9), (9, 10)):
-        hr.box(x0, -9, 38 if female else 47, x1, 2, 51, HR)
-    hr.box(-10, 8, 48, 10, 10, 57, HR)
-    if female:
-        hr.box(-3, -13, 36, 3, -10, 52, HR)
-    hair["head"] = hr
-    return {"body": body, "head": head, "hands": hands, "feet": feet, "hair": hair}
+    """CHAR-BODY body volumes by layer region: {region: {bone: Vol}} for base, hands, head, suit,
+    gear and hair, read from crew_armor_body.json (a snapshot of CHAR-BODY body.py made by
+    crew_armor_body_snapshot.py). Used for the fit checks and as the render fallback."""
+    if not _BODY_CACHE:
+        _BODY_CACHE.update(json.loads(BODY_SNAPSHOT.read_text()))
+    v = "female" if variant == "female" else "male"
+    out = {}
+    for region, bones in _BODY_CACHE["variants"][v].items():
+        out[region] = {}
+        for bone, runs in bones.items():
+            vol = Vol()
+            for x, y, z0, z1, slot in runs:
+                vol.box(x, y, z0, x + 1, y + 1, z1, slot if slot in SI else SK, into=0)
+            out[region][bone] = vol
+    return out
 
 
 # ============================================================================================= CHEST
@@ -333,7 +306,7 @@ def chest_vols(c, w, tier, style):
         ch.box(-7, fy + ft - 1, 30, -5, fy + ft + 1, 36, S2).box(5, fy + ft - 1, 30, 7, fy + ft + 1, 36, S2)   # flanks
         ch.box(-2, fy + ft + 1, 31, 2, fy + ft + 2, 33, AC).box(-1, fy + ft + 2, 31, 1, fy + ft + 3, 33, EM)  # core
         ch.box(-4, fy + ft, 34, 4, fy + ft + 1, 35, EM)                                       # upper light bar
-        ch.box(-4, by - 2, 29, 4, by - 1, 33, S2)                                             # back armour layer
+        ch.paint(-5, by - 1, 29, 5, by, 34, S2)                                               # back armour layer (flush)
     if style in ("harness", "tactical"):
         for x0 in (-4, 3):                                                                     # webbing
             ch.box(x0, fy, 28, x0 + 1, fy + 1, 36, D).box(x0, by - 1, 28, x0 + 1, by, 36, D)
@@ -399,10 +372,10 @@ def shoulder_vols(tier, style):
         return sided({"upper_arm.R": ua})
     g = {1: 0, 2: 1, 3: 2}[tier]
     x1, y0, y1 = 14 + g, -4 - g, 4 + g
-    low = 30 - (tier >= 2)
+    low = 30
     ua.box(8, y0, low, x1, y1, 36, P).chamfer_outer(x1, y0, y1, low, 36)                 # cap
     ua.box(7, y0 + 1, 36, x1 - 1, y1 - 1, 37, P)                                          # top plate
-    ua.box(10, y0 + 2, 37, x1 - 2, y1 - 2, 38 + (tier >= 2), S2)                          # stepped dome crown
+    ua.box(11, y0 + 2, 37, x1 - 2, y1 - 2, 38 + (tier >= 2), S2)                          # stepped dome crown (clear of long hair)
     ua.box(8, y0 - (tier >= 3), low - 1, x1 + 1, y1 + (tier >= 3), low, S2)               # rim (own island)
     ua.box(x1, -2, low + 1, x1 + 1, 2, low + 2, EM)                                       # side light
     if tier >= 2:
@@ -458,8 +431,8 @@ def boot_vols(tier, style):
     ft.box(0, -6, 0, 9, 4, sole, D)                                                  # chunky sole
     ft.box(0, -6, sole, 9, 4, 4, P).cut(0, -6, sole, 1, -5, 4).cut(8, -6, sole, 9, -5, 4)   # heel/instep
     ft.box(1, -7, 1, 8, -6, 3, S2)                                                   # heel tab
-    to.box(0, 5, 0, 9, 9, sole, D)                                                   # (1-vox hinge gap at the ball)
-    to.box(0, 5, sole, 9, 9, 3 + (tier >= 2), P).cut(0, 8, sole, 1, 9, 4).cut(8, 8, sole, 9, 9, 4)   # toe box
+    to.box(0, 4, 0, 9, 9, sole, D)
+    to.box(0, 4, sole, 9, 9, 4, P).cut(0, 8, sole, 1, 9, 4).cut(8, 8, sole, 9, 9, 4)   # toe box (encloses the suit toe)
     to.box(1, 9, 0, 8, 10, sole + 1, S2)                                             # toe bumper
     sh.box(0, -5, 4, 9, 4, 5, P)                                                     # ankle collar under the hem
     if style == "sneaker":
@@ -694,7 +667,28 @@ MASS = {"chest": [1.2, 3.0, 6.5, 11.0], "shoulders": [0.2, 1.0, 2.2, 4.0], "glov
         "back": [0.8, 1.2, 2.4, 4.0]}
 GRID = {"chest": (3, 3), "shoulders": (2, 2), "gloves": (2, 1), "boots": (2, 2), "legs": (2, 3), "belt": (2, 1),
         "back": (3, 4)}
-HIDES = {"gloves": ["hands"], "boots": ["feet"]}   # CHAR-BODY regions a part replaces
+HIDES = {"gloves": ["hands"]}   # CHAR-BODY regions a part replaces (every armour part also replaces "gear")
+# The builders were authored on CHAR-BODY r002. r004 lifts everything from the knee up by one voxel and
+# keeps the feet, boot shaft and trouser hem; LIFT applies that per slot and bone.
+LIFT = {"default": 1, "foot": 0, "toe": 0}
+SHIN_LIFT = {"boots": 0, "legs": 1}
+
+
+def lifted(vols, slot):
+    out = {}
+    for bone, v in vols.items():
+        b = bone.split(".")[0]
+        dz = SHIN_LIFT.get(slot, 1) if b == "shin" else LIFT.get(b, LIFT["default"])
+        if slot == "back":
+            dz = -2                       # packs sit lower: r004 long hair falls to z 34 behind the head
+        if not dz:
+            out[bone] = v
+            continue
+        m = Vol()
+        m.c = {(x, y, z + dz): sl for (x, y, z), sl in v.c.items()}
+        m.isl = {(x, y, z + dz): i for (x, y, z), i in v.isl.items()}
+        out[bone] = m
+    return out
 SOCKET = {"chest": "socket.chest", "shoulders": "socket.shoulder", "gloves": "socket.glove", "boots": "socket.foot",
           "legs": None, "belt": "socket.belt", "back": "socket.back"}
 
@@ -703,8 +697,10 @@ def build_catalog():
     parts = []
 
     def add(pid, slot, tier, style, name, fits, exhaust=()):
+        fits = {fn: lifted(vols, slot) for fn, vols in fits.items()}
+        exhaust = [(b, (x, y, z - 2), r) for b, (x, y, z), r in exhaust]
         parts.append(Part(pid, slot, tier, style, name, fits, SOCKET[slot], MASS[slot][tier], GRID[slot], list(exhaust),
-                          list(HIDES.get(slot, ()))))
+                          ["gear"] + list(HIDES.get(slot, ()))))
 
     for sfx, t, st, name in CHEST_STYLES:
         fits = {}

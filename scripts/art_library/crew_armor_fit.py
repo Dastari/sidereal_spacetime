@@ -39,11 +39,15 @@ def buried(f, occ):
     return tuple(c) in occ
 
 
-def body_for(variant, hidden=()):
-    """Visible body volumes {bone: set(cells)} of the v2 placeholder, minus hidden regions."""
+def body_for(variant, hidden=(), with_hair=False):
+    """Visible CHAR-BODY volumes under worn armour: the suit layer (it hides the base), head, hair and
+    hands, minus the regions the parts replace. Armour always replaces the default gear layer. The default
+    hair is a placeholder that CHAR-HEADS replaces, so it is only included on request (hair report)."""
     out = {}
     for region, vols in K.mannequin(variant).items():
-        if region in hidden or (region == "hair" and "head" in hidden):
+        if region in ("base", "gear") or region in hidden or (region == "hair" and "head" in hidden):
+            continue
+        if region == "hair" and not with_hair:
             continue
         for b, v in vols.items():
             out.setdefault((region, b), set()).update(v.c)
@@ -54,10 +58,10 @@ def part_cells(p, variant):
     return {b: set(v.c) for b, v in p.fits[p.fit_for(variant)].items()}
 
 
-def zfight(parts_worn, variant):
+def zfight(parts_worn, variant, with_hair=False):
     """[(label_a, label_b, count)] of visible coincident faces among the body and the worn parts."""
     hidden = {h for p in parts_worn for h in p.hides}
-    meshes = [(f"body:{r}:{b}", c) for (r, b), c in body_for(variant, hidden).items()]
+    meshes = [(f"body:{r}:{b}", c) for (r, b), c in body_for(variant, hidden, with_hair).items()]
     meshes += [(f"{p.id}:{b}", c) for p in parts_worn for b, c in part_cells(p, variant).items()]
     occ = set().union(*(c for _, c in meshes))
     fs = [(label, faces(c)) for label, c in meshes]
@@ -100,9 +104,16 @@ def report(parts):
             hits = zfight([by[i] for i in pr["parts"].values()], var)
             if hits:
                 presets[f"{pr['id']}@{var}"] = sum(n for _, _, n in hits)
+    hair = {}
+    for p in parts:
+        for var in ("male", "female"):
+            n = sum(k for a, b, k in zfight([p], var, with_hair=True) if "hair" in a or "hair" in b)
+            if n:
+                hair[f"{p.id}@{var}"] = n
     emissive = {p.id: round(emissive_surface_share(p), 3) for p in parts}
     return {"zFightSingle": single, "zFightPresets": presets,
-            "totalSingle": sum(single.values()), "totalPresets": sum(presets.values()), "emissiveSurface": emissive}
+            "totalSingle": sum(single.values()), "totalPresets": sum(presets.values()),
+            "defaultHairContacts": hair, "emissiveSurface": emissive}
 
 
 if __name__ == "__main__":
@@ -118,7 +129,8 @@ if __name__ == "__main__":
                     print(var, a, b, n)
     else:
         r = report(ps)
-        print(json.dumps({k: v for k, v in r.items() if k != "emissiveSurface"}, indent=1))
+        print(json.dumps({k: v for k, v in r.items() if k not in ("emissiveSurface", "defaultHairContacts")}, indent=1))
+        print("default-hair contacts:", r["defaultHairContacts"])
         for p in ps:
             if p.tier >= 2:
                 print(p.id, round(emissive_surface_share(p) * 100, 1), "% emissive surface")

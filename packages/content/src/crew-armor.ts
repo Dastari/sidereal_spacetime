@@ -32,7 +32,7 @@ export const CREW_MATERIAL_SLOTS = [
 ] as const;
 export type CrewMaterialSlot = (typeof CREW_MATERIAL_SLOTS)[number];
 export type CrewArmorBodyVariant = "male" | "female" | "neutral";
-export type CrewBodyRegion = "body" | "head" | "hands" | "feet" | "hair";
+export type CrewBodyRegion = "base" | "suit" | "gear" | "head" | "hands" | "hair";
 
 export interface CrewArmorPart {
   id: string;

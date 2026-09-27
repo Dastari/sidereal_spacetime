@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "kit": "crew.armor-v1",
- "revision": "r003",
+ "revision": "r004",
  "specVersion": 2,
  "status": "proposal; not published; not owner-approved",
  "assetBase": "/assets/crew/armor-v1",
@@ -720,13 +720,15 @@
    "style": "jacket",
    "name": "Crew jacket",
    "glb": "parts/armor.chest.jacket.glb",
-   "sha256": "3feac33ed09bb82686f598dbeb8fefea27b097f6710b2b60359e99244bf1cfb7",
+   "sha256": "9227bc42a7a8f53e5432b72508b94d0243f2bd2e73b471dbfbbdacb8fc8aa7cc",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -758,13 +760,15 @@
    "style": "harness",
    "name": "Light harness vest",
    "glb": "parts/armor.chest.harness.glb",
-   "sha256": "202e7325b571d110fa04d064d0ac6a996db4ffd3ddbe59542109afefac906c95",
+   "sha256": "3bcb226ce359db440c81c980077bde9f45add4a6fdc76fa81d91bc440ae7f270",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -796,13 +800,15 @@
    "style": "plate",
    "name": "Standard plate carrier",
    "glb": "parts/armor.chest.plate.glb",
-   "sha256": "50617b8f0e0e85bbdc818d16208d9f5e330307a28c0da51237e2aa2d8d077d81",
+   "sha256": "846e07eefdae7e8ab8ca144128086edbc51c7b7270505d6217153f769856aadc",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -834,13 +840,15 @@
    "style": "plate",
    "name": "Heavy assault cuirass",
    "glb": "parts/armor.chest.heavy.glb",
-   "sha256": "5ab1cec1d8dadbc8beb2df112710c14d2f67e5bae8127d5ae524799eda1a2b11",
+   "sha256": "1324e939777e0cda1210523010d3ad8bae7b081c5b033598be79f7f0ef70429b",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -857,11 +865,11 @@
    "fits": {
     "wide": {
      "mesh": "GEO-armor-armor.chest.heavy-wide",
-     "tris": 4024
+     "tris": 3916
     },
     "narrow": {
      "mesh": "GEO-armor-armor.chest.heavy-narrow",
-     "tris": 4024
+     "tris": 3916
     }
    }
   },
@@ -873,7 +881,7 @@
    "style": "coat",
    "name": "Officer's coat",
    "glb": "parts/armor.chest.coat.glb",
-   "sha256": "ee7316f08c1bb7b8e0ce5594f6bb762e73ed83a5efb600810986a1ef341d255c",
+   "sha256": "225e46e5ba7a719beab05be3ec1981fde36b9c8a50a44b086031cc986fa30dbd",
    "bones": [
     "pelvis",
     "spine",
@@ -882,7 +890,9 @@
     "thigh.L"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -915,7 +925,7 @@
    "style": "labcoat",
    "name": "Lab coat",
    "glb": "parts/armor.chest.labcoat.glb",
-   "sha256": "1eca65dc3d399c37366adf093d18cc1703d257639d3ef8e3f0aa14e56e34b7c2",
+   "sha256": "c7c19f69f23fd9d5056629641de94004bb9821b997aef09720bfcb024452e979",
    "bones": [
     "pelvis",
     "spine",
@@ -924,7 +934,9 @@
     "thigh.L"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -956,13 +968,15 @@
    "style": "overalls",
    "name": "Work overalls",
    "glb": "parts/armor.chest.overalls.glb",
-   "sha256": "e4008b632f665b200ac6ddf9415c509b3f57010a4c20fedd3d144701433c72fa",
+   "sha256": "9bf486c3a995df1a0e58f374e05651569c5923cf0755e9fa69d0723da4c46321",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -993,13 +1007,15 @@
    "style": "flight",
    "name": "Flight suit harness",
    "glb": "parts/armor.chest.flight.glb",
-   "sha256": "4db25941c5e55efeb7caa08334af09cd34a11be123f1798349c3ea738d06b5a9",
+   "sha256": "c03713e91b4e482560fd00e3651801fcdb2091a6e9e003896843131fdbd69283",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1032,13 +1048,15 @@
    "style": "tactical",
    "name": "Tactical chest rig",
    "glb": "parts/armor.chest.tactical.glb",
-   "sha256": "f4b4ef5bfc527ef7842b3c1f881f4269dcaa3dd0a6b984c326b9266d775572ca",
+   "sha256": "05b370a79998eed4a413eaeeea6b5b5f3477d74ca0f6346817570b1e5ed0d59f",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1071,13 +1089,15 @@
    "style": "vest",
    "name": "Security vest",
    "glb": "parts/armor.chest.vest.glb",
-   "sha256": "d8d93220e1c15b8585c22774967f2ea2832b7c496bdca51ffd81a35503f6ad27",
+   "sha256": "874e0cc741c8e11f20a688461ddda1dc251d99f6ac39f51f7f5002b7ad430620",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1110,13 +1130,15 @@
    "style": "medic",
    "name": "Medical plate",
    "glb": "parts/armor.chest.medic.glb",
-   "sha256": "c232d0b6bdbaa916359e5ce30e1cf37aab4b0d69fec0d2d7a0353f1376040b42",
+   "sha256": "d1cc6c24a787c86b757cfdd976aabfcfab1abb8c71cffb32078c1440d0d8ed41",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1149,13 +1171,15 @@
    "style": "hazard",
    "name": "Hazard-rated plate",
    "glb": "parts/armor.chest.hazard.glb",
-   "sha256": "5b593987d1f6888dcfa4cbb2a528e7e167103508c297d54f0c2db0ab22734469",
+   "sha256": "50b3e3c7aa3b28fd60cab408362149b36b78bd8a6c77d216960204110e901326",
    "bones": [
     "spine",
     "chest"
    ],
    "socket": "socket.chest",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1188,13 +1212,15 @@
    "style": "cloth",
    "name": "Shoulder pads",
    "glb": "parts/armor.shoulders.cloth.glb",
-   "sha256": "4a6e56c65af049c59d7acac51247e4fa48914dbe18d0f3a9b9eb37bc992aaac5",
+   "sha256": "8bfe38533f296832d3d0ab86fbd77e49ef32ee2c49cec54fd5cac10d63926656",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
    ],
    "socket": "socket.shoulder",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_secondary",
     "dark"
@@ -1219,13 +1245,15 @@
    "style": "plain",
    "name": "Light pauldrons",
    "glb": "parts/armor.shoulders.light.glb",
-   "sha256": "4efca6fc5569f0584aaec0f994aea4666f041163e1f29f6f1959bd7fea21a0f9",
+   "sha256": "e03a52d4e903700dac7ba54644c23184ed54a5d0d2d2b1c09603f013226d91e3",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
    ],
    "socket": "socket.shoulder",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1251,13 +1279,15 @@
    "style": "plain",
    "name": "Standard pauldrons",
    "glb": "parts/armor.shoulders.standard.glb",
-   "sha256": "1c3806788f0e4f60ca8574b6a2eab1667116f04d536e25f682c8cac8a98a9c2d",
+   "sha256": "4901d4dbd49da91f4f637f67640c9cc03a62d4c9d6de02c73ee2a0727833d708",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
    ],
    "socket": "socket.shoulder",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1284,13 +1314,15 @@
    "style": "plain",
    "name": "Heavy pauldrons",
    "glb": "parts/armor.shoulders.heavy.glb",
-   "sha256": "d4891cc2b42f5670136320f10db39d532e579cd3bd6ddd35911382afb18f1fc1",
+   "sha256": "e410591e0fa4b6bfefd5a6ed5043b77330a145082c57be6d1f3ef6d5690e44c6",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
    ],
    "socket": "socket.shoulder",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1317,13 +1349,15 @@
    "style": "epaulette",
    "name": "Officer epaulettes",
    "glb": "parts/armor.shoulders.epaulette.glb",
-   "sha256": "677a2324729d63abb702968abd6a9a1ff01bac9578be98e520346d892eb8a412",
+   "sha256": "b06d18a30cb299db9e48813e8c9f8534e045eea59e8ebfc0c90f5bb7e4ad381c",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
    ],
    "socket": "socket.shoulder",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "accent",
@@ -1349,13 +1383,15 @@
    "style": "flight",
    "name": "Flight pauldrons",
    "glb": "parts/armor.shoulders.flight.glb",
-   "sha256": "9b1a96f8ee2bc4ea998412fe03a655eb4d5ba55ad45a7af5e4cfdef7924a1835",
+   "sha256": "86bddbc8d879e432edb8411aa862215e78dccf45f3290b24425e4de8372a0e49",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
    ],
    "socket": "socket.shoulder",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1382,13 +1418,14 @@
    "style": "plain",
    "name": "Fabric gloves",
    "glb": "parts/armor.gloves.fabric.glb",
-   "sha256": "1086bbba8282075a32b6875833b010c2103bd676f0471ab140ad589c720a7171",
+   "sha256": "7b73ee5a2a53cacec55c2265990e7868f5283a5a3b2de16a6aea27c721e20e98",
    "bones": [
     "hand.R",
     "hand.L"
    ],
    "socket": "socket.glove",
    "hidesBodyRegions": [
+    "gear",
     "hands"
    ],
    "slots": [
@@ -1415,7 +1452,7 @@
    "style": "plain",
    "name": "Light gloves",
    "glb": "parts/armor.gloves.light.glb",
-   "sha256": "845b07d67afed397bc69f22cd9063391da72842f8835de220382bce342192c87",
+   "sha256": "294e619f3b8f15d7ae3249b5c53e4b54cc2ece314c578106a7a2e25bed1ec0d7",
    "bones": [
     "forearm.R",
     "forearm.L",
@@ -1424,6 +1461,7 @@
    ],
    "socket": "socket.glove",
    "hidesBodyRegions": [
+    "gear",
     "hands"
    ],
    "slots": [
@@ -1452,7 +1490,7 @@
    "style": "plain",
    "name": "Armoured gauntlets",
    "glb": "parts/armor.gloves.standard.glb",
-   "sha256": "a94e15d6cdfc09e6e7356391bcc22c587801d27a5c2c061fe59c31972563ca21",
+   "sha256": "d69f9f25331a93b4b8a9c09e354dec2ad0a9c6f1c9db692097630430cf1fd04b",
    "bones": [
     "forearm.R",
     "forearm.L",
@@ -1461,6 +1499,7 @@
    ],
    "socket": "socket.glove",
    "hidesBodyRegions": [
+    "gear",
     "hands"
    ],
    "slots": [
@@ -1491,7 +1530,7 @@
    "style": "plain",
    "name": "Heavy gauntlets",
    "glb": "parts/armor.gloves.heavy.glb",
-   "sha256": "a3faeebecb3397a1187526a2765d472f965e0fdb1de90aa76a669d72bdc5345b",
+   "sha256": "7d277f256711467ca06fdd7a1b063fc69fc41631f765952fdf62254a89ab7593",
    "bones": [
     "forearm.R",
     "forearm.L",
@@ -1500,6 +1539,7 @@
    ],
    "socket": "socket.glove",
    "hidesBodyRegions": [
+    "gear",
     "hands"
    ],
    "slots": [
@@ -1530,7 +1570,7 @@
    "style": "work",
    "name": "Work gloves",
    "glb": "parts/armor.gloves.work.glb",
-   "sha256": "de31f3d5282d6a84de5cb7fa24e6af420ccd428b615edc0ea978dc679176a16c",
+   "sha256": "1d0b4320f0ab11591070ac13497a0f8d6a53a99c94ad4ee4237b7e617c1553bf",
    "bones": [
     "forearm.R",
     "forearm.L",
@@ -1539,6 +1579,7 @@
    ],
    "socket": "socket.glove",
    "hidesBodyRegions": [
+    "gear",
     "hands"
    ],
    "slots": [
@@ -1568,7 +1609,7 @@
    "style": "sneaker",
    "name": "Deck shoes",
    "glb": "parts/armor.boots.sneaker.glb",
-   "sha256": "962d8f3bdfc35e262602c5c1db5d107c4fe9e64044c222ccf3f63fdb48c84c1c",
+   "sha256": "54edf35ae80b176d7210a506d19047802689d7d13cd1d58f625c17a4a5f8305c",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1579,7 +1620,7 @@
    ],
    "socket": "socket.foot",
    "hidesBodyRegions": [
-    "feet"
+    "gear"
    ],
    "slots": [
     "suit_primary",
@@ -1595,7 +1636,7 @@
    "fits": {
     "all": {
      "mesh": "GEO-armor-armor.boots.sneaker-all",
-     "tris": 2368
+     "tris": 2592
     }
    }
   },
@@ -1607,7 +1648,7 @@
    "style": "plain",
    "name": "Work boots",
    "glb": "parts/armor.boots.light.glb",
-   "sha256": "0f0a72b0e792a962a499c4f196420c7206bd874a70ad45e83a4fce9addf8538a",
+   "sha256": "f50637997d1df72b7eb1875ae51f4a46baedcb61f18cd28ed741114946ecc52c",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1618,7 +1659,7 @@
    ],
    "socket": "socket.foot",
    "hidesBodyRegions": [
-    "feet"
+    "gear"
    ],
    "slots": [
     "suit_primary",
@@ -1633,7 +1674,7 @@
    "fits": {
     "all": {
      "mesh": "GEO-armor-armor.boots.light-all",
-     "tris": 2176
+     "tris": 2400
     }
    }
   },
@@ -1645,7 +1686,7 @@
    "style": "plain",
    "name": "Armoured boots",
    "glb": "parts/armor.boots.standard.glb",
-   "sha256": "3d58101dfc1ce1215c400fb522edec48fc5d68dd4ce2f36d5a0de0b57077dda2",
+   "sha256": "7fd1b13309036ac36f1e28e3f594c723fdb5613f2beb084005c6d5edff92998e",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1656,7 +1697,7 @@
    ],
    "socket": "socket.foot",
    "hidesBodyRegions": [
-    "feet"
+    "gear"
    ],
    "slots": [
     "suit_primary",
@@ -1685,7 +1726,7 @@
    "style": "plain",
    "name": "Heavy mag boots",
    "glb": "parts/armor.boots.heavy.glb",
-   "sha256": "e6831b6b8711e7c37936bef75db49d4036a25f6e4968288d99df85e3c822b2d4",
+   "sha256": "73749efe6e82cdf4f4e627db4c76504a7dba83d17ced62484a031ac305099c86",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1696,7 +1737,7 @@
    ],
    "socket": "socket.foot",
    "hidesBodyRegions": [
-    "feet"
+    "gear"
    ],
    "slots": [
     "suit_primary",
@@ -1725,7 +1766,7 @@
    "style": "dress",
    "name": "Dress boots",
    "glb": "parts/armor.boots.dress.glb",
-   "sha256": "5167cd7087f1b0ffef7b783574b2bb87ee5ddad0ebe76585e6c97b9a769f8208",
+   "sha256": "4136db28311558eb2a6b124660daeadf5b9f35ead2ada0db335d36beba582ca0",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1736,7 +1777,7 @@
    ],
    "socket": "socket.foot",
    "hidesBodyRegions": [
-    "feet"
+    "gear"
    ],
    "slots": [
     "suit_primary",
@@ -1764,7 +1805,7 @@
    "style": "flight",
    "name": "Flight boots",
    "glb": "parts/armor.boots.flight.glb",
-   "sha256": "94f2fbe9aa18c82453b87a4ce29d4f155301ff3566a722c7001bd16c5cb93485",
+   "sha256": "7f9354635d97978d6bc89cb97585d555e7aa144aaa3b88a48edf86a61d990530",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1775,7 +1816,7 @@
    ],
    "socket": "socket.foot",
    "hidesBodyRegions": [
-    "feet"
+    "gear"
    ],
    "slots": [
     "suit_primary",
@@ -1791,7 +1832,7 @@
    "fits": {
     "all": {
      "mesh": "GEO-armor-armor.boots.flight-all",
-     "tris": 2176
+     "tris": 2400
     }
    }
   },
@@ -1803,13 +1844,15 @@
    "style": "cargo",
    "name": "Cargo trousers",
    "glb": "parts/armor.legs.cargo.glb",
-   "sha256": "51999fa960a260c3ad04cca3e743b3df22affb35a0eb708b8e78c54ab1f1c461",
+   "sha256": "71dd4e9b254feae0b846713da918fafa2813b8a77279cf4d8d4fdd663d25f58f",
    "bones": [
     "thigh.R",
     "thigh.L"
    ],
    "socket": null,
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_secondary",
     "accent"
@@ -1834,7 +1877,7 @@
    "style": "plain",
    "name": "Knee pads and straps",
    "glb": "parts/armor.legs.light.glb",
-   "sha256": "dad9b19d8d65fc8840028139b26b2be761ffad64df518593d2646d202f85f2f3",
+   "sha256": "13b905b494821e261804f42ede9d9fad594044891560d5e5174ec88c14b7486f",
    "bones": [
     "thigh.R",
     "thigh.L",
@@ -1842,7 +1885,9 @@
     "shin.L"
    ],
    "socket": null,
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1869,7 +1914,7 @@
    "style": "plain",
    "name": "Thigh and knee plates",
    "glb": "parts/armor.legs.standard.glb",
-   "sha256": "308d18b972bbeb4697dab41f91eaeaa8ef134bd537f601fff73b22a6288451cd",
+   "sha256": "37de27aac9253be4e3ff190bdca9e07656702f861fcad615420c0b199321bae0",
    "bones": [
     "thigh.R",
     "thigh.L",
@@ -1877,7 +1922,9 @@
     "shin.L"
    ],
    "socket": null,
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1903,7 +1950,7 @@
    "style": "plain",
    "name": "Heavy greaves and tassets",
    "glb": "parts/armor.legs.heavy.glb",
-   "sha256": "c34e8a1bc5072cacfa99f8343abb3ab2722b339c6c4fcfcaca404217a565085e",
+   "sha256": "8e5dc071e60c200e42f77e3d84e1d79fd0ebfbaceb63fe587de23e37e224c237",
    "bones": [
     "pelvis",
     "thigh.R",
@@ -1912,7 +1959,9 @@
     "shin.L"
    ],
    "socket": null,
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -1938,12 +1987,14 @@
    "style": "plain",
    "name": "Belt",
    "glb": "parts/armor.belt.plain.glb",
-   "sha256": "c037313fe4485ae1cf9374b22623bbaa220911c60bccf34fc7357320455f6028",
+   "sha256": "ab20459a859105f0bbde90cfc94f898fc31ad25379a7695cb8fee7e883088a4d",
    "bones": [
     "pelvis"
    ],
    "socket": "socket.belt",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_secondary",
     "metal",
@@ -1973,12 +2024,14 @@
    "style": "utility",
    "name": "Utility belt",
    "glb": "parts/armor.belt.utility.glb",
-   "sha256": "71428fbe378eea3ac41df9672ee5fb418d78a9f2935c23fd8def91ef967807cc",
+   "sha256": "403d8ca5c08d74715ba9ca2e20454a926247a03967527b2fe164fb56af82a1b5",
    "bones": [
     "pelvis"
    ],
    "socket": "socket.belt",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2010,12 +2063,14 @@
    "style": "utility",
    "name": "Load-bearing belt",
    "glb": "parts/armor.belt.standard.glb",
-   "sha256": "07672ef8efeb57c8c41beb56782a167fc71212dc1df6a2f186ff482d7765b870",
+   "sha256": "afce623427ce67698644d97060c66dcb0ce8337441954594d3c5eb051235d44d",
    "bones": [
     "pelvis"
    ],
    "socket": "socket.belt",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2047,12 +2102,14 @@
    "style": "utility",
    "name": "Heavy armoured belt",
    "glb": "parts/armor.belt.heavy.glb",
-   "sha256": "e6e740c05c5340e1730b95594aaa2f28d4059c04e16a59b47c1854a031f1b0fd",
+   "sha256": "aa3373c694288e2a76148efa80fbee5bfe10730793f31dad0a425d2755779b78",
    "bones": [
     "pelvis"
    ],
    "socket": "socket.belt",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2084,12 +2141,14 @@
    "style": "tool",
    "name": "Tool belt",
    "glb": "parts/armor.belt.tool.glb",
-   "sha256": "d6f9774272a26192758a8834403bf4d63ad5dd8dd1c61200755f4d3014cdba0b",
+   "sha256": "71753e7cda64f9b4307f057110215ea60b8d600a7fc2fd3e6785d0fe1953d177",
    "bones": [
     "pelvis"
    ],
    "socket": "socket.belt",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2122,12 +2181,14 @@
    "style": "medic",
    "name": "Medic belt",
    "glb": "parts/armor.belt.medic.glb",
-   "sha256": "f12a2771f9a8b352ee15917f816d50cfb4bd075273bd9e77f219e06f51d08a8d",
+   "sha256": "2599571c6919cbceffbaab36f71234ca3770959d7e19f2f53487087001086a52",
    "bones": [
     "pelvis"
    ],
    "socket": "socket.belt",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2160,12 +2221,14 @@
    "style": "sash",
    "name": "Officer's belt",
    "glb": "parts/armor.belt.sash.glb",
-   "sha256": "7e9e7713d8811c40cd1181c94fe7a92a2940216c9d8f797c19769efa69386778",
+   "sha256": "f94bfd723dc6163e1e49ff39fd18bece77886fbc025ea8b4425fdf8b8c49797b",
    "bones": [
     "pelvis"
    ],
    "socket": "socket.belt",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "accent",
     "metal"
@@ -2194,12 +2257,14 @@
    "style": "holster",
    "name": "Holster belt",
    "glb": "parts/armor.belt.holster.glb",
-   "sha256": "1f3eba0c992ba607e2ee99b6b67b052612603f7aa581d837774b5843248f4a85",
+   "sha256": "02e23752325b5a4e20ea5764d77fa418b8cde202b1517ab41e61ce024177b29d",
    "bones": [
     "pelvis"
    ],
    "socket": "socket.belt",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2231,12 +2296,14 @@
    "style": "backpack",
    "name": "Day pack",
    "glb": "parts/armor.back.backpack-t0.glb",
-   "sha256": "69fdd0e34240edb0a5c2cdda6da038c652acaff58bf9b87c85b4313356cd4d40",
+   "sha256": "25001e21200d2b13edde366c25f3531fcdae0db77d34cc30910227fa27b7f2c3",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2264,12 +2331,14 @@
    "style": "backpack",
    "name": "Field pack",
    "glb": "parts/armor.back.backpack-t1.glb",
-   "sha256": "cf6eec2669e34052a54b77fa20d64eac9fac76db009a9ec4c16e9595e96f7e52",
+   "sha256": "9ba8e659936afa8d2d5a463d73a0b742f6e1a9f20739a295a833e563fd831363",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2298,12 +2367,14 @@
    "style": "backpack",
    "name": "Expedition pack",
    "glb": "parts/armor.back.backpack-t2.glb",
-   "sha256": "b20e0b7629d87c2ef3e30e5b0adc17fbd897784f4ff99150764c3d45e60d0f09",
+   "sha256": "581ba1f2219b347060199f75fe1fb632eb0be59a1f202822ecb0bec000ad6963",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2332,12 +2403,14 @@
    "style": "backpack",
    "name": "Heavy combat rig",
    "glb": "parts/armor.back.backpack-t3.glb",
-   "sha256": "a183ed3e0bc42cc86c9c74576da8ddb6056590cd83eaa3b84c14127d289a3381",
+   "sha256": "1f395484097bd48f7210ffaa3423f8d9bd3898ab4828d47ae4e50433f7ab7c17",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2366,12 +2439,14 @@
    "style": "oxygen",
    "name": "Oxygen pack",
    "glb": "parts/armor.back.oxygen-single.glb",
-   "sha256": "35b7e89ae157f30dc61444bd5d85e1920713f869c01ae4ae9154d305f17f61c2",
+   "sha256": "72c8f66b096c4ec940e08e3a9ee846a390e8e49136095c8f3701a7489d90a233",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_secondary",
     "accent",
@@ -2399,12 +2474,14 @@
    "style": "oxygen",
    "name": "Twin-tank oxygen pack",
    "glb": "parts/armor.back.oxygen-twin.glb",
-   "sha256": "22bda660ef0c6a8824b894a3d3aaba946ac7441f14efea82e7beb6a7b8039ad9",
+   "sha256": "9734f0ef93a08e5df36ff918c830025b796dc1ac264fd598faa8270b7736aefe",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_secondary",
     "metal",
@@ -2431,12 +2508,14 @@
    "style": "jetpack",
    "name": "Light jetpack",
    "glb": "parts/armor.back.jetpack-light.glb",
-   "sha256": "d922cf599f5bf0b11392ec2a7eed98af62fd88bdd335e301f1ffd8f414fcc598",
+   "sha256": "7bddaffcd1f313eff6f3f9cde9eeab813fe2167e2ff4daebc20ffd891ba04582",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2457,7 +2536,7 @@
      "restVox": [
       -4.5,
       -10.5,
-      19
+      17
      ],
      "radiusM": 0.046875,
      "direction": [
@@ -2472,7 +2551,7 @@
      "restVox": [
       4.5,
       -10.5,
-      19
+      17
      ],
      "radiusM": 0.046875,
      "direction": [
@@ -2497,12 +2576,14 @@
    "style": "jetpack",
    "name": "Heavy jetpack",
    "glb": "parts/armor.back.jetpack-heavy.glb",
-   "sha256": "7243898c1e10b425b08627b460d80e860d2331fd2def9efee3887ca671664ca4",
+   "sha256": "fcb357cd4137bb046de5c08f4c6e46e1532d9ce39fdb51ecef8db1c29445803e",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",
@@ -2523,7 +2604,7 @@
      "restVox": [
       -5.5,
       -11.0,
-      19
+      17
      ],
      "radiusM": 0.046875,
      "direction": [
@@ -2538,7 +2619,7 @@
      "restVox": [
       5.5,
       -11.0,
-      19
+      17
      ],
      "radiusM": 0.046875,
      "direction": [
@@ -2563,12 +2644,14 @@
    "style": "medpack",
    "name": "Medical pack",
    "glb": "parts/armor.back.medpack.glb",
-   "sha256": "4c7a3cadfd40a447a4a2bcc5e56576ec8720c41a213e174dd70f7757ad753427",
+   "sha256": "103421ebd4ce7214916072b40a04f58d72fcecfd1c214adf28cd1514f1836f92",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_secondary",
     "accent",
@@ -2596,12 +2679,14 @@
    "style": "radio",
    "name": "Recon radio pack",
    "glb": "parts/armor.back.radio.glb",
-   "sha256": "ce45c3988cf10222dad50c2cadcd8f1e766ca926462d64a94b2b60391de837b0",
+   "sha256": "ba1728ae230fecec93b7f89e50fbad44dc73fc817dae7768ebbb79b19dd6335f",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "accent",
@@ -2629,12 +2714,14 @@
    "style": "toolpack",
    "name": "Engineer tool pack",
    "glb": "parts/armor.back.toolpack.glb",
-   "sha256": "6b3dcc82df086f4be5b5f8f42f554e1d01bf69c5dc1c17deb2b71d0bfeef8a67",
+   "sha256": "48f5d4c49bbaca2b7e097557b148be9b7616587f578b4a39999e44de16b8787f",
    "bones": [
     "chest"
    ],
    "socket": "socket.back",
-   "hidesBodyRegions": [],
+   "hidesBodyRegions": [
+    "gear"
+   ],
    "slots": [
     "suit_primary",
     "suit_secondary",

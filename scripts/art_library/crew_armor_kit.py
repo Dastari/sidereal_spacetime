@@ -49,7 +49,7 @@ def parse_args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     p = argparse.ArgumentParser()
     p.add_argument("--out", default="/tmp/crew_armor")
-    p.add_argument("--body-blend", default="/root/sidereal-progress/_shared/crew-body-r002/crew-body.blend",
+    p.add_argument("--body-blend", default="/root/sidereal-progress/_shared/crew-body-r004/crew-body.blend",
                    help="CHAR-BODY source (rig, body regions, actions); falls back to the ported mannequin")
     p.add_argument("--export", default="")
     p.add_argument("--content-json", default="")
@@ -283,8 +283,8 @@ def build_armature(coll, name="crew_rig"):
     return arm
 
 
-BODY_REGION_OBJECTS = {"body": "GEO-crew-body-{v}", "head": "GEO-crew-head-{v}", "hands": "GEO-crew-hands-{v}",
-                       "feet": "GEO-crew-feet-{v}", "hair": "GEO-crew-hair-default-{v}"}
+BODY_REGION_OBJECTS = {"base": "GEO-crew-base-{v}", "suit": "GEO-crew-suit-{v}", "gear": "GEO-crew-gear-{v}",
+                       "head": "GEO-crew-head-{v}", "hands": "GEO-crew-hands-{v}", "hair": "GEO-crew-hair-default-{v}"}
 
 
 class Kit:
@@ -386,7 +386,7 @@ FACE_YAW = 180.0     # review scenes: characters (facing +Y) turned to face the 
 
 class Figure:
     def __init__(self, kit, part_ids, colourway, loc, coll, variant="male", body=True, pose="relaxed", yaw=0.0,
-                 scale=1.0, preset=None, item_side=False, frame=0.25):
+                 scale=1.0, preset=None, item_side=False, frame=0.25, layers=None):
         if kit.body_arm is not None:
             self.arm = kit.body_arm.copy()
             coll.objects.link(self.arm)
@@ -404,7 +404,11 @@ class Figure:
         hidden = {h for p in parts for h in p.hides}
         if body:
             bm = kit.body_materials(preset)
-            for region in K.BODY_REGIONS:
+            # CHAR-BODY r004 layers: the suit hides the base; worn armour replaces the default gear
+            shown = layers or ["suit", "head", "hair", "hands"]
+            if layers is None and not parts and preset is None:
+                shown = shown + ["gear"]                         # CHAR-BODY default look
+            for region in shown:
                 if region in hidden or (region == "hair" and "head" in hidden):
                     continue
                 tpl = kit.body.get((variant, region))
@@ -826,12 +830,12 @@ def sheet_progress(args, kit, out):
     Figure(kit, list(pr["parts"].values()), pr["colourway"], (3.05, 0, -1.72), coll, preset=pr, yaw=-28)
     plinth((3.05, 0, -1.72), coll)
     text("MEDIC (role.medic)", (3.05, 0, 0.32), 0.07, coll)
-    text("CREW ARMOUR r003 (CHAR-BODY r002 fit, proposal)", (1.4, 0, 0.5), 0.075, coll)
+    text("CREW ARMOUR r004 (CHAR-BODY r004 fit, proposal)", (1.4, 0, 0.5), 0.075, coll)
     aim_front(cam, (1.55, 0, -0.75), 4.6, elev=12)
-    render(sc, out / "armor_progress_r003.png")
-    compare(out / "armor_progress_r003.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png",
+    render(sc, out / "armor_progress_r004.png")
+    compare(out / "armor_progress_r004.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png",
                                               Path(args.refs) / "roster-male-03-medic.png"],
-            out / "armor_progress_r003_vs_reference.png")
+            out / "armor_progress_r004_vs_reference.png")
 
 
 TIER_ROWS = [("CHEST", ["armor.chest.jacket", "armor.chest.harness", "armor.chest.plate", "armor.chest.heavy"]),
@@ -857,7 +861,7 @@ def sheet_tiers(args, kit, out):
     y0 = -len(TIER_ROWS) * dz - 1.35
     for c in range(4):
         Figure(kit, [row[1][c] for row in TIER_ROWS], TIER_CW[c], (c * dx, 0, y0), coll, yaw=-20, scale=0.55)
-    text("CREW ARMOUR TIERS (armor-v1 r003 proposal)", (0.93, 0, 0.45), 0.075, coll)
+    text("CREW ARMOUR TIERS (armor-v1 r004 proposal)", (0.93, 0, 0.45), 0.075, coll)
     aim_front(cam, (0.75, 0, -2.3), 6.0, elev=12)
     render(sc, out / "armor_tier_chart.png")
     compare(out / "armor_tier_chart.png", [Path(args.refs) / "roster-male-armor-tiers.png"], out / "armor_tier_chart_vs_reference.png")
@@ -966,7 +970,7 @@ VIEWS = [("FRONT", 0.0), ("3/4", -35.0), ("SIDE", -90.0), ("BACK", 180.0)]
 def wardrobe_outfits():
     """(label, part ids, colourway, preset-for-undersuit) in review order: base -> uniforms -> tiers -> roles."""
     by = {p["id"]: p for p in K.PRESETS}
-    out = [("Base body (CHAR-BODY r002 undersuit)", [], "arctic", None)]
+    out = [("Base body: underwear (CHAR-BODY r004)", [], "arctic", "BASE")]
     out += [(label, [], "arctic", by[rid]) for label, rid in UNIFORMS]
     out += [(label, ids, cwid, None) for label, ids, cwid in TIER_SETS]
     out += [(f"Set: {pr['name']}", list(pr["parts"].values()), pr["colourway"], pr) for pr in K.PRESETS]
@@ -986,7 +990,9 @@ def sheet_wardrobe(args, kit, out, variant, rows, name):
         z = -(r + 1) * dz + 0.2
         text(label.upper(), (-0.75, 0.6, z + 0.85), 0.085, coll, align="RIGHT")
         for c, (_vname, yaw) in enumerate(VIEWS):
-            Figure(kit, ids, cwid, (c * dx, 0, z), coll, variant=variant, yaw=yaw, preset=pr)
+            base = pr == "BASE"
+            Figure(kit, ids, cwid, (c * dx, 0, z), coll, variant=variant, yaw=yaw, preset=None if base else pr,
+                   layers=["base", "hands", "head", "hair"] if base else None)
     aim_front(cam, ((len(VIEWS) - 1) * dx / 2 - 1.2, 0, -h / 2 + 0.5), h, elev=6)
     render(sc, out / name)
 
@@ -1000,7 +1006,9 @@ def sheet_lineup(args, kit, out, variant, rows, name):
     for i, (label, ids, cwid, pr) in enumerate(rows):
         col, row = i % per, i // per
         x, z = col * dx, -row * 2.5
-        Figure(kit, ids, cwid, (x, 0, z), coll, variant=variant, yaw=-28, preset=pr)
+        base = pr == "BASE"
+        Figure(kit, ids, cwid, (x, 0, z), coll, variant=variant, yaw=-28, preset=None if base else pr,
+               layers=["base", "hands", "head", "hair"] if base else None)
         plinth((x, 0, z), coll, r=0.42)
         text(label.replace("Set: ", "").replace("Uniform: ", "").upper()[:22], (x, 0.6, z - 0.22), 0.055, coll)
     aim_front(cam, ((per - 1) * dx / 2, 0, -0.35), w, elev=8)

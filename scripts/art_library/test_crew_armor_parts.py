@@ -37,19 +37,17 @@ class CrewArmorKitTests(unittest.TestCase):
         self.assertEqual(rep["totalPresets"], 0, rep["zFightPresets"])
 
     def test_hanging_hand_zone_is_clear_of_torso_belt_and_leg_armour(self):
-        hand = {(x, y, z) for x in range(7, 14) for y in range(-4, 5) for z in range(14, 21)}   # r002 fist + cuff
+        hand = {(x, y, z) for x in range(7, 14) for y in range(-4, 5) for z in range(15, 22)}   # r004 fist + cuff
         for p in self.parts:
             if p.slot in ("chest", "belt", "legs"):
                 for fit, vols in p.fits.items():
                     cells = set().union(*(set(v.c) for b, v in vols.items() if not b.endswith(".L")))
                     self.assertFalse(cells & hand, (p.id, fit))
 
-    def test_gloves_and_boots_replace_hands_and_feet(self):
+    def test_armour_replaces_the_default_gear_and_gloves_replace_hands(self):
         for p in self.parts:
-            if p.slot == "gloves":
-                self.assertEqual(p.hides, ["hands"])
-            if p.slot == "boots":
-                self.assertEqual(p.hides, ["feet"])
+            self.assertIn("gear", p.hides, p.id)
+            self.assertEqual("hands" in p.hides, p.slot == "gloves", p.id)
 
     def test_legacy_items_map_to_existing_parts(self):
         for key, v in K.legacy_visual_map().items():

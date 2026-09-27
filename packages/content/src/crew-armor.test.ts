@@ -78,12 +78,12 @@ describe("voxel crew armour catalog (presentation only)", () => {
     expect(crewArmorLoadoutFromEquipment({ chest: "unknown-item" })).toEqual({});
   });
 
-  it("hides the body hands and feet only under gloves and boots", () => {
+  it("replaces the default gear layer and hides bare hands only under gloves", () => {
     expect(
       crewArmorHiddenRegions(crewArmorLoadoutFromPreset("role.marine")).sort(),
-    ).toEqual(["feet", "hands"]);
+    ).toEqual(["gear", "hands"]);
     expect(
       crewArmorHiddenRegions(crewArmorLoadoutFromPreset("role.civilian")),
-    ).toEqual(["feet"]);
+    ).toEqual(["gear"]);
   });
 });
