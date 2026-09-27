@@ -258,7 +258,7 @@ export function stepContacts(
   dt: number,
   restitution = 0.2,
   traceIds?: ReadonlySet<string>,
-  tracePoint: (body: RigidBody) => { x: number; y: number } = body => body,
+  tracePoint: (body: RigidBody) => { x: number; y: number } = (body) => body,
 ) {
   if (
     !Number.isFinite(dt) ||
@@ -302,7 +302,8 @@ export function stepContacts(
   const trace: MotionSegment[] = [];
   const record = (a: RigidBody, b: RigidBody, kind: MotionSegment["kind"]) => {
     if (!traceIds?.has(a.id)) return;
-    const from = tracePoint(a), to = tracePoint(b);
+    const from = tracePoint(a),
+      to = tracePoint(b);
     if (from.x !== to.x || from.y !== to.y)
       trace.push({
         bodyId: a.id,

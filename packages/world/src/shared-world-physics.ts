@@ -343,7 +343,12 @@ export function stepSharedWorld(
     }
   // One small clock write per active system sample; completely idle samples do
   // not write. Admission motion stamps are not proof that physics has run.
-  if (report.changedMotions || report.changedOutputs || consumed || zonesChanged)
+  if (
+    report.changedMotions ||
+    report.changedOutputs ||
+    consumed ||
+    zonesChanged
+  )
     ctx.db.worldSystem.id.update({ ...system, lastSimulationTick: sampleTick });
   return report;
 }

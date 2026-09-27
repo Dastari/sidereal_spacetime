@@ -1,4 +1,4 @@
-import { SOLAR_SYSTEM_BODY_LIMIT } from '@sidereal/content/shared-system';
+import { SOLAR_SYSTEM_BODY_LIMIT } from "@sidereal/content/shared-system";
 import {
   acceptedPassengerAccess,
   type PassengerAccessDatabase,

@@ -1033,6 +1033,7 @@
 .hull-workspace .hull-paint-row button {
   padding: 5px;
   font-size: 11px;
+}
 .template-library-dialog {
   width: min(680px, calc(100vw - 96px));
   max-height: 85dvh;
