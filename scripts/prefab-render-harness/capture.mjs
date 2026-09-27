@@ -12,6 +12,8 @@
  * --game: capture game.html (the real game renderer) instead: per prefab a deck and a 3/4 flight
  * view plus bow and engine close-ups, orbiting/zooming the game camera with real pointer input.
  *   node scripts/prefab-render-harness/capture.mjs --game --only fed.s.wren --out DIR [--orbit PX]
+ * --custom "name|query;name|query": game.html close-ups with explicit queries instead of the defaults
+ *   (e.g. "bridge|interior=1&cam=-0.6,0.95,7,0,3"); the prefab id is prepended to name and query.
  */
 import { spawn } from "node:child_process";
 import {
@@ -274,6 +276,22 @@ async function main() {
   if (!only?.length && !game)
     shots.push({ name: "lineup", query: "lineup=1&view=flight&cam=iso" });
 
+  const custom = opt("--custom", "")?.split(";").filter(Boolean);
+  if (game && custom?.length)
+    shots.splice(
+      0,
+      shots.length,
+      ...ids.flatMap((id) =>
+        custom.map((c) => {
+          const [name, query] = c.split("|");
+          return {
+            name: `${id}_game_${name}`,
+            page: "game.html",
+            query: `prefab=${id}&${query}`,
+          };
+        }),
+      ),
+    );
   if (args.includes("--plan"))
     shots.splice(0, shots.length, {
       name: "shipyard_plan",
