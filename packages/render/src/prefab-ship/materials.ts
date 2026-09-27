@@ -49,8 +49,8 @@ export const emissiveIntensity = (strength: number) => Math.min(2.5, strength / 
  * Linear RGB; emissive and accent slots are never overridden.
  */
 const INTERIOR: Partial<Record<"floor" | "wall", Partial<Record<ShipKitSlot, [number, number, number]>>>> = {
-  floor: { trim: [0.2, 0.2, 0.235], dark: [0.045, 0.046, 0.062], secondary: [0.11, 0.115, 0.155], metal: [0.32, 0.32, 0.36], primary: [0.36, 0.35, 0.4] },
-  wall: { primary: [0.46, 0.45, 0.5], secondary: [0.075, 0.078, 0.12], trim: [0.2, 0.2, 0.25] },
+  floor: { trim: [0.27, 0.27, 0.31], dark: [0.06, 0.062, 0.08], secondary: [0.13, 0.135, 0.175], metal: [0.34, 0.34, 0.38], primary: [0.36, 0.35, 0.4] },
+  wall: { primary: [0.4, 0.39, 0.43], secondary: [0.07, 0.072, 0.11], trim: [0.18, 0.18, 0.22] },
 };
 
 /** Slot material for a mesh role: interior roles get the architectural palette. */

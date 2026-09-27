@@ -574,17 +574,29 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
 
     // Deck view shell: skirt and a capped band at the 2.5 m cut, along every outline edge.
     if (isDeck) {
-      const band: DressBox[] = [];
+      // Mitred around the true outline (no raster steps on angled edges): skirt, a thick wall band
+      // with inner cassettes and light strips, and a wide dark cap at the cut.
       const cut = G.deck.shellCutTexels;
       const lower = tiers[0][1];
-      for (const loop of [outline.outer]) {
-        const ringOuter = offsetLoop(loop, 2 * TEXEL);
-        const ringInner = offsetLoop(loop, -G.deck.exteriorWallTexels * TEXEL);
-        const ring: Outline = { outer: ringOuter, holes: [[...ringInner].reverse()] };
-        band.push(...rasterOutline(ring, [lower, cut - 2, cut], (_cx, _cy, bi) => (bi === 0 ? "primary" : "dark")));
-        band.push(...rasterOutline(ring, [0, z0], () => "trim"));
+      const loop = outline.outer;
+      const segs = loop.map((p, i) => [p, loop[(i + 1) % loop.length]] as [Pt, Pt]);
+      const last = segs[segs.length - 1];
+      const ring = new MitredChain(segs, 1, [last[1][0] - last[0][0], last[1][1] - last[0][1]], [segs[0][1][0] - segs[0][0][0], segs[0][1][1] - segs[0][0][1]]);
+      const T = TEXEL;
+      const W = G.deck.exteriorWallTexels;
+      const L = ring.length;
+      const prisms: DressPrism[] = [
+        ...ring.band(0, L, -W * T, 2 * T, 0, z0, "trim"),
+        ...ring.band(0, L, -W * T, 2 * T, lower, cut - 2, "secondary"),
+        ...ring.band(0, L, -(W + 1.5) * T, 3 * T, cut - 2, cut, "dark"),
+      ];
+      for (let u = 0, k = 0; u < L - 0.3; k++) {
+        const w = Math.min(L - u, hash01(doc.id, vi, k, "shell") < 0.5 ? 1.0 : 1.25);
+        prisms.push(...ring.band(u + 0.03, u + w - 0.03, -(W + 0.75) * T, -W * T, lower + 1, cut - 3, "primary"));
+        if (k % 2 === 0) prisms.push(...ring.band(u + w * 0.25, u + w * 0.75, -(W + 1.25) * T, -(W + 0.75) * T, cut - 6, cut - 5, "emit_a"));
+        u += w;
       }
-      generated.push({ id: `gen.${doc.id}.${v.id}.shell`, kind: "shell-band", boxes: band, view: "deck" });
+      generated.push({ id: `gen.${doc.id}.${v.id}.shell`, kind: "shell-band", boxes: [], prisms, view: "deck" });
     }
 
     // Roof.

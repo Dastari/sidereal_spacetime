@@ -72,7 +72,15 @@ async function main() {
   for (let i = 0; i < 30; i++) await new Promise((r) => requestAnimationFrame(r));
   const ship = scene!.getTransformNodeByName(`prefab-ship:${doc.id}`);
   window.__prefabMetrics = [
-    { id: doc.id, view: interior ? "deck" : "flight", drawCalls: instrumentation.drawCallsCounter.current, meshes: ship?.getChildMeshes().filter((m) => m.isEnabled() && m.isVisible).length ?? 0 },
+    {
+      id: doc.id,
+      view: interior ? "deck" : "flight",
+      drawCalls: instrumentation.drawCallsCounter.current,
+      meshes: ship?.getChildMeshes().filter((m) => m.isEnabled() && m.isVisible).length ?? 0,
+      lights: scene!.lights.filter((l) => l.isEnabled()).map((l) => `${l.getClassName()}:${l.name}:${l.intensity.toFixed(2)}:${"direction" in l ? ((l as unknown as { direction?: Vector3 }).direction?.asArray().map((v) => v.toFixed(2)).join(",") ?? "") : ""}`),
+      environmentIntensity: scene!.environmentIntensity,
+      exposure: scene!.imageProcessingConfiguration.exposure,
+    },
   ];
   document.getElementById("hud")!.textContent = `${doc.id} ${interior ? "deck" : "flight"} (game renderer): ${instrumentation.drawCallsCounter.current} draws/frame`;
   window.__prefabReady = true;

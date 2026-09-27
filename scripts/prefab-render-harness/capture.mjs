@@ -34,7 +34,7 @@ const game = args.includes("--game");
 const orbitPx = Number(opt("--orbit", 0));
 const alpha = Number(opt("--alpha", -0.6));
 const beta = Number(opt("--beta", 0.95));
-const radius = Number(opt("--radius", 32));
+const radius = Number(opt("--radius", 24));
 const PORT = Number(opt("--port", 5391));
 const BASE = `http://127.0.0.1:${PORT}/`;
 mkdirSync(out, { recursive: true });

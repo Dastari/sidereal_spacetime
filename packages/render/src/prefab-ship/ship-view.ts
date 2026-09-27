@@ -50,6 +50,7 @@ import {
   mountRotation,
   multiply,
   prefabFrameMatrix,
+  prefabToShipLocal,
   transformPoint,
   type Mat4,
   type MountSocket,
@@ -188,7 +189,7 @@ function applyFrame(node: TransformNode, origin: [number, number]) {
 const roleOfPiece = (piece: string): MeshRole =>
   piece.startsWith("roof.") || piece.startsWith("deco.") ? "roof" : piece.startsWith("int.floor") ? "floor" : piece.startsWith("int.") ? "wall" : "hull";
 
-const roleOfGenerated = (kind: string): MeshRole => (kind === "floor-slab" ? "floor" : kind === "slope-wall" ? "wall" : "hull");
+const roleOfGenerated = (kind: string): MeshRole => (kind === "floor-slab" ? "floor" : kind === "slope-wall" || kind === "shell-band" ? "wall" : "hull");
 
 /** Socket class used for authored-frame rotation. */
 function socketOf(c: ComponentPlacement): MountSocket {
@@ -231,6 +232,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     buildGenerated(out);
     buildLightPools(out);
     buildContactShadows(out);
+    buildLabels(out, prefabOrigin(d));
     out.decals = buildDecals(scene, frame, dressed, theme).map((h) => ({ ...h, tag: h.decal.view }));
     if (options.batch !== false) batchBuilt(out);
     return out;
@@ -537,6 +539,53 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     out.statics.push({ mesh, tag: "deck", slot: null, triangles: g.indices.length / 3, kind: "pool" });
   }
 
+  /** Room label plates (deck view): dark plate, white stencil text, cyan edge; Y-billboards. */
+  function buildLabels(out: Built, origin: [number, number]) {
+    out.dressed.labels.forEach((l, i) => {
+      const text = l.text.toUpperCase();
+      const tw = Math.max(160, 26 * text.length + 48);
+      const tex = new DynamicTexture(`${out.dressed.id}:label:${i}`, { width: tw, height: 64 }, scene, true);
+      const ctx = tex.getContext() as unknown as CanvasRenderingContext2D;
+      ctx.fillStyle = "#0b0d1c";
+      ctx.fillRect(0, 0, tw, 64);
+      ctx.strokeStyle = "#3fb8ff";
+      ctx.lineWidth = 4;
+      ctx.strokeRect(3, 3, tw - 6, 58);
+      ctx.fillStyle = "#e8ecf8";
+      ctx.font = "bold 36px Arial, Helvetica, sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(text, tw / 2, 34);
+      tex.update(true);
+      const h = 0.34;
+      const w = (h * tw) / 64;
+      const mesh = new Mesh(`${out.dressed.id}:label:${i}`, scene);
+      const vd = new VertexData();
+      vd.positions = [-w / 2, -h / 2, 0, w / 2, -h / 2, 0, w / 2, h / 2, 0, -w / 2, h / 2, 0];
+      vd.normals = [0, 0, -1, 0, 0, -1, 0, 0, -1, 0, 0, -1];
+      vd.uvs = [0, 0, 1, 0, 1, 1, 0, 1];
+      vd.indices = [0, 2, 1, 0, 3, 2];
+      vd.applyToMesh(mesh);
+      // Parent to the (unmirrored, Y-up) ship root: billboards misbehave under the prefab frame.
+      mesh.parent = root;
+      const [x, y, z] = prefabToShipLocal([l.at[0], l.at[1], 2.2], origin);
+      mesh.position.set(x, y, z);
+      mesh.billboardMode = Mesh.BILLBOARDMODE_Y;
+      mesh.isPickable = false;
+      const mat = new StandardMaterial(`${out.dressed.id}:label:${i}`, scene);
+      mat.disableLighting = true;
+      mat.emissiveTexture = tex;
+      mat.diffuseColor = Color3.Black();
+      mat.specularColor = Color3.Black();
+      mat.backFaceCulling = false;
+      mesh.material = mat;
+      out.textures.push(tex);
+      out.materials.push(mat);
+      setMeshRole(mesh, "effect");
+      out.statics.push({ mesh, tag: l.view, slot: null, triangles: 2, kind: "decal" });
+    });
+  }
+
   function buildLightPools(out: Built) {
     const lights = out.dressed.lights;
     if (!lights.length) return;
@@ -605,10 +654,10 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       .forEach((l, i) => {
         const light = new PointLight(`${out.dressed.id}:room-light:${i}`, new Vector3(l.at[0], l.at[1], l.at[2]), scene);
         light.parent = frame;
-        light.diffuse = new Color3(...l.colour.map((c) => 0.55 + 0.45 * c) as [number, number, number]);
+        light.diffuse = new Color3(...l.colour.map((c) => 0.35 + 0.65 * c) as [number, number, number]);
         light.specular = Color3.Black();
         light.falloffType = Light.FALLOFF_STANDARD;
-        light.intensity = 1.1 + l.intensity * 0.9;
+        light.intensity = 1.7 + l.intensity * 1.2;
         light.range = 4.5 + l.intensity * 3;
         out.lights.push({ light, tag: l.view });
       });

@@ -56,7 +56,7 @@ export async function loadPrefabShipPresentation(
   // Bloom: the game's glow layer only includes what is registered with it.
   const glow = scene.effectLayers.find((l): l is GlowLayer => l instanceof GlowLayer);
   const fill = new HemisphericLight("prefab-ship-fill", new Vector3(0.2, 1, -0.3), scene);
-  fill.intensity = 0.6;
+  fill.intensity = 0.85;
   fill.diffuse = new Color3(0.92, 0.94, 1);
   fill.groundColor = new Color3(0.32, 0.34, 0.42);
   fill.specular = new Color3(0.15, 0.15, 0.15);
