@@ -1,0 +1,526 @@
+{
+ "schema": "sidereal.archived-media.v1",
+ "note": "Review evidence, reference boards and generated output removed from the tracked tree on 2026-09-28 (T3 per-turn checkpoints re-hash every tracked file). Git history keeps every file. Exact originals: <archive_root>/sidereal_spacetime/<path>; verify with `sha256sum -c MANIFEST.sha256` in the archive root. Web copies where they are meaningful references: the Sidereal wiki (Art/References/Source Boards, History/Releases). Art-library removals are listed in assets/art-library/ARCHIVED.json. Tools accept a listed file that is absent from the tree when its recorded hash matches.",
+ "archive_root": "/root/sidereal-art-archive",
+ "manifest": "/root/sidereal-art-archive/manifests/repo-slim-20260928.sha256",
+ "details": "/root/sidereal-art-archive/manifest-repo-slim-20260928.json",
+ "wiki": "https://wiki.sidereal.dastari.net/Art/References/Source%20Boards",
+ "source_commit": "a3363d8bc54bfe493bcb759e04218aa92a6a6638",
+ "moved_at": "2026-09-28",
+ "directories": {
+  "output/playwright/planet-reference-20260914": {
+   "files": 3885,
+   "bytes": 2993521094
+  },
+  "output/playwright/render-plan": {
+   "files": 459,
+   "bytes": 92082667
+  }
+ },
+ "files": {
+  "docs/handoffs/ifcs_update_evidence_20260914/compiled-properties.png": {
+   "sha256": "46682af6be44facffee945e0dbb828bbe32ccb043b284ccf84887be91380d0b0",
+   "bytes": 732546
+  },
+  "docs/handoffs/ifcs_update_evidence_20260914/forward-burn-verified.png": {
+   "sha256": "d6e56238ec1ac1987d857f0134eff8513b8640e8d52337035245ce36b23df445",
+   "bytes": 739301
+  },
+  "docs/handoffs/ifcs_update_evidence_20260914/removed-port-main.png": {
+   "sha256": "bc4acd68f708d8ceace9d5a6956ddd4be2b8211c69062156f1a828c7546eaf7b",
+   "bytes": 782733
+  },
+  "docs/handoffs/ifcs_update_evidence_20260914/turn.png": {
+   "sha256": "175f37731367eb1d4b0d0cc9e4af99af475a3f4682a27a647410722b60b7d404",
+   "bytes": 766963
+  },
+  "docs/handoffs/render_optimization_20260921/integrated-deck.png": {
+   "sha256": "11e8114adfc3498b7bea3eba9b6a04aa5a4bd809ff3785becb5f7e71499a560e",
+   "bytes": 261914
+  },
+  "docs/releases/bridge-bed-fix/bridge-clarified-final.png": {
+   "sha256": "d0cbe16ad7aa08bf803c9fea040e004646223705b274231394f5cf3bf78d03ac",
+   "bytes": 614367
+  },
+  "docs/releases/bridge-bed-fix/bridge-clarified.png": {
+   "sha256": "5bceb406406f70fa8faa5c3dda8400bf664ea3acaeefa63a438ab92a6ea21455",
+   "bytes": 428685
+  },
+  "docs/releases/bridge-bed-fix/cutout.png": {
+   "sha256": "378ac4ce1476f4192743bf17dbd175d847ed73794ef012f8ad65be95c21f5cb9",
+   "bytes": 755846
+  },
+  "docs/releases/bridge-bed-fix/runtime-bed-final.png": {
+   "sha256": "990827ba095083d246188d3fe23d466956040c3c8f293b8c0a71ea606241b4a6",
+   "bytes": 311432
+  },
+  "docs/releases/bridge-bed-fix/runtime-bridge-final.png": {
+   "sha256": "3dbb7e416b8b4e338e4c83cc51878b5876bd3b0c5326a4b20e5382b980440cf0",
+   "bytes": 668509
+  },
+  "docs/releases/bridge-bed-fix/runtime-close.png": {
+   "sha256": "c95a943dba4d7e2abd15f0c552ebfa5eff0c544609f81d65c9fff5661b389614",
+   "bytes": 590921
+  },
+  "docs/releases/bridge-bed-fix/runtime-top.png": {
+   "sha256": "5a0977fcdc6350b817fa310f7dcf521468cc012aa0872864f9dcd10c38369d35",
+   "bytes": 654432
+  },
+  "docs/releases/roof-r004/game-deck.png": {
+   "sha256": "b39c43efb8b864a27e95b5174588310419aa245d02bef69e88cf528c42d02c3a",
+   "bytes": 701016
+  },
+  "docs/releases/roof-r004/game-roof.png": {
+   "sha256": "6f6c1a1f6acf3aa38b4bc25d6b36a81296887383211211cb0f7a7b748405d892",
+   "bytes": 748487
+  },
+  "docs/releases/roof-r004/shipyard-roof.png": {
+   "sha256": "907297e86b7a2b6963d0aba9a187d9bc402cb70eb4e2772049533c523af6d444",
+   "bytes": 417619
+  },
+  "docs/releases/side-hull-r003/game-deck.png": {
+   "sha256": "6b43bf690a361206165fb74846b690f22c30b46bfb81c718e7bac2ccf0e05c8b",
+   "bytes": 748391
+  },
+  "docs/releases/side-hull-r003/game-flight.png": {
+   "sha256": "8afa9fad5f7838094b7f1fa7464a5209b8af1bdbafa74ca2ca6acda08abf9dd9",
+   "bytes": 927975
+  },
+  "docs/shipyard_player_builder/01_rules_source.jpg": {
+   "sha256": "24f6f406c6f8dec388292caa153387ec7240a1aba3588159a1b82db68d3c2295",
+   "bytes": 148068
+  },
+  "docs/shipyard_player_builder/02_voxelised_62mm.jpg": {
+   "sha256": "23164e43011f4690745f4fe2aeb507a4326ca1f2c18a97635f54ac7df161e985",
+   "bytes": 158894
+  },
+  "docs/shipyard_player_builder/03_hull_source_vs_62mm_vs_125mm.jpg": {
+   "sha256": "592da4a26f714ff124effbae62b83c81af95ba2725f926a6729d30bf10cef3cf",
+   "bytes": 88044
+  },
+  "docs/shipyard_player_builder/04_wayfarer_section_voxel.jpg": {
+   "sha256": "1614033b9b091d25490de4e89a1e5ed6af9803eec69bbb6a71aad528793121d7",
+   "bytes": 164192
+  },
+  "docs/shipyard_player_builder/05_wayfarer_section_damaged.jpg": {
+   "sha256": "2cd3786431fc63c6062a0f96f722624f473ba1fb10206de859ef1d6bf71aa86e",
+   "bytes": 169951
+  },
+  "docs/shipyard_player_builder/06_damage_closeup.jpg": {
+   "sha256": "3e7859aa0668e936aa975a619d60ae7932b4fa107a61c57cb6785a45bd7caf7e",
+   "bytes": 120072
+  },
+  "docs/shipyard_player_builder/r002_damaged.jpg": {
+   "sha256": "8392840c05dc04eb9912960a19c3b1ea0cd28b806b090ba2cca7694f3e3c1f6b",
+   "bytes": 176957
+  },
+  "docs/shipyard_player_builder/r002_hull_closeup.jpg": {
+   "sha256": "665c5528a3fa440e206afab34e91209caf5cadd933b64dd3b3b22f15ea91702c",
+   "bytes": 118904
+  },
+  "docs/shipyard_player_builder/r002_interior_closeup.jpg": {
+   "sha256": "cd6725f27c308fc32fc1a90b18188a4bed1a5b294fb55ed4fa19bdecb8754bcb",
+   "bytes": 126203
+  },
+  "docs/shipyard_player_builder/r002_overview.jpg": {
+   "sha256": "6c80176d1b9b5510f207c310d85d065515c937f394134707ad1f27ec57817fe6",
+   "bytes": 173054
+  },
+  "docs/shipyard_player_builder/r003_cockpit.jpg": {
+   "sha256": "e29f077244b938cd20cf35c75077ba7a9b32038d9aeb3d9ef0395295aa449ee4",
+   "bytes": 163240
+  },
+  "docs/shipyard_player_builder/r003_deck_view.jpg": {
+   "sha256": "6438fbddf2dd53ff4c4f85569f06c2e6d341d3d9c923f58aa96960cfe09bd8dc",
+   "bytes": 186123
+  },
+  "docs/shipyard_player_builder/r003_engines.jpg": {
+   "sha256": "460ad47150cab089dcf9b5224c06eec60b81a02f80519704431c2589d849c5d0",
+   "bytes": 221873
+  },
+  "docs/shipyard_player_builder/r003_flight_topdown.jpg": {
+   "sha256": "47199e569c7d2efd56e6bef08a6149e87bc51a8901a633cf8f3ac1bed34395ac",
+   "bytes": 124897
+  },
+  "docs/shipyard_player_builder/r003_hull_side.jpg": {
+   "sha256": "6cee0ddef8b2d094e5e03429d49f8a57f00e435abd4f8e0097ef216d9f06a625",
+   "bytes": 126295
+  },
+  "docs/shipyard_player_builder/r004_aurelian_closeup.jpg": {
+   "sha256": "15bd9e78e4df949a893e740baf4eac56485ba4b78f817912f7eae190fc8039c3",
+   "bytes": 240358
+  },
+  "docs/shipyard_player_builder/r004_detail_closeup.jpg": {
+   "sha256": "1eee90d566d7cb44a411d1a6663d12aed6f1fee81a0f102ce141cf305847d7c4",
+   "bytes": 144686
+  },
+  "docs/shipyard_player_builder/r004_detail_height.png": {
+   "sha256": "992384330e3b42ce411bdf7ee063378ab72959e0289d8c39b3fe61f53a32b6e8",
+   "bytes": 144321
+  },
+  "docs/shipyard_player_builder/r004_emblem_crystal.png": {
+   "sha256": "a3046947298b528495bbafcfc0ef1322865b77423cf00ecefb1025d96e26df7b",
+   "bytes": 9258
+  },
+  "docs/shipyard_player_builder/r004_emblem_planet.png": {
+   "sha256": "5dc519d23ee0f16e897b06933a96c4e39c1c686281bb78b8439b3c5e3f4ae4c8",
+   "bytes": 11134
+  },
+  "docs/shipyard_player_builder/r004_emblem_skull.png": {
+   "sha256": "ad78f5df0bdcfa38ec0da3109a7163165050027d57e3e843fa8c308c1b88322d",
+   "bytes": 11660
+  },
+  "docs/shipyard_player_builder/r004_federation_hero.jpg": {
+   "sha256": "624de016dbfc4d0f6bfddcfe67ed245ca88a1ce4cfae6f8c9cba6ea789887e6a",
+   "bytes": 196739
+  },
+  "docs/shipyard_player_builder/r004_kit_sheet.jpg": {
+   "sha256": "f6dfb84675c6e789ff57c6b2f08d9de29ab21d10a360e0bdc8403dfff107b6d5",
+   "bytes": 185772
+  },
+  "docs/shipyard_player_builder/r004_riftjack_closeup.jpg": {
+   "sha256": "d288e9a8b3d762df339dc2147a98dd7d1205d5ee42a6072869f9246a384156d2",
+   "bytes": 252654
+  },
+  "docs/shipyard_player_builder/r004_themes_lineup.jpg": {
+   "sha256": "1845cf7fd26d7e1eb7b58647375f824e96e7b70d3d90457cf58d2658110ac6ef",
+   "bytes": 229333
+  },
+  "docs/shipyard_player_builder/r004_themes_topdown.jpg": {
+   "sha256": "34ccd1790c53f86e2387ed6f49585f26cc022b5573dd8c2ddcf047a1398c370b",
+   "bytes": 200123
+  },
+  "docs/shipyard_player_builder/r005_blueprint_components.jpg": {
+   "sha256": "0bed1621f3e67303af6d602fbb3827be7a4abc4d72d01cf55a0a5e63453bc0f7",
+   "bytes": 563042
+  },
+  "docs/shipyard_player_builder/r005_blueprint_designs.jpg": {
+   "sha256": "be4aad21a462fefd9c8e779734268216d49a4a0e337385fa0219997a8a6ab51c",
+   "bytes": 669614
+  },
+  "docs/shipyard_player_builder/r005_blueprint_shapes.jpg": {
+   "sha256": "e37b26c86b51378ad9080999ed97437ce659bb7019488d4e25c2a7d7839d7839",
+   "bytes": 306285
+  },
+  "docs/shipyard_player_builder/r005_corvette_side_density.jpg": {
+   "sha256": "cfba013ff0cdb6dab4c3ae7abf1e71a3d1904f4ccb5902d1d19faa1783572ba6",
+   "bytes": 186721
+  },
+  "docs/shipyard_player_builder/r005_crescent_curves.jpg": {
+   "sha256": "74b26e80ee0206650717c87f1e012097d4476a489d4fc55566b4a9930c0e292f",
+   "bytes": 151929
+  },
+  "docs/shipyard_player_builder/r005_designs_lineup.jpg": {
+   "sha256": "ed17992cf96d6bb3d79a6750a2e5e35de0f85c2ed4d1bbfc3bc61a90140a35f9",
+   "bytes": 318903
+  },
+  "docs/shipyard_player_builder/r005_designs_topdown.jpg": {
+   "sha256": "5f98d4e3e77b4fb821634174f9b97278fe34d9d08325f93db74715d7a705a6ce",
+   "bytes": 193509
+  },
+  "docs/shipyard_player_builder/r005_frigate_bow_slopes.jpg": {
+   "sha256": "a9bc01bbdba383d51bf56ff607ffff358938c0f367862d8bb54a5f61795f4dd5",
+   "bytes": 212987
+  },
+  "docs/shipyard_player_builder/r005_frigate_hero.jpg": {
+   "sha256": "c56b3f26d516979bc29c1879b84cde6bf721e30cd66d43abf62763ff453742d7",
+   "bytes": 243427
+  },
+  "docs/shipyard_player_builder/r005_razor_courier.jpg": {
+   "sha256": "2480490b3d81ab87776d538e9f12f14548a432ba34db6db3b23fc0a76973e5bb",
+   "bytes": 153111
+  },
+  "docs/shipyard_player_builder/r005_shape_tiles.jpg": {
+   "sha256": "1194654581c5744ebe43bcc3a17de9ce26494cc8c5558e562c91e687725a24e5",
+   "bytes": 119758
+  },
+  "docs/shipyard_player_builder/r006_blueprint_components.jpg": {
+   "sha256": "2bd3a8b8b2c34344bf6bce74ebb726acd46be1b0e46e24bd56de05957099a03d",
+   "bytes": 589611
+  },
+  "docs/shipyard_player_builder/r006_blueprint_designs.jpg": {
+   "sha256": "f78ac7b86bf7eb12d137a98c87a81f0dbed37b87f28e35cdea5f063937eb5ef9",
+   "bytes": 682927
+  },
+  "docs/shipyard_player_builder/r006_blueprint_shapes.jpg": {
+   "sha256": "32ced8304be13da5a59d6d376e478c8df5ea8442fdc709b349b7774c0fb50548",
+   "bytes": 364836
+  },
+  "docs/shipyard_player_builder/r006_designs_lineup.jpg": {
+   "sha256": "bcce488815b48eee752fbc19aab1d6ca4eae3253763d38731717197247210137",
+   "bytes": 321445
+  },
+  "docs/shipyard_player_builder/r006_engine_exploded.jpg": {
+   "sha256": "a730a53c61f4988cb5d7018b983f1689d101df9c5cfac50eafee64962ef3d8e4",
+   "bytes": 139049
+  },
+  "docs/shipyard_player_builder/r006_engines_lineup.jpg": {
+   "sha256": "9690c510253c959af9d1a95150b5ad21277ceb158fab9ac656cd54b88cf1400d",
+   "bytes": 125472
+  },
+  "docs/shipyard_player_builder/r006_frigate_bow_slopes.jpg": {
+   "sha256": "e44b5a5a35a4137b881cb13b2b2c9b1202a66bc9a5d8a3181daa3c618a359fbb",
+   "bytes": 206836
+  },
+  "docs/shipyard_player_builder/r006_frigate_hero.jpg": {
+   "sha256": "71532fa937f1e66de513b40256a8a091c897e38adbfac667c1660d1030ba0d20",
+   "bytes": 248658
+  },
+  "docs/shipyard_player_builder/r006_frigate_rear_engines.jpg": {
+   "sha256": "a9342320f8ef3099d4c7060636eef83dfecda0b8f60fd38cef9f2c12c0f6ea78",
+   "bytes": 234051
+  },
+  "docs/shipyard_player_builder/r006_marauder_rear.jpg": {
+   "sha256": "cc79e783516d1cf88c7e3bc61bc901a871e1fe5899224736f892f323ec5b6940",
+   "bytes": 217697
+  },
+  "docs/shipyard_player_builder/r006_shape_tiles.jpg": {
+   "sha256": "60e1bcc9a93bd56daac1e4f4f99959f541177c478fc0450e95062319d1397da1",
+   "bytes": 118127
+  },
+  "docs/shipyard_player_builder/r007_blueprint_components.jpg": {
+   "sha256": "d9fd5f616b31c360504ee0094da17a03d8d93c9d21164f8d1f5b35b9199c1fa4",
+   "bytes": 746832
+  },
+  "docs/shipyard_player_builder/r007_blueprint_designs.jpg": {
+   "sha256": "aaa9fbb52af321fd5ba2022f979b934e45c71fc9995b3f371ef0a3360a00f5e6",
+   "bytes": 679920
+  },
+  "docs/shipyard_player_builder/r007_designs_lineup.jpg": {
+   "sha256": "1a5803ae48b2e8491c45df5c5643c2b93adea4efbc63210d06348c3df8ccc129",
+   "bytes": 327448
+  },
+  "docs/shipyard_player_builder/r007_designs_topdown.jpg": {
+   "sha256": "3be36af0adbb20aac66bffa135c99153cbc704ce7c5224f89a0f0a35b4d89d9a",
+   "bytes": 206763
+  },
+  "docs/shipyard_player_builder/r007_engine_exploded.jpg": {
+   "sha256": "c2563fc42e18214bcda2b6e358d0bab532f36e1e6c6562a03901e8a7bfca5469",
+   "bytes": 151679
+  },
+  "docs/shipyard_player_builder/r007_engines_lineup.jpg": {
+   "sha256": "f83f85d0458261ca0a3e0179261b82521bbc6a499e1abee75d721ed4c5e35510",
+   "bytes": 141839
+  },
+  "docs/shipyard_player_builder/r007_frigate_hero.jpg": {
+   "sha256": "43b5611c13130bce651e05668633066e274458370c17ff2b223653631b9e7b62",
+   "bytes": 253484
+  },
+  "docs/shipyard_player_builder/r007_frigate_rear_engines.jpg": {
+   "sha256": "f351bf9cf16c2364a9ac0b8be604dbb3074c6837a3fb76a12f9a1b7a4c51aaeb",
+   "bytes": 243907
+  },
+  "docs/shipyard_player_builder/r007_marauder_rear.jpg": {
+   "sha256": "602efd1c9f76ed6e8b650376593a6a007919f42c8b3aae166f13343ddc47dc5c",
+   "bytes": 221405
+  },
+  "docs/shipyard_player_builder/r007_weapon_exploded.jpg": {
+   "sha256": "142585bbe0832164a72f3f8443d867b0837e197f60f45002f898fb2745da96b3",
+   "bytes": 121063
+  },
+  "docs/shipyard_player_builder/r007_weapon_sizes_themes.jpg": {
+   "sha256": "c409e937901746aa6a11284e6811b5097a1e757dfd62645563acc7201ff80c95",
+   "bytes": 130998
+  },
+  "docs/shipyard_player_builder/r007_weapons_catalog.jpg": {
+   "sha256": "9389b13b5f21fcfa221bd07eb8a3a41d1c103f672f701ca2adf0cb6536a01241",
+   "bytes": 129346
+  },
+  "docs/shipyard_player_builder/r008_blueprint_deck.jpg": {
+   "sha256": "6ea58fb710bcf42ef73584867558e7ca1e647dda397bcc8c9683a87762882941",
+   "bytes": 610432
+  },
+  "docs/shipyard_player_builder/r008_deck_closeup.jpg": {
+   "sha256": "52a649607c11440ce2440878a021dfae378d462e3101c856a26c2d047585bcda",
+   "bytes": 181680
+  },
+  "docs/shipyard_player_builder/r008_deck_corridor.jpg": {
+   "sha256": "44b0eee336471e914b5916c6472db8c1d461d3516a12c7cf32073d25510ced83",
+   "bytes": 180390
+  },
+  "docs/shipyard_player_builder/r008_deck_topdown.jpg": {
+   "sha256": "74c95688f6224a23fd5a12de2170afc7d27f4a68dc524cf31534f23ce9889b29",
+   "bytes": 279555
+  },
+  "docs/shipyard_player_builder/r008_deck_view.jpg": {
+   "sha256": "ce97638b0b955377cac95e212bada0fde6ccbc8a820884f9edb7bf0b88392afd",
+   "bytes": 219844
+  },
+  "docs/shipyard_player_builder/r008_interior_kit.jpg": {
+   "sha256": "c99f5e0065fb1362c5b34511e3b9ff67cd8d6c8877075bba42f9b98ba39987f5",
+   "bytes": 229500
+  },
+  "docs/shipyard_player_builder/r008_room_pod_exploded.jpg": {
+   "sha256": "4ed11dd6d803773f03700a4b0d671d5367a77fe208ebe85c99bd264034fefee4",
+   "bytes": 159375
+  },
+  "reference/art/3d-rpg-after.png": {
+   "sha256": "d90ebb5a0526234a5debecc1bc5ef6f32ef370dc3f6520c287be34d1c23e1b29",
+   "bytes": 3127646
+  },
+  "reference/art/3d-rpg-before.png": {
+   "sha256": "4bf78013a5c75628a89f0ca66e968cd5964f9623950371ed25699c45ea48a8ab",
+   "bytes": 2364054
+  },
+  "reference/art/alien-ship-1.png": {
+   "sha256": "68966edcfe1a4036b10215e6cfc7912df1f98a50d65c2911afaa9e62eb192a0f",
+   "bytes": 2740489
+  },
+  "reference/art/alien-ship-2.png": {
+   "sha256": "8278417cccdb9737b4205a5fc86dda7ec168fd8cf7b0be97d5a7802369fbe7ec",
+   "bytes": 2798114
+  },
+  "reference/art/asteroids-and-mining.png": {
+   "sha256": "d2182149b0d6aafee69600ee0587687bb3a89a920510f2b571cdbf22bf90f75c",
+   "bytes": 2560141
+  },
+  "reference/art/buggy-1-mockup.png": {
+   "sha256": "f40ca91671d7d1e1e89e92dbc1db9d9e7dff744668fab096aa8d5722bb59b622",
+   "bytes": 2469618
+  },
+  "reference/art/cargo-pods-ore-etc.png": {
+   "sha256": "a21c973554be0e9830e438a49210139dadcdbbc207ace16bbd344e5c2a460dd2",
+   "bytes": 2539127
+  },
+  "reference/art/character-animations-2.png": {
+   "sha256": "f9ae292c5420e22319c164ae44eeda04cc8965d1c40f082ced2e743b68586273",
+   "bytes": 2032667
+  },
+  "reference/art/characters-facial-assets.png": {
+   "sha256": "ca3213a6cd9e5a4c0215c787c370f488c90bbaf23bfdfe514cc639dece89b891",
+   "bytes": 2227483
+  },
+  "reference/art/characters-weapons-items-female.png": {
+   "sha256": "3b6d818d15555037632185a6abcb1313ee9ccbc4df295088ac40c43a19f9c43d",
+   "bytes": 2188726
+  },
+  "reference/art/characters-weapons-items.png": {
+   "sha256": "9ba9bd1a82f9bb9b5da8bf8c945689c95eca552ea764d1bd8e86d2ada226bd2a",
+   "bytes": 2181573
+  },
+  "reference/art/core-construction-blocks.png": {
+   "sha256": "bf5739e7e06f77425a101786d6b3a3c47dafee5c1c0272908b73843babd7fb08",
+   "bytes": 2525926
+  },
+  "reference/art/editor-mockup-1.png": {
+   "sha256": "9200b61d7c7f8d15ea4b346d82f9270c3206f2da0980ce11abad871612d9b0e1",
+   "bytes": 1816100
+  },
+  "reference/art/editor-mockup-2.png": {
+   "sha256": "63934dcf60378d909e81c2114900ea06bd1b960c817dda2f828ba24c105e6101",
+   "bytes": 1811018
+  },
+  "reference/art/editor-mockup-3.png": {
+   "sha256": "035b5b0c28a7fe3d9d81a15017e0c7746474f9f9bb41c30577dd878bc9de2b66",
+   "bytes": 1829523
+  },
+  "reference/art/editor-mockup-4.png": {
+   "sha256": "d02937c2879381a5081551e3b5521ab397070cee13e2fe8db794425eecd3de26",
+   "bytes": 1910859
+  },
+  "reference/art/editor-mockup-5.png": {
+   "sha256": "f5869bed1e815981f4d15d0de02afb8138401d0bfeae535be774c2a2c70fd81d",
+   "bytes": 2238970
+  },
+  "reference/art/effects-and-weapon-firing.png": {
+   "sha256": "caacb71df7f0ab4e8b2815aab67b530438dc18b13f7a8abf7cd143502209b15e",
+   "bytes": 2412959
+  },
+  "reference/art/exploded-spaceship-view.png": {
+   "sha256": "d63ea6695e934c2c68bf17b072f1b003299fb8a76538dd5648474ed864241f25",
+   "bytes": 2787174
+  },
+  "reference/art/faction-ship-1.png": {
+   "sha256": "dde11a8f94d7310c47a8fdf7df4770c03a14bfac2341e4f7a1da2b2dc05f68de",
+   "bytes": 2769665
+  },
+  "reference/art/faction-ship-2.png": {
+   "sha256": "ba9bfddc1d9ce1ada874f2f5e2ece9553e5c66f0f3131a5df21b4e71d7ef78fb",
+   "bytes": 2699012
+  },
+  "reference/art/fully-complete-constructed-space-ship.png": {
+   "sha256": "99516c764891cf7b58750f96c9c580e1ad87566808f8770425f3de0d4eb64f80",
+   "bytes": 2670885
+  },
+  "reference/art/in-game-ui-interface-example-1.png": {
+   "sha256": "7532d2957804530d6e0741f6a77e606a368000e97726b4334d9eb289a2b0b400",
+   "bytes": 2495507
+  },
+  "reference/art/internal-components-2.png": {
+   "sha256": "421435c8d9479a73fcae92d4ed416fad6f77350c4184152b4ce11d370e51e04b",
+   "bytes": 2278761
+  },
+  "reference/art/modular-components-computers.png": {
+   "sha256": "d2182149b0d6aafee69600ee0587687bb3a89a920510f2b571cdbf22bf90f75c",
+   "bytes": 2560141
+  },
+  "reference/art/modular-spaceship-design-2.png": {
+   "sha256": "d69e233e56a0dba27e1ddc0a367f0277d5adbbc2194454ebd2d7f63a49445611",
+   "bytes": 2728826
+  },
+  "reference/art/modular-spaceship-design.png": {
+   "sha256": "ff2deafe2104b283c01b6b3b4906f262608257cd9f8b86909205c9e2a3bdfb6c",
+   "bytes": 2647118
+  },
+  "reference/art/more-character-customization.png": {
+   "sha256": "dacc6aff2789e167974549c69467c9615b1745346bdff33cf2aa98feccaf9526",
+   "bytes": 2364346
+  },
+  "reference/art/more-turrents-missiles-guns.png": {
+   "sha256": "d5f8893f3763a101a6c34a42ceeb19d4ae7b6460a5b176a094a274770846e3e1",
+   "bytes": 2644226
+  },
+  "reference/art/planets.png": {
+   "sha256": "58e940d6f93f5e119757f3c06f1f99cced763f1829aa7bb31e32bfecd152f9b9",
+   "bytes": 2876847
+  },
+  "reference/art/small-craft-example-3d.png": {
+   "sha256": "bdbf660a8b43992a3fc702a7552f5a97be482cb53d1ed33b94cf1c038d81a9d9",
+   "bytes": 2442413
+  },
+  "reference/art/small-craft-example-top.png": {
+   "sha256": "b4225ebe90c9190e429cbd702103fceb7b8e2675cba958bbfbc02fde88210b2a",
+   "bytes": 1965620
+  },
+  "reference/art/stars.png": {
+   "sha256": "e2234801d565d7a790edb021a39da5e230258cfac739a545881e010ffa099ba2",
+   "bytes": 2870344
+  },
+  "reference/art/top-down-after.png": {
+   "sha256": "7a24656648ddbd2b5708a3dfd4f648470d9e5c351f6502e6e9c9d4e403dc8258",
+   "bytes": 1698754
+  },
+  "reference/art/top-down-before.png": {
+   "sha256": "6fd64128eee762936f3eefdbddcccfacaa59ead6485320861467cd2ef2a9e23c",
+   "bytes": 517341
+  },
+  "reference/art/ui-elements-2.png": {
+   "sha256": "accc77d92716485f7c8aebd724eaa63477390b080d8ce4886fe5b0bc04b54b9a",
+   "bytes": 2165794
+  },
+  "reference/art/ui-elements-3.png": {
+   "sha256": "a728c6ff55a4c951f1d61a2754271e3632c8f35efe988c2229c8e8b482ec505d",
+   "bytes": 2236783
+  },
+  "reference/art/ui-elements-4.png": {
+   "sha256": "3923492edc0532a2b4bf182e2370890833fd85fc6902545bf565770e4e4d819e",
+   "bytes": 2202180
+  },
+  "reference/art/ui-elements-5.png": {
+   "sha256": "fe029a7e1d08df4b6e92b6e88870c9b0235b975a191be681fdb363c7dc1bdd58",
+   "bytes": 2256337
+  },
+  "reference/art/ui-elements-6.png": {
+   "sha256": "f8fb8ff78cdff0f286603dd2bb20c30b19d77ca5f66cecbd8665b5100771f9df",
+   "bytes": 2354246
+  },
+  "reference/art/ui-elements.png": {
+   "sha256": "50cae697ca5a4d2e554fec0400b7572a77527e77956e1c1e9b3e2b922f9e4409",
+   "bytes": 2187091
+  },
+  "reference/art/weapons-turrets.png": {
+   "sha256": "a2fdc3965f3887c87e3accaf5ff682f65d80c569fdfc95699555e52e1c3762c2",
+   "bytes": 2553862
+  }
+ }
+}
