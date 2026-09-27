@@ -94,7 +94,11 @@ export interface CrewHeadCatalog {
     units: string;
     skullVoxels: number[][];
     sockets: Record<string, number[]>;
-    faceCanvas: { px: [number, number]; headSpaceVoxels: { x: number[]; z: number[] }; uv: string };
+    faceCanvas: {
+      px: [number, number];
+      headSpaceVoxels: { x: number[]; z: number[] };
+      uv: string;
+    };
   };
   files: Record<string, string>;
   heads: Referenced[];
@@ -103,7 +107,11 @@ export interface CrewHeadCatalog {
   expressions: Referenced[];
   visemes: string[];
   animationExpressions: Record<string, string>;
-  blink: { intervalSeconds: [number, number]; frames: Array<{ eyes: string; seconds: number }>; blinkSuppressedEyes: string[] };
+  blink: {
+    intervalSeconds: [number, number];
+    frames: Array<{ eyes: string; seconds: number }>;
+    blinkSuppressedEyes: string[];
+  };
   palettes: { skin: PaletteEntry[]; hair: PaletteEntry[]; eye: PaletteEntry[] };
   hairModes: HairMode[];
   hairStyles: HairStyle[];
@@ -118,7 +126,16 @@ export interface CrewHeadCatalog {
 }
 
 /** Layer order of the face atlas (CHAR-BODY r004 schema `sidereal.crew.face-atlas/1`). */
-export const FACE_LAYERS = ["under", "marks", "eyes", "iris", "glint", "brows", "mouth", "over"] as const;
+export const FACE_LAYERS = [
+  "under",
+  "marks",
+  "eyes",
+  "iris",
+  "glint",
+  "brows",
+  "mouth",
+  "over",
+] as const;
 export type FaceLayer = (typeof FACE_LAYERS)[number];
 export interface FaceAtlasVariant {
   label: string;
@@ -216,12 +233,15 @@ export function resolvePaletteColor(
 ): PaletteColor | undefined {
   const entry = C.palettes[kind].find((p) => p.id === value);
   if (entry) return { hex: entry.hex, emissive: !!entry.emissive };
-  return HEX.test(value) ? { hex: value.toLowerCase(), emissive: false } : undefined;
+  return HEX.test(value)
+    ? { hex: value.toLowerCase(), emissive: false }
+    : undefined;
 }
 
 export function shadeHex(hex: string, factor: number) {
   const n = parseInt(hex.slice(1), 16);
-  const ch = (shift: number) => Math.min(255, Math.round(((n >> shift) & 255) * factor));
+  const ch = (shift: number) =>
+    Math.min(255, Math.round(((n >> shift) & 255) * factor));
   return `#${[16, 8, 0].map((s) => ch(s).toString(16).padStart(2, "0")).join("")}`;
 }
 
@@ -234,20 +254,26 @@ export interface HeadValidation {
 export function validateHeadLoadout(l: HeadLoadout): HeadValidation {
   const errors: string[] = [];
   if (!HEADS.has(l.head)) errors.push(`unknown head ${l.head}`);
-  if (!A.variants[l.faceVariant]) errors.push(`unknown faceVariant ${l.faceVariant}`);
+  if (!A.variants[l.faceVariant])
+    errors.push(`unknown faceVariant ${l.faceVariant}`);
   if (!AGES.has(l.age)) errors.push(`unknown age ${l.age}`);
   if (!resolvePaletteColor("skin", l.skin)) errors.push(`bad skin ${l.skin}`);
-  if (!resolvePaletteColor("hair", l.hairColor)) errors.push(`bad hairColor ${l.hairColor}`);
+  if (!resolvePaletteColor("hair", l.hairColor))
+    errors.push(`bad hairColor ${l.hairColor}`);
   if (l.facialHairColor && !resolvePaletteColor("hair", l.facialHairColor))
     errors.push(`bad facialHairColor ${l.facialHairColor}`);
   if (!resolvePaletteColor("eye", l.eyes)) errors.push(`bad eyes ${l.eyes}`);
-  if (l.hair !== null && !HAIR.has(l.hair)) errors.push(`unknown hair ${l.hair}`);
-  if (l.facialHair && !BEARD.has(l.facialHair)) errors.push(`unknown facialHair ${l.facialHair}`);
+  if (l.hair !== null && !HAIR.has(l.hair))
+    errors.push(`unknown hair ${l.hair}`);
+  if (l.facialHair && !BEARD.has(l.facialHair))
+    errors.push(`unknown facialHair ${l.facialHair}`);
   const details = l.details ?? [];
   const accessories = l.accessories ?? [];
   if (new Set(details).size !== details.length) errors.push("duplicate detail");
-  if (new Set(accessories).size !== accessories.length) errors.push("duplicate accessory");
-  if (details.length > C.maxDetails) errors.push(`more than ${C.maxDetails} details`);
+  if (new Set(accessories).size !== accessories.length)
+    errors.push("duplicate accessory");
+  if (details.length > C.maxDetails)
+    errors.push(`more than ${C.maxDetails} details`);
   const zones = new Map<string, string>();
   let markings = 0;
   for (const id of details) {
@@ -256,7 +282,8 @@ export function validateHeadLoadout(l: HeadLoadout): HeadValidation {
       errors.push(`unknown detail ${id}`);
       continue;
     }
-    if (d.kind === "marking" && ++markings > 1) errors.push("only one face marking at a time (one atlas marks layer)");
+    if (d.kind === "marking" && ++markings > 1)
+      errors.push("only one face marking at a time (one atlas marks layer)");
     for (const z of d.zones) {
       const prior = zones.get(z);
       if (prior) errors.push(`details ${prior} and ${id} overlap on ${z}`);
@@ -297,7 +324,8 @@ export function validateHeadLoadout(l: HeadLoadout): HeadValidation {
   if (l.mask) {
     const m = MASK.get(l.mask);
     if (!m) errors.push(`unknown mask ${l.mask}`);
-    else if (helmet && !helmet.openFace) errors.push(`mask ${m.id} needs an open-face helmet or none`);
+    else if (helmet && !helmet.openFace)
+      errors.push(`mask ${m.id} needs an open-face helmet or none`);
     else claim(m.layers, `mask ${m.id}`);
   }
   return { ok: errors.length === 0, errors };
@@ -310,7 +338,8 @@ export function hairModeFor(l: HeadLoadout): HairMode {
     ...(l.accessories ?? []).map((id) => ACC.get(id)?.hairMode ?? "full"),
     ...(l.helmet ? [HELMET.get(l.helmet)?.hairMode ?? "full"] : []),
   ];
-  for (const m of modes) if (HAIR_MODES.indexOf(m) > HAIR_MODES.indexOf(mode)) mode = m;
+  for (const m of modes)
+    if (HAIR_MODES.indexOf(m) > HAIR_MODES.indexOf(mode)) mode = m;
   return mode;
 }
 
@@ -348,7 +377,10 @@ export function resolveFaceFrames(
   const mouth = s.viseme ? (A.visemes[s.viseme] ?? ex.mouth) : ex.mouth;
   const look = A.looks[String(s.look ?? 0)] ?? "c";
   const iris = irisBase === "none" ? "none" : `${irisBase}@${look}`;
-  const mark = (l.details ?? []).map((id) => DETAIL.get(id)).find((d) => d?.kind === "marking")?.atlasMark ?? "none";
+  const mark =
+    (l.details ?? [])
+      .map((id) => DETAIL.get(id))
+      .find((d) => d?.kind === "marking")?.atlasMark ?? "none";
   return {
     under: ex.under,
     marks: marksFrame(AGES.get(l.age)?.ageMark ?? "none", mark),
@@ -394,7 +426,10 @@ export function composeFace(
   };
   A.layers.forEach((layer, row) => {
     const col = v.frames[layer].indexOf(frames[layer]);
-    if (col < 0) throw new Error(`variant ${variant} has no ${layer} frame ${frames[layer]}`);
+    if (col < 0)
+      throw new Error(
+        `variant ${variant} has no ${layer} frame ${frames[layer]}`,
+      );
     const t = tint[layer];
     for (let r = 0; r < N; r++)
       for (let c = 0; c < N; c++) {
@@ -403,7 +438,9 @@ export function composeFace(
         if (!a) continue;
         const o = (r * N + c) * 4;
         for (let k = 0; k < 3; k++) {
-          const src = t ? Math.floor((atlas.data[s + k] * t[k]) / 255) : atlas.data[s + k];
+          const src = t
+            ? Math.floor((atlas.data[s + k] * t[k]) / 255)
+            : atlas.data[s + k];
           out[o + k] = Math.round(out[o + k] * (1 - a) + src * a);
         }
       }
@@ -441,7 +478,12 @@ export interface ResolvedHead {
   hairMode: HairMode;
   hidden: HideTarget[];
   /** Face canvas inputs: variant, tints and whether the mouth is hidden (masks). */
-  face: { variant: string; tints: { skin: string; eye: string; hair: string }; eyeEmissive: boolean; mouthHidden: boolean };
+  face: {
+    variant: string;
+    tints: { skin: string; eye: string; hair: string };
+    eyeEmissive: boolean;
+    mouthHidden: boolean;
+  };
 }
 
 /**
@@ -449,12 +491,17 @@ export interface ResolvedHead {
  * (suit_primary, suit_secondary, accent), for example for player colours. Throws on an invalid loadout,
  * so validate first when the input is untrusted.
  */
-export function resolveHeadLoadout(l: HeadLoadout, theme: SlotValues = {}): ResolvedHead {
+export function resolveHeadLoadout(
+  l: HeadLoadout,
+  theme: SlotValues = {},
+): ResolvedHead {
   const v = validateHeadLoadout(l);
   if (!v.ok) throw new Error(`invalid head loadout: ${v.errors.join("; ")}`);
   const skin = resolvePaletteColor("skin", l.skin)!;
   const hair = resolvePaletteColor("hair", l.hairColor)!;
-  const beard = l.facialHairColor ? resolvePaletteColor("hair", l.facialHairColor)! : hair;
+  const beard = l.facialHairColor
+    ? resolvePaletteColor("hair", l.facialHairColor)!
+    : hair;
   const eye = resolvePaletteColor("eye", l.eyes)!;
   const person: SlotValues = { skin: skin.hex, hair: hair.hex, eye: eye.hex };
   const worn: Array<{ hides: HideTarget[] }> = [
@@ -465,29 +512,58 @@ export function resolveHeadLoadout(l: HeadLoadout, theme: SlotValues = {}): Reso
   const hidden = [...new Set(worn.flatMap((w) => w.hides))];
   const hairMode = hairModeFor(l);
   const nodes: ResolvedHeadNode[] = [];
-  const add = (node: string, file: string, role: HeadPartRole, slots: SlotValues) =>
-    nodes.push({ node, file, role, slots });
+  const add = (
+    node: string,
+    file: string,
+    role: HeadPartRole,
+    slots: SlotValues,
+  ) => nodes.push({ node, file, role, slots });
   add(`head.${l.head}`, "heads", "head", person);
-  if (l.hair && hairMode !== "hidden") add(`hair.${l.hair}.${hairMode}`, `hair/${l.hair}`, "hair", person);
+  if (l.hair && hairMode !== "hidden")
+    add(`hair.${l.hair}.${hairMode}`, `hair/${l.hair}`, "hair", person);
   if (l.facialHair && !hidden.includes("facialHair"))
-    add(`facialhair.${l.facialHair}`, "facial-hair", "facialHair", { ...person, hair: beard.hex });
+    add(`facialhair.${l.facialHair}`, "facial-hair", "facialHair", {
+      ...person,
+      hair: beard.hex,
+    });
   for (const id of l.details ?? []) {
     const d = DETAIL.get(id)!;
-    if (d.kind === "overlay") add(`detail.${id}`, "details", "detail", { ...person, ...d.slotDefaults });
+    if (d.kind === "overlay")
+      add(`detail.${id}`, "details", "detail", {
+        ...person,
+        ...d.slotDefaults,
+      });
   }
   for (const id of l.accessories ?? [])
-    add(`acc.${id}`, "accessories", "accessory", { ...person, ...ACC.get(id)!.slotDefaults, ...theme });
+    add(`acc.${id}`, "accessories", "accessory", {
+      ...person,
+      ...ACC.get(id)!.slotDefaults,
+      ...theme,
+    });
   if (l.helmet) {
     const h = HELMET.get(l.helmet)!;
-    add(`helmet.${h.id}`, "helmets", "helmet", { ...person, ...h.slotDefaults, ...theme });
+    add(`helmet.${h.id}`, "helmets", "helmet", {
+      ...person,
+      ...h.slotDefaults,
+      ...theme,
+    });
     if (l.visor) {
       const vis = VISOR.get(l.visor)!;
-      add(`visor.${h.id}.${vis.id}`, "helmets", "visor", { ...person, ...h.slotDefaults, ...theme, glass: vis.glass });
+      add(`visor.${h.id}.${vis.id}`, "helmets", "visor", {
+        ...person,
+        ...h.slotDefaults,
+        ...theme,
+        glass: vis.glass,
+      });
     }
   }
   if (l.mask) {
     const m = MASK.get(l.mask)!;
-    add(`mask.${m.id}`, "masks", "mask", { ...person, ...m.slotDefaults, ...theme });
+    add(`mask.${m.id}`, "masks", "mask", {
+      ...person,
+      ...m.slotDefaults,
+      ...theme,
+    });
   }
   return {
     nodes,
@@ -506,9 +582,11 @@ export function resolveHeadLoadout(l: HeadLoadout, theme: SlotValues = {}): Reso
 export function expectedHeadNodes(): string[] {
   const out: string[] = C.heads.map((h) => `head.${h.id}`);
   for (const h of C.hairStyles)
-    for (const m of ["full", "cap", "fringe"]) out.push(`hair.${h.id}.${m}`, `hair.${h.id}.${m}.lod1`);
+    for (const m of ["full", "cap", "fringe"])
+      out.push(`hair.${h.id}.${m}`, `hair.${h.id}.${m}.lod1`);
   for (const f of C.facialHair) out.push(`facialhair.${f.id}`);
-  for (const d of C.details) if (d.kind === "overlay") out.push(`detail.${d.id}`);
+  for (const d of C.details)
+    if (d.kind === "overlay") out.push(`detail.${d.id}`);
   for (const a of C.accessories) out.push(`acc.${a.id}`);
   for (const h of C.helmets) {
     out.push(`helmet.${h.id}`);
@@ -523,7 +601,11 @@ export const HAIR_LOD_SUFFIX = ".lod1";
 
 export function crewHeadAssetUrl(fileKey: string) {
   const style = fileKey.startsWith("hair/") ? fileKey.slice(5) : null;
-  const file = style ? (HAIR.has(style) ? C.files.hair.replace("{style}", style) : undefined) : C.files[fileKey];
+  const file = style
+    ? HAIR.has(style)
+      ? C.files.hair.replace("{style}", style)
+      : undefined
+    : C.files[fileKey];
   if (!file) throw new Error(`unknown crew head file ${fileKey}`);
   return `${CREW_HEAD_ASSET_BASE}${file}?revision=r${String(C.revision).padStart(3, "0")}`;
 }
