@@ -6,8 +6,8 @@
   "exports": "./src/index.ts",
   "dependencies": {
     "spacetimedb": "2.10.0",
-    "@sidereal/content": "0.1.0",
-    "@sidereal/sim": "0.1.0"
+    "@sidereal/content": "0.2.0",
+    "@sidereal/sim": "0.2.0"
   },
   "scripts": {
     "typecheck": "tsc --noEmit -p tsconfig.json"

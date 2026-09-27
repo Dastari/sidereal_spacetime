@@ -5,7 +5,7 @@
   "type": "module",
   "exports": "./src/index.ts",
   "dependencies": {
-    "@sidereal/sim": "0.1.0",
+    "@sidereal/sim": "0.2.0",
     "spacetimedb": "2.10.0"
   }
 }

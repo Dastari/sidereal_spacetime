@@ -604,6 +604,10 @@ export default function LayoutEditor() {
           }
         >
           <HullWorkspace
+            leftWidth={view.leftWidth}
+            rightWidth={view.rightWidth}
+            onLeftResize={(leftWidth) => updateView({ leftWidth })}
+            onRightResize={(rightWidth) => updateView({ rightWidth })}
             onDeckChange={(deckId) => updateView({ deckId })}
             sharedViewport={sharedViewport}
             layers={view.layers}
