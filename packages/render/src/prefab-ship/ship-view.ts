@@ -675,7 +675,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
         light.diffuse = new Color3(...l.colour.map((c) => 0.35 + 0.65 * c) as [number, number, number]);
         light.specular = Color3.Black();
         light.falloffType = Light.FALLOFF_STANDARD;
-        light.intensity = 1.7 + l.intensity * 1.2;
+        light.intensity = 1.0 + l.intensity * 0.8;
         light.range = 4.5 + l.intensity * 3;
         out.lights.push({ light, tag: l.view });
       });

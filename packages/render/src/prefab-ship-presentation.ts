@@ -24,10 +24,12 @@ export interface PrefabShipViewHandle {
  * therefore caps metalness and adds a ship-scoped sky/ground fill light. Theme
  * colours, geometry and the shared material pool semantics are unchanged. */
 const GAME_MAX_METALLIC = 0.2;
-/** Scene IBL is 0.28 (open space); materials multiply it. Hull panels take ~0.6 of full IBL and
- * interior floors/walls ~0.85, so rooms read lit rather than as dark voids. */
-const GAME_SHIP_ENVIRONMENT = 2.2;
-const GAME_INTERIOR_ENVIRONMENT = 3.0;
+/** Scene IBL is 0.28 (open space); materials multiply it. Retuned after the inside-out fix (bd3e4d6e): hull at ~0.3 of full IBL and
+ * interior floors/walls ~0.45, with a light fill; light grey reads grey, not white. */
+const GAME_SHIP_ENVIRONMENT = 1.0;
+const GAME_INTERIOR_ENVIRONMENT = 1.6;
+/** The space scene key light is strong (2.1); ship PBR takes 60 % of it so light greys stay grey. */
+const GAME_SHIP_DIRECT = 0.6;
 /** Bloom strength of ship emissives (emit slots keep saturated colour; the glow carries the halo). */
 const GAME_SHIP_GLOW = 0.7;
 
@@ -70,7 +72,7 @@ export async function loadPrefabShipPresentation(
   // housings, walls and hull plates do not bloom through them.
   const occluders = createGlowOccluders(glow);
   const fill = new HemisphericLight("prefab-ship-fill", new Vector3(0.2, 1, -0.3), scene);
-  fill.intensity = 0.85;
+  fill.intensity = 0.25;
   fill.diffuse = new Color3(0.92, 0.94, 1);
   fill.groundColor = new Color3(0.32, 0.34, 0.42);
   fill.specular = new Color3(0.15, 0.15, 0.15);
@@ -86,6 +88,7 @@ export async function loadPrefabShipPresentation(
         // take a fuller share of it so light greys read as light grey, not flat lavender.
         // Interior-palette clones (materials.ts roleSlotMaterial) are named prefab-<theme>-<role>-<slot>.
         m.environmentIntensity = /-(floor|wall)-/.test(m.name) ? GAME_INTERIOR_ENVIRONMENT : GAME_SHIP_ENVIRONMENT;
+        m.directIntensity = /-(floor|wall)-/.test(m.name) ? 0.9 : GAME_SHIP_DIRECT;
       }
     }
     const emissive = new Set<AbstractMesh>(view.emissiveMeshes());
