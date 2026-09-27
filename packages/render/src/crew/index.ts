@@ -30,6 +30,8 @@ export type CrewMotion = {
   weaponPose?: "none" | "one-handed" | "rifle";
   reducedMotion?: boolean;
   speed?: number;
+  /** Used by the voxel crew bundle only (one shoot action per accepted shot). */
+  shotSequence?: number | bigint;
 };
 
 /** Presentation only. The caller owns the ship-frame placement and heading. */

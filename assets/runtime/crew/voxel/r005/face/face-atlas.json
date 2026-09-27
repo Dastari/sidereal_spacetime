@@ -1,0 +1,266 @@
+{
+ "schema": "sidereal.crew.face-atlas/1",
+ "status": "DEFAULT atlas by CHAR-BODY (placeholder until CHAR-HEADS publishes production atlases)",
+ "cell": 16,
+ "layers": [
+  "under",
+  "marks",
+  "eyes",
+  "iris",
+  "glint",
+  "brows",
+  "mouth",
+  "over"
+ ],
+ "frames": {
+  "under": [
+   "none",
+   "blush",
+   "blush_strong"
+  ],
+  "marks": [
+   "none"
+  ],
+  "eyes": [
+   "open",
+   "half",
+   "closed",
+   "wide",
+   "narrow",
+   "happy",
+   "sad",
+   "tight",
+   "ko",
+   "sleepy",
+   "wink"
+  ],
+  "iris": [
+   "none",
+   "open@c",
+   "wide@c",
+   "open@l",
+   "wide@l",
+   "open@r",
+   "wide@r"
+  ],
+  "glint": [
+   "none",
+   "open@c",
+   "wide@c",
+   "open@l",
+   "wide@l",
+   "open@r",
+   "wide@r"
+  ],
+  "brows": [
+   "none",
+   "neutral",
+   "raised",
+   "angry",
+   "sad",
+   "confused",
+   "smug"
+  ],
+  "mouth": [
+   "neutral",
+   "small",
+   "smile",
+   "grin",
+   "frown",
+   "flat",
+   "grit",
+   "smug",
+   "wavy",
+   "o_small",
+   "v_closed",
+   "v_A",
+   "v_E",
+   "v_O",
+   "v_MB"
+  ],
+  "over": [
+   "none",
+   "sweat",
+   "tears",
+   "anger",
+   "zzz",
+   "swirl"
+  ]
+ },
+ "expressions": {
+  "neutral": {
+   "eyes": "open",
+   "iris": "open",
+   "brows": "neutral",
+   "mouth": "neutral",
+   "under": "blush",
+   "over": "none"
+  },
+  "happy": {
+   "eyes": "happy",
+   "iris": "none",
+   "brows": "raised",
+   "mouth": "smile",
+   "under": "blush_strong",
+   "over": "none"
+  },
+  "sad": {
+   "eyes": "sad",
+   "iris": "open",
+   "brows": "sad",
+   "mouth": "frown",
+   "under": "blush",
+   "over": "tears"
+  },
+  "angry": {
+   "eyes": "narrow",
+   "iris": "none",
+   "brows": "angry",
+   "mouth": "flat",
+   "under": "blush",
+   "over": "anger"
+  },
+  "surprised": {
+   "eyes": "wide",
+   "iris": "wide",
+   "brows": "raised",
+   "mouth": "o_small",
+   "under": "blush",
+   "over": "none"
+  },
+  "confused": {
+   "eyes": "open",
+   "iris": "open",
+   "brows": "confused",
+   "mouth": "wavy",
+   "under": "blush",
+   "over": "sweat"
+  },
+  "hurt": {
+   "eyes": "tight",
+   "iris": "none",
+   "brows": "sad",
+   "mouth": "grit",
+   "under": "blush",
+   "over": "sweat"
+  },
+  "determined": {
+   "eyes": "narrow",
+   "iris": "none",
+   "brows": "angry",
+   "mouth": "flat",
+   "under": "blush",
+   "over": "none"
+  },
+  "scared": {
+   "eyes": "wide",
+   "iris": "wide",
+   "brows": "sad",
+   "mouth": "o_small",
+   "under": "blush",
+   "over": "sweat"
+  },
+  "smug": {
+   "eyes": "half",
+   "iris": "none",
+   "brows": "smug",
+   "mouth": "smug",
+   "under": "blush",
+   "over": "none"
+  },
+  "sleepy": {
+   "eyes": "sleepy",
+   "iris": "none",
+   "brows": "neutral",
+   "mouth": "small",
+   "under": "blush",
+   "over": "zzz"
+  },
+  "knocked_out": {
+   "eyes": "ko",
+   "iris": "none",
+   "brows": "none",
+   "mouth": "o_small",
+   "under": "none",
+   "over": "swirl"
+  },
+  "wink": {
+   "eyes": "wink",
+   "iris": "open",
+   "brows": "raised",
+   "mouth": "smile",
+   "under": "blush_strong",
+   "over": "none"
+  },
+  "grin": {
+   "eyes": "happy",
+   "iris": "none",
+   "brows": "raised",
+   "mouth": "grin",
+   "under": "blush_strong",
+   "over": "none"
+  }
+ },
+ "visemes": {
+  "closed": "v_closed",
+  "A": "v_A",
+  "E": "v_E",
+  "O": "v_O",
+  "MB": "v_MB"
+ },
+ "blink": [
+  {
+   "eyes": "half",
+   "seconds": 0.041666666666666664
+  },
+  {
+   "eyes": "closed",
+   "seconds": 0.041666666666666664
+  },
+  {
+   "eyes": "half",
+   "seconds": 0.041666666666666664
+  }
+ ],
+ "blinkSuppressedEyes": [
+  "closed",
+  "happy",
+  "sleepy",
+  "ko",
+  "tight",
+  "wink"
+ ],
+ "looks": {
+  "-1": "r",
+  "0": "c",
+  "1": "l"
+ },
+ "tints": {
+  "iris": "eye",
+  "brows": "hair*0.6"
+ },
+ "animationExpressions": {
+  "emote_happy": "happy",
+  "emote_sad": "sad",
+  "emote_angry": "angry",
+  "emote_confused": "confused",
+  "hurt": "hurt",
+  "death": "knocked_out",
+  "knocked_out": "knocked_out",
+  "revive": "sleepy",
+  "cheer": "grin",
+  "celebrate": "grin",
+  "wave": "happy",
+  "thumbs_up": "wink",
+  "point": "determined",
+  "aim_rifle": "determined",
+  "aim_pistol": "determined",
+  "shoot_rifle": "determined",
+  "shoot_pistol": "determined",
+  "melee_swing": "angry",
+  "throw": "determined",
+  "repair_loop": "determined",
+  "jetpack_hover": "surprised",
+  "sit_idle": "neutral"
+ }
+}
