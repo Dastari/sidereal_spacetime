@@ -507,7 +507,8 @@ function PlanCanvas({ doc, catalog, tools, selection, select, layers, commit, on
           {layers.hull && shown.skylights.map((s) => <path key={s.id} className="pf-skylight" d={rectPath([s.at[0], s.at[1], s.at[0] + s.size[0], s.at[1] + s.size[1]])} />)}
           {layers.walls && (
             <>
-              <path className="pf-exterior" d={[...interior.exteriorWalls, ...interior.exteriorSlopes].map((w) => `M${w.a[0]} ${w.a[1]}L${w.b[0]} ${w.b[1]}`).join("")} />
+              <path className="pf-exterior" d={[...interior.exteriorWalls.filter((w) => w.type !== "canopy"), ...interior.exteriorSlopes.filter((w) => !w.glass)].map((w) => `M${w.a[0]} ${w.a[1]}L${w.b[0]} ${w.b[1]}`).join("")} />
+              <path className="pf-canopy" d={[...interior.exteriorWalls.filter((w) => w.type === "canopy"), ...interior.exteriorSlopes.filter((w) => w.glass)].map((w) => `M${w.a[0]} ${w.a[1]}L${w.b[0]} ${w.b[1]}`).join("")} />
               <path className="pf-partition" d={interior.partitions.filter((w) => w.type === "wall.full").map((w) => `M${w.a[0]} ${w.a[1]}L${w.b[0]} ${w.b[1]}`).join("")} />
               <path className="pf-glazed" d={interior.partitions.filter((w) => w.type === "wall.glazed" || w.type === "window").map((w) => `M${w.a[0]} ${w.a[1]}L${w.b[0]} ${w.b[1]}`).join("")} />
               <path className="pf-half" d={interior.partitions.filter((w) => w.type === "wall.half").map((w) => `M${w.a[0]} ${w.a[1]}L${w.b[0]} ${w.b[1]}`).join("")} />

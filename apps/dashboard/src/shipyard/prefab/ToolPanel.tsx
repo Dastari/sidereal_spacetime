@@ -12,9 +12,11 @@ import {
   placedTileSize,
   type FaceNormal,
   type QuarterTurn,
+  type HeightClassId,
   type ShapeTileId,
 } from "@sidereal/content/construction-grammar";
 import type { PrefabComponentCatalog, PrefabComponentSpec, ShipPrefabDocumentV1 } from "@sidereal/content/ship-prefab";
+import { SHIP_KIT_REVISION, kitId } from "@sidereal/content/ship-kit";
 import { FlipHorizontal2, Plus, RotateCcw, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { addVolume, removeVolume, updateVolume } from "./commands";
@@ -141,7 +143,20 @@ function VolumePanel({ doc, tools, setTools, commit }: Props) {
   );
 }
 
-function TilePicker({ tools, setTools }: Pick<Props, "tools" | "setTools">) {
+/** The Blender kit modules (kit r002, by their exported names) a tile of this shape is dressed with. */
+export function tileModules(shape: ShapeTileId, heightClass: HeightClassId): string[] {
+  const hull = G.heightClasses[heightClass].kinds.includes("hull");
+  const out = [kitId.hull(shape, heightClass)];
+  if (hull) out.push(kitId.hull(shape, heightClass, true));
+  if (shape !== "square") {
+    out.push(kitId.face(shape, heightClass, false), kitId.canopy(shape, heightClass, false));
+    if (G.heightClasses[heightClass].walkable) out.push(kitId.face(shape, "deck", true), kitId.canopy(shape, "deck", true), kitId.shellWall(shape), kitId.floorPart(shape));
+  }
+  return out;
+}
+
+function TilePicker({ tools, setTools, doc }: Pick<Props, "tools" | "setTools" | "doc">) {
+  const heightClass = doc.volumes.find((v) => v.id === tools.volume)?.height ?? "deck";
   return (
     <section className="layout-section">
       <h2>Shape tile</h2>
@@ -171,6 +186,16 @@ function TilePicker({ tools, setTools }: Pick<Props, "tools" | "setTools">) {
       <p className="layout-note">
         Turn {tools.rot * 90} degrees{tools.reflected ? ", mirrored" : ""}. Overlapping tiles are refused and shown in red.
       </p>
+      <div className="pf-modules" aria-label="Blender kit modules">
+        <h3>Blender modules ({SHIP_KIT_REVISION}, {heightClass})</h3>
+        <ul>
+          {tileModules(tools.shape, heightClass).map((id) => (
+            <li key={id}>
+              <code>{id}</code>
+            </li>
+          ))}
+        </ul>
+      </div>
     </section>
   );
 }

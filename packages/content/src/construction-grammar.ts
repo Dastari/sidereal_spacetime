@@ -40,6 +40,8 @@ export interface EdgeTypeSpec {
   seals: boolean;
   walkable: boolean;
   door?: boolean;
+  /** Exterior-only edge type: runs along the hull outline between two outline vertices. */
+  exterior?: boolean;
   label: string;
 }
 export interface BlueprintSizeClass {

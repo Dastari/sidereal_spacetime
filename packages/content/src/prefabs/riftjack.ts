@@ -13,7 +13,7 @@ export const RJ_JACKAL = prefab({
   volumes: [
     volume("hull", "hull", "deck", polygonTiles([[0, 0], [8, 0], [11, 3], [11, 4], [7, 6], [0, 6]]), { logo: true }),
     volume("pod-s", "hull", "cabin", polygonTiles([[0, -2], [4, -2], [4, 0], [0, 0]]), { logo: false }),
-    volume("armour-p", "plate", "plate", polygonTiles([[1, 6], [6, 6], [6, 7], [1, 7]])),
+    volume("armour-p", "plate", "plate", polygonTiles([[1, 6], [5, 6], [5, 7], [1, 7]])),
   ],
   rooms: [
     room("engine", "ENGINE", "engineering", [0, 0, 3, 6]),
@@ -26,6 +26,7 @@ export const RJ_JACKAL = prefab({
     door("d-bunk", [4, 3], [6, 3]),
     door("d-bridge", [7, 3], [7, 5], "door.sliding"),
     edge("h-hold", [7, 0], [7, 3], "wall.half"),
+    edge("canopy-bow", [8, 0], [7, 6], "canopy"),
   ],
   mounts: [
     face("rcs-bow-p", "rcs.sm", "port", [5.5, 6]),

@@ -16,6 +16,8 @@ import {
   G,
   TEXEL,
   ccw,
+  placedTilePolygon,
+  type ShapeTilePlacement,
   fullCells,
   hash01,
   insideOutline,
@@ -25,6 +27,7 @@ import {
   type Pt,
 } from "@sidereal/content/construction-grammar";
 import {
+  canopySegments,
   deckVolume,
   deriveInterior,
   placeMount,
@@ -48,6 +51,8 @@ export interface KitPlacement {
   /** Degrees counter-clockwise about +Z. */
   rotDeg: number;
   view: DressView;
+  /** Mirror the piece across its local X (applied before the rotation); tile modules only. */
+  mirror?: boolean;
 }
 
 /** [x0, y0, z0, x1, y1, z1, slot index] in texels. */
@@ -87,6 +92,8 @@ export interface DressedShip {
   objects: (DerivedSocket & { view: DressView })[];
   lights: { at: [number, number, number]; colour: [number, number, number]; intensity: number; view: DressView }[];
   labels: { text: string; at: [number, number, number]; view: DressView }[];
+  /** Deck-view wall base segments (plan metres) for contact shadows on the floor. */
+  contacts: [Pt, Pt][];
   /** Plan bounds (m) of the structure, [x0, y0, x1, y1]. */
   bounds: [number, number, number, number];
   stats: { cassettes: number; roof: number; skins: number; floors: number; walls: number; partitions: number; doors: number; posts: number; sockets: number };
@@ -177,6 +184,54 @@ export function rasterOutline(
 
 function tierInfo(z: [number, number]) {
   return volumeTiers(z[0], z[1]);
+}
+
+/** True when segment a-b lies on one of `segs` (collinear and within it); outlines merge collinear edges. */
+function onSegments(segs: readonly (readonly [Pt, Pt])[], a: Pt, b: Pt): boolean {
+  const eps = 1e-6;
+  return segs.some(([p, q]) => {
+    const dx = q[0] - p[0];
+    const dy = q[1] - p[1];
+    const L2 = dx * dx + dy * dy;
+    if (L2 < eps) return false;
+    const inside = (v: Pt) => {
+      const cross = dx * (v[1] - p[1]) - dy * (v[0] - p[0]);
+      const t = (dx * (v[0] - p[0]) + dy * (v[1] - p[1])) / L2;
+      return Math.abs(cross) < 1e-6 * Math.sqrt(L2) && t > -eps && t < 1 + eps;
+    };
+    return inside(a) && inside(b);
+  });
+}
+
+/** Undirected key of a plan segment (1/32 m lattice). */
+function segKey(a: Pt, b: Pt): string {
+  const k = (p: Pt) => `${Math.round(p[0] * 32)},${Math.round(p[1] * 32)}`;
+  const [p, q] = [k(a), k(b)].sort();
+  return `${p}|${q}`;
+}
+
+/** Non-axis edges of a placed tile polygon. */
+function angledEdges(poly: readonly Pt[]): [Pt, Pt][] {
+  const out: [Pt, Pt][] = [];
+  poly.forEach((p, i) => {
+    const q = poly[(i + 1) % poly.length];
+    if (Math.abs(p[0] - q[0]) > 1e-9 && Math.abs(p[1] - q[1]) > 1e-9) out.push([p, q]);
+  });
+  return out;
+}
+
+/**
+ * Kit frame of a placed shape tile: tile-local point L (cells, unrotated) maps to
+ * rot(rotDeg) * mirrorX(L) + (x, y), matching placedTilePolygon.
+ */
+export function tileFrame(t: ShapeTilePlacement): { x: number; y: number; rotDeg: number; mirror: boolean } {
+  let [w, h] = G.shapeTiles[t.shape].size;
+  let p: Pt = t.reflected ? [w, 0] : [0, 0];
+  for (let k = 0; k < t.rot; k++) {
+    p = [h - p[1], p[0]];
+    [w, h] = [h, w];
+  }
+  return { x: p[0] + t.x, y: p[1] + t.y, rotDeg: 90 * t.rot, mirror: t.reflected };
 }
 
 /** Stepped panel skin following a chain of non-axis edges (slopes/arcs); port of skin_piece. */
@@ -353,7 +408,13 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
   const generated: GeneratedGeometry[] = [];
   const decals: DecalPlacement[] = [];
   const stats = { cassettes: 0, roof: 0, skins: 0, floors: 0, walls: 0, partitions: 0, doors: 0, posts: 0, sockets: 0 };
-  const place = (piece: string, x: number, y: number, z: number, rotDeg: number, view: DressView) => kit.push({ piece, x, y, z, rotDeg: ((rotDeg % 360) + 360) % 360, view });
+  const place = (piece: string, x: number, y: number, z: number, rotDeg: number, view: DressView, mirror = false) =>
+    kit.push({ piece, x, y, z, rotDeg: ((rotDeg % 360) + 360) % 360, view, ...(mirror ? { mirror } : {}) });
+  // Tile modules (kit r002) live in the unrotated shape-tile frame: place them with the tile's turns/mirror.
+  const placeTile = (piece: string, t: ShapeTilePlacement, view: DressView) => {
+    const f = tileFrame(t);
+    place(piece, f.x, f.y, 0, f.rotDeg, view, f.mirror);
+  };
   const decoKind = G.decorators[doc.theme] ?? "antenna";
 
   const mounts = doc.mounts.map((m) => placeMount(m, options.catalog.get(m.component), geoms));
@@ -368,8 +429,16 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
 
   const otherCovers = (v: VolumeGeometry, x: number, y: number, z0: number, z1: number) =>
     geoms.some((w) => w !== v && w.z[0] < z1 && z0 < w.z[1] && insideOutline(w.outline!, x, y));
+  // Cassette tiers only give way when another volume hides most of the tier (a wing covering the
+  // lower 5 texels of an upper tier still leaves a visible band that needs cassettes).
+  const mostlyCovered = (v: VolumeGeometry, x: number, y: number, z0: number, z1: number) =>
+    geoms.some((w) => w !== v && insideOutline(w.outline!, x, y) && Math.min(z1, w.z[1]) - Math.max(z0, w.z[0]) > 0.6 * (z1 - z0));
 
   const interior = deckId ? deriveInterior(doc, 0, options.catalog) : null;
+  // Exterior outline runs marked as canopy glass (edge type "canopy"), as outline segment keys.
+  const canopyRuns: [Pt, Pt][] = [];
+  for (const g of geoms) if (g.outline) canopyRuns.push(...canopySegments(doc, ccw(g.outline.outer)));
+  const canopy = { has: (a: Pt, b: Pt) => onSegments(canopyRuns, a, b) };
   const exteriorDoors = interior?.doors.filter((d) => d.exterior) ?? [];
 
   geoms.forEach((g, vi) => {
@@ -378,35 +447,42 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
     const isDeck = v.id === deckId;
     const { tiers, rim } = tierInfo(g.z);
     const [z0, z1] = g.z;
-    // Hull body (solid, roofed). Deck volumes swap it for floors + walls in deck view.
-    let bands: number[];
-    let colour: (cx: number, cy: number, bi: number) => ShipKitSlot;
-    if (v.kind === "hull") {
-      bands = [...new Set([Math.max(0, z0 - G.tierRule.skirtTexels), z0, ...tiers.map((t) => t[1]), ...(rim ? [rim[1]] : [])])].sort((a, b) => a - b);
-      const nb = bands.length;
-      colour = (_cx, _cy, bi) => (bi === 0 ? "trim" : bi === 1 && nb > 3 ? "secondary" : "primary");
-    } else {
-      bands = [z0, z1];
-      colour = (cx, cy) => {
-        const h = hash01(cx, cy, vi, 44);
-        return h < 0.62 ? "primary" : h < 0.84 ? "secondary" : "accent";
-      };
-    }
-    // 3 m panels: larger plates read as the reference's panelled hull instead of a 1 m grid.
-    generated.push({ id: `gen.${doc.id}.${v.id}.body`, kind: "hull-body", boxes: rasterOutline(outline, bands, colour, 48), view: isDeck ? "flight" : "both" });
-
-    // Slope and arc skins.
-    const { axis, chains } = faceChains(outline.outer);
-    chains.forEach((ch, ci) => {
-      const boxes = skinBoxes(ch, g.z, outline.outer, hash01(doc.id, vi, ci) * 1e5);
-      if (!boxes.length) return;
+    // Hull body and angled faces: Blender kit modules per shape tile (kit r002), placed with the tile's
+    // quarter turns and mirror. Deck volumes swap the body for floors + walls in deck view.
+    const { axis } = faceChains(outline.outer);
+    const outlineSegs = outline.outer.map((pt, i) => [pt, outline.outer[(i + 1) % outline.outer.length]] as [Pt, Pt]);
+    const bodyView: DressView = isDeck ? "flight" : "both";
+    for (const t of v.tiles) {
+      const poly = placedTilePolygon(t);
+      // Tiles with an edge behind canopy glass get the hollow cockpit body.
+      const cockpit = v.kind === "hull" && poly.some((a, i) => canopy.has(a, poly[(i + 1) % poly.length]));
+      placeTile(kitId.hull(t.shape, v.height, cockpit), t, bodyView);
+      if (t.shape === "square") continue;
+      const angled = angledEdges(poly);
+      if (!angled.length || !angled.every(([a, b]) => onSegments(outlineSegs, a, b))) continue;
+      const glass = angled.every(([a, b]) => canopy.has(a, b));
+      const id = glass ? kitId.canopy : kitId.face;
       stats.skins++;
-      if (!isDeck) generated.push({ id: `gen.${doc.id}.${v.id}.skin${ci}`, kind: "skin", boxes, view: "both" });
+      if (!isDeck) placeTile(id(t.shape, v.height, false), t, "both");
       else {
-        generated.push({ id: `gen.${doc.id}.${v.id}.skin${ci}`, kind: "skin", boxes, view: "flight" });
-        const cut = G.deck.shellCutTexels;
-        const clipped = boxes.filter((b) => b[2] < cut).map((b) => [b[0], b[1], b[2], b[3], b[4], Math.min(b[5], cut), b[6]] as DressBox);
-        generated.push({ id: `gen.${doc.id}.${v.id}.skin${ci}.cut`, kind: "skin", boxes: clipped, view: "deck" });
+        placeTile(id(t.shape, v.height, false), t, "flight");
+        placeTile(id(t.shape, "deck", true), t, "deck");
+        placeTile(kitId.shellWall(t.shape), t, "deck");
+      }
+    }
+    // Corner posts on outline turns: cover every face-to-face join (straight, angled, curved).
+    const ring = outline.outer;
+    ring.forEach((pt, i) => {
+      const prev = ring[(i - 1 + ring.length) % ring.length];
+      const next = ring[(i + 1) % ring.length];
+      const din: Pt = [pt[0] - prev[0], pt[1] - prev[1]];
+      const dout: Pt = [next[0] - pt[0], next[1] - pt[1]];
+      const turn = Math.abs(Math.atan2(din[0] * dout[1] - din[1] * dout[0], din[0] * dout[0] + din[1] * dout[1]));
+      if (turn < (30 * Math.PI) / 180) return;
+      if (!isDeck) place(kitId.hullPost(v.height, false), pt[0], pt[1], 0, 0, "both");
+      else {
+        place(kitId.hullPost(v.height, false), pt[0], pt[1], 0, 0, "flight");
+        place(kitId.hullPost("deck", true), pt[0], pt[1], 0, 0, "deck");
       }
     });
 
@@ -430,7 +506,7 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
         for (let u = 0; u < L; u++) {
           const px = p[0] + d[0] * (u + 0.5) + nrm[0] * 0.3;
           const py = p[1] + d[1] * (u + 0.5) + nrm[1] * 0.3;
-          if (otherCovers(g, px, py, t0, t1)) holes.push([u, u + 1]);
+          if (mostlyCovered(g, px, py, t0, t1)) holes.push([u, u + 1]);
         }
         for (const mp of mounts) {
           if (mp.mount.attach !== "face") continue;
@@ -443,6 +519,7 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
           const ua = (mp.anchor[0] - p[0]) * d[0] + (mp.anchor[1] - p[1]) * d[1] - w / 2;
           holes.push([Math.floor(ua + 1e-6), Math.ceil(ua + w - 1e-6)]);
         }
+        for (let u = 0; u < L; u++) if (canopy.has([p[0] + d[0] * u, p[1] + d[1] * u], [p[0] + d[0] * (u + 1), p[1] + d[1] * (u + 1)])) holes.push([u, u + 1]);
         for (const door of exteriorDoors) {
           if (!(8 < t1 && t0 < 48)) continue;
           const ua = (door.a[0] - p[0]) * d[0] + (door.a[1] - p[1]) * d[1];
@@ -493,30 +570,26 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
           }
         }
       });
+      const glassAt = (u: number) => canopy.has([p[0] + d[0] * u, p[1] + d[1] * u], [p[0] + d[0] * (u + 1), p[1] + d[1] * (u + 1)]);
+      for (let u = 0; u < L; u++) {
+        if (!glassAt(u)) continue;
+        const [ex, ey] = [p[0] + d[0] * (u + 1), p[1] + d[1] * (u + 1)];
+        if (!isDeck) place(kitId.canopy("straight.w1", v.height, false), ex, ey, 0, rot, "both");
+        else {
+          place(kitId.canopy("straight.w1", v.height, false), ex, ey, 0, rot, "flight");
+          place(kitId.canopy("straight.w1", "deck", true), ex, ey, 0, rot, "deck");
+        }
+      }
+      if (isDeck) for (let u = 0; u < L; u++) place(kitId.shellStraight(), p[0] + d[0] * (u + 1), p[1] + d[1] * (u + 1), 0, rot, "deck");
       if (rim) {
         for (let u = 0; u < L; u++) {
           const px = p[0] + d[0] * (u + 0.5) + nrm[0] * 0.3;
           const py = p[1] + d[1] * (u + 0.5) + nrm[1] * 0.3;
-          if (otherCovers(g, px, py, rim[0], rim[1])) continue;
+          if (otherCovers(g, px, py, rim[0], rim[1]) || glassAt(u)) continue;
           const lit = hash01(doc.id, vi, u, Math.trunc(p[0] + p[1]), 5) < 0.3;
           place(kitId.rim(rim[1] - rim[0], lit), p[0] + d[0] * (u + 1), p[1] + d[1] * (u + 1), rim[0] * TEXEL, rot, isDeck ? "flight" : "both");
         }
       }
-    }
-
-    // Deck view shell: skirt and a capped band at the 2.5 m cut, along every outline edge.
-    if (isDeck) {
-      const band: DressBox[] = [];
-      const cut = G.deck.shellCutTexels;
-      const lower = tiers[0][1];
-      for (const loop of [outline.outer]) {
-        const ringOuter = offsetLoop(loop, 2 * TEXEL);
-        const ringInner = offsetLoop(loop, -G.deck.exteriorWallTexels * TEXEL);
-        const ring: Outline = { outer: ringOuter, holes: [[...ringInner].reverse()] };
-        band.push(...rasterOutline(ring, [lower, cut - 2, cut], (_cx, _cy, bi) => (bi === 0 ? "primary" : "dark")));
-        band.push(...rasterOutline(ring, [0, z0], () => "trim"));
-      }
-      generated.push({ id: `gen.${doc.id}.${v.id}.shell`, kind: "shell-band", boxes: band, view: "deck" });
     }
 
     // Roof.
@@ -591,25 +664,13 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
         }
         stats.roof++;
       }
-      // Roof rim: merged dark trim runs (not 1 m tiles), a lit edge line and sparse running
-      // lights, as the reference's charcoal-navy hull edging.
-      const rimCells = [...rimc].map((c) => c.split(",").map(Number) as [number, number]).sort((a, b) => a[1] - b[1] || a[0] - b[0]);
-      const rimBoxes: DressBox[] = [];
-      for (let i = 0; i < rimCells.length; ) {
-        const [x0, y] = rimCells[i];
-        let x1 = x0 + 1;
-        while (i + 1 < rimCells.length && rimCells[i + 1][1] === y && rimCells[i + 1][0] === x1) i++, x1++;
-        i++;
-        rimBoxes.push([x0 * 16, y * 16, z1, x1 * 16, y * 16 + 16, z1 + 2, SLOT.secondary]);
-        rimBoxes.push([x0 * 16 + 1, y * 16 + 1, z1 + 2, x1 * 16 - 1, y * 16 + 15, z1 + 3, SLOT.trim]);
-        for (let x = x0; x < x1; x++) {
-          const h = hash01(doc.id, x, y, 3);
-          if (h < 0.28) rimBoxes.push([x * 16 + 6, y * 16 + 6, z1 + 3, x * 16 + 10, y * 16 + 10, z1 + 4, h < 0.14 ? SLOT.emit_a : SLOT.emit_b]);
-          else if (h < 0.5) rimBoxes.push([x * 16 + 3, y * 16 + 3, z1 + 3, x * 16 + 13, y * 16 + 13, z1 + 5, SLOT.metal]);
-        }
+      // Roof rim: Blender roof-rim modules on the edge cells (plain, bump, lit, vent).
+      for (const c of [...rimc].sort()) {
+        const [x, y] = c.split(",").map(Number);
+        const kind = G.roof.rimKinds[Math.floor(hash01(doc.id, x, y, 3) * G.roof.rimKinds.length)];
+        place(kitId.roofRim(kind), x, y, zt, 0, roofView);
       }
-      generated.push({ id: `gen.${doc.id}.${v.id}.roof-rim`, kind: "hull-body", boxes: rimBoxes, view: roofView });
-      rimCells.forEach(([cx, cy], k) => {
+      [...rimc].sort().map((c) => c.split(",").map(Number) as [number, number]).forEach(([cx, cy], k) => {
         if (doc.theme === "riftjack" && k % 3 === 0) place(kitId.decorator("spike"), cx + 0.3, cy + 0.3, zt + 3 * TEXEL, 0, roofView);
       });
     } else if (doc.theme === "aurelian" || doc.theme === "crystalline") {
@@ -635,7 +696,8 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
     mount: mp.mount.id,
     component: mp.mount.component,
     placement: mp,
-    view: mp.mount.attach === "interior" ? "deck" : mp.mount.attach === "top" && mp.host === deckId ? "flight" : "both",
+    // Edge hatches (airlocks, cargo doors) stand in the hull wall: flight only, the cut-away shows the door opening.
+    view: mp.mount.attach === "interior" ? "deck" : (mp.mount.attach === "top" && mp.host === deckId) || mp.mount.attach === "edge" ? "flight" : "both",
   }));
 
   // Plate decals (number strip on the first plate, emblem on the second).
@@ -660,6 +722,7 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
   const objects: DressedShip["objects"] = [];
   const lights: DressedShip["lights"] = [];
   const labels: DressedShip["labels"] = [];
+  const contacts: [Pt, Pt][] = [];
   if (interior && deck?.outline) {
     const ft = G.deck.floorTopTexels * TEXEL;
     const cutT = G.deck.interiorCutTexels;
@@ -669,8 +732,8 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
       place(kitId.floor(f.kind), f.cell[0], f.cell[1], 0, 0, "deck");
       stats.floors++;
     }
-    const slab = rasterOutline(deck.outline, [0, G.deck.floorTopTexels], () => "trim").filter((b) => !full.has(`${Math.floor(b[0] / 16)},${Math.floor(b[1] / 16)}`));
-    generated.push({ id: `gen.${doc.id}.floor-slab`, kind: "floor-slab", boxes: slab, view: "deck" });
+    // Partial floor cells: Blender floor-part modules per angled deck tile (kit r002).
+    for (const t of deck.volume.tiles) if (t.shape !== "square") placeTile(kitId.floorPart(t.shape), t, "deck");
     const edgePlace = (piece: string, a: Pt, b: Pt, thickness: number, centred: boolean) => {
       const L = Math.hypot(b[0] - a[0], b[1] - a[1]);
       const d: Pt = [(b[0] - a[0]) / L, (b[1] - a[1]) / L];
@@ -682,16 +745,6 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
       edgePlace(kitId.edge(w.variant, true), w.a, w.b, 4, false);
       stats.walls++;
     }
-    const slopeBoxes: DressBox[] = [];
-    for (const s of interior.exteriorSlopes) {
-      const L = Math.hypot(s.b[0] - s.a[0], s.b[1] - s.a[1]);
-      const left: Pt = [-(s.b[1] - s.a[1]) / L, (s.b[0] - s.a[0]) / L];
-      const t = G.deck.exteriorWallTexels * TEXEL;
-      const band: Pt[] = [s.a, s.b, [s.b[0] + left[0] * t, s.b[1] + left[1] * t], [s.a[0] + left[0] * t, s.a[1] + left[1] * t]];
-      const ft3 = G.deck.floorTopTexels;
-      slopeBoxes.push(...rasterOutline({ outer: ccw(band), holes: [] }, [ft3, ft3 + 3, ft3 + 14, ft3 + cutT - 2, ft3 + cutT], (_cx, _cy, bi) => (["dark", "secondary", "primary", "dark"] as ShipKitSlot[])[bi]));
-    }
-    if (slopeBoxes.length) generated.push({ id: `gen.${doc.id}.slope-walls`, kind: "slope-wall", boxes: slopeBoxes, view: "deck" });
     for (const w of interior.partitions) {
       const variant = w.type === "wall.glazed" || w.type === "window" ? "glazed" : w.type === "wall.half" ? "half" : w.variant;
       edgePlace(kitId.edge(variant, true), w.a, w.b, variant === "reinforced" ? 6 : 4, true);
@@ -721,6 +774,8 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
       objects.push({ ...s, view: "deck" });
       stats.sockets++;
     }
+    for (const w of [...interior.exteriorWalls, ...interior.partitions]) contacts.push([w.a, w.b]);
+    for (const s of interior.exteriorSlopes) contacts.push([s.a, s.b]);
     for (const l of interior.lights) lights.push({ at: [l.at[0], l.at[1], 2.3], colour: l.colour, intensity: Math.min(1.5, 0.25 + l.area * 0.04), view: "deck" });
     for (const l of interior.labels) labels.push({ text: l.text, at: [l.at[0], l.at[1], 2.6], view: "deck" });
   }
@@ -729,7 +784,7 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
   const bounds: [number, number, number, number] = allB.length
     ? [Math.min(...allB.map((b) => b[0])), Math.min(...allB.map((b) => b[1])), Math.max(...allB.map((b) => b[2])), Math.max(...allB.map((b) => b[3]))]
     : [0, 0, 0, 0];
-  return { id: doc.id, theme: doc.theme, markings: doc.markings, kit, generated, decals, components, objects, lights, labels, bounds, stats };
+  return { id: doc.id, theme: doc.theme, markings: doc.markings, kit, generated, decals, components, objects, lights, labels, contacts, bounds, stats };
 }
 
 /**

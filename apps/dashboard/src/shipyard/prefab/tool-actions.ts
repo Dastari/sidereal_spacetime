@@ -4,8 +4,8 @@
  * so "the editor can author it" is checked against the real tool path: cursor snapping,
  * the live placement gate (the red ghost) and the document command.
  */
-import { G, type Pt, type ShapeTilePlacement } from "@sidereal/content/construction-grammar";
-import type { PrefabComponentCatalog, PrefabMount, ShipPrefabDocumentV1 } from "@sidereal/content/ship-prefab";
+import { G, ccw, type Pt, type ShapeTilePlacement } from "@sidereal/content/construction-grammar";
+import { deckVolume, type PrefabComponentCatalog, type PrefabMount, type ShipPrefabDocumentV1 } from "@sidereal/content/ship-prefab";
 import { addMount, addRoom, addSkylight, eraseTiles, paintTiles, placeEdge, type CommandResult } from "./commands";
 import { geometriesOf } from "./derive";
 import type { ToolState } from "./keymap";
@@ -98,7 +98,33 @@ export interface EdgePreview {
   check: PlacementCheck;
 }
 
+/**
+ * Canopy (exterior glass) gesture: both ends snap to the nearest deck hull outline vertices and the
+ * run is ordered so it takes the shorter way counter-clockwise around the outline.
+ */
+export function canopyGesture(doc: Doc, a: Pt, b: Pt = a): { a: [number, number]; b: [number, number] } | null {
+  const loop = deckVolume(doc)?.outline ? ccw(deckVolume(doc)!.outline!.outer) : null;
+  if (!loop || loop.length < 3) return null;
+  const nearest = (p: Pt) => loop.reduce((best, q, i) => (Math.hypot(q[0] - p[0], q[1] - p[1]) < Math.hypot(loop[best][0] - p[0], loop[best][1] - p[1]) ? i : best), 0);
+  let ia = nearest(a);
+  let ib = nearest(b);
+  if (ia === ib) ib = (ia + 1) % loop.length;
+  const run = (i: number, j: number) => {
+    let len = 0;
+    for (let k = i; k !== j; k = (k + 1) % loop.length) len += Math.hypot(loop[(k + 1) % loop.length][0] - loop[k][0], loop[(k + 1) % loop.length][1] - loop[k][1]);
+    return len;
+  };
+  if (run(ib, ia) < run(ia, ib)) [ia, ib] = [ib, ia];
+  return { a: [loop[ia][0], loop[ia][1]], b: [loop[ib][0], loop[ib][1]] };
+}
+
 export function edgePreview(doc: Doc, catalog: PrefabComponentCatalog, tools: ToolState, a: Pt, b?: Pt): EdgePreview {
+  if (G.edgeTypes[tools.edgeType].exterior) {
+    const seg = canopyGesture(doc, a, b);
+    if (!seg) return { seg: { a: [0, 0], b: [0, 0] }, removes: false, check: { ok: false, reason: "Canopy glass needs a walkable deck hull" } };
+    const removes = doc.edges.some((e) => e.type === tools.edgeType && sameEdge(e, seg));
+    return { seg, removes, check: { ok: true } };
+  }
   const seg = edgeGesture(tools, a, b);
   const removes = doc.edges.some((e) => e.type === tools.edgeType && sameEdge(e, seg));
   return { seg, removes, check: removes ? { ok: true } : checkEdge(doc, catalog, seg.a, seg.b, tools.edgeType) };

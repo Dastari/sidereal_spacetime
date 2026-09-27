@@ -1520,7 +1520,7 @@ def scrap_ion(sz):
 # crates ...) are designed through the art-library review pipeline; here they are reserved PROP SOCKETS that
 # carry the art-library design id and a footprint, rendered as placeholders.
 FLOOR_T = 3                    # floor slab top (0.1875 m)
-WALL_TOP = 51                  # 3.1875 m
+WALL_TOP = 40                  # 2.5 m (grammar deck.wallTopTexels, r002 low-profile decks)
 DECK_CUT = 28                  # deck-view cutaway height for interior edges (1.75 m)
 EDGE_KINDS = {                 # edge type -> seals pressure
     "wall": True, "panel": True, "light": True, "screen": True, "utility": True, "reinforced": True,

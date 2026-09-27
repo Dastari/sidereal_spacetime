@@ -6,27 +6,27 @@
   "cellMeters": 1,
   "frame": "Ship-local metres. +X is fore (bow), +Y is port, +Z is up. Plan cells are 1 m; heights are texels (1/16 m).",
   "deck": {
-    "pitchTexels": 56,
+    "pitchTexels": 44,
     "floorTopTexels": 3,
-    "wallTopTexels": 51,
-    "roofTexels": 54,
+    "wallTopTexels": 40,
+    "roofTexels": 43,
     "interiorCutTexels": 28,
-    "shellCutTexels": 40,
+    "shellCutTexels": 32,
     "exteriorWallTexels": 4,
     "partitionTexels": 4,
     "minCorridorCells": 2
   },
   "heightClasses": {
-    "deck": { "z": [5, 54], "kinds": ["hull"], "walkable": true, "massPerM2": 0.12, "label": "Full deck 3.1 m" },
-    "pod": { "z": [9, 50], "kinds": ["hull"], "walkable": false, "massPerM2": 0.1, "label": "Side pod 2.6 m" },
+    "deck": { "z": [5, 43], "kinds": ["hull"], "walkable": true, "massPerM2": 0.12, "label": "Full deck 2.4 m" },
+    "pod": { "z": [8, 39], "kinds": ["hull"], "walkable": false, "massPerM2": 0.1, "label": "Side pod 1.9 m" },
     "cabin": { "z": [6, 32], "kinds": ["hull"], "walkable": false, "massPerM2": 0.08, "label": "Small-craft cabin 1.6 m" },
     "wing": { "z": [10, 28], "kinds": ["plate"], "walkable": false, "massPerM2": 0.05, "label": "Wing 1.1 m" },
     "plate": { "z": [12, 20], "kinds": ["plate"], "walkable": false, "massPerM2": 0.035, "label": "Armour plate 0.5 m" }
   },
   "tierRule": {
-    "twoTierMinTexels": 40,
-    "lowerTierTexels": 24,
-    "twoTierRimTexels": 5,
+    "twoTierMinTexels": 30,
+    "lowerTierTexels": 18,
+    "twoTierRimTexels": 4,
     "oneTierMinTexels": 16,
     "oneTierRimTexels": 4,
     "cassetteMinTexels": 10,
@@ -70,7 +70,8 @@
     "door.sliding": { "seals": true, "walkable": true, "door": true, "label": "Sliding door" },
     "door.airlock": { "seals": true, "walkable": true, "door": true, "label": "Airlock door" },
     "door.blast": { "seals": true, "walkable": true, "door": true, "label": "Blast door" },
-    "door.forcefield": { "seals": true, "walkable": true, "door": true, "label": "Force field" }
+    "door.forcefield": { "seals": true, "walkable": true, "door": true, "label": "Force field" },
+    "canopy": { "seals": true, "walkable": false, "exterior": true, "label": "Canopy glass (exterior hull run, seals)" }
   },
   "wallVariants": ["wall", "panel", "light", "screen", "utility", "reinforced"],
   "floorKinds": ["panel", "reinforced", "grated", "hazard", "glass", "carpet", "carpet2", "tread", "corridor", "hex"],

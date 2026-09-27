@@ -11,7 +11,7 @@ export const FED_WREN = prefab({
   theme: "federation",
   sizeClass: "S",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [9, 0], [11, 2], [11, 4], [9, 6], [0, 6]]), { spine: false, logo: true }),
+    volume("hull", "hull", "deck", polygonTiles([[0, 0], [9, 0], [11, 2], [11, 4], [9, 6], [0, 6]]), { spine: true, logo: true }),
     volume("wing-s", "plate", "wing", polygonTiles([[0, -2], [3, -2], [5, 0], [0, 0]])),
     volume("wing-p", "plate", "wing", polygonTiles([[0, 6], [5, 6], [3, 8], [0, 8]])),
   ],
@@ -29,6 +29,8 @@ export const FED_WREN = prefab({
     door("d-bridge", [7, 2], [7, 4], "door.sliding"),
     edge("g-bridge-s", [7, 0], [7, 2], "wall.glazed"),
     edge("g-bridge-p", [7, 4], [7, 6], "wall.glazed"),
+    // Cockpit canopy: framed glass along the whole bow (both chamfers and the nose), sealing.
+    edge("canopy-bow", [9, 0], [9, 6], "canopy"),
   ],
   mounts: [
     face("main-s", "ion-drive.md", "aft", [0, 1.5]),
@@ -95,6 +97,7 @@ export const FED_CREST = prefab({
     edge("g-bridge-s", [20, 0], [20, 4], "wall.glazed"),
     edge("g-bridge-p", [20, 6], [20, 10], "wall.glazed"),
     edge("h-eng", [4, 0], [4, 4], "wall.half"),
+    edge("canopy-bow", [20, 0], [20, 10], "canopy"),
   ],
   mounts: [
     face("main-s", "ion-drive.lg", "aft", [0, 1.5]),
