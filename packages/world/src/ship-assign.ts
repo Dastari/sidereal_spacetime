@@ -28,7 +28,7 @@ export type PrefabSpawnPose =
 export type PrefabSpawnRequest = { pose: PrefabSpawnPose; name: string };
 
 /** Server-side spawn path for one published prefab ship (SHIPS-PREFABS
- * registers these; see docs/handoffs/ship_asset_removal_plan.md). In the same
+ * registers these; see the wiki: Operations/Ship Wipe Runbook). In the same
  * transaction a spawner installs a complete ship owned by `actor.owner` and
  * boards the EXISTING awaiting-ship character at the prefab spawn deck:
  * character.shipId/localX/localY, construction_location, input,

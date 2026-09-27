@@ -6,7 +6,7 @@ the live database and nothing runs on deploy. Operator reducers are invoked
 with the local SpacetimeDB CLI identity (the deployment owner). Backups are
 written outside git (``.runtime/ship-wipe-backups``, mode 0600).
 
-See docs/handoffs/ship_wipe_runbook.md.
+See the wiki: Operations/Ship Wipe Runbook.
 """
 import argparse
 import hashlib

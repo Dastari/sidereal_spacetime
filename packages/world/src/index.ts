@@ -1460,7 +1460,7 @@ export const moveCargoCarrier = db.reducer(
 );
 
 /** Operator-only ship maintenance (deployment identity). See
- * docs/handoffs/ship_wipe_runbook.md. Never invoked automatically. */
+ * the wiki page Operations/Ship Wipe Runbook. Never invoked automatically. */
 export const operatorSetStarterPrefab = db.reducer(
   {
     operationId: t.string(),
