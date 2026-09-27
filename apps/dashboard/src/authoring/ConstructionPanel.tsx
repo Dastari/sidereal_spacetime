@@ -1,14 +1,18 @@
+import {
+  constructionForLayout,
+  rememberConstructionSource,
+  storedConstructionSource,
+} from "./construction-document";
 import { CONSTRUCTION_BOUNDARY_FAMILY_PIN } from "@sidereal/content/construction-boundary-family";
 import { CONSTRUCTION_BOUNDARY_PIN } from "@sidereal/content/construction-boundary";
 import { CONSTRUCTION_ROOF_PIN } from "@sidereal/content/construction-roof";
 import { useEffect, useRef, useState } from "react";
 import type { User } from "oidc-client-ts";
 import type { LayoutDocument } from "../../../../packages/content/src/ship-layout";
-import { bindConstructionLayout } from "../../../../packages/sim/src/construction-layout";
 import { compileConstruction } from "../../../../packages/sim/src/construction-transactions";
-import { createConnectionSession } from "../../../../packages/net/src/connection-session";
+import { createConnectionSession } from "@sidereal/net/connection-session";
 import { connectConstruction } from "../../../../packages/net/src/construction";
-import type { DbConnection } from "../../../../packages/net/src/generated";
+import type { DbConnection } from "@sidereal/net/generated";
 import { authoringAuth, loadAuthoringAccount } from "./auth";
 import { uuid } from "../shipyard/layout/useLayout";
 import { draftOptionsKey, readDraftOptions } from "./draft-options";
@@ -23,6 +27,7 @@ export default function ConstructionPanel({
     [connection, setConnection] = useState<DbConnection | null>(null),
     [status, setStatus] = useState("Signed out"),
     [error, setError] = useState(""),
+    [notice, setNotice] = useState(""),
     [workspace, setWorkspace] = useState(""),
     [busy, setBusy] = useState(false),
     [serial, setSerial] = useState(0),
@@ -108,7 +113,9 @@ export default function ConstructionPanel({
     );
   useEffect(() => {
     if (!workspace) {
-      const g = grants.find((g) => !g.revoked);
+      const g = grants.find(
+        (g) => !g.revoked && g.workspaceId !== "universe-map",
+      );
       if (g) setWorkspace(g.workspaceId);
     }
   }, [serial, workspace]);
@@ -121,7 +128,9 @@ export default function ConstructionPanel({
       /* Storage can be unavailable. */
     }
     const remote = drafts.find((d) => d.id === doc.id);
-    const parsed = remote ? JSON.parse(remote.documentJson) : null;
+    const parsed = remote
+      ? JSON.parse(remote.documentJson)
+      : storedConstructionSource(doc.id);
     setBoundaries(
       cached
         ? cached.boundary === "r001"
@@ -160,12 +169,16 @@ export default function ConstructionPanel({
     setBusy(true);
     setError("");
     try {
-      const bound = bindConstructionLayout(doc);
+      const bound = {
+        document: constructionForLayout(doc, storedConstructionSource(doc.id)),
+      };
       if (boundaries)
         bound.document.boundaryKit = { ...CONSTRUCTION_BOUNDARY_PIN };
       if (familyBoundaries)
         bound.document.boundaryKit = { ...CONSTRUCTION_BOUNDARY_FAMILY_PIN };
+      if (!boundaries && !familyBoundaries) delete bound.document.boundaryKit;
       if (roofs) bound.document.roofKit = { ...CONSTRUCTION_ROOF_PIN };
+      else delete bound.document.roofKit;
       const raw = JSON.stringify(bound.document),
         revision = base?.id === doc.id ? base.revision : 0n;
       if (kind === "publish") compileConstruction(raw);
@@ -198,6 +211,14 @@ export default function ConstructionPanel({
           operationId: pending.current.operationId,
         });
         setBase({ id: doc.id, revision: revision + 1n });
+        setNotice(`Workspace draft saved · revision ${revision + 1n}`);
+        try {
+          rememberConstructionSource(raw);
+        } catch {
+          setNotice(
+            "Workspace draft saved. Browser metadata storage is unavailable; reload the workspace draft before exporting on another browser.",
+          );
+        }
       } else {
         const remote = drafts.find((d) => d.id === doc.id);
         const local = compileConstruction(raw);
@@ -213,6 +234,7 @@ export default function ConstructionPanel({
           ...args,
           operationId: pending.current.operationId,
         });
+        setNotice("Template revision published. Create a test ship below.");
       }
       pending.current = null;
     } catch (e) {
@@ -252,21 +274,27 @@ export default function ConstructionPanel({
     }
   }
   const load = (json: string, revision: bigint) => {
-    const parsed = JSON.parse(json);
-    setBoundaries(parsed.boundaryKit?.revision === "r001");
-    setFamilyBoundaries(parsed.boundaryKit?.revision === "r004");
-    setRoofs(!!parsed.roofKit);
-    const incoming = parsed.layout as LayoutDocument;
-    if (doc)
-      localStorage.setItem(
-        "sidereal.authoring.recovery:" + user?.profile.sub + ":" + uuid(),
-        JSON.stringify(doc),
+    try {
+      const parsed = rememberConstructionSource(json);
+      setBoundaries(parsed.boundaryKit?.revision === "r001");
+      setFamilyBoundaries(parsed.boundaryKit?.revision === "r004");
+      setRoofs(!!parsed.roofKit);
+      const incoming = parsed.layout as LayoutDocument;
+      if (doc)
+        localStorage.setItem(
+          "sidereal.authoring.recovery:" + user?.profile.sub + ":" + uuid(),
+          JSON.stringify(doc),
+        );
+      onLoad(incoming);
+      setBase({ id: incoming.id, revision });
+      setOptionsScope(
+        draftOptionsKey(user!.profile.sub, workspace, incoming.id),
       );
-    onLoad(incoming);
-    setBase({ id: incoming.id, revision });
-    setOptionsScope(draftOptionsKey(user!.profile.sub, workspace, incoming.id));
-    pending.current = null;
-    setError("");
+      pending.current = null;
+      setError("");
+    } catch (e) {
+      setError(String(e));
+    }
   };
   return (
     <div className="construction-online">
@@ -309,14 +337,29 @@ export default function ConstructionPanel({
         <>
           <label className="layout-note">
             Workspace
-            <input
+            <select
               aria-label="Construction workspace"
               value={workspace}
               onChange={(e) => {
                 setWorkspace(e.target.value);
                 setBase(null);
               }}
-            />
+            >
+              <option value="">Select a workspace</option>
+              {[
+                ...new Set(
+                  grants
+                    .filter(
+                      (g) => !g.revoked && g.workspaceId !== "universe-map",
+                    )
+                    .map((g) => g.workspaceId),
+                ),
+              ].map((id) => (
+                <option key={id} value={id}>
+                  {id}
+                </option>
+              ))}
+            </select>
           </label>
           <label className="layout-note">
             <input
@@ -328,7 +371,7 @@ export default function ConstructionPanel({
                 if (e.target.checked) setFamilyBoundaries(false);
               }}
             />{" "}
-            Native walls and hinged doors · r001 review
+            Straight walls and hinged doors
           </label>
           <label className="layout-note">
             <input
@@ -340,7 +383,7 @@ export default function ConstructionPanel({
                 if (e.target.checked) setBoundaries(false);
               }}
             />{" "}
-            Shaped-room walls · r004 closed-room review
+            Shaped-room walls
           </label>
           <label className="layout-note">
             <input
@@ -349,7 +392,7 @@ export default function ConstructionPanel({
               disabled={busy || !optionsReady}
               onChange={(e) => setRoofs(e.target.checked)}
             />{" "}
-            Matching native roofs · r001 review
+            Matching roofs
           </label>
           <button
             className="layout-wide"
@@ -369,12 +412,18 @@ export default function ConstructionPanel({
             }
             onClick={() => void act("publish")}
           >
-            Publish immutable blueprint
+            Publish template revision
           </button>
           {!grants.some((g) => !g.revoked) && (
             <p className="layout-note">
               An administrator must grant access to a workspace. Ship ownership
               does not grant authoring rights.
+            </p>
+          )}
+          <h3>Saved workspace drafts</h3>
+          {drafts.length === 0 && (
+            <p className="layout-note">
+              No workspace drafts yet. Save your current design above.
             </p>
           )}
           {drafts.map((d) => (
@@ -388,11 +437,12 @@ export default function ConstructionPanel({
               {String(d.revision)}
             </button>
           ))}
+          <h3>Published templates</h3>
           {blueprints.map((b) => (
             <div key={b.id}>
               <p className="layout-note">
-                Published {JSON.parse(b.canonical).layout.name} ·{" "}
-                {b.sha256.slice(0, 12)} · geometry validated.
+                Published {JSON.parse(b.canonical).layout.name} · revision{" "}
+                {String(b.sourceRevision)} · geometry validated.
               </p>
               <button
                 className="layout-wide"
@@ -405,19 +455,25 @@ export default function ConstructionPanel({
                   )
                 }
               >
-                Create walking review instance
+                Create test ship
               </button>
             </div>
           ))}
           {connection &&
             [...connection.db.ownConstructionInstances.iter()].map((i) => (
               <p className="layout-note" key={i.id}>
-                Instance {i.name} · {i.id.slice(0, 8)} · Open the game with this
-                account to walk its authored floors. Native boundaries require
-                the explicit kit option; flight and pressure are not installed.
+                Test ship: {i.name}. Open the game with this account, choose
+                Test ships, then select this design. Your normal ship and
+                inventory are preserved. Flight, pressure and traversal are
+                available only for qualified designs.
               </p>
             ))}
         </>
+      )}
+      {notice && (
+        <p role="status" className="layout-note">
+          {notice}
+        </p>
       )}
       {error && (
         <p role="alert" className="layout-note">

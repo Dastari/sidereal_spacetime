@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["toxic_reference_composition_r006.ts","toxic_reference_composition_r006.test.ts","toxic_reference_r006.vitest.config.ts"]}

@@ -1,0 +1,14 @@
+### Ran Playwright code
+```js
+await (async(page)=>{
+ await page.setViewportSize({width:1574,height:907});
+ await page.goto("http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?candidate=1&style=ice&seed=38&capture=1789363510680324542");
+ await page.waitForFunction(()=>window.planetReview?.stats().candidate?.active===0,{}, {timeout:60000});
+ await page.evaluate(()=>window.planetReview.lodRecorder.start({steps:[24,64,280,64,24,280].map(projected=>({projected,durationMs:7000})),viewport:{width:1574,height:907}}));
+})(page);
+```
+### Page
+- Page URL: http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?candidate=1&style=ice&seed=38&capture=1789363510680324542
+- Page Title: Planet reference review — isolated
+### Events
+- New console entries: .playwright-cli/console-2026-09-14T05-16-19-018Z.log#L9

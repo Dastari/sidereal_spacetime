@@ -1,0 +1,160 @@
+{
+  "date": "2026-09-15",
+  "sourceCommit": "a02b566a5f004dc8882b29b04d5aab8d8991d1c6",
+  "implementations": [
+    {
+      "from": "scripts/art_library/crystal_reference_composition_r013.ts",
+      "to": "packages/render/src/environment/reviewed-native/crystal_reference_composition_r013.ts",
+      "originalSha256": "898bd1bcc70f7a256917a9135a478514d895305c21b5913a071de7697a180ecd",
+      "movedSha256": "8a7b47401a0cd71ff1a6d3706429401fa7b66b38c74ecf55cfdf5fd54c139651",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/gas_reference_composition.ts",
+      "to": "packages/render/src/environment/reviewed-native/gas_reference_composition.ts",
+      "originalSha256": "29ca8363248b85bbc7d7e61d79569d49f59972b9684a1e019464163516bb37bf",
+      "movedSha256": "ac34767ffdff61b1d5080dafe2c6f2563e75f57c1b700dd64e755ff4f7fc014a",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/ice_reference_composition_r025.ts",
+      "to": "packages/render/src/environment/reviewed-native/ice_reference_composition_r025.ts",
+      "originalSha256": "776ab79c61eda60d44b5b3f6cda9802a7aab83a871168170cdd2a7f81d13fc7b",
+      "movedSha256": "ff32b649474a1f0048885c7510b94cdba33529c8ca6fe5339d144c4b6a40bdc9",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/native_cloud_composition_r002.ts",
+      "to": "packages/render/src/environment/reviewed-native/native_cloud_composition_r002.ts",
+      "originalSha256": "a869afddbe714bfdb03c5d2bd0220a2245ba9e847ce655237b381802af8da7d5",
+      "movedSha256": "6f5f7f3570594034cb1477ae019da60629adccf3c7b1f6c35f6459a8fbffbc4f",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/native_deformation_normals.ts",
+      "to": "packages/render/src/environment/reviewed-native/native_deformation_normals.ts",
+      "originalSha256": "0667bfc25c2fd3b26ab9ce5c9ab08ce3f88317b3a01a7ed7cdc3ff846e5d3906",
+      "movedSha256": "0667bfc25c2fd3b26ab9ce5c9ab08ce3f88317b3a01a7ed7cdc3ff846e5d3906",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/native_radial_surface.ts",
+      "to": "packages/render/src/environment/reviewed-native/native_radial_surface.ts",
+      "originalSha256": "ae6b0e45b6ec8b859fc3c3f5cd0be096715897b7e2bfb2d274d6c95cff03db8b",
+      "movedSha256": "ae6b0e45b6ec8b859fc3c3f5cd0be096715897b7e2bfb2d274d6c95cff03db8b",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/native_reference_assembly.ts",
+      "to": "packages/render/src/environment/reviewed-native/native_reference_assembly.ts",
+      "originalSha256": "56cc88e5dc74583275addc15585b6cb702bbb2f4d32b55b1652fa3269cc20d92",
+      "movedSha256": "0547e186cf0f674bb50bef807f584f4b9dc310a49b122da7c5033223bbaddb5f",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/native_surface_clearance.ts",
+      "to": "packages/render/src/environment/reviewed-native/native_surface_clearance.ts",
+      "originalSha256": "1d53cf1407395d7a9e8182e95f150df3f41baf8d48db2ff6a1aeada935c2cb28",
+      "movedSha256": "5a7582945177257d4c4d547ef43e85834c59b26724aa795539e5bd38bfa198a5",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/ocean_reference_composition_r007.ts",
+      "to": "packages/render/src/environment/reviewed-native/ocean_reference_composition_r007.ts",
+      "originalSha256": "c22cbc5fe97e0f17d1c39ea0e7b85b624574f8a59ac000eae50a729f4c38fcac",
+      "movedSha256": "f9aa8aa243531af9c59c119647c97edc217ca9b19f056c4854706cf96dbec5e8",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/planet_reference_composition.ts",
+      "to": "packages/render/src/environment/reviewed-native/planet_reference_composition.ts",
+      "originalSha256": "555bdbc724b2028f9ed5e1e7f95ba1cff550486ca1424f6237137f4268ea4ee3",
+      "movedSha256": "9459aea4777695ae8faac8455e64216bf3f71893548798a664ccc1a100980eaa",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/planet_reference_local_lights.ts",
+      "to": "packages/render/src/environment/reviewed-native/planet_reference_local_lights.ts",
+      "originalSha256": "73631876c1635591eaebd217fb4a55ae5c6f07e1bcfc95be2e51faa070a6669e",
+      "movedSha256": "73631876c1635591eaebd217fb4a55ae5c6f07e1bcfc95be2e51faa070a6669e",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/planet_reference_materials.ts",
+      "to": "packages/render/src/environment/reviewed-native/planet_reference_materials.ts",
+      "originalSha256": "6dbf44b623d56abacce51c6c186a296b79c3f766347a6df35f49f9b17c9f55fe",
+      "movedSha256": "6dbf44b623d56abacce51c6c186a296b79c3f766347a6df35f49f9b17c9f55fe",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/planet_reference_transmission.ts",
+      "to": "packages/render/src/environment/reviewed-native/planet_reference_transmission.ts",
+      "originalSha256": "70269433398dd76cbcb4d844fa00ae45b7cc2e3a80ccbf7d114b575d24c2cc9f",
+      "movedSha256": "70269433398dd76cbcb4d844fa00ae45b7cc2e3a80ccbf7d114b575d24c2cc9f",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/reference_shadow_radius.ts",
+      "to": "packages/render/src/environment/reviewed-native/reference_shadow_radius.ts",
+      "originalSha256": "12960c0e8773e960a6c9a8892cd8c15246209d71d0099d5ca8c7919a1e17e996",
+      "movedSha256": "12960c0e8773e960a6c9a8892cd8c15246209d71d0099d5ca8c7919a1e17e996",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/reference_volcanic_smoke_build.ts",
+      "to": "packages/render/src/environment/reviewed-native/reference_volcanic_smoke_build.ts",
+      "originalSha256": "81f3ecc255ac9e456ed701acb003da844d074fc861ab9d4db1c686708ea77b39",
+      "movedSha256": "629599d626224cb18233bc1f3841ed336c96c623938690df0cd7847d302eda77",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/rocky_reference_composition_r010.ts",
+      "to": "packages/render/src/environment/reviewed-native/rocky_reference_composition_r010.ts",
+      "originalSha256": "ade618237e5540554843bbcc5bfbae0e892064a620eab1ca2b5e1d8bbf7c6b4d",
+      "movedSha256": "3fb936e34a22a80fcf569c84148055a5cf3217b64b4be0c8a807afa4620bff92",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/temperate_reference_composition_r003.ts",
+      "to": "packages/render/src/environment/reviewed-native/temperate_reference_composition_r003.ts",
+      "originalSha256": "8ff08c502bdfb6e270a9892eb175712d67e5bb031e7361ce54808e40947af61b",
+      "movedSha256": "43dbe756e8e9d322fad3a0227ca0bfa6af8ed928f828ae04dcae4b7ed34ca82c",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/toxic_fog_composition_r005.ts",
+      "to": "packages/render/src/environment/reviewed-native/toxic_fog_composition_r005.ts",
+      "originalSha256": "d9479e52cf4f39c647079f4e73d0d6b22bf442bdbe8806d7a95088042e8229d7",
+      "movedSha256": "7a86a830e50fab7c56b69fef9c4c6b07f0e9933ec9c26f131825b82e204dd090",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/toxic_fog_reference_clearance.ts",
+      "to": "packages/render/src/environment/reviewed-native/toxic_fog_reference_clearance.ts",
+      "originalSha256": "34a0e1d1b08261f85a098e8e61fb8ac603dcff7d91774c185de835fc8fb48c98",
+      "movedSha256": "988170d3b578bf8d5f5942e8b7faeb175ed1b2189d1b4b509aa1115752c0a95c",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/toxic_fog_reference_integration.ts",
+      "to": "packages/render/src/environment/reviewed-native/toxic_fog_reference_integration.ts",
+      "originalSha256": "9a54d0e62a3b1258e363819b584c1d350bedd32c656671320edcf92dca7b3f9d",
+      "movedSha256": "27fca1c22c7dac8391589e9f59a4223297464f7dc0b8c4e36e171a6ef44264c1",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/toxic_reference_composition_r007.ts",
+      "to": "packages/render/src/environment/reviewed-native/toxic_reference_composition_r007.ts",
+      "originalSha256": "b9dc8f13e4ef2ae2b4934224523dea19a10c213fd191b4b79e634a6c5cdc504f",
+      "movedSha256": "0b06dfd91bb2184a01b9234d2d4a16d37681aa0965f29ad67cf634c5d316493b",
+      "sameExceptImportPaths": true
+    },
+    {
+      "from": "scripts/art_library/volcanic_reference_composition_r023.ts",
+      "to": "packages/render/src/environment/reviewed-native/volcanic_reference_composition_r023.ts",
+      "originalSha256": "731eeb4bad249c4eca82242251221675ef2e88c816e683ee5c7a758f3bdcdaaa",
+      "movedSha256": "3c6f8362ca00defe673e23627710000ce62048600c417a0c148afcd374625303",
+      "sameExceptImportPaths": true
+    }
+  ]
+}

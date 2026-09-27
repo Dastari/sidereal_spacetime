@@ -1,6 +1,7 @@
 import type { Light } from "@babylonjs/core/Lights/light";
 import { prepareShadowPolicy, isStructuralShadowSource } from "./shadow-policy";
 import { createShadowBatches } from "./shadow-batches";
+import { createExteriorShadowCache } from "./exterior-shadow-cache";
 import type { ManagedLocalLight } from "./local-light-budget";
 import { isCabinMesh } from "./cabin-visibility";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
@@ -479,6 +480,7 @@ export function createShipLighting(
     refreshShadowCache(localX, localY);
   }
   refreshShadowCache(0, 0);
+  createExteriorShadowCache(scene, sun, exteriorShadows);
   scene.onDisposeObservable.addOnce(() => {
     sunBatches.dispose();
     sunPlacementCache.clear();

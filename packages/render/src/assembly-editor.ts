@@ -66,6 +66,8 @@ export async function createAssemblyEditor(
     buttons: number[];
   };
   pointerInput.buttons = [1, 2];
+  let tool: "select" | "pan" = "select",
+    space = false;
   camera.movement.input.addEntry({
     source: "pointer",
     button: 1,
@@ -188,7 +190,9 @@ export async function createAssemblyEditor(
   const pointer = scene.onPointerObservable.add((info) => {
     if (
       info.type === PointerEventTypes.POINTERDOWN &&
-      info.event.button === 0
+      info.event.button === 0 &&
+      tool !== "pan" &&
+      !space
     ) {
       const id = info.pickInfo?.pickedMesh?.parent?.metadata?.partId as
         string | undefined;
@@ -236,6 +240,7 @@ export async function createAssemblyEditor(
           origin: entry.node.position.clone(),
           copy: info.event.ctrlKey || info.event.metaKey,
         };
+        canvas.dataset.gestureActive = "true";
         canvas.setPointerCapture((info.event as PointerEvent).pointerId);
       }
     } else if (info.type === PointerEventTypes.POINTERMOVE && drag) {
@@ -251,14 +256,33 @@ export async function createAssemblyEditor(
       if (!position.equals(drag.origin))
         onMove(drag.id, [position.x, -position.z, position.y], drag.copy);
       drag = undefined;
+      canvas.dataset.gestureActive = "false";
     }
   });
   const cancel = () => {
+    space = false;
+    pointerInput.buttons = tool === "pan" ? [0, 1, 2] : [1, 2];
     if (drag) {
       nodes.get(drag.id)?.node.position.copyFrom(drag.origin);
       drag = undefined;
+      canvas.dataset.gestureActive = "false";
     }
   };
+  const keys = (e: KeyboardEvent) => {
+    if (e.code === "Space" && (document.activeElement === canvas || space)) {
+      e.preventDefault();
+      space = e.type === "keydown";
+      pointerInput.buttons = space || tool === "pan" ? [0, 1, 2] : [1, 2];
+      camera.movement.input.setInteraction(
+        "pointer",
+        { button: 0 },
+        space || tool === "pan" ? "pan" : "rotate",
+      );
+    }
+    if (e.key === "Escape") cancel();
+  };
+  window.addEventListener("keydown", keys);
+  window.addEventListener("keyup", keys);
   const context = (e: Event) => e.preventDefault();
   canvas.addEventListener("contextmenu", context);
   canvas.addEventListener("pointercancel", cancel);
@@ -267,6 +291,17 @@ export async function createAssemblyEditor(
   resize.observe(canvas);
   engine.runRenderLoop(() => scene.render());
   const handle = {
+    cancel,
+    tool(value: "select" | "pan") {
+      cancel();
+      tool = value;
+      pointerInput.buttons = value === "pan" ? [0, 1, 2] : [1, 2];
+      camera.movement.input.setInteraction(
+        "pointer",
+        { button: 0 },
+        value === "pan" ? "pan" : "rotate",
+      );
+    },
     update(
       next: AssemblyDocument,
       id: string,
@@ -428,6 +463,8 @@ export async function createAssemblyEditor(
       canvas.removeEventListener("contextmenu", context);
       canvas.removeEventListener("pointercancel", cancel);
       window.removeEventListener("blur", cancel);
+      window.removeEventListener("keydown", keys);
+      window.removeEventListener("keyup", keys);
       scene.dispose();
       engine.dispose();
     },

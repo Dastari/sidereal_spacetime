@@ -1,0 +1,1062 @@
+{
+  "schema": "sidereal.native-armor-block-strict-validation.v1",
+  "status": "pass",
+  "manifestSha256": "66542b6a404db51e4010574c85f4609dd58edeb52038e06f840a9bf589762732",
+  "sourceSha256": "1207f7eca4cede4baf0ea10927b622c3f455a105e1e40437c3dcb22a91ecffb9",
+  "validatorSha256": "2c36c20487c76bece90e62da2780b2f65069ab5860a1bd8432e0fe1810fa4e04",
+  "binaryReaderDependency": {
+    "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/check_armor_cassette_hull.py",
+    "sha256": "95ddacab11e28837724943a6541639161cf96a587b3d008147513b8ee7c805d3"
+  },
+  "models": [
+    {
+      "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+      "glbSha256": "2ba52942620ef7c806c2e76d55a89b7dc71aca27663b043bfc2beea940b67426",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          -0.0,
+          3.0
+        ]
+      },
+      "backingVolumeM3": 4.5,
+      "nodes": [
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-incoming-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.421875,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-outgoing-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.421875,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-solid-bod",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 3.65625,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--cyan-flush-status",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.00010781240612267595,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--interchangeable-p",
+          "group": "FINISH",
+          "triangles": 44,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.2124158421082791,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.041748046875,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-.001",
+          "group": "FINISH",
+          "triangles": 36,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.03623437583073974,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--lower-impact-rail",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.041748046875,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.1402587890625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--pale-wrapped-conn",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.1402587890625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--recess-shadow-sea",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.09648428298532963,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-f94c0ba2aa04f31fb6a5--FINISH--upper-stepped-sho",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.11108398437499994,
+          "closedWeldedBacking": false
+        }
+      ],
+      "embeddedImages": [
+        {
+          "name": "armor-normal",
+          "sha256": "54429532ad55e8a286ba7750a9c94927edbbc54973bb4f464ec5e5b4c6e4c1b9",
+          "byteLength": 25689
+        },
+        {
+          "name": "armor-basecolor",
+          "sha256": "fe85f74ffb3bf905d6a0d26498d359bf8bd8d61f6346342c339d8985a280d187",
+          "byteLength": 482972
+        },
+        {
+          "name": "armor-roughness",
+          "sha256": "7b854af0ba268fb3e9f7e6306a97ffc485e84419caceb65bcec4e03bf59f4832",
+          "byteLength": 485092
+        }
+      ],
+      "socketsMatched": true,
+      "allGeometryInsideOwningEnvelope": true
+    },
+    {
+      "modelId": "armor-block-7c657ee01a90318dec3e",
+      "glbSha256": "e9656cd1356aed6540eda3373fe494e6b9b2af49f9cc51253fc578177ed5fea7",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          -0.0,
+          3.0
+        ]
+      },
+      "backingVolumeM3": 4.5,
+      "nodes": [
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-incoming-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.421875,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-outgoing-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.421875,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-solid-bod",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 3.65625,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--cyan-flush-status",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.00010781240612267595,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.01807343567982311,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.001",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.018073440690338668,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.002",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.018073440690338668,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.003",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.018073430669307555,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.004",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.018073440690338675,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.005",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.01807344069033866,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.006",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.018073430669307555,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-lou.007",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.01807345071136979,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--deep-vent-louver-",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.018073438185080896,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--interchangeable-v",
+          "group": "FINISH",
+          "triangles": 44,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.2124158421082791,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--lower-impact-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.041748046875,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--lower-impact-.001",
+          "group": "FINISH",
+          "triangles": 36,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.03623437583073974,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--lower-impact-rail",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.041748046875,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--pale-wrapped-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.1402587890625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--pale-wrapped-conn",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.1402587890625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--recess-shadow-sea",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.09648428298532963,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--upper-stepped-sho",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.11108398437499994,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-7c657ee01a90318dec3e--FINISH--vent-dark-well",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.04530276101848256,
+          "closedWeldedBacking": false
+        }
+      ],
+      "embeddedImages": [
+        {
+          "name": "armor-normal",
+          "sha256": "54429532ad55e8a286ba7750a9c94927edbbc54973bb4f464ec5e5b4c6e4c1b9",
+          "byteLength": 25689
+        },
+        {
+          "name": "armor-basecolor",
+          "sha256": "fe85f74ffb3bf905d6a0d26498d359bf8bd8d61f6346342c339d8985a280d187",
+          "byteLength": 482972
+        },
+        {
+          "name": "armor-roughness",
+          "sha256": "7b854af0ba268fb3e9f7e6306a97ffc485e84419caceb65bcec4e03bf59f4832",
+          "byteLength": 485092
+        }
+      ],
+      "socketsMatched": true,
+      "allGeometryInsideOwningEnvelope": true
+    },
+    {
+      "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+      "glbSha256": "13cc7fa682a277646163ae4699ec4a430f882b337c636909b9c764c5952d69fb",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          -0.0,
+          3.0
+        ]
+      },
+      "backingVolumeM3": 4.5,
+      "nodes": [
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-incoming-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.421875,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-outgoing-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.421875,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-solid-bod",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 3.65625,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--cyan-flush-status",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.00010781240612267595,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--interchangeable-r",
+          "group": "FINISH",
+          "triangles": 44,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.2124158421082791,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.041748046875,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-.001",
+          "group": "FINISH",
+          "triangles": 36,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.03623437583073974,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--lower-impact-rail",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.041748046875,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--pale-wrapped-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.1402587890625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--pale-wrapped-conn",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.1402587890625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--recess-shadow-sea",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.09648428298532963,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-fe79dfaf2e1542dbd67c--FINISH--upper-stepped-sho",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.11108398437499994,
+          "closedWeldedBacking": false
+        }
+      ],
+      "embeddedImages": [
+        {
+          "name": "armor-normal",
+          "sha256": "54429532ad55e8a286ba7750a9c94927edbbc54973bb4f464ec5e5b4c6e4c1b9",
+          "byteLength": 25689
+        },
+        {
+          "name": "armor-basecolor",
+          "sha256": "fe85f74ffb3bf905d6a0d26498d359bf8bd8d61f6346342c339d8985a280d187",
+          "byteLength": 482972
+        },
+        {
+          "name": "armor-roughness",
+          "sha256": "7b854af0ba268fb3e9f7e6306a97ffc485e84419caceb65bcec4e03bf59f4832",
+          "byteLength": 485092
+        }
+      ],
+      "socketsMatched": true,
+      "allGeometryInsideOwningEnvelope": true
+    },
+    {
+      "modelId": "armor-block-9ca59f6db637d3afceb9",
+      "glbSha256": "8c213705f103b08179133df8f39df343432cae708d840deb62a47072f5195e28",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          -0.0,
+          1.5
+        ]
+      },
+      "backingVolumeM3": 2.25,
+      "nodes": [
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-incoming-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.2109375,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-outgoing-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.2109375,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-solid-bod",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 1.828125,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--FINISH--cyan-flush-status",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.00010781240612267595,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--FINISH--interchangeable-p",
+          "group": "FINISH",
+          "triangles": 44,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.07276584397092478,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--FINISH--lower-impact-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.041748046875,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--FINISH--lower-impact-.001",
+          "group": "FINISH",
+          "triangles": 36,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.03623437583073974,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--FINISH--lower-impact-rail",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.041748046875,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--FINISH--pale-wrapped-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.0699462890625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--FINISH--pale-wrapped-conn",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.0699462890625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--FINISH--recess-shadow-sea",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.035546841099858284,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-9ca59f6db637d3afceb9--FINISH--upper-stepped-sho",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.111083984375,
+          "closedWeldedBacking": false
+        }
+      ],
+      "embeddedImages": [
+        {
+          "name": "armor-normal",
+          "sha256": "54429532ad55e8a286ba7750a9c94927edbbc54973bb4f464ec5e5b4c6e4c1b9",
+          "byteLength": 25689
+        },
+        {
+          "name": "armor-basecolor",
+          "sha256": "fe85f74ffb3bf905d6a0d26498d359bf8bd8d61f6346342c339d8985a280d187",
+          "byteLength": 482972
+        },
+        {
+          "name": "armor-roughness",
+          "sha256": "7b854af0ba268fb3e9f7e6306a97ffc485e84419caceb65bcec4e03bf59f4832",
+          "byteLength": 485092
+        }
+      ],
+      "socketsMatched": true,
+      "allGeometryInsideOwningEnvelope": true
+    },
+    {
+      "modelId": "armor-block-70b34597548b284a0a7f",
+      "glbSha256": "57becd882be8eb22314f87b6e8d72e3dcfad9c891723ab4935c43aad0b32f671",
+      "bounds": {
+        "min": [
+          -0.375,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.9722718000411987,
+          0.2651650309562683,
+          1.5
+        ]
+      },
+      "backingVolumeM3": 1.142060657239436,
+      "nodes": [
+        {
+          "name": "GEO-armor-block-70b34597548b284a0a7f--BACKING--closed-junction-",
+          "group": "BACKING",
+          "triangles": 24,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 1.142060657239436,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-70b34597548b284a0a7f--FINISH--junction-lower-na",
+          "group": "FINISH",
+          "triangles": 28,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.10693112835953647,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-70b34597548b284a0a7f--FINISH--junction-upper-na",
+          "group": "FINISH",
+          "triangles": 28,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.10693112835953647,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-70b34597548b284a0a7f--FINISH--junction-wrapped-",
+          "group": "FINISH",
+          "triangles": 28,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.29940715940670215,
+          "closedWeldedBacking": false
+        }
+      ],
+      "embeddedImages": [
+        {
+          "name": "armor-normal",
+          "sha256": "54429532ad55e8a286ba7750a9c94927edbbc54973bb4f464ec5e5b4c6e4c1b9",
+          "byteLength": 25689
+        },
+        {
+          "name": "armor-basecolor",
+          "sha256": "fe85f74ffb3bf905d6a0d26498d359bf8bd8d61f6346342c339d8985a280d187",
+          "byteLength": 482972
+        },
+        {
+          "name": "armor-roughness",
+          "sha256": "7b854af0ba268fb3e9f7e6306a97ffc485e84419caceb65bcec4e03bf59f4832",
+          "byteLength": 485092
+        }
+      ],
+      "socketsMatched": true,
+      "allGeometryInsideOwningEnvelope": true
+    },
+    {
+      "modelId": "armor-block-cd2f17ea0cf58cb60b7f",
+      "glbSha256": "696e3666a46866af6bac674279b73be7736ec4321671e0b826a56b5282df60ca",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.4534270763397217,
+          -0.0,
+          1.5
+        ]
+      },
+      "backingVolumeM3": 2.760105460882187,
+      "nodes": [
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-incoming-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.2109375,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-outgoing-",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.2109375,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-solid-bod",
+          "group": "BACKING",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 2.338230460882187,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--cyan-flush-status",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.00010781239215285066,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--deep-vent-lou",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.02416636287678786,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--deep-vent-louver-",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.02416636622661962,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--interchangeable-v",
+          "group": "FINISH",
+          "triangles": 44,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.09403158198805701,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--lower-impact-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.05857444228604436,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--lower-impact-.001",
+          "group": "FINISH",
+          "triangles": 36,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.03623437583073974,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--lower-impact-rail",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.05857444228604436,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--pale-wrapped-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.06994628906250006,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--pale-wrapped-conn",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.0699462890625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--recess-shadow-sea",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.04546554893556376,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--upper-stepped-sho",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.14207997592166066,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-cd2f17ea0cf58cb60b7f--FINISH--vent-dark-well",
+          "group": "FINISH",
+          "triangles": 12,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.018438115347225992,
+          "closedWeldedBacking": false
+        }
+      ],
+      "embeddedImages": [
+        {
+          "name": "armor-normal",
+          "sha256": "54429532ad55e8a286ba7750a9c94927edbbc54973bb4f464ec5e5b4c6e4c1b9",
+          "byteLength": 25689
+        },
+        {
+          "name": "armor-basecolor",
+          "sha256": "fe85f74ffb3bf905d6a0d26498d359bf8bd8d61f6346342c339d8985a280d187",
+          "byteLength": 482972
+        },
+        {
+          "name": "armor-roughness",
+          "sha256": "7b854af0ba268fb3e9f7e6306a97ffc485e84419caceb65bcec4e03bf59f4832",
+          "byteLength": 485092
+        }
+      ],
+      "socketsMatched": true,
+      "allGeometryInsideOwningEnvelope": true
+    },
+    {
+      "modelId": "armor-block-1676c64748013f376c0a",
+      "glbSha256": "7a5fa77f6ec3de7fe463813d996361d3ed420b636aee5fcb0ce963dd5d4a0450",
+      "bounds": {
+        "min": [
+          -1.125,
+          -1.125,
+          0.0
+        ],
+        "max": [
+          0.0,
+          -0.0,
+          3.0
+        ]
+      },
+      "backingVolumeM3": 3.3749999999998037,
+      "nodes": [
+        {
+          "name": "GEO-armor-block-1676c64748013f376c0a--BACKING--closed-junction-",
+          "group": "BACKING",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 3.3749999999998037,
+          "closedWeldedBacking": true
+        },
+        {
+          "name": "GEO-armor-block-1676c64748013f376c0a--FINISH--junction-lower-na",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.0390625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-1676c64748013f376c0a--FINISH--junction-upper-na",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.0390625,
+          "closedWeldedBacking": false
+        },
+        {
+          "name": "GEO-armor-block-1676c64748013f376c0a--FINISH--junction-wrapped-",
+          "group": "FINISH",
+          "triangles": 20,
+          "finite": true,
+          "unitNormals": true,
+          "volumeM3": 0.296875,
+          "closedWeldedBacking": false
+        }
+      ],
+      "embeddedImages": [
+        {
+          "name": "armor-normal",
+          "sha256": "54429532ad55e8a286ba7750a9c94927edbbc54973bb4f464ec5e5b4c6e4c1b9",
+          "byteLength": 25689
+        },
+        {
+          "name": "armor-basecolor",
+          "sha256": "fe85f74ffb3bf905d6a0d26498d359bf8bd8d61f6346342c339d8985a280d187",
+          "byteLength": 482972
+        },
+        {
+          "name": "armor-roughness",
+          "sha256": "7b854af0ba268fb3e9f7e6306a97ffc485e84419caceb65bcec4e03bf59f4832",
+          "byteLength": 485092
+        }
+      ],
+      "socketsMatched": true,
+      "allGeometryInsideOwningEnvelope": true
+    }
+  ],
+  "assemblies": [
+    {
+      "name": "joined-bay",
+      "placementCount": 3,
+      "unitScale": true,
+      "ownershipComparisons": 0,
+      "maximumIntersectionAreaM2": 0.0,
+      "positiveVolumeOverlap": false,
+      "exactEdgePartitions": 0
+    },
+    {
+      "name": "solid-section",
+      "placementCount": 1,
+      "unitScale": true,
+      "ownershipComparisons": 0,
+      "maximumIntersectionAreaM2": 0.0,
+      "positiveVolumeOverlap": false,
+      "exactEdgePartitions": 0
+    },
+    {
+      "name": "convex-45-half-height",
+      "placementCount": 3,
+      "unitScale": true,
+      "ownershipComparisons": 1,
+      "maximumIntersectionAreaM2": 0.0,
+      "positiveVolumeOverlap": false,
+      "exactEdgePartitions": 0
+    },
+    {
+      "name": "concave-90",
+      "placementCount": 3,
+      "unitScale": true,
+      "ownershipComparisons": 0,
+      "maximumIntersectionAreaM2": 0.0,
+      "positiveVolumeOverlap": false,
+      "exactEdgePartitions": 0
+    }
+  ],
+  "rejectionProbes": [
+    {
+      "fixture": "short-reentrant",
+      "reason": "CORNER_FIT_REJECTED edge 2: length 0.5 consumed by 0.375 + 0.375"
+    },
+    {
+      "fixture": "unsupported-direction",
+      "reason": "UNQUALIFIED_DIRECTION:(3, 2)"
+    }
+  ],
+  "directionCount": 32,
+  "limitations": [
+    "All actual GLB surfaces contained by disjoint analytic ownership envelopes. Backing coverage independently checks exported closed meshes, projected cap area and signed volume.",
+    "Map hashes/embedding presence checked; this does not claim pixel-level roughness repack parity.",
+    "No collision, pressure, mount clearance or authority qualification implied."
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "status": "isolated draft; ice-r015 unchanged",
+  "reference": "planets--ice-world",
+  "axes": "BlenderZup; corner-expanded native normals and glTF UVs",
+  "embedding": {
+    "shaftFloor": -0.62,
+    "shaftWallRange": [
+      -0.48,
+      0.15
+    ],
+    "snowLipRange": [
+      0.1,
+      0.26
+    ],
+    "root": -0.84,
+    "outerRadius": 1.5,
+    "suggestedScale": 0.28,
+    "groundClearance": "Depress native substrate below -0.70*scale within hole; restore below snow lip past about0.55*scale. Verify actual triangle-ray clearance and2angles.",
+    "buttressRoot": -0.27,
+    "buttressTop": 0.936
+  },
+  "pbr": {
+    "snowRoughness": 0.83,
+    "iceRoughness": 0.15,
+    "deepIceRoughness": 0.19,
+    "ior": 1.31,
+    "clearcoatFactor": 0.42,
+    "clearcoatRoughnessFactor": 0.1,
+    "note": "Retain existing nativeOptics/cold-response where integrated; no replacement shader/transmission claim."
+  },
+  "lod": "Preserve shafts and major bluewalls acrosslevels; useworker/materialprecompile/retainedready swap. Authored groundLOD5120/1280/320. Native corner normals need differential transformation and UVs must be retained."
+}

@@ -1,0 +1,2674 @@
+{
+  "schema": "sidereal.runtime-projection-equality.v1",
+  "sourceSHA256": "15cc6b11bcdc0abb94987bf36f632bdf0a71ef315b7e66d76c3da90bb66ae64e",
+  "projectionSHA256": "f5e21fbe3c38689fddcc3a8120eeec2715c8265ceef31af28d13a8175e95c2ee",
+  "seeds": [
+    1,
+    38,
+    91
+  ],
+  "lods": [
+    0,
+    1,
+    2
+  ],
+  "composers": [
+    {
+      "path": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "sha256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989"
+    },
+    {
+      "path": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "sha256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061"
+    }
+  ],
+  "cases": [
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "composerSHA256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+      "seed": 1,
+      "lod": 0,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "45eefa05eee563e84d016470483c7042adcad8281208575172bc5a12ab501d38"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "f00663c284c4ce276ae8d76d117b9beb739e9c0a1c36b508b43c12ca7f43e215"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "11d68282c10033f60f1bdee740b000836c9f209ef1093b859b672d4262e166dc"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a1d01589ee69bdc43e387ee4198175b7d35984270537e9aec65c152025d5010b"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a4e1ed7e772eaf9307beb59dc95ac1d617307544613c7d1bd8fc1e2adbb15fe8"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "ea47f1e2fa9b413010e6914f257051fe7fa442867ab301a544763d4689b28db1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "160bc573d09c14ff6982696836a08b8cc9854a80b4de71ababe83af79f27d091"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "949f9964692e19fcf99f9497c71b6ce91133f72c0ecaeafa41122e58c69ed6b1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "2fddae765fa77a4e6a42ae5081f5bcca4b19f7d09e34a8f2ea4dd6e241894d88"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "0f57f804cd830774dc5115a3f1584179b8af72b3818c0cb41e73ae17ab86ffd0"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 6259.002579000007
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "composerSHA256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+      "seed": 1,
+      "lod": 1,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "45eefa05eee563e84d016470483c7042adcad8281208575172bc5a12ab501d38"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "f00663c284c4ce276ae8d76d117b9beb739e9c0a1c36b508b43c12ca7f43e215"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "11d68282c10033f60f1bdee740b000836c9f209ef1093b859b672d4262e166dc"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a1d01589ee69bdc43e387ee4198175b7d35984270537e9aec65c152025d5010b"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a4e1ed7e772eaf9307beb59dc95ac1d617307544613c7d1bd8fc1e2adbb15fe8"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "ea47f1e2fa9b413010e6914f257051fe7fa442867ab301a544763d4689b28db1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "160bc573d09c14ff6982696836a08b8cc9854a80b4de71ababe83af79f27d091"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "949f9964692e19fcf99f9497c71b6ce91133f72c0ecaeafa41122e58c69ed6b1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "2fddae765fa77a4e6a42ae5081f5bcca4b19f7d09e34a8f2ea4dd6e241894d88"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "0f57f804cd830774dc5115a3f1584179b8af72b3818c0cb41e73ae17ab86ffd0"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 6361.759283000007
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "composerSHA256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+      "seed": 1,
+      "lod": 2,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "45eefa05eee563e84d016470483c7042adcad8281208575172bc5a12ab501d38"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "f00663c284c4ce276ae8d76d117b9beb739e9c0a1c36b508b43c12ca7f43e215"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "11d68282c10033f60f1bdee740b000836c9f209ef1093b859b672d4262e166dc"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a1d01589ee69bdc43e387ee4198175b7d35984270537e9aec65c152025d5010b"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a4e1ed7e772eaf9307beb59dc95ac1d617307544613c7d1bd8fc1e2adbb15fe8"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "ea47f1e2fa9b413010e6914f257051fe7fa442867ab301a544763d4689b28db1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "160bc573d09c14ff6982696836a08b8cc9854a80b4de71ababe83af79f27d091"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "949f9964692e19fcf99f9497c71b6ce91133f72c0ecaeafa41122e58c69ed6b1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "2fddae765fa77a4e6a42ae5081f5bcca4b19f7d09e34a8f2ea4dd6e241894d88"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "0f57f804cd830774dc5115a3f1584179b8af72b3818c0cb41e73ae17ab86ffd0"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 6411.771139000004
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "composerSHA256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+      "seed": 38,
+      "lod": 0,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "8c4f9143d282e22cc72cc0b221862b1780ae607ef36c5e0133d2782dfe3729c2"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "b7884bb8f31eb0caca0fb7bb07281a0b123757078e9d63bbd90390ab61d2cc41"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "2a16c3f903f1eaa234e8b2653d01ffe64e1749e6532a724b0ea9904544313d20"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "87f8bb7fe85cbcf7c7a05a3d7e2b41c18bd49df5b137da8dfc377c52023234cd"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "1e7de0a481a6188705291190ccdaf160a55deb58e8b92636dd20195801e3490b"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "abbdc9a0165d5d82bc4c9e04d242206cc411986e562d0d1da3ab033fdf583a3f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "a06673db7ca602e7a01e1c9b21dc1bf933c9ce15cdf7601e71531694f1b35074"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "4ebb25953b16ebac7a34103748a2b07a7292a1e76c669f4baba044ae3e63a4cb"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "07e0f4ea6e2517076c1d510326e528e6540b539ec7ba2604829946dd61f2f279"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "81b458b1cad3c2bdea20ba7394b6ca776e56a1bd753ed6e0b431376395e19d1f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 6311.582778000011
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "composerSHA256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+      "seed": 38,
+      "lod": 1,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "8c4f9143d282e22cc72cc0b221862b1780ae607ef36c5e0133d2782dfe3729c2"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "b7884bb8f31eb0caca0fb7bb07281a0b123757078e9d63bbd90390ab61d2cc41"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "2a16c3f903f1eaa234e8b2653d01ffe64e1749e6532a724b0ea9904544313d20"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "87f8bb7fe85cbcf7c7a05a3d7e2b41c18bd49df5b137da8dfc377c52023234cd"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "1e7de0a481a6188705291190ccdaf160a55deb58e8b92636dd20195801e3490b"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "abbdc9a0165d5d82bc4c9e04d242206cc411986e562d0d1da3ab033fdf583a3f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "a06673db7ca602e7a01e1c9b21dc1bf933c9ce15cdf7601e71531694f1b35074"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "4ebb25953b16ebac7a34103748a2b07a7292a1e76c669f4baba044ae3e63a4cb"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "07e0f4ea6e2517076c1d510326e528e6540b539ec7ba2604829946dd61f2f279"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "81b458b1cad3c2bdea20ba7394b6ca776e56a1bd753ed6e0b431376395e19d1f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 6349.391218000004
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "composerSHA256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+      "seed": 38,
+      "lod": 2,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "8c4f9143d282e22cc72cc0b221862b1780ae607ef36c5e0133d2782dfe3729c2"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "b7884bb8f31eb0caca0fb7bb07281a0b123757078e9d63bbd90390ab61d2cc41"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "2a16c3f903f1eaa234e8b2653d01ffe64e1749e6532a724b0ea9904544313d20"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "87f8bb7fe85cbcf7c7a05a3d7e2b41c18bd49df5b137da8dfc377c52023234cd"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "1e7de0a481a6188705291190ccdaf160a55deb58e8b92636dd20195801e3490b"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "abbdc9a0165d5d82bc4c9e04d242206cc411986e562d0d1da3ab033fdf583a3f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "a06673db7ca602e7a01e1c9b21dc1bf933c9ce15cdf7601e71531694f1b35074"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "4ebb25953b16ebac7a34103748a2b07a7292a1e76c669f4baba044ae3e63a4cb"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "07e0f4ea6e2517076c1d510326e528e6540b539ec7ba2604829946dd61f2f279"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "81b458b1cad3c2bdea20ba7394b6ca776e56a1bd753ed6e0b431376395e19d1f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 6330.9967250000045
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "composerSHA256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+      "seed": 91,
+      "lod": 0,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "ccb9507846ed91c252295b71eb3e5ec53eeb67877fe7acb0fa8f4bf987a2c32a"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "986b979e615ecaae7c9f0b0914abdcd3392c1495d0023b9ce850fdeaa56a37df"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a91db8e2390df56505b4ebe443da980aa2d518c1f0143fc2b8b3d49719928b7f"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "b79ccfe517884988456861839020eaad13b4fd05710e7bdb319b42be501a785d"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "f5551f0489ec177267e8edd3afee85caba24d0d3211bceea319e6f63ab7d44d9"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a789140a0b97742599913f312a5dbf01247f141488b6d9bed671f22dde490a0f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "c913015e39aad468754a14fa984f7cdb617db95d55ed22b4fc396829cb6c1438"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "ee9e5d4246f7eb6e2b3d8caa5c6415a8d94d5ab38fbfad3ad93688cd651b34d7"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "b6a6c6b99bd2a1e3217d385c8498bda87345d8909558ce23d2d1dea1e21b2a3c"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "354b453f3c1d114b81c33372695c31494a62d940049d600f70583b07d5e5a371"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 6417.880352000007
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "composerSHA256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+      "seed": 91,
+      "lod": 1,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "ccb9507846ed91c252295b71eb3e5ec53eeb67877fe7acb0fa8f4bf987a2c32a"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "986b979e615ecaae7c9f0b0914abdcd3392c1495d0023b9ce850fdeaa56a37df"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a91db8e2390df56505b4ebe443da980aa2d518c1f0143fc2b8b3d49719928b7f"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "b79ccfe517884988456861839020eaad13b4fd05710e7bdb319b42be501a785d"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "f5551f0489ec177267e8edd3afee85caba24d0d3211bceea319e6f63ab7d44d9"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a789140a0b97742599913f312a5dbf01247f141488b6d9bed671f22dde490a0f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "c913015e39aad468754a14fa984f7cdb617db95d55ed22b4fc396829cb6c1438"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "ee9e5d4246f7eb6e2b3d8caa5c6415a8d94d5ab38fbfad3ad93688cd651b34d7"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "b6a6c6b99bd2a1e3217d385c8498bda87345d8909558ce23d2d1dea1e21b2a3c"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "354b453f3c1d114b81c33372695c31494a62d940049d600f70583b07d5e5a371"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 6361.086901000002
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r002.ts",
+      "composerSHA256": "d6d94a18d02b578ae52ee3b7cdcd12938dedf5048c8a1e956a15a257a74ca989",
+      "seed": 91,
+      "lod": 2,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "ccb9507846ed91c252295b71eb3e5ec53eeb67877fe7acb0fa8f4bf987a2c32a"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "986b979e615ecaae7c9f0b0914abdcd3392c1495d0023b9ce850fdeaa56a37df"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a91db8e2390df56505b4ebe443da980aa2d518c1f0143fc2b8b3d49719928b7f"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "b79ccfe517884988456861839020eaad13b4fd05710e7bdb319b42be501a785d"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "f5551f0489ec177267e8edd3afee85caba24d0d3211bceea319e6f63ab7d44d9"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a789140a0b97742599913f312a5dbf01247f141488b6d9bed671f22dde490a0f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "c913015e39aad468754a14fa984f7cdb617db95d55ed22b4fc396829cb6c1438"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "ee9e5d4246f7eb6e2b3d8caa5c6415a8d94d5ab38fbfad3ad93688cd651b34d7"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "b6a6c6b99bd2a1e3217d385c8498bda87345d8909558ce23d2d1dea1e21b2a3c"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "354b453f3c1d114b81c33372695c31494a62d940049d600f70583b07d5e5a371"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 6553.859713999991
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "composerSHA256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+      "seed": 1,
+      "lod": 0,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "45eefa05eee563e84d016470483c7042adcad8281208575172bc5a12ab501d38"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "f00663c284c4ce276ae8d76d117b9beb739e9c0a1c36b508b43c12ca7f43e215"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "11d68282c10033f60f1bdee740b000836c9f209ef1093b859b672d4262e166dc"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a1d01589ee69bdc43e387ee4198175b7d35984270537e9aec65c152025d5010b"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a4e1ed7e772eaf9307beb59dc95ac1d617307544613c7d1bd8fc1e2adbb15fe8"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "ea47f1e2fa9b413010e6914f257051fe7fa442867ab301a544763d4689b28db1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "160bc573d09c14ff6982696836a08b8cc9854a80b4de71ababe83af79f27d091"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "949f9964692e19fcf99f9497c71b6ce91133f72c0ecaeafa41122e58c69ed6b1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "2fddae765fa77a4e6a42ae5081f5bcca4b19f7d09e34a8f2ea4dd6e241894d88"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "0f57f804cd830774dc5115a3f1584179b8af72b3818c0cb41e73ae17ab86ffd0"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 2628.092462999979
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "composerSHA256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+      "seed": 1,
+      "lod": 1,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "45eefa05eee563e84d016470483c7042adcad8281208575172bc5a12ab501d38"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "f00663c284c4ce276ae8d76d117b9beb739e9c0a1c36b508b43c12ca7f43e215"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "11d68282c10033f60f1bdee740b000836c9f209ef1093b859b672d4262e166dc"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a1d01589ee69bdc43e387ee4198175b7d35984270537e9aec65c152025d5010b"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a4e1ed7e772eaf9307beb59dc95ac1d617307544613c7d1bd8fc1e2adbb15fe8"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "ea47f1e2fa9b413010e6914f257051fe7fa442867ab301a544763d4689b28db1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "160bc573d09c14ff6982696836a08b8cc9854a80b4de71ababe83af79f27d091"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "949f9964692e19fcf99f9497c71b6ce91133f72c0ecaeafa41122e58c69ed6b1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "2fddae765fa77a4e6a42ae5081f5bcca4b19f7d09e34a8f2ea4dd6e241894d88"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "0f57f804cd830774dc5115a3f1584179b8af72b3818c0cb41e73ae17ab86ffd0"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 2596.8353449999995
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "composerSHA256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+      "seed": 1,
+      "lod": 2,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "45eefa05eee563e84d016470483c7042adcad8281208575172bc5a12ab501d38"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "f00663c284c4ce276ae8d76d117b9beb739e9c0a1c36b508b43c12ca7f43e215"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "11d68282c10033f60f1bdee740b000836c9f209ef1093b859b672d4262e166dc"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a1d01589ee69bdc43e387ee4198175b7d35984270537e9aec65c152025d5010b"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a4e1ed7e772eaf9307beb59dc95ac1d617307544613c7d1bd8fc1e2adbb15fe8"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "ea47f1e2fa9b413010e6914f257051fe7fa442867ab301a544763d4689b28db1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "160bc573d09c14ff6982696836a08b8cc9854a80b4de71ababe83af79f27d091"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "949f9964692e19fcf99f9497c71b6ce91133f72c0ecaeafa41122e58c69ed6b1"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "2fddae765fa77a4e6a42ae5081f5bcca4b19f7d09e34a8f2ea4dd6e241894d88"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "0f57f804cd830774dc5115a3f1584179b8af72b3818c0cb41e73ae17ab86ffd0"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 2659.7887850000116
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "composerSHA256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+      "seed": 38,
+      "lod": 0,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "8c4f9143d282e22cc72cc0b221862b1780ae607ef36c5e0133d2782dfe3729c2"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "b7884bb8f31eb0caca0fb7bb07281a0b123757078e9d63bbd90390ab61d2cc41"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "2a16c3f903f1eaa234e8b2653d01ffe64e1749e6532a724b0ea9904544313d20"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "87f8bb7fe85cbcf7c7a05a3d7e2b41c18bd49df5b137da8dfc377c52023234cd"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "1e7de0a481a6188705291190ccdaf160a55deb58e8b92636dd20195801e3490b"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "abbdc9a0165d5d82bc4c9e04d242206cc411986e562d0d1da3ab033fdf583a3f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "a06673db7ca602e7a01e1c9b21dc1bf933c9ce15cdf7601e71531694f1b35074"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "4ebb25953b16ebac7a34103748a2b07a7292a1e76c669f4baba044ae3e63a4cb"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "07e0f4ea6e2517076c1d510326e528e6540b539ec7ba2604829946dd61f2f279"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "81b458b1cad3c2bdea20ba7394b6ca776e56a1bd753ed6e0b431376395e19d1f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 2636.541247999994
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "composerSHA256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+      "seed": 38,
+      "lod": 1,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "8c4f9143d282e22cc72cc0b221862b1780ae607ef36c5e0133d2782dfe3729c2"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "b7884bb8f31eb0caca0fb7bb07281a0b123757078e9d63bbd90390ab61d2cc41"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "2a16c3f903f1eaa234e8b2653d01ffe64e1749e6532a724b0ea9904544313d20"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "87f8bb7fe85cbcf7c7a05a3d7e2b41c18bd49df5b137da8dfc377c52023234cd"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "1e7de0a481a6188705291190ccdaf160a55deb58e8b92636dd20195801e3490b"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "abbdc9a0165d5d82bc4c9e04d242206cc411986e562d0d1da3ab033fdf583a3f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "a06673db7ca602e7a01e1c9b21dc1bf933c9ce15cdf7601e71531694f1b35074"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "4ebb25953b16ebac7a34103748a2b07a7292a1e76c669f4baba044ae3e63a4cb"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "07e0f4ea6e2517076c1d510326e528e6540b539ec7ba2604829946dd61f2f279"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "81b458b1cad3c2bdea20ba7394b6ca776e56a1bd753ed6e0b431376395e19d1f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 2722.160551000008
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "composerSHA256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+      "seed": 38,
+      "lod": 2,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "8c4f9143d282e22cc72cc0b221862b1780ae607ef36c5e0133d2782dfe3729c2"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "b7884bb8f31eb0caca0fb7bb07281a0b123757078e9d63bbd90390ab61d2cc41"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "2a16c3f903f1eaa234e8b2653d01ffe64e1749e6532a724b0ea9904544313d20"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "87f8bb7fe85cbcf7c7a05a3d7e2b41c18bd49df5b137da8dfc377c52023234cd"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "1e7de0a481a6188705291190ccdaf160a55deb58e8b92636dd20195801e3490b"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "abbdc9a0165d5d82bc4c9e04d242206cc411986e562d0d1da3ab033fdf583a3f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "a06673db7ca602e7a01e1c9b21dc1bf933c9ce15cdf7601e71531694f1b35074"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "4ebb25953b16ebac7a34103748a2b07a7292a1e76c669f4baba044ae3e63a4cb"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "07e0f4ea6e2517076c1d510326e528e6540b539ec7ba2604829946dd61f2f279"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "81b458b1cad3c2bdea20ba7394b6ca776e56a1bd753ed6e0b431376395e19d1f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 2695.5848750000005
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "composerSHA256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+      "seed": 91,
+      "lod": 0,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "ccb9507846ed91c252295b71eb3e5ec53eeb67877fe7acb0fa8f4bf987a2c32a"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "986b979e615ecaae7c9f0b0914abdcd3392c1495d0023b9ce850fdeaa56a37df"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a91db8e2390df56505b4ebe443da980aa2d518c1f0143fc2b8b3d49719928b7f"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "b79ccfe517884988456861839020eaad13b4fd05710e7bdb319b42be501a785d"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "f5551f0489ec177267e8edd3afee85caba24d0d3211bceea319e6f63ab7d44d9"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a789140a0b97742599913f312a5dbf01247f141488b6d9bed671f22dde490a0f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "c913015e39aad468754a14fa984f7cdb617db95d55ed22b4fc396829cb6c1438"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "ee9e5d4246f7eb6e2b3d8caa5c6415a8d94d5ab38fbfad3ad93688cd651b34d7"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "b6a6c6b99bd2a1e3217d385c8498bda87345d8909558ce23d2d1dea1e21b2a3c"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "354b453f3c1d114b81c33372695c31494a62d940049d600f70583b07d5e5a371"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 2715.7106889999995
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "composerSHA256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+      "seed": 91,
+      "lod": 1,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "ccb9507846ed91c252295b71eb3e5ec53eeb67877fe7acb0fa8f4bf987a2c32a"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "986b979e615ecaae7c9f0b0914abdcd3392c1495d0023b9ce850fdeaa56a37df"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a91db8e2390df56505b4ebe443da980aa2d518c1f0143fc2b8b3d49719928b7f"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "b79ccfe517884988456861839020eaad13b4fd05710e7bdb319b42be501a785d"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "f5551f0489ec177267e8edd3afee85caba24d0d3211bceea319e6f63ab7d44d9"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a789140a0b97742599913f312a5dbf01247f141488b6d9bed671f22dde490a0f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "c913015e39aad468754a14fa984f7cdb617db95d55ed22b4fc396829cb6c1438"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "ee9e5d4246f7eb6e2b3d8caa5c6415a8d94d5ab38fbfad3ad93688cd651b34d7"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "b6a6c6b99bd2a1e3217d385c8498bda87345d8909558ce23d2d1dea1e21b2a3c"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "354b453f3c1d114b81c33372695c31494a62d940049d600f70583b07d5e5a371"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 2710.9806960000133
+    },
+    {
+      "composerPath": "scripts/art_library/ice_moon_reference_composition_r003.ts",
+      "composerSHA256": "b5344bfa16a35ffa377b3a72012f46013f8b2dce2296f01ecf893b2b50cdf061",
+      "seed": 91,
+      "lod": 2,
+      "roles": [
+        {
+          "role": 0,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "ccb9507846ed91c252295b71eb3e5ec53eeb67877fe7acb0fa8f4bf987a2c32a"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 2718576,
+              "sha256": "986b979e615ecaae7c9f0b0914abdcd3392c1495d0023b9ce850fdeaa56a37df"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 1812384,
+              "sha256": "b1339fc90bcb4fce8c60c978cd8dcd77e7565b2f1563a89381e3c2f0b01851fb"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 906192,
+              "sha256": "e311adb153ec11dbbeb1c68a0056fb15164a2b073ec655a8ac87899117f33f21"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "15a6471f7aca93e0b71793041fee12a2d167f8a1d92559e07570ab616fd433e1"
+        },
+        {
+          "role": 1,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "a91db8e2390df56505b4ebe443da980aa2d518c1f0143fc2b8b3d49719928b7f"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 558144,
+              "sha256": "b79ccfe517884988456861839020eaad13b4fd05710e7bdb319b42be501a785d"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 372096,
+              "sha256": "091a57d95748a757f4af94bea877d5107dcec6d0f69397108e234c39eafa0fa0"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 186048,
+              "sha256": "9e84dfc55d71769e316e6c2bafef8f409089af519cfe84a570b1d739be5ca587"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "ca85d4bdf2bc71320d2cad4d805468492d3b292af62e3e9d3ce3448f2b2eb6dc"
+        },
+        {
+          "role": 2,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "f5551f0489ec177267e8edd3afee85caba24d0d3211bceea319e6f63ab7d44d9"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 1286208,
+              "sha256": "a789140a0b97742599913f312a5dbf01247f141488b6d9bed671f22dde490a0f"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 857472,
+              "sha256": "ad1ccc1992348f8068160cb5dd11252b5319a57c91fb18085a4cd098ae73b14a"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 428736,
+              "sha256": "4ae3f30394ab82fc5dc5f0a87a062d3bdec964e6b99c8332109e743b930be899"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "19616a45d9945a99ce76c7e6f5fc6b7476258f3fcbbd0c3b01d48508f288d08e"
+        },
+        {
+          "role": 3,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "c913015e39aad468754a14fa984f7cdb617db95d55ed22b4fc396829cb6c1438"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 962928,
+              "sha256": "ee9e5d4246f7eb6e2b3d8caa5c6415a8d94d5ab38fbfad3ad93688cd651b34d7"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 641952,
+              "sha256": "15a8c959351025ac85957e989a9187a1975daece4b3aa3329228e389f52cc193"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 320976,
+              "sha256": "851ff2ea875d62237c9bcf4ca3bb2cc45fa1c04bb7b3d84ee79e10c041470b6a"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "16dadb706dc0c8175b5719d0422e846b618dedac33124d87da2da7d863332561"
+        },
+        {
+          "role": 4,
+          "fields": {
+            "positions": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "b6a6c6b99bd2a1e3217d385c8498bda87345d8909558ce23d2d1dea1e21b2a3c"
+            },
+            "normals": {
+              "equal": true,
+              "bytes": 570816,
+              "sha256": "354b453f3c1d114b81c33372695c31494a62d940049d600f70583b07d5e5a371"
+            },
+            "uvs": {
+              "equal": true,
+              "bytes": 380544,
+              "sha256": "84ef6fef1b36cfefcbff4d04b1db71946a856b4cfb163e683161a9cd4bd618f4"
+            },
+            "indices": {
+              "equal": true,
+              "bytes": 190272,
+              "sha256": "d524bd7a8a22240f8e707db0f7ddb83c4d915fbeedde5a89ce6b18cc7c31fca5"
+            }
+          },
+          "rangesEqual": true,
+          "rangesSHA256": "e178706565d2e0db1fc5fb49f86bf24c79259a8cd8ec433bcb69aa9b30d3d311"
+        }
+      ],
+      "materialDefinitionsEqual": true,
+      "allBuffersEqual": true,
+      "rangesEqual": true,
+      "elapsedMs": 2717.1340320000018
+    }
+  ],
+  "allEqual": true
+}

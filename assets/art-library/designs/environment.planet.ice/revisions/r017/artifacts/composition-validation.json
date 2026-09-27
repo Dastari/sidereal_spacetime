@@ -1,0 +1,17 @@
+{
+  "testsPassed": 4,
+  "typescript": "passed",
+  "unitTriangles": 10048,
+  "allLOD": "exact geometry, normals, UVs, indices and placement ranges",
+  "clearance": [
+    "NullEngine shaft floor before substrate by >.015 radius",
+    "NullEngine open cut floor before substrate by >.005 radius"
+  ],
+  "artifactParity": "Four variants: zero material differences, zero missing channels, zero supplied corner attribute mismatches",
+  "status": "single-unit diagnostic only; two-angle actual planet review pending",
+  "hashes": {
+    "kit.json": "6f6673c23cc8dfe1797befd35f24c25e98ee8b86877508af8b2491f0ad3d3d8f",
+    "generator.py": "faee27d75b3ee1b3467cf4467417339f35a08d0761a4a9ab50901e1416e4aa92",
+    "composition-r017.ts": "272c3ed250549057f2a52291b333da59fd160d80729af117742e1bb8f9daba22"
+  }
+}

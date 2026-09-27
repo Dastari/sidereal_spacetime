@@ -4,6 +4,7 @@ import { HullPaintPanel } from "./HullPaintPanel";
 import { isArmorPaletteAlias } from "./armor-review";
 import { PanelResizeHandle } from "@sidereal/ui/editor-controls";
 import { LayoutContextOverlay } from "./LayoutContextOverlay";
+import { editorCommand, editorKeyTarget } from "@sidereal/ui/editor-commands";
 import { WallFitNotes } from "./WallFitNotes";
 import { MeasurementReadout } from "./MeasurementReadout";
 import type { MeasurementPoint } from "@sidereal/render/layout-measurement";
@@ -568,11 +569,18 @@ export default function HullWorkspace(props: Props) {
   useEffect(() => {
     const key = (e: KeyboardEvent) => {
       if (
-        (e.target as HTMLElement).closest(
-          'input,textarea,select,[contenteditable="true"],dialog',
-        )
+        editorKeyTarget(e.target) ||
+        e.defaultPrevented ||
+        !(e.target instanceof Element && e.target.closest(".hull-workspace"))
       )
         return;
+      const command = editorCommand(e);
+      if (command === "select" || command === "pan") {
+        e.preventDefault();
+        viewport.current?.cancel();
+        setTool(command);
+        return;
+      }
       if (e.key === "Escape") {
         if (tool === "measure") {
           viewport.current?.clearMeasurements();
@@ -657,12 +665,16 @@ export default function HullWorkspace(props: Props) {
           position: [
             selected.position[0] +
               (e.key === "ArrowLeft"
-                ? -snap
+                ? -snap * (e.shiftKey ? 10 : 1)
                 : e.key === "ArrowRight"
-                  ? snap
+                  ? snap * (e.shiftKey ? 10 : 1)
                   : 0),
             selected.position[1] +
-              (e.key === "ArrowUp" ? snap : e.key === "ArrowDown" ? -snap : 0),
+              (e.key === "ArrowUp"
+                ? snap * (e.shiftKey ? 10 : 1)
+                : e.key === "ArrowDown"
+                  ? -snap * (e.shiftKey ? 10 : 1)
+                  : 0),
             selected.position[2],
           ],
         });
@@ -696,6 +708,12 @@ export default function HullWorkspace(props: Props) {
   return (
     <div
       className="hull-workspace"
+      tabIndex={-1}
+      onPointerDownCapture={(e) => {
+        if (!editorKeyTarget(e.target)) {
+          e.currentTarget.focus({ preventScroll: true });
+        }
+      }}
       data-hull-workspace
       data-left={showLibrary ? "open" : "closed"}
       data-right={showInspector ? "open" : "closed"}
@@ -816,6 +834,9 @@ export default function HullWorkspace(props: Props) {
           onChange={props.onDeckChange}
         />
         <div className="hull-toolbar">
+          <button aria-pressed={tool === "pan"} onClick={() => setTool("pan")}>
+            Pan (H)
+          </button>
           <button
             className="hull-pane-toggle"
             aria-label="Toggle component library"

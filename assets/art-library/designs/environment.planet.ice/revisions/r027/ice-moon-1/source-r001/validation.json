@@ -1,0 +1,130 @@
+{
+  "publication": "isolated draft; existing ice-r015 untouched",
+  "sourceComponentsManifold": true,
+  "attributes": "Corner-expanded native normals and UVs preserve authored hard edges, snow smoothing and seams",
+  "variants": [
+    {
+      "name": "snow-cut-region",
+      "triangles": 10104,
+      "normalCount": 30312,
+      "uvCount": 30312,
+      "bounds": [
+        [
+          -1.4800000190734863,
+          1.703225016593933
+        ],
+        [
+          -1.3109145164489746,
+          1.1699999570846558
+        ],
+        [
+          -0.8399999737739563,
+          0.6473967432975769
+        ]
+      ]
+    },
+    {
+      "name": "snow-open-gorge",
+      "triangles": 17080,
+      "normalCount": 51240,
+      "uvCount": 51240,
+      "bounds": [
+        [
+          -1.899999976158142,
+          1.8799999952316284
+        ],
+        [
+          -1.0299999713897705,
+          1.0299999713897705
+        ],
+        [
+          -0.8399999737739563,
+          0.6494770050048828
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "triangles": 16680,
+      "normalCount": 50040,
+      "uvCount": 50040,
+      "bounds": [
+        [
+          -1.0939276218414307,
+          1.1270819902420044
+        ],
+        [
+          -1.0793830156326294,
+          1.0924206972122192
+        ],
+        [
+          -1.0872188806533813,
+          1.0673869848251343
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "triangles": 12840,
+      "normalCount": 38520,
+      "uvCount": 38520,
+      "bounds": [
+        [
+          -1.0939276218414307,
+          1.1270819902420044
+        ],
+        [
+          -1.0793830156326294,
+          1.0924206972122192
+        ],
+        [
+          -1.0872188806533813,
+          1.0673869848251343
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "triangles": 11880,
+      "normalCount": 35640,
+      "uvCount": 35640,
+      "bounds": [
+        [
+          -1.0939276218414307,
+          1.1270819902420044
+        ],
+        [
+          -1.0793830156326294,
+          1.0924206972122192
+        ],
+        [
+          -1.0872188806533813,
+          1.0673869848251343
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "ice-3-albedo.png": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7",
+    "snow-cut-region.glb": "e105d1df3377797c25efafcebf3943ab9570c55363b7c9600d865bcbb04d9512",
+    "kit.json": "3facdd4831a4ed043385ef6fdf75030cb7eadeba04b5ff19abd9587f0d0f4f2e",
+    "ice-3-orm.png": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+    "ice-4-albedo.png": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037",
+    "foundation-source.py": "002d90a4f818089acb1f50bba71ba7d0ed9c847ea55749a08ab403aa0ba48fe0",
+    "snow-open-gorge.glb": "dd1ebe7db3f5ae6435c7858c7a5f071d3876bc5c76fd77eccaa093bed258914f",
+    "ice-2-orm.png": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+    "variant-recipe.json": "eed38771088c3e30b6604825261e18515a9b26174192b0d497cadf068b1b4664",
+    "ice-1-albedo.png": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f",
+    "ice-4-orm.png": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4",
+    "ice-0-orm.png": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879",
+    "kit-preview.png": "60ec17e2b18a2f7e35e2d5aa9d0ea383a26c656841e0dd244e8ade767d4eb637",
+    "ground-sphere-medium.glb": "ec394181f35c838844ba9cf75c06f6b3ffb8dd36e62b2b611898aa9505476041",
+    "ground-sphere.glb": "4d50e9a2edd6d0bcbb53905a70d4fd35a0b4346cbf08d8e2feb806464cee7018",
+    "ice-0-albedo.png": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c",
+    "ground-sphere-low.glb": "dedb6a6f14e64d1beec7ff4b61e4af1793534aa17ae048fb18c97db323735f09",
+    "ice-1-orm.png": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973",
+    "ice-2-albedo.png": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d",
+    "generator.py": "ff8241df250b258c31bd66654ac5e5a2cc562c920668f3ad705b796d9fbe4004",
+    "kit.blend": "af9684bfed2c11226bf1cc37c6c1ef5d23205cb807f19662a70d8571e3d5642b"
+  }
+}

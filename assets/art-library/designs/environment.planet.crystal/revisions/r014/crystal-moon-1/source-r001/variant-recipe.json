@@ -1,0 +1,24 @@
+{
+  "referenceId": "planets--crystal-moon-1",
+  "foundation": "/root/sidereal_spacetime/scripts/art_library/build_crystal_native_kit_r009.py",
+  "foundationSha256": "f169c80e578789f719090496741b3757403e1e661489c4d8409bdc9f57a70759",
+  "runtimeStyle": "moon",
+  "status": "isolated authored candidate, exact visual review pending",
+  "seed": 1973,
+  "family": "crystal",
+  "hero": 0.16,
+  "count": 10,
+  "scales": [
+    0.36,
+    0.33,
+    0.37,
+    0.34,
+    0.36,
+    0.32,
+    0.37,
+    0.33,
+    0.36,
+    0.34
+  ],
+  "cue": "Rounded fractured purple lunar crust with compact regional magenta crystal relief"
+}

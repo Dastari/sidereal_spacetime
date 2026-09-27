@@ -1,0 +1,41 @@
+{
+  "retainedSource": "ocean-r007",
+  "materialDefinitionsExactOcean7": true,
+  "nativeContinentMaxEdge": 0.22,
+  "nativeContinentsClosed": true,
+  "variants": [
+    {
+      "name": "tree-grove",
+      "triangles": 992
+    },
+    {
+      "name": "small-grove",
+      "triangles": 496
+    },
+    {
+      "name": "ground-sphere",
+      "triangles": 5120
+    },
+    {
+      "name": "ground-sphere-medium",
+      "triangles": 1280
+    },
+    {
+      "name": "ground-sphere-low",
+      "triangles": 320
+    },
+    {
+      "name": "continent-a",
+      "triangles": 5150
+    },
+    {
+      "name": "continent-b",
+      "triangles": 5150
+    },
+    {
+      "name": "continent-c",
+      "triangles": 5046
+    }
+  ],
+  "publication": "isolated draft only"
+}

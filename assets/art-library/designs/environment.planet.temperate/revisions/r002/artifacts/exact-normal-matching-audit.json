@@ -1,0 +1,15 @@
+{
+  "method": "Maximum bipartite matching, preserves corner multiplicity/material boundaries; original strict tolerances unchanged",
+  "kitSha256": "426d18faaa123a9277f5b7cebc52e9ad0656a2c937f3168e8585021f113f3446",
+  "variant": "continent-a",
+  "expectedCorners": 13242,
+  "actualCorners": 13242,
+  "matchedCorners": 13242,
+  "unmatchedExpected": [],
+  "unmatchedActual": 0,
+  "positionTolerance": 1e-05,
+  "normalTolerance": 0.0001,
+  "uvTolerance": 1e-05,
+  "maximumNormalDelta": 8.453813056922496e-05,
+  "kitUnchanged": true
+}

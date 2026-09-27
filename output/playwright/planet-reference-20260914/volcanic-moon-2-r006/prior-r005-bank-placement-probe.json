@@ -1,0 +1,236 @@
+{
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 5.5
+  },
+  "hits": [
+    {
+      "x": 633,
+      "y": 538,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-charcoal-crust",
+      "face": 29855,
+      "placement": {
+        "firstTriangle": 25524,
+        "triangleCount": 5119,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-4"
+      },
+      "point": [
+        -0.5718586057520252,
+        0.12680066500298093,
+        0.8688760343153605
+      ]
+    },
+    {
+      "x": 653,
+      "y": 538,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-molten-fault",
+      "face": 3239,
+      "placement": {
+        "firstTriangle": 2220,
+        "triangleCount": 1416,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-4"
+      },
+      "point": [
+        -0.5359065119627928,
+        0.12146210519004486,
+        0.913147602471966
+      ]
+    },
+    {
+      "x": 626,
+      "y": 568,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-charcoal-crust",
+      "face": 30015,
+      "placement": {
+        "firstTriangle": 25524,
+        "triangleCount": 5119,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-4"
+      },
+      "point": [
+        -0.5948760087835709,
+        0.0438585268684748,
+        0.8614968393850793
+      ]
+    },
+    {
+      "x": 630,
+      "y": 611,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-charcoal-crust",
+      "face": 29938,
+      "placement": {
+        "firstTriangle": 25524,
+        "triangleCount": 5119,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-4"
+      },
+      "point": [
+        -0.5743636516121184,
+        -0.0966520871246459,
+        0.8711049753717575
+      ]
+    },
+    {
+      "x": 563,
+      "y": 650,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-molten-fault",
+      "face": 2659,
+      "placement": {
+        "firstTriangle": 2220,
+        "triangleCount": 1416,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-4"
+      },
+      "point": [
+        -0.7713662506010213,
+        -0.15128549242498668,
+        0.7584504517733937
+      ]
+    },
+    {
+      "x": 579,
+      "y": 670,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-charcoal-crust",
+      "face": 30026,
+      "placement": {
+        "firstTriangle": 25524,
+        "triangleCount": 5119,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-4"
+      },
+      "point": [
+        -0.6663603591272413,
+        -0.26701263793564056,
+        0.7630455346568972
+      ]
+    },
+    {
+      "x": 477,
+      "y": 631,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-charcoal-crust",
+      "face": 30427,
+      "placement": {
+        "firstTriangle": 25524,
+        "triangleCount": 5119,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-4"
+      },
+      "point": [
+        -0.9263359628475909,
+        -0.06439843468019246,
+        0.5742807597177491
+      ]
+    },
+    {
+      "x": 496,
+      "y": 622,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-charcoal-crust",
+      "face": 29525,
+      "placement": {
+        "firstTriangle": 25524,
+        "triangleCount": 5119,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-4"
+      },
+      "point": [
+        -0.8720288039550992,
+        -0.05580868819949947,
+        0.6038188266289626
+      ]
+    },
+    {
+      "x": 453,
+      "y": 779,
+      "hit": false,
+      "face": -1
+    },
+    {
+      "x": 476,
+      "y": 759,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-cooled-fracture",
+      "face": 46317,
+      "placement": {
+        "firstTriangle": 43332,
+        "triangleCount": 4948,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-9"
+      },
+      "point": [
+        -0.7469199548154677,
+        -0.600039633498187,
+        0.48272139274783066
+      ]
+    },
+    {
+      "x": 414,
+      "y": 145,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-molten-fault",
+      "face": 73,
+      "placement": {
+        "firstTriangle": 0,
+        "triangleCount": 1416,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-0"
+      },
+      "point": [
+        -0.2532201220081305,
+        1.0531858862059722,
+        0.017082818799326827
+      ]
+    },
+    {
+      "x": 442,
+      "y": 140,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-charcoal-crust",
+      "face": 9112,
+      "placement": {
+        "firstTriangle": 5120,
+        "triangleCount": 5119,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-0"
+      },
+      "point": [
+        -0.15280095350553413,
+        1.0518323158565295,
+        0.05473461284410419
+      ]
+    },
+    {
+      "x": 330,
+      "y": 162,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-charcoal-crust",
+      "face": 9113,
+      "placement": {
+        "firstTriangle": 5120,
+        "triangleCount": 5119,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-0"
+      },
+      "point": [
+        -0.3175466523485282,
+        0.9896010398169814,
+        -0.22925948753993453
+      ]
+    },
+    {
+      "x": 163,
+      "y": 515,
+      "hit": true,
+      "mesh": "native-planets--volcanic-moon-2-charcoal-crust",
+      "face": 45090,
+      "placement": {
+        "firstTriangle": 40881,
+        "triangleCount": 5119,
+        "partId": "reference-review:38:planets--volcanic-moon-2/crust-7"
+      },
+      "point": [
+        -0.9587905970756236,
+        0.07041611269393666,
+        -0.42757873484438047
+      ]
+    }
+  ]
+}

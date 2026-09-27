@@ -1,0 +1,2153 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "environment.planet.ocean",
+  "asset_uuid": "c6986d90-2555-5ccf-b102-cee1373f275e",
+  "reference_ids": [
+    "planets--ocean-world",
+    "planets--ocean-moon-1",
+    "planets--ocean-moon-2"
+  ],
+  "mapping_status": "proposed shared production family; inspect and split distinct geometry before implementation",
+  "current_revision": 8,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 50,
+  "profile": "planet",
+  "assigned_to": "root/planet-reference-20260914",
+  "blocker": null,
+  "feedback": [
+    {
+      "revision": 7,
+      "author": "agent",
+      "text": "Current isolated candidate checkpoint. Working visual passes are scoped in docs/planet_reference_iteration_20260914.md and independent review reports; this is not full readiness, owner sign-off or publication. Moon variants, full runtime integration, hardware Flight/Map transitions and any listed optical gaps remain separate.",
+      "message_reference": "docs/planet_reference_iteration_20260914.md",
+      "recorded_at": "2026-09-14T04:37:36.716192+00:00",
+      "resolved_by_revision": null
+    },
+    {
+      "revision": 8,
+      "author": "agent",
+      "text": "Moon preservation checkpoint only. Main-world deliverable remains r007; prior feedback/approval state unchanged. Per-moon gates and original source revisions are in manifest.json and attached independent reviews. Remaining candidates, runtime integration and hardware Flight/Map LOD acceptance remain in progress.",
+      "message_reference": "output/playwright/planet-reference-20260914/reviews/moon-canonical-checkpoint-proposal.md",
+      "recorded_at": "2026-09-14T05:38:17.007892+00:00",
+      "resolved_by_revision": null
+    }
+  ],
+  "approvals": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-08",
+      "stage": "reference-only",
+      "change": "Reference inventory and provisional scale/gameplay brief",
+      "hypothesis": null,
+      "covered_reference_ids": [],
+      "evidence": [],
+      "review": null
+    },
+    {
+      "revision": 1,
+      "created_at": "2026-09-14T01:03:56.863841+00:00",
+      "stage": "changes-requested",
+      "change": "Native Blender island, atoll, coastline and grove kit with sparse seeded wholeplanet composition.",
+      "hypothesis": "Broad open ocean, pale shore shelves and steep sparse islands distinguish ocean from temperate.",
+      "covered_reference_ids": [
+        "planets--ocean-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.ocean/revisions/r001/runtime-close.png",
+          "sha256": "fea89579532ae933b81b41063a21dd3ca8684e4d86b51411c0cb7c13628cce42",
+          "bytes": 294051,
+          "notes": "",
+          "capture_context": "Actual isolated Babylon SwiftShader; appearance only, no timing acceptance.",
+          "recorded_at": "2026-09-14T01:32:43.619601+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Both agents reject sparse tiny islands on bare ocean sphere and concentric coast disks; see ocean-r001-review.md.",
+        "recorded_at": "2026-09-14T01:32:44.084921+00:00"
+      }
+    },
+    {
+      "revision": 2,
+      "created_at": "2026-09-14T01:32:44.472794+00:00",
+      "stage": "changes-requested",
+      "change": "Ten global island groups, asymmetric native coasts and restored baseline atmosphere/clouds.",
+      "hypothesis": "Broader island coverage and shore variation improve reference alignment.",
+      "covered_reference_ids": [
+        "planets--ocean-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.ocean/revisions/r002/runtime-close.png",
+          "sha256": "e63dbb9c6e250ae7f63006de7d9033a0349e0ed50419992bd9a6cd7dfd0d7449",
+          "bytes": 481945,
+          "notes": "",
+          "capture_context": "Actual isolated Babylon SwiftShader; appearance only.",
+          "recorded_at": "2026-09-14T01:32:44.873246+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Both agents reject pillar islands and vanished shelves. Author later identified cumulative coast-width mutation. Clouds also need reference alignment.",
+        "recorded_at": "2026-09-14T01:32:45.270328+00:00"
+      }
+    },
+    {
+      "revision": 3,
+      "created_at": "2026-09-14T01:32:45.680664+00:00",
+      "stage": "changes-requested",
+      "change": "Correct shore-width mutation; lower five-island groups with tessellated radial coast placement.",
+      "hypothesis": "Native shelf clearance and broader low islands restore coastal hierarchy.",
+      "covered_reference_ids": [
+        "planets--ocean-world"
+      ],
+      "evidence": [],
+      "review": null
+    },
+    {
+      "revision": 4,
+      "created_at": "2026-09-14T04:37:36.716192+00:00",
+      "stage": "changes-requested",
+      "change": "Preserve water and native island foundation while separating regional shore/grove scale.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--ocean-world"
+      ],
+      "evidence": [
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r004/artifacts/composition-r004.ts",
+          "sha256": "b646e952fcd113ff143558b8119517ebf134c840ef24f24f8d4c65219e21a568",
+          "bytes": 5459,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r004/artifacts/native_deformation_normals.ts",
+          "sha256": "ebedef67ea728b2937058dc0c0868decb7434d4f6955b7b41e7823560e028200",
+          "bytes": 909,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r004/artifacts/normal-change-validation.json",
+          "sha256": "0b26c2d7a929c5ad22b88d345cb7f2c172a0beb863bf11061c74fcfb9fa791a8",
+          "bytes": 811,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.ocean/revisions/r004/artifacts/planet-seed38-angle2.png",
+          "sha256": "d2f8297e85f59a993f113c354e7bfac897d45606dfb094bd0d608703490c6f55",
+          "bytes": 282274,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.ocean/revisions/r004/artifacts/planet-seed38.png",
+          "sha256": "25bf6439ec85488238890b45699f8bec55b36bbc9b631e58f5146782fa145df2",
+          "bytes": 277964,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r004/artifacts/revision-notes.md",
+          "sha256": "6b3fe4bec433b43003c15484e20f1a038e821db31abec9b357e6f11fd8f6ad10",
+          "bytes": 1086,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 5,
+      "created_at": "2026-09-14T04:37:36.716192+00:00",
+      "stage": "changes-requested",
+      "change": "Broaden asymmetric native shores and native groves; preserve radial relief.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--ocean-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/archipelago.glb",
+          "sha256": "60d53688daef90daf34159fe1edf49393811a8c6adc16d5f198f499b38797b09",
+          "bytes": 343784,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/composition-notes.md",
+          "sha256": "ab2d6f75c4e9e2624577e127eef58aba9049ee3cb473c85535dd79a552f87e2c",
+          "bytes": 1140,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/composition-r005.test.ts",
+          "sha256": "5995167e88a847105c2268517ab2c489379490c185e95cb807cb2c2b59c35fa3",
+          "bytes": 6063,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/composition-r005.ts",
+          "sha256": "795d82abfd5b304ac6fdc7eee3cdf01bb1773b2d8f75e4de7b743114ff87a4ee",
+          "bytes": 5731,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/composition-validation.json",
+          "sha256": "c0199ffedc8c13a3c9ac668b4a12edd8585f7f325066aa248dc10440fbe7cf6f",
+          "bytes": 857,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/ground-sphere-low.glb",
+          "sha256": "dd68c9c391e78a627eb11e64cc5b60bb63f11de514128b70fc825516c030c7d9",
+          "bytes": 9892,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/ground-sphere-medium.glb",
+          "sha256": "cc06c79b328b783b3762647154ff14127a25a2b491cc43b86f6729ac173e454d",
+          "bytes": 32428,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/ground-sphere.glb",
+          "sha256": "db06db4beb8164a9c6516f602bc77f9144c485340ffce5e0d4bade26d9b224fd",
+          "bytes": 119728,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/kit-preview.png",
+          "sha256": "c01e5c65b7834d26a353f6d166aa5f8d5b7dae856f0526e366d306ce83cf48fa",
+          "bytes": 1027509,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/kit.blend",
+          "sha256": "97193220eb8a8d3bb1ad0dcd457152c5345f8c97a01b94512ba9eca822a79eeb",
+          "bytes": 2922448,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/kit.json",
+          "sha256": "f347a6b76b0b8040f44358c7c1af85fb302384505eff771a735ead735096f5d9",
+          "bytes": 1416438,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/lagoon-atoll.glb",
+          "sha256": "42538793ddd1bdeb28bef9d659d32cffecb5d4e2a4dfea32023591271b6f77c9",
+          "bytes": 188456,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/long-island.glb",
+          "sha256": "506ccb9384bbb8dbdab611285a3e240c4a15fd7bb0957d6d729923e6970fc7e0",
+          "bytes": 70152,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/native_deformation_normals.ts",
+          "sha256": "0667bfc25c2fd3b26ab9ce5c9ab08ce3f88317b3a01a7ed7cdc3ff846e5d3906",
+          "bytes": 1472,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/planet-seed38-angle2.png",
+          "sha256": "061e0783f0db3bfc5923008ff4d5ec2cac7fadd1000d415173d22339a08d7911",
+          "bytes": 295082,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/planet-seed38.png",
+          "sha256": "e4c05e103e90678956ab361fabc51b6f3bac3a8023ba6fe6b1e3b1b46b17e8a6",
+          "bytes": 269550,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/small-grove.glb",
+          "sha256": "78619e8f6dc4e09ddf91098392d16df07fb445c61618066706499a951327060d",
+          "bytes": 64208,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/steep-island.glb",
+          "sha256": "ef8c0efad6d7cc827db7dc0fdfaeb13bb92a3ef209d878f8850385a3281ae945",
+          "bytes": 70460,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/tiny-islet.glb",
+          "sha256": "a811ce4c921fd63365d9ec2835be2406d295ac308b6ff8c992af63208effb09c",
+          "bytes": 70196,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/tree-grove.glb",
+          "sha256": "781e18c6ebdd8cf48aaf1d37b8911d5f1626165e20cf2d140b37cf070bf8f733",
+          "bytes": 127144,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r005/artifacts/validation.json",
+          "sha256": "978fbc14e307e0f1ac7085cda23376b3897a73d864758fb2a73077b8d40c1e0f",
+          "bytes": 5062,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 6,
+      "created_at": "2026-09-14T04:37:36.716192+00:00",
+      "stage": "changes-requested",
+      "change": "Water, reef and grove appearance working subgates; island finish remains open.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--ocean-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/archipelago.glb",
+          "sha256": "85204374ec72fc42531795282832ac9a88c5031aa557165ece3793bfe0382fdc",
+          "bytes": 854764,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/composition-r006.test.ts",
+          "sha256": "cf46efd2b2d64e90262df0bb29924d07c743a6f0772c665a94732f4a5ddb5a39",
+          "bytes": 5820,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/composition-r006.ts",
+          "sha256": "f7eab012e07ab30e9ecdff51a3ad371cb845f945749316e6e7cac95f1cc4f01c",
+          "bytes": 6172,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/composition-validation.json",
+          "sha256": "ca98e5c43801734b96cdac48650c9894fa95b5d795126199983d595d7ecc3066",
+          "bytes": 1200,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/generator.py",
+          "sha256": "849778c1f429eac9033d9a81c31e23af8a8ec5e503d7c1a3f70ecb3eb6f8697c",
+          "bytes": 14927,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/ground-sphere-low.glb",
+          "sha256": "03138956e4425d3ecc9e8b98b8738f9ee1d356307d10b1a876fb185e06b57386",
+          "bytes": 265936,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/ground-sphere-medium.glb",
+          "sha256": "e9841cb038ad5f038c884212f02ddb9ee57d5a9bea763e38ecc882cf18b766cd",
+          "bytes": 287448,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/ground-sphere.glb",
+          "sha256": "22ec0dcb11d5fbbb669c36e095bfad24c01009e7c5554eea991072beed461775",
+          "bytes": 372700,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/kit-preview.png",
+          "sha256": "8e9c12ce2ae619495c29295ae1bb027bf2267e0959037e6b693b8b8d31f31287",
+          "bytes": 1031066,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/kit.blend",
+          "sha256": "069b4b98b36e84def3d10e4042dd2961894be90bcf87208a95f5e9ae8a9f87f1",
+          "bytes": 4726537,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/kit.json",
+          "sha256": "c1bca6539f8654a22f96ff831e79564c5dbdfd0ed95447dd2c93c8b9da367adf",
+          "bytes": 20583406,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/lagoon-atoll.glb",
+          "sha256": "c570ebf34cbb6fdabd2b2c11189e333411d48a440f037e351300b0e9ae91dd18",
+          "bytes": 764612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/long-island.glb",
+          "sha256": "e7cff73f331627374e01b10efd591016cd385d924de87b45363cd5c6ba858bf6",
+          "bytes": 373780,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/native_deformation_normals.ts",
+          "sha256": "0667bfc25c2fd3b26ab9ce5c9ab08ce3f88317b3a01a7ed7cdc3ff846e5d3906",
+          "bytes": 1472,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/planet-seed38-angle2.png",
+          "sha256": "aa652f1d32f2dfa78be059134d83fed423147efd2d4f97023b8ef9c6d7508cd8",
+          "bytes": 324395,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/planet-seed38.png",
+          "sha256": "ba5e6dadbc00c5507fcef73223cce6568b9fbdc38c492ba6bbc683a716456733",
+          "bytes": 307076,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/revision-notes.md",
+          "sha256": "0f879c19ccfd2526b4a0cb70bc8a44777934aecad84e4cc746ba21541b9b9dd0",
+          "bytes": 2371,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/small-grove.glb",
+          "sha256": "136c588d9fd44d5e8ef9d6cedc852333a399fbfd191e57e253d83128150f7c2b",
+          "bytes": 64208,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/steep-island.glb",
+          "sha256": "8a8c9ddf694122cd0d1dce2b224c65d383fb530695c8af74d7850798f839ef5f",
+          "bytes": 373200,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/tiny-islet.glb",
+          "sha256": "fab1ee075701ac99bb104f1c777e3d224cbc6872631e7483ce4069890dfea7a5",
+          "bytes": 373716,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/tree-grove.glb",
+          "sha256": "ef1f3c825210d5aa9f4ae848c3801b6c3a8a961ca28d89ca39676ab9912b83a1",
+          "bytes": 127144,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/validation.json",
+          "sha256": "3a084713784bce83c5fb490564883bff27ed4a678f3cc887e8858f42f22f9e37",
+          "bytes": 5326,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/water-albedo.png",
+          "sha256": "e05012eda3625e188f23ee5ebbfc75b57c5d522752a33c93b25122a44cf805a7",
+          "bytes": 54636,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/water-normal.png",
+          "sha256": "39232b0a816d26908fe3bc7842b1699ed2e93c99e44847f92d4cb9626987742f",
+          "bytes": 132322,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r006/artifacts/water-orm.png",
+          "sha256": "594ab38132c524629984063a8ce56206f4bbf9e7baf6d4aa08b3c6850c466cfc",
+          "bytes": 69599,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 7,
+      "created_at": "2026-09-14T04:37:36.716192+00:00",
+      "stage": "in-progress",
+      "change": "Island-only finish over the preserved water/reef/grove source.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--ocean-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/archipelago.glb",
+          "sha256": "23533fd3886e1553585e1da655ddb8ae35e840a4f24f230b62cc1f0c476ccb7f",
+          "bytes": 2508872,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/composition-r007.test.ts",
+          "sha256": "827304c3fb88588011d216d6855b19f0c4c39679e72c7e1723b6fb8c49a350a6",
+          "bytes": 7081,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/composition-r007.ts",
+          "sha256": "c22cbc5fe97e0f17d1c39ea0e7b85b624574f8a59ac000eae50a729f4c38fcac",
+          "bytes": 6179,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/composition-validation.json",
+          "sha256": "4313564cc7786d77f57475db0704c745077a186a528528ace58829499ff87de6",
+          "bytes": 860,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/current-optics-run.log",
+          "sha256": "91fd4fdd7e640983eb9d82b6f68467ee46c5d92c68b06abeb75003ba4c4ff965",
+          "bytes": 550,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/current-optics-seed38-angle2.png",
+          "sha256": "af3a60b7d6d26f1c8e69a115cd72a312a0fc7a2acca65603377e69120e3ee7d5",
+          "bytes": 349256,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/current-optics-seed38-capture.log",
+          "sha256": "db5d1b4d7d9e78d9fd25e7e39fc821d8fd994c3cce9687be3c71065e671edc7f",
+          "bytes": 2745,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/current-optics-seed38-reference-scale.png",
+          "sha256": "e32f04f53c82af4ddd6ae577987ad09235c797fe0333d875d0068506019d2918",
+          "bytes": 94729,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/current-optics-seed38.json",
+          "sha256": "3ce829ff675a8067006cb4bb4047eb255c5795af4fee2c2e49b4e58c34fab386",
+          "bytes": 1989,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/current-optics-seed38.png",
+          "sha256": "caa299c0af918cac4a381fe3ce1d7c6a904543be7ee54baee45f03cce95efd3f",
+          "bytes": 331211,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/generator.py",
+          "sha256": "4c7a6c151b3ccb10a0e340d24d3158d2b495b029dd4e3ba7d7bdbb18bf9e464a",
+          "bytes": 7698,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/ground-sphere-low.glb",
+          "sha256": "03138956e4425d3ecc9e8b98b8738f9ee1d356307d10b1a876fb185e06b57386",
+          "bytes": 265936,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/ground-sphere-medium.glb",
+          "sha256": "e9841cb038ad5f038c884212f02ddb9ee57d5a9bea763e38ecc882cf18b766cd",
+          "bytes": 287448,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/ground-sphere.glb",
+          "sha256": "22ec0dcb11d5fbbb669c36e095bfad24c01009e7c5554eea991072beed461775",
+          "bytes": 372700,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-1-albedo.png",
+          "sha256": "cf05fa7597941cd4a9dfcd9b808affb1147d27ec8cbe560361997862d1097630",
+          "bytes": 95918,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-1-normal.png",
+          "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48",
+          "bytes": 96770,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-1-orm.png",
+          "sha256": "49d55db301acb4fa17eb366e6282a48dd7d7d5131f8d5665c3ba40c61bcac155",
+          "bytes": 61173,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-2-albedo.png",
+          "sha256": "0a4555636d01e76b98b21732488ec31dfeb597f233fd684abbefee47ed4340e3",
+          "bytes": 95963,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-2-normal.png",
+          "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48",
+          "bytes": 96770,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-2-orm.png",
+          "sha256": "f89ba9b6acba36367557aab26aba759e6d51af93d69110665a7aa496157ff413",
+          "bytes": 61190,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-3-albedo.png",
+          "sha256": "95d88f8e7fa2ad03e45c767cfbdfd3900abcabab7a9303ccb57f280aad65b66b",
+          "bytes": 100063,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-3-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-3-orm.png",
+          "sha256": "ca20405ec37d8bc842a1ecb59dfb44133ef546ed6e0623f00794d3f0f890e6f5",
+          "bytes": 72729,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-4-albedo.png",
+          "sha256": "dfb9545f38dc50eeb530499932c855b670fa003ea57822e63cc27c6813206394",
+          "bytes": 97689,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-4-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-4-orm.png",
+          "sha256": "a903a4bd0fcfede7e968335fb2ae865c5a24bc875642be3eb1c3f6f05cb96086",
+          "bytes": 72407,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-5-albedo.png",
+          "sha256": "3b98bdacbccbfd9eacf760161d64d0c5fa8799541d68da29c1ea2743d9b7f9c5",
+          "bytes": 95102,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-5-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-5-orm.png",
+          "sha256": "7ae19499b3a2cbd6149b8f03fdeb71960cf82460c21de40c5f2e91e577178223",
+          "bytes": 72543,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-6-albedo.png",
+          "sha256": "885892ae66865e9380596fc4d7d6654758bffaea3d36e55c349002d7d78fe2fd",
+          "bytes": 95442,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-6-normal.png",
+          "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2",
+          "bytes": 111546,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/island-6-orm.png",
+          "sha256": "a646f1100c24da8bead6add3abe283f5c04a6f270e3fbd866bb157f1ff176d1c",
+          "bytes": 72547,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/kit-preview.png",
+          "sha256": "0c13e9787f659c9052ee5768e27af8bc5eee35bd3e069848958c81faa738fab8",
+          "bytes": 1025634,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/kit.blend",
+          "sha256": "bdadc2fd0a825ed37e74a347cf13f94555b452ec78934c30a940289ef5693a25",
+          "bytes": 6621283,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/kit.json",
+          "sha256": "71c2918ae71f8d074bfb8a8d94bc76f7271dd94e8a20c2c1b1f323f30d057f22",
+          "bytes": 20546174,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/lagoon-atoll.glb",
+          "sha256": "c570ebf34cbb6fdabd2b2c11189e333411d48a440f037e351300b0e9ae91dd18",
+          "bytes": 764612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/long-island.glb",
+          "sha256": "716669bbe888bb169caf09cf8d7219dd130485d85e9f03cd274ec839d5d567c7",
+          "bytes": 2012492,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/native_deformation_normals.ts",
+          "sha256": "0667bfc25c2fd3b26ab9ce5c9ab08ce3f88317b3a01a7ed7cdc3ff846e5d3906",
+          "bytes": 1472,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/planet-reference-scale.png",
+          "sha256": "44d4a0202928735b2116c34fbeb643d38f76856360a6c8951482e7ddea882e29",
+          "bytes": 111606,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/planet-seed38-angle2.png",
+          "sha256": "7895ff63f6cfe140803f49753ecb487e843fbf577873b4ae0d5e6945a2c7e339",
+          "bytes": 350632,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/planet-seed38.png",
+          "sha256": "d7e82d37fecfde6de21af90c5e279508e8480e081fe627a8bd6301046cd3dd8c",
+          "bytes": 328114,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/revision-notes.md",
+          "sha256": "ed949617d38634d14311ba052f03f853dc56d81b705a2335a3b19022353a12da",
+          "bytes": 1943,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/small-grove.glb",
+          "sha256": "136c588d9fd44d5e8ef9d6cedc852333a399fbfd191e57e253d83128150f7c2b",
+          "bytes": 64208,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/steep-island.glb",
+          "sha256": "0e89e757d5e43d1b433daef01285b3caf89b26abc8f2ccaad56dfcd94a7b4606",
+          "bytes": 2013836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/tiny-islet.glb",
+          "sha256": "c69e58be15dbc0018fc6ca14579e38cc584622de158b29d295ad292b2257db59",
+          "bytes": 2013232,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/tree-grove.glb",
+          "sha256": "ef1f3c825210d5aa9f4ae848c3801b6c3a8a961ca28d89ca39676ab9912b83a1",
+          "bytes": 127144,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/validation.json",
+          "sha256": "4b9a5f035f3104e4929eb2cae067917efdbca9046c2d5f83d17d09d4b94e143d",
+          "bytes": 3759,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/water-albedo.png",
+          "sha256": "e05012eda3625e188f23ee5ebbfc75b57c5d522752a33c93b25122a44cf805a7",
+          "bytes": 54636,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/water-normal.png",
+          "sha256": "39232b0a816d26908fe3bc7842b1699ed2e93c99e44847f92d4cb9626987742f",
+          "bytes": 132322,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r007/artifacts/water-orm.png",
+          "sha256": "594ab38132c524629984063a8ce56206f4bbf9e7baf6d4aa08b3c6850c466cfc",
+          "bytes": 69599,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:36.716192+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 8,
+      "created_at": "2026-09-14T05:38:17.007887+00:00",
+      "stage": "in-progress",
+      "change": "Preserve independently authored moon variants and failed/diagnostic history; main world remains pinned to r007.",
+      "hypothesis": "Explicit per-reference source-revision evidence preserves variant identity while remaining visual, optical and hardware/LOD gates are completed independently.",
+      "covered_reference_ids": [
+        "planets--ocean-moon-1",
+        "planets--ocean-moon-2"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/angular-outcrops.glb",
+          "sha256": "5b75b371fd6ecb29177440314682fa6f7db09009830f4d60db959be90dc5993e",
+          "bytes": 329808,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.794491+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/battered-region-a.glb",
+          "sha256": "af9d971311c09758caf34b9b4b3128bbca2062690bb7f5df62d31b92e671b391",
+          "bytes": 1255084,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.798982+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/battered-region-b.glb",
+          "sha256": "937f333c165980e508d50d861cb713c1a2a1c46e7aa01b6809e1c4760f8c8886",
+          "bytes": 1250884,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.802006+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/build_hybrid_moon_native_variants_r001.py",
+          "sha256": "7d599394f6acf18af32b2f8357daf6fe1fc79be01d99f34e60033468b2b7b515",
+          "bytes": 6647,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.802418+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/corrected-run.log",
+          "sha256": "9427eb89960ec98426042027e34fe116bf826d54bb207f4f347a9c5df05f896c",
+          "bytes": 551,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.802643+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/corrected-seed38-angle2.png",
+          "sha256": "47a6d1e1ca73fa5c8e9ccb970be18ff8470fe68a6102643f2a760eee80d42514",
+          "bytes": 314392,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.803697+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/corrected-seed38-capture.log",
+          "sha256": "9de93390919113c052e88862eefcbf90477a885425e42a61c0cd863f9f4ec25c",
+          "bytes": 2776,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.804281+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/corrected-seed38-reference-scale.png",
+          "sha256": "f2c2988e637f48061d14f0922123c8f166c2a51f39f72469fdc5909d6358804f",
+          "bytes": 19037,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.805135+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/corrected-seed38.json",
+          "sha256": "c5ab5b7fc85d3356fdbd3db9ef8333d66920611ca8a926ce5721ba7f007a6c02",
+          "bytes": 1998,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.805408+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/corrected-seed38.png",
+          "sha256": "e5ed1e2fb226599157a2e95f7aac2a5c3f9bf0d222b2cd2c4e8f1b924202189b",
+          "bytes": 350929,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.806545+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/crater-broken.glb",
+          "sha256": "fd0d40f86e2b5b3d911fe3ad990621fe75c4603739f1b5f6aff8c85f6aa111d9",
+          "bytes": 551924,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.809739+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/crater-large.glb",
+          "sha256": "03558e438de68adbb676fbac8be34670f777872d85fe06073515a1fc9ff4448b",
+          "bytes": 551920,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.811961+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/crater-small.glb",
+          "sha256": "aee000e1a30d00342ed48165419848a9e4080d615a54620ecae0b0d4a697b174",
+          "bytes": 551932,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.813715+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/exact-reference.png",
+          "sha256": "d9ff21fbcae013a205e75dee9086430825cd6335fe266ddd36af9903439f50f6",
+          "bytes": 12310,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.814368+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/foundation-source.py",
+          "sha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+          "bytes": 19405,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.814616+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/fractured-shelf.glb",
+          "sha256": "a7d85d2aef997fb23d7b0d418e1efc74acaffec84fd9743722599ba71f8cf8f5",
+          "bytes": 329800,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.815479+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/generator.py",
+          "sha256": "f73f9d1b024dfa648383eb0b0d4bb2c81f3fccb91df91a18d1d48a4086264250",
+          "bytes": 22406,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.815726+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/ground-sphere-low.glb",
+          "sha256": "bb5cdd4d7e2e050450977a18e6e62bd72214e7b28238d806e92831604ede2a5f",
+          "bytes": 115704,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.816217+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/ground-sphere-medium.glb",
+          "sha256": "8df9a24d0e979b44d37b975ffc5de04d81c508939f63eaea9f528c7171386697",
+          "bytes": 138240,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.816807+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/ground-sphere.glb",
+          "sha256": "58753623db22f318db8ec0370b9f9d0d202ae53790365e75b940ab12d50511ba",
+          "bytes": 225536,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.817507+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/hybrid_moon_reference_composition_r001.test.ts",
+          "sha256": "61b45bac55566bbe1596d63f162fce4e1a63e68bbed8a40041706ab5babba459",
+          "bytes": 6059,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.817715+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/hybrid_moon_reference_composition_r001.ts",
+          "sha256": "8824c5820d3f86864b303f3ca4c245891c6730f7dd28288152732f0d7afa205f",
+          "bytes": 5201,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.817904+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/hybrid_moon_reference_r001.tsconfig.json",
+          "sha256": "857094ab09b85f1d69a1e7d2191f3d727f4cc934356827fda9749d9d9b9740ed",
+          "bytes": 172,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.818080+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/hybrid_moon_reference_r001.vitest.config.ts",
+          "sha256": "81a6bb42954f3a5a9f250beb10a2170e49cfed64fa04ce032f659079cb7d9eae",
+          "bytes": 176,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.818266+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/kit-preview.png",
+          "sha256": "afa9162342ab2549bba7dc6cc6ffcacb351405aa4fd6551ed36a948dcdcbdda4",
+          "bytes": 1114962,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.820755+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/kit.blend",
+          "sha256": "0b3f2728e02deccc913fbfa078143f23c625851e0619c3e5532991db92ad3cad",
+          "bytes": 5197930,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.831296+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/kit.json",
+          "sha256": "ffb61918739465a4d34ccc82beab3201afbd1e707687e4519a4d94701a7cb3a8",
+          "bytes": 16377882,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.859638+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/mineral-seam.glb",
+          "sha256": "da1a66a8be743e23050fdaaf1be33a1b526d5469b6335696cbe687d484bccc07",
+          "bytes": 218216,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.860697+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/revision-notes.md",
+          "sha256": "25ab6fbce54b7ded925ea85a68069741f681c2a2b7b9d6e42b0dcf65af99ef48",
+          "bytes": 1604,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.861020+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-0-albedo.png",
+          "sha256": "0030c5deceb3918e252e8e93f268999fc86b378f9c5d6f0d9b799ed1ace8f965",
+          "bytes": 72013,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.861417+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.861781+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-1-albedo.png",
+          "sha256": "53652007ff9b36f4d9310f1145e2756a053c17237b9390687ca3c752eb393cde",
+          "bytes": 74501,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.862168+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.862694+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-2-albedo.png",
+          "sha256": "abc5e4313e37a4a54c4f263fcf9c70f336dafddde115cd4d3067effc5d237e4e",
+          "bytes": 55924,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.863166+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.863542+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-3-albedo.png",
+          "sha256": "668b9cd85a14224171eb1214c3e9a1e79dec6339cc5d9291074b6e9c0a71ae18",
+          "bytes": 65583,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.864339+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.864711+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-4-albedo.png",
+          "sha256": "6c903a1fe254238e8d0ddf53c7900ee9597e28e0f7e55a4d96a49c4f8ce45c14",
+          "bytes": 70888,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.865083+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-4-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.865359+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-5-albedo.png",
+          "sha256": "da3254d36ea267109d2d6bee88525ead99ac2255d4f3c58738ce744b4723cad8",
+          "bytes": 72059,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.865754+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.866062+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/validation.json",
+          "sha256": "9bf91eb670dffa3e71d224fcbb286c81c682a085390e6792c47043fe075dcf65",
+          "bytes": 6956,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.866285+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/variant-recipe.json",
+          "sha256": "5715f368f85562522db433c4146dfbf1192375b2b4fa96410ab69161ad6fcffb",
+          "bytes": 1106,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.866621+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/angular-outcrops.glb",
+          "sha256": "29466524dddd93729ddaf612675c676f9d981034c7ea8fc6db2af13e4f42c632",
+          "bytes": 329548,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.867903+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/battered-region-a.glb",
+          "sha256": "255ea7dae98260b7cd25f8baf535ef6331ce4ce2776ac222fcff28f4fd11d3d5",
+          "bytes": 1113132,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.870855+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/battered-region-b.glb",
+          "sha256": "f286b2c3ce42b02219d5f26fd18f8c60c022308c9fabbab2d1a2d4869b4dee96",
+          "bytes": 1109028,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.873881+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/build_hybrid_moon_native_variants_r001.py",
+          "sha256": "7d599394f6acf18af32b2f8357daf6fe1fc79be01d99f34e60033468b2b7b515",
+          "bytes": 6647,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.874229+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/corrected-run.log",
+          "sha256": "1fbf99077db091d2a0d62f056f58076652c4720f2f7ed35ab2da113b1f2d2c4c",
+          "bytes": 551,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.874538+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/corrected-seed38-angle2.png",
+          "sha256": "aa3e6bd540aaf1b229b56d17384dbb742675342a10156f2ac48f4a4f233f6df4",
+          "bytes": 300048,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.875805+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/corrected-seed38-capture.log",
+          "sha256": "4232dfa3d597cdf4d668ef3e694c2ff460647a38b860cb4e6b1c45896737fc19",
+          "bytes": 2776,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.876105+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/corrected-seed38-reference-scale.png",
+          "sha256": "a62f8638348c04745259733d61961243e778954e5530e4257249e5e29c7ee347",
+          "bytes": 14331,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.876383+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/corrected-seed38.json",
+          "sha256": "651ad262ed75a3cdb28c672cf06bafd56cd66418365751ec5377970594564aff",
+          "bytes": 1996,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.876591+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/corrected-seed38.png",
+          "sha256": "06e03cc2896fe9835e0077bb146611b48e2c7a0809b748e05613e3da49aff28e",
+          "bytes": 325005,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.877662+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/crater-broken.glb",
+          "sha256": "4b5296e02293441d48800f1ddbb02daa7f563161895a1f37b12c7b773b2a9b36",
+          "bytes": 557724,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.879366+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/crater-large.glb",
+          "sha256": "be6f9b46441c728017f115671890886fc3adac5dfc159e0eae8f9ee2e9aa614c",
+          "bytes": 557720,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.881518+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/crater-small.glb",
+          "sha256": "b13c7922874f3245a7cac35c79a54f9f91512b906ba047d08a5e805bef1fc9d2",
+          "bytes": 557732,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.882896+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/exact-reference.png",
+          "sha256": "dd6b7843d48e30f7c5298b6b3c5976204a5479e42ec90550ee41a456facbacd2",
+          "bytes": 7292,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.883167+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/foundation-source.py",
+          "sha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+          "bytes": 19405,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.883404+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/fractured-shelf.glb",
+          "sha256": "3e3d87a477f8fa7dfa56828443697f0b4fba06eb9093e6a093a0fa67df5b5d1e",
+          "bytes": 329540,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.884370+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/generator.py",
+          "sha256": "9b7261ed05abd568d982b642a9d4ffd860846ff2d4a5a1ceb7b127f03595c529",
+          "bytes": 20758,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.885140+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/ground-sphere-low.glb",
+          "sha256": "12ae462c3727b2ad1655cdb5524e049092f7caa077e112bcd122adacf28a70be",
+          "bytes": 114440,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.885656+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/ground-sphere-medium.glb",
+          "sha256": "ce51d11fc9157ed5ecddc587d73de2beb353008e1cec34003542f06fe7af3058",
+          "bytes": 136976,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.886316+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/ground-sphere.glb",
+          "sha256": "bfd599102bbde0223b0ff0ff958bf6465c630d9711a7e4d09db86c793a0769f5",
+          "bytes": 224272,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.887604+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/hybrid_moon_reference_composition_r001.test.ts",
+          "sha256": "61b45bac55566bbe1596d63f162fce4e1a63e68bbed8a40041706ab5babba459",
+          "bytes": 6059,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.887889+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/hybrid_moon_reference_composition_r001.ts",
+          "sha256": "8824c5820d3f86864b303f3ca4c245891c6730f7dd28288152732f0d7afa205f",
+          "bytes": 5201,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.888098+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/hybrid_moon_reference_r001.tsconfig.json",
+          "sha256": "857094ab09b85f1d69a1e7d2191f3d727f4cc934356827fda9749d9d9b9740ed",
+          "bytes": 172,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.888294+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/hybrid_moon_reference_r001.vitest.config.ts",
+          "sha256": "81a6bb42954f3a5a9f250beb10a2170e49cfed64fa04ce032f659079cb7d9eae",
+          "bytes": 176,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.888500+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/kit-preview.png",
+          "sha256": "21c743ab46d29aecf82bf04a08e0aec4a7b3086e87d5f71abdfee321e20c78c7",
+          "bytes": 1137782,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.891154+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/kit.blend",
+          "sha256": "89a949103e0f3c29c516f29c7658675fbdd355eb75c410282650379fa0c6bc6f",
+          "bytes": 4499298,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.900122+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/kit.json",
+          "sha256": "6b9d58440c7df04084f252a80a66d4f657a71ecf892ea29a5136a488b651e84e",
+          "bytes": 15480204,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.927148+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/mineral-seam.glb",
+          "sha256": "6fdf0fbf5ec4ecde4b84c4ab6ec4f9361a2355ae34f7d0787b3736f3b1f956ef",
+          "bytes": 213384,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.928216+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/revision-notes.md",
+          "sha256": "1afa72fab982042944259fbb84d8e56d70a9fa20e4ccef66c0e217c22d5b00b7",
+          "bytes": 1597,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.928849+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-0-albedo.png",
+          "sha256": "1c625ee9c4ba327b792a144d81ca067ff9e398c4abb596ec829eb4ff88eb5c30",
+          "bytes": 70750,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.929314+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.930023+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-1-albedo.png",
+          "sha256": "0e39f77e129b56c29ddd4f201dbf346ca2a38b60243136a03f9953aa2cd83f8d",
+          "bytes": 79411,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.930589+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.931340+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-2-albedo.png",
+          "sha256": "eb62cb3ca6636524e34eead064071b76b3ade31203c8b19c5e79be865e45a431",
+          "bytes": 54650,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.932098+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.932406+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-3-albedo.png",
+          "sha256": "ec2fc5ab08e937bc61d058bd8aee79ed4586a72b430051f12381f6ab4c7fb534",
+          "bytes": 61678,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.932923+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.933276+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-4-albedo.png",
+          "sha256": "dcf43af84b46f764148195987c875ede1d39e671bd5fb21377e102577755e73e",
+          "bytes": 69963,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.934124+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-4-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.934411+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-5-albedo.png",
+          "sha256": "e08d3a6c6ef651678d4384d3d009a321aabdc447e77dfc72b64f83b089c2d1f6",
+          "bytes": 79390,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.934872+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.935198+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/validation.json",
+          "sha256": "68a3b58c726c143d5eee87128a11baa0e3d6c809e26c8aed417f9ead57c69943",
+          "bytes": 6956,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.935433+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/variant-recipe.json",
+          "sha256": "2ad15d6ee4d5ea84fb8b05a605ca2ec31535fceb689d15709932cf500bc786b2",
+          "bytes": 1101,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.935571+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/angular-outcrops.glb",
+          "sha256": "e20e9a6ea7bb94e3f13bf58cf1fb339429d8e5fbda93d2f0881deaf4352f6dff",
+          "bytes": 329548,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.936820+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/battered-region-a.glb",
+          "sha256": "318ac8b4c0d3771ab9dac2481ae492b9ce907bf8a926be2c06d8532e4e2e27cf",
+          "bytes": 1112516,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.939422+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/battered-region-b.glb",
+          "sha256": "f19c237cde8f46e044e1f5b855e9d425e17ec2ca6f87bcc0693264aca8608ab3",
+          "bytes": 1107928,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.942601+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/build_hybrid_moon_native_variants_r002.py",
+          "sha256": "206fbd18229f593b7d159ea3cc548b06093beef41148d6802a76b76e247efa40",
+          "bytes": 2082,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.942842+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/corrected-run.log",
+          "sha256": "d9abef681c35d20ddb82f9f5b7782e00977a7117d6b18ec9f3aad78ec3af11a2",
+          "bytes": 551,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.943070+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/corrected-seed38-angle2.png",
+          "sha256": "e17d81b1299b8011c4c2c2c5c72b09620d432ff3e25fca48746b08289de0d1d4",
+          "bytes": 303923,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.944037+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/corrected-seed38-capture.log",
+          "sha256": "f796ca7e54361b43c8b2b40c099df5ea63bb1c1c327e15a0bddf8236e5f11103",
+          "bytes": 2790,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.944246+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/corrected-seed38-reference-scale.png",
+          "sha256": "2dd0ccccc98ea5747e6669d5e9ca983ef81d7c00bb4bb8f0acd9af58537274e4",
+          "bytes": 15107,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.944486+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/corrected-seed38.json",
+          "sha256": "98caf22229d3150731fbe5510aee8ef1b85c8958da1f26252c5f696573a6955a",
+          "bytes": 2085,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.944695+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/corrected-seed38.png",
+          "sha256": "0358aca6ff014202639619369c3ab39aa740e721b9729f87b92be3ca88921a91",
+          "bytes": 329175,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.945665+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/crater-broken.glb",
+          "sha256": "c5836227d15549f8e57b87b6c0986bb3ae2057fdbec80deac555f2e8f4e0c77a",
+          "bytes": 557724,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.947991+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/crater-large.glb",
+          "sha256": "91c85260f24cded120df5a94b4932cc5e2ecd321a399179fff384f08d8054595",
+          "bytes": 557720,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.950711+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/crater-small.glb",
+          "sha256": "06dfb4f2eccb3bbae22257cb068cae48176a16fd33798fd3f68642d7085c0c5d",
+          "bytes": 557732,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.952511+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/exact-reference.png",
+          "sha256": "dd6b7843d48e30f7c5298b6b3c5976204a5479e42ec90550ee41a456facbacd2",
+          "bytes": 7292,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.952871+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/foundation-source.py",
+          "sha256": "9b7261ed05abd568d982b642a9d4ffd860846ff2d4a5a1ceb7b127f03595c529",
+          "bytes": 20758,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.953174+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/fractured-shelf.glb",
+          "sha256": "e0e8234e534467259a74bc30ae712976d3caf547f8ba423b75fe491a4f9dd2f7",
+          "bytes": 329540,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.954215+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/generator.py",
+          "sha256": "59fd0976a94dff751e8c8275420ac777e8077a83063c47dbaa1eaf415fcd23a1",
+          "bytes": 21091,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.954998+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/ground-sphere-low.glb",
+          "sha256": "12ae462c3727b2ad1655cdb5524e049092f7caa077e112bcd122adacf28a70be",
+          "bytes": 114440,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.955536+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/ground-sphere-medium.glb",
+          "sha256": "ce51d11fc9157ed5ecddc587d73de2beb353008e1cec34003542f06fe7af3058",
+          "bytes": 136976,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.956222+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/ground-sphere.glb",
+          "sha256": "bfd599102bbde0223b0ff0ff958bf6465c630d9711a7e4d09db86c793a0769f5",
+          "bytes": 224272,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.957555+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/hybrid_moon_reference_composition_r001.ts",
+          "sha256": "8824c5820d3f86864b303f3ca4c245891c6730f7dd28288152732f0d7afa205f",
+          "bytes": 5201,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.957868+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/hybrid_moon_reference_composition_r002.test.ts",
+          "sha256": "7b7de33c51f49ff7f8a16c5f295ca097e3615d3641c189a429653bcb832675dd",
+          "bytes": 6981,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.958146+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/hybrid_moon_reference_r002.tsconfig.json",
+          "sha256": "7f4b110804ea18bc0bb66b362af1dff33213ce2642fa25b053644af0a0ab3dcf",
+          "bytes": 172,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.958367+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/hybrid_moon_reference_r002.vitest.config.ts",
+          "sha256": "df6da9c312e470716cccea3f18888a597a7ff76ba724ea4efee49dab785810f5",
+          "bytes": 176,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.958570+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/kit-preview.png",
+          "sha256": "24bc6b4e386e7341eccea97269b04b232dfeaa4aae700e5783e54284cfa85f71",
+          "bytes": 1137764,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.961536+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/kit.blend",
+          "sha256": "890ec674367e12587d3f28242859d0b48a9063449f8210d77640da279489e770",
+          "bytes": 4523586,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.971532+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/kit.json",
+          "sha256": "bc81bfb98f28fe4a37753bfea25db8b3c91acc2591837fe79bd3de54401a3347",
+          "bytes": 15480289,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:16.999518+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/mineral-seam.glb",
+          "sha256": "3d3599c41f4217b4f0cf39aa5f4a3897c0ad81ac0a1b30185c1988bfad7abfae",
+          "bytes": 213384,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.000564+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/revision-notes.md",
+          "sha256": "a7c904acd1331461be06e5901b310d2bf9f171f4d27b31eb7962d0287b24f117",
+          "bytes": 1056,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.000842+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-0-albedo.png",
+          "sha256": "1c625ee9c4ba327b792a144d81ca067ff9e398c4abb596ec829eb4ff88eb5c30",
+          "bytes": 70750,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.001260+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.001748+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-1-albedo.png",
+          "sha256": "0e39f77e129b56c29ddd4f201dbf346ca2a38b60243136a03f9953aa2cd83f8d",
+          "bytes": 79411,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.002205+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.002742+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-2-albedo.png",
+          "sha256": "eb62cb3ca6636524e34eead064071b76b3ade31203c8b19c5e79be865e45a431",
+          "bytes": 54650,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.003367+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.004196+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-3-albedo.png",
+          "sha256": "ec2fc5ab08e937bc61d058bd8aee79ed4586a72b430051f12381f6ab4c7fb534",
+          "bytes": 61678,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.005044+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.005352+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-4-albedo.png",
+          "sha256": "dcf43af84b46f764148195987c875ede1d39e671bd5fb21377e102577755e73e",
+          "bytes": 69963,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.005831+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-4-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.006170+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-5-albedo.png",
+          "sha256": "e08d3a6c6ef651678d4384d3d009a321aabdc447e77dfc72b64f83b089c2d1f6",
+          "bytes": 79390,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.006610+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.006959+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/validation.json",
+          "sha256": "48cf7d0a677e96bcc5bc714bb9c0c6879d0c16a62340ec42513df78983ae53ce",
+          "bytes": 6956,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.007185+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/variant-recipe.json",
+          "sha256": "a60e82a962e5879038741492c3cfcfef7031049ad5addabcc67f206632ad21b7",
+          "bytes": 1343,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.007339+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/reviews/toxic-r007-four-hybrid-moons.md",
+          "sha256": "3ac2e8e075b841c550dde9c5237f751fb606c429e616c6004fd2fa8c9d670b45",
+          "bytes": 2637,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.007528+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/reviews/hybrid-moons-r002-working-passes.md",
+          "sha256": "cd64cd5b1352b889cce0b473505af488eb937985bb9998e8e4d4f135f53246b7",
+          "bytes": 1678,
+          "notes": "Preserved isolated candidate artifact; filenames and manifest distinguish native source, failed trial, optical diagnostic and actual browser capture. No hardware timing acceptance.",
+          "recorded_at": "2026-09-14T05:38:17.007624+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.ocean/revisions/r008/manifest.json",
+          "sha256": "339728b3e0c956d130cebc21be8ba7b49c6c36903082300e01f494efacc958e9",
+          "bytes": 26099,
+          "notes": "Exact source revision, per-moon gate, source path, hashes and pinned main-world provenance.",
+          "recorded_at": "2026-09-14T05:38:17.007882+00:00"
+        }
+      ],
+      "review": null
+    }
+  ]
+}

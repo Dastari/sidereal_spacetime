@@ -1,0 +1,56 @@
+{
+  "referenceId": "planets--gas-giant-moon-2",
+  "sourceFoundation": "rocky-r010",
+  "foundationSha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+  "candidateRevision": "r001",
+  "sourceCoordinates": "Native Blender Z-up; unit radius, no authority dimensions",
+  "seed": 631,
+  "scales": [
+    0.38,
+    0.4,
+    0.42,
+    0.37,
+    0.39,
+    0.41,
+    0.38,
+    0.43,
+    0.4,
+    0.37,
+    0.42,
+    0.39
+  ],
+  "palette": [
+    [
+      0.34,
+      0.3,
+      0.39
+    ],
+    [
+      0.55,
+      0.49,
+      0.61
+    ],
+    [
+      0.03,
+      0.025,
+      0.041
+    ],
+    [
+      0.13,
+      0.105,
+      0.17
+    ],
+    [
+      0.23,
+      0.2,
+      0.29
+    ],
+    [
+      0.64,
+      0.56,
+      0.68
+    ]
+  ],
+  "cue": "Quiet grey/lilac solid crater companion; no gas bands or own rings",
+  "publication": "isolated source candidate; no automatic acceptance from rocky-moon-1 pass"
+}

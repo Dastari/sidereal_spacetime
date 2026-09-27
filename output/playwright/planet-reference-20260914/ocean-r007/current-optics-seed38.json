@@ -1,0 +1,65 @@
+{
+  "stats": {
+    "style": "ocean",
+    "seed": 38,
+    "frames": 38,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 490.20000076293945,
+      "localLights": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 17,
+    "triangles": 288840,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 16,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "ocean",
+    "revision": "ocean-r007",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "current-optics",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "shadows_off": false,
+    "reference_radius": 13.5
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=ocean&seed=38&candidate=1&capture=1789360435378614396&shadowBias=0.006",
+  "images": {
+    "current-optics-seed38.png": "caa299c0af918cac4a381fe3ce1d7c6a904543be7ee54baee45f03cce95efd3f",
+    "current-optics-seed38-angle2.png": "af3a60b7d6d26f1c8e69a115cd72a312a0fc7a2acca65603377e69120e3ee7d5",
+    "current-optics-seed38-reference-scale.png": "e32f04f53c82af4ddd6ae577987ad09235c797fe0333d875d0068506019d2918"
+  },
+  "kitSha256": "71c2918ae71f8d074bfb8a8d94bc76f7271dd94e8a20c2c1b1f323f30d057f22"
+}

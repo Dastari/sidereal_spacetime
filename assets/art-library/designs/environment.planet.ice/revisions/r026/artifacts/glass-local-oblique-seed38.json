@@ -1,0 +1,76 @@
+{
+  "stats": {
+    "style": "ice",
+    "seed": 38,
+    "frames": 42,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 343.70000076293945,
+      "localLights": 0,
+      "transmissionMaterials": 2,
+      "transmissionTargets": 1
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 8,
+    "triangles": 97516,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 3.1,
+    "beta": 1.5,
+    "radius": 1.4
+  },
+  "shadows": [
+    {
+      "casters": 7,
+      "normalBias": 0.003,
+      "bias": 0.0005
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "ice",
+    "revision": "ice-r026",
+    "seed": 38,
+    "radius": 1.4,
+    "alpha": 1.5,
+    "beta": 1.5,
+    "bias": null,
+    "depth_bias": null,
+    "glow": false,
+    "local_light": false,
+    "prefix": "glass-local-oblique",
+    "reference_scale": false,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": true,
+    "target": [
+      0.45,
+      0.38,
+      0.79
+    ],
+    "shadows_off": false,
+    "reference_radius": 13.5
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=ice&seed=38&candidate=1&capture=1789363267905419353&unit=1",
+  "images": {
+    "glass-local-oblique-seed38.png": "4f4891c97bc927849c0530694f3f8344cbc88787e01267d679b3a9bc39f73f9a",
+    "glass-local-oblique-seed38-angle2.png": "7d3de15b8f83f40e3e38b10da8f9cbe0b31c354b534213ef6fdd61f99e65814a"
+  },
+  "kitSha256": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574"
+}

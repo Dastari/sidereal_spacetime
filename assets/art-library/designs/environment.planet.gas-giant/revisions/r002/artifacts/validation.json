@@ -1,0 +1,22 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "fixedDetail": true,
+  "geometryUVNormalsIdenticalTo": "gas-r001",
+  "materialChange": "Generated reference-led albedo on ordinary PBR body; authored ring alpha density and selective PBR emission",
+  "uvConvention": "glTF UV (Blender V flipped); invertY=false",
+  "normalMap": "none; exact original authored normals retained",
+  "triangles": 19904,
+  "sha256": {
+    "gas-body.glb": "5331d888d72819809abb50b37521b7b5fb636ce91f566ce6c572593b0bcfa190",
+    "image-generation.json": "ca3524495f53678d27726b03d50d6449b03f01eaa73189d4740801382bc03afb",
+    "kit-preview.png": "608ca59fcc902e28bc9e43ea99903fb1acbdc9ff3847da6fe252bc7a2765736c",
+    "kit.blend": "e1e89be838d8a1ab25f58fb4ac32354593bdba6c388e8c4bb433bb10b3323714",
+    "ring-dust-2.glb": "e68bfb663af2a2e23194158a821b92035d77ee7a6acec92325457f8f6465c5ec",
+    "ring-dust.png": "b6e9487c66751dca0e9b6127193e8c2a4711b5d28930add654f5fde08a4f5559",
+    "ring-rocks.glb": "61b5c7f38d16d33bfa5fcbcdfdbbb0371f95d8a74b0ab9d197c2978d35d5ffe7",
+    "gas-albedo-generated.png": "1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da",
+    "ring-dust-1.glb": "c49ed6684273e347585dcfe80097b1d872299f2afcc24f809b6cb11c9b393223",
+    "kit.json": "aef80152fc66bb2d1ec727bd17d3056be47babcc9325a99caf9b8755c0363a7c",
+    "ring-dust-0.glb": "a99d0e8c7c1488249546c2b63c33f7ee79a1af03b2a929dc3654c305d03becbf"
+  }
+}

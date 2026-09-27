@@ -1,0 +1,2987 @@
+--- a/apps/client/package.json
++++ b/apps/client/package.json
+@@ -3 +3 @@
+-  "version": "0.4.1",
++  "version": "0.7.0",
+@@ -9,4 +9,4 @@
+-    "@sidereal/content": "0.2.1",
+-    "@sidereal/net": "0.2.1",
+-    "@sidereal/render": "0.5.2",
+-    "@sidereal/sim": "*",
++    "@sidereal/content": "0.5.0",
++    "@sidereal/net": "0.5.0",
++    "@sidereal/render": "0.7.0",
++    "@sidereal/sim": "0.4.0",
+@@ -16 +16 @@
+-    "@sidereal/canvas-ui": "*"
++    "@sidereal/canvas-ui": "0.1.2"
+@@ -19 +19 @@
+-    "build": "python3 ../../scripts/prepare_app.py client && vite build && node ../../scripts/precompress_assets.mjs dist",
++    "build": "python3 ../../scripts/prepare_app.py client && vite build",
+--- a/apps/client/src/App.tsx
++++ b/apps/client/src/App.tsx
+@@ -0,0 +1 @@
++import type { SpaceRegion } from "@sidereal/sim/space-background";
+@@ -110,3 +111 @@
+-  const [vistaId, setVistaId] = useState(
+-    () => localStorage.getItem("sidereal.vista") ?? DEFAULT_SPACE_VISTA,
+-  );
++  const [vistaId, setVistaId] = useState(() => DEFAULT_SPACE_VISTA);
+@@ -200,0 +200,44 @@
++  const systemScape = c
++    ? [...c.db.admittedSystemScapes.iter()].find(
++        (s) => s.id === sharedAdmission?.systemId,
++      )
++    : undefined;
++  useEffect(() => {
++    setVistaId(systemScape?.backgroundId ?? DEFAULT_SPACE_VISTA);
++  }, [systemScape?.backgroundId]);
++  const activeSpaceRegion: SpaceRegion | undefined = systemScape?.regionsJson
++    ? JSON.parse(systemScape.regionsJson)
++    : undefined;
++  const shipZones =
++    c && sharedAdmission
++      ? c.db.ownShipZones.shipId.find(sharedAdmission.shipId)
++      : undefined;
++  const zoneNames: string[] = shipZones
++    ? JSON.parse(shipZones.activeJson).map(
++        (id: string) =>
++          activeSpaceRegion?.zones?.find((z) => z.id === id)?.name ??
++          (id === sharedAdmission?.systemId ? "System" : id),
++      )
++    : [];
++  const fieldBodies = () =>
++    connection.current
++      ? [...connection.current.db.nearbyFieldAsteroids.iter()].map((r) => ({
++          id: r.id,
++          key: r.id,
++          shipId: "",
++          kind: "asteroid",
++          appearance: "stone",
++          x: r.x,
++          y: r.y,
++          height: r.height,
++          radius: r.radius,
++          seed: r.seed,
++          vx: 0,
++          vy: 0,
++          heading: 0,
++          omega: 0,
++          massKg: 0,
++          tick: 0n,
++        }))
++      : [];
++
+@@ -749 +792,7 @@
+-                      ? sharedBodyPresentation(sharedPresentation.store, nowMs)
++                      ? [
++                          ...sharedBodyPresentation(
++                            sharedPresentation.store,
++                            nowMs,
++                          ),
++                          ...fieldBodies(),
++                        ]
+@@ -1167 +1216,2 @@
+-      vistaId,
++      vistaId: systemScape ? DEFAULT_SPACE_VISTA : vistaId,
++      spaceRegion: activeSpaceRegion,
+@@ -1174,0 +1225 @@
++    systemScape?.regionsJson,
+@@ -1407,0 +1459,16 @@
++        {shipZones && (
++          <div
++            aria-label="Current zones"
++            style={{
++              position: "absolute",
++              top: 16,
++              left: "50%",
++              transform: "translateX(-50%)",
++              color: "#b8ccdc",
++              fontSize: 12,
++              pointerEvents: "none",
++            }}
++          >
++            {zoneNames.length ? zoneNames.join(" / ") : "Deep space"}
++          </div>
++        )}
+--- a/apps/client/src/ConstructionReview.tsx
++++ b/apps/client/src/ConstructionReview.tsx
+@@ -0,0 +1 @@
++import { useState } from "react";
+@@ -12,0 +14,2 @@
++  const [expanded, setExpanded] = useState(false);
++  const [busy, setBusy] = useState(false);
+@@ -50,11 +52,0 @@
+-  // Gameplay mechanisms do not require a review query. Permanent membership
+-  // never exposes authoring transit or a fabricated return destination.
+-  if (!new URLSearchParams(location.search).has("constructionReview"))
+-    return airlockPanel ? (
+-      <aside
+-        className="construction-review-controls"
+-        aria-label="Airlock controls"
+-      >
+-        {airlockPanel}
+-      </aside>
+-    ) : null;
+@@ -106,2 +98,27 @@
+-  const act = (fn: () => Promise<unknown>) =>
+-    void fn().catch((e) => onError(String(e)));
++  const act = (fn: () => Promise<unknown>) => {
++    if (busy) return;
++    setBusy(true);
++    void fn()
++      .catch((e) => onError(String(e)))
++      .finally(() => setBusy(false));
++  };
++  if (!expanded && !visit)
++    return (
++      <aside
++        className="construction-review-controls"
++        aria-label="Shipyard test ships"
++      >
++        <button onClick={() => setExpanded(true)}>
++          Test ships (
++          {
++            instances.filter(
++              (i) =>
++                i.id !== actor.shipId &&
++                i.workspaceId !== "trusted-starter-templates",
++            ).length
++          }
++          )
++        </button>
++        {airlockPanel}
++      </aside>
++    );
+@@ -111 +128 @@
+-      aria-label="Construction walking review"
++      aria-label="Shipyard test ships"
+@@ -113 +130,4 @@
+-      <strong>Shipyard walking review</strong>
++      <strong>Shipyard test ships</strong>
++      {!visit && (
++        <button onClick={() => setExpanded(false)}>Close test ships</button>
++      )}
+@@ -115,2 +135,2 @@
+-        Authored rooms, stairs and ladders. Qualified ships can enter an
+-        explicit flight review. Airlocks use nearby manual service.
++        Your normal ship and inventory stay preserved. Choose an independent
++        saved test ship; qualified ships also support flight testing.
+@@ -121 +141,4 @@
+-            !!traversal || !!stair || (!!flight && flight.seatState !== "none")
++            busy ||
++            !!traversal ||
++            !!stair ||
++            (!!flight && flight.seatState !== "none")
+@@ -144 +167,5 @@
+-          .filter((i) => i.id !== actor.shipId)
++          .filter(
++            (i) =>
++              i.id !== actor.shipId &&
++              i.workspaceId !== "trusted-starter-templates",
++          )
+@@ -148,0 +176 @@
++                busy ||
+@@ -166 +194 @@
+-              Walk {i.name} · {i.id.slice(0, 8)}
++              Test {i.name}
+@@ -168,0 +197,41 @@
++      )}
++      {visit && (
++        <section aria-label="Switch test ship">
++          <strong>Switch test ship</strong>
++          {instances
++            .filter(
++              (i) =>
++                i.id !== actor.shipId &&
++                i.workspaceId !== "trusted-starter-templates",
++            )
++            .map((i) => (
++              <button
++                key={i.id}
++                disabled={
++                  busy ||
++                  !!traversal ||
++                  !!stair ||
++                  !!flight?.flightAdmitted ||
++                  !grants.some(
++                    (g) =>
++                      g.workspaceId === i.workspaceId &&
++                      g.capability === "instance.spawn" &&
++                      !g.revoked,
++                  )
++                }
++                onClick={() =>
++                  act(() =>
++                    connection.reducers.switchConstructionReview({
++                      instanceId: i.id,
++                      expectedInstanceRevision: i.revision,
++                      expectedVisitId: visit.visitId,
++                      expectedRevision: visit.revision,
++                      operationId: createOperationId(),
++                    }),
++                  )
++                }
++              >
++                Switch to {i.name}
++              </button>
++            ))}
++        </section>
+--- a/apps/client/src/connection-session.ts
++++ b/apps/client/src/connection-session.ts
+@@ -2 +2,4 @@
+-export {createConnectionSession,type GameAuthentication} from '../../../packages/net/src/connection-session';
++export {
++  createConnectionSession,
++  type GameAuthentication,
++} from "@sidereal/net/connection-session";
+--- a/apps/client/src/style.css
++++ b/apps/client/src/style.css
+@@ -35,0 +36,2 @@
++  max-height: calc(100dvh - 6rem);
++  overflow-y: auto;
+--- a/packages/canvas-ui/package.json
++++ b/packages/canvas-ui/package.json
+@@ -3 +3 @@
+-  "version": "0.1.1",
++  "version": "0.1.2",
+@@ -11,2 +11,2 @@
+-    "@sidereal/content": "0.2.1",
+-    "@sidereal/render": "0.5.2"
++    "@sidereal/content": "0.5.0",
++    "@sidereal/render": "0.7.0"
+--- a/packages/content/package.json
++++ b/packages/content/package.json
+@@ -3 +3 @@
+-  "version": "0.2.1",
++  "version": "0.5.0",
+@@ -29 +28,0 @@
+-    "./wayfarer-rebuild-r002.json": "./src/wayfarer-rebuild-r002.json",
+@@ -37,0 +37,4 @@
++    "./system-map": "./src/system-map.ts",
++    "./environment": "./src/environment.ts",
++    "./zones": "./src/zones.ts",
++    "./wayfarer-rebuild-r002.json": "./src/wayfarer-rebuild-r002.json",
+--- a/packages/content/src/environment.ts
++++ b/packages/content/src/environment.ts
+@@ -184,0 +185,10 @@
++  {
++    id: "deep-space",
++    name: "Deep space",
++    description: "Open space and distant stars, without nebulae.",
++    nebulaTint: [0, 0, 0],
++    nebulaStrength: 0,
++    dust: 0,
++    seed: 17,
++    bodies: [],
++  },
+@@ -186 +196 @@
+-export const DEFAULT_SPACE_VISTA = SPACE_VISTAS[0].id;
++export const DEFAULT_SPACE_VISTA = "deep-space";
+@@ -188 +198,4 @@
+-  return SPACE_VISTAS.find((v) => v.id === id) ?? SPACE_VISTAS[0];
++  return (
++    SPACE_VISTAS.find((v) => v.id === id) ??
++    SPACE_VISTAS.find((v) => v.id === DEFAULT_SPACE_VISTA)!
++  );
+--- /dev/null
++++ b/packages/content/src/system-map.ts
+@@ -0,0 +1,202 @@
++import type { MapZone, ZoneAnchor } from "./zones";
++import { SOLAR_SYSTEM } from "./solar-system";
++import { SPACE_VISTAS, DEFAULT_SPACE_VISTA } from "./environment";
++export const MAP_WORKSPACE = "universe-map";
++export const MAP_BACKGROUNDS = SPACE_VISTAS.map(
++  ({ id, name, nebulaAsset }) => ({
++    id,
++    name,
++    asset: id === "deep-space" ? null : (nebulaAsset ?? "veil-nebula-v1.png"),
++  }),
++);
++export const MAP_RESOURCES = [
++  "iron",
++  "nickel",
++  "copper",
++  "silicate",
++  "ice",
++  "uranium",
++] as const;
++export interface MapPoint {
++  x: number;
++  y: number;
++  height: number;
++}
++export interface MapBody extends MapPoint {
++  parentId?: string | null;
++  appearance?: string;
++  seed?: number;
++  id: string;
++  name: string;
++  kind: string;
++  radius: number;
++}
++export interface AsteroidField extends MapPoint {
++  parentId?: string;
++  color?: string;
++  backgroundId?: string;
++  feather?: number;
++  priority?: number;
++  id: string;
++  name: string;
++  shape: "ellipsoid" | "box" | "polygon";
++  /** Full dimensions, metres. Polygon XY dimensions come from vertices. */
++  width: number;
++  length: number;
++  depth: number;
++  vertices: ZoneAnchor[];
++  density: number;
++  seed: number;
++  minRadius: number;
++  maxRadius: number;
++  resources: { resource: string; chance: number }[];
++}
++export interface SystemMapDocument {
++  zones?: MapZone[];
++  color?: string;
++  version: 1;
++  id: string;
++  name: string;
++  center: MapPoint;
++  primaryStarId?: string;
++  feather?: number;
++  radius: number;
++  backgroundId: string;
++  bodies: MapBody[];
++  fields: AsteroidField[];
++}
++export interface FieldAsteroid extends MapPoint {
++  id: string;
++  fieldId: string;
++  radius: number;
++  seed: number;
++  resources: string[];
++}
++export function newSystemMap(
++  id: string,
++  bodies: MapBody[] = [],
++): SystemMapDocument {
++  bodies = bodies.map((b) => ({ ...mapBodyMetadata(b.id), ...b }));
++  const primary = bodies.find((b) => b.kind === "star");
++  const center = primary
++    ? { x: primary.x, y: primary.y, height: primary.height }
++    : { x: 0, y: 0, height: 0 };
++  const radius = Math.max(
++    10000,
++    ...bodies.map(
++      (b) =>
++        Math.hypot(b.x - center.x, b.y - center.y, b.height - center.height) +
++        b.radius +
++        1000,
++    ),
++  );
++  return {
++    version: 1,
++    id,
++    name: "New system",
++    center,
++    primaryStarId: primary?.id,
++    radius,
++    backgroundId: DEFAULT_SPACE_VISTA,
++    bodies,
++    fields: [],
++  };
++}
++export function newAsteroidField(id: string, x = 0, y = 0): AsteroidField {
++  return {
++    id,
++    name: "Asteroid field",
++    shape: "ellipsoid",
++    x,
++    y,
++    height: 0,
++    width: 1000,
++    length: 1000,
++    depth: 500,
++    vertices: [],
++    density: 100,
++    seed: 1,
++    minRadius: 2,
++    maxRadius: 8,
++    resources: [
++      { resource: "iron", chance: 35 },
++      { resource: "ice", chance: 15 },
++    ],
++  };
++}
++
++export function mapBodyName(id: string, fallback: string) {
++  return SOLAR_SYSTEM.bodies.find((b) => b.id === id)?.name ?? fallback;
++}
++export function mapBodyRole(
++  body: Pick<MapBody, "id" | "kind" | "parentId">,
++  bodies?: readonly MapBody[],
++) {
++  const source = SOLAR_SYSTEM.bodies.find((b) => b.id === body.id);
++  const parentId =
++    body.parentId === undefined ? source?.parentId : body.parentId;
++  const parent =
++    bodies?.find((b) => b.id === parentId) ??
++    SOLAR_SYSTEM.bodies.find((b) => b.id === parentId);
++  return parent && parent.kind !== "star" ? "moon" : body.kind;
++}
++/** Stable parent-first outline, including malformed/orphan local drafts without hiding data. */
++export function mapBodyOutline(bodies: readonly MapBody[]) {
++  const result: MapBody[] = [],
++    seen = new Set<string>();
++  const visit = (b: MapBody) => {
++    if (seen.has(b.id)) return;
++    seen.add(b.id);
++    result.push(b);
++    bodies.filter((c) => c.parentId === b.id).forEach(visit);
++  };
++  bodies
++    .filter((b) => !b.parentId || !bodies.some((p) => p.id === b.parentId))
++    .forEach(visit);
++  bodies.forEach(visit);
++  return result;
++}
++
++export function mapBodyMetadata(id: string) {
++  const b = SOLAR_SYSTEM.bodies.find((b) => b.id === id);
++  return b
++    ? { parentId: b.parentId, appearance: b.appearance, seed: b.seed }
++    : {};
++}
++
++/** Move a parent and descendants as one draft operation; orbit guides stay relative. */
++export function moveMapBody(
++  doc: SystemMapDocument,
++  id: string,
++  point: MapPoint,
++) {
++  const body = doc.bodies.find((b) => b.id === id);
++  if (!body) return;
++  const dx = point.x - body.x,
++    dy = point.y - body.y,
++    dz = point.height - body.height;
++  const moving = new Set([id]);
++  for (let i = 0; i < doc.bodies.length; i++)
++    for (const b of doc.bodies)
++      if (b.parentId && moving.has(b.parentId)) moving.add(b.id);
++  for (const b of doc.bodies)
++    if (moving.has(b.id)) {
++      b.x += dx;
++      b.y += dy;
++      b.height += dz;
++    }
++  if (doc.primaryStarId && moving.has(doc.primaryStarId)) {
++    const star = doc.bodies.find((b) => b.id === doc.primaryStarId)!;
++    doc.center = { x: star.x, y: star.y, height: star.height };
++    // Fields are authored in world space and move only through their own controls.
++  }
++}
++
++export function systemCenter(
++  doc: Pick<SystemMapDocument, "center" | "primaryStarId" | "bodies">,
++): MapPoint {
++  return (
++    doc.bodies.find((b) => b.id === doc.primaryStarId && b.kind === "star") ??
++    doc.center
++  );
++}
+--- /dev/null
++++ b/packages/content/src/zones.ts
+@@ -0,0 +1,42 @@
++import type { MapPoint } from "./system-map";
++export interface ZoneVector {
++  x: number;
++  y: number;
++}
++export interface ZoneAnchor extends ZoneVector {
++  in?: ZoneVector;
++  out?: ZoneVector;
++  mode?: "corner" | "aligned" | "mirrored";
++}
++export interface ZoneVolume extends MapPoint {
++  shape: "ellipsoid" | "box" | "polygon";
++  width: number;
++  length: number;
++  depth: number;
++  vertices: ZoneAnchor[];
++}
++export interface ZoneMetadata {
++  id: string;
++  name: string;
++  parentId?: string;
++  color?: string;
++  backgroundId?: string;
++  feather?: number;
++  priority?: number;
++}
++export interface MapZone extends ZoneVolume, ZoneMetadata {}
++export function newMapZone(id: string, x = 0, y = 0): MapZone {
++  return {
++    id,
++    name: "New zone",
++    color: "#6ca6cb",
++    x,
++    y,
++    height: 0,
++    shape: "box",
++    width: 1000,
++    length: 1000,
++    depth: 500,
++    vertices: [],
++  };
++}
+--- a/packages/net/package.json
++++ b/packages/net/package.json
+@@ -3 +3 @@
+-  "version": "0.2.1",
++  "version": "0.5.0",
+@@ -6 +6,6 @@
+-  "exports": "./src/index.ts",
++  "exports": {
++    ".": "./src/index.ts",
++    "./system-map": "./src/system-map.ts",
++    "./connection-session": "./src/connection-session.ts",
++    "./generated": "./src/generated/index.ts"
++  },
+@@ -8 +13 @@
+-    "@sidereal/sim": "0.1.0",
++    "@sidereal/sim": "0.4.0",
+--- a/packages/net/src/index.ts
++++ b/packages/net/src/index.ts
+@@ -131,0 +132,3 @@
++          tables.admittedSystemScapes,
++          tables.ownShipZones,
++          tables.nearbyFieldAsteroids,
+@@ -176,0 +180,3 @@
++    connection.db.admittedSystemScapes,
++    connection.db.ownShipZones,
++    connection.db.nearbyFieldAsteroids,
+--- /dev/null
++++ b/packages/net/src/system-map.ts
+@@ -0,0 +1,55 @@
++import { bindGameSessionProof } from "./game-session-proof";
++import { DbConnection, tables } from "./generated";
++import type { GameAuthentication } from "./connection-session";
++export function connectSystemMap(
++  change: () => void,
++  status: (state: "connecting" | "ready" | "offline", error?: string) => void,
++  auth?: GameAuthentication,
++) {
++  if (!auth) throw Error("Sign in to view the live map");
++  const url = new URL(location.href);
++  url.protocol = url.protocol === "https:" ? "wss:" : "ws:";
++  const c = DbConnection.builder()
++    .withUri(url.origin)
++    .withDatabaseName(import.meta.env.VITE_DATABASE)
++    .withToken(auth.token)
++    .onConnect(async (c) => {
++      try {
++        await bindGameSessionProof({
++          origin: url.origin,
++          database: import.meta.env.VITE_DATABASE,
++          connectionId: c.connectionId!.toHexString(),
++          token: auth.token,
++          signal: AbortSignal.timeout(10000),
++        });
++        if (!c.isActive) return;
++        c.subscriptionBuilder()
++          .onApplied(() => {
++            status("ready");
++            change();
++          })
++          .onError((e) => status("offline", String(e.event)))
++          .subscribe([
++            tables.ownConstructionGrants,
++            tables.ownSystemMaps,
++            tables.ownMapShips,
++          ]);
++      } catch (e) {
++        status("offline", String(e));
++        c.disconnect();
++      }
++    })
++    .onConnectError((_c, e) => status("offline", String(e)))
++    .onDisconnect(() => status("offline"))
++    .build();
++  for (const table of [
++    c.db.ownConstructionGrants,
++    c.db.ownSystemMaps,
++    c.db.ownMapShips,
++  ]) {
++    table.onInsert(change);
++    table.onUpdate(change);
++    table.onDelete(change);
++  }
++  return c;
++}
+--- a/packages/render/package.json
++++ b/packages/render/package.json
+@@ -3 +3 @@
+-  "version": "0.5.2",
++  "version": "0.7.0",
+@@ -8 +7,0 @@
+-    "./floor-finishes": "./src/floor-finishes.ts",
+@@ -16 +14,0 @@
+-    "./layout-plane-projection": "./src/layout-plane-projection.ts",
+@@ -20 +18,3 @@
+-    "./layout-assembly-preview": "./src/layout-assembly-preview.ts"
++    "./layout-assembly-preview": "./src/layout-assembly-preview.ts",
++    "./floor-finishes": "./src/floor-finishes.ts",
++    "./layout-plane-projection": "./src/layout-plane-projection.ts"
+@@ -25,2 +25,3 @@
+-    "@sidereal/content": "0.2.1",
+-    "@sidereal/sim": "0.1.0"
++    "@sidereal/content": "0.5.0",
++    "@sidereal/sim": "0.4.0",
++    "@noble/hashes": "2.4.0"
+--- a/packages/render/src/assembly-editor.ts
++++ b/packages/render/src/assembly-editor.ts
+@@ -1,3 +1,3 @@
+-import { categoryMeshRole, setMeshRole } from './mesh-roles';
+-import { updateHullDecals } from './hull-decals';
+-import { loadEquipmentPrototypes } from './installed-equipment';
++import { categoryMeshRole, setMeshRole } from "./mesh-roles";
++import { updateHullDecals } from "./hull-decals";
++import { loadEquipmentPrototypes } from "./installed-equipment";
+@@ -66,0 +67,2 @@
++  let tool: "select" | "pan" = "select",
++    space = false;
+@@ -104 +106,5 @@
+-  for (const [id, meshes] of await loadEquipmentPrototypes(scene, catalog.assets.filter(a=>a.category!=='cargo'))) prototypes.set(id, meshes);
++  for (const [id, meshes] of await loadEquipmentPrototypes(
++    scene,
++    catalog.assets.filter((a) => a.category !== "cargo"),
++  ))
++    prototypes.set(id, meshes);
+@@ -106,3 +112,11 @@
+-  for(const asset of catalog.assets)if(asset.category==='cargo'&&asset.visual)prototypes.delete(asset.id);
+-  const pendingCargo=new Map<string,Promise<void>>();
+-  const nodes = new Map<string, { assetId: string; node: TransformNode; lighting: ReturnType<typeof createEquipmentLighting> }>();
++  for (const asset of catalog.assets)
++    if (asset.category === "cargo" && asset.visual) prototypes.delete(asset.id);
++  const pendingCargo = new Map<string, Promise<void>>();
++  const nodes = new Map<
++    string,
++    {
++      assetId: string;
++      node: TransformNode;
++      lighting: ReturnType<typeof createEquipmentLighting>;
++    }
++  >();
+@@ -150 +164 @@
+-      mesh.metadata = { damagePreview: true, role: 'effect' };
++      mesh.metadata = { damagePreview: true, role: "effect" };
+@@ -176 +190,3 @@
+-      info.event.button === 0
++      info.event.button === 0 &&
++      tool !== "pan" &&
++      !space
+@@ -192 +208 @@
+-        if (catalog.assets.find(a => a.id === entry.assetId)?.visual) return;
++        if (catalog.assets.find((a) => a.id === entry.assetId)?.visual) return;
+@@ -223,0 +240 @@
++        canvas.dataset.gestureActive = "true";
+@@ -238,0 +256 @@
++      canvas.dataset.gestureActive = "false";
+@@ -241,0 +260,2 @@
++    space = false;
++    pointerInput.buttons = tool === "pan" ? [0, 1, 2] : [1, 2];
+@@ -244,0 +265 @@
++      canvas.dataset.gestureActive = "false";
+@@ -246,0 +268,15 @@
++  const keys = (e: KeyboardEvent) => {
++    if (e.code === "Space" && (document.activeElement === canvas || space)) {
++      e.preventDefault();
++      space = e.type === "keydown";
++      pointerInput.buttons = space || tool === "pan" ? [0, 1, 2] : [1, 2];
++      camera.movement.input.setInteraction(
++        "pointer",
++        { button: 0 },
++        space || tool === "pan" ? "pan" : "rotate",
++      );
++    }
++    if (e.key === "Escape") cancel();
++  };
++  window.addEventListener("keydown", keys);
++  window.addEventListener("keyup", keys);
+@@ -254,0 +291,11 @@
++    cancel,
++    tool(value: "select" | "pan") {
++      cancel();
++      tool = value;
++      pointerInput.buttons = value === "pan" ? [0, 1, 2] : [1, 2];
++      camera.movement.input.setInteraction(
++        "pointer",
++        { button: 0 },
++        value === "pan" ? "pan" : "rotate",
++      );
++    },
+@@ -282,10 +329,14 @@
+-          if(!sources){
+-            const asset=catalog.assets.find(a=>a.id===part.assetId);
+-            if(asset?.visual&&asset.category==='cargo'){
+-              if(!pendingCargo.has(asset.id)){
+-                const pending=loadEquipmentPrototypes(scene,[asset]).then(result=>{
+-                  if(scene.isDisposed)return;
+-                  prototypes.set(asset.id,result.get(asset.id)!);
+-                  if(doc)handle.update(doc,selected,visible);
+-                }).catch(error=>{if(!scene.isDisposed)onError(String(error));});
+-                pendingCargo.set(asset.id,pending);
++          if (!sources) {
++            const asset = catalog.assets.find((a) => a.id === part.assetId);
++            if (asset?.visual && asset.category === "cargo") {
++              if (!pendingCargo.has(asset.id)) {
++                const pending = loadEquipmentPrototypes(scene, [asset])
++                  .then((result) => {
++                    if (scene.isDisposed) return;
++                    prototypes.set(asset.id, result.get(asset.id)!);
++                    if (doc) handle.update(doc, selected, visible);
++                  })
++                  .catch((error) => {
++                    if (!scene.isDisposed) onError(String(error));
++                  });
++                pendingCargo.set(asset.id, pending);
+@@ -295 +346 @@
+-            throw new Error('Part asset missing: '+part.assetId);
++            throw new Error("Part asset missing: " + part.assetId);
+@@ -299 +350,3 @@
+-          const fixtures = catalog.assets.find(a => a.id === part.assetId)?.lights;
++          const fixtures = catalog.assets.find(
++            (a) => a.id === part.assetId,
++          )?.lights;
+@@ -304,2 +357,11 @@
+-            const instance = fixtures?.length ? source.clone(name, node, true)! : source.createInstance(name);
+-            instance.metadata = {...source.metadata, partId: part.id, role: categoryMeshRole(catalog.assets.find(a => a.id === part.assetId)?.category ?? 'equipment')};
++            const instance = fixtures?.length
++              ? source.clone(name, node, true)!
++              : source.createInstance(name);
++            instance.metadata = {
++              ...source.metadata,
++              partId: part.id,
++              role: categoryMeshRole(
++                catalog.assets.find((a) => a.id === part.assetId)?.category ??
++                  "equipment",
++              ),
++            };
+@@ -335 +397,4 @@
+-          if (part.removedCells.length && !catalog.assets.find(a => a.id === part.assetId)?.visual)
++          if (
++            part.removedCells.length &&
++            !catalog.assets.find((a) => a.id === part.assetId)?.visual
++          )
+@@ -381,0 +447,2 @@
++      window.removeEventListener("keydown", keys);
++      window.removeEventListener("keyup", keys);
+--- a/packages/render/src/environment/index.ts
++++ b/packages/render/src/environment/index.ts
+@@ -1,2 +1,9 @@
+-import { createReviewedSystemBodies, isReviewedSystemBody } from './reviewed-system-bodies';
+-import { orientStellarLight } from './yellow-star-runtime';
++import {
++  resolveSpaceBackground,
++  type SpaceRegion,
++} from "@sidereal/sim/space-background";
++import {
++  createReviewedSystemBodies,
++  isReviewedSystemBody,
++} from "./reviewed-system-bodies";
++import { orientStellarLight } from "./yellow-star-runtime";
+@@ -112,0 +120,2 @@
++        "tint2",
++        "gasStrength",
+@@ -115 +124 @@
+-      samplers: ["nebula"],
++      samplers: ["nebula", "nebula2"],
+@@ -153 +162,7 @@
+-  const reviewedSystem = createReviewedSystemBodies(scene, root, planetWorker, heroShadows, planetGlow);
++  const reviewedSystem = createReviewedSystemBodies(
++    scene,
++    root,
++    planetWorker,
++    heroShadows,
++    planetGlow,
++  );
+@@ -626,0 +642 @@
++      region?: SpaceRegion;
+@@ -653,7 +669,28 @@
+-      if (active !== options.id) {
+-        active = options.id;
+-        const vista = spaceVista(active);
+-        skyMat.setTexture("nebula", vista.nebulaAsset ? violet : nebula);
+-        skyMat.setVector3("tint", Vector3.FromArray(vista.nebulaTint));
+-        skyMat.setFloat("strength", vista.nebulaStrength);
+-        skyMat.setFloat("seed", vista.seed);
++      const weights = options.region
++        ? resolveSpaceBackground(options.region, {
++            x: options.x,
++            y: options.y,
++            height: 0,
++          })
++        : [{ id: options.id, weight: 1 }];
++      const key = weights
++        .map((w) => `${w.id}:${w.weight.toFixed(4)}`)
++        .join("|");
++      if (active !== key) {
++        active = key;
++        const tint = [0, 0, 0],
++          tint2 = [0, 0, 0];
++        let gas = 0;
++        for (const w of weights) {
++          const v = spaceVista(w.id);
++          const t = v.nebulaAsset ? tint2 : tint;
++          for (let i = 0; i < 3; i++)
++            t[i] += v.nebulaTint[i] * v.nebulaStrength * w.weight;
++          if (v.id !== "deep-space") gas += w.weight;
++        }
++        skyMat.setTexture("nebula", nebula);
++        skyMat.setTexture("nebula2", violet);
++        skyMat.setVector3("tint", Vector3.FromArray(tint));
++        skyMat.setVector3("tint2", Vector3.FromArray(tint2));
++        skyMat.setFloat("gasStrength", gas);
++        skyMat.setFloat("seed", 17);
+@@ -674,3 +711,17 @@
+-      const star = options.bodies.find(body => body.appearance === 'yellow-main-sequence-r013');
+-      if (star && primaryLight) orientStellarLight(primaryLight, new Vector3(star.x-options.x,star.height,-(star.y-options.y)), camera);
+-      reviewedSystem.update(options.bodies, options, camera, rangePlane, age, options.planetsEnabled !== false);
++      const star = options.bodies.find(
++        (body) => body.appearance === "yellow-main-sequence-r013",
++      );
++      if (star && primaryLight)
++        orientStellarLight(
++          primaryLight,
++          new Vector3(star.x - options.x, star.height, -(star.y - options.y)),
++          camera,
++        );
++      reviewedSystem.update(
++        options.bodies,
++        options,
++        camera,
++        rangePlane,
++        age,
++        options.planetsEnabled !== false,
++      );
+@@ -772 +823,4 @@
+-          mat.setVector3("cameraPosition", scene.floatingOriginMode ? Vector3.Zero() : camera);
++          mat.setVector3(
++            "cameraPosition",
++            scene.floatingOriginMode ? Vector3.Zero() : camera,
++          );
+@@ -786 +840,3 @@
+-        [...entries.values(), ...reviewedSystem.shadowCandidates()].filter((entry) => entry.node.isEnabled()),
++        [...entries.values(), ...reviewedSystem.shadowCandidates()].filter(
++          (entry) => entry.node.isEnabled(),
++        ),
+@@ -794 +850,7 @@
+-      dustField.update(camera, target, options);
++      const dust = weights.reduce(
++        (sum, w) => sum + spaceVista(w.id).dust * w.weight,
++        0,
++      );
++      dustField.mesh.setEnabled(dust > 0);
++      dustField.mesh.visibility = dust;
++      if (dust > 0) dustField.update(camera, target, options);
+--- a/packages/render/src/environment/shaders.ts
++++ b/packages/render/src/environment/shaders.ts
+@@ -17 +17 @@
+-uniform sampler2D nebula;uniform float time;uniform vec3 tint;uniform float strength;uniform float seed;uniform float viewportHeight;
++uniform sampler2D nebula;uniform sampler2D nebula2;uniform vec3 tint2;uniform float gasStrength;uniform float time;uniform vec3 tint;uniform float strength;uniform float seed;uniform float viewportHeight;
+@@ -19 +19 @@
+-vec4 skyPlate(vec3 p,vec3 core){
++vec4 skyPlate(vec3 p,vec3 core,sampler2D plate){
+@@ -24 +24 @@
+- vec3 image=texture2D(nebula,clamp(uv,vec2(.001),vec2(.999))).rgb;
++ vec3 image=texture2D(plate,clamp(uv,vec2(.001),vec2(.999))).rgb;
+@@ -34,2 +34,2 @@
+- vec4 rpg=skyPlate(p,normalize(vec3(.74,-.58,.355)));
+- vec4 downward=skyPlate(p,normalize(vec3(-.20,-.96,-.18)));
++ vec4 rpg=skyPlate(p,normalize(vec3(.74,-.58,.355)),nebula);
++ vec4 downward=skyPlate(p,normalize(vec3(-.20,-.96,-.18)),nebula);
+@@ -36,0 +37,3 @@
++ vec4 rpg2=skyPlate(p,normalize(vec3(.74,-.58,.355)),nebula2);
++ vec4 downward2=skyPlate(p,normalize(vec3(-.20,-.96,-.18)),nebula2);
++ vec3 image2=mix(rpg2.rgb*rpg2.a,downward2.rgb*downward2.a,smoothstep(.78,.97,-p.y));
+@@ -42 +45 @@
+- vec3 color=vec3(.005,.008,.028)+gas*.55+image*tint*strength*.65;
++ vec3 color=vec3(.005,.008,.028)+gas*.55*gasStrength+(image*tint+image2*tint2)*.65;
+--- a/packages/render/src/index.ts
++++ b/packages/render/src/index.ts
+@@ -0,0 +1 @@
++import type { SpaceRegion } from "@sidereal/sim/space-background";
+@@ -4 +5,4 @@
+-import { createStaticMaterialFreeze, invalidateStaticMaterials } from "./static-material-freeze";
++import {
++  createStaticMaterialFreeze,
++  invalidateStaticMaterials,
++} from "./static-material-freeze";
+@@ -6,3 +10,3 @@
+-import { createShipGlowOccluders } from './ship-glow-occluders';
+-import { setMeshRole } from './mesh-roles';
+-import { legacyMeshRole, legacyCutawayFade } from './legacy-mesh-role';
++import { createShipGlowOccluders } from "./ship-glow-occluders";
++import { setMeshRole } from "./mesh-roles";
++import { legacyMeshRole, legacyCutawayFade } from "./legacy-mesh-role";
+@@ -40 +44,5 @@
+-import { readRenderBackend, createRenderBackendPreference, type RenderBackend } from "./render-backend";
++import {
++  readRenderBackend,
++  createRenderBackendPreference,
++  type RenderBackend,
++} from "./render-backend";
+@@ -142,0 +151 @@
++  spaceRegion?: SpaceRegion;
+@@ -203 +212,5 @@
+-  try { backendStorage = globalThis.localStorage; } catch { /* Device storage can be blocked. */ }
++  try {
++    backendStorage = globalThis.localStorage;
++  } catch {
++    /* Device storage can be blocked. */
++  }
+@@ -205,3 +218,8 @@
+-  const pageUrl = typeof window === "undefined" ? undefined : new URL(window.location.href);
+-  const recoveringWebGL = pageUrl?.searchParams.get("rendererFallback") === "webgl";
+-  const createdEngine = await createRenderEngine(canvas, recoveringWebGL ? "webgl" : requestedBackend);
++  const pageUrl =
++    typeof window === "undefined" ? undefined : new URL(window.location.href);
++  const recoveringWebGL =
++    pageUrl?.searchParams.get("rendererFallback") === "webgl";
++  const createdEngine = await createRenderEngine(
++    canvas,
++    recoveringWebGL ? "webgl" : requestedBackend,
++  );
+@@ -216,2 +234,6 @@
+-  const backend = createRenderBackendPreference(createdEngine.active, requestedBackend, backendStorage,
+-    recoveringWebGL ? "WebGL recovery mode." : createdEngine.reason);
++  const backend = createRenderBackendPreference(
++    createdEngine.active,
++    requestedBackend,
++    backendStorage,
++    recoveringWebGL ? "WebGL recovery mode." : createdEngine.reason,
++  );
+@@ -441 +463,4 @@
+-    (m) => m.getTotalVertices() > 0 && m.metadata?.role === "roof" && m.metadata?.cutawayFade,
++    (m) =>
++      m.getTotalVertices() > 0 &&
++      m.metadata?.role === "roof" &&
++      m.metadata?.cutawayFade,
+@@ -510 +535 @@
+-    plate.metadata = { side: Math.sign(room.x), role: 'equipment' };
++    plate.metadata = { side: Math.sign(room.x), role: "equipment" };
+@@ -560,4 +585,7 @@
+-  const refreshLocalGlow = () => localGlowOcclusion.set([
+-    ...flightEffects.meshes, ...emitters, ...imported.meshes,
+-    ...(crew?.root.getChildMeshes() ?? []),
+-  ]);
++  const refreshLocalGlow = () =>
++    localGlowOcclusion.set([
++      ...flightEffects.meshes,
++      ...emitters,
++      ...imported.meshes,
++      ...(crew?.root.getChildMeshes() ?? []),
++    ]);
+@@ -928 +956,2 @@
+-    const actorBlend = blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
++    const actorBlend =
++      blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
+@@ -958 +987,5 @@
+-      const observed = observation.frame(celestialObservationRadius(focus, aspect), dt, state.reducedMotion);
++      const observed = observation.frame(
++        celestialObservationRadius(focus, aspect),
++        dt,
++        state.reducedMotion,
++      );
+@@ -968,0 +1002 @@
++      region: state.spaceRegion,
+@@ -996,3 +1030,16 @@
+-    const snapshotCandidate = fastSnapshot?.prepare({ready:!firstFrame && !state.inspect && !focusedBodyId,
+-      reducedMotion:!!state.reducedMotion,temporal:antialiasing.snapshot().effective.mode === "taa",displayRevision:0}) ?? false;
+-    flightActiveSet.prepare(!snapshotCandidate && !firstFrame && !!state.seated && !state.interior && !state.inspect && !focusedBodyId && blend < .001);
++    const snapshotCandidate =
++      fastSnapshot?.prepare({
++        ready: !firstFrame && !state.inspect && !focusedBodyId,
++        reducedMotion: !!state.reducedMotion,
++        temporal: antialiasing.snapshot().effective.mode === "taa",
++        displayRevision: 0,
++      }) ?? false;
++    flightActiveSet.prepare(
++      !snapshotCandidate &&
++        !firstFrame &&
++        !!state.seated &&
++        !state.interior &&
++        !state.inspect &&
++        !focusedBodyId &&
++        blend < 0.001,
++    );
+@@ -1197,2 +1244,7 @@
+-      if (next.interior !== state.interior || next.inspect !== state.inspect || next.seated !== state.seated) {
+-        fastSnapshot?.invalidate();flightActiveSet.invalidate();
++      if (
++        next.interior !== state.interior ||
++        next.inspect !== state.inspect ||
++        next.seated !== state.seated
++      ) {
++        fastSnapshot?.invalidate();
++        flightActiveSet.invalidate();
+@@ -1201 +1253,3 @@
+-      if (invalidatesTemporalHistory(state, next, temporalNow - temporalStateAt))
++      if (
++        invalidatesTemporalHistory(state, next, temporalNow - temporalStateAt)
++      )
+--- a/packages/render/src/layout-hull.ts
++++ b/packages/render/src/layout-hull.ts
+@@ -77 +77 @@
+-  tool: "select" | "orbit" | "place";
++  tool: "select" | "orbit" | "place" | "pan";
+@@ -158,0 +159,11 @@
++  let space = false;
++  const navigation = () => {
++    const pan = space || state?.tool === "pan";
++    const lockTop = state?.lockTop || state?.preview?.lockTop;
++    pointerInput.buttons = lockTop && !pan ? [] : pan || state?.tool === "orbit" ? [0, 1, 2] : [1, 2];
++    camera.movement.input.setInteraction(
++      "pointer",
++      { button: 0 },
++      pan ? "pan" : "rotate",
++    );
++  };
+@@ -455,0 +467,4 @@
++    if (state.tool === "orbit" || state.tool === "pan" || space) {
++      down = undefined;
++      return;
++    }
+@@ -457 +471,0 @@
+-    if (state.tool === "orbit") return;
+@@ -542,0 +557,2 @@
++    space = false;
++    navigation();
+@@ -573,0 +590,5 @@
++    if (e.code === "Space" && (document.activeElement === canvas || space)) {
++      e.preventDefault();
++      space = e.type === "keydown";
++      navigation();
++    }
+@@ -585,0 +607 @@
++  window.addEventListener("keyup", key);
+@@ -639,5 +661 @@
+-    pointerInput.buttons = lockTop
+-      ? []
+-      : next.tool === "orbit"
+-        ? [0, 1, 2]
+-        : [1, 2];
++    navigation();
+@@ -1014,0 +1033 @@
++      window.removeEventListener("keyup", key);
+--- a/packages/sim/package.json
++++ b/packages/sim/package.json
+@@ -3 +3 @@
+-  "version": "0.1.0",
++  "version": "0.4.0",
+@@ -55,0 +56,4 @@
++    "./system-map": "./src/system-map.ts",
++    "./space-background": "./src/space-background.ts",
++    "./zones": "./src/zones.ts",
++    "./zone-path": "./src/zone-path.ts",
+@@ -73 +77 @@
+-    "@sidereal/content": "0.2.1"
++    "@sidereal/content": "0.5.0"
+--- a/packages/sim/src/collision.ts
++++ b/packages/sim/src/collision.ts
+@@ -218,0 +219,6 @@
++export interface MotionSegment {
++  bodyId: string;
++  from: { x: number; y: number };
++  to: { x: number; y: number };
++  kind: "drift" | "correction";
++}
+@@ -222,0 +229 @@
++  traceIds?: ReadonlySet<string>,
+@@ -259,0 +267,15 @@
++  const trace: MotionSegment[] = [];
++  const record = (a: RigidBody, b: RigidBody, kind: MotionSegment["kind"]) => {
++    if (traceIds?.has(a.id) && (a.x !== b.x || a.y !== b.y))
++      trace.push({
++        bodyId: a.id,
++        from: { x: a.x, y: a.y },
++        to: { x: b.x, y: b.y },
++        kind,
++      });
++  };
++  const drift = (i: number, duration: number) => {
++    const before = bodies[i];
++    bodies[i] = advance(before, duration);
++    record(before, bodies[i], "drift");
++  };
+@@ -287,2 +309 @@
+-      for (let i = 0; i < bodies.length; i++)
+-        bodies[i] = advance(bodies[i], remaining);
++      for (let i = 0; i < bodies.length; i++) drift(i, remaining);
+@@ -292,2 +313 @@
+-    for (let i = 0; i < bodies.length; i++)
+-      bodies[i] = advance(bodies[i], first);
++    for (let i = 0; i < bodies.length; i++) drift(i, first);
+@@ -295 +315 @@
+-    if (!confirmed) return { bodies, impacts, exhausted: true, work };
++    if (!confirmed) return { bodies, impacts, exhausted: true, work, trace };
+@@ -296,0 +317,2 @@
++    const beforeA = { ...bodies[a] },
++      beforeB = { ...bodies[b] };
+@@ -298,3 +320,5 @@
+-  }
+-  return { bodies, impacts, exhausted: remaining > 1e-9, work };
+-}
++    record(beforeA, bodies[a], "correction");
++    record(beforeB, bodies[b], "correction");
++  }
++  return { bodies, impacts, exhausted: remaining > 1e-9, work, trace };
++}
+--- /dev/null
++++ b/packages/sim/src/space-background.test.ts
+@@ -0,0 +1,141 @@
++import { expect, test } from "vitest";
++import {
++  newSystemMap,
++  newAsteroidField,
++  moveMapBody,
++} from "@sidereal/content/system-map";
++import { DEFAULT_SPACE_VISTA, spaceVista } from "@sidereal/content/environment";
++import {
++  resolveSpaceBackground,
++  spaceRegion,
++  systemCenter,
++} from "./space-background";
++import { validateSystemMap } from "./system-map";
++
++test("deep space is the default without authored nebula or bodies", () => {
++  expect(DEFAULT_SPACE_VISTA).toBe("deep-space");
++  expect(spaceVista("missing").id).toBe("deep-space");
++  expect(spaceVista("deep-space")).toMatchObject({
++    nebulaStrength: 0,
++    dust: 0,
++    bodies: [],
++  });
++  expect(resolveSpaceBackground(undefined, { x: 0, y: 0, height: 0 })).toEqual([
++    { id: "deep-space", weight: 1 },
++  ]);
++});
++test("off-origin primary centers new systems; legacy explicit centers are retained", () => {
++  const d = newSystemMap("s", [
++    {
++      id: "star",
++      name: "Star",
++      kind: "star",
++      x: 15000000,
++      y: -80,
++      height: 0,
++      radius: 10,
++    },
++  ]);
++  expect(systemCenter(d).x).toBe(15000000);
++  expect(d.radius).toBe(10000);
++  delete d.primaryStarId;
++  d.center.x = 14999900;
++  expect(systemCenter(d).x).toBe(14999900);
++});
++test("nested region blends are normalized, continuous, deterministic and default outside", () => {
++  const d = newSystemMap("s");
++  d.radius = 1000;
++  d.feather = 100;
++  d.backgroundId = "helion-reach";
++  const f = newAsteroidField("f");
++  Object.assign(f, {
++    width: 200,
++    length: 200,
++    depth: 200,
++    backgroundId: "orion-veil",
++    feather: 20,
++    density: 0,
++  });
++  d.fields = [f];
++  const region = spaceRegion(d),
++    at = (x: number) => resolveSpaceBackground(region, { x, y: 0, height: 0 });
++  expect(at(1100)).toEqual([{ id: "deep-space", weight: 1 }]);
++  expect(at(950)).toEqual([
++    { id: "deep-space", weight: 0.5 },
++    { id: "helion-reach", weight: 0.5 },
++  ]);
++  expect(at(0)).toEqual([{ id: "orion-veil", weight: 1 }]);
++  expect(at(90).find((w) => w.id === "orion-veil")!.weight).toBeCloseTo(0.5);
++  for (let x = -1100; x <= 1100; x += 7) {
++    const values = at(x);
++    expect(values.reduce((s, v) => s + v.weight, 0)).toBeCloseTo(1);
++    expect(
++      values.every((v) => Number.isFinite(v.weight) && v.weight >= 0),
++    ).toBe(true);
++  }
++  const other = { ...region.fields[0], id: "z", backgroundId: "ash-belt" };
++  region.fields.push(other);
++  const first = at(0);
++  region.fields.reverse();
++  expect(at(0)).toEqual(first);
++  expect(JSON.stringify(region)).not.toContain("resources");
++});
++test("concave polygon notches inherit system and feather actual edges", () => {
++  const d = newSystemMap("s");
++  d.backgroundId = "helion-reach";
++  const f = newAsteroidField("f");
++  Object.assign(f, {
++    shape: "polygon",
++    vertices: [
++      { x: 0, y: 0 },
++      { x: 100, y: 0 },
++      { x: 100, y: 30 },
++      { x: 30, y: 30 },
++      { x: 30, y: 100 },
++      { x: 0, y: 100 },
++    ],
++    depth: 100,
++    backgroundId: "orion-veil",
++    feather: 10,
++    density: 0,
++  });
++  d.fields = [f];
++  const at = (x: number, y: number) =>
++    resolveSpaceBackground(spaceRegion(d), { x, y, height: 0 });
++  expect(at(60, 60)).toEqual([{ id: "helion-reach", weight: 1 }]);
++  expect(at(5, 20).find((v) => v.id === "orion-veil")!.weight).toBeCloseTo(0.5);
++  expect(at(15, 20)).toEqual([{ id: "orion-veil", weight: 1 }]);
++});
++test("moving parents retains moon offsets and validation rejects cyclic hierarchy and unknown backgrounds", () => {
++  const d = newSystemMap("s", [
++    { id: "star", name: "S", kind: "star", x: 0, y: 0, height: 0, radius: 10 },
++    {
++      id: "p",
++      name: "P",
++      kind: "planet",
++      parentId: "star",
++      x: 100,
++      y: 0,
++      height: 0,
++      radius: 2,
++    },
++    {
++      id: "m",
++      name: "M",
++      kind: "planet",
++      parentId: "p",
++      x: 110,
++      y: 0,
++      height: 0,
++      radius: 1,
++    },
++  ]);
++  moveMapBody(d, "p", { x: 200, y: 50, height: 1 });
++  expect(d.bodies[2]).toMatchObject({ x: 210, y: 50, height: 1 });
++  expect(validateSystemMap(d)).toBe(0);
++  d.bodies[1].parentId = "m";
++  expect(() => validateSystemMap(d)).toThrow(/cycle/);
++  d.bodies[1].parentId = "star";
++  d.fields = [{ ...newAsteroidField("f"), backgroundId: "invalid" }];
++  expect(() => validateSystemMap(d)).toThrow(/background/);
++});
+--- /dev/null
++++ b/packages/sim/src/space-background.ts
+@@ -0,0 +1,207 @@
++import { compileZones, type CompiledZone } from "./zones";
++import { systemCenter } from "@sidereal/content/system-map";
++import { DEFAULT_SPACE_VISTA } from "@sidereal/content/environment";
++import type {
++  AsteroidField,
++  MapPoint,
++  SystemMapDocument,
++} from "@sidereal/content/system-map";
++import { insidePolygon } from "./system-map";
++
++/** Public presentation geometry only: never resources, population seeds or private bodies. */
++export type BackgroundField = Pick<
++  AsteroidField,
++  | "id"
++  | "x"
++  | "y"
++  | "height"
++  | "shape"
++  | "width"
++  | "length"
++  | "depth"
++  | "vertices"
++  | "backgroundId"
++  | "feather"
++  | "priority"
++>;
++export interface SpaceRegion {
++  center: MapPoint;
++  radius: number;
++  backgroundId: string;
++  feather?: number;
++  fields: BackgroundField[];
++  zones?: CompiledZone[];
++}
++export interface BackgroundWeight {
++  id: string;
++  weight: number;
++}
++export { systemCenter } from "@sidereal/content/system-map";
++export function spaceRegion(doc: SystemMapDocument): SpaceRegion {
++  const p = systemCenter(doc);
++  return {
++    center: { x: p.x, y: p.y, height: p.height },
++    radius: doc.radius,
++    backgroundId: doc.backgroundId,
++    feather: doc.feather,
++    zones: compileZones(doc),
++    fields: doc.fields
++      .filter((f) => f.backgroundId)
++      .map((f) => ({
++        id: f.id,
++        x: f.x,
++        y: f.y,
++        height: f.height,
++        shape: f.shape,
++        width: f.width,
++        length: f.length,
++        depth: f.depth,
++        vertices: f.vertices.map((v) => ({ ...v })),
++        backgroundId: f.backgroundId,
++        feather: f.feather,
++        priority: f.priority,
++      })),
++  };
++}
++const smooth = (distance: number, feather: number) => {
++  const t =
++    feather > 0
++      ? Math.max(0, Math.min(1, distance / feather))
++      : Number(distance >= 0);
++  return t * t * (3 - 2 * t);
++};
++function edgeDistance(
++  x: number,
++  y: number,
++  a: { x: number; y: number },
++  b: { x: number; y: number },
++) {
++  const dx = b.x - a.x,
++    dy = b.y - a.y,
++    d = dx * dx + dy * dy;
++  const t = d
++    ? Math.max(0, Math.min(1, ((x - a.x) * dx + (y - a.y) * dy) / d))
++    : 0;
++  return Math.hypot(x - a.x - t * dx, y - a.y - t * dy);
++}
++export function fieldInteriorDistance(f: BackgroundField, p: MapPoint) {
++  const x = p.x - f.x,
++    y = p.y - f.y,
++    z = p.height - f.height;
++  if (f.shape === "ellipsoid")
++    return (
++      ((1 -
++        Math.hypot(x / (f.width / 2), y / (f.length / 2), z / (f.depth / 2))) *
++        Math.min(f.width, f.length, f.depth)) /
++      2
++    );
++  const depth = f.depth / 2 - Math.abs(z);
++  if (f.shape === "box")
++    return Math.min(
++      f.width / 2 - Math.abs(x),
++      f.length / 2 - Math.abs(y),
++      depth,
++    );
++  const d = Math.min(
++    ...f.vertices.map((a, i) =>
++      edgeDistance(x, y, a, f.vertices[(i + 1) % f.vertices.length]),
++    ),
++  );
++  return Math.min(insidePolygon({ x, y }, f.vertices) ? d : -d, depth);
++}
++/** Precompute deterministic ordering/bounds once for a raster or repeated position samples. */
++export function prepareSpaceBackground(region: SpaceRegion | undefined) {
++  const zoneById = new Map(region?.zones?.map((z) => [z.id, z]) ?? []);
++  const fields = (region?.zones?.filter((z) => !z.root) ?? region?.fields ?? [])
++    .filter((f) => f.backgroundId)
++    .sort(
++      (a, b) =>
++        ((a as CompiledZone).level ?? 0) - ((b as CompiledZone).level ?? 0) ||
++        (a.priority ?? 0) - (b.priority ?? 0) ||
++        (a.id < b.id ? -1 : a.id > b.id ? 1 : 0),
++    )
++    .map((f) => ({
++      field: f,
++      minX:
++        f.x +
++        (f.shape === "polygon"
++          ? Math.min(...f.vertices.map((p) => p.x))
++          : -f.width / 2),
++      maxX:
++        f.x +
++        (f.shape === "polygon"
++          ? Math.max(...f.vertices.map((p) => p.x))
++          : f.width / 2),
++      minY:
++        f.y +
++        (f.shape === "polygon"
++          ? Math.min(...f.vertices.map((p) => p.y))
++          : -f.length / 2),
++      maxY:
++        f.y +
++        (f.shape === "polygon"
++          ? Math.max(...f.vertices.map((p) => p.y))
++          : f.length / 2),
++    }));
++  return (p: MapPoint): BackgroundWeight[] => {
++    const weights = new Map<string, number>([[DEFAULT_SPACE_VISTA, 1]]);
++    const overlay = (id: string, alpha: number) => {
++      if (alpha <= 0) return;
++      for (const [key, w] of weights) weights.set(key, w * (1 - alpha));
++      weights.set(id, (weights.get(id) ?? 0) + alpha);
++    };
++    if (region) {
++      const d =
++        region.radius -
++        Math.hypot(
++          p.x - region.center.x,
++          p.y - region.center.y,
++          p.height - region.center.height,
++        );
++      const system = smooth(
++        d,
++        region.feather ?? Math.min(region.radius * 0.05, 100000),
++      );
++      overlay(region.backgroundId, system);
++      if (system > 0)
++        for (const { field: f, minX, maxX, minY, maxY } of fields) {
++          if (
++            p.x < minX ||
++            p.x > maxX ||
++            p.y < minY ||
++            p.y > maxY ||
++            Math.abs(p.height - f.height) > f.depth / 2
++          )
++            continue;
++          let clipped = system;
++          for (const id of (f as CompiledZone).ancestors ?? []) {
++            const parent = zoneById.get(id);
++            if (parent && !parent.root)
++              clipped *= smooth(
++                fieldInteriorDistance(parent, p),
++                parent.feather ??
++                  Math.min(parent.width, parent.length, parent.depth) * 0.1,
++              );
++          }
++          overlay(
++            f.backgroundId!,
++            clipped *
++              smooth(
++                fieldInteriorDistance(f, p),
++                f.feather ?? Math.min(f.width, f.length, f.depth) * 0.1,
++              ),
++          );
++        }
++    }
++    return [...weights]
++      .filter(([, weight]) => weight > 0)
++      .map(([id, weight]) => ({ id, weight }));
++  };
++}
++/** Deep space, system, then higher-priority fields; all weights remain normalized. */
++export function resolveSpaceBackground(
++  region: SpaceRegion | undefined,
++  p: MapPoint,
++): BackgroundWeight[] {
++  return prepareSpaceBackground(region)(p);
++}
+--- /dev/null
++++ b/packages/sim/src/system-map.test.ts
+@@ -0,0 +1,136 @@
++import { expect, test } from "vitest";
++import { newAsteroidField, newSystemMap } from "@sidereal/content/system-map";
++import {
++  containsFieldPoint,
++  fieldCount,
++  fieldVolume,
++  generateField,
++  readSystemMap,
++  validateSystemMap,
++} from "./system-map";
++const fixture = () => {
++  const d = newSystemMap("test");
++  d.fields = [newAsteroidField("field", 2000, 0)];
++  return d;
++};
++test("ellipsoid density uses cubic kilometres and seeded occurrences are deterministic", () => {
++  const d = fixture(),
++    f = d.fields[0];
++  f.resources = [
++    { resource: "iron", chance: 100 },
++    { resource: "ice", chance: 0 },
++  ];
++  expect(validateSystemMap(d)).toBe(26);
++  const a = generateField(f);
++  expect(a).toEqual(generateField(f));
++  expect(a).toHaveLength(26);
++  expect(
++    a.every(
++      (p) =>
++        containsFieldPoint(f, p) &&
++        p.radius >= 2 &&
++        p.radius <= 8 &&
++        p.resources.join() === "iron",
++    ),
++  ).toBe(true);
++  expect(generateField({ ...f, seed: 2 })).not.toEqual(a);
++});
++test("box and concave polygon prism volume and sampling", () => {
++  const d = fixture(),
++    f = d.fields[0];
++  f.shape = "box";
++  expect(fieldVolume(f)).toBe(500000000);
++  expect(fieldCount(f)).toBe(50);
++  f.shape = "polygon";
++  f.vertices = [
++    { x: 0, y: 0 },
++    { x: 1000, y: 0 },
++    { x: 1000, y: 200 },
++    { x: 200, y: 200 },
++    { x: 200, y: 1000 },
++    { x: 0, y: 1000 },
++  ];
++  expect(validateSystemMap(d)).toBe(18);
++  const a = generateField(f);
++  expect(a.every((p) => containsFieldPoint(f, p))).toBe(true);
++  expect(containsFieldPoint(f, { x: f.x + 500, y: 500, height: 0 })).toBe(
++    false,
++  );
++  expect(containsFieldPoint(f, { x: f.x + 100, y: 100, height: 251 })).toBe(
++    false,
++  );
++});
++test("invalid/self-intersecting and repeated polygon vertices rejected", () => {
++  const d = fixture(),
++    f = d.fields[0];
++  f.shape = "polygon";
++  f.vertices = [
++    { x: 0, y: 0 },
++    { x: 100, y: 100 },
++    { x: 0, y: 100 },
++    { x: 100, y: 0 },
++  ];
++  expect(() => validateSystemMap(d)).toThrow("intersect");
++  f.vertices = [
++    { x: 0, y: 0 },
++    { x: 0, y: 0 },
++    { x: 100, y: 0 },
++  ];
++  expect(() => validateSystemMap(d)).toThrow("repeated");
++});
++test("probability and work budgets fail explicitly; zero density is empty", () => {
++  const d = fixture(),
++    f = d.fields[0];
++  f.density = 0;
++  expect(generateField(f)).toEqual([]);
++  f.density = 1e9;
++  expect(() => validateSystemMap(d)).toThrow("exceeds");
++  f.density = 100;
++  f.resources[0].chance = 101;
++  expect(() => validateSystemMap(d)).toThrow("chance");
++  f.resources[0].chance = 20;
++  f.resources.push({ ...f.resources[0] });
++  expect(() => validateSystemMap(d)).toThrow("duplicate");
++});
++test("sphere contains full bodies, volume bounds and asteroid surfaces", () => {
++  const d = fixture();
++  d.bodies = [
++    {
++      id: "body",
++      kind: "planet",
++      name: "Planet",
++      x: 9999,
++      y: 0,
++      height: 0,
++      radius: 2,
++    },
++  ];
++  expect(() => validateSystemMap(d)).toThrow("outside");
++  d.bodies = [];
++  d.fields[0].x = 9999;
++  expect(() => validateSystemMap(d)).toThrow("outside");
++});
++test("rejects invalid numeric/unknown inputs and oversized JSON", () => {
++  const d = fixture();
++  d.center.x = NaN;
++  expect(() => validateSystemMap(d)).toThrow();
++  expect(() => readSystemMap("x".repeat(128001))).toThrow("large");
++  expect(() => readSystemMap("{")).toThrow("JSON");
++  d.center.x = 0;
++  d.backgroundId = "missing";
++  expect(() => validateSystemMap(d)).toThrow("background");
++});
++
++test("polygon admission uses real vertices rather than empty bounding-box corners", () => {
++  const d = newSystemMap("triangle"),
++    f = newAsteroidField("triangle-field");
++  f.shape = "polygon";
++  f.vertices = [
++    { x: 0, y: 0 },
++    { x: 9000, y: 0 },
++    { x: 0, y: 9000 },
++  ];
++  f.density = 0;
++  d.fields = [f];
++  expect(() => validateSystemMap(d)).not.toThrow();
++});
+--- /dev/null
++++ b/packages/sim/src/system-map.ts
+@@ -0,0 +1,383 @@
++import { compileZonePath } from "./zone-path";
++import { compileZones, zoneContains } from "./zones";
++import { systemCenter } from "@sidereal/content/system-map";
++import {
++  MAP_BACKGROUNDS,
++  MAP_RESOURCES,
++  type AsteroidField,
++  type FieldAsteroid,
++  type MapPoint,
++  type SystemMapDocument,
++} from "@sidereal/content/system-map";
++export const MAP_LIMITS = {
++  bodies: 64,
++  fields: 16,
++  vertices: 64,
++  perField: 2048,
++  asteroids: 8192,
++  jsonBytes: 128000,
++  coordinate: 1e9,
++};
++const finite = (n: number, min: number, max: number, label: string) => {
++  if (typeof n !== "number" || !Number.isFinite(n) || n < min || n > max)
++    throw Error(`${label} must be between ${min} and ${max}`);
++};
++const id = (s: string) => {
++  if (typeof s !== "string" || !/^[a-zA-Z0-9:_-]{1,100}$/.test(s))
++    throw Error("Invalid map ID");
++};
++const name = (s: string) => {
++  if (typeof s !== "string" || !s.trim() || s.length > 80)
++    throw Error("Name must contain 1–80 characters");
++};
++const point = (p: MapPoint) => {
++  for (const k of ["x", "y", "height"] as const)
++    finite(p[k], -MAP_LIMITS.coordinate, MAP_LIMITS.coordinate, k);
++};
++type XY = { x: number; y: number };
++const cross = (a: XY, b: XY, c: XY) =>
++  (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
++const between = (a: XY, b: XY, c: XY) =>
++  cross(a, b, c) === 0 &&
++  c.x >= Math.min(a.x, b.x) &&
++  c.x <= Math.max(a.x, b.x) &&
++  c.y >= Math.min(a.y, b.y) &&
++  c.y <= Math.max(a.y, b.y);
++function intersects(a: XY, b: XY, c: XY, d: XY) {
++  return (
++    (cross(a, b, c) * cross(a, b, d) < 0 &&
++      cross(c, d, a) * cross(c, d, b) < 0) ||
++    between(a, b, c) ||
++    between(a, b, d) ||
++    between(c, d, a) ||
++    between(c, d, b)
++  );
++}
++export function polygonArea(vertices: XY[]) {
++  return (
++    Math.abs(
++      vertices.reduce((sum, a, i) => {
++        const b = vertices[(i + 1) % vertices.length];
++        return sum + a.x * b.y - b.x * a.y;
++      }, 0),
++    ) / 2
++  );
++}
++export function insidePolygon(p: XY, vertices: XY[]) {
++  let inside = false;
++  for (let i = 0, j = vertices.length - 1; i < vertices.length; j = i++) {
++    const a = vertices[i],
++      b = vertices[j];
++    if (between(a, b, p)) return true;
++    if (
++      a.y > p.y !== b.y > p.y &&
++      p.x < ((b.x - a.x) * (p.y - a.y)) / (b.y - a.y) + a.x
++    )
++      inside = !inside;
++  }
++  return inside;
++}
++export function fieldBounds(f: AsteroidField) {
++  if (f.shape === "polygon" && f.vertices.some((v) => v.in || v.out))
++    f = { ...f, vertices: compileZonePath(f.vertices) };
++  return f.shape === "polygon"
++    ? {
++        minX: Math.min(...f.vertices.map((p) => p.x)),
++        maxX: Math.max(...f.vertices.map((p) => p.x)),
++        minY: Math.min(...f.vertices.map((p) => p.y)),
++        maxY: Math.max(...f.vertices.map((p) => p.y)),
++      }
++    : {
++        minX: -f.width / 2,
++        maxX: f.width / 2,
++        minY: -f.length / 2,
++        maxY: f.length / 2,
++      };
++}
++export function fieldVolume(f: AsteroidField) {
++  return f.shape === "ellipsoid"
++    ? (Math.PI / 6) * f.width * f.length * f.depth
++    : f.shape === "box"
++      ? f.width * f.length * f.depth
++      : polygonArea(
++          f.vertices.some((v) => v.in || v.out)
++            ? compileZonePath(f.vertices)
++            : f.vertices,
++        ) * f.depth;
++}
++export const fieldCount = (f: AsteroidField) =>
++  Math.round((fieldVolume(f) / 1e9) * f.density);
++export function containsFieldPoint(f: AsteroidField, p: MapPoint) {
++  const x = p.x - f.x,
++    y = p.y - f.y,
++    h = p.height - f.height;
++  if (Math.abs(h) > f.depth / 2) return false;
++  if (f.shape === "ellipsoid")
++    return (
++      ((2 * x) / f.width) ** 2 +
++        ((2 * y) / f.length) ** 2 +
++        ((2 * h) / f.depth) ** 2 <=
++      1
++    );
++  if (f.shape === "polygon")
++    return insidePolygon(
++      { x, y },
++      f.vertices.some((v) => v.in || v.out)
++        ? compileZonePath(f.vertices)
++        : f.vertices,
++    );
++  return Math.abs(x) <= f.width / 2 && Math.abs(y) <= f.length / 2;
++}
++export function validateSystemMap(doc: SystemMapDocument) {
++  if (!doc || doc.version !== 1) throw Error("Unsupported system map version");
++  id(doc.id);
++  compileZones(doc);
++  name(doc.name);
++  point(doc.center);
++  if (
++    !Array.isArray(doc.bodies) ||
++    doc.bodies.length > MAP_LIMITS.bodies ||
++    !Array.isArray(doc.fields) ||
++    doc.fields.length > MAP_LIMITS.fields
++  )
++    throw Error("System body or field budget exceeded");
++
++  if (
++    doc.primaryStarId !== undefined &&
++    !doc.bodies.some((b) => b.id === doc.primaryStarId && b.kind === "star")
++  )
++    throw Error("Primary star must belong to this system");
++  const center = systemCenter(doc);
++  if (doc.feather !== undefined)
++    finite(doc.feather, 0, doc.radius, "System feather");
++  finite(doc.radius, 1, 1e8, "System radius");
++  for (const key of ["x", "y", "height"] as const)
++    if (Math.abs(center[key]) + doc.radius > MAP_LIMITS.coordinate)
++      throw Error("System exceeds world coordinate bounds");
++  if (!MAP_BACKGROUNDS.some((b) => b.id === doc.backgroundId))
++    throw Error("Unknown space background");
++  const ids = new Set<string>();
++  const unique = (s: string) => {
++    id(s);
++    if (ids.has(s)) throw Error("Duplicate map ID");
++    ids.add(s);
++  };
++  const contained = (p: MapPoint, r = 0) => {
++    if (
++      Math.hypot(p.x - center.x, p.y - center.y, p.height - center.height) + r >
++      doc.radius + 1e-7
++    )
++      throw Error("Body or field is outside the system sphere");
++  };
++  for (const b of doc.bodies) {
++    unique(b.id);
++    name(b.name);
++    point(b);
++    if (!["star", "planet", "moon"].includes(b.kind))
++      throw Error("Only celestial bodies may be edited");
++    finite(b.radius, 0.01, 1e7, "Body radius");
++    contained(b, b.radius);
++  }
++  const byId = new Map(doc.bodies.map((b) => [b.id, b]));
++  for (const b of doc.bodies) {
++    if (b.parentId != null) {
++      const parent = byId.get(b.parentId);
++      if (
++        !parent ||
++        parent.id === b.id ||
++        b.kind === "star" ||
++        (b.kind === "moon" && parent.kind === "star")
++      )
++        throw Error("Invalid celestial parent");
++      const visited = new Set([b.id]);
++      let next = parent;
++      while (next) {
++        if (visited.has(next.id)) throw Error("Celestial hierarchy cycle");
++        visited.add(next.id);
++        if (!next.parentId) break;
++        next = byId.get(next.parentId)!;
++      }
++    }
++    if (b.seed !== undefined) {
++      finite(b.seed, 0, 2147483647, "Body seed");
++      if (!Number.isInteger(b.seed))
++        throw Error("Body seed must be an integer");
++    }
++    if (
++      b.appearance !== undefined &&
++      (typeof b.appearance !== "string" || b.appearance.length > 100)
++    )
++      throw Error("Invalid body appearance");
++  }
++  let count = 0;
++  for (const f of doc.fields) {
++    unique(f.id);
++    if (
++      f.backgroundId !== undefined &&
++      !MAP_BACKGROUNDS.some((b) => b.id === f.backgroundId)
++    )
++      throw Error("Unknown field background");
++    if (f.feather !== undefined) finite(f.feather, 0, 1e8, "Field feather");
++    if (f.priority !== undefined) {
++      finite(f.priority, -100, 100, "Field priority");
++      if (!Number.isInteger(f.priority))
++        throw Error("Field priority must be an integer");
++    }
++    name(f.name);
++    point(f);
++    if (!["ellipsoid", "box", "polygon"].includes(f.shape))
++      throw Error("Unknown field shape");
++    for (const k of ["width", "length", "depth"] as const)
++      finite(f[k], 1, 1e8, k);
++    finite(f.density, 0, 1e9, "Density");
++    finite(f.seed, 0, 4294967295, "Seed");
++    if (!Number.isInteger(f.seed)) throw Error("Seed must be an integer");
++    finite(f.minRadius, 0.1, 1000, "Minimum asteroid radius");
++    finite(f.maxRadius, f.minRadius, 1000, "Maximum asteroid radius");
++    if (!Array.isArray(f.vertices) || f.vertices.length > MAP_LIMITS.vertices)
++      throw Error("Vertex budget exceeded");
++    if (f.shape === "polygon") {
++      const v = compileZonePath(f.vertices);
++      if (v.length < 3) throw Error("Draw at least three vertices");
++      for (const p of v) {
++        finite(p.x, -1e8, 1e8, "Vertex X");
++        finite(p.y, -1e8, 1e8, "Vertex Y");
++      }
++      for (let i = 0; i < v.length; i++) {
++        const a = v[i],
++          b = v[(i + 1) % v.length];
++        if (Math.hypot(a.x - b.x, a.y - b.y) < 0.01)
++          throw Error("Polygon has repeated vertices");
++        for (let j = i + 1; j < v.length; j++) {
++          if (j === i + 1 || (i === 0 && j === v.length - 1)) continue;
++          if (intersects(a, b, v[j], v[(j + 1) % v.length]))
++            throw Error("Polygon edges intersect");
++        }
++      }
++      const bb = fieldBounds(f);
++      if (
++        polygonArea(v) < 1 ||
++        polygonArea(v) / ((bb.maxX - bb.minX) * (bb.maxY - bb.minY)) < 0.01
++      )
++        throw Error("Polygon is too thin for bounded population");
++    }
++    const bounds = fieldBounds(f);
++    // Exact prism corners; ellipsoids use a conservative enclosing sphere.
++    // A concave footprint's empty bounding-box corners are not part of its volume.
++    if (f.shape === "ellipsoid")
++      contained(f, Math.max(f.width, f.length, f.depth) / 2 + f.maxRadius);
++    else {
++      const corners =
++        f.shape === "polygon"
++          ? compileZonePath(f.vertices)
++          : [
++              { x: bounds.minX, y: bounds.minY },
++              { x: bounds.maxX, y: bounds.minY },
++              { x: bounds.maxX, y: bounds.maxY },
++              { x: bounds.minX, y: bounds.maxY },
++            ];
++      for (const p of corners)
++        for (const h of [-f.depth / 2, f.depth / 2])
++          contained(
++            { x: f.x + p.x, y: f.y + p.y, height: f.height + h },
++            f.maxRadius,
++          );
++    }
++    if (
++      !Array.isArray(f.resources) ||
++      f.resources.length > MAP_RESOURCES.length
++    )
++      throw Error("Resource budget exceeded");
++    const resources = new Set<string>();
++    for (const r of f.resources) {
++      if (
++        !MAP_RESOURCES.some((s) => s === r.resource) ||
++        resources.has(r.resource)
++      )
++        throw Error("Unknown or duplicate resource");
++      resources.add(r.resource);
++      finite(r.chance, 0, 100, "Resource chance");
++    }
++    const n = fieldCount(f);
++    if (n > MAP_LIMITS.perField)
++      throw Error(
++        `Field exceeds ${MAP_LIMITS.perField} asteroids; reduce density or volume`,
++      );
++    count += n;
++  }
++  if (count > MAP_LIMITS.asteroids)
++    throw Error("System asteroid budget exceeded");
++  return count;
++}
++function random(seed: number) {
++  let state = seed >>> 0;
++  return () => {
++    state = (state + 0x6d2b79f5) >>> 0;
++    let t = state;
++    t = Math.imul(t ^ (t >>> 15), t | 1);
++    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
++    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
++  };
++}
++/** Call only after validation. Fixed bounded work; never silently underpopulate. */
++export function generateField(f: AsteroidField): FieldAsteroid[] {
++  if (f.shape === "polygon" && f.vertices.some((v) => v.in || v.out))
++    f = { ...f, vertices: compileZonePath(f.vertices) };
++  const count = fieldCount(f);
++  if (!Number.isSafeInteger(count) || count < 0 || count > MAP_LIMITS.perField)
++    throw Error("Invalid population budget");
++  const rng = random(f.seed),
++    b = fieldBounds(f),
++    result: FieldAsteroid[] = [];
++  for (
++    let attempt = 0;
++    result.length < count && attempt < Math.max(1, count) * 1000;
++    attempt++
++  ) {
++    const p = {
++      x: f.x + b.minX + rng() * (b.maxX - b.minX),
++      y: f.y + b.minY + rng() * (b.maxY - b.minY),
++      height: f.height + (rng() - 0.5) * f.depth,
++    };
++    if (!containsFieldPoint(f, p)) continue;
++    const index = result.length;
++    result.push({
++      ...p,
++      id: `${f.id}:${index}`,
++      fieldId: f.id,
++      radius: f.minRadius + rng() * (f.maxRadius - f.minRadius),
++      seed: Math.floor(rng() * 4294967296),
++      resources: [...f.resources]
++        .sort((a, b) => a.resource.localeCompare(b.resource))
++        .filter((r) => rng() * 100 < r.chance)
++        .map((r) => r.resource),
++    });
++  }
++  if (result.length !== count)
++    throw Error("Population sampling budget exhausted");
++  return result;
++}
++export function readSystemMap(json: string) {
++  if (new TextEncoder().encode(json).length > MAP_LIMITS.jsonBytes)
++    throw Error("Map document too large");
++  let doc: SystemMapDocument;
++  try {
++    doc = JSON.parse(json);
++  } catch {
++    throw Error("Invalid map JSON");
++  }
++  validateSystemMap(doc);
++  return doc;
++}
++
++/** Clip populated fields by ancestors without changing legacy seeded identities. */
++export function generateMapFields(doc: SystemMapDocument): FieldAsteroid[] {
++  const zones = compileZones(doc),
++    byId = new Map(zones.map((z) => [z.id, z]));
++  return doc.fields.flatMap((f) => {
++    const ancestors = byId.get(f.id)!.ancestors.map((id) => byId.get(id)!);
++    return generateField(f).filter((p) =>
++      ancestors.every((z) => zoneContains(z, p)),
++    );
++  });
++}
+--- a/packages/sim/src/system-space.ts
++++ b/packages/sim/src/system-space.ts
+@@ -1 +1 @@
+-import { stepContacts, type RigidBody } from "./collision";
++import { stepContacts, type RigidBody, type MotionSegment } from "./collision";
+@@ -43,0 +44 @@
++  trace: MotionSegment[];
+@@ -108,0 +110 @@
++  traceIds?: ReadonlySet<string>,
+@@ -113,0 +116 @@
++    trace: [],
+@@ -133,0 +137 @@
++  const trace: MotionSegment[] = [];
+@@ -248 +252 @@
+-    const result = stepContacts(kicked, DT);
++    const result = stepContacts(kicked, DT, 0.2, traceIds);
+@@ -256,0 +261 @@
++    trace.push(...result.trace);
+@@ -265,0 +271 @@
++    trace,
+--- /dev/null
++++ b/packages/sim/src/zone-path.ts
+@@ -0,0 +1,159 @@
++import type { ZoneAnchor, ZoneVector } from "@sidereal/content/zones";
++export const PATH_LIMITS = { anchors: 64, edges: 512, depth: 16 };
++const add = (a: ZoneVector, b?: ZoneVector): ZoneVector => ({
++  x: a.x + (b?.x ?? 0),
++  y: a.y + (b?.y ?? 0),
++});
++const sub = (a: ZoneVector, b: ZoneVector): ZoneVector => ({
++  x: a.x - b.x,
++  y: a.y - b.y,
++});
++const mix = (a: ZoneVector, b: ZoneVector, t: number): ZoneVector => ({
++  x: a.x + (b.x - a.x) * t,
++  y: a.y + (b.y - a.y) * t,
++});
++export function cubicAt(a: ZoneAnchor, b: ZoneAnchor, t: number) {
++  const p = mix(a, add(a, a.out), t),
++    q = mix(add(a, a.out), add(b, b.in), t),
++    r = mix(add(b, b.in), b, t);
++  return mix(mix(p, q, t), mix(q, r, t), t);
++}
++/** Exact shape-preserving split, including the closing segment. Mutates only the draft. */
++export function splitZoneEdge(points: ZoneAnchor[], index: number, t = 0.5) {
++  if (points.length >= PATH_LIMITS.anchors)
++    throw Error("Path anchor budget exceeded");
++  if (!(t > 0 && t < 1) || index < 0 || index >= points.length)
++    throw Error("Invalid path split");
++  const a = points[index],
++    b = points[(index + 1) % points.length];
++  if (!a.out && !b.in) {
++    points.splice(index + 1, 0, mix(a, b, t));
++    return;
++  }
++  const p = mix(a, add(a, a.out), t),
++    q = mix(add(a, a.out), add(b, b.in), t),
++    r = mix(add(b, b.in), b, t);
++  const s = mix(p, q, t),
++    u = mix(q, r, t),
++    v = mix(s, u, t);
++  a.out = sub(p, a);
++  b.in = sub(r, b);
++  points.splice(index + 1, 0, {
++    ...v,
++    in: sub(s, v),
++    out: sub(u, v),
++    mode: "aligned",
++  });
++}
++export function curveZoneEdge(points: ZoneAnchor[], index: number) {
++  const a = points[index],
++    b = points[(index + 1) % points.length];
++  if (!a.out && !b.in) {
++    a.out = sub(mix(a, b, 1 / 3), a);
++    b.in = sub(mix(a, b, 2 / 3), b);
++  }
++}
++export function setZoneHandle(
++  a: ZoneAnchor,
++  side: "in" | "out",
++  value: ZoneVector,
++  independent = false,
++) {
++  a[side] = value;
++  if (independent) a.mode = "corner";
++  const other = side === "in" ? "out" : "in",
++    length = Math.hypot(value.x, value.y);
++  if (a.mode === "mirrored") a[other] = { x: -value.x, y: -value.y };
++  else if (a.mode === "aligned" && length > 0) {
++    const ratio =
++      Math.hypot(a[other]?.x ?? value.x, a[other]?.y ?? value.y) / length;
++    a[other] = { x: -value.x * ratio, y: -value.y * ratio };
++  }
++}
++function distance(p: ZoneVector, a: ZoneVector, b: ZoneVector) {
++  const d = sub(b, a),
++    l = d.x * d.x + d.y * d.y;
++  const t = l
++    ? Math.max(0, Math.min(1, ((p.x - a.x) * d.x + (p.y - a.y) * d.y) / l))
++    : 0;
++  return Math.hypot(p.x - a.x - d.x * t, p.y - a.y - d.y * t);
++}
++/** Version 1 compiler. Absolute error <= max(1 cm, control extent / 16384). */
++export function compileZonePath(points: readonly ZoneAnchor[]): ZoneVector[] {
++  if (
++    !Array.isArray(points) ||
++    points.length < 3 ||
++    points.length > PATH_LIMITS.anchors
++  )
++    throw Error("Path needs 3–64 anchors");
++  let extent = 1;
++  for (const p of points) {
++    if (
++      !p ||
++      !Number.isFinite(p.x) ||
++      !Number.isFinite(p.y) ||
++      Math.abs(p.x) > 1e9 ||
++      Math.abs(p.y) > 1e9
++    )
++      throw Error("Invalid path anchor");
++    if (
++      p.mode !== undefined &&
++      !["corner", "aligned", "mirrored"].includes(p.mode)
++    )
++      throw Error("Invalid handle mode");
++    for (const h of [p.in, p.out])
++      if (
++        h &&
++        (!Number.isFinite(h.x) ||
++          !Number.isFinite(h.y) ||
++          Math.abs(h.x) > 1e9 ||
++          Math.abs(h.y) > 1e9)
++      )
++        throw Error("Invalid curve handle");
++    extent = Math.max(
++      extent,
++      Math.abs(p.x),
++      Math.abs(p.y),
++      Math.abs(add(p, p.in).x),
++      Math.abs(add(p, p.in).y),
++      Math.abs(add(p, p.out).x),
++      Math.abs(add(p, p.out).y),
++    );
++  }
++  const tolerance = Math.max(0.01, extent / 16384),
++    result: ZoneVector[] = [{ x: points[0].x, y: points[0].y }];
++  const emit = (p: ZoneVector) => {
++    if (result.length > PATH_LIMITS.edges)
++      throw Error("Curve exceeds 512 compiled edges; simplify the path");
++    result.push({ x: p.x, y: p.y });
++  };
++  const flatten = (
++    a: ZoneVector,
++    b: ZoneVector,
++    c: ZoneVector,
++    d: ZoneVector,
++    depth: number,
++  ) => {
++    if (Math.max(distance(b, a, d), distance(c, a, d)) <= tolerance) {
++      emit(d);
++      return;
++    }
++    if (depth >= PATH_LIMITS.depth)
++      throw Error("Curve precision budget exceeded");
++    const ab = mix(a, b, 0.5),
++      bc = mix(b, c, 0.5),
++      cd = mix(c, d, 0.5),
++      abc = mix(ab, bc, 0.5),
++      bcd = mix(bc, cd, 0.5),
++      mid = mix(abc, bcd, 0.5);
++    flatten(a, ab, abc, mid, depth + 1);
++    flatten(mid, bcd, cd, d, depth + 1);
++  };
++  points.forEach((a, i) => {
++    const b = points[(i + 1) % points.length];
++    if (a.out || b.in) flatten(a, add(a, a.out), add(b, b.in), b, 0);
++    else emit({ x: b.x, y: b.y });
++  });
++  result.pop();
++  return result;
++}
+--- /dev/null
++++ b/packages/sim/src/zone-traces.test.ts
+@@ -0,0 +1,77 @@
++import { expect, test } from "vitest";
++import { stepContacts, type RigidBody } from "./collision";
++import { stepSystemSpace } from "./system-space";
++import { compileZones, sweepZones } from "./zones";
++import { newSystemMap } from "@sidereal/content/system-map";
++import { newMapZone } from "@sidereal/content/zones";
++const body = (
++  id: string,
++  x: number,
++  extra: Partial<RigidBody> = {},
++): RigidBody => ({
++  id,
++  x,
++  y: 0,
++  vx: 0,
++  vy: 0,
++  heading: 0,
++  omega: 0,
++  massKg: 1000,
++  inertia: 1000,
++  radius: 1,
++  halfLength: 0,
++  ...extra,
++});
++test("collision bounce retains each accepted drift instead of an endpoint chord", () => {
++  const input = [
++      body("ship", -10, { vx: 2000 }),
++      body("rock", 0, { massKg: 1e12, inertia: 1e12 }),
++    ],
++    r = stepContacts(input, 1 / 60, 0.8, new Set(["ship"]));
++  expect(r.impacts).toBeGreaterThan(0);
++  const trace = r.trace.filter((s) => s.kind === "drift");
++  expect(trace.length).toBeGreaterThanOrEqual(2);
++  expect(trace[0].to.x).toBeGreaterThan(trace[0].from.x);
++  expect(trace.at(-1)!.to.x).toBeLessThan(trace.at(-1)!.from.x);
++  const d = newSystemMap("system");
++  d.zones = [{ ...newMapZone("near-wall", -3, 0), width: 1, length: 100 }];
++  const zones = compileZones(d),
++    events = trace.flatMap(
++      (s) =>
++        sweepZones(zones, { ...s.from, height: 0 }, { ...s.to, height: 0 })
++          .changes,
++    );
++  expect(events.map((e) => e.entered)).toEqual([true, false, true, false]);
++});
++test("rolled-back coordinate substeps expose no trace", () => {
++  const input = [body("ship", 1e9, { vx: 10 })],
++    r = stepSystemSpace(input, [], new Set(["ship"]));
++  expect(r.reason).toBe("coordinate-bound");
++  expect(r.bodies).toEqual(input);
++  expect(r.trace).toEqual([]);
++});
++test("contact exhaustion retains only the partial accepted motion trace", () => {
++  const input = [
++      body("ship", -Math.SQRT1_2, {
++        y: -Math.SQRT1_2,
++        vx: 1000 * Math.SQRT1_2,
++        vy: 1000 * Math.SQRT1_2,
++      }),
++      body("rock", -2.001 * Math.SQRT1_2, { y: 2.001 * Math.SQRT1_2 }),
++    ],
++    r = stepSystemSpace(input, [], new Set(["ship"]));
++  expect(r.reason).toBe("contact-budget");
++  expect(r.trace.length).toBeGreaterThan(0);
++  const last = r.trace.at(-1)!;
++  expect(last.to.x).toBe(r.bodies.find((b) => b.id === "ship")!.x);
++  expect(last.to.y).toBe(r.bodies.find((b) => b.id === "ship")!.y);
++});
++test("overlap correction is distinct from drift", () => {
++  const r = stepContacts(
++    [body("ship", 0), body("rock", 1)],
++    1 / 60,
++    0.2,
++    new Set(["ship"]),
++  );
++  expect(r.trace.some((s) => s.kind === "correction")).toBe(true);
++});
+--- /dev/null
++++ b/packages/sim/src/zones.test.ts
+@@ -0,0 +1,232 @@
++import { expect, test } from "vitest";
++import { newSystemMap, newAsteroidField } from "@sidereal/content/system-map";
++import { newMapZone, type ZoneAnchor } from "@sidereal/content/zones";
++import { compileZones, zoneMembership, sweepZones } from "./zones";
++import {
++  compileZonePath,
++  curveZoneEdge,
++  cubicAt,
++  splitZoneEdge,
++  setZoneHandle,
++} from "./zone-path";
++import { generateField } from "./system-map";
++import { spaceRegion, resolveSpaceBackground } from "./space-background";
++const square = (): ZoneAnchor[] => [
++  { x: -100, y: -100 },
++  { x: 100, y: -100 },
++  { x: 100, y: 100 },
++  { x: -100, y: 100 },
++];
++const fixture = () => {
++  const d = newSystemMap("system");
++  d.radius = 10000;
++  d.zones = [
++    { ...newMapZone("parent"), width: 1000, length: 1000 },
++    {
++      ...newMapZone("child", 450, 0),
++      parentId: "parent",
++      width: 200,
++      length: 200,
++    },
++  ];
++  return d;
++};
++test("root, generic zones and legacy fields normalize without leaking population", () => {
++  const d = fixture();
++  d.fields = [newAsteroidField("rocks")];
++  const zones = compileZones(d);
++  expect(zones.map((z) => z.id)).toEqual([
++    "system",
++    "parent",
++    "rocks",
++    "child",
++  ]);
++  expect(JSON.stringify(zones)).not.toMatch(/density|resources|seed/);
++  expect(zoneMembership(zones, { x: 480, y: 0, height: 0 })).toEqual([
++    "system",
++    "parent",
++    "rocks",
++    "child",
++  ]);
++  expect(zoneMembership(zones, { x: 520, y: 0, height: 0 })).toEqual([
++    "system",
++  ]);
++});
++test("parents clip children and presentation strips resource data", () => {
++  const d = fixture();
++  const region = spaceRegion(d);
++  expect(region.zones).toHaveLength(3);
++  expect(zoneMembership(region.zones!, { x: 520, y: 0, height: 0 })).toEqual([
++    "system",
++  ]);
++  expect(
++    resolveSpaceBackground(region, { x: 520, y: 0, height: 0 }).reduce(
++      (sum, x) => sum + x.weight,
++      0,
++    ),
++  ).toBeCloseTo(1);
++});
++test("reject cycles, orphan parents, duplicate IDs and invalid color", () => {
++  for (const mutate of [
++    (d: ReturnType<typeof fixture>) => {
++      d.zones![0].parentId = "child";
++    },
++    (d: ReturnType<typeof fixture>) => {
++      d.zones![1].parentId = "missing";
++    },
++    (d: ReturnType<typeof fixture>) => {
++      d.zones![1].id = "system";
++    },
++    (d: ReturnType<typeof fixture>) => {
++      d.zones![1].color = "red";
++    },
++  ]) {
++    const d = fixture();
++    mutate(d);
++    expect(() => compileZones(d)).toThrow();
++  }
++});
++test("straight-to-cubic conversion and de Casteljau splitting preserve shape", () => {
++  const points = square();
++  curveZoneEdge(points, 0);
++  expect(cubicAt(points[0], points[1], 0.25).x).toBeCloseTo(-50, 10);
++  points[0].out = { x: 80, y: -130 };
++  points[1].in = { x: -30, y: -60 };
++  const a = structuredClone(points[0]),
++    b = structuredClone(points[1]);
++  splitZoneEdge(points, 0, 0.3);
++  for (let i = 0; i <= 100; i++) {
++    const t = i / 100,
++      p =
++        t <= 0.3
++          ? cubicAt(points[0], points[1], t / 0.3)
++          : cubicAt(points[1], points[2], (t - 0.3) / 0.7),
++      q = cubicAt(a, b, t);
++    expect(p.x).toBeCloseTo(q.x, 8);
++    expect(p.y).toBeCloseTo(q.y, 8);
++  }
++  expect(compileZonePath(points).length).toBeGreaterThan(5);
++});
++test("handle coupling preserves opposite length or mirrors, Alt breaks link", () => {
++  const a: ZoneAnchor = { x: 0, y: 0, in: { x: -20, y: 0 }, mode: "aligned" };
++  setZoneHandle(a, "out", { x: 0, y: 40 });
++  expect(a.in).toEqual({ x: -0, y: -20 });
++  a.mode = "mirrored";
++  setZoneHandle(a, "out", { x: 10, y: 12 });
++  expect(a.in).toEqual({ x: -10, y: -12 });
++  setZoneHandle(a, "out", { x: 1, y: 2 }, true);
++  expect(a.in).toEqual({ x: -10, y: -12 });
++  expect(a.mode).toBe("corner");
++});
++test("curves reject nonfinite handles and self intersections", () => {
++  const d = fixture();
++  d.zones![0].shape = "polygon";
++  d.zones![0].vertices = [
++    { x: 0, y: 0 },
++    { x: 100, y: 100 },
++    { x: 0, y: 100 },
++    { x: 100, y: 0 },
++  ];
++  expect(() => compileZones(d)).toThrow(/intersect/);
++  d.zones![0].vertices = square();
++  d.zones![0].vertices[0].out = { x: Infinity, y: 0 };
++  expect(() => compileZones(d)).toThrow(/handle/);
++});
++test("outside-to-outside sweep reports thin zone entry and exit in order", () => {
++  const d = fixture();
++  d.zones = [{ ...newMapZone("thin"), width: 1, length: 100 }];
++  const result = sweepZones(
++    compileZones(d),
++    { x: -100, y: 0, height: 0 },
++    { x: 100, y: 0, height: 0 },
++  );
++  expect(result.changes.map((c) => [c.zoneId, c.entered])).toEqual([
++    ["thin", true],
++    ["thin", false],
++  ]);
++  expect(result.changes[0].fraction).toBeCloseTo(0.4975);
++  expect(result.active).toEqual(["system"]);
++});
++test("nested simultaneous crossings enter parent-first and exit child-first", () => {
++  const d = fixture();
++  d.zones![1] = { ...d.zones![0], id: "child", parentId: "parent" };
++  const r = sweepZones(
++    compileZones(d),
++    { x: -1000, y: 0, height: 0 },
++    { x: 1000, y: 0, height: 0 },
++  );
++  expect(r.changes.map((c) => [c.zoneId, c.entered])).toEqual([
++    ["parent", true],
++    ["child", true],
++    ["child", false],
++    ["parent", false],
++  ]);
++});
++test("ellipsoid tangencies do not invent transit events", () => {
++  const d = fixture();
++  d.zones = [
++    { ...newMapZone("round"), shape: "ellipsoid", width: 100, length: 100 },
++  ];
++  const r = sweepZones(
++    compileZones(d),
++    { x: -100, y: 50, height: 0 },
++    { x: 100, y: 50, height: 0 },
++  );
++  expect(r.changes).toEqual([]);
++});
++test("curved asteroid paths use deterministic compiled population", () => {
++  const f = newAsteroidField("curve");
++  f.shape = "polygon";
++  f.vertices = square();
++  f.density = 1000;
++  curveZoneEdge(f.vertices, 0);
++  f.vertices[0].out!.y = -100;
++  const a = generateField(f);
++  expect(a.length).toBeGreaterThan(0);
++  expect(a).toEqual(generateField(f));
++});
++
++test("primary-star metadata cannot overwrite root identity or its parent", () => {
++  const d = newSystemMap("system", [
++    {
++      id: "star",
++      name: "Star",
++      kind: "star",
++      radius: 5,
++      x: 10,
++      y: 20,
++      height: 0,
++      parentId: null,
++    },
++  ]);
++  const zones = compileZones(d);
++  expect(zones[0].id).toBe("system");
++  expect(zones[0].parentId).toBeUndefined();
++  expect(zones[0].x).toBe(10);
++});
++test("empty parent cannot create an unbounded orphan", () => {
++  const d = fixture();
++  d.zones![0].parentId = "";
++  expect(() => compileZones(d)).toThrow(/parent/);
++});
++test("distinct very thin crossings are not merged by an arbitrary fraction tolerance", () => {
++  const d = fixture();
++  d.zones = [
++    {
++      ...newMapZone("sliver"),
++      shape: "polygon",
++      vertices: [
++        { x: 0, y: -1e6 },
++        { x: 1e-6, y: -1e6 },
++        { x: 1e-6, y: 1e6 },
++        { x: 0, y: 1e6 },
++      ],
++    },
++  ];
++  const r = sweepZones(
++    compileZones(d),
++    { x: -8000, y: 0, height: 0 },
++    { x: 8000, y: 0, height: 0 },
++  );
++  expect(r.changes.map((x) => x.entered)).toEqual([true, false]);
++});
+--- /dev/null
++++ b/packages/sim/src/zones.ts
+@@ -0,0 +1,374 @@
++import {
++  MAP_BACKGROUNDS,
++  systemCenter,
++  type MapPoint,
++  type SystemMapDocument,
++} from "@sidereal/content/system-map";
++import type { MapZone, ZoneVector } from "@sidereal/content/zones";
++import { compileZonePath } from "./zone-path";
++export const ZONE_LIMITS = { zones: 48, depth: 8, edges: 8192, history: 128 };
++export interface CompiledZone extends MapZone {
++  parentId?: string;
++  level: number;
++  ancestors: string[];
++  root?: boolean;
++  bounds?: { minX: number; maxX: number; minY: number; maxY: number };
++}
++const cross = (a: ZoneVector, b: ZoneVector, c: ZoneVector) =>
++  (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
++const onEdge = (a: ZoneVector, b: ZoneVector, p: ZoneVector) =>
++  Math.abs(cross(a, b, p)) < 1e-8 &&
++  p.x >= Math.min(a.x, b.x) - 1e-9 &&
++  p.x <= Math.max(a.x, b.x) + 1e-9 &&
++  p.y >= Math.min(a.y, b.y) - 1e-9 &&
++  p.y <= Math.max(a.y, b.y) + 1e-9;
++export function zonePolygonContains(p: ZoneVector, v: readonly ZoneVector[]) {
++  let inside = false;
++  for (let i = 0, j = v.length - 1; i < v.length; j = i++) {
++    const a = v[i],
++      b = v[j];
++    if (onEdge(a, b, p)) return true;
++    if (
++      a.y > p.y !== b.y > p.y &&
++      p.x < ((b.x - a.x) * (p.y - a.y)) / (b.y - a.y) + a.x
++    )
++      inside = !inside;
++  }
++  return inside;
++}
++export function validateZonePolygon(v: readonly ZoneVector[]) {
++  let area = 0;
++  for (let i = 0; i < v.length; i++) {
++    const a = v[i],
++      b = v[(i + 1) % v.length];
++    if (Math.hypot(a.x - b.x, a.y - b.y) < 1e-6)
++      throw Error("Zone has repeated vertices or collapsed edges");
++    area += a.x * b.y - b.x * a.y;
++    for (let j = i + 2; j < v.length; j++) {
++      if (i === 0 && j === v.length - 1) continue;
++      const c = v[j],
++        d = v[(j + 1) % v.length];
++      if (
++        (cross(a, b, c) * cross(a, b, d) < 0 &&
++          cross(c, d, a) * cross(c, d, b) < 0) ||
++        onEdge(a, b, c) ||
++        onEdge(a, b, d) ||
++        onEdge(c, d, a) ||
++        onEdge(c, d, b)
++      )
++        throw Error("Zone edges intersect");
++    }
++  }
++  if (Math.abs(area) < 2)
++    throw Error("Zone area must be at least one square metre");
++}
++/** Normalize legacy fields without exposing their population/resource data. */
++export function compileZones(doc: SystemMapDocument): CompiledZone[] {
++  if (doc.zones !== undefined && !Array.isArray(doc.zones))
++    throw Error("Invalid zones");
++  const center = systemCenter(doc);
++  const source: MapZone[] = [
++    {
++      id: doc.id,
++      name: doc.name,
++      color: doc.color,
++      backgroundId: doc.backgroundId,
++      feather: doc.feather,
++      x: center.x,
++      y: center.y,
++      height: center.height,
++      shape: "ellipsoid",
++      width: doc.radius * 2,
++      length: doc.radius * 2,
++      depth: doc.radius * 2,
++      vertices: [],
++    },
++    ...doc.fields,
++    ...(doc.zones ?? []),
++  ];
++  if (source.length > ZONE_LIMITS.zones)
++    throw Error("Zone budget exceeded (48 including root and fields)");
++  const zones = new Map<string, CompiledZone>(),
++    bodyIds = new Set(doc.bodies.map((b) => b.id));
++  let edges = 0;
++  for (let i = 0; i < source.length; i++) {
++    const z = source[i];
++    if (
++      !z ||
++      typeof z.id !== "string" ||
++      !/^[a-zA-Z0-9:_-]{1,100}$/.test(z.id) ||
++      zones.has(z.id) ||
++      (i > 0 && bodyIds.has(z.id))
++    )
++      throw Error("Invalid or duplicate zone ID");
++    if (typeof z.name !== "string" || !z.name.trim() || z.name.length > 80)
++      throw Error("Zone name must contain 1–80 characters");
++    if (
++      z.parentId !== undefined &&
++      (typeof z.parentId !== "string" ||
++        !/^[a-zA-Z0-9:_-]{1,100}$/.test(z.parentId))
++    )
++      throw Error("Invalid zone parent ID");
++    if (z.color !== undefined && !/^#[0-9a-fA-F]{6}$/.test(z.color))
++      throw Error("Zone color must be a six-digit hex color");
++    if (!["ellipsoid", "box", "polygon"].includes(z.shape))
++      throw Error("Invalid zone shape");
++    for (const k of ["x", "y", "height"] as const)
++      if (!Number.isFinite(z[k]) || Math.abs(z[k]) > 1e9)
++        throw Error("Invalid zone coordinates");
++    for (const k of ["width", "length", "depth"] as const)
++      if (!Number.isFinite(z[k]) || z[k] < 1 || z[k] > 2e8)
++        throw Error("Invalid zone dimensions");
++    if (
++      z.backgroundId !== undefined &&
++      !MAP_BACKGROUNDS.some((b) => b.id === z.backgroundId)
++    )
++      throw Error("Unknown zone background");
++    if (
++      z.feather !== undefined &&
++      (!Number.isFinite(z.feather) || z.feather < 0 || z.feather > 1e8)
++    )
++      throw Error("Invalid zone feather");
++    if (
++      z.priority !== undefined &&
++      (!Number.isInteger(z.priority) || Math.abs(z.priority) > 100)
++    )
++      throw Error("Invalid zone priority");
++    const vertices = z.shape === "polygon" ? compileZonePath(z.vertices) : [];
++    if (vertices.length) validateZonePolygon(vertices);
++    edges += vertices.length;
++    if (edges > ZONE_LIMITS.edges)
++      throw Error("Total zone edge budget exceeded");
++    const ex = vertices.length
++        ? Math.max(...vertices.map((p) => Math.abs(p.x)))
++        : z.width / 2,
++      ey = vertices.length
++        ? Math.max(...vertices.map((p) => Math.abs(p.y)))
++        : z.length / 2;
++    if (
++      Math.abs(z.x) + ex > 1e9 ||
++      Math.abs(z.y) + ey > 1e9 ||
++      Math.abs(z.height) + z.depth / 2 > 1e9
++    )
++      throw Error("Zone exceeds coordinate bounds");
++    // Explicit projection: never spread asteroid population into public geometry.
++    zones.set(z.id, {
++      id: z.id,
++      name: z.name,
++      color: z.color,
++      parentId: i ? (z.parentId ?? doc.id) : undefined,
++      backgroundId: z.backgroundId,
++      feather: z.feather,
++      priority: z.priority,
++      x: z.x,
++      y: z.y,
++      height: z.height,
++      shape: z.shape,
++      width: z.width,
++      length: z.length,
++      depth: z.depth,
++      vertices,
++      root: i === 0,
++      level: 0,
++      ancestors: [],
++      bounds: { minX: -ex, maxX: ex, minY: -ey, maxY: ey },
++    });
++  }
++  for (const z of zones.values()) {
++    let p = z.parentId;
++    const seen = new Set([z.id]);
++    while (p) {
++      if (seen.has(p)) throw Error("Zone hierarchy cycle");
++      seen.add(p);
++      const parent = zones.get(p);
++      if (!parent) throw Error("Zone parent does not exist");
++      z.ancestors.unshift(p);
++      if (z.ancestors.length > ZONE_LIMITS.depth)
++        throw Error("Zone nesting exceeds eight levels");
++      p = parent.parentId;
++    }
++    z.level = z.ancestors.length;
++  }
++  return [...zones.values()].sort(
++    (a, b) => a.level - b.level || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0),
++  );
++}
++export function zoneContains(z: MapZone, p: MapPoint) {
++  const x = p.x - z.x,
++    y = p.y - z.y,
++    h = p.height - z.height;
++  if (Math.abs(h) > z.depth / 2) return false;
++  const bounds = (z as CompiledZone).bounds;
++  if (
++    bounds &&
++    (x < bounds.minX || x > bounds.maxX || y < bounds.minY || y > bounds.maxY)
++  )
++    return false;
++  if (z.shape === "ellipsoid")
++    return (
++      ((2 * x) / z.width) ** 2 +
++        ((2 * y) / z.length) ** 2 +
++        ((2 * h) / z.depth) ** 2 <=
++      1
++    );
++  return z.shape === "box"
++    ? Math.abs(x) <= z.width / 2 && Math.abs(y) <= z.length / 2
++    : zonePolygonContains({ x, y }, z.vertices);
++}
++export interface ZoneWork {
++  remaining: number;
++}
++export class ZoneBudgetError extends Error {
++  constructor() {
++    super("zone-work-budget");
++  }
++}
++function spend(work: ZoneWork | undefined, n: number) {
++  if (work && (work.remaining -= n) < 0) throw new ZoneBudgetError();
++}
++export function zoneMembership(
++  zones: readonly CompiledZone[],
++  p: MapPoint,
++  work?: ZoneWork,
++): string[] {
++  spend(
++    work,
++    zones.reduce((n, z) => n + Math.max(1, z.vertices.length), 0),
++  );
++  const inside = new Set<string>();
++  for (const z of zones)
++    if (z.ancestors.every((id) => inside.has(id)) && zoneContains(z, p))
++      inside.add(z.id);
++  return [...inside];
++}
++export interface ZoneChange {
++  zoneId: string;
++  entered: boolean;
++  fraction: number;
++}
++export function zoneChanges(
++  zones: readonly CompiledZone[],
++  before: readonly string[],
++  after: readonly string[],
++  fraction = 1,
++): ZoneChange[] {
++  const levels = new Map(zones.map((z) => [z.id, z.level]));
++  return [
++    ...before
++      .filter((id) => !after.includes(id))
++      .sort(
++        (a, b) =>
++          (levels.get(b) ?? 99) - (levels.get(a) ?? 99) ||
++          (a < b ? -1 : a > b ? 1 : 0),
++      )
++      .map((zoneId) => ({ zoneId, entered: false, fraction })),
++    ...after
++      .filter((id) => !before.includes(id))
++      .sort(
++        (a, b) =>
++          (levels.get(a) ?? 0) - (levels.get(b) ?? 0) ||
++          (a < b ? -1 : a > b ? 1 : 0),
++      )
++      .map((zoneId) => ({ zoneId, entered: true, fraction })),
++  ];
++}
++/** Sweep compiled boundaries, then classify open intervals. Isolated tangencies do not enter. */
++export function sweepZones(
++  zones: readonly CompiledZone[],
++  from: MapPoint,
++  to: MapPoint,
++  initial = zoneMembership(zones, from),
++  work?: ZoneWork,
++) {
++  const cuts = [0, 1],
++    dx = to.x - from.x,
++    dy = to.y - from.y,
++    dh = to.height - from.height;
++  const push = (t: number) => {
++    if (t > 0 && t < 1 && Number.isFinite(t)) cuts.push(t);
++  };
++  for (const z of zones) {
++    spend(work, Math.max(1, z.vertices.length));
++    const bb = z.bounds;
++    if (
++      bb &&
++      (Math.max(from.x, to.x) < z.x + bb.minX ||
++        Math.min(from.x, to.x) > z.x + bb.maxX ||
++        Math.max(from.y, to.y) < z.y + bb.minY ||
++        Math.min(from.y, to.y) > z.y + bb.maxY)
++    )
++      continue;
++    const x = from.x - z.x,
++      y = from.y - z.y,
++      h = from.height - z.height;
++    if (z.shape === "ellipsoid") {
++      const a =
++          ((2 * dx) / z.width) ** 2 +
++          ((2 * dy) / z.length) ** 2 +
++          ((2 * dh) / z.depth) ** 2,
++        b =
++          8 *
++          ((x * dx) / z.width ** 2 +
++            (y * dy) / z.length ** 2 +
++            (h * dh) / z.depth ** 2),
++        c =
++          ((2 * x) / z.width) ** 2 +
++          ((2 * y) / z.length) ** 2 +
++          ((2 * h) / z.depth) ** 2 -
++          1,
++        disc = b * b - 4 * a * c;
++      if (a > 0 && disc >= 0) {
++        push((-b - Math.sqrt(disc)) / (2 * a));
++        push((-b + Math.sqrt(disc)) / (2 * a));
++      }
++    } else {
++      if (dh) {
++        push((-z.depth / 2 - h) / dh);
++        push((z.depth / 2 - h) / dh);
++      }
++      if (z.shape === "box") {
++        if (dx) {
++          push((-z.width / 2 - x) / dx);
++          push((z.width / 2 - x) / dx);
++        }
++        if (dy) {
++          push((-z.length / 2 - y) / dy);
++          push((z.length / 2 - y) / dy);
++        }
++      } else
++        for (let i = 0; i < z.vertices.length; i++) {
++          const a = z.vertices[i],
++            b = z.vertices[(i + 1) % z.vertices.length],
++            ex = b.x - a.x,
++            ey = b.y - a.y,
++            den = dx * ey - dy * ex;
++          if (Math.abs(den) > 1e-16) {
++            const t = ((a.x - x) * ey - (a.y - y) * ex) / den,
++              u = ((a.x - x) * dy - (a.y - y) * dx) / den;
++            if (u >= 0 && u <= 1) push(t);
++          }
++        }
++    }
++  }
++  cuts.sort((a, b) => a - b);
++  const unique = cuts.filter((t, i) => !i || t !== cuts[i - 1]);
++  let active = [...initial];
++  const changes: ZoneChange[] = [];
++  const at = (t: number) => ({
++    x: from.x + dx * t,
++    y: from.y + dy * t,
++    height: from.height + dh * t,
++  });
++  for (let i = 0; i < unique.length - 1; i++) {
++    const next = zoneMembership(
++      zones,
++      at((unique[i] + unique[i + 1]) / 2),
++      work,
++    );
++    changes.push(...zoneChanges(zones, active, next, unique[i]));
++    active = next;
++  }
++  const final = zoneMembership(zones, to, work);
++  changes.push(...zoneChanges(zones, active, final, 1));
++  return { active: final, changes };
++}
+--- a/packages/ui/package.json
++++ b/packages/ui/package.json
+@@ -3 +3 @@
+-  "version": "0.1.0",
++  "version": "0.2.0",
+@@ -8 +8,2 @@
+-    "./editor-controls": "./src/editor-controls.tsx"
++    "./editor-controls": "./src/editor-controls.tsx",
++    "./editor-commands": "./src/editor-commands.ts"
+--- /dev/null
++++ b/packages/ui/src/editor-commands.test.ts
+@@ -0,0 +1,25 @@
++import { expect, test } from "vitest";
++import { editorCommand } from "./editor-commands";
++const key = (key: string, extras = {}) =>
++  editorCommand({
++    key,
++    ctrlKey: false,
++    metaKey: false,
++    shiftKey: false,
++    altKey: false,
++    ...extras,
++  });
++test("portable studio commands preserve platform modifiers", () => {
++  expect(key("v")).toBe("select");
++  expect(key("a")).toBe("direct");
++  expect(key("p")).toBe("draw");
++  expect(key("h")).toBe("pan");
++  expect(key("Z", { metaKey: true, shiftKey: true })).toBe("redo");
++  expect(key("z", { ctrlKey: true })).toBe("undo");
++  expect(key("d", { metaKey: true })).toBe("duplicate");
++  expect(key("s", { ctrlKey: true })).toBe("save");
++  expect(key("a", { metaKey: true })).toBeUndefined();
++  expect(key("Delete")).toBe("delete");
++  expect(key("ArrowUp", { shiftKey: true })).toBe("up");
++  expect(key("v", { altKey: true })).toBeUndefined();
++});
+--- /dev/null
++++ b/packages/ui/src/editor-commands.ts
+@@ -0,0 +1,55 @@
++export type EditorCommand =
++  | "select"
++  | "direct"
++  | "draw"
++  | "pan"
++  | "undo"
++  | "redo"
++  | "duplicate"
++  | "delete"
++  | "save"
++  | "cancel"
++  | "left"
++  | "right"
++  | "up"
++  | "down";
++export interface EditorKey {
++  key: string;
++  ctrlKey: boolean;
++  metaKey: boolean;
++  altKey: boolean;
++  shiftKey: boolean;
++}
++export function editorCommand(e: EditorKey): EditorCommand | undefined {
++  const key = e.key.toLowerCase(),
++    mod = e.ctrlKey || e.metaKey;
++  if (e.altKey) return undefined;
++  if (mod) {
++    if (key === "z") return e.shiftKey ? "redo" : "undo";
++    return ({ y: "redo", d: "duplicate", s: "save" } as const)[key as "y"];
++  }
++  return (
++    {
++      v: "select",
++      a: "direct",
++      p: "draw",
++      h: "pan",
++      delete: "delete",
++      backspace: "delete",
++      escape: "cancel",
++      arrowleft: "left",
++      arrowright: "right",
++      arrowup: "up",
++      arrowdown: "down",
++    } as const
++  )[key as "v"];
++}
++/** Use with a focused editor root. Text fields and dialogs own their shortcuts. */
++export function editorKeyTarget(target: EventTarget | null): boolean {
++  return (
++    target instanceof Element &&
++    !!target.closest(
++      'input,textarea,select,[contenteditable="true"],[role="textbox"],[role="dialog"],dialog',
++    )
++  );
++}

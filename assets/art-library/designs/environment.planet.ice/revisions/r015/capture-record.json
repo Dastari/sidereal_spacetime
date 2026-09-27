@@ -1,0 +1,42 @@
+{
+  "live": {
+    "seed": 47,
+    "revision": "live-ice",
+    "triangles": 191990,
+    "meshes": 4,
+    "materials": 4,
+    "drawCalls": 6,
+    "activeIndices": 1099662
+  },
+  "candidate": {
+    "seed": 47,
+    "revision": "ice-r015",
+    "triangles": 74864,
+    "meshes": 4,
+    "materials": 5,
+    "nonemptyMaterials": 4,
+    "drawCalls": 8,
+    "activeIndices": 449184,
+    "sharedHeroShadows": true,
+    "nativeColdFinish": true
+  },
+  "sharedContext": {
+    "shadowMapSize": 1024,
+    "environment": "/assets/materials/frontier-workshop.hdr",
+    "environmentReady": true,
+    "environmentIntensity": 0.28,
+    "rightHanded": true,
+    "viewport": [
+      1780,
+      740
+    ],
+    "canvas": [
+      560,
+      560
+    ],
+    "URL": "http://sidereal.tail7a58a6.ts.net:5173/@fs/root/sidereal_spacetime/output/playwright/planet-native-r015-review.html",
+    "databaseCapture": false,
+    "baselineReusedFrom": "live-ice-seed47-control.png"
+  },
+  "verdict": "Root working review pending. Brighter snow and connected blue cuts improve hierarchy; faceted blue fan/ramp strips, regular snow chunks and insufficient luminous optical contrast remain."
+}

@@ -1,0 +1,420 @@
+{
+  "designId": "shipyard.hull.voxel-material-study",
+  "assetUuid": "ce432bb9-f916-50bc-8463-3d3034790d24",
+  "currentRevision": 7,
+  "state": "awaiting-owner",
+  "ownerFinalSignoff": null,
+  "ownerFeedback": {
+    "revision": 6,
+    "author": "owner",
+    "text": "I like it, but I don't think the outer hull is \"bulky\" enough. I think we need an armour plating behind each of the hull sections to bulk it out so it's level with the front section. ... I don't like the fact we have pieces that are JUST for this configuration, we need a broader set of angled and bulkhead tiles that all fit together and match what we can make with our floorplan.",
+    "message_reference": "Current conversation owner reusable backed armor direction,2026-09-14",
+    "recorded_at": "2026-09-14T12:26:59.973251+00:00",
+    "resolved_by_revision": null,
+    "scope": "Positive direction plus requested changes; not final approval ofr006/r004native."
+  },
+  "nativeCandidate": {
+    "design_revision": 7,
+    "hull_revision": 5,
+    "attempt": "family-03",
+    "runtime_library": "library-02",
+    "source_sha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+    "library_sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+    "status": "native-review-passed; not installed or owner-approved"
+  },
+  "revision": {
+    "revision": 7,
+    "created_at": "2026-09-14T12:26:59.973251+00:00",
+    "stage": "native-review-passed",
+    "change": "Reusable solid armor backing kit, common angled/corner/bulkhead/height profiles and reference-led bulk; replace bespoke bow pods in exact review assembly.",
+    "hypothesis": "A 0.75 m solid backing and 0.25 m face/frame, with exact edge-vector spans and qualified corner modules, gives strong bow and side bulk and an assembly language suitable for boundary-driven in-game construction.",
+    "covered_reference_ids": [],
+    "evidence": [
+      {
+        "role": "blender-source",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/source.blend",
+        "sha256": "f0f381f1f9b38a8b19cb6a91226aafbff082e678e9471b607c0823c15fdbf2ec",
+        "bytes": 6764388,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "glb",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/library-02/hull.glb",
+        "sha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+        "bytes": 2583732,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "manifest",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/models.json",
+        "sha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+        "bytes": 353691,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "validation",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/validation.json",
+        "sha256": "d12e5ffe0cc0508b8f68d3c3f5b5ca0d2f6f7862b9c17169f52f6a0ba067a1ed",
+        "bytes": 297456,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "contacts",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/validation-contacts.json",
+        "sha256": "31c2678fc7528c499e20b5b567357bd427a9fc186e8187639a807f5bfa11e904",
+        "bytes": 51964,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "finish-parity",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/validation-finish-parity.json",
+        "sha256": "e9185e8ceb3260545b720fda54d0039aa9aad19529392b5bdd1c5d94fe391953",
+        "bytes": 16880,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "packing-parity",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/library-02/parity.json",
+        "sha256": "6b210a6b26919eeb619d2f054f77d04f971da26666e94be87f7401c517294ac6",
+        "bytes": 1159709,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "native-exports",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/models.tar.xz",
+        "sha256": "008497e572de427950d9b91f10befe2af5cbaaae845094135bd4032462425e77",
+        "bytes": 1069876,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "browser-receipt",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/captures.json",
+        "sha256": "22cbcab55663713615a364254d2a4fa97d65056e934410bf488aa8e3be281d98",
+        "bytes": 243178,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/alternate-station.png",
+        "sha256": "7b6f610ba3649074ee6d9dfbd8e3e703271eda68efb9d8f9e890903f7a3c7e35",
+        "bytes": 1336299,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/alternate-tug.png",
+        "sha256": "c2adfc5a73904e398275a517464fe396fd19f8d0c4d2304b9bf9be96b938b816",
+        "bytes": 1444485,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/bulkheads.png",
+        "sha256": "5f92d6004ef0a7748251d05d3e9f242dceaa3421d109ee6d1602f8a786be09e8",
+        "bytes": 1169534,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/concave-90-top.png",
+        "sha256": "15db8913db4cdb7844557ffe24f8a5012baec1025b5d2bb0a11f1a687d035005",
+        "bytes": 1127382,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/concave-90.png",
+        "sha256": "25cff8a205e01d77d8d7bd6b1546cf8f22c1193441e7eb601f4f2f0f8dbd5f5a",
+        "bytes": 1402952,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/convex-45-half-height.png",
+        "sha256": "d1fc45275d88dff62ab792a432192b351a136cfaa765df772c8ba9301d91ae48",
+        "bytes": 1248463,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/directions-32.png",
+        "sha256": "7b0daa41b4298f24abe8320f71365b2e3ee1054844e02fc1863445a4e163822a",
+        "bytes": 1115298,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/exploded-section.png",
+        "sha256": "05fe4d6cb8d7227522484b4eb738cbbd558663982b53e2f895bd1e9e12b19958",
+        "bytes": 1262822,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/heights.png",
+        "sha256": "6a461c4d6dd80d301bf5af734400b5a58c26d127529d5bad9d7e7e904fa28975",
+        "bytes": 1162979,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/identity-single-bay.png",
+        "sha256": "d93dff5ee64d9020b2b0570201084d0d9d3235117bed7e35bd543cc915ea7a4e",
+        "bytes": 1235672,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/joined-bay.png",
+        "sha256": "9a7b8ed10e1fad83ebcc291bf6f714c4f2f5b3559a8e21f87a0b4d8e861ec32c",
+        "bytes": 1347899,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/junction-registry.png",
+        "sha256": "53935e478dece37d0cf2bb930e32862330f991453ab41ce803cb77755e4c4a6a",
+        "bytes": 1055494,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/solid-section.png",
+        "sha256": "ccaf1cd736d8796b4051d04b1860d0f85fe71f4d3c18d1bfbc0f2b18ae6d199b",
+        "bytes": 1162778,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/wayfarer-backing.png",
+        "sha256": "0cc5c636a796df457ff6b2b3e045c8c0de59e60fc000602bdb82fbcf753981de",
+        "bytes": 1245810,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/wayfarer-bow.png",
+        "sha256": "360ca43380e7ca1dbeba96859752c66934077d12786c277dc4fb7e8d7e250301",
+        "bytes": 1409938,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "blender-render",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/family-03/renders/wayfarer-kit.png",
+        "sha256": "347aa35bcf068b6ca0611092ad412ea00c86cae3ec6749b1277521fc263d14b3",
+        "bytes": 1228113,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/alternate-station-alternate-whole.png",
+        "sha256": "faaa07c8fbcc0be406fed337c0162f4b15c57a7f64d7fcc852c53f5f42d44d45",
+        "bytes": 342584,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-top",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/alternate-station-top-backing.png",
+        "sha256": "5002464d7d076c4db795bead210e877f8efb9d5263f05ab393fbff84ccace28e",
+        "bytes": 81812,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/alternate-tug-fixture-whole.png",
+        "sha256": "59a3f6f8f85b990c8e7a8ff5649bd585b934318a3206a3ccf9e1b05146ebb2a3",
+        "bytes": 350753,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/bulkheads-fixture-whole.png",
+        "sha256": "e122aec20de1aeceb2399010ccc85a511b7995db8181ed4806477577d878aceb",
+        "bytes": 80324,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/bulkheads-front-whole.png",
+        "sha256": "0a1e6d5f27aef6965234d5bb6bc08b599bbd83f4bb17b12ff01377e0c4fac2fe",
+        "bytes": 132467,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/directions-32-fixture-whole.png",
+        "sha256": "4d9f4fc17941b97a6a9889d613e88f93665aa64ea058043ff0b6c30b1621177b",
+        "bytes": 99494,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/directions-32-front-whole.png",
+        "sha256": "bdeca7f5921b25f0f51ffec95c036c33cdad0ac428207278b1de1cb755220b2e",
+        "bytes": 104133,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/heights-fixture-whole.png",
+        "sha256": "7eae0edc295a039ef9ffb36931744c1afe846fdd494564e868966bf6d8e352d0",
+        "bytes": 93314,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/heights-front-whole.png",
+        "sha256": "46fae2abcbbfce3192c8c4ec923f82c6d8a6bc15760112a1763dfd4575bba1e5",
+        "bytes": 137033,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/junction-registry-fixture-whole.png",
+        "sha256": "769d2e92c1c57a046ed9e6c396b04e14201a79a908611366004bd5249e662da0",
+        "bytes": 94841,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/junction-registry-front-whole.png",
+        "sha256": "cad1e450a595b0b6a29ecdca0cd2de0bc2715dfbb128dcc840fd29fb9bc6d3e6",
+        "bytes": 110118,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-bow-whole.png",
+        "sha256": "2a4e33477d981bb56913703f790750b4c6e1b63aeb9b7ba75511afad11b05e44",
+        "bytes": 527366,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-concept-backing.png",
+        "sha256": "0d172764d7c023b112aa39571e1398ab933dd3b0fca0f7c95c71645126af95ca",
+        "bytes": 176972,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-concept-bare.png",
+        "sha256": "fef230d5d2307ecd7661dfc21225ab199e121264f43cdab287e840ec8b7214e8",
+        "bytes": 229528,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-concept-finish.png",
+        "sha256": "54cf960a6e0278de6cafb4fe96d0f583c7657f0c2fa3f4e6ebdcfcdbd4695079",
+        "bytes": 175873,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-concept-whole.png",
+        "sha256": "4df463742f15505e1123df9f6cb0ca90512bb7a8f0048cf2a893d0580c159a48",
+        "bytes": 335899,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-exploded-exploded.png",
+        "sha256": "3a6627def7e68dab1442d17ab266b42490a4b9413f4c2e58c75de7548361420e",
+        "bytes": 345220,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-gameplay-whole.png",
+        "sha256": "050b996f05254101265cf19eec8d837fc0acfe78cf00f65bc79726ca96a64a67",
+        "bytes": 307744,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-joined-whole.png",
+        "sha256": "d1f3ec3fab954dacbed8ed4aca0159a8023346268302f1fc65739a5e99f1f65d",
+        "bytes": 569411,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-close",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-starboard-whole.png",
+        "sha256": "4dfdc225ae7913c8107a8af1e28e70768bc1022f1edd48810f8bc71f0086972f",
+        "bytes": 346583,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "runtime-top",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/r005/browser/final-02/wayfarer-top-whole.png",
+        "sha256": "cc10675fc0bc555588d0d9059617904553c5033baf9b707b65306138991e6896",
+        "bytes": 225359,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      },
+      {
+        "role": "independent-review",
+        "path": "designs/shipyard.hull.voxel-material-study/../../framed-wayfarer/armor-block-review-20260914/final-review.md",
+        "sha256": "64c1df2e970ad509ab9c3dd26db44456a038f107f119c00525d02d4fb468b8bb",
+        "bytes": 6874,
+        "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+        "notes": "Native r005 family-03 and exact private browser candidate; no owner approval or live installation."
+      }
+    ],
+    "review": {
+      "outcome": "pass",
+      "reviewer": "armor_block_astra_review (gpt-6-astra)",
+      "scope": "Exact native kit/private game-renderer evidence only; not live authority or owner approval.",
+      "recorded_at": "2026-09-14T13:08:23.612919+00:00",
+      "report": "framed-wayfarer/armor-block-review-20260914/final-review.md",
+      "reportSha256": "64c1df2e970ad509ab9c3dd26db44456a038f107f119c00525d02d4fb468b8bb",
+      "notes": "Independent inspection passes 16 native and21 browser images. Real .75m backing+.25m face, shared finite joints/heights and alternate footprints; identity clipping corrected. Remaining artistic/integration limits explicit."
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "command": "python3 scripts/art_library/armor_cassette_hull.py --out .runtime/armor-delivery-validation/reproduction",
+  "workingDirectory": "/root/wayfarer-armor-pr",
+  "status": "pass",
+  "nativeCheck": "pass",
+  "runtimeCatalogPresent": false,
+  "models": [
+    {
+      "slug": "armor-red-service-w200-h300",
+      "sha256": "c3bac96d19fdd3f53698d21b5558e23c18b5075f8a69282666fb0dfc0ed2de80",
+      "matchesDeliveredGlb": true
+    },
+    {
+      "slug": "armor-vent-w200-h300",
+      "sha256": "b7ffcc34f95180a872a7cc44945619e2ce1e7e18a8c792d6437e018027fc523e",
+      "matchesDeliveredGlb": true
+    },
+    {
+      "slug": "armor-plain-pair-left-w200-h300",
+      "sha256": "a3a4b91b3bfc7aa2b20af27a0391ac0656f84ae60e14db13a39e9bb4bb4e0962",
+      "matchesDeliveredGlb": true
+    },
+    {
+      "slug": "armor-plain-pair-right-w200-h300",
+      "sha256": "ba03bd28693cbc1d5e556027eb6e60e14c5dbcb1092a8d3d70a7a5f154123bca",
+      "matchesDeliveredGlb": true
+    },
+    {
+      "slug": "front-bow-bumper",
+      "sha256": "4b8f813d292c06c033c5ad4e2dd00d84f62c83694429b700a1c918f173b72888",
+      "matchesDeliveredGlb": true
+    },
+    {
+      "slug": "front-shoulder-transition",
+      "sha256": "9814498d140b65a6d754b93762d0746c7b979420ebeb39c713966baf56c15fd1",
+      "matchesDeliveredGlb": true
+    }
+  ]
+}

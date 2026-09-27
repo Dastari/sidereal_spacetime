@@ -15,8 +15,8 @@ export function DocumentBar({
   commit: (change: (doc: LayoutDocument) => LayoutDocument) => void;
   onNew: () => void;
 }) {
-  const input = useRef<HTMLInputElement>(null);
   const [publishing, setPublishing] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
   return (
     <header className="layout-document-bar">
       <Ship className="document-symbol" size={23} />
@@ -67,7 +67,11 @@ export function DocumentBar({
           }
           onClick={() => setPublishing(true)}
         >
-          Publish
+          Templates
+        </button>
+        <button onClick={editor.exportDraft}>
+          <Download size={16} />
+          Export
         </button>
         <details className="layout-file-menu">
           <summary>File</summary>

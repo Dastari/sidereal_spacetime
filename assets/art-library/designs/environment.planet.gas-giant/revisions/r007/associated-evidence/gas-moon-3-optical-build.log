@@ -1,0 +1,334 @@
+ERROR Draco mesh compression is not available because library could not be found at /usr/bin/4.3/python/lib/python3.13/site-packages/libextern_draco.so
+15:00:52 | INFO: Starting glTF 2.0 export
+15:00:52 | INFO: Extracting primitive: crater-large
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | INFO: Primitives created: 5
+15:00:52 | INFO: Finished glTF 2.0 export in 0.015282154083251953 s
+
+15:00:52 | INFO: Starting glTF 2.0 export
+15:00:52 | INFO: Extracting primitive: crater-broken
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | INFO: Primitives created: 7
+15:00:52 | INFO: Finished glTF 2.0 export in 0.0157473087310791 s
+
+15:00:52 | INFO: Starting glTF 2.0 export
+15:00:52 | INFO: Extracting primitive: crater-small
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | INFO: Primitives created: 5
+15:00:52 | INFO: Finished glTF 2.0 export in 0.012228965759277344 s
+
+15:00:52 | INFO: Starting glTF 2.0 export
+15:00:52 | INFO: Extracting primitive: shelf-a
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: shelf-b
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: shelf-c
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Finished glTF 2.0 export in 0.010484695434570312 s
+
+15:00:52 | INFO: Starting glTF 2.0 export
+15:00:52 | INFO: Extracting primitive: outcrop-a
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: outcrop-b
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: outcrop-c
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Finished glTF 2.0 export in 0.011233806610107422 s
+
+15:00:52 | INFO: Starting glTF 2.0 export
+15:00:52 | INFO: Extracting primitive: mineral-a
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | INFO: Primitives created: 2
+15:00:52 | INFO: Extracting primitive: mineral-b
+15:00:52 | INFO: Primitives created: 2
+15:00:52 | INFO: Extracting primitive: mineral-c
+15:00:52 | INFO: Primitives created: 2
+15:00:52 | INFO: Finished glTF 2.0 export in 0.00874781608581543 s
+
+15:00:52 | INFO: Starting glTF 2.0 export
+15:00:52 | INFO: Extracting primitive: battered-region-a
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | INFO: Primitives created: 6
+15:00:52 | INFO: Extracting primitive: battered-region-a-directional-crust-0
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-directional-crust-1
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-directional-crust-2
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-directional-crust-3
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-embedded-medium-pit
+15:00:52 | INFO: Primitives created: 5
+15:00:52 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-0
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-1
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-2
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-3
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-4
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-5
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-6
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-unequal-broken-ledge-7
+15:00:52 | INFO: Primitives created: 4
+15:00:52 | INFO: Extracting primitive: battered-region-a-warm-inset-mineral
+15:00:52 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:52 | INFO: Primitives created: 2
+15:00:52 | INFO: Extracting primitive: battered-region-a-warm-inset-mineral-rise
+15:00:52 | INFO: Primitives created: 2
+15:00:52 | INFO: Extracting primitive: battered-region-a-fault-collapsed-cap-a
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fault-collapsed-cap-b
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-0
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-1
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-2
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-3
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-4
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-5
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-6
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-7
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-8
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-9
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Extracting primitive: battered-region-a-fracture-chip-10
+15:00:52 | INFO: Primitives created: 3
+15:00:52 | INFO: Finished glTF 2.0 export in 0.07856106758117676 s
+
+15:00:53 | INFO: Starting glTF 2.0 export
+15:00:53 | INFO: Extracting primitive: battered-region-b
+15:00:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-directional-crust-0
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-directional-crust-1
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-directional-crust-2
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-directional-crust-3
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-embedded-medium-pit
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-unequal-broken-ledge-0
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-unequal-broken-ledge-1
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-unequal-broken-ledge-2
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-unequal-broken-ledge-3
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-unequal-broken-ledge-4
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-unequal-broken-ledge-5
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-unequal-broken-ledge-6
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-unequal-broken-ledge-7
+15:00:53 | INFO: Primitives created: 4
+15:00:53 | INFO: Extracting primitive: battered-region-b-warm-inset-mineral
+15:00:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:53 | INFO: Primitives created: 2
+15:00:53 | INFO: Extracting primitive: battered-region-b-warm-inset-mineral-rise
+15:00:53 | INFO: Primitives created: 2
+15:00:53 | INFO: Extracting primitive: battered-region-b-fault-collapsed-cap-a
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fault-collapsed-cap-b
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-0
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-1
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-2
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-3
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-4
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-5
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-6
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-7
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-8
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-9
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Extracting primitive: battered-region-b-fracture-chip-10
+15:00:53 | INFO: Primitives created: 3
+15:00:53 | INFO: Finished glTF 2.0 export in 0.11518216133117676 s
+
+15:00:53 | INFO: Starting glTF 2.0 export
+15:00:53 | INFO: Extracting primitive: Icosphere
+15:00:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:53 | INFO: Primitives created: 1
+15:00:53 | INFO: Finished glTF 2.0 export in 0.017032384872436523 s
+
+15:00:53 | INFO: Starting glTF 2.0 export
+15:00:53 | INFO: Extracting primitive: Icosphere.001
+15:00:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:53 | INFO: Primitives created: 1
+15:00:53 | INFO: Finished glTF 2.0 export in 0.008181333541870117 s
+
+15:00:53 | INFO: Starting glTF 2.0 export
+15:00:53 | INFO: Extracting primitive: Icosphere.002
+15:00:53 | WARNING: More than one shader node tex image used for a texture. The resulting glTF sampler will behave like the first shader node tex image.
+15:00:53 | INFO: Primitives created: 1
+15:00:53 | INFO: Finished glTF 2.0 export in 0.004781961441040039 s
+Blender 4.3.2
+Fra:1 Mem:28.90M (Peak 28.90M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-ground-sphere
+Fra:1 Mem:29.07M (Peak 29.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-ground-sphere-medium
+Fra:1 Mem:29.30M (Peak 29.30M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crater-large
+Fra:1 Mem:29.37M (Peak 29.37M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crater-broken
+Fra:1 Mem:29.38M (Peak 29.38M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-crater-small
+Fra:1 Mem:29.42M (Peak 29.42M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-shelf-c
+Fra:1 Mem:29.43M (Peak 29.43M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-outcrop-b
+Fra:1 Mem:29.46M (Peak 29.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-outcrop-c
+Fra:1 Mem:29.45M (Peak 29.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-mineral-a
+Fra:1 Mem:29.46M (Peak 29.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fracture-chip-10
+Fra:1 Mem:29.46M (Peak 29.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-directional-crust-0
+Fra:1 Mem:29.50M (Peak 29.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-directional-crust-1
+Fra:1 Mem:29.56M (Peak 29.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-directional-crust-2
+Fra:1 Mem:29.63M (Peak 29.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-directional-crust-3
+Fra:1 Mem:29.65M (Peak 29.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-unequal-broken-ledge-0
+Fra:1 Mem:29.66M (Peak 29.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-unequal-broken-ledge-1
+Fra:1 Mem:29.67M (Peak 29.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-unequal-broken-ledge-2
+Fra:1 Mem:29.69M (Peak 29.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-unequal-broken-ledge-3
+Fra:1 Mem:29.93M (Peak 29.93M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-unequal-broken-ledge-5
+Fra:1 Mem:29.95M (Peak 29.95M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-unequal-broken-ledge-6
+Fra:1 Mem:29.99M (Peak 29.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-unequal-broken-ledge-7
+Fra:1 Mem:30.14M (Peak 30.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-warm-inset-mineral
+Fra:1 Mem:30.17M (Peak 30.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-warm-inset-mineral-rise
+Fra:1 Mem:30.18M (Peak 30.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fault-collapsed-cap-a
+Fra:1 Mem:30.20M (Peak 30.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fracture-chip-9
+Fra:1 Mem:30.21M (Peak 30.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fault-collapsed-cap-b
+Fra:1 Mem:30.21M (Peak 30.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fracture-chip-0
+Fra:1 Mem:30.27M (Peak 30.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fracture-chip-8
+Fra:1 Mem:30.30M (Peak 30.30M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fracture-chip-2
+Fra:1 Mem:30.34M (Peak 30.34M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fracture-chip-3
+Fra:1 Mem:30.29M (Peak 30.34M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fracture-chip-4
+Fra:1 Mem:30.45M (Peak 30.45M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fracture-chip-6
+Fra:1 Mem:30.45M (Peak 30.45M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fracture-chip-6
+Fra:1 Mem:30.46M (Peak 30.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fracture-chip-7
+Fra:1 Mem:30.46M (Peak 30.46M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fracture-chip-5
+Fra:1 Mem:30.47M (Peak 30.47M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fracture-chip-9
+Fra:1 Mem:30.48M (Peak 30.48M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-a-fracture-chip-10
+Fra:1 Mem:30.49M (Peak 30.49M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b
+Fra:1 Mem:30.49M (Peak 30.49M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-directional-crust-0
+Fra:1 Mem:30.68M (Peak 30.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fracture-chip-4
+Fra:1 Mem:30.71M (Peak 30.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-directional-crust-1
+Fra:1 Mem:30.61M (Peak 30.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fracture-chip-3
+Fra:1 Mem:30.65M (Peak 30.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-directional-crust-2
+Fra:1 Mem:30.68M (Peak 30.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fracture-chip-2
+Fra:1 Mem:30.74M (Peak 30.74M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-directional-crust-3
+Fra:1 Mem:30.74M (Peak 30.74M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fracture-chip-1
+Fra:1 Mem:30.77M (Peak 30.77M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-embedded-medium-pit
+Fra:1 Mem:30.79M (Peak 30.79M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-unequal-broken-ledge-0
+Fra:1 Mem:30.77M (Peak 30.79M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-unequal-broken-ledge-2
+Fra:1 Mem:30.80M (Peak 30.80M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-unequal-broken-ledge-1
+Fra:1 Mem:30.94M (Peak 30.94M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-unequal-broken-ledge-3
+Fra:1 Mem:30.98M (Peak 30.98M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-unequal-broken-ledge-4
+Fra:1 Mem:31.03M (Peak 31.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-unequal-broken-ledge-6
+Fra:1 Mem:31.10M (Peak 31.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-fault-collapsed-cap-a
+Fra:1 Mem:31.19M (Peak 31.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-warm-inset-mineral
+Fra:1 Mem:31.27M (Peak 31.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-battered-region-b-warm-inset-mineral-rise
+Fra:1 Mem:31.19M (Peak 31.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:30.90M (Peak 31.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Rocky10-albedo-0
+Fra:1 Mem:30.90M (Peak 31.27M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Rocky10-roughness-1
+Fra:1 Mem:32.41M (Peak 32.41M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Rocky10-albedo-2
+Fra:1 Mem:32.91M (Peak 32.91M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Rocky10-roughness-2
+Fra:1 Mem:32.91M (Peak 32.91M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Rocky10-albedo-3
+Fra:1 Mem:33.16M (Peak 33.16M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Rocky10-roughness-4
+Fra:1 Mem:33.41M (Peak 33.41M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Rocky10-albedo-5
+Fra:1 Mem:33.66M (Peak 33.66M) | Time:00:00.00 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Rocky10-roughness-5
+Fra:1 Mem:33.91M (Peak 33.91M) | Time:00:00.00 | Mem:2.50M, Peak:2.50M | Scene, ViewLayer | Updating Images | Loading Rocky10-albedo-6
+Fra:1 Mem:34.16M (Peak 34.16M) | Time:00:00.00 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Images | Loading Rocky10-roughness-6
+Fra:1 Mem:34.41M (Peak 34.41M) | Time:00:00.00 | Mem:3.00M, Peak:3.00M | Scene, ViewLayer | Updating Images | Loading Rocky10-albedo-7
+Fra:1 Mem:32.25M (Peak 34.41M) | Time:00:00.01 | Mem:4.00M, Peak:4.00M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:32.25M (Peak 34.41M) | Time:00:00.01 | Mem:4.00M, Peak:4.00M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:32.25M (Peak 34.41M) | Time:00:00.01 | Mem:4.00M, Peak:4.00M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:32.25M (Peak 34.41M) | Time:00:00.01 | Mem:4.00M, Peak:4.00M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:32.34M (Peak 34.41M) | Time:00:00.01 | Mem:4.01M, Peak:4.01M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:32.34M (Peak 34.41M) | Time:00:00.01 | Mem:4.01M, Peak:4.01M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:32.34M (Peak 34.41M) | Time:00:00.01 | Mem:4.01M, Peak:4.01M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:32.34M (Peak 34.41M) | Time:00:00.01 | Mem:4.01M, Peak:4.01M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:32.34M (Peak 34.41M) | Time:00:00.01 | Mem:4.01M, Peak:4.01M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:32.34M (Peak 34.41M) | Time:00:00.01 | Mem:4.01M, Peak:4.01M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:32.36M (Peak 34.41M) | Time:00:00.01 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:32.36M (Peak 34.41M) | Time:00:00.01 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:32.36M (Peak 34.41M) | Time:00:00.01 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:32.36M (Peak 34.41M) | Time:00:00.01 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:32.91M (Peak 34.41M) | Time:00:00.01 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:33.98M (Peak 34.41M) | Time:00:00.01 | Mem:4.03M, Peak:4.03M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:33.97M (Peak 34.41M) | Time:00:00.01 | Mem:5.08M, Peak:5.08M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:33.97M (Peak 34.41M) | Time:00:00.01 | Mem:5.08M, Peak:5.08M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:33.97M (Peak 34.41M) | Time:00:00.01 | Mem:6.19M, Peak:6.19M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:33.97M (Peak 34.41M) | Time:00:00.02 | Mem:7.53M, Peak:8.64M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:33.97M (Peak 34.41M) | Time:00:00.02 | Mem:7.53M, Peak:8.64M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:7.53M, Peak:8.64M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.78M, Peak:8.78M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.79M, Peak:8.79M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.79M, Peak:8.79M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.79M, Peak:8.79M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.79M, Peak:8.79M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.87M, Peak:8.87M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.87M, Peak:8.87M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.87M, Peak:8.87M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.87M, Peak:8.87M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.79M, Peak:8.87M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.87M, Peak:8.87M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:35.23M (Peak 35.23M) | Time:00:00.02 | Mem:8.87M, Peak:8.87M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:35.24M (Peak 35.24M) | Time:00:00.02 | Mem:8.87M, Peak:8.87M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:79.04M (Peak 79.04M) | Time:00:00.28 | Remaining:00:07.88 | Mem:52.66M, Peak:52.66M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:98.49M (Peak 137.40M) | Time:00:04.01 | Mem:52.66M, Peak:52.66M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:98.49M (Peak 137.40M) | Time:00:04.01 | Mem:52.66M, Peak:52.66M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/gas-giant-moon-3-r003/kit-preview.png'
+Time: 00:04.37 (Saving: 00:00.35)
+
+
+Info: Saved "kit.blend"
+ROCKY_NATIVE_KIT_DONE [{"name": "crater-large", "vertices": 1716, "triangles": 572, "bounds": [[-1.0649960041046143, 1.034999966621399], [-0.9250667691230774, 0.8899491429328918], [-0.16467289626598358, 0.3643461763858795]]}, {"name": "crater-broken", "vertices": 1716, "triangles": 572, "bounds": [[-0.9327695965766907, 0.9737630486488342], [-0.8688113689422607, 0.8883816599845886], [-0.15275496244430542, 0.3392561972141266]]}, {"name": "crater-small", "vertices": 1716, "triangles": 572, "bounds": [[-0.5353879928588867, 0.5155556201934814], [-0.48227983713150024, 0.4876709580421448], [-0.08557188510894775, 0.18953165411949158]]}, {"name": "fractured-shelf", "vertices": 450, "triangles": 150, "bounds": [[-0.9359400272369385, 0.820576012134552], [-0.4646120071411133, 0.4391480088233948], [-0.14000000059604645, 0.25999999046325684]]}, {"name": "angular-outcrops", "vertices": 450, "triangles": 150, "bounds": [[-0.5345799922943115, 0.39764800667762756], [-0.38042500615119934, 0.24210399389266968], [-0.14000000059604645, 0.5899999737739563]]}, {"name": "mineral-seam", "vertices": 450, "triangles": 150, "bounds": [[-0.7056319713592529, 0.49158400297164917], [-0.05820399895310402, 0.31109198927879333], [-0.14000000059604645, 0.09000000357627869]]}, {"name": "battered-region-a", "vertices": 41634, "triangles": 13878, "bounds": [[-1.9900000095367432, 1.9500000476837158], [-1.4500000476837158, 1.4800000190734863], [-0.4300000071525574, 0.3400000035762787]]}, {"name": "battered-region-b", "vertices": 41370, "triangles": 13790, "bounds": [[-1.9900000095367432, 1.9500000476837158], [-1.4500000476837158, 1.4800000190734863], [-0.4300000071525574, 0.3400000035762787]]}, {"name": "ground-sphere", "vertices": 15360, "triangles": 5120, "bounds": [[-0.9999999403953552, 1.0], [-0.9999999403953552, 0.9999999403953552], [-1.0, 1.0]]}, {"name": "ground-sphere-medium", "vertices": 3840, "triangles": 1280, "bounds": [[-0.9999999403953552, 1.0], [-0.9999999403953552, 0.9999999403953552], [-1.0, 1.0]]}, {"name": "ground-sphere-low", "vertices": 960, "triangles": 320, "bounds": [[-0.9999999403953552, 1.0], [-0.9999999403953552, 0.9999999403953552], [-1.0, 1.0]]}]
+
+Blender quit

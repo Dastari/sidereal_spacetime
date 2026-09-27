@@ -1,0 +1,33 @@
+{
+  "method": "Manual software stills; no animation or hardware timing acceptance",
+  "baseCapture": "../gas-r005/shadow-tight-whole-seed38.json",
+  "sunDirection": [
+    -0.6,
+    -0.22,
+    0.45
+  ],
+  "cameraRadius": 7.5,
+  "cameraBetas": [
+    1.9,
+    1.1
+  ],
+  "shadows": [
+    true,
+    false
+  ],
+  "materials": "unchanged authored PBR",
+  "images": {
+    "gas-tight-low-sun-1.1-on.png": "823ee2d26d724b55fb64589bcf60ef0ef2385f5947e59f616cff49bfe4654900",
+    "gas-tight-low-sun-1.9-off.png": "abb5d86dac7a22d840c376eb66fda7a391f1dade2ec15c213a195f5e4cbf3a32",
+    "gas-tight-low-sun-1.1-off.png": "675fcc229d8e3712b91e9668dee3bd693056b7b0e4a73dbbe0c1a89c3d88f4cc",
+    "gas-tight-low-sun-1.9-on.png": "296bc051586b03c5d81187f4477366a5db0d9f806da3f0aa4cf069ec92a4d163"
+  },
+  "sourceHashes": {
+    "packages/render/src/environment/planet-shadows.ts": "b735b32242e45ef84b96984561ac15f185c0eb57d877a867723cae5d9b42d591",
+    "packages/render/src/environment/planet-shadow-depth-offset.ts": "c7a541d9d183ff489e1295a648a28637ccf62c16f6365de74d42c6cebd316445",
+    "packages/render/src/environment/planet-shadow-coverage.ts": "1eb6337d43213a3583e638c8680af6542efab8e4b6c6c7bfac249090220520af",
+    "scripts/art_library/reference_shadow_radius.ts": "12960c0e8773e960a6c9a8892cd8c15246209d71d0099d5ca8c7919a1e17e996",
+    "scripts/art_library/planet_reference_worker.ts": "12c0e4ec46e0ef413c965afd5b4d788b96079dabdc61e91cde6ee6379e56b847",
+    "scripts/art_library/planet_reference_candidate.ts": "3eff5be7826d46e2e276594c23d0ec18a9c6f752e28c4892dd9d6157c1c961d1"
+  }
+}

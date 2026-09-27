@@ -1,0 +1,17 @@
+[
+  {
+    "name": "volcanic-region-a",
+    "maxEdge": 0.2999999523162842,
+    "triangles": 6076
+  },
+  {
+    "name": "volcanic-region-b",
+    "maxEdge": 0.2999999523162842,
+    "triangles": 6132
+  },
+  {
+    "name": "volcanic-region-c",
+    "maxEdge": 0.2999999523162842,
+    "triangles": 5458
+  }
+]

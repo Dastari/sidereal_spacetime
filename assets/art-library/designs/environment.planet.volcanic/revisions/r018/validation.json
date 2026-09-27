@@ -1,0 +1,20 @@
+{
+  "viewport": [
+    560,
+    560
+  ],
+  "comparison": "same-camera native lava reflected spill enabled versus disabled; emission/glow/sun unchanged",
+  "changedPixelsAbove2": 47850,
+  "totalPixels": 313600,
+  "meanRGBDeltaChanged": [
+    23.078,
+    5.742,
+    2.459
+  ],
+  "maximumChannelDelta": 122,
+  "shaderErrors": 0,
+  "nativeTriangles": 131840,
+  "smokeTriangles": 33440,
+  "totalPlanetTriangles": 165282,
+  "drawCalls": 26
+}

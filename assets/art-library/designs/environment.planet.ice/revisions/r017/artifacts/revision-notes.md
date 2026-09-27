@@ -1,0 +1,9 @@
+# Ice r017 — single regional unit
+
+Preserves the r016 deep shaft and thick snow, and extends the outer snowbank into an asymmetric open-sided glacial cut with three unequal substantial blue columns. Smooth snow and hard ice corner normals, native UV seams, IOR 1.31 and explicit clearcoat survive JSON/GLB validation. Grouped interior facet tones replace alternating stripes. Every component is closed/manifold; original Blender raw GLBs remain under `blender-raw/`, with only source-authored IOR metadata restored in exported GLBs.
+
+The compositor is deliberately single-unit-only regardless of seed, LOD or diagnostic flag. It uses the established camera-facing anchor [0.452,0.388,0.794] at scale .28. No global population is authorized by this candidate.
+
+Native shaft floor Z −.62; open cut approximately −.42 to −.50; outer closure −.84; hero columns reach 1.04. Substrate samples upward native surfaces through a spatial triangle index, lowers beneath their minimum surface by .12 source units, and takes conservative neighbouring samples over the retained ground triangle footprint. Initial vertex-only clearance let a ground triangle bridge the open cut; the explicit NullEngine cut ray caught that and now passes alongside the shaft ray. No native triangles were added or deleted by composition.
+
+Four focused tests and TypeScript checking pass. Source plus retained ground totals 10,048 triangles, identical at all three LODs; four-variant attribute audit reports zero differences or gaps. Kit preview has been visually inspected: actual depth, connected cut and above-crust columns read clearly, while broad smooth snow and optical realism remain visual review questions. Two-angle actual in-game unit comparison is required before population. No full-planet, owner or hardware transition acceptance is claimed.

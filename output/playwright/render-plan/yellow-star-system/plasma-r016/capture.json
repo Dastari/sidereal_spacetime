@@ -1,0 +1,12 @@
+{
+  "nativeRevision": "r013",
+  "assetSha256": "f651ba13ade02fb918c97dd4d3924879dd9c204527a4e43cef90c8c578505bd2",
+  "renderer": "Chromium SwiftShader",
+  "timingAcceptance": false,
+  "viewport": [
+    768,
+    768
+  ],
+  "playbackSecondsRequested": 30,
+  "review": "Astra pending; root confirms moving spot boundaries, close relief review pending"
+}

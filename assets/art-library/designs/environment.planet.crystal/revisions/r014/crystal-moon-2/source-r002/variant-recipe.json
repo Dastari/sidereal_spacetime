@@ -1,0 +1,25 @@
+{
+  "referenceId": "planets--crystal-moon-2",
+  "foundation": "/root/sidereal_spacetime/scripts/art_library/build_crystal_native_kit_r009.py",
+  "foundationSha256": "f169c80e578789f719090496741b3757403e1e661489c4d8409bdc9f57a70759",
+  "runtimeStyle": "moon",
+  "status": "isolated authored candidate, exact visual review pending",
+  "seed": 2087,
+  "family": "crystal",
+  "hero": 0.27,
+  "count": 8,
+  "scales": [
+    0.36,
+    0.32,
+    0.38,
+    0.33,
+    0.37,
+    0.31,
+    0.36,
+    0.34
+  ],
+  "cue": "More angular compact purple moon with fewer stronger native crystalline protrusions and open cavities",
+  "candidateRevision": "r002",
+  "change": "Native connected squat prism/buttress districts, crystalline upper caps, separate angular compact moon2",
+  "predecessorKitSha256": "13f297e56de5992b9d1cc9fd80af70f248a8e4f5df8eeba87a0b322491edf9f5"
+}

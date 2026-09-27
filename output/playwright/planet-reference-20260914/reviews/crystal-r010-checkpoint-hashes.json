@@ -1,0 +1,27 @@
+[
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/design.json",
+    "sha256": "ecc947d04515316467b7859895d2432aa36b774c4b5e946a6467f20dce480573",
+    "bytes": 697115
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/DESIGN.md",
+    "sha256": "38403542a5f96d07069788a2ba72be8e32dfd78498b000acbdabf9d14c00bb76",
+    "bytes": 71030
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/revisions/r016/manifest.json",
+    "sha256": "3dcfa52dff6fbc57fa8837fe02502ca91fbc09bec11f4730ae568a8c19236c15",
+    "bytes": 156985
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/revisions/r016/pre-checkpoint-design.json",
+    "sha256": "a189c3998d7305705d4ab8127b817c1b113abd080dcdc6a80fa1905e46440466",
+    "bytes": 474627
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.crystal/revisions/r016/pre-checkpoint-DESIGN.md",
+    "sha256": "d909e4c11980be29118ed151cc521f0038a1f7db4157bf6741ba28bae6fab4ac",
+    "bytes": 70687
+  }
+]

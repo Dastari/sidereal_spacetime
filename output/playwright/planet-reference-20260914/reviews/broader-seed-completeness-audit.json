@@ -1,0 +1,10 @@
+{
+  "date": "2026-09-15",
+  "completedJobs": 56,
+  "verifiedImageHashes": 168,
+  "referenceRadii": "exact manifest match",
+  "sourceKitHashes": "exact manifest match",
+  "viewSettlements": "3 advancing ready frames, 0 pending per view",
+  "hardwareScope": "SwiftShader visual evidence only; never timing acceptance",
+  "failedAttemptsPreserved": true
+}

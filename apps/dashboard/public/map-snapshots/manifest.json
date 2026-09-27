@@ -1,0 +1,267 @@
+{
+  "schema": 1,
+  "description": "Transparent portraits rendered from runtime-pinned native assets. Planet seed 117; authored placement/seed remains independent.",
+  "entries": {
+    "desert-r014": {
+      "url": "/map-snapshots/desert-r014-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/desert-r014.png",
+      "sourceSha256": "9cc94a7630f06a55d8b79f4774fbda6778cc0ce18b118abfb898dcd2a08d0806",
+      "assetSha256": "a0d43d1c645543363136d0ada28541cf03e66c2651d47744d6de573698a8b47c",
+      "seed": 117,
+      "sha256": "8f70dee5f65012a307ec24c391bab182e51b5873fa9845bcf8e2ae5c1426d990",
+      "alpha": true
+    },
+    "rocky-r010": {
+      "url": "/map-snapshots/rocky-r010-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/rocky-r010.png",
+      "sourceSha256": "df9a48c5badde147fe55287e4eb2b6ed952a6641f868cbfb5949b3176048074d",
+      "assetSha256": "fdb5964a2c4dcde7889fd821a0b4625664eae477be62130c7ea99794a5d98de2",
+      "seed": 117,
+      "sha256": "ee85c8a4128aa09da6655dbff57bf4ecb8f06c0709b17ebf7c75c266a0e668a0",
+      "alpha": true
+    },
+    "ocean-r007": {
+      "url": "/map-snapshots/ocean-r007-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/ocean-r007.png",
+      "sourceSha256": "42560e0763550839cd8d9f5bbf5765ed8c4e343f159aea35ba415faed718c104",
+      "assetSha256": "71c2918ae71f8d074bfb8a8d94bc76f7271dd94e8a20c2c1b1f323f30d057f22",
+      "seed": 117,
+      "sha256": "680674023592ea5ea348e7ba04674c90b0a43411e8b7d0e5700b12dd832fc542",
+      "alpha": true
+    },
+    "temperate-r003": {
+      "url": "/map-snapshots/temperate-r003-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/temperate-r003.png",
+      "sourceSha256": "922df047e9923560439a21da5f1c8298755768e3228426af5d7c18273ab0cdf9",
+      "assetSha256": "c8c3470f41e85b53b9ce1e1f05b24446900bfad439a0522cfedce3c48eef01fc",
+      "seed": 117,
+      "sha256": "657b635e9b21c00fa618ccecd7473ae93ef866729f495355153724c197c40a2a",
+      "alpha": true
+    },
+    "toxic-r007": {
+      "url": "/map-snapshots/toxic-r007-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/toxic-r007.png",
+      "sourceSha256": "90d59346f3acc9595331dfe9b802e9a1f081a881495b064b5b049e61f6873b6d",
+      "assetSha256": "fde2bb95e38f34ee971d5c74aee10258fbd5e7259fb121b0cdbb5d25f8bb0e65",
+      "seed": 117,
+      "sha256": "02823c46629d502ea3393591b3b3bea7b05541fc19808043d7724671f1b48866",
+      "alpha": true
+    },
+    "crystal-r013": {
+      "url": "/map-snapshots/crystal-r013-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/crystal-r013.png",
+      "sourceSha256": "dcb1504bbdad816a36c3e7a77cd7b2fa76fbe5b5da3e81ec3c845ad93fee0a53",
+      "assetSha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369",
+      "seed": 117,
+      "sha256": "449ba934b01d44f95e54756f49d80d4af3e4f7fcf59b61a2e4712becdac0e877",
+      "alpha": true
+    },
+    "volcanic-r023": {
+      "url": "/map-snapshots/volcanic-r023-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/volcanic-r023.png",
+      "sourceSha256": "43b1b3a6d22c493d3a90dbdc00db266b371dc440c388de7467535b4ed8ccc880",
+      "assetSha256": "e591d10cc0810958484bc058ec0b3d0307bde8acd8ff44d1a40d8c50116f3ecf",
+      "seed": 117,
+      "sha256": "92ace291bd4e393c42ebf91000c469247b3097232edd55214e37c9d24cd3885d",
+      "alpha": true
+    },
+    "ice-r026": {
+      "url": "/map-snapshots/ice-r026-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/ice-r026.png",
+      "sourceSha256": "3b75f3dc37a0b279fada017bb6c1cf760b09e1ed2c11ba91d7ae41b947d65311",
+      "assetSha256": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574",
+      "seed": 117,
+      "sha256": "0e76cf131c57264c460e54cd8043a37d0f28b954d9141446a98e3f593ce0ab24",
+      "alpha": true
+    },
+    "gas-r005": {
+      "url": "/map-snapshots/gas-r005-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/gas-r005.png",
+      "sourceSha256": "8a5a23c7cbaa7a79443a29d28e577cdb215a6739daf1cf3c47547bab87ee445c",
+      "assetSha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+      "seed": 117,
+      "sha256": "e2b14c4faa4d3ca672ab5d6fc5b04e81d6ff423e33b6dd8ec34d97ef9aa23361",
+      "alpha": true
+    },
+    "rocky-moon-r002": {
+      "url": "/map-snapshots/rocky-moon-r002-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/rocky-moon-r002.png",
+      "sourceSha256": "2532d6c0d3073189eedcb2475fd0ee74ce4a35071599811491218b7170d08505",
+      "assetSha256": "bd22ee4e2b51a13bd09ee3b299c49e9f6c45e2955290c9afc21a15fc9df8b92d",
+      "seed": 117,
+      "sha256": "c2c348f33b0402b8dc07ccf97246dc3f78724ea3092d14dd94b7237f2de83d8b",
+      "alpha": true
+    },
+    "rocky-moon-2-r001": {
+      "url": "/map-snapshots/rocky-moon-2-r001-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/rocky-moon-2-r001.png",
+      "sourceSha256": "66f784763675ad30cd44e477004dc4cc884961729a9388f98973ec0dae91b6ae",
+      "assetSha256": "40f0b9a4cdc59d2de49d0edbcd0b1ad1438e366006edcdd28551b859204ed6db",
+      "seed": 117,
+      "sha256": "9f4ae68495254d154df854f3789533746b323ef045330ade4a3318565913c77c",
+      "alpha": true
+    },
+    "desert-moon-1-r001": {
+      "url": "/map-snapshots/desert-moon-1-r001-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/desert-moon-1-r001.png",
+      "sourceSha256": "81a42d8158962d0285fe77d95e2dc757f31835acc5b53c301c137a15f695941c",
+      "assetSha256": "83a1ceb44cf8a5f3b2a9a7473d1e9b9202a4119be05c49322cb5a22941fd3c20",
+      "seed": 117,
+      "sha256": "8a2f98a206a5ed40eba648d5bf494b635304e7064c299e52ecff490f3a3bc1d8",
+      "alpha": true
+    },
+    "desert-moon-2-r001": {
+      "url": "/map-snapshots/desert-moon-2-r001-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/desert-moon-2-r001.png",
+      "sourceSha256": "8a8a1890b1c53537d5b1722faf808b9467b0bb421ebf57a030de60d5e5a1cd49",
+      "assetSha256": "4d4b1a295643ad05bb37012d517e75d05a41a63e7032ea9dc6e75b7bf5d375be",
+      "seed": 117,
+      "sha256": "a633b200967b5d4eea709bd515ff8ea7ad6f1e3a629e076baab8288e6aef7687",
+      "alpha": true
+    },
+    "gas-giant-moon-1-r005": {
+      "url": "/map-snapshots/gas-giant-moon-1-r005-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/gas-giant-moon-1-r005.png",
+      "sourceSha256": "d0e20279fa37989674c473fb943cd681824ecefece2c6af526c9067c4ae535d9",
+      "assetSha256": "6f5385ee9f65def88c0e33c9b2bed391bec75103ddab2de50cfb36f63f4f596e",
+      "seed": 117,
+      "sha256": "c4532fbb3b5eb2e0efadc5a19576ab625c868895547397b15bf1865f32a629ad",
+      "alpha": true
+    },
+    "gas-giant-moon-2-r001": {
+      "url": "/map-snapshots/gas-giant-moon-2-r001-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/gas-giant-moon-2-r001.png",
+      "sourceSha256": "9ee5424dcecceef3b9930dc99f7a81ccb3108332ff111a10faa5a94816d31eba",
+      "assetSha256": "598a32d8f5b8ed67ddee6828ce9b1fa6082d83de7556c1c007542efc676f6fe5",
+      "seed": 117,
+      "sha256": "49e3c12560e75aaf07e2e493a72b30cee0513ab1dda146df4131838dbee79d17",
+      "alpha": true
+    },
+    "gas-giant-moon-3-r005": {
+      "url": "/map-snapshots/gas-giant-moon-3-r005-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/gas-giant-moon-3-r005.png",
+      "sourceSha256": "785b62b7e8f026b15c0cf8ff725a0a227e0fa90ca57585833f9f09168b9688f8",
+      "assetSha256": "9391022b5a57b77b346a469fac91860164696c31bb46388a60bcb4d153f72e59",
+      "seed": 117,
+      "sha256": "3556af8ec99a92f0ef82510dd67a6748aa26bcf28df10059b599f702bc1660c9",
+      "alpha": true
+    },
+    "ocean-moon-1-r001": {
+      "url": "/map-snapshots/ocean-moon-1-r001-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/ocean-moon-1-r001.png",
+      "sourceSha256": "2979c4364bb78e2ae74b021a4016acf2695c68c16126f60bc82cae2e3d4da2e0",
+      "assetSha256": "ffb61918739465a4d34ccc82beab3201afbd1e707687e4519a4d94701a7cb3a8",
+      "seed": 117,
+      "sha256": "d584263fc613207a5fe389e33587ca68f649e7cf7e3bfc5b7eaa0296e5bcd83c",
+      "alpha": true
+    },
+    "ocean-moon-2-r002": {
+      "url": "/map-snapshots/ocean-moon-2-r002-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/ocean-moon-2-r002.png",
+      "sourceSha256": "193f07ced23c006d3866b5eac0da8ff33a57ea166c7cf3879220653a777cb07f",
+      "assetSha256": "bc81bfb98f28fe4a37753bfea25db8b3c91acc2591837fe79bd3de54401a3347",
+      "seed": 117,
+      "sha256": "3835280b3445539a3fd4fcac7e7e0b4248c1c0beaad41850fd2979c2344c2870",
+      "alpha": true
+    },
+    "temperate-moon-1-r002": {
+      "url": "/map-snapshots/temperate-moon-1-r002-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/temperate-moon-1-r002.png",
+      "sourceSha256": "6b48b01b0b5aaf68421561cde9b3633a6cbe53a5f054e8efd508709560d95533",
+      "assetSha256": "b686cf85d77a2d116bd18602592a3dcada882fa2eb2a8d71ba7b92847368949d",
+      "seed": 117,
+      "sha256": "d42e56b04c27c440f7dac8b5bbe4d83e4fab5c23dc8da2daef527bd79d5322ae",
+      "alpha": true
+    },
+    "temperate-moon-2-r002": {
+      "url": "/map-snapshots/temperate-moon-2-r002-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/temperate-moon-2-r002.png",
+      "sourceSha256": "5d596acadf5ac7f3dfd8ce2e7ca6d924c33ed4e0178820d9ec93b029cf761fac",
+      "assetSha256": "a20ab21c8c121a87167ff1480add89b2d60fd65cb07c39377054824f79c47de8",
+      "seed": 117,
+      "sha256": "df8895ac17b8019c7418e1c878eb64075882a2378b0817444a13f9a0251dea90",
+      "alpha": true
+    },
+    "toxic-moon-1-r001": {
+      "url": "/map-snapshots/toxic-moon-1-r001-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/toxic-moon-1-r001.png",
+      "sourceSha256": "6d2dc694810d577710ca4c557fff5cd4a3894773547e98d320b0a86a20b9f89f",
+      "assetSha256": "b3d7eb42691d2bf24d2d7e6119180452d712f50e88ad80901dfc9a7a8993e213",
+      "seed": 117,
+      "sha256": "e385354482ca53be7f92571a57fec972ea23976f981c8b4cdc50f8b2e11b1ae2",
+      "alpha": true
+    },
+    "toxic-moon-2-r001": {
+      "url": "/map-snapshots/toxic-moon-2-r001-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/toxic-moon-2-r001.png",
+      "sourceSha256": "5939fdf042508917e865cf0ce9e88ed47563160da4e470c877c2845995051d07",
+      "assetSha256": "d97fbcc129c4876fb4b217ecb81de63d7f9b4e62abe5f336984c9c5e2b5957fe",
+      "seed": 117,
+      "sha256": "88ef724ff59a26cb5c3649bb0a3b1c7e0f7b4fcfbe2d11ae5aef4c2ebba05b52",
+      "alpha": true
+    },
+    "ice-moon-1-r002": {
+      "url": "/map-snapshots/ice-moon-1-r002-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/ice-moon-1-r002.png",
+      "sourceSha256": "06a7dad36c3ec4516ee80aea4c026890fb6844b0f12959014213515b463b8a62",
+      "assetSha256": "8bf42eb720f34978fc174ce519a76b72f8b27debbd42f80e700d5f0383f50b95",
+      "seed": 117,
+      "sha256": "861446b29caecfc20d159d1f8429e16c760a4ba9e8df7e75e577571857ba449a",
+      "alpha": true
+    },
+    "ice-moon-2-r003": {
+      "url": "/map-snapshots/ice-moon-2-r003-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/ice-moon-2-r003.png",
+      "sourceSha256": "932558fb077a0b332b1b3c1b7b23f1511f3ddd8faf0ebcbc260eabc200c3d82f",
+      "assetSha256": "f2f7bfd0a1cb706bdca20c11e1c53baec18fe7d1212f30115586cbceeaf7de3c",
+      "seed": 117,
+      "sha256": "2d1821bc8946abd654346c52992a321b45d3bc4636f84199839bdb7122e502c8",
+      "alpha": true
+    },
+    "volcanic-moon-1-r003": {
+      "url": "/map-snapshots/volcanic-moon-1-r003-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/volcanic-moon-1-r003.png",
+      "sourceSha256": "409c87c9a4d6158c729d89066aba0da052768c9b46e081aae9c06d29cb9cca6d",
+      "assetSha256": "73ecf286225a9daf4d1be1d2479a691747f34614f8782ec21f8c7e732721d7fc",
+      "seed": 117,
+      "sha256": "f5afc0af2d3eecf0ec7818e1ca179ac61510a1b4e5643f577e42c5a737b328ac",
+      "alpha": true
+    },
+    "volcanic-moon-2-r006": {
+      "url": "/map-snapshots/volcanic-moon-2-r006-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/volcanic-moon-2-r006.png",
+      "sourceSha256": "ae529aea49fb2ebbab05fbc40189ca129f984c27d228bfa8a3b753737dd2ea90",
+      "assetSha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4",
+      "seed": 117,
+      "sha256": "5b437fe23e234abbaae93585084cf337234af93a108e691f153145196e8d1bba",
+      "alpha": true
+    },
+    "crystal-moon-1-r010": {
+      "url": "/map-snapshots/crystal-moon-1-r010-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/crystal-moon-1-r010.png",
+      "sourceSha256": "f02b51262d382830be75a67967bcd718f1fea4e552ac4f42507169dcc332bd51",
+      "assetSha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702",
+      "seed": 117,
+      "sha256": "a064a433c8caa355ea2bdd3bc8f789aa04a418861a0769ef1dca6271a2e10e23",
+      "alpha": true
+    },
+    "crystal-moon-2-r010": {
+      "url": "/map-snapshots/crystal-moon-2-r010-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/crystal-moon-2-r010.png",
+      "sourceSha256": "92c88aea3103e503dd833ff7bb04597e441bad9a4d35427a488a88bff36b2212",
+      "assetSha256": "90ba1de6ecd0bfb4f5333c7010ff70764887d13d68cb1c072e2d2cc0648818e0",
+      "seed": 117,
+      "sha256": "34f6fcf65625cdd50a3df365e304379dee4645a907b49ea3d20533ba56fc3aa6",
+      "alpha": true
+    },
+    "yellow-main-sequence-r013": {
+      "url": "/map-snapshots/yellow-main-sequence-r013-alpha-v1.webp",
+      "source": "output/playwright/map-portraits-alpha/yellow-main-sequence-r013.png",
+      "sourceSha256": "2d0fccb1842d7f8aa2a3d1926d0d4cf62496a72f96679288ebfa131373ab0f1a",
+      "assetSha256": "f651ba13ade02fb918c97dd4d3924879dd9c204527a4e43cef90c8c578505bd2",
+      "seed": 3901,
+      "sha256": "436beb1a3e82747769d71ed279c15f5870d58c5fa184bb43ec8d0c8f6ad5013f",
+      "alpha": true
+    }
+  }
+}

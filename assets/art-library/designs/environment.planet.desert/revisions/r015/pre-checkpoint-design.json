@@ -1,0 +1,397 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "environment.planet.desert",
+  "asset_uuid": "25fbe102-e645-566f-bec8-fdf394188eb4",
+  "reference_ids": [
+    "planets--desert-world",
+    "planets--desert-moon-1",
+    "planets--desert-moon-2"
+  ],
+  "mapping_status": "proposed shared production family; inspect and split distinct geometry before implementation",
+  "current_revision": 14,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 50,
+  "profile": "planet",
+  "assigned_to": "root/planet-reference-20260914",
+  "blocker": null,
+  "feedback": [],
+  "approvals": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-08",
+      "stage": "reference-only",
+      "change": "Reference inventory and provisional scale/gameplay brief",
+      "hypothesis": null,
+      "covered_reference_ids": [],
+      "evidence": [],
+      "review": null
+    },
+    {
+      "revision": 1,
+      "created_at": "2026-09-14T00:31:21.227271+00:00",
+      "stage": "changes-requested",
+      "change": "Author broad sand basins and monumental clustered mesa geography",
+      "hypothesis": "Quiet sand regions around three to five authored mesa groups and deep canyon cuts close the reference macro-hierarchy gap without uniform fine tiling",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.desert/revisions/r001/blender-source.blend",
+          "sha256": "524d0633c819449cf71ae2dfd5bc3645c6dea3801e42f8a23c93e8200ebffb5d",
+          "bytes": 1344776,
+          "notes": "",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T00:39:52.656067+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r001/runtime-close.png",
+          "sha256": "567cae127c6b969edecc3816663524487bfaa43eae1c05024671f614391c6914",
+          "bytes": 209081,
+          "notes": "",
+          "capture_context": "Isolated Babylon native composition seed38; worker-built; shared planet shadows and HDR .28, sun2.1; camera4.7 fov.52; 900x900 SwiftShader; natural render loop stopped after119frames for still. Visual failure, no hardware timing or game acceptance.",
+          "recorded_at": "2026-09-14T00:39:53.470985+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Root and independent Astra agree: isolated dark towers on a faceted ball; quiet substrate demonstrated but no integrated geological shelves. Need broad aprons and connected terraces, one dominant mesa group, wider branching canyon ledges and warmer readable faces.",
+        "recorded_at": "2026-09-14T00:39:54.144199+00:00"
+      }
+    },
+    {
+      "revision": 2,
+      "created_at": "2026-09-14T00:39:54.712305+00:00",
+      "stage": "changes-requested",
+      "change": "Integrate mesa groups with broad sand-capped aprons and regional terraces",
+      "hypothesis": "A broad low shelf and two intermediate ledges connect each summit to the planet and replace the bolted-on tower silhouette",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.desert/revisions/r002/blender-source.blend",
+          "sha256": "99bad07c0a45a72c70d869fef027114d849d02b2e56ed71845e835effc5f1c26",
+          "bytes": 8969288,
+          "notes": "",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T00:44:09.849296+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r002/runtime-close.png",
+          "sha256": "8ad5c61d84258eda5e2dd31828c3ea60a3c09f8b16a3e5220a8e96a547b9ec67",
+          "bytes": 283959,
+          "notes": "",
+          "capture_context": "Isolated actual Babylon worker composition, native r002 kit; 900x900 SwiftShader, current planet shadow helper, sun2.1 HDR .28. Natural render loop, then stopped for still. Both agents reject visual fidelity; no hardware timing.",
+          "recorded_at": "2026-09-14T00:44:10.499879+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Root/Astra: some apron connection improves, but artificial contour bands, dark slab tops, symmetric plinths and sparse hierarchy persist. Diagnose quantized ground field, material orientation and overlaps before further art.",
+        "recorded_at": "2026-09-14T00:44:10.963677+00:00"
+      }
+    },
+    {
+      "revision": 3,
+      "created_at": "2026-09-14T00:44:11.433884+00:00",
+      "stage": "changes-requested",
+      "change": "Remove synthetic contour bands and validate native cap lighting before refining macro hierarchy",
+      "hypothesis": "Smooth broad ground deformation and correctly exposed authored aprons recover geological continuity without retuning material colors",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.desert/revisions/r003/blender-source.blend",
+          "sha256": "99bad07c0a45a72c70d869fef027114d849d02b2e56ed71845e835effc5f1c26",
+          "bytes": 8969288,
+          "notes": "",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T00:45:40.767949+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r003/runtime-close.png",
+          "sha256": "2ef4896af3d083f17f3d8f0607e0792da03674ba4de5b631016d0c9f9fad235a",
+          "bytes": 354236,
+          "notes": "",
+          "capture_context": "Actual isolated Babylon seed38, corrected explicit CCW source winding, native r002 kit unchanged, smooth broad ground field. SwiftShader900x900; appearance only. Macro composition still rejected by both agents.",
+          "recorded_at": "2026-09-14T00:47:14.513365+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Correct source winding restores roofs and materials; quantization removal fixes false contours. Still too bare with isolated symmetric plinths. Next: authored connected regional cliff/basin chains, not uniform detail scattering.",
+        "recorded_at": "2026-09-14T00:47:14.975630+00:00"
+      }
+    },
+    {
+      "revision": 4,
+      "created_at": "2026-09-14T00:47:15.350308+00:00",
+      "stage": "changes-requested",
+      "change": "Connect authored cliff and basin modules into regional escarpments",
+      "hypothesis": "Joined irregular plateau edges with offset vertical drops create the missing regional hierarchy while retaining quiet sand plains",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.desert/revisions/r004/blender-source.blend",
+          "sha256": "6a91f7bd69bff305a1a14a8d01f739035f33948090396942523ee18e866337f6",
+          "bytes": 9122844,
+          "notes": "",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T00:50:45.892745+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r004/runtime-close.png",
+          "sha256": "b7c546b800770795f03e4599926ddef1eaab05426ad2a2ad1bbfa7e31ebdf7bc",
+          "bytes": 339639,
+          "notes": "",
+          "capture_context": "Actual isolated Babylon SwiftShader900x900, worker-composed regional cliff chains. Sparse native cap triangles form visibly incorrect chords during spherical deformation. Rejected technical artifact; no timing or game acceptance.",
+          "recorded_at": "2026-09-14T00:50:46.295910+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Long native planar cap triangles warp as sphere chords and expose triangular wedges. Need authored planar tessellation preserving surfaces before spherical mapping; regional coverage also too sparse.",
+        "recorded_at": "2026-09-14T00:50:46.715196+00:00"
+      }
+    },
+    {
+      "revision": 5,
+      "created_at": "2026-09-14T00:50:47.096694+00:00",
+      "stage": "changes-requested",
+      "change": "Preserve regional cap surfaces during spherical composition with native planar tessellation",
+      "hypothesis": "Additional authored cap tessellation prevents broad faces cutting through the curved substrate; six regional chains improve hemisphere coverage",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.desert/revisions/r005/blender-source.blend",
+          "sha256": "cb7fb196018a2141845aecae5d1497ccc2800c08d366370ec3383f836a24e8cb",
+          "bytes": 9994008,
+          "notes": "",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T01:01:35.248932+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r005/runtime-close.png",
+          "sha256": "ba526e44cc69d75947e5a2f9e8aa516d00d0ac52f13fc1df3003d6b7214694bb",
+          "bytes": 354294,
+          "notes": "",
+          "capture_context": "Isolated Babylon actual native candidate, seed38. SwiftShader appearance evidence only; no hardware timing acceptance.",
+          "recorded_at": "2026-09-14T01:01:35.741153+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Root and independent Astra reviewer agree: adaptive authored tessellation fixes chord wedges but thin cliff belts and large smooth bare regions remain unlike the reference. Broader raised plateau regions, unequal widths, rotations and centered hero formations required.",
+        "recorded_at": "2026-09-14T01:01:36.161855+00:00"
+      }
+    },
+    {
+      "revision": 6,
+      "created_at": "2026-09-14T01:01:36.575455+00:00",
+      "stage": "changes-requested",
+      "change": "Recompose r005 native regional meshes into broader, independently rotated plateau regions.",
+      "hypothesis": "Unequal region widths and central monumental formations close the thin-belt versus broad-plateau gap.",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [],
+      "review": {
+        "outcome": "fail",
+        "notes": "Both reviewers reject: widened rotated plates remain shallow beige caps, lacking monumental frontal formations and exposed cliff tiers. Shadow-off diagnostic isolates fine hatching to shadows.",
+        "recorded_at": "2026-09-14T01:04:35.375879+00:00"
+      }
+    },
+    {
+      "revision": 7,
+      "created_at": "2026-09-14T01:04:35.777319+00:00",
+      "stage": "changes-requested",
+      "change": "New native broad irregular plateau regions with branching canyon notches and attached unequal heads.",
+      "hypothesis": "Distinct integrated landmasses and substantial tier depths replace thin belts and separate plinths.",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [],
+      "review": {
+        "outcome": "fail",
+        "notes": "Both reviewers reject: broader cliff depth improved but sparse blocky summits and large tabletops remain; empty center and clipped limb hero. Need dense unequal narrow column bundles and global multi-angle coverage.",
+        "recorded_at": "2026-09-14T01:09:36.877072+00:00"
+      }
+    },
+    {
+      "revision": 8,
+      "created_at": "2026-09-14T01:09:37.387318+00:00",
+      "stage": "changes-requested",
+      "change": "Native thirteen-column monumental groups, medium edge buttresses and rust shoulders, distributed across fourteen global regions.",
+      "hypothesis": "Rich connected column relief and denser multihemisphere regions close macro and medium-scale gaps.",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [],
+      "review": {
+        "outcome": "fail",
+        "notes": "Both reviewers reject at two angles: improved thirteen-column skyline but broad bare midgrounds and separate platforms persist. Tallest groups too large. Need contiguous low/mid terraces, erosion pockets and reduced head repetition.",
+        "recorded_at": "2026-09-14T01:15:09.015173+00:00"
+      }
+    },
+    {
+      "revision": 9,
+      "created_at": "2026-09-14T01:15:09.507495+00:00",
+      "stage": "changes-requested",
+      "change": "Contiguous native lowfield and middle terraces with erosion pockets; varied reduced head presence; remove synthetic radial canyon deformation.",
+      "hypothesis": "Broad connected low/mid native terrain fills the structural gap without adding taller heads.",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [],
+      "review": {
+        "outcome": "fail",
+        "notes": "Two-angle review rejects large flat cross/tabletop topology and geometric pinches. Shadow bias diagnostic removes hatching. Need authored unequal medium-relief field and one-region compositing diagnostic.",
+        "recorded_at": "2026-09-14T01:20:30.437334+00:00"
+      }
+    },
+    {
+      "revision": 10,
+      "created_at": "2026-09-14T01:20:30.919418+00:00",
+      "stage": "changes-requested",
+      "change": "Native explicit twenty-two-terrace relief fields across five heights, inset erosion pockets and sparse short head groups.",
+      "hypothesis": "Continuous unequal medium relief replaces broad flat tabletops while preserving quiet pockets and native triangle topology.",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r010/runtime-close.png",
+          "sha256": "4e77245c27e6ba82fded23ffa831b338f8404c356a03bfa7237fb15e671c0d35",
+          "bytes": 205740,
+          "notes": "",
+          "capture_context": "Single mapped region, shadows off, SwiftShader; false diagonal shading diagnosis, not wholeplanet acceptance.",
+          "recorded_at": "2026-09-14T01:55:11.312177+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Mapped native cap normals create false triangular shading; corrected in successor without geometry change.",
+        "recorded_at": "2026-09-14T01:55:11.682339+00:00"
+      }
+    },
+    {
+      "revision": 11,
+      "created_at": "2026-09-14T01:55:12.056477+00:00",
+      "stage": "changes-requested",
+      "change": "Deformation-normal correction on exact r010 native geometry",
+      "hypothesis": "Close documented reference gaps while retaining native surfaces, attributes, history and LOD identity.",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r011/runtime-close.png",
+          "sha256": "3b574bb09f9d1a655afdaf316be073d0a4aa5365bd56a52b116aebf16c53d09e",
+          "bytes": 230462,
+          "notes": "",
+          "capture_context": "Isolated Babylon SwiftShader two-angle review; .006 normal-bias diagnostic. Not hardware timing.",
+          "recorded_at": "2026-09-14T01:55:12.461119+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Both reviewers note substantial coverage improvement but giant plates and sparse needle-like summit groups remain; see desert-r011-review.md.",
+        "recorded_at": "2026-09-14T01:55:12.875620+00:00"
+      }
+    },
+    {
+      "revision": 12,
+      "created_at": "2026-09-14T01:55:13.275241+00:00",
+      "stage": "changes-requested",
+      "change": "Selective sixty-form terrace hierarchy, chipped lips, topographic strata and wider shorter summit groups",
+      "hypothesis": "Close documented reference gaps while retaining native surfaces, attributes, history and LOD identity.",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r012/runtime-close.png",
+          "sha256": "792e562ddf668745f876adc20061d45370c9d0f3c8ba5b4d664ed804ee3d01ce",
+          "bytes": 253393,
+          "notes": "",
+          "capture_context": "Actual isolated Babylon seed38; SwiftShader appearance only. Low-mid terrain improvement; summit and finish gaps remain.",
+          "recorded_at": "2026-09-14T02:35:22.162844+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Root and Astra retain summit shape and fine sandstone finish blockers; preserve r012 geography, supersede with r013.",
+        "recorded_at": "2026-09-14T02:35:22.617347+00:00"
+      }
+    },
+    {
+      "revision": 13,
+      "created_at": "2026-09-14T02:35:23.023347+00:00",
+      "stage": "changes-requested",
+      "change": "Native UVs/normals, sandstone PBR finish, broader summit feet",
+      "hypothesis": "Keep established low-mid terrain and close material and summit gap",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r013/runtime-close.png",
+          "sha256": "339c7d3208119e4718f1a228a207e4e8babd1f1e2b5a3a6a98acbea844e35ac9",
+          "bytes": 627177,
+          "notes": "",
+          "capture_context": "Actual Babylon seed38; root and Astra pass material subgap, retain source summit and cap-edge shape blockers. SwiftShader appearance only.",
+          "recorded_at": "2026-09-14T02:35:23.437981+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Material subgap passes; narrow summit rods and oversized plate rhythm remain at reference scale. Native outline variable shadowing defect identified; fix in r014.",
+        "recorded_at": "2026-09-14T02:35:23.852724+00:00"
+      }
+    },
+    {
+      "revision": 14,
+      "created_at": "2026-09-14T02:35:24.264818+00:00",
+      "stage": "in-progress",
+      "change": "Fix native summit outline variable shadowing; compact broad massif and selected erosion mouths",
+      "hypothesis": "Correct actual summit footprint and selectively erode large cap edges while preserving reviewed material finish",
+      "covered_reference_ids": [
+        "planets--desert-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.desert/revisions/r014/runtime-close.png",
+          "sha256": "1c5cc5ddac4c00e4fa9a9311606f3f4314e237c73faca776a74bdc28d8085126",
+          "bytes": 636535,
+          "notes": "",
+          "capture_context": "Actual isolated Babylon seed38. Root and independent Astra agree meaningful visual gap closed at two angles and ~300px scale. Working visual gate only; owner sign-off, multi-seed, moons and hardware LOD acceptance remain open. SwiftShader appearance evidence.",
+          "recorded_at": "2026-09-14T02:44:42.133663+00:00"
+        }
+      ],
+      "review": null
+    }
+  ]
+}

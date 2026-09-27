@@ -1,0 +1,318 @@
+[
+  {
+    "id": "desert-r014-seed117",
+    "record": "output/playwright/planet-reference-20260914/desert-r014/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "desert-r014-seed904",
+    "record": "output/playwright/planet-reference-20260914/desert-r014/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "rocky-r010-seed117",
+    "record": "output/playwright/planet-reference-20260914/rocky-r010/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "rocky-r010-seed904",
+    "record": "output/playwright/planet-reference-20260914/rocky-r010/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "ocean-r007-seed117",
+    "record": "output/playwright/planet-reference-20260914/ocean-r007/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "ocean-r007-seed904",
+    "record": "output/playwright/planet-reference-20260914/ocean-r007/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "temperate-r003-seed117",
+    "record": "output/playwright/planet-reference-20260914/temperate-r003/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "temperate-r003-seed904",
+    "record": "output/playwright/planet-reference-20260914/temperate-r003/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "toxic-r007-seed117",
+    "record": "output/playwright/planet-reference-20260914/toxic-r007/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "toxic-r007-seed904",
+    "record": "output/playwright/planet-reference-20260914/toxic-r007/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "crystal-r013-seed117",
+    "record": "output/playwright/planet-reference-20260914/crystal-r013/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "crystal-r013-seed904",
+    "record": "output/playwright/planet-reference-20260914/crystal-r013/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "volcanic-r023-seed117",
+    "record": "output/playwright/planet-reference-20260914/volcanic-r023/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "volcanic-r023-seed904",
+    "record": "output/playwright/planet-reference-20260914/volcanic-r023/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "ice-r026-seed117",
+    "record": "output/playwright/planet-reference-20260914/ice-r026/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "ice-r026-seed904",
+    "record": "output/playwright/planet-reference-20260914/ice-r026/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "gas-r005-seed117",
+    "record": "output/playwright/planet-reference-20260914/gas-r005/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "gas-r005-seed904",
+    "record": "output/playwright/planet-reference-20260914/gas-r005/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "rocky-moon-r002-seed117",
+    "record": "output/playwright/planet-reference-20260914/rocky-moon-r002/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "rocky-moon-r002-seed904",
+    "record": "output/playwright/planet-reference-20260914/rocky-moon-r002/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "rocky-moon-2-r001-seed117",
+    "record": "output/playwright/planet-reference-20260914/rocky-moon-2-r001/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "rocky-moon-2-r001-seed904",
+    "record": "output/playwright/planet-reference-20260914/rocky-moon-2-r001/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "desert-moon-1-r001-seed117",
+    "record": "output/playwright/planet-reference-20260914/desert-moon-1-r001/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "desert-moon-1-r001-seed904",
+    "record": "output/playwright/planet-reference-20260914/desert-moon-1-r001/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "desert-moon-2-r001-seed117",
+    "record": "output/playwright/planet-reference-20260914/desert-moon-2-r001/broader-shadow-fixed-retry2-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "desert-moon-2-r001-seed904",
+    "record": "output/playwright/planet-reference-20260914/desert-moon-2-r001/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "gas-giant-moon-1-r005-seed117",
+    "record": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "gas-giant-moon-1-r005-seed904",
+    "record": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r005/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "gas-giant-moon-2-r001-seed117",
+    "record": "output/playwright/planet-reference-20260914/gas-giant-moon-2-r001/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "gas-giant-moon-2-r001-seed904",
+    "record": "output/playwright/planet-reference-20260914/gas-giant-moon-2-r001/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "gas-giant-moon-3-r005-seed117",
+    "record": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "gas-giant-moon-3-r005-seed904",
+    "record": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r005/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "ocean-moon-1-r001-seed117",
+    "record": "output/playwright/planet-reference-20260914/ocean-moon-1-r001/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "ocean-moon-1-r001-seed904",
+    "record": "output/playwright/planet-reference-20260914/ocean-moon-1-r001/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "ocean-moon-2-r002-seed117",
+    "record": "output/playwright/planet-reference-20260914/ocean-moon-2-r002/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "ocean-moon-2-r002-seed904",
+    "record": "output/playwright/planet-reference-20260914/ocean-moon-2-r002/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "temperate-moon-1-r002-seed117",
+    "record": "output/playwright/planet-reference-20260914/temperate-moon-1-r002/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "temperate-moon-1-r002-seed904",
+    "record": "output/playwright/planet-reference-20260914/temperate-moon-1-r002/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "temperate-moon-2-r002-seed117",
+    "record": "output/playwright/planet-reference-20260914/temperate-moon-2-r002/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "temperate-moon-2-r002-seed904",
+    "record": "output/playwright/planet-reference-20260914/temperate-moon-2-r002/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "toxic-moon-1-r001-seed117",
+    "record": "output/playwright/planet-reference-20260914/toxic-moon-1-r001/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "toxic-moon-1-r001-seed904",
+    "record": "output/playwright/planet-reference-20260914/toxic-moon-1-r001/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "toxic-moon-2-r001-seed117",
+    "record": "output/playwright/planet-reference-20260914/toxic-moon-2-r001/broader-shadow-fixed-seed117.json",
+    "status": "complete"
+  },
+  {
+    "id": "toxic-moon-2-r001-seed904",
+    "record": "output/playwright/planet-reference-20260914/toxic-moon-2-r001/broader-shadow-fixed-seed904.json",
+    "status": "complete"
+  },
+  {
+    "id": "ice-moon-1-r002-seed117",
+    "record": "output/playwright/planet-reference-20260914/ice-moon-1-r002/broader-shadow-fixed-retry2-seed117.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/ice-moon-1-r002/broader-shadow-fixed-retry2-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 1859, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "ice-moon-1-r002-seed904",
+    "record": "output/playwright/planet-reference-20260914/ice-moon-1-r002/broader-shadow-fixed-seed904.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/ice-moon-1-r002/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 1831.6999988555908, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "ice-moon-2-r003-seed117",
+    "record": "output/playwright/planet-reference-20260914/ice-moon-2-r003/broader-shadow-fixed-seed117.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/ice-moon-2-r003/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 1693.7999992370605, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "ice-moon-2-r003-seed904",
+    "record": "output/playwright/planet-reference-20260914/ice-moon-2-r003/broader-shadow-fixed-seed904.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/ice-moon-2-r003/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 1597.8999996185303, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "volcanic-moon-1-r003-seed117",
+    "record": "output/playwright/planet-reference-20260914/volcanic-moon-1-r003/broader-shadow-fixed-seed117.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/volcanic-moon-1-r003/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 617.7999992370605, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "volcanic-moon-1-r003-seed904",
+    "record": "output/playwright/planet-reference-20260914/volcanic-moon-1-r003/broader-shadow-fixed-seed904.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/volcanic-moon-1-r003/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 602.5, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "volcanic-moon-2-r006-seed117",
+    "record": "output/playwright/planet-reference-20260914/volcanic-moon-2-r006/broader-shadow-fixed-seed117.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/volcanic-moon-2-r006/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 601.6000003814697, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "volcanic-moon-2-r006-seed904",
+    "record": "output/playwright/planet-reference-20260914/volcanic-moon-2-r006/broader-shadow-fixed-seed904.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/volcanic-moon-2-r006/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 583.2000007629395, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "crystal-moon-1-r010-seed117",
+    "record": "output/playwright/planet-reference-20260914/crystal-moon-1-r010/broader-shadow-fixed-seed117.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moon-1-r010/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 6.200000762939453, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "crystal-moon-1-r010-seed904",
+    "record": "output/playwright/planet-reference-20260914/crystal-moon-1-r010/broader-shadow-fixed-seed904.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moon-1-r010/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 6.600000381469727, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "crystal-moon-2-r010-seed117",
+    "record": "output/playwright/planet-reference-20260914/crystal-moon-2-r010/broader-shadow-fixed-seed117.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moon-2-r010/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 3.3000011444091797, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "crystal-moon-2-r010-seed904",
+    "record": "output/playwright/planet-reference-20260914/crystal-moon-2-r010/broader-shadow-fixed-seed904.json",
+    "status": "complete",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moon-2-r010/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 3.1000003814697266, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  }
+]

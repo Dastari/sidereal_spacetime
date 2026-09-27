@@ -1,0 +1,5 @@
+# volcanic-moon-1 native r002 — 2026-09-14
+
+Exact reference `planets--volcanic-moon-1` only. Predecessor r001 preserved. Native editable Blender meshes, complete GLBs, PBR maps, material roles and UV/normal channels retained. 178,472 triangles at every LOD; stable exact-reference placement IDs. Actual source preview viewed. No runtime visual pass/owner approval/publication or hardware timing claim; root coordinator owns next actual captures and Astra comparison.
+
+Adds closed native variable-width stepped fracture paths across selected existing upper districts. Native ray samples anchor paths to source crust height before tessellation; no emission increase. Existing cavities/body geometry preserved. Eight tests pass, including final overlapping-crust hot-surface rays (moon1 36/49 samples exposed, moon2 36/50), all24 primary crater floors and retainedLOD; TSC passes. GLB complete parity has zero differences/gaps. Detailed exposed-fracture ray JSON at parent evidence root. Actual reference-scale branch readability remains for next capture/reviewer.

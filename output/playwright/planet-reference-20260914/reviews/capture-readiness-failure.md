@@ -1,0 +1,3 @@
+# Capture readiness failure — 2026-09-14
+
+Desert moon2 seed117 completed its worker and had ready native meshes, but full scene readiness correctly failed. Inspection isolated the EffectLayer readiness stage; browser console records 504 Outdated Optimize Dep for three lazy glow shader modules after new preparation imports changed Vite dependency optimization. This is a development bundle mismatch, not evidence of a planet geometry/LOD regression. Preserve the failed capture log and console. Reload a fresh document against the completed optimizer and retry with a new evidence prefix; do not relax readiness or force a successful capture. Earlier Ice preparation timeout has not been conclusively attributed to this same cause.

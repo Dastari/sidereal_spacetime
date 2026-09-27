@@ -1,0 +1,36 @@
+{
+  "mode": "full",
+  "workerComposeMs": 6214.640927,
+  "cloneAndStartMs": 16.030462999999997,
+  "totalMs": 6439.586243000001,
+  "before": {
+    "rss": 203276288,
+    "heapTotal": 181637120,
+    "heapUsed": 146776200,
+    "external": 3547813,
+    "arrayBuffers": 1192447
+  },
+  "received": {
+    "rss": 668368896,
+    "heapTotal": 181637120,
+    "heapUsed": 147789256,
+    "external": 25739527,
+    "arrayBuffers": 1192463
+  },
+  "afterTerminate": {
+    "rss": 381394944,
+    "heapTotal": 86196224,
+    "heapUsed": 51355928,
+    "external": 25739527,
+    "arrayBuffers": 1192463
+  },
+  "peakRss": 668368896,
+  "outputBytes": 22021632,
+  "sourceVariantNames": [
+    "snow-cut-region",
+    "snow-open-gorge",
+    "ground-sphere",
+    "ground-sphere-medium",
+    "ground-sphere-low"
+  ]
+}

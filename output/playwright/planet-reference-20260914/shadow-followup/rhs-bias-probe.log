@@ -1,0 +1,4 @@
+### Ran Playwright code
+```js
+await (async(page)=>{for(const value of [.003,.006]){await page.evaluate(value=>{const r=window.planetReview;for(const l of r.scene.lights){const s=l.getShadowGenerator();if(s){s.normalBias=.003;s.bias=value;}}r.scene.render();},value);await page.waitForTimeout(500);await page.evaluate(()=>window.planetReview.scene.render());await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/shadow-followup"+'/ice-rhs-bias-'+value+'.png'});}})(page);
+```

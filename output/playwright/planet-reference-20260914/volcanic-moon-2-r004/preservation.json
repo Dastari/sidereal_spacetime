@@ -1,0 +1,12 @@
+{
+  "prior": "/root/sidereal_spacetime/output/playwright/planet-reference-20260914/volcanic-moon-2-r003",
+  "priorKitSHA256": "4518af690d6776f07db6f935ce545f6fb7ba95c90356b20412924662695e0b4f",
+  "all11OriginalVariants": "exact JSON attributes and material roles",
+  "materialsAnd12Textures": "exact",
+  "newVariant": "battered-region-b-edge",
+  "warmEdgeRegions": [
+    2,
+    9
+  ],
+  "scope": "only two existing B placement IDs select native broader junction; no crater/layout/emission change"
+}

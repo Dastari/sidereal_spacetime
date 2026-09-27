@@ -1,0 +1,68 @@
+{
+  "recordedAt": "2026-09-14T12:57:00.895276+00:00",
+  "entryHead": "2af5fb3e98057f577b61a657e71f61067c7d338b",
+  "currentSharedHead": "2af5fb3e98057f577b61a657e71f61067c7d338b",
+  "pins": [
+    {
+      "path": "assets/runtime/assembly/catalog-shipyard-r005.json",
+      "entrySha256": "9fa3db94ed61a84f3e9d52b0d404d1433931747bbd268fceefe6a4e2a6ead237",
+      "currentSha256": "9fa3db94ed61a84f3e9d52b0d404d1433931747bbd268fceefe6a4e2a6ead237",
+      "unchanged": true
+    },
+    {
+      "path": "assets/runtime/assembly/catalog.json",
+      "entrySha256": "f92e1e487106794b188bcb4e5a3e2f0cada7047b81ddfc0ee8bd9434964063ac",
+      "currentSha256": "f92e1e487106794b188bcb4e5a3e2f0cada7047b81ddfc0ee8bd9434964063ac",
+      "unchanged": true
+    },
+    {
+      "path": "assets/runtime/assembly/wayfarer.json",
+      "entrySha256": "1f723510ac156089903fbd0d711a2f6adff1da35433e2ac02afde94fa4a00deb",
+      "currentSha256": "1f723510ac156089903fbd0d711a2f6adff1da35433e2ac02afde94fa4a00deb",
+      "unchanged": true
+    },
+    {
+      "path": "assets/runtime/assembly/hull-manifest.json",
+      "entrySha256": "2e275052217da4b20a92ab40a9a9f098dc011557f7611b6b0c6f40f71ea22695",
+      "currentSha256": "2e275052217da4b20a92ab40a9a9f098dc011557f7611b6b0c6f40f71ea22695",
+      "unchanged": true
+    },
+    {
+      "path": "packages/content/src/ship-hull-interfaces.v1.json",
+      "entrySha256": "2379415fc3501b6818daa3b17174d52fa8a91c330c9a1107271b5fcc4efd4e03",
+      "currentSha256": "2379415fc3501b6818daa3b17174d52fa8a91c330c9a1107271b5fcc4efd4e03",
+      "unchanged": true
+    },
+    {
+      "path": "packages/render/src/framed-wayfarer-visuals.json",
+      "entrySha256": "51d225e900a0267c9f8ca5d0202521bdc1c21e420a3ec91ec3140844bd607410",
+      "currentSha256": "51d225e900a0267c9f8ca5d0202521bdc1c21e420a3ec91ec3140844bd607410",
+      "unchanged": true
+    }
+  ],
+  "liveReleaseAtEntry": {
+    "origin": "https://sidereal.dastari.net",
+    "sha256": "048e6f35a49fffb161d1361dda21cf5f53e69c1e24f73c978525fe99299c7b88",
+    "release": "/root/sidereal_spacetime/.runtime/public-client/releases/20260914-141801-048e6f35a49f"
+  },
+  "http": [
+    {
+      "url": "https://sidereal.dastari.net/",
+      "status": "200",
+      "exitCode": 0
+    },
+    {
+      "url": "https://sidereal.tail7a58a6.ts.net:8445/shipyard",
+      "status": "200",
+      "exitCode": 0
+    }
+  ],
+  "operations": "No deployment, world publication, reducer, spawn, refit, account or inventory mutation by this pass. Review only; not a transactional conservation test.",
+  "currentLiveRelease": {
+    "origin": "https://sidereal.dastari.net",
+    "sha256": "048e6f35a49fffb161d1361dda21cf5f53e69c1e24f73c978525fe99299c7b88",
+    "release": "/root/sidereal_spacetime/.runtime/public-client/releases/20260914-141801-048e6f35a49f"
+  },
+  "currentSymlink": "/root/sidereal_spacetime/.runtime/public-client/releases/20260914-141801-048e6f35a49f",
+  "releaseUnchanged": true
+}

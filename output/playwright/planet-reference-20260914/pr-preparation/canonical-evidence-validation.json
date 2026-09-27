@@ -1,0 +1,65 @@
+[
+  {
+    "id": "environment.planet.crystal",
+    "currentRevision": 14,
+    "state": "in-progress",
+    "checkedEvidence": 501,
+    "errors": []
+  },
+  {
+    "id": "environment.planet.desert",
+    "currentRevision": 15,
+    "state": "in-progress",
+    "checkedEvidence": 101,
+    "errors": []
+  },
+  {
+    "id": "environment.planet.gas-giant",
+    "currentRevision": 6,
+    "state": "in-progress",
+    "checkedEvidence": 461,
+    "errors": []
+  },
+  {
+    "id": "environment.planet.ice",
+    "currentRevision": 27,
+    "state": "in-progress",
+    "checkedEvidence": 569,
+    "errors": []
+  },
+  {
+    "id": "environment.planet.ocean",
+    "currentRevision": 8,
+    "state": "in-progress",
+    "checkedEvidence": 236,
+    "errors": []
+  },
+  {
+    "id": "environment.planet.rocky",
+    "currentRevision": 11,
+    "state": "in-progress",
+    "checkedEvidence": 279,
+    "errors": []
+  },
+  {
+    "id": "environment.planet.temperate",
+    "currentRevision": 4,
+    "state": "in-progress",
+    "checkedEvidence": 339,
+    "errors": []
+  },
+  {
+    "id": "environment.planet.toxic",
+    "currentRevision": 8,
+    "state": "in-progress",
+    "checkedEvidence": 304,
+    "errors": []
+  },
+  {
+    "id": "environment.planet.volcanic",
+    "currentRevision": 24,
+    "state": "in-progress",
+    "checkedEvidence": 389,
+    "errors": []
+  }
+]

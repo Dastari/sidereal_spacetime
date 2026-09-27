@@ -1,0 +1,1416 @@
+[
+  {
+    "slug": "armor-plain-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h300/model.glb",
+    "sourceSha256": "37d86032ef626af53df9b4231b91856fdecca6549e8b7b774b5300419f5cdd99",
+    "nodePrefix": "GEO-armor-plain-w200-h300--",
+    "kitNodeIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "kitMeshIndices": [
+      0,
+      1
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h300-port/model.glb",
+    "sourceSha256": "c6088e157ddd6c979d7911deade37d5f11131c6be4207b274fc5a19aae44c081",
+    "nodePrefix": "GEO-armor-plain-w200-h300-port--",
+    "kitNodeIndices": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13
+    ],
+    "kitMeshIndices": [
+      2,
+      3
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-pair-left-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-pair-left-w200-h300/model.glb",
+    "sourceSha256": "a3a4b91b3bfc7aa2b20af27a0391ac0656f84ae60e14db13a39e9bb4bb4e0962",
+    "nodePrefix": "GEO-armor-plain-pair-left-w200-h300--",
+    "kitNodeIndices": [
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20
+    ],
+    "kitMeshIndices": [
+      4,
+      5
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-pair-left-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-pair-left-w200-h300-port/model.glb",
+    "sourceSha256": "f1bd01e1f68a6ef9394473c30a4ab15adee9602655705d326ec6a683e13b9301",
+    "nodePrefix": "GEO-armor-plain-pair-left-w200-h300-port--",
+    "kitNodeIndices": [
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27
+    ],
+    "kitMeshIndices": [
+      6,
+      7
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-pair-right-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-pair-right-w200-h300/model.glb",
+    "sourceSha256": "ba03bd28693cbc1d5e556027eb6e60e14c5dbcb1092a8d3d70a7a5f154123bca",
+    "nodePrefix": "GEO-armor-plain-pair-right-w200-h300--",
+    "kitNodeIndices": [
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ],
+    "kitMeshIndices": [
+      8,
+      9
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-pair-right-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-pair-right-w200-h300-port/model.glb",
+    "sourceSha256": "b56d6a9b3791b14af3b982677f13c9ca8fb8f34022e17df4f719ec0b3d9dc763",
+    "nodePrefix": "GEO-armor-plain-pair-right-w200-h300-port--",
+    "kitNodeIndices": [
+      35,
+      36,
+      37,
+      38,
+      39,
+      40,
+      41
+    ],
+    "kitMeshIndices": [
+      10,
+      11
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-red-service-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-w200-h300/model.glb",
+    "sourceSha256": "c3bac96d19fdd3f53698d21b5558e23c18b5075f8a69282666fb0dfc0ed2de80",
+    "nodePrefix": "GEO-armor-red-service-w200-h300--",
+    "kitNodeIndices": [
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48
+    ],
+    "kitMeshIndices": [
+      12,
+      13
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-red-service-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-w200-h300-port/model.glb",
+    "sourceSha256": "41ab2f18fc97c1576e1c689939b86893bc96c9d423f49c0c37aa5519efa3cf65",
+    "nodePrefix": "GEO-armor-red-service-w200-h300-port--",
+    "kitNodeIndices": [
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55
+    ],
+    "kitMeshIndices": [
+      14,
+      15
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-red-service-pair-left-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-pair-left-w200-h300/model.glb",
+    "sourceSha256": "5fc84cf2cc50ac3aaa89a0525046231f1e08cf2abc820f462d6010948722a91e",
+    "nodePrefix": "GEO-armor-red-service-pair-left-w200-h300--",
+    "kitNodeIndices": [
+      56,
+      57,
+      58,
+      59,
+      60,
+      61,
+      62
+    ],
+    "kitMeshIndices": [
+      16,
+      17
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-red-service-pair-left-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-pair-left-w200-h300-port/model.glb",
+    "sourceSha256": "5d5757fbfcee7048918999b0c92c7c5ab62c3cb0cca3d0762a5f6491a0b5ad3a",
+    "nodePrefix": "GEO-armor-red-service-pair-left-w200-h300-port--",
+    "kitNodeIndices": [
+      63,
+      64,
+      65,
+      66,
+      67,
+      68,
+      69
+    ],
+    "kitMeshIndices": [
+      18,
+      19
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-red-service-pair-right-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-pair-right-w200-h300/model.glb",
+    "sourceSha256": "743ae507b8c0d7d837100b321a60d1f7c3697c7422004c8184e899c3b5127a34",
+    "nodePrefix": "GEO-armor-red-service-pair-right-w200-h300--",
+    "kitNodeIndices": [
+      70,
+      71,
+      72,
+      73,
+      74,
+      75,
+      76
+    ],
+    "kitMeshIndices": [
+      20,
+      21
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-red-service-pair-right-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-red-service-pair-right-w200-h300-port/model.glb",
+    "sourceSha256": "392b055ebbe085ad3b01d4bd138dc94156d439d34ceee26122db30017afe34e0",
+    "nodePrefix": "GEO-armor-red-service-pair-right-w200-h300-port--",
+    "kitNodeIndices": [
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83
+    ],
+    "kitMeshIndices": [
+      22,
+      23
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-vent-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-w200-h300/model.glb",
+    "sourceSha256": "b7ffcc34f95180a872a7cc44945619e2ce1e7e18a8c792d6437e018027fc523e",
+    "nodePrefix": "GEO-armor-vent-w200-h300--",
+    "kitNodeIndices": [
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90
+    ],
+    "kitMeshIndices": [
+      24,
+      25
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-vent-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-w200-h300-port/model.glb",
+    "sourceSha256": "a9d7d6d5a3294af1446db3424d32fc3e1d300c0dbf5cfde6a8b51911ce1e37c9",
+    "nodePrefix": "GEO-armor-vent-w200-h300-port--",
+    "kitNodeIndices": [
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97
+    ],
+    "kitMeshIndices": [
+      26,
+      27
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-vent-pair-left-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-pair-left-w200-h300/model.glb",
+    "sourceSha256": "a9068687686bae5558a336c341ac7fc4d0e8224885f54912a564a8d6f58c97fb",
+    "nodePrefix": "GEO-armor-vent-pair-left-w200-h300--",
+    "kitNodeIndices": [
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104
+    ],
+    "kitMeshIndices": [
+      28,
+      29
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-vent-pair-left-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-pair-left-w200-h300-port/model.glb",
+    "sourceSha256": "99aca02be3ed465dc5c40d2ae3cddaca40377e45721fb7a921b4f2e59def5cc8",
+    "nodePrefix": "GEO-armor-vent-pair-left-w200-h300-port--",
+    "kitNodeIndices": [
+      105,
+      106,
+      107,
+      108,
+      109,
+      110,
+      111
+    ],
+    "kitMeshIndices": [
+      30,
+      31
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-vent-pair-right-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-pair-right-w200-h300/model.glb",
+    "sourceSha256": "8cc46a72dc0485e9e9a725f4594bce2a3c0682dc14d79a431317ef987be24f4e",
+    "nodePrefix": "GEO-armor-vent-pair-right-w200-h300--",
+    "kitNodeIndices": [
+      112,
+      113,
+      114,
+      115,
+      116,
+      117,
+      118
+    ],
+    "kitMeshIndices": [
+      32,
+      33
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-vent-pair-right-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-vent-pair-right-w200-h300-port/model.glb",
+    "sourceSha256": "f6f36ce03cf698865b5225ce34eee22329ea3bce0e26cb2294bb2d3482f6bf35",
+    "nodePrefix": "GEO-armor-vent-pair-right-w200-h300-port--",
+    "kitNodeIndices": [
+      119,
+      120,
+      121,
+      122,
+      123,
+      124,
+      125
+    ],
+    "kitMeshIndices": [
+      34,
+      35
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-utility-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-w200-h300/model.glb",
+    "sourceSha256": "f1d0d4903c4efa5036359a9eeabcc87faa8714083f994abf5921a232dd709e70",
+    "nodePrefix": "GEO-armor-utility-w200-h300--",
+    "kitNodeIndices": [
+      126,
+      127,
+      128,
+      129,
+      130,
+      131,
+      132
+    ],
+    "kitMeshIndices": [
+      36,
+      37
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-utility-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-w200-h300-port/model.glb",
+    "sourceSha256": "182abcc1d91f6a5bdc311304dd5c35bddab082bd065127624948e11034f690b7",
+    "nodePrefix": "GEO-armor-utility-w200-h300-port--",
+    "kitNodeIndices": [
+      133,
+      134,
+      135,
+      136,
+      137,
+      138,
+      139
+    ],
+    "kitMeshIndices": [
+      38,
+      39
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-utility-pair-left-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-pair-left-w200-h300/model.glb",
+    "sourceSha256": "2571fe1f7703bdf1b6decae1c645ec20ed4805e595dbcf8b2d207f9286a8cad3",
+    "nodePrefix": "GEO-armor-utility-pair-left-w200-h300--",
+    "kitNodeIndices": [
+      140,
+      141,
+      142,
+      143,
+      144,
+      145,
+      146
+    ],
+    "kitMeshIndices": [
+      40,
+      41
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-utility-pair-left-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-pair-left-w200-h300-port/model.glb",
+    "sourceSha256": "79e164274c428bbe30875092d6527f3b11b222f947899cefd8796ff56036ff3f",
+    "nodePrefix": "GEO-armor-utility-pair-left-w200-h300-port--",
+    "kitNodeIndices": [
+      147,
+      148,
+      149,
+      150,
+      151,
+      152,
+      153
+    ],
+    "kitMeshIndices": [
+      42,
+      43
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-utility-pair-right-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-pair-right-w200-h300/model.glb",
+    "sourceSha256": "a61626f08495b85cbcd43830bc5b4df987c205bb4759e88e72f659ab14e6280c",
+    "nodePrefix": "GEO-armor-utility-pair-right-w200-h300--",
+    "kitNodeIndices": [
+      154,
+      155,
+      156,
+      157,
+      158,
+      159,
+      160
+    ],
+    "kitMeshIndices": [
+      44,
+      45
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-utility-pair-right-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-utility-pair-right-w200-h300-port/model.glb",
+    "sourceSha256": "38ea679016d369f4a08f8342e5ef2bdb730b31b267896186abc4c902bdf80a6e",
+    "nodePrefix": "GEO-armor-utility-pair-right-w200-h300-port--",
+    "kitNodeIndices": [
+      161,
+      162,
+      163,
+      164,
+      165,
+      166,
+      167
+    ],
+    "kitMeshIndices": [
+      46,
+      47
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-identity-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-w200-h300/model.glb",
+    "sourceSha256": "32a7453096c4a9286b7e167b2d723e520f739ac568fe3245b09a9e04b1e29c1c",
+    "nodePrefix": "GEO-armor-identity-w200-h300--",
+    "kitNodeIndices": [
+      168,
+      169,
+      170,
+      171,
+      172,
+      173,
+      174
+    ],
+    "kitMeshIndices": [
+      48,
+      49
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-identity-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-w200-h300-port/model.glb",
+    "sourceSha256": "ee9abae809a86fffc6d8bac42f0186ea32163614042d5228c3f39bfadad815ab",
+    "nodePrefix": "GEO-armor-identity-w200-h300-port--",
+    "kitNodeIndices": [
+      175,
+      176,
+      177,
+      178,
+      179,
+      180,
+      181
+    ],
+    "kitMeshIndices": [
+      50,
+      51
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-identity-pair-left-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-pair-left-w200-h300/model.glb",
+    "sourceSha256": "9b038a53af1366dd91dbfe2d609c5da8f7cc5cd66d07ca4703ef6ab1c68f24e5",
+    "nodePrefix": "GEO-armor-identity-pair-left-w200-h300--",
+    "kitNodeIndices": [
+      182,
+      183,
+      184,
+      185,
+      186,
+      187,
+      188
+    ],
+    "kitMeshIndices": [
+      52,
+      53
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-identity-pair-left-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-pair-left-w200-h300-port/model.glb",
+    "sourceSha256": "38ca63ac4a0613a86cef3effeb1cdd1c40333694b9520b77cae2fe0fb40b9710",
+    "nodePrefix": "GEO-armor-identity-pair-left-w200-h300-port--",
+    "kitNodeIndices": [
+      189,
+      190,
+      191,
+      192,
+      193,
+      194,
+      195
+    ],
+    "kitMeshIndices": [
+      54,
+      55
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-identity-pair-right-w200-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-pair-right-w200-h300/model.glb",
+    "sourceSha256": "a342413464f9b7e7a67e0284a60c26e0d481112df876bc1b478c9a4240547dc3",
+    "nodePrefix": "GEO-armor-identity-pair-right-w200-h300--",
+    "kitNodeIndices": [
+      196,
+      197,
+      198,
+      199,
+      200,
+      201,
+      202
+    ],
+    "kitMeshIndices": [
+      56,
+      57
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-identity-pair-right-w200-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-identity-pair-right-w200-h300-port/model.glb",
+    "sourceSha256": "7914a41708376c12d82ce1553058e01c8e0c88328a5564a9652380e2c93dd55e",
+    "nodePrefix": "GEO-armor-identity-pair-right-w200-h300-port--",
+    "kitNodeIndices": [
+      203,
+      204,
+      205,
+      206,
+      207,
+      208,
+      209
+    ],
+    "kitMeshIndices": [
+      58,
+      59
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w100-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w100-h300/model.glb",
+    "sourceSha256": "3ff7e45acd541424252b10aa691ebd81cc63694b69566053d1c88cfd87867157",
+    "nodePrefix": "GEO-armor-plain-w100-h300--",
+    "kitNodeIndices": [
+      210,
+      211,
+      212,
+      213,
+      214,
+      215,
+      216
+    ],
+    "kitMeshIndices": [
+      60,
+      61
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.5,
+        0.0
+      ],
+      "max": [
+        0.5,
+        0.5,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w100-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w100-h300-port/model.glb",
+    "sourceSha256": "194ecade7d179b7b586bd124707476d10e0ef282b7001ffc34aa76d90df30fd7",
+    "nodePrefix": "GEO-armor-plain-w100-h300-port--",
+    "kitNodeIndices": [
+      217,
+      218,
+      219,
+      220,
+      221,
+      222,
+      223
+    ],
+    "kitMeshIndices": [
+      62,
+      63
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.5,
+        0.0
+      ],
+      "max": [
+        0.5,
+        0.5,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w050-h300",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w050-h300/model.glb",
+    "sourceSha256": "a10eb06864964257c52854b3b97b5ad1af23f876ef5898f79dd58ce4d275c2c2",
+    "nodePrefix": "GEO-armor-plain-w050-h300--",
+    "kitNodeIndices": [
+      224,
+      225,
+      226,
+      227,
+      228,
+      229,
+      230
+    ],
+    "kitMeshIndices": [
+      64,
+      65
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.25,
+        0.0
+      ],
+      "max": [
+        0.5,
+        0.25,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w050-h300-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w050-h300-port/model.glb",
+    "sourceSha256": "9cc6993df6d7ec77e54a044fdf2cb37957b5e4910ca8d6d26216b0dd46053f17",
+    "nodePrefix": "GEO-armor-plain-w050-h300-port--",
+    "kitNodeIndices": [
+      231,
+      232,
+      233,
+      234,
+      235,
+      236,
+      237
+    ],
+    "kitMeshIndices": [
+      66,
+      67
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.25,
+        0.0
+      ],
+      "max": [
+        0.5,
+        0.25,
+        3.0
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w200-h075",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h075/model.glb",
+    "sourceSha256": "a929a721c059e651f23352bf1b1a4de89e0f39e16b6d1dca183157c1ad3d8502",
+    "nodePrefix": "GEO-armor-plain-w200-h075--",
+    "kitNodeIndices": [
+      238,
+      239,
+      240,
+      241,
+      242,
+      243,
+      244
+    ],
+    "kitMeshIndices": [
+      68,
+      69
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        0.75
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w200-h075-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h075-port/model.glb",
+    "sourceSha256": "4bcf2ddd9523bd4a604aeb295e852206271554f43b9d12b68d860f4d5f9307e0",
+    "nodePrefix": "GEO-armor-plain-w200-h075-port--",
+    "kitNodeIndices": [
+      245,
+      246,
+      247,
+      248,
+      249,
+      250,
+      251
+    ],
+    "kitMeshIndices": [
+      70,
+      71
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        0.75
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w200-h150",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h150/model.glb",
+    "sourceSha256": "fdfd2a877c0bed3c841b143a69565aca89178660598b8e0c9013674d0bcfcae0",
+    "nodePrefix": "GEO-armor-plain-w200-h150--",
+    "kitNodeIndices": [
+      252,
+      253,
+      254,
+      255,
+      256,
+      257,
+      258
+    ],
+    "kitMeshIndices": [
+      72,
+      73
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w200-h150-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h150-port/model.glb",
+    "sourceSha256": "27825d0b6569d82d7127cc8391cf402a66684e8ead9ae5bda41df6ccebb21b5a",
+    "nodePrefix": "GEO-armor-plain-w200-h150-port--",
+    "kitNodeIndices": [
+      259,
+      260,
+      261,
+      262,
+      263,
+      264,
+      265
+    ],
+    "kitMeshIndices": [
+      74,
+      75
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        1.5
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w200-h225",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h225/model.glb",
+    "sourceSha256": "6a54987d1311f65113f17d55af784106f159cd1cf100a96ba5f9fdbcadb4fca9",
+    "nodePrefix": "GEO-armor-plain-w200-h225--",
+    "kitNodeIndices": [
+      266,
+      267,
+      268,
+      269,
+      270,
+      271,
+      272
+    ],
+    "kitMeshIndices": [
+      76,
+      77
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        2.25
+      ]
+    }
+  },
+  {
+    "slug": "armor-plain-w200-h225-port",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/armor-plain-w200-h225-port/model.glb",
+    "sourceSha256": "2cc44e4ca974f5f89f50c276aff677306057ff5c730cb96ee9c755511c38f26d",
+    "nodePrefix": "GEO-armor-plain-w200-h225-port--",
+    "kitNodeIndices": [
+      273,
+      274,
+      275,
+      276,
+      277,
+      278,
+      279
+    ],
+    "kitMeshIndices": [
+      78,
+      79
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5,
+        1.0,
+        2.25
+      ]
+    }
+  },
+  {
+    "slug": "front-sill-straight",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-sill-straight/model.glb",
+    "sourceSha256": "add4defb47f8f994d261e1db77daf0b324c933c1b138828439bf5aa00fd62ef7",
+    "nodePrefix": "GEO-front-sill-straight--",
+    "kitNodeIndices": [
+      280,
+      281,
+      282,
+      283
+    ],
+    "kitMeshIndices": [
+      80,
+      81
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.03125,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.375,
+        1.125
+      ]
+    },
+    "assetId": "part-4c25a5fd9da0bce537f5"
+  },
+  {
+    "slug": "front-sill-diagonal45",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-sill-diagonal45/model.glb",
+    "sourceSha256": "31ccae2459180af1bd39ab1169f88fa74b7908b1ec1d4857de57b08afa1b1324",
+    "nodePrefix": "GEO-front-sill-diagonal45--",
+    "kitNodeIndices": [
+      284,
+      285,
+      286,
+      287
+    ],
+    "kitMeshIndices": [
+      82,
+      83
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        0.03500594571232796,
+        0.0
+      ],
+      "max": [
+        1.964993953704834,
+        2.0,
+        1.125
+      ]
+    },
+    "assetId": "part-540c83fc49ee792d9a4a"
+  },
+  {
+    "slug": "front-bow-transom",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-bow-transom/model.glb",
+    "sourceSha256": "e04ad6c33d9bd0cddf71b2b7477cddfad7b6e20ea76672b40d1b861b6f3f0c57",
+    "nodePrefix": "GEO-front-bow-transom--",
+    "kitNodeIndices": [
+      288,
+      289,
+      290,
+      291
+    ],
+    "kitMeshIndices": [
+      84,
+      85
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        -0.03125,
+        0.0
+      ],
+      "max": [
+        2.0,
+        0.375,
+        1.125
+      ]
+    },
+    "assetId": "part-ecd751f76e602db806a3"
+  },
+  {
+    "slug": "front-bow-bumper",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-bow-bumper/model.glb",
+    "sourceSha256": "4b8f813d292c06c033c5ad4e2dd00d84f62c83694429b700a1c918f173b72888",
+    "nodePrefix": "GEO-front-bow-bumper--",
+    "kitNodeIndices": [
+      292,
+      293,
+      294,
+      295
+    ],
+    "kitMeshIndices": [
+      86,
+      87
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        4.0,
+        0.625,
+        1.5499999523162842
+      ]
+    },
+    "assetId": "part-63a0c40bbb71cfeba4dd"
+  },
+  {
+    "slug": "front-diagonal-cheek",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-diagonal-cheek/model.glb",
+    "sourceSha256": "0d302ea3f239965c49c0db07b3ba6da87badd5149703d1320223c9f931facba7",
+    "nodePrefix": "GEO-front-diagonal-cheek--",
+    "kitNodeIndices": [
+      296,
+      297,
+      298,
+      299
+    ],
+    "kitMeshIndices": [
+      88,
+      89
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        4.0225348472595215,
+        2.0625,
+        1.5499999523162842
+      ]
+    },
+    "assetId": "part-437732483fa4d7acbcbc"
+  },
+  {
+    "slug": "front-shoulder-transition",
+    "sourcePath": "assets/art-library/framed-wayfarer/r004/hull/final-03/models/front-shoulder-transition/model.glb",
+    "sourceSha256": "9814498d140b65a6d754b93762d0746c7b979420ebeb39c713966baf56c15fd1",
+    "nodePrefix": "GEO-front-shoulder-transition--",
+    "kitNodeIndices": [
+      300,
+      301,
+      302,
+      303
+    ],
+    "kitMeshIndices": [
+      90,
+      91
+    ],
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        0.7445136904716492,
+        2.0,
+        2.9375
+      ]
+    },
+    "assetId": "part-e965a5502d9fe4c25406"
+  }
+]

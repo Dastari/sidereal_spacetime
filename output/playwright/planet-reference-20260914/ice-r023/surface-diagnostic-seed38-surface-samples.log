@@ -1,0 +1,12 @@
+### Result
+"[{\"x\":300,\"y\":450,\"face\":-1},{\"x\":450,\"y\":450,\"face\":-1},{\"x\":560,\"y\":400,\"face\":-1},{\"x\":350,\"y\":330,\"face\":-1}]"
+### Ran Playwright code
+```js
+await page.evaluate('() => (JSON.stringify([[300,450],[450,450],[560,400],[350,330]].map(([x,y])=>{const r=window.planetReview;r.camera.radius=5.5;r.camera.alpha-=1.6;r.scene.render();const hit=r.scene.pick(x,y,m=>m.isEnabled()&&m.metadata?.trianglePlacementRanges);r.camera.alpha+=1.6;return {x,y,mesh:hit.pickedMesh?.name,face:hit.faceId,placement:hit.pickedMesh?.metadata?.trianglePlacementRanges.find(t=>hit.faceId>=t.firstTriangle&&hit.faceId<t.firstTriangle+t.triangleCount)?.partId};})))');
+```
+### Page
+- Page URL: http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=ice&seed=38&candidate=1&capture=1789358208846180466&shadowBias=0.006
+- Page Title: Planet reference review — isolated
+- Console: 0 errors, 1 warnings
+### Events
+- New console entries: .playwright-cli/console-2026-09-14T01-01-13-194Z.log#L1830

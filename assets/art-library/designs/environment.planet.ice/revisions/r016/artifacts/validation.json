@@ -1,0 +1,219 @@
+{
+  "publication": "isolated draft; existing ice-r015 untouched",
+  "sourceComponentsManifold": true,
+  "attributes": "Corner-expanded native normals and UVs preserve authored hard edges, snow smoothing and seams",
+  "variants": [
+    {
+      "name": "snow-shaft-region-a",
+      "triangles": 4208,
+      "normalCount": 12624,
+      "uvCount": 12624,
+      "bounds": [
+        [
+          -1.685859203338623,
+          1.9271279573440552
+        ],
+        [
+          -1.6242378950119019,
+          1.5780925750732422
+        ],
+        [
+          -0.8399999737739563,
+          0.2993258237838745
+        ]
+      ]
+    },
+    {
+      "name": "snow-shaft-region-b",
+      "triangles": 4208,
+      "normalCount": 12624,
+      "uvCount": 12624,
+      "bounds": [
+        [
+          -1.314652681350708,
+          1.3411202430725098
+        ],
+        [
+          -1.6619099378585815,
+          1.4755079746246338
+        ],
+        [
+          -0.8399999737739563,
+          0.2997666001319885
+        ]
+      ]
+    },
+    {
+      "name": "glacial-buttress-group",
+      "triangles": 960,
+      "normalCount": 2880,
+      "uvCount": 2880,
+      "bounds": [
+        [
+          -0.5129308700561523,
+          0.4487271308898926
+        ],
+        [
+          -0.3549809753894806,
+          0.29083654284477234
+        ],
+        [
+          -0.28712883591651917,
+          0.9360417127609253
+        ]
+      ]
+    },
+    {
+      "name": "broken-snowcap",
+      "triangles": 480,
+      "normalCount": 1440,
+      "uvCount": 1440,
+      "bounds": [
+        [
+          -0.7036203145980835,
+          0.6674543023109436
+        ],
+        [
+          -0.3773600459098816,
+          0.4973600506782532
+        ],
+        [
+          -0.28712883591651917,
+          0.35604172945022583
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "triangles": 5120,
+      "normalCount": 15360,
+      "uvCount": 15360,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "triangles": 1280,
+      "normalCount": 3840,
+      "uvCount": 3840,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "triangles": 320,
+      "normalCount": 960,
+      "uvCount": 960,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "snow-shaft-region-b.glb": "f00f389b91ce90b7ac95ab2ce3e56d6ca96d4c127e8c073155f53d90964a6080",
+    "kit.blend": "33dcde08b1fb03be659d880d7fcf2333ec19e0357d1b843abb9a5a345175c3b2",
+    "ground-sphere.glb": "909f48aeb60279f406de29eed5584595ea60740c8c02a19d2cf94d937019e92f",
+    "ground-sphere-medium.glb": "bb7f38f71cd1afba4dbc5fb9e33aa4497f1e7d3949318886ab5284f7404f4c7f",
+    "generator.py": "7af3bfcf65c70ccdd5f3fcb05e09e46e47dca66a6f1fdef2ca3d67b2c4ab044f",
+    "kit.json": "13c530bdc2c950ef814b19210198420f421a0998b009f54daae4fb0f161b198a",
+    "glacial-buttress-group.glb": "2cdbf32ac5b057680d1b04f4d2eba85e11f80bb2456708aa55fbaf450f2d43d9",
+    "kit-preview.png": "4d4db67fec6d2cf1d874331743fe4e8b744ca6565a9fbcc41c15a05cc136dca8",
+    "ground-sphere-low.glb": "0aa36c34854690b00ffb542342e6e57f1b6dc2c0642cc70b54fe96b1570657a5",
+    "broken-snowcap.glb": "96133fcf6feb0f45df01b4644baf63adb926e272a126e7e3299c6344a70b24aa",
+    "snow-shaft-region-a.glb": "450ab760fb0778514eff2834823068790631585d0e0588025df69486750e48a0",
+    "blender-raw/ground-sphere-low.glb": "3fc5294dd2c9f064c6b48650fafaf8a9e9c2cddb68425687326a29d27d076a62",
+    "blender-raw/snow-shaft-region-a.glb": "aa406faf809b553c4f9db9465d82c225dae6b0fa64497c27d9a539495c10bba0",
+    "blender-raw/ground-sphere-medium.glb": "45a083487c2cb6376ee03f917705d2e2b7fb6525b1621eedf02ce248e594b0f8",
+    "blender-raw/snow-shaft-region-b.glb": "df9531df6c48811166dc8db98eafc4bca869be0e49aa2b9bb4a63574278c8b2c",
+    "blender-raw/ground-sphere.glb": "d7144a62c0c1f440c7e7c0ace5ea6270f980978f28d19db1cbe0a9f6146cc4df",
+    "blender-raw/broken-snowcap.glb": "435d182fabe450e1e565bced65e6d457840667323ea9afb367e571a401e9c3c6",
+    "blender-raw/glacial-buttress-group.glb": "4a95209e6ddb4d30ae6085732e7a9aefdc338d0b26a3b4efdbb5ab593a65bcd0"
+  },
+  "glbChecks": [
+    {
+      "file": "broken-snowcap.glb",
+      "normalsUVsMaterials": true,
+      "nativeIORAndClearcoatPreserved": true,
+      "binaryGeometryUnchangedFromRawBlenderExport": true
+    },
+    {
+      "file": "glacial-buttress-group.glb",
+      "normalsUVsMaterials": true,
+      "nativeIORAndClearcoatPreserved": true,
+      "binaryGeometryUnchangedFromRawBlenderExport": true
+    },
+    {
+      "file": "ground-sphere-low.glb",
+      "normalsUVsMaterials": true,
+      "nativeIORAndClearcoatPreserved": true,
+      "binaryGeometryUnchangedFromRawBlenderExport": true
+    },
+    {
+      "file": "ground-sphere-medium.glb",
+      "normalsUVsMaterials": true,
+      "nativeIORAndClearcoatPreserved": true,
+      "binaryGeometryUnchangedFromRawBlenderExport": true
+    },
+    {
+      "file": "ground-sphere.glb",
+      "normalsUVsMaterials": true,
+      "nativeIORAndClearcoatPreserved": true,
+      "binaryGeometryUnchangedFromRawBlenderExport": true
+    },
+    {
+      "file": "snow-shaft-region-a.glb",
+      "normalsUVsMaterials": true,
+      "nativeIORAndClearcoatPreserved": true,
+      "binaryGeometryUnchangedFromRawBlenderExport": true
+    },
+    {
+      "file": "snow-shaft-region-b.glb",
+      "normalsUVsMaterials": true,
+      "nativeIORAndClearcoatPreserved": true,
+      "binaryGeometryUnchangedFromRawBlenderExport": true
+    }
+  ],
+  "attributeChecks": {
+    "finite": true,
+    "matchingCornerCounts": true,
+    "unitNormals": true,
+    "authoredSnowSmoothingRetained": true,
+    "authoredUVsRetained": true
+  },
+  "exportNormalization": "Raw Blender exports preserve UV/normal/coat but omit opaque IOR. Retained raw files; normalized standard KHR_materials_ior from source, BIN chunk byte-identical."
+}

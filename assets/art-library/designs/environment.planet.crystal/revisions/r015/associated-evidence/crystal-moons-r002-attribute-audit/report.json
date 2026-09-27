@@ -1,0 +1,1444 @@
+[
+  {
+    "candidate": "crystal-moon-1-r002",
+    "kit": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/kit.json",
+    "kitSha256": "28606fbfbb91108acb7f0521b11de372e9ce163a0b824cdf984120e300d8b77b",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "colossal-cluster",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/colossal-cluster.glb",
+        "glbSha256": "e07bf3f1de810287f172d24f54cf182411bb5204e4de407530f36de863a9a2cc",
+        "jsonCorners": 840,
+        "glbCorners": 840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.176031119887379e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "leaning-colossal-cluster",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/leaning-colossal-cluster.glb",
+        "glbSha256": "f689dcacbd471793e25062274c8e3f41548a01df65a24c2df351c00977e07da4",
+        "jsonCorners": 630,
+        "glbCorners": 630,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.348735625068157e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "medium-cluster",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/medium-cluster.glb",
+        "glbSha256": "b2b25df18d1c085198c99b9331b2bcfc04854245887071ca55757a287bc8a02c",
+        "jsonCorners": 630,
+        "glbCorners": 630,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.238614567384699e-05,
+        "maximumMatchedUVDelta": 1.4901161193847656e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "single-crystal",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/single-crystal.glb",
+        "glbSha256": "665b8309099231e9b15e624ad5f54ad521ad66f78415422a3acc2eb7ea95812d",
+        "jsonCorners": 210,
+        "glbCorners": 210,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.994176192199833e-05,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "fracture-cliffs",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/fracture-cliffs.glb",
+        "glbSha256": "24e5ef2c274a924e1302c5495dd0706df65e0becbd4381f7006ba5eb1c474270",
+        "jsonCorners": 990,
+        "glbCorners": 990,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.147844417346691e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "baseColorTexture",
+            "expected": "material-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "baseColorTexture",
+            "expected": "material-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-2-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "low-fractured-shelf",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/low-fractured-shelf.glb",
+        "glbSha256": "44b1dc9333d7759ddf3a732d35f487cec4550df02b70cd939c5a5c052117cb37",
+        "jsonCorners": 660,
+        "glbCorners": 660,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.958500916988107e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "baseColorTexture",
+            "expected": "material-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "baseColorTexture",
+            "expected": "material-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-2-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crystal-battered-region-a",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/crystal-battered-region-a.glb",
+        "glbSha256": "fbc16ebeeb6f04d2129a8b14dd2edca34bcf64cf200b4de26bf8909219aec47e",
+        "jsonCorners": 41634,
+        "glbCorners": 41634,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.679311839534963e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "baseColorTexture",
+            "expected": "material-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "baseColorTexture",
+            "expected": "material-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crystal-battered-region-b",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/crystal-battered-region-b.glb",
+        "glbSha256": "f042d1c010f47e975bedaf890467e5cade872cb22a087feca9b828361450b9ca",
+        "jsonCorners": 41370,
+        "glbCorners": 41370,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.679311839534963e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "baseColorTexture",
+            "expected": "material-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "baseColorTexture",
+            "expected": "material-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/ground-sphere.glb",
+        "glbSha256": "466dda9ff3d180004a30fae487f7719052795a939e13ab2b9bf7fa941089ba15",
+        "jsonCorners": 15360,
+        "glbCorners": 15360,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.969896464190269e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/ground-sphere-medium.glb",
+        "glbSha256": "c9f118c73040ff358ef2a21b1da4f185cf8a2e6e7628ce9ac84286b4791ab178",
+        "jsonCorners": 3840,
+        "glbCorners": 3840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.695697840018373e-05,
+        "maximumMatchedUVDelta": 5.366746336221695e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/ground-sphere-low.glb",
+        "glbSha256": "edf99ea63703e9488e987def8049e770d44cf9eac91d7f3fb0a214ad316be1aa",
+        "jsonCorners": 960,
+        "glbCorners": 960,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.110542189241277e-05,
+        "maximumMatchedUVDelta": 5.3551048040390015e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "squat-crystal-district",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/squat-crystal-district.glb",
+        "glbSha256": "fabbe17a6609c0eae830799ba80e97e44fea9389368d25a30d9fad7ecabb63ae",
+        "jsonCorners": 720,
+        "glbCorners": 720,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.2994958555005e-05,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "angular-crystal-district",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r002/angular-crystal-district.glb",
+        "glbSha256": "74c0d2fce78d9dcbad790a848e7de7bfc15e0dd9714ff8911cd83aa67b138686",
+        "jsonCorners": 720,
+        "glbCorners": 720,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.488140546424828e-05,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 13,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  },
+  {
+    "candidate": "crystal-moon-2-r002",
+    "kit": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/kit.json",
+    "kitSha256": "687daa73c98cd67e19ef4e6e1f4f98478fd3b1574b1dbf23501e34fab90a05aa",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "colossal-cluster",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/colossal-cluster.glb",
+        "glbSha256": "513a415a77ac44f43cdd62a5a5d501e441f7e0201f3a1f50359019496d6d9990",
+        "jsonCorners": 840,
+        "glbCorners": 840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.499760152584773e-05,
+        "maximumMatchedUVDelta": 1.4901161193847656e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "leaning-colossal-cluster",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/leaning-colossal-cluster.glb",
+        "glbSha256": "573a4daeadca2abed621b82ff0e9cb7dcfba341b342a28f23f8aa50cc2c5fe46",
+        "jsonCorners": 630,
+        "glbCorners": 630,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.5682430871023e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "medium-cluster",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/medium-cluster.glb",
+        "glbSha256": "c9da3dba1179bc47320d82f54b6e3ee436ca85bed446f864dfdf2df523871417",
+        "jsonCorners": 630,
+        "glbCorners": 630,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.8416445658927e-05,
+        "maximumMatchedUVDelta": 1.4901161193847656e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "single-crystal",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/single-crystal.glb",
+        "glbSha256": "a7c9a935ce3c67b0f3e2d59aaeff2b7fa11f10d30d0230d99e20c158cb18ae92",
+        "jsonCorners": 210,
+        "glbCorners": 210,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.739858489057497e-05,
+        "maximumMatchedUVDelta": 1.4901161193847656e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "fracture-cliffs",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/fracture-cliffs.glb",
+        "glbSha256": "d269893b6c658dcabba8f9ee07092b7784985945d7d90188e69f77d1f7a4f923",
+        "jsonCorners": 990,
+        "glbCorners": 990,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.147844417346691e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "baseColorTexture",
+            "expected": "material-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "baseColorTexture",
+            "expected": "material-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-2-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "low-fractured-shelf",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/low-fractured-shelf.glb",
+        "glbSha256": "2cca6abd704b4d659101f0e277811bf6187d451d59077372e7ae9f2d87c4e234",
+        "jsonCorners": 660,
+        "glbCorners": 660,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.958500916988107e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "baseColorTexture",
+            "expected": "material-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "baseColorTexture",
+            "expected": "material-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-2-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crystal-battered-region-a",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/crystal-battered-region-a.glb",
+        "glbSha256": "0df5c81b5fb125d2c174eecfcbb8f3b692d0739f515f5e6eee1813fd74eb74b3",
+        "jsonCorners": 41634,
+        "glbCorners": 41634,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.679311839534963e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "baseColorTexture",
+            "expected": "material-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "baseColorTexture",
+            "expected": "material-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crystal-battered-region-b",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/crystal-battered-region-b.glb",
+        "glbSha256": "471348edafdbd3cb1e66c6677dc4de7cc5f088d6b353537d6f81ccc8531be515",
+        "jsonCorners": 41370,
+        "glbCorners": 41370,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.679311839534963e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "baseColorTexture",
+            "expected": "material-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fracture-shadow",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "baseColorTexture",
+            "expected": "material-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "cliff-edge",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/ground-sphere.glb",
+        "glbSha256": "51b179960a140020ca47c030ebd75af348e6a23d295de948c02d5d52ba395fe5",
+        "jsonCorners": 15360,
+        "glbCorners": 15360,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.141910140628345e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/ground-sphere-medium.glb",
+        "glbSha256": "7fb39afef1ce5bf223805f89f909eeb883a870702100037e067605d4b4e0bee9",
+        "jsonCorners": 3840,
+        "glbCorners": 3840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.819899559348341e-05,
+        "maximumMatchedUVDelta": 5.4016709327697754e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/ground-sphere-low.glb",
+        "glbSha256": "fa2f35469187af1fea76d554ad10886bcfcef86be296fcf2ce1d35cbc2d7becd",
+        "jsonCorners": 960,
+        "glbCorners": 960,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.817538797132312e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "dark-lilac-crust",
+            "field": "baseColorTexture",
+            "expected": "material-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-lilac-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "material-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "squat-crystal-district",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/squat-crystal-district.glb",
+        "glbSha256": "3a3fdaf0182d5541a90ba4ce25e8a88c55974d14767fe11677dd760c8d455b8f",
+        "jsonCorners": 720,
+        "glbCorners": 720,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.2994958555005e-05,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "angular-crystal-district",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r002/angular-crystal-district.glb",
+        "glbSha256": "8da10dde84bc71d5338ddce58d16dcbd51a81de2f1ec94348ab5ac06fef25080",
+        "jsonCorners": 720,
+        "glbCorners": 720,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.488140546424828e-05,
+        "maximumMatchedUVDelta": 0,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 13,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  }
+]

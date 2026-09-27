@@ -1,0 +1,19 @@
+{
+  "testsPassed": 5,
+  "typescript": "passed",
+  "auditTestsPassed": 6,
+  "highTriangles": 147902,
+  "previousHighTriangles": 110156,
+  "countReason": "Additional native cliff terrace loops and closed crescent coast topology, not runtime-generated solids.",
+  "allLOD": "Major island/grove positions, normals, UVs and identities exact; ground authored LOD changes resolution only.",
+  "artifactParity": "Ten variants: zero supplied material/attribute differences or gaps, all four texture bindings byte-identical to authored PNGs",
+  "hashes": {
+    "kit.json": "c1bca6539f8654a22f96ff831e79564c5dbdfd0ed95447dd2c93c8b9da367adf",
+    "generator.py": "849778c1f429eac9033d9a81c31e23af8a8ec5e503d7c1a3f70ecb3eb6f8697c",
+    "composition-r006.ts": "f7eab012e07ab30e9ecdff51a3ad371cb845f945749316e6e7cac95f1cc4f01c",
+    "water-albedo.png": "e05012eda3625e188f23ee5ebbfc75b57c5d522752a33c93b25122a44cf805a7",
+    "water-normal.png": "39232b0a816d26908fe3bc7842b1699ed2e93c99e44847f92d4cb9626987742f",
+    "water-orm.png": "594ab38132c524629984063a8ce56206f4bbf9e7baf6d4aa08b3c6850c466cfc"
+  },
+  "status": "Frozen draft ready for actual whole-planet reference review; no visual or hardware acceptance"
+}

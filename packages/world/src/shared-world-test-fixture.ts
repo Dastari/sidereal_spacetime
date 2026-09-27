@@ -1,5 +1,5 @@
 import { Identity } from "spacetimedb";
-import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
+import { LEGACY_SYSTEM_SEED } from "@sidereal/content/shared-system";
 import type { SharedJoinContext } from "./shared-world";
 export const owner = Identity.fromString("1".repeat(64)),
   other = Identity.fromString("2".repeat(64));
@@ -57,6 +57,7 @@ export function fixture() {
     constructionFlightBinding: table("shipId"),
     constructionInstance: table("id"),
     worldSystem: table("id"),
+    celestialMigrationReceipt: table("id"),
     shipWorldMotion: table("shipId", {
       by_system: "systemId",
       by_cell: ["systemId", "cellX", "cellY"],
@@ -136,7 +137,7 @@ export function fixture() {
       game: true,
       expiresMicros: 1000000n,
     });
-    for (const body of SHARED_SYSTEM_SEED.bodies)
+    for (const body of LEGACY_SYSTEM_SEED.bodies)
       db.spaceBody.insert({
         ...body,
         id: `legacy${n}-${body.key}`,

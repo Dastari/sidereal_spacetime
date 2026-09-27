@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /root/sidereal_spacetime
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  15:53:38
+   Duration  7.25s (transform 127ms, setup 0ms, import 320ms, tests 6.86s, environment 0ms)
+

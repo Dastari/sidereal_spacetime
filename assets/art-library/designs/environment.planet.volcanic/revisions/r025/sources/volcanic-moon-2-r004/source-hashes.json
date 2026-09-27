@@ -1,0 +1,8 @@
+{
+  "scripts/art_library/build_volcanic_moon2_hot_edges_r004.py": "7c37ec26690a59940e5cc3098168d09bab0a9adbc2cf79c8fec94f8025fc6d3e",
+  "scripts/art_library/preview_volcanic_moon2_edge_r004.py": "ddbc377ef2530f76c88dc169a5c25cfd3c5b4614cfded60c267ca16534da00ff",
+  "scripts/art_library/volcanic_moon_reference_composition_r004.ts": "6d6a23dfdfa4332ae98a2b5ea9af090a12768fcbee3b93cb860050db44b8f08b",
+  "scripts/art_library/volcanic_moon_reference_composition_r004.test.ts": "0bd03df80ede341b956582442a093de9cbbb1a959b7f0fd80bca360a2aa5ab29",
+  "scripts/art_library/volcanic_moon_reference_r004.vitest.config.ts": "b550d36cc9c3764c6e40a4bf673962bc632f97d3af82b034e442358250de95fa",
+  "scripts/art_library/volcanic_moon_reference_r004.tsconfig.json": "594e0ad9ec3f6d871062aa9c272513bcd1cb742a04ab89aeb901db2d732dfe76"
+}

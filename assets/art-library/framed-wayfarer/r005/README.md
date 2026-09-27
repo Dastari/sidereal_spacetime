@@ -1,6 +1,7 @@
 # Reusable backed armor kit r005
 
 Current candidate: **family-03 / library-02 / browser final-02**, passed independent Astra review with16 native and21 browser images. The owner authorized merging the native delivery and making it available in the editor. It is now live for editable review; final artistic sign-off and game installation remain pending.
+Current candidate: **family-03 / library-02 / browser final-02**, passed independent Astra review with16 native and21 browser images. Exact owner sign-off and live installation remain pending.
 
 The new kit uses actual closed 0.75 m backing solids between the unchanged structure datum and the 0.25 m decorative frame/face. This new family reserves 1 m outward. Inward structural walls remain 250 mm. Native heights are 0.75, 1.5, 2.25 and 3 m. Source Blender geometry, maps and contacts remain distinct from gameplay collision, pressure and damage.
 

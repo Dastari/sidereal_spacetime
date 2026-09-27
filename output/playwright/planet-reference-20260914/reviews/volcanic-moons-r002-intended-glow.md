@@ -1,0 +1,5 @@
+# Volcanic moon1/2 r002 intended glow — 2026-09-14
+
+Independently viewed all six intended-glow seed38 close/angle2/reference-scale images against exact moon1 and moon2 crops and prior corrected captures. Both individual full visual gates remain OPEN. Glow introduces real local bloom, particularly moon1 lower-left/central line and moon2 lower-right patch, but at82/47px respectively they still read as dark pitted rock with tiny isolated orange scratches. The exact references retain larger connected hot patches and regional rim interruptions. This confirms a bounded remaining source feature/readability gap after the intended optical context was enabled.
+
+Preserve good cratered foundations. Next authoring should selectively broaden exposed fault junctions and connect neighboring short segments into a few unequal hot patch regions across distinct quadrants. Keep most crust cold. Moon2 may remain quieter than moon1 but must retain visible volcanic identity near47px. Do not solve by raising all lava, emitting every seam, or globally increasing glow. This is not hardware performance or owner acceptance.

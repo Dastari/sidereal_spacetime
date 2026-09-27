@@ -1,0 +1,132 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "coordinates": "Blender Z up, formation roots buried below Z0; ground sphere radius1",
+  "partsManifold": true,
+  "variants": [
+    {
+      "name": "volcanic-region-a",
+      "vertices": 1961,
+      "triangles": 3838,
+      "bounds": [
+        [
+          -1.5475918054580688,
+          1.5089775323867798
+        ],
+        [
+          -0.9399999976158142,
+          1.0708483457565308
+        ],
+        [
+          -0.27000001072883606,
+          0.5964711904525757
+        ]
+      ]
+    },
+    {
+      "name": "volcanic-region-b",
+      "vertices": 1997,
+      "triangles": 3910,
+      "bounds": [
+        [
+          -1.5289496183395386,
+          1.5049352645874023
+        ],
+        [
+          -0.9399999976158142,
+          1.0678762197494507
+        ],
+        [
+          -0.27000001072883606,
+          0.5964711904525757
+        ]
+      ]
+    },
+    {
+      "name": "volcanic-region-c",
+      "vertices": 1671,
+      "triangles": 3290,
+      "bounds": [
+        [
+          -1.5010019540786743,
+          1.5027458667755127
+        ],
+        [
+          -0.9399999976158142,
+          1.0669766664505005
+        ],
+        [
+          -0.27000001072883606,
+          0.44999998807907104
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "vertices": 40962,
+      "triangles": 81920,
+      "bounds": [
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "vertices": 10242,
+      "triangles": 20480,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "vertices": 2562,
+      "triangles": 5120,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "ground-sphere-low.glb": "acf185cff7b0fbee93a01682aecb8b8c05f44572555f10860060d010d4633432",
+    "kit.blend": "266aa55e62b2ae6c5cbfb4ce19d5bdcd32bd2af8b1583a51973e6314ffba39ab",
+    "volcanic-region-a.glb": "028fab5b7adc82c5c4bf171ecdb942b0627d447a5a618b1188e88369b95ed548",
+    "kit-preview.png": "a7b7a548fda43622ddb717b68388a83d68fa50274a4901fed3cadf233adb0e56",
+    "volcanic-region-b.glb": "0fce1fc13b7f223dcffedf856fe394a16e4ca6896de3e331b55f06cc6914fc2e",
+    "ground-sphere.glb": "9e2ac9c4cd97f5bfd84957e0eb84dc12ae7f7c27e7fe7588c3a739ff4d05f29f",
+    "volcanic-region-c.glb": "a82f67fa8e609fec3b0f120b777bc0616011e717ab511f3cd293de7a8dfdd23a",
+    "kit.json": "6c7532288101b6db0213eb1bf21376fad91118f69f187ca521308925cbe45f9c",
+    "ground-sphere-medium.glb": "b7645445dd0b69e878be744926d28691664efb8f701891f08961619a0b1d98f1"
+  }
+}

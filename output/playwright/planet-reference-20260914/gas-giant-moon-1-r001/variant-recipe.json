@@ -1,0 +1,56 @@
+{
+  "referenceId": "planets--gas-giant-moon-1",
+  "sourceFoundation": "rocky-r010",
+  "foundationSha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+  "candidateRevision": "r001",
+  "sourceCoordinates": "Native Blender Z-up; unit radius, no authority dimensions",
+  "seed": 523,
+  "scales": [
+    0.43,
+    0.38,
+    0.41,
+    0.4,
+    0.44,
+    0.39,
+    0.42,
+    0.37,
+    0.43,
+    0.4,
+    0.39,
+    0.41
+  ],
+  "palette": [
+    [
+      0.3,
+      0.22,
+      0.38
+    ],
+    [
+      0.54,
+      0.41,
+      0.62
+    ],
+    [
+      0.024,
+      0.015,
+      0.038
+    ],
+    [
+      0.1,
+      0.06,
+      0.15
+    ],
+    [
+      0.23,
+      0.15,
+      0.3
+    ],
+    [
+      0.65,
+      0.44,
+      0.65
+    ]
+  ],
+  "cue": "Deep pitted lilac solid companion; pink near-ring illumination is separate, not painted emission",
+  "publication": "isolated source candidate; no automatic acceptance from rocky-moon-1 pass"
+}

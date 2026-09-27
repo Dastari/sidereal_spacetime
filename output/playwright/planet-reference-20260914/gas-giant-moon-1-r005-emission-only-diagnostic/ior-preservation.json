@@ -1,0 +1,38 @@
+[
+  {
+    "file": "crater-broken.glb",
+    "changes": [
+      {
+        "material": "gas-giant-moon-1-violet-mineral",
+        "before": 1.5,
+        "after": 2.2
+      },
+      {
+        "material": "gas-giant-moon-1-pink-mineral",
+        "before": 1.5,
+        "after": 2.2
+      }
+    ],
+    "originalSHA256": "4333eb5bc83c6353a4c3e1ebd5beb2b104d1281453e5e3a65536f327c12454b4",
+    "finalSHA256": "b65a6f8696f0058dda6d06f0f05242cbcfdd33fb6c3f72443edad550b49c7591",
+    "binByteIdentical": true
+  },
+  {
+    "file": "battered-region-a.glb",
+    "changes": [
+      {
+        "material": "gas-giant-moon-1-violet-mineral",
+        "before": 1.5,
+        "after": 2.2
+      },
+      {
+        "material": "gas-giant-moon-1-pink-mineral",
+        "before": 1.5,
+        "after": 2.2
+      }
+    ],
+    "originalSHA256": "353ceda946e6333d643e063e139325c829d0b7cd2a8518073a5baa72f86aa55c",
+    "finalSHA256": "52c3421aa843ba63f8bbf5b03127b99576926c13b763d36f41b75707138f85b0",
+    "binByteIdentical": true
+  }
+]
