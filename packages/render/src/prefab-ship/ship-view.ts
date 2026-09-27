@@ -349,7 +349,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
           pushMatrix(matrices[c.view], m);
           if (isMainEngine(c)) {
             // Nozzle exit: the GLB's outward extreme (component -Y is glTF +Z).
-            const r = Math.min(geom.bounds[3] - geom.bounds[0], geom.bounds[4] - geom.bounds[1]) * 0.32;
+            const r = Math.min(geom.bounds[3] - geom.bounds[0], geom.bounds[4] - geom.bounds[1]) * 0.26;
             emitPlumeAt(plumes[c.view], place, [0, -geom.bounds[5], 0], r, c);
           }
         }
@@ -392,7 +392,8 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     const local = newBuilder();
     const colours: number[] = [];
     const main = !!c.placement.spec?.thrustN;
-    emitPlume(local, colours, at, radius, (main ? 3.2 : 1.2) * radius + (main ? 1.5 : 0.3));
+    // Compact exhaust like the reference engine assemblies: about one nozzle diameter long.
+    emitPlume(local, colours, at, radius, (main ? 2.0 : 1.2) * radius);
     const base = target.g.positions.length / 3;
     for (let i = 0; i < local.positions.length; i += 3) {
       const p = transformPoint(place, [local.positions[i], local.positions[i + 1], local.positions[i + 2]]);

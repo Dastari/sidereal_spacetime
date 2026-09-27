@@ -248,7 +248,7 @@ export function appendStandin(standin: Standin, m: Mat4, builders: Map<ShipKitSl
 export function emitPlume(out: GeometryBuilder, colours: number[], at: readonly [number, number, number], radius: number, length: number, rings = 6, _sides = 0) {
   const T = 1 / 16;
   const snap = (v: number) => Math.max(T, Math.round(v / T) * T);
-  const steps = Math.max(4, rings + 1);
+  const steps = Math.max(4, rings);
   const slab = (r: number, y0: number, y1: number, fade: number) => {
     const before = out.positions.length / 3;
     emitBox(out, [at[0] - r, at[1] - y1, at[2] - r], [at[0] + r, at[1] - y0, at[2] + r], 0, () => false);
@@ -257,10 +257,10 @@ export function emitPlume(out: GeometryBuilder, colours: number[], at: readonly 
   for (let k = 0; k < steps; k++) {
     const t0 = k / steps;
     const t1 = (k + 1) / steps;
-    const fade = Math.pow(1 - t0, 1.5);
-    // Additive and double-sided: keep each shell dim so overlapping slabs stay blue, not white.
-    slab(snap(radius * (1 - 0.7 * t0)), t0 * length, t1 * length, fade * 0.22);
-    if (t0 < 0.5) slab(snap(radius * 0.45 * (1 - t0)), t0 * length, t1 * length, fade * 0.3);
+    const fade = Math.pow(1 - t0, 2.6);                      // quick falloff
+    // Additive and double-sided: dim outer shell, bright short core at the nozzle.
+    slab(snap(radius * (1 - 0.75 * t0)), t0 * length, t1 * length, fade * 0.16);
+    if (t0 < 0.6) slab(snap(radius * 0.5 * (1 - 0.6 * t0)), t0 * length, t1 * length, fade * 0.75);
   }
   out.boxes += 1;
 }
