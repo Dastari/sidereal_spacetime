@@ -159,3 +159,6 @@ if (ROOT/'assets/runtime/crew/poses/r002').exists():
  runpy.run_path(str(ROOT/'scripts'/pose_validator),run_name='__main__')
 if (ROOT/'assets/runtime/crew/poses/r003').exists():
  runpy.run_path(str(ROOT/'scripts/validate_installed_poses_r003.py'),run_name='__main__')
+
+# Published SHIPS-COMPONENTS runtime GLBs: prefab coverage, fixed slots and preserved .blend source.
+runpy.run_path(str(ROOT/"scripts/art_library/check_ship_components.py"),run_name="__main__")

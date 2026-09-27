@@ -20,6 +20,12 @@ import {
   type CompiledFlightHull,
 } from "@sidereal/sim/flight-definition";
 import type { FlightEnvelope } from "@sidereal/sim/ifcs";
+import { PREFAB_FLIGHT_DEFINITION } from "@sidereal/sim/prefab-flight";
+/** Prefab physical definitions pair `prefab-component:<id>` with `prefab-fitting:<id>`. */
+const prefabFittingFor = (definitionId: string) =>
+  definitionId.startsWith("prefab-component:")
+    ? "prefab-fitting:" + definitionId.slice("prefab-component:".length)
+    : null;
 import type { CompiledFlightRow } from "./construction-flight-compilation";
 export type ConstructionFlightBindingRow = Infer<
   typeof constructionFlightBinding.rowType
@@ -45,14 +51,21 @@ export function resolveShipFlightDefinition(
   const binding = db.binding(shipId),
     compiled = db.compiled(shipId);
   let reason = "";
+  // Prefab bindings are written only by trusted prefab installation; their pin is the
+  // prefab physical catalog hash, compared with the compiled definition hash below.
+  const prefab =
+    !!binding &&
+    binding.definitionId === PREFAB_FLIGHT_DEFINITION &&
+    /^[0-9a-f]{64}$/.test(binding.definitionSha256);
   if (!binding) reason = "missing-authored-flight-binding";
   else if (
     binding.shipId !== shipId ||
     binding.instanceId !== shipId ||
     binding.instanceRevision !== db.currentInstanceRevision(shipId) ||
-    !isQualifiedWayfarerBlueprint(binding.blueprintSha256) ||
-    binding.definitionId !== CONSTRUCTION_FLIGHT_DEFINITION ||
-    binding.definitionSha256 !== CONSTRUCTION_FLIGHT_DEFINITION_SHA256
+    (!prefab &&
+      (!isQualifiedWayfarerBlueprint(binding.blueprintSha256) ||
+        binding.definitionId !== CONSTRUCTION_FLIGHT_DEFINITION ||
+        binding.definitionSha256 !== CONSTRUCTION_FLIGHT_DEFINITION_SHA256))
   )
     reason = "authored-flight-definition-mismatch";
   else if (!["active", "installed-dormant"].includes(binding.lifecycle))
@@ -91,7 +104,7 @@ export function resolveShipFlightDefinition(
   if (db.dirty(shipId)) reason = reason || "flight-compilation-pending";
   if (compiled.status !== "ready")
     reason = reason || compiled.reason || "flight-compilation-rejected";
-  if (compiled.definitionHash !== catalogHash)
+  if (compiled.definitionHash !== (prefab ? binding!.definitionSha256 : catalogHash))
     reason = reason || "physical-definition-catalog-mismatch";
   if (
     compiled.shipId !== shipId ||
@@ -140,11 +153,15 @@ export function resolveShipFlightDefinition(
       throw Error("invalid-compiled-flight-devices");
     for (const device of [...actuators, ...computers]) {
       const fitting = byId.get(device.id);
-      const physical = WAYFARER_PHYSICAL_CATALOG.definitions.find(
-        (d) =>
-          d.id === device.definitionId &&
-          d.revision === device.definitionRevision,
-      );
+      const physical = prefab
+        ? device.definitionRevision === 1 && prefabFittingFor(device.definitionId)
+          ? { fittingDefinitionId: prefabFittingFor(device.definitionId)! }
+          : undefined
+        : WAYFARER_PHYSICAL_CATALOG.definitions.find(
+            (d) =>
+              d.id === device.definitionId &&
+              d.revision === device.definitionRevision,
+          );
       if (
         !physical ||
         !("fittingDefinitionId" in physical) ||

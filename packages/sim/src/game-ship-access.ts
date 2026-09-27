@@ -1,5 +1,8 @@
 import { WAYFARER_REBUILD_SHA256 } from "./wayfarer-rebuild-contract";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
+/** Blueprint id prefix of trusted developer prefab ships installed by server code only
+ * (never a player publication): `trusted-prefab:<prefab id>@<revision>`. */
+export const TRUSTED_PREFAB_BLUEPRINT_PREFIX = "trusted-prefab:";
 
 /** Private gameplay relationship created by the trusted starter transaction.
  * It is not an authoring grant, seating reservation or remote control grant. */
@@ -25,6 +28,8 @@ export interface GameShipAccessFacts {
     ownerId: string;
     revision: bigint;
     blueprintSha256: string;
+    /** Trusted prefab installs set `trusted-prefab:<id>@<rev>`; absent for older callers. */
+    blueprintId?: string;
   };
   deck?: { id: string; instanceId: string };
   location?: { characterId: string; instanceId: string; deckId: string };
@@ -78,7 +83,11 @@ export function gameShipAccess(f: GameShipAccessFacts) {
     i.blueprintSha256 === b.templateSha256 &&
     ((b.templateSha256 === WAYFARER_STARTER.sha256 && i.revision === 1n) ||
       (b.templateSha256 === WAYFARER_REBUILD_SHA256 &&
-        (i.revision === 1n || i.revision === 2n)))
+        (i.revision === 1n || i.revision === 2n)) ||
+      // Unrefitted trusted prefab ship. The workspace check in the world adapter is the trust
+      // anchor; the prefab document itself is re-derived on every admission.
+      (!!i.blueprintId?.startsWith(TRUSTED_PREFAB_BLUEPRINT_PREFIX) &&
+        i.revision === 1n))
   );
   return {
     readInterior: allowed,

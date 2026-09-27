@@ -5,7 +5,11 @@ import {
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
 } from "./game-ship-access-authority";
-import { PilotGeometryError } from "@sidereal/sim/construction-pilot";
+import {
+  PilotGeometryError,
+  prefabPilotPose,
+} from "@sidereal/sim/construction-pilot";
+import { PREFAB_FLIGHT_DEFINITION } from "@sidereal/sim/prefab-flight";
 import type { Infer } from "spacetimedb/server";
 import type { constructionPilotSeat } from "./construction-pilot-tables";
 import type { constructionFlightBinding } from "./construction-flight-tables";
@@ -130,6 +134,10 @@ export function constructionPilotRepository(
         operational: station.operational,
         instanceRevision: binding.instanceRevision,
         revision: binding.revision,
+        // Trusted prefab installs store the derived station on the station row.
+        ...(binding.definitionId === PREFAB_FLIGHT_DEFINITION
+          ? { pose: prefabPilotPose([station.localX, station.localY]) }
+          : {}),
       };
     },
     seat: (id) =>
@@ -213,6 +221,7 @@ export function constructionPilotRepository(
         instance,
         frame: constructionCollision(ctx, instance, s.deckId),
         seatPlacedObjectId: mapping.seatPlacedObjectId,
+        ...(s.pose ? { pose: s.pose } : {}),
         supportHeightAt: (x, y) =>
           support({
             actor: { ...a, localX: x, localY: y },
