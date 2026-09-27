@@ -165,6 +165,12 @@ function makeMesh(scene: Scene, name: string, parent: TransformNode, g: { positi
   vd.indices = g.indices instanceof Uint32Array ? g.indices : Uint32Array.from(g.indices);
   if (colours) vd.colors = Float32Array.from(colours);
   vd.applyToMesh(mesh, false);
+  // Prefab geometry (glTF GLBs, box-mesher polygons, merged batches) is wound counter-clockwise
+  // seen from outside. A new Mesh in a right-handed scene defaults to clockwise front faces
+  // (Babylon's own builders), so without this every prefab surface rendered inside-out: the far
+  // interior faces were drawn and the near exterior culled. The glTF loader sets the same value
+  // on the meshes it creates; extraction into our own meshes has to restore it.
+  mesh.sideOrientation = Constants.MATERIAL_CounterClockWiseSideOrientation;
   mesh.parent = parent;
   mesh.isPickable = false;
   return mesh;
@@ -530,6 +536,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       vd.uvs = g.uvs;
       vd.colors = g.colours;
       vd.applyToMesh(mesh);
+      mesh.sideOrientation = Constants.MATERIAL_CounterClockWiseSideOrientation; // see makeMesh
       mesh.parent = frame;
       mesh.isPickable = false;
       mesh.material = mat;

@@ -10,6 +10,7 @@ import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
+import { Constants } from "@babylonjs/core/Engines/constants";
 import type { DecalPlacement, DressedShip } from "@sidereal/sim/ship-dresser";
 import { SHIP_THEMES } from "@sidereal/content/ship-themes";
 import type { ShipThemeId } from "@sidereal/content/ship-prefab";
@@ -86,6 +87,8 @@ export function buildDecals(scene: Scene, parent: TransformNode, dressed: Dresse
     vd.uvs = [0, 0, 1, 0, 1, 1, 0, 1];
     vd.indices = [0, 1, 2, 0, 2, 3];
     vd.applyToMesh(mesh);
+    // Corners are counter-clockwise seen from outside (see makeMesh in ship-view.ts).
+    mesh.sideOrientation = Constants.MATERIAL_CounterClockWiseSideOrientation;
     mesh.material = material;
     mesh.parent = parent;
     mesh.isPickable = false;
