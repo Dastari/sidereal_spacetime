@@ -179,10 +179,43 @@ def stop_row(name, row):
     elif supervisor:
         os.kill(supervisor['pid'], signal.SIGTERM)
         wait_for(lambda: supervisor_of(row) is None and not alive(row), STOP_GRACE.get(name, DEFAULT_STOP_GRACE) + 5)
-    if alive(row):
-        os.killpg(row['pid'], signal.SIGTERM)
-        if not wait_for(lambda: not alive(row), 8):
-            os.killpg(row['pid'], signal.SIGKILL)
+    if alive(row) or lingering(row):
+        signal_group(row['pid'], signal.SIGTERM)
+        if not wait_for(lambda: released(row), 8):
+            signal_group(row['pid'], signal.SIGKILL)
+            wait_for(lambda: released(row), 5)
+
+
+def lingering(row):
+    """The recorded process's leader is a zombie but other threads still run (and may hold its port).
+
+    A multi-threaded server such as SpacetimeDB can end its main thread first; `alive` then
+    reports it stopped while worker threads still listen, and an immediate restart fails
+    with EADDRINUSE (seen during the 2026-09-28 systemd cutover).
+    """
+    if row['start'] is None or proc(row['pid']) is not None:
+        return False
+    try:
+        fields = Path(f"/proc/{row['pid']}/stat").read_text().rsplit(')', 1)[1].split()
+        if fields[19] != row['start']:
+            return False
+        for task in os.listdir(f"/proc/{row['pid']}/task"):
+            if Path(f"/proc/{row['pid']}/task/{task}/stat").read_text().rsplit(')', 1)[1].split()[0] not in ('Z', 'X'):
+                return True
+    except (FileNotFoundError, ProcessLookupError, IndexError):
+        return False
+    return False
+
+
+def released(row):
+    return not alive(row) and not lingering(row)
+
+
+def signal_group(pid, signum):
+    try:
+        os.killpg(pid, signum)
+    except ProcessLookupError:
+        pass
 
 
 def down(only=None):

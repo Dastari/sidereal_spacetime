@@ -245,6 +245,28 @@ class SystemdHandOffTests(unittest.TestCase):
         self.assertIsNotNone(detached.wait(10))
         self.assertEqual(dev.load(), {})
 
+    def test_down_waits_for_worker_threads_that_outlive_the_main_thread(self):
+        # Like SpacetimeDB at the 2026-09-28 cutover: the main thread ends first, so the leader
+        # looks like a zombie while a worker thread still holds the listening port.
+        port = free_port()
+        program = ('import ctypes, socket, threading, time\n'
+                   f'server = socket.socket(); server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1); server.bind(("127.0.0.1", {port})); server.listen()\n'
+                   'threading.Thread(target=time.sleep, args=(60,)).start()\n'
+                   'ctypes.CDLL(None).pthread_exit(None)\n')
+        process = subprocess.Popen([sys.executable, '-c', program], start_new_session=True)
+        self.sleepers.append(process)
+        row = {'pid': process.pid, 'start': dev.proc(process.pid) or open(f'/proc/{process.pid}/stat').read().rsplit(')', 1)[1].split()[19], 'command': ['server']}
+        self.assertTrue(wait(lambda: dev.proc(process.pid) is None), 'main thread exited')
+        self.assertTrue(dev.lingering(row))
+        with self.assertRaises(OSError):
+            dev.port_free('127.0.0.1', port)
+        with dev.state_lock():
+            dev.save({'database': row})
+        dev.down('database')
+        dev.port_free('127.0.0.1', port)
+        self.assertFalse(dev.lingering(row))
+        self.assertEqual(dev.load(), {})
+
     def test_down_stops_a_unit_row_through_systemctl(self):
         supervisor, child = self.sleeper(), self.sleeper()
         with dev.state_lock():
