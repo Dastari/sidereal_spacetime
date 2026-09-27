@@ -13,9 +13,33 @@ import {
 import type { VoxelCrewMotion } from "../../packages/render/src/crew/voxel-crew-clips";
 
 type Mode =
-  | "idle" | "walk" | "run" | "crouch" | "crouch_walk" | "rifle_idle" | "rifle_aim" | "rifle_walk_aim"
-  | "pistol_aim" | "carry" | "carry_walk" | "seated" | "climb" | "hover" | "downed" | "dead";
-const MODES: Record<Mode, { moving?: boolean; sprint?: boolean; weapon?: "rifle" | "pistol"; combat?: boolean; override?: Partial<VoxelCrewMotion>; seated?: boolean }> = {
+  | "idle"
+  | "walk"
+  | "run"
+  | "crouch"
+  | "crouch_walk"
+  | "rifle_idle"
+  | "rifle_aim"
+  | "rifle_walk_aim"
+  | "pistol_aim"
+  | "carry"
+  | "carry_walk"
+  | "seated"
+  | "climb"
+  | "hover"
+  | "downed"
+  | "dead";
+const MODES: Record<
+  Mode,
+  {
+    moving?: boolean;
+    sprint?: boolean;
+    weapon?: "rifle" | "pistol";
+    combat?: boolean;
+    override?: Partial<VoxelCrewMotion>;
+    seated?: boolean;
+  }
+> = {
   idle: {},
   walk: { moving: true },
   run: { moving: true, sprint: true },
@@ -40,30 +64,46 @@ const modeSelect = document.querySelector<HTMLSelectElement>("#mode")!;
 const actionSelect = document.querySelector<HTMLSelectElement>("#action")!;
 const bodySelect = document.querySelector<HTMLSelectElement>("#body")!;
 for (const m of Object.keys(MODES)) modeSelect.append(new Option(m, m));
-for (const a of [...VOXEL_CREW_ACTIONS, ...VOXEL_CREW_EXTRA_ACTIONS]) actionSelect.append(new Option(a, a));
+for (const a of [...VOXEL_CREW_ACTIONS, ...VOXEL_CREW_EXTRA_ACTIONS])
+  actionSelect.append(new Option(a, a));
 
 const params = new URLSearchParams(location.search);
 let mode = (params.get("mode") as Mode) ?? "idle";
 let body = params.get("body") ?? "male";
 let t = 0;
 let shots = 0n;
-const origin = { x: Number(params.get("x") ?? 0), y: Number(params.get("y") ?? 0) };
+const origin = {
+  x: Number(params.get("x") ?? 0),
+  y: Number(params.get("y") ?? 0),
+};
 let state: SceneState = {
-  heading: 0, x: 0, y: 0, localX: origin.x, localY: origin.y, interior: true, inspect: false, grid: false,
+  heading: 0,
+  x: 0,
+  y: 0,
+  localX: origin.x,
+  localY: origin.y,
+  interior: true,
+  inspect: false,
+  grid: false,
   crewAppearance: { outfit: "engineer", bodyType: body as "male" },
 };
 let world: Awaited<ReturnType<typeof createWorld>> | undefined;
 const controller = new AbortController();
-const crew = () => world?.getCrewVisual() as
-  | (NonNullable<ReturnType<NonNullable<typeof world>["getCrewVisual"]>> & {
-      setMotionOverride?: (m?: Partial<VoxelCrewMotion>) => void;
-      play?: (a: VoxelCrewAction) => void;
-      setOutfit?: (o: { suit?: boolean; gear?: boolean }) => void;
-      face?: { setExpression(id: string | null): void; setViseme(id: string | null): void; blink(): void };
-      layers?: unknown;
-      activeClips?: string[];
-    })
-  | undefined;
+const crew = () =>
+  world?.getCrewVisual() as
+    | (NonNullable<ReturnType<NonNullable<typeof world>["getCrewVisual"]>> & {
+        setMotionOverride?: (m?: Partial<VoxelCrewMotion>) => void;
+        play?: (a: VoxelCrewAction) => void;
+        setOutfit?: (o: { suit?: boolean; gear?: boolean }) => void;
+        face?: {
+          setExpression(id: string | null): void;
+          setViseme(id: string | null): void;
+          blink(): void;
+        };
+        layers?: unknown;
+        activeClips?: string[];
+      })
+    | undefined;
 
 const applyMode = () => {
   const m = MODES[mode];
@@ -71,9 +111,20 @@ const applyMode = () => {
     ...state,
     seated: !!m.seated,
     sprinting: !!m.sprint,
-    equippedAsset: m.weapon === "rifle" ? "carbine" : m.weapon === "pistol" ? "compact-pistol" : null,
-    combat: m.combat ? { active: true, angle: 0, range: 40, shotSequence: shots } : undefined,
-    crewAppearance: { outfit: "engineer", bodyType: body as "male", weapon: m.weapon ?? "none" },
+    equippedAsset:
+      m.weapon === "rifle"
+        ? "carbine"
+        : m.weapon === "pistol"
+          ? "compact-pistol"
+          : null,
+    combat: m.combat
+      ? { active: true, angle: 0, range: 40, shotSequence: shots }
+      : undefined,
+    crewAppearance: {
+      outfit: "engineer",
+      bodyType: body as "male",
+      weapon: m.weapon ?? "none",
+    },
   };
   crew()?.setMotionOverride?.(m.override);
   world?.update(state);
@@ -83,7 +134,11 @@ const tick = () => {
   if (!world) return;
   const m = MODES[mode];
   if (m.moving) {
-    const speed = m.sprint ? 4.5 : m.override?.crouching || m.override?.carrying ? 1.2 : 2.5;
+    const speed = m.sprint
+      ? 4.5
+      : m.override?.crouching || m.override?.carrying
+        ? 1.2
+        : 2.5;
     t += (1 / 60) * speed;
     // walk a 3 m back-and-forth line along ship-forward so the camera keeps the actor in view
     const phase = (t / 3) % 2;
@@ -93,7 +148,10 @@ const tick = () => {
   world.update(state);
   const c = crew();
   (canvas.dataset as DOMStringMap).review = JSON.stringify({
-    mode, body, layers: c?.layers, clips: c?.activeClips,
+    mode,
+    body,
+    layers: c?.layers,
+    clips: c?.activeClips,
   });
 };
 
@@ -105,7 +163,8 @@ createWorld(canvas, (text) => (status.textContent = text), {
   .then((result) => {
     world = result;
     applyMode();
-    status.textContent = "voxel crew (proposal, preview only) — actual game renderer, no database";
+    status.textContent =
+      "voxel crew (proposal, preview only) — actual game renderer, no database";
   })
   .catch((error) => {
     status.textContent = String(error);
@@ -122,19 +181,27 @@ bodySelect.addEventListener("change", () => {
   body = bodySelect.value;
   applyMode();
 });
-document.querySelector("#play")!.addEventListener("click", () => crew()?.play?.(actionSelect.value as VoxelCrewAction));
+document
+  .querySelector("#play")!
+  .addEventListener("click", () =>
+    crew()?.play?.(actionSelect.value as VoxelCrewAction),
+  );
 document.querySelector("#shoot")!.addEventListener("click", () => {
   shots += 1n;
   applyMode();
 });
-document.querySelector<HTMLSelectElement>("#outfit")!.addEventListener("change", (e) => {
-  const v = (e.target as HTMLSelectElement).value;
-  crew()?.setOutfit?.({ suit: v !== "base", gear: v === "gear" });
-});
-document.querySelector<HTMLSelectElement>("#expression")!.addEventListener("change", (e) => {
-  const v = (e.target as HTMLSelectElement).value;
-  crew()?.face?.setExpression(v === "auto" ? null : v);
-});
+document
+  .querySelector<HTMLSelectElement>("#outfit")!
+  .addEventListener("change", (e) => {
+    const v = (e.target as HTMLSelectElement).value;
+    crew()?.setOutfit?.({ suit: v !== "base", gear: v === "gear" });
+  });
+document
+  .querySelector<HTMLSelectElement>("#expression")!
+  .addEventListener("change", (e) => {
+    const v = (e.target as HTMLSelectElement).value;
+    crew()?.face?.setExpression(v === "auto" ? null : v);
+  });
 Object.assign(window, {
   crewReview: {
     setOutfit(v: "base" | "suit" | "gear") {

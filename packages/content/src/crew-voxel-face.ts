@@ -5,7 +5,16 @@
  * Atlas image: RGBA8, one ROW per layer (under, marks, eyes, iris, glint, brows, mouth, over), one
  * COLUMN per frame, 16 x 16 px cells. Output: 16 x 16 RGBA8, row 0 = top, column 0 = character's right.
  */
-export const FACE_LAYERS = ["under", "marks", "eyes", "iris", "glint", "brows", "mouth", "over"] as const;
+export const FACE_LAYERS = [
+  "under",
+  "marks",
+  "eyes",
+  "iris",
+  "glint",
+  "brows",
+  "mouth",
+  "over",
+] as const;
 export type FaceLayer = (typeof FACE_LAYERS)[number];
 
 export type FaceExpression = {
@@ -48,14 +57,24 @@ export const FACE_DEFAULT_TINTS: FaceTints = {
   hair: [110, 58, 31],
 };
 
-export type FaceAtlasImage = { width: number; height: number; data: Uint8Array | Uint8ClampedArray };
+export type FaceAtlasImage = {
+  width: number;
+  height: number;
+  data: Uint8Array | Uint8ClampedArray;
+};
 
 /** Frame name per layer for a state (null = draw nothing on that layer). */
-export function faceFrames(atlas: FaceAtlas, state: FaceState): Record<FaceLayer, string | null> {
+export function faceFrames(
+  atlas: FaceAtlas,
+  state: FaceState,
+): Record<FaceLayer, string | null> {
   const ex = atlas.expressions[state.expression] ?? atlas.expressions.neutral;
   const look = atlas.looks[String(state.look ?? 0)] ?? "c";
-  const mouth = state.viseme ? (atlas.visemes[state.viseme] ?? ex.mouth) : ex.mouth;
-  const blinking = !!state.blinkEyes && !atlas.blinkSuppressedEyes.includes(ex.eyes);
+  const mouth = state.viseme
+    ? (atlas.visemes[state.viseme] ?? ex.mouth)
+    : ex.mouth;
+  const blinking =
+    !!state.blinkEyes && !atlas.blinkSuppressedEyes.includes(ex.eyes);
   const eyes = blinking ? state.blinkEyes! : ex.eyes;
   const iris = ex.iris ?? "open";
   const irisFrame = blinking || iris === "none" ? null : `${iris}@${look}`;
@@ -94,7 +113,8 @@ export function composeFace(
     if (col < 0) return;
     let tint: readonly number[] = [1, 1, 1];
     if (layer === "iris") tint = tints.eye.map((c) => c / 255);
-    else if (layer === "brows") tint = tints.hair.map((c) => ((c / 255) * 0.6) / (200 / 255));
+    else if (layer === "brows")
+      tint = tints.hair.map((c) => ((c / 255) * 0.6) / (200 / 255));
     for (let r = 0; r < n; r++)
       for (let q = 0; q < n; q++) {
         const si = ((row * n + r) * image.width + col * n + q) * 4;
@@ -115,5 +135,9 @@ export function composeFace(
 export function hexToRgb(hex: string): [number, number, number] {
   const v = /^#?([0-9a-f]{6})$/i.exec(hex)?.[1];
   if (!v) return [255, 255, 255];
-  return [parseInt(v.slice(0, 2), 16), parseInt(v.slice(2, 4), 16), parseInt(v.slice(4, 6), 16)];
+  return [
+    parseInt(v.slice(0, 2), 16),
+    parseInt(v.slice(2, 4), 16),
+    parseInt(v.slice(4, 6), 16),
+  ];
 }

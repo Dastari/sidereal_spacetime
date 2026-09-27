@@ -34,9 +34,13 @@ export type VoxelCrewLayers =
   | { full: VoxelCrewAction; speedRatio: number }
   | { lower: VoxelCrewAction; upper: VoxelCrewAction; speedRatio: number };
 
-const clamp = (v: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, v));
+const clamp = (v: number, lo: number, hi: number) =>
+  Math.max(lo, Math.min(hi, v));
 
-export function voxelCrewWeapon(motion: VoxelCrewMotion, fallback: VoxelCrewWeapon): VoxelCrewWeapon {
+export function voxelCrewWeapon(
+  motion: VoxelCrewMotion,
+  fallback: VoxelCrewWeapon,
+): VoxelCrewWeapon {
   if (motion.weaponPose === "rifle") return "rifle";
   if (motion.weaponPose === "one-handed") return "pistol";
   if (motion.weaponPose === "none") return "none";
@@ -44,7 +48,10 @@ export function voxelCrewWeapon(motion: VoxelCrewMotion, fallback: VoxelCrewWeap
 }
 
 /** Locomotion playback rate so the authored in-place stride roughly matches gameplay speed. */
-export function voxelCrewSpeedRatio(clip: VoxelCrewAction, motion: VoxelCrewMotion) {
+export function voxelCrewSpeedRatio(
+  clip: VoxelCrewAction,
+  motion: VoxelCrewMotion,
+) {
   const nominal = VOXEL_CREW_NOMINAL_SPEED[clip];
   if (!nominal) return 1;
   const gameplay = clip === "run" ? SPRINT_SPEED_MPS : WALK_SPEED_MPS;
@@ -86,26 +93,43 @@ export function selectVoxelCrewLayers(
           ? "carry_walk"
           : "walk";
     if (!armed) return full(loco);
-    return { lower: loco, upper, speedRatio: voxelCrewSpeedRatio(loco, motion) };
+    return {
+      lower: loco,
+      upper,
+      speedRatio: voxelCrewSpeedRatio(loco, motion),
+    };
   }
   if (motion.carrying) return full("carry_idle");
   if (motion.crouching)
-    return armed ? { lower: "crouch_idle", upper, speedRatio: 1 } : full("crouch_idle");
+    return armed
+      ? { lower: "crouch_idle", upper, speedRatio: 1 }
+      : full("crouch_idle");
   return armed ? full(upper) : full("idle");
 }
 
 /** Actions that override only the upper body while the character keeps moving. */
 const UPPER_BODY_ACTIONS = new Set<VoxelCrewAction>([
-  "shoot_rifle", "shoot_pistol", "reload", "use_interact", "melee_swing", "throw", "wave", "point",
+  "shoot_rifle",
+  "shoot_pistol",
+  "reload",
+  "use_interact",
+  "melee_swing",
+  "throw",
+  "wave",
+  "point",
   "thumbs_up",
 ]);
 
-export function voxelCrewActionLayer(action: VoxelCrewAction, moving: boolean): "upper" | "full" {
+export function voxelCrewActionLayer(
+  action: VoxelCrewAction,
+  moving: boolean,
+): "upper" | "full" {
   if (action.startsWith("shoot")) return "upper";
   return moving && UPPER_BODY_ACTIONS.has(action) ? "upper" : "full";
 }
 
-export const voxelCrewLoops = (clip: VoxelCrewAction) => VOXEL_CREW_LOOPING.has(clip);
+export const voxelCrewLoops = (clip: VoxelCrewAction) =>
+  VOXEL_CREW_LOOPING.has(clip);
 
 export function voxelCrewBlendDuration(previous: string, next: string) {
   if (previous === next) return 0;

@@ -22,7 +22,11 @@ import {
   type VoxelCrewSocket,
   type VoxelCrewVariant,
 } from "@sidereal/content/crew-voxel-bundle";
-import { hexToRgb, type FaceAtlas, type FaceAtlasImage } from "@sidereal/content/crew-voxel-face";
+import {
+  hexToRgb,
+  type FaceAtlas,
+  type FaceAtlasImage,
+} from "@sidereal/content/crew-voxel-face";
 import { createVoxelFace, loadVoxelFaceAtlas } from "./voxel-face";
 import { solveTwoBone } from "./voxel-ik";
 import { setMeshRole } from "../mesh-roles";
@@ -40,12 +44,19 @@ import { blendProgress } from "./animation";
 
 type Mask = "full" | "upper" | "lower";
 export type VoxelCrewBodyRegion = VoxelCrewRegion;
-type Track = { group: AnimationGroup; weight: number; from: number; target: number };
+type Track = {
+  group: AnimationGroup;
+  weight: number;
+  from: number;
+  target: number;
+};
 
 const UPPER = new Set<string>(VOXEL_CREW_UPPER_BONES);
 
 /** Map legacy appearance roles onto the voxel material slots (colour only, never geometry). */
-export function voxelCrewSlotColors(appearance: CrewAppearance): Record<string, string> {
+export function voxelCrewSlotColors(
+  appearance: CrewAppearance,
+): Record<string, string> {
   const r = resolveCrewAppearance(appearance);
   const darker = (hex: string, k: number) => {
     const c = Color3.FromHexString(hex);
@@ -83,7 +94,13 @@ export async function createVoxelCrewVisual(
     random?: () => number;
   } = {},
 ) {
-  const container: AssetContainer = await SceneLoader.LoadAssetContainerAsync("", assetUrl, scene, undefined, ".glb");
+  const container: AssetContainer = await SceneLoader.LoadAssetContainerAsync(
+    "",
+    assetUrl,
+    scene,
+    undefined,
+    ".glb",
+  );
   const root = new TransformNode("crew-placement", scene);
   root.parent = parent;
   const visual = new TransformNode("crew-model", scene);
@@ -93,7 +110,9 @@ export async function createVoxelCrewVisual(
   for (const mesh of container.meshes) setMeshRole(mesh, "crew");
   for (const node of container.rootNodes) node.parent = visual;
   const nodes = new Map(container.transformNodes.map((n) => [n.name, n]));
-  const clips = new Map(container.animationGroups.map((g) => [g.name as VoxelCrewAction, g]));
+  const clips = new Map(
+    container.animationGroups.map((g) => [g.name as VoxelCrewAction, g]),
+  );
   for (const g of clips.values()) g.stop();
 
   // ------------------------------------------------------------------ sockets
@@ -123,7 +142,10 @@ export async function createVoxelCrewVisual(
   const itemSocket = (side: "R" | "L") => {
     const node = new TransformNode(`crew-item-socket-${side}`, scene);
     node.parent = socketNodes[`socket.hand.${side}`] ?? visual;
-    node.rotationQuaternion = Quaternion.RotationAxis(Vector3.Up(), -Math.PI / 2);
+    node.rotationQuaternion = Quaternion.RotationAxis(
+      Vector3.Up(),
+      -Math.PI / 2,
+    );
     return node;
   };
   const itemSockets = { R: itemSocket("R"), L: itemSocket("L") };
@@ -186,7 +208,8 @@ export async function createVoxelCrewVisual(
       g = new AnimationGroup(`${clip}:${mask}`, scene);
       for (const ta of source.targetedAnimations) {
         const name = (ta.target as { name?: string })?.name ?? "";
-        if (UPPER.has(name) === (mask === "upper")) g.addTargetedAnimation(ta.animation, ta.target);
+        if (UPPER.has(name) === (mask === "upper"))
+          g.addTargetedAnimation(ta.animation, ta.target);
       }
       g.normalize(source.from, source.to);
       masked.set(key, g);
@@ -199,7 +222,13 @@ export async function createVoxelCrewVisual(
   let blendDuration = 0.2;
   let lastKey = "";
   const setDesired = (
-    wanted: { clip: VoxelCrewAction; mask: Mask; loop: boolean; speed: number; restart?: boolean }[],
+    wanted: {
+      clip: VoxelCrewAction;
+      mask: Mask;
+      loop: boolean;
+      speed: number;
+      restart?: boolean;
+    }[],
     reducedMotion: boolean,
   ) => {
     const keys = new Set(wanted.map((w) => `${w.clip}|${w.mask}`));
@@ -227,7 +256,8 @@ export async function createVoxelCrewVisual(
     }
     if (signature === lastKey) return;
     const next = wanted.map((w) => w.clip).join("+");
-    blendDuration = reducedMotion || !lastKey ? 0 : voxelCrewBlendDuration(lastKey, next);
+    blendDuration =
+      reducedMotion || !lastKey ? 0 : voxelCrewBlendDuration(lastKey, next);
     lastKey = signature;
     blendElapsed = 0;
     for (const [key, t] of tracks) {
@@ -258,13 +288,18 @@ export async function createVoxelCrewVisual(
   let lastMotion: VoxelCrewMotion = { moving: false, seated: false };
   let lastShot: number | bigint | undefined;
   let lastAction: number | undefined;
-  let oneShot: { clip: VoxelCrewAction; layer: "upper" | "full"; group: AnimationGroup } | undefined;
+  let oneShot:
+    | { clip: VoxelCrewAction; layer: "upper" | "full"; group: AnimationGroup }
+    | undefined;
   let layers: VoxelCrewLayers | undefined;
   let variant: VoxelCrewVariant = "male";
   let outfit: VoxelCrewOutfit = { ...VOXEL_CREW_DEFAULT_OUTFIT };
   const face = createVoxelFace(
     scene,
-    container.materials.find((m): m is PBRMaterial => m instanceof PBRMaterial && /^crew\.face(\.\d+)?$/.test(m.name)),
+    container.materials.find(
+      (m): m is PBRMaterial =>
+        m instanceof PBRMaterial && /^crew\.face(\.\d+)?$/.test(m.name),
+    ),
     options.random,
   );
 
@@ -293,15 +328,21 @@ export async function createVoxelCrewVisual(
   const hiddenRegions = new Set<VoxelCrewBodyRegion>();
   // the runtime bundle ships masculine + feminine meshes; neutral renders the masculine build
   const hasNeutral = container.meshes.some((m) => m.name.includes("-neutral"));
-  const meshVariant = () => (variant === "neutral" && !hasNeutral ? "male" : variant);
+  const meshVariant = () =>
+    variant === "neutral" && !hasNeutral ? "male" : variant;
   let hairHiddenByLook = false;
   const refreshRegions = (hairHidden = hairHiddenByLook) => {
     hairHiddenByLook = hairHidden;
     const byOutfit = new Set(voxelCrewHiddenRegions(outfit));
     for (const mesh of container.meshes) {
-      const match = /^GEO-crew-(base|hands|head|suit|gear|hair-default)-(male|female|neutral)/.exec(mesh.name);
+      const match =
+        /^GEO-crew-(base|hands|head|suit|gear|hair-default)-(male|female|neutral)/.exec(
+          mesh.name,
+        );
       if (!match) continue;
-      const region = (match[1] === "hair-default" ? "hair" : match[1]) as VoxelCrewBodyRegion;
+      const region = (
+        match[1] === "hair-default" ? "hair" : match[1]
+      ) as VoxelCrewBodyRegion;
       const hidden =
         byOutfit.has(region) ||
         hiddenRegions.has(region) ||
@@ -312,16 +353,25 @@ export async function createVoxelCrewVisual(
   // face: the driving clip's expression track each frame, plus the blink timer
   const faceObserver = scene.onBeforeRenderObservable.add(() => {
     const dt = Math.min(0.1, scene.getEngine().getDeltaTime() / 1000);
-    const driver = oneShot?.clip ?? (layers ? ("full" in layers ? layers.full : layers.upper) : undefined);
+    const driver =
+      oneShot?.clip ??
+      (layers ? ("full" in layers ? layers.full : layers.upper) : undefined);
     if (driver) {
       const g = oneShot?.group ?? clips.get(driver);
       const frame = g?.animatables[0]?.masterFrame ?? 0;
-      face.setTrackExpression(voxelCrewExpressionAt(driver, frame - (g?.from ?? 0)));
+      face.setTrackExpression(
+        voxelCrewExpressionAt(driver, frame - (g?.from ?? 0)),
+      );
     }
     face.tick(dt);
   });
-  if (options.faceAtlas) face.setAtlas(options.faceAtlas.atlas, options.faceAtlas.image);
-  else if (options.faceAtlas === undefined && typeof fetch === "function" && typeof OffscreenCanvas !== "undefined")
+  if (options.faceAtlas)
+    face.setAtlas(options.faceAtlas.atlas, options.faceAtlas.image);
+  else if (
+    options.faceAtlas === undefined &&
+    typeof fetch === "function" &&
+    typeof OffscreenCanvas !== "undefined"
+  )
     loadVoxelFaceAtlas(VOXEL_CREW_FACE_ATLAS_URL, VOXEL_CREW_FACE_IMAGE_URL)
       .then(({ atlas, image }) => {
         if (!disposed) face.setAtlas(atlas, image);
@@ -338,15 +388,31 @@ export async function createVoxelCrewVisual(
     lastMotion = motion;
     if (disposed) return;
     const fallback = resolveCrewAppearance(appearance).weapon;
-    const weapon = voxelCrewWeapon(motion, fallback === "pistol" || fallback === "rifle" ? fallback : "none");
+    const weapon = voxelCrewWeapon(
+      motion,
+      fallback === "pistol" || fallback === "rifle" ? fallback : "none",
+    );
     layers = selectVoxelCrewLayers(motion, weapon);
     // Seated / downed / dead / climbing bodies cancel any gesture or shot in progress.
-    if (oneShot && (motion.seated || motion.dead || motion.downed || motion.climbing)) oneShot = undefined;
+    if (
+      oneShot &&
+      (motion.seated || motion.dead || motion.downed || motion.climbing)
+    )
+      oneShot = undefined;
     // one-shot triggers
-    if (motion.shotSequence !== undefined && lastShot !== undefined && motion.shotSequence !== lastShot && weapon !== "none")
+    if (
+      motion.shotSequence !== undefined &&
+      lastShot !== undefined &&
+      motion.shotSequence !== lastShot &&
+      weapon !== "none"
+    )
       startOneShot(weapon === "rifle" ? "shoot_rifle" : "shoot_pistol", motion);
     lastShot = motion.shotSequence;
-    if (motion.action && motion.action.sequence !== lastAction && lastAction !== undefined)
+    if (
+      motion.action &&
+      motion.action.sequence !== lastAction &&
+      lastAction !== undefined
+    )
       startOneShot(motion.action.name, motion);
     lastAction = motion.action?.sequence ?? lastAction ?? -1;
     apply(motion);
@@ -369,20 +435,66 @@ export async function createVoxelCrewVisual(
   const apply = (motion: VoxelCrewMotion, restartOneShot = false) => {
     if (!layers) return;
     const reduced = !!motion.reducedMotion;
-    const wanted: { clip: VoxelCrewAction; mask: Mask; loop: boolean; speed: number; restart?: boolean }[] = [];
+    const wanted: {
+      clip: VoxelCrewAction;
+      mask: Mask;
+      loop: boolean;
+      speed: number;
+      restart?: boolean;
+    }[] = [];
     const shot = oneShot;
     if ("full" in layers) {
       if (shot?.layer === "full") {
-        wanted.push({ clip: shot.clip, mask: "full", loop: false, speed: 1, restart: restartOneShot });
+        wanted.push({
+          clip: shot.clip,
+          mask: "full",
+          loop: false,
+          speed: 1,
+          restart: restartOneShot,
+        });
       } else if (shot?.layer === "upper") {
-        wanted.push({ clip: layers.full, mask: "lower", loop: voxelCrewLoops(layers.full), speed: layers.speedRatio });
-        wanted.push({ clip: shot.clip, mask: "upper", loop: false, speed: 1, restart: restartOneShot });
-      } else wanted.push({ clip: layers.full, mask: "full", loop: voxelCrewLoops(layers.full), speed: layers.speedRatio });
+        wanted.push({
+          clip: layers.full,
+          mask: "lower",
+          loop: voxelCrewLoops(layers.full),
+          speed: layers.speedRatio,
+        });
+        wanted.push({
+          clip: shot.clip,
+          mask: "upper",
+          loop: false,
+          speed: 1,
+          restart: restartOneShot,
+        });
+      } else
+        wanted.push({
+          clip: layers.full,
+          mask: "full",
+          loop: voxelCrewLoops(layers.full),
+          speed: layers.speedRatio,
+        });
     } else {
-      wanted.push({ clip: layers.lower, mask: "lower", loop: true, speed: layers.speedRatio });
+      wanted.push({
+        clip: layers.lower,
+        mask: "lower",
+        loop: true,
+        speed: layers.speedRatio,
+      });
       if (shot && shot.layer === "upper")
-        wanted.push({ clip: shot.clip, mask: "upper", loop: false, speed: 1, restart: restartOneShot });
-      else wanted.push({ clip: layers.upper, mask: "upper", loop: voxelCrewLoops(layers.upper), speed: 1 });
+        wanted.push({
+          clip: shot.clip,
+          mask: "upper",
+          loop: false,
+          speed: 1,
+          restart: restartOneShot,
+        });
+      else
+        wanted.push({
+          clip: layers.upper,
+          mask: "upper",
+          loop: voxelCrewLoops(layers.upper),
+          speed: 1,
+        });
     }
     setDesired(wanted, reduced);
   };
@@ -438,7 +550,10 @@ export async function createVoxelCrewVisual(
     },
     /** Masked clip keys currently blending toward full weight. */
     get activeClips() {
-      return [...tracks].filter(([, t]) => t.target === 1).map(([k]) => k.replace("|full", "").replace("|", ":")).sort();
+      return [...tracks]
+        .filter(([, t]) => t.target === 1)
+        .map(([k]) => k.replace("|full", "").replace("|", ":"))
+        .sort();
     },
     /** Play a one-shot action (emote, reload, interact ...) over the current state. */
     /**

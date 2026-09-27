@@ -20,7 +20,11 @@ export type VoxelFaceLook = -1 | 0 | 1;
  * the CPU from atlas state and uploads it only when the state changes (expression, viseme, blink
  * frame, look, tints). Idle auto-blink every 2-6 s. Precedence: explicit expression > action track.
  */
-export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined, random: () => number = Math.random) {
+export function createVoxelFace(
+  scene: Scene,
+  material: PBRMaterial | undefined,
+  random: () => number = Math.random,
+) {
   let atlas: FaceAtlas | undefined;
   let image: FaceAtlasImage | undefined;
   let tints: FaceTints = FACE_DEFAULT_TINTS;
@@ -39,7 +43,8 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
   const state = (): FaceState => ({
     expression: explicit ?? track ?? "neutral",
     viseme,
-    blinkEyes: atlas && blinkIndex >= 0 ? atlas.blink[blinkIndex]?.eyes ?? null : null,
+    blinkEyes:
+      atlas && blinkIndex >= 0 ? (atlas.blink[blinkIndex]?.eyes ?? null) : null,
     look,
   });
 
@@ -53,10 +58,22 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
     // RawTexture rows start at the bottom; the face canvas row 0 is the top.
     const flipped = new Uint8Array(pixels.length);
     const n = atlas.cell;
-    for (let r = 0; r < n; r++) flipped.set(pixels.subarray(r * n * 4, (r + 1) * n * 4), (n - 1 - r) * n * 4);
+    for (let r = 0; r < n; r++)
+      flipped.set(
+        pixels.subarray(r * n * 4, (r + 1) * n * 4),
+        (n - 1 - r) * n * 4,
+      );
     if (!texture) {
-      texture = RawTexture.CreateRGBATexture(flipped, n, n, scene, false, false, Texture.NEAREST_SAMPLINGMODE,
-        Engine.TEXTURETYPE_UNSIGNED_BYTE);
+      texture = RawTexture.CreateRGBATexture(
+        flipped,
+        n,
+        n,
+        scene,
+        false,
+        false,
+        Texture.NEAREST_SAMPLINGMODE,
+        Engine.TEXTURETYPE_UNSIGNED_BYTE,
+      );
       texture.name = "crew-face";
       texture.wrapU = texture.wrapV = Texture.CLAMP_ADDRESSMODE;
       material.albedoTexture = texture;
@@ -69,7 +86,10 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
     if (!atlas) return;
     if (blinkIndex >= 0) {
       blinkElapsed += dt;
-      while (blinkIndex >= 0 && blinkElapsed >= atlas.blink[blinkIndex].seconds) {
+      while (
+        blinkIndex >= 0 &&
+        blinkElapsed >= atlas.blink[blinkIndex].seconds
+      ) {
         blinkElapsed -= atlas.blink[blinkIndex].seconds;
         blinkIndex = blinkIndex + 1 < atlas.blink.length ? blinkIndex + 1 : -1;
       }
@@ -145,10 +165,20 @@ export function createVoxelFace(scene: Scene, material: PBRMaterial | undefined,
 export async function loadVoxelFaceAtlas(jsonUrl: string, imageUrl: string) {
   const atlas = (await (await fetch(jsonUrl)).json()) as FaceAtlas;
   const blob = await (await fetch(imageUrl)).blob();
-  const bitmap = await createImageBitmap(blob, { premultiplyAlpha: "none", colorSpaceConversion: "none" });
+  const bitmap = await createImageBitmap(blob, {
+    premultiplyAlpha: "none",
+    colorSpaceConversion: "none",
+  });
   const canvas = new OffscreenCanvas(bitmap.width, bitmap.height);
   const ctx = canvas.getContext("2d")!;
   ctx.drawImage(bitmap, 0, 0);
   const data = ctx.getImageData(0, 0, bitmap.width, bitmap.height).data;
-  return { atlas, image: { width: bitmap.width, height: bitmap.height, data } satisfies FaceAtlasImage };
+  return {
+    atlas,
+    image: {
+      width: bitmap.width,
+      height: bitmap.height,
+      data,
+    } satisfies FaceAtlasImage,
+  };
 }

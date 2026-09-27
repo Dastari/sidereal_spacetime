@@ -7,7 +7,7 @@ import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
  * support hand onto a held item's support socket every frame, and by future foot planting.
  */
 export type TwoBoneChain = {
-  root: TransformNode;          // armature root (any ancestor with unit, non-mirrored scale below it)
+  root: TransformNode; // armature root (any ancestor with unit, non-mirrored scale below it)
   upper: TransformNode;
   lower: TransformNode;
   end: TransformNode;
@@ -15,7 +15,8 @@ export type TwoBoneChain = {
   effector: TransformNode;
 };
 
-const rel = (node: TransformNode, rootInv: Matrix) => node.computeWorldMatrix(true).multiply(rootInv);
+const rel = (node: TransformNode, rootInv: Matrix) =>
+  node.computeWorldMatrix(true).multiply(rootInv);
 
 function setRel(node: TransformNode, desiredRel: Matrix, rootInv: Matrix) {
   const parent = node.parent as TransformNode | null;
@@ -59,7 +60,11 @@ function rotateRel(node: TransformNode, q: Quaternion, rootInv: Matrix) {
  * its current bend plane (pole = current elbow offset), so animated arm character is preserved.
  * Returns the remaining effector error in metres (0 when reachable).
  */
-export function solveTwoBone(chain: TwoBoneChain, targetWorld: Matrix, matchRotation = true): number {
+export function solveTwoBone(
+  chain: TwoBoneChain,
+  targetWorld: Matrix,
+  matchRotation = true,
+): number {
   const rootInv = chain.root.computeWorldMatrix(true).clone().invert();
   const target = targetWorld.multiply(rootInv);
   // desired end transform = target * inverse(end->effector)
@@ -80,13 +85,22 @@ export function solveTwoBone(chain: TwoBoneChain, targetWorld: Matrix, matchRota
   const h = Math.sqrt(Math.max(0, l1 * l1 - a * a));
   let pole = E.subtract(S);
   pole = pole.subtract(dir.scale(Vector3.Dot(pole, dir)));
-  if (pole.lengthSquared() < 1e-8) pole = new Vector3(0, 0, 1).subtract(dir.scale(dir.z));
+  if (pole.lengthSquared() < 1e-8)
+    pole = new Vector3(0, 0, 1).subtract(dir.scale(dir.z));
   pole.normalize();
   const Et = S.add(dir.scale(a)).add(pole.scale(h));
-  rotateRel(chain.upper, rotationBetween(E.subtract(S), Et.subtract(S)), rootInv);
+  rotateRel(
+    chain.upper,
+    rotationBetween(E.subtract(S), Et.subtract(S)),
+    rootInv,
+  );
   const E2 = rel(chain.lower, rootInv).getTranslation();
   const W2 = rel(chain.end, rootInv).getTranslation();
-  rotateRel(chain.lower, rotationBetween(W2.subtract(E2), Wt.subtract(E2)), rootInv);
+  rotateRel(
+    chain.lower,
+    rotationBetween(W2.subtract(E2), Wt.subtract(E2)),
+    rootInv,
+  );
   if (matchRotation) {
     const pos = rel(chain.end, rootInv).getTranslation();
     const s = new Vector3();
