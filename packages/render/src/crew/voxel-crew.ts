@@ -36,6 +36,7 @@ import {
   voxelCrewActionLayer,
   voxelCrewBlendDuration,
   voxelCrewLoops,
+  voxelCrewSpeedRatio,
   voxelCrewWeapon,
   type VoxelCrewLayers,
   type VoxelCrewMotion,
@@ -110,8 +111,8 @@ export async function createVoxelCrewVisual(
   for (const mesh of container.meshes) setMeshRole(mesh, "crew");
   for (const node of container.rootNodes) node.parent = visual;
   const nodes = new Map(container.transformNodes.map((n) => [n.name, n]));
-  const clips = new Map(
-    container.animationGroups.map((g) => [g.name as VoxelCrewAction, g]),
+  const clips = new Map<string, AnimationGroup>(
+    container.animationGroups.map((g) => [g.name, g]),
   );
   for (const g of clips.values()) g.stop();
 
@@ -293,6 +294,11 @@ export async function createVoxelCrewVisual(
     | undefined;
   let layers: VoxelCrewLayers | undefined;
   let variant: VoxelCrewVariant = "male";
+  let armedClass: string | null = null;
+  const armedLoops = (clip: string) =>
+    /\.(idle_armed|walk_armed|run_armed|aim)$/.test(clip);
+  const loops = (clip: VoxelCrewAction) =>
+    clip.includes(".") ? armedLoops(clip) : voxelCrewLoops(clip);
   let outfit: VoxelCrewOutfit = { ...VOXEL_CREW_DEFAULT_OUTFIT };
   const face = createVoxelFace(
     scene,
@@ -393,6 +399,37 @@ export async function createVoxelCrewVisual(
       fallback === "pistol" || fallback === "rifle" ? fallback : "none",
     );
     layers = selectVoxelCrewLayers(motion, weapon);
+    if (
+      armedClass &&
+      !motion.seated &&
+      !motion.dead &&
+      !motion.downed &&
+      !motion.climbing
+    ) {
+      const has = (c: string) => clips.has(`${armedClass}.${c}`);
+      const name = (c: string) => `${armedClass}.${c}` as VoxelCrewAction;
+      const aimClip =
+        motion.combat && !motion.sprinting && has("aim")
+          ? name("aim")
+          : undefined;
+      if (motion.moving) {
+        const loco =
+          motion.sprinting && has("run_armed")
+            ? name("run_armed")
+            : has("walk_armed")
+              ? name("walk_armed")
+              : undefined;
+        const speedRatio = voxelCrewSpeedRatio(
+          motion.sprinting ? "run" : "walk",
+          motion,
+        );
+        if (loco)
+          layers = aimClip
+            ? { lower: loco, upper: aimClip, speedRatio }
+            : { full: loco, speedRatio };
+      } else if (has("idle_armed"))
+        layers = { full: aimClip ?? name("idle_armed"), speedRatio: 1 };
+    }
     // Seated / downed / dead / climbing bodies cancel any gesture or shot in progress.
     if (
       oneShot &&
@@ -406,7 +443,14 @@ export async function createVoxelCrewVisual(
       motion.shotSequence !== lastShot &&
       weapon !== "none"
     )
-      startOneShot(weapon === "rifle" ? "shoot_rifle" : "shoot_pistol", motion);
+      startOneShot(
+        armedClass && clips.has(`${armedClass}.shoot`)
+          ? (`${armedClass}.shoot` as VoxelCrewAction)
+          : weapon === "rifle"
+            ? "shoot_rifle"
+            : "shoot_pistol",
+        motion,
+      );
     lastShot = motion.shotSequence;
     if (
       motion.action &&
@@ -456,7 +500,7 @@ export async function createVoxelCrewVisual(
         wanted.push({
           clip: layers.full,
           mask: "lower",
-          loop: voxelCrewLoops(layers.full),
+          loop: loops(layers.full),
           speed: layers.speedRatio,
         });
         wanted.push({
@@ -470,7 +514,7 @@ export async function createVoxelCrewVisual(
         wanted.push({
           clip: layers.full,
           mask: "full",
-          loop: voxelCrewLoops(layers.full),
+          loop: loops(layers.full),
           speed: layers.speedRatio,
         });
     } else {
@@ -492,7 +536,7 @@ export async function createVoxelCrewVisual(
         wanted.push({
           clip: layers.upper,
           mask: "upper",
-          loop: voxelCrewLoops(layers.upper),
+          loop: loops(layers.upper),
           speed: 1,
         });
     }
@@ -511,6 +555,7 @@ export async function createVoxelCrewVisual(
     },
     sockets,
     socketNodes,
+    skeleton: container.skeletons[0],
     itemSockets,
     joints,
     attachPart,
@@ -562,6 +607,32 @@ export async function createVoxelCrewVisual(
      */
     setMotionOverride(next: Partial<VoxelCrewMotion> | undefined) {
       override = next;
+      update(lastInput);
+    },
+    /**
+     * Register clips baked on a copy of crew_rig (e.g. CHAR-WEAPONS armed-actions.glb): each group is
+     * retargeted onto this body's joints by bone name. Returns the registered clip names.
+     */
+    addClips(source: AssetContainer) {
+      const names: string[] = [];
+      for (const group of source.animationGroups) {
+        const clone = group.clone(
+          group.name,
+          (target: { name?: string }) =>
+            (target?.name &&
+              (joints.get(target.name) ?? nodes.get(target.name))) ||
+            target,
+        );
+        clone.stop();
+        clips.set(group.name, clone);
+        owned.push(clone);
+        names.push(group.name);
+      }
+      return names;
+    },
+    /** Armed class ("rifle", "pistol", ...) whose `<class>.<clip>` clips drive idle/walk/run/aim/shoot; null = base set. */
+    setArmedClass(cls: string | null) {
+      armedClass = cls;
       update(lastInput);
     },
     play(action: VoxelCrewAction) {
