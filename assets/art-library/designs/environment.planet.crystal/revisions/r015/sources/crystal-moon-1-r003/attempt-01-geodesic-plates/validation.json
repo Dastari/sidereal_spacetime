@@ -1,0 +1,8 @@
+{
+  "referenceId": "planets--crystal-moon-1",
+  "triangles": 3432,
+  "panels": 189,
+  "materialDefinitionsExact": true,
+  "connectedNativeSurface": true,
+  "allLODIdenticalSource": true
+}

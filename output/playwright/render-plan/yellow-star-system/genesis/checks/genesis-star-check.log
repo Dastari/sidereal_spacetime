@@ -1,0 +1,20 @@
+
+> sidereal-spacetime@0.2.0 check
+> npm run typecheck && npm test && python3 scripts/check_docs.py
+
+
+> sidereal-spacetime@0.2.0 typecheck
+> tsc --noEmit
+
+packages/render/src/flight-collision-debug.test.ts(6,40): error TS2307: Cannot find module './debug-collision-geometry' or its corresponding type declarations.
+packages/render/src/flight-collision-debug.test.ts(28,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(29,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(30,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(31,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(43,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(44,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(45,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.test.ts(46,34): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/render/src/flight-collision-debug.ts(4,42): error TS2307: Cannot find module './debug-collision-geometry' or its corresponding type declarations.
+packages/render/src/layout-native-walls.ts(17,49): error TS2307: Cannot find module './scene-material-registration' or its corresponding type declarations.
+packages/render/src/native-wall-batches.ts(6,49): error TS2307: Cannot find module './scene-material-registration' or its corresponding type declarations.

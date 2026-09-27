@@ -7,6 +7,15 @@ import {
 } from "./construction-device-power";
 import { replacePlayerWayfarer } from "./wayfarer-replacement";
 import * as rebuiltWayfarer from "./wayfarer-rebuild-installation";
+import { systemZone, shipZoneState, shipZoneProjection } from "./zone-tables";
+import { stepZones, ownShipZones as readOwnShipZones } from "./zones";
+import {
+  systemMapDefinition,
+  fieldAsteroid,
+  systemMapEdit,
+} from "./system-map-tables";
+import * as systemMap from "./system-map";
+import { migrateSolarSystem } from "./solar-system-migration";
 import { constructionCargoAssembly } from "./construction-cargo-assembly-tables";
 import {
   constructionCargoGrid,
@@ -103,6 +112,7 @@ import {
 } from "./construction-pilot-authority";
 import {
   worldSystem,
+  celestialMigrationReceipt,
   shipWorldMotion,
   systemBody,
   bodyWorldMotion,
@@ -290,6 +300,8 @@ const movementTimer = table(
   { scheduledId: t.u64().primaryKey().autoInc(), scheduledAt: t.scheduleAt() },
 );
 const db = schema({
+  systemZone,
+  shipZoneState,
   constructionCargoAssembly,
   constructionCargoGrid,
   constructionCargoPlacement,
@@ -312,7 +324,11 @@ const db = schema({
   constructionPassengerReceipt,
   constructionPilotSeat,
   constructionFlightReview,
+  systemMapDefinition,
+  systemMapEdit,
+  fieldAsteroid,
   worldSystem,
+  celestialMigrationReceipt,
   shipWorldMotion,
   systemBody,
   bodyWorldMotion,
@@ -696,6 +712,7 @@ export const stepWorld = db.reducer(
   (ctx) => {
     if (!ctx.sender.isEqual(ctx.databaseIdentity))
       throw new SenderError("Server schedule only");
+    migrateSolarSystem(ctx.db, ctx.timestamp.microsSinceUnixEpoch);
     auth.expireSessions(ctx);
     construction.expireGrants(ctx);
     passengers.expireShipPassengers(ctx);
@@ -748,6 +765,8 @@ export const stepWorld = db.reducer(
           },
           shipId,
         ),
+      zones: (systemId, ships, trace, tick) =>
+        stepZones(ctx, systemId, ships, trace, tick),
       canPilot: (characterId) => {
         const actor = ctx.db.character.id.find(characterId);
         return (
@@ -1047,6 +1066,16 @@ export const enterConstructionReview = db.reducer(
     operationId: t.string(),
   },
   auth.gameAction(constructionInstances.enterReview, true),
+);
+export const switchConstructionReview = db.reducer(
+  {
+    instanceId: t.string(),
+    expectedInstanceRevision: t.u64(),
+    expectedVisitId: t.string(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(constructionInstances.switchReview, true),
 );
 export const leaveConstructionReview = db.reducer(
   {
@@ -1517,4 +1546,41 @@ export const currentInteriorCrew = db.view(
   { name: "current_interior_crew", public: true },
   t.array(passengerViews.interiorCrewProjection),
   auth.gameView(passengerViews.currentInteriorCrew),
+);
+
+export const ownSystemMaps = db.view(
+  { name: "own_system_maps", public: true },
+  t.array(systemMap.mapProjection),
+  auth.gameView(systemMap.ownMaps),
+);
+export const ownMapShips = db.view(
+  { name: "own_map_ships", public: true },
+  t.array(systemMap.mapShipProjection),
+  auth.gameView(systemMap.ownMapShips),
+);
+export const admittedSystemScapes = db.view(
+  { name: "admitted_system_scapes", public: true },
+  t.array(systemMap.systemScapeProjection),
+  auth.gameView(systemMap.admittedSystemScapes),
+);
+export const applySystemMap = db.reducer(
+  {
+    documentJson: t.string(),
+    expectedRevision: t.u64(),
+    sourceFingerprint: t.string(),
+    operationId: t.string(),
+  },
+  auth.gameAction(systemMap.applySystemMap, true),
+);
+
+export const nearbyFieldAsteroids = db.view(
+  { name: "nearby_field_asteroids", public: true },
+  t.array(systemMap.nearbyFieldProjection),
+  auth.gameView(systemMap.nearbyFieldAsteroids),
+);
+
+export const ownShipZones = db.view(
+  { name: "own_ship_zones", public: true },
+  t.array(shipZoneProjection),
+  auth.gameView(readOwnShipZones),
 );

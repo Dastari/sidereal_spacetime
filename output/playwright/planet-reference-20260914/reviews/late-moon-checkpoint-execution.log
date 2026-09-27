@@ -1,0 +1,4 @@
+{'family': 'ice', 'checkpoint': 28, 'pinned_main_revision': 26, 'files': 79, 'bytes': 74103132}
+{'family': 'gas-giant', 'checkpoint': 7, 'pinned_main_revision': 5, 'files': 179, 'bytes': 97002134}
+{'family': 'volcanic', 'checkpoint': 25, 'pinned_main_revision': 23, 'files': 275, 'bytes': 188603329}
+{'family': 'crystal', 'checkpoint': 15, 'pinned_main_revision': 13, 'files': 387, 'bytes': 71041965}

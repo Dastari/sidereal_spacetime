@@ -1,0 +1,94 @@
+{
+  "stats": {
+    "style": "volcanic",
+    "seed": 38,
+    "frames": 19,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "requestedLOD": 0,
+      "buildMs": 980.5,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 1708.8999996185303,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 7,
+    "triangles": 689246,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-volcanic-lods",
+        "role": "planet",
+        "nativePlanet": true,
+        "nativeRevision": "volcanic-r018",
+        "activeLOD": 0,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-native-volcanic",
+        "role": "planet",
+        "nativePlanet": true,
+        "nativeRevision": "volcanic-r018",
+        "seed": 38,
+        "triangles": 132496,
+        "litVertices": 140105,
+        "minimumAO": 0.48,
+        "maximumRadiance": 1.5,
+        "buriedBaseMaxClearance": -0.015050093083488814,
+        "regionalGroupCount": 19,
+        "nativeUnitCount": 57,
+        "actualCells": 12,
+        "lod": 0,
+        "smokeImplemented": true,
+        "artApproval": "unapproved draft",
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 6,
+      "normalBias": 0.006
+    },
+    {
+      "casters": 6,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "volcanic",
+    "revision": "volcanic-r023",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": true,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=volcanic&seed=38&candidate=1&capture=1789358468639452477&shadowBias=0.006&glow=1",
+  "images": {
+    "corrected-seed38.png": "ecf49e267d583580eb97cf5e11140563cc1ba28eb8b672ee35f81615554bcd20",
+    "corrected-seed38-angle2.png": "a91f6142c2ffad672b995ab3a2745bfdceeaa4e0e5c84dfa1d6cbe653cc1e2c6",
+    "corrected-seed38-reference-scale.png": "046b6323d71c5abe1e0a1cf4a1ab00c28145040c9df17d6db767b58d5c4d8660"
+  },
+  "kitSha256": "e591d10cc0810958484bc058ec0b3d0307bde8acd8ff44d1a40d8c50116f3ecf"
+}

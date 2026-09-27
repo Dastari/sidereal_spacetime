@@ -1,0 +1,33 @@
+
+> sidereal-spacetime@0.1.0 art:reference:check
+> tsc -p scripts/art_library/reference_review.tsconfig.json && vitest run --config scripts/art_library/reference_review.vitest.config.ts && python3 -m unittest discover -s scripts/art_library -p test_*reference*.py && python3 -m unittest discover -s scripts/art_library -p test_native_kit_attribute_audit.py && python3 -m unittest discover -s scripts/art_library -p test_preserve_native_kit_ior.py && python3 -m unittest discover -s scripts/art_library -p test_ice_moon_runtime_projection.py
+
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  31 passed (31)
+      Tests  165 passed (165)
+   Start at  16:05:23
+   Duration  183.21s (transform 678ms, setup 0ms, import 7.00s, tests 173.75s, environment 2ms)
+
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.011s
+
+OK
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.008s
+
+OK

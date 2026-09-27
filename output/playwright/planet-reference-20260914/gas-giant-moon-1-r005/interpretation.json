@@ -1,0 +1,59 @@
+{
+  "referenceId": "planets--FILL",
+  "source": "r004",
+  "sourceSHA256": "51cc57d8c61b96e168e413a83f63caad69602b42e9ee70c38450d492ca8a5dce",
+  "hypothesis": "Bounded luminous mineral facets intentionally interpret ambiguous localized magenta illustrated highlights; not recovered physical truth.",
+  "changes": {
+    "role6": {
+      "name": "gas-giant-moon-1-violet-mineral",
+      "linearColor": [
+        1,
+        1,
+        1
+      ],
+      "roughness": 1,
+      "metallic": 1,
+      "baseColorTexture": "rocky-6-albedo.png",
+      "metallicRoughnessTexture": "rocky-6-orm.png",
+      "textureColorSpace": "sRGB",
+      "invertY": false,
+      "ior": 2.2,
+      "clearcoatFactor": 1,
+      "clearcoatRoughnessFactor": 0.08,
+      "emissiveColor": [
+        0.42,
+        0.015,
+        0.9
+      ],
+      "emissiveStrength": 0.7
+    },
+    "role7": {
+      "name": "gas-giant-moon-1-pink-mineral",
+      "linearColor": [
+        1,
+        1,
+        1
+      ],
+      "roughness": 1,
+      "metallic": 1,
+      "baseColorTexture": "rocky-7-albedo.png",
+      "metallicRoughnessTexture": "rocky-7-orm.png",
+      "textureColorSpace": "sRGB",
+      "invertY": false,
+      "ior": 2.2,
+      "clearcoatFactor": 1,
+      "clearcoatRoughnessFactor": 0.08,
+      "emissiveColor": [
+        1.0,
+        0.025,
+        0.44
+      ],
+      "emissiveStrength": 1.1
+    }
+  },
+  "geometryAndRoles": "all11 variants retain exact geometry, normals, UVs and indices; only selected existing rim-sector face material assignments broaden",
+  "originalSixMaterials": "exact",
+  "all16TextureBytes": "exact",
+  "coverage": "Existing single regional mineral sector expands to outer rim facets after emission-only78px preview remained unreadable; no new geometry or population. Actual whole-moon reference-scale gate remains open.",
+  "approval": null
+}

@@ -83,7 +83,7 @@ export interface HullViewState {
   selected: string;
   visible: ReadonlySet<PartCategory>;
   preview?: LayoutPreviewPolicy;
-  tool: "select" | "orbit" | "place" | "measure";
+  tool: "select" | "orbit" | "place" | "measure" | "pan";
   assetId: string;
   height: number;
   snap: number;
@@ -174,6 +174,16 @@ export function createHullViewport(
     buttons: number[];
   };
   pointerInput.buttons = [1, 2];
+  let space = false;
+  const navigation = () => {
+    const pan = space || state?.tool === "pan";
+    pointerInput.buttons = pan || state?.tool === "orbit" ? [0, 1, 2] : [1, 2];
+    camera.movement.input.setInteraction(
+      "pointer",
+      { button: 0 },
+      pan ? "pan" : "rotate",
+    );
+  };
   camera.movement.input.addEntry({
     source: "pointer",
     button: 1,
@@ -501,9 +511,12 @@ export function createHullViewport(
     requestRender();
     if (!state || e.button !== 0) return;
     canvas.focus({ preventScroll: true });
+    if (state.tool === "orbit" || state.tool === "pan" || space) {
+      down = undefined;
+      return;
+    }
     down = { x: e.clientX, y: e.clientY };
     if (state.tool === "measure") return;
-    if (state.tool === "orbit") return;
     if (state.tool === "place") return;
     const id = pick(e)?.pickedMesh?.metadata?.partId as string | undefined;
     if (!id) {
@@ -626,6 +639,8 @@ export function createHullViewport(
     }
   }
   function cancel() {
+    space = false;
+    navigation();
     requestRender();
     if (drag) {
       const node = nodes.get(drag.id)?.node;
@@ -675,6 +690,11 @@ export function createHullViewport(
     }
   };
   const key = (e: KeyboardEvent) => {
+    if (e.code === "Space" && (document.activeElement === canvas || space)) {
+      e.preventDefault();
+      space = e.type === "keydown";
+      navigation();
+    }
     if (e.key === "Escape") cancel();
   };
   const context = (e: Event) => e.preventDefault();
@@ -688,6 +708,7 @@ export function createHullViewport(
   canvas.addEventListener("wheel", requestRender, { passive: true });
   window.addEventListener("blur", cancel);
   window.addEventListener("keydown", key);
+  window.addEventListener("keyup", key);
   const syncSurface = () => {
     engine.setHardwareScalingLevel(
       editorRenderScale(
@@ -741,17 +762,8 @@ export function createHullViewport(
     grid.position.y = next.height - origin.y - 0.025;
     if (next.tool !== "place") hideGhost();
     loadNeeded(next.parts);
-    const lockTop = next.lockTop || next.preview?.lockTop;
-    pointerInput.buttons = lockTop
-      ? []
-      : next.tool === "orbit" && !externalMeasuring
-        ? [0, 1, 2]
-        : [1, 2];
-    camera.mode = next.projection === "3D" && !lockTop ? 0 : 1;
-    const orientation = lockTop
-      ? { alpha: Math.PI / 2, beta: 0.000001 }
-      : layoutViewOrientation(projection, next.projection);
-    camera.lowerBetaLimit = lockTop ? 0.000001 : 0.03;
+    navigation();
+    const orientation = layoutViewOrientation(projection, next.projection);
     projection = next.projection;
     if (orientation) {
       camera.alpha = orientation.alpha;
@@ -1146,6 +1158,7 @@ export function createHullViewport(
       canvas.removeEventListener("wheel", requestRender);
       window.removeEventListener("blur", cancel);
       window.removeEventListener("keydown", key);
+      window.removeEventListener("keyup", key);
       engine.stopRenderLoop();
       // Let in-flight GLB/BRDF texture work finish before releasing its engine.
       // Switching editor modes during a load must not execute a shader callback

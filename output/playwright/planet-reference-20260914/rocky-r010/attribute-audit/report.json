@@ -1,0 +1,733 @@
+[
+  {
+    "candidate": "rocky-r010",
+    "kit": "output/playwright/planet-reference-20260914/rocky-r010/kit.json",
+    "kitSha256": "fdb5964a2c4dcde7889fd821a0b4625664eae477be62130c7ea99794a5d98de2",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "crater-large",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/crater-large.glb",
+        "glbSha256": "cfbee9a340838a657c709b51a2455885378948ce7cdf57347bb6b6cc651ec9d1",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.374203324862029e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crater-broken",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/crater-broken.glb",
+        "glbSha256": "8bfa00fb960db3250d7983d5432b2d21bbe765c7774a2d937bc58d15706b7348",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.527892878563046e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crater-small",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/crater-small.glb",
+        "glbSha256": "527648b433cb9bf37165dc90dc0b68a21768ca41eb8288d53e492e3a152c845d",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.569265725237314e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "pale-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "fractured-shelf",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/fractured-shelf.glb",
+        "glbSha256": "887a72e1adaed8422a561472d096a18a50662b89d4955697bf0bde36be479e36",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.935736447153988e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "angular-outcrops",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/angular-outcrops.glb",
+        "glbSha256": "485ad96dff497a3e695e09785baed429ca31f3e2e94e7ccd448c3cf34dfba727",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.771974163605368e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "mineral-seam",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/mineral-seam.glb",
+        "glbSha256": "4c24fbb106fbac136d27ced14c38e459630ff38d3f4da397307c5defb8adbdec",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.217579356702141e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "fractured-side",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "warm-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "warm-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "battered-region-a",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/battered-region-a.glb",
+        "glbSha256": "c5e09d5181a511acdfbbb7a5315eeb005ffb4094b452619b173863c2f8920b55",
+        "jsonCorners": 41634,
+        "glbCorners": 41634,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 9.140146923260603e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "warm-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "warm-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "battered-region-b",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/battered-region-b.glb",
+        "glbSha256": "fff247bd2803dc77a53456c0911493f0a275fa9d20a3da60f7f27397f4e697d2",
+        "jsonCorners": 41370,
+        "glbCorners": 41370,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.679311839534963e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "sunlit-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "dark-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "fractured-side",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "warm-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "warm-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/ground-sphere.glb",
+        "glbSha256": "9981f0b3ccd4aa2ff4a48eca1a7dadfc527436bdd71671da4d79ba1131d79f35",
+        "jsonCorners": 15360,
+        "glbCorners": 15360,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.969896464190269e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/ground-sphere-medium.glb",
+        "glbSha256": "c4088b5afa60759dd6d7333057177cc0a4095eb04a5bd04bf2afc6ed2c1fa721",
+        "jsonCorners": 3840,
+        "glbCorners": 3840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.695697840018373e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/rocky-r010/ground-sphere-low.glb",
+        "glbSha256": "897c791a26d5d90292e7ee3bc14f4d9a85eb97b3c77befccd68ace04c4b25452",
+        "jsonCorners": 960,
+        "glbCorners": 960,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.110542189241277e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "regolith-lilac",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "regolith-lilac",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 11,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  }
+]

@@ -1,0 +1,88 @@
+{
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 39,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 831.2000007629395,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 1339.2999992370605,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 6,
+    "triangles": 342258,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "lod": 0,
+        "resolution": 54,
+        "requestedResolution": 96,
+        "budgetReduced": true,
+        "trees": 0,
+        "terrainFaces": 74621,
+        "enabled": false
+      }
+    ]
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 65.50943396226415
+  },
+  "shadows": [
+    {
+      "casters": 5,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "gas-giant-moon-1-r001",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "shadows_off": false,
+    "reference_radius": 65.50943396226415
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&capture=1789359998437542975&shadowBias=0.006",
+  "images": {
+    "corrected-seed38.png": "b3a6f7a01e76cb6bd447a7a20072fcb2964244c0ddc62b33d90592da1bcf2cd7",
+    "corrected-seed38-angle2.png": "9c8aac430c5e915653b7f9d0031100b3885d2336e2a92053eea8ce220c3abcba",
+    "corrected-seed38-reference-scale.png": "dde66bcd80211f847038253cdac3341717a94e1e67495958ba7dc45aa8d6b03b"
+  },
+  "kitSha256": "993c53f659cec4af7849e7b76de924d28eb4af477bea4730afd7f36b04abff64"
+}

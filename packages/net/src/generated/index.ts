@@ -37,13 +37,12 @@ import {
 import AcceptIdentityLinkReducer from "./accept_identity_link_reducer";
 import ActivateAuthoredShipFlightReducer from "./activate_authored_ship_flight_reducer";
 import ActivateInventoryHotbarReducer from "./activate_inventory_hotbar_reducer";
+import ApplySystemMapReducer from "./apply_system_map_reducer";
 import AssignInventoryHotbarReducer from "./assign_inventory_hotbar_reducer";
 import BeginAuthoredFlightReviewReducer from "./begin_authored_flight_review_reducer";
 import BeginConstructionTraversalReducer from "./begin_construction_traversal_reducer";
 import BindGameSessionReducer from "./bind_game_session_reducer";
-import BoardShipPassengerReducer from "./board_ship_passenger_reducer";
 import CancelConstructionTraversalReducer from "./cancel_construction_traversal_reducer";
-import ChangeShipFlightFittingReducer from "./change_ship_flight_fitting_reducer";
 import ClaimCharacterArmoryReducer from "./claim_character_armory_reducer";
 import ClaimInputControlReducer from "./claim_input_control_reducer";
 import ClaimStarterKitReducer from "./claim_starter_kit_reducer";
@@ -53,7 +52,6 @@ import EnterConstructionReviewReducer from "./enter_construction_review_reducer"
 import EnterLabReducer from "./enter_lab_reducer";
 import EquipInventoryItemReducer from "./equip_inventory_item_reducer";
 import FireWeaponReducer from "./fire_weapon_reducer";
-import GrantShipPassengerReducer from "./grant_ship_passenger_reducer";
 import InstallAuthoredShipFlightReducer from "./install_authored_ship_flight_reducer";
 import InstallCargoHandlingFixtureReducer from "./install_cargo_handling_fixture_reducer";
 import InteractObjectReducer from "./interact_object_reducer";
@@ -64,24 +62,19 @@ import MoveCargoCarrierReducer from "./move_cargo_carrier_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
 import RefitExistingWayfarerReducer from "./refit_existing_wayfarer_reducer";
-import RefitRebuiltWayfarerReducer from "./refit_rebuilt_wayfarer_reducer";
 import ReleaseInputControlReducer from "./release_input_control_reducer";
 import RenameShipReducer from "./rename_ship_reducer";
-import ReplaceLegacyPlayerWayfarerReducer from "./replace_legacy_player_wayfarer_reducer";
 import RequestIdentityLinkReducer from "./request_identity_link_reducer";
 import ReturnAuthoredFlightReviewReducer from "./return_authored_flight_review_reducer";
-import ReturnShipPassengerReducer from "./return_ship_passenger_reducer";
-import RevokeShipPassengerReducer from "./revoke_ship_passenger_reducer";
 import SaveConstructionDraftReducer from "./save_construction_draft_reducer";
 import SetCharacterAppearanceReducer from "./set_character_appearance_reducer";
 import SetCombatAimReducer from "./set_combat_aim_reducer";
-import SetConstructionComputerPowerReducer from "./set_construction_computer_power_reducer";
 import SetConstructionDoorReducer from "./set_construction_door_reducer";
-import SetConstructionEnginePowerReducer from "./set_construction_engine_power_reducer";
 import SetConstructionGrantReducer from "./set_construction_grant_reducer";
 import SetIntentReducer from "./set_intent_reducer";
 import SpawnConstructionBlueprintReducer from "./spawn_construction_blueprint_reducer";
 import StoreAllInventoryItemsReducer from "./store_all_inventory_items_reducer";
+import SwitchConstructionReviewReducer from "./switch_construction_review_reducer";
 import TakeAllInventoryItemsReducer from "./take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "./transfer_inventory_item_reducer";
 import TransferScopedCargoItemReducer from "./transfer_scoped_cargo_item_reducer";
@@ -91,14 +84,11 @@ import UseStationReducer from "./use_station_reducer";
 // Import all procedure arg schemas
 
 // Import all table schema definitions
-import CurrentInteriorCrewRow from "./current_interior_crew_table";
-import CurrentPassengerInteriorRow from "./current_passenger_interior_table";
+import AdmittedSystemScapesRow from "./admitted_system_scapes_table";
+import NearbyFieldAsteroidsRow from "./nearby_field_asteroids_table";
 import OwnActuatorOutputsRow from "./own_actuator_outputs_table";
 import OwnAppearanceRow from "./own_appearance_table";
-import OwnAuthoredFlightActuatorsRow from "./own_authored_flight_actuators_table";
 import OwnAuthoredFlightFittingsRow from "./own_authored_flight_fittings_table";
-import OwnAuthoredFlightPhysicsRow from "./own_authored_flight_physics_table";
-import OwnAuthoredFlightPowerFittingsRow from "./own_authored_flight_power_fittings_table";
 import OwnAuthoredFlightsRow from "./own_authored_flights_table";
 import OwnCargoCarriersRow from "./own_cargo_carriers_table";
 import OwnCargoGridsRow from "./own_cargo_grids_table";
@@ -127,15 +117,15 @@ import OwnInventoryContainersRow from "./own_inventory_containers_table";
 import OwnInventoryHotbarRow from "./own_inventory_hotbar_table";
 import OwnInventoryItemsRow from "./own_inventory_items_table";
 import OwnInventoryStateRow from "./own_inventory_state_table";
+import OwnMapShipsRow from "./own_map_ships_table";
 import OwnNativeAirlocksRow from "./own_native_airlocks_table";
-import OwnPassengerGrantsRow from "./own_passenger_grants_table";
-import OwnPassengerVisitRow from "./own_passenger_visit_table";
 import OwnReachableCargoContainersRow from "./own_reachable_cargo_containers_table";
 import OwnReachableCargoItemsRow from "./own_reachable_cargo_items_table";
+import OwnShipZonesRow from "./own_ship_zones_table";
 import OwnShipsRow from "./own_ships_table";
 import OwnSpaceBodiesRow from "./own_space_bodies_table";
 import OwnStationsRow from "./own_stations_table";
-import OwnWayfarerRebuildOfferRow from "./own_wayfarer_rebuild_offer_table";
+import OwnSystemMapsRow from "./own_system_maps_table";
 import OwnWayfarerRefitAttachmentsRow from "./own_wayfarer_refit_attachments_table";
 import OwnWayfarerRefitOfferRow from "./own_wayfarer_refit_offer_table";
 import OwnWorldAdmissionRow from "./own_world_admission_table";
@@ -148,20 +138,20 @@ import VisibleShipMotionRow from "./visible_ship_motion_table";
 
 /** The schema information for all tables in this module. This is defined the same was as the tables would have been defined in the server. */
 const tablesSchema = __schema({
-  currentInteriorCrew: __table({
-    name: 'current_interior_crew',
+  admittedSystemScapes: __table({
+    name: 'admitted_system_scapes',
     indexes: [
     ],
     constraints: [
     ],
-  }, CurrentInteriorCrewRow),
-  currentPassengerInterior: __table({
-    name: 'current_passenger_interior',
+  }, AdmittedSystemScapesRow),
+  nearbyFieldAsteroids: __table({
+    name: 'nearby_field_asteroids',
     indexes: [
     ],
     constraints: [
     ],
-  }, CurrentPassengerInteriorRow),
+  }, NearbyFieldAsteroidsRow),
   ownActuatorOutputs: __table({
     name: 'own_actuator_outputs',
     indexes: [
@@ -176,13 +166,6 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnAppearanceRow),
-  ownAuthoredFlightActuators: __table({
-    name: 'own_authored_flight_actuators',
-    indexes: [
-    ],
-    constraints: [
-    ],
-  }, OwnAuthoredFlightActuatorsRow),
   ownAuthoredFlightFittings: __table({
     name: 'own_authored_flight_fittings',
     indexes: [
@@ -190,20 +173,6 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnAuthoredFlightFittingsRow),
-  ownAuthoredFlightPhysics: __table({
-    name: 'own_authored_flight_physics',
-    indexes: [
-    ],
-    constraints: [
-    ],
-  }, OwnAuthoredFlightPhysicsRow),
-  ownAuthoredFlightPowerFittings: __table({
-    name: 'own_authored_flight_power_fittings',
-    indexes: [
-    ],
-    constraints: [
-    ],
-  }, OwnAuthoredFlightPowerFittingsRow),
   ownAuthoredFlights: __table({
     name: 'own_authored_flights',
     indexes: [
@@ -400,6 +369,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnInventoryStateRow),
+  ownMapShips: __table({
+    name: 'own_map_ships',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnMapShipsRow),
   ownNativeAirlocks: __table({
     name: 'own_native_airlocks',
     indexes: [
@@ -407,20 +383,6 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnNativeAirlocksRow),
-  ownPassengerGrants: __table({
-    name: 'own_passenger_grants',
-    indexes: [
-    ],
-    constraints: [
-    ],
-  }, OwnPassengerGrantsRow),
-  ownPassengerVisit: __table({
-    name: 'own_passenger_visit',
-    indexes: [
-    ],
-    constraints: [
-    ],
-  }, OwnPassengerVisitRow),
   ownReachableCargoContainers: __table({
     name: 'own_reachable_cargo_containers',
     indexes: [
@@ -435,6 +397,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnReachableCargoItemsRow),
+  ownShipZones: __table({
+    name: 'own_ship_zones',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnShipZonesRow),
   ownShips: __table({
     name: 'own_ships',
     indexes: [
@@ -456,13 +425,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnStationsRow),
-  ownWayfarerRebuildOffer: __table({
-    name: 'own_wayfarer_rebuild_offer',
+  ownSystemMaps: __table({
+    name: 'own_system_maps',
     indexes: [
     ],
     constraints: [
     ],
-  }, OwnWayfarerRebuildOfferRow),
+  }, OwnSystemMapsRow),
   ownWayfarerRefitAttachments: __table({
     name: 'own_wayfarer_refit_attachments',
     indexes: [
@@ -519,13 +488,12 @@ const reducersSchema = __reducers(
   __reducerSchema("accept_identity_link", AcceptIdentityLinkReducer),
   __reducerSchema("activate_authored_ship_flight", ActivateAuthoredShipFlightReducer),
   __reducerSchema("activate_inventory_hotbar", ActivateInventoryHotbarReducer),
+  __reducerSchema("apply_system_map", ApplySystemMapReducer),
   __reducerSchema("assign_inventory_hotbar", AssignInventoryHotbarReducer),
   __reducerSchema("begin_authored_flight_review", BeginAuthoredFlightReviewReducer),
   __reducerSchema("begin_construction_traversal", BeginConstructionTraversalReducer),
   __reducerSchema("bind_game_session", BindGameSessionReducer),
-  __reducerSchema("board_ship_passenger", BoardShipPassengerReducer),
   __reducerSchema("cancel_construction_traversal", CancelConstructionTraversalReducer),
-  __reducerSchema("change_ship_flight_fitting", ChangeShipFlightFittingReducer),
   __reducerSchema("claim_character_armory", ClaimCharacterArmoryReducer),
   __reducerSchema("claim_input_control", ClaimInputControlReducer),
   __reducerSchema("claim_starter_kit", ClaimStarterKitReducer),
@@ -535,7 +503,6 @@ const reducersSchema = __reducers(
   __reducerSchema("enter_lab", EnterLabReducer),
   __reducerSchema("equip_inventory_item", EquipInventoryItemReducer),
   __reducerSchema("fire_weapon", FireWeaponReducer),
-  __reducerSchema("grant_ship_passenger", GrantShipPassengerReducer),
   __reducerSchema("install_authored_ship_flight", InstallAuthoredShipFlightReducer),
   __reducerSchema("install_cargo_handling_fixture", InstallCargoHandlingFixtureReducer),
   __reducerSchema("interact_object", InteractObjectReducer),
@@ -546,24 +513,19 @@ const reducersSchema = __reducers(
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
   __reducerSchema("refit_existing_wayfarer", RefitExistingWayfarerReducer),
-  __reducerSchema("refit_rebuilt_wayfarer", RefitRebuiltWayfarerReducer),
   __reducerSchema("release_input_control", ReleaseInputControlReducer),
   __reducerSchema("rename_ship", RenameShipReducer),
-  __reducerSchema("replace_legacy_player_wayfarer", ReplaceLegacyPlayerWayfarerReducer),
   __reducerSchema("request_identity_link", RequestIdentityLinkReducer),
   __reducerSchema("return_authored_flight_review", ReturnAuthoredFlightReviewReducer),
-  __reducerSchema("return_ship_passenger", ReturnShipPassengerReducer),
-  __reducerSchema("revoke_ship_passenger", RevokeShipPassengerReducer),
   __reducerSchema("save_construction_draft", SaveConstructionDraftReducer),
   __reducerSchema("set_character_appearance", SetCharacterAppearanceReducer),
   __reducerSchema("set_combat_aim", SetCombatAimReducer),
-  __reducerSchema("set_construction_computer_power", SetConstructionComputerPowerReducer),
   __reducerSchema("set_construction_door", SetConstructionDoorReducer),
-  __reducerSchema("set_construction_engine_power", SetConstructionEnginePowerReducer),
   __reducerSchema("set_construction_grant", SetConstructionGrantReducer),
   __reducerSchema("set_intent", SetIntentReducer),
   __reducerSchema("spawn_construction_blueprint", SpawnConstructionBlueprintReducer),
   __reducerSchema("store_all_inventory_items", StoreAllInventoryItemsReducer),
+  __reducerSchema("switch_construction_review", SwitchConstructionReviewReducer),
   __reducerSchema("take_all_inventory_items", TakeAllInventoryItemsReducer),
   __reducerSchema("transfer_inventory_item", TransferInventoryItemReducer),
   __reducerSchema("transfer_scoped_cargo_item", TransferScopedCargoItemReducer),

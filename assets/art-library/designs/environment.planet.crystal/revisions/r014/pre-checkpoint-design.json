@@ -1,0 +1,3107 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "environment.planet.crystal",
+  "asset_uuid": "9ec3f6af-c041-514c-82b8-059ea0f01c94",
+  "reference_ids": [
+    "planets--crystal-world",
+    "planets--crystal-moon-1",
+    "planets--crystal-moon-2"
+  ],
+  "mapping_status": "proposed shared production family; inspect and split distinct geometry before implementation",
+  "current_revision": 13,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 50,
+  "profile": "planet",
+  "assigned_to": "root/planet-reference-20260914",
+  "blocker": null,
+  "feedback": [
+    {
+      "revision": 13,
+      "author": "agent",
+      "text": "Current isolated candidate checkpoint. Working visual passes are scoped in docs/planet_reference_iteration_20260914.md and independent review reports; this is not full readiness, owner sign-off or publication. Moon variants, full runtime integration, hardware Flight/Map transitions and any listed optical gaps remain separate.",
+      "message_reference": "docs/planet_reference_iteration_20260914.md",
+      "recorded_at": "2026-09-14T04:37:57.614942+00:00",
+      "resolved_by_revision": null
+    }
+  ],
+  "approvals": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-08",
+      "stage": "reference-only",
+      "change": "Reference inventory and provisional scale/gameplay brief",
+      "hypothesis": null,
+      "covered_reference_ids": [],
+      "evidence": [],
+      "review": null
+    },
+    {
+      "revision": 1,
+      "created_at": "2026-09-14T01:32:47.740164+00:00",
+      "stage": "changes-requested",
+      "change": "Native colossal and medium crystal formations with PBR facets, selective emission and dark fracture shelves.",
+      "hypothesis": "Dominant coherent formations replace a tiny-needle field.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [],
+      "review": null
+    },
+    {
+      "revision": 2,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Native crystal source and complete material-channel review.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/colossal-cluster.glb",
+          "sha256": "0e8ef00cbea98645a24f9432dc7a8be482c0c51a107dc873d7b6a1b72df1d6fc",
+          "bytes": 27904,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/composition-r002.ts",
+          "sha256": "17d72a16e11497479acf0ec56ab562e08e10e65852aac2ae0b539db55992d7c0",
+          "bytes": 5472,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/crystal-battered-region-a.glb",
+          "sha256": "1859805cbb81aa9a0c282de31d72669683000a47a71dd11e13b44515e8783259",
+          "bytes": 208328,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/crystal-battered-region-b.glb",
+          "sha256": "ff838baf9414a00e030ee7eefb33eb164176237da44d19e631846f0a5e627eb6",
+          "bytes": 209048,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/fracture-cliffs.glb",
+          "sha256": "c477d721a503c4dfe79ac6ce106897c45fcd9523fd4a2768785b2999bb68f17e",
+          "bytes": 12536,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/generator.py",
+          "sha256": "cf599eef909c8bd7a582d228b36d22c70644486883df9ce21886293d71e8efbc",
+          "bytes": 9522,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/ground-sphere-low.glb",
+          "sha256": "a17000ed955103715d88f76a0da7b33567c1741d0dd6df8c4f216640417db878",
+          "bytes": 9724,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/ground-sphere-medium.glb",
+          "sha256": "d88ce6e822a62a5e5dddb29086bc52a2161811f06dd086c197c30ca06e81026d",
+          "bytes": 32260,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/ground-sphere.glb",
+          "sha256": "5ce33ad71c08f8f3d925552e19c27dca55e22efc05cee4d2e9313230df7e73f7",
+          "bytes": 119552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/kit-preview.png",
+          "sha256": "0c51dad58691ab402ed5939d88e027a4e7ab4a7349eb4eec38cc92b467b0b365",
+          "bytes": 1130871,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/kit.blend",
+          "sha256": "b5333276e7ec10175d4f5187adcff8902214c9c4d1d498142cab2705b795140f",
+          "bytes": 1969572,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/kit.json",
+          "sha256": "3027e13fea6942857c9c21852a6c75f1425b780594e57fa867057780a830cbca",
+          "bytes": 908988,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "1859289835325c6631f9bb3a707a5271775f3751739713c406b235c4bf6f5fbf",
+          "bytes": 21292,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/low-fractured-shelf.glb",
+          "sha256": "8dd16abf9bd568709ca2eac7d77601e08b048ffbc043ead273e0032f1f479bc4",
+          "bytes": 8848,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/medium-cluster.glb",
+          "sha256": "7623aa1d5c747186f9deed5991dd21143e4757c04f3fd546e794cdbe510f8135",
+          "bytes": 21444,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/native_deformation_normals.ts",
+          "sha256": "ebedef67ea728b2937058dc0c0868decb7434d4f6955b7b41e7823560e028200",
+          "bytes": 909,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/revision-notes.md",
+          "sha256": "8e96b4de60ce65cb76928109f25e83c6d05bf83123cacf9684327a670ccf4ae9",
+          "bytes": 1893,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/single-crystal.glb",
+          "sha256": "cdcf5c3d6030e75b168de06a51fb313f2b5f9cf2410f44d8c4ea898332cc0fd3",
+          "bytes": 8228,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r002/artifacts/validation.json",
+          "sha256": "f509ea4652f9b3c9a0d1fcfadf5df0d35a82e83ed7e4c2aa0a7a651a9a6388b8",
+          "bytes": 7742,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 3,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Preserve GLB binary geometry while adding missing authored IOR metadata.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/colossal-cluster.glb",
+          "sha256": "7a06937304f55a413bb613c58412c7784e17bad49bce20545372dbcb817a10d5",
+          "bytes": 28184,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/crystal-battered-region-a.glb",
+          "sha256": "1859805cbb81aa9a0c282de31d72669683000a47a71dd11e13b44515e8783259",
+          "bytes": 208328,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/crystal-battered-region-b.glb",
+          "sha256": "ff838baf9414a00e030ee7eefb33eb164176237da44d19e631846f0a5e627eb6",
+          "bytes": 209048,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/fracture-cliffs.glb",
+          "sha256": "c477d721a503c4dfe79ac6ce106897c45fcd9523fd4a2768785b2999bb68f17e",
+          "bytes": 12536,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/ground-sphere-low.glb",
+          "sha256": "a17000ed955103715d88f76a0da7b33567c1741d0dd6df8c4f216640417db878",
+          "bytes": 9724,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/ground-sphere-medium.glb",
+          "sha256": "d88ce6e822a62a5e5dddb29086bc52a2161811f06dd086c197c30ca06e81026d",
+          "bytes": 32260,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/ground-sphere.glb",
+          "sha256": "5ce33ad71c08f8f3d925552e19c27dca55e22efc05cee4d2e9313230df7e73f7",
+          "bytes": 119552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/ior-preservation.json",
+          "sha256": "bc727661f4cf2ba78e45616b66686a464cb0c33e0da0f25f1bdddcf70be4736e",
+          "bytes": 6396,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/kit-preview.png",
+          "sha256": "0c51dad58691ab402ed5939d88e027a4e7ab4a7349eb4eec38cc92b467b0b365",
+          "bytes": 1130871,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/kit.blend",
+          "sha256": "b5333276e7ec10175d4f5187adcff8902214c9c4d1d498142cab2705b795140f",
+          "bytes": 1969572,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/kit.json",
+          "sha256": "3027e13fea6942857c9c21852a6c75f1425b780594e57fa867057780a830cbca",
+          "bytes": 908988,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "9aee8a6611255b654fe24065578662b7d559dd256105b3db2bd9292c53b14178",
+          "bytes": 21568,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/low-fractured-shelf.glb",
+          "sha256": "8dd16abf9bd568709ca2eac7d77601e08b048ffbc043ead273e0032f1f479bc4",
+          "bytes": 8848,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/medium-cluster.glb",
+          "sha256": "92a203c0852e95feb828b6ee7292334ddfc6573890978cbecf02bc5e397dda81",
+          "bytes": 21724,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/planet-seed38-angle2-glow.png",
+          "sha256": "63a07980c76cd84e63d69e2c06347ae81bc0bb4b84e2b8ec304348be1e4dbd52",
+          "bytes": 203012,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/planet-seed38-angle2.png",
+          "sha256": "ee74dfbe8bcdecef3c57c2f17df441ef1df7552ef47ed06dcef4da23e6c8c4fc",
+          "bytes": 194507,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/planet-seed38-glow.png",
+          "sha256": "5c3f6e3389d563feb2f1368e490140a11b449e56fbee6d7e867b671863c578a0",
+          "bytes": 219872,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/planet-seed38.png",
+          "sha256": "88a13010682a5d6a94519b1e08a7531f7b2c0dcd73a0a25cc6c75ba1bed5ae83",
+          "bytes": 204359,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/preserve_native_kit_ior.py",
+          "sha256": "a4f469b2b6dfaf92125078dbf7c695b70d709e1f9352de962824baa2b44588b3",
+          "bytes": 2885,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/revision-notes.md",
+          "sha256": "6a477861ca7e8355599c26677f17e59898a8e3f91ae5add1aafdf1d5481a1ead",
+          "bytes": 1053,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/single-crystal.glb",
+          "sha256": "9f4683cec65cbd45f076f617c63b753d0a61b189c316667b5900a0984435a267",
+          "bytes": 8504,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r003/artifacts/test_preserve_native_kit_ior.py",
+          "sha256": "2abd23adfcac0b31cd36b34251e66dcf0d90fa0532c19bc0c97a637382320cc7",
+          "bytes": 1478,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 4,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Bounded local illumination and distribution trial.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r004/artifacts/composition-r004.ts",
+          "sha256": "400410fe57bd13462cd17252beeb5c57692b1e70970fb9a19ebb86af73f2f9a1",
+          "bytes": 6351,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r004/artifacts/kit.json",
+          "sha256": "3027e13fea6942857c9c21852a6c75f1425b780594e57fa867057780a830cbca",
+          "bytes": 908988,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r004/artifacts/planet-seed38-angle2.png",
+          "sha256": "a0dbde56e5f15373b34d01dcb6324173aebe4d6e465e36aac367c20941c390a0",
+          "bytes": 259603,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r004/artifacts/planet-seed38.png",
+          "sha256": "aabd0d6f55f69561c66e58305fe76e19070126df6e90cde9d9b6d5e1692b5d57",
+          "bytes": 265321,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 5,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Hero crystal/crust refinement; source color encoding needs correction.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/build_crystal_native_kit_r005.py",
+          "sha256": "935b52815d6fd42c112d42f70d9eb0cd6da3bd2650d4b07a586922ebc797539f",
+          "bytes": 13952,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/colossal-cluster.glb",
+          "sha256": "6395b30bf653a78606266ffb3057443d09fef360f612371f33335a1841a91d85",
+          "bytes": 191380,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/composition-tests.log",
+          "sha256": "2eb7e7fa611b46d70e776368712c16645efc4b3c860544f4186dd0ee6f813988",
+          "bytes": 208,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/crystal-battered-region-a.glb",
+          "sha256": "330c644a3aebe205da91f65a4adf23fdd6dc85d6a9b687e9fcbbc0e158e113ae",
+          "bytes": 598620,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/crystal-battered-region-b.glb",
+          "sha256": "9e2b362e0b75a16c7e402c146c7340b266a8be261772eb3b13e8b9f84a6c1322",
+          "bytes": 599580,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/crystal_reference_composition_r005.test.ts",
+          "sha256": "c915df1dfc00ed789c46f130e48ee8c59694146c353a05745fca384f09d40590",
+          "bytes": 2827,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/crystal_reference_composition_r005.ts",
+          "sha256": "bbe68704181abb0a60ca28569e2f7090d3c511d2037c6cb275dafae4533c0a29",
+          "bytes": 6879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/crystal_reference_r005.tsconfig.json",
+          "sha256": "d3cdc22ca463a25a2107a7dd9b3cc4b85803bc8343f0119d6eb7e76410ce516b",
+          "bytes": 207,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/crystal_reference_r005.vitest.config.ts",
+          "sha256": "6250096b8df0461f68e7cedbf9baaaceb94af6a040b147d196e20dfec3ca3897",
+          "bytes": 158,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/emission-texture-validation.json",
+          "sha256": "8c4fc1eb7c7f86f04f0084cf1006cc3ba77a8c6fa75af5bdff2778f5153df30f",
+          "bytes": 1166,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/fracture-cliffs.glb",
+          "sha256": "f7ed6ff600762976bb86df4ea4ff557debbe4969d6482fef7493695b08447b29",
+          "bytes": 359752,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/ground-sphere-low.glb",
+          "sha256": "75e605545239aa0813cd2a2d34772348719994868a4cfa2f9ef1651d2d64e78f",
+          "bytes": 131400,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/ground-sphere-medium.glb",
+          "sha256": "26915fd9d49263b7bf345b423dd31aee04e28c1b5979c8816a11290e717327b4",
+          "bytes": 154000,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/ground-sphere.glb",
+          "sha256": "c245df9313d1861a625ad79b8204dd5b43a3ef9a5fbd771f71221d0de7c08ba2",
+          "bytes": 243216,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/kit-preview.png",
+          "sha256": "df374aec2bb611735d40a6737e033bbf1ce40b0d66bc1425a7f34a1e186abbb9",
+          "bytes": 1094501,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/kit.blend",
+          "sha256": "0fa81399be5e21a80d28f2648100c2afcc8ca45c5917fa62d5f88741e267aa26",
+          "bytes": 2865227,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/kit.json",
+          "sha256": "2111b736763467fda7046c2b876552d43d890fb0c2e2544f7234054aa7ea76cb",
+          "bytes": 9690264,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "dd7149d6ef953556ab8b2c642d07c3289877dd540552d2624a8e571aeb7f47a5",
+          "bytes": 182880,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/local-pbr-seed38-angle2.png",
+          "sha256": "958e9c1055f4cccdd1820e6485d15fbe3dc99eaee72a4fb478f5d3d3d7e376ee",
+          "bytes": 417307,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/local-pbr-seed38-capture.log",
+          "sha256": "6cb61e1bd27c3f225f95c803162de11c89df7ef1635d513d02d13540af1c28ba",
+          "bytes": 2496,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/local-pbr-seed38-reference-scale.png",
+          "sha256": "3819e53b3050376920140da392eb16d7a71a5c513b686f417df4ae7cc4b35005",
+          "bytes": 113008,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/local-pbr-seed38.json",
+          "sha256": "f78b7b77b02fdbd5063aebc4db3272d2483a91cf0e9e443a4d5e5b4ae70f07e3",
+          "bytes": 2339,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/local-pbr-seed38.png",
+          "sha256": "e9aae5b0657e27e599dab23c1c8aa468d937aa415dad1dbc147f2d1df3daad55",
+          "bytes": 402365,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/low-fractured-shelf.glb",
+          "sha256": "33e161033838b036590924b53534ab49d74ec5ee7227e9b3f21564efccb6cf5d",
+          "bytes": 351692,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-0-albedo.png",
+          "sha256": "3a3e701ebe7bcd25e424035adfb7884257c43fb83a7c32b1bc09ca7c37df2c93",
+          "bytes": 79813,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-0-orm.png",
+          "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+          "bytes": 40836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-1-albedo.png",
+          "sha256": "69e60b28e10d59716b0aab18348dacf6e84623e10899412a7631fb97e6b88f15",
+          "bytes": 40239,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-1-orm.png",
+          "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+          "bytes": 41452,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-2-albedo.png",
+          "sha256": "a9ff95a02211638f911636c65284b08e432fc2346bdcceed495cbda0f0c88517",
+          "bytes": 90794,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-2-orm.png",
+          "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+          "bytes": 39879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-3-albedo.png",
+          "sha256": "e5f9a42d21d58578b16d7c3385b738b6c92f30e0321d11adc843c4331bfaa426",
+          "bytes": 28048,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-4-albedo.png",
+          "sha256": "4fea1da03b1bef3296c2014c410a0891c5c54d425e2bb64b66867a197111fcc2",
+          "bytes": 31742,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-5-albedo.png",
+          "sha256": "e2e431b0764d5fe4595a81cd43a39cd66b599bad5e8894b4c460a565e8e0ca81",
+          "bytes": 16602,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-6-albedo.png",
+          "sha256": "f38364043b2d88e47c1028e02bc8b303eff5c9e42a76b7b156b74f23c6fe007f",
+          "bytes": 36484,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/material-7-albedo.png",
+          "sha256": "6915d9e8455f7f2611ae6c838a338800b7439a8f2cc38f46c616799890f29ea6",
+          "bytes": 42037,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/medium-cluster.glb",
+          "sha256": "06efeeda82fbbdd18b965ed48cf7f300f2184f066bba6ffff201b0cfac585f76",
+          "bytes": 183036,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/planet-seed38-angle2-shadows.png",
+          "sha256": "51f30f373341567eaf3db8dd0f250cdee9465b6ba2540abe62d150732f549b91",
+          "bytes": 435434,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/planet-seed38-shadows.png",
+          "sha256": "d8a351779a96124dd9b0aefe3f996f0cc5ab418715c5af8e8469426a05af4ef4",
+          "bytes": 437261,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/revision-notes.md",
+          "sha256": "4fb13a2e08a5dbf5cb392e7445f0156feaa12863481b362e44fdd54e3d10ede1",
+          "bytes": 1801,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/single-crystal.glb",
+          "sha256": "ed72ed8f03d5f0576e6855261361dd5471e7ddcb6567976c9a9648c9ec759207",
+          "bytes": 166020,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r005/artifacts/validation.json",
+          "sha256": "42809605d5d4d351a84d9b837e6a37d756c130a4dfdb65c38b1677e4c9b7b8e0",
+          "bytes": 6604,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 6,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Correct source color encoding; intermediate geology remains open.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/colossal-cluster.glb",
+          "sha256": "cd8ad3bb22919a96632319eb59231f0892ff3a03155620847aaf6c2b29652609",
+          "bytes": 202956,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/corrected-seed38-angle2.png",
+          "sha256": "6f20ce510b3efeb6de24e5d47b0557e64fac5d6640031d4c1ee7dbbbef128c95",
+          "bytes": 525645,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/corrected-seed38-capture.log",
+          "sha256": "96922bd7ad41ce78ddc7bb2bdbdcdb52dabf84364d36f9a04c000b1e22999468",
+          "bytes": 2496,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "b28967ec78a64dac9b4c4ea8bdb25a640c34f386385ee433afc95524b7ea2e8e",
+          "bytes": 132830,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/corrected-seed38.json",
+          "sha256": "4ce2c106db9bbdddfbcd4229f9c0fd1b4b3164b34c33b42ded5c01f8b3313671",
+          "bytes": 2340,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/corrected-seed38.png",
+          "sha256": "577461eb7a12e0a59e8cc74dd3e0fffbf33ae471dc6a1dccd9fab7b5c911424c",
+          "bytes": 529510,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/crystal-battered-region-a.glb",
+          "sha256": "920123f7ec52b7aa5db07ec725c93c15f5c9236e80c729ace4e3d6194363581d",
+          "bytes": 644420,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/crystal-battered-region-b.glb",
+          "sha256": "b698b4c3634ef34d21c3cf9bb81f830597bbf87ab61e6bc97360b72357eb607c",
+          "bytes": 645380,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/fracture-cliffs.glb",
+          "sha256": "166e13b4a3221eaf545fec9524e2f4ff62788cb8b446b37a6e5d30bbb78294c7",
+          "bytes": 405552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/ground-sphere-low.glb",
+          "sha256": "edf99ea63703e9488e987def8049e770d44cf9eac91d7f3fb0a214ad316be1aa",
+          "bytes": 139404,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/ground-sphere-medium.glb",
+          "sha256": "c9f118c73040ff358ef2a21b1da4f185cf8a2e6e7628ce9ac84286b4791ab178",
+          "bytes": 162004,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/ground-sphere.glb",
+          "sha256": "466dda9ff3d180004a30fae487f7719052795a939e13ab2b9bf7fa941089ba15",
+          "bytes": 251220,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/kit-preview.png",
+          "sha256": "86b0def4a86e63314403bc7a29d23b8ded4c9dcbdc81ec98dc21bad7e786eab5",
+          "bytes": 1149174,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/kit.blend",
+          "sha256": "c38bf5bb712da26733880cb25c18d195ee12401e2c0d426290522c853c8a9857",
+          "bytes": 2922603,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/kit.json",
+          "sha256": "2111b736763467fda7046c2b876552d43d890fb0c2e2544f7234054aa7ea76cb",
+          "bytes": 9690264,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "7f0583b736a36f1f42f3a0893f93db81e5c46c86853be73cad2ea80032c65afb",
+          "bytes": 194456,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/low-fractured-shelf.glb",
+          "sha256": "007ce539b3ae94df3a414cc0865d61e5e9afc3471a7fa37f252eb0a5bae300ed",
+          "bytes": 397492,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-0-albedo.png",
+          "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+          "bytes": 87818,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-0-orm.png",
+          "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+          "bytes": 40836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-1-albedo.png",
+          "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+          "bytes": 76356,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-1-orm.png",
+          "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+          "bytes": 41452,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-2-albedo.png",
+          "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+          "bytes": 92476,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-2-orm.png",
+          "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+          "bytes": 39879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-3-albedo.png",
+          "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+          "bytes": 31086,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-4-albedo.png",
+          "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+          "bytes": 33571,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-5-albedo.png",
+          "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+          "bytes": 24737,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-6-albedo.png",
+          "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+          "bytes": 37069,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/material-7-albedo.png",
+          "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+          "bytes": 40023,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/medium-cluster.glb",
+          "sha256": "08d0f04bfd87fc741fd8b618e763ed581ec0a5e8cc94e8187065c6a17238ac29",
+          "bytes": 194612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/single-crystal.glb",
+          "sha256": "f3ec4c6b6294f2b83e0884a154145a209fce078a1ca32fb330aed34ac22704c1",
+          "bytes": 177596,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r006/artifacts/validation.json",
+          "sha256": "bcf91d38a6e1aafdcfee868c752bc8fd73b7f76ac1cda33bfcc47036660405f9",
+          "bytes": 6507,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 7,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Rejected corner-expanded JSON topology as native source; preserve failed attempt.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/colossal-cluster.glb",
+          "sha256": "00e6be247645cdc260157bf03dfc2a405342a3ea86253318c531e584ef9431ff",
+          "bytes": 202956,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/corrected-seed38-capture.log",
+          "sha256": "7b4c411ca603aaba7afec40b9ad80fa18d8951a8aa3f01880ac924c52d74b941",
+          "bytes": 1299,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/failure.md",
+          "sha256": "fae8911e71b1463503f0a92d06b92ae057cabbdf43d7e1080f072dd9aad897a9",
+          "bytes": 282,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/fracture-cliffs.glb",
+          "sha256": "1cae0b9e6429dcf94789c183a6c75cc0574de324c95e994c1a251dd6918a975f",
+          "bytes": 405552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "e664fe2a1c8c7174cde53dbef7122e6b7be6d756423c7f20b0e2b66999846491",
+          "bytes": 194456,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/low-fractured-shelf.glb",
+          "sha256": "3a00dd53864f0f05ec3df55c317428ce5a2e596060c5151eb50e850758640bf3",
+          "bytes": 397492,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-0-albedo.png",
+          "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+          "bytes": 87818,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-0-orm.png",
+          "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+          "bytes": 40836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-1-albedo.png",
+          "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+          "bytes": 76356,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-1-orm.png",
+          "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+          "bytes": 41452,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-2-albedo.png",
+          "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+          "bytes": 92476,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-2-orm.png",
+          "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+          "bytes": 39879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-3-albedo.png",
+          "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+          "bytes": 31086,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-4-albedo.png",
+          "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+          "bytes": 33571,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-5-albedo.png",
+          "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+          "bytes": 24737,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-6-albedo.png",
+          "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+          "bytes": 37069,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/material-7-albedo.png",
+          "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+          "bytes": 40023,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/medium-cluster.glb",
+          "sha256": "0ccfe54ee14e381d3e7cf7a61feb070daba29e4a39638509781d9b86ea849bc4",
+          "bytes": 194612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r007/artifacts/single-crystal.glb",
+          "sha256": "8e58017a9034d0fec511e94e5fed97308f05f1e5a15cbdc92e4d3e601ca07183",
+          "bytes": 177596,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 8,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Rejected GLB optical seams as closed native authoring topology.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/colossal-cluster.glb",
+          "sha256": "ea61c4d55613d9cd451f160a0bd135f6aac93c1bcbc449febfc32c5697d51d0b",
+          "bytes": 202956,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/failure.md",
+          "sha256": "f3d3447f32498c2528387e41ed1e430cd159af84205ad7e4229ce7f26229d30e",
+          "bytes": 208,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/fracture-cliffs.glb",
+          "sha256": "f8518fbeac54908529ef9ff909614f0cd8ba24405a17678cd833a0eaa1226865",
+          "bytes": 405552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "0978d386d53a45793edb92b9a215a0d7363e7c572bcd1fd0ff31de2963dffc6d",
+          "bytes": 194456,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/low-fractured-shelf.glb",
+          "sha256": "00206dcc2ea5a114a8129078f07e92b4ef14a28d6817995f05bf6d299a99eedc",
+          "bytes": 397492,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-0-albedo.png",
+          "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+          "bytes": 87818,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-0-orm.png",
+          "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+          "bytes": 40836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-1-albedo.png",
+          "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+          "bytes": 76356,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-1-orm.png",
+          "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+          "bytes": 41452,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-2-albedo.png",
+          "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+          "bytes": 92476,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-2-orm.png",
+          "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+          "bytes": 39879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-3-albedo.png",
+          "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+          "bytes": 31086,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-4-albedo.png",
+          "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+          "bytes": 33571,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-5-albedo.png",
+          "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+          "bytes": 24737,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-6-albedo.png",
+          "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+          "bytes": 37069,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/material-7-albedo.png",
+          "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+          "bytes": 40023,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/medium-cluster.glb",
+          "sha256": "6faf88cb94a160915b0f2e8330d71f4ae0d2b02b3bb6aacfb5693d6c7d47f77b",
+          "bytes": 194612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r008/artifacts/single-crystal.glb",
+          "sha256": "6660b97d23af1f8c69b9e80d8fc68e5030d70b8b1fc680e6e06599c35b457180",
+          "bytes": 177596,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 9,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Append original editable Blender geology; preserve closed native surfaces.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/colossal-cluster.glb",
+          "sha256": "3aa633e47d0ee1d3ec7196877e1e29041c215d9c97f441b1500117c9dac346e4",
+          "bytes": 202956,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/corrected-seed38-angle2.png",
+          "sha256": "003fa72e00d2da64fce26c4ce790fb98cf6f64ef377d65d981b5ed4b0e0a6be4",
+          "bytes": 535844,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/corrected-seed38-capture.log",
+          "sha256": "e48796e2449541fa10a62056961414b2c14c959967c099a3f8b30b223237bd40",
+          "bytes": 2784,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "4532e0438352df33be080ec21a08399443470dda3e8730330c9c71827b69f8e8",
+          "bytes": 132703,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/corrected-seed38.json",
+          "sha256": "e325f07b3ff2cf1ba24009565b64927767ee2f6607c84be684c14233dba7031d",
+          "bytes": 2377,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/corrected-seed38.png",
+          "sha256": "3a2eb735b99e17b9deab229885c61e0afdfd06b47ac7c7f03792eff6607a5d30",
+          "bytes": 530675,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/crystal-battered-region-a.glb",
+          "sha256": "1c40f07479ae1b1a46e6fd5535e18dd1662883914235726356ebdfb6d3e5ac96",
+          "bytes": 934936,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/crystal-battered-region-b.glb",
+          "sha256": "d60d8b32daea4ad28889b1a66afa29bf8687cce943a022cfedb434688c09ac8f",
+          "bytes": 930980,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/fracture-cliffs.glb",
+          "sha256": "e6a735298b9b11aa9712ebb8c356ca2b1b8d402dac8ada26abeb79e4ed92acfe",
+          "bytes": 405552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/ground-sphere-low.glb",
+          "sha256": "edf99ea63703e9488e987def8049e770d44cf9eac91d7f3fb0a214ad316be1aa",
+          "bytes": 139404,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/ground-sphere-medium.glb",
+          "sha256": "c9f118c73040ff358ef2a21b1da4f185cf8a2e6e7628ce9ac84286b4791ab178",
+          "bytes": 162004,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/ground-sphere.glb",
+          "sha256": "466dda9ff3d180004a30fae487f7719052795a939e13ab2b9bf7fa941089ba15",
+          "bytes": 251220,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/kit-preview.png",
+          "sha256": "c53cfead0a9207e733f84e4ccbd3318f1af5013bdae6b796a8aa2cc8ad15acf2",
+          "bytes": 1194938,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/kit.blend",
+          "sha256": "642cc6f4763995016e44514ad80d584e75c59f67a24953c3093c71a95c18b90f",
+          "bytes": 5677371,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/kit.json",
+          "sha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369",
+          "bytes": 15403081,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "0adcdc05675dcee5f9940e40010dbe42c12c7f58822ec665ad2d359910132ce5",
+          "bytes": 194456,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/low-fractured-shelf.glb",
+          "sha256": "8d060e664110f81420ced42869409e3b37e92d65d214af3336854f04dee2f0a3",
+          "bytes": 397492,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-0-albedo.png",
+          "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+          "bytes": 87818,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-0-orm.png",
+          "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+          "bytes": 40836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-1-albedo.png",
+          "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+          "bytes": 76356,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-1-orm.png",
+          "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+          "bytes": 41452,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-2-albedo.png",
+          "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+          "bytes": 92476,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-2-orm.png",
+          "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+          "bytes": 39879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-3-albedo.png",
+          "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+          "bytes": 31086,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-4-albedo.png",
+          "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+          "bytes": 33571,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-5-albedo.png",
+          "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+          "bytes": 24737,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-6-albedo.png",
+          "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+          "bytes": 37069,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/material-7-albedo.png",
+          "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+          "bytes": 40023,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/medium-cluster.glb",
+          "sha256": "92f34e1c8c90a9d0c5554f1f637577ce9fb9ca00d0763ed720ec25f47d809ae8",
+          "bytes": 194612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/single-crystal.glb",
+          "sha256": "2fb0e7e1604665658cb9b6f8000a85d72ca320e5618ad1d45b0128c8c55e742b",
+          "bytes": 177596,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r009/artifacts/validation.json",
+          "sha256": "86ab60532199c0774ec1a7f09d9745269c49a6822573884ed6d867f45b13bc3e",
+          "bytes": 6510,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 10,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Intermediate bridge distribution; interrupted capture excluded and retry retained.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/colossal-cluster.glb",
+          "sha256": "3aa633e47d0ee1d3ec7196877e1e29041c215d9c97f441b1500117c9dac346e4",
+          "bytes": 202956,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/corrected-seed38-angle2.png",
+          "sha256": "d2fa5b980979d5b7d0b8c57f6e46cdc9f8bffbea091df3ab47db65e4a6e8c2ba",
+          "bytes": 547349,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/corrected-seed38-capture.log",
+          "sha256": "0f1aa9409850095d3019415f6d250bb5bc9f459b4719230e2b512d29e78018e4",
+          "bytes": 101,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/corrected-seed38.png",
+          "sha256": "e57ad19b4f16d24cd294c114ee37bcec2b8178fbed121bd1ba65b33fb199e65f",
+          "bytes": 570895,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/crystal-battered-region-a.glb",
+          "sha256": "1c40f07479ae1b1a46e6fd5535e18dd1662883914235726356ebdfb6d3e5ac96",
+          "bytes": 934936,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/crystal-battered-region-b.glb",
+          "sha256": "d60d8b32daea4ad28889b1a66afa29bf8687cce943a022cfedb434688c09ac8f",
+          "bytes": 930980,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/crystal_reference_composition_r010.ts",
+          "sha256": "0e95d50a4d6ac5406701d0506053f420973826e65785bed202f371e92b4a8ea7",
+          "bytes": 7305,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/fracture-cliffs.glb",
+          "sha256": "e6a735298b9b11aa9712ebb8c356ca2b1b8d402dac8ada26abeb79e4ed92acfe",
+          "bytes": 405552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/ground-sphere-low.glb",
+          "sha256": "edf99ea63703e9488e987def8049e770d44cf9eac91d7f3fb0a214ad316be1aa",
+          "bytes": 139404,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/ground-sphere-medium.glb",
+          "sha256": "c9f118c73040ff358ef2a21b1da4f185cf8a2e6e7628ce9ac84286b4791ab178",
+          "bytes": 162004,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/ground-sphere.glb",
+          "sha256": "466dda9ff3d180004a30fae487f7719052795a939e13ab2b9bf7fa941089ba15",
+          "bytes": 251220,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/interrupted-capture.md",
+          "sha256": "e05ebf8f5467af1c90b062bc4ac8a958efdf79c51bc16cc2724ff6118b32effd",
+          "bytes": 296,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/kit-preview.png",
+          "sha256": "c53cfead0a9207e733f84e4ccbd3318f1af5013bdae6b796a8aa2cc8ad15acf2",
+          "bytes": 1194938,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/kit.blend",
+          "sha256": "642cc6f4763995016e44514ad80d584e75c59f67a24953c3093c71a95c18b90f",
+          "bytes": 5677371,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/kit.json",
+          "sha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369",
+          "bytes": 15403081,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "0adcdc05675dcee5f9940e40010dbe42c12c7f58822ec665ad2d359910132ce5",
+          "bytes": 194456,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/low-fractured-shelf.glb",
+          "sha256": "8d060e664110f81420ced42869409e3b37e92d65d214af3336854f04dee2f0a3",
+          "bytes": 397492,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-0-albedo.png",
+          "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+          "bytes": 87818,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-0-orm.png",
+          "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+          "bytes": 40836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-1-albedo.png",
+          "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+          "bytes": 76356,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-1-orm.png",
+          "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+          "bytes": 41452,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-2-albedo.png",
+          "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+          "bytes": 92476,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-2-orm.png",
+          "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+          "bytes": 39879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-3-albedo.png",
+          "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+          "bytes": 31086,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-4-albedo.png",
+          "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+          "bytes": 33571,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-5-albedo.png",
+          "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+          "bytes": 24737,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-6-albedo.png",
+          "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+          "bytes": 37069,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/material-7-albedo.png",
+          "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+          "bytes": 40023,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/medium-cluster.glb",
+          "sha256": "92f34e1c8c90a9d0c5554f1f637577ce9fb9ca00d0763ed720ec25f47d809ae8",
+          "bytes": 194612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/retry-seed38-angle2.png",
+          "sha256": "d2fa5b980979d5b7d0b8c57f6e46cdc9f8bffbea091df3ab47db65e4a6e8c2ba",
+          "bytes": 547349,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/retry-seed38-capture.log",
+          "sha256": "1f57853f40a52bf73500fbbd5c4401c5511c4f9f91240ec8d3ac4dcf5dca73c6",
+          "bytes": 2772,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/retry-seed38-reference-scale.png",
+          "sha256": "c0492b698a6d7706538fff8e6dd5c9c3124a3be641c20fef11a4d4321c682ccf",
+          "bytes": 135083,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/retry-seed38.json",
+          "sha256": "550a540b6f2d3fac76e7886b57153aa8a1ebdcf3c0cfabde929ae5fb02827f7f",
+          "bytes": 2379,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/retry-seed38.png",
+          "sha256": "e57ad19b4f16d24cd294c114ee37bcec2b8178fbed121bd1ba65b33fb199e65f",
+          "bytes": 570895,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/revision-notes.md",
+          "sha256": "a57b86bf91ceab3418f0ea730c31e887aa91640e36d58fe29fefe109aad0369e",
+          "bytes": 267,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/single-crystal.glb",
+          "sha256": "2fb0e7e1604665658cb9b6f8000a85d72ca320e5618ad1d45b0128c8c55e742b",
+          "bytes": 177596,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r010/artifacts/source-preservation.json",
+          "sha256": "aeef607af17f75e116fbb11e5d5978880a3862efd2e73376b02ab3228f147a8f",
+          "bytes": 2554,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 11,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Farthest-point bridge placement; central angular coverage gap remains.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/colossal-cluster.glb",
+          "sha256": "3aa633e47d0ee1d3ec7196877e1e29041c215d9c97f441b1500117c9dac346e4",
+          "bytes": 202956,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/corrected-seed38-angle2.png",
+          "sha256": "e0cfe101886be696b82b58db871bbc44d7e75b2fb6c151cd7f972b33a26f5859",
+          "bytes": 568286,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/corrected-seed38-capture.log",
+          "sha256": "f231170fece3c1248a0b9fb235b6d6230d77fd3a458418daa3c04544a24dc43c",
+          "bytes": 2784,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "94641d69d18ce575b556756933c780d6aeb1f5721d77e2c44f002a1b329c3f68",
+          "bytes": 139610,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/corrected-seed38.json",
+          "sha256": "58497a6e629608927bb4e584d63e2b5cdbac5c07b4e1a3677daabc676faebe8d",
+          "bytes": 2393,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/corrected-seed38.png",
+          "sha256": "459faff1cf21c530ae22cb964e0c6df9add584c183a52c3dfd09a159b41e313e",
+          "bytes": 549333,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/crystal-battered-region-a.glb",
+          "sha256": "1c40f07479ae1b1a46e6fd5535e18dd1662883914235726356ebdfb6d3e5ac96",
+          "bytes": 934936,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/crystal-battered-region-b.glb",
+          "sha256": "d60d8b32daea4ad28889b1a66afa29bf8687cce943a022cfedb434688c09ac8f",
+          "bytes": 930980,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/crystal_reference_composition_r011.ts",
+          "sha256": "7c8e277fc698c06180c0ea3b8932dcd528349b2fa15c7465ba924a6e4b30fb12",
+          "bytes": 8166,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/fracture-cliffs.glb",
+          "sha256": "e6a735298b9b11aa9712ebb8c356ca2b1b8d402dac8ada26abeb79e4ed92acfe",
+          "bytes": 405552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/ground-sphere-low.glb",
+          "sha256": "edf99ea63703e9488e987def8049e770d44cf9eac91d7f3fb0a214ad316be1aa",
+          "bytes": 139404,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/ground-sphere-medium.glb",
+          "sha256": "c9f118c73040ff358ef2a21b1da4f185cf8a2e6e7628ce9ac84286b4791ab178",
+          "bytes": 162004,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/ground-sphere.glb",
+          "sha256": "466dda9ff3d180004a30fae487f7719052795a939e13ab2b9bf7fa941089ba15",
+          "bytes": 251220,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/kit-preview.png",
+          "sha256": "c53cfead0a9207e733f84e4ccbd3318f1af5013bdae6b796a8aa2cc8ad15acf2",
+          "bytes": 1194938,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/kit.blend",
+          "sha256": "642cc6f4763995016e44514ad80d584e75c59f67a24953c3093c71a95c18b90f",
+          "bytes": 5677371,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/kit.json",
+          "sha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369",
+          "bytes": 15403081,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "0adcdc05675dcee5f9940e40010dbe42c12c7f58822ec665ad2d359910132ce5",
+          "bytes": 194456,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/low-fractured-shelf.glb",
+          "sha256": "8d060e664110f81420ced42869409e3b37e92d65d214af3336854f04dee2f0a3",
+          "bytes": 397492,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-0-albedo.png",
+          "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+          "bytes": 87818,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-0-orm.png",
+          "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+          "bytes": 40836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-1-albedo.png",
+          "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+          "bytes": 76356,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-1-orm.png",
+          "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+          "bytes": 41452,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-2-albedo.png",
+          "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+          "bytes": 92476,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-2-orm.png",
+          "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+          "bytes": 39879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-3-albedo.png",
+          "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+          "bytes": 31086,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-4-albedo.png",
+          "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+          "bytes": 33571,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-5-albedo.png",
+          "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+          "bytes": 24737,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-6-albedo.png",
+          "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+          "bytes": 37069,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/material-7-albedo.png",
+          "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+          "bytes": 40023,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/medium-cluster.glb",
+          "sha256": "92f34e1c8c90a9d0c5554f1f637577ce9fb9ca00d0763ed720ec25f47d809ae8",
+          "bytes": 194612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/revision-notes.md",
+          "sha256": "d2dddcae380b5278d796ed2d62ab294e625af3d872b601481ccdd4b44f566fbc",
+          "bytes": 260,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r011/artifacts/single-crystal.glb",
+          "sha256": "2fb0e7e1604665658cb9b6f8000a85d72ca320e5618ad1d45b0128c8c55e742b",
+          "bytes": 177596,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 12,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "changes-requested",
+      "change": "Resolve crystal feet against final overlapping terrain.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/bridge-directions.json",
+          "sha256": "6616c4aa5795d7a8268936fe50fa51b5d25c92c37e634cb6d2b2e1e1d84ad9d4",
+          "bytes": 2374,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/colossal-cluster.glb",
+          "sha256": "3aa633e47d0ee1d3ec7196877e1e29041c215d9c97f441b1500117c9dac346e4",
+          "bytes": 202956,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/corrected-seed38-angle2.png",
+          "sha256": "3a11b8c0101c46de37a21ec6b81de14b10c8e34b10a96d62e4170da7e9c95991",
+          "bytes": 567904,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/corrected-seed38-capture.log",
+          "sha256": "8e7139d649428e6958af418b6a6af52fc1ac48eaa77297c03b357b67de33cb7a",
+          "bytes": 2784,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "b3436f03b3be42c77c9063ae93879c116765f102428d2ae998a74e5e5988d06b",
+          "bytes": 139288,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/corrected-seed38.json",
+          "sha256": "510cfce8e8319a030e15287962718747edd6b9b88677210c397408a060ab1cfe",
+          "bytes": 2407,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/corrected-seed38.png",
+          "sha256": "2efa832851ed646504ba536e68fb540a25ded5e7fc9e7f88dd49c94a3f92a184",
+          "bytes": 580684,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/crystal-battered-region-a.glb",
+          "sha256": "1c40f07479ae1b1a46e6fd5535e18dd1662883914235726356ebdfb6d3e5ac96",
+          "bytes": 934936,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/crystal-battered-region-b.glb",
+          "sha256": "d60d8b32daea4ad28889b1a66afa29bf8687cce943a022cfedb434688c09ac8f",
+          "bytes": 930980,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/fracture-cliffs.glb",
+          "sha256": "e6a735298b9b11aa9712ebb8c356ca2b1b8d402dac8ada26abeb79e4ed92acfe",
+          "bytes": 405552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/ground-sphere-low.glb",
+          "sha256": "edf99ea63703e9488e987def8049e770d44cf9eac91d7f3fb0a214ad316be1aa",
+          "bytes": 139404,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/ground-sphere-medium.glb",
+          "sha256": "c9f118c73040ff358ef2a21b1da4f185cf8a2e6e7628ce9ac84286b4791ab178",
+          "bytes": 162004,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/ground-sphere.glb",
+          "sha256": "466dda9ff3d180004a30fae487f7719052795a939e13ab2b9bf7fa941089ba15",
+          "bytes": 251220,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/kit-preview.png",
+          "sha256": "c53cfead0a9207e733f84e4ccbd3318f1af5013bdae6b796a8aa2cc8ad15acf2",
+          "bytes": 1194938,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/kit.blend",
+          "sha256": "642cc6f4763995016e44514ad80d584e75c59f67a24953c3093c71a95c18b90f",
+          "bytes": 5677371,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/kit.json",
+          "sha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369",
+          "bytes": 15403081,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "0adcdc05675dcee5f9940e40010dbe42c12c7f58822ec665ad2d359910132ce5",
+          "bytes": 194456,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/low-fractured-shelf.glb",
+          "sha256": "8d060e664110f81420ced42869409e3b37e92d65d214af3336854f04dee2f0a3",
+          "bytes": 397492,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-0-albedo.png",
+          "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+          "bytes": 87818,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-0-orm.png",
+          "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+          "bytes": 40836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-1-albedo.png",
+          "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+          "bytes": 76356,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-1-orm.png",
+          "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+          "bytes": 41452,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-2-albedo.png",
+          "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+          "bytes": 92476,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-2-orm.png",
+          "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+          "bytes": 39879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-3-albedo.png",
+          "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+          "bytes": 31086,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-4-albedo.png",
+          "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+          "bytes": 33571,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-5-albedo.png",
+          "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+          "bytes": 24737,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-6-albedo.png",
+          "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+          "bytes": 37069,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/material-7-albedo.png",
+          "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+          "bytes": 40023,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/medium-cluster.glb",
+          "sha256": "92f34e1c8c90a9d0c5554f1f637577ce9fb9ca00d0763ed720ec25f47d809ae8",
+          "bytes": 194612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/revision-notes.md",
+          "sha256": "654be7bc3ca4a4b699b1aa94269f32ed530249eb6c599fc3bd7e41f3b093614e",
+          "bytes": 324,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r012/artifacts/single-crystal.glb",
+          "sha256": "2fb0e7e1604665658cb9b6f8000a85d72ca320e5618ad1d45b0128c8c55e742b",
+          "bytes": 177596,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    },
+    {
+      "revision": 13,
+      "created_at": "2026-09-14T04:37:57.614942+00:00",
+      "stage": "in-progress",
+      "change": "Twenty-four intermediate clusters close global angular gaps; tip visibility verified across seeds.",
+      "hypothesis": "Close the exact main-world reference gap while preserving native surfaces, identity and retained LOD behavior; see immutable revision notes and dated independent reviews.",
+      "covered_reference_ids": [
+        "planets--crystal-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/colossal-cluster.glb",
+          "sha256": "3aa633e47d0ee1d3ec7196877e1e29041c215d9c97f441b1500117c9dac346e4",
+          "bytes": 202956,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/composition-r013.test.ts",
+          "sha256": "79e383f0589d3543df8fb4b3d6ce5163e58f8f306808a18246984ec0cdd802cb",
+          "bytes": 4983,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/composition-r013.ts",
+          "sha256": "898bd1bcc70f7a256917a9135a478514d895305c21b5913a071de7697a180ecd",
+          "bytes": 9012,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-top",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/corrected-seed38-angle2.png",
+          "sha256": "b03a33a31510b612aa39a528a69dc479760213673e99c3ab598b9571a169b48d",
+          "bytes": 575231,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/corrected-seed38-capture.log",
+          "sha256": "15e1b9eb88bca548b0334319438c4f9528d40a2efb2301f1d98b00330bc54918",
+          "bytes": 2784,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "c3955b07ed47f4066a7a6a0d6e6774bdbd24deb1cd201fe825f756056dc0b6e2",
+          "bytes": 143230,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/corrected-seed38.json",
+          "sha256": "3d2ba3f446fd0c7ac043e9ae239aed99b41956422b3837966c31d257d980da6c",
+          "bytes": 2553,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/corrected-seed38.png",
+          "sha256": "5447b71b276047c3ca35a4aed1ae5653bd392a13f04fdc3ff14b4569205040fe",
+          "bytes": 596474,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": "Isolated Babylon/SwiftShader appearance only for runtime captures; no Flight/Map or hardware timing acceptance.",
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/coverage.json",
+          "sha256": "f2bd8c2333cab4c6f2f2135e75ddc5e900dffd961ef21372c2c4a09fac0a52f0",
+          "bytes": 644,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/crystal-battered-region-a.glb",
+          "sha256": "1c40f07479ae1b1a46e6fd5535e18dd1662883914235726356ebdfb6d3e5ac96",
+          "bytes": 934936,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/crystal-battered-region-b.glb",
+          "sha256": "d60d8b32daea4ad28889b1a66afa29bf8687cce943a022cfedb434688c09ac8f",
+          "bytes": 930980,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/fracture-cliffs.glb",
+          "sha256": "e6a735298b9b11aa9712ebb8c356ca2b1b8d402dac8ada26abeb79e4ed92acfe",
+          "bytes": 405552,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/ground-sphere-low.glb",
+          "sha256": "edf99ea63703e9488e987def8049e770d44cf9eac91d7f3fb0a214ad316be1aa",
+          "bytes": 139404,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/ground-sphere-medium.glb",
+          "sha256": "c9f118c73040ff358ef2a21b1da4f185cf8a2e6e7628ce9ac84286b4791ab178",
+          "bytes": 162004,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/ground-sphere.glb",
+          "sha256": "466dda9ff3d180004a30fae487f7719052795a939e13ab2b9bf7fa941089ba15",
+          "bytes": 251220,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/kit-preview.png",
+          "sha256": "c53cfead0a9207e733f84e4ccbd3318f1af5013bdae6b796a8aa2cc8ad15acf2",
+          "bytes": 1194938,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "native-source",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/kit.blend",
+          "sha256": "642cc6f4763995016e44514ad80d584e75c59f67a24953c3093c71a95c18b90f",
+          "bytes": 5677371,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/kit.json",
+          "sha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369",
+          "bytes": 15403081,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/leaning-colossal-cluster.glb",
+          "sha256": "0adcdc05675dcee5f9940e40010dbe42c12c7f58822ec665ad2d359910132ce5",
+          "bytes": 194456,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/low-fractured-shelf.glb",
+          "sha256": "8d060e664110f81420ced42869409e3b37e92d65d214af3336854f04dee2f0a3",
+          "bytes": 397492,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-0-albedo.png",
+          "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+          "bytes": 87818,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-0-orm.png",
+          "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+          "bytes": 40836,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-1-albedo.png",
+          "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+          "bytes": 76356,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-1-orm.png",
+          "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+          "bytes": 41452,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-2-albedo.png",
+          "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+          "bytes": 92476,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-2-orm.png",
+          "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+          "bytes": 39879,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-3-albedo.png",
+          "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+          "bytes": 31086,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-4-albedo.png",
+          "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+          "bytes": 33571,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-5-albedo.png",
+          "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+          "bytes": 24737,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-6-albedo.png",
+          "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+          "bytes": 37069,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/material-7-albedo.png",
+          "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa",
+          "bytes": 40023,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/medium-cluster.glb",
+          "sha256": "92f34e1c8c90a9d0c5554f1f637577ce9fb9ca00d0763ed720ec25f47d809ae8",
+          "bytes": 194612,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/native_radial_surface.ts",
+          "sha256": "ae6b0e45b6ec8b859fc3c3f5cd0be096715897b7e2bfb2d274d6c95cff03db8b",
+          "bytes": 1768,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/notes.md",
+          "sha256": "5e1112baf49f161d3d88fc073afa13dc4211c8f81aaa113931ec700fccc5be6e",
+          "bytes": 1963,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/single-crystal.glb",
+          "sha256": "2fb0e7e1604665658cb9b6f8000a85d72ca320e5618ad1d45b0128c8c55e742b",
+          "bytes": 177596,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.crystal/revisions/r013/artifacts/source-hashes.json",
+          "sha256": "e435d73409d747a52be04074a9cee840d7d727e1a3ac4bd2b44df70c5e8de345",
+          "bytes": 2810,
+          "notes": "Preserved isolated revision artifact; filename distinguishes diagnostic from complete body.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T04:37:57.614942+00:00"
+        }
+      ],
+      "review": null
+    }
+  ]
+}

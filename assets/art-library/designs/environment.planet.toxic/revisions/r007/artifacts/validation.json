@@ -1,0 +1,151 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "coordinates": "Blender Z up, formation roots buried below Z0; ground sphere radius1",
+  "partsManifold": true,
+  "variants": [
+    {
+      "name": "toxic-basin-group-a",
+      "vertices": 20088,
+      "triangles": 6696,
+      "bounds": [
+        [
+          -1.5564311742782593,
+          1.5463999509811401
+        ],
+        [
+          -1.1100000143051147,
+          1.2200000286102295
+        ],
+        [
+          -0.30000001192092896,
+          0.8100000023841858
+        ]
+      ]
+    },
+    {
+      "name": "toxic-basin-group-b",
+      "vertices": 19314,
+      "triangles": 6438,
+      "bounds": [
+        [
+          -1.5564311742782593,
+          1.5463999509811401
+        ],
+        [
+          -1.0768749713897705,
+          1.1018327474594116
+        ],
+        [
+          -0.30000001192092896,
+          0.6966000199317932
+        ]
+      ]
+    },
+    {
+      "name": "toxic-basin-group-c",
+      "vertices": 19752,
+      "triangles": 6584,
+      "bounds": [
+        [
+          -1.5564311742782593,
+          1.5463999509811401
+        ],
+        [
+          -1.0768749713897705,
+          1.1607999801635742
+        ],
+        [
+          -0.30000001192092896,
+          0.7533000111579895
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "vertices": 160854,
+      "triangles": 53618,
+      "bounds": [
+        [
+          -1.0267807245254517,
+          1.046695590019226
+        ],
+        [
+          -1.0416834354400635,
+          1.0186123847961426
+        ],
+        [
+          -1.032179832458496,
+          1.0436391830444336
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "vertices": 114774,
+      "triangles": 38258,
+      "bounds": [
+        [
+          -1.0267807245254517,
+          1.046695590019226
+        ],
+        [
+          -1.0416834354400635,
+          1.0186123847961426
+        ],
+        [
+          -1.032179832458496,
+          1.0436391830444336
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "vertices": 103254,
+      "triangles": 34418,
+      "bounds": [
+        [
+          -1.0267807245254517,
+          1.046695590019226
+        ],
+        [
+          -1.0416834354400635,
+          1.0186123847961426
+        ],
+        [
+          -1.032179832458496,
+          1.0436391830444336
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "corrosion-1-orm.png": "97733bd28a661651593dee68387cd0c37ab0906f62c9fd1d405b9ff511f86430",
+    "corrosion-5-orm.png": "696048521bc13fef90dabda790499c7c4668a1fcebe7aee0b6f2fe1d09320e80",
+    "source-picks-before.json": "819cc19f993abb8adfab39341f27e8ddb93b15ea5f7492854347fe9eba30e88a",
+    "corrosion-1-albedo.png": "c77ba148b32143c0d50891420da132d360d37489fab9c6ca29c29387efbcf176",
+    "corrosion-1-normal.png": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed",
+    "ground-sphere-low.glb": "2440af5a901c03a5d901907b0f325d7dd9e9e93a41da1786aaad910a4b379cf7",
+    "corrosion-4-normal.png": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed",
+    "ground-sphere.glb": "152ae5be02f260bc9d4b0a02b2adf83f286ab4b2d26e9dd24e19cd0ce1c9348c",
+    "corrosion-4-albedo.png": "ba88f2e643fb09a2a5d306390231dda2fd0cd56a7f89e0f1de3eb65ee8cb728a",
+    "corrosion-3-albedo.png": "76c6ae415edd3b9d228b5701bb9c62dbe73229c33f8ab4d7fc287f7c5e0cb74c",
+    "corrosion-0-orm.png": "54669fc9839add68e9c216bb171baf6aa458d3c8c39aa3fbdf5f602f6a5b79ed",
+    "corrosion-4-orm.png": "4e3c075d2d1d244ed58757b828bb7e9bb6880fb00c9cc062a32535fe6556212e",
+    "corrosion-3-normal.png": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed",
+    "toxic-basin-group-a.glb": "0e7e31de96e50d401781605b29cbe9f50ee150534f1ddc27eb40e86d0a62d56e",
+    "ground-sphere-medium.glb": "680c24ae35060a73889ec4dc21c2dbceec2a7455a60231b958e11295e9393867",
+    "corrosion-2-albedo.png": "8549fd652c2a09f4f19211f0893e004441eb63b764012da29b6162f8f17dd224",
+    "kit.blend": "8d4d19a6302e1ff2e2e710cf7135e3295904d62702f8aaa313fb2df638f181f3",
+    "toxic-basin-group-b.glb": "3d35f2fe6afb71c58d2d27eef6ee0f80a59349b4c8acfa2a73253ed00e0bf40f",
+    "corrosion-2-normal.png": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed",
+    "corrosion-2-orm.png": "af791bbd08c5999f8055ec8b554e670820ad388e9176491236c26c6dcbb2dd57",
+    "kit.json": "df85fefbbb5b9474e810197333255819d33dcf3c911462f98dc49a111edfcb2c",
+    "corrosion-5-normal.png": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed",
+    "kit-preview.png": "671714507af7121d48d80e09ca6bc78344accf4863b5f502a66c483c85f7aaa8",
+    "corrosion-5-albedo.png": "4fa50be569348706075713232fab073c4d8d527721b39077c1782bc3d6290cde",
+    "corrosion-3-orm.png": "ee01de90775cf84584f7e0f576e89adb19214fbcf95b5a6d16690f5f00985049",
+    "corrosion-0-albedo.png": "9864772f8a28e2c20ebe51325b5897e4c49173133b3e64668805f8ea1a485c9a",
+    "toxic-basin-group-c.glb": "b42c04adefeca09e43d64fcb278a5378a24304b8b3abd20c4eeafed0dc2dff56",
+    "corrosion-0-normal.png": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed"
+  }
+}

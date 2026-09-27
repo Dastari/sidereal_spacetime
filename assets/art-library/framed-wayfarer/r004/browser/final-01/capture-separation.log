@@ -1,0 +1,22 @@
+### Result
+{"captures":[{"mode":"armor","camera":[-2.75,0.955,0,1,-1,24],"draws":77,"triangles":13784,"activeMeshes":77,"renderMs":0.5999984741210938},{"mode":"bare","camera":[-2.75,0.955,0,1,-1,24],"draws":311,"triangles":290182,"activeMeshes":274,"renderMs":1.8999996185302734},{"mode":"exploded","camera":[-2.75,0.955,0,1,-1,24],"draws":388,"triangles":303966,"activeMeshes":351,"renderMs":2.1999988555908203}],"errors":[],"scope":"Exact native armor only, retained structure with armor hidden, and1.5m rigid exploded inspection offsets. Private pure fixture; no live state changes."}
+### Ran Playwright code
+```js
+await (async page => {
+ const out='/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r004/browser/final-01';
+ const errors=[];page.on('pageerror',e=>errors.push(e.message));const captures=[];
+ for(const mode of ['armor','bare','exploded']){
+  await page.goto('https://sidereal.tail7a58a6.ts.net:8445/__armor-review/index.html?mode='+mode);
+  await page.waitForFunction(()=>window.review?.ready,undefined,{timeout:60000});
+  const metrics=await page.evaluate(()=>window.review.view('concept'));
+  await page.screenshot({path:out+'/'+mode+'.png',timeout:60000});captures.push({mode,...metrics});
+ }
+ return {captures,errors,scope:'Exact native armor only, retained structure with armor hidden, and1.5m rigid exploded inspection offsets. Private pure fixture; no live state changes.'};
+}
+)(page);
+```
+### Page
+- Page URL: https://sidereal.tail7a58a6.ts.net:8445/__armor-review/index.html?mode=exploded
+- Page Title: Wayfarer armor native review
+### Events
+- New console entries: .playwright-cli/console-2026-09-14T07-42-57-104Z.log#L6-L8

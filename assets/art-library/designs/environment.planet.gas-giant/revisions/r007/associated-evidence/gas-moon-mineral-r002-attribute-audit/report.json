@@ -1,0 +1,1560 @@
+[
+  {
+    "candidate": "gas-giant-moon-1-r002",
+    "kit": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/kit.json",
+    "kitSha256": "5b90f425b682d747e04ca5f2d00775b87df23ff7ed798dcb432646acea227c34",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "crater-large",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/crater-large.glb",
+        "glbSha256": "ddc1a2a70534c24fffc457b461ed4b80d29b04f61ba35cc1db384c2b23a5aba2",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.374203324862029e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-pale-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-pale-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crater-broken",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/crater-broken.glb",
+        "glbSha256": "c100ebc3ead092b909553e5fd189cfd95abf27ae0aef0297a31192f08a860d32",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.527892878563046e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-pale-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-pale-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-1-violet-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-1-violet-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-6-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-1-pink-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-7-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-1-pink-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-7-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crater-small",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/crater-small.glb",
+        "glbSha256": "4c6a51dc43112a57d512dba77bdbecd2cea5d1f1ebce6523c865d0b610f7251a",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.569265725237314e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-pale-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-pale-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "fractured-shelf",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/fractured-shelf.glb",
+        "glbSha256": "cfed8f3883e476ba68ef15e06e35b01eb7097562001a629f1d1b4d01d9564a1d",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.935736447153988e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "angular-outcrops",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/angular-outcrops.glb",
+        "glbSha256": "e8d504aaa3f2d27c8a2ffb12db79befbe7bf7b4a86a4a98f024001380263df41",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.771974163605368e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "mineral-seam",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/mineral-seam.glb",
+        "glbSha256": "558d94f2d0902418d564b750fba2f16df00eb1b67acf70990e4e0b560bdbc42b",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.217579356702141e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cool-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cool-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "battered-region-a",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/battered-region-a.glb",
+        "glbSha256": "9287105f2280131f37a66d7c1140abce46d70212bcc1f5998ba64f2ef20c1dee",
+        "jsonCorners": 41634,
+        "glbCorners": 41634,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 9.140146923260603e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-1-violet-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-1-violet-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-6-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-1-pink-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-7-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-1-pink-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-7-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cool-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cool-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "battered-region-b",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/battered-region-b.glb",
+        "glbSha256": "c33ff2c0b13527b01c788bc16a6428091bc872adc53625426834446eaa3ab97b",
+        "jsonCorners": 41370,
+        "glbCorners": 41370,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.679311839534963e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cool-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-cool-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/ground-sphere.glb",
+        "glbSha256": "ad375f585cfd035bd044b5f6bd99f6ee8081e16bcfec1f0ea422e3a5a978a8d2",
+        "jsonCorners": 15360,
+        "glbCorners": 15360,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.969896464190269e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/ground-sphere-medium.glb",
+        "glbSha256": "4dbe6d5c82b8de65ed680958cc03f533c6d549c6dd3ec2cd49b4ceaf5e7de870",
+        "jsonCorners": 3840,
+        "glbCorners": 3840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.695697840018373e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-1-r002/ground-sphere-low.glb",
+        "glbSha256": "8de9dd5febd301cc38e2ddcc6cd2a92db90fee9d3e32b7947f50a7df7a2ddba6",
+        "jsonCorners": 960,
+        "glbCorners": 960,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.110542189241277e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-1-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 11,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  },
+  {
+    "candidate": "gas-giant-moon-3-r002",
+    "kit": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/kit.json",
+    "kitSha256": "2b88193b15290a0a30c238b402628b4c5061b83e9d71162108e5480ee36c9cc4",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "crater-large",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/crater-large.glb",
+        "glbSha256": "ee06e93a5771ee76259fbed010185865995da3cd3184953791ba3af0d13ea832",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.374203324862029e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-pale-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-pale-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crater-broken",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/crater-broken.glb",
+        "glbSha256": "aebc46f7ee0a0ccfb1e918cc01b2f294d6f0f66f105ae71bcd0a56881c391f3c",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.527892878563046e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-pale-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-pale-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-3-violet-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-3-violet-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-6-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-3-pink-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-7-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-3-pink-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-7-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "crater-small",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/crater-small.glb",
+        "glbSha256": "e42b91c0638517d639f6cc81b3f45427d854fcbebd7f0e9d3a685b769a33920d",
+        "jsonCorners": 1716,
+        "glbCorners": 1716,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.569265725237314e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-pale-fracture",
+            "field": "baseColorTexture",
+            "expected": "rocky-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-pale-fracture",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-5-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "fractured-shelf",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/fractured-shelf.glb",
+        "glbSha256": "a52c5b05be58a4b3f689cc0c0ccf6e7f5f9989d73aa215d20c408d83d754aa11",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.935736447153988e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "angular-outcrops",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/angular-outcrops.glb",
+        "glbSha256": "ad167d57db599d7f83b873752184b7a88f71facdacb0d56f03a61599f2722ef3",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.771974163605368e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "mineral-seam",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/mineral-seam.glb",
+        "glbSha256": "abb48218e17384bbd0429188d0553ea79a433c95a7a129199c2a52001a6662e0",
+        "jsonCorners": 450,
+        "glbCorners": 450,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.217579356702141e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cool-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cool-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "battered-region-a",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/battered-region-a.glb",
+        "glbSha256": "9d71d0761d4b3bc9aac2b0000c52fe83d188e8e70fb2e41a3d27f13bf161edf3",
+        "jsonCorners": 41634,
+        "glbCorners": 41634,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 9.140146923260603e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-3-violet-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-3-violet-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-6-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-3-pink-mineral",
+            "field": "baseColorTexture",
+            "expected": "rocky-7-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "gas-giant-moon-3-pink-mineral",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-7-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cool-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cool-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "battered-region-b",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/battered-region-b.glb",
+        "glbSha256": "0a995b2a47bfa23ce8adf41d582a5d4f438b015b5468dd92a247fb5fb990cc68",
+        "jsonCorners": 41370,
+        "glbCorners": 41370,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 8.679311839534963e-05,
+        "maximumMatchedUVDelta": 5.960464477539063e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "baseColorTexture",
+            "expected": "rocky-1-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-rim",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-1-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "baseColorTexture",
+            "expected": "rocky-2-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cavity",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-2-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "baseColorTexture",
+            "expected": "rocky-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-fracture-wall",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-3-orm.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cool-fault",
+            "field": "baseColorTexture",
+            "expected": "rocky-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-cool-fault",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-4-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/ground-sphere.glb",
+        "glbSha256": "ae5a423c37b32c7b7ec83db27e205d51d3d42e268c99b81a5506a19db9fa0ed5",
+        "jsonCorners": 15360,
+        "glbCorners": 15360,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.969896464190269e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-medium",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/ground-sphere-medium.glb",
+        "glbSha256": "c7d5691bf8ef44f3dfa0f4b50a4845e0e2cf76274a64b9b995bbae48d753651c",
+        "jsonCorners": 3840,
+        "glbCorners": 3840,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 6.695697840018373e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      },
+      {
+        "name": "ground-sphere-low",
+        "glb": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r002/ground-sphere-low.glb",
+        "glbSha256": "21698dd33e4b4566a4f03ca25f86419effc737bd1604b28998ad1b435902413e",
+        "jsonCorners": 960,
+        "glbCorners": 960,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 7.110542189241277e-05,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "baseColorTexture",
+            "expected": "rocky-0-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "planets--gas-giant-moon-3-crust",
+            "field": "metallicRoughnessTexture",
+            "expected": "rocky-0-orm.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 11,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  }
+]

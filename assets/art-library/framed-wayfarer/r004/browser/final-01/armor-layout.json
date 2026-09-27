@@ -1,0 +1,1216 @@
+{
+  "parts": [
+    {
+      "assetId": "part-0211e6d7960f233accb7",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000115",
+      "position": [
+        -5,
+        2,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-identity-pair-right-w200-h300-port",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-identity-pair-right-w200-h300-port--"
+      },
+      "armorGroup": "GEO-armor-identity-pair-right-w200-h300-port--ARMOR"
+    },
+    {
+      "assetId": "part-08dac7402c764c4d89d7",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000110",
+      "position": [
+        -5,
+        -2,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-utility-pair-right-w200-h300-port",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-utility-pair-right-w200-h300-port--"
+      },
+      "armorGroup": "GEO-armor-utility-pair-right-w200-h300-port--ARMOR"
+    },
+    {
+      "assetId": "part-151314086c02e30e06f4",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000117",
+      "position": [
+        -5,
+        6,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-plain-pair-left-w200-h300-port",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-plain-pair-left-w200-h300-port--"
+      },
+      "armorGroup": "GEO-armor-plain-pair-left-w200-h300-port--ARMOR"
+    },
+    {
+      "assetId": "part-357cf42235c1a190e1d6",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000113",
+      "position": [
+        -5,
+        -8,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-red-service-pair-left-w200-h300-port",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-red-service-pair-left-w200-h300-port--"
+      },
+      "armorGroup": "GEO-armor-red-service-pair-left-w200-h300-port--ARMOR"
+    },
+    {
+      "assetId": "part-437732483fa4d7acbcbc",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000094",
+      "position": [
+        1,
+        11,
+        -0.25
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "front-diagonal-cheek",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            4.0225348472595215,
+            2.0346686840057373,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-diagonal-cheek--"
+      },
+      "armorGroup": "GEO-front-diagonal-cheek--ARMOR"
+    },
+    {
+      "assetId": "part-437732483fa4d7acbcbc",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000093",
+      "position": [
+        -1,
+        11,
+        -0.25
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "front-diagonal-cheek",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            4.0225348472595215,
+            2.0346686840057373,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-diagonal-cheek--"
+      },
+      "armorGroup": "GEO-front-diagonal-cheek--ARMOR"
+    },
+    {
+      "assetId": "part-4c25a5fd9da0bce537f5",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000087",
+      "position": [
+        3,
+        9,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 1.5707963267948966,
+      "slug": "front-sill-straight",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -0.03125,
+            0.0
+          ],
+          "max": [
+            2.0,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-sill-straight--"
+      },
+      "armorGroup": "GEO-front-sill-straight--ARMOR"
+    },
+    {
+      "assetId": "part-4c25a5fd9da0bce537f5",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000088",
+      "position": [
+        -3,
+        11,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": -1.5707963267948966,
+      "slug": "front-sill-straight",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -0.03125,
+            0.0
+          ],
+          "max": [
+            2.0,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-sill-straight--"
+      },
+      "armorGroup": "GEO-front-sill-straight--ARMOR"
+    },
+    {
+      "assetId": "part-540c83fc49ee792d9a4a",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000085",
+      "position": [
+        3,
+        11,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 1.5707963267948966,
+      "slug": "front-sill-diagonal45",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.03500594571232796,
+            0.0
+          ],
+          "max": [
+            1.964993953704834,
+            2.0,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-sill-diagonal45--"
+      },
+      "armorGroup": "GEO-front-sill-diagonal45--ARMOR"
+    },
+    {
+      "assetId": "part-540c83fc49ee792d9a4a",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000086",
+      "position": [
+        -1,
+        13,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 3.141592653589793,
+      "slug": "front-sill-diagonal45",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.03500594571232796,
+            0.0
+          ],
+          "max": [
+            1.964993953704834,
+            2.0,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-sill-diagonal45--"
+      },
+      "armorGroup": "GEO-front-sill-diagonal45--ARMOR"
+    },
+    {
+      "assetId": "part-5b7cee528aeb6959eb7c",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000116",
+      "position": [
+        -5,
+        4,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-vent-w200-h300-port",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-vent-w200-h300-port--"
+      },
+      "armorGroup": "GEO-armor-vent-w200-h300-port--ARMOR"
+    },
+    {
+      "assetId": "part-5cd7ebc9a8d894fb2b3a",
+      "decals": [
+        {
+          "color": "#d2d5e0",
+          "face": "right",
+          "id": "side-registration-1",
+          "kind": "text",
+          "position": [
+            0.5270000000000001,
+            0,
+            1.42
+          ],
+          "rotation": 0,
+          "size": [
+            1.45,
+            0.58
+          ],
+          "text": "WF-01"
+        }
+      ],
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000123",
+      "position": [
+        5,
+        0,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-identity-pair-left-w200-h300",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-identity-pair-left-w200-h300--"
+      },
+      "armorGroup": "GEO-armor-identity-pair-left-w200-h300--ARMOR"
+    },
+    {
+      "assetId": "part-62c859bcc51b318b2c65",
+      "decals": [
+        {
+          "color": "#d2d5e0",
+          "face": "left",
+          "id": "side-registration--1",
+          "kind": "text",
+          "position": [
+            -0.5270000000000001,
+            0,
+            1.42
+          ],
+          "rotation": 0,
+          "size": [
+            1.45,
+            0.58
+          ],
+          "text": "WF-01"
+        }
+      ],
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000114",
+      "position": [
+        -5,
+        0,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-identity-pair-left-w200-h300-port",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-identity-pair-left-w200-h300-port--"
+      },
+      "armorGroup": "GEO-armor-identity-pair-left-w200-h300-port--ARMOR"
+    },
+    {
+      "assetId": "part-63a0c40bbb71cfeba4dd",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000092",
+      "position": [
+        -2,
+        13,
+        -0.25
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "front-bow-bumper",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            4.0,
+            0.625,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-bow-bumper--"
+      },
+      "armorGroup": "GEO-front-bow-bumper--ARMOR"
+    },
+    {
+      "assetId": "part-64b068a5a6e987c1d518",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000124",
+      "position": [
+        5,
+        2,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-identity-pair-right-w200-h300",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-identity-pair-right-w200-h300--"
+      },
+      "armorGroup": "GEO-armor-identity-pair-right-w200-h300--ARMOR"
+    },
+    {
+      "assetId": "part-679e9e22f0af30b070a3",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000122",
+      "position": [
+        5,
+        -8,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-red-service-pair-left-w200-h300",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-red-service-pair-left-w200-h300--"
+      },
+      "armorGroup": "GEO-armor-red-service-pair-left-w200-h300--ARMOR"
+    },
+    {
+      "assetId": "part-77e9c39b3c50d6dd66f7",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000126",
+      "position": [
+        5,
+        6,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-plain-pair-left-w200-h300",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-plain-pair-left-w200-h300--"
+      },
+      "armorGroup": "GEO-armor-plain-pair-left-w200-h300--ARMOR"
+    },
+    {
+      "assetId": "part-9ab3a7a3dbc68586c530",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000118",
+      "position": [
+        -5,
+        8,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-plain-pair-right-w200-h300-port",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-plain-pair-right-w200-h300-port--"
+      },
+      "armorGroup": "GEO-armor-plain-pair-right-w200-h300-port--ARMOR"
+    },
+    {
+      "assetId": "part-9b292ad82d675d682b8b",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000125",
+      "position": [
+        5,
+        4,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-vent-w200-h300",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-vent-w200-h300--"
+      },
+      "armorGroup": "GEO-armor-vent-w200-h300--ARMOR"
+    },
+    {
+      "assetId": "part-b9ca98146302dec24dd6",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000112",
+      "position": [
+        -5,
+        -6,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-red-service-pair-right-w200-h300-port",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-red-service-pair-right-w200-h300-port--"
+      },
+      "armorGroup": "GEO-armor-red-service-pair-right-w200-h300-port--ARMOR"
+    },
+    {
+      "assetId": "part-c9e43b70cbc1f9f77b1f",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000127",
+      "position": [
+        5,
+        8,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-plain-pair-right-w200-h300",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-plain-pair-right-w200-h300--"
+      },
+      "armorGroup": "GEO-armor-plain-pair-right-w200-h300--ARMOR"
+    },
+    {
+      "assetId": "part-d16f3e3a2db2188e5ed6",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000121",
+      "position": [
+        5,
+        -6,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-red-service-pair-right-w200-h300",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-red-service-pair-right-w200-h300--"
+      },
+      "armorGroup": "GEO-armor-red-service-pair-right-w200-h300--ARMOR"
+    },
+    {
+      "assetId": "part-d3e5e45b0f3f60b3fa0a",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000120",
+      "position": [
+        5,
+        -4,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-utility-pair-left-w200-h300",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-utility-pair-left-w200-h300--"
+      },
+      "armorGroup": "GEO-armor-utility-pair-left-w200-h300--ARMOR"
+    },
+    {
+      "assetId": "part-e43ac94780eb7a1adc50",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000119",
+      "position": [
+        5,
+        -2,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-utility-pair-right-w200-h300",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-utility-pair-right-w200-h300--"
+      },
+      "armorGroup": "GEO-armor-utility-pair-right-w200-h300--ARMOR"
+    },
+    {
+      "assetId": "part-e965a5502d9fe4c25406",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000098",
+      "position": [
+        5,
+        9,
+        -0.25
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "front-shoulder-transition",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            0.7445136904716492,
+            2.0,
+            2.9375
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-shoulder-transition--"
+      },
+      "armorGroup": "GEO-front-shoulder-transition--ARMOR"
+    },
+    {
+      "assetId": "part-e965a5502d9fe4c25406",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000097",
+      "position": [
+        -5,
+        9,
+        -0.25
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "front-shoulder-transition",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            0.7445136904716492,
+            2.0,
+            2.9375
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-shoulder-transition--"
+      },
+      "armorGroup": "GEO-front-shoulder-transition--ARMOR"
+    },
+    {
+      "assetId": "part-ecd751f76e602db806a3",
+      "flipped": false,
+      "id": "30000000-0000-4000-8000-000000000077",
+      "position": [
+        1,
+        13,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 3.141592653589793,
+      "slug": "front-bow-transom",
+      "isSide": false,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -0.03125,
+            0.0
+          ],
+          "max": [
+            2.0,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-front-bow-transom--"
+      },
+      "armorGroup": "GEO-front-bow-transom--ARMOR"
+    },
+    {
+      "assetId": "part-f85394947090b7609d41",
+      "flipped": true,
+      "id": "30000000-0000-4000-8000-000000000111",
+      "position": [
+        -5,
+        -4,
+        0.1875
+      ],
+      "removedCells": [],
+      "rotation": 0,
+      "slug": "armor-utility-pair-left-w200-h300-port",
+      "isSide": true,
+      "visual": {
+        "url": "/__armor-native/hull.glb",
+        "sha256": "90e05fdad417878671468cc1fb03530c13d4060223a8586bd48cbc3a3a89a584",
+        "designId": "shipyard.wayfarer.armor-cassette.hull",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0.0,
+            -1.0,
+            0.0
+          ],
+          "max": [
+            0.5,
+            1.0,
+            3.0
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-armor-utility-pair-left-w200-h300-port--"
+      },
+      "armorGroup": "GEO-armor-utility-pair-left-w200-h300-port--ARMOR"
+    }
+  ],
+  "coverage": [
+    {
+      "assetId": "part-0211e6d7960f233accb7",
+      "previousSlug": "side-red-service-w200-h300",
+      "requestedSlug": "armor-identity-pair-right-w200-h300-port",
+      "candidateSlug": "armor-identity-pair-right-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-08dac7402c764c4d89d7",
+      "previousSlug": "side-utility-w200-h300",
+      "requestedSlug": "armor-utility-pair-right-w200-h300-port",
+      "candidateSlug": "armor-utility-pair-right-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-151314086c02e30e06f4",
+      "previousSlug": "side-plain-w200-h300",
+      "requestedSlug": "armor-plain-pair-left-w200-h300-port",
+      "candidateSlug": "armor-plain-pair-left-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-357cf42235c1a190e1d6",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-red-service-pair-left-w200-h300-port",
+      "candidateSlug": "armor-red-service-pair-left-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-437732483fa4d7acbcbc",
+      "previousSlug": "front-diagonal-cheek",
+      "requestedSlug": "front-diagonal-cheek",
+      "candidateSlug": "front-diagonal-cheek",
+      "missingRequiredModel": false,
+      "placements": 2
+    },
+    {
+      "assetId": "part-4c25a5fd9da0bce537f5",
+      "previousSlug": "front-sill-straight",
+      "requestedSlug": "front-sill-straight",
+      "candidateSlug": "front-sill-straight",
+      "missingRequiredModel": false,
+      "placements": 2
+    },
+    {
+      "assetId": "part-540c83fc49ee792d9a4a",
+      "previousSlug": "front-sill-diagonal45",
+      "requestedSlug": "front-sill-diagonal45",
+      "candidateSlug": "front-sill-diagonal45",
+      "missingRequiredModel": false,
+      "placements": 2
+    },
+    {
+      "assetId": "part-5b7cee528aeb6959eb7c",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-vent-w200-h300-port",
+      "candidateSlug": "armor-vent-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-5cd7ebc9a8d894fb2b3a",
+      "previousSlug": "side-identity-w200-h300",
+      "requestedSlug": "armor-identity-pair-left-w200-h300",
+      "candidateSlug": "armor-identity-pair-left-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-62c859bcc51b318b2c65",
+      "previousSlug": "side-identity-w200-h300",
+      "requestedSlug": "armor-identity-pair-left-w200-h300-port",
+      "candidateSlug": "armor-identity-pair-left-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-63a0c40bbb71cfeba4dd",
+      "previousSlug": "front-bow-bumper",
+      "requestedSlug": "front-bow-bumper",
+      "candidateSlug": "front-bow-bumper",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-64b068a5a6e987c1d518",
+      "previousSlug": "side-red-service-w200-h300",
+      "requestedSlug": "armor-identity-pair-right-w200-h300",
+      "candidateSlug": "armor-identity-pair-right-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-679e9e22f0af30b070a3",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-red-service-pair-left-w200-h300",
+      "candidateSlug": "armor-red-service-pair-left-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-77e9c39b3c50d6dd66f7",
+      "previousSlug": "side-plain-w200-h300",
+      "requestedSlug": "armor-plain-pair-left-w200-h300",
+      "candidateSlug": "armor-plain-pair-left-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-9ab3a7a3dbc68586c530",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-plain-pair-right-w200-h300-port",
+      "candidateSlug": "armor-plain-pair-right-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-9b292ad82d675d682b8b",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-vent-w200-h300",
+      "candidateSlug": "armor-vent-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-b9ca98146302dec24dd6",
+      "previousSlug": "side-red-service-w200-h300",
+      "requestedSlug": "armor-red-service-pair-right-w200-h300-port",
+      "candidateSlug": "armor-red-service-pair-right-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-c9e43b70cbc1f9f77b1f",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-plain-pair-right-w200-h300",
+      "candidateSlug": "armor-plain-pair-right-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-d16f3e3a2db2188e5ed6",
+      "previousSlug": "side-red-service-w200-h300",
+      "requestedSlug": "armor-red-service-pair-right-w200-h300",
+      "candidateSlug": "armor-red-service-pair-right-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-d3e5e45b0f3f60b3fa0a",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-utility-pair-left-w200-h300",
+      "candidateSlug": "armor-utility-pair-left-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-e43ac94780eb7a1adc50",
+      "previousSlug": "side-utility-w200-h300",
+      "requestedSlug": "armor-utility-pair-right-w200-h300",
+      "candidateSlug": "armor-utility-pair-right-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-e965a5502d9fe4c25406",
+      "previousSlug": "front-shoulder-transition",
+      "requestedSlug": "front-shoulder-transition",
+      "candidateSlug": "front-shoulder-transition",
+      "missingRequiredModel": false,
+      "placements": 2
+    },
+    {
+      "assetId": "part-ecd751f76e602db806a3",
+      "previousSlug": "front-bow-transom",
+      "requestedSlug": "front-bow-transom",
+      "candidateSlug": "front-bow-transom",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-f85394947090b7609d41",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-utility-pair-left-w200-h300-port",
+      "candidateSlug": "armor-utility-pair-left-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    }
+  ]
+}

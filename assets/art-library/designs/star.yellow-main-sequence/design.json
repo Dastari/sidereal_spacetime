@@ -1,0 +1,393 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "star.yellow-main-sequence",
+  "asset_uuid": "99d4f85d-c7c0-5fa0-8243-9381adff0209",
+  "reference_ids": [
+    "stars--yellow-main-sequence"
+  ],
+  "mapping_status": "Explicit S39 yellow main sequence only",
+  "current_revision": 13,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 1,
+  "profile": "star",
+  "assigned_to": "root/yellow-star-solar-system",
+  "blocker": null,
+  "feedback": [
+    {
+      "source": "Astra independent reviewer",
+      "date": "2026-09-15",
+      "text": "Astra: body/pits close, no further sculpt needed; runtime corona and playback pending."
+    },
+    {
+      "date": "2026-09-15",
+      "source": "owner and independent gpt-6-astra original-atlas comparison",
+      "text": "r007/plasma-r009 acceptance superseded. Orange body and connected near-white flows, luminous limb blended into turbulent orange corona required; current champagne checkerboard and red annulus materially miss original Yellow Main Sequence reference."
+    },
+    {
+      "source": "independent gpt-6-astra and root",
+      "date": "2026-09-15",
+      "text": "Root/Astra working acceptance against original Yellow Main Sequence after front, alternate, bloom-off and five playback frames. No further correction before owner review. Cleaner/coarser relief, simpler dark basins, fine flare tips and less billowy corona remain. No owner final sign-off or hardware timing acceptance."
+    },
+    {
+      "date": "2026-09-15",
+      "source": "owner, new corona reference; independent Astra concurs",
+      "text": "r012 acceptance superseded. Flares must be much rarer, larger, dramatic and integrated with a larger corona; stronger surface fluctuation and deeply saturated orange/yellow glow. Persistent small tentacles are rejected."
+    },
+    {
+      "date": "2026-09-15",
+      "source": "owner / root implementation review",
+      "text": "Owner requests dynamic hexagonal tile heights and evolving spots, twice visible corona, longer curling orange flares. Native r011 too coarse; r012 rejected upload cap; r013 closed native tiles fit 8MiB. Plasma r016 exposed missing vertex injection at base construction; r017 fixes actual lift and passes compiled NullEngine regression. Astra review pending; no final signoff."
+    },
+    {
+      "date": "2026-09-15",
+      "source": "root and independent gpt-6-astra",
+      "text": "Native r013 / plasma-r018 passes working visual qualification against revised owner brief. No further art iteration requested. Actual playback/front/alternate/two close bloom-off captures prove raised moving relief, evolving spots and textured hot fields, broad corona and rare orange curling eruptions. Owner final signoff and hardware performance remain unclaimed."
+    }
+  ],
+  "approvals": [],
+  "revisions": [
+    {
+      "revision": 1,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "Render failed: unavailable denoiser. Source/export retained.",
+      "hypothesis": "Render failed: unavailable denoiser. Source/export retained.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r001/blender-source.blend",
+          "sha256": "25e8554cd34851383871f9e565f2cebb46ace8ca7f292ff3ad43545883261bee"
+        },
+        {
+          "role": "glb",
+          "path": "designs/star.yellow-main-sequence/revisions/r001/star.glb",
+          "sha256": "ed896b82fa7dc01fd9ff13e30fe4862d6e4c5edcb63740515a27c776a0e165e7"
+        }
+      ],
+      "review": "Render failed: unavailable denoiser. Source/export retained."
+    },
+    {
+      "revision": 2,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "Rejected: pale tiled shell, rectangular pits, weak corona.",
+      "hypothesis": "Rejected: pale tiled shell, rectangular pits, weak corona.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r002/blender-source.blend",
+          "sha256": "2cc2e726d8c0f0dccd13373c972239cee3056b2caf299673c780280786f8cf45"
+        },
+        {
+          "role": "glb",
+          "path": "designs/star.yellow-main-sequence/revisions/r002/star.glb",
+          "sha256": "ed896b82fa7dc01fd9ff13e30fe4862d6e4c5edcb63740515a27c776a0e165e7"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r002/blender-close.png",
+          "sha256": "ef9bfe3562eb86fe5cefdbcb54e2b19dd2baf701b74e46f92a5a7c674fc2ddb0"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r002/validation.json",
+          "sha256": "bb2bb156fc5e989f8f2f0955741dc5a8e86deac5561aa29b9d0dda0158347e9e"
+        }
+      ],
+      "review": "Rejected: pale tiled shell, rectangular pits, weak corona."
+    },
+    {
+      "revision": 3,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "Rejected: tiled grid remains dominant despite brighter emission.",
+      "hypothesis": "Rejected: tiled grid remains dominant despite brighter emission.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r003/blender-source.blend",
+          "sha256": "7c9f35616b3bfe4b27ec0aca22bb1c9d93c38160868cc4fe6fadbe52b55ae4d6"
+        },
+        {
+          "role": "glb",
+          "path": "designs/star.yellow-main-sequence/revisions/r003/star.glb",
+          "sha256": "0a782af10fab9646ff9df70f9f5e905b2cfd6d03a5b11e0602bb96eb9e231667"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r003/blender-close.png",
+          "sha256": "a7a7478b6ad1385a09f34481d163e4010500c599fbe3aa99e19af5b5de1e1399"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r003/validation.json",
+          "sha256": "b173c50068b27201364506bdd15e469fc4fda496a466e287cd7ee7b9ad6b8ccd"
+        }
+      ],
+      "review": "Rejected: tiled grid remains dominant despite brighter emission."
+    },
+    {
+      "revision": 4,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "Astra: finer relief and stronger corona required.",
+      "hypothesis": "Astra: finer relief and stronger corona required.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r004/blender-source.blend",
+          "sha256": "3122a311d19ca0437323828f26f5c484f0b2202875fb1a4d434eb2bf2f62bbe6"
+        },
+        {
+          "role": "glb",
+          "path": "designs/star.yellow-main-sequence/revisions/r004/star.glb",
+          "sha256": "8e116bdb9018789862f5b755e52ea691cacd52ee623297e24c520d97c4dc34a9"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r004/blender-close.png",
+          "sha256": "615ac2579d5265b77635038c027b6fa8a0b4cddce090a178557a86d7f3c594a1"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r004/validation.json",
+          "sha256": "345276edcf24dd81d85419e147e63cf94365d24d30ac4eb916bf64d9854c394e"
+        }
+      ],
+      "review": "Astra: finer relief and stronger corona required."
+    },
+    {
+      "revision": 5,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "Astra: relief close; remove face-like spot layout and improve corona.",
+      "hypothesis": "Astra: relief close; remove face-like spot layout and improve corona.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r005/blender-source.blend",
+          "sha256": "4b0bd9117a8aa7f6677e5acf4d513ce529c4e986abbc717d5e67ff4acef86d0d"
+        },
+        {
+          "role": "glb",
+          "path": "designs/star.yellow-main-sequence/revisions/r005/star.glb",
+          "sha256": "437042f8d84dcf0772e23cbb35834fd1dbedb196ed6bead4b4bed5eda8b24463"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r005/blender-close.png",
+          "sha256": "e550afbd26c1f7b43d48525dad5e86c9a677d5936ae72222e20b41570912ed0d"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r005/validation.json",
+          "sha256": "5b306d866851e616c793d0fca96225026fb74150f1fcc17be23d741a117b1a48"
+        }
+      ],
+      "review": "Astra: relief close; remove face-like spot layout and improve corona."
+    },
+    {
+      "revision": 6,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "Shared flare geometry/material export; continued visual review.",
+      "hypothesis": "Shared flare geometry/material export; continued visual review.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r006/blender-source.blend",
+          "sha256": "b2bcc18ae14621f82de9018ba109fc0705b36c79110a2973ea25f8e3bcad08f1"
+        },
+        {
+          "role": "glb",
+          "path": "designs/star.yellow-main-sequence/revisions/r006/star.glb",
+          "sha256": "d4173a746cb870fed63f4499987cdf5beb65408de1851d25e529b527f8b56898"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r006/blender-close.png",
+          "sha256": "f5d8999e7e897dd50519e416f0afe755105c54c3e8ec8e15aaf43a84f8504f68"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r006/validation.json",
+          "sha256": "3e2afa3765450a20bccdf1c253d08319b137f9d8d0c8ed9aa21e6135f085ab52"
+        }
+      ],
+      "review": "Shared flare geometry/material export; continued visual review."
+    },
+    {
+      "revision": 7,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "Astra: body/pits close, no further sculpt needed; runtime corona and playback pending.",
+      "hypothesis": "Astra: body/pits close, no further sculpt needed; runtime corona and playback pending.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r007/blender-source.blend",
+          "sha256": "051ba02ffbef1f14f974dc7f7fbe2576112759ac86f422cc39750c2c547d5b0e"
+        },
+        {
+          "role": "glb",
+          "path": "designs/star.yellow-main-sequence/revisions/r007/star.glb",
+          "sha256": "3f060f0b085b87c13379ce6afa98a574d9338bd2d3335892c3c9975b99c16a47"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r007/blender-close.png",
+          "sha256": "3a76ca56e173d028a5f0c7fb6088f6a36fe7cd9fe9aea517013b28eeaa184826"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r007/validation.json",
+          "sha256": "63536deb64ef5aef0b4f7b79c17bcd9a01db94a97b97933eab80817803b5671e"
+        }
+      ],
+      "review": "Root and independent Astra working acceptance: good reference match, no further art iteration requested. Matching front light-on/off probe verifies external warm illumination. Timed frames verify evolving anchored flare states; software playback is not hardware timing acceptance."
+    },
+    {
+      "revision": 8,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "Coherent orange native material regions and connected white-hot seams preserve existing sculpt. Runtime turbulent corona and analytic limb emission replace detached red annulus.",
+      "hypothesis": "Larger connected hot structures dominate the native relief and blend continuously into orange plasma at the limb.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "star",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/star.glb",
+          "sha256": "ee3f5eafd9468e3fd41b7143706d615f72e8e8da4d1c6653e0243e446f2eab4f"
+        },
+        {
+          "role": "generator",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/generator.py",
+          "sha256": "85c2217afeb36917cfdfafbf2c2ed61b733ef48e7d585e9aa74b89c48b1f5346"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/blender-close.png",
+          "sha256": "8bcd4132b7c88eaabcd402d5e1dda85e68e24d3531f5936b86268e47147154d2"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/validation.json",
+          "sha256": "981a892ad408e5c5cacaf2d06df378aa104dc08417f870d5f6b12c5e1b6285ae"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r008/blender-source.blend",
+          "sha256": "a5fdc3e0f07014592d4c356f5067524d0450d03c751894078c83b7a84bb27068"
+        }
+      ],
+      "review": "Actual plasma-r010 render: orange/white and limb continuity improved; direct original-atlas Astra review pending. No acceptance."
+    },
+    {
+      "revision": 9,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "plasma-r011: original-atlas Astra review finds palette and limb substantially on target; requires connecting selected hot regions and shortening/broadening whisker-like flares.",
+      "hypothesis": "Preserve orange relief and continuous bright limb while resolving the original-reference hot-flow and flare silhouette gaps.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "generator",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/generator.py",
+          "sha256": "21bb12dfc1c3c9ba5cabfc014580c91ade74f3ced2a43ad6d6dcf2423ae38d7d"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/validation.json",
+          "sha256": "32254fb41ff33d8a1d9ba6dc255dea8846e403a0d2d2659c484b5b25095dcd70"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/blender-source.blend",
+          "sha256": "e528ad6d667ffd6a8e2e7de54032fd06dcf4441652d42242431e8351a5070409"
+        },
+        {
+          "role": "star",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/star.glb",
+          "sha256": "87839cb1fb37b6178b32a8012c316d0ff55f61ef4fc8f61df82c5251ab7a1aeb"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r009/blender-close.png",
+          "sha256": "1298d99014066ed04755fba84574d8cb5c8e5f567188a31ebe9727a232bd8cfa"
+        }
+      ],
+      "review": "plasma-r011: original-atlas Astra review finds palette and limb substantially on target; requires connecting selected hot regions and shortening/broadening whisker-like flares."
+    },
+    {
+      "revision": 10,
+      "created_at": "2026-09-15",
+      "stage": "review",
+      "change": "plasma-r012 candidate: asymmetric connected hot regions and shorter/wider animated flares; actual review pending, no acceptance.",
+      "hypothesis": "Preserve orange relief and continuous bright limb while resolving the original-reference hot-flow and flare silhouette gaps.",
+      "covered_reference_ids": [
+        "stars--yellow-main-sequence"
+      ],
+      "evidence": [
+        {
+          "role": "blender-source",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/blender-source.blend",
+          "sha256": "f1921047a2a7f2fdf4a4e17dbf1ec2cb2b15d817c3060b25209dc68fec6b3003"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/blender-close.png",
+          "sha256": "ea20815c6730ba431545c603fdcf7cadc4ea21d0479084cacd070d94841c2032"
+        },
+        {
+          "role": "validation",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/validation.json",
+          "sha256": "f3568e242785670ee88b1ffe2b3307174e96f2c80a8437fdafc9b730df857584"
+        },
+        {
+          "role": "generator",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/generator.py",
+          "sha256": "a91d4cf060051068094b0ef07b15b4f92965c571d41e8731e4a29c117ff41108"
+        },
+        {
+          "role": "star",
+          "path": "designs/star.yellow-main-sequence/revisions/r010/star.glb",
+          "sha256": "1bfd0d364052e09943e9e6815cfca482780fcf2f5fef1f4f3bdad262ee258691"
+        }
+      ],
+      "review": "Root/Astra working acceptance against original Yellow Main Sequence after front, alternate, bloom-off and five playback frames. No further correction before owner review. Cleaner/coarser relief, simpler dark basins, fine flare tips and less billowy corona remain. No owner final sign-off or hardware timing acceptance."
+    }
+  ],
+  "additional_references": [
+    {
+      "path": "designs/star.yellow-main-sequence/references/owner-corona-20260915.png",
+      "sha256": "81ebe95c370a0fec1bcc2724a764f6aad8fdec32dc34ce608b53dbe855c9c982",
+      "purpose": "Owner supplementary direction for broad eruptions, saturation and larger corona; original Yellow Main Sequence atlas remains surface-detail reference."
+    }
+  ]
+}

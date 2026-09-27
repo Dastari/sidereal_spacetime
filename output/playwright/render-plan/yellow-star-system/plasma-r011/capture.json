@@ -1,0 +1,48 @@
+{
+  "date": "2026-09-15",
+  "renderer": "Chromium SwiftShader WebGL2",
+  "hardwareTimingAcceptance": false,
+  "canvas": [
+    768,
+    768
+  ],
+  "nativeRevision": "r009",
+  "runtimeRevision": "plasma-r011",
+  "nativeSha256": "87839cb1fb37b6178b32a8012c316d0ff55f61ef4fc8f61df82c5251ab7a1aeb",
+  "reference": "reference/art/stars.png Yellow Main Sequence exact crop [35,64,462,364]",
+  "playbackRequestedSeconds": 12,
+  "before": {
+    "frames": 211,
+    "ready": true,
+    "flareCount": 180,
+    "ejectaCount": 18,
+    "convectionMaterials": 4,
+    "time": 114.35410000038146,
+    "glow": true,
+    "lighting": true,
+    "meshes": 388,
+    "instances": 358,
+    "drawCalls": 63
+  },
+  "after": {
+    "frames": 232,
+    "ready": true,
+    "flareCount": 180,
+    "ejectaCount": 18,
+    "convectionMaterials": 4,
+    "time": 129.19589999961852,
+    "glow": true,
+    "lighting": true,
+    "meshes": 388,
+    "instances": 358,
+    "drawCalls": 63
+  },
+  "advancedFrames": 21,
+  "sourceHashes": {
+    "reviewed-star-catalog.ts": "3c5c1fa133fd62eb645a61de0332c64ab8c9f9809a51396d6bed21d8af215dec",
+    "yellow-star-runtime.ts": "b92b59bb7805baa1428009a394fe8fe66b79d777e533ecb99f5dc36a4ae4e02b",
+    "stellar-corona.ts": "4e576d1200d3671216c6ddcf06db4b0280a4712c40619b2597ad0f9c7cdce58e",
+    "stellar-convection.ts": "7065d79500cd4e964715038b2e8394dc29b1850eccd62070ddcb62b4115c556f"
+  },
+  "acceptance": "rejected: connect hot paths and reshape thin flares"
+}

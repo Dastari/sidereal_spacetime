@@ -1,0 +1,13 @@
+
+> sidereal-spacetime@0.1.0 build
+> npm run world:build && npm run world:generate && npm run build:client && npm run build:dashboard
+
+
+> sidereal-spacetime@0.1.0 world:build
+> python3 scripts/dev.py build-world
+
+
+> @sidereal/world@0.1.0 typecheck
+> tsc --noEmit -p tsconfig.json
+
+[Errno 2] No such file or directory: '/root/sidereal-planet-reference-review/.tools/spacetime/spacetime'

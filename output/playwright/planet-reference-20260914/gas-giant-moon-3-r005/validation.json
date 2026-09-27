@@ -1,0 +1,251 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "coordinates": "Blender Z up, formation roots buried below Z0; ground sphere radius1",
+  "partsManifold": true,
+  "lodContract": "Dominant crater variants retained unchanged at all levels; ground-sphere high/medium/low are authored originals; small outcrop density may decrease; no decimation.",
+  "variants": [
+    {
+      "name": "crater-large",
+      "vertices": 1716,
+      "triangles": 572,
+      "bounds": [
+        [
+          -1.0649960041046143,
+          1.034999966621399
+        ],
+        [
+          -0.9250667691230774,
+          0.8899491429328918
+        ],
+        [
+          -0.16467289626598358,
+          0.3643461763858795
+        ]
+      ]
+    },
+    {
+      "name": "crater-broken",
+      "vertices": 1716,
+      "triangles": 572,
+      "bounds": [
+        [
+          -0.9327695965766907,
+          0.9737630486488342
+        ],
+        [
+          -0.8688113689422607,
+          0.8883816599845886
+        ],
+        [
+          -0.15275496244430542,
+          0.3392561972141266
+        ]
+      ]
+    },
+    {
+      "name": "crater-small",
+      "vertices": 1716,
+      "triangles": 572,
+      "bounds": [
+        [
+          -0.5353879928588867,
+          0.5155556201934814
+        ],
+        [
+          -0.48227983713150024,
+          0.4876709580421448
+        ],
+        [
+          -0.08557188510894775,
+          0.18953165411949158
+        ]
+      ]
+    },
+    {
+      "name": "fractured-shelf",
+      "vertices": 450,
+      "triangles": 150,
+      "bounds": [
+        [
+          -0.9359400272369385,
+          0.820576012134552
+        ],
+        [
+          -0.4646120071411133,
+          0.4391480088233948
+        ],
+        [
+          -0.14000000059604645,
+          0.25999999046325684
+        ]
+      ]
+    },
+    {
+      "name": "angular-outcrops",
+      "vertices": 450,
+      "triangles": 150,
+      "bounds": [
+        [
+          -0.5345799922943115,
+          0.39764800667762756
+        ],
+        [
+          -0.38042500615119934,
+          0.24210399389266968
+        ],
+        [
+          -0.14000000059604645,
+          0.5899999737739563
+        ]
+      ]
+    },
+    {
+      "name": "mineral-seam",
+      "vertices": 450,
+      "triangles": 150,
+      "bounds": [
+        [
+          -0.7056319713592529,
+          0.49158400297164917
+        ],
+        [
+          -0.05820399895310402,
+          0.31109198927879333
+        ],
+        [
+          -0.14000000059604645,
+          0.09000000357627869
+        ]
+      ]
+    },
+    {
+      "name": "battered-region-a",
+      "vertices": 41634,
+      "triangles": 13878,
+      "bounds": [
+        [
+          -1.9900000095367432,
+          1.9500000476837158
+        ],
+        [
+          -1.4500000476837158,
+          1.4800000190734863
+        ],
+        [
+          -0.4300000071525574,
+          0.3400000035762787
+        ]
+      ]
+    },
+    {
+      "name": "battered-region-b",
+      "vertices": 41370,
+      "triangles": 13790,
+      "bounds": [
+        [
+          -1.9900000095367432,
+          1.9500000476837158
+        ],
+        [
+          -1.4500000476837158,
+          1.4800000190734863
+        ],
+        [
+          -0.4300000071525574,
+          0.3400000035762787
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "vertices": 15360,
+      "triangles": 5120,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "vertices": 3840,
+      "triangles": 1280,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "vertices": 960,
+      "triangles": 320,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "rocky-2-orm.png": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+    "rocky-6-orm.png": "6b9853f449130a4976c5db69912b29733a291889c5723f1de65844a9f8ecf663",
+    "rocky-0-albedo.png": "9bc6fad73f6e48ec7c1dd8c8121fd5e25c077397cb772898aa2a0c200872d971",
+    "foundation-source-r004.py": "59c9f23b12ce9e09144bae45d90b2ae917c12d4c1064a6917470f506d85866b3",
+    "kit.json": "9391022b5a57b77b346a469fac91860164696c31bb46388a60bcb4d153f72e59",
+    "kit.blend": "bd53b127cdc7856b6b8ae7fbb9ac80dbfbab6fa4e763869be96a42719c3df068",
+    "battered-region-a.glb": "2ae242a22ab988064854f3fc8ac52c7229f0c7c1924a99132594d1017bd36cac",
+    "rocky-7-albedo.png": "cc55054a782eca403bfcce80e34ac4ed2379ecd6c3ce6ecdef9ac89880e94913",
+    "rocky-2-albedo.png": "a81ada705c9a7d22069ce0dabd059c7cce192db07b5c0c3f96d4142e3afe62de",
+    "mineral-seam.glb": "abb48218e17384bbd0429188d0553ea79a433c95a7a129199c2a52001a6662e0",
+    "rocky-3-orm.png": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+    "rocky-7-orm.png": "6abdbb32f57a31613bfa76360d98152f41d0a3f23aab4a173aa0f89326e0424c",
+    "generator.py": "684b54b780b85f028e9823c8aaf632d96f8e9d487f5063a1ecebb3907069da13",
+    "angular-outcrops.glb": "ad167d57db599d7f83b873752184b7a88f71facdacb0d56f03a61599f2722ef3",
+    "rocky-5-albedo.png": "e5646053bde5fbc0ed52b56f05f9c64001befb838eaaf2d4433c53ad6487dcce",
+    "rocky-4-albedo.png": "7a31ad70f638b0503edd21e755df45e458333756e015f0f2f3a411a9df5a6686",
+    "ground-sphere-low.glb": "21698dd33e4b4566a4f03ca25f86419effc737bd1604b28998ad1b435902413e",
+    "rocky-3-albedo.png": "88176172beffa7861b947b557e8aa3dc6c72fc03fd528193e166d4ec7c87a598",
+    "crater-small.glb": "e42b91c0638517d639f6cc81b3f45427d854fcbebd7f0e9d3a685b769a33920d",
+    "crater-large.glb": "ee06e93a5771ee76259fbed010185865995da3cd3184953791ba3af0d13ea832",
+    "fractured-shelf.glb": "a52c5b05be58a4b3f689cc0c0ccf6e7f5f9989d73aa215d20c408d83d754aa11",
+    "rocky-1-orm.png": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+    "rocky-5-orm.png": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+    "ground-sphere.glb": "ae5a423c37b32c7b7ec83db27e205d51d3d42e268c99b81a5506a19db9fa0ed5",
+    "kit-preview.png": "e818b89ab9dd0d3f2ca43f35075cab77110c67f0e8dfcc5b5be2e8725d3b63dd",
+    "rocky-0-orm.png": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+    "rocky-4-orm.png": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+    "battered-region-b.glb": "0a995b2a47bfa23ce8adf41d582a5d4f438b015b5468dd92a247fb5fb990cc68",
+    "crater-broken.glb": "d2948d0cdb6fde417a8554982fd4ad714196160dced0ae28f5ba1b351ccf8a9a",
+    "rocky-6-albedo.png": "016503b23952e6224c8b3187d69da233374b8295cce6616c81d71fdf6ea30bae",
+    "rocky-1-albedo.png": "99afd56fd84b1c984d8517d327df01b5dc28cd03309d52f6fe795adbbe2246fd",
+    "ground-sphere-medium.glb": "c7d5691bf8ef44f3dfa0f4b50a4845e0e2cf76274a64b9b995bbae48d753651c"
+  }
+}

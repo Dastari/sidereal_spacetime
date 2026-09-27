@@ -1,0 +1,1608 @@
+{
+  "files": [
+    {
+      "path": "reviewed-planets/cloud-r002/kit.json",
+      "sha256": "ae4a1f95517ff4425d0f7ab532c2d91e960b6512f833c23d01b816e717dbdd01"
+    },
+    {
+      "path": "reviewed-planets/cloud-r002/provenance.json",
+      "sha256": "7a405558266cb1d02d0ebdcbf82d11d0070f52292ea2272fa84efa41e283126f"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/kit.json",
+      "sha256": "808cf50f1a25e00d39cbd39cbabebf05a344cb0cf75ca7167d80a101f086c702"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-1-r010/provenance.json",
+      "sha256": "89b06fc3d9f4962bff620f991b19ede0ab89536078b0864cb53810a4c8867167"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/kit.json",
+      "sha256": "90ba1de6ecd0bfb4f5333c7010ff70764887d13d68cb1c072e2d2cc0648818e0"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa"
+    },
+    {
+      "path": "reviewed-planets/crystal-moon-2-r010/provenance.json",
+      "sha256": "b031464b1754f6e3951fbdd8b2586b5f70502c56e8f7028294cd000a0137fd42"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/kit.json",
+      "sha256": "f3798cc5e67d0dfbed1caf86001002906465021764839be9da0260615052e369"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-0-albedo.png",
+      "sha256": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-0-orm.png",
+      "sha256": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-1-albedo.png",
+      "sha256": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-1-orm.png",
+      "sha256": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-2-albedo.png",
+      "sha256": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-2-orm.png",
+      "sha256": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-3-albedo.png",
+      "sha256": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-4-albedo.png",
+      "sha256": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-5-albedo.png",
+      "sha256": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-6-albedo.png",
+      "sha256": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/material-7-albedo.png",
+      "sha256": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa"
+    },
+    {
+      "path": "reviewed-planets/crystal-r013/provenance.json",
+      "sha256": "685fb550b3058a705b561b18f3beae738eba3eac7e6d4b84203fbfddabe0c5df"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/kit.json",
+      "sha256": "83a1ceb44cf8a5f3b2a9a7473d1e9b9202a4119be05c49322cb5a22941fd3c20"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/provenance.json",
+      "sha256": "637bc39adbe407d4749c7ebff94edccdccfc2c92ac83dc1122a24e7d1a23af48"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-0-albedo.png",
+      "sha256": "bd0b9434980391bdae5f596ab3803cc618c2d567879419e339da1c49a6542ba1"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-1-albedo.png",
+      "sha256": "21d56467302d525e92cbec98b0b08cbdb65624c092e7ca17a2f9bb7990f578c6"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-2-albedo.png",
+      "sha256": "14e45f8fdd6edddf9adf5a0cc31ec971a04738e46dfddb69ea13b6bff29a7692"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-3-albedo.png",
+      "sha256": "211ec56fe430fb0ff992de2bf5aeedbf160e58bf0370b287cc3ed74aa80784fb"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-4-albedo.png",
+      "sha256": "3a761fb681b386d812047fa24f65fdaa510665a3e48edb4d07cf9a1993f8ec95"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-5-albedo.png",
+      "sha256": "da985b76d5aa06eb63df3ad59fae767eaea7e67a8c5981d053160f8475d050e6"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-1-r001/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/kit.json",
+      "sha256": "4d4b1a295643ad05bb37012d517e75d05a41a63e7032ea9dc6e75b7bf5d375be"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/provenance.json",
+      "sha256": "e85ce78fe9b180204ba118ae32fff3192ea82e7bc038a67d58a4ce313b68a9fa"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-0-albedo.png",
+      "sha256": "fbe25227e522ca05e7e6eb7dfe706735d47d8e86e1444795c01d496669c26ceb"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-1-albedo.png",
+      "sha256": "decb57230a5981be72df1bd9705b67dc3daec4bcb363226aacc73a59a158254e"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-2-albedo.png",
+      "sha256": "69d5d4ec13a768bdcf80e738dbe380c911ec6b65edf76966adc160d814c4a6ed"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-3-albedo.png",
+      "sha256": "e8db113c787dea797ddfa2131a2afdd0f568c7f61c2f6ade140be2e4246b2a35"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-4-albedo.png",
+      "sha256": "ee3d98c16452184fcce1f47ce9d6f3935fd8b2fd97e998f38bdeef0a3daeaed3"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-5-albedo.png",
+      "sha256": "266ddf691896ecb5eee1b255a50cc4f1f79aa48e99cac3575b002ff7592aa9ba"
+    },
+    {
+      "path": "reviewed-planets/desert-moon-2-r001/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/desert-r014/desert-cap-albedo.png",
+      "sha256": "9920a448a05a9416dc93c6c21e741040a7b6e9bf22da180b26ded2dd28b03110"
+    },
+    {
+      "path": "reviewed-planets/desert-r014/desert-wall-albedo.png",
+      "sha256": "3e5bb32ee531f0e13d6a6e40aed63ec8d4bb092ed375d03d574f7d6b0702e6a0"
+    },
+    {
+      "path": "reviewed-planets/desert-r014/kit.snp",
+      "sha256": "a0d43d1c645543363136d0ada28541cf03e66c2651d47744d6de573698a8b47c"
+    },
+    {
+      "path": "reviewed-planets/desert-r014/provenance.json",
+      "sha256": "c8425c717b2dd796fd94cf38a43103c4591e14fd8b677450496c81a14f95a8c4"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/kit.json",
+      "sha256": "6f5385ee9f65def88c0e33c9b2bed391bec75103ddab2de50cfb36f63f4f596e"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/provenance.json",
+      "sha256": "98a00ddc587089e2f4f02a76e6933743b235dfe8f0cf976109bd0cefc9017dc2"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-0-albedo.png",
+      "sha256": "386ff2b85d33920ad1f801bfdce94b3826fb3e56e7ec537538fbe4dadb6037af"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-1-albedo.png",
+      "sha256": "04083e93be7050aea3b3cebe4e89e399f3a112e58840e0b11fcdfe0a1cea2589"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-2-albedo.png",
+      "sha256": "1e9b32afc99fa903b6def16c4194a38877a6ce62a3e5e98e68890acd0eb4dec5"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-3-albedo.png",
+      "sha256": "7ff6c81218c41398d38f50890c2fa626457f9d85bedba034a1824b002bff541c"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-4-albedo.png",
+      "sha256": "6ef35503245ee5aa19637c882631ff0afa60e3f82f5e80da5ab8adb072127ced"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-5-albedo.png",
+      "sha256": "9ef0a5d2017ef86325460792d060c8ac5c7cfb839b47a5630851aed6934d54c7"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-6-albedo.png",
+      "sha256": "016503b23952e6224c8b3187d69da233374b8295cce6616c81d71fdf6ea30bae"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-6-orm.png",
+      "sha256": "6b9853f449130a4976c5db69912b29733a291889c5723f1de65844a9f8ecf663"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-7-albedo.png",
+      "sha256": "cc55054a782eca403bfcce80e34ac4ed2379ecd6c3ce6ecdef9ac89880e94913"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-1-r005/rocky-7-orm.png",
+      "sha256": "6abdbb32f57a31613bfa76360d98152f41d0a3f23aab4a173aa0f89326e0424c"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/kit.json",
+      "sha256": "598a32d8f5b8ed67ddee6828ce9b1fa6082d83de7556c1c007542efc676f6fe5"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/provenance.json",
+      "sha256": "e8d5978c75360df281a660737c4558668972fc8f6b452674dceca69d1962896e"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-0-albedo.png",
+      "sha256": "713adf14811e9d6dc9958685e80e4473bcf4f9a8236ddec941eb06c1d3dfca68"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-1-albedo.png",
+      "sha256": "2f7481097694df49b82d849f0c114527b5121620d77403aaa038c9a9e545f5cd"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-2-albedo.png",
+      "sha256": "7d3a8a5c82b7109a239d81da313615a55391d07d7133964474cf3cf587bb3f9b"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-3-albedo.png",
+      "sha256": "006c6e4017dff87629049fff5769a2ae7f6eb5f1673676099419b0a19962ec5f"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-4-albedo.png",
+      "sha256": "7bed51044d38dd53222af12b19e87bf93b9eaf026f6ed69467e830ac651424f5"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-5-albedo.png",
+      "sha256": "c400e61321d59a61ac2f2447d0523f0ba8349e8773f5c44d20e018a5d58b51f3"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-2-r001/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/kit.json",
+      "sha256": "9391022b5a57b77b346a469fac91860164696c31bb46388a60bcb4d153f72e59"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/provenance.json",
+      "sha256": "a1b87dcfe5d7a34729b475bd77c31adb365de1ac036a49b7440dc53f29916e92"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-0-albedo.png",
+      "sha256": "9bc6fad73f6e48ec7c1dd8c8121fd5e25c077397cb772898aa2a0c200872d971"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-1-albedo.png",
+      "sha256": "99afd56fd84b1c984d8517d327df01b5dc28cd03309d52f6fe795adbbe2246fd"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-2-albedo.png",
+      "sha256": "a81ada705c9a7d22069ce0dabd059c7cce192db07b5c0c3f96d4142e3afe62de"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-3-albedo.png",
+      "sha256": "88176172beffa7861b947b557e8aa3dc6c72fc03fd528193e166d4ec7c87a598"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-4-albedo.png",
+      "sha256": "7a31ad70f638b0503edd21e755df45e458333756e015f0f2f3a411a9df5a6686"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-5-albedo.png",
+      "sha256": "e5646053bde5fbc0ed52b56f05f9c64001befb838eaaf2d4433c53ad6487dcce"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-6-albedo.png",
+      "sha256": "016503b23952e6224c8b3187d69da233374b8295cce6616c81d71fdf6ea30bae"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-6-orm.png",
+      "sha256": "6b9853f449130a4976c5db69912b29733a291889c5723f1de65844a9f8ecf663"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-7-albedo.png",
+      "sha256": "cc55054a782eca403bfcce80e34ac4ed2379ecd6c3ce6ecdef9ac89880e94913"
+    },
+    {
+      "path": "reviewed-planets/gas-giant-moon-3-r005/rocky-7-orm.png",
+      "sha256": "6abdbb32f57a31613bfa76360d98152f41d0a3f23aab4a173aa0f89326e0424c"
+    },
+    {
+      "path": "reviewed-planets/gas-r005/gas-albedo-generated.png",
+      "sha256": "1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da"
+    },
+    {
+      "path": "reviewed-planets/gas-r005/kit.json",
+      "sha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130"
+    },
+    {
+      "path": "reviewed-planets/gas-r005/provenance.json",
+      "sha256": "8b89c92f28bc12c8563f4a5f3b24e3a3f19a83043720a58901ad18dbfd277b60"
+    },
+    {
+      "path": "reviewed-planets/gas-r005/ring-dust-0.png",
+      "sha256": "7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e"
+    },
+    {
+      "path": "reviewed-planets/gas-r005/ring-dust-1.png",
+      "sha256": "27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79"
+    },
+    {
+      "path": "reviewed-planets/gas-r005/ring-dust-2.png",
+      "sha256": "dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-0-albedo.png",
+      "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-0-orm.png",
+      "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-1-albedo.png",
+      "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-1-orm.png",
+      "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-2-albedo.png",
+      "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-2-orm.png",
+      "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-3-albedo.png",
+      "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-3-orm.png",
+      "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-4-albedo.png",
+      "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/ice-4-orm.png",
+      "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/kit.json",
+      "sha256": "8bf42eb720f34978fc174ce519a76b72f8b27debbd42f80e700d5f0383f50b95"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-1-r002/provenance.json",
+      "sha256": "5b71b03b75a350effdac343b8c94feccbc50ef9c90ff06d18c063b1d7c665451"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-0-albedo.png",
+      "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-0-orm.png",
+      "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-1-albedo.png",
+      "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-1-orm.png",
+      "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-2-albedo.png",
+      "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-2-orm.png",
+      "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-3-albedo.png",
+      "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-3-orm.png",
+      "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-4-albedo.png",
+      "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/ice-4-orm.png",
+      "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/kit.json",
+      "sha256": "f2f7bfd0a1cb706bdca20c11e1c53baec18fe7d1212f30115586cbceeaf7de3c"
+    },
+    {
+      "path": "reviewed-planets/ice-moon-2-r003/provenance.json",
+      "sha256": "fc5f3a9dbdf34bfac1acd43b94702ab590462e0cc9a8f4e2df585391859733aa"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-0-albedo.png",
+      "sha256": "ef0b9ef41997a9588d87f7c2a153c50328656429b3915df204e922b18f79443c"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-0-orm.png",
+      "sha256": "422e6c2851744f6324e578e9bc34ec7c586caa5f1edec1a0cc959209a95ff879"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-1-albedo.png",
+      "sha256": "daa7ff65ab88390945537287f66700b14e6540b9c41f9bf5a4efd3059bffdd1f"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-1-orm.png",
+      "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-2-albedo.png",
+      "sha256": "5037a3fab7f4507535fc339b4f7024c7e70a20a191ad0120297a5c64c087a91d"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-2-orm.png",
+      "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-3-albedo.png",
+      "sha256": "485a3e3326d7cb6726742f50379726bc0fc4c3faa7686f6cd7fb6cf913481fc7"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-3-orm.png",
+      "sha256": "f5fe036f2e734a218f63edd5ee4dbae90461d83c7c0874a99e8a1fad8ec46973"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-4-albedo.png",
+      "sha256": "ec118c65ca7feb308a4540da06f75d20bbf7e0bef1a10c8863d44fc15e895037"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/ice-4-orm.png",
+      "sha256": "5069fb80400d3e2e7e43d7e1c3e0a52a9d81b5aa8967c9ff790e92f68b3c51e4"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/kit.json",
+      "sha256": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574"
+    },
+    {
+      "path": "reviewed-planets/ice-r026/provenance.json",
+      "sha256": "4d70c0321ea109210236b5edd781829564b636d8f476e2d6cdaf44132bd9fb4e"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/kit.json",
+      "sha256": "ffb61918739465a4d34ccc82beab3201afbd1e707687e4519a4d94701a7cb3a8"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/provenance.json",
+      "sha256": "153a53136580f7ebd4647013c7d38fa8e4a39adb551a8963cc63a11011896739"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-0-albedo.png",
+      "sha256": "0030c5deceb3918e252e8e93f268999fc86b378f9c5d6f0d9b799ed1ace8f965"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-1-albedo.png",
+      "sha256": "53652007ff9b36f4d9310f1145e2756a053c17237b9390687ca3c752eb393cde"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-2-albedo.png",
+      "sha256": "abc5e4313e37a4a54c4f263fcf9c70f336dafddde115cd4d3067effc5d237e4e"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-3-albedo.png",
+      "sha256": "668b9cd85a14224171eb1214c3e9a1e79dec6339cc5d9291074b6e9c0a71ae18"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-4-albedo.png",
+      "sha256": "6c903a1fe254238e8d0ddf53c7900ee9597e28e0f7e55a4d96a49c4f8ce45c14"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-5-albedo.png",
+      "sha256": "da3254d36ea267109d2d6bee88525ead99ac2255d4f3c58738ce744b4723cad8"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-1-r001/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/kit.json",
+      "sha256": "bc81bfb98f28fe4a37753bfea25db8b3c91acc2591837fe79bd3de54401a3347"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/provenance.json",
+      "sha256": "7b6b42ce207d2b5ba595d591d577f5689763bcff01c3e57d6bdf8a623943a570"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-0-albedo.png",
+      "sha256": "1c625ee9c4ba327b792a144d81ca067ff9e398c4abb596ec829eb4ff88eb5c30"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-1-albedo.png",
+      "sha256": "0e39f77e129b56c29ddd4f201dbf346ca2a38b60243136a03f9953aa2cd83f8d"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-2-albedo.png",
+      "sha256": "eb62cb3ca6636524e34eead064071b76b3ade31203c8b19c5e79be865e45a431"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-3-albedo.png",
+      "sha256": "ec2fc5ab08e937bc61d058bd8aee79ed4586a72b430051f12381f6ab4c7fb534"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-4-albedo.png",
+      "sha256": "dcf43af84b46f764148195987c875ede1d39e671bd5fb21377e102577755e73e"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-5-albedo.png",
+      "sha256": "e08d3a6c6ef651678d4384d3d009a321aabdc447e77dfc72b64f83b089c2d1f6"
+    },
+    {
+      "path": "reviewed-planets/ocean-moon-2-r002/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-1-albedo.png",
+      "sha256": "cf05fa7597941cd4a9dfcd9b808affb1147d27ec8cbe560361997862d1097630"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-1-normal.png",
+      "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-1-orm.png",
+      "sha256": "49d55db301acb4fa17eb366e6282a48dd7d7d5131f8d5665c3ba40c61bcac155"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-2-albedo.png",
+      "sha256": "0a4555636d01e76b98b21732488ec31dfeb597f233fd684abbefee47ed4340e3"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-2-normal.png",
+      "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-2-orm.png",
+      "sha256": "f89ba9b6acba36367557aab26aba759e6d51af93d69110665a7aa496157ff413"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-3-albedo.png",
+      "sha256": "95d88f8e7fa2ad03e45c767cfbdfd3900abcabab7a9303ccb57f280aad65b66b"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-3-normal.png",
+      "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-3-orm.png",
+      "sha256": "ca20405ec37d8bc842a1ecb59dfb44133ef546ed6e0623f00794d3f0f890e6f5"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-4-albedo.png",
+      "sha256": "dfb9545f38dc50eeb530499932c855b670fa003ea57822e63cc27c6813206394"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-4-normal.png",
+      "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-4-orm.png",
+      "sha256": "a903a4bd0fcfede7e968335fb2ae865c5a24bc875642be3eb1c3f6f05cb96086"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-5-albedo.png",
+      "sha256": "3b98bdacbccbfd9eacf760161d64d0c5fa8799541d68da29c1ea2743d9b7f9c5"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-5-normal.png",
+      "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-5-orm.png",
+      "sha256": "7ae19499b3a2cbd6149b8f03fdeb71960cf82460c21de40c5f2e91e577178223"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-6-albedo.png",
+      "sha256": "885892ae66865e9380596fc4d7d6654758bffaea3d36e55c349002d7d78fe2fd"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-6-normal.png",
+      "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/island-6-orm.png",
+      "sha256": "a646f1100c24da8bead6add3abe283f5c04a6f270e3fbd866bb157f1ff176d1c"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/kit.json",
+      "sha256": "71c2918ae71f8d074bfb8a8d94bc76f7271dd94e8a20c2c1b1f323f30d057f22"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/provenance.json",
+      "sha256": "5fdff3d360a3b23627cda0e184991686ee7a634c773f59672ee0f09139c1f9c4"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/water-albedo.png",
+      "sha256": "e05012eda3625e188f23ee5ebbfc75b57c5d522752a33c93b25122a44cf805a7"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/water-normal.png",
+      "sha256": "39232b0a816d26908fe3bc7842b1699ed2e93c99e44847f92d4cb9626987742f"
+    },
+    {
+      "path": "reviewed-planets/ocean-r007/water-orm.png",
+      "sha256": "594ab38132c524629984063a8ce56206f4bbf9e7baf6d4aa08b3c6850c466cfc"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/kit.json",
+      "sha256": "40f0b9a4cdc59d2de49d0edbcd0b1ad1438e366006edcdd28551b859204ed6db"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/provenance.json",
+      "sha256": "90957d4499d837778bf19914cd3ddab581aa8610866418a750e2e2b21016357d"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-0-albedo.png",
+      "sha256": "dc401263ed5560c34240fd2aac032c142764dd70f29680d76eeebbe97dc011f9"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-1-albedo.png",
+      "sha256": "1fbc7467cc78ef26acb57c1bc8bcabdd2842a085a5c5c8934f26e9c51bed8e1b"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-2-albedo.png",
+      "sha256": "d46b4720e823929720d7d22d532a81fc059456a78f26020d2d0542308fd04d88"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-3-albedo.png",
+      "sha256": "a1da0a9dc12811c7bcdabb8a5096e4a6c39673cf6514b129f44c45af4c52866e"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-4-albedo.png",
+      "sha256": "b0f41d7fdc670623ef1bb82e64e8e82436efe278d01eba344ea8a8111769ccd1"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-5-albedo.png",
+      "sha256": "6be4cdf419001cd108094122e3e1d8e363f2a6bb08594ab29bbe9ae38a0ed0ff"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-2-r001/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/kit.json",
+      "sha256": "bd22ee4e2b51a13bd09ee3b299c49e9f6c45e2955290c9afc21a15fc9df8b92d"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/provenance.json",
+      "sha256": "3607b54993e1da89831305d347056f5f625bf47a42b396435e3da78274ad0afc"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-0-albedo.png",
+      "sha256": "5d6f1983c05e0821c6ed6718e855ffb8eb6277224f6f0431f2ad9d618dc40903"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-1-albedo.png",
+      "sha256": "ef179131084b7eae87255a504041c9860bcae0abec56304e87d6870b992b348f"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-2-albedo.png",
+      "sha256": "44c92f1a15e684fc72b6d00fd4d5b1d69e016a302b7d2931e265dc6d2249c0fd"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-3-albedo.png",
+      "sha256": "1acd3523e591a1fe43f53b207613575b2d3c01610f93b4f4e321a80e645deefd"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-4-albedo.png",
+      "sha256": "03cbd42d66b7a1388f0a683aa5b4b19915eb0b4a2f5c9ce9305c6acf668c2d74"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-5-albedo.png",
+      "sha256": "8d373ecec82709c95261119c2e69c70467ec44dedf7309da8e52d06a160dfc1d"
+    },
+    {
+      "path": "reviewed-planets/rocky-moon-r002/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/kit.json",
+      "sha256": "fdb5964a2c4dcde7889fd821a0b4625664eae477be62130c7ea99794a5d98de2"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/provenance.json",
+      "sha256": "16e3d2d55b88fda23b712daf54a83b00ca2ec90e4f446cde3881c58e737673c0"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-0-albedo.png",
+      "sha256": "5d6f1983c05e0821c6ed6718e855ffb8eb6277224f6f0431f2ad9d618dc40903"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-1-albedo.png",
+      "sha256": "ef179131084b7eae87255a504041c9860bcae0abec56304e87d6870b992b348f"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-2-albedo.png",
+      "sha256": "44c92f1a15e684fc72b6d00fd4d5b1d69e016a302b7d2931e265dc6d2249c0fd"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-3-albedo.png",
+      "sha256": "1acd3523e591a1fe43f53b207613575b2d3c01610f93b4f4e321a80e645deefd"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-4-albedo.png",
+      "sha256": "8fa29c53e57c1e6dd975c7a52b767ed2fa510b38378f649b20a9699001eddcf1"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-4-orm.png",
+      "sha256": "ede0b765e656b78786e29460a3a014a305c6474144f2753e7d0066468e40857b"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-5-albedo.png",
+      "sha256": "8d373ecec82709c95261119c2e69c70467ec44dedf7309da8e52d06a160dfc1d"
+    },
+    {
+      "path": "reviewed-planets/rocky-r010/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/kit.json",
+      "sha256": "b686cf85d77a2d116bd18602592a3dcada882fa2eb2a8d71ba7b92847368949d"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/provenance.json",
+      "sha256": "bccce7dde40645929308bcfde1d6e3fbc8ae3235c9c8582c5b6ba3826d66b6eb"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-0-albedo.png",
+      "sha256": "40f1dce2d02e37b1b65abec1f1e19c01d2bfda25b082da949ae4d6a5e09cd66e"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-1-albedo.png",
+      "sha256": "1bfc0529b9d030107788d1049a64534a86c66542073f0ce750f3922d6289c197"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-2-albedo.png",
+      "sha256": "78d910fe358f0eb70f5c4c1b4a729b8ba6b0665a37eafdbe950e7cd43d3a2898"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-3-albedo.png",
+      "sha256": "d9b4a444c13bbdd3b33587c03b41c257129b45ce3140dced80a90181bbda150b"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-4-albedo.png",
+      "sha256": "76b8112830d338bcec13e463f5e6c4b1f3e149df9e83f6a4bcc5d4465bc6146c"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-5-albedo.png",
+      "sha256": "5fa8af27655a29c6ab8a49f01adf6231b9a6cf007c9535c95ca1dce419e32d54"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-1-r002/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/kit.json",
+      "sha256": "a20ab21c8c121a87167ff1480add89b2d60fd65cb07c39377054824f79c47de8"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/provenance.json",
+      "sha256": "38ce147440dbc07760dc08aa23f6432cd81a48f1b8f076d5d21efbd267d06589"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-0-albedo.png",
+      "sha256": "cbb167c8eb3f0b1b1ed6e7edcbde6b5db093f0b091c1ccf8458258725ac7f87e"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-1-albedo.png",
+      "sha256": "17b770434b0f784163621e911cae4eea0b4dc6c2865a6e352bed69d3e2c8b373"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-2-albedo.png",
+      "sha256": "ea0a3dceaa881497033e10009e2d979bae0a3c9d1b0466ab0d24732783f1e77c"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-3-albedo.png",
+      "sha256": "33933127cef60445841734d1c97ec4afcc3025b9e6489d13ee792f70782fad04"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-4-albedo.png",
+      "sha256": "c3cc7b3a1c00febc42a9b753d60f1b5239248c9a21bb45b66605ee5e360dc1f6"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-4-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-5-albedo.png",
+      "sha256": "f08a4979c4d3b9f50f68e12b48241c9dfeaf1e6fe0248ac8894b28e817f2bdaa"
+    },
+    {
+      "path": "reviewed-planets/temperate-moon-2-r002/rocky-5-orm.png",
+      "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-1-albedo.png",
+      "sha256": "cf05fa7597941cd4a9dfcd9b808affb1147d27ec8cbe560361997862d1097630"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-1-normal.png",
+      "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-1-orm.png",
+      "sha256": "49d55db301acb4fa17eb366e6282a48dd7d7d5131f8d5665c3ba40c61bcac155"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-2-albedo.png",
+      "sha256": "0a4555636d01e76b98b21732488ec31dfeb597f233fd684abbefee47ed4340e3"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-2-normal.png",
+      "sha256": "2d565384dd72dd0a775f98917d414e400ffe75bc1766c31a41f2ed2e30b8ee48"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-2-orm.png",
+      "sha256": "f89ba9b6acba36367557aab26aba759e6d51af93d69110665a7aa496157ff413"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-3-albedo.png",
+      "sha256": "95d88f8e7fa2ad03e45c767cfbdfd3900abcabab7a9303ccb57f280aad65b66b"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-3-normal.png",
+      "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-3-orm.png",
+      "sha256": "ca20405ec37d8bc842a1ecb59dfb44133ef546ed6e0623f00794d3f0f890e6f5"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-4-albedo.png",
+      "sha256": "dfb9545f38dc50eeb530499932c855b670fa003ea57822e63cc27c6813206394"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-4-normal.png",
+      "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-4-orm.png",
+      "sha256": "a903a4bd0fcfede7e968335fb2ae865c5a24bc875642be3eb1c3f6f05cb96086"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-5-albedo.png",
+      "sha256": "3b98bdacbccbfd9eacf760161d64d0c5fa8799541d68da29c1ea2743d9b7f9c5"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-5-normal.png",
+      "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-5-orm.png",
+      "sha256": "7ae19499b3a2cbd6149b8f03fdeb71960cf82460c21de40c5f2e91e577178223"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-6-albedo.png",
+      "sha256": "885892ae66865e9380596fc4d7d6654758bffaea3d36e55c349002d7d78fe2fd"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-6-normal.png",
+      "sha256": "69db011aa97ee177a77f682e14b4828461f5ae7d1dcf21f7174763efb0e6d0d2"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/island-6-orm.png",
+      "sha256": "a646f1100c24da8bead6add3abe283f5c04a6f270e3fbd866bb157f1ff176d1c"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/kit.json",
+      "sha256": "c8c3470f41e85b53b9ce1e1f05b24446900bfad439a0522cfedce3c48eef01fc"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/provenance.json",
+      "sha256": "4ccc2e0cfc69e0a0084bf50432b8a83d84acf93a76265be0357b6d3e21a12d42"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/water-albedo.png",
+      "sha256": "e05012eda3625e188f23ee5ebbfc75b57c5d522752a33c93b25122a44cf805a7"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/water-normal.png",
+      "sha256": "39232b0a816d26908fe3bc7842b1699ed2e93c99e44847f92d4cb9626987742f"
+    },
+    {
+      "path": "reviewed-planets/temperate-r003/water-orm.png",
+      "sha256": "594ab38132c524629984063a8ce56206f4bbf9e7baf6d4aa08b3c6850c466cfc"
+    },
+    {
+      "path": "reviewed-planets/toxic-fog-r005/kit.json",
+      "sha256": "f4f47fdf8a2652d91284c77ac591b522adae45795495c4fd45c3c8a258deb731"
+    },
+    {
+      "path": "reviewed-planets/toxic-fog-r005/provenance.json",
+      "sha256": "2acc002e5f8fda971bcd68db1d86fc207b17aae3b636e865f8232d853b0def4a"
+    },
+    {
+      "path": "reviewed-planets/toxic-fog-r005/toxic-fog-density.png",
+      "sha256": "55dda2e150e20197164a2026e05983d2ce18baf2d41a5c151691f1634721ddb5"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/kit.json",
+      "sha256": "b3d7eb42691d2bf24d2d7e6119180452d712f50e88ad80901dfc9a7a8993e213"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/provenance.json",
+      "sha256": "79926af12a7c588ec5d3750221a68fde4b8a92f3ea1b934d8c79e3f2274da601"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-0-albedo.png",
+      "sha256": "ea6e7761eca1e98b2ba1584d6b5eed44833cecc1a6ee43578c8023eb44d90cd9"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-0-orm.png",
+      "sha256": "dead442146c9926458d67859f76197f153cc8a2dda4ddd3dc4041c0882270d32"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-1-albedo.png",
+      "sha256": "30783193aec2decd5e7d2ca84d6e25750b21817a5053b18e2c32162d61234d80"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-1-orm.png",
+      "sha256": "b68c6f555d3c98f2a16eb31379f1700468e86f56c0020be4debf92bab8ce29fd"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-2-albedo.png",
+      "sha256": "bccdaf24748ad02c0b92de8d78f2b83094f396e67f6eeceac0a10727b3b011a6"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-2-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-3-albedo.png",
+      "sha256": "94e1f59bf23b26d5170c7bed1744b23c14a65e443b73748b90210fd59bda5e55"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-3-orm.png",
+      "sha256": "88c877540fbe4c86d6be0dcd63825723359defd1b6f93b590de39ff5535b4622"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-4-albedo.png",
+      "sha256": "568ceb03dde6cbaa11467ac201097cdd42f81325c2fe16ad33428cc35a28d3e3"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-4-orm.png",
+      "sha256": "c620af34271b70bc4dfd84640a61a410b4b568e6acd06b084d52eea61ff2dbcf"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-5-albedo.png",
+      "sha256": "babb65330237305f52fff28a2781932da6fddb9212f60b99c7fa2bfd2bffd107"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-1-r001/rocky-5-orm.png",
+      "sha256": "c93273168546709e80da00d5b8fab868efadbc9fad34411e2162047a8750956d"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/kit.json",
+      "sha256": "d97fbcc129c4876fb4b217ecb81de63d7f9b4e62abe5f336984c9c5e2b5957fe"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/provenance.json",
+      "sha256": "4c1a596250684dd48063bf70a9d672613a125158f02a4d36df911bd63390f6a4"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-0-albedo.png",
+      "sha256": "cafd4e4687a575948d2924611a72b7b8fcd704cc8ac2be3a88d093b8c59fa4b8"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-0-orm.png",
+      "sha256": "dead442146c9926458d67859f76197f153cc8a2dda4ddd3dc4041c0882270d32"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-1-albedo.png",
+      "sha256": "8729624fcef266f7eaea14afc0d3e6402f501349995a75686bcf7817f289e519"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-1-orm.png",
+      "sha256": "b68c6f555d3c98f2a16eb31379f1700468e86f56c0020be4debf92bab8ce29fd"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-2-albedo.png",
+      "sha256": "1015fce33ce07f85e841aae4b68a265e9172cc841f6c0918ab023bd9b05e94f7"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-2-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-3-albedo.png",
+      "sha256": "8f3f99d79507b0b8f919b46e21b10f00b513be7caabfe9fe1320a08117ba871c"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-3-orm.png",
+      "sha256": "88c877540fbe4c86d6be0dcd63825723359defd1b6f93b590de39ff5535b4622"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-4-albedo.png",
+      "sha256": "8bed10e91b1c648b6a037cc1dee31625d64bb035a4951b31f355b041c4cb1eb7"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-4-orm.png",
+      "sha256": "c620af34271b70bc4dfd84640a61a410b4b568e6acd06b084d52eea61ff2dbcf"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-5-albedo.png",
+      "sha256": "787e981d7f9f2dfa362eb0cd3176b5e748f8c8c1b23fcece09cba2044d614c34"
+    },
+    {
+      "path": "reviewed-planets/toxic-moon-2-r001/rocky-5-orm.png",
+      "sha256": "c93273168546709e80da00d5b8fab868efadbc9fad34411e2162047a8750956d"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-0-albedo.png",
+      "sha256": "9864772f8a28e2c20ebe51325b5897e4c49173133b3e64668805f8ea1a485c9a"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-0-normal.png",
+      "sha256": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-0-orm.png",
+      "sha256": "54669fc9839add68e9c216bb171baf6aa458d3c8c39aa3fbdf5f602f6a5b79ed"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-1-albedo.png",
+      "sha256": "c77ba148b32143c0d50891420da132d360d37489fab9c6ca29c29387efbcf176"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-1-normal.png",
+      "sha256": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-1-orm.png",
+      "sha256": "97733bd28a661651593dee68387cd0c37ab0906f62c9fd1d405b9ff511f86430"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-2-albedo.png",
+      "sha256": "8549fd652c2a09f4f19211f0893e004441eb63b764012da29b6162f8f17dd224"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-2-normal.png",
+      "sha256": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-2-orm.png",
+      "sha256": "af791bbd08c5999f8055ec8b554e670820ad388e9176491236c26c6dcbb2dd57"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-3-albedo.png",
+      "sha256": "76c6ae415edd3b9d228b5701bb9c62dbe73229c33f8ab4d7fc287f7c5e0cb74c"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-3-normal.png",
+      "sha256": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-3-orm.png",
+      "sha256": "ee01de90775cf84584f7e0f576e89adb19214fbcf95b5a6d16690f5f00985049"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-4-albedo.png",
+      "sha256": "ba88f2e643fb09a2a5d306390231dda2fd0cd56a7f89e0f1de3eb65ee8cb728a"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-4-normal.png",
+      "sha256": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-4-orm.png",
+      "sha256": "4e3c075d2d1d244ed58757b828bb7e9bb6880fb00c9cc062a32535fe6556212e"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-5-albedo.png",
+      "sha256": "4fa50be569348706075713232fab073c4d8d527721b39077c1782bc3d6290cde"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-5-normal.png",
+      "sha256": "884009225fc4a5e3cda86a7c142d68995f76127c6c46520db2592eb79c3bf9ed"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/corrosion-5-orm.png",
+      "sha256": "696048521bc13fef90dabda790499c7c4668a1fcebe7aee0b6f2fe1d09320e80"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/kit.snp",
+      "sha256": "fde2bb95e38f34ee971d5c74aee10258fbd5e7259fb121b0cdbb5d25f8bb0e65"
+    },
+    {
+      "path": "reviewed-planets/toxic-r007/provenance.json",
+      "sha256": "61fa2508259631235a5cf8142e93e56b5a88f062bbe50c9925b24ab09170405e"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/kit.json",
+      "sha256": "73ecf286225a9daf4d1be1d2479a691747f34614f8782ec21f8c7e732721d7fc"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/provenance.json",
+      "sha256": "94bb7e1ff4d986f6d13ce40e980cfa82ae8772220efe6a63fdbc30760b421bbf"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-0-albedo.png",
+      "sha256": "a6f3adb52bf7c0f344534b25e23b258cd832ec7fd095837b42b730f21d20a9a6"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-1-albedo.png",
+      "sha256": "8666c26305ec9836725fc36fe97555d438ff1d8666cc65ca453ba2fcf9394c8e"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-2-albedo.png",
+      "sha256": "eb20bad831fcf10db1574135db186c40b9dd486288310396d2f383ae5e3bd6c5"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-3-albedo.png",
+      "sha256": "3e9cbedfb5dcf2bf16f3958bdedd754683ad378f101f8fe3968991e0fc57c116"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-4-albedo.png",
+      "sha256": "39f91ef83307a0a47ef8fad5cecb3d88004eaa8897b8572c45a6731d51732b9a"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-4-orm.png",
+      "sha256": "881d15e89c03867a59e02c572bdc65b8464995b0a525f8a16742ba36b8f0c3c0"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-5-albedo.png",
+      "sha256": "1618131eae84aa81daec95a6a84e6c0ecda207ae41b48310d730f6e863298c9c"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-1-r003/rocky-5-orm.png",
+      "sha256": "dc9e39924415e4b446a4c6183192104d6d558729b6b1b92aceafdb5a3a63da6a"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/kit.json",
+      "sha256": "0feb7937c42e5e06f30fbdd1dec215ec5abd24e74897cad7636fbb44985ba9b4"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/provenance.json",
+      "sha256": "0763b0dbf7d929981ee496a070e3f5e49d7ff5b5476b00ecebba9c5f2219487c"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-0-albedo.png",
+      "sha256": "4a25c093c542daca85c14cac6a070835b2eab734c7fe557c30c251437b14e65e"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-0-orm.png",
+      "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-1-albedo.png",
+      "sha256": "87c451d3f2c8648efc2ba8f9ef2e3c7637261e7de4e700365bcf3c179ae09a23"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-1-orm.png",
+      "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-2-albedo.png",
+      "sha256": "68fb2cd61242bbfdc91a2466a4a2f6794a3268c094372e9ec6d765cda2ec2923"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-2-orm.png",
+      "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-3-albedo.png",
+      "sha256": "3907a68898c6467fdc1268fcbb5c72329353eed665f134119400da46ecd90e6c"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-3-orm.png",
+      "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-4-albedo.png",
+      "sha256": "fea0cad8e772b0be1731366615d6a58a7b141e72fa70a532236445f09eaaa257"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-4-orm.png",
+      "sha256": "881d15e89c03867a59e02c572bdc65b8464995b0a525f8a16742ba36b8f0c3c0"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-5-albedo.png",
+      "sha256": "6aabddb6ef2135aea5ce20e048c188358809f8a4f01c4b257b1fddb3bc88933f"
+    },
+    {
+      "path": "reviewed-planets/volcanic-moon-2-r006/rocky-5-orm.png",
+      "sha256": "dc9e39924415e4b446a4c6183192104d6d558729b6b1b92aceafdb5a3a63da6a"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/basalt-0-albedo.png",
+      "sha256": "80e5d4f0c043848a4ff9324125919c8deba2d13d0ea8d86c04d0b5786cc9d2b7"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/basalt-0-orm.png",
+      "sha256": "b1816901174aa8e828fbf00ef981495180ce10cd6ed5385b3a54eb58c5d22715"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/basalt-1-albedo.png",
+      "sha256": "295f5a006db60db275f99aa20c918bed1b8d4bd3d2721a80f60179b38b8355d7"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/basalt-1-orm.png",
+      "sha256": "b1816901174aa8e828fbf00ef981495180ce10cd6ed5385b3a54eb58c5d22715"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/basalt-2-albedo.png",
+      "sha256": "6cb862d9a23c578932d820d1bed7132da1c05f5d250e24ee9fd96fde914c5508"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/basalt-2-orm.png",
+      "sha256": "b1816901174aa8e828fbf00ef981495180ce10cd6ed5385b3a54eb58c5d22715"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/basalt-4-albedo.png",
+      "sha256": "8acca88fc267445505c80401e63e8b95a2367f9f6f4e39e46c2fe6dfae7e5cbf"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/basalt-4-orm.png",
+      "sha256": "47fb9e8df1f5dd88fc57a929257bc7547e97f43241066f8fcc0a6767aaecc419"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/kit.json",
+      "sha256": "e591d10cc0810958484bc058ec0b3d0307bde8acd8ff44d1a40d8c50116f3ecf"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/lava-flow.png",
+      "sha256": "4622dfb4a176b3280db4ecce97ef78a383102de41574b4d0553ca40b15ba49fd"
+    },
+    {
+      "path": "reviewed-planets/volcanic-r023/provenance.json",
+      "sha256": "6ef4945364a8c196bab4ff539b786af5bbca00d9ba1234e8ea3ecf5b13e69f9d"
+    },
+    {
+      "path": "reviewed-stars/yellow-main-sequence/star.glb",
+      "sha256": "3f060f0b085b87c13379ce6afa98a574d9338bd2d3335892c3c9975b99c16a47"
+    }
+  ],
+  "apps": [
+    "client",
+    "dashboard"
+  ]
+}

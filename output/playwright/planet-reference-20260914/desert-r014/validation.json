@@ -1,0 +1,314 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "coordinates": "Blender Z up, formation roots buried below Z0; ground sphere radius1",
+  "partsManifold": true,
+  "variants": [
+    {
+      "name": "mesa-group-a",
+      "vertices": 9162,
+      "triangles": 3054,
+      "bounds": [
+        [
+          -1.190000057220459,
+          0.9682000279426575
+        ],
+        [
+          -0.9079700112342834,
+          0.7597299814224243
+        ],
+        [
+          -0.18000000715255737,
+          0.569599986076355
+        ]
+      ]
+    },
+    {
+      "name": "mesa-group-b",
+      "vertices": 9198,
+      "triangles": 3066,
+      "bounds": [
+        [
+          -1.190000057220459,
+          0.9682000279426575
+        ],
+        [
+          -0.9079700112342834,
+          0.7597299814224243
+        ],
+        [
+          -0.18000000715255737,
+          0.5952000021934509
+        ]
+      ]
+    },
+    {
+      "name": "mesa-group-c",
+      "vertices": 8844,
+      "triangles": 2948,
+      "bounds": [
+        [
+          -1.190000057220459,
+          0.9682000279426575
+        ],
+        [
+          -0.9079700112342834,
+          0.7597299814224243
+        ],
+        [
+          -0.18000000715255737,
+          0.5120000243186951
+        ]
+      ]
+    },
+    {
+      "name": "tower-group",
+      "vertices": 4962,
+      "triangles": 1654,
+      "bounds": [
+        [
+          -0.8793500065803528,
+          0.6637629866600037
+        ],
+        [
+          -0.6202380061149597,
+          0.5373420119285583
+        ],
+        [
+          -0.18000000715255737,
+          0.7728000283241272
+        ]
+      ]
+    },
+    {
+      "name": "broken-cliff-shelves",
+      "vertices": 5058,
+      "triangles": 1686,
+      "bounds": [
+        [
+          -1.0246000289916992,
+          1.00410795211792
+        ],
+        [
+          -0.7063760161399841,
+          0.627784013748169
+        ],
+        [
+          -0.18000000715255737,
+          0.2815999984741211
+        ]
+      ]
+    },
+    {
+      "name": "tiny-rock-group",
+      "vertices": 1206,
+      "triangles": 402,
+      "bounds": [
+        [
+          -0.38624998927116394,
+          0.36750200390815735
+        ],
+        [
+          -0.2528429925441742,
+          0.21597300469875336
+        ],
+        [
+          -0.18000000715255737,
+          0.27000001072883606
+        ]
+      ]
+    },
+    {
+      "name": "sand-plateau",
+      "vertices": 1884,
+      "triangles": 628,
+      "bounds": [
+        [
+          -0.7903500199317932,
+          0.75307297706604
+        ],
+        [
+          -0.5714870095252991,
+          0.47818300127983093
+        ],
+        [
+          -0.18000000715255737,
+          0.05999999865889549
+        ]
+      ]
+    },
+    {
+      "name": "broad-shelf-a",
+      "vertices": 2910,
+      "triangles": 970,
+      "bounds": [
+        [
+          -1.1130000352859497,
+          0.9697780013084412
+        ],
+        [
+          -0.5497779846191406,
+          0.5441129803657532
+        ],
+        [
+          -0.18000000715255737,
+          0.09000000357627869
+        ]
+      ]
+    },
+    {
+      "name": "broad-shelf-b",
+      "vertices": 2778,
+      "triangles": 926,
+      "bounds": [
+        [
+          -0.9213500022888184,
+          0.8718240261077881
+        ],
+        [
+          -0.6159160137176514,
+          0.5972989797592163
+        ],
+        [
+          -0.18000000715255737,
+          0.12999999523162842
+        ]
+      ]
+    },
+    {
+      "name": "regional-cliff-head",
+      "vertices": 28212,
+      "triangles": 9404,
+      "bounds": [
+        [
+          -1.562000036239624,
+          1.6519999504089355
+        ],
+        [
+          -1.062000036239624,
+          1.1519999504089355
+        ],
+        [
+          -0.23999999463558197,
+          0.7799999713897705
+        ]
+      ]
+    },
+    {
+      "name": "regional-cliff-continuation",
+      "vertices": 26166,
+      "triangles": 8722,
+      "bounds": [
+        [
+          -1.1469600200653076,
+          1.2441600561141968
+        ],
+        [
+          -1.5198400020599365,
+          1.4370399713516235
+        ],
+        [
+          -0.23999999463558197,
+          0.6607999801635742
+        ]
+      ]
+    },
+    {
+      "name": "regional-cliff-end",
+      "vertices": 21888,
+      "triangles": 7296,
+      "bounds": [
+        [
+          -1.6519999504089355,
+          1.562000036239624
+        ],
+        [
+          -1.062000036239624,
+          1.1519999504089355
+        ],
+        [
+          -0.23999999463558197,
+          0.5885000228881836
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "vertices": 245760,
+      "triangles": 81920,
+      "bounds": [
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "vertices": 61440,
+      "triangles": 20480,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "vertices": 15360,
+      "triangles": 5120,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "tower-group.glb": "c422c7f4d7ec38032f61935b911e4bd93fc7477e0a5b46e3417947c53786c9f9",
+    "mesa-group-c.glb": "bb84087775bb036c128ce2c87543cc65b0297de169a08e2901d69be456cbe3c4",
+    "desert-wall-albedo.png": "3e5bb32ee531f0e13d6a6e40aed63ec8d4bb092ed375d03d574f7d6b0702e6a0",
+    "kit.json": "f42546e33499b7727d1609c8a808fe52de880a10f630ebafeac33d68c9ef4e96",
+    "desert-cap-albedo.png": "9920a448a05a9416dc93c6c21e741040a7b6e9bf22da180b26ded2dd28b03110",
+    "tiny-rock-group.glb": "4d48c56457c4e2037b29a31bd81fa4cfa51a469c3dc396baea55ef1f39533626",
+    "ground-sphere-low.glb": "0078e428fb5c0d3e80517755ff39f9a6835421907eeeaec08515780af8897d3a",
+    "mesa-group-b.glb": "2a91a31dc1382d62251a4ca727a563b83ee33be1cdad114612845f66dd2df29c",
+    "broad-shelf-b.glb": "7703b86c5b22c84497dafa61c4b5d882bcbcdbc1d15a7ad01daca916dc84de48",
+    "regional-cliff-end.glb": "8f9085298c79c8e133e2e70e6096078aab25691e3a5f3e2d22fa04d3e879fedc",
+    "sand-plateau.glb": "9a5af731990615f027db5b7ccecca60491412674a8d57b1a9c660f043ae120dd",
+    "ground-sphere-medium.glb": "9fdc0788d3199269fba63ce00d0ccb1b83b873189fa3186b1c690a4108e57319",
+    "regional-cliff-head.glb": "22a38c0793d3a4228a1ba75e26dcf10b0b627ef60e17085cc895ce934d5f77de",
+    "broken-cliff-shelves.glb": "2db8d25cc40fab9335b156d14d4559efd257b892096e3aad2702d85952fc5c1b",
+    "mesa-group-a.glb": "e62a07f87a3f7f6d033a57ac09d44035bde1f9a83473d4856754308d1fec196b",
+    "ground-sphere.glb": "ebd77e9b2a56df73f40fbc06e4e08130255b2f7e0d47cc1f439e1bac7c847ae2",
+    "broad-shelf-a.glb": "882a26cfca78fd8a853c173444a310403199c352badde0f7104644c1f9f1f1bb",
+    "regional-cliff-continuation.glb": "054b921f8e5b6f6166778fe43c3ff0cd87e0686c5c5e031bdcefcfce39af67e5",
+    "kit.blend": "dc24eef023e4b70a1e77af25e434bcba5525241270421ccd5030fe32b866b545",
+    "kit-preview.png": "6978ea833e556c19aaee79a5f0179842ca92b68ef3d36eb85d1c3722b3031b05"
+  }
+}

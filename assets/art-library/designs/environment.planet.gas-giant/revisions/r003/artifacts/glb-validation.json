@@ -1,0 +1,32 @@
+[
+  {
+    "file": "gas-body.glb",
+    "validContainer": true,
+    "normals": true,
+    "embeddedImages": 1
+  },
+  {
+    "file": "ring-rocks.glb",
+    "validContainer": true,
+    "normals": true,
+    "embeddedImages": 0
+  },
+  {
+    "file": "ring-dust-2.glb",
+    "validContainer": true,
+    "normals": true,
+    "embeddedImages": 1
+  },
+  {
+    "file": "ring-dust-1.glb",
+    "validContainer": true,
+    "normals": true,
+    "embeddedImages": 1
+  },
+  {
+    "file": "ring-dust-0.glb",
+    "validContainer": true,
+    "normals": true,
+    "embeddedImages": 1
+  }
+]

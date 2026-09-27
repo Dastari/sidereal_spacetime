@@ -1,0 +1,6 @@
+{
+  "scripts/art_library/build_gas_moon_luminous_trial_r005.py": "06f04dbf68ee9bdfc3a899421ad2532a2f64251c23a360b2887f83dc72cc9d5a",
+  "scripts/art_library/gas_moon_luminous_trial_r005.test.ts": "94202ea2a4da01b01284eb7c5a1a49090f400e60af22f7256f9bd2b3be26b0d8",
+  "scripts/art_library/gas_moon_luminous_trial_r005.vitest.config.ts": "a7339a8dee97a7e00c6b2c4247c78ac7029577234d22baa04ed24ed4154fb88a",
+  "scripts/art_library/gas_moon_luminous_trial_r005.tsconfig.json": "bf7089cec6107417c3bbc1760683e879d6e87d63be6e759075b492630df16c18"
+}

@@ -1,0 +1,14 @@
+### Error
+Error: ENOENT: no such file or directory, open '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-r007/kit.json'
+
+Error: ENOENT: no such file or directory, open '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-r007/kit.json'
+    at async open (node:internal/fs/promises:640:25)
+    at async Object.readFile (node:internal/fs/promises:1290:14)
+    at async Route2._innerFulfill (/root/.npm/_npx/31e32ef8478fbf80/node_modules/playwright-core/lib/coreBundle.js:59737:26)
+    at async /root/.npm/_npx/31e32ef8478fbf80/node_modules/playwright-core/lib/coreBundle.js:59704:11
+    at async Route2._handleRoute (/root/.npm/_npx/31e32ef8478fbf80/node_modules/playwright-core/lib/coreBundle.js:59710:11)
+    at async Route2.fulfill (/root/.npm/_npx/31e32ef8478fbf80/node_modules/playwright-core/lib/coreBundle.js:59703:9)
+    at async Promise.all (index 1)
+    at async RouteHandler._handleInternal (/root/.npm/_npx/31e32ef8478fbf80/node_modules/playwright-core/lib/coreBundle.js:60141:27)
+    at async RouteHandler._handleImpl (/root/.npm/_npx/31e32ef8478fbf80/node_modules/playwright-core/lib/coreBundle.js:60110:18)
+    at async RouteHandler.handle (/root/.npm/_npx/31e32ef8478fbf80/node_modules/playwright-core/lib/coreBundle.js:60104:16)

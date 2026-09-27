@@ -1,0 +1,637 @@
+{
+  "baseline": {
+    "frames": 450,
+    "floatingOrigin": true,
+    "diagnostics": {
+      "fps": 0.2054181080165214,
+      "frameCpuMs": 40.56712902864667,
+      "updateCpuMs": 4.107276803804184,
+      "frameMs": 4868.120000012715,
+      "renderCpuMs": 19.100000381469727,
+      "drawCalls": 1502,
+      "activeMeshes": 594,
+      "totalMeshes": 1734,
+      "meshesByRole": {
+        "hull": {
+          "active": 170,
+          "total": 297
+        },
+        "roof": {
+          "active": 1,
+          "total": 260
+        },
+        "floor": {
+          "active": 104,
+          "total": 128
+        },
+        "wall": {
+          "active": 92,
+          "total": 131
+        },
+        "equipment": {
+          "active": 144,
+          "total": 229
+        },
+        "cargo": {
+          "active": 36,
+          "total": 53
+        },
+        "crew": {
+          "active": 38,
+          "total": 356
+        },
+        "remote": {
+          "active": 0,
+          "total": 0
+        },
+        "planet": {
+          "active": 0,
+          "total": 27
+        },
+        "environment": {
+          "active": 2,
+          "total": 9
+        },
+        "effect": {
+          "active": 7,
+          "total": 38
+        },
+        "proxy": {
+          "active": 0,
+          "total": 206
+        },
+        "unclassified": {
+          "active": 0,
+          "total": 0
+        }
+      },
+      "activeIndices": 5438916,
+      "materials": 510,
+      "textures": 108,
+      "lights": 40,
+      "shadowMaps": 9,
+      "allocatedShadowMaps": 9,
+      "environmentTexturePresent": true,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "sceneCapture": {
+        "name": "sidereal-aa-scene",
+        "width": 1574,
+        "height": 907,
+        "samples": 4
+      },
+      "customRenderTargets": 0,
+      "cameraRadius": 46.995808375751295,
+      "cameraElevationDegrees": 35.264389682754654,
+      "transparentMeshes": 7,
+      "renderWidth": 1574,
+      "renderHeight": 907,
+      "hardwareScale": 1,
+      "renderBackend": "webgl",
+      "debugFeatures": {
+        "lighting": true,
+        "equipment": true,
+        "shadows": true,
+        "glow": true,
+        "planets": true,
+        "characters": true
+      },
+      "localLightBudget": {
+        "limit": "all",
+        "eligibleLights": 21,
+        "enabledLights": 21,
+        "enabledShadowLights": 7
+      },
+      "planetBuild": {
+        "lastBuildMs": 537.4000015258789,
+        "pendingBuilds": 0,
+        "pendingWeatherBuilds": 0,
+        "reviewedSystem": {
+          "retainedBodies": 2,
+          "pendingBodies": 0,
+          "errors": []
+        }
+      }
+    },
+    "diagnosticsUpdatedFrame": 450,
+    "camera": [
+      -55.75820746981363,
+      106.47843815542352,
+      27.747650797759235
+    ],
+    "target": [
+      0,
+      0.43904930887522103,
+      0
+    ]
+  },
+  "scale2": {
+    "frames": 460,
+    "floatingOrigin": true,
+    "diagnostics": {
+      "fps": 0.24657750424035998,
+      "frameCpuMs": 190.90392285355554,
+      "updateCpuMs": 4.745454516339239,
+      "frameMs": 4055.520000012715,
+      "renderCpuMs": 197.9000015258789,
+      "drawCalls": 957,
+      "activeMeshes": 454,
+      "totalMeshes": 1734,
+      "meshesByRole": {
+        "hull": {
+          "active": 170,
+          "total": 297
+        },
+        "roof": {
+          "active": 183,
+          "total": 260
+        },
+        "floor": {
+          "active": 1,
+          "total": 128
+        },
+        "wall": {
+          "active": 86,
+          "total": 131
+        },
+        "equipment": {
+          "active": 10,
+          "total": 229
+        },
+        "cargo": {
+          "active": 2,
+          "total": 53
+        },
+        "crew": {
+          "active": 0,
+          "total": 356
+        },
+        "remote": {
+          "active": 0,
+          "total": 0
+        },
+        "planet": {
+          "active": 0,
+          "total": 27
+        },
+        "environment": {
+          "active": 2,
+          "total": 9
+        },
+        "effect": {
+          "active": 0,
+          "total": 38
+        },
+        "proxy": {
+          "active": 0,
+          "total": 206
+        },
+        "unclassified": {
+          "active": 0,
+          "total": 0
+        }
+      },
+      "activeIndices": 1817964,
+      "materials": 510,
+      "textures": 108,
+      "lights": 18,
+      "shadowMaps": 1,
+      "allocatedShadowMaps": 9,
+      "environmentTexturePresent": true,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "sceneCapture": {
+        "name": "sidereal-aa-scene",
+        "width": 787,
+        "height": 453,
+        "samples": 4
+      },
+      "customRenderTargets": 0,
+      "cameraRadius": 214.980029107265,
+      "cameraElevationDegrees": 89.00701762466146,
+      "transparentMeshes": 10,
+      "renderWidth": 787,
+      "renderHeight": 453,
+      "hardwareScale": 2,
+      "renderBackend": "webgl",
+      "debugFeatures": {
+        "lighting": true,
+        "equipment": true,
+        "shadows": true,
+        "glow": true,
+        "planets": true,
+        "characters": true
+      },
+      "localLightBudget": {
+        "limit": "all",
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0
+      },
+      "planetBuild": {
+        "lastBuildMs": 537.4000015258789,
+        "pendingBuilds": 0,
+        "pendingWeatherBuilds": 0,
+        "reviewedSystem": {
+          "retainedBodies": 2,
+          "pendingBodies": 0,
+          "errors": []
+        }
+      }
+    },
+    "diagnosticsUpdatedFrame": 460,
+    "camera": [
+      -0.009628754056609363,
+      215.14094470614043,
+      3.5025959131003797
+    ],
+    "target": [
+      0,
+      0.0010882944300383132,
+      0
+    ]
+  },
+  "glowOff": {
+    "frames": 480,
+    "floatingOrigin": true,
+    "diagnostics": {
+      "fps": 0.6288279903764245,
+      "frameCpuMs": 37.68957175834965,
+      "updateCpuMs": 2.2818385435381967,
+      "frameMs": 1590.260000038146,
+      "renderCpuMs": 12.149998664855957,
+      "drawCalls": 839,
+      "activeMeshes": 454,
+      "totalMeshes": 1734,
+      "meshesByRole": {
+        "hull": {
+          "active": 170,
+          "total": 297
+        },
+        "roof": {
+          "active": 183,
+          "total": 260
+        },
+        "floor": {
+          "active": 1,
+          "total": 128
+        },
+        "wall": {
+          "active": 86,
+          "total": 131
+        },
+        "equipment": {
+          "active": 10,
+          "total": 229
+        },
+        "cargo": {
+          "active": 2,
+          "total": 53
+        },
+        "crew": {
+          "active": 0,
+          "total": 356
+        },
+        "remote": {
+          "active": 0,
+          "total": 0
+        },
+        "planet": {
+          "active": 0,
+          "total": 27
+        },
+        "environment": {
+          "active": 2,
+          "total": 9
+        },
+        "effect": {
+          "active": 0,
+          "total": 38
+        },
+        "proxy": {
+          "active": 0,
+          "total": 206
+        },
+        "unclassified": {
+          "active": 0,
+          "total": 0
+        }
+      },
+      "activeIndices": 1223010,
+      "materials": 510,
+      "textures": 108,
+      "lights": 18,
+      "shadowMaps": 1,
+      "allocatedShadowMaps": 9,
+      "environmentTexturePresent": true,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "sceneCapture": {
+        "name": "sidereal-aa-scene",
+        "width": 1574,
+        "height": 907,
+        "samples": 4
+      },
+      "customRenderTargets": 0,
+      "cameraRadius": 215.39745249077305,
+      "cameraElevationDegrees": 89.14056248677073,
+      "transparentMeshes": 10,
+      "renderWidth": 1574,
+      "renderHeight": 907,
+      "hardwareScale": 1,
+      "renderBackend": "webgl",
+      "debugFeatures": {
+        "lighting": true,
+        "equipment": true,
+        "shadows": true,
+        "glow": false,
+        "planets": true,
+        "characters": true
+      },
+      "localLightBudget": {
+        "limit": "all",
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0
+      },
+      "planetBuild": {
+        "lastBuildMs": 537.4000015258789,
+        "pendingBuilds": 0,
+        "pendingWeatherBuilds": 0,
+        "reviewedSystem": {
+          "retainedBodies": 2,
+          "pendingBodies": 0,
+          "errors": []
+        }
+      }
+    },
+    "diagnosticsUpdatedFrame": 480,
+    "camera": [
+      -5.457087840125448e-08,
+      215.37322187006907,
+      3.230842337747747
+    ],
+    "target": [
+      0,
+      6.686712081099678e-09,
+      0
+    ]
+  },
+  "shadowsOff": {
+    "frames": 490,
+    "floatingOrigin": true,
+    "diagnostics": {
+      "fps": 1.0529308329876805,
+      "frameCpuMs": 21.93992642657651,
+      "updateCpuMs": 2.1605388563943904,
+      "frameMs": 949.7299999872832,
+      "renderCpuMs": 10.40000057220459,
+      "drawCalls": 426,
+      "activeMeshes": 454,
+      "totalMeshes": 1734,
+      "meshesByRole": {
+        "hull": {
+          "active": 170,
+          "total": 297
+        },
+        "roof": {
+          "active": 183,
+          "total": 260
+        },
+        "floor": {
+          "active": 1,
+          "total": 128
+        },
+        "wall": {
+          "active": 86,
+          "total": 131
+        },
+        "equipment": {
+          "active": 10,
+          "total": 229
+        },
+        "cargo": {
+          "active": 2,
+          "total": 53
+        },
+        "crew": {
+          "active": 0,
+          "total": 356
+        },
+        "remote": {
+          "active": 0,
+          "total": 0
+        },
+        "planet": {
+          "active": 0,
+          "total": 27
+        },
+        "environment": {
+          "active": 2,
+          "total": 9
+        },
+        "effect": {
+          "active": 0,
+          "total": 38
+        },
+        "proxy": {
+          "active": 0,
+          "total": 206
+        },
+        "unclassified": {
+          "active": 0,
+          "total": 0
+        }
+      },
+      "activeIndices": 628266,
+      "materials": 510,
+      "textures": 108,
+      "lights": 18,
+      "shadowMaps": 0,
+      "allocatedShadowMaps": 9,
+      "environmentTexturePresent": true,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "sceneCapture": {
+        "name": "sidereal-aa-scene",
+        "width": 1574,
+        "height": 907,
+        "samples": 4
+      },
+      "customRenderTargets": 0,
+      "cameraRadius": 215.39745504916928,
+      "cameraElevationDegrees": 89.14056330526986,
+      "transparentMeshes": 10,
+      "renderWidth": 1574,
+      "renderHeight": 907,
+      "hardwareScale": 1,
+      "renderBackend": "webgl",
+      "debugFeatures": {
+        "lighting": true,
+        "equipment": true,
+        "shadows": false,
+        "glow": false,
+        "planets": true,
+        "characters": true
+      },
+      "localLightBudget": {
+        "limit": "all",
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0
+      },
+      "planetBuild": {
+        "lastBuildMs": 537.4000015258789,
+        "pendingBuilds": 0,
+        "pendingWeatherBuilds": 0,
+        "reviewedSystem": {
+          "retainedBodies": 2,
+          "pendingBodies": 0,
+          "errors": []
+        }
+      }
+    },
+    "diagnosticsUpdatedFrame": 490,
+    "camera": [
+      -1.3526741318761779e-10,
+      215.37322329264856,
+      3.2308406702710184
+    ],
+    "target": [
+      0,
+      1.6574702125767045e-11,
+      0
+    ]
+  },
+  "lightingOff": {
+    "frames": 500,
+    "floatingOrigin": true,
+    "diagnostics": {
+      "fps": 1.1723008748922712,
+      "frameCpuMs": 15.700836734740813,
+      "updateCpuMs": 2.0999035632368024,
+      "frameMs": 853.0233333587636,
+      "renderCpuMs": 10.15000057220459,
+      "drawCalls": 426,
+      "activeMeshes": 454,
+      "totalMeshes": 1734,
+      "meshesByRole": {
+        "hull": {
+          "active": 170,
+          "total": 297
+        },
+        "roof": {
+          "active": 183,
+          "total": 260
+        },
+        "floor": {
+          "active": 1,
+          "total": 128
+        },
+        "wall": {
+          "active": 86,
+          "total": 131
+        },
+        "equipment": {
+          "active": 10,
+          "total": 229
+        },
+        "cargo": {
+          "active": 2,
+          "total": 53
+        },
+        "crew": {
+          "active": 0,
+          "total": 356
+        },
+        "remote": {
+          "active": 0,
+          "total": 0
+        },
+        "planet": {
+          "active": 0,
+          "total": 27
+        },
+        "environment": {
+          "active": 2,
+          "total": 9
+        },
+        "effect": {
+          "active": 0,
+          "total": 38
+        },
+        "proxy": {
+          "active": 0,
+          "total": 206
+        },
+        "unclassified": {
+          "active": 0,
+          "total": 0
+        }
+      },
+      "activeIndices": 628266,
+      "materials": 510,
+      "textures": 108,
+      "lights": 0,
+      "shadowMaps": 0,
+      "allocatedShadowMaps": 9,
+      "environmentTexturePresent": true,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "sceneCapture": {
+        "name": "sidereal-aa-scene",
+        "width": 1574,
+        "height": 907,
+        "samples": 4
+      },
+      "customRenderTargets": 0,
+      "cameraRadius": 215.39745505551096,
+      "cameraElevationDegrees": 89.14056330729872,
+      "transparentMeshes": 10,
+      "renderWidth": 1574,
+      "renderHeight": 907,
+      "hardwareScale": 1,
+      "renderBackend": "webgl",
+      "debugFeatures": {
+        "lighting": false,
+        "equipment": true,
+        "shadows": false,
+        "glow": false,
+        "planets": true,
+        "characters": true
+      },
+      "localLightBudget": {
+        "limit": "all",
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0
+      },
+      "planetBuild": {
+        "lastBuildMs": 537.4000015258789,
+        "pendingBuilds": 0,
+        "pendingWeatherBuilds": 0,
+        "reviewedSystem": {
+          "retainedBodies": 2,
+          "pendingBodies": 0,
+          "errors": []
+        }
+      }
+    },
+    "diagnosticsUpdatedFrame": 500,
+    "camera": [
+      -3.3482364331361115e-13,
+      215.37322329617479,
+      3.2308406661377567
+    ],
+    "target": [
+      0,
+      4.1084578971841556e-14,
+      0
+    ]
+  }
+}

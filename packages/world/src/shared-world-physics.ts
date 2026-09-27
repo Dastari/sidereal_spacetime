@@ -1,3 +1,4 @@
+import { ZoneBudgetError } from "@sidereal/sim/zones";
 import type { resolveShipFlightDefinition } from "./construction-flight-resolver";
 import type { Identity } from "spacetimedb";
 import {
@@ -6,8 +7,11 @@ import {
   type SystemActuatorConsumption,
 } from "@sidereal/sim/system-space";
 import { spatialCell } from "@sidereal/sim/spatial-cells";
-import type { RigidBody } from "@sidereal/sim/collision";
-import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
+import type { RigidBody, MotionSegment } from "@sidereal/sim/collision";
+import {
+  SHARED_SYSTEM_SEED,
+  SOLAR_SYSTEM_BODY_LIMIT,
+} from "@sidereal/content/shared-system";
 import {
   toCenterOfMassMotion,
   toAuthoredFrameMotion,
@@ -102,6 +106,12 @@ export function stepSharedWorld(
       sampleTick: bigint,
       usage: readonly SystemActuatorConsumption[],
     ): void;
+    zones?(
+      systemId: string,
+      ships: readonly ShipMotionRow[],
+      trace: readonly MotionSegment[],
+      tick: bigint,
+    ): boolean;
   },
 ): SharedPhysicsReport {
   const report: SharedPhysicsReport = {
@@ -128,7 +138,7 @@ export function stepSharedWorld(
   const ships = limited(ctx.db.shipWorldMotion.by_system.filter(systemId), 60);
   const descriptions = limited(
     ctx.db.systemBody.by_system.filter(systemId),
-    32,
+    SOLAR_SYSTEM_BODY_LIMIT,
   );
   if (!ships || !descriptions)
     return {
@@ -233,7 +243,11 @@ export function stepSharedWorld(
   report.bodyCount = bodies.length;
   // Do not truncate/partition an over-budget shared island or move a subset of it.
   if (bodies.length > 64) return rejectIsland("body-budget");
-  const result = stepSystemSpace(bodies, controls);
+  const result = stepSystemSpace(
+    bodies,
+    controls,
+    hooks?.zones ? new Set(shipRows.keys()) : undefined,
+  );
   hooks.recordConsumption(sampleTick, result.consumption);
   const consumed = result.consumption.some((s) =>
     s.actuators.some((a) => a.newtonSeconds > 0),
@@ -245,6 +259,15 @@ export function stepSharedWorld(
       : "idle";
   report.reason = result.reason;
   report.impacts = result.impacts;
+  let zonesChanged = false;
+  try {
+    zonesChanged =
+      hooks?.zones?.(systemId, ships, result.trace, sampleTick) ?? false;
+  } catch (error) {
+    if (error instanceof ZoneBudgetError)
+      return { ...report, status: "exhausted", reason: "zone-work-budget" };
+    throw error;
+  }
   const changed = new Set(result.changedBodyIds);
   for (const body of result.bodies) {
     if (!changed.has(body.id)) continue;
@@ -320,7 +343,7 @@ export function stepSharedWorld(
     }
   // One small clock write per active system sample; completely idle samples do
   // not write. Admission motion stamps are not proof that physics has run.
-  if (report.changedMotions || report.changedOutputs || consumed)
+  if (report.changedMotions || report.changedOutputs || consumed || zonesChanged)
     ctx.db.worldSystem.id.update({ ...system, lastSimulationTick: sampleTick });
   return report;
 }

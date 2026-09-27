@@ -1,0 +1,502 @@
+[
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-5/tier-0",
+    "sourcePanel": 5,
+    "tier": 0,
+    "firstTriangle": 3208,
+    "triangleCount": 24,
+    "topMaterial": 4,
+    "height": 0.051259432387619396,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-5/tier-1",
+    "sourcePanel": 5,
+    "tier": 1,
+    "firstTriangle": 3232,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.10281966819174902,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-5/tier-2",
+    "sourcePanel": 5,
+    "tier": 2,
+    "firstTriangle": 3260,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.16820610477354742,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-33/tier-0",
+    "sourcePanel": 33,
+    "tier": 0,
+    "firstTriangle": 3284,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.06259904536512462,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-33/tier-1",
+    "sourcePanel": 33,
+    "tier": 1,
+    "firstTriangle": 3308,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.1315895000327466,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-58/tier-0",
+    "sourcePanel": 58,
+    "tier": 0,
+    "firstTriangle": 3336,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.08289043104739241,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-58/tier-1",
+    "sourcePanel": 58,
+    "tier": 1,
+    "firstTriangle": 3364,
+    "triangleCount": 24,
+    "topMaterial": 6,
+    "height": 0.11615031695024769,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-45/tier-0",
+    "sourcePanel": 45,
+    "tier": 0,
+    "firstTriangle": 3388,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.07708292849974631,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-45/tier-1",
+    "sourcePanel": 45,
+    "tier": 1,
+    "firstTriangle": 3412,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.1066439538139522,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-8/tier-0",
+    "sourcePanel": 8,
+    "tier": 0,
+    "firstTriangle": 3440,
+    "triangleCount": 36,
+    "topMaterial": 3,
+    "height": 0.059362388655576886,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-8/tier-1",
+    "sourcePanel": 8,
+    "tier": 1,
+    "firstTriangle": 3476,
+    "triangleCount": 24,
+    "topMaterial": 4,
+    "height": 0.10687796067466031,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-8/tier-2",
+    "sourcePanel": 8,
+    "tier": 2,
+    "firstTriangle": 3500,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.15665077067713254,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-54/tier-0",
+    "sourcePanel": 54,
+    "tier": 0,
+    "firstTriangle": 3528,
+    "triangleCount": 28,
+    "topMaterial": 4,
+    "height": 0.06386701440521483,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-54/tier-1",
+    "sourcePanel": 54,
+    "tier": 1,
+    "firstTriangle": 3556,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.11688926990459755,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-81/tier-0",
+    "sourcePanel": 81,
+    "tier": 0,
+    "firstTriangle": 3580,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.06674452673851519,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-81/tier-1",
+    "sourcePanel": 81,
+    "tier": 1,
+    "firstTriangle": 3604,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.10681915631643815,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-47/tier-0",
+    "sourcePanel": 47,
+    "tier": 0,
+    "firstTriangle": 3632,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.056311947775882915,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-47/tier-1",
+    "sourcePanel": 47,
+    "tier": 1,
+    "firstTriangle": 3656,
+    "triangleCount": 36,
+    "topMaterial": 3,
+    "height": 0.10219929793487917,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-74/tier-0",
+    "sourcePanel": 74,
+    "tier": 0,
+    "firstTriangle": 3692,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.08027548724398108,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-74/tier-1",
+    "sourcePanel": 74,
+    "tier": 1,
+    "firstTriangle": 3720,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.10470271307383347,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-74/tier-2",
+    "sourcePanel": 74,
+    "tier": 2,
+    "firstTriangle": 3744,
+    "triangleCount": 36,
+    "topMaterial": 6,
+    "height": 0.15767637242591215,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-23/tier-0",
+    "sourcePanel": 23,
+    "tier": 0,
+    "firstTriangle": 3780,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.07627484436273271,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-23/tier-1",
+    "sourcePanel": 23,
+    "tier": 1,
+    "firstTriangle": 3804,
+    "triangleCount": 36,
+    "topMaterial": 4,
+    "height": 0.11014052916798682,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-2/tier-0",
+    "sourcePanel": 2,
+    "tier": 0,
+    "firstTriangle": 3840,
+    "triangleCount": 28,
+    "topMaterial": 4,
+    "height": 0.06893885475709957,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-2/tier-1",
+    "sourcePanel": 2,
+    "tier": 1,
+    "firstTriangle": 3868,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.11835614695781418,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-9/tier-0",
+    "sourcePanel": 9,
+    "tier": 0,
+    "firstTriangle": 3892,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.06536534682011903,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-9/tier-1",
+    "sourcePanel": 9,
+    "tier": 1,
+    "firstTriangle": 3916,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.13271098336765358,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-26/tier-0",
+    "sourcePanel": 26,
+    "tier": 0,
+    "firstTriangle": 3944,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.053941457137635304,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-26/tier-1",
+    "sourcePanel": 26,
+    "tier": 1,
+    "firstTriangle": 3972,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.13177596573978295,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-26/tier-2",
+    "sourcePanel": 26,
+    "tier": 2,
+    "firstTriangle": 3996,
+    "triangleCount": 36,
+    "topMaterial": 3,
+    "height": 0.16685933814823228,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-65/tier-0",
+    "sourcePanel": 65,
+    "tier": 0,
+    "firstTriangle": 4032,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.05235214285310501,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-65/tier-1",
+    "sourcePanel": 65,
+    "tier": 1,
+    "firstTriangle": 4056,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.13372156492640222,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-41/tier-0",
+    "sourcePanel": 41,
+    "tier": 0,
+    "firstTriangle": 4084,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.0802563949653119,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-41/tier-1",
+    "sourcePanel": 41,
+    "tier": 1,
+    "firstTriangle": 4108,
+    "triangleCount": 28,
+    "topMaterial": 6,
+    "height": 0.0999165878034013,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-17/tier-0",
+    "sourcePanel": 17,
+    "tier": 0,
+    "firstTriangle": 4136,
+    "triangleCount": 24,
+    "topMaterial": 4,
+    "height": 0.059951869981763016,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-17/tier-1",
+    "sourcePanel": 17,
+    "tier": 1,
+    "firstTriangle": 4160,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.10811923542531872,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-22/tier-0",
+    "sourcePanel": 22,
+    "tier": 0,
+    "firstTriangle": 4188,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.07748190134804894,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-22/tier-1",
+    "sourcePanel": 22,
+    "tier": 1,
+    "firstTriangle": 4216,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.129182707131486,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-22/tier-2",
+    "sourcePanel": 22,
+    "tier": 2,
+    "firstTriangle": 4240,
+    "triangleCount": 36,
+    "topMaterial": 3,
+    "height": 0.1742943467750418,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-39/tier-0",
+    "sourcePanel": 39,
+    "tier": 0,
+    "firstTriangle": 4276,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.06414766947826667,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-39/tier-1",
+    "sourcePanel": 39,
+    "tier": 1,
+    "firstTriangle": 4300,
+    "triangleCount": 36,
+    "topMaterial": 3,
+    "height": 0.0981378062948655,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-35/tier-0",
+    "sourcePanel": 35,
+    "tier": 0,
+    "firstTriangle": 4336,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.057469726341495456,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-35/tier-1",
+    "sourcePanel": 35,
+    "tier": 1,
+    "firstTriangle": 4360,
+    "triangleCount": 36,
+    "topMaterial": 3,
+    "height": 0.11780806442798081,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-50/tier-0",
+    "sourcePanel": 50,
+    "tier": 0,
+    "firstTriangle": 4396,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.07698756119027103,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-50/tier-1",
+    "sourcePanel": 50,
+    "tier": 1,
+    "firstTriangle": 4424,
+    "triangleCount": 24,
+    "topMaterial": 4,
+    "height": 0.12224804394674599,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-34/tier-0",
+    "sourcePanel": 34,
+    "tier": 0,
+    "firstTriangle": 4448,
+    "triangleCount": 28,
+    "topMaterial": 4,
+    "height": 0.07015074451744399,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-34/tier-1",
+    "sourcePanel": 34,
+    "tier": 1,
+    "firstTriangle": 4476,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.13296899565943138,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-34/tier-2",
+    "sourcePanel": 34,
+    "tier": 2,
+    "firstTriangle": 4500,
+    "triangleCount": 36,
+    "topMaterial": 3,
+    "height": 0.1630961123106124,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-78/tier-0",
+    "sourcePanel": 78,
+    "tier": 0,
+    "firstTriangle": 4536,
+    "triangleCount": 28,
+    "topMaterial": 3,
+    "height": 0.0572699951868757,
+    "baseEmbeddedBelowParentSurface": true
+  },
+  {
+    "partId": "planets--crystal-moon-1/fracture-panel-78/tier-1",
+    "sourcePanel": 78,
+    "tier": 1,
+    "firstTriangle": 4564,
+    "triangleCount": 24,
+    "topMaterial": 3,
+    "height": 0.09897789805407489,
+    "baseEmbeddedBelowParentSurface": true
+  }
+]

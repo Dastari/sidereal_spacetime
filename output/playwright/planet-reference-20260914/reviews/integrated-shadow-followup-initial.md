@@ -1,0 +1,13 @@
+# Integrated Ice/Gas shadows — independent initial review, 2026-09-14
+
+Inspected Gas5 `shadow-fix-integrated-seed38.png` and `-angle2.png`; `shadow-followup/gas5-shadow-restored-materials-below.png`, `-above.png` and `gas5-shadow-diagnostic-grey.png`; Ice26 `shadow-fix-integrated-seed38.png`. Ice angle2 had not yet been written when inspected. Exact references and prior hardware slope1 images were inspected earlier in this review sequence.
+
+**Ice integrated technical gate remains open in the first software view.** The gross dense stripe pattern is improved, but coarse serrated bands remain on upper-right cap (~x500–590/y210–280) and mid-right cap (~x600–660/y470–550), with a small central dense hatch region (~x400–440/y460–490). This is not as clean as the previous actual hardware slope1 diagnostic. Do not promote that diagnostic pass into a claim that this later integrated capture is clean. Preserve geometry/materials and investigate effective map coverage/texel density and actual polygon-offset state for this capture. Different renderer and framing are relevant context, not proof of a cause.
+
+**Gas alpha-cast functionality is demonstrated, temporal shadow quality remains unverified.** The gray diagnostic clearly separates projected ring bands on the right hemisphere from visible foreground ring belts. Restored below-view materials retain the same localized projected region. The bands have visibly regular stipple/dither, which may be an expected transparent-shadow approximation; a still cannot prove whether it remains stable or visibly shimmers during movement. This merits a bounded temporal check, not art redesign. Do not call the effect smooth continuous transmission or infer physical volumetric accuracy.
+
+The integrated normal above-view close images preserve the body pattern and granular ring identity without the earlier broad body self-shadow hatching. Their cropped outer rings cannot establish complete shadow-map coverage or lack of edge clipping. Full-ring framing is still needed for that specific claim.
+
+All previous nine-main/nineteen-moon art passes remain intact. These findings concern renderer shadow correctness only, not renewed artistic iteration or owner approval. Hardware timing and normal Flight/Map acceptance remain separate.
+
+Follow-up: Ice `shadow-fix-integrated-seed38-angle2.png` subsequently finished and was inspected. It is mostly clean and retains cavity/contact shade and selective glass, but the small upper-left shoulder of the broad high cap still shows faint regular patterning. This angle does not overturn the first-view unresolved finding.

@@ -1,0 +1,86 @@
+{
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 22,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "fixedDetail": true,
+      "workerPending": 0,
+      "buildMs": 3.700000762939453,
+      "localLights": 0,
+      "transmissionMaterials": 0,
+      "transmissionTargets": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 6,
+    "triangles": 9626,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 43.9493670886
+  },
+  "shadows": [
+    {
+      "casters": 5,
+      "normalBias": 0.006,
+      "bias": 0.0005
+    }
+  ],
+  "checkoutHead": "cd09510ca30705a49bbd38a010d775be30aef0c7",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "crystal-moon-1-r004",
+    "seed": 38,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": 0.006,
+    "depth_bias": null,
+    "glow": true,
+    "local_light": false,
+    "prefix": "native-body",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": false,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 43.9493670886
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&reviewRevision=crystal-moon-1-r004&capture=1789365542395560863&shadowBias=0.006&glow=1",
+  "images": {
+    "native-body-seed38.png": "458094553e1d8a35fdb342e51d7f4c8cd36bc5805ec774859885b6101af90e84",
+    "native-body-seed38-angle2.png": "fc8e3af21e72cd09c511be606f33946a8ab35ff524a02924d54bef85e5cc98e3",
+    "native-body-seed38-reference-scale.png": "8d2c45647238025335d52aa3dbb6b32b8f5a6cf35f0f973ed0da0ad4195dc375"
+  },
+  "kitSha256": "8364d4f7f45e0fedf2e2e774a13537f64d46b3ba8319664439bc3526f3b2a47f"
+}

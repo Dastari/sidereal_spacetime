@@ -1,0 +1,85 @@
+{
+  "stats": {
+    "style": "temperate",
+    "seed": 38,
+    "frames": 52,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "requestedLOD": 0,
+      "buildMs": 773.1999988555908,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 844.6000003814697,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 14,
+    "triangles": 513044,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "activeLOD": 0,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "lod": 0,
+        "resolution": 96,
+        "requestedResolution": 96,
+        "budgetReduced": false,
+        "trees": 2293,
+        "terrainFaces": 88915,
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 4,
+      "normalBias": 0.006
+    },
+    {
+      "casters": 13,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "temperate",
+    "revision": "temperate-r003",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": false,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002"
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=temperate&seed=38&candidate=1&capture=1789358092694578730&shadowBias=0.006",
+  "images": {
+    "corrected-seed38.png": "7b6b6cda216bbcd75c2b53cf3f443d2ce509dda181800f449bcb789868664ee5",
+    "corrected-seed38-angle2.png": "062c95f358b74b225899525f401abc945840f2cfe91d074050a9e4f4149addae",
+    "corrected-seed38-reference-scale.png": "d59dceadbf6677407dcf35fd582d8cc5f6e2fa09ec46d5586f92bc9b566ea089"
+  },
+  "kitSha256": "c8c3470f41e85b53b9ce1e1f05b24446900bfad439a0522cfedce3c48eef01fc"
+}

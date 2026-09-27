@@ -1,0 +1,213 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "coordinates": "Blender Z up, formation roots buried below Z0; ground sphere radius1",
+  "partsManifold": true,
+  "lodContract": "Keep dominant island and shoreline variants unchanged at all levels. Ground levels independently authored, no decimation. Worker compose and precompiled shared materials required.",
+  "variants": [
+    {
+      "name": "steep-island",
+      "vertices": 1064,
+      "triangles": 2124,
+      "bounds": [
+        [
+          -0.7282214760780334,
+          0.6127246618270874
+        ],
+        [
+          -1.143459439277649,
+          1.1519066095352173
+        ],
+        [
+          -0.3199999928474426,
+          0.32499998807907104
+        ]
+      ]
+    },
+    {
+      "name": "long-island",
+      "vertices": 1064,
+      "triangles": 2124,
+      "bounds": [
+        [
+          -0.43166494369506836,
+          0.44083210825920105
+        ],
+        [
+          -1.502482295036316,
+          1.7777578830718994
+        ],
+        [
+          -0.3199999928474426,
+          0.23000000417232513
+        ]
+      ]
+    },
+    {
+      "name": "archipelago",
+      "vertices": 5320,
+      "triangles": 10620,
+      "bounds": [
+        [
+          -0.9598257541656494,
+          0.8641341328620911
+        ],
+        [
+          -0.9970138072967529,
+          1.037431001663208
+        ],
+        [
+          -0.3199999928474426,
+          0.2800000011920929
+        ]
+      ]
+    },
+    {
+      "name": "tiny-islet",
+      "vertices": 1064,
+      "triangles": 2124,
+      "bounds": [
+        [
+          -0.2905717194080353,
+          0.23556312918663025
+        ],
+        [
+          -0.5383354425430298,
+          0.4798421263694763
+        ],
+        [
+          -0.3199999928474426,
+          0.125
+        ]
+      ]
+    },
+    {
+      "name": "lagoon-atoll",
+      "vertices": 2922,
+      "triangles": 5832,
+      "bounds": [
+        [
+          -1.3894513845443726,
+          1.5795204639434814
+        ],
+        [
+          -0.9011279940605164,
+          1.014752984046936
+        ],
+        [
+          -0.23960763216018677,
+          0.09983651340007782
+        ]
+      ]
+    },
+    {
+      "name": "tree-grove",
+      "vertices": 592,
+      "triangles": 992,
+      "bounds": [
+        [
+          -0.5213096141815186,
+          0.5563386082649231
+        ],
+        [
+          -0.34223347902297974,
+          0.47415781021118164
+        ],
+        [
+          -0.03500001132488251,
+          0.8757919669151306
+        ]
+      ]
+    },
+    {
+      "name": "small-grove",
+      "vertices": 296,
+      "triangles": 496,
+      "bounds": [
+        [
+          -0.37610799074172974,
+          0.4614839553833008
+        ],
+        [
+          -0.3290090560913086,
+          0.3710689842700958
+        ],
+        [
+          -0.03500000387430191,
+          0.7157920002937317
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "vertices": 2562,
+      "triangles": 5120,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "vertices": 642,
+      "triangles": 1280,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "vertices": 162,
+      "triangles": 320,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "kit.json": "f347a6b76b0b8040f44358c7c1af85fb302384505eff771a735ead735096f5d9",
+    "archipelago.glb": "60d53688daef90daf34159fe1edf49393811a8c6adc16d5f198f499b38797b09",
+    "ground-sphere.glb": "db06db4beb8164a9c6516f602bc77f9144c485340ffce5e0d4bade26d9b224fd",
+    "ground-sphere-low.glb": "dd68c9c391e78a627eb11e64cc5b60bb63f11de514128b70fc825516c030c7d9",
+    "steep-island.glb": "ef8c0efad6d7cc827db7dc0fdfaeb13bb92a3ef209d878f8850385a3281ae945",
+    "kit-preview.png": "c01e5c65b7834d26a353f6d166aa5f8d5b7dae856f0526e366d306ce83cf48fa",
+    "small-grove.glb": "78619e8f6dc4e09ddf91098392d16df07fb445c61618066706499a951327060d",
+    "kit.blend": "97193220eb8a8d3bb1ad0dcd457152c5345f8c97a01b94512ba9eca822a79eeb",
+    "tiny-islet.glb": "a811ce4c921fd63365d9ec2835be2406d295ac308b6ff8c992af63208effb09c",
+    "lagoon-atoll.glb": "42538793ddd1bdeb28bef9d659d32cffecb5d4e2a4dfea32023591271b6f77c9",
+    "ground-sphere-medium.glb": "cc06c79b328b783b3762647154ff14127a25a2b491cc43b86f6729ac173e454d",
+    "long-island.glb": "506ccb9384bbb8dbdab611285a3e240c4a15fd7bb0957d6d729923e6970fc7e0",
+    "tree-grove.glb": "781e18c6ebdd8cf48aaf1d37b8911d5f1626165e20cf2d140b37cf070bf8f733"
+  }
+}

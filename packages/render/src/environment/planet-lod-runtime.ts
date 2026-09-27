@@ -13,7 +13,7 @@ export function createPlanetLODRuntime(
   scene: Scene,
   name: string,
   recipe: PlanetRecipe,
-  worker: ReturnType<typeof createPlanetWorkerClient>,
+  worker: Pick<ReturnType<typeof createPlanetWorkerClient>, "nextFrame" | "build" | "weather">,
   beforeCompile?: () => void,
 ) {
   const root = new TransformNode(name + "-layers", scene);

@@ -1,0 +1,350 @@
+
+> sidereal-spacetime@0.1.0 art:reference:check
+> python3 scripts/art_library/run_reference_checks.py
+
+Running: npx tsc -p scripts/art_library/reference_review.tsconfig.json
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_moon_reference_composition_r002.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  17:25:13
+   Duration  7.55s (transform 225ms, setup 0ms, import 420ms, tests 7.05s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  17:25:21
+   Duration  3.95s (transform 165ms, setup 0ms, import 328ms, tests 3.56s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_moon_reference_composition_r004.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  17:25:26
+   Duration  298ms (transform 105ms, setup 0ms, import 196ms, tests 42ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_reference_composition_r013.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  17:25:26
+   Duration  17.74s (transform 126ms, setup 0ms, import 246ms, tests 17.43s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/gas_reference_composition.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  17:25:44
+   Duration  158ms (transform 15ms, setup 0ms, import 45ms, tests 38ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/hybrid_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  17:25:45
+   Duration  9.86s (transform 88ms, setup 0ms, import 348ms, tests 9.44s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_moon_blue_cut_r003.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  17:25:55
+   Duration  8.01s (transform 235ms, setup 0ms, import 424ms, tests 7.50s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_moon_reference_composition_r002.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  17:26:04
+   Duration  27.07s (transform 173ms, setup 0ms, import 726ms, tests 26.25s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_moon_reference_composition_r003.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  17:26:31
+   Duration  34.61s (transform 46ms, setup 0ms, import 502ms, tests 34.04s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_reference_composition_r025.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  17:27:06
+   Duration  5.88s (transform 47ms, setup 0ms, import 248ms, tests 5.54s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_reference_optics_r026.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  17:27:13
+   Duration  5.90s (transform 134ms, setup 0ms, import 317ms, tests 5.51s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/native_cloud_composition_r002.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  17:27:19
+   Duration  2.63s (transform 74ms, setup 0ms, import 152ms, tests 2.41s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/native_deformation_normals.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  17:27:22
+   Duration  94ms (transform 16ms, setup 0ms, import 23ms, tests 2ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ocean_reference_composition_r007.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  17:27:22
+   Duration  8.41s (transform 35ms, setup 0ms, import 1.25s, tests 7.10s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_composition.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  17:27:31
+   Duration  8.52s (transform 22ms, setup 0ms, import 193ms, tests 8.26s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_hardware_review.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  17:27:40
+   Duration  202ms (transform 24ms, setup 0ms, import 119ms, tests 13ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_local_lights.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  17:27:40
+   Duration  362ms (transform 121ms, setup 0ms, import 246ms, tests 38ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_materials.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  17:27:41
+   Duration  181ms (transform 27ms, setup 0ms, import 102ms, tests 13ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_pbr_channels.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  17:27:42
+   Duration  439ms (transform 78ms, setup 0ms, import 296ms, tests 73ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_transmission.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  17:27:42
+   Duration  224ms (transform 37ms, setup 0ms, import 135ms, tests 18ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_worker_lifetime.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  17:27:43
+   Duration  193ms (transform 31ms, setup 0ms, import 108ms, tests 14ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/rocky_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  17:27:44
+   Duration  876ms (transform 34ms, setup 0ms, import 161ms, tests 645ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/rocky_reference_composition_r010.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  17:27:45
+   Duration  1.89s (transform 137ms, setup 0ms, import 255ms, tests 1.57s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/solid_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  19 passed (19)
+   Start at  17:27:47
+   Duration  13.00s (transform 38ms, setup 0ms, import 346ms, tests 12.56s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/temperate_reference_composition_r003.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  17:28:00
+   Duration  1.66s (transform 28ms, setup 0ms, import 144ms, tests 1.45s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_fog_composition_r005.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  17:28:02
+   Duration  763ms (transform 29ms, setup 0ms, import 115ms, tests 582ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_fog_reference_clearance.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  17:28:04
+   Duration  2.62s (transform 44ms, setup 0ms, import 171ms, tests 2.38s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_fog_reference_integration.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  17:28:06
+   Duration  1.77s (transform 52ms, setup 0ms, import 171ms, tests 1.53s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  17:28:09
+   Duration  4.24s (transform 29ms, setup 0ms, import 200ms, tests 3.97s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_reference_composition_r007.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  17:28:13
+   Duration  7.85s (transform 29ms, setup 0ms, import 279ms, tests 7.50s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/volcanic_moon_reference_composition_r002.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  17:28:21
+   Duration  6.95s (transform 27ms, setup 0ms, import 190ms, tests 6.68s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/volcanic_reference_composition_r023.test.ts --maxWorkers=1 --no-file-parallelism
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  17:28:29
+   Duration  3.58s (transform 38ms, setup 0ms, import 281ms, tests 3.22s, environment 0ms)
+
+Running: python3 -m unittest discover -s scripts/art_library -p test_*reference*.py
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.011s
+
+OK
+Running: python3 -m unittest discover -s scripts/art_library -p test_native_kit_attribute_audit.py
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK
+Running: python3 -m unittest discover -s scripts/art_library -p test_preserve_native_kit_ior.py
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+Running: python3 -m unittest discover -s scripts/art_library -p test_ice_moon_runtime_projection.py
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.009s
+
+OK
+All reference checks passed

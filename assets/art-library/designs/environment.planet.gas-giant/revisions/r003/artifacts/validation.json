@@ -1,0 +1,23 @@
+{
+  "bodyExactGas2": true,
+  "bodyTextureExactGas2": true,
+  "fixedDetail": true,
+  "triangles": 19904,
+  "uvConvention": "glTF UV (Blender V flipped); invertY=false",
+  "ringDesign": "Unequal broad density zones, one main gap, soft partial subgap, four clustered debris arcs, reduced baseline PBR emission",
+  "publication": "isolated draft only",
+  "sha256": {
+    "gas-albedo-generated.png": "1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da",
+    "gas-body.glb": "5331d888d72819809abb50b37521b7b5fb636ce91f566ce6c572593b0bcfa190",
+    "kit-preview.png": "e8ad38d101ca4e0ca307254d6d186ab8ea8b88e888e41d33c14c70df3c8921f7",
+    "ring-dust-2.png": "49c1a81c825f25f65965c11164b6c468b0905917db491474941df6330b7d7747",
+    "ring-rocks.glb": "f407398bf8eb21313d2ee8b85b427db6686404d653f860c3b2d0c8b6e15f9b5b",
+    "ring-dust-2.glb": "2a91a3bb3a1c2171aa8ad3a1df5d4b4bb8782c78db9fc8c83a07e1a3adc02a80",
+    "ring-dust-1.png": "e87ee6e10fb37f2f84f243512874d52292a49f0e8c391fa37277838e6e2aa283",
+    "ring-dust-1.glb": "039b1c01927c788b56dca140cc14255d547db5708a4d57b1d7ae1a08ee7dc379",
+    "kit.json": "483a0a2a5449cc7853d73ecc74761f9595b7398c14a45a7b5bc1c3127a66b1b6",
+    "kit.blend": "9e2dd781356a68705e0afef6f8a19b7fbb115005e4c4b4792970ea963d04af68",
+    "ring-dust-0.glb": "e64ee4b6a657816482e3c4f337f9e39d081bed3361d81ad9dbf6fa6045bac0d5",
+    "ring-dust-0.png": "c1e33ba54352e0b658752df39934d77ed878f3451ee07b7b8e2e3870fcae3130"
+  }
+}

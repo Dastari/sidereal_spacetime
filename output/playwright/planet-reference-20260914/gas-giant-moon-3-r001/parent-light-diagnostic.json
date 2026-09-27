@@ -1,0 +1,11 @@
+{
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?candidate=1&style=moon&seed=38&kit=gas-giant-moon-3-r001&capture=1789360766449660817&shadowBias=.006",
+  "hypothesis": "One fixed magenta directional parent reflection, intensity3.2. Diagnostic only: reference does not identify illumination versus intrinsic material.",
+  "kitSha256": "f2ea6e0840bb5437a220f8d6310fb418a69b7521dd87e1332e499ac6cbfdbb64",
+  "images": {
+    "parent-light-diagnostic-angle1.png": "7aaca568684453b5f9b658614288919edd4ad56d363215dd35b0c16b793c5a1b",
+    "parent-light-diagnostic-angle2.png": "f30273203003b6b98e6f3624983628293a2199148c990515991285e6427cce8a",
+    "parent-light-diagnostic-reference-scale.png": "abf08eae79e14f9436f0dcad804e40212e9a4c2f6d88e56a2470aceb8c8f5505"
+  },
+  "method": "SwiftShader appearance only; no hardware or production acceptance"
+}

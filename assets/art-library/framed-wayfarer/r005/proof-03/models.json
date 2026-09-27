@@ -1,0 +1,1473 @@
+{
+  "schemaVersion": 1,
+  "schema": "sidereal.native-armor-block-kit.v1",
+  "revision": 5,
+  "stage": "proof",
+  "coordinateSystem": "blender-z-up",
+  "placementTransform": "source(x,y,z) -> renderer(x,z,-y); GLBs exported glTF Y-up",
+  "depthM": {
+    "backing": 0.75,
+    "finish": 0.25,
+    "totalOutward": 1.0,
+    "bulkheadBacking": 0.25
+  },
+  "heightPaletteM": [
+    0.75,
+    1.5,
+    2.25,
+    3.0
+  ],
+  "directionPalette": [
+    [
+      -8,
+      -1
+    ],
+    [
+      -4,
+      -1
+    ],
+    [
+      -2,
+      -1
+    ],
+    [
+      -1,
+      -1
+    ],
+    [
+      -1,
+      -2
+    ],
+    [
+      -1,
+      -4
+    ],
+    [
+      -1,
+      -8
+    ],
+    [
+      0,
+      -1
+    ],
+    [
+      1,
+      -8
+    ],
+    [
+      1,
+      -4
+    ],
+    [
+      1,
+      -2
+    ],
+    [
+      1,
+      -1
+    ],
+    [
+      2,
+      -1
+    ],
+    [
+      4,
+      -1
+    ],
+    [
+      8,
+      -1
+    ],
+    [
+      1,
+      0
+    ],
+    [
+      8,
+      1
+    ],
+    [
+      4,
+      1
+    ],
+    [
+      2,
+      1
+    ],
+    [
+      1,
+      1
+    ],
+    [
+      1,
+      2
+    ],
+    [
+      1,
+      4
+    ],
+    [
+      1,
+      8
+    ],
+    [
+      0,
+      1
+    ],
+    [
+      -1,
+      8
+    ],
+    [
+      -1,
+      4
+    ],
+    [
+      -1,
+      2
+    ],
+    [
+      -1,
+      1
+    ],
+    [
+      -2,
+      1
+    ],
+    [
+      -4,
+      1
+    ],
+    [
+      -8,
+      1
+    ],
+    [
+      -1,
+      0
+    ]
+  ],
+  "qualifiedTurnRadians": [
+    0.124354994547,
+    0.244978663127,
+    0.463647609001,
+    0.785398163397,
+    1.107148717794,
+    1.325817663668,
+    1.446441332248,
+    1.570796326795
+  ],
+  "qualifiedTurnConvexities": [
+    "convex",
+    "concave"
+  ],
+  "models": [
+    {
+      "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+      "kind": "span",
+      "parameters": {
+        "kind": "span",
+        "lengthM": 2,
+        "heightM": 3,
+        "backingDepthM": 0.75,
+        "finishDepthM": 0.25,
+        "finish": "plain"
+      },
+      "nominalEndpointVectorLocalM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "contacts": {
+        "incoming": {
+          "position": [
+            0,
+            -0.375,
+            1.5
+          ],
+          "normal": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "outgoing": {
+          "position": [
+            2,
+            -0.375,
+            1.5
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        },
+        "lower": {
+          "position": [
+            1.0,
+            -0.375,
+            0
+          ],
+          "normal": [
+            0,
+            0,
+            -1
+          ]
+        },
+        "upper": {
+          "position": [
+            1.0,
+            -0.375,
+            3
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        },
+        "outwardSurface": {
+          "position": [
+            1.0,
+            -1.0,
+            1.5
+          ],
+          "normal": [
+            0,
+            -1,
+            0
+          ]
+        }
+      },
+      "backingSolids": [
+        {
+          "object": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-solid-bod",
+          "footprint": [
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              1.8125,
+              -0.75
+            ],
+            [
+              1.8125,
+              0
+            ],
+            [
+              0.1875,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-incoming-",
+          "footprint": [
+            [
+              0,
+              -0.75
+            ],
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              0.1875,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-f94c0ba2aa04f31fb6a5--BACKING--closed-outgoing-",
+          "footprint": [
+            [
+              1.8125,
+              -0.75
+            ],
+            [
+              2,
+              -0.75
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              1.8125,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "glb": "models/armor-block-f94c0ba2aa04f31fb6a5/model.glb",
+      "sha256": "2ba52942620ef7c806c2e76d55a89b7dc71aca27663b043bfc2beea940b67426",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          0.0,
+          3.0
+        ]
+      },
+      "meshGroups": [
+        "BACKING",
+        "FINISH"
+      ],
+      "backingVolumeM3": 4.5
+    },
+    {
+      "modelId": "armor-block-7c657ee01a90318dec3e",
+      "kind": "span",
+      "parameters": {
+        "kind": "span",
+        "lengthM": 2,
+        "heightM": 3,
+        "backingDepthM": 0.75,
+        "finishDepthM": 0.25,
+        "finish": "vent"
+      },
+      "nominalEndpointVectorLocalM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "contacts": {
+        "incoming": {
+          "position": [
+            0,
+            -0.375,
+            1.5
+          ],
+          "normal": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "outgoing": {
+          "position": [
+            2,
+            -0.375,
+            1.5
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        },
+        "lower": {
+          "position": [
+            1.0,
+            -0.375,
+            0
+          ],
+          "normal": [
+            0,
+            0,
+            -1
+          ]
+        },
+        "upper": {
+          "position": [
+            1.0,
+            -0.375,
+            3
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        },
+        "outwardSurface": {
+          "position": [
+            1.0,
+            -1.0,
+            1.5
+          ],
+          "normal": [
+            0,
+            -1,
+            0
+          ]
+        }
+      },
+      "backingSolids": [
+        {
+          "object": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-solid-bod",
+          "footprint": [
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              1.8125,
+              -0.75
+            ],
+            [
+              1.8125,
+              0
+            ],
+            [
+              0.1875,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-incoming-",
+          "footprint": [
+            [
+              0,
+              -0.75
+            ],
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              0.1875,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-7c657ee01a90318dec3e--BACKING--closed-outgoing-",
+          "footprint": [
+            [
+              1.8125,
+              -0.75
+            ],
+            [
+              2,
+              -0.75
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              1.8125,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "glb": "models/armor-block-7c657ee01a90318dec3e/model.glb",
+      "sha256": "e9656cd1356aed6540eda3373fe494e6b9b2af49f9cc51253fc578177ed5fea7",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          0.0,
+          3.0
+        ]
+      },
+      "meshGroups": [
+        "BACKING",
+        "FINISH"
+      ],
+      "backingVolumeM3": 4.5
+    },
+    {
+      "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+      "kind": "span",
+      "parameters": {
+        "kind": "span",
+        "lengthM": 2,
+        "heightM": 3,
+        "backingDepthM": 0.75,
+        "finishDepthM": 0.25,
+        "finish": "red-service"
+      },
+      "nominalEndpointVectorLocalM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "contacts": {
+        "incoming": {
+          "position": [
+            0,
+            -0.375,
+            1.5
+          ],
+          "normal": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "outgoing": {
+          "position": [
+            2,
+            -0.375,
+            1.5
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        },
+        "lower": {
+          "position": [
+            1.0,
+            -0.375,
+            0
+          ],
+          "normal": [
+            0,
+            0,
+            -1
+          ]
+        },
+        "upper": {
+          "position": [
+            1.0,
+            -0.375,
+            3
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        },
+        "outwardSurface": {
+          "position": [
+            1.0,
+            -1.0,
+            1.5
+          ],
+          "normal": [
+            0,
+            -1,
+            0
+          ]
+        }
+      },
+      "backingSolids": [
+        {
+          "object": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-solid-bod",
+          "footprint": [
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              1.8125,
+              -0.75
+            ],
+            [
+              1.8125,
+              0
+            ],
+            [
+              0.1875,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3,
+          "expectedVolumeM3": 3.65625
+        },
+        {
+          "object": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-incoming-",
+          "footprint": [
+            [
+              0,
+              -0.75
+            ],
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              0.1875,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3,
+          "expectedVolumeM3": 0.421875
+        },
+        {
+          "object": "GEO-armor-block-fe79dfaf2e1542dbd67c--BACKING--closed-outgoing-",
+          "footprint": [
+            [
+              1.8125,
+              -0.75
+            ],
+            [
+              2,
+              -0.75
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              1.8125,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3,
+          "expectedVolumeM3": 0.421875
+        }
+      ],
+      "glb": "models/armor-block-fe79dfaf2e1542dbd67c/model.glb",
+      "sha256": "13cc7fa682a277646163ae4699ec4a430f882b337c636909b9c764c5952d69fb",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          0.0,
+          3.0
+        ]
+      },
+      "meshGroups": [
+        "BACKING",
+        "FINISH"
+      ],
+      "backingVolumeM3": 4.5
+    },
+    {
+      "modelId": "armor-block-9ca59f6db637d3afceb9",
+      "kind": "span",
+      "parameters": {
+        "kind": "span",
+        "lengthM": 2,
+        "heightM": 1.5,
+        "backingDepthM": 0.75,
+        "finishDepthM": 0.25,
+        "finish": "plain"
+      },
+      "nominalEndpointVectorLocalM": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ]
+      ],
+      "contacts": {
+        "incoming": {
+          "position": [
+            0,
+            -0.375,
+            0.75
+          ],
+          "normal": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "outgoing": {
+          "position": [
+            2,
+            -0.375,
+            0.75
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        },
+        "lower": {
+          "position": [
+            1.0,
+            -0.375,
+            0
+          ],
+          "normal": [
+            0,
+            0,
+            -1
+          ]
+        },
+        "upper": {
+          "position": [
+            1.0,
+            -0.375,
+            1.5
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        },
+        "outwardSurface": {
+          "position": [
+            1.0,
+            -1.0,
+            0.75
+          ],
+          "normal": [
+            0,
+            -1,
+            0
+          ]
+        }
+      },
+      "backingSolids": [
+        {
+          "object": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-solid-bod",
+          "footprint": [
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              1.8125,
+              -0.75
+            ],
+            [
+              1.8125,
+              0
+            ],
+            [
+              0.1875,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 1.5,
+          "expectedVolumeM3": 1.828125
+        },
+        {
+          "object": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-incoming-",
+          "footprint": [
+            [
+              0,
+              -0.75
+            ],
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              0.1875,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 1.5,
+          "expectedVolumeM3": 0.2109375
+        },
+        {
+          "object": "GEO-armor-block-9ca59f6db637d3afceb9--BACKING--closed-outgoing-",
+          "footprint": [
+            [
+              1.8125,
+              -0.75
+            ],
+            [
+              2,
+              -0.75
+            ],
+            [
+              2,
+              0
+            ],
+            [
+              1.8125,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 1.5,
+          "expectedVolumeM3": 0.2109375
+        }
+      ],
+      "glb": "models/armor-block-9ca59f6db637d3afceb9/model.glb",
+      "sha256": "8c213705f103b08179133df8f39df343432cae708d840deb62a47072f5195e28",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          0.0,
+          1.5
+        ]
+      },
+      "meshGroups": [
+        "BACKING",
+        "FINISH"
+      ],
+      "backingVolumeM3": 2.25
+    },
+    {
+      "modelId": "armor-block-70b34597548b284a0a7f",
+      "kind": "junction",
+      "parameters": {
+        "kind": "junction",
+        "turnRadians": 0.785398163397,
+        "convexity": "convex",
+        "cutbackM": 0.375,
+        "incomingHeightM": 1.5,
+        "outgoingHeightM": 1.5,
+        "backingDepthM": 0.75,
+        "finishDepthM": 0.25,
+        "finish": "connector"
+      },
+      "contactPlaneEndpointsLocalM": {
+        "incoming": [
+          -0.375,
+          0
+        ],
+        "outgoing": [
+          0.2651650429450742,
+          0.26516504294483645
+        ]
+      },
+      "contacts": {
+        "incoming": {
+          "position": [
+            -0.375,
+            -0.375,
+            0.75
+          ],
+          "normal": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "outgoing": {
+          "position": [
+            0.5303300858899107,
+            -2.3775426072347727e-13,
+            0.75
+          ],
+          "normal": [
+            0.7071067811868645,
+            0.7071067811862305,
+            0
+          ]
+        }
+      },
+      "backingSolids": [
+        {
+          "object": "GEO-armor-block-70b34597548b284a0a7f--BACKING--closed-junction-",
+          "footprint": [
+            [
+              -0.375,
+              -0.75
+            ],
+            [
+              0,
+              -0.75
+            ],
+            [
+              0.5303300858896729,
+              -0.5303300858901484
+            ],
+            [
+              0.7954951288347472,
+              -0.26516504294531196
+            ],
+            [
+              0.2651650429450742,
+              0.26516504294483645
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              -0.375,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 1.5,
+          "expectedVolumeM3": 1.1420606733129408
+        }
+      ],
+      "glb": "models/armor-block-70b34597548b284a0a7f/model.glb",
+      "sha256": "57becd882be8eb22314f87b6e8d72e3dcfad9c891723ab4935c43aad0b32f671",
+      "bounds": {
+        "min": [
+          -0.375,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.9722718000411987,
+          0.2651650309562683,
+          1.5
+        ]
+      },
+      "meshGroups": [
+        "BACKING",
+        "FINISH"
+      ],
+      "backingVolumeM3": 1.1420606733129408
+    },
+    {
+      "modelId": "armor-block-cd2f17ea0cf58cb60b7f",
+      "kind": "span",
+      "parameters": {
+        "kind": "span",
+        "lengthM": 2.453427124746,
+        "heightM": 1.5,
+        "backingDepthM": 0.75,
+        "finishDepthM": 0.25,
+        "finish": "vent"
+      },
+      "nominalEndpointVectorLocalM": [
+        [
+          0,
+          0
+        ],
+        [
+          2.453427124746,
+          0
+        ]
+      ],
+      "contacts": {
+        "incoming": {
+          "position": [
+            0,
+            -0.375,
+            0.75
+          ],
+          "normal": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "outgoing": {
+          "position": [
+            2.453427124746,
+            -0.375,
+            0.75
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        },
+        "lower": {
+          "position": [
+            1.226713562373,
+            -0.375,
+            0
+          ],
+          "normal": [
+            0,
+            0,
+            -1
+          ]
+        },
+        "upper": {
+          "position": [
+            1.226713562373,
+            -0.375,
+            1.5
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        },
+        "outwardSurface": {
+          "position": [
+            1.226713562373,
+            -1.0,
+            0.75
+          ],
+          "normal": [
+            0,
+            -1,
+            0
+          ]
+        }
+      },
+      "backingSolids": [
+        {
+          "object": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-solid-bod",
+          "footprint": [
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              2.265927124746,
+              -0.75
+            ],
+            [
+              2.265927124746,
+              0
+            ],
+            [
+              0.1875,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 1.5,
+          "expectedVolumeM3": 2.3382305153392506
+        },
+        {
+          "object": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-incoming-",
+          "footprint": [
+            [
+              0,
+              -0.75
+            ],
+            [
+              0.1875,
+              -0.75
+            ],
+            [
+              0.1875,
+              0
+            ],
+            [
+              0,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 1.5,
+          "expectedVolumeM3": 0.2109375
+        },
+        {
+          "object": "GEO-armor-block-cd2f17ea0cf58cb60b7f--BACKING--closed-outgoing-",
+          "footprint": [
+            [
+              2.265927124746,
+              -0.75
+            ],
+            [
+              2.453427124746,
+              -0.75
+            ],
+            [
+              2.453427124746,
+              0
+            ],
+            [
+              2.265927124746,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 1.5,
+          "expectedVolumeM3": 0.2109375
+        }
+      ],
+      "glb": "models/armor-block-cd2f17ea0cf58cb60b7f/model.glb",
+      "sha256": "696e3666a46866af6bac674279b73be7736ec4321671e0b826a56b5282df60ca",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          2.4534270763397217,
+          0.0,
+          1.5
+        ]
+      },
+      "meshGroups": [
+        "BACKING",
+        "FINISH"
+      ],
+      "backingVolumeM3": 2.7601055153392506
+    },
+    {
+      "modelId": "armor-block-1676c64748013f376c0a",
+      "kind": "junction",
+      "parameters": {
+        "kind": "junction",
+        "turnRadians": -1.570796326795,
+        "convexity": "concave",
+        "cutbackM": 1.125,
+        "incomingHeightM": 3.0,
+        "outgoingHeightM": 3.0,
+        "backingDepthM": 0.75,
+        "finishDepthM": 0.25,
+        "finish": "connector"
+      },
+      "contactPlaneEndpointsLocalM": {
+        "incoming": [
+          -1.125,
+          0
+        ],
+        "outgoing": [
+          -1.1633799774949562e-13,
+          -1.125
+        ]
+      },
+      "contacts": {
+        "incoming": {
+          "position": [
+            -1.125,
+            -0.375,
+            1.5
+          ],
+          "normal": [
+            -1,
+            0,
+            0
+          ]
+        },
+        "outgoing": {
+          "position": [
+            -0.37500000000011635,
+            -1.1249999999999611,
+            1.5
+          ],
+          "normal": [
+            -1.0341155355510722e-13,
+            -1.0,
+            0
+          ]
+        }
+      },
+      "backingSolids": [
+        {
+          "object": "GEO-armor-block-1676c64748013f376c0a--BACKING--closed-junction-",
+          "footprint": [
+            [
+              -1.125,
+              -0.75
+            ],
+            [
+              -0.7500000000000776,
+              -0.75
+            ],
+            [
+              -0.7500000000001164,
+              -1.1249999999999225
+            ],
+            [
+              -1.1633799774949562e-13,
+              -1.125
+            ],
+            [
+              0,
+              0
+            ],
+            [
+              -1.125,
+              0
+            ]
+          ],
+          "z0": 0,
+          "z1": 3.0,
+          "expectedVolumeM3": 3.3749999999998255
+        }
+      ],
+      "glb": "models/armor-block-1676c64748013f376c0a/model.glb",
+      "sha256": "7a5fa77f6ec3de7fe463813d996361d3ed420b636aee5fcb0ce963dd5d4a0450",
+      "bounds": {
+        "min": [
+          -1.125,
+          -1.125,
+          0.0
+        ],
+        "max": [
+          0.0,
+          0.0,
+          3.0
+        ]
+      },
+      "meshGroups": [
+        "BACKING",
+        "FINISH"
+      ],
+      "backingVolumeM3": 3.3749999999998255
+    }
+  ],
+  "assemblies": {
+    "joined-bay": {
+      "placements": [
+        {
+          "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotationZRad": 0.0,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "joined-bay-000"
+        },
+        {
+          "modelId": "armor-block-7c657ee01a90318dec3e",
+          "position": [
+            2,
+            0,
+            0
+          ],
+          "rotationZRad": 0.0,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "joined-bay-001"
+        },
+        {
+          "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+          "position": [
+            4,
+            0,
+            0
+          ],
+          "rotationZRad": 0.0,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "joined-bay-002"
+        }
+      ]
+    },
+    "solid-section": {
+      "placements": [
+        {
+          "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotationZRad": 0.0,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "solid-section-000"
+        }
+      ]
+    },
+    "convex-45-half-height": {
+      "placements": [
+        {
+          "modelId": "armor-block-9ca59f6db637d3afceb9",
+          "position": [
+            -2.375,
+            0,
+            0
+          ],
+          "rotationZRad": 0.0,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "convex-45-half-height-000"
+        },
+        {
+          "modelId": "armor-block-70b34597548b284a0a7f",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotationZRad": 0.0,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "convex-45-half-height-001"
+        },
+        {
+          "modelId": "armor-block-cd2f17ea0cf58cb60b7f",
+          "position": [
+            0.2651650429449553,
+            0.2651650429449553,
+            0
+          ],
+          "rotationZRad": 0.7853981633974483,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "convex-45-half-height-002"
+        }
+      ]
+    },
+    "concave-90": {
+      "placements": [
+        {
+          "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+          "position": [
+            -3.125,
+            0,
+            0
+          ],
+          "rotationZRad": 0.0,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "concave-90-000"
+        },
+        {
+          "modelId": "armor-block-1676c64748013f376c0a",
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "rotationZRad": 0.0,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "concave-90-001"
+        },
+        {
+          "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+          "position": [
+            0,
+            -1.125,
+            0
+          ],
+          "rotationZRad": -1.5707963267948966,
+          "scale": [
+            1,
+            1,
+            1
+          ],
+          "role": "armor",
+          "placementId": "concave-90-002"
+        }
+      ]
+    }
+  },
+  "limits": [
+    "Finite axis-to-slope and 90-degree junction registry only; other turn pairs explicitly rejected.",
+    "Concave cutback = total depth*tan(unsigned turn/2)+.125m; convex beveled cutback=.375m.",
+    "No visual geometry grants armor, pressure, damage, placement, or runtime authority.",
+    "Bulkhead review depth is .25m backing + .25m finish; separate from existing pressure wall."
+  ],
+  "source": "source.blend",
+  "sourceSha256": "1207f7eca4cede4baf0ea10927b622c3f455a105e1e40437c3dcb22a91ecffb9",
+  "recipeSha256": "ff9fd39bf9b7ed20015bfca442ebc1e023e677d1ed7b6bd4545cb692dc05f9ec",
+  "plannerSha256": "a7e4d425735f22bd3d373ff6d65c0aea99215d317b0ba1ea0d358cb7282bef73",
+  "sourceDependencies": [
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/final-03/recipe.py",
+      "sha256": "437480435844fac88e061ec151cb9cbaf1ebafe1890c8c5066e970e4209303f3",
+      "usage": "Frozen r004 atlas materials only; geometry is new r005. Atlas sampled at 64 texels/m."
+    }
+  ],
+  "maps": [
+    {
+      "path": "textures/armor-basecolor.png",
+      "sha256": "fe85f74ffb3bf905d6a0d26498d359bf8bd8d61f6346342c339d8985a280d187"
+    },
+    {
+      "path": "textures/armor-normal.png",
+      "sha256": "54429532ad55e8a286ba7750a9c94927edbbc54973bb4f464ec5e5b4c6e4c1b9"
+    },
+    {
+      "path": "textures/armor-roughness.png",
+      "sha256": "808b0809c453ca5617764e53785467a2f9dc669a786e6859520602d52cc9f2a8"
+    }
+  ],
+  "textureTexelsPerMetre": 64
+}

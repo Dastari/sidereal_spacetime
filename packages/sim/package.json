@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.2.0",
+  "version": "0.4.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -78,10 +78,14 @@
     "./ground-placement": "./src/ground-placement.ts",
     "./backpack-swap": "./src/backpack-swap.ts",
     "./flight-frame": "./src/flight-frame.ts",
-    "./construction-refit-identities": "./src/construction-refit-identities.ts"
+    "./construction-refit-identities": "./src/construction-refit-identities.ts",
+    "./system-map": "./src/system-map.ts",
+    "./space-background": "./src/space-background.ts",
+    "./zones": "./src/zones.ts",
+    "./zone-path": "./src/zone-path.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.2.0"
+    "@sidereal/content": "0.6.0"
   }
 }

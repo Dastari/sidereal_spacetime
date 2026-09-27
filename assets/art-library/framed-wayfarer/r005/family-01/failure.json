@@ -1,0 +1,4 @@
+{
+  "state": "preserved-native-validation-failure",
+  "reason": "The 0.75m shoulder profile repeated one vertex, producing zero-area triangles. Strict validation rejected the run before source.blend/models.json completion. All exported drafts and exact recipe/planner retained; family-02 uses a distinct low-height profile."
+}

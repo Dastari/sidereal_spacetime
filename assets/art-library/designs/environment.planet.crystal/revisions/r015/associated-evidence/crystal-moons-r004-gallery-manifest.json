@@ -1,0 +1,20 @@
+[
+  {
+    "referenceId": "planets--crystal-moon-1",
+    "revision": "r004",
+    "kit": "output/playwright/planet-reference-20260914/crystal-moon-1-r004/kit.json",
+    "composer": "scripts/art_library/crystal_moon_reference_composition_r003.ts",
+    "layout": "crystal-moon-native-body",
+    "triangles": 3208,
+    "status": "source validated; runtime visual review pending"
+  },
+  {
+    "referenceId": "planets--crystal-moon-2",
+    "revision": "r004",
+    "kit": "output/playwright/planet-reference-20260914/crystal-moon-2-r004/kit.json",
+    "composer": "scripts/art_library/crystal_moon_reference_composition_r003.ts",
+    "layout": "crystal-moon-native-body",
+    "triangles": 1012,
+    "status": "source validated; runtime visual review pending"
+  }
+]

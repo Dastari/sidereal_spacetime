@@ -1,5 +1,6 @@
-import { HullDecalPanel } from './HullDecalPanel';
-import {migrateDefaultHull} from '../../../../packages/content/src/hull-publication';
+import { editorCommand, editorKeyTarget } from "@sidereal/ui/editor-commands";
+import { HullDecalPanel } from "./HullDecalPanel";
+import { migrateDefaultHull } from "../../../../packages/content/src/hull-publication";
 import { useEffect, useRef, useState } from "react";
 import {
   Layers,
@@ -51,6 +52,7 @@ export default function AssemblyEditor() {
     [error, setError] = useState(""),
     [ready, setReady] = useState(false),
     [damage, setDamage] = useState(false),
+    [navigation, setNavigation] = useState<"select" | "pan">("select"),
     [recovery, setRecovery] = useState<string>();
   const [visible, setVisible] = useState<Set<PartCategory>>(
       new Set(PART_CATEGORIES.filter((c) => c !== "roof")),
@@ -67,19 +69,44 @@ export default function AssemblyEditor() {
     setHistory((h) => {
       if (!h || recovery) return h;
       const proposed = change(h.present);
-      const changed = proposed.parts.filter(p => p !== h.present.parts.find(old => old.id === p.id));
-      const snapped = new Map(changed.map(p => [p.id, snapPlacement(p)]));
-      const next = { ...proposed, parts: proposed.parts.map(p => snapped.get(p.id) ?? p) };
-      if (!catalog || !voxelLibrary.current) { setError("Part occupancy is still loading."); return h; }
-      try { validateAssembly(next, catalog); } catch (e) { setError(String(e)); return h; }
+      const changed = proposed.parts.filter(
+        (p) => p !== h.present.parts.find((old) => old.id === p.id),
+      );
+      const snapped = new Map(changed.map((p) => [p.id, snapPlacement(p)]));
+      const next = {
+        ...proposed,
+        parts: proposed.parts.map((p) => snapped.get(p.id) ?? p),
+      };
+      if (!catalog || !voxelLibrary.current) {
+        setError("Part occupancy is still loading.");
+        return h;
+      }
+      try {
+        validateAssembly(next, catalog);
+      } catch (e) {
+        setError(String(e));
+        return h;
+      }
       for (const p of snapped.values()) {
-        const previous = h.present.parts.find(old => old.id === p.id);
-        if (previous && JSON.stringify({...previous, decals: undefined}) === JSON.stringify({...p, decals: undefined})) continue;
+        const previous = h.present.parts.find((old) => old.id === p.id);
+        if (
+          previous &&
+          JSON.stringify({ ...previous, decals: undefined }) ===
+            JSON.stringify({ ...p, decals: undefined })
+        )
+          continue;
         const error = placementError(p, next, catalog, voxelLibrary.current);
-        if (error) { setError(error); return h; }
+        if (error) {
+          setError(error);
+          return h;
+        }
       }
       setError("");
-      return { past: [...h.past, h.present].slice(-40), present: next, future: [] };
+      return {
+        past: [...h.past, h.present].slice(-40),
+        present: next,
+        future: [],
+      };
     });
   const mutate = (change: Partial<PartPlacement>) =>
     commit((d) => ({
@@ -143,7 +170,9 @@ export default function AssemblyEditor() {
       fetch("/assets/assembly/catalog.json").then((r) => r.json()),
       fetch("/assets/assembly/wayfarer.json").then((r) => r.json()),
       fetch("/assets/assembly/catalog.voxels.json").then((r) => r.json()),
-      fetch("/assets/assembly/hull-manifest.json").then(r=>r.ok?r.json():null),
+      fetch("/assets/assembly/hull-manifest.json").then((r) =>
+        r.ok ? r.json() : null,
+      ),
     ])
       .then(([catalog, source, volumes, hull]) => {
         voxelLibrary.current = volumes;
@@ -168,7 +197,17 @@ export default function AssemblyEditor() {
               throw new Error("Invalid history");
             state = {
               past: s.past.map((d: unknown) => validateAssembly(d, catalog)),
-              present: hull?.original_default ? (hull.previous_defaults??[hull.original_default]).reduce((draft: AssemblyDocument, previous: AssemblyDocument)=>migrateDefaultHull(draft,previous,validateAssembly(source,catalog)),validateAssembly(s.present,catalog)) : validateAssembly(s.present, catalog),
+              present: hull?.original_default
+                ? (hull.previous_defaults ?? [hull.original_default]).reduce(
+                    (draft: AssemblyDocument, previous: AssemblyDocument) =>
+                      migrateDefaultHull(
+                        draft,
+                        previous,
+                        validateAssembly(source, catalog),
+                      ),
+                    validateAssembly(s.present, catalog),
+                  )
+                : validateAssembly(s.present, catalog),
               future: s.future.map((d: unknown) =>
                 validateAssembly(d, catalog),
               ),
@@ -245,20 +284,71 @@ export default function AssemblyEditor() {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       if (
-        ["INPUT", "TEXTAREA", "SELECT"].includes(
-          (e.target as HTMLElement).tagName,
-        )
+        editorKeyTarget(e.target) ||
+        e.defaultPrevented ||
+        !(e.target instanceof Element && e.target.closest(".assembly-editor"))
       )
         return;
-      if ((e.ctrlKey || e.metaKey) && e.code === "KeyZ") {
+      const command = editorCommand(e);
+      if (
+        command === "cancel" ||
+        command === "undo" ||
+        command === "redo" ||
+        command === "delete"
+      )
+        view.current?.cancel();
+      else if (canvas.current?.dataset.gestureActive === "true") return;
+      if (command === "select" || command === "pan") {
+        view.current?.tool(command);
+        setNavigation(command);
         e.preventDefault();
-        e.shiftKey ? redo() : undo();
+        return;
+      }
+      if (command === "duplicate" && selection) {
+        e.preventDefault();
+        const p = current.current?.present.parts.find(
+          (p) => p.id === selection,
+        );
+        if (p)
+          callbacks.current.move(
+            p.id,
+            [p.position[0] + 2, p.position[1], p.position[2]],
+            true,
+          );
+        return;
+      }
+      if (
+        ["left", "right", "up", "down"].includes(command ?? "") &&
+        selection
+      ) {
+        e.preventDefault();
+        const p = current.current?.present.parts.find(
+            (p) => p.id === selection,
+          ),
+          step = e.shiftKey ? 10 : 1;
+        if (p)
+          callbacks.current.move(
+            p.id,
+            [
+              p.position[0] +
+                (command === "left" ? -step : command === "right" ? step : 0),
+              p.position[1] +
+                (command === "up" ? step : command === "down" ? -step : 0),
+              p.position[2],
+            ],
+            false,
+          );
+        return;
+      }
+      if (command === "undo" || command === "redo") {
+        e.preventDefault();
+        command === "redo" ? redo() : undo();
       } else if ((e.ctrlKey || e.metaKey) && e.code === "KeyY") {
         e.preventDefault();
         redo();
       } else if (e.code === "Escape") {
         select("");
-      } else if (selection && e.code === "Delete") {
+      } else if (selection && command === "delete") {
         e.preventDefault();
         remove();
       } else if (selection && e.code === "KeyR") {
@@ -286,14 +376,19 @@ export default function AssemblyEditor() {
       ...d,
       parts: [
         ...d.parts,
-        snapPlacementToSupport({
-          id,
-          assetId,
-          position,
-          rotation: 0,
-          flipped: false,
-          removedCells: [],
-        }, d, catalog!, voxelLibrary.current!),
+        snapPlacementToSupport(
+          {
+            id,
+            assetId,
+            position,
+            rotation: 0,
+            flipped: false,
+            removedCells: [],
+          },
+          d,
+          catalog!,
+          voxelLibrary.current!,
+        ),
       ],
     }));
     select(id);
@@ -315,7 +410,14 @@ export default function AssemblyEditor() {
   };
   return (
     <>
-      <main className="viewport assembly-editor">
+      <main
+        className="viewport assembly-editor"
+        tabIndex={-1}
+        onPointerDownCapture={(e) => {
+          if (!editorKeyTarget(e.target))
+            e.currentTarget.focus({ preventScroll: true });
+        }}
+      >
         <canvas
           ref={canvas}
           tabIndex={0}
@@ -389,6 +491,24 @@ export default function AssemblyEditor() {
           >
             <Redo2 />
           </ToolButton>
+          <button
+            aria-pressed={navigation === "select"}
+            onClick={() => {
+              view.current?.tool("select");
+              setNavigation("select");
+            }}
+          >
+            Select (V)
+          </button>
+          <button
+            aria-pressed={navigation === "pan"}
+            onClick={() => {
+              view.current?.tool("pan");
+              setNavigation("pan");
+            }}
+          >
+            Pan (H)
+          </button>
           <ToolButton label="Fit assembly" onClick={() => view.current?.fit()}>
             <Focus />
           </ToolButton>
@@ -448,7 +568,10 @@ export default function AssemblyEditor() {
                   onClick={() => add(a.id, [0, 0, 0])}
                 >
                   <img
-                    src={a.thumbnail ?? "/assets/assembly/thumbnails/" + a.id + ".svg"}
+                    src={
+                      a.thumbnail ??
+                      "/assets/assembly/thumbnails/" + a.id + ".svg"
+                    }
                     alt=""
                     width={56}
                     height={56}
@@ -472,7 +595,9 @@ export default function AssemblyEditor() {
                 : "Select a part to inspect or move it"
               : "Loading modular library…"}
           </span>
-          <span>MMB-drag orbit · Right-drag pan · Scroll zoom · Ctrl-drag copy</span>
+          <span>
+            MMB-drag orbit · Right-drag pan · Scroll zoom · Ctrl-drag copy
+          </span>
         </div>
       </main>
       <aside className="inspector">
@@ -508,7 +633,12 @@ export default function AssemblyEditor() {
           {part ? (
             <>
               <strong>{asset?.label}</strong>
-              {asset?.visual && <small>Damage preview is unavailable for this model. Any saved damage edits are retained.</small>}
+              {asset?.visual && (
+                <small>
+                  Damage preview is unavailable for this model. Any saved damage
+                  edits are retained.
+                </small>
+              )}
               {part.removedCells.length > 0 && (
                 <button
                   className="secondary full"
@@ -517,7 +647,12 @@ export default function AssemblyEditor() {
                   Restore voxels
                 </button>
               )}
-              <HullDecalPanel part={part} asset={asset} disabled={!!recovery} change={decals => mutate({decals})} />
+              <HullDecalPanel
+                part={part}
+                asset={asset}
+                disabled={!!recovery}
+                change={(decals) => mutate({ decals })}
+              />
               <small className="part-id">{part.id}</small>
               <div className="part-position">
                 {["East", "North", "Height"].map((axis, i) => (

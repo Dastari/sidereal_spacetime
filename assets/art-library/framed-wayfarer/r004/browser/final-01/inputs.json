@@ -1,0 +1,215 @@
+{
+  "schema": "sidereal.armor-cassette-private-review.v1",
+  "nativeDirectory": "/root/sidereal_spacetime/assets/art-library/framed-wayfarer/r004/library-01",
+  "fixture": {
+    "path": "/root/sidereal_spacetime/.runtime/shipyard-completion/wayfarer-framed-20260914/assembly-review/document.json",
+    "sha256": "9e0da70783ffcd6c480e287fab5a056fd0b81e570e838d96e5d66df5d516b48b"
+  },
+  "previousBindings": {
+    "path": "/root/wayfarer-framed-r001-candidate/packages/render/src/framed-wayfarer-visuals.json",
+    "sha256": "51d225e900a0267c9f8ca5d0202521bdc1c21e420a3ec91ec3140844bd607410"
+  },
+  "nativeManifestSha256": "6aed015679477293e35efe0b7e9b61155694674baad8fafadb08aa89cccc243d",
+  "coverage": [
+    {
+      "assetId": "part-0211e6d7960f233accb7",
+      "previousSlug": "side-red-service-w200-h300",
+      "requestedSlug": "armor-identity-pair-right-w200-h300-port",
+      "candidateSlug": "armor-identity-pair-right-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-08dac7402c764c4d89d7",
+      "previousSlug": "side-utility-w200-h300",
+      "requestedSlug": "armor-utility-pair-right-w200-h300-port",
+      "candidateSlug": "armor-utility-pair-right-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-151314086c02e30e06f4",
+      "previousSlug": "side-plain-w200-h300",
+      "requestedSlug": "armor-plain-pair-left-w200-h300-port",
+      "candidateSlug": "armor-plain-pair-left-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-357cf42235c1a190e1d6",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-red-service-pair-left-w200-h300-port",
+      "candidateSlug": "armor-red-service-pair-left-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-437732483fa4d7acbcbc",
+      "previousSlug": "front-diagonal-cheek",
+      "requestedSlug": "front-diagonal-cheek",
+      "candidateSlug": "front-diagonal-cheek",
+      "missingRequiredModel": false,
+      "placements": 2
+    },
+    {
+      "assetId": "part-4c25a5fd9da0bce537f5",
+      "previousSlug": "front-sill-straight",
+      "requestedSlug": "front-sill-straight",
+      "candidateSlug": "front-sill-straight",
+      "missingRequiredModel": false,
+      "placements": 2
+    },
+    {
+      "assetId": "part-540c83fc49ee792d9a4a",
+      "previousSlug": "front-sill-diagonal45",
+      "requestedSlug": "front-sill-diagonal45",
+      "candidateSlug": "front-sill-diagonal45",
+      "missingRequiredModel": false,
+      "placements": 2
+    },
+    {
+      "assetId": "part-5b7cee528aeb6959eb7c",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-vent-w200-h300-port",
+      "candidateSlug": "armor-vent-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-5cd7ebc9a8d894fb2b3a",
+      "previousSlug": "side-identity-w200-h300",
+      "requestedSlug": "armor-identity-pair-left-w200-h300",
+      "candidateSlug": "armor-identity-pair-left-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-62c859bcc51b318b2c65",
+      "previousSlug": "side-identity-w200-h300",
+      "requestedSlug": "armor-identity-pair-left-w200-h300-port",
+      "candidateSlug": "armor-identity-pair-left-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-63a0c40bbb71cfeba4dd",
+      "previousSlug": "front-bow-bumper",
+      "requestedSlug": "front-bow-bumper",
+      "candidateSlug": "front-bow-bumper",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-64b068a5a6e987c1d518",
+      "previousSlug": "side-red-service-w200-h300",
+      "requestedSlug": "armor-identity-pair-right-w200-h300",
+      "candidateSlug": "armor-identity-pair-right-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-679e9e22f0af30b070a3",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-red-service-pair-left-w200-h300",
+      "candidateSlug": "armor-red-service-pair-left-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-77e9c39b3c50d6dd66f7",
+      "previousSlug": "side-plain-w200-h300",
+      "requestedSlug": "armor-plain-pair-left-w200-h300",
+      "candidateSlug": "armor-plain-pair-left-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-9ab3a7a3dbc68586c530",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-plain-pair-right-w200-h300-port",
+      "candidateSlug": "armor-plain-pair-right-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-9b292ad82d675d682b8b",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-vent-w200-h300",
+      "candidateSlug": "armor-vent-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-b9ca98146302dec24dd6",
+      "previousSlug": "side-red-service-w200-h300",
+      "requestedSlug": "armor-red-service-pair-right-w200-h300-port",
+      "candidateSlug": "armor-red-service-pair-right-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-c9e43b70cbc1f9f77b1f",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-plain-pair-right-w200-h300",
+      "candidateSlug": "armor-plain-pair-right-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-d16f3e3a2db2188e5ed6",
+      "previousSlug": "side-red-service-w200-h300",
+      "requestedSlug": "armor-red-service-pair-right-w200-h300",
+      "candidateSlug": "armor-red-service-pair-right-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-d3e5e45b0f3f60b3fa0a",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-utility-pair-left-w200-h300",
+      "candidateSlug": "armor-utility-pair-left-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-e43ac94780eb7a1adc50",
+      "previousSlug": "side-utility-w200-h300",
+      "requestedSlug": "armor-utility-pair-right-w200-h300",
+      "candidateSlug": "armor-utility-pair-right-w200-h300",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-e965a5502d9fe4c25406",
+      "previousSlug": "front-shoulder-transition",
+      "requestedSlug": "front-shoulder-transition",
+      "candidateSlug": "front-shoulder-transition",
+      "missingRequiredModel": false,
+      "placements": 2
+    },
+    {
+      "assetId": "part-ecd751f76e602db806a3",
+      "previousSlug": "front-bow-transom",
+      "requestedSlug": "front-bow-transom",
+      "candidateSlug": "front-bow-transom",
+      "missingRequiredModel": false,
+      "placements": 1
+    },
+    {
+      "assetId": "part-f85394947090b7609d41",
+      "previousSlug": "side-vent-w200-h300",
+      "requestedSlug": "armor-utility-pair-left-w200-h300-port",
+      "candidateSlug": "armor-utility-pair-left-w200-h300-port",
+      "missingRequiredModel": false,
+      "placements": 1
+    }
+  ],
+  "fallbackHullEntries": 0,
+  "finalFamilyRequired": true,
+  "missingRequiredModels": 0,
+  "limits": [
+    "Private pure fixture; no database access or publication.",
+    "Bare view uses exact front liner groups and hides separate hull meshes.",
+    "Exploded view offsets intact side/bow groups by 1.5 m for inspection only."
+  ]
+}

@@ -1,0 +1,88 @@
+{
+  "scope": "Metadata adapter-key correction only; not a new native surface revision",
+  "source": "output/playwright/planet-reference-20260914/gas-giant-moon-3-r003",
+  "originalFileHashes": {
+    "ground-sphere-medium.glb": "c7d5691bf8ef44f3dfa0f4b50a4845e0e2cf76274a64b9b995bbae48d753651c",
+    "validation.json": "6f1176a622f1cb5dcc16bf20f50a0d161632a5b9d63cf9e60d383592c3b264a1",
+    "rocky-4-albedo.png": "7a31ad70f638b0503edd21e755df45e458333756e015f0f2f3a411a9df5a6686",
+    "angular-outcrops.glb": "ad167d57db599d7f83b873752184b7a88f71facdacb0d56f03a61599f2722ef3",
+    "rocky-5-orm.png": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+    "rocky-1-orm.png": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+    "crater-small.glb": "e42b91c0638517d639f6cc81b3f45427d854fcbebd7f0e9d3a685b769a33920d",
+    "crater-large.glb": "ee06e93a5771ee76259fbed010185865995da3cd3184953791ba3af0d13ea832",
+    "battered-region-b.glb": "0a995b2a47bfa23ce8adf41d582a5d4f438b015b5468dd92a247fb5fb990cc68",
+    "rocky-3-albedo.png": "88176172beffa7861b947b557e8aa3dc6c72fc03fd528193e166d4ec7c87a598",
+    "kit-preview.png": "7e92cb903d6bd6710c1c09eb395fb5cf6c6031842f01e0cecf5bf865f477c075",
+    "rocky-6-albedo.png": "016503b23952e6224c8b3187d69da233374b8295cce6616c81d71fdf6ea30bae",
+    "rocky-4-orm.png": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+    "rocky-0-orm.png": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+    "generator.py": "59c9f23b12ce9e09144bae45d90b2ae917c12d4c1064a6917470f506d85866b3",
+    "rocky-1-albedo.png": "99afd56fd84b1c984d8517d327df01b5dc28cd03309d52f6fe795adbbe2246fd",
+    "ground-sphere-low.glb": "21698dd33e4b4566a4f03ca25f86419effc737bd1604b28998ad1b435902413e",
+    "rocky-6-orm.png": "6b9853f449130a4976c5db69912b29733a291889c5723f1de65844a9f8ecf663",
+    "rocky-2-orm.png": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+    "interpretation.json": "189cffbd8fe90a94cad1b967624e78d440b4a8b8ad8e5b97c4c74451d21e2d9d",
+    "rocky-0-albedo.png": "9bc6fad73f6e48ec7c1dd8c8121fd5e25c077397cb772898aa2a0c200872d971",
+    "rocky-7-albedo.png": "cc55054a782eca403bfcce80e34ac4ed2379ecd6c3ce6ecdef9ac89880e94913",
+    "kit.blend": "68bd0969f764ffd336805bea9256d1945344f3c4e0c9beb3124274ab39aa3437",
+    "fractured-shelf.glb": "a52c5b05be58a4b3f689cc0c0ccf6e7f5f9989d73aa215d20c408d83d754aa11",
+    "crater-broken.glb": "c65df094807bfff3f922903532ab0f159c6863547a0acb6309577613fc20ae07",
+    "ground-sphere.glb": "ae5a423c37b32c7b7ec83db27e205d51d3d42e268c99b81a5506a19db9fa0ed5",
+    "mineral-seam.glb": "abb48218e17384bbd0429188d0553ea79a433c95a7a129199c2a52001a6662e0",
+    "geometry-parity.json": "0d144454e7d9f286e02cb1cdac09b137fadabf35b007a2156f7d16e4f524072c",
+    "rocky-2-albedo.png": "a81ada705c9a7d22069ce0dabd059c7cce192db07b5c0c3f96d4142e3afe62de",
+    "battered-region-a.glb": "df7cfb02911ed07d1b473efce964f89177e746198c0c2ef19c9fd4f8f31ff84b",
+    "rocky-5-albedo.png": "e5646053bde5fbc0ed52b56f05f9c64001befb838eaaf2d4433c53ad6487dcce",
+    "rocky-7-orm.png": "6abdbb32f57a31613bfa76360d98152f41d0a3f23aab4a173aa0f89326e0424c",
+    "rocky-3-orm.png": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+    "kit.json": "178cde8b31868c134bdf0daf824523d6d4bd3cef0d1fba3ba5236446e5d3ea1e"
+  },
+  "changes": {
+    "clearcoat": "clearcoatFactor",
+    "clearcoatRoughness": "clearcoatRoughnessFactor"
+  },
+  "nativeGLBOptics": [
+    {
+      "file": "crater-broken.glb",
+      "material": "gas-giant-moon-3-violet-mineral",
+      "extensions": {
+        "KHR_materials_clearcoat": {
+          "clearcoatFactor": 1,
+          "clearcoatRoughnessFactor": 0.07999999821186066
+        }
+      }
+    },
+    {
+      "file": "crater-broken.glb",
+      "material": "gas-giant-moon-3-pink-mineral",
+      "extensions": {
+        "KHR_materials_clearcoat": {
+          "clearcoatFactor": 1,
+          "clearcoatRoughnessFactor": 0.07999999821186066
+        }
+      }
+    },
+    {
+      "file": "battered-region-a.glb",
+      "material": "gas-giant-moon-3-violet-mineral",
+      "extensions": {
+        "KHR_materials_clearcoat": {
+          "clearcoatFactor": 1,
+          "clearcoatRoughnessFactor": 0.07999999821186066
+        }
+      }
+    },
+    {
+      "file": "battered-region-a.glb",
+      "material": "gas-giant-moon-3-pink-mineral",
+      "extensions": {
+        "KHR_materials_clearcoat": {
+          "clearcoatFactor": 1,
+          "clearcoatRoughnessFactor": 0.07999999821186066
+        }
+      }
+    }
+  ],
+  "kitSha256": "d259fc39825c32cab96f710253a50018059f9343bf0862f638ae7a43268c62e4",
+  "approval": null
+}

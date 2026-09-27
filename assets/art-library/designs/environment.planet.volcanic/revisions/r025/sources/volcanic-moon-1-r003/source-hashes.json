@@ -1,0 +1,7 @@
+{
+  "scripts/art_library/build_volcanic_moon_native_variants_r003.py": "eb7266cb6f6046193c20645be61caa31b38c31478c0e91a145fe2bc05e3fcc79",
+  "scripts/art_library/volcanic_moon_reference_composition_r003.ts": "421729d72b47fc95ee787838be5466409a44ad0719a87d96775b971254eb833b",
+  "scripts/art_library/volcanic_moon_reference_composition_r003.test.ts": "5cec2003a6158f08f382a65ffc9b5c48095d60cc4670dec48833a70e82b4e300",
+  "scripts/art_library/volcanic_moon_reference_r003.vitest.config.ts": "a2e67bd2d3a8424a360e7ba2327f375b16625dfc3eff1747fdd9a720929f1354",
+  "scripts/art_library/volcanic_moon_reference_r003.tsconfig.json": "cf7bf3b4c1536458c8483768447fc6ba75f0879f1b4517a72ef374a0124968b3"
+}

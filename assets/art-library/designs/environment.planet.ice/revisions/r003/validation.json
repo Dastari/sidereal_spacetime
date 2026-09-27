@@ -1,0 +1,10 @@
+{
+  "seed": 131,
+  "source": "native Blender editable mesh; no legacy geometry imported",
+  "mesh_count": 1,
+  "triangles": 3304,
+  "materials": 5,
+  "radius_units": "1 metre draft, runtime scaled to authoritative body radius",
+  "publication": "draft only",
+  "glb_sha256": "5dcc83dad266b2fa2ff1b8bdaf961e819cbf1989751b6a1cb3fa308b45c14ab6"
+}

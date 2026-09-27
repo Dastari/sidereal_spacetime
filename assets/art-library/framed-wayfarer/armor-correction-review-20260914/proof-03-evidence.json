@@ -1,0 +1,72 @@
+{
+  "recordedAt": "2026-09-14T06:17:24.989609+00:00",
+  "reviewer": "/root/armor_reference_review",
+  "outcome": "fail; repair connector/rail visual intersection before family propagation",
+  "evidence": [
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/models.json",
+      "sha256": "2b7885ed73ead207903f3c85d16827208493eba4f87e3aa88e3b21d57419ff2a",
+      "bytes": 14352
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/validation.json",
+      "sha256": "d5f3bfb5326f695eb0c357d2e125a9e0181c7e1abba2e472aa3f9327c4a1aa8e",
+      "bytes": 7120
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/source.blend",
+      "sha256": "afcd1198c151a6ac13211bc9ded4148b5a1db9c86f5602851f3d6ff75a6524df",
+      "bytes": 4766240
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/renders/captures.json",
+      "sha256": "34095187270d4ffc23e5cd891a5c6e9a6597d91470c994d4a6570987da0101c9",
+      "bytes": 6751
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/renders/bow-armor.png",
+      "sha256": "ab53478a53d3607e2f46ef6aed49173f167f82476a94f9d51b3ce5269eb86fe3",
+      "bytes": 869419
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/renders/bow-exploded-liner.png",
+      "sha256": "bc4eaa843725a16d91e332f29419c1e53f0e32a2b470a5917ebb4257af2ab002",
+      "bytes": 959727
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/renders/joined-plain-bay.png",
+      "sha256": "0ed43c9c8a68707f0f104fd296f34ff2e8152b3466881384ba8825fe17d6f2f6",
+      "bytes": 1121194
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/renders/joined-seam-close.png",
+      "sha256": "81933bc14c861e81b11e3a9988a10e2037f61954dac910f1c83a516da688a5e9",
+      "bytes": 1426445
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/renders/shoulder-armor.png",
+      "sha256": "613222dc5a8cf58f5e92621869305ec3ddbf6977f047c356f528511832ec4355",
+      "bytes": 1085617
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/renders/single-service.png",
+      "sha256": "998dc5c63f21c3663c65dbad8e53aed0e19e87acf3aae5126b13a6870fccf808",
+      "bytes": 1210058
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/hull/proof-03/renders/single-vent.png",
+      "sha256": "e87b970b8e91513b66ebba228fe856a1fc2c3d30891de807c8d1142aa5f4a17a",
+      "bytes": 1189080
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/baseline/concept-wide.png",
+      "sha256": "f22ca32f8f3be903729168069540e0910bba44d470727350e67392d3bfec8bde",
+      "bytes": 335881
+    },
+    {
+      "path": "assets/art-library/framed-wayfarer/r004/browser/proof-03/concept.png",
+      "sha256": "b9c5fb59601c47e710e751ca529b9d6c668899f40090a12454eca65ecc76e357",
+      "bytes": 341799
+    }
+  ]
+}

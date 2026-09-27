@@ -1,6 +1,11 @@
 import { toCenterOfMassMotion } from "../packages/sim/src/flight-frame";
 import { WAYFARER_FLIGHT_SPEED } from "../packages/content/src/physical-definitions";
 import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
+import { systemMapDenialSmoke } from "./system-map-smoke";
+import {
+  LEGACY_SYSTEM_SEED,
+  solarBodyForLegacyKey,
+} from "@sidereal/content/shared-system";
 import {
   acquireNativePilot,
   nextSequence,
@@ -130,7 +135,20 @@ if (restore) {
     );
     assert.equal([...a.db.ownEditReceipts.iter()].length, 1);
     await a.reducers.enterLab({ name: "Smoke Alpha" });
-    const rock = sharedBodies(a).find((b) => b.id === evidence.bodyId);
+    const previousBody = LEGACY_SYSTEM_SEED.bodies.find(
+      (body) => body.id === evidence.bodyId,
+    );
+    const expectedBodyId =
+      process.env.SIDEREAL_SMOKE_SOLAR_MIGRATION === "1" &&
+      previousBody?.kind !== "asteroid"
+        ? (solarBodyForLegacyKey(previousBody?.key ?? "")?.id ??
+          evidence.bodyId)
+        : evidence.bodyId;
+    await wait(
+      () => sharedBodies(a).some((body) => body.id === expectedBodyId),
+      "expected body after module update",
+    );
+    const rock = sharedBodies(a).find((b) => b.id === expectedBodyId);
     assert(rock, "authored body identity survived restart");
     if (process.env.SIDEREAL_SMOKE_PERSISTENT_ROWS_ONLY !== "1") {
       const { connection: b } = await client(evidence.collisionToken);
@@ -300,12 +318,16 @@ if (restore) {
     const celestial = sharedBodies(a).filter((r) => r.kind === "planet");
     assert.equal(
       celestial.length,
-      11,
-      "all ten planet families plus a mixed world are admitted for observation",
+      SHARED_SYSTEM_SEED.bodies.filter((b) => b.kind === "planet").length,
+      "the current authored planet and moon chart is admitted for observation",
     );
     assert(
-      celestial.some((r) => r.appearance === "temperate-volcanic"),
-      "mixed terrain/effect preset is server-authored",
+      celestial.every((r) =>
+        SHARED_SYSTEM_SEED.bodies.some(
+          (b) => b.id === r.id && b.appearance === r.appearance,
+        ),
+      ),
+      "every celestial appearance matches its server-authored pin",
     );
     assert(
       celestial.filter((r) => Math.hypot(r.x, r.y) > 1000).length >= 8,
@@ -786,6 +808,7 @@ if (restore) {
       combatReconnect.connection.disconnect();
     }
     summary.combat_authority_energy_aim_cooldown_retry_persistence = true;
+    summary.system_map_denial = await systemMapDenialSmoke(a);
     summary.construction_authority_denials = await constructionDenialSmoke(
       a,
       b,

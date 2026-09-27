@@ -1,0 +1,1034 @@
+Blender 4.3.2
+Read blend: "/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moon-1-r007/kit.blend"
+Fra:1 Mem:19.90M (Peak 19.90M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-1-connected-crystalline-body
+Fra:1 Mem:19.95M (Peak 19.95M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-85-section-2-band-2
+Fra:1 Mem:19.95M (Peak 19.95M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-85-section-2-band-1
+Fra:1 Mem:19.95M (Peak 19.95M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-84-section-2-band-2
+Fra:1 Mem:19.95M (Peak 19.95M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-84-section-2-band-1
+Fra:1 Mem:20.04M (Peak 20.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-83-section-2-band-1
+Fra:1 Mem:20.08M (Peak 20.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-83-section-2-band-0
+Fra:1 Mem:20.17M (Peak 20.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-2
+Fra:1 Mem:20.18M (Peak 20.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-1
+Fra:1 Mem:20.18M (Peak 20.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-0
+Fra:1 Mem:20.20M (Peak 20.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-80-section-1-band-2
+Fra:1 Mem:20.24M (Peak 20.24M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-80-section-1-band-1
+Fra:1 Mem:20.26M (Peak 20.26M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-2-band-1
+Fra:1 Mem:20.26M (Peak 20.26M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-2-band-0
+Fra:1 Mem:20.26M (Peak 20.26M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-2
+Fra:1 Mem:20.31M (Peak 20.31M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-1
+Fra:1 Mem:20.31M (Peak 20.31M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-0
+Fra:1 Mem:20.31M (Peak 20.31M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-2
+Fra:1 Mem:20.32M (Peak 20.32M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-1
+Fra:1 Mem:20.32M (Peak 20.32M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-0
+Fra:1 Mem:20.32M (Peak 20.32M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-1-band-1
+Fra:1 Mem:20.32M (Peak 20.32M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-1-band-0
+Fra:1 Mem:20.42M (Peak 20.42M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-0-band-1
+Fra:1 Mem:20.42M (Peak 20.42M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-0-band-0
+Fra:1 Mem:20.43M (Peak 20.43M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-73-section-0-band-1
+Fra:1 Mem:20.44M (Peak 20.44M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-73-section-0-band-0
+Fra:1 Mem:20.48M (Peak 20.48M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-70-section-0-band-1
+Fra:1 Mem:20.48M (Peak 20.48M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-70-section-0-band-0
+Fra:1 Mem:20.58M (Peak 20.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-1-band-2
+Fra:1 Mem:20.58M (Peak 20.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-1-band-1
+Fra:1 Mem:20.58M (Peak 20.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-0-band-2
+Fra:1 Mem:20.59M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-0-band-1
+Fra:1 Mem:20.59M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-59-section-2-band-2
+Fra:1 Mem:20.54M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-59-section-2-band-1
+Fra:1 Mem:20.50M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-2-band-1
+Fra:1 Mem:20.50M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-0
+Fra:1 Mem:20.50M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-2-band-0
+Fra:1 Mem:20.51M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-1-band-1
+Fra:1 Mem:20.51M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-1
+Fra:1 Mem:20.51M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-1-band-0
+Fra:1 Mem:20.51M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-2
+Fra:1 Mem:20.51M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-1-band-0
+Fra:1 Mem:20.51M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-1-band-0
+Fra:1 Mem:20.52M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-0-band-1
+Fra:1 Mem:20.52M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-1-band-1
+Fra:1 Mem:20.52M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-0-band-0
+Fra:1 Mem:20.54M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-0-band-1
+Fra:1 Mem:20.53M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-55-section-2-band-1
+Fra:1 Mem:20.53M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-0-band-2
+Fra:1 Mem:20.53M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-55-section-2-band-0
+Fra:1 Mem:20.53M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-1-band-1
+Fra:1 Mem:20.53M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-2-band-1
+Fra:1 Mem:20.54M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-1-band-2
+Fra:1 Mem:20.55M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-2-band-0
+Fra:1 Mem:20.54M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-0-band-2
+Fra:1 Mem:20.54M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-1-band-0
+Fra:1 Mem:20.55M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-1-band-1
+Fra:1 Mem:20.55M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-48-section-0-band-1
+Fra:1 Mem:20.56M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-1-band-2
+Fra:1 Mem:20.57M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-48-section-0-band-0
+Fra:1 Mem:20.56M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-0
+Fra:1 Mem:20.56M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-43-section-2-band-2
+Fra:1 Mem:20.56M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-43-section-2-band-1
+Fra:1 Mem:20.57M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-1
+Fra:1 Mem:20.58M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-2
+Fra:1 Mem:20.57M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-1
+Fra:1 Mem:20.59M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-2
+Fra:1 Mem:20.58M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-0
+Fra:1 Mem:20.58M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-0
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-1
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-2
+Fra:1 Mem:20.60M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-1
+Fra:1 Mem:20.60M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-2
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-0
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-29-section-0-band-1
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-10-section-2-band-0
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-29-section-0-band-0
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-10-section-2-band-1
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-1-band-1
+Fra:1 Mem:20.63M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-0
+Fra:1 Mem:20.61M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-1-band-0
+Fra:1 Mem:20.62M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-1
+Fra:1 Mem:20.63M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-2
+Fra:1 Mem:20.62M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-2
+Fra:1 Mem:20.62M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-1
+Fra:1 Mem:20.64M (Peak 20.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-13-section-2-band-0
+Fra:1 Mem:20.63M (Peak 20.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-0
+Fra:1 Mem:20.63M (Peak 20.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-13-section-2-band-1
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-2-band-2
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-0-band-2
+Fra:1 Mem:20.64M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-2-band-1
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-1-band-1
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-2
+Fra:1 Mem:20.67M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-1-band-2
+Fra:1 Mem:20.66M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-1
+Fra:1 Mem:20.67M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-0
+Fra:1 Mem:20.66M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-1
+Fra:1 Mem:20.68M (Peak 20.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-0
+Fra:1 Mem:20.67M (Peak 20.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-2
+Fra:1 Mem:20.68M (Peak 20.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-25-section-2-band-2
+Fra:1 Mem:20.67M (Peak 20.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:20.27M (Peak 20.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:20.27M (Peak 20.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:20.78M (Peak 20.78M) | Time:00:00.01 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.01 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:21.28M (Peak 21.28M) | Time:00:00.01 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:21.53M (Peak 21.53M) | Time:00:00.01 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:21.78M (Peak 21.78M) | Time:00:00.01 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:22.03M (Peak 22.03M) | Time:00:00.01 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:22.29M (Peak 22.29M) | Time:00:00.01 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:22.54M (Peak 22.54M) | Time:00:00.01 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:22.79M (Peak 22.79M) | Time:00:00.01 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:19.62M (Peak 22.79M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:19.62M (Peak 22.79M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:19.62M (Peak 22.79M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:19.62M (Peak 22.79M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:19.73M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:19.73M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:19.73M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:19.73M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:19.80M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:20.02M (Peak 22.79M) | Time:00:00.02 | Mem:2.79M, Peak:2.79M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.02 | Mem:2.98M, Peak:2.98M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.02 | Mem:2.98M, Peak:2.98M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.02 | Mem:3.12M, Peak:3.12M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.02 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.02 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.02 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.02 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.02 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.02 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.02 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.02 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.02 | Mem:3.66M, Peak:3.66M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.02 | Mem:3.66M, Peak:3.66M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.02 | Mem:3.79M, Peak:3.79M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.02 | Mem:3.79M, Peak:3.79M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.02 | Mem:3.71M, Peak:3.79M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.02 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.02 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.02 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:48.26M (Peak 48.26M) | Time:00:00.53 | Remaining:00:15.91 | Mem:31.62M, Peak:31.62M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:60.62M (Peak 85.34M) | Time:00:11.67 | Mem:31.62M, Peak:31.62M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:60.62M (Peak 85.34M) | Time:00:11.67 | Mem:31.62M, Peak:31.62M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r007-parity/moon-1-native-two-sided-matched-angle2.png'
+Time: 00:11.90 (Saving: 00:00.22)
+
+Fra:1 Mem:20.14M (Peak 20.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-1-connected-crystalline-body
+Fra:1 Mem:20.49M (Peak 20.49M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-0
+Fra:1 Mem:20.49M (Peak 20.49M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-1
+Fra:1 Mem:20.50M (Peak 20.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-2
+Fra:1 Mem:20.50M (Peak 20.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-1-band-0
+Fra:1 Mem:20.50M (Peak 20.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-1-band-1
+Fra:1 Mem:20.50M (Peak 20.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-0-band-1
+Fra:1 Mem:20.50M (Peak 20.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-0-band-2
+Fra:1 Mem:20.50M (Peak 20.50M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-1-band-1
+Fra:1 Mem:20.51M (Peak 20.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-1-band-2
+Fra:1 Mem:20.51M (Peak 20.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-0-band-2
+Fra:1 Mem:20.51M (Peak 20.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-1-band-1
+Fra:1 Mem:20.51M (Peak 20.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-1-band-2
+Fra:1 Mem:20.51M (Peak 20.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-0
+Fra:1 Mem:20.51M (Peak 20.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-1
+Fra:1 Mem:20.52M (Peak 20.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-2
+Fra:1 Mem:20.52M (Peak 20.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-0
+Fra:1 Mem:20.52M (Peak 20.52M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-1
+Fra:1 Mem:20.53M (Peak 20.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-2
+Fra:1 Mem:20.53M (Peak 20.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-10-section-2-band-0
+Fra:1 Mem:20.53M (Peak 20.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-10-section-2-band-1
+Fra:1 Mem:20.53M (Peak 20.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-0
+Fra:1 Mem:20.53M (Peak 20.53M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-1
+Fra:1 Mem:20.54M (Peak 20.54M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-2
+Fra:1 Mem:20.54M (Peak 20.54M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-13-section-2-band-0
+Fra:1 Mem:20.54M (Peak 20.54M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-13-section-2-band-1
+Fra:1 Mem:20.54M (Peak 20.54M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-0-band-2
+Fra:1 Mem:20.55M (Peak 20.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-1-band-1
+Fra:1 Mem:20.55M (Peak 20.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-1-band-2
+Fra:1 Mem:20.55M (Peak 20.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-0
+Fra:1 Mem:20.55M (Peak 20.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-1
+Fra:1 Mem:20.55M (Peak 20.55M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-2
+Fra:1 Mem:20.56M (Peak 20.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-85-section-2-band-2
+Fra:1 Mem:20.56M (Peak 20.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-25-section-2-band-2
+Fra:1 Mem:20.56M (Peak 20.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-0
+Fra:1 Mem:20.56M (Peak 20.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-85-section-2-band-1
+Fra:1 Mem:20.56M (Peak 20.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-1
+Fra:1 Mem:20.56M (Peak 20.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-84-section-2-band-2
+Fra:1 Mem:20.56M (Peak 20.56M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-2
+Fra:1 Mem:20.57M (Peak 20.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-84-section-2-band-1
+Fra:1 Mem:20.57M (Peak 20.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-2-band-1
+Fra:1 Mem:20.57M (Peak 20.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-83-section-2-band-1
+Fra:1 Mem:20.57M (Peak 20.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-2-band-2
+Fra:1 Mem:20.57M (Peak 20.57M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-83-section-2-band-0
+Fra:1 Mem:20.58M (Peak 20.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-0
+Fra:1 Mem:20.58M (Peak 20.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-2
+Fra:1 Mem:20.58M (Peak 20.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-1
+Fra:1 Mem:20.58M (Peak 20.58M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-1
+Fra:1 Mem:20.59M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-2
+Fra:1 Mem:20.59M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-0
+Fra:1 Mem:20.59M (Peak 20.59M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-1-band-0
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-80-section-1-band-2
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-1-band-1
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-80-section-1-band-1
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-29-section-0-band-0
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-2-band-1
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-29-section-0-band-1
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-2-band-0
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-0
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-2
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-1
+Fra:1 Mem:20.60M (Peak 20.60M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-1
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-2
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-0
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-0
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-2
+Fra:1 Mem:20.61M (Peak 20.61M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-1
+Fra:1 Mem:20.62M (Peak 20.62M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-1
+Fra:1 Mem:20.62M (Peak 20.62M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-2
+Fra:1 Mem:20.62M (Peak 20.62M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-0
+Fra:1 Mem:20.62M (Peak 20.62M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-43-section-2-band-1
+Fra:1 Mem:20.63M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-1-band-1
+Fra:1 Mem:20.63M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-43-section-2-band-2
+Fra:1 Mem:20.63M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-1-band-0
+Fra:1 Mem:20.63M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-48-section-0-band-0
+Fra:1 Mem:20.64M (Peak 20.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-0-band-1
+Fra:1 Mem:20.64M (Peak 20.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-48-section-0-band-1
+Fra:1 Mem:20.64M (Peak 20.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-0-band-0
+Fra:1 Mem:20.64M (Peak 20.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-1-band-0
+Fra:1 Mem:20.64M (Peak 20.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-73-section-0-band-1
+Fra:1 Mem:20.64M (Peak 20.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-2-band-0
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-73-section-0-band-0
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-2-band-1
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-70-section-0-band-1
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-55-section-2-band-0
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-70-section-0-band-0
+Fra:1 Mem:20.65M (Peak 20.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-55-section-2-band-1
+Fra:1 Mem:20.66M (Peak 20.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-1-band-2
+Fra:1 Mem:20.66M (Peak 20.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-0-band-0
+Fra:1 Mem:20.66M (Peak 20.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-1-band-1
+Fra:1 Mem:20.66M (Peak 20.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-0-band-1
+Fra:1 Mem:20.66M (Peak 20.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-0-band-2
+Fra:1 Mem:20.66M (Peak 20.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-1-band-0
+Fra:1 Mem:20.66M (Peak 20.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-0-band-1
+Fra:1 Mem:20.67M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-1-band-0
+Fra:1 Mem:20.67M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-59-section-2-band-2
+Fra:1 Mem:20.67M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-1-band-1
+Fra:1 Mem:20.67M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-2-band-0
+Fra:1 Mem:20.67M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-59-section-2-band-1
+Fra:1 Mem:20.67M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-2-band-1
+Fra:1 Mem:20.67M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:20.27M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:20.27M (Peak 20.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:20.79M (Peak 20.79M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:21.29M (Peak 21.29M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:21.54M (Peak 21.54M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:21.79M (Peak 21.79M) | Time:00:00.01 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:22.04M (Peak 22.04M) | Time:00:00.01 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:22.29M (Peak 22.29M) | Time:00:00.01 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:22.54M (Peak 22.54M) | Time:00:00.01 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:22.79M (Peak 22.79M) | Time:00:00.01 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:19.62M (Peak 22.79M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:19.62M (Peak 22.79M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:19.62M (Peak 22.79M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:19.62M (Peak 22.79M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:19.71M (Peak 22.79M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:19.73M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:19.73M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:19.73M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:19.73M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:19.80M (Peak 22.79M) | Time:00:00.01 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:20.02M (Peak 22.79M) | Time:00:00.01 | Mem:2.79M, Peak:2.79M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.01 | Mem:2.98M, Peak:2.98M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.01 | Mem:2.98M, Peak:2.98M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.01 | Mem:3.12M, Peak:3.12M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.01 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:20.00M (Peak 22.79M) | Time:00:00.01 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.01 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.01 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.01 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.01 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.01 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.01 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.01 | Mem:3.66M, Peak:3.66M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:20.31M (Peak 22.79M) | Time:00:00.01 | Mem:3.66M, Peak:3.66M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.01 | Mem:3.79M, Peak:3.79M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.01 | Mem:3.79M, Peak:3.79M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.01 | Mem:3.71M, Peak:3.79M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.01 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.01 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:20.44M (Peak 22.79M) | Time:00:00.01 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:20.66M (Peak 22.79M) | Time:00:00.01 | Remaining:00:00.11 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:20.76M (Peak 22.79M) | Time:00:00.11 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:20.76M (Peak 22.79M) | Time:00:00.11 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r007-parity/moon-1-native-two-sided-reference-scale.png'
+Time: 00:00.11 (Saving: 00:00.00)
+
+Fra:1 Mem:20.63M (Peak 20.63M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-1-connected-crystalline-body
+Fra:1 Mem:20.99M (Peak 20.99M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-0
+Fra:1 Mem:20.99M (Peak 20.99M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-1
+Fra:1 Mem:20.99M (Peak 20.99M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-2
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-1-band-0
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-1-band-1
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-0-band-1
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-0-band-2
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-1-band-1
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-1-band-2
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-0-band-2
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-1-band-1
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-1-band-2
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-0
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-1
+Fra:1 Mem:21.02M (Peak 21.02M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-85-section-2-band-2
+Fra:1 Mem:21.02M (Peak 21.02M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-2
+Fra:1 Mem:21.02M (Peak 21.02M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-0
+Fra:1 Mem:21.02M (Peak 21.02M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-85-section-2-band-1
+Fra:1 Mem:21.02M (Peak 21.02M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-84-section-2-band-2
+Fra:1 Mem:21.02M (Peak 21.02M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-84-section-2-band-1
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-2
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-83-section-2-band-1
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-83-section-2-band-0
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-10-section-2-band-0
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-2
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-10-section-2-band-1
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-1
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-0
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-0
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-1
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-80-section-1-band-2
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-2
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-80-section-1-band-1
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-13-section-2-band-0
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-2-band-1
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-2-band-0
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-2
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-1
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-0
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-2
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-1
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-0
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-1-band-1
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-0-band-2
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-1-band-0
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-1-band-1
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-0-band-1
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-1-band-2
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-0-band-0
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-0
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-73-section-0-band-1
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-1
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-73-section-0-band-0
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-2
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-70-section-0-band-1
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-25-section-2-band-2
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-70-section-0-band-0
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-0
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-1-band-2
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-1
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-1-band-1
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-2
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-0-band-2
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-2-band-1
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-0-band-1
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-2-band-2
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-59-section-2-band-2
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-0
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-59-section-2-band-1
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-1
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-2-band-1
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-2
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-2-band-0
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-1-band-0
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-1-band-1
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-1-band-1
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-1-band-0
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-29-section-0-band-0
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-1-band-0
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-29-section-0-band-1
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-0-band-1
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-0-band-0
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-0
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-55-section-2-band-1
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-55-section-2-band-0
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-1
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-2-band-1
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-2
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-2-band-0
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-0
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-1-band-0
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-1
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-48-section-0-band-1
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-2
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-48-section-0-band-0
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-43-section-2-band-1
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-43-section-2-band-2
+Fra:1 Mem:21.17M (Peak 21.17M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:20.76M (Peak 21.17M) | Time:00:00.05 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:21.28M (Peak 21.28M) | Time:00:00.05 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:21.53M (Peak 21.53M) | Time:00:00.05 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:21.78M (Peak 21.78M) | Time:00:00.05 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:22.03M (Peak 22.03M) | Time:00:00.05 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:22.28M (Peak 22.28M) | Time:00:00.05 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:23.04M (Peak 23.04M) | Time:00:00.05 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:22.53M (Peak 23.04M) | Time:00:00.05 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:23.54M (Peak 23.54M) | Time:00:00.05 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:23.28M (Peak 23.54M) | Time:00:00.05 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:19.95M (Peak 23.54M) | Time:00:00.06 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:19.95M (Peak 23.54M) | Time:00:00.06 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:19.95M (Peak 23.54M) | Time:00:00.06 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:19.95M (Peak 23.54M) | Time:00:00.06 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:20.04M (Peak 23.54M) | Time:00:00.06 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:20.04M (Peak 23.54M) | Time:00:00.06 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:20.04M (Peak 23.54M) | Time:00:00.06 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:20.04M (Peak 23.54M) | Time:00:00.06 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:20.04M (Peak 23.54M) | Time:00:00.06 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:20.04M (Peak 23.54M) | Time:00:00.06 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:20.07M (Peak 23.54M) | Time:00:00.06 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:20.07M (Peak 23.54M) | Time:00:00.06 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:20.07M (Peak 23.54M) | Time:00:00.06 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:20.07M (Peak 23.54M) | Time:00:00.06 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:20.14M (Peak 23.54M) | Time:00:00.06 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:20.36M (Peak 23.54M) | Time:00:00.06 | Mem:2.79M, Peak:2.79M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:20.33M (Peak 23.54M) | Time:00:00.06 | Mem:2.98M, Peak:2.98M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:20.34M (Peak 23.54M) | Time:00:00.06 | Mem:2.98M, Peak:2.98M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:20.34M (Peak 23.54M) | Time:00:00.06 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:20.34M (Peak 23.54M) | Time:00:00.06 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:20.65M (Peak 23.54M) | Time:00:00.06 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:20.65M (Peak 23.54M) | Time:00:00.06 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:20.65M (Peak 23.54M) | Time:00:00.06 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:20.65M (Peak 23.54M) | Time:00:00.06 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:20.65M (Peak 23.54M) | Time:00:00.06 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:20.65M (Peak 23.54M) | Time:00:00.06 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:20.65M (Peak 23.54M) | Time:00:00.06 | Mem:3.66M, Peak:3.66M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:20.65M (Peak 23.54M) | Time:00:00.06 | Mem:3.66M, Peak:3.66M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:20.78M (Peak 23.54M) | Time:00:00.06 | Mem:3.79M, Peak:3.79M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:20.78M (Peak 23.54M) | Time:00:00.06 | Mem:3.79M, Peak:3.79M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:20.78M (Peak 23.54M) | Time:00:00.06 | Mem:3.71M, Peak:3.79M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:20.78M (Peak 23.54M) | Time:00:00.06 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:20.78M (Peak 23.54M) | Time:00:00.06 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:20.78M (Peak 23.54M) | Time:00:00.06 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:48.60M (Peak 48.60M) | Time:00:00.57 | Remaining:00:15.80 | Mem:31.62M, Peak:31.62M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:60.96M (Peak 85.68M) | Time:00:12.30 | Mem:31.62M, Peak:31.62M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:60.96M (Peak 85.68M) | Time:00:12.30 | Mem:31.62M, Peak:31.62M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r007-parity/moon-1-gltf-front-faces-only-matched-angle2.png'
+Time: 00:12.37 (Saving: 00:00.07)
+
+Fra:1 Mem:20.63M (Peak 20.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-1-connected-crystalline-body
+Fra:1 Mem:20.99M (Peak 20.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-0
+Fra:1 Mem:20.99M (Peak 20.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-1
+Fra:1 Mem:20.99M (Peak 20.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-0-band-2
+Fra:1 Mem:20.99M (Peak 20.99M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-1-band-0
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-2-section-1-band-1
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-0-band-1
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-0-band-2
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-1-band-1
+Fra:1 Mem:21.00M (Peak 21.00M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-3-section-1-band-2
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-0-band-2
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-1-band-1
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-7-section-1-band-2
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-0
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-1
+Fra:1 Mem:21.01M (Peak 21.01M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-1-band-2
+Fra:1 Mem:21.02M (Peak 21.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-0
+Fra:1 Mem:21.02M (Peak 21.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-1
+Fra:1 Mem:21.02M (Peak 21.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-8-section-2-band-2
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-10-section-2-band-0
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-10-section-2-band-1
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-0
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-85-section-2-band-2
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-1
+Fra:1 Mem:21.03M (Peak 21.03M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-11-section-0-band-2
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-13-section-2-band-0
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-85-section-2-band-1
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-13-section-2-band-1
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-84-section-2-band-2
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-0-band-2
+Fra:1 Mem:21.04M (Peak 21.04M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-84-section-2-band-1
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-1-band-1
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-83-section-2-band-1
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-1-band-2
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-83-section-2-band-0
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-0
+Fra:1 Mem:21.05M (Peak 21.05M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-2
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-1
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-1
+Fra:1 Mem:21.06M (Peak 21.06M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-24-section-2-band-2
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-81-section-2-band-0
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-25-section-2-band-2
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-80-section-1-band-2
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-0
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-80-section-1-band-1
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-1
+Fra:1 Mem:21.07M (Peak 21.07M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-2-band-1
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-1-band-2
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-2-band-0
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-2-band-1
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-2
+Fra:1 Mem:21.08M (Peak 21.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-26-section-2-band-2
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-1
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-0
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-79-section-1-band-0
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-1
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-2
+Fra:1 Mem:21.09M (Peak 21.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-0-band-2
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-1
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-1-band-0
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-78-section-2-band-0
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-27-section-1-band-1
+Fra:1 Mem:21.10M (Peak 21.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-1-band-1
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-29-section-0-band-0
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-1-band-0
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-29-section-0-band-1
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-0-band-1
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-0
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-76-section-0-band-0
+Fra:1 Mem:21.11M (Peak 21.11M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-1
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-73-section-0-band-1
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-30-section-0-band-2
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-73-section-0-band-0
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-0
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-70-section-0-band-1
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-1
+Fra:1 Mem:21.12M (Peak 21.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-70-section-0-band-0
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-41-section-2-band-2
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-1-band-2
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-43-section-2-band-1
+Fra:1 Mem:21.13M (Peak 21.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-1-band-1
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-43-section-2-band-2
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-0-band-2
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-48-section-0-band-0
+Fra:1 Mem:21.14M (Peak 21.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-69-section-0-band-1
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-48-section-0-band-1
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-59-section-2-band-2
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-1-band-0
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-59-section-2-band-1
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-2-band-0
+Fra:1 Mem:21.15M (Peak 21.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-2-band-1
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-54-section-2-band-1
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-2-band-0
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-55-section-2-band-0
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-1-band-1
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-55-section-2-band-1
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-57-section-1-band-0
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-0-band-0
+Fra:1 Mem:21.16M (Peak 21.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-1-band-0
+Fra:1 Mem:21.17M (Peak 21.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-56-section-0-band-1
+Fra:1 Mem:21.17M (Peak 21.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:20.76M (Peak 21.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:20.76M (Peak 21.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:21.28M (Peak 21.28M) | Time:00:00.06 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:21.53M (Peak 21.53M) | Time:00:00.06 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:21.78M (Peak 21.78M) | Time:00:00.06 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:22.03M (Peak 22.03M) | Time:00:00.07 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:22.28M (Peak 22.28M) | Time:00:00.07 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:22.53M (Peak 22.53M) | Time:00:00.07 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:22.78M (Peak 22.78M) | Time:00:00.07 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:23.03M (Peak 23.03M) | Time:00:00.07 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:23.28M (Peak 23.28M) | Time:00:00.07 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:19.95M (Peak 23.28M) | Time:00:00.08 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:19.95M (Peak 23.28M) | Time:00:00.08 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:19.95M (Peak 23.28M) | Time:00:00.08 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:19.95M (Peak 23.28M) | Time:00:00.08 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:20.04M (Peak 23.28M) | Time:00:00.08 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:20.04M (Peak 23.28M) | Time:00:00.08 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:20.04M (Peak 23.28M) | Time:00:00.08 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:20.04M (Peak 23.28M) | Time:00:00.08 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:20.04M (Peak 23.28M) | Time:00:00.08 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:20.04M (Peak 23.28M) | Time:00:00.08 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:20.07M (Peak 23.28M) | Time:00:00.08 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:20.07M (Peak 23.28M) | Time:00:00.08 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:20.07M (Peak 23.28M) | Time:00:00.08 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:20.07M (Peak 23.28M) | Time:00:00.08 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:20.14M (Peak 23.28M) | Time:00:00.08 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:20.35M (Peak 23.28M) | Time:00:00.08 | Mem:2.79M, Peak:2.79M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:20.33M (Peak 23.28M) | Time:00:00.08 | Mem:2.98M, Peak:2.98M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:20.33M (Peak 23.28M) | Time:00:00.08 | Mem:2.98M, Peak:2.98M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:20.33M (Peak 23.28M) | Time:00:00.08 | Mem:3.12M, Peak:3.12M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:20.33M (Peak 23.28M) | Time:00:00.08 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:20.33M (Peak 23.28M) | Time:00:00.08 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:20.65M (Peak 23.28M) | Time:00:00.08 | Mem:3.27M, Peak:3.41M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:20.65M (Peak 23.28M) | Time:00:00.08 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:20.65M (Peak 23.28M) | Time:00:00.08 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:20.65M (Peak 23.28M) | Time:00:00.08 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:20.65M (Peak 23.28M) | Time:00:00.08 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:20.65M (Peak 23.28M) | Time:00:00.08 | Mem:3.58M, Peak:3.58M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:20.65M (Peak 23.28M) | Time:00:00.08 | Mem:3.66M, Peak:3.66M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:20.65M (Peak 23.28M) | Time:00:00.08 | Mem:3.66M, Peak:3.66M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:20.78M (Peak 23.28M) | Time:00:00.09 | Mem:3.79M, Peak:3.79M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:20.78M (Peak 23.28M) | Time:00:00.09 | Mem:3.79M, Peak:3.79M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:20.78M (Peak 23.28M) | Time:00:00.09 | Mem:3.71M, Peak:3.79M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:20.78M (Peak 23.28M) | Time:00:00.09 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:20.78M (Peak 23.28M) | Time:00:00.09 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:20.78M (Peak 23.28M) | Time:00:00.09 | Mem:3.80M, Peak:3.80M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:21.00M (Peak 23.28M) | Time:00:00.09 | Remaining:00:00.12 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:21.09M (Peak 23.28M) | Time:00:00.18 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:21.09M (Peak 23.28M) | Time:00:00.18 | Mem:4.02M, Peak:4.02M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r007-parity/moon-1-gltf-front-faces-only-reference-scale.png'
+Time: 00:00.19 (Saving: 00:00.00)
+
+Read blend: "/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moon-2-r007/kit.blend"
+Fra:1 Mem:15.93M (Peak 15.93M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-2-connected-crystalline-body
+Fra:1 Mem:16.08M (Peak 16.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-0
+Fra:1 Mem:16.08M (Peak 16.08M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-1
+Fra:1 Mem:16.09M (Peak 16.09M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-2
+Fra:1 Mem:16.10M (Peak 16.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-0
+Fra:1 Mem:16.10M (Peak 16.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-1
+Fra:1 Mem:16.10M (Peak 16.10M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-2
+Fra:1 Mem:16.12M (Peak 16.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-25-section-2-band-2
+Fra:1 Mem:16.10M (Peak 16.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-0
+Fra:1 Mem:16.11M (Peak 16.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-1
+Fra:1 Mem:16.12M (Peak 16.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-2
+Fra:1 Mem:16.12M (Peak 16.12M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-2
+Fra:1 Mem:16.13M (Peak 16.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-1
+Fra:1 Mem:16.12M (Peak 16.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-0
+Fra:1 Mem:16.13M (Peak 16.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-0
+Fra:1 Mem:16.13M (Peak 16.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-1
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-2
+Fra:1 Mem:16.14M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-2
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-1
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-1-band-0
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-0
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-1-band-1
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-2
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-0
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-1
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-1
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-0
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-2
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-1-band-2
+Fra:1 Mem:16.17M (Peak 16.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-0-band-2
+Fra:1 Mem:16.17M (Peak 16.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-2
+Fra:1 Mem:16.17M (Peak 16.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-1-band-1
+Fra:1 Mem:16.18M (Peak 16.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-1-band-2
+Fra:1 Mem:16.19M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-1
+Fra:1 Mem:16.18M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-2-band-2
+Fra:1 Mem:16.18M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-0
+Fra:1 Mem:16.18M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-0-band-2
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-1-band-0
+Fra:1 Mem:16.19M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-1-band-1
+Fra:1 Mem:16.21M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-0-band-1
+Fra:1 Mem:16.19M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-1-band-2
+Fra:1 Mem:16.19M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-0-band-0
+Fra:1 Mem:16.20M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-0
+Fra:1 Mem:16.20M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-2-band-2
+Fra:1 Mem:16.22M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-1
+Fra:1 Mem:16.20M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-2-band-1
+Fra:1 Mem:16.22M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-2
+Fra:1 Mem:16.21M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-1-band-1
+Fra:1 Mem:16.21M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-0
+Fra:1 Mem:16.23M (Peak 16.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-1-band-0
+Fra:1 Mem:16.23M (Peak 16.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-1
+Fra:1 Mem:16.22M (Peak 16.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-0-band-0
+Fra:1 Mem:16.22M (Peak 16.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-2
+Fra:1 Mem:16.22M (Peak 16.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:16.01M (Peak 16.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:16.01M (Peak 16.23M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:16.52M (Peak 16.52M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:16.77M (Peak 16.77M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:17.02M (Peak 17.02M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:17.78M (Peak 17.78M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:17.27M (Peak 17.78M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:17.77M (Peak 17.78M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:18.02M (Peak 18.02M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:18.27M (Peak 18.27M) | Time:00:00.01 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:18.52M (Peak 18.52M) | Time:00:00.01 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:16.68M (Peak 18.52M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:16.69M (Peak 18.52M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:16.69M (Peak 18.52M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:16.69M (Peak 18.52M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:16.79M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:16.79M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:16.79M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:16.79M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:16.81M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:16.90M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:16.89M (Peak 18.52M) | Time:00:00.01 | Mem:2.85M, Peak:2.85M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:16.89M (Peak 18.52M) | Time:00:00.01 | Mem:2.85M, Peak:2.85M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:16.89M (Peak 18.52M) | Time:00:00.01 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:16.89M (Peak 18.52M) | Time:00:00.01 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.21M, Peak:3.21M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.21M, Peak:3.21M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.13M, Peak:3.21M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:44.88M (Peak 44.88M) | Time:00:00.40 | Remaining:00:12.22 | Mem:31.04M, Peak:31.04M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:57.24M (Peak 81.96M) | Time:00:09.22 | Mem:31.04M, Peak:31.04M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:57.24M (Peak 81.96M) | Time:00:09.22 | Mem:31.04M, Peak:31.04M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r007-parity/moon-2-native-two-sided-matched-angle2.png'
+Time: 00:09.39 (Saving: 00:00.16)
+
+Fra:1 Mem:16.02M (Peak 16.02M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-2-connected-crystalline-body
+Fra:1 Mem:16.13M (Peak 16.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-0
+Fra:1 Mem:16.13M (Peak 16.13M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-1
+Fra:1 Mem:16.14M (Peak 16.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-2
+Fra:1 Mem:16.14M (Peak 16.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-25-section-2-band-2
+Fra:1 Mem:16.14M (Peak 16.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-0
+Fra:1 Mem:16.14M (Peak 16.14M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-2
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-1
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-1
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-2
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-0
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-0
+Fra:1 Mem:16.15M (Peak 16.15M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-2
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-1
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-1
+Fra:1 Mem:16.16M (Peak 16.16M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-2
+Fra:1 Mem:16.17M (Peak 16.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-0
+Fra:1 Mem:16.17M (Peak 16.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-0
+Fra:1 Mem:16.17M (Peak 16.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-2
+Fra:1 Mem:16.17M (Peak 16.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-1
+Fra:1 Mem:16.17M (Peak 16.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-1
+Fra:1 Mem:16.17M (Peak 16.17M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-2
+Fra:1 Mem:16.18M (Peak 16.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-0
+Fra:1 Mem:16.18M (Peak 16.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-1-band-0
+Fra:1 Mem:16.18M (Peak 16.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-1-band-2
+Fra:1 Mem:16.18M (Peak 16.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-1-band-1
+Fra:1 Mem:16.18M (Peak 16.18M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-2
+Fra:1 Mem:16.19M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-0
+Fra:1 Mem:16.19M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-1
+Fra:1 Mem:16.19M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-1
+Fra:1 Mem:16.19M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-0
+Fra:1 Mem:16.19M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-2
+Fra:1 Mem:16.19M (Peak 16.19M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-1-band-0
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-0-band-2
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-0-band-1
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-1-band-1
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-0-band-0
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-1-band-2
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-2-band-2
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-2-band-2
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-2-band-1
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-0-band-2
+Fra:1 Mem:16.20M (Peak 16.20M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-1-band-1
+Fra:1 Mem:16.21M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-1-band-1
+Fra:1 Mem:16.21M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-1-band-0
+Fra:1 Mem:16.21M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-1-band-2
+Fra:1 Mem:16.21M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-0-band-0
+Fra:1 Mem:16.21M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-0
+Fra:1 Mem:16.21M (Peak 16.21M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-2
+Fra:1 Mem:16.22M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-1
+Fra:1 Mem:16.22M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-0
+Fra:1 Mem:16.22M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-2
+Fra:1 Mem:16.22M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:16.01M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:16.01M (Peak 16.22M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:16.52M (Peak 16.52M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:16.77M (Peak 16.77M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:17.02M (Peak 17.02M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:17.78M (Peak 17.78M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:17.27M (Peak 17.78M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:17.77M (Peak 17.78M) | Time:00:00.01 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:18.02M (Peak 18.02M) | Time:00:00.01 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:18.27M (Peak 18.27M) | Time:00:00.01 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:18.52M (Peak 18.52M) | Time:00:00.01 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:16.68M (Peak 18.52M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:16.69M (Peak 18.52M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:16.69M (Peak 18.52M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:16.69M (Peak 18.52M) | Time:00:00.01 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:16.77M (Peak 18.52M) | Time:00:00.01 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:16.79M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:16.79M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:16.79M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:16.79M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:16.81M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:16.90M (Peak 18.52M) | Time:00:00.01 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:16.89M (Peak 18.52M) | Time:00:00.01 | Mem:2.85M, Peak:2.85M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:16.89M (Peak 18.52M) | Time:00:00.01 | Mem:2.85M, Peak:2.85M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:16.89M (Peak 18.52M) | Time:00:00.01 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:16.89M (Peak 18.52M) | Time:00:00.01 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:16.89M (Peak 18.52M) | Time:00:00.01 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:17.01M (Peak 18.52M) | Time:00:00.01 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.21M, Peak:3.21M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.21M, Peak:3.21M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.13M, Peak:3.21M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:17.06M (Peak 18.52M) | Time:00:00.01 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:17.22M (Peak 18.52M) | Time:00:00.01 | Remaining:00:00.06 | Mem:3.37M, Peak:3.37M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:17.28M (Peak 18.52M) | Time:00:00.06 | Mem:3.37M, Peak:3.37M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:17.28M (Peak 18.52M) | Time:00:00.06 | Mem:3.37M, Peak:3.37M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r007-parity/moon-2-native-two-sided-reference-scale.png'
+Time: 00:00.06 (Saving: 00:00.00)
+
+Fra:1 Mem:16.51M (Peak 16.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-2-connected-crystalline-body
+Fra:1 Mem:16.62M (Peak 16.62M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-0
+Fra:1 Mem:16.63M (Peak 16.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-1
+Fra:1 Mem:16.63M (Peak 16.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-25-section-2-band-2
+Fra:1 Mem:16.63M (Peak 16.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-2
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-0
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-2
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-1
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-1
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-2
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-0
+Fra:1 Mem:16.65M (Peak 16.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-0
+Fra:1 Mem:16.65M (Peak 16.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-2
+Fra:1 Mem:16.65M (Peak 16.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-1
+Fra:1 Mem:16.65M (Peak 16.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-1
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-2
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-0
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-0
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-2
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-1
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-1
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-2
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-0
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-1-band-0
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-1-band-2
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-1-band-1
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-2
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-0
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-1
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-1
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-0
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-2
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-1-band-0
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-0-band-2
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-0-band-1
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-1-band-1
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-0-band-0
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-1-band-2
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-2-band-2
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-2-band-2
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-2-band-1
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-0-band-2
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-1-band-1
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-1-band-1
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-1-band-0
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-1-band-2
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-0-band-0
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-0
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-2
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-1
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-1
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-2
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-0
+Fra:1 Mem:16.72M (Peak 16.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:16.50M (Peak 16.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:16.50M (Peak 16.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:17.01M (Peak 17.01M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:17.26M (Peak 17.26M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:17.51M (Peak 17.51M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:17.76M (Peak 17.76M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:18.01M (Peak 18.01M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:18.26M (Peak 18.26M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:18.51M (Peak 18.51M) | Time:00:00.00 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:18.76M (Peak 18.76M) | Time:00:00.00 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:19.01M (Peak 19.01M) | Time:00:00.04 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:17.02M (Peak 19.01M) | Time:00:00.04 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:17.02M (Peak 19.01M) | Time:00:00.04 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:17.02M (Peak 19.01M) | Time:00:00.04 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:17.02M (Peak 19.01M) | Time:00:00.04 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.04 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.04 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.04 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.04 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.04 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.04 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:17.12M (Peak 19.01M) | Time:00:00.04 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:17.12M (Peak 19.01M) | Time:00:00.04 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:17.12M (Peak 19.01M) | Time:00:00.04 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:17.12M (Peak 19.01M) | Time:00:00.04 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:17.15M (Peak 19.01M) | Time:00:00.04 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:17.24M (Peak 19.01M) | Time:00:00.04 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:17.23M (Peak 19.01M) | Time:00:00.04 | Mem:2.85M, Peak:2.85M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:17.23M (Peak 19.01M) | Time:00:00.04 | Mem:2.85M, Peak:2.85M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:17.23M (Peak 19.01M) | Time:00:00.04 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:17.23M (Peak 19.01M) | Time:00:00.04 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:17.35M (Peak 19.01M) | Time:00:00.04 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:17.35M (Peak 19.01M) | Time:00:00.04 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:17.35M (Peak 19.01M) | Time:00:00.04 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:17.35M (Peak 19.01M) | Time:00:00.04 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:17.35M (Peak 19.01M) | Time:00:00.04 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:17.35M (Peak 19.01M) | Time:00:00.04 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:17.35M (Peak 19.01M) | Time:00:00.04 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:17.35M (Peak 19.01M) | Time:00:00.04 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.04 | Mem:3.21M, Peak:3.21M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.04 | Mem:3.21M, Peak:3.21M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.04 | Mem:3.13M, Peak:3.21M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.04 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.04 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.04 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:45.22M (Peak 45.22M) | Time:00:00.37 | Remaining:00:10.04 | Mem:31.04M, Peak:31.04M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:57.58M (Peak 82.30M) | Time:00:09.49 | Mem:31.04M, Peak:31.04M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:57.58M (Peak 82.30M) | Time:00:09.49 | Mem:31.04M, Peak:31.04M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r007-parity/moon-2-gltf-front-faces-only-matched-angle2.png'
+Time: 00:09.59 (Saving: 00:00.10)
+
+Fra:1 Mem:16.51M (Peak 16.51M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-planets--crystal-moon-2-connected-crystalline-body
+Fra:1 Mem:16.62M (Peak 16.62M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-0
+Fra:1 Mem:16.63M (Peak 16.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-1
+Fra:1 Mem:16.63M (Peak 16.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-1-band-2
+Fra:1 Mem:16.63M (Peak 16.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-0
+Fra:1 Mem:16.63M (Peak 16.63M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-1
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-1-section-2-band-2
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-0
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-25-section-2-band-2
+Fra:1 Mem:16.64M (Peak 16.64M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-1
+Fra:1 Mem:16.65M (Peak 16.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-2
+Fra:1 Mem:16.65M (Peak 16.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-2-section-0-band-2
+Fra:1 Mem:16.65M (Peak 16.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-1
+Fra:1 Mem:16.65M (Peak 16.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-0
+Fra:1 Mem:16.65M (Peak 16.65M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-23-section-2-band-0
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-1
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-2
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-1
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-0-band-2
+Fra:1 Mem:16.66M (Peak 16.66M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-2-band-0
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-2
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-1-band-0
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-1
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-5-section-1-band-1
+Fra:1 Mem:16.67M (Peak 16.67M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-21-section-1-band-0
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-0
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-1-band-2
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-1
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-2
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-6-section-2-band-2
+Fra:1 Mem:16.68M (Peak 16.68M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-1
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-0-band-2
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-17-section-0-band-0
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-1-band-1
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-1-band-0
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-1-band-2
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-0-band-1
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-7-section-2-band-2
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-16-section-0-band-0
+Fra:1 Mem:16.69M (Peak 16.69M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-0-band-2
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-2-band-2
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-1-band-1
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-2-band-1
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-1-panel-10-section-1-band-2
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-1-band-1
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-0
+Fra:1 Mem:16.70M (Peak 16.70M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-1-band-0
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-1
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-0-panel-15-section-0-band-0
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-0-band-2
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-2
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-0
+Fra:1 Mem:16.71M (Peak 16.71M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Synchronizing object | GEO-native-regional-fracture-2-panel-14-section-1-band-1
+Fra:1 Mem:16.72M (Peak 16.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Initializing
+Fra:1 Mem:16.50M (Peak 16.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-7
+Fra:1 Mem:16.50M (Peak 16.72M) | Time:00:00.00 | Mem:0.00M, Peak:0.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-0
+Fra:1 Mem:17.01M (Peak 17.01M) | Time:00:00.00 | Mem:0.25M, Peak:0.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-0
+Fra:1 Mem:17.26M (Peak 17.26M) | Time:00:00.00 | Mem:0.50M, Peak:0.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-6
+Fra:1 Mem:17.51M (Peak 17.51M) | Time:00:00.00 | Mem:0.75M, Peak:0.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-1
+Fra:1 Mem:17.76M (Peak 17.76M) | Time:00:00.00 | Mem:1.00M, Peak:1.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-5
+Fra:1 Mem:18.01M (Peak 18.01M) | Time:00:00.00 | Mem:1.25M, Peak:1.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-1
+Fra:1 Mem:18.26M (Peak 18.26M) | Time:00:00.00 | Mem:1.50M, Peak:1.50M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-4
+Fra:1 Mem:18.51M (Peak 18.51M) | Time:00:00.04 | Mem:1.75M, Peak:1.75M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-3
+Fra:1 Mem:18.76M (Peak 18.76M) | Time:00:00.04 | Mem:2.00M, Peak:2.00M | Scene, ViewLayer | Updating Images | Loading Crystal9-material-2
+Fra:1 Mem:19.01M (Peak 19.01M) | Time:00:00.04 | Mem:2.25M, Peak:2.25M | Scene, ViewLayer | Updating Images | Loading Crystal9-roughness-2
+Fra:1 Mem:17.02M (Peak 19.01M) | Time:00:00.05 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Waiting for render to start
+Fra:1 Mem:17.02M (Peak 19.01M) | Time:00:00.05 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Loading render kernels (may take a few minutes the first time)
+Fra:1 Mem:17.02M (Peak 19.01M) | Time:00:00.05 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Scene
+Fra:1 Mem:17.02M (Peak 19.01M) | Time:00:00.05 | Mem:2.75M, Peak:2.75M | Scene, ViewLayer | Updating Shaders
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.05 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Procedurals
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.05 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Background
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.05 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Camera
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.05 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Meshes Flags
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.05 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects
+Fra:1 Mem:17.11M (Peak 19.01M) | Time:00:00.05 | Mem:2.76M, Peak:2.76M | Scene, ViewLayer | Updating Objects | Copying Transformations to device
+Fra:1 Mem:17.12M (Peak 19.01M) | Time:00:00.05 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Objects | Applying Static Transformations
+Fra:1 Mem:17.12M (Peak 19.01M) | Time:00:00.05 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems
+Fra:1 Mem:17.12M (Peak 19.01M) | Time:00:00.05 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Particle Systems | Copying Particles to device
+Fra:1 Mem:17.12M (Peak 19.01M) | Time:00:00.05 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Meshes
+Fra:1 Mem:17.15M (Peak 19.01M) | Time:00:00.05 | Mem:2.77M, Peak:2.77M | Scene, ViewLayer | Updating Mesh | Computing attributes
+Fra:1 Mem:17.24M (Peak 19.01M) | Time:00:00.05 | Mem:2.78M, Peak:2.78M | Scene, ViewLayer | Updating Mesh | Copying Attributes to device
+Fra:1 Mem:17.23M (Peak 19.01M) | Time:00:00.05 | Mem:2.85M, Peak:2.85M | Scene, ViewLayer | Updating Scene BVH | Building
+Fra:1 Mem:17.23M (Peak 19.01M) | Time:00:00.05 | Mem:2.85M, Peak:2.85M | Scene, ViewLayer | Updating Scene BVH | Building BVH
+Fra:1 Mem:17.23M (Peak 19.01M) | Time:00:00.05 | Mem:2.90M, Peak:2.90M | Scene, ViewLayer | Updating Scene BVH | Building BVH 0%
+Fra:1 Mem:17.23M (Peak 19.01M) | Time:00:00.05 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Scene BVH | Copying BVH to device
+Fra:1 Mem:17.23M (Peak 19.01M) | Time:00:00.05 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Mesh | Computing normals
+Fra:1 Mem:17.34M (Peak 19.01M) | Time:00:00.05 | Mem:2.97M, Peak:3.02M | Scene, ViewLayer | Updating Mesh | Copying Mesh to device
+Fra:1 Mem:17.34M (Peak 19.01M) | Time:00:00.05 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Objects Flags
+Fra:1 Mem:17.34M (Peak 19.01M) | Time:00:00.05 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Primitive Offsets
+Fra:1 Mem:17.34M (Peak 19.01M) | Time:00:00.05 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Images
+Fra:1 Mem:17.34M (Peak 19.01M) | Time:00:00.05 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Camera Volume
+Fra:1 Mem:17.34M (Peak 19.01M) | Time:00:00.05 | Mem:3.08M, Peak:3.08M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:17.34M (Peak 19.01M) | Time:00:00.05 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Lights
+Fra:1 Mem:17.35M (Peak 19.01M) | Time:00:00.05 | Mem:3.16M, Peak:3.16M | Scene, ViewLayer | Updating Lights | Computing tree
+Fra:1 Mem:17.39M (Peak 19.01M) | Time:00:00.05 | Mem:3.21M, Peak:3.21M | Scene, ViewLayer | Updating Integrator
+Fra:1 Mem:17.39M (Peak 19.01M) | Time:00:00.05 | Mem:3.21M, Peak:3.21M | Scene, ViewLayer | Updating Film
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.05 | Mem:3.13M, Peak:3.21M | Scene, ViewLayer | Updating Lookup Tables
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.05 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Updating Baking
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.05 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Updating Device | Writing constant memory
+Fra:1 Mem:17.40M (Peak 19.01M) | Time:00:00.05 | Mem:3.22M, Peak:3.22M | Scene, ViewLayer | Sample 0/32
+Fra:1 Mem:17.55M (Peak 19.01M) | Time:00:00.05 | Remaining:00:00.06 | Mem:3.37M, Peak:3.37M | Scene, ViewLayer | Sample 1/32
+Fra:1 Mem:17.62M (Peak 19.01M) | Time:00:00.10 | Mem:3.37M, Peak:3.37M | Scene, ViewLayer | Sample 32/32
+Fra:1 Mem:17.62M (Peak 19.01M) | Time:00:00.10 | Mem:3.37M, Peak:3.37M | Scene, ViewLayer | Finished
+Saved: '/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-moons-r007-parity/moon-2-gltf-front-faces-only-reference-scale.png'
+Time: 00:00.10 (Saving: 00:00.00)
+
+
+Blender quit

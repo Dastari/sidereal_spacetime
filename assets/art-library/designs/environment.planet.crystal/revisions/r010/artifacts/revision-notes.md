@@ -1,0 +1,1 @@
+Composition-only successor of native Crystal9. Exact source, GLBs, PBR images and kit preserved; medium crystal bridges join existing global native outcrop feet. Four hero placements/lights unchanged; all bridge geometry retained acrossLOD. No visual/owner approval.

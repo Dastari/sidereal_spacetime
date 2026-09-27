@@ -1,0 +1,28 @@
+[
+  {
+    "id": "ice-moon-1",
+    "sourceBytes": 95700105,
+    "prunedJsonUtf8Bytes": 45772917,
+    "under64000000": true,
+    "under64MiB": true,
+    "sourceSha256": "dd192b60d46ad562bef442306a7ded75053647ea69a5ceca2fe05b70323a5fb8",
+    "keptVariants": [
+      "snow-cut-region",
+      "snow-open-gorge",
+      "ground-sphere"
+    ]
+  },
+  {
+    "id": "ice-moon-2",
+    "sourceBytes": 87657228,
+    "prunedJsonUtf8Bytes": 42921684,
+    "under64000000": true,
+    "under64MiB": true,
+    "sourceSha256": "15cc6b11bcdc0abb94987bf36f632bdf0a71ef315b7e66d76c3da90bb66ae64e",
+    "keptVariants": [
+      "snow-cut-region",
+      "snow-open-gorge",
+      "ground-sphere"
+    ]
+  }
+]

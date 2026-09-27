@@ -1,0 +1,6 @@
+[
+  "scripts/art_library/native_cloud_composition_r002.test.ts",
+  "scripts/art_library/toxic_fog_composition_r005.test.ts",
+  "scripts/art_library/toxic_fog_reference_clearance.test.ts",
+  "scripts/art_library/toxic_fog_reference_integration.test.ts"
+]

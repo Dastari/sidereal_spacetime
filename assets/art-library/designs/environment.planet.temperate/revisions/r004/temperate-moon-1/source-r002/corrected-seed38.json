@@ -1,0 +1,69 @@
+{
+  "stats": {
+    "style": "moon",
+    "seed": 38,
+    "frames": 59,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 0,
+      "buildMs": 1002.5,
+      "localLights": 0
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 12,
+    "triangles": 620522,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 46.91891891891892
+  },
+  "shadows": [
+    {
+      "casters": 11,
+      "normalBias": 0.006,
+      "bias": 0.0005
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "moon",
+    "revision": "temperate-moon-1-r002",
+    "seed": 38,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": 0.006,
+    "depth_bias": null,
+    "glow": true,
+    "local_light": false,
+    "prefix": "corrected",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "shadows_off": false,
+    "reference_radius": 46.91891891891892
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=moon&seed=38&candidate=1&capture=1789361923490099976&shadowBias=0.006&glow=1",
+  "images": {
+    "corrected-seed38.png": "9524172c7dd1fe8051247a0c9453d5e7f751d1a294682d5a14a0981d4cb46098",
+    "corrected-seed38-angle2.png": "4b397f8b7eec7127a83d4694952d4dcc65326663243dfca1d217c53114540d25",
+    "corrected-seed38-reference-scale.png": "586afda5fb0a319de29711facb07caf5a20c721c4a481a0587e843c28c56aed6"
+  },
+  "kitSha256": "b686cf85d77a2d116bd18602592a3dcada882fa2eb2a8d71ba7b92847368949d"
+}

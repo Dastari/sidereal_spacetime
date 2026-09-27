@@ -1,0 +1,52 @@
+{
+  "name": "ice-moon-1-r002",
+  "node": "v24.18.0",
+  "seed": 38,
+  "lod": 0,
+  "jsonBytes": 95700105,
+  "kitSha256": "dd192b60d46ad562bef442306a7ded75053647ea69a5ceca2fe05b70323a5fb8",
+  "parseMs": 165.78333700000002,
+  "composeMs": 4304.787844,
+  "triangles": 203904,
+  "outputBytes": 22021632,
+  "before": {
+    "rss": 311439360,
+    "heapTotal": 120537088,
+    "heapUsed": 51995456,
+    "external": 194073980,
+    "arrayBuffers": 95975696
+  },
+  "after": {
+    "rss": 443547648,
+    "heapTotal": 244346880,
+    "heapUsed": 168298496,
+    "external": 120395547,
+    "arrayBuffers": 117997328
+  },
+  "retained": {
+    "rss": 393228288,
+    "heapTotal": 189218816,
+    "heapUsed": 52143576,
+    "external": 120395547,
+    "arrayBuffers": 117997328
+  },
+  "peakRss": 524857344,
+  "resourceUsage": {
+    "userCPUTime": 4748357,
+    "systemCPUTime": 162288,
+    "maxRSS": 512556,
+    "sharedMemorySize": 0,
+    "unsharedDataSize": 0,
+    "unsharedStackSize": 0,
+    "minorPageFault": 150984,
+    "majorPageFault": 266,
+    "swappedOut": 0,
+    "fsRead": 13532,
+    "fsWrite": 0,
+    "ipcSent": 0,
+    "ipcReceived": 0,
+    "signalsCount": 0,
+    "voluntaryContextSwitches": 5467,
+    "involuntaryContextSwitches": 195
+  }
+}

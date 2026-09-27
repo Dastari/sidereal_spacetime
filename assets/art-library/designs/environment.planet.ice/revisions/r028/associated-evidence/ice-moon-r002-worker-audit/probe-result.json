@@ -1,0 +1,113 @@
+{
+  "seed": 38,
+  "lod": 0,
+  "originalInstrumentedMs": 4299.533269,
+  "proposedMs": 1735.6621340000002,
+  "speedup": 2.4771717863610427,
+  "work": {
+    "substrate": 1019760,
+    "floorQueries": 45794196,
+    "floorTriangles": 141096252
+  },
+  "comparisons": [
+    {
+      "positions": {
+        "equal": true,
+        "sha256": "a351830ea685702cabdcda022b162e0b29a107bc80172385c5fdabbcd385bd4d"
+      },
+      "normals": {
+        "equal": true,
+        "sha256": "942e2094e240f52ee2f6a5d6256324a494e31b793296b7585e0f1602ef67093a"
+      },
+      "uvs": {
+        "equal": true,
+        "sha256": "7a2a48f5dca2cec669fff8348ebc77920a580adf53c0b1bce0a170a886820b15"
+      },
+      "indices": {
+        "equal": true,
+        "sha256": "1150e7cb32e72599350ca05a8d2cfc0e2b3b37134ee9c3f527fe9d2b51885ab6"
+      }
+    },
+    {
+      "positions": {
+        "equal": true,
+        "sha256": "bbbd970724f57930056a8ccbb44fe53ed31910818f15a7430dcd335f51b841ef"
+      },
+      "normals": {
+        "equal": true,
+        "sha256": "51d0947cff5d2d03b55b68b24817dc89c7d173dd73d75294aafca6e3a008c24c"
+      },
+      "uvs": {
+        "equal": true,
+        "sha256": "fca2ed68a1415a9272d6df45881d0b535fa485e79a8a5d5b288890c6ed8d1502"
+      },
+      "indices": {
+        "equal": true,
+        "sha256": "30895d945a752d5973022f0743d17a39a6fc8bd010397f60202800d7b004fcd1"
+      }
+    },
+    {
+      "positions": {
+        "equal": true,
+        "sha256": "da8cfd6fd4c5d613cbe27e814cbb1125411b885854683a2c6ffeffc59ff21d56"
+      },
+      "normals": {
+        "equal": true,
+        "sha256": "fed7b8094d32c2ed17fe196256be5f8d7685ec74fd3c897a7833fe00238a5384"
+      },
+      "uvs": {
+        "equal": true,
+        "sha256": "5eb5dae52f906285b9d6935e32a16b5bb2fa179c97522bcc75ad20b9849ed72d"
+      },
+      "indices": {
+        "equal": true,
+        "sha256": "32b55e196109f4c54188b682cc873bec1ec0930ae0e12abe0333ec632c5ee211"
+      }
+    },
+    {
+      "positions": {
+        "equal": true,
+        "sha256": "ee6fd429e594c0f8fc0f24ac31c3cd9558d1455bd557cae5747fc419b74d878e"
+      },
+      "normals": {
+        "equal": true,
+        "sha256": "27b8679b112052a1c659824bbbe37084f8f33dfcb96de5199906715dc4b63234"
+      },
+      "uvs": {
+        "equal": true,
+        "sha256": "40d88cb716bee462d00495c6964b329556efb4310f2d4b8473357eeb61736c69"
+      },
+      "indices": {
+        "equal": true,
+        "sha256": "08b01eec0e952c4fe108d7f462b354109b11c1f3a71220cedfac21bb736cee97"
+      }
+    },
+    {
+      "positions": {
+        "equal": true,
+        "sha256": "6fbbb708f9948ee92f54603ea89bf67644dac5606346931625f6558c8fa86cea"
+      },
+      "normals": {
+        "equal": true,
+        "sha256": "d3d0b6f233819ab64c229b9679acaf3fc56512c9c5420c77115170d23fc9b1d6"
+      },
+      "uvs": {
+        "equal": true,
+        "sha256": "c04f4d694fb5d000d0af4b1f45b5ea52641b6158c10628f008008848b85d01d4"
+      },
+      "indices": {
+        "equal": true,
+        "sha256": "15961fee08448d3056924874a4d1f25ca969ba5ecef6fb083b001088d291723f"
+      }
+    }
+  ],
+  "rangesEqual": true,
+  "memory": {
+    "rss": 403513344,
+    "heapTotal": 281366528,
+    "heapUsed": 209442656,
+    "external": 46717034,
+    "arrayBuffers": 44318855
+  },
+  "peakRss": 519925760
+}

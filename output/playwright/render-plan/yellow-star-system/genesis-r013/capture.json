@@ -1,0 +1,24 @@
+{
+  "state": {
+    "frames": 265,
+    "selected": "yellow-main-sequence-r013",
+    "seed": 3901,
+    "loading": false,
+    "stats": {
+      "active": 0,
+      "requestedLOD": 2,
+      "flareCount": 1,
+      "revision": "r013",
+      "assetSha256": "f651ba13ade02fb918c97dd4d3924879dd9c204527a4e43cef90c8c578505bd2"
+    },
+    "worker": {
+      "lastBuildMs": 2254.8999996185303,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "ready": true
+  },
+  "text": "Reviewed planets and stars\n\nDrag to orbit \u00b7 Scroll to zoom\n\nYellow Main Sequence Star \u00b7 active solar flares\nReviewed planets and stars\n\nAuthored Blender surfaces, materials and retained levels of detail.\n\nPlanet, moon or star\nYellow Main Sequence Star\nDesert\nRocky\nOcean\nTemperate\nToxic\nCrystal\nVolcanic\nIce\nGas\nRocky Moon\nRocky Moon 2\nDesert Moon 1\nDesert Moon 2\nGas Giant Moon 1\nGas Giant Moon 2\nGas Giant Moon 3\nOcean Moon 1\nOcean Moon 2\nTemperate Moon 1\nTemperate Moon 2\nToxic Moon 1\nToxic Moon 2\nIce Moon 1\nIce Moon 2\nVolcanic Moon 1\nVolcanic Moon 2\nCrystal Moon 1\nCrystal Moon 2\n\nSelected revision: r013\n\nA golden main-sequence star with active solar flares.\n\nOrbit to inspect the surface and animated flares. The star retains its authored detail at every viewing distance.",
+  "hardwareTimingAcceptance": false,
+  "url": "http://sidereal.tail7a58a6.ts.net:5174/planets"
+}

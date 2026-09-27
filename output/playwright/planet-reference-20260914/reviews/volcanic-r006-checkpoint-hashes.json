@@ -1,0 +1,17 @@
+[
+  {
+    "path": "assets/art-library/designs/environment.planet.volcanic/design.json",
+    "sha256": "063b00cb61846c746fec68f6752289f6942c760db36db630edde5456af633206",
+    "bytes": 411317
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.volcanic/DESIGN.md",
+    "sha256": "990cf982a357e4747cfeff90c19b0abb15df77add5e4c6363954be9d0a86941f",
+    "bytes": 56595
+  },
+  {
+    "path": "assets/art-library/designs/environment.planet.volcanic/revisions/r026/manifest.json",
+    "sha256": "a5862e514ab86485c1adc71e43ea4595f4c8598ec7b97ca8311e5129b0452a88",
+    "bytes": 30991
+  }
+]

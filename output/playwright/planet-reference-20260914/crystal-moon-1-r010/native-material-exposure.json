@@ -1,0 +1,129 @@
+[
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-0/panel-78/section-14/band-0",
+    "nativePolygon": 1,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.029009990394115448,
+    "triangles": [
+      4719,
+      4720,
+      4721
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-0/panel-78/section-14/band-0",
+    "nativePolygon": 3,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.020357346162199974,
+    "triangles": [
+      4724,
+      4725
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-1/panel-76/section-4/band-0",
+    "nativePolygon": 1,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.014169956557452679,
+    "triangles": [
+      4638,
+      4639
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-1/panel-73/section-3/band-0",
+    "nativePolygon": 1,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.0323280468583107,
+    "triangles": [
+      4481,
+      4482,
+      4483,
+      4484,
+      4485
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-2/panel-8/section-9/band-2",
+    "nativePolygon": 7,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.05097663775086403,
+    "triangles": [
+      1954,
+      1955
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-1/panel-11/section-2/band-0",
+    "nativePolygon": 4,
+    "oldMaterial": 5,
+    "newMaterial": 7,
+    "area": 0.012271145358681679,
+    "triangles": [
+      2092,
+      2093
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-0/panel-81/section-14/band-2",
+    "nativePolygon": 1,
+    "oldMaterial": 6,
+    "newMaterial": 7,
+    "area": 0.05645275488495827,
+    "triangles": [
+      5048,
+      5049,
+      5050,
+      5051
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-1/panel-52/section-7/band-2",
+    "nativePolygon": 1,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.010923854075372219,
+    "triangles": [
+      3754,
+      3755
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-0/panel-55/section-10/band-0",
+    "nativePolygon": 1,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.0353834442794323,
+    "triangles": [
+      3955,
+      3956,
+      3957
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-1/regional-fracture-0/panel-81/section-15/band-1",
+    "nativePolygon": 4,
+    "oldMaterial": 5,
+    "newMaterial": 7,
+    "area": 0.028131263330578804,
+    "triangles": [
+      5072,
+      5073
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  }
+]

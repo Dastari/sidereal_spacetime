@@ -1,0 +1,5 @@
+{
+  "state": "preserved-rejected-proof",
+  "reason": "Imported GLB roots stayed in quaternion mode, so the capture helper Euler values did not rotate spans. Angled/concave images are invalid assembly evidence. Cyan inserts also sat behind uncut rail faces. Source/GLBs retained; proof-03 fixes both issues.",
+  "renderSourceSnapshot": "The failed renderer script was not separately archived; captures and logs retain the failure evidence."
+}

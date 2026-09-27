@@ -4,6 +4,8 @@ import {
   SHARED_SYSTEM_SEED,
   SHARED_SYSTEM_SEED_SHA256,
   SHARED_SYSTEM_MAX_SHIPS,
+  SOLAR_SYSTEM_BODY_LIMIT,
+  solarBodyForLegacyKey,
 } from "@sidereal/content/shared-system";
 import { LAB_HULL } from "@sidereal/content/space";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
@@ -198,7 +200,7 @@ export function ensureCanonicalSystem(db: SharedWorldDatabase): SystemRow {
     id: SHARED_SYSTEM_SEED.systemId,
     seedRevision: BigInt(SHARED_SYSTEM_SEED.revision),
     seedSha256: SHARED_SYSTEM_SEED_SHA256,
-    migrationRevision: 1n,
+    migrationRevision: 2n,
     lastSimulationTick: 0n,
   };
   const existing = db.worldSystem.id.find(expected.id);
@@ -286,7 +288,7 @@ export function reserveBerth(db: SharedWorldDatabase, systemId: string) {
     throw new SenderError("Shared contact island is full");
   const rockMotions = bounded(
     db.bodyWorldMotion.by_system.filter(systemId),
-    32,
+    SOLAR_SYSTEM_BODY_LIMIT,
     "System body",
   );
   const radius =
@@ -378,9 +380,9 @@ export function joinSharedSystem(
     "Legacy body",
   );
   const aliases: LegacyAliasRow[] = legacy.map((body) => {
-    const canonical = SHARED_SYSTEM_SEED.bodies.find(
-      (candidate) => candidate.key === body.key,
-    );
+    const canonical = body.kind === 'asteroid'
+      ? SHARED_SYSTEM_SEED.bodies.find(candidate => candidate.key === body.key)
+      : solarBodyForLegacyKey(body.key);
     if (!canonical || body.kind !== canonical.kind)
       throw new SenderError("Legacy body requires explicit canonical mapping");
     if (ctx.db.legacyBodyAlias.legacyBodyId.find(body.id))

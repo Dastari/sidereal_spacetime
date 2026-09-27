@@ -182,10 +182,23 @@ export const SPACE_VISTAS: readonly SpaceVista[] = [
       },
     ],
   },
+  {
+    id: "deep-space",
+    name: "Deep space",
+    description: "Open space and distant stars, without nebulae.",
+    nebulaTint: [0, 0, 0],
+    nebulaStrength: 0,
+    dust: 0,
+    seed: 17,
+    bodies: [],
+  },
 ];
-export const DEFAULT_SPACE_VISTA = SPACE_VISTAS[0].id;
+export const DEFAULT_SPACE_VISTA = "deep-space";
 export function spaceVista(id: string): SpaceVista {
-  return SPACE_VISTAS.find((v) => v.id === id) ?? SPACE_VISTAS[0];
+  return (
+    SPACE_VISTAS.find((v) => v.id === id) ??
+    SPACE_VISTAS.find((v) => v.id === DEFAULT_SPACE_VISTA)!
+  );
 }
 
 /** Versioned local art recipe. This carries no position, ownership or authority. */

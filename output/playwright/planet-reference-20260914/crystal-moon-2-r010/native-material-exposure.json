@@ -1,0 +1,77 @@
+[
+  {
+    "partId": "planets--crystal-moon-2/regional-fracture-2/panel-1/section-8/band-2",
+    "nativePolygon": 2,
+    "oldMaterial": 5,
+    "newMaterial": 7,
+    "area": 0.011405309662222862,
+    "triangles": [
+      430,
+      431
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-2/regional-fracture-1/panel-2/section-4/band-0",
+    "nativePolygon": 1,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.012988532893359661,
+    "triangles": [
+      602,
+      603
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-2/regional-fracture-0/panel-23/section-11/band-0",
+    "nativePolygon": 6,
+    "oldMaterial": 5,
+    "newMaterial": 7,
+    "area": 0.04180914908647537,
+    "triangles": [
+      2080,
+      2081
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-2/regional-fracture-0/panel-23/section-14/band-2",
+    "nativePolygon": 1,
+    "oldMaterial": 6,
+    "newMaterial": 7,
+    "area": 0.06929715722799301,
+    "triangles": [
+      2142,
+      2143
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-2/regional-fracture-1/panel-10/section-5/band-2",
+    "nativePolygon": 1,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.08277658373117447,
+    "triangles": [
+      1171,
+      1172,
+      1173
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  },
+  {
+    "partId": "planets--crystal-moon-2/regional-fracture-0/panel-21/section-10/band-0",
+    "nativePolygon": 1,
+    "oldMaterial": 3,
+    "newMaterial": 7,
+    "area": 0.04145476594567299,
+    "triangles": [
+      1912,
+      1913,
+      1914,
+      1915
+    ],
+    "intent": "Traced exposed short pale-pink mineral shoulder; geometry and illumination unchanged"
+  }
+]

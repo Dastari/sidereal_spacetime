@@ -1,0 +1,12 @@
+{
+  "volcanic-moon-1": {
+    "samples": 49,
+    "visible": 36,
+    "visibleAreaEstimate": 0.20338535769147761
+  },
+  "volcanic-moon-2": {
+    "samples": 50,
+    "visible": 36,
+    "visibleAreaEstimate": 0.11828825331767139
+  }
+}

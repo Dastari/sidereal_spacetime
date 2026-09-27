@@ -1,3 +1,5 @@
+import type { SpaceRegion } from "@sidereal/sim/space-background";
+import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
 import { createFlightActiveSet } from "./flight-active-set";
 import { createFastSnapshot } from "./fast-snapshot";
 import {
@@ -149,6 +151,7 @@ export type SceneState = {
   seatFacing?: number;
   sprinting?: boolean;
   vistaId?: string;
+  spaceRegion?: SpaceRegion;
   reducedMotion?: boolean;
   bodies?: readonly SpaceBodyState[];
   crewAppearance?: CrewAppearance;
@@ -992,7 +995,11 @@ async function buildWorld(
         focus.height,
         -(focus.y - displayed.y),
       );
-      const observed = observation.frame(focus.radius, dt, state.reducedMotion);
+      const observed = observation.frame(
+        celestialObservationRadius(focus, aspect),
+        dt,
+        state.reducedMotion,
+      );
       camera.alpha = observed.alpha;
       camera.beta = observed.beta;
       camera.radius = observed.radius;
@@ -1003,6 +1010,7 @@ async function buildWorld(
     camera.getViewMatrix(true);
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,
+      region: state.spaceRegion,
       x: displayed.x,
       y: displayed.y,
       vx: state.vx ?? 0,

@@ -1,0 +1,1702 @@
+{
+  "schema": "sidereal.art-library.v1",
+  "id": "environment.planet.rocky",
+  "asset_uuid": "ce61185b-afd0-5046-bcfa-c4f1ad866e9c",
+  "reference_ids": [
+    "planets--rocky-world",
+    "planets--rocky-moon-1",
+    "planets--rocky-moon-2"
+  ],
+  "mapping_status": "proposed shared production family; inspect and split distinct geometry before implementation",
+  "current_revision": 10,
+  "state": "in-progress",
+  "owner_final_signoff": null,
+  "priority": 50,
+  "profile": "planet",
+  "assigned_to": "root/planet-reference-20260914",
+  "blocker": null,
+  "feedback": [
+    {
+      "revision": 8,
+      "author": "agent",
+      "text": "Sparse smooth blank faces and insufficient multiscale crust; linear albedo written to sRGB PNG needs correction.",
+      "message_reference": "output/playwright/planet-reference-20260914/reviews/rocky-r008-volcanic-r020-ice-r020-corrected.md",
+      "recorded_at": "2026-09-14T03:48:15.307399+00:00",
+      "resolved_by_revision": null
+    },
+    {
+      "revision": 9,
+      "author": "agent",
+      "text": "Macro coverage subpass; equal clean drilled holes and straight copper strips still need a bounded finish.",
+      "message_reference": "output/playwright/planet-reference-20260914/reviews/rocky-r009-volcanic-r021-ice-r021.md",
+      "recorded_at": "2026-09-14T03:48:15.307399+00:00",
+      "resolved_by_revision": null
+    },
+    {
+      "revision": 10,
+      "author": "agent",
+      "text": "Root and independent Astra agree on working visual pass for meaningful reference-gap closure, limited to corrected seed38 two angles and reference scale. Broader planar plates, less dense chips, duller mineral optics and weaker cool rim remain refinements. Other seeds/hemispheres, moon coverage, actual lighting, retained LOD/Map Observe and hardware remain unverified. No owner approval/publication.",
+      "message_reference": "output/playwright/planet-reference-20260914/reviews/rocky-r010-working-pass.md",
+      "recorded_at": "2026-09-14T03:52:29.083416+00:00",
+      "resolved_by_revision": null
+    }
+  ],
+  "approvals": [],
+  "revisions": [
+    {
+      "revision": 0,
+      "created_at": "2026-09-08",
+      "stage": "reference-only",
+      "change": "Reference inventory and provisional scale/gameplay brief",
+      "hypothesis": null,
+      "covered_reference_ids": [],
+      "evidence": [],
+      "review": null
+    },
+    {
+      "revision": 1,
+      "created_at": "2026-09-14T00:47:15.727561+00:00",
+      "stage": "changes-requested",
+      "change": "Author native broken crater bowls and fractured shelves",
+      "hypothesis": "Deep macro craters with thick irregular rims and exposed regolith strata establish rocky-world identity before secondary detail",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.rocky/revisions/r001/runtime-close.png",
+          "sha256": "cf9df9391436dde289e9dd93aa1dfae58ef03ff5b510281bdcab3daafc46d796",
+          "bytes": 298948,
+          "notes": "",
+          "capture_context": "Isolated Babylon SwiftShader appearance or explicitly named single-region diagnostic only; no hardware timing acceptance.",
+          "recorded_at": "2026-09-14T01:44:58.033385+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Wholeplanet reference gate rejected by root and independent Astra; see dated review reports. Technical bowl-clearance progress remains preserved separately.",
+        "recorded_at": "2026-09-14T01:44:58.459501+00:00"
+      }
+    },
+    {
+      "revision": 2,
+      "created_at": "2026-09-14T01:44:58.844688+00:00",
+      "stage": "changes-requested",
+      "change": "Buried native crater bowls and substrate depressions.",
+      "hypothesis": "Preserve tested cavity clearance and improve reference regional geology; technical diagnostics are not family acceptance.",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.rocky/revisions/r002/runtime-close.png",
+          "sha256": "4fa5006cd3a61d4e4189e338eb60e6b30fc70cafe99ebf22121992f282c81d34",
+          "bytes": 318605,
+          "notes": "",
+          "capture_context": "Isolated Babylon SwiftShader appearance or explicitly named single-region diagnostic only; no hardware timing acceptance.",
+          "recorded_at": "2026-09-14T01:44:59.258660+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Wholeplanet reference gate rejected by root and independent Astra; see dated review reports. Technical bowl-clearance progress remains preserved separately.",
+        "recorded_at": "2026-09-14T01:44:59.646731+00:00"
+      }
+    },
+    {
+      "revision": 3,
+      "created_at": "2026-09-14T01:45:00.039470+00:00",
+      "stage": "changes-requested",
+      "change": "Single-bowl clearance diagnostic and exclusion of shelves over openings.",
+      "hypothesis": "Preserve tested cavity clearance and improve reference regional geology; technical diagnostics are not family acceptance.",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.rocky/revisions/r003/runtime-close.png",
+          "sha256": "ca873ec8710247c32ec1e6bafa1460b0c813c2d7da0bb711c906b73360e41f52",
+          "bytes": 312566,
+          "notes": "",
+          "capture_context": "Isolated Babylon SwiftShader appearance or explicitly named single-region diagnostic only; no hardware timing acceptance.",
+          "recorded_at": "2026-09-14T01:45:00.431233+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Wholeplanet reference gate rejected by root and independent Astra; see dated review reports. Technical bowl-clearance progress remains preserved separately.",
+        "recorded_at": "2026-09-14T01:45:00.814089+00:00"
+      }
+    },
+    {
+      "revision": 4,
+      "created_at": "2026-09-14T01:45:01.189907+00:00",
+      "stage": "changes-requested",
+      "change": "Targeted camera-facing anchor diagnostic, not a final distribution.",
+      "hypothesis": "Preserve tested cavity clearance and improve reference regional geology; technical diagnostics are not family acceptance.",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [],
+      "review": {
+        "outcome": "fail",
+        "notes": "Camera-targeted diagnostic is deliberately ineligible for wholeplanet acceptance; replaced with globally distributed r005.",
+        "recorded_at": "2026-09-14T01:55:08.227788+00:00"
+      }
+    },
+    {
+      "revision": 5,
+      "created_at": "2026-09-14T01:55:08.614946+00:00",
+      "stage": "changes-requested",
+      "change": "Global crater distribution and lower native rim",
+      "hypothesis": "Close documented reference gaps while retaining native surfaces, attributes, history and LOD identity.",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.rocky/revisions/r005/runtime-close.png",
+          "sha256": "74a195b7d4c1c0bc6180bb131080759ff76b7a0a991951ab4305c2c3b8ad6456",
+          "bytes": 370009,
+          "notes": "",
+          "capture_context": "Isolated Babylon SwiftShader, seed38, two views. Appearance only; no hardware acceptance.",
+          "recorded_at": "2026-09-14T01:55:09.006362+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Reference gate incomplete: r005 lacks connected regional crust; r006 is a technical diagnostic superseded by native normal correction. No wholeplanet acceptance claimed.",
+        "recorded_at": "2026-09-14T01:55:09.380561+00:00"
+      }
+    },
+    {
+      "revision": 6,
+      "created_at": "2026-09-14T01:55:09.777088+00:00",
+      "stage": "changes-requested",
+      "change": "Connected native battered-crust regions with embedded bowls",
+      "hypothesis": "Close documented reference gaps while retaining native surfaces, attributes, history and LOD identity.",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.rocky/revisions/r006/runtime-close.png",
+          "sha256": "7f7c725e5cf9873cc715a23aa0719a4f6ffbe4ff4bd230df88a4503f86d72bae",
+          "bytes": 153702,
+          "notes": "",
+          "capture_context": "Single-region bowl/ledge diagnostic, shadows off, SwiftShader; not complete-body acceptance.",
+          "recorded_at": "2026-09-14T01:55:10.148659+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Reference gate incomplete: r005 lacks connected regional crust; r006 is a technical diagnostic superseded by native normal correction. No wholeplanet acceptance claimed.",
+        "recorded_at": "2026-09-14T01:55:10.547867+00:00"
+      }
+    },
+    {
+      "revision": 7,
+      "created_at": "2026-09-14T01:55:10.938214+00:00",
+      "stage": "in-progress",
+      "change": "Deformation-aware normals preserving exact r006 geometry",
+      "hypothesis": "Close documented reference gaps while retaining native surfaces, attributes, history and LOD identity.",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [],
+      "review": null
+    },
+    {
+      "revision": 8,
+      "created_at": "2026-09-14T03:48:15.307399+00:00",
+      "stage": "changes-requested",
+      "change": "Connected native fractured crust with embedded large and medium bowls",
+      "hypothesis": "Greater connected coverage while retaining the verified crater floor.",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/angular-outcrops.glb",
+          "sha256": "91e5508f1a567a8dc1c7656da0a5d66a8e1b4985d5aaee335305d3bf6507306b",
+          "bytes": 405908,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/angular-outcrops.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/angular-outcrops.glb",
+          "sha256": "91e5508f1a567a8dc1c7656da0a5d66a8e1b4985d5aaee335305d3bf6507306b",
+          "bytes": 405908,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/angular-outcrops.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/battered-region-a.glb",
+          "sha256": "6d7d05a0b543e69747c8bdbfc8f746d8593765104c3b48b2f126e55e0bcd17c3",
+          "bytes": 1062376,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/battered-region-a.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/battered-region-b.glb",
+          "sha256": "8c6ae1823a528d1519a9c833cf29739808fe3234db25b1e0886542f2ccfa3e7c",
+          "bytes": 1050416,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/battered-region-b.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/crater-broken.glb",
+          "sha256": "83846c8d9c4310106b0914d8ec0a8c65a1bc84172abd4b75eb7790938fd271a3",
+          "bytes": 671096,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/crater-broken.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/crater-large.glb",
+          "sha256": "ccdbe3ed4a96bfc7218f2a9eb1f4d2d349332ac22293204645b68c48aec0b172",
+          "bytes": 671092,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/crater-large.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/crater-small.glb",
+          "sha256": "067976c975aa360393f5a747129f7c1e1fa518c7eb010a9beb796357fbc426d5",
+          "bytes": 671104,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/crater-small.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/fractured-shelf.glb",
+          "sha256": "9ceef646af0f2a743f75ad1a847d040ef6a319a6d73c839e7abe423bbee4a414",
+          "bytes": 405900,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/fractured-shelf.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/ground-sphere-low.glb",
+          "sha256": "ed7a3ff218b953febde867be02b2c253db4e65c0533a28fa32d274a5cff7bc87",
+          "bytes": 143972,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/ground-sphere-low.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/ground-sphere-medium.glb",
+          "sha256": "ceea5c972e7759a4868b3bb7b18c3db8e8bc5dc59a0f3045c7fd80d41aa8fcbc",
+          "bytes": 166572,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/ground-sphere-medium.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/ground-sphere.glb",
+          "sha256": "c8466b36259f4e6708a2c33c2aa7eb88061bf70ea536dbd9b112c36ff604eedb",
+          "bytes": 255788,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/ground-sphere.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/kit-preview.png",
+          "sha256": "f58010005843b711f934b78cd142b8121a93d9fc13a4a659cbf9480900846bda",
+          "bytes": 1095300,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/kit-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/kit.blend",
+          "sha256": "38dc1108854ea81c6fd9af760cdf1fefcad7f776d1a68767db0d01c5e718b9ad",
+          "bytes": 4208938,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/kit.blend",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/kit.json",
+          "sha256": "fe5d8774feee7896fd2eda0884bda85bcfc32b3625d816a0f1041c4371d1e4d5",
+          "bytes": 14929318,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/kit.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/mineral-seam.glb",
+          "sha256": "bff1d0675b5039be3a62b969d7ae297a0592275f63589fb7c0bd62df744cf923",
+          "bytes": 395072,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/mineral-seam.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-0-albedo.png",
+          "sha256": "4079da6558f5959668e0ba4dca236df319489c1da9dc00a520b478a972c47dea",
+          "bytes": 92544,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-0-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-0-orm.png",
+          "sha256": "15cb6d98d71a9607568670020db29a4a1ab054e393bdffaa2d295fa6aacc8606",
+          "bytes": 40688,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-0-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-1-albedo.png",
+          "sha256": "ed0448acfa77505b10b6bab0e8f58f4b3ffaa298540506453c99704ae90f1efa",
+          "bytes": 97847,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-1-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-1-orm.png",
+          "sha256": "c983a22bb5aa5d0e34cf8fb695be861660af0ad421a06b4a33c7bf6da93dc8ea",
+          "bytes": 40198,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-1-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-2-albedo.png",
+          "sha256": "914cb37fb9b934cd46bbe0c1c0b20ed7625704e5ded654431b2cf6e9b106cc9e",
+          "bytes": 55282,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-2-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-2-orm.png",
+          "sha256": "14508288e8596c5ea9913d8dcb8d2a023c7e4f947ac6ff293445a3fa23410bec",
+          "bytes": 41832,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-2-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-3-albedo.png",
+          "sha256": "ca62cb9723b89c2f053b18e11cc5696ab3951195e91f994992ae9074dbf2d743",
+          "bytes": 76909,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-3-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-3-orm.png",
+          "sha256": "1b7907a1d2638cd5ca9913b333ef60914e32be35d2b80d41f79fc3dcb7b0d8f5",
+          "bytes": 40985,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-3-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-4-albedo.png",
+          "sha256": "e4b3fd2baf94ae54fae4488dd349240f924ba9ba624daefc16bdd93440e9f969",
+          "bytes": 83251,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-4-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-4-orm.png",
+          "sha256": "98802d506f035357a375185298a793a6598fc59ec1d0c3a380af0d0d30bdb23d",
+          "bytes": 39119,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-4-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-5-albedo.png",
+          "sha256": "ff1363397e3ee8b19e513970b928086f4a644972030fb7c80cfe74628d508127",
+          "bytes": 100275,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-5-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/rocky-5-orm.png",
+          "sha256": "fc327a4ba561dc020b0db54f5311c62e425ce2af50f323c8fbfffc801c90156c",
+          "bytes": 40028,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/rocky-5-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attempt-01-underlying-pit-fill/validation.json",
+          "sha256": "18c00fc70c09cd34acad8d2ec3e45b03998dc33eb0406944c3d6cee1cc7cdb12",
+          "bytes": 6674,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attempt-01-underlying-pit-fill/validation.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attribute-audit/report.json",
+          "sha256": "4e758e5ab8dc469af7d4b6991e0b46d8ad98a5f990cb96a580ac2d6f1ef182a6",
+          "bytes": 24407,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attribute-audit/report.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/attribute-audit/report.md",
+          "sha256": "db95eb77df2d39ddd8e1711cbbe099a47d630e5cc79159a7369cd35732a9e1ad",
+          "bytes": 5688,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/attribute-audit/report.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/battered-region-a.glb",
+          "sha256": "a5e2a7650dc0e4e5c3d9d6d53edb02a7d543f6a917a51a859fc7549aa25bf554",
+          "bytes": 1034664,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/battered-region-a.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/battered-region-b.glb",
+          "sha256": "10e8c41dcf6589ab034f81f2c535bc1bf0c338f6dc59cf62fa9a18fc00fe159f",
+          "bytes": 1030672,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/battered-region-b.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/build_rocky_native_kit_r008.py",
+          "sha256": "68009a183d531a525fab2d974049548c7a0b33a23c980a6b85124a3a2b75578e",
+          "bytes": 15895,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/build_rocky_native_kit_r008.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/composition-tests.log",
+          "sha256": "8d4ed8431e3995553f9467a4357b3b08117cc06a0bbff21456e643d3f180c237",
+          "bytes": 209,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/composition-tests.log",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-back",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/corrected-seed38-angle2.png",
+          "sha256": "be5bd74073b56fb1f473ac8e35301133fdf3aa6ddcc0fba566defcd74d793557",
+          "bytes": 364635,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/corrected-seed38-angle2.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/corrected-seed38-capture.log",
+          "sha256": "2d08cc71aa7ab98713cdfc04124c35632692a083aa954110cc3ea57f57bdd2b4",
+          "bytes": 2440,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/corrected-seed38-capture.log",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-context",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "dfc2f1e13402ce63fc477a39f001515a660ef5c457338b5083cba0ca14a42b92",
+          "bytes": 92861,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/corrected-seed38-reference-scale.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/corrected-seed38.json",
+          "sha256": "5a171ceaa53238b948cd226188aca37566236c57bf207dcef5c31a623dee289f",
+          "bytes": 2227,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/corrected-seed38.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/corrected-seed38.png",
+          "sha256": "2cdc60107d99df599d5a6891f9f32ceecf8f2275c201c85ee395e2b6967a5ce5",
+          "bytes": 394274,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/corrected-seed38.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/crater-broken.glb",
+          "sha256": "83846c8d9c4310106b0914d8ec0a8c65a1bc84172abd4b75eb7790938fd271a3",
+          "bytes": 671096,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/crater-broken.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/crater-large.glb",
+          "sha256": "ccdbe3ed4a96bfc7218f2a9eb1f4d2d349332ac22293204645b68c48aec0b172",
+          "bytes": 671092,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/crater-large.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/crater-small.glb",
+          "sha256": "067976c975aa360393f5a747129f7c1e1fa518c7eb010a9beb796357fbc426d5",
+          "bytes": 671104,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/crater-small.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/fractured-shelf.glb",
+          "sha256": "9ceef646af0f2a743f75ad1a847d040ef6a319a6d73c839e7abe423bbee4a414",
+          "bytes": 405900,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/fractured-shelf.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/ground-sphere-low.glb",
+          "sha256": "ed7a3ff218b953febde867be02b2c253db4e65c0533a28fa32d274a5cff7bc87",
+          "bytes": 143972,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/ground-sphere-low.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/ground-sphere-medium.glb",
+          "sha256": "ceea5c972e7759a4868b3bb7b18c3db8e8bc5dc59a0f3045c7fd80d41aa8fcbc",
+          "bytes": 166572,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/ground-sphere-medium.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/ground-sphere.glb",
+          "sha256": "c8466b36259f4e6708a2c33c2aa7eb88061bf70ea536dbd9b112c36ff604eedb",
+          "bytes": 255788,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/ground-sphere.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/kit-preview.png",
+          "sha256": "432a8ca17f3e6b7c193caa6bee97b93d7869e8ff351611ba80717e0b4c5db4ed",
+          "bytes": 1082833,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/kit-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/kit.blend",
+          "sha256": "c548b06c2873987dc3f86542bb1651617c5857161af63237948fa9571b3d0755",
+          "bytes": 4001962,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/kit.blend",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/kit.json",
+          "sha256": "d51b189720f9e2363e001134434c7a6c26f90c8cfdaa64965c6149ce509841ef",
+          "bytes": 13857268,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/kit.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/mineral-seam.glb",
+          "sha256": "bff1d0675b5039be3a62b969d7ae297a0592275f63589fb7c0bd62df744cf923",
+          "bytes": 395072,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/mineral-seam.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/regional-rocky-preview.png",
+          "sha256": "80f4928d9f73a8443b7ee46ab0b9add602de35b3d70ca549b19eb6de3dc5183e",
+          "bytes": 980609,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/regional-rocky-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/render-region-preview.py",
+          "sha256": "0999159a4fb920a65fca27f2df0b4ac6cb97dce56329515fc9f1dc9efb33556e",
+          "bytes": 753,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/render-region-preview.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/revision-notes.md",
+          "sha256": "4ea7ca1f4347811409d5ebff9aca1e9d38827f3afd0e80f2ac6ba1818c4e94ec",
+          "bytes": 1540,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/revision-notes.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-0-albedo.png",
+          "sha256": "4079da6558f5959668e0ba4dca236df319489c1da9dc00a520b478a972c47dea",
+          "bytes": 92544,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-0-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-0-orm.png",
+          "sha256": "15cb6d98d71a9607568670020db29a4a1ab054e393bdffaa2d295fa6aacc8606",
+          "bytes": 40688,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-0-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-1-albedo.png",
+          "sha256": "ed0448acfa77505b10b6bab0e8f58f4b3ffaa298540506453c99704ae90f1efa",
+          "bytes": 97847,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-1-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-1-orm.png",
+          "sha256": "c983a22bb5aa5d0e34cf8fb695be861660af0ad421a06b4a33c7bf6da93dc8ea",
+          "bytes": 40198,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-1-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-2-albedo.png",
+          "sha256": "914cb37fb9b934cd46bbe0c1c0b20ed7625704e5ded654431b2cf6e9b106cc9e",
+          "bytes": 55282,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-2-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-2-orm.png",
+          "sha256": "14508288e8596c5ea9913d8dcb8d2a023c7e4f947ac6ff293445a3fa23410bec",
+          "bytes": 41832,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-2-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-3-albedo.png",
+          "sha256": "ca62cb9723b89c2f053b18e11cc5696ab3951195e91f994992ae9074dbf2d743",
+          "bytes": 76909,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-3-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-3-orm.png",
+          "sha256": "1b7907a1d2638cd5ca9913b333ef60914e32be35d2b80d41f79fc3dcb7b0d8f5",
+          "bytes": 40985,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-3-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-4-albedo.png",
+          "sha256": "e4b3fd2baf94ae54fae4488dd349240f924ba9ba624daefc16bdd93440e9f969",
+          "bytes": 83251,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-4-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-4-orm.png",
+          "sha256": "98802d506f035357a375185298a793a6598fc59ec1d0c3a380af0d0d30bdb23d",
+          "bytes": 39119,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-4-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-5-albedo.png",
+          "sha256": "ff1363397e3ee8b19e513970b928086f4a644972030fb7c80cfe74628d508127",
+          "bytes": 100275,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-5-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky-5-orm.png",
+          "sha256": "fc327a4ba561dc020b0db54f5311c62e425ce2af50f323c8fbfffc801c90156c",
+          "bytes": 40028,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky-5-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky_reference_composition_r008.test.ts",
+          "sha256": "4211742780aa5fd0162544a9e048620d4ec7a4b9c67766abfc02fa48dc0d1aa1",
+          "bytes": 3211,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky_reference_composition_r008.test.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky_reference_composition_r008.ts",
+          "sha256": "e729a96c121450cf442530a5dca67b0d9d464f16074f8711ef8663e4201508da",
+          "bytes": 4633,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky_reference_composition_r008.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky_reference_r008.tsconfig.json",
+          "sha256": "89ad90e4bfc9e09e4917013927ab1b25188ae51e2faab6d4768a5b38e72a46bc",
+          "bytes": 201,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky_reference_r008.tsconfig.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/rocky_reference_r008.vitest.config.ts",
+          "sha256": "c98e7d0b1c430e9bc2129509db90ee9ba553a187881648eb397a59ffaf2de94a",
+          "bytes": 156,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/rocky_reference_r008.vitest.config.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r008/artifacts/validation.json",
+          "sha256": "59119608f10a4ed8257e647e1b607d7ccc3d9f09d12466c56e086c04fba33429",
+          "bytes": 6677,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; artifacts/validation.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r008/review.md",
+          "sha256": "c20d7a8c72da9802c383d339dc5e8bc49a1960815d94a4fad4277df413e74081",
+          "bytes": 4956,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; review.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r008/specification.json",
+          "sha256": "5c64886128fece3519668283e31e45ab1cd7d8f3fc7bb11a446e2c9a69b12113",
+          "bytes": 1027,
+          "notes": "Exact candidate rocky-r008 immutable checkpoint; specification.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Sparse smooth blank faces and insufficient multiscale crust; linear albedo written to sRGB PNG needs correction.",
+        "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+      }
+    },
+    {
+      "revision": 9,
+      "created_at": "2026-09-14T03:48:15.307399+00:00",
+      "stage": "changes-requested",
+      "change": "Native small recessed pits, fracture chips and corrected albedo encoding",
+      "hypothesis": "Dense multiscale relief and corrected color make the existing connected crust readable.",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/angular-outcrops.glb",
+          "sha256": "b83a0cd75401d9b6751480c5bbff82729293abe536473a85b2b2e4e8cc352673",
+          "bytes": 334172,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/angular-outcrops.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/attribute-audit/report.json",
+          "sha256": "81d02054ba4c066930380afdd40f1b469d65cf50cdb38b8ee46edfc096b5cc89",
+          "bytes": 24407,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/attribute-audit/report.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/attribute-audit/report.md",
+          "sha256": "8850a49917bc853d7b570e46cee14eb131831c52a6dc9bcb6d41da96af0d8375",
+          "bytes": 5688,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/attribute-audit/report.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/battered-region-a.glb",
+          "sha256": "c285f6aa667ee98403c5c6a326e4c05758f2fc34ddf287747af6deb09ee040e7",
+          "bytes": 1078748,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/battered-region-a.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/battered-region-b.glb",
+          "sha256": "b87d40e4da9e39563e8bb6f4368ccc7c5c1fd3111be49e06582612765ef7e078",
+          "bytes": 1074784,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/battered-region-b.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/build_rocky_native_kit_r009.py",
+          "sha256": "1e3cb3b358deec04c4d2c56b375fb37dfe314200dccbe073e95b804bb5f54b58",
+          "bytes": 18376,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/build_rocky_native_kit_r009.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-back",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/corrected-seed38-angle2.png",
+          "sha256": "10bea828409898c5a43dc569ad64817d08d6f4ef64059cc2dd1a58e5ad1a2a76",
+          "bytes": 404990,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/corrected-seed38-angle2.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/corrected-seed38-capture.log",
+          "sha256": "15148e2c03058ef2724875f1106ef9ad1a91d8584bf91e8dac613376c94c837d",
+          "bytes": 2454,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/corrected-seed38-capture.log",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-context",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "450d6fa4ab9d6872ebbe90192c334725ad0023df18dd19a73198b36beca1ed93",
+          "bytes": 102937,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/corrected-seed38-reference-scale.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/corrected-seed38.json",
+          "sha256": "4e5be3345052d8d22cc61bbb9318aa57698fae108dbc1d75c924431fb4887ada",
+          "bytes": 2316,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/corrected-seed38.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/corrected-seed38.png",
+          "sha256": "1a0a17e6da4bf1c463134f751cc81f1954b5d12f09309b832059fef4dbeaf170",
+          "bytes": 428247,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/corrected-seed38.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/crater-broken.glb",
+          "sha256": "ade7859ee5715e540036cec3c9ecedb86becf7af79330dbd51e7af09bd7ad7ba",
+          "bytes": 558296,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/crater-broken.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/crater-large.glb",
+          "sha256": "a05e4a8f30b1503eb2af866d3dad12dc6a7583b654511a2327a1387a9ed804bf",
+          "bytes": 558292,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/crater-large.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/crater-small.glb",
+          "sha256": "467b1e926e58e1fb6ce13da50c4205282b7a5abe20d9fbb406fe4480ed3afb99",
+          "bytes": 558304,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/crater-small.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/fractured-shelf.glb",
+          "sha256": "9b3d25f01be4f252152571f1dac6c8ac459b0af54f7ca2a1c5b87e41823ebd6f",
+          "bytes": 334164,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/fractured-shelf.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/ground-sphere-low.glb",
+          "sha256": "897c791a26d5d90292e7ee3bc14f4d9a85eb97b3c77befccd68ace04c4b25452",
+          "bytes": 118268,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/ground-sphere-low.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/ground-sphere-medium.glb",
+          "sha256": "c4088b5afa60759dd6d7333057177cc0a4095eb04a5bd04bf2afc6ed2c1fa721",
+          "bytes": 140868,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/ground-sphere-medium.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/ground-sphere.glb",
+          "sha256": "9981f0b3ccd4aa2ff4a48eca1a7dadfc527436bdd71671da4d79ba1131d79f35",
+          "bytes": 230084,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/ground-sphere.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/kit-preview.png",
+          "sha256": "1440f3a183f8fe000924a5ed7606eb72c5331a329e32114be968b833f6103645",
+          "bytes": 1083366,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/kit-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/kit.blend",
+          "sha256": "7d8c64ed212716701165578c27509ead6184486616bd376a74cfa5f593a3aea1",
+          "bytes": 4336150,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/kit.blend",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/kit.json",
+          "sha256": "9ed732f1018573c3dc9a0a3e7727a1278fc0f4c39312d55dc37732f89c2b43ac",
+          "bytes": 15827332,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/kit.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/mineral-seam.glb",
+          "sha256": "e48c4eb944b087fa7922519b84cee6ce0b52ed32519b10a15f4e11af5d9ed284",
+          "bytes": 324992,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/mineral-seam.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/regional-preview.png",
+          "sha256": "c03a9cadcf05302bab5d07dea7054ab24b724c6a961c58614a41eda383ec40cf",
+          "bytes": 967929,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/regional-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/render-region.py",
+          "sha256": "60e6572d3258352ef9f4315a00e8dfae0fd2ec0b8ad0c776dad3411e47da8af9",
+          "bytes": 665,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/render-region.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/revision-notes.md",
+          "sha256": "fcd5d6e70cc887ae922daa40acf2be65c63629282564ba7ecaf35fa39fecd493",
+          "bytes": 1928,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/revision-notes.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-0-albedo.png",
+          "sha256": "5d6f1983c05e0821c6ed6718e855ffb8eb6277224f6f0431f2ad9d618dc40903",
+          "bytes": 73854,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-0-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-0-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-1-albedo.png",
+          "sha256": "ef179131084b7eae87255a504041c9860bcae0abec56304e87d6870b992b348f",
+          "bytes": 76706,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-1-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-1-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-2-albedo.png",
+          "sha256": "44c92f1a15e684fc72b6d00fd4d5b1d69e016a302b7d2931e265dc6d2249c0fd",
+          "bytes": 56363,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-2-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-2-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-3-albedo.png",
+          "sha256": "1acd3523e591a1fe43f53b207613575b2d3c01610f93b4f4e321a80e645deefd",
+          "bytes": 65998,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-3-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-3-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-4-albedo.png",
+          "sha256": "8fa29c53e57c1e6dd975c7a52b767ed2fa510b38378f649b20a9699001eddcf1",
+          "bytes": 66076,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-4-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-4-orm.png",
+          "sha256": "ede0b765e656b78786e29460a3a014a305c6474144f2753e7d0066468e40857b",
+          "bytes": 32245,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-4-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-5-albedo.png",
+          "sha256": "8d373ecec82709c95261119c2e69c70467ec44dedf7309da8e52d06a160dfc1d",
+          "bytes": 73634,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-5-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky-5-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky_reference_composition_r009.test.ts",
+          "sha256": "b6930979058179b00674e13ec00a848e38780249deac4288ec2ec0940b7b48e6",
+          "bytes": 3649,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky_reference_composition_r009.test.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky_reference_composition_r009.ts",
+          "sha256": "ade618237e5540554843bbcc5bfbae0e892064a620eab1ca2b5e1d8bbf7c6b4d",
+          "bytes": 4651,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky_reference_composition_r009.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky_reference_r009.tsconfig.json",
+          "sha256": "429e3accda2a64318d542c0ff60ed06da965fdafc1fa3393d82e758ae7530f62",
+          "bytes": 201,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky_reference_r009.tsconfig.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/rocky_reference_r009.vitest.config.ts",
+          "sha256": "433f316cab8b3400601e0d28149831e4e4c38a7c4ea9ee2f253611fe8bd5fcc1",
+          "bytes": 156,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/rocky_reference_r009.vitest.config.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r009/artifacts/validation.json",
+          "sha256": "eed5bab36f0ff3c896a756477fa6dd9084683859f90a098ab900e1b55d7bbc68",
+          "bytes": 6677,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; artifacts/validation.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r009/review.md",
+          "sha256": "157cdc9578f8d467850074058f9e1f7457c20b48181b9a425f6d079e5ba8214a",
+          "bytes": 3580,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; review.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r009/specification.json",
+          "sha256": "a8757cecfba74baf6953efb94b1ff6ab35999eb2241e2b1d53b82fbf5561ecc8",
+          "bytes": 1027,
+          "notes": "Exact candidate rocky-r009 immutable checkpoint; specification.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        }
+      ],
+      "review": {
+        "outcome": "fail",
+        "notes": "Macro coverage subpass; equal clean drilled holes and straight copper strips still need a bounded finish.",
+        "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+      }
+    },
+    {
+      "revision": 10,
+      "created_at": "2026-09-14T03:48:15.307399+00:00",
+      "stage": "in-progress",
+      "change": "Irregular native pit mouths and interrupted mineral fault",
+      "hypothesis": "Preserve r009 macro layout and materials while removing manufactured small-hole and strip cues.",
+      "covered_reference_ids": [
+        "planets--rocky-world"
+      ],
+      "evidence": [
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/angular-outcrops.glb",
+          "sha256": "485ad96dff497a3e695e09785baed429ca31f3e2e94e7ccd448c3cf34dfba727",
+          "bytes": 334172,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/angular-outcrops.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/attribute-audit/report.json",
+          "sha256": "a5c66b202fb9d20fddc43b86f0a5df676441eca80f9b77cb18aac26c2dbbc1d8",
+          "bytes": 24024,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/attribute-audit/report.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/attribute-audit/report.md",
+          "sha256": "731ffba3b174479b23f06950db300365bfa9c087e0c8375df1a996566e6ccc56",
+          "bytes": 5565,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/attribute-audit/report.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/battered-region-a.glb",
+          "sha256": "c5e09d5181a511acdfbbb7a5315eeb005ffb4094b452619b173863c2f8920b55",
+          "bytes": 1102088,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/battered-region-a.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/battered-region-b.glb",
+          "sha256": "fff247bd2803dc77a53456c0911493f0a275fa9d20a3da60f7f27397f4e697d2",
+          "bytes": 1098020,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/battered-region-b.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/build_rocky_native_kit_r010.py",
+          "sha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+          "bytes": 19405,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/build_rocky_native_kit_r010.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-back",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/corrected-seed38-angle2.png",
+          "sha256": "8d3e4eb6e00700ad589fbb650cb2380d7f7a5934b6ca0e8c7f612f0728c87a7f",
+          "bytes": 406011,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/corrected-seed38-angle2.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/corrected-seed38-capture.log",
+          "sha256": "7db0ef9cfe923e1dadeeb7c49130c3a0e9acd891d82392583d1383d8cae2d9b4",
+          "bytes": 2440,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/corrected-seed38-capture.log",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-context",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/corrected-seed38-reference-scale.png",
+          "sha256": "6afac1515a8509d853edbed581ed48f90cf336be437c9915e7abec13068c014b",
+          "bytes": 103671,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/corrected-seed38-reference-scale.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "capture-record",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/corrected-seed38.json",
+          "sha256": "6fe2b932bfed7a416c231063a401c6dac481b26ae57edcfb543d40994b0d5b33",
+          "bytes": 2272,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/corrected-seed38.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "runtime-close",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/corrected-seed38.png",
+          "sha256": "923394c74fa8ee5829703930b541baedf3f75db31b90d42042d624b50c3bb10a",
+          "bytes": 430148,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/corrected-seed38.png",
+          "capture_context": "Actual isolated Babylon/SwiftShader appearance capture; see same-revision saved capture JSON. No hardware timing or owner acceptance.",
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/crater-broken.glb",
+          "sha256": "8bfa00fb960db3250d7983d5432b2d21bbe765c7774a2d937bc58d15706b7348",
+          "bytes": 558296,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/crater-broken.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/crater-large.glb",
+          "sha256": "cfbee9a340838a657c709b51a2455885378948ce7cdf57347bb6b6cc651ec9d1",
+          "bytes": 558292,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/crater-large.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/crater-small.glb",
+          "sha256": "527648b433cb9bf37165dc90dc0b68a21768ca41eb8288d53e492e3a152c845d",
+          "bytes": 558304,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/crater-small.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/fractured-shelf.glb",
+          "sha256": "887a72e1adaed8422a561472d096a18a50662b89d4955697bf0bde36be479e36",
+          "bytes": 334164,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/fractured-shelf.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/ground-sphere-low.glb",
+          "sha256": "897c791a26d5d90292e7ee3bc14f4d9a85eb97b3c77befccd68ace04c4b25452",
+          "bytes": 118268,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/ground-sphere-low.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/ground-sphere-medium.glb",
+          "sha256": "c4088b5afa60759dd6d7333057177cc0a4095eb04a5bd04bf2afc6ed2c1fa721",
+          "bytes": 140868,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/ground-sphere-medium.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/ground-sphere.glb",
+          "sha256": "9981f0b3ccd4aa2ff4a48eca1a7dadfc527436bdd71671da4d79ba1131d79f35",
+          "bytes": 230084,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/ground-sphere.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/kit-preview.png",
+          "sha256": "2b93da6241ea45dcb255aaccf672b7975540f3f31ace6aa990e1b3d66e6696c6",
+          "bytes": 1085967,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/kit-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-source",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/kit.blend",
+          "sha256": "9bfd3b388e68dbb68b31f37c1045e16c3d1198c313556bc1b1debf2c36238722",
+          "bytes": 4420398,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/kit.blend",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/kit.json",
+          "sha256": "fdb5964a2c4dcde7889fd821a0b4625664eae477be62130c7ea99794a5d98de2",
+          "bytes": 16268031,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/kit.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "glb",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/mineral-seam.glb",
+          "sha256": "4c24fbb106fbac136d27ced14c38e459630ff38d3f4da397307c5defb8adbdec",
+          "bytes": 212308,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/mineral-seam.glb",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "blender-close",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/regional-preview.png",
+          "sha256": "5677ead70b3ea3af18c4dfce657d48f07021e27faf34d7bb2792a507198d1cda",
+          "bytes": 971201,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/regional-preview.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/render-region.py",
+          "sha256": "60e6572d3258352ef9f4315a00e8dfae0fd2ec0b8ad0c776dad3411e47da8af9",
+          "bytes": 665,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/render-region.py",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/revision-notes.md",
+          "sha256": "bd5041605b2737c822c92c6c812fb7e0aa2d4f3db64e2138535356d5c850a842",
+          "bytes": 1137,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/revision-notes.md",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-0-albedo.png",
+          "sha256": "5d6f1983c05e0821c6ed6718e855ffb8eb6277224f6f0431f2ad9d618dc40903",
+          "bytes": 73854,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-0-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-0-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-1-albedo.png",
+          "sha256": "ef179131084b7eae87255a504041c9860bcae0abec56304e87d6870b992b348f",
+          "bytes": 76706,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-1-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-1-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-2-albedo.png",
+          "sha256": "44c92f1a15e684fc72b6d00fd4d5b1d69e016a302b7d2931e265dc6d2249c0fd",
+          "bytes": 56363,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-2-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-2-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-3-albedo.png",
+          "sha256": "1acd3523e591a1fe43f53b207613575b2d3c01610f93b4f4e321a80e645deefd",
+          "bytes": 65998,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-3-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-3-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-4-albedo.png",
+          "sha256": "8fa29c53e57c1e6dd975c7a52b767ed2fa510b38378f649b20a9699001eddcf1",
+          "bytes": 66076,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-4-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-4-orm.png",
+          "sha256": "ede0b765e656b78786e29460a3a014a305c6474144f2753e7d0066468e40857b",
+          "bytes": 32245,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-4-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-5-albedo.png",
+          "sha256": "8d373ecec82709c95261119c2e69c70467ec44dedf7309da8e52d06a160dfc1d",
+          "bytes": 73634,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-5-albedo.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "material-debug",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky-5-orm.png",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky_reference_composition_r010.test.ts",
+          "sha256": "c5e7e3382666e1e8638de462e8c98f68388ac2beebe64b46b740bcc1736868ad",
+          "bytes": 3649,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky_reference_composition_r010.test.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky_reference_composition_r010.ts",
+          "sha256": "ade618237e5540554843bbcc5bfbae0e892064a620eab1ca2b5e1d8bbf7c6b4d",
+          "bytes": 4651,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky_reference_composition_r010.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky_reference_r010.tsconfig.json",
+          "sha256": "219bbabf54bcdbd3416fb1427df278dc635d84c9a9780c487bdd47d712f5abb1",
+          "bytes": 201,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky_reference_r010.tsconfig.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "recipe",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/rocky_reference_r010.vitest.config.ts",
+          "sha256": "cbc72182a08b9f0d2ad90f54bf97c15f9736791cf759e0a66e496856128c8def",
+          "bytes": 156,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/rocky_reference_r010.vitest.config.ts",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r010/artifacts/validation.json",
+          "sha256": "226df3c4546a921136fa8f99eb58aa3ac0e5e534a204bfcb2e3a7db6095648a7",
+          "bytes": 6677,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; artifacts/validation.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r010/specification.json",
+          "sha256": "662520664c2772200fabf3e0be330c369376374a64e878f8ea71b6bd67653cb7",
+          "bytes": 1028,
+          "notes": "Exact candidate rocky-r010 immutable checkpoint; specification.json",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:48:15.307399+00:00"
+        },
+        {
+          "role": "validation",
+          "path": "designs/environment.planet.rocky/revisions/r010/working-visual-feedback.md",
+          "sha256": "a032320fe6e617e317110f49a946ec5f78544c32292f05c6bcb61b6a266934c4",
+          "bytes": 1952,
+          "notes": "Independent Astra scoped working visual pass; not owner approval, hardware acceptance or publication.",
+          "capture_context": null,
+          "recorded_at": "2026-09-14T03:52:29.083398+00:00"
+        }
+      ],
+      "review": null
+    }
+  ]
+}

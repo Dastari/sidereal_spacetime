@@ -104,6 +104,7 @@ it("accepted consumption advances the sample clock even with unchanged motion an
     .spyOn(systemSpace, "stepSystemSpace")
     .mockImplementationOnce((bodies) => ({
       bodies,
+      trace: [],
       changedBodyIds: [],
       commands: [],
       impacts: 0,
