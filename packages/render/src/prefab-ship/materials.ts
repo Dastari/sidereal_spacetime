@@ -39,8 +39,12 @@ export function slotOfMaterialName(name: string | undefined): ShipKitSlot | null
   return isShipKitSlot(base) ? base : null;
 }
 
-/** Emissive intensity for a theme strength (Blender emission strength 6-9 -> 1.5-2.25). */
-export const emissiveIntensity = (strength: number) => Math.min(2.5, strength / 4);
+/**
+ * Emissive intensity for a theme strength (Blender emission strength 6-9 -> 1.0-1.3). Kept low so
+ * ACES tone mapping leaves the slot colour saturated instead of clipping to white; the glow
+ * layer supplies the bloom.
+ */
+export const emissiveIntensity = (strength: number) => Math.min(1.3, strength / 6.5);
 
 /** The pooled material for a theme slot. */
 export function slotMaterial(scene: Scene, theme: ShipThemeId, slot: ShipKitSlot): PBRMaterial {

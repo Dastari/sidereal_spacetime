@@ -43,8 +43,9 @@ export async function loadPrefabShipPresentation(
     catalog,
     view: "deck",
     parent: shipRoot,
-    // Component GLBs are not published to the game yet (SHIPS-COMPONENTS).
-    standinComponents: true,
+    // SHIPS-COMPONENTS r003 runtime GLBs (published by scripts/prepare_app.py). A missing file
+    // still falls back to the procedural stand-in for that component.
+    componentsBaseUrl: "/assets/ship-components/r003/",
     roomLights: 2,
   });
   const fill = new HemisphericLight("prefab-ship-fill", new Vector3(0.2, 1, -0.3), scene);
