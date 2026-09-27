@@ -68,6 +68,8 @@ export interface CrewArmorPreset {
   colourway: string;
   headPreset: string;
   undersuit?: Partial<Record<"suit_primary" | "suit_secondary", string>>;
+  /** CHAR-HEADS node ids per body type (heads, hair, hats, glasses, helmets) plus skin/hair tints. */
+  heads?: { male: string[]; female: string[]; skin: string; hair: string; source: string };
   parts: Partial<Record<CrewArmorSlot, string>>;
 }
 export type CrewArmorLoadout = Partial<
