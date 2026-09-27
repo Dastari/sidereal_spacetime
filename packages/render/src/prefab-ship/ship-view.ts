@@ -250,12 +250,23 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
    * own materials and stay separate (a handful of draws).
    */
   function batchBuilt(out: Built) {
-    const groups = new Map<string, MergeGroup & { tag: DressView; slot: ShipKitSlot; role: MeshRole; glb: number; ts: number }>();
-    const group = (tag: DressView, slot: ShipKitSlot, role: MeshRole) => {
-      const key = `${tag}|${slot}|${role}`;
-      let g = groups.get(key);
-      if (!g) groups.set(key, (g = { key, tag, slot, role, positions: [], normals: [], indices: [], glb: 0, ts: 0 }));
-      return g;
+    // One mesh per (presentation, material): "both"-tagged geometry is baked into the flight and
+    // the deck mesh alike, so each view draws once per material instead of once per tag x slot x role.
+    type Group = MergeGroup & { view: "flight" | "deck"; slot: ShipKitSlot; roles: Map<MeshRole, number>; glb: number; ts: number };
+    const groups = new Map<string, Group>();
+    const views = (tag: DressView): ("flight" | "deck")[] => (tag === "both" ? ["flight", "deck"] : [tag]);
+    const add = (tag: DressView, slot: ShipKitSlot, role: MeshRole, geo: NonNullable<ReturnType<typeof meshGeometry>>, m: ArrayLike<number>, glb: boolean) => {
+      const mat = roleSlotMaterial(scene, theme, slot, role).name;
+      for (const view of views(tag)) {
+        const key = `${view}|${mat}`;
+        let g = groups.get(key);
+        if (!g) groups.set(key, (g = { key, view, slot, roles: new Map(), positions: [], normals: [], indices: [], glb: 0, ts: 0 }));
+        appendTransformed(g, geo.positions, geo.normals, geo.indices, m);
+        const tris = geo.indices.length / 3;
+        g.roles.set(role, (g.roles.get(role) ?? 0) + tris);
+        if (glb) g.glb += tris;
+        else g.ts += tris;
+      }
     };
     for (const e of out.instanced) {
       const geo = meshGeometry(e.mesh);
@@ -263,11 +274,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       if (geo)
         for (const tag of ["both", "flight", "deck"] as const) {
           const m = e.matrices[tag];
-          for (let i = 0; i < m.length; i += 16) {
-            const g = group(tag, e.slot ?? "primary", role);
-            appendTransformed(g, geo.positions, geo.normals, geo.indices, m.slice(i, i + 16));
-            g.glb += geo.indices.length / 3;
-          }
+          for (let i = 0; i < m.length; i += 16) add(tag, e.slot ?? "primary", role, geo, m.slice(i, i + 16), true);
         }
       e.mesh.dispose();
     }
@@ -280,21 +287,18 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       }
       const geo = meshGeometry(st.mesh);
       const role = ((st.mesh.metadata as { role?: MeshRole } | null)?.role ?? "hull") as MeshRole;
-      if (geo) {
-        const g = group(st.tag, st.slot, role);
-        appendTransformed(g, geo.positions, geo.normals, geo.indices, localToParent(st.mesh));
-        g.ts += geo.indices.length / 3;
-      }
+      if (geo) add(st.tag, st.slot, role, geo, localToParent(st.mesh), false);
       st.mesh.dispose();
     }
     for (const g of groups.values()) {
       if (!g.indices.length) continue;
+      const role = [...g.roles].sort((a, b) => b[1] - a[1])[0][0];
       const mesh = makeMesh(scene, `${out.dressed.id}:batch:${g.key}`, frame, g);
-      mesh.material = roleSlotMaterial(scene, theme, g.slot, g.role);
-      setMeshRole(mesh, g.role);
+      mesh.material = roleSlotMaterial(scene, theme, g.slot, role);
+      setMeshRole(mesh, role);
       // No freezeWorldMatrix: the ship root moves in game, and a frozen world matrix would
       // leave the hull at its spawn pose. Geometry is baked relative to the parent frame.
-      kept.push({ mesh, tag: g.tag, slot: g.slot, triangles: g.indices.length / 3, kind: "generated", origin: { glb: g.glb, ts: g.ts } });
+      kept.push({ mesh, tag: g.view, slot: g.slot, triangles: g.indices.length / 3, kind: "generated", origin: { glb: g.glb, ts: g.ts } });
     }
     out.statics = kept;
   }

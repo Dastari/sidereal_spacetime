@@ -97,6 +97,7 @@ async function main() {
           .reduce<Record<string, number>>((acc, m) => ((acc[m.name.split(/[:_.\-\d]/)[0] || m.name] = (acc[m.name.split(/[:_.\-\d]/)[0] || m.name] ?? 0) + 1), acc), {}),
       ).sort((a, b) => b[1] - a[1]).slice(0, 12),
       activeMeshes: scene!.getActiveMeshes().length,
+      otherNames: scene!.getActiveMeshes().data.slice(0, scene!.getActiveMeshes().length).filter((m) => !ship || !m.isDescendantOf(ship)).map((m) => `${m.name}<${m.parent?.name ?? ""}`).slice(0, 80),
       environmentIntensity: scene!.environmentIntensity,
       exposure: scene!.imageProcessingConfiguration.exposure,
     },

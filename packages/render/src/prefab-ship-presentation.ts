@@ -27,6 +27,8 @@ const GAME_MAX_METALLIC = 0.2;
  * interior floors/walls ~0.85, so rooms read lit rather than as dark voids. */
 const GAME_SHIP_ENVIRONMENT = 2.2;
 const GAME_INTERIOR_ENVIRONMENT = 3.0;
+/** Bloom strength of ship emissives (emit slots keep saturated colour; the glow carries the halo). */
+const GAME_SHIP_GLOW = 0.7;
 
 /** A trusted prefab construction document carries its canonical grammar source
  * under `prefab` (admitted by readConstructionDraft). Returns undefined for any
@@ -55,8 +57,14 @@ export async function loadPrefabShipPresentation(
     view: "deck",
     parent: shipRoot,
   });
-  // Bloom: the game's glow layer only includes what is registered with it.
-  const glow = scene.effectLayers.find((l): l is GlowLayer => l instanceof GlowLayer);
+  // The native construction loader also builds boundary guide meshes for the same layout; the
+  // dressed view replaces them visually (walking and collision stay authoritative), so hide them.
+  for (const mesh of shipRoot.getChildMeshes())
+    if (mesh.name.startsWith("construction-boundary-guide") && !mesh.isDescendantOf(view.root)) mesh.setEnabled(false);
+  // Bloom: a ship-owned glow layer over the ship's emissive meshes only (light strips, canopy
+  // edges, exhaust). The game's instrument glow layer stays untouched; one grading path.
+  const glow = new GlowLayer("prefab-ship-glow", scene, { mainTextureFixedSize: 512, blurKernelSize: 40 });
+  glow.intensity = GAME_SHIP_GLOW;
   const fill = new HemisphericLight("prefab-ship-fill", new Vector3(0.2, 1, -0.3), scene);
   fill.intensity = 0.85;
   fill.diffuse = new Color3(0.92, 0.94, 1);
@@ -100,7 +108,7 @@ export async function loadPrefabShipPresentation(
     },
     metrics: () => view.metrics(),
     dispose() {
-      if (glow) for (const mesh of glowing) glow.removeIncludedOnlyMesh(mesh as Mesh);
+      glow.dispose();
       fill.dispose();
       view.dispose();
     },

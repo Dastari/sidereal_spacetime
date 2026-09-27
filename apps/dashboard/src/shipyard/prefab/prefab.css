@@ -1657,3 +1657,25 @@ section.prefab-preview > .prefab-preview-status:only-child {
 .pf-right .layout-section dl {
   margin-bottom: 4px;
 }
+
+/* Blender kit modules a tile is dressed with (kit r002 names). */
+.pf-modules h3 {
+  margin: 10px 0 4px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--layout-muted, #8b98a8);
+}
+.pf-modules ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 2px;
+}
+.pf-modules code {
+  font-size: 11px;
+  color: #cfe3ff;
+  word-break: break-all;
+}
