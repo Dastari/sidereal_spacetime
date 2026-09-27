@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/content",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "exports": {
@@ -65,7 +65,8 @@
     "./wayfarer-current-starter": "./src/wayfarer-current-starter.ts",
     "./wayfarer-flight-definition": "./src/wayfarer-flight-definition.ts",
     "./interior": "./src/interior.ts",
-    "./wayfarer-rebuild-removals.json": "./src/wayfarer-rebuild-removals.json"
+    "./wayfarer-rebuild-removals.json": "./src/wayfarer-rebuild-removals.json",
+    "./hull-paint": "./src/hull-paint.ts"
   },
   "dependencies": {}
 }

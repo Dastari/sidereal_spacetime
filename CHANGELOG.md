@@ -1,5 +1,18 @@
 # Changelog
 
+## Dashboard/render 0.3.0, content/sim 0.2.0 — component paint, 2026-09-15
+
+Primary and secondary paint controls for placed hull components, engines and thrusters. Optional per-placement colours survive drafts, copies and exports without changing native geometry, snapping or physical state. Native atlas/material masks preserve surface maps, glazing and emissive details. Reset restores the authored appearance; painted copies share immutable meshes/textures and release their own material bindings.
+
+
+## 2026-09-15 — Genesis reviewed native planets (dashboard/render 0.2.1)
+
+Genesis now defaults to all 28 reviewed Blender planet and moon variants, including selective transparent ice shards. Selection and seeded composition use validated worker-owned assets, shared PBR materials, precompiled retained LODs and ready-only replacement. Preserved the procedural editor as a separate mode. Added exact catalog/provenance, lossless bounded payload packaging and worker/NullEngine lifecycle tests.
+
+## Dashboard 0.2.0 — native armor editor review, 2026-09-15
+
+The normal Shipyard can open an editable Wayfarer using the exact reviewed r005 backed armor, with all 76 native variants in the Hull palette. New-design loading preserves the current draft; pieces use normal selection, transform, measurement, undo and save tools. Dashboard publication includes the hash-pinned native GLB; canvas-ui 0.1.2 declares the matching render 0.2.0 workspace dependency. Game installation remains unqualified and is kept separate from editor review.
+
 ## Unreleased — Wayfarer exterior armor native r004
 
 Added separate Blender-authored exterior armor with broad paired bays, recessed cassettes, wrapped ribs and fitted bow returns. Fine surface details use shared color, normal and roughness maps. The 46-model final-03 family passes native checks and independent comparison of 14 native and 8 exact game-renderer images. Sources, compressed exact exports, validation and review evidence are retained in the art library. This is a review candidate; the installed ship and physical interfaces are unchanged.

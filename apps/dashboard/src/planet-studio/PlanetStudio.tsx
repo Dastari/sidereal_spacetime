@@ -1,3 +1,4 @@
+import { ReviewedPlanetStudio } from "./ReviewedPlanetStudio";
 import { useEffect, useRef, useState } from "react";
 import {
   PLANET_STYLES,
@@ -17,7 +18,7 @@ const ranges = [
   ["cloudSpeed", "Weather drift", 0.1, 0.001],
   ["emission", "Deposit radiance", 4, 0.05],
 ] as const;
-export default function PlanetStudio() {
+function ProceduralPlanetStudio() {
   const [recipe, setRecipe] = useState<PlanetRecipe>(() => planetRecipe());
   const [gallery, setGallery] = useState(false);
   const [status, setStatus] = useState("Generating surface…");
@@ -264,5 +265,34 @@ export default function PlanetStudio() {
         </p>
       </aside>
     </main>
+  );
+}
+
+export default function PlanetStudio() {
+  const [mode, setMode] = useState<"reviewed" | "procedural">("reviewed");
+  return (
+    <div className="planet-studio-modes">
+      <nav aria-label="Planet rendering mode">
+        <button
+          type="button"
+          aria-pressed={mode === "reviewed"}
+          onClick={() => setMode("reviewed")}
+        >
+          Reviewed planets
+        </button>
+        <button
+          type="button"
+          aria-pressed={mode === "procedural"}
+          onClick={() => setMode("procedural")}
+        >
+          Procedural editor
+        </button>
+      </nav>
+      {mode === "reviewed" ? (
+        <ReviewedPlanetStudio />
+      ) : (
+        <ProceduralPlanetStudio />
+      )}
+    </div>
   );
 }

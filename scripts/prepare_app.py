@@ -2,6 +2,7 @@
 from pathlib import Path
 import argparse
 import fnmatch
+import json
 import re
 import shutil
 
@@ -11,6 +12,17 @@ PUBLIC_HELP = {
     "client": {},
     "dashboard": {"docs/public/shipyard.md": "help/shipyard.md"},
 }
+EDITOR_NATIVE_ASSETS = {
+    "assets/art-library/framed-wayfarer/r005/library-02/hull.glb":
+        "assets/shipyard/armor-r005/hull.glb",
+}
+# Only reviewed per-model palette PNGs are public, never the source manifest/renders.
+ARMOR_THUMBNAILS = "assets/art-library/framed-wayfarer/r005/thumbnails-r001"
+for thumbnail in json.loads((ROOT / ARMOR_THUMBNAILS / "manifest.json").read_text())["assets"]:
+    filename = thumbnail["file"]
+    if not re.fullmatch(r"armor-block-[0-9a-f]{20}\.png", filename):
+        raise ValueError("Unexpected native armor thumbnail filename")
+    EDITOR_NATIVE_ASSETS[f"{ARMOR_THUMBNAILS}/{filename}"] = f"assets/shipyard/armor-r005/thumbnails/{filename}"
 # Publication is explicit. Only these `assets/runtime` entries (files or whole
 # directories) are copied into an app's public tree; anything else written into
 # `assets/runtime` (review packages, preview builds, rebuild experiments) stays
@@ -1438,7 +1450,17 @@ def prepare(app: str, root: Path = ROOT) -> None:
     elif public_assets.is_dir():
         shutil.rmtree(public_assets)
     _copy_published(root / "assets/runtime", public_assets)
+    if app == "dashboard":
+        for source, destination in EDITOR_NATIVE_ASSETS.items():
+            target = public / destination
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(root / source, target)
     check_references(public_assets)
+    # Shared reviewed celestial payloads are independently packaged for each app.
+    for family in ("reviewed-planets", "reviewed-stars"):
+        source = root / "assets/reviewed-celestials" / family
+        if source.is_dir():
+            shutil.copytree(source, public / family, dirs_exist_ok=True)
     for source, destination in PUBLIC_HELP[app].items():
         target = public / destination
         target.parent.mkdir(parents=True, exist_ok=True)

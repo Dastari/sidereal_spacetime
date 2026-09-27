@@ -1,4 +1,4 @@
-import type {NativePlanetKit} from '../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 import {globeAnchor,nativeAssembly,seeded,tangent,type Vec} from './native_reference_assembly';
 
 const BANKS=['cloud-swept-bank','cloud-swept-bank','cloud-broken-wisp','cloud-swept-bank','cloud-towering-bank'] as const;

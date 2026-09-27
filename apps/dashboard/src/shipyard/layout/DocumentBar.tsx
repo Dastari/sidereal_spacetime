@@ -2,6 +2,7 @@ import type { LayoutDocument } from "@sidereal/content/ship-layout";
 import { Download, Plus, Redo2, Save, Ship, Undo2, Upload } from "lucide-react";
 import { useRef, useState } from "react";
 import { PublicationDialog } from "./PublicationDialog";
+import { hasArmorReviewParts } from "./armor-review";
 import type { useLayout } from "./useLayout";
 export function DocumentBar({
   editor,
@@ -58,7 +59,12 @@ export function DocumentBar({
         </button>
         <button
           className="layout-primary"
-          disabled={blocked}
+          disabled={blocked || hasArmorReviewParts(editor.doc)}
+          title={
+            hasArmorReviewParts(editor.doc)
+              ? "This armor kit is available for editor review. Game installation is not yet qualified."
+              : undefined
+          }
           onClick={() => setPublishing(true)}
         >
           Publish

@@ -1,4 +1,4 @@
-import type {NativePlanetKit} from '../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 import type {Vec} from './native_reference_assembly';
 /** Fixed native gas geometry: no LOD input or threshold rebuild. glTF UVs and
  * exported vertex normals are preserved with one rigid Z-up to Y-up rotation. */

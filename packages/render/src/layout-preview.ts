@@ -1,3 +1,4 @@
+import { createHullPaintBinding } from "./hull-paint";
 import { categoryMeshRole, setMeshRole } from "./mesh-roles";
 /** Disposable local design preview. Proxies never replace approved asset exports or authority. */
 import { Engine } from "@babylonjs/core/Engines/engine";
@@ -219,8 +220,11 @@ export function createLayoutPreview(
         );
         node.rotation.y = (f.quarterTurns * Math.PI) / 2;
         node.metadata = { draftPlacementId: f.id };
+        const painter = createHullPaintBinding(node, asset, f.paint);
         for (const source of sources) {
-          const mesh = source.createInstance("native-draft-" + f.id);
+          const mesh = painter
+            ? painter.clone(source, "native-draft-" + f.id)
+            : source.createInstance("native-draft-" + f.id);
           mesh.metadata = {
             ...source.metadata,
             partId: f.id,

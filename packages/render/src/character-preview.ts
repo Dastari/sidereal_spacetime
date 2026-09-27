@@ -1,3 +1,4 @@
+import { withSceneCoordinateContext } from "./scene-coordinate-context";
 import { characterPresentationStatus } from "./character-preview-state";
 import { MODULAR_CREW_ASSET_URL } from "@sidereal/content/character-components";
 import { Engine } from "@babylonjs/core/Engines/engine";
@@ -40,6 +41,14 @@ export function createCharacterPreview(
     onInvalidate?: () => void;
   } = {},
 ) {
+  return withSceneCoordinateContext(undefined, () =>
+    buildCharacterPreview(options),
+  );
+}
+
+function buildCharacterPreview(
+  options: NonNullable<Parameters<typeof createCharacterPreview>[0]>,
+) {
   const canvas = document.createElement("canvas");
   canvas.width = 360;
   canvas.height = 560;
@@ -58,6 +67,8 @@ export function createCharacterPreview(
     preserveDrawingBuffer: true,
     stencil: false,
     powerPreference: "low-power",
+    // Matrix precision is process-wide, even though this portrait has its own engine.
+    useHighPrecisionMatrix: true,
   });
   engine.setHardwareScalingLevel(1);
   const scene = new Scene(engine);
@@ -142,8 +153,10 @@ export function createCharacterPreview(
     gear?.dispose();
     crew?.dispose();
     disc.dispose();
-    scene.dispose();
-    engine.dispose();
+    withSceneCoordinateContext(scene, () => {
+      scene.dispose();
+      engine.dispose();
+    });
   }
   function subjects() {
     disc.setSubjects(placement.getChildMeshes());
@@ -370,17 +383,19 @@ export function createCharacterPreview(
         : undefined;
       if (poseIntent)
         pose?.update(poseIntent, Math.min(0.1, Math.max(0, t - previousFrame)));
-      engine.beginFrame();
-      frameEquipment();
-      scene.render();
-      // A freshly loaded/rotated hand item acquires its final socket transform
-      // during animation evaluation. Fit once more so side-on rifles never
-      // clip the portrait, including the final static reduced-motion frame.
-      if (frameEquipment()) {
-        if (poseIntent) pose?.update(poseIntent, 0);
+      withSceneCoordinateContext(scene, () => {
+        engine.beginFrame();
+        frameEquipment();
         scene.render();
-      }
-      engine.endFrame();
+        // A freshly loaded/rotated hand item acquires its final socket transform
+        // during animation evaluation. Fit once more so side-on rifles never
+        // clip the portrait, including the final static reduced-motion frame.
+        if (frameEquipment()) {
+          if (poseIntent) pose?.update(poseIntent, 0);
+          scene.render();
+        }
+        engine.endFrame();
+      });
       previousFrame = t;
       previousReducedMotion = reducedMotion;
       // A first visible frame can arrive before HDR/GLB shader compilation.

@@ -73,7 +73,8 @@
     "lint:all": "eslint \"apps/**/*.{ts,tsx}\" \"packages/**/*.{ts,tsx}\"",
     "test:python": "python3 scripts/run_python_tests.py",
     "art:character-components": "python3 scripts/character_components/run.py",
-    "art:study:layered": "python3 scripts/art_library/run_hull_layered_study.py"
+    "art:study:layered": "python3 scripts/art_library/run_hull_layered_study.py",
+    "agent-mail": "python3 scripts/agent_mail.py"
   },
   "devDependencies": {
     "@types/node": "26.5.0",

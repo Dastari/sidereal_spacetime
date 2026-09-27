@@ -38,7 +38,7 @@ export function createRenderEngine(
 ) {
   return chooseRenderEngine(requested, {
     webgl: () =>
-      new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true }),
+      new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true, useLargeWorldRendering: true }),
     webgpu: async () =>
       (await import("./webgpu-backend")).createWebGPUEngine(canvas),
   });

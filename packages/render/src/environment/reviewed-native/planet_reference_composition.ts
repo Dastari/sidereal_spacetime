@@ -1,5 +1,5 @@
 import {deformedFaceNormals,deformedNormalAt} from './native_deformation_normals';
-import type {NativePlanetKit} from '../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 type Vec=[number,number,number];
 const unit=(v:Vec):Vec=>{const n=Math.hypot(...v);return v.map(x=>x/n) as Vec;};
 const cross=(a:Vec,b:Vec):Vec=>[a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];

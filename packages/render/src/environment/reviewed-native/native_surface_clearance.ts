@@ -1,4 +1,4 @@
-import type {NativePlanetKit} from '../native-planet-composition';
+import type {ReviewedComposerInput as NativePlanetKit} from './reviewed-composer-input';
 type Vec=[number,number,number];
 /** Read-only spatial index of native upward faces. It supplies a conservative
  * lower supporting surface beneath authored cavities without new visual solids. */

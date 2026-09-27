@@ -3,7 +3,7 @@ import {Color3}from'@babylonjs/core/Maths/math.color';
 import type{Scene}from'@babylonjs/core/scene';
 import{TransmissionHelper,type ITransmissionHelperHolder}from'@babylonjs/loaders/glTF/2.0/Extensions/transmissionHelper';
 import{PBRMaterialLoadingAdapter}from'@babylonjs/loaders/glTF/2.0/pbrMaterialLoadingAdapter';
-export type ReferenceTransmissionRole={transmissionFactor?:number;thicknessFactor?:number;attenuationColor?:number[];attenuationDistance?:number};
+export type ReferenceTransmissionRole={transmissionFactor?:number;thicknessFactor?:number;attenuationColor?:readonly number[];attenuationDistance?:number};
 /** Match the installed glTF transmission/volume adapter. Source alpha stays
  * independent: transmission is not an opacity fade or an emissive replacement. */
 export function applyReferenceTransmission(material:PBRMaterial,role:ReferenceTransmissionRole){

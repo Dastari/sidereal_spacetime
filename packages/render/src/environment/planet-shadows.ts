@@ -120,7 +120,7 @@ export function createPlanetShadows(scene: Scene) {
               Vector3.DistanceSquared(camera, a.node.getAbsolutePosition()) -
               Vector3.DistanceSquared(camera, b.node.getAbsolutePosition()),
           )[0];
-      if (!target || !primary || !primary.isEnabled()) {
+      if (!scene.lightsEnabled || !scene.shadowsEnabled || !target || !primary || !primary.isEnabled()) {
         if (selected) release();
         return;
       }

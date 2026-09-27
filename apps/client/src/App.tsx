@@ -1014,6 +1014,7 @@ export default function App({
         if (disposed) return;
         setError(String(e));
         setLoadFailure(String(e));
+        console.error("Renderer initialization failed", e);
         setRendererFailed(true);
       });
     return () => {
