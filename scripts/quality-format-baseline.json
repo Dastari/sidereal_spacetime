@@ -101,7 +101,6 @@
   "packages/render/src/environment/reviewed-native/volcanic_moon_reference_composition_r004.ts": "44e85d6e55692cfe5996f8abf7396566859d5bc04f06f2b8586d09042be6f62c",
   "packages/render/src/environment/reviewed-native/volcanic_reference_composition_r023.ts": "2d6fb9456388cd7953c4f83506d2123684823cbd7af0384574f5f9fb304f957e",
   "packages/render/src/environment/reviewed-native-planet-catalog.ts": "69640c335eb171fde42bbaffc3c170d1f148e3f208134edc550a0280c0642e64",
-  "packages/render/src/environment/reviewed-native-planet-encoding.test.ts": "81669667567aeb534d8fdc80b3d653258970ba3540ea9fc15d11d094dc213c2d",
   "packages/render/src/environment/reviewed-native-planet-encoding.ts": "fe34d2af68559bffec64aa11700aa962aa565b4334897da9ae38a89370493fc9",
   "packages/render/src/equipment/anchors.test.ts": "c09320a102df4de5957afbbcaf53f3299e45e20dc3235d8eaa314e51ab9e2713",
   "packages/render/src/equipment/anchors.ts": "66613c03fd21c47a945e4a314d0cce378e4ca7756192e615fa2276e1ba97acea",
