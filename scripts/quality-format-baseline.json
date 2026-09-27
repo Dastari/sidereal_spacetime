@@ -297,5 +297,7 @@
   "packages/content/src/crew-items-r001-armed.json": "2c2ec2a71fd1be4faaec353a79491cd9ce4c9cb37cca0eb100c2658002b2927b",
   "packages/content/src/crew-items-r001-holds.json": "b43c3749aeda4c9c77e0773296990ddf6a84a7ab310d3e451c650afb6c1c2fea",
   "packages/content/src/crew-items-r001.json": "74252e229537b3d299b8c9f3a8c888e3b17d4612ac3fdb12b2100b1cb61fdeee",
-  "scripts/art_library/crew_items_reference_crops.json": "4f981ca82605ebe35caca94d8993c5d3e362c0cc62025a9c38a186d06cdaaf1e"
+  "scripts/art_library/crew_items_reference_crops.json": "4f981ca82605ebe35caca94d8993c5d3e362c0cc62025a9c38a186d06cdaaf1e",
+  "packages/content/src/crew-armor.json": "74df80683f0867f41c7a97c11c67f2661f83ea49146374773f03fba2cebfb6eb",
+  "scripts/art_library/crew_armor_body.json": "68c7f8f028458dbab6392b83f1488839dbc944c68929bb197f18127900676e46"
 }
