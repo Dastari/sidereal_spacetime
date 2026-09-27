@@ -1,9 +1,0 @@
-# Crystal13 — global visible-emitter coverage
-
-2026-09-14. Read-only diagnosis found Crystal12 optimizes bridge-to-bridge separation without including the existing40 emitters in its coverage objective. Fourteen well-separated bridges therefore do not prevent a large blank central cap. The maximum sampled angular empty cap over4096 global directions is34.87°,34.49°,38.94° for seeds1,38,91 respectively. Source surface support is present; there was no missing batch or camera-specific clipping defect.
-
-Composer13 keeps exact native Crystal9 kit, all materials/textures, four heroes/light identities,36 existing medium clusters, native regions and fractured outcrop transforms. It creates24 bridge clusters, now selecting largest angular gaps relative to the final visible emitter population from1536 globally seeded candidate directions. Region cavity exclusion remains. A read-only radial native-triangle surface index checks support against final terrain and excludes buried existing tips from coverage scoring. Random streams for all prior placements remain unchanged. No camera direction or reference-angle anchor enters the planner.
-
-Three tests and focused TypeScript pass: sampled global visible-tip coverage on3 seeds, exact nonbridge positions/normals/UV/ranges andLOD buffers, and NullEngine radial visibility of all24 bridge tips above final native terrain. Maximum angular holes become23.62°,22.75°,21.96°; all64 tips are radially exposed in these cases. Regression bound is26° on the sampled directions, not a mathematical continuous-sphere proof or all-seed guarantee. Whole geometry147,754 triangles; same9 material roles. Native kit/source unchanged.
-
-Actual views still need root capture and independent Astra comparison. Radial tip visibility does not prove every broad crystal footprint or every camera sightline is unobstructed. No native art/palette change, shared worker/viewer edit, hardware timing or visual acceptance claimed.

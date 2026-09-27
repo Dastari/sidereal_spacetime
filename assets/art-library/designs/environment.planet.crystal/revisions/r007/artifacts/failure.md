@@ -1,1 +1,0 @@
-Native build rejected before completion: corner-expanded Rocky9 JSON cannot be treated as indexed closed topology. No kit.json, Blender source or visual pass produced. Successor8 imports separate native GLB objects preserving topology rather than welding across independent pieces.

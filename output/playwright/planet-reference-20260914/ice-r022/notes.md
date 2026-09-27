@@ -1,9 +1,0 @@
-# Ice22 native regional replacement
-
-2026-09-14. Based on Ice21 corrected-source two-angle review and exact Ice World crop. Replaces the broad shaft unit surround with six unequal thick blue-walled snowbanks and four compact blue column clusters. The central cavity shrinks horizontally to68% while preserving native shaft depth; its asymmetric cut remains open. Existing selected hero height lowers from.70 to.58. Six compact groups populate selected gorge sides while leaving the central deep floor open. Existing small-flake authoring remains at the same attempt count; this revision does not rely on increasing global flakes.
-
-Source geometry, normals/UVs/material boundaries remain editable and native. Ground originals and all ten corrected Ice21 texture files are exact preserved bytes; material definitions are identical. Five-variant JSON↔GLB audit has zero material/attribute/texture differences or missing fields. Raw Blender exports are preserved before explicit opaque IOR normalization.
-
-Four focused tests and TypeScript pass: identical full-body buffers/placement ranges at everyLOD, native shaft/gorge deep floor ray-picking before cleared substrate, bounded columns/missing-normal rejection, and exact source material/texture/ground preservation plus increased above-crust blue-face area. Full body140,480 triangles (10,104 shaft,12,456 gorge;12 stable regions and5,120 ground triangles). No runtime visual solids, material clones, per-frame geometry or authority changes.
-
-Self-review: both native unit angles show genuine thick stepped banks and compact blue faces around a smaller cavity. Gorge preview exposes selected compact blue wall members instead of an empty cut alone. Native previews show a promising intermediate hierarchy, but wholeplanet reference-scale and independent Astra comparison remain required; no visual acceptance, hardware timing or LOD-transition performance claim. Root owns integration and browser measurements.

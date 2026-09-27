@@ -1,1 +1,0 @@
-Exact native Crystal9 source/material reuse. Composition-only successor11 distributes14 medium bridge clusters by camera-independent farthest angular spacing over existing outcrops;4heroes unchanged. Every placement retained acrossLOD. No visual approval yet.

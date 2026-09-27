@@ -1,1 +1,0 @@
-Initial export attempt failed JSON validation: adding face attributes invalidated the retained Blender UV RNA handle, causing nonfinite JSON UVs. Preserved invalid attempt directories. Reacquire the UV layer after attribute allocation; source r004 unchanged.

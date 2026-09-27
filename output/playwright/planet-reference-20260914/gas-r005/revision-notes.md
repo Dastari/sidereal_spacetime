@@ -1,1 +1,0 @@
-Gas r005 changes annulus radial UV support only. Body, geometry, normals, materials and texture bytes remain r004. Ordinary PBR two-sided lighting parity is required. No publication or final sign-off.
