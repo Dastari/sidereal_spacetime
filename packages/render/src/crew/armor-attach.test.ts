@@ -31,7 +31,11 @@ describe("voxel crew armour attach", () => {
     expect(crewMaterialSlot("crew.emit.001")).toBe("emit");
     expect(crewMaterialSlot("hull.primary")).toBeUndefined();
     const colors = crewArmorSlotColors("crimson");
-    expect(colors.suit_primary?.equals(Color3.FromHexString("#c8263d").toLinearSpace())).toBe(true);
+    expect(
+      colors.suit_primary?.equals(
+        Color3.FromHexString("#c8263d").toLinearSpace(),
+      ),
+    ).toBe(true);
     expect(colors.skin).toBeUndefined();
   });
 
@@ -41,7 +45,13 @@ describe("voxel crew armour attach", () => {
     const engine = new NullEngine();
     const scene = new Scene(engine);
     // Stand-in body: any kit GLB carries the full crew_rig joint hierarchy.
-    const body = await SceneLoader.LoadAssetContainerAsync("", glb("armor.boots.standard"), scene, undefined, ".glb");
+    const body = await SceneLoader.LoadAssetContainerAsync(
+      "",
+      glb("armor.boots.standard"),
+      scene,
+      undefined,
+      ".glb",
+    );
     body.addAllToScene();
     const root = new TransformNode("crew-visual", scene);
     for (const node of body.rootNodes) node.parent = root;
@@ -54,15 +64,22 @@ describe("voxel crew armour attach", () => {
     });
     expect(armour.meshes.length).toBeGreaterThan(0);
     for (const mesh of armour.meshes)
-      expect(mesh.name.startsWith("GEO-armor-armor.chest.plate-narrow")).toBe(true);
-    expect(scene.meshes.some((m) => m.name.includes("chest.plate-wide"))).toBe(false);
-    expect(armour.linkedBones).toEqual(expect.arrayContaining(["chest", "spine", "hand.R", "foot.L"]));
+      expect(mesh.name.startsWith("GEO-armor-armor.chest.plate-narrow")).toBe(
+        true,
+      );
+    expect(scene.meshes.some((m) => m.name.includes("chest.plate-wide"))).toBe(
+      false,
+    );
+    expect(armour.linkedBones).toEqual(
+      expect.arrayContaining(["chest", "spine", "hand.R", "foot.L"]),
+    );
     const skeleton = armour.meshes.find((m) => m.skeleton)!.skeleton!;
     const chestBone = skeleton.bones.find((b) => b.name === "chest")!;
     expect(chestBone.getTransformNode()).toBe(joints.get("chest"));
     const primary = armour.meshes
       .map((m) => m.material)
-      .find((m) => m?.name.startsWith("crew.suit_primary")) as PBRMaterial | undefined;
+      .find((m) => m?.name.startsWith("crew.suit_primary")) as
+      PBRMaterial | undefined;
     expect(primary).toBeDefined();
     const crimson = Color3.FromHexString("#c8263d").toLinearSpace();
     expect(primary!.albedoColor.equalsWithEpsilon(crimson, 1e-3)).toBe(true);

@@ -28,7 +28,9 @@ describe("voxel crew armour catalog (presentation only)", () => {
     expect(new Set(ids).size).toBe(ids.length);
     for (const slot of CREW_ARMOR_SLOTS)
       expect(
-        new Set(CREW_ARMOR_PARTS.filter((p) => p.slot === slot).map((p) => p.tier)),
+        new Set(
+          CREW_ARMOR_PARTS.filter((p) => p.slot === slot).map((p) => p.tier),
+        ),
       ).toEqual(new Set([0, 1, 2, 3]));
   });
 
@@ -39,7 +41,9 @@ describe("voxel crew armour catalog (presentation only)", () => {
       const bytes = readFileSync(file);
       // Skip hash comparison for un-fetched Git LFS pointers.
       if (bytes.subarray(0, 4).toString() !== "glTF") continue;
-      expect(createHash("sha256").update(bytes).digest("hex")).toBe(part.sha256);
+      expect(createHash("sha256").update(bytes).digest("hex")).toBe(
+        part.sha256,
+      );
       expect(crewArmorAssetUrl(part)).toContain(part.sha256.slice(0, 12));
     }
   });
@@ -75,7 +79,9 @@ describe("voxel crew armour catalog (presentation only)", () => {
       expect(Object.keys(loadout).length).toBeGreaterThan(0);
       expect(Object.keys(loadout)).not.toContain("helmet");
     }
-    expect(crewArmorLoadoutFromEquipment({ chest: "unknown-item" })).toEqual({});
+    expect(crewArmorLoadoutFromEquipment({ chest: "unknown-item" })).toEqual(
+      {},
+    );
   });
 
   it("replaces the default gear layer and hides bare hands only under gloves", () => {

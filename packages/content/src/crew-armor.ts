@@ -32,7 +32,8 @@ export const CREW_MATERIAL_SLOTS = [
 ] as const;
 export type CrewMaterialSlot = (typeof CREW_MATERIAL_SLOTS)[number];
 export type CrewArmorBodyVariant = "male" | "female" | "neutral";
-export type CrewBodyRegion = "base" | "suit" | "gear" | "head" | "hands" | "hair";
+export type CrewBodyRegion =
+  "base" | "suit" | "gear" | "head" | "hands" | "hair";
 
 export interface CrewArmorPart {
   id: string;
@@ -69,7 +70,13 @@ export interface CrewArmorPreset {
   headPreset: string;
   undersuit?: Partial<Record<"suit_primary" | "suit_secondary", string>>;
   /** CHAR-HEADS node ids per body type (heads, hair, hats, glasses, helmets) plus skin/hair tints. */
-  heads?: { male: string[]; female: string[]; skin: string; hair: string; source: string };
+  heads?: {
+    male: string[];
+    female: string[];
+    skin: string;
+    hair: string;
+    source: string;
+  };
   parts: Partial<Record<CrewArmorSlot, string>>;
 }
 export type CrewArmorLoadout = Partial<
@@ -78,7 +85,8 @@ export type CrewArmorLoadout = Partial<
 
 export const CREW_ARMOR_REVISION = catalog.revision;
 export const CREW_ARMOR_ASSET_BASE = catalog.assetBase;
-export const CREW_ARMOR_PARTS = catalog.parts as unknown as readonly CrewArmorPart[];
+export const CREW_ARMOR_PARTS =
+  catalog.parts as unknown as readonly CrewArmorPart[];
 export const CREW_ARMOR_COLOURWAYS = catalog.colourways as unknown as Readonly<
   Record<string, CrewArmorColourway>
 >;
