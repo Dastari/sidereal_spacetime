@@ -64,5 +64,28 @@ def main():
                           "triangles": triangles, "source": blend, "ship_components": "passed"}))
 
 
+def objects():
+    """Prefab interior object GLBs (`ship-objects/<rev>`): same rules, keyed by design id."""
+    source = (ROOT / "scripts/prepare_app.py").read_text()
+    for entry in re.findall(r'"(ship-objects/r\d+)"', source):
+        folder = ROOT / "assets/runtime" / entry
+        manifest = json.loads((folder / "manifest.json").read_text())
+        rows = {r["designId"]: r for r in manifest["objects"]}
+        missing = sorted(set(manifest.get("requiredObjectIds", [])) - set(rows))
+        assert not missing, f"{entry}: object designs without a GLB: {missing}"
+        blend_path = ROOT / manifest["source"]["blend"]
+        assert blend_path.exists() and not blend_path.is_relative_to(ROOT / "assets/runtime"), entry
+        assert sha(blend_path) == manifest["source"]["sha256"], f"{entry}: source .blend changed"
+        for did, row in sorted(rows.items()):
+            path = folder / f"{did}.glb"
+            assert sha(path) == row["sha256"], f"{entry}: GLB bytes changed: {path.name}"
+            model = glb(path)
+            for m in model.get("materials", []):
+                match = SLOT_NAME.match(m.get("name", ""))
+                assert match and SLOTS[int(match.group(1))] == match.group(2), f"{path.name}: {m.get('name')}"
+        print(json.dumps({"asset": entry, "objects": len(rows), "source": manifest["source"]["blend"], "ship_objects": "passed"}))
+
+
 if __name__ == "__main__":
     main()
+    objects()

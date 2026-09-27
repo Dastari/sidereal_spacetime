@@ -392,8 +392,9 @@ def screen(p, x0, x1, y0, z0, z1, glow, seed, K):
                     p.b(a0 + 1, y0 + 3, bb, a0 + 1 + ln, y0 + 4, bb + 1, "dark")
 
 
-def console(K, kind):
-    glow, seat, _ = CONSOLE[kind]
+def console(K, kind, seat=None):
+    glow, default_seat, _ = CONSOLE[kind]
+    seat = default_seat if seat is None else seat
 
     def build(w, d, h):
         p = K.Piece(f"x2.console-{kind}", "equipment", "interior", (w, d, h))

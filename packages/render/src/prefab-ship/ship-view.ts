@@ -47,6 +47,7 @@ import {
   mountRotation,
   multiply,
   prefabFrameMatrix,
+  rotZTranslate,
   transformPoint,
   type Mat4,
   type MountSocket,
@@ -64,6 +65,12 @@ export interface PrefabShipViewOptions {
   parent?: TransformNode;
   /** When set, component GLBs load from `${componentsBaseUrl}${basename(spec.visual.url)}`. */
   componentsBaseUrl?: string;
+  /**
+   * Opt-in: art-library object sockets load `${objectsBaseUrl}${designId}.glb` (SHIPS-COMPONENTS
+   * ship-objects runtime GLBs) instead of translucent placeholder boxes; a missing file keeps its
+   * placeholder. Unset: placeholders only (unchanged behaviour).
+   */
+  objectsBaseUrl?: string;
   /** Initial theme; default the document's theme. */
   theme?: ShipThemeId;
   /** Real point lights for the brightest deck-view room lights (0-4). Default 0: emissive pools only. */
@@ -217,7 +224,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     const out: Built = { dressed, instanced: [], statics: [], decals: [], lights: [], textures: [], materials: [], componentGlbs: 0, componentStandins: 0 };
     await Promise.all([buildKit(out), buildComponents(out)]);
     buildGenerated(out);
-    buildObjects(out);
+    await buildObjects(out);
     buildLightPools(out);
     out.decals = buildDecals(scene, frame, dressed, theme).map((h) => ({ ...h, tag: h.decal.view }));
     if (options.batch !== false) batchBuilt(out);
@@ -404,11 +411,38 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     target.colours.push(...colours);
   }
 
-  function buildObjects(out: Built) {
+  async function buildObjects(out: Built) {
     const fill: Record<DressView, GeometryBuilder> = { both: newBuilder(), flight: newBuilder(), deck: newBuilder() };
     const edges: Record<DressView, GeometryBuilder> = { both: newBuilder(), flight: newBuilder(), deck: newBuilder() };
     const z0 = G.deck.floorTopTexels * TEXEL;
-    for (const o of out.dressed.objects) {
+    let placeholders = out.dressed.objects;
+    const base = options.objectsBaseUrl;
+    if (base) {
+      // Object GLBs: origin at footprint centre on the floor, front +Y, glTF Y-up. Yaw turns the
+      // front toward the socket's facing (prefab frame: +X fore, +Y port).
+      const yaw: Record<string, number> = { fore: -90, aft: 90, port: 0, starboard: 180 };
+      const byDesign = new Map<string, typeof placeholders>();
+      for (const o of placeholders) byDesign.set(o.designId, [...(byDesign.get(o.designId) ?? []), o]);
+      const missing: typeof placeholders = [];
+      await Promise.all(
+        [...byDesign].map(async ([designId, list]) => {
+          const geom = await loadGlbGeometry(scene, `${base}${designId}.glb`);
+          if (!geom) {
+            missing.push(...list);
+            return;
+          }
+          const matrices = buckets();
+          for (const o of list) {
+            const centre: [number, number, number] = [o.at[0] + o.size[0] / 2, o.at[1] + o.size[1] / 2, z0];
+            pushMatrix(matrices[o.view], multiply(GLTF_TO_ZUP, rotZTranslate(yaw[o.facing] ?? 0, centre)));
+          }
+          addInstanced(out, geom, null, matrices, "equipment");
+        }),
+      );
+      if (missing.length) warnOnce(`objects:${base}`, `prefab-ship: ${missing.length} object GLB(s) missing under ${base}; drawing placeholders`);
+      placeholders = missing;
+    }
+    for (const o of placeholders) {
       const inset = 0.08;
       const lo = [o.at[0] + inset, o.at[1] + inset, z0 + 0.01];
       const hi = [o.at[0] + o.size[0] - inset, o.at[1] + o.size[1] - inset, z0 + Math.max(0.3, o.heightTexels * TEXEL)];

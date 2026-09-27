@@ -70,6 +70,8 @@ def args():
     p.add_argument("--runtime", action="store_true",
                    help="compact runtime export: merged cuboids, hidden boxes dropped, flat <out>/<id>.glb")
     p.add_argument("--ids-file", default="", help="JSON list of component ids to export")
+    p.add_argument("--objects", action="store_true",
+                   help="export the prefab interior objects (ship_object_art.py) instead of catalog components")
     p.add_argument("--save-blend", default="",
                    help="save the editable Blender source (.blend, compressed) with every exported component")
     p.add_argument("--runtime-bevel", type=float, default=0.0,
@@ -1065,8 +1067,78 @@ def export_all(catalog, a):
     return rows
 
 
+OBJECTS_REVISION = "r001"
+
+
+def export_objects(a):
+    """Runtime GLBs for prefab interior objects: <out>/<designId>.glb, flat shaded, hidden faces
+    culled, nine fixed slots, plus manifest and the editable .blend source (--save-blend)."""
+    import ship_object_art as O
+    out = Path(a.out)
+    out.mkdir(parents=True, exist_ok=True)
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    sc = bpy.context.scene
+    coll = bpy.data.collections.new("objects")
+    sc.collection.children.link(coll)
+    mats = slot_materials()
+    make = O.builders(K, sys.modules[__name__])
+    rows = []
+    for n, (did, (w, d, h)) in enumerate(sorted(O.OBJECT_SIZES.items())):
+        piece = make[did](w, d, h)
+        piece.size = (w, d, h)
+        env = [[-w / 32, -d / 32, 0.0], [w / 32, d / 32, h / 16]]
+        boxes = clip_boxes(to_catalog(piece, "interior", 0), env)
+        cc = bpy.data.collections.new(did)
+        coll.children.link(cc)
+        root = bpy.data.objects.new(f"object.{did}", None)
+        cc.objects.link(root)
+        root["designId"], root["frame"], root["status"] = did, "interior: footprint centre on floor, front +Y", "proposed"
+        me = boxes_mesh(did, boxes, hidden_faces(boxes))
+        for m in mats:
+            me.materials.append(m)
+        me.polygons.foreach_set("use_smooth", [False] * len(me.polygons))
+        ob = bpy.data.objects.new(did, me)
+        cc.objects.link(ob)
+        ob.parent = root
+        tris, verts, lo, hi, used = measure(ob)
+        glb = out / f"{did}.glb"
+        bpy.ops.object.select_all(action="DESELECT")
+        root.select_set(True)
+        ob.select_set(True)
+        bpy.context.view_layer.objects.active = root
+        bpy.ops.export_scene.gltf(filepath=str(glb), export_format="GLB", use_selection=True, export_apply=True,
+                                  export_extras=True, export_yup=True, export_cameras=False, export_lights=False,
+                                  export_animations=False, export_materials="EXPORT")
+        root.location = ((n % 7) * 5.0, -(n // 7) * 5.0, 0.0)
+        rows.append({"designId": did, "sizeTexels": [w, d, h], "glb": str(glb.relative_to(ROOT)) if glb.is_relative_to(ROOT) else str(glb),
+                     "sha256": sha256(glb), "bytes": glb.stat().st_size, "triangles": tris, "boxes": len(boxes),
+                     "materialSlotsUsed": [f"slot{i}_{SLOTS[i]}" for i in used],
+                     "boundsM": [[round(v, 4) for v in lo], [round(v, 4) for v in hi]]})
+        print(f"[objects] {did:40s} tris={tris}")
+    manifest = {"schema": "sidereal.ship-object-art.v1", "revision": OBJECTS_REVISION,
+                "status": "proposed art published to the runtime for review; not owner-approved",
+                "frame": "interior: origin at footprint centre on the floor, +X along the wall (w), +Y front (d), +Z up; glTF (x, y, z) -> (x, z, -y)",
+                "sizes": "construction-grammar.v1.json socket [designId, w, d, h] texels (1/16 m)",
+                "materialSlots": [f"slot{i}_{s}" for i, s in enumerate(SLOTS)],
+                "generator": {"script": str(Path(__file__).resolve().relative_to(ROOT)), "sha256": sha256(__file__),
+                              "builders": str((HERE / "ship_object_art.py").relative_to(ROOT)),
+                              "buildersSha256": sha256(HERE / "ship_object_art.py"), "blender": bpy.app.version_string},
+                "requiredObjectIds": sorted(O.OBJECT_SIZES), "objects": rows}
+    if a.save_blend:
+        path = Path(a.save_blend)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        bpy.ops.wm.save_as_mainfile(filepath=str(path), compress=True, check_existing=False)
+        blend = path.resolve()
+        manifest["source"] = {"blend": str(blend.relative_to(ROOT)) if blend.is_relative_to(ROOT) else str(blend),
+                              "sha256": sha256(blend), "note": "editable Blender source saved by this export"}
+    (out / "manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
+    print(f"[objects] {len(rows)} objects")
+
+
 def main():
     a = args()
+    if a.objects:
+        return export_objects(a)
     catalog = json.loads(Path(a.catalog).read_text())
     bpy.ops.wm.read_factory_settings(use_empty=True)
     rows = export_all(catalog, a)

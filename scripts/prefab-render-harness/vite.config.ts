@@ -22,6 +22,7 @@ const MOUNTS: [string, string[]][] = [
   // Component GLBs: the published runtime copy (any art revision) first, else the art-library export.
   ["/assets/ship-components/r001/", ["assets/runtime/ship-components/r001", "assets/art-library/ship-components/r001/glb"]],
   ["/assets/ship-components/", ["assets/runtime/ship-components"]],
+  ["/assets/ship-objects/", ["assets/runtime/ship-objects"]],
 ];
 
 const TYPES: Record<string, string> = {

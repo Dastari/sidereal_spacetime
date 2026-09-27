@@ -26,6 +26,7 @@ PUBLISHED_RUNTIME = (
     "voxels",
     "ship-kit/r001",
     "ship-components/r003",
+    "ship-objects/r001",
     "construction/boundary-r001",
     "construction/boundary-r004",
     "construction/floor-finishes",
