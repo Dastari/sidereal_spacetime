@@ -1,9 +1,0 @@
-# Crystal moons r009 local native review — ready for actual-runtime comparison
-
-Inspected both actual native front-face close and reference-scale views against r008 and the exact reference crops. The traced unbounded terminal runs are now split into finite unequal runs through the native ±1.15 envelope. Both crowns and Moon2’s left bank acquire additional short mineral transitions; the successful central/lower r008 steps and connected body remain. Broad quiet anchor/crown facets remain visible and require actual-runtime/Astra judgment. This is readiness for that comparison, not a final reference working pass or owner approval.
-
-All nonterminal r008 parts retain byte-exact triangle positions, normals, UVs and material assignments. Only old terminal sections0/11 are divided, with real new heights and a few existing bright-role shoulders. Material definitions and maps remain unchanged. Composer r008 is reused without modification; native region/panel/section/band identities survive every retained LOD.
-
-Final targeted suite passes9/9. Its new regression checks derive occupied roof footprints from actual exported roof/base vertex pairs, verify finite run limits and constrain each actual projected run span to0.205 source units. This avoids mistaking the original extrusion normal for the reauthored planar roof normal. The first failed normal-assumption test report is preserved. Full GLB/kit UV/normal/material/map audit is clean.
-
-Triangle counts are5,224 /2,232, adding384 /124 over r008. The fixture ceiling is5,500 for the requested geometry; this count is not hardware performance acceptance. Eight matched Blender close/tiny culling diagnostics are preserved. Root owns fixed-detail runtime qualification, actual browser capture, Astra review, PR delivery and all publication decisions.

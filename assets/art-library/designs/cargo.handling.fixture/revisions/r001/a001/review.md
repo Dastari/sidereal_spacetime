@@ -1,1 +1,0 @@
-Retained failed evidence: old GEO-REVIEW helper meshes were not hidden because the filter omitted the GEO- prefix. The orange2.5625m gauges and old display base are not cargo interfaces and do not belong in the new native-floor fixture. Corrected in a002.

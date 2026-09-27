@@ -1,1 +1,0 @@
-Exact native9 source reused. Composition12 keeps farthest14 bridge positions but seats them on final overlapping crust using worker-side radial triangle probes. Previous own-outcrop placement could be occluded by later regional surfaces. All geometry/placement retained acrossLOD. Requires actual and NullEngine validation.

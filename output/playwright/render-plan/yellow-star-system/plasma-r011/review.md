@@ -1,1 +1,0 @@
-Original-atlas Astra review: palette and limb substantially on target. Not accepted: connect selected isolated hot regions into open asymmetric branches; shorten/broaden fine whisker flares. Preserve orange relief and current limb brightness. Actual playback retained, SwiftShader only.
