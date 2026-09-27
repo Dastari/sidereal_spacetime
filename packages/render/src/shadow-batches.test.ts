@@ -7,16 +7,26 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { createShadowBatches } from "./shadow-batches";
 
 test("shadow batches retain map membership, deck boundaries and placement lookup", () => {
-  const engine = new NullEngine(), scene = new Scene(engine);
-  const root = new TransformNode("ship", scene), material = new StandardMaterial("opaque", scene);
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const root = new TransformNode("ship", scene),
+    material = new StandardMaterial("opaque", scene);
   const sources = ["a", "b", "c"].map((partId, i) => {
     const mesh = CreateBox("opaque-proxy", {}, scene);
-    mesh.parent = root; mesh.position.x = i * 2; mesh.material = material;
-    mesh.metadata = { role: "proxy", shadowRole: "roof", shadowCabin: false,
-      deckId: i === 2 ? "upper" : "main", partId };
+    mesh.parent = root;
+    mesh.position.x = i * 2;
+    mesh.material = material;
+    mesh.metadata = {
+      role: "proxy",
+      shadowRole: "roof",
+      shadowCabin: false,
+      deckId: i === 2 ? "upper" : "main",
+      partId,
+    };
     return mesh;
   });
-  const sun = createShadowBatches(root), spot = createShadowBatches(root);
+  const sun = createShadowBatches(root),
+    spot = createShadowBatches(root);
   const first = sun.rebuild(sources);
   expect(first).toHaveLength(2);
   expect(first[0].metadata.trianglePlacements).toEqual([
@@ -30,12 +40,14 @@ test("shadow batches retain map membership, deck boundaries and placement lookup
   sources[1].setEnabled(false);
   const second = sun.rebuild(sources);
   expect(second[0].metadata.trianglePlacements).toHaveLength(1);
-  expect(first.every(m => m.isDisposed())).toBe(true);
-  expect(sources.every(m => !m.isDisposed())).toBe(true);
+  expect(first.every((m) => m.isDisposed())).toBe(true);
+  expect(sources.every((m) => !m.isDisposed())).toBe(true);
   sources[0].metadata.deckId = undefined;
   expect(sun.rebuild([sources[0]])).toEqual([sources[0]]);
-  sun.dispose(); spot.dispose();
-  expect(second.every(m => m.isDisposed())).toBe(true);
+  sun.dispose();
+  spot.dispose();
+  expect(second.every((m) => m.isDisposed())).toBe(true);
   expect(scene.materials).toContain(material);
-  scene.dispose(); engine.dispose();
+  scene.dispose();
+  engine.dispose();
 });

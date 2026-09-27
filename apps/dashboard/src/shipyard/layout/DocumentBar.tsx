@@ -1,6 +1,17 @@
 import type { LayoutDocument } from "@sidereal/content/ship-layout";
-import { Download, Plus, Redo2, Save, Ship, Undo2, Upload } from "lucide-react";
-import { useRef } from "react";
+import {
+  Blocks,
+  Download,
+  Plus,
+  Redo2,
+  Save,
+  Ship,
+  Undo2,
+  Upload,
+} from "lucide-react";
+import { useRef, useState } from "react";
+import { PublicationDialog } from "./PublicationDialog";
+import { hasArmorReviewParts } from "./armor-review";
 import type { useLayout } from "./useLayout";
 export function DocumentBar({
   editor,
@@ -13,6 +24,7 @@ export function DocumentBar({
   commit: (change: (doc: LayoutDocument) => LayoutDocument) => void;
   onNew: () => void;
 }) {
+  const [publishing, setPublishing] = useState(false);
   const input = useRef<HTMLInputElement>(null);
   return (
     <header className="layout-document-bar">
@@ -46,9 +58,15 @@ export function DocumentBar({
           <Redo2 size={16} />
           <span>Redo</span>
         </button>
-        <button onClick={() => input.current?.click()} title="Import draft">
-          <Upload size={16} />
-          <span>Import</span>
+        <button
+          title="Open the prefab ship editor"
+          onClick={() => {
+            history.pushState({}, "", "/shipyard/prefabs");
+            dispatchEvent(new PopStateEvent("popstate"));
+          }}
+        >
+          <Blocks size={16} />
+          <span>Prefab ships</span>
         </button>
         <button onClick={onNew}>
           <Plus size={16} />
@@ -58,10 +76,38 @@ export function DocumentBar({
           <Save size={16} />
           Save draft
         </button>
-        <button className="layout-primary" onClick={editor.exportDraft}>
+        <button
+          className="layout-primary"
+          disabled={blocked || hasArmorReviewParts(editor.doc)}
+          title={
+            hasArmorReviewParts(editor.doc)
+              ? "This armor kit is available for editor review. Game installation is not yet qualified."
+              : undefined
+          }
+          onClick={() => setPublishing(true)}
+        >
+          Templates
+        </button>
+        <button onClick={editor.exportDraft}>
           <Download size={16} />
           Export
         </button>
+        <details className="layout-file-menu">
+          <summary>File</summary>
+          <div>
+            <button onClick={() => input.current?.click()}>
+              <Upload size={16} /> Import draft
+            </button>
+            <button onClick={editor.exportDraft}>
+              <Download size={16} /> Export draft
+            </button>
+            {editor.legacy && (
+              <button onClick={editor.exportLegacy}>
+                Export previous assembly
+              </button>
+            )}
+          </div>
+        </details>
         <input
           ref={input}
           type="file"
@@ -73,6 +119,12 @@ export function DocumentBar({
           }}
         />
       </div>
+      {publishing && (
+        <PublicationDialog
+          editor={editor}
+          onClose={() => setPublishing(false)}
+        />
+      )}
     </header>
   );
 }

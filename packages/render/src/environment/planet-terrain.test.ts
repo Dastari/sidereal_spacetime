@@ -107,11 +107,16 @@ describe("layered cube-sphere terrain", () => {
     ).toBe(0);
     expect(mixed.terrain.faces).toBeGreaterThan(0);
   });
-  it("degrades excessive hero detail deterministically instead of leaving any solid family blank", () => {
-    const engine = new NullEngine(),
-      scene = new Scene(engine);
-    for (const style of PLANET_STYLES.filter((s) => s !== "gas"))
-      for (const extreme of [false, true]) {
+  it.each(
+    PLANET_STYLES.filter((style) => style !== "gas").flatMap((style) =>
+      [false, true].map((extreme) => ({ style, extreme })),
+    ),
+  )(
+    "degrades $style hero detail deterministically (extreme=$extreme)",
+    ({ style, extreme }) => {
+      const engine = new NullEngine(),
+        scene = new Scene(engine);
+      try {
         const recipe = {
           ...planetRecipe(style, 348112),
           resolution: 96,
@@ -130,10 +135,13 @@ describe("layered cube-sphere terrain", () => {
         );
         expect(generated.generated.terrain.faces).toBeGreaterThan(0);
         generated.dispose();
+      } finally {
+        scene.dispose();
+        engine.dispose();
       }
-    scene.dispose();
-    engine.dispose();
-  }, 20000);
+    },
+    20000,
+  );
   it("uses overlapping projected-size LOD bands", () => {
     expect(planetLOD(250, 2)).toBe(0);
     expect(planetLOD(170, 0)).toBe(0);

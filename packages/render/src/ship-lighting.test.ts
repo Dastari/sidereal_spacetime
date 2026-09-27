@@ -13,31 +13,49 @@ import { createShipLighting } from "./ship-lighting";
 import { CABIN_ROOMS } from "../../content/src/interior";
 
 test("identified roof proxies batch while cutaway and independently hidden Flight decks retain their shadow policy", () => {
-  const engine = new NullEngine(), scene = new Scene(engine), root = new TransformNode("ship", scene);
-  const decks = [new TransformNode("main", scene), new TransformNode("upper", scene)];
-  decks.forEach(d => d.parent = root);
-  const roofs = [0, 1, 2].map(i => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine),
+    root = new TransformNode("ship", scene);
+  const decks = [
+    new TransformNode("main", scene),
+    new TransformNode("upper", scene),
+  ];
+  decks.forEach((d) => (d.parent = root));
+  const roofs = [0, 1, 2].map((i) => {
     const mesh = CreateBox("arbitrary-authored-name", {}, scene);
     mesh.parent = decks[i === 2 ? 1 : 0];
-    mesh.metadata = {role:"roof",shadowStructural:true,partId:"roof-"+i,deckId:i === 2 ? "upper" : "main"};
+    mesh.metadata = {
+      role: "roof",
+      shadowStructural: true,
+      partId: "roof-" + i,
+      deckId: i === 2 ? "upper" : "main",
+    };
     return mesh;
   });
   const lighting = createShipLighting(scene, root, roofs);
   const map = lighting.primaryLight.getShadowGenerator()!.getShadowMap()!;
   expect(map.renderList).toHaveLength(2);
-  const main = map.renderList!.find(m => m.metadata.deckId === "main")!;
-  expect(main.metadata.trianglePlacements.map((r: {placementId:string}) => r.placementId)).toEqual(["roof-0","roof-1"]);
-  roofs[0].setEnabled(false); roofs[0].visibility = 0;
+  const main = map.renderList!.find((m) => m.metadata.deckId === "main")!;
+  expect(
+    main.metadata.trianglePlacements.map(
+      (r: { placementId: string }) => r.placementId,
+    ),
+  ).toEqual(["roof-0", "roof-1"]);
+  roofs[0].setEnabled(false);
+  roofs[0].visibility = 0;
   lighting.update(1, 0, 0);
   expect(map.renderList).toContain(main);
   lighting.setCabinVisible(false);
   decks[1].setEnabled(false);
   lighting.update(0, 0, 0);
-  expect(map.renderList!.some(m => m.metadata.deckId === "upper")).toBe(false);
+  expect(map.renderList!.some((m) => m.metadata.deckId === "upper")).toBe(
+    false,
+  );
   decks[1].setEnabled(true);
   lighting.update(0, 0, 0);
-  expect(map.renderList!.some(m => m.metadata.deckId === "upper")).toBe(true);
-  scene.dispose(); engine.dispose();
+  expect(map.renderList!.some((m) => m.metadata.deckId === "upper")).toBe(true);
+  scene.dispose();
+  engine.dispose();
 });
 
 test("cabin, exterior and walking actor stay within eight eligible lights", () => {
@@ -86,7 +104,7 @@ test("occluders are independent of receivers and cutaway visibility", () => {
     scene = new Scene(engine);
   const root = new TransformNode("ship", scene);
   const wall = CreateBox("GEO-cutaway-port", {}, scene);
-  wall.metadata = {role:"wall",shadowStructural:true};
+  wall.metadata = { role: "wall", shadowStructural: true };
   wall.parent = root;
   wall.position.set(-3.1, 1, 6);
   wall.material = new PBRMaterial("wall-original", scene);
@@ -311,18 +329,30 @@ test("stationary receiver memberships do not resynchronize every scene mesh", ()
   engine.dispose();
 });
 
-
 test("roof paint receives exterior light but never creates solid shadow casters", () => {
-  const engine=new NullEngine(),scene=new Scene(engine),root=new TransformNode('ship',scene);
-  const roof=CreateBox('GEO-roof-panel',{},scene),paint=CreateBox('GEO-roof-hull-name',{},scene);
-  roof.metadata={role:"roof",shadowStructural:true};
-  roof.parent=root;paint.parent=root;paint.metadata={hullDecal:true};
-  paint.material=new PBRMaterial('paint',scene);
-  const lighting=createShipLighting(scene,root,[roof,paint]);
+  const engine = new NullEngine(),
+    scene = new Scene(engine),
+    root = new TransformNode("ship", scene);
+  const roof = CreateBox("GEO-roof-panel", {}, scene),
+    paint = CreateBox("GEO-roof-hull-name", {}, scene);
+  roof.metadata = { role: "roof", shadowStructural: true };
+  roof.parent = root;
+  paint.parent = root;
+  paint.metadata = { hullDecal: true };
+  paint.material = new PBRMaterial("paint", scene);
+  const lighting = createShipLighting(scene, root, [roof, paint]);
   expect(lighting.primaryLight.canAffectMesh(paint)).toBe(true);
   expect(paint.receiveShadows).toBe(true);
-  expect(scene.meshes.some(m=>m.name==='shadow-occluder-'+paint.name)).toBe(false);
-  expect(scene.meshes.some(m=>m.name==='shadow-occluder-'+roof.name)).toBe(true);
-  for(const light of scene.lights)expect(light.getShadowGenerator()?.getShadowMap()?.renderList??[]).not.toContain(paint);
-  scene.dispose();engine.dispose();
+  expect(
+    scene.meshes.some((m) => m.name === "shadow-occluder-" + paint.name),
+  ).toBe(false);
+  expect(
+    scene.meshes.some((m) => m.name === "shadow-occluder-" + roof.name),
+  ).toBe(true);
+  for (const light of scene.lights)
+    expect(
+      light.getShadowGenerator()?.getShadowMap()?.renderList ?? [],
+    ).not.toContain(paint);
+  scene.dispose();
+  engine.dispose();
 });

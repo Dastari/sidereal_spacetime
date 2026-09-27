@@ -1,6 +1,7 @@
 """Read-only attachment feasibility from exact native triangles and nominal floors.
 No asset mutation, no collision authorization, no live assembly/refit/publication.
 """
+from native_source_paths import checkout_source_path
 import hashlib,json,math,struct,sys
 from pathlib import Path
 import numpy as np
@@ -37,7 +38,7 @@ def ray_hits(t,start,end):
 def qualify():
  docraw=(ROOT/'.runtime/wayfarer-semantic-candidate-r001/document.json').read_text().rstrip('\n');assert digest(docraw.encode())==native.CANDIDATE
  doc=json.loads(docraw);placements=json.loads((ROOT/'.runtime/wayfarer-semantic-candidate-r001/placements.json').read_text());byid={p['sourcePlacedId']:p for p in placements};auditraw=(ROOT/AUDIT).read_bytes();assert digest(auditraw)==AUDIT_SHA;audit=json.loads(auditraw)
- for pin in audit['sourcePins'].values():assert digest((ROOT/pin['path']).read_bytes())==pin['sha256']
+ for pin in audit['sourcePins'].values():assert digest(checkout_source_path(pin['path'], ROOT).read_bytes())==pin['sha256']
  floor=unary_union([Polygon([(x/32,y/32)for x,y in t['vertices']])for t in doc['layout']['tiles']]);proof=json.loads((ROOT/'packages/content/src/wayfarer-walking-proof.json').read_text());bindings={p['sourceObjectId']:p for p in proof['bindings']}
  scans=[]
  for side in [-1,1]:

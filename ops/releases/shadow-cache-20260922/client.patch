@@ -1,0 +1,834 @@
+--- a/apps/client/package.json
++++ b/apps/client/package.json
+@@ -8,7 +8,7 @@
+     "@fontsource/barlow-condensed": "5.3.0",
+     "@sidereal/content": "0.5.0",
+     "@sidereal/net": "0.5.0",
+-    "@sidereal/render": "0.7.0",
++    "@sidereal/render": "0.8.1",
+     "@sidereal/sim": "0.4.0",
+     "oidc-client-ts": "^3.4.1",
+     "react": "19.2.8",
+--- a/apps/dashboard/package.json
++++ b/apps/dashboard/package.json
+@@ -7,7 +7,7 @@
+     "@fontsource/barlow": "5.3.0",
+     "@fontsource/barlow-condensed": "5.3.0",
+     "@sidereal/content": "0.5.0",
+-    "@sidereal/render": "0.7.0",
++    "@sidereal/render": "0.8.1",
+     "@sidereal/sim": "0.4.0",
+     "@sidereal/ui": "*",
+     "lucide-react": "1.42.0",
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -34,14 +34,14 @@
+       "dependencies": {
+         "@fontsource/barlow": "5.3.0",
+         "@fontsource/barlow-condensed": "5.3.0",
++        "@sidereal/canvas-ui": "0.1.2",
+         "@sidereal/content": "0.5.0",
+         "@sidereal/net": "0.5.0",
+-        "@sidereal/render": "0.7.0",
++        "@sidereal/render": "0.8.1",
+         "@sidereal/sim": "0.4.0",
+         "oidc-client-ts": "^3.4.1",
+         "react": "19.2.8",
+-        "react-dom": "19.2.8",
+-        "@sidereal/canvas-ui": "0.1.2"
++        "react-dom": "19.2.8"
+       }
+     },
+     "apps/dashboard": {
+@@ -51,7 +51,7 @@
+         "@fontsource/barlow": "5.3.0",
+         "@fontsource/barlow-condensed": "5.3.0",
+         "@sidereal/content": "0.5.0",
+-        "@sidereal/render": "0.7.0",
++        "@sidereal/render": "0.8.1",
+         "@sidereal/sim": "0.4.0",
+         "@sidereal/ui": "*",
+         "lucide-react": "1.42.0",
+@@ -3382,13 +3382,12 @@
+       "dependencies": {
+         "@babylonjs/core": "9.25.0",
+         "@sidereal/content": "0.5.0",
+-        "@sidereal/render": "0.7.0"
++        "@sidereal/render": "0.8.1"
+       }
+     },
+     "packages/content": {
+       "name": "@sidereal/content",
+-      "version": "0.5.0",
+-      "dependencies": {}
++      "version": "0.5.0"
+     },
+     "packages/net": {
+       "name": "@sidereal/net",
+@@ -3400,13 +3399,13 @@
+     },
+     "packages/render": {
+       "name": "@sidereal/render",
+-      "version": "0.7.0",
++      "version": "0.8.1",
+       "dependencies": {
+         "@babylonjs/core": "9.25.0",
+         "@babylonjs/loaders": "9.25.0",
++        "@noble/hashes": "2.4.0",
+         "@sidereal/content": "0.5.0",
+-        "@sidereal/sim": "0.4.0",
+-        "@noble/hashes": "2.4.0"
++        "@sidereal/sim": "0.4.0"
+       }
+     },
+     "packages/scripting": {
+@@ -3432,9 +3431,9 @@
+       "name": "@sidereal/world",
+       "version": "0.5.0",
+       "dependencies": {
+-        "spacetimedb": "2.10.0",
+         "@sidereal/content": "0.5.0",
+-        "@sidereal/sim": "0.4.0"
++        "@sidereal/sim": "0.4.0",
++        "spacetimedb": "2.10.0"
+       },
+       "devDependencies": {
+         "typescript": "6.0.3"
+--- a/packages/canvas-ui/package.json
++++ b/packages/canvas-ui/package.json
+@@ -9,6 +9,6 @@
+   "dependencies": {
+     "@babylonjs/core": "9.25.0",
+     "@sidereal/content": "0.5.0",
+-    "@sidereal/render": "0.7.0"
++    "@sidereal/render": "0.8.1"
+   }
+ }
+--- a/packages/render/package.json
++++ b/packages/render/package.json
+@@ -1,6 +1,6 @@
+ {
+   "name": "@sidereal/render",
+-  "version": "0.7.0",
++  "version": "0.8.1",
+   "private": true,
+   "type": "module",
+   "exports": {
+--- /dev/null
++++ b/packages/render/src/exterior-shadow-cache.test.ts
+@@ -0,0 +1,247 @@
++import { afterEach, describe, expect, test } from "vitest";
++import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
++import { Scene } from "@babylonjs/core/scene";
++import { Vector3 } from "@babylonjs/core/Maths/math.vector";
++import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
++import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
++import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
++import "@babylonjs/core/Meshes/instancedMesh";
++import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
++import { Texture } from "@babylonjs/core/Materials/Textures/texture";
++import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
++import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
++import { ShadowGenerator } from "@babylonjs/core/Lights/Shadows/shadowGenerator";
++import { Skeleton } from "@babylonjs/core/Bones/skeleton";
++import { MorphTargetManager } from "@babylonjs/core/Morph/morphTargetManager";
++import { createExteriorShadowCache } from "./exterior-shadow-cache";
++
++const cleanups: (() => void)[] = [];
++afterEach(() => {
++  for (const cleanup of cleanups.splice(0)) cleanup();
++});
++function fixture() {
++  const engine = new NullEngine(),
++    scene = new Scene(engine);
++  const camera = new FreeCamera("camera", new Vector3(0, 4, -8), scene);
++  camera.setTarget(Vector3.Zero());
++  const root = new TransformNode("ship", scene);
++  const mesh = CreateBox("caster", {}, scene);
++  mesh.parent = root;
++  const material = new StandardMaterial("opaque", scene);
++  mesh.material = material;
++  const light = new DirectionalLight("sun", new Vector3(-0.6, -1, 0.45), scene);
++  light.position.set(18, 30, -18);
++  light.autoCalcShadowZBounds = true;
++  const shadow = new ShadowGenerator(1024, light);
++  shadow.usePercentageCloserFiltering = true;
++  shadow.addShadowCaster(mesh);
++  const map = shadow.getShadowMap()!;
++  const cache = createExteriorShadowCache(scene, light, shadow);
++  const frame = () => {
++    scene.incrementRenderId();
++    cache.update();
++    // Use Babylon's actual scheduling decision, including its shader retry state.
++    return map._shouldRender();
++  };
++  cleanups.push(() => {
++    scene.dispose();
++    engine.dispose();
++  });
++  expect(frame()).toBe(true);
++  expect(frame()).toBe(false);
++  return {
++    engine,
++    scene,
++    camera,
++    root,
++    mesh,
++    material,
++    light,
++    shadow,
++    map,
++    cache,
++    frame,
++  };
++}
++
++test("stationary ship shadows reuse depth while unrelated actors move", () => {
++  const { scene, frame } = fixture();
++  const actor = CreateBox("local-crew", {}, scene);
++  for (let i = 0; i < 100; i++) {
++    actor.position.x = i;
++    expect(frame()).toBe(false);
++  }
++});
++
++describe("changes affecting depth invalidate before the next pass", () => {
++  for (const [name, mutate] of Object.entries({
++    "ship translation": (f: ReturnType<typeof fixture>): void => {
++      f.root.position.x += 10;
++    },
++    "ship yaw": (f: ReturnType<typeof fixture>): void => {
++      f.root.rotation.y += 0.3;
++    },
++    "caster placement": (f: ReturnType<typeof fixture>): void => {
++      f.mesh.position.z += 1;
++    },
++    "caster visibility": (f: ReturnType<typeof fixture>): void => {
++      f.mesh.isVisible = false;
++    },
++    "ancestor enabled": (f: ReturnType<typeof fixture>): void => {
++      f.root.setEnabled(false);
++    },
++    "camera clipping": (f: ReturnType<typeof fixture>): void => {
++      f.camera.maxZ *= 0.9;
++    },
++    "light direction": (f: ReturnType<typeof fixture>): void => {
++      f.light.direction.x += 0.1;
++    },
++    "light parent": (f: ReturnType<typeof fixture>): void => {
++      f.light.parent = f.root;
++      f.root.rotation.y = 0.4;
++    },
++    "shadow bias": (f: ReturnType<typeof fixture>): void => {
++      f.shadow.bias += 0.001;
++    },
++    "material culling": (f: ReturnType<typeof fixture>): void => {
++      f.material.backFaceCulling = false;
++    },
++    "transparent classification": (f: ReturnType<typeof fixture>): void => {
++      f.material.alpha = 0.5;
++    },
++    "same-count topology": (f: ReturnType<typeof fixture>): void => {
++      f.mesh.geometry!.setIndices([...f.mesh.getIndices()!].reverse());
++    },
++    "same-bounds vertex edit": (f: ReturnType<typeof fixture>): void => {
++      const values = [...f.mesh.getVerticesData(VertexBuffer.PositionKind)!];
++      values[0] *= 0.5;
++      f.mesh.setVerticesData(VertexBuffer.PositionKind, values);
++    },
++    "list removal": (f: ReturnType<typeof fixture>): void => {
++      f.map.renderList = [];
++    },
++    "caster disposal": (f: ReturnType<typeof fixture>): void => {
++      f.mesh.dispose();
++    },
++    "context restoration": (f: ReturnType<typeof fixture>): void => {
++      f.engine.onContextRestoredObservable.notifyObservers(f.engine);
++    },
++    "shadow reactivation": (f: ReturnType<typeof fixture>): void => {
++      f.light.shadowEnabled = false;
++    },
++  }))
++    test(name, () => {
++      const f = fixture();
++      mutate(f);
++      expect(f.frame()).toBe(true);
++      expect(f.frame()).toBe(false);
++    });
++});
++
++test("new caster, geometry replacement and parent reparenting refresh", () => {
++  const f = fixture();
++  const other = CreateBox("replacement", { size: 0.75 }, f.scene);
++  other.material = f.material;
++  f.map.renderList!.push(other);
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(false);
++  other.geometry!.applyToMesh(f.mesh);
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(false);
++  other.position.x = 2;
++  f.mesh.parent = other;
++  expect(f.frame()).toBe(true);
++});
++
++test("updatable geometry and alpha testing fall back, then become cacheable again", () => {
++  const f = fixture();
++  const positions = [...f.mesh.getVerticesData(VertexBuffer.PositionKind)!];
++  f.mesh.setVerticesData(VertexBuffer.PositionKind, positions, true);
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(true);
++  f.mesh.setVerticesData(VertexBuffer.PositionKind, positions, false);
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(false);
++  const texture = new Texture(null, f.scene);
++  texture.hasAlpha = true;
++  f.material.diffuseTexture = texture;
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(true);
++  f.material.diffuseTexture = null;
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(false);
++});
++
++test("custom rendering, instancing and multiple cameras never freeze", () => {
++  const f = fixture();
++  f.shadow.customAllowRendering = () => true;
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(true);
++  f.shadow.customAllowRendering = undefined!;
++  f.mesh.createInstance("instance");
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(true);
++  f.mesh.instances[0].dispose();
++  f.scene.activeCameras = [f.camera];
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(true);
++});
++
++test("explicit native instances cache with their own placement and shared source geometry", () => {
++  const f = fixture();
++  const instance = f.mesh.createInstance("native-cargo");
++  f.map.renderList = [instance];
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(false);
++  instance.position.x += 1;
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(false);
++  f.mesh.geometry!.setIndices([...f.mesh.getIndices()!].reverse());
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(false);
++});
++
++test("camera orbit and zoom conservatively refresh native instance activation", () => {
++  const f = fixture();
++  f.camera.position.x += 2;
++  f.camera.setTarget(Vector3.Zero());
++  f.camera.fov *= 0.9;
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(false);
++});
++
++test("shader readiness retries and cache disposal preserve Babylon scheduling", () => {
++  const f = fixture();
++  f.map.resetRefreshCounter(); // ShadowGenerator does this if an effect is unready.
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(false);
++  f.cache.dispose();
++  expect(f.map.refreshRate).toBe(1);
++  expect(f.map._shouldRender()).toBe(true);
++  expect(f.map._shouldRender()).toBe(true);
++});
++
++test("skinned and morphing casters keep updating every frame", () => {
++  const f = fixture();
++  f.mesh.skeleton = new Skeleton("crew", "crew", f.scene);
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(true);
++  f.mesh.skeleton = null;
++  f.mesh.morphTargetManager = new MorphTargetManager(f.scene);
++  expect(f.frame()).toBe(true);
++  expect(f.frame()).toBe(true);
++});
++
++test("geometry subscriptions release on list removal and disposal", () => {
++  const f = fixture();
++  const geometry = f.mesh.geometry!;
++  expect(geometry.onGeometryUpdated).toBeTypeOf("function");
++  f.map.renderList = [];
++  f.frame();
++  expect(geometry.onGeometryUpdated).toBeUndefined();
++  f.map.renderList = [f.mesh];
++  f.frame();
++  expect(geometry.onGeometryUpdated).toBeTypeOf("function");
++  f.cache.dispose();
++  expect(geometry.onGeometryUpdated).toBeUndefined();
++});
+--- /dev/null
++++ b/packages/render/src/exterior-shadow-cache.ts
+@@ -0,0 +1,255 @@
++import type { Scene } from "@babylonjs/core/scene";
++import { Mesh } from "@babylonjs/core/Meshes/mesh";
++import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
++import type { Geometry } from "@babylonjs/core/Meshes/geometry";
++import type { Matrix } from "@babylonjs/core/Maths/math.vector";
++import type { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
++import type { ShadowGenerator } from "@babylonjs/core/Lights/Shadows/shadowGenerator";
++import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
++
++/** Exact, allocation-free comparisons after the first frame. No rounded hashes:
++ * even small caster/light movements can change a shadow-map texel. */
++class ShadowInputs {
++  private values: unknown[] = [];
++  private cursor = 0;
++  changed = false;
++  begin() {
++    this.cursor = 0;
++    this.changed = false;
++  }
++  add(value: unknown) {
++    if (!Object.is(this.values[this.cursor], value)) this.changed = true;
++    this.values[this.cursor++] = value;
++  }
++  matrix(value: Matrix) {
++    for (const component of value.m) this.add(component);
++  }
++  end() {
++    if (this.values.length !== this.cursor) this.changed = true;
++    this.values.length = this.cursor;
++    return this.changed;
++  }
++}
++
++/** Cache the ship's ordinary directional depth pass, not animated local lights.
++ * Runs after scene animation and before RTT selection. Unsupported deformation,
++ * alpha textures, custom shaders/lists and multiple cameras render normally.
++ * Geometry edits use Babylon's Geometry APIs (the same contract as ship batches).
++ */
++export function createExteriorShadowCache(
++  scene: Scene,
++  light: DirectionalLight,
++  shadow: ShadowGenerator,
++) {
++  const inputs = new ShadowInputs();
++  const geometries = new Map<
++    Geometry,
++    {
++      previous: Geometry["onGeometryUpdated"];
++      observer: Geometry["onGeometryUpdated"];
++      visited: number;
++    }
++  >();
++  let revision = 0,
++    epoch = 0;
++  let map = shadow.getShadowMap();
++  let previousRefreshRate = map?.refreshRate;
++  const engine = scene.getEngine();
++  const restored = engine.onContextRestoredObservable.add(() => revision++);
++
++  function update() {
++    const nextMap = shadow.getShadowMap();
++    if (!nextMap) return;
++    if (nextMap !== map) {
++      map = nextMap;
++      previousRefreshRate = map.refreshRate;
++      revision++;
++    }
++    const camera = nextMap.activeCamera ?? scene.activeCamera;
++    const casters = nextMap.renderList;
++    let dynamic =
++      !camera ||
++      !casters ||
++      !!scene.activeCameras?.length ||
++      !!camera?.cameraRigMode ||
++      !!nextMap.renderListPredicate ||
++      !!nextMap.getCustomRenderList ||
++      !!scene.customLODSelector ||
++      !!light.customProjectionMatrixBuilder ||
++      !!shadow.customShaderOptions ||
++      !!shadow.customAllowRendering ||
++      shadow.onBeforeShadowMapRenderObservable.hasObservers() ||
++      shadow.onBeforeShadowMapRenderMeshObservable.hasObservers() ||
++      // Only unblurred depth passes (PCF and its low-capability fallbacks).
++      !(
++        shadow.usePercentageCloserFiltering ||
++        shadow.usePoissonSampling ||
++        shadow.filter === 0
++      );
++    inputs.begin();
++    inputs.add(map);
++    inputs.add(scene.shadowsEnabled);
++    inputs.add(scene.renderTargetsEnabled);
++    inputs.add(scene.useRightHandedSystem);
++    inputs.add(light.isEnabled());
++    inputs.add(light.shadowEnabled);
++    inputs.add(nextMap.getRenderWidth());
++    inputs.add(nextMap.getRenderHeight());
++    inputs.add(nextMap.samples);
++    inputs.add(nextMap.forceLayerMaskCheck);
++    inputs.add(camera);
++    if (camera) {
++      // Keep camera changes conservative: Babylon's instance activation and
++      // readiness paths share camera-dependent state with the main draw pass.
++      inputs.matrix(camera.getViewMatrix());
++      inputs.matrix(camera.getProjectionMatrix());
++      inputs.add(camera.minZ);
++      inputs.add(camera.maxZ);
++      inputs.add(camera.layerMask);
++    }
++    inputs.add(shadow.bias);
++    inputs.add(shadow.normalBias);
++    inputs.add(shadow.depthScale);
++    inputs.add(shadow.filter);
++    inputs.add(shadow.forceBackFacesOnly);
++    inputs.add(shadow.transparencyShadow);
++    inputs.add(shadow.enableSoftTransparentShadow);
++    // Clip-plane and custom material paths are intentionally uncached.
++    if (
++      scene.clipPlane ||
++      scene.clipPlane2 ||
++      scene.clipPlane3 ||
++      scene.clipPlane4 ||
++      scene.clipPlane5 ||
++      scene.clipPlane6
++    )
++      dynamic = true;
++    epoch++;
++    for (const mesh of casters ?? []) {
++      inputs.add(mesh);
++      inputs.add(mesh.isDisposed());
++      if (mesh.isDisposed()) continue;
++      inputs.matrix(mesh.computeWorldMatrix());
++      inputs.add(mesh.isEnabled());
++      inputs.add(mesh.isVisible);
++      inputs.add(mesh.visibility);
++      inputs.add(mesh.layerMask);
++      inputs.add(mesh.cullingStrategy);
++      inputs.add(mesh.alwaysSelectAsActiveMesh);
++      const bounds = mesh.getBoundingInfo().boundingBox;
++      inputs.add(bounds.minimum.x);
++      inputs.add(bounds.minimum.y);
++      inputs.add(bounds.minimum.z);
++      inputs.add(bounds.maximum.x);
++      inputs.add(bounds.maximum.y);
++      inputs.add(bounds.maximum.z);
++      const source = mesh instanceof InstancedMesh ? mesh.sourceMesh : mesh;
++      if (!(source instanceof Mesh)) {
++        dynamic = true;
++        continue;
++      }
++      inputs.add(source);
++      inputs.add(source.sideOrientation);
++      const geometry = source.geometry;
++      inputs.add(geometry);
++      if (geometry) {
++        let watched = geometries.get(geometry);
++        if (!watched) {
++          const previous = geometry.onGeometryUpdated;
++          const observer: Geometry["onGeometryUpdated"] = (changed, kind) => {
++            previous?.(changed, kind);
++            revision++;
++          };
++          watched = { previous, observer, visited: epoch };
++          geometries.set(geometry, watched);
++          geometry.onGeometryUpdated = observer;
++        }
++        watched.visited = epoch;
++        // Direct buffer writes have no Geometry notification. Dynamic buffers
++        // therefore keep normal per-frame rendering, even before their first edit.
++        const buffers = geometry.getVertexBuffers();
++        for (const kind in buffers)
++          if (buffers[kind].isUpdatable()) dynamic = true;
++      }
++      if (
++        source.skeleton ||
++        source.morphTargetManager ||
++        (mesh === source && source.hasInstances) ||
++        source.hasThinInstances ||
++        source.bakedVertexAnimationManager?.isEnabled ||
++        source.getLODLevels().length ||
++        source.forcedInstanceCount
++      )
++        dynamic = true;
++      inputs.add(mesh.subMeshes.length);
++      for (const sub of mesh.subMeshes) {
++        inputs.add(sub.verticesStart);
++        inputs.add(sub.verticesCount);
++        inputs.add(sub.indexStart);
++        inputs.add(sub.indexCount);
++        const material = sub.getMaterial();
++        inputs.add(material);
++        if (!material) continue;
++        inputs.add(material.backFaceCulling);
++        inputs.add(material.cullBackFaces);
++        inputs.add(material.sideOrientation);
++        inputs.add(material.fillMode);
++        inputs.add(material.disableDepthWrite);
++        inputs.add(material.needDepthPrePass);
++        const blended = material.needAlphaBlendingForMesh(mesh);
++        const tested = material.needAlphaTestingForMesh(mesh);
++        inputs.add(blended);
++        inputs.add(tested);
++        if (
++          tested ||
++          (blended && shadow.transparencyShadow) ||
++          material.shadowDepthWrapper ||
++          material.clipPlane ||
++          material.clipPlane2 ||
++          material.clipPlane3 ||
++          material.clipPlane4 ||
++          material.clipPlane5 ||
++          material.clipPlane6
++        )
++          dynamic = true;
++      }
++    }
++    for (const [geometry, watched] of geometries) {
++      if (watched.visited === epoch) continue;
++      if (geometry.onGeometryUpdated === watched.observer)
++        geometry.onGeometryUpdated = watched.previous;
++      geometries.delete(geometry);
++    }
++    // All caster world bounds are now current. Compare the actual Babylon light
++    // projection, including automatic depth/extents and parented light motion.
++    if (camera) {
++      inputs.matrix(shadow.getTransformMatrix());
++      inputs.add(light.getDepthMinZ(camera));
++      inputs.add(light.getDepthMaxZ(camera));
++    }
++    inputs.add(revision);
++    const changed = inputs.end();
++    const refreshRate = dynamic
++      ? RenderTargetTexture.REFRESHRATE_RENDER_ONEVERYFRAME
++      : RenderTargetTexture.REFRESHRATE_RENDER_ONCE;
++    if (nextMap.refreshRate !== refreshRate) nextMap.refreshRate = refreshRate;
++    if (changed || dynamic) nextMap.resetRefreshCounter();
++    // Do not reset after rendering: Babylon independently retries unready shaders.
++  }
++  const before = scene.onBeforeRenderTargetsRenderObservable.add(update);
++  let disposed = false;
++  function dispose() {
++    if (disposed) return;
++    disposed = true;
++    scene.onBeforeRenderTargetsRenderObservable.remove(before);
++    engine.onContextRestoredObservable.remove(restored);
++    for (const [geometry, watched] of geometries)
++      if (geometry.onGeometryUpdated === watched.observer)
++        geometry.onGeometryUpdated = watched.previous;
++    geometries.clear();
++    if (map && previousRefreshRate !== undefined)
++      map.refreshRate = previousRefreshRate;
++  }
++  scene.onDisposeObservable.addOnce(dispose);
++  return { update, dispose };
++}
+--- a/packages/render/src/ship-lighting.ts
++++ b/packages/render/src/ship-lighting.ts
+@@ -1,11 +1,15 @@
+ import type { Light } from "@babylonjs/core/Lights/light";
+ import { prepareShadowPolicy, isStructuralShadowSource } from "./shadow-policy";
+ import { createShadowBatches } from "./shadow-batches";
++import { createExteriorShadowCache } from "./exterior-shadow-cache";
+ import type { ManagedLocalLight } from "./local-light-budget";
+ import { isCabinMesh } from "./cabin-visibility";
+ import { Mesh } from "@babylonjs/core/Meshes/mesh";
+ import type { Geometry } from "@babylonjs/core/Meshes/geometry";
+-import { createShadowPlacementCache, sphereIntersectsSpot } from "./ship-shadow-cache";
++import {
++  createShadowPlacementCache,
++  sphereIntersectsSpot,
++} from "./ship-shadow-cache";
+ import { Matrix } from "@babylonjs/core/Maths/math.vector";
+ import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
+ import { cabinLineOfSight } from "./ship-occlusion";
+@@ -61,7 +65,12 @@
+   for (const mesh of meshes) {
+     prepareShadowPolicy(mesh);
+     mesh.receiveShadows = true;
+-    if (mesh.getTotalVertices() > 0 && !mesh.metadata?.hullDecal && !mesh.metadata?.shadowExcluded) exteriorShadows.addShadowCaster(mesh);
++    if (
++      mesh.getTotalVertices() > 0 &&
++      !mesh.metadata?.hullDecal &&
++      !mesh.metadata?.shadowExcluded
++    )
++      exteriorShadows.addShadowCaster(mesh);
+     if (mesh.material && "maxSimultaneousLights" in mesh.material)
+       mesh.material.maxSimultaneousLights = 8;
+     if (mesh.material && "enableSpecularAntiAliasing" in mesh.material)
+@@ -140,7 +149,12 @@
+   const proxySources = new Map<AbstractMesh, AbstractMesh>();
+   const occluders: AbstractMesh[] = [];
+   for (const mesh of meshes) {
+-    if (!mesh.getTotalVertices() || mesh.metadata?.hullDecal || mesh.metadata?.shadowExcluded) continue;
++    if (
++      !mesh.getTotalVertices() ||
++      mesh.metadata?.hullDecal ||
++      mesh.metadata?.shadowExcluded
++    )
++      continue;
+     const structural = isStructuralShadowSource(mesh);
+     if (structural) {
+       // Sibling clone shares immutable geometry, not its visibility or material.
+@@ -150,7 +164,11 @@
+         true,
+       );
+       if (!proxy) continue;
+-      proxy.metadata = {...mesh.metadata, role: 'proxy', shadowRole: mesh.metadata.role};
++      proxy.metadata = {
++        ...mesh.metadata,
++        role: "proxy",
++        shadowRole: mesh.metadata.role,
++      };
+       proxy.material = proxyMaterial;
+       proxy.layerMask = 0x10000000;
+       proxy.setEnabled(true);
+@@ -192,21 +210,36 @@
+   let cabinVisible = true;
+   let budgetManaged = false;
+   let budgetLightingAllowed = true;
+-  const localEligible = (light:Light) => cabinVisible && budgetLightingAllowed && root.isEnabled() && !light.isDisposed()
+-    && light.intensity > 0 && light.includedOnlyMeshes.some(mesh => !mesh.isDisposed() && mesh.isEnabled() && mesh.isVisible && mesh.visibility > 0);
+-  const localSources = receiverLights.map(light => ({
++  const localEligible = (light: Light) =>
++    cabinVisible &&
++    budgetLightingAllowed &&
++    root.isEnabled() &&
++    !light.isDisposed() &&
++    light.intensity > 0 &&
++    light.includedOnlyMeshes.some(
++      (mesh) =>
++        !mesh.isDisposed() &&
++        mesh.isEnabled() &&
++        mesh.isVisible &&
++        mesh.visibility > 0,
++    );
++  const localSources = receiverLights.map((light) => ({
+     light,
+     id: `${root.metadata?.shipId ?? root.name}:local:${light.name}`,
+-    apply: ({enabled,shadowEnabled}:Parameters<ManagedLocalLight['apply']>[0]) => {
+-      if(light.isDisposed())return;
++    apply: ({
++      enabled,
++      shadowEnabled,
++    }: Parameters<ManagedLocalLight["apply"]>[0]) => {
++      if (light.isDisposed()) return;
+       const next = enabled && localEligible(light);
+       const shadow = light.getShadowGenerator();
+       const nextShadow = next && shadowEnabled && !!shadow;
+       // A cached map may have changed while its light was suppressed. Ensure
+       // first reactivation sees current actor/geometry occlusion.
+-      if(nextShadow && (!light.isEnabled(false) || !light.shadowEnabled))shadow?.getShadowMap()?.resetRefreshCounter();
+-      if(light.isEnabled(false)!==next)light.setEnabled(next);
+-      if(light.shadowEnabled!==nextShadow)light.shadowEnabled=nextShadow;
++      if (nextShadow && (!light.isEnabled(false) || !light.shadowEnabled))
++        shadow?.getShadowMap()?.resetRefreshCounter();
++      if (light.isEnabled(false) !== next) light.setEnabled(next);
++      if (light.shadowEnabled !== nextShadow) light.shadowEnabled = nextShadow;
+     },
+   }));
+   const exteriorCasters = [
+@@ -217,7 +250,10 @@
+   const spotBatches = spots.map(() => createShadowBatches(root));
+   const refreshExteriorBatches = () => {
+     exteriorShadows.getShadowMap()!.renderList = sunBatches.rebuild(
+-      exteriorCasters.filter(mesh => !mesh.isDisposed() && (cabinVisible || !isCabinMesh(mesh.name))),
++      exteriorCasters.filter(
++        (mesh) =>
++          !mesh.isDisposed() && (cabinVisible || !isCabinMesh(mesh.name)),
++      ),
+     );
+   };
+   function setMembership(
+@@ -242,7 +278,8 @@
+       );
+       // Babylon interprets an empty inclusion list as unrestricted, not empty.
+       const enabled = localEligible(light);
+-      if (!budgetManaged && light.isEnabled(false) !== enabled) light.setEnabled(enabled);
++      if (!budgetManaged && light.isEnabled(false) !== enabled)
++        light.setEnabled(enabled);
+     }
+   }
+   syncReceiverLights();
+@@ -340,19 +377,21 @@
+       root.computeWorldMatrix(true);
+       const inverse = Matrix.Invert(root.getWorldMatrix());
+       staticLists = spots.map((light, i) =>
+-        spotBatches[i].rebuild(liveOccluders.filter((mesh) => {
+-          if (!mesh.isEnabled() || !mesh.isVisible) return false;
+-          mesh.computeWorldMatrix(true);
+-          const sphere = mesh.getBoundingInfo().boundingSphere;
+-          return sphereIntersectsSpot(
+-            Vector3.TransformCoordinates(sphere.centerWorld, inverse),
+-            sphere.radiusWorld,
+-            light.position,
+-            light.direction,
+-            light.range,
+-            light.angle,
+-          );
+-        })),
++        spotBatches[i].rebuild(
++          liveOccluders.filter((mesh) => {
++            if (!mesh.isEnabled() || !mesh.isVisible) return false;
++            mesh.computeWorldMatrix(true);
++            const sphere = mesh.getBoundingInfo().boundingSphere;
++            return sphereIntersectsSpot(
++              Vector3.TransformCoordinates(sphere.centerWorld, inverse),
++              sphere.radiusWorld,
++              light.position,
++              light.direction,
++              light.range,
++              light.angle,
++            );
++          }),
++        ),
+       );
+     }
+     const alive = actorMeshes.filter(
+@@ -392,7 +431,8 @@
+   function update(_interiorBlend: number, localX: number, localY: number) {
+     if (!cabinVisible) {
+       // Parent deck visibility stays live even while local spot maps are paused.
+-      if (sunPlacementCache.update(exteriorCasters, geometryRevision)) refreshExteriorBatches();
++      if (sunPlacementCache.update(exteriorCasters, geometryRevision))
++        refreshExteriorBatches();
+       return;
+     }
+     pruneDisposedActors();
+@@ -440,6 +480,7 @@
+     refreshShadowCache(localX, localY);
+   }
+   refreshShadowCache(0, 0);
++  createExteriorShadowCache(scene, sun, exteriorShadows);
+   scene.onDisposeObservable.addOnce(() => {
+     sunBatches.dispose();
+     sunPlacementCache.clear();
+@@ -463,14 +504,21 @@
+     update,
+     primaryLight: sun,
+     /** Sun/fill are separate; local positions use the current renderer frame. */
+-    getLocalLightSources(allowed=true):ManagedLocalLight[]{
+-      budgetManaged=true;budgetLightingAllowed=allowed;
+-      const world=root.computeWorldMatrix(true);
+-      return localSources.filter(({light})=>!light.isDisposed()).map(({light,id,apply})=>({
+-        id,position:Vector3.TransformCoordinates(light.position,world),range:light.range,
+-        eligible:localEligible(light),requiresShadow:spots.includes(light as SpotLight),
+-        shadowEligible:!!light.getShadowGenerator()?.getShadowMap(),apply,
+-      }));
++    getLocalLightSources(allowed = true): ManagedLocalLight[] {
++      budgetManaged = true;
++      budgetLightingAllowed = allowed;
++      const world = root.computeWorldMatrix(true);
++      return localSources
++        .filter(({ light }) => !light.isDisposed())
++        .map(({ light, id, apply }) => ({
++          id,
++          position: Vector3.TransformCoordinates(light.position, world),
++          range: light.range,
++          eligible: localEligible(light),
++          requiresShadow: spots.includes(light as SpotLight),
++          shadowEligible: !!light.getShadowGenerator()?.getShadowMap(),
++          apply,
++        }));
+     },
+   };
+ }

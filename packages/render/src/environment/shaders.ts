@@ -1,9 +1,11 @@
+// Keep world and view/projection uploads separate: Babylon camera-relative binding
+// can rebase these directly without inverting a combined astronomical WVP matrix.
 export const surfaceVertex = /* glsl */ `
 precision highp float;
 attribute vec3 position; attribute vec3 normal; attribute vec2 uv;
-uniform mat4 worldViewProjection; uniform mat4 world;
+uniform mat4 viewProjection; uniform mat4 world;
 varying vec3 vLocal; varying vec3 vWorld; varying vec3 vNormal; varying vec2 vUV;
-void main(){vLocal=position;vWorld=(world*vec4(position,1.)).xyz;vNormal=normalize(mat3(world)*normal);vUV=uv;gl_Position=worldViewProjection*vec4(position,1.);}
+void main(){vLocal=position;vWorld=(world*vec4(position,1.)).xyz;vNormal=normalize(mat3(world)*normal);vUV=uv;gl_Position=viewProjection*vec4(vWorld,1.);}
 `;
 const noise = /* glsl */ `
 float hash31(vec3 p){p=fract(p*.1031);p+=dot(p,p.yzx+33.33);return fract((p.x+p.y)*p.z);}
@@ -12,14 +14,14 @@ float fbm(vec3 p){float f=0.,a=.5;for(int i=0;i<5;i++){f+=a*noise3(p);p=p*2.03+v
 `;
 export const skyFragment = /* glsl */ `
 precision highp float;varying vec3 vLocal;
-uniform sampler2D nebula;uniform float time;uniform vec3 tint;uniform float strength;uniform float seed;uniform float viewportHeight;
+uniform sampler2D nebula;uniform sampler2D nebula2;uniform vec3 tint2;uniform float gasStrength;uniform float time;uniform vec3 tint;uniform float strength;uniform float seed;uniform float viewportHeight;
 ${noise}
-vec4 skyPlate(vec3 p,vec3 core){
+vec4 skyPlate(vec3 p,vec3 core,sampler2D plate){
  vec3 right=normalize(cross(core,vec3(0.,1.,0.)));vec3 up=cross(right,core);
  float forward=dot(p,core);
  vec2 uv=vec2(dot(p,right),dot(p,up))/max(.1,forward)*1.3+.5;
  uv=(floor(uv*vec2(1536.,1024.))+.5)/vec2(1536.,1024.);
- vec3 image=texture2D(nebula,clamp(uv,vec2(.001),vec2(.999))).rgb;
+ vec3 image=texture2D(plate,clamp(uv,vec2(.001),vec2(.999))).rgb;
  float seam=smoothstep(0.,.15,uv.x)*smoothstep(0.,.15,1.-uv.x)*smoothstep(.1,.5,forward);
  float poles=smoothstep(0.,.15,uv.y)*smoothstep(0.,.15,1.-uv.y);
  return vec4(image,seam*poles);
@@ -29,15 +31,18 @@ void main(){
  vec3 direction=normalize(vLocal);
  float starGrid=clamp(viewportHeight*2.6,1024.,4096.);
  vec3 cell=floor(direction*starGrid);vec3 p=normalize((cell+.5)/starGrid);
- vec4 rpg=skyPlate(p,normalize(vec3(.74,-.58,.355)));
- vec4 downward=skyPlate(p,normalize(vec3(-.20,-.96,-.18)));
+ vec4 rpg=skyPlate(p,normalize(vec3(.74,-.58,.355)),nebula);
+ vec4 downward=skyPlate(p,normalize(vec3(-.20,-.96,-.18)),nebula);
  vec3 image=mix(rpg.rgb*rpg.a,downward.rgb*downward.a,smoothstep(.78,.97,-p.y));
+ vec4 rpg2=skyPlate(p,normalize(vec3(.74,-.58,.355)),nebula2);
+ vec4 downward2=skyPlate(p,normalize(vec3(-.20,-.96,-.18)),nebula2);
+ vec3 image2=mix(rpg2.rgb*rpg2.a,downward2.rgb*downward2.a,smoothstep(.78,.97,-p.y));
  float cloud=fbm(p*4.5+seed);
  float overhead=smoothstep(.25,.85,-p.y);
  float ribbon=max(exp(-pow((p.y+.15+p.x*.45)/.36,2.))*.38, exp(-pow((p.x*.55+p.z-.05)/.38,2.))*overhead);
  vec3 gas=mix(vec3(.03,.06,.18),vec3(.24,.035,.31),smoothstep(.35,.7,cloud));
  gas*=smoothstep(.2,.72,cloud)*(.4+.6*ribbon);
- vec3 color=vec3(.005,.008,.028)+gas*.55+image*tint*strength*.65;
+ vec3 color=vec3(.005,.008,.028)+gas*.55*gasStrength+(image*tint+image2*tint2)*.65;
  // Small, deliberate palette steps retain the voxel/pixel character.
  color=floor(color*192.+.5)/192.;
  float star=hash31(cell+seed);float large=hash31(floor(direction*190.)+seed+3.);

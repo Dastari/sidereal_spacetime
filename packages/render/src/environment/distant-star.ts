@@ -30,7 +30,7 @@ export function createDistantStar(scene: Scene, bodyId: string) {
     },
     {
       attributes: ["position", "normal", "uv"],
-      uniforms: ["world", "worldViewProjection"],
+      uniforms: ["world", "viewProjection"],
       needAlphaBlending: true,
     },
   );

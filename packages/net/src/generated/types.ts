@@ -19,6 +19,9 @@ export const ActuatorOutput = __t.object("ActuatorOutput", {
 });
 export type ActuatorOutput = __Infer<typeof ActuatorOutput>;
 
+export const AdmittedSystemScapes = __t.object("AdmittedSystemScapes", {});
+export type AdmittedSystemScapes = __Infer<typeof AdmittedSystemScapes>;
+
 export const AppearanceReceipt = __t.object("AppearanceReceipt", {
   id: __t.string(),
   characterId: __t.string(),
@@ -36,6 +39,21 @@ export const AuthSession = __t.object("AuthSession", {
 });
 export type AuthSession = __Infer<typeof AuthSession>;
 
+export const AuthoredFlightActuator = __t.object("AuthoredFlightActuator", {
+  id: __t.string(),
+  shipId: __t.string(),
+  placedObjectId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  nozzleX: __t.f64(),
+  nozzleY: __t.f64(),
+  height: __t.f64(),
+  exhaustX: __t.f64(),
+  exhaustY: __t.f64(),
+  throttle: __t.f64(),
+});
+export type AuthoredFlightActuator = __Infer<typeof AuthoredFlightActuator>;
+
 export const AuthoredFlightFitting = __t.object("AuthoredFlightFitting", {
   id: __t.string(),
   shipId: __t.string(),
@@ -44,6 +62,30 @@ export const AuthoredFlightFitting = __t.object("AuthoredFlightFitting", {
   kind: __t.string(),
 });
 export type AuthoredFlightFitting = __Infer<typeof AuthoredFlightFitting>;
+
+export const AuthoredFlightPhysics = __t.object("AuthoredFlightPhysics", {
+  shipId: __t.string(),
+  revision: __t.u64(),
+  status: __t.string(),
+  reason: __t.string(),
+  massKg: __t.f64(),
+  centerX: __t.f64(),
+  centerY: __t.f64(),
+  inertiaKgM2: __t.f64(),
+  envelopeJson: __t.string(),
+  definitionHash: __t.string(),
+});
+export type AuthoredFlightPhysics = __Infer<typeof AuthoredFlightPhysics>;
+
+export const AuthoredFlightPowerFitting = __t.object("AuthoredFlightPowerFitting", {
+  id: __t.string(),
+  shipId: __t.string(),
+  placedObjectId: __t.string(),
+  sourceDeviceId: __t.string(),
+  kind: __t.string(),
+  powered: __t.bool(),
+});
+export type AuthoredFlightPowerFitting = __Infer<typeof AuthoredFlightPowerFitting>;
 
 export const AuthoredFlightStatus = __t.object("AuthoredFlightStatus", {
   shipId: __t.string(),
@@ -404,6 +446,51 @@ export const ConstructionFlightBinding = __t.object("ConstructionFlightBinding",
 });
 export type ConstructionFlightBinding = __Infer<typeof ConstructionFlightBinding>;
 
+export const ConstructionFlightCompiled = __t.object("ConstructionFlightCompiled", {
+  shipId: __t.string(),
+  revision: __t.u64(),
+  inputHash: __t.string(),
+  definitionHash: __t.string(),
+  massKg: __t.f64(),
+  centerX: __t.f64(),
+  centerY: __t.f64(),
+  inertiaKgM2: __t.f64(),
+  envelopeJson: __t.string(),
+  actuatorsJson: __t.string(),
+  computersJson: __t.string(),
+  hullJson: __t.string(),
+  contributionsJson: __t.string(),
+  status: __t.string(),
+  reason: __t.string(),
+});
+export type ConstructionFlightCompiled = __Infer<typeof ConstructionFlightCompiled>;
+
+export const ConstructionFlightConsumption = __t.object("ConstructionFlightConsumption", {
+  shipId: __t.string(),
+  sampleTick: __t.u64(),
+  compiledRevision: __t.u64(),
+  inputHash: __t.string(),
+  actuatorsJson: __t.string(),
+});
+export type ConstructionFlightConsumption = __Infer<typeof ConstructionFlightConsumption>;
+
+export const ConstructionFlightDamageEvent = __t.object("ConstructionFlightDamageEvent", {
+  id: __t.string(),
+  shipId: __t.string(),
+  fittingId: __t.string(),
+  expectedFittingRevision: __t.u64(),
+  lossFraction: __t.f64(),
+  sourceEventId: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type ConstructionFlightDamageEvent = __Infer<typeof ConstructionFlightDamageEvent>;
+
+export const ConstructionFlightDirty = __t.object("ConstructionFlightDirty", {
+  shipId: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionFlightDirty = __Infer<typeof ConstructionFlightDirty>;
+
 export const ConstructionFlightFitting = __t.object("ConstructionFlightFitting", {
   id: __t.string(),
   shipId: __t.string(),
@@ -415,6 +502,7 @@ export const ConstructionFlightFitting = __t.object("ConstructionFlightFitting",
   powered: __t.bool(),
   availability: __t.f64(),
   revision: __t.u64(),
+  definitionRevision: __t.u32(),
 });
 export type ConstructionFlightFitting = __Infer<typeof ConstructionFlightFitting>;
 
@@ -574,6 +662,52 @@ export const ConstructionNativePressureStatus = __t.object("ConstructionNativePr
   },
 });
 export type ConstructionNativePressureStatus = __Infer<typeof ConstructionNativePressureStatus>;
+
+export const ConstructionPassengerGrant = __t.object("ConstructionPassengerGrant", {
+  id: __t.string(),
+  shipId: __t.string(),
+  owner: __t.identity(),
+  granteeId: __t.string(),
+  granteeOwner: __t.identity(),
+  deckId: __t.string(),
+  instanceRevision: __t.u64(),
+  expiresMicros: __t.u64(),
+  revision: __t.u64(),
+});
+export type ConstructionPassengerGrant = __Infer<typeof ConstructionPassengerGrant>;
+
+export const ConstructionPassengerReceipt = __t.object("ConstructionPassengerReceipt", {
+  id: __t.string(),
+  owner: __t.identity(),
+  requestJson: __t.string(),
+  resultId: __t.string(),
+  revision: __t.u64(),
+});
+export type ConstructionPassengerReceipt = __Infer<typeof ConstructionPassengerReceipt>;
+
+export const ConstructionPassengerVisit = __t.object("ConstructionPassengerVisit", {
+  characterId: __t.string(),
+  owner: __t.identity(),
+  shipId: __t.string(),
+  deckId: __t.string(),
+  grantId: __t.string(),
+  grantRevision: __t.u64(),
+  visitId: __t.string(),
+  admissionRevision: __t.u64(),
+  sourceShipId: __t.string(),
+  sourceDeckId: __t.string(),
+  sourceVisitId: __t.string(),
+  sourceLocationRevision: __t.u64(),
+  sourceInstanceRevision: __t.u64(),
+  sourceSha256: __t.string(),
+  sourceSystemId: __t.string(),
+  sourceX: __t.f64(),
+  sourceY: __t.f64(),
+  revision: __t.u64(),
+  recoveryReason: __t.string(),
+  retryAfterMicros: __t.u64(),
+});
+export type ConstructionPassengerVisit = __Infer<typeof ConstructionPassengerVisit>;
 
 export const ConstructionPilotSeat = __t.object("ConstructionPilotSeat", {
   characterId: __t.string(),
@@ -825,6 +959,12 @@ export const CouchSeat = __t.object("CouchSeat", {
 });
 export type CouchSeat = __Infer<typeof CouchSeat>;
 
+export const CurrentInteriorCrew = __t.object("CurrentInteriorCrew", {});
+export type CurrentInteriorCrew = __Infer<typeof CurrentInteriorCrew>;
+
+export const CurrentPassengerInterior = __t.object("CurrentPassengerInterior", {});
+export type CurrentPassengerInterior = __Infer<typeof CurrentPassengerInterior>;
+
 export const EditReceipt = __t.object("EditReceipt", {
   id: __t.string(),
   owner: __t.identity(),
@@ -834,6 +974,21 @@ export const EditReceipt = __t.object("EditReceipt", {
   createdMicros: __t.u64(),
 });
 export type EditReceipt = __Infer<typeof EditReceipt>;
+
+export const FieldAsteroid = __t.object("FieldAsteroid", {
+  id: __t.string(),
+  systemId: __t.string(),
+  fieldId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  height: __t.f64(),
+  radius: __t.f64(),
+  seed: __t.u32(),
+  resourcesJson: __t.string(),
+  cellX: __t.i64(),
+  cellY: __t.i64(),
+});
+export type FieldAsteroid = __Infer<typeof FieldAsteroid>;
 
 export const GameShipAccess = __t.object("GameShipAccess", {
   shipId: __t.string(),
@@ -926,6 +1081,19 @@ export const InteractionReceipt = __t.object("InteractionReceipt", {
   createdMicros: __t.u64(),
 });
 export type InteractionReceipt = __Infer<typeof InteractionReceipt>;
+
+export const InteriorCrew = __t.object("InteriorCrew", {
+  characterId: __t.string(),
+  name: __t.string(),
+  shipId: __t.string(),
+  deckId: __t.string(),
+  localX: __t.f64(),
+  localY: __t.f64(),
+  standingElevationM: __t.f64(),
+  connected: __t.bool(),
+  sprinting: __t.bool(),
+});
+export type InteriorCrew = __Infer<typeof InteriorCrew>;
 
 export const InventoryContainer = __t.object("InventoryContainer", {
   id: __t.string(),
@@ -1028,6 +1196,17 @@ export const LegacyBodyAlias = __t.object("LegacyBodyAlias", {
 });
 export type LegacyBodyAlias = __Infer<typeof LegacyBodyAlias>;
 
+export const MapShipProjection = __t.object("MapShipProjection", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  name: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  heading: __t.f64(),
+  serverTick: __t.u64(),
+});
+export type MapShipProjection = __Infer<typeof MapShipProjection>;
+
 export const MovementTimer = __t.object("MovementTimer", {
   scheduledId: __t.u64(),
   scheduledAt: __t.scheduleAt(),
@@ -1053,14 +1232,37 @@ export const NativeAirlockStatus = __t.object("NativeAirlockStatus", {
 });
 export type NativeAirlockStatus = __Infer<typeof NativeAirlockStatus>;
 
+export const NearbyFieldAsteroid = __t.object("NearbyFieldAsteroid", {
+  id: __t.string(),
+  systemId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  height: __t.f64(),
+  radius: __t.f64(),
+  seed: __t.u32(),
+});
+export type NearbyFieldAsteroid = __Infer<typeof NearbyFieldAsteroid>;
+
+export const NearbyFieldAsteroids = __t.object("NearbyFieldAsteroids", {});
+export type NearbyFieldAsteroids = __Infer<typeof NearbyFieldAsteroids>;
+
 export const OwnActuatorOutputs = __t.object("OwnActuatorOutputs", {});
 export type OwnActuatorOutputs = __Infer<typeof OwnActuatorOutputs>;
 
 export const OwnAppearance = __t.object("OwnAppearance", {});
 export type OwnAppearance = __Infer<typeof OwnAppearance>;
 
+export const OwnAuthoredFlightActuators = __t.object("OwnAuthoredFlightActuators", {});
+export type OwnAuthoredFlightActuators = __Infer<typeof OwnAuthoredFlightActuators>;
+
 export const OwnAuthoredFlightFittings = __t.object("OwnAuthoredFlightFittings", {});
 export type OwnAuthoredFlightFittings = __Infer<typeof OwnAuthoredFlightFittings>;
+
+export const OwnAuthoredFlightPhysics = __t.object("OwnAuthoredFlightPhysics", {});
+export type OwnAuthoredFlightPhysics = __Infer<typeof OwnAuthoredFlightPhysics>;
+
+export const OwnAuthoredFlightPowerFittings = __t.object("OwnAuthoredFlightPowerFittings", {});
+export type OwnAuthoredFlightPowerFittings = __Infer<typeof OwnAuthoredFlightPowerFittings>;
 
 export const OwnAuthoredFlights = __t.object("OwnAuthoredFlights", {});
 export type OwnAuthoredFlights = __Infer<typeof OwnAuthoredFlights>;
@@ -1158,14 +1360,26 @@ export type OwnInventoryItems = __Infer<typeof OwnInventoryItems>;
 export const OwnInventoryState = __t.object("OwnInventoryState", {});
 export type OwnInventoryState = __Infer<typeof OwnInventoryState>;
 
+export const OwnMapShips = __t.object("OwnMapShips", {});
+export type OwnMapShips = __Infer<typeof OwnMapShips>;
+
 export const OwnNativeAirlocks = __t.object("OwnNativeAirlocks", {});
 export type OwnNativeAirlocks = __Infer<typeof OwnNativeAirlocks>;
+
+export const OwnPassengerGrants = __t.object("OwnPassengerGrants", {});
+export type OwnPassengerGrants = __Infer<typeof OwnPassengerGrants>;
+
+export const OwnPassengerVisit = __t.object("OwnPassengerVisit", {});
+export type OwnPassengerVisit = __Infer<typeof OwnPassengerVisit>;
 
 export const OwnReachableCargoContainers = __t.object("OwnReachableCargoContainers", {});
 export type OwnReachableCargoContainers = __Infer<typeof OwnReachableCargoContainers>;
 
 export const OwnReachableCargoItems = __t.object("OwnReachableCargoItems", {});
 export type OwnReachableCargoItems = __Infer<typeof OwnReachableCargoItems>;
+
+export const OwnShipZones = __t.object("OwnShipZones", {});
+export type OwnShipZones = __Infer<typeof OwnShipZones>;
 
 export const OwnShips = __t.object("OwnShips", {});
 export type OwnShips = __Infer<typeof OwnShips>;
@@ -1176,6 +1390,12 @@ export type OwnSpaceBodies = __Infer<typeof OwnSpaceBodies>;
 export const OwnStations = __t.object("OwnStations", {});
 export type OwnStations = __Infer<typeof OwnStations>;
 
+export const OwnSystemMaps = __t.object("OwnSystemMaps", {});
+export type OwnSystemMaps = __Infer<typeof OwnSystemMaps>;
+
+export const OwnWayfarerRebuildOffer = __t.object("OwnWayfarerRebuildOffer", {});
+export type OwnWayfarerRebuildOffer = __Infer<typeof OwnWayfarerRebuildOffer>;
+
 export const OwnWayfarerRefitAttachments = __t.object("OwnWayfarerRefitAttachments", {});
 export type OwnWayfarerRefitAttachments = __Infer<typeof OwnWayfarerRefitAttachments>;
 
@@ -1184,6 +1404,57 @@ export type OwnWayfarerRefitOffer = __Infer<typeof OwnWayfarerRefitOffer>;
 
 export const OwnWorldAdmission = __t.object("OwnWorldAdmission", {});
 export type OwnWorldAdmission = __Infer<typeof OwnWorldAdmission>;
+
+export const OwnedShip = __t.object("OwnedShip", {
+  id: __t.string(),
+  owner: __t.identity(),
+  name: __t.string(),
+  revision: __t.u64(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  omega: __t.f64(),
+  tick: __t.u64(),
+});
+export type OwnedShip = __Infer<typeof OwnedShip>;
+
+export const PassengerAdmission = __t.object("PassengerAdmission", {
+  id: __t.string(),
+  shipId: __t.string(),
+  granteeId: __t.string(),
+  deckId: __t.string(),
+  instanceRevision: __t.u64(),
+  expiresMicros: __t.u64(),
+  revision: __t.u64(),
+  issuedByYou: __t.bool(),
+});
+export type PassengerAdmission = __Infer<typeof PassengerAdmission>;
+
+export const PassengerInteriorShip = __t.object("PassengerInteriorShip", {
+  shipId: __t.string(),
+  name: __t.string(),
+  characterId: __t.string(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  instanceRevision: __t.u64(),
+  flightStatus: __t.string(),
+  flightReason: __t.string(),
+});
+export type PassengerInteriorShip = __Infer<typeof PassengerInteriorShip>;
+
+export const PassengerVisitStatus = __t.object("PassengerVisitStatus", {
+  characterId: __t.string(),
+  shipId: __t.string(),
+  deckId: __t.string(),
+  visitId: __t.string(),
+  grantId: __t.string(),
+  revision: __t.u64(),
+  admitted: __t.bool(),
+  recoveryReason: __t.string(),
+});
+export type PassengerVisitStatus = __Infer<typeof PassengerVisitStatus>;
 
 export const PersonalStarterReceipt = __t.object("PersonalStarterReceipt", {
   owner: __t.identity(),
@@ -1347,6 +1618,30 @@ export const ShipWorldMotion = __t.object("ShipWorldMotion", {
 });
 export type ShipWorldMotion = __Infer<typeof ShipWorldMotion>;
 
+export const ShipZoneProjection = __t.object("ShipZoneProjection", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  mapRevision: __t.u64(),
+  stateRevision: __t.u64(),
+  sequence: __t.u64(),
+  earliestSequence: __t.u64(),
+  activeJson: __t.string(),
+  transitionsJson: __t.string(),
+});
+export type ShipZoneProjection = __Infer<typeof ShipZoneProjection>;
+
+export const ShipZoneState = __t.object("ShipZoneState", {
+  shipId: __t.string(),
+  systemId: __t.string(),
+  mapRevision: __t.u64(),
+  stateRevision: __t.u64(),
+  sequence: __t.u64(),
+  earliestSequence: __t.u64(),
+  activeJson: __t.string(),
+  transitionsJson: __t.string(),
+});
+export type ShipZoneState = __Infer<typeof ShipZoneState>;
+
 export const SpaceBody = __t.object("SpaceBody", {
   id: __t.string(),
   shipId: __t.string(),
@@ -1399,6 +1694,48 @@ export const SystemBody = __t.object("SystemBody", {
 });
 export type SystemBody = __Infer<typeof SystemBody>;
 
+export const SystemMapDefinition = __t.object("SystemMapDefinition", {
+  id: __t.string(),
+  revision: __t.u64(),
+  documentJson: __t.string(),
+});
+export type SystemMapDefinition = __Infer<typeof SystemMapDefinition>;
+
+export const SystemMapEdit = __t.object("SystemMapEdit", {
+  id: __t.string(),
+  systemId: __t.string(),
+  principal: __t.identity(),
+  revision: __t.u64(),
+  beforeJson: __t.string(),
+  afterJson: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type SystemMapEdit = __Infer<typeof SystemMapEdit>;
+
+export const SystemMapProjection = __t.object("SystemMapProjection", {
+  id: __t.string(),
+  revision: __t.u64(),
+  documentJson: __t.string(),
+  sourceFingerprint: __t.string(),
+});
+export type SystemMapProjection = __Infer<typeof SystemMapProjection>;
+
+export const SystemScapeProjection = __t.object("SystemScapeProjection", {
+  id: __t.string(),
+  backgroundId: __t.string(),
+  regionsJson: __t.string(),
+});
+export type SystemScapeProjection = __Infer<typeof SystemScapeProjection>;
+
+export const SystemZone = __t.object("SystemZone", {
+  id: __t.string(),
+  systemId: __t.string(),
+  zoneId: __t.string(),
+  revision: __t.u64(),
+  definitionJson: __t.string(),
+});
+export type SystemZone = __Infer<typeof SystemZone>;
+
 export const VisibleBodyDescriptions = __t.object("VisibleBodyDescriptions", {});
 export type VisibleBodyDescriptions = __Infer<typeof VisibleBodyDescriptions>;
 
@@ -1411,6 +1748,9 @@ export const VisibleGroundItem = __t.object("VisibleGroundItem", {
   localX: __t.f64(),
   localY: __t.f64(),
   reachable: __t.bool(),
+  instanceId: __t.string(),
+  deckId: __t.string(),
+  elevationM: __t.f64(),
 });
 export type VisibleGroundItem = __Infer<typeof VisibleGroundItem>;
 
@@ -1490,6 +1830,18 @@ export const WayfarerLiquidReceipt = __t.object("WayfarerLiquidReceipt", {
   litres: __t.f64(),
 });
 export type WayfarerLiquidReceipt = __Infer<typeof WayfarerLiquidReceipt>;
+
+export const WayfarerRebuildOfferProjection = __t.object("WayfarerRebuildOfferProjection", {
+  shipId: __t.string(),
+  eligible: __t.bool(),
+  reason: __t.string(),
+  expectedInstanceRevision: __t.u64(),
+  expectedShipRevision: __t.u64(),
+  fingerprint: __t.string(),
+  targetSha256: __t.string(),
+  reportJson: __t.string(),
+});
+export type WayfarerRebuildOfferProjection = __Infer<typeof WayfarerRebuildOfferProjection>;
 
 export const WayfarerRefitAttachment = __t.object("WayfarerRefitAttachment", {
   id: __t.string(),

@@ -1,0 +1,739 @@
+[
+  {
+    "slug": "center-quiet",
+    "node_prefix": "GEO-center-quiet--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.8600000143051147
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-center-quiet--sealed-backing",
+      "GEO-center-quiet--quiet-plate"
+    ]
+  },
+  {
+    "slug": "center-service",
+    "node_prefix": "GEO-center-service--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.024999976158142,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.024999976158142,
+        1.2750000953674316
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-center-service--sealed-backing",
+      "GEO-center-service--quiet-plate",
+      "GEO-center-service--raised-machinery-cowl",
+      "GEO-center-service--radiator-recess",
+      "GEO-center-service--deep-fin-0",
+      "GEO-center-service--deep-fin-1",
+      "GEO-center-service--deep-fin-2",
+      "GEO-center-service--deep-fin-3",
+      "GEO-center-service--deep-fin-4",
+      "GEO-center-service--deep-fin-5",
+      "GEO-center-service--deep-fin-6",
+      "GEO-center-service--vent-frame",
+      "GEO-center-service--vent-frame.001"
+    ]
+  },
+  {
+    "slug": "center-service-aft",
+    "node_prefix": "GEO-center-service-aft--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.024999976158142,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.024999976158142,
+        1.2750000953674316
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-center-service-aft--sealed-backing",
+      "GEO-center-service-aft--quiet-plate",
+      "GEO-center-service-aft--raised-machinery-cowl",
+      "GEO-center-service-aft--radiator-recess",
+      "GEO-center-service-aft--deep-fin-0",
+      "GEO-center-service-aft--deep-fin-1",
+      "GEO-center-service-aft--deep-fin-2",
+      "GEO-center-service-aft--deep-fin-3",
+      "GEO-center-service-aft--deep-fin-4",
+      "GEO-center-service-aft--deep-fin-5",
+      "GEO-center-service-aft--deep-fin-6",
+      "GEO-center-service-aft--vent-frame",
+      "GEO-center-service-aft--vent-frame.001"
+    ]
+  },
+  {
+    "slug": "center-service-fore",
+    "node_prefix": "GEO-center-service-fore--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.024999976158142,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.024999976158142,
+        1.2750000953674316
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-center-service-fore--sealed-backing",
+      "GEO-center-service-fore--quiet-plate",
+      "GEO-center-service-fore--raised-machinery-cowl",
+      "GEO-center-service-fore--radiator-recess",
+      "GEO-center-service-fore--deep-fin-0",
+      "GEO-center-service-fore--deep-fin-1",
+      "GEO-center-service-fore--deep-fin-2",
+      "GEO-center-service-fore--deep-fin-3",
+      "GEO-center-service-fore--deep-fin-4",
+      "GEO-center-service-fore--deep-fin-5",
+      "GEO-center-service-fore--deep-fin-6",
+      "GEO-center-service-fore--vent-frame",
+      "GEO-center-service-fore--vent-frame.001"
+    ]
+  },
+  {
+    "slug": "center-crossbreak",
+    "node_prefix": "GEO-center-crossbreak--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        1.0099999904632568
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-center-crossbreak--sealed-backing",
+      "GEO-center-crossbreak--quiet-plate",
+      "GEO-center-crossbreak--transverse-channel",
+      "GEO-center-crossbreak--raised-cross-rib"
+    ]
+  },
+  {
+    "slug": "transition-port",
+    "node_prefix": "GEO-transition-port--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.8600000143051147
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-transition-port--sealed-backing",
+      "GEO-transition-port--quiet-plate",
+      "GEO-transition-port--pale-longitudinal-armor"
+    ]
+  },
+  {
+    "slug": "transition-starboard",
+    "node_prefix": "GEO-transition-starboard--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.8600000143051147
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-transition-starboard--sealed-backing",
+      "GEO-transition-starboard--quiet-plate",
+      "GEO-transition-starboard--pale-longitudinal-armor"
+    ]
+  },
+  {
+    "slug": "transition-break-port",
+    "node_prefix": "GEO-transition-break-port--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        1.0699999332427979
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          -0.275,
+          -0.145,
+          1.11
+        ],
+        "direction": [
+          0.25,
+          0.4,
+          -0.3
+        ],
+        "color": [
+          0.05,
+          0.72,
+          1.0
+        ],
+        "intensity": 0.85,
+        "range": 1.8,
+        "angle": 1.5
+      }
+    ],
+    "objects": [
+      "GEO-transition-break-port--sealed-backing",
+      "GEO-transition-break-port--quiet-plate",
+      "GEO-transition-break-port--pale-longitudinal-armor",
+      "GEO-transition-break-port--transverse-channel",
+      "GEO-transition-break-port--raised-cross-rib",
+      "GEO-transition-break-port--crossbreak-light"
+    ]
+  },
+  {
+    "slug": "transition-break-starboard",
+    "node_prefix": "GEO-transition-break-starboard--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        1.0699999332427979
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          0.275,
+          -0.145,
+          1.11
+        ],
+        "direction": [
+          -0.25,
+          0.4,
+          -0.3
+        ],
+        "color": [
+          0.05,
+          0.72,
+          1.0
+        ],
+        "intensity": 0.85,
+        "range": 1.8,
+        "angle": 1.5
+      }
+    ],
+    "objects": [
+      "GEO-transition-break-starboard--sealed-backing",
+      "GEO-transition-break-starboard--quiet-plate",
+      "GEO-transition-break-starboard--pale-longitudinal-armor",
+      "GEO-transition-break-starboard--transverse-channel",
+      "GEO-transition-break-starboard--raised-cross-rib",
+      "GEO-transition-break-starboard--crossbreak-light"
+    ]
+  },
+  {
+    "slug": "transition-service-port",
+    "node_prefix": "GEO-transition-service-port--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        1.2350000143051147
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-transition-service-port--sealed-backing",
+      "GEO-transition-service-port--quiet-plate",
+      "GEO-transition-service-port--pale-longitudinal-armor",
+      "GEO-transition-service-port--raised-machinery-cowl",
+      "GEO-transition-service-port--service-secondary-cover",
+      "GEO-transition-service-port--utility-witness",
+      "GEO-transition-service-port--utility-witness.001"
+    ]
+  },
+  {
+    "slug": "transition-service-starboard",
+    "node_prefix": "GEO-transition-service-starboard--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        1.2350000143051147
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-transition-service-starboard--sealed-backing",
+      "GEO-transition-service-starboard--quiet-plate",
+      "GEO-transition-service-starboard--pale-longitudinal-armor",
+      "GEO-transition-service-starboard--raised-machinery-cowl",
+      "GEO-transition-service-starboard--service-secondary-cover",
+      "GEO-transition-service-starboard--utility-witness",
+      "GEO-transition-service-starboard--utility-witness.001"
+    ]
+  },
+  {
+    "slug": "transition-service-aft-port",
+    "node_prefix": "GEO-transition-service-aft-port--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        1.2350000143051147
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-transition-service-aft-port--sealed-backing",
+      "GEO-transition-service-aft-port--quiet-plate",
+      "GEO-transition-service-aft-port--pale-longitudinal-armor",
+      "GEO-transition-service-aft-port--raised-machinery-cowl",
+      "GEO-transition-service-aft-port--service-secondary-cover",
+      "GEO-transition-service-aft-port--utility-witness"
+    ]
+  },
+  {
+    "slug": "transition-service-aft-starboard",
+    "node_prefix": "GEO-transition-service-aft-starboard--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        1.2350000143051147
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-transition-service-aft-starboard--sealed-backing",
+      "GEO-transition-service-aft-starboard--quiet-plate",
+      "GEO-transition-service-aft-starboard--pale-longitudinal-armor",
+      "GEO-transition-service-aft-starboard--raised-machinery-cowl",
+      "GEO-transition-service-aft-starboard--service-secondary-cover",
+      "GEO-transition-service-aft-starboard--utility-witness"
+    ]
+  },
+  {
+    "slug": "transition-service-fore-port",
+    "node_prefix": "GEO-transition-service-fore-port--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        1.2350000143051147
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-transition-service-fore-port--sealed-backing",
+      "GEO-transition-service-fore-port--quiet-plate",
+      "GEO-transition-service-fore-port--pale-longitudinal-armor",
+      "GEO-transition-service-fore-port--raised-machinery-cowl",
+      "GEO-transition-service-fore-port--service-secondary-cover",
+      "GEO-transition-service-fore-port--utility-witness"
+    ]
+  },
+  {
+    "slug": "transition-service-fore-starboard",
+    "node_prefix": "GEO-transition-service-fore-starboard--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        1.2350000143051147
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-transition-service-fore-starboard--sealed-backing",
+      "GEO-transition-service-fore-starboard--quiet-plate",
+      "GEO-transition-service-fore-starboard--pale-longitudinal-armor",
+      "GEO-transition-service-fore-starboard--raised-machinery-cowl",
+      "GEO-transition-service-fore-starboard--service-secondary-cover",
+      "GEO-transition-service-fore-starboard--utility-witness"
+    ]
+  },
+  {
+    "slug": "shoulder-plain",
+    "node_prefix": "GEO-shoulder-plain--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.5199999809265137
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-shoulder-plain--sealed-backing",
+      "GEO-shoulder-plain--broad-shoulder",
+      "GEO-shoulder-plain--utility-amber"
+    ]
+  },
+  {
+    "slug": "shoulder-vent",
+    "node_prefix": "GEO-shoulder-vent--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.6800000071525574
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-shoulder-vent--sealed-backing",
+      "GEO-shoulder-vent--forward-armor",
+      "GEO-shoulder-vent--aft-armor",
+      "GEO-shoulder-vent--radiator-recess",
+      "GEO-shoulder-vent--deep-fin-0",
+      "GEO-shoulder-vent--deep-fin-1",
+      "GEO-shoulder-vent--deep-fin-2",
+      "GEO-shoulder-vent--deep-fin-3",
+      "GEO-shoulder-vent--deep-fin-4",
+      "GEO-shoulder-vent--deep-fin-5",
+      "GEO-shoulder-vent--deep-fin-6",
+      "GEO-shoulder-vent--vent-frame",
+      "GEO-shoulder-vent--vent-frame.001",
+      "GEO-shoulder-vent--grouped-appliance-plinth"
+    ]
+  },
+  {
+    "slug": "shoulder-vent-fore-datum",
+    "node_prefix": "GEO-shoulder-vent-fore-datum--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.125
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.8050000071525574
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-shoulder-vent-fore-datum--sealed-backing",
+      "GEO-shoulder-vent-fore-datum--forward-armor",
+      "GEO-shoulder-vent-fore-datum--aft-armor",
+      "GEO-shoulder-vent-fore-datum--radiator-recess",
+      "GEO-shoulder-vent-fore-datum--deep-fin-0",
+      "GEO-shoulder-vent-fore-datum--deep-fin-1",
+      "GEO-shoulder-vent-fore-datum--deep-fin-2",
+      "GEO-shoulder-vent-fore-datum--deep-fin-3",
+      "GEO-shoulder-vent-fore-datum--deep-fin-4",
+      "GEO-shoulder-vent-fore-datum--deep-fin-5",
+      "GEO-shoulder-vent-fore-datum--deep-fin-6",
+      "GEO-shoulder-vent-fore-datum--vent-frame",
+      "GEO-shoulder-vent-fore-datum--vent-frame.001",
+      "GEO-shoulder-vent-fore-datum--grouped-appliance-plinth"
+    ]
+  },
+  {
+    "slug": "shoulder-red",
+    "node_prefix": "GEO-shoulder-red--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.8749999403953552
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-shoulder-red--sealed-backing",
+      "GEO-shoulder-red--hatch-surround",
+      "GEO-shoulder-red--hatch-gasket",
+      "GEO-shoulder-red--wine-service-lid",
+      "GEO-shoulder-red--latch",
+      "GEO-shoulder-red--latch.001",
+      "GEO-shoulder-red--grouped-appliance-plinth"
+    ]
+  },
+  {
+    "slug": "shoulder-lamp",
+    "node_prefix": "GEO-shoulder-lamp--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        1.0,
+        1.0,
+        0.9035106897354126
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          0,
+          -0.24,
+          0.93
+        ],
+        "direction": [
+          0,
+          -0.65,
+          -0.41
+        ],
+        "color": [
+          0.05,
+          0.72,
+          1.0
+        ],
+        "intensity": 1.0,
+        "range": 1.8,
+        "angle": 1.5
+      }
+    ],
+    "objects": [
+      "GEO-shoulder-lamp--sealed-backing",
+      "GEO-shoulder-lamp--broad-shoulder",
+      "GEO-shoulder-lamp--fixture-plinth",
+      "GEO-shoulder-lamp--fixture-recess",
+      "GEO-shoulder-lamp--light-lens"
+    ]
+  },
+  {
+    "slug": "edge-long",
+    "node_prefix": "GEO-edge-long--surface",
+    "bounds": {
+      "min": [
+        -0.125,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.125,
+        1.0,
+        0.2199999988079071
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-edge-long--edge-armor"
+    ]
+  },
+  {
+    "slug": "edge-short",
+    "node_prefix": "GEO-edge-short--surface",
+    "bounds": {
+      "min": [
+        -0.125,
+        -0.25,
+        0.0
+      ],
+      "max": [
+        0.125,
+        0.25,
+        0.2199999988079071
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-edge-short--edge-armor"
+    ]
+  },
+  {
+    "slug": "stern-strip",
+    "node_prefix": "GEO-stern-strip--surface",
+    "bounds": {
+      "min": [
+        -1.0,
+        -0.25,
+        0.0
+      ],
+      "max": [
+        1.0,
+        0.25,
+        0.2199999988079071
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-stern-strip--edge-armor"
+    ]
+  },
+  {
+    "slug": "vestibule-name",
+    "node_prefix": "GEO-vestibule-name--surface",
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "max": [
+        2.0,
+        2.0,
+        0.30000001192092896
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-vestibule-name--sealed-backing",
+      "GEO-vestibule-name--name-armor"
+    ]
+  },
+  {
+    "slug": "pilot-roof",
+    "node_prefix": "GEO-pilot-roof--surface",
+    "bounds": {
+      "min": [
+        0.625,
+        0.0,
+        0.0
+      ],
+      "max": [
+        5.375,
+        3.375,
+        0.28999999165534973
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-pilot-roof--sealed-structural-tray",
+      "GEO-pilot-roof--armor-course-0",
+      "GEO-pilot-roof--armor-course-1",
+      "GEO-pilot-roof--armor-course-2",
+      "GEO-pilot-roof--armor-course-3",
+      "GEO-pilot-roof--armor-course-4",
+      "GEO-pilot-roof--armor-course-5",
+      "GEO-pilot-roof--bridge-service-panel",
+      "GEO-pilot-roof--radiator-recess",
+      "GEO-pilot-roof--deep-fin-0",
+      "GEO-pilot-roof--deep-fin-1",
+      "GEO-pilot-roof--deep-fin-2",
+      "GEO-pilot-roof--deep-fin-3",
+      "GEO-pilot-roof--deep-fin-4",
+      "GEO-pilot-roof--deep-fin-5",
+      "GEO-pilot-roof--deep-fin-6",
+      "GEO-pilot-roof--vent-frame",
+      "GEO-pilot-roof--vent-frame.001",
+      "GEO-pilot-roof--radiator-recess.001",
+      "GEO-pilot-roof--deep-fin-0.001",
+      "GEO-pilot-roof--deep-fin-1.001",
+      "GEO-pilot-roof--deep-fin-2.001",
+      "GEO-pilot-roof--deep-fin-3.001",
+      "GEO-pilot-roof--deep-fin-4.001",
+      "GEO-pilot-roof--deep-fin-5.001",
+      "GEO-pilot-roof--deep-fin-6.001",
+      "GEO-pilot-roof--vent-frame.002",
+      "GEO-pilot-roof--vent-frame.003",
+      "GEO-pilot-roof--bow-emitter",
+      "GEO-pilot-roof--bow-emitter.001"
+    ]
+  },
+  {
+    "slug": "outer-roof-collar",
+    "node_prefix": "GEO-outer-roof-collar--surface",
+    "bounds": {
+      "min": [
+        0.0,
+        0.0,
+        2.59375
+      ],
+      "max": [
+        0.375,
+        0.5,
+        3.3125
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-outer-roof-collar--collar"
+    ]
+  }
+]

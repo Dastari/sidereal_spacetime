@@ -1,9 +1,13 @@
+import { AuthoredFlightReview } from "./AuthoredFlightReview";
+import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
+import { ShipSystemsPanel } from "./ShipSystemsPanel";
 import { ShipRefitPanel } from "./ShipRefitPanel";
 import { MountedFuelPanel } from "./MountedFuelPanel";
 import {
-  QUALIFIED_FLIGHT_PREVIEW_SHA256,
+  supportsAuthoredFlightPresentation,
   authoredFlightPresentation,
+  passengerFlightAdmitted,
   authoredExhaustTelemetry,
 } from "./construction-flight-presentation";
 import {
@@ -20,9 +24,10 @@ import {
 } from "./shared-body-presentation";
 import { constructionInspectionCatalog } from "./construction-inspection";
 import { constructionPresentation } from "./construction-presentation";
+import { groundItemsForScene } from "./ground-items";
 import { createMovementControl } from "./movement-control";
 import { createIntentTransmitter } from "./intent-transmitter";
-import { LAB_STORAGE_FIXTURES } from "../../../packages/content/src/storage-fixtures";
+import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
 import { ConstructionReview } from "./ConstructionReview";
 import { PILOT_LAYOUT } from "../../../packages/content/src/pilot-layout";
 import { AccountPanel } from "./AccountPanel";
@@ -44,17 +49,11 @@ import {
   createSharedWorldPresentation,
   getSharedWorldBinding,
   type DbConnection,
-  type ShipRow,
   type CharacterRow,
   type StationRow,
   type SpaceBodyRow,
-  type ActuatorOutputRow,
 } from "@sidereal/net";
 import { SPACE_VISTAS, DEFAULT_SPACE_VISTA } from "@sidereal/content";
-import {
-  LAB_FLIGHT_ACTUATORS,
-  LAB_FLIGHT_MASS,
-} from "../../../packages/content/src/flight";
 import { LAB_BODIES } from "../../../packages/content/src/space";
 import { LAB_INTERACTIONS } from "../../../packages/content/src/interactions";
 import { inventoryView, inventoryAppearance } from "./inventory";
@@ -70,6 +69,7 @@ import {
 } from "./objects";
 import type { CrewAppearance } from "../../../packages/render/src/crew/appearance";
 import type { SceneState } from "../../../packages/render/src";
+import { resolveCrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import {
   createGameUI,
   gameplayIntent,
@@ -105,9 +105,7 @@ export default function App({
     [error, setError] = useState("");
   const [revision, refresh] = useState(0),
     [interior, setInterior] = useState(true);
-  const [vistaId, setVistaId] = useState(
-    () => localStorage.getItem("sidereal.vista") ?? DEFAULT_SPACE_VISTA,
-  );
+  const [vistaId, setVistaId] = useState(() => DEFAULT_SPACE_VISTA);
   const [reducedMotion, setReducedMotion] = useState(
     () => matchMedia("(prefers-reduced-motion: reduce)").matches,
   );
@@ -145,7 +143,7 @@ export default function App({
   const sceneState = useRef<SceneState>({
     vx: 0,
     vy: 0,
-    actuatorOutputs: [] as ActuatorOutputRow[],
+    flightActuators: [],
     heading: 0,
     x: 0,
     y: 0,
@@ -196,6 +194,50 @@ export default function App({
     session.current?.authenticate(auth);
   }, [auth?.token]);
   const c = connection.current;
+  const systemScape = c
+    ? [...c.db.admittedSystemScapes.iter()].find(
+        (s) => s.id === sharedAdmission?.systemId,
+      )
+    : undefined;
+  useEffect(() => {
+    setVistaId(systemScape?.backgroundId ?? DEFAULT_SPACE_VISTA);
+  }, [systemScape?.backgroundId]);
+  const activeSpaceRegion: SpaceRegion | undefined = systemScape?.regionsJson
+    ? JSON.parse(systemScape.regionsJson)
+    : undefined;
+  const shipZones =
+    c && sharedAdmission
+      ? c.db.ownShipZones.shipId.find(sharedAdmission.shipId)
+      : undefined;
+  const zoneNames: string[] = shipZones
+    ? JSON.parse(shipZones.activeJson).map(
+        (id: string) =>
+          activeSpaceRegion?.zones?.find((z) => z.id === id)?.name ??
+          (id === sharedAdmission?.systemId ? "System" : id),
+      )
+    : [];
+  const fieldBodies = () =>
+    connection.current
+      ? [...connection.current.db.nearbyFieldAsteroids.iter()].map((r) => ({
+          id: r.id,
+          key: r.id,
+          shipId: "",
+          kind: "asteroid",
+          appearance: "stone",
+          x: r.x,
+          y: r.y,
+          height: r.height,
+          radius: r.radius,
+          seed: r.seed,
+          vx: 0,
+          vy: 0,
+          heading: 0,
+          omega: 0,
+          massKg: 0,
+          tick: 0n,
+        }))
+      : [];
+
   const ownedActors = c ? [...c.db.ownCharacters.iter()] : [];
   const actor = (
     sharedAdmission
@@ -204,11 +246,38 @@ export default function App({
         ? ownedActors[0]
         : undefined
   ) as CharacterRow | undefined;
-  const ship = (
+  const passengerInterior =
     c && actor
-      ? [...c.db.ownShips.iter()].find((row) => row.id === actor.shipId)
-      : undefined
-  ) as ShipRow | undefined;
+      ? [...c.db.currentPassengerInterior.iter()].find(
+          (p) => p.characterId === actor.id && p.shipId === actor.shipId,
+        )
+      : undefined;
+  const passengerVisit =
+    c && passengerInterior
+      ? [...c.db.ownPassengerVisit.iter()].find(
+          (p) =>
+            p.characterId === actor?.id &&
+            p.shipId === passengerInterior.shipId &&
+            p.admitted,
+        )
+      : undefined;
+  const passengerMotion =
+    c && passengerVisit
+      ? [...c.db.visibleShipMotion.iter()].find(
+          (m) => m.shipId === passengerVisit.shipId,
+        )
+      : undefined;
+  const ship =
+    c && actor
+      ? ([...c.db.ownShips.iter()].find((row) => row.id === actor.shipId) ??
+        (passengerInterior && passengerMotion
+          ? {
+              ...passengerMotion,
+              id: passengerInterior.shipId,
+              name: passengerInterior.name,
+            }
+          : undefined))
+      : undefined;
   localShipId.current = ship?.id;
   const sharedBinding = sharedEnabled ? getSharedWorldBinding(c) : undefined;
   const sharedEntry = useSharedWorldEntry(c, sharedEnabled);
@@ -289,8 +358,33 @@ export default function App({
     c ? [...c.db.ownAuthoredFlights.iter()] : [],
     ship,
   );
+  const passengerAdmitted = passengerFlightAdmitted(
+    actor,
+    constructionVisit,
+    constructionInstance,
+    passengerVisit,
+    passengerInterior,
+    passengerMotion,
+  );
   const staticConstruction =
-    constructionScene.active && !authoredFlight.admitted;
+    constructionScene.active && !authoredFlight.admitted && !passengerAdmitted;
+  const compiledPhysics =
+    c && ship
+      ? [...c.db.ownAuthoredFlightPhysics.iter()].find(
+          (p) => p.shipId === ship.id,
+        )
+      : undefined;
+  let availableForwardThrust: number | undefined;
+  try {
+    const envelope = JSON.parse(compiledPhysics?.envelopeJson ?? "null");
+    if (
+      compiledPhysics?.status === "ready" &&
+      Number.isFinite(envelope?.forward)
+    )
+      availableForwardThrust = compiledPhysics.massKg * envelope.forward;
+  } catch {
+    /* A rejected definition has no available envelope. */
+  }
   const displayedOutputs = readyForOutputs();
   function readyForOutputs() {
     const outputs =
@@ -518,19 +612,11 @@ export default function App({
     heading: ship
       ? ((((ship.heading * 180) / Math.PI) % 360) + 360) % 360
       : undefined,
-    mass: !constructionInstance && ship ? LAB_FLIGHT_MASS.massKg : undefined,
-    thrust:
-      !constructionInstance && ship
-        ? LAB_FLIGHT_ACTUATORS.filter((device) =>
-            device.id.startsWith("drives-main-"),
-          ).reduce(
-            (total, device) => total + device.maxThrustN * device.availability,
-            0,
-          )
-        : undefined,
+    mass: compiledPhysics?.massKg || undefined,
+    thrust: availableForwardThrust,
     x: ship?.x,
     y: ship?.y,
-    revision: ship?.revision.toString(),
+    revision: ship && "revision" in ship ? ship.revision.toString() : undefined,
     receipts: c ? [...c.db.ownEditReceipts.iter()].length : 0,
     pending,
     vistaId,
@@ -736,6 +822,13 @@ export default function App({
               if (!disposed) setLoadStage(stage);
             },
             equipmentPose,
+            crewBundle: resolveCrewBundle({
+              // Proposal voxel crew: local dev or an explicit preview build only; never a default.
+              previewEnabled:
+                import.meta.env.DEV ||
+                import.meta.env.VITE_CREW_VOXEL_PREVIEW === "1",
+              query: new URLSearchParams(window.location.search).get("crew"),
+            }),
             sharedWorld: sharedEnabled
               ? {
                   store: sharedPresentation.store,
@@ -744,7 +837,13 @@ export default function App({
                       ?.shipId ?? localShipId.current,
                   bodies: (nowMs) =>
                     sharedPresentation.store.getSnapshot().admission.length
-                      ? sharedBodyPresentation(sharedPresentation.store, nowMs)
+                      ? [
+                          ...sharedBodyPresentation(
+                            sharedPresentation.store,
+                            nowMs,
+                          ),
+                          ...fieldBodies(),
+                        ]
                       : undefined,
                 }
               : undefined,
@@ -754,9 +853,9 @@ export default function App({
                   attachments: refitAttachments,
                 }
               : undefined,
-            authoredFlightEffects:
-              constructionInstance?.blueprintSha256 ===
-              QUALIFIED_FLIGHT_PREVIEW_SHA256,
+            authoredFlightEffects: supportsAuthoredFlightPresentation(
+              constructionInstance?.blueprintSha256,
+            ),
             constructionEgress: constructionScene.egress,
             onScene(scene) {
               if (disposed) return;
@@ -791,7 +890,7 @@ export default function App({
                       return;
                     }
                     const current = live.current.ship;
-                    if (current)
+                    if (current && "revision" in current)
                       void perform(() =>
                         connection.current!.reducers.renameShip({
                           shipId: current.id,
@@ -1075,8 +1174,11 @@ export default function App({
     sceneState.current = {
       selectedObject,
       groundItems:
-        ready && c && !constructionScene.active
-          ? [...c.db.ownGroundItems.iter()]
+        ready && c
+          ? groundItemsForScene(
+              [...c.db.ownGroundItems.iter()],
+              constructionScene,
+            )
           : [],
       combat: {
         active: combatEnabled && !!combat?.aimActive,
@@ -1148,7 +1250,12 @@ export default function App({
       ...inventoryAppearance(inventory, cosmetics),
       vx: staticConstruction ? 0 : (ship?.vx ?? 0),
       vy: staticConstruction ? 0 : (ship?.vy ?? 0),
-      actuatorOutputs: ready ? displayedOutputs : [],
+      flightActuators:
+        ready && c && ship && authoredFlight.admitted
+          ? [...c.db.ownAuthoredFlightActuators.iter()].filter(
+              (a) => a.shipId === ship.id,
+            )
+          : [],
       heading: staticConstruction ? 0 : (ship?.heading ?? 0),
       x: staticConstruction ? 0 : (ship?.x ?? 0),
       y: staticConstruction ? 0 : (ship?.y ?? 0),
@@ -1163,7 +1270,8 @@ export default function App({
           ? (Math.sign((couch ?? constructionSeat)!.localX) * Math.PI) / 2
           : 0,
       sprinting: actor?.sprinting ?? false,
-      vistaId,
+      vistaId: systemScape ? DEFAULT_SPACE_VISTA : vistaId,
+      spaceRegion: activeSpaceRegion,
       reducedMotion,
       bodies: !staticConstruction ? navigationBodies : [],
     };
@@ -1171,6 +1279,7 @@ export default function App({
     gui.current?.update(uiState);
   }, [
     revision,
+    systemScape?.regionsJson,
     interior,
     seated,
     vistaId,
@@ -1404,8 +1513,59 @@ export default function App({
               : "Sidereal game. WASD moves. Tab changes view. E uses the control seat. Escape opens the console. F6 focuses interface controls."
           }
         />
+        {shipZones && (
+          <div
+            aria-label="Current zones"
+            style={{
+              position: "absolute",
+              top: 16,
+              left: "50%",
+              transform: "translateX(-50%)",
+              color: "#b8ccdc",
+              fontSize: 12,
+              pointerEvents: "none",
+            }}
+          >
+            {zoneNames.length ? zoneNames.join(" / ") : "Deep space"}
+          </div>
+        )}
         <ConstructionReview connection={c} onError={setError} />
+        {!passengerVisit && (
+          <ConstructionReview connection={c} onError={setError} />
+        )}
+        {passengerInterior && (
+          <aside
+            aria-label="Passenger interior"
+            className="construction-flight-properties"
+          >
+            <strong>{passengerInterior.name} · Passenger</strong>
+            {passengerInterior.flightStatus !== "ready" && (
+              <p role="status">
+                Flight unavailable: {passengerInterior.flightReason}
+              </p>
+            )}
+            <small>
+              {c
+                ? [...c.db.currentInteriorCrew.iter()]
+                    .filter((p) => p.shipId === passengerInterior.shipId)
+                    .map((p) => p.name)
+                    .join(", ")
+                : ""}
+            </small>
+          </aside>
+        )}
         <ShipRefitPanel connection={c} onError={setError} />
+        <ShipSystemsPanel connection={c} onError={setError} />
+        {c && gameShipAccess && constructionInstance && (
+          <details className="construction-flight-properties">
+            <summary>Flight properties</summary>
+            <AuthoredFlightReview
+              connection={c}
+              instanceId={constructionInstance.id}
+              onError={setError}
+            />
+          </details>
+        )}
         <MountedFuelPanel
           connection={c}
           selectedObject={selectedObject}

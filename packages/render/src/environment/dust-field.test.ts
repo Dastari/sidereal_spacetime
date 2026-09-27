@@ -127,20 +127,27 @@ test("dust streak and perspective cap update without rebuilding stationary cell 
 });
 
 test("dust snapshot revision changes only when GPU uniforms or instance buffers change", () => {
-  const engine=new NullEngine(), scene=new Scene(engine), root=new TransformNode("environment",scene);
-  const field=createDustField(scene,root), camera=new Vector3(0,60,40), target=Vector3.Zero();
-  const options={x:0,y:0,reducedMotion:true,aspect:1.5};
-  field.update(camera,target,options);
-  const initial=field.mesh.metadata.snapshotRevision;
-  for (let i=0;i<4;i++) {
+  const engine = new NullEngine(),
+    scene = new Scene(engine),
+    root = new TransformNode("environment", scene);
+  const field = createDustField(scene, root),
+    camera = new Vector3(0, 60, 40),
+    target = Vector3.Zero();
+  const options = { x: 0, y: 0, reducedMotion: true, aspect: 1.5 };
+  field.update(camera, target, options);
+  const initial = field.mesh.metadata.snapshotRevision;
+  for (let i = 0; i < 4; i++) {
     expect(field.mesh.isVerticesDataPresent(`previousWorld${i}`)).toBe(true);
-    expect(field.mesh.getVerticesData(`previousWorld${i}`)).toEqual(field.mesh.getVerticesData(`world${i}`));
+    expect(field.mesh.getVerticesData(`previousWorld${i}`)).toEqual(
+      field.mesh.getVerticesData(`world${i}`),
+    );
   }
-  field.update(camera,target,options);
+  field.update(camera, target, options);
   expect(field.mesh.metadata.snapshotRevision).toBe(initial);
-  field.update(camera,target,{...options,x:0.1});
-  expect(field.mesh.metadata.snapshotRevision).toBe(initial+1);
-  field.update(camera,target,{...options,x:100});
-  expect(field.mesh.metadata.snapshotRevision).toBe(initial+2);
-  scene.dispose();engine.dispose();
+  field.update(camera, target, { ...options, x: 0.1 });
+  expect(field.mesh.metadata.snapshotRevision).toBe(initial + 1);
+  field.update(camera, target, { ...options, x: 100 });
+  expect(field.mesh.metadata.snapshotRevision).toBe(initial + 2);
+  scene.dispose();
+  engine.dispose();
 });

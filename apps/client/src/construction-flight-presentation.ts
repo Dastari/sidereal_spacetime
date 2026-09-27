@@ -1,8 +1,11 @@
-import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
+import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
 
 /** Display allowlist only; authority independently validates the full source. */
 export const QUALIFIED_FLIGHT_PREVIEW_SHA256 =
   "362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340";
+
+/** Presentation only; game authority still checks the complete source and fittings. */
+export const supportsAuthoredFlightPresentation = isQualifiedWayfarerBlueprint;
 
 export interface AuthoredFlightStatus {
   shipId: string;
@@ -96,9 +99,8 @@ export interface AuthoredFlightFitting {
   sourceDeviceId: string;
   kind: string;
 }
-/** The legacy effect mount names are presentation keys only. Keep UUIDs in
- * accepted telemetry/state and translate a complete qualified set for drawing.
- * Missing, duplicated, unknown or foreign mappings leave every exhaust dark. */
+/** Object-detail labels join actual fitting IDs; plume geometry independently
+ * consumes the compiled actuator projection. Removal is a valid smaller set. */
 export function authoredExhaustTelemetry(
   shipId: string,
   fittings: readonly AuthoredFlightFitting[],
@@ -107,15 +109,13 @@ export function authoredExhaustTelemetry(
   const actuators = fittings.filter(
     (f) => f.shipId === shipId && f.kind === "actuator",
   );
-  const known = new Set(LAB_FLIGHT_ACTUATORS.map((device) => device.id));
+  const count = actuators.length;
   if (
-    actuators.length !== known.size ||
-    new Set(actuators.map((f) => f.id)).size !== known.size ||
-    new Set(actuators.map((f) => f.placedObjectId)).size !== known.size ||
-    new Set(actuators.map((f) => f.sourceDeviceId)).size !== known.size ||
-    actuators.some(
-      (f) => !f.id || !f.placedObjectId || !known.has(f.sourceDeviceId),
-    )
+    count > 256 ||
+    new Set(actuators.map((f) => f.id)).size !== count ||
+    new Set(actuators.map((f) => f.placedObjectId)).size !== count ||
+    new Set(actuators.map((f) => f.sourceDeviceId)).size !== count ||
+    actuators.some((f) => !f.id || !f.placedObjectId || !f.sourceDeviceId)
   )
     return [];
   return actuators.flatMap((f) => {
@@ -131,4 +131,72 @@ export function authoredExhaustTelemetry(
       },
     ];
   });
+}
+
+/** Passenger motion requires the current narrow admission and exact interior
+ * revision. This grants no pilot controls and supplies no owner-only telemetry. */
+export function passengerFlightAdmitted(
+  actor: { id: string; shipId: string } | undefined,
+  location:
+    | {
+        characterId: string;
+        instanceId: string;
+        deckId: string;
+        visitId: string;
+      }
+    | undefined,
+  instance: { id: string; revision?: bigint } | undefined,
+  passenger:
+    | {
+        characterId: string;
+        shipId: string;
+        deckId: string;
+        visitId: string;
+        admitted: boolean;
+      }
+    | undefined,
+  interior:
+    | {
+        characterId: string;
+        shipId: string;
+        instanceId: string;
+        instanceRevision: bigint;
+        deckId: string;
+      }
+    | undefined,
+  motion:
+    | {
+        shipId: string;
+        x: number;
+        y: number;
+        vx: number;
+        vy: number;
+        heading: number;
+      }
+    | undefined,
+) {
+  return !!(
+    actor &&
+    location &&
+    instance &&
+    passenger?.admitted &&
+    interior &&
+    motion &&
+    passenger.characterId === actor.id &&
+    interior.characterId === actor.id &&
+    location.characterId === actor.id &&
+    passenger.shipId === actor.shipId &&
+    interior.shipId === actor.shipId &&
+    motion.shipId === actor.shipId &&
+    location.instanceId === instance.id &&
+    interior.instanceId === instance.id &&
+    instance.id === actor.shipId &&
+    interior.instanceRevision === instance.revision &&
+    passenger.visitId === location.visitId &&
+    passenger.deckId === location.deckId &&
+    interior.deckId === location.deckId &&
+    [motion.x, motion.y, motion.vx, motion.vy, motion.heading].every(
+      Number.isFinite,
+    )
+  );
 }

@@ -1,6 +1,16 @@
-import proof from "../../content/src/wayfarer-walking-proof.json";
-import type { Point } from "../../content/src/ship-layout";
-import type { ConstructionSnapshot } from "../../content/src/construction";
+import {
+  WAYFARER_EXTERIOR_SHA256,
+  planWayfarerExteriorGame,
+  qualifiedWayfarerExteriorInstanceObstacles,
+} from "./wayfarer-exterior-qualification";
+import {
+  WAYFARER_REBUILD_SHA256,
+  verifyWayfarerRebuildSource,
+} from "./wayfarer-rebuild-contract";
+import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
+import proof from "@sidereal/content/wayfarer-walking-proof.json";
+import type { Point } from "@sidereal/content/ship-layout";
+import type { ConstructionSnapshot } from "@sidereal/content/construction";
 import {
   compileConstruction,
   constructionHash,
@@ -14,6 +24,28 @@ export function qualifiedWayfarerWalkingBindings(
   bodyRadiusM: number,
   bodyHeightM: number,
 ): SpawnObjectCollisionBinding[] {
+  if (snapshot.sha256 === WAYFARER_EXTERIOR_SHA256) {
+    if (
+      constructionHash(snapshot.canonical) !== WAYFARER_EXTERIOR_SHA256 ||
+      bodyRadiusM !== 0.3 ||
+      bodyHeightM !== 1.8
+    )
+      throw Error(
+        "Wayfarer exterior: exact source and actor envelope required",
+      );
+    return planWayfarerExteriorGame(JSON.parse(snapshot.canonical))
+      .sourceObjectCollisionBindings;
+  }
+  if (snapshot.sha256 === WAYFARER_REBUILD_SHA256) {
+    if (
+      constructionHash(snapshot.canonical) !== WAYFARER_REBUILD_SHA256 ||
+      bodyRadiusM !== 0.3 ||
+      bodyHeightM !== 1.8
+    )
+      throw Error("Wayfarer rebuild: exact source and actor envelope required");
+    return planWayfarerRebuildGame(JSON.parse(snapshot.canonical))
+      .sourceObjectCollisionBindings;
+  }
   if (
     snapshot.sha256 !== proof.documentSha256 ||
     constructionHash(snapshot.canonical) !== proof.documentSha256 ||
@@ -46,6 +78,13 @@ export function qualifiedWayfarerWalkingBindings(
 }
 
 export const QUALIFIED_WAYFARER_SHA256 = proof.documentSha256;
+export function isQualifiedWayfarerBlueprint(sha: string | undefined): boolean {
+  return (
+    sha === QUALIFIED_WAYFARER_SHA256 ||
+    sha === WAYFARER_REBUILD_SHA256 ||
+    sha === WAYFARER_EXTERIOR_SHA256
+  );
+}
 /** Reconstruct the exact source through the authority's saved UUID map before
  * using its obstacle coordinates. A copied hash alone never authorizes a refit. */
 export function qualifiedWayfarerInstanceObstacles(
@@ -57,6 +96,63 @@ export function qualifiedWayfarerInstanceObstacles(
   },
   deckId: string,
 ) {
+  if (instance.blueprintSha256 === WAYFARER_EXTERIOR_SHA256)
+    return qualifiedWayfarerExteriorInstanceObstacles(instance, deckId);
+  if (instance.blueprintSha256 === WAYFARER_REBUILD_SHA256) {
+    if (
+      instance.documentJson.length > 262144 ||
+      instance.idMapJson.length > 1048576
+    )
+      throw Error("Wayfarer rebuild: instance budget exceeded");
+    const document = JSON.parse(instance.documentJson);
+    const verified = verifyWayfarerRebuildSource(document);
+    if (
+      document.layout.id !== instance.id ||
+      document.layout.source?.blueprintRevision !== WAYFARER_REBUILD_SHA256 ||
+      deckId !== verified.identities[verified.source.layout.playableDeckId!]
+    )
+      throw Error("Wayfarer rebuild: instance source/deck mismatch");
+    const mappings = JSON.parse(instance.idMapJson);
+    const all: { sourceId: string; instanceId: string }[] = Object.values(
+      mappings,
+    ).flat() as any;
+    if (
+      all.length !== Object.keys(verified.identities).length - 1 ||
+      new Set(all.map((e) => e.sourceId)).size !== all.length ||
+      new Set(all.map((e) => e.instanceId)).size !== all.length ||
+      all.some(
+        (e) =>
+          !e ||
+          verified.identities[e.sourceId] !== e.instanceId ||
+          e.sourceId === verified.source.layout.id,
+      )
+    )
+      throw Error("Wayfarer rebuild: invalid saved identity map");
+    for (const [domain, items] of Object.entries({
+      decks: verified.source.layout.decks,
+      floors: verified.source.layout.tiles,
+      objects: verified.source.layout.assembly!.parts,
+      partitions: verified.source.layout.partitions,
+      openings: verified.source.layout.openings,
+      rooms: verified.source.layout.rooms,
+    })) {
+      const rows = mappings[domain];
+      if (
+        !Array.isArray(rows) ||
+        rows.length !== items.length ||
+        items.some(
+          (item) =>
+            !rows.some(
+              (e) =>
+                e.sourceId === item.id &&
+                e.instanceId === verified.identities[item.id],
+            ),
+        )
+      )
+        throw Error("Wayfarer rebuild: invalid identity domain " + domain);
+    }
+    return planWayfarerRebuildGame(document).instanceObstacles;
+  }
   if (instance.blueprintSha256 !== proof.documentSha256) return [];
   const document = JSON.parse(instance.documentJson),
     mappings = JSON.parse(instance.idMapJson) as Record<

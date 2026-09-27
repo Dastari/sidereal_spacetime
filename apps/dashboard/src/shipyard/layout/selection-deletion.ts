@@ -1,7 +1,9 @@
 import type { PartCatalog } from "@sidereal/content/assembly";
 import type { LayoutDocument } from "@sidereal/content/ship-layout";
 import type { CompiledLayout } from "@sidereal/sim/layout-compiler";
+import { remapOpeningTreatments } from "@sidereal/sim/layout-structure";
 import { deleteInternalWall, selectedInternalWall } from "./panel-deletion";
+import { reconcileRoomTiles } from "./room-tiles";
 
 /** Delete explicit draft selections and their wall dependents in one history edit.
  * Unconnected service nodes remain authored ports, never incidental garbage. */
@@ -20,6 +22,15 @@ export function deleteLayoutSelection(
   }
   if (next.structure)
     for (const id of ids) delete next.structure.tileStyles[id];
+  if (next.structure?.schema === "sidereal.layout-structure.v2")
+    for (const opening of next.openings.filter((o) => ids.has(o.id))) {
+      next.structure.boundaryTreatments = remapOpeningTreatments(
+        next,
+        undefined,
+        opening.id,
+      );
+      next.openings = next.openings.filter((o) => o.id !== opening.id);
+    }
   next.tiles = next.tiles.filter((t) => !ids.has(t.id));
   next.openings = next.openings.filter((o) => !ids.has(o.id));
   next.rooms = next.rooms.filter((r) => !ids.has(r.id));
@@ -46,5 +57,18 @@ export function deleteLayoutSelection(
       (p) => !ids.has(p.id) || !objectAssets.has(p.assetId),
     );
   }
-  return next;
+  if (next.serviceConnections) {
+    const devices = new Set(
+      [...(next.assembly?.parts ?? []), ...next.fittings].map(
+        (device) => device.id,
+      ),
+    );
+    next.serviceConnections = next.serviceConnections.filter(
+      (connection) =>
+        !ids.has(connection.id) &&
+        devices.has(connection.fromDeviceId) &&
+        devices.has(connection.toDeviceId),
+    );
+  }
+  return reconcileRoomTiles(next);
 }

@@ -144,7 +144,7 @@ def app_up(name):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
+    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'keycloak-development-review-account', 'keycloak-development-review-grant', 'keycloak-development-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-crew', 'export-equipment', 'export-crew-items', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup'])
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
     parser.add_argument('--client-artifact', help='Pinned prebuilt client directory; public-client-stage only')
     parser.add_argument('--client-artifact-sha256', help='Required complete tree digest with --client-artifact')
@@ -152,6 +152,9 @@ def main():
     parser.add_argument('--expected-staged-client-sha256', help='Exact reviewed staged digest; public-client-activate only')
     parser.add_argument('--module-artifact', help='Pinned compiled JS/WASM; publish-review only')
     parser.add_argument('--artifact-sha256', help='Required digest with --module-artifact')
+    parser.add_argument('--ifcs-definition', action='store_true', help='Run fixed server-event and invalid-definition smoke in an isolated module copy')
+    parser.add_argument('--ifcs-passenger', action='store_true', help='Run real IFCS two-client passenger evidence in a fresh isolated smoke database')
+    parser.add_argument('--prefab', action='store_true', help='Assign, walk and fly a developer prefab ship in an isolated module copy')
     parser.add_argument('--smoke-name', help='Separate named smoke database; additive publication, never reset')
     parser.add_argument('--fresh-smoke', action='store_true', help='Reserve an unused numbered fixture for a named smoke run; never reset')
     parser.add_argument('--archive', help='Private cold archive; restore-review-prepare only')
@@ -160,6 +163,14 @@ def main():
     command = args.command
     if (args.archive is not None or args.expected_sha256 is not None) and command != 'restore-review-prepare':
         parser.error('Recovery archive arguments are valid only for restore-review-prepare')
+    if sum(map(bool, (args.ifcs_passenger, args.ifcs_definition, args.prefab))) > 1:
+        parser.error('Choose one smoke variant')
+    if args.prefab and (command != 'smoke' or not args.fresh_smoke or not args.smoke_name):
+        parser.error('--prefab requires smoke --smoke-name LABEL --fresh-smoke')
+    if args.ifcs_definition and (command != 'smoke' or not args.fresh_smoke or not args.smoke_name):
+        parser.error('--ifcs-definition requires smoke --smoke-name LABEL --fresh-smoke')
+    if args.ifcs_passenger and (command != 'smoke' or not args.fresh_smoke or not args.smoke_name):
+        parser.error('--ifcs-passenger requires smoke --smoke-name LABEL --fresh-smoke')
     smoke_database = CFG['project']['database'] + '-smoke'
     if args.smoke_name is not None:
         import re
@@ -236,16 +247,26 @@ def main():
             evidence = evidence_directory(sys.modules[__name__], smoke_database)
             if evidence and command == 'smoke':
                 raise RuntimeError('Reserved fresh fixture already exists; use a new --fresh-smoke run or smoke-restart for persistence')
+        ifcs_bindings = None
         if command == 'smoke':
-            publish(smoke_database, reset=args.smoke_name is None)
+            if args.ifcs_definition:
+                from ifcs_smoke_module import publish as publish_ifcs_smoke
+                ifcs_bindings = publish_ifcs_smoke(sys.modules[__name__], smoke_database, evidence)
+            elif args.prefab:
+                from prefab_smoke_module import publish as publish_prefab_smoke
+                ifcs_bindings = publish_prefab_smoke(sys.modules[__name__], smoke_database, evidence)
+            else:
+                publish(smoke_database, reset=args.smoke_name is None)
         env = os.environ.copy()
         env.update(SIDEREAL_SMOKE_URL=DB_URL, SIDEREAL_SMOKE_DATABASE=smoke_database)
         if evidence:
             env['SIDEREAL_SMOKE_EVIDENCE_DIR'] = evidence
         else:
             env.pop('SIDEREAL_SMOKE_EVIDENCE_DIR', None)
+        if ifcs_bindings:
+            env['SIDEREAL_IFCS_TEST_BINDINGS'] = ifcs_bindings
         arguments = ['--verify-restart'] if command == 'smoke-restart' else []
-        script = 'scripts/auth-admission-smoke.ts' if command == 'smoke-auth-admission' else 'scripts/smoke.ts'
+        script = 'scripts/prefab-smoke.ts' if args.prefab else 'scripts/ifcs-definition-smoke.ts' if args.ifcs_definition else 'scripts/ifcs-passenger-smoke.ts' if args.ifcs_passenger else ('scripts/auth-admission-smoke.ts' if command == 'smoke-auth-admission' else 'scripts/smoke.ts')
         run([str(ROOT/'node_modules/.bin/tsx'), script, *arguments], env=env)
     elif command == 'database-up':
         database_up(publish_module=False)
@@ -281,6 +302,11 @@ def main():
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_voxel_blender.py'])
     elif command == 'export-equipment':
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_equipment_source.py'])
+    elif command == 'export-crew-items':
+        # Proposal art kit (unpublished): GLBs, content JSON, source .blend, icons and review renders.
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python',
+             'scripts/art_library/crew_items/build.py', '--', '--renders', str(ROOT/'.runtime/crew-items-r001-renders'),
+             '--sheets', 'icons,held'])
     elif command == 'export-inventory-icons':
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_inventory_icons.py'])
     elif command == 'export-crew':

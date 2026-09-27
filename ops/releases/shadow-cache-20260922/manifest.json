@@ -1,0 +1,60 @@
+{
+  "status": "prepared",
+  "baselineClientSha256": "1285899d78177c92813dc6f4f1bbf1a97d16212b0d618419407364ba42e08b73",
+  "candidateClientSha256": "0c48930c709ab6eae5f856e4131de3e2081454f6a80114e93a9d094727db2558",
+  "sourceRoot": "/root/sidereal-shadow-release-20260922",
+  "sourceBaseline": "/root/sidereal_spacetime/.runtime/worktrees/studio-client-20260921",
+  "changedSources": [
+    {
+      "path": "apps/client/package.json",
+      "sha256": "50aa2f28bd65a8b6a89820a746b3da7cacf09f01e9b122459bf765292b22ddc1",
+      "before": "b05c0ce93226de0f96148dd6bc0edaa5d7e331f24831e5bf0d82292931882bf0"
+    },
+    {
+      "path": "apps/dashboard/package.json",
+      "sha256": "63e68b315e3bfe1ac99853414cb16b20ca70567d6ab6a673393df6b34b95c0f7",
+      "before": "881da88d788c5e149394715c88c460061353db4591a1182730e32ae187088b35"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "f613422501d86d64c5d0ccbb30fc9abfe713da052aeb7f6aad18ecfc39a57b4f",
+      "before": "df73ae938f65a1ef616ca074f4dfb848711423c4723c0cf677e3d6642c6f1fb7"
+    },
+    {
+      "path": "packages/canvas-ui/package.json",
+      "sha256": "be5f45f96a492714df4aa75a23daafd8b14dde253d75f8afe24354c258dd1e3a",
+      "before": "6494ff871bb92887cecd1ae29bdb7333987720da81ec06d44efe219bf0359662"
+    },
+    {
+      "path": "packages/render/package.json",
+      "sha256": "79cf664c6f6c0c771a37950276e2d634911465de6088d0d4b195488fb5a2e45f",
+      "before": "8557a6127a6b919e185fd85abcbfebf9bcc2d9dd5681dc9c210e092a1c7ccd4e"
+    },
+    {
+      "path": "packages/render/src/exterior-shadow-cache.test.ts",
+      "sha256": "87dab574731a02855d6c8f60a6bc049a747c858e44d8debc37aef7cb18c4ffc0",
+      "before": null
+    },
+    {
+      "path": "packages/render/src/exterior-shadow-cache.ts",
+      "sha256": "0f49160c0b8bfbe6eca98f3c379ce55edf66cc57110d86d01557010ab966a84c",
+      "before": null
+    },
+    {
+      "path": "packages/render/src/ship-lighting.ts",
+      "sha256": "549e082425d599a849e7616b5d3f5831b5b19a764b75d7e5ffad00939ec79b29",
+      "before": "2d4999a3c7fbce46ecdee982b0f0f9b525331d68db8a341ad409ae6ba17db5d9"
+    }
+  ],
+  "baselineFileCount": 3373,
+  "candidateFileCount": 3371,
+  "unchangedStaticFiles": 3040,
+  "staticFileChanges": [],
+  "tests": {
+    "mergeBranchTests": 1531,
+    "releaseShadowTests": 39,
+    "mergeBranchBuild": "passed",
+    "releaseTypecheck": "passed",
+    "releaseBuild": "passed"
+  }
+}

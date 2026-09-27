@@ -22,6 +22,7 @@ import {
 } from "./shared-world-views";
 function setup() {
   const f = fixture();
+  f.db.constructionPassengerVisit = { characterId: { find: () => undefined } };
   joinSharedSystem(f.ctx(), f.args());
   joinSharedSystem(f.ctx(2, other), f.args(2));
   const view = (sender = owner): SharedViewContext => ({ db: f.db, sender });
@@ -131,7 +132,9 @@ describe("authorized shared spatial projections", () => {
     move(f, "ship1", 100000, 100000);
     const bodies = visibleBodyDescriptions(f.view());
     expect(bodies.every((b) => b.kind !== "asteroid")).toBe(true);
-    expect(bodies).toHaveLength(SHARED_SYSTEM_SEED.bodies.filter(b=>b.kind!=="asteroid").length);
+    expect(bodies).toHaveLength(
+      SHARED_SYSTEM_SEED.bodies.filter((b) => b.kind !== "asteroid").length,
+    );
     expect(visibleBodyMotion(f.view()).map((b) => b.bodyId)).toEqual(
       bodies.map((b) => b.bodyId),
     );

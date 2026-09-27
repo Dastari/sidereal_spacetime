@@ -1,12 +1,25 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, writeFile, rm, symlink } from "node:fs/promises";
+import {
+  mkdtemp,
+  mkdir,
+  writeFile,
+  rm,
+  symlink,
+  utimes,
+} from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { createServer, request } from "node:http";
-import { gunzipSync } from "node:zlib";
+import {
+  brotliCompressSync,
+  brotliDecompressSync,
+  gunzipSync,
+  gzipSync,
+} from "node:zlib";
 import { createHash } from "node:crypto";
-import { glbDelivery } from "./glb_delivery.mjs";
+import { assetDelivery, IMMUTABLE, REVALIDATE } from "./glb_delivery.mjs";
+import { precompress } from "./precompress_assets.mjs";
 const sha = (data) => createHash("sha256").update(data).digest("hex");
 
 test("actual HTTP representation, cache, precondition, range and path behavior", async (t) => {
@@ -15,7 +28,7 @@ test("actual HTTP representation, cache, precondition, range and path behavior",
   const bytes = Buffer.concat([Buffer.from("glTF"), Buffer.alloc(50000, 65)]);
   await writeFile(join(folder, "assets/model.glb"), bytes);
   await symlink("/etc/passwd", join(folder, "assets/escape.glb"));
-  const middleware = glbDelivery(folder);
+  const middleware = assetDelivery(folder);
   const server = createServer((req, res) =>
     middleware(req, res, () => res.writeHead(200).end("ordinary asset")),
   );
@@ -187,15 +200,162 @@ test("actual HTTP representation, cache, precondition, range and path behavior",
       },
     );
     await t.test(
-      "non-GLB behavior is delegated, missing/escaped GLBs never SPA-fallback",
+      "unknown types and sidecars are delegated; missing/escaped assets never SPA-fallback",
       async () => {
         assert.equal(
-          (await get({}, "/assets/ordinary.js")).bytes.toString(),
+          (await get({}, "/assets/ordinary.unknown")).bytes.toString(),
           "ordinary asset",
         );
+        assert.equal(
+          (await get({}, "/assets/model.glb.br")).bytes.toString(),
+          "ordinary asset",
+        );
+        assert.equal((await get({}, "/assets/missing.js")).status, 404);
         assert.equal((await get({}, "/assets/missing.glb")).status, 404);
         assert.equal((await get({}, "/assets/escape.glb")).status, 404);
         assert.equal((await get({}, "/assets/model.glb", "POST")).status, 405);
+        assert.equal(raw.headers["cache-control"], REVALIDATE);
+      },
+    );
+    await t.test(
+      "every published type gets validators; only compressible ones encode",
+      async () => {
+        await writeFile(
+          join(folder, "assets/hull-manifest.json"),
+          JSON.stringify({ parts: Array(2000).fill("part") }),
+        );
+        await writeFile(
+          join(folder, "assets/icon.png"),
+          Buffer.alloc(30000, 7),
+        );
+        const manifest = await get(
+          { "Accept-Encoding": "gzip, br" },
+          "/assets/hull-manifest.json",
+        );
+        assert.equal(manifest.headers["content-type"], "application/json");
+        assert.equal(manifest.headers["content-encoding"], "gzip");
+        assert.equal(manifest.headers["cache-control"], REVALIDATE);
+        assert.equal(
+          gunzipSync(manifest.bytes).toString(),
+          JSON.stringify({ parts: Array(2000).fill("part") }),
+        );
+        const png = await get(
+          { "Accept-Encoding": "gzip, br" },
+          "/assets/icon.png",
+        );
+        assert.equal(png.headers["content-type"], "image/png");
+        assert.equal(png.headers["content-encoding"], undefined);
+        assert.equal(png.headers["content-length"], "30000");
+        assert.match(png.headers.etag, /^"sha256-/);
+        assert.equal(
+          (await get({ "If-None-Match": png.headers.etag }, "/assets/icon.png"))
+            .status,
+          304,
+        );
+      },
+    );
+    await t.test(
+      "Vite hashed bundle files are immutable, plain runtime names revalidate",
+      async () => {
+        await writeFile(
+          join(folder, "assets/index-B4bNcXSU.js"),
+          "console.log(1)".repeat(200),
+        );
+        await mkdir(join(folder, "assets/assembly"));
+        await writeFile(
+          join(folder, "assets/assembly/parts-B4bNcXSU.js"),
+          "nested",
+        );
+        await writeFile(join(folder, "assets/wayfarer.glb"), bytes);
+        assert.equal(
+          (await get({}, "/assets/index-B4bNcXSU.js")).headers["cache-control"],
+          IMMUTABLE,
+        );
+        assert.equal(
+          (await get({}, "/assets/index-B4bNcXSU.js")).headers["content-type"],
+          "text/javascript",
+        );
+        assert.equal(
+          (await get({}, "/assets/assembly/parts-B4bNcXSU.js")).headers[
+            "cache-control"
+          ],
+          REVALIDATE,
+        );
+        assert.equal(
+          (await get({}, "/assets/wayfarer.glb")).headers["cache-control"],
+          REVALIDATE,
+        );
+      },
+    );
+    await t.test(
+      "precompressed sidecars are served exactly, stale ones are ignored",
+      async () => {
+        const summary = await precompress(folder, {
+          cache: join(folder, ".cache"),
+        });
+        assert.ok(summary.sidecars >= 2, JSON.stringify(summary));
+        const br = await get({ "Accept-Encoding": "gzip, br" });
+        assert.equal(br.headers["content-encoding"], "br");
+        assert.equal(br.headers["content-type"], "model/gltf-binary");
+        assert.equal(br.headers["content-length"], String(br.bytes.length));
+        assert.equal(sha(brotliDecompressSync(br.bytes)), sha(bytes));
+        assert.notEqual(br.headers.etag, compressed.headers.etag);
+        assert.equal(
+          (
+            await get({
+              "Accept-Encoding": "br",
+              "If-None-Match": br.headers.etag,
+            })
+          ).status,
+          304,
+        );
+        const zipped = await get({ "Accept-Encoding": "gzip" });
+        assert.equal(zipped.headers["content-encoding"], "gzip");
+        assert.equal(
+          zipped.headers["content-length"],
+          String(zipped.bytes.length),
+        );
+        assert.equal(sha(gunzipSync(zipped.bytes)), sha(bytes));
+        // Ranges still come from the identity bytes.
+        const part = await get({
+          "Accept-Encoding": "br, gzip",
+          Range: "bytes=4-7",
+        });
+        assert.equal(part.status, 206);
+        assert.deepEqual(part.bytes, bytes.subarray(4, 8));
+        // A sidecar older than its source must not be trusted.
+        const changed = Buffer.concat([
+          Buffer.from("glTF"),
+          Buffer.alloc(50000, 66),
+        ]);
+        await writeFile(join(folder, "assets/model.glb"), changed);
+        await utimes(
+          join(folder, "assets/model.glb.br"),
+          new Date(0),
+          new Date(0),
+        );
+        await utimes(
+          join(folder, "assets/model.glb.gz"),
+          new Date(0),
+          new Date(0),
+        );
+        const fresh = await get({ "Accept-Encoding": "br, gzip" });
+        assert.equal(fresh.headers["content-encoding"], "gzip");
+        assert.equal(sha(gunzipSync(fresh.bytes)), sha(changed));
+        // Hand-written sidecars that are newer are served as-is.
+        await writeFile(
+          join(folder, "assets/model.glb.br"),
+          brotliCompressSync(changed),
+        );
+        await writeFile(join(folder, "assets/model.glb.gz"), gzipSync(changed));
+        assert.equal(
+          sha(
+            brotliDecompressSync(
+              (await get({ "Accept-Encoding": "br" })).bytes,
+            ),
+          ),
+          sha(changed),
+        );
       },
     );
   } finally {
@@ -204,7 +364,7 @@ test("actual HTTP representation, cache, precondition, range and path behavior",
   }
 });
 
-test("managed preview configuration serves immutable GLBs, SPA and database proxy", async () => {
+test("managed preview configuration serves assets, SPA and database proxy", async () => {
   const { preview } = await import("vite");
   const folder = await mkdtemp(join(tmpdir(), "sidereal-preview-"));
   await mkdir(join(folder, "assets"));

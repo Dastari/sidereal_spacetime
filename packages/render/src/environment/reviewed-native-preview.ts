@@ -40,11 +40,17 @@ const colors = {
 export function createReviewedNativePreview(
   canvas: HTMLCanvasElement,
   status: (message: string, error?: boolean) => void,
+  options: { transparent?: boolean } = {},
 ) {
-  const engine = new Engine(canvas, true, { preserveDrawingBuffer: true });
+  const engine = new Engine(canvas, true, {
+    preserveDrawingBuffer: true,
+    alpha: true,
+  });
   const scene = new Scene(engine);
   scene.useRightHandedSystem = true;
-  scene.clearColor = new Color4(0.012, 0.016, 0.035, 1);
+  scene.clearColor = options.transparent
+    ? new Color4(0, 0, 0, 0)
+    : new Color4(0.012, 0.016, 0.035, 1);
   scene.environmentTexture = new HDRCubeTexture(
     "/assets/materials/frontier-workshop.hdr",
     scene,

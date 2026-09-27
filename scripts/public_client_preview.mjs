@@ -1,4 +1,4 @@
-import { glbDelivery } from "./glb_delivery.mjs";
+import { assetDelivery } from "./glb_delivery.mjs";
 const root = process.env.SIDEREAL_PUBLIC_ROOT;
 const target = process.env.SIDEREAL_PUBLIC_DATABASE_URL;
 if (!root || !target)
@@ -14,9 +14,9 @@ export default {
   },
   plugins: [
     {
-      name: "exact-native-glb-delivery",
+      name: "exact-asset-delivery",
       configurePreviewServer(server) {
-        server.middlewares.use(glbDelivery(root));
+        server.middlewares.use(assetDelivery(root));
       },
     },
   ],

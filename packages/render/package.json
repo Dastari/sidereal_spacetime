@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/render",
-  "version": "0.5.3",
+  "version": "0.8.1",
   "private": true,
   "type": "module",
   "exports": {
@@ -15,13 +15,26 @@
     "./antialiasing-settings": "./src/antialiasing-settings.ts",
     "./graphics-settings": "./src/graphics-settings.ts",
     "./local-light-budget": "./src/local-light-budget.ts",
-    "./layout-assembly-preview": "./src/layout-assembly-preview.ts"
+    "./layout-assembly-preview": "./src/layout-assembly-preview.ts",
+    "./floor-finishes": "./src/floor-finishes.ts",
+    "./crew/armor-attach": "./src/crew/armor-attach.ts",
+    "./layout-inset-visual-plan": "./src/layout-inset-visual-plan.ts",
+    "./layout-measurement": "./src/layout-measurement.ts",
+    "./layout-plane-projection": "./src/layout-plane-projection.ts",
+    "./diagnostics": "./src/diagnostics.ts",
+    "./mesh-roles": "./src/mesh-roles.ts",
+    "./ground-items": "./src/ground-items.ts",
+    "./render-backend": "./src/render-backend.ts",
+    "./debug-features": "./src/debug-features.ts",
+    "./reviewed-native-preview": "./src/environment/reviewed-native-preview.ts",
+    "./prefab-ship": "./src/prefab-ship/ship-view.ts",
+    "./prefab-ship/blueprint-svg": "./src/prefab-ship/blueprint-svg.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",
     "@babylonjs/loaders": "9.25.0",
-    "@sidereal/content": "0.2.1",
-    "@sidereal/sim": "0.1.0",
+    "@sidereal/content": "0.6.0",
+    "@sidereal/sim": "0.4.1",
     "@noble/hashes": "2.4.0"
   }
 }

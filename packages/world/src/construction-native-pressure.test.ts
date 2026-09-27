@@ -1,4 +1,6 @@
 import { readFileSync } from "node:fs";
+import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
@@ -20,6 +22,9 @@ import {
 } from "./construction-native-pressure";
 import { requestDoor, stepDoors } from "./construction-doors";
 
+const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
+const nativeSourcePath = (path: string) =>
+  resolve(repositoryRoot, path.replace(/^\/root\/sidereal_spacetime\//, ""));
 const audit = new Uint8Array(
   readFileSync(
     "assets/art-library/designs/shipyard.structure.boundary-kit/revisions/r006/qualification-a007/native-room-validation.json",
@@ -34,7 +39,7 @@ const compile = createNativePressureRoomCompiler({
   sources: Object.fromEntries(
     Object.entries(pins).map(([name, pin]) => [
       name,
-      new Uint8Array(readFileSync(pin.path)),
+      new Uint8Array(readFileSync(nativeSourcePath(pin.path))),
     ]),
   ),
 });

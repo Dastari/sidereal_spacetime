@@ -1,14 +1,14 @@
 {
   "name": "@sidereal/dashboard",
-  "version": "0.5.0",
+  "version": "0.11.0",
   "private": true,
   "type": "module",
   "dependencies": {
     "@fontsource/barlow": "5.3.0",
     "@fontsource/barlow-condensed": "5.3.0",
-    "@sidereal/content": "0.2.1",
-    "@sidereal/render": "0.5.3",
-    "@sidereal/sim": "*",
+    "@sidereal/content": "0.6.0",
+    "@sidereal/render": "0.8.1",
+    "@sidereal/sim": "0.4.1",
     "@sidereal/ui": "*",
     "lucide-react": "1.42.0",
     "oidc-client-ts": "3.4.1",
@@ -16,7 +16,7 @@
     "react-dom": "19.2.8"
   },
   "scripts": {
-    "build": "python3 ../../scripts/prepare_app.py dashboard && vite build",
+    "build": "python3 ../../scripts/prepare_app.py dashboard && vite build && node ../../scripts/precompress_assets.mjs dist",
     "typecheck": "tsc --noEmit -p tsconfig.json"
   }
 }

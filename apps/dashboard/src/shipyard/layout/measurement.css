@@ -1,0 +1,55 @@
+.layout-measurement {
+  position: absolute;
+  z-index: 20;
+  bottom: 3.5rem;
+  left: 1rem;
+  width: min(320px, calc(100% - 2rem));
+  max-height: 40%;
+  overflow: auto;
+  padding: 12px;
+  background: #0b2432;
+  color: #dcebf2;
+  border: 1px solid #395563;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.layout-measurement header,
+.layout-measurement footer,
+.measurement-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+.layout-measurement header span {
+  color: #92b6c9;
+}
+.layout-measurement p {
+  margin: 10px 0;
+}
+.layout-measurement table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  font-variant-numeric: tabular-nums;
+}
+.layout-measurement th,
+.layout-measurement td {
+  padding: 4px 0;
+  text-align: right;
+}
+.layout-measurement th:first-child,
+.layout-measurement td:first-child {
+  text-align: left;
+}
+.layout-measurement th {
+  color: #92b6c9;
+  font-weight: normal;
+}
+.layout-measurement footer {
+  margin-top: 8px;
+}
+.layout-measurement footer button {
+  padding: 5px 8px;
+  font-size: 12px;
+}

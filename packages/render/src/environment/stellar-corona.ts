@@ -73,7 +73,7 @@ void main(){
     },
     {
       attributes: ["position", "normal", "uv"],
-      uniforms: ["world", "worldViewProjection", "time", "eruption"],
+      uniforms: ["world", "viewProjection", "time", "eruption"],
       needAlphaBlending: true,
     },
   );
