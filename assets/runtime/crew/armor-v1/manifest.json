@@ -1,0 +1,5668 @@
+{
+ "schema": "sidereal.crew.armor-manifest/1",
+ "kit": "crew.armor-v1",
+ "revision": "r006",
+ "specVersion": 2,
+ "status": "proposal; not published; not owner-approved",
+ "voxelMeters": 0.03125,
+ "rig": "crew_rig",
+ "body": "CHAR-ARMOR spec-v2 placeholder rig/body (crew_armor_parts.BODY) pending CHAR-BODY spec_version 2",
+ "frame": "Blender Z up, character faces +Y, .R at +X; glTF = (x, z, -y)",
+ "attach": "Each GLB holds crew_rig plus one rigid-skinned mesh per fit (GEO-armor-<id>-<fit>). Parent the meshes to the crew visual root and link each armour skeleton bone to the body's joint node of the same name; recolour by setting albedo/emissive on the crew.<slot> materials from a colourway; hide the body regions listed in hidesBodyRegions.",
+ "fits": {
+  "wide": [
+   "male",
+   "neutral"
+  ],
+  "narrow": [
+   "female"
+  ]
+ },
+ "materialSlots": [
+  "skin",
+  "hair",
+  "eye",
+  "suit_primary",
+  "suit_secondary",
+  "accent",
+  "metal",
+  "dark",
+  "emit",
+  "glass"
+ ],
+ "equipmentSlots": [
+  "chest",
+  "shoulders",
+  "gloves",
+  "belt",
+  "legs",
+  "boots",
+  "back"
+ ],
+ "tiers": {
+  "0": "civilian",
+  "1": "light",
+  "2": "standard",
+  "3": "heavy"
+ },
+ "colourways": {
+  "arctic": {
+   "suit_primary": "#e4e0f2",
+   "suit_secondary": "#343a6a",
+   "accent": "#4f7cff",
+   "metal": "#a3abc0",
+   "dark": "#2a2b40",
+   "emit": "#56c8ff",
+   "glass": "#7fd8ff",
+   "label": "Arctic"
+  },
+  "crimson": {
+   "suit_primary": "#c8263d",
+   "suit_secondary": "#2e2735",
+   "accent": "#f08a2a",
+   "metal": "#a0a6b3",
+   "dark": "#1b1820",
+   "emit": "#ff5a4a",
+   "glass": "#7fd8ff",
+   "label": "Crimson"
+  },
+  "cobalt": {
+   "suit_primary": "#2f63e6",
+   "suit_secondary": "#1c2548",
+   "accent": "#e8ecf6",
+   "metal": "#a8b2c6",
+   "dark": "#161c33",
+   "emit": "#5fd2ff",
+   "glass": "#7fd8ff",
+   "label": "Cobalt"
+  },
+  "amber": {
+   "suit_primary": "#f7a414",
+   "suit_secondary": "#24222e",
+   "accent": "#4c83ff",
+   "metal": "#aeafb6",
+   "dark": "#1c1b24",
+   "emit": "#6fd6ff",
+   "glass": "#7fd8ff",
+   "label": "Amber"
+  },
+  "moss": {
+   "suit_primary": "#86b43c",
+   "suit_secondary": "#2e3528",
+   "accent": "#d4e05c",
+   "metal": "#929c90",
+   "dark": "#161a14",
+   "emit": "#8dff5a",
+   "glass": "#7fd8ff",
+   "label": "Moss"
+  },
+  "shadow": {
+   "suit_primary": "#4d4864",
+   "suit_secondary": "#2b283a",
+   "accent": "#f08a2a",
+   "metal": "#827f96",
+   "dark": "#131219",
+   "emit": "#ff9a3a",
+   "glass": "#7fd8ff",
+   "label": "Shadow"
+  },
+  "captain": {
+   "suit_primary": "#1f2d55",
+   "suit_secondary": "#e3e8f1",
+   "accent": "#f3bb3c",
+   "metal": "#d0a84c",
+   "dark": "#12182a",
+   "emit": "#63c9ff",
+   "glass": "#7fd8ff",
+   "label": "Command navy"
+  },
+  "engineer": {
+   "suit_primary": "#f08c1e",
+   "suit_secondary": "#2f2e3e",
+   "accent": "#3f78ff",
+   "metal": "#aeb2bd",
+   "dark": "#1c1b25",
+   "emit": "#46d6ff",
+   "glass": "#7fd8ff",
+   "label": "Engineering orange"
+  },
+  "medic": {
+   "suit_primary": "#f2f3f8",
+   "suit_secondary": "#d8243a",
+   "accent": "#e0253e",
+   "metal": "#b7bfd2",
+   "dark": "#23222e",
+   "emit": "#35d6ff",
+   "glass": "#7fd8ff",
+   "label": "Medical white"
+  },
+  "pilot": {
+   "suit_primary": "#e6eaf2",
+   "suit_secondary": "#2b4cb0",
+   "accent": "#f08a24",
+   "metal": "#a2abbe",
+   "dark": "#1a1f33",
+   "emit": "#58d0ff",
+   "glass": "#7fd8ff",
+   "label": "Flight white"
+  },
+  "security": {
+   "suit_primary": "#2e4394",
+   "suit_secondary": "#1a2138",
+   "accent": "#f2c14a",
+   "metal": "#a0aabf",
+   "dark": "#121626",
+   "emit": "#4fb6ff",
+   "glass": "#7fd8ff",
+   "label": "Security blue"
+  },
+  "marine": {
+   "suit_primary": "#bd253c",
+   "suit_secondary": "#2c2732",
+   "accent": "#e8e4ea",
+   "metal": "#949aa8",
+   "dark": "#16131a",
+   "emit": "#ff4d5e",
+   "glass": "#7fd8ff",
+   "label": "Marine red"
+  },
+  "salvage": {
+   "suit_primary": "#ec9c22",
+   "suit_secondary": "#302e35",
+   "accent": "#f5d24a",
+   "metal": "#a3a7af",
+   "dark": "#1a1a1e",
+   "emit": "#ffc24a",
+   "glass": "#7fd8ff",
+   "label": "Salvage hazard"
+  },
+  "recon": {
+   "suit_primary": "#5a6e3e",
+   "suit_secondary": "#2b3125",
+   "accent": "#93a462",
+   "metal": "#838c7d",
+   "dark": "#141812",
+   "emit": "#6cff5a",
+   "glass": "#7fd8ff",
+   "label": "Recon green"
+  },
+  "scientist": {
+   "suit_primary": "#f0f2f7",
+   "suit_secondary": "#5e4c9e",
+   "accent": "#9a6cff",
+   "metal": "#adb2c0",
+   "dark": "#2c2842",
+   "emit": "#b58cff",
+   "glass": "#7fd8ff",
+   "label": "Laboratory white"
+  },
+  "mechanic": {
+   "suit_primary": "#2b3663",
+   "suit_secondary": "#1c2035",
+   "accent": "#f08a24",
+   "metal": "#a7acb8",
+   "dark": "#12141f",
+   "emit": "#ffa04a",
+   "glass": "#7fd8ff",
+   "label": "Mechanic navy"
+  },
+  "civilian": {
+   "suit_primary": "#8e7159",
+   "suit_secondary": "#3f4c5f",
+   "accent": "#d8b36a",
+   "metal": "#9fa5ad",
+   "dark": "#1e2027",
+   "emit": "#7fd0ff",
+   "glass": "#7fd8ff",
+   "label": "Civilian"
+  }
+ },
+ "sheetColourways": [
+  "arctic",
+  "crimson",
+  "cobalt",
+  "amber",
+  "moss",
+  "shadow"
+ ],
+ "presets": [
+  {
+   "id": "role.captain",
+   "heads": {
+    "male": [
+     "acc.officer_cap",
+     "hair.swept_quiff.cap"
+    ],
+    "female": [
+     "acc.officer_cap",
+     "hair.long_gathered.cap"
+    ],
+    "skin": "#e7a98a",
+    "hair": "#7a4526",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#1d2748",
+    "suit_secondary": "#10152a"
+   },
+   "name": "Captain",
+   "colourway": "captain",
+   "headPreset": "head.captain-cap",
+   "parts": {
+    "chest": "armor.chest.coat",
+    "shoulders": "armor.shoulders.epaulette",
+    "gloves": "armor.gloves.fabric",
+    "belt": "armor.belt.sash",
+    "boots": "armor.boots.dress"
+   }
+  },
+  {
+   "id": "role.engineer",
+   "heads": {
+    "male": [
+     "acc.goggles_up",
+     "hair.curly_top.full"
+    ],
+    "female": [
+     "acc.goggles_up",
+     "hair.messy_bun.full"
+    ],
+    "skin": "#c98a62",
+    "hair": "#4a2f6e",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#2d2b3f",
+    "suit_secondary": "#1a1926"
+   },
+   "name": "Engineer",
+   "colourway": "engineer",
+   "headPreset": "head.engineer-helmet",
+   "parts": {
+    "chest": "armor.chest.harness",
+    "shoulders": "armor.shoulders.light",
+    "gloves": "armor.gloves.work",
+    "belt": "armor.belt.tool",
+    "legs": "armor.legs.light",
+    "boots": "armor.boots.light",
+    "back": "armor.back.toolpack"
+   }
+  },
+  {
+   "id": "role.medic",
+   "heads": {
+    "male": [
+     "acc.medic_cap",
+     "hair.close_crop.cap"
+    ],
+    "female": [
+     "acc.medic_cap",
+     "hair.blunt_bob.cap"
+    ],
+    "skin": "#f3c2a2",
+    "hair": "#2a2438",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#2c2a3a",
+    "suit_secondary": "#1b1a26"
+   },
+   "name": "Medic",
+   "colourway": "medic",
+   "headPreset": "head.medic-helmet",
+   "parts": {
+    "chest": "armor.chest.medic",
+    "shoulders": "armor.shoulders.standard",
+    "gloves": "armor.gloves.light",
+    "belt": "armor.belt.medic",
+    "legs": "armor.legs.light",
+    "boots": "armor.boots.standard",
+    "back": "armor.back.medpack"
+   }
+  },
+  {
+   "id": "role.pilot",
+   "heads": {
+    "male": [
+     "acc.headset",
+     "hair.short_waves.full"
+    ],
+    "female": [
+     "acc.headset",
+     "hair.high_bun.full"
+    ],
+    "skin": "#e0a47f",
+    "hair": "#6b3b1f",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#233a8a",
+    "suit_secondary": "#152255"
+   },
+   "name": "Pilot",
+   "colourway": "pilot",
+   "headPreset": "head.pilot-helmet",
+   "parts": {
+    "chest": "armor.chest.flight",
+    "shoulders": "armor.shoulders.flight",
+    "gloves": "armor.gloves.light",
+    "belt": "armor.belt.utility",
+    "legs": "armor.legs.light",
+    "boots": "armor.boots.flight",
+    "back": "armor.back.oxygen-single"
+   }
+  },
+  {
+   "id": "role.security",
+   "heads": {
+    "male": [
+     "acc.cap",
+     "hair.close_crop.cap"
+    ],
+    "female": [
+     "acc.cap",
+     "hair.straight_bob.cap"
+    ],
+    "skin": "#8a5a3c",
+    "hair": "#3a2a22",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#1f2c63",
+    "suit_secondary": "#121934"
+   },
+   "name": "Security officer",
+   "colourway": "security",
+   "headPreset": "head.security-cap",
+   "parts": {
+    "chest": "armor.chest.vest",
+    "shoulders": "armor.shoulders.standard",
+    "gloves": "armor.gloves.standard",
+    "belt": "armor.belt.holster",
+    "legs": "armor.legs.standard",
+    "boots": "armor.boots.standard",
+    "back": "armor.back.backpack-t1"
+   }
+  },
+  {
+   "id": "role.marine",
+   "heads": {
+    "male": [
+     "helmet.tactical",
+     "visor.tactical.tinted"
+    ],
+    "female": [
+     "helmet.tactical",
+     "visor.tactical.tinted"
+    ],
+    "skin": "#b87955",
+    "hair": "#241a14",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#2e2934",
+    "suit_secondary": "#1a171f"
+   },
+   "name": "Heavy marine",
+   "colourway": "marine",
+   "headPreset": "head.marine-helmet",
+   "parts": {
+    "chest": "armor.chest.heavy",
+    "shoulders": "armor.shoulders.heavy",
+    "gloves": "armor.gloves.heavy",
+    "belt": "armor.belt.heavy",
+    "legs": "armor.legs.heavy",
+    "boots": "armor.boots.heavy",
+    "back": "armor.back.backpack-t3"
+   }
+  },
+  {
+   "id": "role.salvage",
+   "heads": {
+    "male": [
+     "acc.goggles_down",
+     "hair.flat_top.full"
+    ],
+    "female": [
+     "acc.goggles_down",
+     "hair.side_undercut.full"
+    ],
+    "skin": "#d99b78",
+    "hair": "#7a4a1e",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#3a3440",
+    "suit_secondary": "#221f28"
+   },
+   "name": "Salvage tech",
+   "colourway": "salvage",
+   "headPreset": "head.salvage-helmet",
+   "parts": {
+    "chest": "armor.chest.hazard",
+    "shoulders": "armor.shoulders.standard",
+    "gloves": "armor.gloves.work",
+    "belt": "armor.belt.tool",
+    "legs": "armor.legs.standard",
+    "boots": "armor.boots.standard",
+    "back": "armor.back.backpack-t3"
+   }
+  },
+  {
+   "id": "role.recon",
+   "heads": {
+    "male": [
+     "acc.hood",
+     "acc.scarf"
+    ],
+    "female": [
+     "acc.hood",
+     "acc.scarf"
+    ],
+    "skin": "#a8704e",
+    "hair": "#2b3a1e",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#34402c",
+    "suit_secondary": "#1f261a"
+   },
+   "name": "Recon scout",
+   "colourway": "recon",
+   "headPreset": "head.recon-goggles",
+   "parts": {
+    "chest": "armor.chest.tactical",
+    "shoulders": "armor.shoulders.light",
+    "gloves": "armor.gloves.light",
+    "belt": "armor.belt.utility",
+    "legs": "armor.legs.light",
+    "boots": "armor.boots.light",
+    "back": "armor.back.radio"
+   }
+  },
+  {
+   "id": "role.scientist",
+   "heads": {
+    "male": [
+     "acc.round_glasses",
+     "hair.afro.full"
+    ],
+    "female": [
+     "acc.round_glasses",
+     "hair.silver_bob.full"
+    ],
+    "skin": "#6e4630",
+    "hair": "#c9c3d6",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#5b3fa8",
+    "suit_secondary": "#34245f"
+   },
+   "name": "Scientist",
+   "colourway": "scientist",
+   "headPreset": "head.scientist-hair",
+   "parts": {
+    "chest": "armor.chest.labcoat",
+    "gloves": "armor.gloves.fabric",
+    "belt": "armor.belt.plain",
+    "boots": "armor.boots.sneaker",
+    "back": "armor.back.backpack-t0"
+   }
+  },
+  {
+   "id": "role.mechanic",
+   "heads": {
+    "male": [
+     "acc.cap",
+     "hair.short_spikes.cap"
+    ],
+    "female": [
+     "acc.cap",
+     "hair.long_straight.cap"
+    ],
+    "skin": "#f1b894",
+    "hair": "#b8452a",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#27305a",
+    "suit_secondary": "#161b33"
+   },
+   "name": "Mechanic",
+   "colourway": "mechanic",
+   "headPreset": "head.mechanic-cap",
+   "parts": {
+    "chest": "armor.chest.overalls",
+    "shoulders": "armor.shoulders.cloth",
+    "gloves": "armor.gloves.work",
+    "belt": "armor.belt.tool",
+    "legs": "armor.legs.cargo",
+    "boots": "armor.boots.light",
+    "back": "armor.back.toolpack"
+   }
+  },
+  {
+   "id": "role.civilian",
+   "heads": {
+    "male": [
+     "hair.pompadour.full"
+    ],
+    "female": [
+     "hair.long_side_fringe.full"
+    ],
+    "skin": "#e8b08e",
+    "hair": "#5a3222",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#3e5a86",
+    "suit_secondary": "#26344f"
+   },
+   "name": "Civilian",
+   "colourway": "civilian",
+   "headPreset": "head.civilian-hair",
+   "parts": {
+    "chest": "armor.chest.jacket",
+    "belt": "armor.belt.plain",
+    "legs": "armor.legs.cargo",
+    "boots": "armor.boots.sneaker"
+   }
+  },
+  {
+   "id": "role.jet-trooper",
+   "heads": {
+    "male": [
+     "helmet.closed",
+     "visor.closed.hud"
+    ],
+    "female": [
+     "helmet.closed",
+     "visor.closed.hud"
+    ],
+    "skin": "#c4876a",
+    "hair": "#2a2020",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
+   "undersuit": {
+    "suit_primary": "#232d4a",
+    "suit_secondary": "#141a2c"
+   },
+   "name": "Jet trooper",
+   "colourway": "cobalt",
+   "headPreset": "head.closed-helmet",
+   "parts": {
+    "chest": "armor.chest.plate",
+    "shoulders": "armor.shoulders.standard",
+    "gloves": "armor.gloves.standard",
+    "belt": "armor.belt.standard",
+    "legs": "armor.legs.standard",
+    "boots": "armor.boots.heavy",
+    "back": "armor.back.jetpack-heavy"
+   }
+  }
+ ],
+ "legacyVisuals": {
+  "captain-chest": {
+   "part": "armor.chest.coat",
+   "colourway": "captain"
+  },
+  "captain-shoulders": {
+   "part": "armor.shoulders.epaulette",
+   "colourway": "captain"
+  },
+  "captain-gloves": {
+   "part": "armor.gloves.fabric",
+   "colourway": "captain"
+  },
+  "captain-belt": {
+   "part": "armor.belt.sash",
+   "colourway": "captain"
+  },
+  "captain-boots": {
+   "part": "armor.boots.dress",
+   "colourway": "captain"
+  },
+  "engineer-chest": {
+   "part": "armor.chest.harness",
+   "colourway": "engineer"
+  },
+  "engineer-shoulders": {
+   "part": "armor.shoulders.light",
+   "colourway": "engineer"
+  },
+  "engineer-gloves": {
+   "part": "armor.gloves.work",
+   "colourway": "engineer"
+  },
+  "engineer-belt": {
+   "part": "armor.belt.tool",
+   "colourway": "engineer"
+  },
+  "engineer-legs": {
+   "part": "armor.legs.light",
+   "colourway": "engineer"
+  },
+  "engineer-boots": {
+   "part": "armor.boots.light",
+   "colourway": "engineer"
+  },
+  "engineer-back": {
+   "part": "armor.back.toolpack",
+   "colourway": "engineer"
+  },
+  "medic-chest": {
+   "part": "armor.chest.medic",
+   "colourway": "medic"
+  },
+  "medic-shoulders": {
+   "part": "armor.shoulders.standard",
+   "colourway": "medic"
+  },
+  "medic-gloves": {
+   "part": "armor.gloves.light",
+   "colourway": "medic"
+  },
+  "medic-belt": {
+   "part": "armor.belt.medic",
+   "colourway": "medic"
+  },
+  "medic-legs": {
+   "part": "armor.legs.light",
+   "colourway": "medic"
+  },
+  "medic-boots": {
+   "part": "armor.boots.standard",
+   "colourway": "medic"
+  },
+  "medic-back": {
+   "part": "armor.back.medpack",
+   "colourway": "medic"
+  },
+  "pilot-chest": {
+   "part": "armor.chest.flight",
+   "colourway": "pilot"
+  },
+  "pilot-shoulders": {
+   "part": "armor.shoulders.flight",
+   "colourway": "pilot"
+  },
+  "pilot-gloves": {
+   "part": "armor.gloves.light",
+   "colourway": "pilot"
+  },
+  "pilot-belt": {
+   "part": "armor.belt.utility",
+   "colourway": "pilot"
+  },
+  "pilot-legs": {
+   "part": "armor.legs.light",
+   "colourway": "pilot"
+  },
+  "pilot-boots": {
+   "part": "armor.boots.flight",
+   "colourway": "pilot"
+  },
+  "pilot-back": {
+   "part": "armor.back.oxygen-single",
+   "colourway": "pilot"
+  },
+  "security-chest": {
+   "part": "armor.chest.vest",
+   "colourway": "security"
+  },
+  "security-shoulders": {
+   "part": "armor.shoulders.standard",
+   "colourway": "security"
+  },
+  "security-gloves": {
+   "part": "armor.gloves.standard",
+   "colourway": "security"
+  },
+  "security-belt": {
+   "part": "armor.belt.holster",
+   "colourway": "security"
+  },
+  "security-legs": {
+   "part": "armor.legs.standard",
+   "colourway": "security"
+  },
+  "security-boots": {
+   "part": "armor.boots.standard",
+   "colourway": "security"
+  },
+  "security-back": {
+   "part": "armor.back.backpack-t1",
+   "colourway": "security"
+  },
+  "marine-chest": {
+   "part": "armor.chest.heavy",
+   "colourway": "marine"
+  },
+  "marine-shoulders": {
+   "part": "armor.shoulders.heavy",
+   "colourway": "marine"
+  },
+  "marine-gloves": {
+   "part": "armor.gloves.heavy",
+   "colourway": "marine"
+  },
+  "marine-belt": {
+   "part": "armor.belt.heavy",
+   "colourway": "marine"
+  },
+  "marine-legs": {
+   "part": "armor.legs.heavy",
+   "colourway": "marine"
+  },
+  "marine-boots": {
+   "part": "armor.boots.heavy",
+   "colourway": "marine"
+  },
+  "marine-back": {
+   "part": "armor.back.backpack-t3",
+   "colourway": "marine"
+  },
+  "salvage-chest": {
+   "part": "armor.chest.hazard",
+   "colourway": "salvage"
+  },
+  "salvage-shoulders": {
+   "part": "armor.shoulders.standard",
+   "colourway": "salvage"
+  },
+  "salvage-gloves": {
+   "part": "armor.gloves.work",
+   "colourway": "salvage"
+  },
+  "salvage-belt": {
+   "part": "armor.belt.tool",
+   "colourway": "salvage"
+  },
+  "salvage-legs": {
+   "part": "armor.legs.standard",
+   "colourway": "salvage"
+  },
+  "salvage-boots": {
+   "part": "armor.boots.standard",
+   "colourway": "salvage"
+  },
+  "salvage-back": {
+   "part": "armor.back.backpack-t3",
+   "colourway": "salvage"
+  },
+  "recon-chest": {
+   "part": "armor.chest.tactical",
+   "colourway": "recon"
+  },
+  "recon-shoulders": {
+   "part": "armor.shoulders.light",
+   "colourway": "recon"
+  },
+  "recon-gloves": {
+   "part": "armor.gloves.light",
+   "colourway": "recon"
+  },
+  "recon-belt": {
+   "part": "armor.belt.utility",
+   "colourway": "recon"
+  },
+  "recon-legs": {
+   "part": "armor.legs.light",
+   "colourway": "recon"
+  },
+  "recon-boots": {
+   "part": "armor.boots.light",
+   "colourway": "recon"
+  },
+  "recon-back": {
+   "part": "armor.back.radio",
+   "colourway": "recon"
+  },
+  "scientist-chest": {
+   "part": "armor.chest.labcoat",
+   "colourway": "scientist"
+  },
+  "scientist-gloves": {
+   "part": "armor.gloves.fabric",
+   "colourway": "scientist"
+  },
+  "scientist-belt": {
+   "part": "armor.belt.plain",
+   "colourway": "scientist"
+  },
+  "scientist-boots": {
+   "part": "armor.boots.sneaker",
+   "colourway": "scientist"
+  },
+  "scientist-back": {
+   "part": "armor.back.backpack-t0",
+   "colourway": "scientist"
+  },
+  "mechanic-chest": {
+   "part": "armor.chest.overalls",
+   "colourway": "mechanic"
+  },
+  "mechanic-shoulders": {
+   "part": "armor.shoulders.cloth",
+   "colourway": "mechanic"
+  },
+  "mechanic-gloves": {
+   "part": "armor.gloves.work",
+   "colourway": "mechanic"
+  },
+  "mechanic-belt": {
+   "part": "armor.belt.tool",
+   "colourway": "mechanic"
+  },
+  "mechanic-legs": {
+   "part": "armor.legs.cargo",
+   "colourway": "mechanic"
+  },
+  "mechanic-boots": {
+   "part": "armor.boots.light",
+   "colourway": "mechanic"
+  },
+  "mechanic-back": {
+   "part": "armor.back.toolpack",
+   "colourway": "mechanic"
+  }
+ },
+ "fitReport": {
+  "zFight": {
+   "zFightSingle": {},
+   "zFightPresets": {},
+   "totalSingle": 0,
+   "totalPresets": 0
+  },
+  "emissiveSurface": {
+   "armor.chest.jacket": 0.006,
+   "armor.chest.harness": 0.0,
+   "armor.chest.plate": 0.007,
+   "armor.chest.heavy": 0.006,
+   "armor.chest.coat": 0.001,
+   "armor.chest.labcoat": 0.0,
+   "armor.chest.overalls": 0.0,
+   "armor.chest.flight": 0.011,
+   "armor.chest.tactical": 0.0,
+   "armor.chest.vest": 0.007,
+   "armor.chest.medic": 0.006,
+   "armor.chest.hazard": 0.007,
+   "armor.shoulders.cloth": 0.0,
+   "armor.shoulders.light": 0.0,
+   "armor.shoulders.standard": 0.0,
+   "armor.shoulders.heavy": 0.0,
+   "armor.shoulders.epaulette": 0.0,
+   "armor.shoulders.flight": 0.0,
+   "armor.gloves.fabric": 0.0,
+   "armor.gloves.light": 0.0,
+   "armor.gloves.standard": 0.0,
+   "armor.gloves.heavy": 0.0,
+   "armor.gloves.work": 0.0,
+   "armor.boots.sneaker": 0.0,
+   "armor.boots.light": 0.0,
+   "armor.boots.standard": 0.0,
+   "armor.boots.heavy": 0.0,
+   "armor.boots.dress": 0.0,
+   "armor.boots.flight": 0.0,
+   "armor.legs.cargo": 0.0,
+   "armor.legs.light": 0.0,
+   "armor.legs.standard": 0.0,
+   "armor.legs.heavy": 0.0,
+   "armor.belt.plain": 0.0,
+   "armor.belt.utility": 0.0,
+   "armor.belt.standard": 0.0,
+   "armor.belt.heavy": 0.0,
+   "armor.belt.tool": 0.0,
+   "armor.belt.medic": 0.0,
+   "armor.belt.sash": 0.0,
+   "armor.belt.holster": 0.0,
+   "armor.back.backpack-t0": 0.0,
+   "armor.back.backpack-t1": 0.006,
+   "armor.back.backpack-t2": 0.01,
+   "armor.back.backpack-t3": 0.004,
+   "armor.back.oxygen-single": 0.0,
+   "armor.back.oxygen-twin": 0.0,
+   "armor.back.jetpack-light": 0.006,
+   "armor.back.jetpack-heavy": 0.008,
+   "armor.back.medpack": 0.0,
+   "armor.back.radio": 0.008,
+   "armor.back.toolpack": 0.0
+  },
+  "clip": {
+   "role.captain@male": {
+    "run": {
+     "penetratingVoxels": 803,
+     "hinge": 600,
+     "other": 203,
+     "bodySelfHinge": 909,
+     "bodySelfOther": 175,
+     "worstOther": {
+      "armor.boots.dress@toe.R -> shin.R": 34,
+      "armor.chest.coat@thigh.L -> spine": 30,
+      "armor.boots.dress@toe.L -> shin.L": 30,
+      "armor.gloves.fabric@hand.L -> chest": 12,
+      "armor.chest.coat@pelvis -> shin.L": 10,
+      "armor.chest.coat@chest -> hand.L": 9,
+      "armor.chest.coat@spine -> thigh.L": 8,
+      "armor.shoulders.epaulette@upper_arm.L -> hand.L": 8
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1069,
+     "hinge": 292,
+     "other": 777,
+     "bodySelfHinge": 360,
+     "bodySelfOther": 719,
+     "worstOther": {
+      "armor.gloves.fabric@hand.R -> chest": 192,
+      "armor.chest.coat@chest -> hand.R": 112,
+      "armor.gloves.fabric@hand.R -> hand.L": 100,
+      "armor.gloves.fabric@hand.L -> hand.R": 100,
+      "armor.gloves.fabric@hand.R -> forearm.L": 39,
+      "armor.gloves.fabric@hand.L -> upper_arm.L": 35,
+      "armor.chest.coat@chest -> upper_arm.L": 24,
+      "armor.chest.coat@chest -> hand.L": 22
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 747,
+     "hinge": 561,
+     "other": 186,
+     "bodySelfHinge": 843,
+     "bodySelfOther": 215,
+     "worstOther": {
+      "armor.boots.dress@toe.L -> shin.L": 83,
+      "armor.boots.dress@toe.R -> shin.R": 42,
+      "armor.chest.coat@thigh.R -> hand.R": 10,
+      "armor.chest.coat@chest -> head": 9,
+      "armor.boots.dress@shin.R -> toe.R": 9,
+      "armor.belt.sash@pelvis -> chest": 6,
+      "armor.chest.coat@thigh.R -> forearm.R": 5,
+      "armor.chest.coat@thigh.L -> hand.L": 5
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 850,
+     "hinge": 388,
+     "other": 462,
+     "bodySelfHinge": 460,
+     "bodySelfOther": 383,
+     "worstOther": {
+      "armor.gloves.fabric@hand.L -> thigh.L": 80,
+      "armor.gloves.fabric@hand.R -> thigh.R": 69,
+      "armor.chest.coat@thigh.L -> hand.L": 43,
+      "armor.chest.coat@thigh.R -> hand.R": 39,
+      "armor.boots.dress@toe.R -> shin.R": 30,
+      "armor.boots.dress@toe.L -> shin.L": 23,
+      "armor.belt.sash@pelvis -> forearm.L": 19,
+      "armor.shoulders.epaulette@upper_arm.L -> chest": 15
+     }
+    }
+   },
+   "role.captain@female": {
+    "run": {
+     "penetratingVoxels": 795,
+     "hinge": 596,
+     "other": 199,
+     "bodySelfHinge": 901,
+     "bodySelfOther": 166,
+     "worstOther": {
+      "armor.boots.dress@toe.R -> shin.R": 34,
+      "armor.boots.dress@toe.L -> shin.L": 30,
+      "armor.chest.coat@thigh.L -> spine": 26,
+      "armor.gloves.fabric@hand.L -> chest": 12,
+      "armor.chest.coat@pelvis -> shin.L": 10,
+      "armor.chest.coat@chest -> hand.L": 9,
+      "armor.chest.coat@spine -> thigh.L": 8,
+      "armor.shoulders.epaulette@upper_arm.L -> hand.L": 8
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1061,
+     "hinge": 284,
+     "other": 777,
+     "bodySelfHinge": 358,
+     "bodySelfOther": 727,
+     "worstOther": {
+      "armor.gloves.fabric@hand.R -> chest": 192,
+      "armor.chest.coat@chest -> hand.R": 112,
+      "armor.gloves.fabric@hand.R -> hand.L": 100,
+      "armor.gloves.fabric@hand.L -> hand.R": 100,
+      "armor.gloves.fabric@hand.R -> forearm.L": 39,
+      "armor.gloves.fabric@hand.L -> upper_arm.L": 35,
+      "armor.chest.coat@chest -> upper_arm.L": 24,
+      "armor.chest.coat@chest -> hand.L": 22
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 747,
+     "hinge": 561,
+     "other": 186,
+     "bodySelfHinge": 833,
+     "bodySelfOther": 215,
+     "worstOther": {
+      "armor.boots.dress@toe.L -> shin.L": 83,
+      "armor.boots.dress@toe.R -> shin.R": 42,
+      "armor.chest.coat@thigh.R -> hand.R": 10,
+      "armor.chest.coat@chest -> head": 9,
+      "armor.boots.dress@shin.R -> toe.R": 9,
+      "armor.belt.sash@pelvis -> chest": 6,
+      "armor.chest.coat@thigh.R -> forearm.R": 5,
+      "armor.chest.coat@thigh.L -> hand.L": 5
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 838,
+     "hinge": 389,
+     "other": 449,
+     "bodySelfHinge": 454,
+     "bodySelfOther": 368,
+     "worstOther": {
+      "armor.gloves.fabric@hand.L -> thigh.L": 80,
+      "armor.gloves.fabric@hand.R -> thigh.R": 69,
+      "armor.chest.coat@thigh.L -> hand.L": 43,
+      "armor.chest.coat@thigh.R -> hand.R": 39,
+      "armor.boots.dress@toe.R -> shin.R": 30,
+      "armor.boots.dress@toe.L -> shin.L": 23,
+      "armor.belt.sash@pelvis -> forearm.L": 20,
+      "armor.shoulders.epaulette@upper_arm.L -> chest": 15
+     }
+    }
+   },
+   "role.engineer@male": {
+    "run": {
+     "penetratingVoxels": 773,
+     "hinge": 668,
+     "other": 105,
+     "bodySelfHinge": 840,
+     "bodySelfOther": 116,
+     "worstOther": {
+      "armor.boots.light@toe.R -> shin.R": 27,
+      "armor.boots.light@toe.L -> shin.L": 23,
+      "armor.shoulders.light@upper_arm.L -> hand.L": 8,
+      "armor.chest.harness@chest -> head": 7,
+      "armor.gloves.work@hand.L -> chest": 7,
+      "armor.gloves.work@hand.L -> upper_arm.L": 6,
+      "armor.chest.harness@chest -> hand.L": 5,
+      "armor.legs.light@thigh.L -> spine": 4
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1535,
+     "hinge": 562,
+     "other": 973,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 809,
+     "worstOther": {
+      "armor.gloves.work@hand.R -> chest": 187,
+      "armor.chest.harness@chest -> hand.R": 107,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.gloves.work@forearm.L -> hand.R": 41,
+      "armor.shoulders.light@upper_arm.R -> chest": 40
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 595,
+     "hinge": 419,
+     "other": 176,
+     "bodySelfHinge": 729,
+     "bodySelfOther": 197,
+     "worstOther": {
+      "armor.boots.light@toe.L -> shin.L": 95,
+      "armor.boots.light@toe.R -> shin.R": 33,
+      "armor.legs.light@shin.L -> toe.L": 14,
+      "armor.chest.harness@chest -> head": 9,
+      "armor.legs.light@thigh.R -> hand.R": 6,
+      "armor.belt.tool@pelvis -> chest": 4,
+      "armor.legs.light@thigh.L -> hand.L": 3,
+      "armor.chest.harness@chest -> upper_arm.R": 2
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 876,
+     "hinge": 398,
+     "other": 478,
+     "bodySelfHinge": 401,
+     "bodySelfOther": 343,
+     "worstOther": {
+      "armor.gloves.work@hand.L -> thigh.L": 71,
+      "armor.gloves.work@hand.R -> thigh.R": 56,
+      "armor.belt.tool@pelvis -> forearm.L": 39,
+      "armor.gloves.work@forearm.L -> pelvis": 38,
+      "armor.legs.light@thigh.L -> hand.L": 36,
+      "armor.gloves.work@forearm.R -> pelvis": 33,
+      "armor.belt.tool@pelvis -> forearm.R": 32,
+      "armor.legs.light@thigh.R -> hand.R": 27
+     }
+    }
+   },
+   "role.engineer@female": {
+    "run": {
+     "penetratingVoxels": 752,
+     "hinge": 648,
+     "other": 104,
+     "bodySelfHinge": 832,
+     "bodySelfOther": 112,
+     "worstOther": {
+      "armor.boots.light@toe.R -> shin.R": 27,
+      "armor.boots.light@toe.L -> shin.L": 23,
+      "armor.shoulders.light@upper_arm.L -> hand.L": 8,
+      "armor.chest.harness@chest -> head": 7,
+      "armor.gloves.work@hand.L -> chest": 7,
+      "armor.gloves.work@hand.L -> upper_arm.L": 6,
+      "armor.chest.harness@chest -> hand.L": 5,
+      "armor.chest.harness@spine -> thigh.L": 3
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1529,
+     "hinge": 556,
+     "other": 973,
+     "bodySelfHinge": 345,
+     "bodySelfOther": 817,
+     "worstOther": {
+      "armor.gloves.work@hand.R -> chest": 187,
+      "armor.chest.harness@chest -> hand.R": 107,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.gloves.work@forearm.L -> hand.R": 41,
+      "armor.shoulders.light@upper_arm.R -> chest": 40
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 583,
+     "hinge": 407,
+     "other": 176,
+     "bodySelfHinge": 719,
+     "bodySelfOther": 197,
+     "worstOther": {
+      "armor.boots.light@toe.L -> shin.L": 95,
+      "armor.boots.light@toe.R -> shin.R": 33,
+      "armor.legs.light@shin.L -> toe.L": 14,
+      "armor.chest.harness@chest -> head": 9,
+      "armor.legs.light@thigh.R -> hand.R": 6,
+      "armor.belt.tool@pelvis -> chest": 4,
+      "armor.legs.light@thigh.L -> hand.L": 3,
+      "armor.chest.harness@chest -> upper_arm.R": 2
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 839,
+     "hinge": 389,
+     "other": 450,
+     "bodySelfHinge": 395,
+     "bodySelfOther": 326,
+     "worstOther": {
+      "armor.gloves.work@hand.L -> thigh.L": 71,
+      "armor.gloves.work@hand.R -> thigh.R": 56,
+      "armor.belt.tool@pelvis -> forearm.L": 40,
+      "armor.gloves.work@forearm.L -> pelvis": 38,
+      "armor.legs.light@thigh.L -> hand.L": 36,
+      "armor.gloves.work@forearm.R -> pelvis": 33,
+      "armor.belt.tool@pelvis -> forearm.R": 33,
+      "armor.legs.light@thigh.R -> hand.R": 27
+     }
+    }
+   },
+   "role.medic@male": {
+    "run": {
+     "penetratingVoxels": 782,
+     "hinge": 623,
+     "other": 159,
+     "bodySelfHinge": 827,
+     "bodySelfOther": 116,
+     "worstOther": {
+      "armor.shoulders.standard@upper_arm.L -> hand.L": 31,
+      "armor.boots.standard@toe.R -> shin.R": 27,
+      "armor.gloves.light@hand.L -> upper_arm.L": 25,
+      "armor.boots.standard@toe.L -> shin.L": 23,
+      "armor.belt.medic@pelvis -> chest": 10,
+      "armor.chest.medic@chest -> head": 7,
+      "armor.gloves.light@hand.L -> chest": 7,
+      "armor.chest.medic@chest -> pelvis": 6
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1452,
+     "hinge": 433,
+     "other": 1019,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 803,
+     "worstOther": {
+      "armor.gloves.light@hand.R -> chest": 217,
+      "armor.chest.medic@chest -> hand.R": 140,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 697,
+     "hinge": 473,
+     "other": 224,
+     "bodySelfHinge": 734,
+     "bodySelfOther": 202,
+     "worstOther": {
+      "armor.boots.standard@toe.L -> shin.L": 110,
+      "armor.boots.standard@toe.R -> shin.R": 36,
+      "armor.legs.light@shin.L -> toe.L": 25,
+      "armor.belt.medic@pelvis -> chest": 16,
+      "armor.chest.medic@chest -> head": 9,
+      "armor.chest.medic@chest -> pelvis": 6,
+      "armor.legs.light@thigh.R -> hand.R": 6,
+      "armor.chest.medic@chest -> upper_arm.R": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 850,
+     "hinge": 404,
+     "other": 446,
+     "bodySelfHinge": 401,
+     "bodySelfOther": 368,
+     "worstOther": {
+      "armor.gloves.light@hand.L -> thigh.L": 71,
+      "armor.gloves.light@hand.R -> thigh.R": 56,
+      "armor.shoulders.standard@upper_arm.L -> chest": 37,
+      "armor.legs.light@thigh.L -> hand.L": 36,
+      "armor.shoulders.standard@upper_arm.R -> chest": 34,
+      "armor.belt.medic@pelvis -> forearm.L": 29,
+      "armor.legs.light@thigh.R -> hand.R": 27,
+      "armor.belt.medic@pelvis -> forearm.R": 23
+     }
+    }
+   },
+   "role.medic@female": {
+    "run": {
+     "penetratingVoxels": 753,
+     "hinge": 597,
+     "other": 156,
+     "bodySelfHinge": 819,
+     "bodySelfOther": 112,
+     "worstOther": {
+      "armor.shoulders.standard@upper_arm.L -> hand.L": 31,
+      "armor.boots.standard@toe.R -> shin.R": 27,
+      "armor.gloves.light@hand.L -> upper_arm.L": 25,
+      "armor.boots.standard@toe.L -> shin.L": 23,
+      "armor.belt.medic@pelvis -> chest": 10,
+      "armor.chest.medic@chest -> head": 7,
+      "armor.gloves.light@hand.L -> chest": 7,
+      "armor.chest.medic@chest -> pelvis": 6
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1446,
+     "hinge": 427,
+     "other": 1019,
+     "bodySelfHinge": 345,
+     "bodySelfOther": 811,
+     "worstOther": {
+      "armor.gloves.light@hand.R -> chest": 217,
+      "armor.chest.medic@chest -> hand.R": 140,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 677,
+     "hinge": 453,
+     "other": 224,
+     "bodySelfHinge": 724,
+     "bodySelfOther": 202,
+     "worstOther": {
+      "armor.boots.standard@toe.L -> shin.L": 110,
+      "armor.boots.standard@toe.R -> shin.R": 36,
+      "armor.legs.light@shin.L -> toe.L": 25,
+      "armor.belt.medic@pelvis -> chest": 16,
+      "armor.chest.medic@chest -> head": 9,
+      "armor.chest.medic@chest -> pelvis": 6,
+      "armor.legs.light@thigh.R -> hand.R": 6,
+      "armor.chest.medic@chest -> upper_arm.R": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 820,
+     "hinge": 393,
+     "other": 427,
+     "bodySelfHinge": 395,
+     "bodySelfOther": 351,
+     "worstOther": {
+      "armor.gloves.light@hand.L -> thigh.L": 71,
+      "armor.gloves.light@hand.R -> thigh.R": 56,
+      "armor.shoulders.standard@upper_arm.L -> chest": 37,
+      "armor.legs.light@thigh.L -> hand.L": 36,
+      "armor.shoulders.standard@upper_arm.R -> chest": 34,
+      "armor.belt.medic@pelvis -> forearm.L": 30,
+      "armor.legs.light@thigh.R -> hand.R": 27,
+      "armor.belt.medic@pelvis -> forearm.R": 24
+     }
+    }
+   },
+   "role.pilot@male": {
+    "run": {
+     "penetratingVoxels": 615,
+     "hinge": 510,
+     "other": 105,
+     "bodySelfHinge": 812,
+     "bodySelfOther": 127,
+     "worstOther": {
+      "armor.boots.flight@toe.R -> shin.R": 27,
+      "armor.boots.flight@toe.L -> shin.L": 23,
+      "armor.chest.flight@chest -> head": 18,
+      "armor.shoulders.flight@upper_arm.L -> hand.L": 8,
+      "armor.gloves.light@hand.L -> chest": 7,
+      "armor.gloves.light@hand.L -> upper_arm.L": 6,
+      "armor.chest.flight@chest -> hand.L": 5,
+      "armor.legs.light@thigh.L -> hand.L": 3
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1430,
+     "hinge": 447,
+     "other": 983,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 778,
+     "worstOther": {
+      "armor.gloves.light@hand.R -> chest": 220,
+      "armor.chest.flight@chest -> hand.R": 138,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.flight@upper_arm.R -> chest": 40,
+      "armor.gloves.light@hand.L -> upper_arm.L": 38
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 571,
+     "hinge": 391,
+     "other": 180,
+     "bodySelfHinge": 732,
+     "bodySelfOther": 205,
+     "worstOther": {
+      "armor.boots.flight@toe.L -> shin.L": 95,
+      "armor.boots.flight@toe.R -> shin.R": 33,
+      "armor.chest.flight@chest -> head": 17,
+      "armor.legs.light@shin.L -> toe.L": 14,
+      "armor.legs.light@thigh.R -> hand.R": 6,
+      "armor.legs.light@thigh.L -> hand.L": 3,
+      "armor.chest.flight@chest -> upper_arm.R": 2,
+      "armor.chest.flight@chest -> upper_arm.L": 2
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 749,
+     "hinge": 357,
+     "other": 392,
+     "bodySelfHinge": 401,
+     "bodySelfOther": 343,
+     "worstOther": {
+      "armor.gloves.light@hand.L -> thigh.L": 71,
+      "armor.gloves.light@hand.R -> thigh.R": 56,
+      "armor.legs.light@thigh.L -> hand.L": 36,
+      "armor.belt.utility@pelvis -> forearm.L": 29,
+      "armor.legs.light@thigh.R -> hand.R": 27,
+      "armor.belt.utility@pelvis -> forearm.R": 23,
+      "armor.boots.flight@toe.R -> shin.R": 23,
+      "armor.gloves.light@forearm.L -> pelvis": 21
+     }
+    }
+   },
+   "role.pilot@female": {
+    "run": {
+     "penetratingVoxels": 615,
+     "hinge": 510,
+     "other": 105,
+     "bodySelfHinge": 804,
+     "bodySelfOther": 123,
+     "worstOther": {
+      "armor.boots.flight@toe.R -> shin.R": 27,
+      "armor.boots.flight@toe.L -> shin.L": 23,
+      "armor.chest.flight@chest -> head": 18,
+      "armor.shoulders.flight@upper_arm.L -> hand.L": 8,
+      "armor.gloves.light@hand.L -> chest": 7,
+      "armor.gloves.light@hand.L -> upper_arm.L": 6,
+      "armor.chest.flight@chest -> hand.L": 5,
+      "armor.legs.light@thigh.L -> hand.L": 3
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1424,
+     "hinge": 441,
+     "other": 983,
+     "bodySelfHinge": 345,
+     "bodySelfOther": 786,
+     "worstOther": {
+      "armor.gloves.light@hand.R -> chest": 220,
+      "armor.chest.flight@chest -> hand.R": 138,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.flight@upper_arm.R -> chest": 40,
+      "armor.gloves.light@hand.L -> upper_arm.L": 38
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 575,
+     "hinge": 395,
+     "other": 180,
+     "bodySelfHinge": 722,
+     "bodySelfOther": 205,
+     "worstOther": {
+      "armor.boots.flight@toe.L -> shin.L": 95,
+      "armor.boots.flight@toe.R -> shin.R": 33,
+      "armor.chest.flight@chest -> head": 17,
+      "armor.legs.light@shin.L -> toe.L": 14,
+      "armor.legs.light@thigh.R -> hand.R": 6,
+      "armor.legs.light@thigh.L -> hand.L": 3,
+      "armor.chest.flight@chest -> upper_arm.R": 2,
+      "armor.chest.flight@chest -> upper_arm.L": 2
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 739,
+     "hinge": 362,
+     "other": 377,
+     "bodySelfHinge": 395,
+     "bodySelfOther": 326,
+     "worstOther": {
+      "armor.gloves.light@hand.L -> thigh.L": 71,
+      "armor.gloves.light@hand.R -> thigh.R": 56,
+      "armor.legs.light@thigh.L -> hand.L": 36,
+      "armor.belt.utility@pelvis -> forearm.L": 30,
+      "armor.legs.light@thigh.R -> hand.R": 27,
+      "armor.belt.utility@pelvis -> forearm.R": 24,
+      "armor.boots.flight@toe.R -> shin.R": 23,
+      "armor.gloves.light@forearm.L -> pelvis": 21
+     }
+    }
+   },
+   "role.security@male": {
+    "run": {
+     "penetratingVoxels": 858,
+     "hinge": 666,
+     "other": 192,
+     "bodySelfHinge": 851,
+     "bodySelfOther": 142,
+     "worstOther": {
+      "armor.shoulders.standard@upper_arm.L -> hand.L": 31,
+      "armor.legs.standard@thigh.L -> spine": 29,
+      "armor.boots.standard@toe.R -> shin.R": 27,
+      "armor.gloves.standard@hand.L -> upper_arm.L": 25,
+      "armor.boots.standard@toe.L -> shin.L": 23,
+      "armor.chest.vest@spine -> thigh.L": 12,
+      "armor.belt.holster@pelvis -> chest": 12,
+      "armor.chest.vest@chest -> pelvis": 8
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1561,
+     "hinge": 498,
+     "other": 1063,
+     "bodySelfHinge": 359,
+     "bodySelfOther": 859,
+     "worstOther": {
+      "armor.gloves.standard@hand.R -> chest": 213,
+      "armor.chest.vest@chest -> hand.R": 132,
+      "armor.gloves.standard@forearm.R -> head": 106,
+      "armor.gloves.standard@hand.R -> hand.L": 100,
+      "armor.gloves.standard@hand.L -> hand.R": 100,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.standard@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 712,
+     "hinge": 479,
+     "other": 233,
+     "bodySelfHinge": 744,
+     "bodySelfOther": 208,
+     "worstOther": {
+      "armor.boots.standard@toe.L -> shin.L": 110,
+      "armor.boots.standard@toe.R -> shin.R": 36,
+      "armor.legs.standard@shin.L -> toe.L": 25,
+      "armor.belt.holster@pelvis -> chest": 20,
+      "armor.chest.vest@chest -> head": 9,
+      "armor.chest.vest@chest -> pelvis": 8,
+      "armor.chest.vest@chest -> upper_arm.R": 3,
+      "armor.chest.vest@chest -> upper_arm.L": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 868,
+     "hinge": 401,
+     "other": 467,
+     "bodySelfHinge": 407,
+     "bodySelfOther": 410,
+     "worstOther": {
+      "armor.gloves.standard@hand.L -> thigh.L": 67,
+      "armor.gloves.standard@hand.R -> thigh.R": 54,
+      "armor.shoulders.standard@upper_arm.L -> chest": 37,
+      "armor.shoulders.standard@upper_arm.R -> chest": 34,
+      "armor.belt.holster@pelvis -> forearm.L": 29,
+      "armor.legs.standard@thigh.L -> forearm.L": 27,
+      "armor.belt.holster@pelvis -> forearm.R": 23,
+      "armor.boots.standard@toe.R -> shin.R": 23
+     }
+    }
+   },
+   "role.security@female": {
+    "run": {
+     "penetratingVoxels": 831,
+     "hinge": 646,
+     "other": 185,
+     "bodySelfHinge": 843,
+     "bodySelfOther": 129,
+     "worstOther": {
+      "armor.shoulders.standard@upper_arm.L -> hand.L": 31,
+      "armor.boots.standard@toe.R -> shin.R": 27,
+      "armor.gloves.standard@hand.L -> upper_arm.L": 25,
+      "armor.legs.standard@thigh.L -> spine": 23,
+      "armor.boots.standard@toe.L -> shin.L": 23,
+      "armor.belt.holster@pelvis -> chest": 12,
+      "armor.chest.vest@spine -> thigh.L": 11,
+      "armor.chest.vest@chest -> pelvis": 8
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1555,
+     "hinge": 492,
+     "other": 1063,
+     "bodySelfHinge": 357,
+     "bodySelfOther": 867,
+     "worstOther": {
+      "armor.gloves.standard@hand.R -> chest": 213,
+      "armor.chest.vest@chest -> hand.R": 132,
+      "armor.gloves.standard@forearm.R -> head": 106,
+      "armor.gloves.standard@hand.R -> hand.L": 100,
+      "armor.gloves.standard@hand.L -> hand.R": 100,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.standard@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 691,
+     "hinge": 459,
+     "other": 232,
+     "bodySelfHinge": 734,
+     "bodySelfOther": 207,
+     "worstOther": {
+      "armor.boots.standard@toe.L -> shin.L": 110,
+      "armor.boots.standard@toe.R -> shin.R": 36,
+      "armor.legs.standard@shin.L -> toe.L": 25,
+      "armor.belt.holster@pelvis -> chest": 20,
+      "armor.chest.vest@chest -> head": 9,
+      "armor.chest.vest@chest -> pelvis": 8,
+      "armor.chest.vest@chest -> upper_arm.R": 3,
+      "armor.chest.vest@chest -> upper_arm.L": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 838,
+     "hinge": 390,
+     "other": 448,
+     "bodySelfHinge": 401,
+     "bodySelfOther": 393,
+     "worstOther": {
+      "armor.gloves.standard@hand.L -> thigh.L": 67,
+      "armor.gloves.standard@hand.R -> thigh.R": 54,
+      "armor.shoulders.standard@upper_arm.L -> chest": 37,
+      "armor.shoulders.standard@upper_arm.R -> chest": 34,
+      "armor.belt.holster@pelvis -> forearm.L": 30,
+      "armor.legs.standard@thigh.L -> forearm.L": 27,
+      "armor.belt.holster@pelvis -> forearm.R": 24,
+      "armor.boots.standard@toe.R -> shin.R": 23
+     }
+    }
+   },
+   "role.marine@male": {
+    "run": {
+     "penetratingVoxels": 1213,
+     "hinge": 689,
+     "other": 524,
+     "bodySelfHinge": 910,
+     "bodySelfOther": 206,
+     "worstOther": {
+      "armor.shoulders.heavy@upper_arm.L -> hand.L": 77,
+      "armor.gloves.heavy@hand.L -> upper_arm.L": 73,
+      "armor.legs.heavy@thigh.L -> spine": 59,
+      "armor.boots.heavy@toe.R -> shin.R": 52,
+      "armor.boots.heavy@toe.L -> shin.L": 49,
+      "armor.chest.heavy@spine -> thigh.L": 43,
+      "armor.belt.heavy@pelvis -> chest": 28,
+      "armor.boots.heavy@shin.R -> toe.R": 25
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1935,
+     "hinge": 553,
+     "other": 1382,
+     "bodySelfHinge": 363,
+     "bodySelfOther": 958,
+     "worstOther": {
+      "armor.gloves.heavy@hand.R -> chest": 258,
+      "armor.chest.heavy@chest -> hand.R": 173,
+      "armor.gloves.heavy@forearm.R -> head": 124,
+      "armor.gloves.heavy@hand.R -> hand.L": 109,
+      "armor.gloves.heavy@hand.L -> hand.R": 109,
+      "armor.shoulders.heavy@upper_arm.R -> head": 81,
+      "armor.gloves.heavy@hand.L -> chest": 60,
+      "armor.chest.heavy@chest -> hand.L": 58
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 912,
+     "hinge": 597,
+     "other": 315,
+     "bodySelfHinge": 784,
+     "bodySelfOther": 229,
+     "worstOther": {
+      "armor.boots.heavy@toe.L -> shin.L": 106,
+      "armor.boots.heavy@toe.R -> shin.R": 59,
+      "armor.belt.heavy@pelvis -> chest": 28,
+      "armor.legs.heavy@shin.L -> toe.L": 25,
+      "armor.boots.heavy@shin.R -> toe.R": 23,
+      "armor.chest.heavy@chest -> pelvis": 16,
+      "armor.legs.heavy@thigh.R -> spine": 11,
+      "armor.chest.heavy@chest -> head": 9
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 1328,
+     "hinge": 570,
+     "other": 758,
+     "bodySelfHinge": 426,
+     "bodySelfOther": 519,
+     "worstOther": {
+      "armor.gloves.heavy@hand.L -> thigh.L": 67,
+      "armor.shoulders.heavy@upper_arm.L -> chest": 66,
+      "armor.shoulders.heavy@upper_arm.R -> chest": 59,
+      "armor.gloves.heavy@hand.R -> thigh.R": 54,
+      "armor.boots.heavy@toe.R -> shin.R": 54,
+      "armor.legs.heavy@thigh.L -> forearm.L": 52,
+      "armor.legs.heavy@thigh.R -> forearm.R": 37,
+      "armor.boots.heavy@toe.L -> shin.L": 35
+     }
+    }
+   },
+   "role.marine@female": {
+    "run": {
+     "penetratingVoxels": 1179,
+     "hinge": 677,
+     "other": 502,
+     "bodySelfHinge": 902,
+     "bodySelfOther": 187,
+     "worstOther": {
+      "armor.shoulders.heavy@upper_arm.L -> hand.L": 77,
+      "armor.gloves.heavy@hand.L -> upper_arm.L": 73,
+      "armor.boots.heavy@toe.R -> shin.R": 52,
+      "armor.boots.heavy@toe.L -> shin.L": 49,
+      "armor.legs.heavy@thigh.L -> spine": 46,
+      "armor.chest.heavy@spine -> thigh.L": 34,
+      "armor.belt.heavy@pelvis -> chest": 28,
+      "armor.boots.heavy@shin.R -> toe.R": 25
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1929,
+     "hinge": 547,
+     "other": 1382,
+     "bodySelfHinge": 361,
+     "bodySelfOther": 966,
+     "worstOther": {
+      "armor.gloves.heavy@hand.R -> chest": 258,
+      "armor.chest.heavy@chest -> hand.R": 173,
+      "armor.gloves.heavy@forearm.R -> head": 124,
+      "armor.gloves.heavy@hand.R -> hand.L": 109,
+      "armor.gloves.heavy@hand.L -> hand.R": 109,
+      "armor.shoulders.heavy@upper_arm.R -> head": 81,
+      "armor.gloves.heavy@hand.L -> chest": 60,
+      "armor.chest.heavy@chest -> hand.L": 58
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 893,
+     "hinge": 587,
+     "other": 306,
+     "bodySelfHinge": 774,
+     "bodySelfOther": 226,
+     "worstOther": {
+      "armor.boots.heavy@toe.L -> shin.L": 106,
+      "armor.boots.heavy@toe.R -> shin.R": 59,
+      "armor.belt.heavy@pelvis -> chest": 28,
+      "armor.legs.heavy@shin.L -> toe.L": 25,
+      "armor.boots.heavy@shin.R -> toe.R": 23,
+      "armor.chest.heavy@chest -> pelvis": 16,
+      "armor.chest.heavy@chest -> head": 9,
+      "armor.legs.heavy@thigh.R -> forearm.R": 8
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 1301,
+     "hinge": 563,
+     "other": 738,
+     "bodySelfHinge": 420,
+     "bodySelfOther": 500,
+     "worstOther": {
+      "armor.gloves.heavy@hand.L -> thigh.L": 67,
+      "armor.shoulders.heavy@upper_arm.L -> chest": 66,
+      "armor.shoulders.heavy@upper_arm.R -> chest": 59,
+      "armor.gloves.heavy@hand.R -> thigh.R": 54,
+      "armor.boots.heavy@toe.R -> shin.R": 54,
+      "armor.legs.heavy@thigh.L -> forearm.L": 52,
+      "armor.legs.heavy@thigh.R -> forearm.R": 37,
+      "armor.boots.heavy@toe.L -> shin.L": 35
+     }
+    }
+   },
+   "role.salvage@male": {
+    "run": {
+     "penetratingVoxels": 895,
+     "hinge": 705,
+     "other": 190,
+     "bodySelfHinge": 872,
+     "bodySelfOther": 142,
+     "worstOther": {
+      "armor.shoulders.standard@upper_arm.L -> hand.L": 31,
+      "armor.legs.standard@thigh.L -> spine": 29,
+      "armor.boots.standard@toe.R -> shin.R": 27,
+      "armor.gloves.work@hand.L -> upper_arm.L": 25,
+      "armor.boots.standard@toe.L -> shin.L": 23,
+      "armor.chest.hazard@spine -> thigh.L": 12,
+      "armor.belt.tool@pelvis -> chest": 10,
+      "armor.gloves.work@hand.L -> chest": 8
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1687,
+     "hinge": 588,
+     "other": 1099,
+     "bodySelfHinge": 358,
+     "bodySelfOther": 842,
+     "worstOther": {
+      "armor.gloves.work@hand.R -> chest": 214,
+      "armor.chest.hazard@chest -> hand.R": 134,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 670,
+     "hinge": 443,
+     "other": 227,
+     "bodySelfHinge": 744,
+     "bodySelfOther": 208,
+     "worstOther": {
+      "armor.boots.standard@toe.L -> shin.L": 110,
+      "armor.boots.standard@toe.R -> shin.R": 36,
+      "armor.legs.standard@shin.L -> toe.L": 25,
+      "armor.belt.tool@pelvis -> chest": 16,
+      "armor.chest.hazard@chest -> head": 9,
+      "armor.chest.hazard@chest -> pelvis": 6,
+      "armor.chest.hazard@chest -> upper_arm.R": 3,
+      "armor.chest.hazard@chest -> upper_arm.L": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 941,
+     "hinge": 400,
+     "other": 541,
+     "bodySelfHinge": 407,
+     "bodySelfOther": 410,
+     "worstOther": {
+      "armor.gloves.work@hand.L -> thigh.L": 67,
+      "armor.gloves.work@hand.R -> thigh.R": 54,
+      "armor.belt.tool@pelvis -> forearm.L": 39,
+      "armor.gloves.work@forearm.L -> pelvis": 38,
+      "armor.shoulders.standard@upper_arm.L -> chest": 37,
+      "armor.shoulders.standard@upper_arm.R -> chest": 34,
+      "armor.gloves.work@forearm.R -> pelvis": 33,
+      "armor.belt.tool@pelvis -> forearm.R": 32
+     }
+    }
+   },
+   "role.salvage@female": {
+    "run": {
+     "penetratingVoxels": 874,
+     "hinge": 691,
+     "other": 183,
+     "bodySelfHinge": 864,
+     "bodySelfOther": 129,
+     "worstOther": {
+      "armor.shoulders.standard@upper_arm.L -> hand.L": 31,
+      "armor.boots.standard@toe.R -> shin.R": 27,
+      "armor.gloves.work@hand.L -> upper_arm.L": 25,
+      "armor.legs.standard@thigh.L -> spine": 23,
+      "armor.boots.standard@toe.L -> shin.L": 23,
+      "armor.chest.hazard@spine -> thigh.L": 11,
+      "armor.belt.tool@pelvis -> chest": 10,
+      "armor.gloves.work@hand.L -> chest": 8
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1679,
+     "hinge": 580,
+     "other": 1099,
+     "bodySelfHinge": 356,
+     "bodySelfOther": 850,
+     "worstOther": {
+      "armor.gloves.work@hand.R -> chest": 214,
+      "armor.chest.hazard@chest -> hand.R": 134,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 655,
+     "hinge": 429,
+     "other": 226,
+     "bodySelfHinge": 734,
+     "bodySelfOther": 207,
+     "worstOther": {
+      "armor.boots.standard@toe.L -> shin.L": 110,
+      "armor.boots.standard@toe.R -> shin.R": 36,
+      "armor.legs.standard@shin.L -> toe.L": 25,
+      "armor.belt.tool@pelvis -> chest": 16,
+      "armor.chest.hazard@chest -> head": 9,
+      "armor.chest.hazard@chest -> pelvis": 6,
+      "armor.chest.hazard@chest -> upper_arm.R": 3,
+      "armor.chest.hazard@chest -> upper_arm.L": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 903,
+     "hinge": 391,
+     "other": 512,
+     "bodySelfHinge": 401,
+     "bodySelfOther": 393,
+     "worstOther": {
+      "armor.gloves.work@hand.L -> thigh.L": 67,
+      "armor.gloves.work@hand.R -> thigh.R": 54,
+      "armor.belt.tool@pelvis -> forearm.L": 40,
+      "armor.gloves.work@forearm.L -> pelvis": 38,
+      "armor.shoulders.standard@upper_arm.L -> chest": 37,
+      "armor.shoulders.standard@upper_arm.R -> chest": 34,
+      "armor.gloves.work@forearm.R -> pelvis": 33,
+      "armor.belt.tool@pelvis -> forearm.R": 33
+     }
+    }
+   },
+   "role.recon@male": {
+    "run": {
+     "penetratingVoxels": 678,
+     "hinge": 552,
+     "other": 126,
+     "bodySelfHinge": 812,
+     "bodySelfOther": 117,
+     "worstOther": {
+      "armor.boots.light@toe.R -> shin.R": 27,
+      "armor.boots.light@toe.L -> shin.L": 23,
+      "armor.chest.tactical@chest -> pelvis": 12,
+      "armor.belt.utility@pelvis -> chest": 12,
+      "armor.shoulders.light@upper_arm.L -> hand.L": 8,
+      "armor.chest.tactical@chest -> head": 7,
+      "armor.gloves.light@hand.L -> chest": 7,
+      "armor.gloves.light@hand.L -> upper_arm.L": 6
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1342,
+     "hinge": 435,
+     "other": 907,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 772,
+     "worstOther": {
+      "armor.gloves.light@hand.R -> chest": 189,
+      "armor.chest.tactical@chest -> hand.R": 109,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.light@upper_arm.R -> chest": 40,
+      "armor.gloves.light@hand.L -> upper_arm.L": 38
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 615,
+     "hinge": 419,
+     "other": 196,
+     "bodySelfHinge": 729,
+     "bodySelfOther": 198,
+     "worstOther": {
+      "armor.boots.light@toe.L -> shin.L": 95,
+      "armor.boots.light@toe.R -> shin.R": 33,
+      "armor.belt.utility@pelvis -> chest": 14,
+      "armor.legs.light@shin.L -> toe.L": 14,
+      "armor.chest.tactical@chest -> pelvis": 12,
+      "armor.chest.tactical@chest -> head": 9,
+      "armor.legs.light@thigh.R -> hand.R": 6,
+      "armor.legs.light@thigh.L -> hand.L": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 789,
+     "hinge": 386,
+     "other": 403,
+     "bodySelfHinge": 401,
+     "bodySelfOther": 343,
+     "worstOther": {
+      "armor.gloves.light@hand.L -> thigh.L": 71,
+      "armor.gloves.light@hand.R -> thigh.R": 56,
+      "armor.legs.light@thigh.L -> hand.L": 36,
+      "armor.belt.utility@pelvis -> forearm.L": 29,
+      "armor.legs.light@thigh.R -> hand.R": 27,
+      "armor.belt.utility@pelvis -> forearm.R": 23,
+      "armor.boots.light@toe.R -> shin.R": 23,
+      "armor.gloves.light@forearm.L -> pelvis": 21
+     }
+    }
+   },
+   "role.recon@female": {
+    "run": {
+     "penetratingVoxels": 657,
+     "hinge": 532,
+     "other": 125,
+     "bodySelfHinge": 804,
+     "bodySelfOther": 113,
+     "worstOther": {
+      "armor.boots.light@toe.R -> shin.R": 27,
+      "armor.boots.light@toe.L -> shin.L": 23,
+      "armor.chest.tactical@chest -> pelvis": 12,
+      "armor.belt.utility@pelvis -> chest": 12,
+      "armor.shoulders.light@upper_arm.L -> hand.L": 8,
+      "armor.chest.tactical@chest -> head": 7,
+      "armor.gloves.light@hand.L -> chest": 7,
+      "armor.gloves.light@hand.L -> upper_arm.L": 6
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1336,
+     "hinge": 429,
+     "other": 907,
+     "bodySelfHinge": 345,
+     "bodySelfOther": 780,
+     "worstOther": {
+      "armor.gloves.light@hand.R -> chest": 189,
+      "armor.chest.tactical@chest -> hand.R": 109,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.light@upper_arm.R -> chest": 40,
+      "armor.gloves.light@hand.L -> upper_arm.L": 38
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 603,
+     "hinge": 407,
+     "other": 196,
+     "bodySelfHinge": 719,
+     "bodySelfOther": 198,
+     "worstOther": {
+      "armor.boots.light@toe.L -> shin.L": 95,
+      "armor.boots.light@toe.R -> shin.R": 33,
+      "armor.belt.utility@pelvis -> chest": 14,
+      "armor.legs.light@shin.L -> toe.L": 14,
+      "armor.chest.tactical@chest -> pelvis": 12,
+      "armor.chest.tactical@chest -> head": 9,
+      "armor.legs.light@thigh.R -> hand.R": 6,
+      "armor.legs.light@thigh.L -> hand.L": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 760,
+     "hinge": 377,
+     "other": 383,
+     "bodySelfHinge": 395,
+     "bodySelfOther": 326,
+     "worstOther": {
+      "armor.gloves.light@hand.L -> thigh.L": 71,
+      "armor.gloves.light@hand.R -> thigh.R": 56,
+      "armor.legs.light@thigh.L -> hand.L": 36,
+      "armor.belt.utility@pelvis -> forearm.L": 30,
+      "armor.legs.light@thigh.R -> hand.R": 27,
+      "armor.belt.utility@pelvis -> forearm.R": 24,
+      "armor.boots.light@toe.R -> shin.R": 23,
+      "armor.gloves.light@forearm.L -> pelvis": 21
+     }
+    }
+   },
+   "role.scientist@male": {
+    "run": {
+     "penetratingVoxels": 685,
+     "hinge": 554,
+     "other": 131,
+     "bodySelfHinge": 893,
+     "bodySelfOther": 159,
+     "worstOther": {
+      "armor.boots.sneaker@toe.R -> shin.R": 27,
+      "armor.chest.labcoat@thigh.L -> spine": 26,
+      "armor.boots.sneaker@toe.L -> shin.L": 23,
+      "armor.chest.labcoat@pelvis -> shin.L": 10,
+      "armor.chest.labcoat@chest -> head": 7,
+      "armor.chest.labcoat@thigh.L -> forearm.L": 7,
+      "armor.gloves.fabric@hand.L -> chest": 7,
+      "armor.chest.labcoat@chest -> hand.L": 5
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 983,
+     "hinge": 268,
+     "other": 715,
+     "bodySelfHinge": 360,
+     "bodySelfOther": 702,
+     "worstOther": {
+      "armor.gloves.fabric@hand.R -> chest": 193,
+      "armor.chest.labcoat@chest -> hand.R": 113,
+      "armor.gloves.fabric@hand.R -> hand.L": 100,
+      "armor.gloves.fabric@hand.L -> hand.R": 100,
+      "armor.gloves.fabric@hand.R -> forearm.L": 39,
+      "armor.gloves.fabric@hand.L -> upper_arm.L": 35,
+      "armor.chest.labcoat@chest -> upper_arm.L": 21,
+      "armor.gloves.fabric@hand.L -> chest": 18
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 683,
+     "hinge": 531,
+     "other": 152,
+     "bodySelfHinge": 842,
+     "bodySelfOther": 207,
+     "worstOther": {
+      "armor.boots.sneaker@toe.L -> shin.L": 83,
+      "armor.boots.sneaker@toe.R -> shin.R": 33,
+      "armor.chest.labcoat@thigh.R -> hand.R": 10,
+      "armor.chest.labcoat@chest -> head": 9,
+      "armor.chest.labcoat@thigh.R -> forearm.R": 5,
+      "armor.chest.labcoat@thigh.L -> hand.L": 5,
+      "armor.chest.labcoat@thigh.R -> spine": 3,
+      "armor.belt.plain@pelvis -> chest": 2
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 767,
+     "hinge": 362,
+     "other": 405,
+     "bodySelfHinge": 460,
+     "bodySelfOther": 364,
+     "worstOther": {
+      "armor.gloves.fabric@hand.L -> thigh.L": 83,
+      "armor.gloves.fabric@hand.R -> thigh.R": 71,
+      "armor.chest.labcoat@thigh.L -> hand.L": 49,
+      "armor.chest.labcoat@thigh.R -> hand.R": 42,
+      "armor.boots.sneaker@toe.R -> shin.R": 23,
+      "armor.belt.plain@pelvis -> forearm.L": 18,
+      "armor.boots.sneaker@toe.L -> shin.L": 15,
+      "armor.chest.labcoat@pelvis -> forearm.R": 11
+     }
+    }
+   },
+   "role.scientist@female": {
+    "run": {
+     "penetratingVoxels": 681,
+     "hinge": 554,
+     "other": 127,
+     "bodySelfHinge": 885,
+     "bodySelfOther": 150,
+     "worstOther": {
+      "armor.boots.sneaker@toe.R -> shin.R": 27,
+      "armor.boots.sneaker@toe.L -> shin.L": 23,
+      "armor.chest.labcoat@thigh.L -> spine": 22,
+      "armor.chest.labcoat@pelvis -> shin.L": 10,
+      "armor.chest.labcoat@chest -> head": 7,
+      "armor.chest.labcoat@thigh.L -> forearm.L": 7,
+      "armor.gloves.fabric@hand.L -> chest": 7,
+      "armor.chest.labcoat@chest -> hand.L": 5
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 977,
+     "hinge": 262,
+     "other": 715,
+     "bodySelfHinge": 358,
+     "bodySelfOther": 710,
+     "worstOther": {
+      "armor.gloves.fabric@hand.R -> chest": 193,
+      "armor.chest.labcoat@chest -> hand.R": 113,
+      "armor.gloves.fabric@hand.R -> hand.L": 100,
+      "armor.gloves.fabric@hand.L -> hand.R": 100,
+      "armor.gloves.fabric@hand.R -> forearm.L": 39,
+      "armor.gloves.fabric@hand.L -> upper_arm.L": 35,
+      "armor.chest.labcoat@chest -> upper_arm.L": 21,
+      "armor.gloves.fabric@hand.L -> chest": 18
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 687,
+     "hinge": 535,
+     "other": 152,
+     "bodySelfHinge": 832,
+     "bodySelfOther": 207,
+     "worstOther": {
+      "armor.boots.sneaker@toe.L -> shin.L": 83,
+      "armor.boots.sneaker@toe.R -> shin.R": 33,
+      "armor.chest.labcoat@thigh.R -> hand.R": 10,
+      "armor.chest.labcoat@chest -> head": 9,
+      "armor.chest.labcoat@thigh.R -> forearm.R": 5,
+      "armor.chest.labcoat@thigh.L -> hand.L": 5,
+      "armor.chest.labcoat@thigh.R -> spine": 3,
+      "armor.belt.plain@pelvis -> chest": 2
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 759,
+     "hinge": 367,
+     "other": 392,
+     "bodySelfHinge": 454,
+     "bodySelfOther": 349,
+     "worstOther": {
+      "armor.gloves.fabric@hand.L -> thigh.L": 83,
+      "armor.gloves.fabric@hand.R -> thigh.R": 71,
+      "armor.chest.labcoat@thigh.L -> hand.L": 49,
+      "armor.chest.labcoat@thigh.R -> hand.R": 42,
+      "armor.boots.sneaker@toe.R -> shin.R": 23,
+      "armor.belt.plain@pelvis -> forearm.L": 19,
+      "armor.boots.sneaker@toe.L -> shin.L": 15,
+      "armor.belt.plain@pelvis -> forearm.R": 12
+     }
+    }
+   },
+   "role.mechanic@male": {
+    "run": {
+     "penetratingVoxels": 636,
+     "hinge": 523,
+     "other": 113,
+     "bodySelfHinge": 840,
+     "bodySelfOther": 130,
+     "worstOther": {
+      "armor.boots.light@toe.R -> shin.R": 27,
+      "armor.boots.light@toe.L -> shin.L": 23,
+      "armor.legs.cargo@thigh.L -> spine": 16,
+      "armor.shoulders.cloth@upper_arm.L -> hand.L": 8,
+      "armor.chest.overalls@chest -> head": 7,
+      "armor.gloves.work@hand.L -> chest": 7,
+      "armor.gloves.work@hand.L -> upper_arm.L": 6,
+      "armor.belt.tool@pelvis -> chest": 6
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1511,
+     "hinge": 554,
+     "other": 957,
+     "bodySelfHinge": 349,
+     "bodySelfOther": 794,
+     "worstOther": {
+      "armor.gloves.work@hand.R -> chest": 196,
+      "armor.chest.overalls@chest -> hand.R": 116,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.gloves.work@forearm.L -> hand.R": 41,
+      "armor.gloves.work@hand.L -> upper_arm.L": 38
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 482,
+     "hinge": 333,
+     "other": 149,
+     "bodySelfHinge": 728,
+     "bodySelfOther": 200,
+     "worstOther": {
+      "armor.boots.light@toe.L -> shin.L": 83,
+      "armor.boots.light@toe.R -> shin.R": 33,
+      "armor.chest.overalls@chest -> head": 9,
+      "armor.belt.tool@pelvis -> chest": 8,
+      "armor.chest.overalls@chest -> upper_arm.R": 3,
+      "armor.chest.overalls@chest -> upper_arm.L": 3,
+      "armor.chest.overalls@chest -> pelvis": 2,
+      "armor.shoulders.cloth@upper_arm.R -> chest": 2
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 679,
+     "hinge": 307,
+     "other": 372,
+     "bodySelfHinge": 392,
+     "bodySelfOther": 349,
+     "worstOther": {
+      "armor.gloves.work@hand.L -> thigh.L": 52,
+      "armor.gloves.work@hand.R -> thigh.R": 43,
+      "armor.belt.tool@pelvis -> forearm.L": 39,
+      "armor.gloves.work@forearm.L -> pelvis": 38,
+      "armor.gloves.work@forearm.R -> pelvis": 33,
+      "armor.belt.tool@pelvis -> forearm.R": 32,
+      "armor.boots.light@toe.R -> shin.R": 23,
+      "armor.shoulders.cloth@upper_arm.L -> chest": 15
+     }
+    }
+   },
+   "role.mechanic@female": {
+    "run": {
+     "penetratingVoxels": 634,
+     "hinge": 525,
+     "other": 109,
+     "bodySelfHinge": 832,
+     "bodySelfOther": 121,
+     "worstOther": {
+      "armor.boots.light@toe.R -> shin.R": 27,
+      "armor.boots.light@toe.L -> shin.L": 23,
+      "armor.legs.cargo@thigh.L -> spine": 12,
+      "armor.shoulders.cloth@upper_arm.L -> hand.L": 8,
+      "armor.chest.overalls@chest -> head": 7,
+      "armor.gloves.work@hand.L -> chest": 7,
+      "armor.gloves.work@hand.L -> upper_arm.L": 6,
+      "armor.belt.tool@pelvis -> chest": 6
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1505,
+     "hinge": 548,
+     "other": 957,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 802,
+     "worstOther": {
+      "armor.gloves.work@hand.R -> chest": 196,
+      "armor.chest.overalls@chest -> hand.R": 116,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.gloves.work@forearm.L -> hand.R": 41,
+      "armor.gloves.work@hand.L -> upper_arm.L": 38
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 485,
+     "hinge": 337,
+     "other": 148,
+     "bodySelfHinge": 718,
+     "bodySelfOther": 199,
+     "worstOther": {
+      "armor.boots.light@toe.L -> shin.L": 83,
+      "armor.boots.light@toe.R -> shin.R": 33,
+      "armor.chest.overalls@chest -> head": 9,
+      "armor.belt.tool@pelvis -> chest": 8,
+      "armor.chest.overalls@chest -> upper_arm.R": 3,
+      "armor.chest.overalls@chest -> upper_arm.L": 3,
+      "armor.chest.overalls@chest -> pelvis": 2,
+      "armor.shoulders.cloth@upper_arm.R -> chest": 2
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 669,
+     "hinge": 312,
+     "other": 357,
+     "bodySelfHinge": 386,
+     "bodySelfOther": 332,
+     "worstOther": {
+      "armor.gloves.work@hand.L -> thigh.L": 52,
+      "armor.gloves.work@hand.R -> thigh.R": 43,
+      "armor.belt.tool@pelvis -> forearm.L": 40,
+      "armor.gloves.work@forearm.L -> pelvis": 38,
+      "armor.gloves.work@forearm.R -> pelvis": 33,
+      "armor.belt.tool@pelvis -> forearm.R": 33,
+      "armor.boots.light@toe.R -> shin.R": 23,
+      "armor.shoulders.cloth@upper_arm.L -> chest": 15
+     }
+    }
+   },
+   "role.civilian@male": {
+    "run": {
+     "penetratingVoxels": 444,
+     "hinge": 359,
+     "other": 85,
+     "bodySelfHinge": 771,
+     "bodySelfOther": 128,
+     "worstOther": {
+      "armor.boots.sneaker@toe.R -> shin.R": 27,
+      "armor.boots.sneaker@toe.L -> shin.L": 23,
+      "armor.legs.cargo@thigh.L -> spine": 18,
+      "armor.chest.jacket@chest -> head": 7,
+      "armor.chest.jacket@spine -> thigh.L": 4,
+      "armor.belt.plain@pelvis -> forearm.R": 2,
+      "armor.belt.plain@pelvis -> forearm.L": 2,
+      "armor.belt.plain@pelvis -> chest": 2
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 227,
+     "hinge": 75,
+     "other": 152,
+     "bodySelfHinge": 424,
+     "bodySelfOther": 790,
+     "worstOther": {
+      "armor.chest.jacket@chest -> hand.R": 70,
+      "armor.chest.jacket@chest -> upper_arm.L": 21,
+      "armor.chest.jacket@chest -> upper_arm.R": 17,
+      "armor.boots.sneaker@toe.R -> shin.R": 15,
+      "armor.chest.jacket@chest -> forearm.L": 11,
+      "armor.chest.jacket@chest -> forearm.R": 8,
+      "armor.boots.sneaker@shin.R -> toe.R": 5,
+      "armor.boots.sneaker@toe.L -> shin.L": 3
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 479,
+     "hinge": 348,
+     "other": 131,
+     "bodySelfHinge": 725,
+     "bodySelfOther": 200,
+     "worstOther": {
+      "armor.boots.sneaker@toe.L -> shin.L": 83,
+      "armor.boots.sneaker@toe.R -> shin.R": 33,
+      "armor.chest.jacket@chest -> head": 9,
+      "armor.belt.plain@pelvis -> chest": 2,
+      "armor.boots.sneaker@shin.R -> toe.R": 2,
+      "armor.legs.cargo@thigh.R -> forearm.R": 1,
+      "armor.legs.cargo@thigh.R -> spine": 1
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 310,
+     "hinge": 209,
+     "other": 101,
+     "bodySelfHinge": 412,
+     "bodySelfOther": 352,
+     "worstOther": {
+      "armor.boots.sneaker@toe.R -> shin.R": 23,
+      "armor.belt.plain@pelvis -> forearm.L": 18,
+      "armor.boots.sneaker@toe.L -> shin.L": 15,
+      "armor.belt.plain@pelvis -> forearm.R": 11,
+      "armor.chest.jacket@spine -> forearm.R": 7,
+      "armor.chest.jacket@spine -> forearm.L": 7,
+      "armor.legs.cargo@thigh.L -> forearm.L": 7,
+      "armor.legs.cargo@thigh.R -> forearm.R": 5
+     }
+    }
+   },
+   "role.civilian@female": {
+    "run": {
+     "penetratingVoxels": 434,
+     "hinge": 355,
+     "other": 79,
+     "bodySelfHinge": 763,
+     "bodySelfOther": 119,
+     "worstOther": {
+      "armor.boots.sneaker@toe.R -> shin.R": 27,
+      "armor.boots.sneaker@toe.L -> shin.L": 23,
+      "armor.legs.cargo@thigh.L -> spine": 13,
+      "armor.chest.jacket@chest -> head": 7,
+      "armor.chest.jacket@spine -> thigh.L": 3,
+      "armor.belt.plain@pelvis -> forearm.R": 2,
+      "armor.belt.plain@pelvis -> forearm.L": 2,
+      "armor.belt.plain@pelvis -> chest": 2
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 221,
+     "hinge": 69,
+     "other": 152,
+     "bodySelfHinge": 422,
+     "bodySelfOther": 794,
+     "worstOther": {
+      "armor.chest.jacket@chest -> hand.R": 70,
+      "armor.chest.jacket@chest -> upper_arm.L": 21,
+      "armor.chest.jacket@chest -> upper_arm.R": 17,
+      "armor.boots.sneaker@toe.R -> shin.R": 15,
+      "armor.chest.jacket@chest -> forearm.L": 11,
+      "armor.chest.jacket@chest -> forearm.R": 8,
+      "armor.boots.sneaker@shin.R -> toe.R": 5,
+      "armor.boots.sneaker@toe.L -> shin.L": 3
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 474,
+     "hinge": 344,
+     "other": 130,
+     "bodySelfHinge": 715,
+     "bodySelfOther": 199,
+     "worstOther": {
+      "armor.boots.sneaker@toe.L -> shin.L": 83,
+      "armor.boots.sneaker@toe.R -> shin.R": 33,
+      "armor.chest.jacket@chest -> head": 9,
+      "armor.belt.plain@pelvis -> chest": 2,
+      "armor.boots.sneaker@shin.R -> toe.R": 2,
+      "armor.legs.cargo@thigh.R -> forearm.R": 1
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 297,
+     "hinge": 209,
+     "other": 88,
+     "bodySelfHinge": 406,
+     "bodySelfOther": 337,
+     "worstOther": {
+      "armor.boots.sneaker@toe.R -> shin.R": 23,
+      "armor.belt.plain@pelvis -> forearm.L": 19,
+      "armor.boots.sneaker@toe.L -> shin.L": 15,
+      "armor.belt.plain@pelvis -> forearm.R": 12,
+      "armor.legs.cargo@thigh.L -> forearm.L": 7,
+      "armor.legs.cargo@thigh.R -> forearm.R": 5,
+      "armor.chest.jacket@spine -> forearm.R": 2,
+      "armor.chest.jacket@spine -> forearm.L": 2
+     }
+    }
+   },
+   "role.jet-trooper@male": {
+    "run": {
+     "penetratingVoxels": 918,
+     "hinge": 626,
+     "other": 292,
+     "bodySelfHinge": 851,
+     "bodySelfOther": 164,
+     "worstOther": {
+      "armor.boots.heavy@toe.R -> shin.R": 52,
+      "armor.boots.heavy@toe.L -> shin.L": 49,
+      "armor.shoulders.standard@upper_arm.L -> hand.L": 31,
+      "armor.legs.standard@thigh.L -> spine": 29,
+      "armor.gloves.standard@hand.L -> upper_arm.L": 25,
+      "armor.boots.heavy@shin.R -> toe.R": 25,
+      "armor.boots.heavy@shin.L -> toe.L": 24,
+      "armor.chest.plate@spine -> thigh.L": 12
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1605,
+     "hinge": 498,
+     "other": 1107,
+     "bodySelfHinge": 359,
+     "bodySelfOther": 865,
+     "worstOther": {
+      "armor.gloves.standard@hand.R -> chest": 213,
+      "armor.chest.plate@chest -> hand.R": 132,
+      "armor.gloves.standard@forearm.R -> head": 106,
+      "armor.gloves.standard@hand.R -> hand.L": 100,
+      "armor.gloves.standard@hand.L -> hand.R": 100,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.standard@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 712,
+     "hinge": 439,
+     "other": 273,
+     "bodySelfHinge": 744,
+     "bodySelfOther": 221,
+     "worstOther": {
+      "armor.boots.heavy@toe.L -> shin.L": 106,
+      "armor.boots.heavy@toe.R -> shin.R": 59,
+      "armor.legs.standard@shin.L -> toe.L": 25,
+      "armor.boots.heavy@shin.R -> toe.R": 23,
+      "armor.belt.standard@pelvis -> chest": 20,
+      "armor.chest.plate@chest -> head": 9,
+      "armor.chest.plate@chest -> pelvis": 8,
+      "armor.chest.plate@chest -> upper_arm.R": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 944,
+     "hinge": 383,
+     "other": 561,
+     "bodySelfHinge": 407,
+     "bodySelfOther": 430,
+     "worstOther": {
+      "armor.gloves.standard@hand.L -> thigh.L": 67,
+      "armor.gloves.standard@hand.R -> thigh.R": 54,
+      "armor.boots.heavy@toe.R -> shin.R": 54,
+      "armor.shoulders.standard@upper_arm.L -> chest": 37,
+      "armor.boots.heavy@toe.L -> shin.L": 35,
+      "armor.shoulders.standard@upper_arm.R -> chest": 34,
+      "armor.belt.standard@pelvis -> forearm.L": 29,
+      "armor.legs.standard@thigh.L -> forearm.L": 27
+     }
+    }
+   },
+   "role.jet-trooper@female": {
+    "run": {
+     "penetratingVoxels": 899,
+     "hinge": 614,
+     "other": 285,
+     "bodySelfHinge": 843,
+     "bodySelfOther": 151,
+     "worstOther": {
+      "armor.boots.heavy@toe.R -> shin.R": 52,
+      "armor.boots.heavy@toe.L -> shin.L": 49,
+      "armor.shoulders.standard@upper_arm.L -> hand.L": 31,
+      "armor.gloves.standard@hand.L -> upper_arm.L": 25,
+      "armor.boots.heavy@shin.R -> toe.R": 25,
+      "armor.boots.heavy@shin.L -> toe.L": 24,
+      "armor.legs.standard@thigh.L -> spine": 23,
+      "armor.belt.standard@pelvis -> chest": 12
+     }
+    },
+    "aim_rifle": {
+     "penetratingVoxels": 1599,
+     "hinge": 492,
+     "other": 1107,
+     "bodySelfHinge": 357,
+     "bodySelfOther": 873,
+     "worstOther": {
+      "armor.gloves.standard@hand.R -> chest": 213,
+      "armor.chest.plate@chest -> hand.R": 132,
+      "armor.gloves.standard@forearm.R -> head": 106,
+      "armor.gloves.standard@hand.R -> hand.L": 100,
+      "armor.gloves.standard@hand.L -> hand.R": 100,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.standard@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
+     }
+    },
+    "crouch_idle": {
+     "penetratingVoxels": 699,
+     "hinge": 427,
+     "other": 272,
+     "bodySelfHinge": 734,
+     "bodySelfOther": 220,
+     "worstOther": {
+      "armor.boots.heavy@toe.L -> shin.L": 106,
+      "armor.boots.heavy@toe.R -> shin.R": 59,
+      "armor.legs.standard@shin.L -> toe.L": 25,
+      "armor.boots.heavy@shin.R -> toe.R": 23,
+      "armor.belt.standard@pelvis -> chest": 20,
+      "armor.chest.plate@chest -> head": 9,
+      "armor.chest.plate@chest -> pelvis": 8,
+      "armor.chest.plate@chest -> upper_arm.R": 3
+     }
+    },
+    "sit": {
+     "penetratingVoxels": 918,
+     "hinge": 376,
+     "other": 542,
+     "bodySelfHinge": 401,
+     "bodySelfOther": 413,
+     "worstOther": {
+      "armor.gloves.standard@hand.L -> thigh.L": 67,
+      "armor.gloves.standard@hand.R -> thigh.R": 54,
+      "armor.boots.heavy@toe.R -> shin.R": 54,
+      "armor.shoulders.standard@upper_arm.L -> chest": 37,
+      "armor.boots.heavy@toe.L -> shin.L": 35,
+      "armor.shoulders.standard@upper_arm.R -> chest": 34,
+      "armor.belt.standard@pelvis -> forearm.L": 30,
+      "armor.legs.standard@thigh.L -> forearm.L": 27
+     }
+    }
+   }
+  },
+  "poseSource": "CHAR-BODY actions"
+ },
+ "parts": [
+  {
+   "id": "armor.chest.jacket",
+   "slot": "chest",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "jacket",
+   "name": "Crew jacket",
+   "glb": "parts/armor.chest.jacket.glb",
+   "sha256": "61c34dc7f0047b449256ee82e611b459661d55a02998c3440ef9924b582b44e4",
+   "bytes": 201164,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.jacket-wide",
+     "tris": 2660,
+     "voxels": 1131,
+     "boundsVox": {
+      "min": [
+       -7,
+       -7,
+       26
+      ],
+      "max": [
+       7,
+       10,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.jacket-narrow",
+     "tris": 2660,
+     "voxels": 1061,
+     "boundsVox": {
+      "min": [
+       -7,
+       -7,
+       26
+      ],
+      "max": [
+       7,
+       10,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "dark",
+    "emit"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.006
+  },
+  {
+   "id": "armor.chest.harness",
+   "slot": "chest",
+   "tier": 1,
+   "tierName": "light",
+   "style": "harness",
+   "name": "Light harness vest",
+   "glb": "parts/armor.chest.harness.glb",
+   "sha256": "93f76c8fd1da8638659b3e0d0911aec1a4f2273d9186b43123a694b936d382b6",
+   "bytes": 190488,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.harness-wide",
+     "tris": 2608,
+     "voxels": 1159,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       10,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.harness-narrow",
+     "tris": 2608,
+     "voxels": 1085,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       10,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 3.0,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.chest.plate",
+   "slot": "chest",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "plate",
+   "name": "Standard plate carrier",
+   "glb": "parts/armor.chest.plate.glb",
+   "sha256": "47a541d85e122931c757bae6c874dacf7d0e715f6524478ab064e23c6011c2ed",
+   "bytes": 234484,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.plate-wide",
+     "tris": 3208,
+     "voxels": 1280,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       11,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.plate-narrow",
+     "tris": 3208,
+     "voxels": 1206,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       11,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 6.5,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.007
+  },
+  {
+   "id": "armor.chest.heavy",
+   "slot": "chest",
+   "tier": 3,
+   "tierName": "heavy",
+   "style": "plate",
+   "name": "Heavy assault cuirass",
+   "glb": "parts/armor.chest.heavy.glb",
+   "sha256": "5c2b182b2fbaabebd245b7ca6900d05bf5c36548c56bf7e1a095b8be62574cc5",
+   "bytes": 284388,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.heavy-wide",
+     "tris": 3916,
+     "voxels": 1516,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       14,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.heavy-narrow",
+     "tris": 3916,
+     "voxels": 1442,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       14,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 11.0,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.006
+  },
+  {
+   "id": "armor.chest.coat",
+   "slot": "chest",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "coat",
+   "name": "Officer's coat",
+   "glb": "parts/armor.chest.coat.glb",
+   "sha256": "8a617270b8a3cf4a07f95433e4bdbdc692161c905f9f3d5cece54689d30936c9",
+   "bytes": 328672,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.coat-wide",
+     "tris": 4492,
+     "voxels": 1746,
+     "boundsVox": {
+      "min": [
+       -9,
+       -7,
+       12
+      ],
+      "max": [
+       9,
+       10,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.coat-narrow",
+     "tris": 4492,
+     "voxels": 1678,
+     "boundsVox": {
+      "min": [
+       -9,
+       -7,
+       12
+      ],
+      "max": [
+       9,
+       10,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis",
+    "spine",
+    "chest",
+    "thigh.R",
+    "thigh.L"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.001
+  },
+  {
+   "id": "armor.chest.labcoat",
+   "slot": "chest",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "labcoat",
+   "name": "Lab coat",
+   "glb": "parts/armor.chest.labcoat.glb",
+   "sha256": "737065a1f8d62c54311d9a61ee9c7b14dbeae0470910bee06d4108122277d6bd",
+   "bytes": 261536,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.labcoat-wide",
+     "tris": 3520,
+     "voxels": 1722,
+     "boundsVox": {
+      "min": [
+       -10,
+       -7,
+       11
+      ],
+      "max": [
+       10,
+       10,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.labcoat-narrow",
+     "tris": 3520,
+     "voxels": 1656,
+     "boundsVox": {
+      "min": [
+       -10,
+       -7,
+       11
+      ],
+      "max": [
+       10,
+       10,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis",
+    "spine",
+    "chest",
+    "thigh.R",
+    "thigh.L"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.chest.overalls",
+   "slot": "chest",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "overalls",
+   "name": "Work overalls",
+   "glb": "parts/armor.chest.overalls.glb",
+   "sha256": "b5cbc7eb818e89bc82632d998349b6f48e3cac4ec948ab49c49af011cdb8a91e",
+   "bytes": 139176,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.overalls-wide",
+     "tris": 1884,
+     "voxels": 1146,
+     "boundsVox": {
+      "min": [
+       -7,
+       -7,
+       26
+      ],
+      "max": [
+       7,
+       10,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.overalls-narrow",
+     "tris": 1884,
+     "voxels": 1080,
+     "boundsVox": {
+      "min": [
+       -7,
+       -7,
+       26
+      ],
+      "max": [
+       7,
+       10,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.chest.flight",
+   "slot": "chest",
+   "tier": 1,
+   "tierName": "light",
+   "style": "flight",
+   "name": "Flight suit harness",
+   "glb": "parts/armor.chest.flight.glb",
+   "sha256": "f09b3f09d7ae1c70ae9e7b92b1224dbf52ff81bc5e773595a3f1cbf0467f74aa",
+   "bytes": 216936,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.flight-wide",
+     "tris": 2748,
+     "voxels": 1188,
+     "boundsVox": {
+      "min": [
+       -7,
+       -7,
+       26
+      ],
+      "max": [
+       7,
+       10,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.flight-narrow",
+     "tris": 2748,
+     "voxels": 1122,
+     "boundsVox": {
+      "min": [
+       -7,
+       -7,
+       26
+      ],
+      "max": [
+       7,
+       10,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 3.0,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.011
+  },
+  {
+   "id": "armor.chest.tactical",
+   "slot": "chest",
+   "tier": 1,
+   "tierName": "light",
+   "style": "tactical",
+   "name": "Tactical chest rig",
+   "glb": "parts/armor.chest.tactical.glb",
+   "sha256": "871aea30ce5aa9af1bf5ac66a7c922c875f671575a9f8bb8aab1e14a3baab2f3",
+   "bytes": 259264,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.tactical-wide",
+     "tris": 3640,
+     "voxels": 1221,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       11,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.tactical-narrow",
+     "tris": 3640,
+     "voxels": 1147,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       11,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 3.0,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.chest.vest",
+   "slot": "chest",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "vest",
+   "name": "Security vest",
+   "glb": "parts/armor.chest.vest.glb",
+   "sha256": "000f5635eaa248ce4737681c37bc30446be1c7b23f15325fbd7bc2318e5bd8ab",
+   "bytes": 256156,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.vest-wide",
+     "tris": 3480,
+     "voxels": 1297,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       11,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.vest-narrow",
+     "tris": 3480,
+     "voxels": 1221,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       11,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 6.5,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.007
+  },
+  {
+   "id": "armor.chest.medic",
+   "slot": "chest",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "medic",
+   "name": "Medical plate",
+   "glb": "parts/armor.chest.medic.glb",
+   "sha256": "3dcff591e7c7627e767624736f600de7067ee994740975efb099711653e1d3d1",
+   "bytes": 267588,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.medic-wide",
+     "tris": 3648,
+     "voxels": 1322,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       11,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.medic-narrow",
+     "tris": 3648,
+     "voxels": 1246,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       11,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 6.5,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.006
+  },
+  {
+   "id": "armor.chest.hazard",
+   "slot": "chest",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "hazard",
+   "name": "Hazard-rated plate",
+   "glb": "parts/armor.chest.hazard.glb",
+   "sha256": "6b85ea4dc0d706368841f1e83592c7ce34856fbf36568b0743a1b0f1ec4342a0",
+   "bytes": 307244,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.chest.hazard-wide",
+     "tris": 4292,
+     "voxels": 1302,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       12,
+       38
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.chest.hazard-narrow",
+     "tris": 4184,
+     "voxels": 1227,
+     "boundsVox": {
+      "min": [
+       -7,
+       -8,
+       26
+      ],
+      "max": [
+       7,
+       12,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "spine",
+    "chest"
+   ],
+   "socket": "socket.chest",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 6.5,
+   "grid": [
+    3,
+    3
+   ],
+   "emissiveSurface": 0.007
+  },
+  {
+   "id": "armor.shoulders.cloth",
+   "slot": "shoulders",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "cloth",
+   "name": "Shoulder pads",
+   "glb": "parts/armor.shoulders.cloth.glb",
+   "sha256": "fd88ba3eb6b84d27e98732e2c20a38268e15df0b9be1e750f2f15c38dc3e3936",
+   "bytes": 38120,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.shoulders.cloth-all",
+     "tris": 872,
+     "voxels": 656,
+     "boundsVox": {
+      "min": [
+       -15,
+       -4,
+       31
+      ],
+      "max": [
+       15,
+       4,
+       38
+      ]
+     }
+    }
+   },
+   "bones": [
+    "upper_arm.R",
+    "upper_arm.L"
+   ],
+   "socket": "socket.shoulder",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_secondary",
+    "dark"
+   ],
+   "massKg": 0.2,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.shoulders.light",
+   "slot": "shoulders",
+   "tier": 1,
+   "tierName": "light",
+   "style": "plain",
+   "name": "Light pauldrons",
+   "glb": "parts/armor.shoulders.light.glb",
+   "sha256": "5dc006d4ad58f1ca87ec7f8e3275c2331e9c545a99b1e77d23af962e1e1243c2",
+   "bytes": 54412,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.shoulders.light-all",
+     "tris": 1304,
+     "voxels": 752,
+     "boundsVox": {
+      "min": [
+       -15,
+       -4,
+       30
+      ],
+      "max": [
+       15,
+       4,
+       39
+      ]
+     }
+    }
+   },
+   "bones": [
+    "upper_arm.R",
+    "upper_arm.L"
+   ],
+   "socket": "socket.shoulder",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal"
+   ],
+   "massKg": 1.0,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.shoulders.standard",
+   "slot": "shoulders",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "plain",
+   "name": "Standard pauldrons",
+   "glb": "parts/armor.shoulders.standard.glb",
+   "sha256": "10ec2f5ba9f8f2753d1892a73fc2027197974088249a5036c73aa63eb0fa3433",
+   "bytes": 92256,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.shoulders.standard-all",
+     "tris": 2384,
+     "voxels": 1184,
+     "boundsVox": {
+      "min": [
+       -16,
+       -6,
+       30
+      ],
+      "max": [
+       16,
+       6,
+       40
+      ]
+     }
+    }
+   },
+   "bones": [
+    "upper_arm.R",
+    "upper_arm.L"
+   ],
+   "socket": "socket.shoulder",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal"
+   ],
+   "massKg": 2.2,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.shoulders.heavy",
+   "slot": "shoulders",
+   "tier": 3,
+   "tierName": "heavy",
+   "style": "plain",
+   "name": "Heavy pauldrons",
+   "glb": "parts/armor.shoulders.heavy.glb",
+   "sha256": "1dd84a29f7a1b7a3580d81825c0c6e659bc2b90744cecd0fef600f2926d2c86d",
+   "bytes": 114972,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.shoulders.heavy-all",
+     "tris": 3032,
+     "voxels": 1768,
+     "boundsVox": {
+      "min": [
+       -18,
+       -7,
+       30
+      ],
+      "max": [
+       18,
+       7,
+       41
+      ]
+     }
+    }
+   },
+   "bones": [
+    "upper_arm.R",
+    "upper_arm.L"
+   ],
+   "socket": "socket.shoulder",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal"
+   ],
+   "massKg": 4.0,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.shoulders.epaulette",
+   "slot": "shoulders",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "epaulette",
+   "name": "Officer epaulettes",
+   "glb": "parts/armor.shoulders.epaulette.glb",
+   "sha256": "afa8f0fb06f78c60ac0163d5ab87e9769139d2eae83db97aeb415f1b2b4addf3",
+   "bytes": 69536,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.shoulders.epaulette-all",
+     "tris": 1736,
+     "voxels": 704,
+     "boundsVox": {
+      "min": [
+       -15,
+       -4,
+       30
+      ],
+      "max": [
+       15,
+       4,
+       39
+      ]
+     }
+    }
+   },
+   "bones": [
+    "upper_arm.R",
+    "upper_arm.L"
+   ],
+   "socket": "socket.shoulder",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "accent",
+    "metal"
+   ],
+   "massKg": 0.2,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.shoulders.flight",
+   "slot": "shoulders",
+   "tier": 1,
+   "tierName": "light",
+   "style": "flight",
+   "name": "Flight pauldrons",
+   "glb": "parts/armor.shoulders.flight.glb",
+   "sha256": "d460fe2a03128057d99bca1622c326a9cee86b1b7446792de2f919d43a905c9b",
+   "bytes": 63096,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.shoulders.flight-all",
+     "tris": 1520,
+     "voxels": 764,
+     "boundsVox": {
+      "min": [
+       -16,
+       -4,
+       30
+      ],
+      "max": [
+       16,
+       4,
+       39
+      ]
+     }
+    }
+   },
+   "bones": [
+    "upper_arm.R",
+    "upper_arm.L"
+   ],
+   "socket": "socket.shoulder",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal"
+   ],
+   "massKg": 1.0,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.gloves.fabric",
+   "slot": "gloves",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "plain",
+   "name": "Fabric gloves",
+   "glb": "parts/armor.gloves.fabric.glb",
+   "sha256": "8d234a7b7c53da4f66fcb607fd0a5b9bc6e6d29ddbf21cc0e66e6bbfbee5b768",
+   "bytes": 75968,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.gloves.fabric-all",
+     "tris": 1952,
+     "voxels": 850,
+     "boundsVox": {
+      "min": [
+       -15,
+       -4,
+       14
+      ],
+      "max": [
+       15,
+       6,
+       21
+      ]
+     }
+    }
+   },
+   "bones": [
+    "hand.R",
+    "hand.L"
+   ],
+   "socket": "socket.glove",
+   "hidesBodyRegions": [
+    "gear",
+    "hands"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary"
+   ],
+   "massKg": 0.1,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.gloves.light",
+   "slot": "gloves",
+   "tier": 1,
+   "tierName": "light",
+   "style": "plain",
+   "name": "Light gloves",
+   "glb": "parts/armor.gloves.light.glb",
+   "sha256": "74f6e1aab1b1c1747ae91675dc02a5a9631662bcef4201aa97f1d038d2b7db78",
+   "bytes": 126196,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.gloves.light-all",
+     "tris": 3336,
+     "voxels": 1080,
+     "boundsVox": {
+      "min": [
+       -16,
+       -4,
+       14
+      ],
+      "max": [
+       16,
+       6,
+       24
+      ]
+     }
+    }
+   },
+   "bones": [
+    "forearm.R",
+    "forearm.L",
+    "hand.R",
+    "hand.L"
+   ],
+   "socket": "socket.glove",
+   "hidesBodyRegions": [
+    "gear",
+    "hands"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal"
+   ],
+   "massKg": 0.3,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.gloves.standard",
+   "slot": "gloves",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "plain",
+   "name": "Armoured gauntlets",
+   "glb": "parts/armor.gloves.standard.glb",
+   "sha256": "e1335cd17ccb6061f7e8e728b945ae9d7fe18d687c9599fc90eadf38f4480da7",
+   "bytes": 165228,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.gloves.standard-all",
+     "tris": 4424,
+     "voxels": 1188,
+     "boundsVox": {
+      "min": [
+       -16,
+       -4,
+       14
+      ],
+      "max": [
+       16,
+       6,
+       27
+      ]
+     }
+    }
+   },
+   "bones": [
+    "forearm.R",
+    "forearm.L",
+    "hand.R",
+    "hand.L"
+   ],
+   "socket": "socket.glove",
+   "hidesBodyRegions": [
+    "gear",
+    "hands"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 0.8,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.gloves.heavy",
+   "slot": "gloves",
+   "tier": 3,
+   "tierName": "heavy",
+   "style": "plain",
+   "name": "Heavy gauntlets",
+   "glb": "parts/armor.gloves.heavy.glb",
+   "sha256": "b93adaa626f0f23d8001afb9293b2f20a8ec5603db7ba218484492426ad7cc48",
+   "bytes": 182036,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.gloves.heavy-all",
+     "tris": 4912,
+     "voxels": 1254,
+     "boundsVox": {
+      "min": [
+       -16,
+       -4,
+       14
+      ],
+      "max": [
+       16,
+       7,
+       28
+      ]
+     }
+    }
+   },
+   "bones": [
+    "forearm.R",
+    "forearm.L",
+    "hand.R",
+    "hand.L"
+   ],
+   "socket": "socket.glove",
+   "hidesBodyRegions": [
+    "gear",
+    "hands"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 1.4,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.gloves.work",
+   "slot": "gloves",
+   "tier": 1,
+   "tierName": "light",
+   "style": "work",
+   "name": "Work gloves",
+   "glb": "parts/armor.gloves.work.glb",
+   "sha256": "118783134fcc6aaae78e7cdefffe837b14017f8bd7f3ef135d52f9619d4cdb68",
+   "bytes": 134904,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.gloves.work-all",
+     "tris": 3552,
+     "voxels": 1234,
+     "boundsVox": {
+      "min": [
+       -16,
+       -5,
+       14
+      ],
+      "max": [
+       16,
+       6,
+       25
+      ]
+     }
+    }
+   },
+   "bones": [
+    "forearm.R",
+    "forearm.L",
+    "hand.R",
+    "hand.L"
+   ],
+   "socket": "socket.glove",
+   "hidesBodyRegions": [
+    "gear",
+    "hands"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 0.3,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.boots.sneaker",
+   "slot": "boots",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "sneaker",
+   "name": "Deck shoes",
+   "glb": "parts/armor.boots.sneaker.glb",
+   "sha256": "69627a940fb012f3d0587aa2347f1fa3b9dccdfd0fc6f286c1dcd1bdd8f00417",
+   "bytes": 105360,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.boots.sneaker-all",
+     "tris": 2592,
+     "voxels": 1274,
+     "boundsVox": {
+      "min": [
+       -9,
+       -7,
+       0
+      ],
+      "max": [
+       9,
+       10,
+       5
+      ]
+     }
+    }
+   },
+   "bones": [
+    "shin.R",
+    "shin.L",
+    "foot.R",
+    "foot.L",
+    "toe.R",
+    "toe.L"
+   ],
+   "socket": "socket.foot",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "dark"
+   ],
+   "massKg": 0.8,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.boots.light",
+   "slot": "boots",
+   "tier": 1,
+   "tierName": "light",
+   "style": "plain",
+   "name": "Work boots",
+   "glb": "parts/armor.boots.light.glb",
+   "sha256": "9a8ce7be30dcec59a6cf380b49be8c05d83f60e15c9b052a5afffc92574f236e",
+   "bytes": 92324,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.boots.light-all",
+     "tris": 2400,
+     "voxels": 1274,
+     "boundsVox": {
+      "min": [
+       -9,
+       -7,
+       0
+      ],
+      "max": [
+       9,
+       10,
+       5
+      ]
+     }
+    }
+   },
+   "bones": [
+    "shin.R",
+    "shin.L",
+    "foot.R",
+    "foot.L",
+    "toe.R",
+    "toe.L"
+   ],
+   "socket": "socket.foot",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "dark"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.boots.standard",
+   "slot": "boots",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "plain",
+   "name": "Armoured boots",
+   "glb": "parts/armor.boots.standard.glb",
+   "sha256": "2aeadd329d5147b950e2af90e32c74e1d0a78fd30a537635b2a6be5dfa2aa18f",
+   "bytes": 112228,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.boots.standard-all",
+     "tris": 2872,
+     "voxels": 1364,
+     "boundsVox": {
+      "min": [
+       -10,
+       -7,
+       0
+      ],
+      "max": [
+       10,
+       11,
+       5
+      ]
+     }
+    }
+   },
+   "bones": [
+    "shin.R",
+    "shin.L",
+    "foot.R",
+    "foot.L",
+    "toe.R",
+    "toe.L"
+   ],
+   "socket": "socket.foot",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 2.0,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.boots.heavy",
+   "slot": "boots",
+   "tier": 3,
+   "tierName": "heavy",
+   "style": "plain",
+   "name": "Heavy mag boots",
+   "glb": "parts/armor.boots.heavy.glb",
+   "sha256": "edc295b10781aa0680becce14c71df4a8c4b5d62f45836309dd9d95e4f993f99",
+   "bytes": 134928,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.boots.heavy-all",
+     "tris": 3520,
+     "voxels": 1448,
+     "boundsVox": {
+      "min": [
+       -10,
+       -7,
+       0
+      ],
+      "max": [
+       10,
+       11,
+       8
+      ]
+     }
+    }
+   },
+   "bones": [
+    "shin.R",
+    "shin.L",
+    "foot.R",
+    "foot.L",
+    "toe.R",
+    "toe.L"
+   ],
+   "socket": "socket.foot",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 3.4,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.boots.dress",
+   "slot": "boots",
+   "tier": 1,
+   "tierName": "light",
+   "style": "dress",
+   "name": "Dress boots",
+   "glb": "parts/armor.boots.dress.glb",
+   "sha256": "66ac285429a6e25ad63fb1f5a9de2e7328a46b66e75245b031dad6a0fdec2283",
+   "bytes": 85860,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.boots.dress-all",
+     "tris": 2176,
+     "voxels": 1288,
+     "boundsVox": {
+      "min": [
+       -9,
+       -7,
+       0
+      ],
+      "max": [
+       9,
+       10,
+       5
+      ]
+     }
+    }
+   },
+   "bones": [
+    "shin.R",
+    "shin.L",
+    "foot.R",
+    "foot.L",
+    "toe.R",
+    "toe.L"
+   ],
+   "socket": "socket.foot",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.boots.flight",
+   "slot": "boots",
+   "tier": 1,
+   "tierName": "light",
+   "style": "flight",
+   "name": "Flight boots",
+   "glb": "parts/armor.boots.flight.glb",
+   "sha256": "7ea467d6c37db9ee0a1c388927d974e85abb27a6c5ea2c4a5bd1c0ab9bf8bf76",
+   "bytes": 93448,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.boots.flight-all",
+     "tris": 2400,
+     "voxels": 1274,
+     "boundsVox": {
+      "min": [
+       -9,
+       -7,
+       0
+      ],
+      "max": [
+       9,
+       10,
+       5
+      ]
+     }
+    }
+   },
+   "bones": [
+    "shin.R",
+    "shin.L",
+    "foot.R",
+    "foot.L",
+    "toe.R",
+    "toe.L"
+   ],
+   "socket": "socket.foot",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "dark"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    2,
+    2
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.legs.cargo",
+   "slot": "legs",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "cargo",
+   "name": "Cargo trousers",
+   "glb": "parts/armor.legs.cargo.glb",
+   "sha256": "ef0c21a72d55fd49710b34a13b310b42f3aaf08598b0c8f2c9ea51f7dec4b77b",
+   "bytes": 30476,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.legs.cargo-all",
+     "tris": 648,
+     "voxels": 48,
+     "boundsVox": {
+      "min": [
+       -6,
+       4,
+       12
+      ],
+      "max": [
+       6,
+       6,
+       18
+      ]
+     }
+    }
+   },
+   "bones": [
+    "thigh.R",
+    "thigh.L"
+   ],
+   "socket": null,
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_secondary",
+    "accent"
+   ],
+   "massKg": 0.3,
+   "grid": [
+    2,
+    3
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.legs.light",
+   "slot": "legs",
+   "tier": 1,
+   "tierName": "light",
+   "style": "plain",
+   "name": "Knee pads and straps",
+   "glb": "parts/armor.legs.light.glb",
+   "sha256": "5a358075958403fb05ac4e2fe220eef31f15f386864ef0a72e01ec36f9406aac",
+   "bytes": 47896,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.legs.light-all",
+     "tris": 1080,
+     "voxels": 286,
+     "boundsVox": {
+      "min": [
+       -11,
+       -4,
+       9
+      ],
+      "max": [
+       11,
+       8,
+       14
+      ]
+     }
+    }
+   },
+   "bones": [
+    "thigh.R",
+    "thigh.L",
+    "shin.R",
+    "shin.L"
+   ],
+   "socket": null,
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "dark"
+   ],
+   "massKg": 1.0,
+   "grid": [
+    2,
+    3
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.legs.standard",
+   "slot": "legs",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "plain",
+   "name": "Thigh and knee plates",
+   "glb": "parts/armor.legs.standard.glb",
+   "sha256": "15517f88f75c75026bb00149ce34e28f8000dd69566dc2bf519dbe9485903b26",
+   "bytes": 69508,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.legs.standard-all",
+     "tris": 1728,
+     "voxels": 224,
+     "boundsVox": {
+      "min": [
+       -10,
+       -3,
+       9
+      ],
+      "max": [
+       10,
+       9,
+       19
+      ]
+     }
+    }
+   },
+   "bones": [
+    "thigh.R",
+    "thigh.L",
+    "shin.R",
+    "shin.L"
+   ],
+   "socket": null,
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal"
+   ],
+   "massKg": 3.0,
+   "grid": [
+    2,
+    3
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.legs.heavy",
+   "slot": "legs",
+   "tier": 3,
+   "tierName": "heavy",
+   "style": "plain",
+   "name": "Heavy greaves and tassets",
+   "glb": "parts/armor.legs.heavy.glb",
+   "sha256": "668cf7088e5f84f8dc6bdd35c82e1b97b3deffa3649fe48a7605b98aad11f4b4",
+   "bytes": 92204,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.legs.heavy-all",
+     "tris": 2376,
+     "voxels": 368,
+     "boundsVox": {
+      "min": [
+       -10,
+       -3,
+       9
+      ],
+      "max": [
+       10,
+       9,
+       22
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis",
+    "thigh.R",
+    "thigh.L",
+    "shin.R",
+    "shin.L"
+   ],
+   "socket": null,
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal"
+   ],
+   "massKg": 5.5,
+   "grid": [
+    2,
+    3
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.belt.plain",
+   "slot": "belt",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "plain",
+   "name": "Belt",
+   "glb": "parts/armor.belt.plain.glb",
+   "sha256": "f0fbfb2a3722b364ee610c721f8fc636e3f5c58cd0839aee90e2d091f66bde97",
+   "bytes": 73608,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.belt.plain-wide",
+     "tris": 876,
+     "voxels": 640,
+     "boundsVox": {
+      "min": [
+       -8,
+       -6,
+       22
+      ],
+      "max": [
+       8,
+       10,
+       26
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.belt.plain-narrow",
+     "tris": 988,
+     "voxels": 662,
+     "boundsVox": {
+      "min": [
+       -8,
+       -6,
+       22
+      ],
+      "max": [
+       8,
+       10,
+       26
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis"
+   ],
+   "socket": "socket.belt",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 0.2,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.belt.utility",
+   "slot": "belt",
+   "tier": 1,
+   "tierName": "light",
+   "style": "utility",
+   "name": "Utility belt",
+   "glb": "parts/armor.belt.utility.glb",
+   "sha256": "a7aabf2dbac5864a367c97aba91d6c51d3e9b59a5915dcdb1b971e4995b9639f",
+   "bytes": 115832,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.belt.utility-wide",
+     "tris": 1464,
+     "voxels": 788,
+     "boundsVox": {
+      "min": [
+       -8,
+       -8,
+       21
+      ],
+      "max": [
+       8,
+       11,
+       26
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.belt.utility-narrow",
+     "tris": 1576,
+     "voxels": 810,
+     "boundsVox": {
+      "min": [
+       -8,
+       -8,
+       21
+      ],
+      "max": [
+       8,
+       11,
+       26
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis"
+   ],
+   "socket": "socket.belt",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 0.5,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.belt.standard",
+   "slot": "belt",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "utility",
+   "name": "Load-bearing belt",
+   "glb": "parts/armor.belt.standard.glb",
+   "sha256": "106a95a475534672c2a4c6beb6f95cb4fd8f4d7ffe0e37a00f16a4e3436902db",
+   "bytes": 182032,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.belt.standard-wide",
+     "tris": 2312,
+     "voxels": 883,
+     "boundsVox": {
+      "min": [
+       -8,
+       -9,
+       14
+      ],
+      "max": [
+       10,
+       11,
+       26
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.belt.standard-narrow",
+     "tris": 2424,
+     "voxels": 905,
+     "boundsVox": {
+      "min": [
+       -8,
+       -9,
+       14
+      ],
+      "max": [
+       10,
+       11,
+       26
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis"
+   ],
+   "socket": "socket.belt",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 0.9,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.belt.heavy",
+   "slot": "belt",
+   "tier": 3,
+   "tierName": "heavy",
+   "style": "utility",
+   "name": "Heavy armoured belt",
+   "glb": "parts/armor.belt.heavy.glb",
+   "sha256": "e862e5734f47ee5291f60832326b4a1567a622fba9b10d9bb41ace05cb455d65",
+   "bytes": 192652,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.belt.heavy-wide",
+     "tris": 2396,
+     "voxels": 899,
+     "boundsVox": {
+      "min": [
+       -8,
+       -9,
+       14
+      ],
+      "max": [
+       10,
+       11,
+       26
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.belt.heavy-narrow",
+     "tris": 2508,
+     "voxels": 921,
+     "boundsVox": {
+      "min": [
+       -8,
+       -9,
+       14
+      ],
+      "max": [
+       10,
+       11,
+       26
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis"
+   ],
+   "socket": "socket.belt",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 1.6,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.belt.tool",
+   "slot": "belt",
+   "tier": 1,
+   "tierName": "light",
+   "style": "tool",
+   "name": "Tool belt",
+   "glb": "parts/armor.belt.tool.glb",
+   "sha256": "7380a5bfe7e034df0376c069fa1858be80ea83d108bda26d107afacb8ec6480b",
+   "bytes": 163948,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.belt.tool-wide",
+     "tris": 2166,
+     "voxels": 811,
+     "boundsVox": {
+      "min": [
+       -8,
+       -9,
+       14
+      ],
+      "max": [
+       8,
+       11,
+       26
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.belt.tool-narrow",
+     "tris": 2278,
+     "voxels": 833,
+     "boundsVox": {
+      "min": [
+       -8,
+       -9,
+       14
+      ],
+      "max": [
+       8,
+       11,
+       26
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis"
+   ],
+   "socket": "socket.belt",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 0.5,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.belt.medic",
+   "slot": "belt",
+   "tier": 1,
+   "tierName": "light",
+   "style": "medic",
+   "name": "Medic belt",
+   "glb": "parts/armor.belt.medic.glb",
+   "sha256": "1b7461ee4e2b69e2c62334b2ea2ffd64099c16f8dd7c48eec04bae83d1b17f5f",
+   "bytes": 138540,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.belt.medic-wide",
+     "tris": 1788,
+     "voxels": 793,
+     "boundsVox": {
+      "min": [
+       -8,
+       -8,
+       21
+      ],
+      "max": [
+       8,
+       12,
+       26
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.belt.medic-narrow",
+     "tris": 1900,
+     "voxels": 815,
+     "boundsVox": {
+      "min": [
+       -8,
+       -8,
+       21
+      ],
+      "max": [
+       8,
+       12,
+       26
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis"
+   ],
+   "socket": "socket.belt",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 0.5,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.belt.sash",
+   "slot": "belt",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "sash",
+   "name": "Officer's belt",
+   "glb": "parts/armor.belt.sash.glb",
+   "sha256": "9d88f5ae0a212bc499df2ba2969a70c23ab2c0d294206f475328f7596c1a6d6e",
+   "bytes": 80504,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.belt.sash-wide",
+     "tris": 984,
+     "voxels": 649,
+     "boundsVox": {
+      "min": [
+       -8,
+       -6,
+       19
+      ],
+      "max": [
+       8,
+       10,
+       28
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.belt.sash-narrow",
+     "tris": 1096,
+     "voxels": 671,
+     "boundsVox": {
+      "min": [
+       -8,
+       -6,
+       19
+      ],
+      "max": [
+       8,
+       10,
+       28
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis"
+   ],
+   "socket": "socket.belt",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "accent",
+    "metal"
+   ],
+   "massKg": 0.2,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.belt.holster",
+   "slot": "belt",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "holster",
+   "name": "Holster belt",
+   "glb": "parts/armor.belt.holster.glb",
+   "sha256": "9b78e4f04a372504ba3a51cdcf36174e1f0730d6906af983c668548be04b8032",
+   "bytes": 182024,
+   "fits": {
+    "wide": {
+     "mesh": "GEO-armor-armor.belt.holster-wide",
+     "tris": 2312,
+     "voxels": 883,
+     "boundsVox": {
+      "min": [
+       -8,
+       -9,
+       14
+      ],
+      "max": [
+       10,
+       11,
+       26
+      ]
+     }
+    },
+    "narrow": {
+     "mesh": "GEO-armor-armor.belt.holster-narrow",
+     "tris": 2424,
+     "voxels": 905,
+     "boundsVox": {
+      "min": [
+       -8,
+       -9,
+       14
+      ],
+      "max": [
+       10,
+       11,
+       26
+      ]
+     }
+    }
+   },
+   "bones": [
+    "pelvis"
+   ],
+   "socket": "socket.belt",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 0.9,
+   "grid": [
+    2,
+    1
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.back.backpack-t0",
+   "slot": "back",
+   "tier": 0,
+   "tierName": "civilian",
+   "style": "backpack",
+   "name": "Day pack",
+   "glb": "parts/armor.back.backpack-t0.glb",
+   "sha256": "eb4960d8257bf4eb9495b1b605db8ebc79be8e3159332caf73fea2affe9c9dbb",
+   "bytes": 58184,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.backpack-t0-all",
+     "tris": 1336,
+     "voxels": 458,
+     "boundsVox": {
+      "min": [
+       -5,
+       -14,
+       25
+      ],
+      "max": [
+       5,
+       -6,
+       34
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 0.8,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.back.backpack-t1",
+   "slot": "back",
+   "tier": 1,
+   "tierName": "light",
+   "style": "backpack",
+   "name": "Field pack",
+   "glb": "parts/armor.back.backpack-t1.glb",
+   "sha256": "d172a674d688367a945910f651834044cc05a5899b28f27e3a39bb5125a16e83",
+   "bytes": 74612,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.backpack-t1-all",
+     "tris": 1768,
+     "voxels": 772,
+     "boundsVox": {
+      "min": [
+       -7,
+       -15,
+       24
+      ],
+      "max": [
+       8,
+       -6,
+       34
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.006
+  },
+  {
+   "id": "armor.back.backpack-t2",
+   "slot": "back",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "backpack",
+   "name": "Expedition pack",
+   "glb": "parts/armor.back.backpack-t2.glb",
+   "sha256": "85740845de87223d59b86536d1c518bde4d9bd30ac7dab122f306144c731554d",
+   "bytes": 82176,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.backpack-t2-all",
+     "tris": 1984,
+     "voxels": 1180,
+     "boundsVox": {
+      "min": [
+       -7,
+       -17,
+       21
+      ],
+      "max": [
+       8,
+       -6,
+       34
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 2.4,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.01
+  },
+  {
+   "id": "armor.back.backpack-t3",
+   "slot": "back",
+   "tier": 3,
+   "tierName": "heavy",
+   "style": "backpack",
+   "name": "Heavy combat rig",
+   "glb": "parts/armor.back.backpack-t3.glb",
+   "sha256": "f8e780a452f9b094542d43325068f6912314ecb218e99297ba8f2978fa211104",
+   "bytes": 97320,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.backpack-t3-all",
+     "tris": 2416,
+     "voxels": 1943,
+     "boundsVox": {
+      "min": [
+       -8,
+       -18,
+       18
+      ],
+      "max": [
+       9,
+       -6,
+       43
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 4.0,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.004
+  },
+  {
+   "id": "armor.back.oxygen-single",
+   "slot": "back",
+   "tier": 1,
+   "tierName": "light",
+   "style": "oxygen",
+   "name": "Oxygen pack",
+   "glb": "parts/armor.back.oxygen-single.glb",
+   "sha256": "431a0926ea94e22085fde697e7300d4566801b200ade6c9f1d29c9f7a73c8510",
+   "bytes": 45664,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.oxygen-single-all",
+     "tris": 1004,
+     "voxels": 450,
+     "boundsVox": {
+      "min": [
+       -4,
+       -15,
+       23
+      ],
+      "max": [
+       4,
+       -6,
+       34
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.back.oxygen-twin",
+   "slot": "back",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "oxygen",
+   "name": "Twin-tank oxygen pack",
+   "glb": "parts/armor.back.oxygen-twin.glb",
+   "sha256": "11718775e1507656d5616207ed3761776469ab7daa064cfd4452535488501a9e",
+   "bytes": 71084,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.oxygen-twin-all",
+     "tris": 1768,
+     "voxels": 408,
+     "boundsVox": {
+      "min": [
+       -6,
+       -13,
+       23
+      ],
+      "max": [
+       6,
+       -6,
+       34
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_secondary",
+    "metal",
+    "dark"
+   ],
+   "massKg": 2.4,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.back.jetpack-light",
+   "slot": "back",
+   "tier": 2,
+   "tierName": "standard",
+   "style": "jetpack",
+   "name": "Light jetpack",
+   "glb": "parts/armor.back.jetpack-light.glb",
+   "sha256": "6a13830094fc43205a7bc69c246647f6dfe066a65abd3f68d74e3a1c0715ff36",
+   "bytes": 90260,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.jetpack-light-all",
+     "tris": 2208,
+     "voxels": 662,
+     "boundsVox": {
+      "min": [
+       -6,
+       -15,
+       17
+      ],
+      "max": [
+       6,
+       -6,
+       34
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 2.4,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.006,
+   "exhaust": [
+    {
+     "node": "EXHAUST-armor.back.jetpack-light-0",
+     "bone": "chest",
+     "restVox": [
+      -4.5,
+      -10.5,
+      17
+     ],
+     "radiusM": 0.046875,
+     "direction": [
+      0,
+      0,
+      -1
+     ]
+    },
+    {
+     "node": "EXHAUST-armor.back.jetpack-light-1",
+     "bone": "chest",
+     "restVox": [
+      4.5,
+      -10.5,
+      17
+     ],
+     "radiusM": 0.046875,
+     "direction": [
+      0,
+      0,
+      -1
+     ]
+    }
+   ]
+  },
+  {
+   "id": "armor.back.jetpack-heavy",
+   "slot": "back",
+   "tier": 3,
+   "tierName": "heavy",
+   "style": "jetpack",
+   "name": "Heavy jetpack",
+   "glb": "parts/armor.back.jetpack-heavy.glb",
+   "sha256": "0fb814e4288f49e703a85f89aa2d323bec855517deabf4f22c2192f03e29dcda",
+   "bytes": 97864,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.jetpack-heavy-all",
+     "tris": 2424,
+     "voxels": 992,
+     "boundsVox": {
+      "min": [
+       -8,
+       -16,
+       17
+      ],
+      "max": [
+       8,
+       -6,
+       34
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 4.0,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.008,
+   "exhaust": [
+    {
+     "node": "EXHAUST-armor.back.jetpack-heavy-0",
+     "bone": "chest",
+     "restVox": [
+      -5.5,
+      -11.0,
+      17
+     ],
+     "radiusM": 0.046875,
+     "direction": [
+      0,
+      0,
+      -1
+     ]
+    },
+    {
+     "node": "EXHAUST-armor.back.jetpack-heavy-1",
+     "bone": "chest",
+     "restVox": [
+      5.5,
+      -11.0,
+      17
+     ],
+     "radiusM": 0.046875,
+     "direction": [
+      0,
+      0,
+      -1
+     ]
+    }
+   ]
+  },
+  {
+   "id": "armor.back.medpack",
+   "slot": "back",
+   "tier": 1,
+   "tierName": "light",
+   "style": "medpack",
+   "name": "Medical pack",
+   "glb": "parts/armor.back.medpack.glb",
+   "sha256": "33efd2bd7d9ec461e3bd9e665211532e999038de7277e161e832dfcc150377e9",
+   "bytes": 51988,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.medpack-all",
+     "tris": 1132,
+     "voxels": 848,
+     "boundsVox": {
+      "min": [
+       -6,
+       -15,
+       22
+      ],
+      "max": [
+       6,
+       -6,
+       34
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.0
+  },
+  {
+   "id": "armor.back.radio",
+   "slot": "back",
+   "tier": 1,
+   "tierName": "light",
+   "style": "radio",
+   "name": "Recon radio pack",
+   "glb": "parts/armor.back.radio.glb",
+   "sha256": "dc3afe94ab7d6faf7d7f5422965b2b7481286a5467715606a27d4e1aef1b7c95",
+   "bytes": 50696,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.radio-all",
+     "tris": 1112,
+     "voxels": 687,
+     "boundsVox": {
+      "min": [
+       -5,
+       -15,
+       22
+      ],
+      "max": [
+       5,
+       -6,
+       49
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "accent",
+    "metal",
+    "dark",
+    "emit"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.008
+  },
+  {
+   "id": "armor.back.toolpack",
+   "slot": "back",
+   "tier": 1,
+   "tierName": "light",
+   "style": "toolpack",
+   "name": "Engineer tool pack",
+   "glb": "parts/armor.back.toolpack.glb",
+   "sha256": "8c79f7088b10fa7e6673428ae251917688655cb754d6bfdbbd62b01359aafeb0",
+   "bytes": 62604,
+   "fits": {
+    "all": {
+     "mesh": "GEO-armor-armor.back.toolpack-all",
+     "tris": 1400,
+     "voxels": 928,
+     "boundsVox": {
+      "min": [
+       -8,
+       -15,
+       21
+      ],
+      "max": [
+       8,
+       -6,
+       36
+      ]
+     }
+    }
+   },
+   "bones": [
+    "chest"
+   ],
+   "socket": "socket.back",
+   "hidesBodyRegions": [
+    "gear"
+   ],
+   "slots": [
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark"
+   ],
+   "massKg": 1.2,
+   "grid": [
+    3,
+    4
+   ],
+   "emissiveSurface": 0.0
+  }
+ ]
+}

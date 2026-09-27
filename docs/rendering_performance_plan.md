@@ -6,6 +6,12 @@ Owners: Sidereal project
 
 This plan is written for a fresh agent. It is self-contained: read this file, `AGENTS.md`, then the referenced source lines, and start with the issue register in priority order. Every claim about the current code was verified against source on 2026-09-10; re-verify line numbers before editing because the tree changes daily.
 
+2026-09-21 candidate: [exterior sun-map reuse](handoffs/render_optimization_20260921.md)
+removes 581 of 1,211 draw calls in an isolated stationary ship fixture with identical
+pixels. Camera/motion invalidation and unsupported-path fallbacks preserve normal
+rendering. The fixture differs from the historical table below; this is not evidence
+that the overall Deck/Flight targets or public-client FPS acceptance have passed.
+
 ## What the hardware measurement says
 
 First measurement on real hardware, 2026-09-10: laptop with an NVIDIA RTX 4080, Chromium, render resolution 1574 × 907, hardware scale 1.0, nothing selected, F3 open.
@@ -323,7 +329,7 @@ Append one dated entry per completed item with: what changed (files), before and
 - 2026-09-09: plan written.
 - 2026-09-09 integration status correction: the Graphics local-light cap and F3 eligibility counts are wired in the game. Actual pointer tests exercised All, 8, 4 and Off, equipment and debug gates and Deck/Flight transitions; see [light-budget evidence](handoffs/render_light_budget.md). This is the light-budget portion of R9, not completion of the plan.
 - 2026-09-09: Phase 1a (shadow placement comparison) now uses reusable scalar snapshots instead of per-frame arrays and string serialization. Synthetic helper median 0.152 to 0.029 ms. Transform, cutaway, geometry and caster-membership regressions added. Included in public client release 400dc9fdda68. See [bounded implementation evidence](handoffs/render_performance_resume.md).
-- 2026-09-09 browser follow-up: release 400dc9fdda68 passed bounded cache behaviour review. SwiftShader captures at 1280 × 900 recorded Deck 2,312 draw calls / 581 active / 1,762 total, Flight 2,106 / 569 / 1,762. Local-light caps produced the expected eligible counts. Evidence under [`output/playwright/render-plan/phase-1a/`](../output/playwright/render-plan/phase-1a/). No timing field from these captures is performance evidence. Discrepancy noted: Lighting Off suppresses local shadows but still renders the exterior sun map while diagnostics report zero.
+- 2026-09-09 browser follow-up: release 400dc9fdda68 passed bounded cache behaviour review. SwiftShader captures at 1280 × 900 recorded Deck 2,312 draw calls / 581 active / 1,762 total, Flight 2,106 / 569 / 1,762. Local-light caps produced the expected eligible counts. Evidence under `output/playwright/render-plan/phase-1a/` (local historical captures; not distributed in Git). No timing field from these captures is performance evidence. Discrepancy noted: Lighting Off suppresses local shadows but still renders the exterior sun map while diagnostics report zero.
 - 2026-09-10: first hardware baseline recorded from the owner's laptop RTX 4080 (table at the top of this file). Deck 7,304 draw calls, 2,663 total meshes, 637 materials, 37.36 ms Render CPU; Flight 4,920 / 2,662 / 636 / 26.96 ms. Diagnosis: CPU-bound on draw submission at about 5 µs per call; Update CPU 0.31 ms confirms Phase 1a. Plan rewritten as the issue register above. No register item started.
 
 ### 2026-09-10 — R0 harness implementation and hardware review

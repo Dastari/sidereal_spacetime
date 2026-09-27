@@ -1,4 +1,4 @@
-import { planQualifiedWayfarerFunctionalSeeds } from "../../sim/src/construction-functional-instances";
+import { planQualifiedWayfarerFunctionalSeeds } from "@sidereal/sim/construction-functional-instances";
 import { readFileSync } from "node:fs";
 import { expect, it, vi } from "vitest";
 import { Identity } from "spacetimedb";
@@ -31,10 +31,10 @@ import {
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
-import { qualifiedWayfarerWalkingBindings } from "../../sim/src/wayfarer-walking-bindings";
-import { planConstructionInstance } from "../../sim/src/construction-instance";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
+import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 // Ordinary indexed ctx.db emulator. Real transactional behavior is separately
 // required in the isolated authority journey; mocks never claim rollback proof.
 function table(primary = "id", indices: Record<string, string[]> = {}) {
@@ -103,6 +103,7 @@ function fixture() {
     uuid,
   );
   const db: any = {
+    constructionFlightBinding: { shipId: { find: () => undefined } },
     constructionCargoAssembly: table("containerId", {
       by_instance: ["instanceId"],
     }),

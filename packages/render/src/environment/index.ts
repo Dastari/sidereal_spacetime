@@ -1,5 +1,12 @@
-import { createReviewedSystemBodies, isReviewedSystemBody } from './reviewed-system-bodies';
-import { orientStellarLight } from './yellow-star-runtime';
+import {
+  resolveSpaceBackground,
+  type SpaceRegion,
+} from "@sidereal/sim/space-background";
+import {
+  createReviewedSystemBodies,
+  isReviewedSystemBody,
+} from "./reviewed-system-bodies";
+import { orientStellarLight } from "./yellow-star-runtime";
 import { createNativeIceLODRuntime } from "./native-ice-lod-runtime";
 import { createNativeVolcanicLODRuntime } from "./native-volcanic-lod-runtime";
 import { createPlanetWorkerClient } from "./planet-worker-client";
@@ -110,9 +117,11 @@ function material(
         "cameraPosition",
         "tint",
         "strength",
+        "tint2",
+        "gasStrength",
         "viewportHeight",
       ],
-      samplers: ["nebula"],
+      samplers: ["nebula", "nebula2"],
       needAlphaBlending: alpha,
     },
   );
@@ -150,7 +159,13 @@ export function createSpaceEnvironment(scene: Scene) {
   const planetOccluders = createGlowOccluders(planetGlow);
   planetGlow.intensity = 0.45;
   planetGlow.isEnabled = false;
-  const reviewedSystem = createReviewedSystemBodies(scene, root, planetWorker, heroShadows, planetGlow);
+  const reviewedSystem = createReviewedSystemBodies(
+    scene,
+    root,
+    planetWorker,
+    heroShadows,
+    planetGlow,
+  );
   const nebula = new Texture(
     "/assets/environment/veil-nebula-v1.png",
     scene,
@@ -624,6 +639,7 @@ export function createSpaceEnvironment(scene: Scene) {
     },
     update(options: {
       id: string;
+      region?: SpaceRegion;
       x: number;
       y: number;
       dt: number;
@@ -650,13 +666,34 @@ export function createSpaceEnvironment(scene: Scene) {
         heroShadows.update([]);
         return;
       }
-      if (active !== options.id) {
-        active = options.id;
-        const vista = spaceVista(active);
-        skyMat.setTexture("nebula", vista.nebulaAsset ? violet : nebula);
-        skyMat.setVector3("tint", Vector3.FromArray(vista.nebulaTint));
-        skyMat.setFloat("strength", vista.nebulaStrength);
-        skyMat.setFloat("seed", vista.seed);
+      const weights = options.region
+        ? resolveSpaceBackground(options.region, {
+            x: options.x,
+            y: options.y,
+            height: 0,
+          })
+        : [{ id: options.id, weight: 1 }];
+      const key = weights
+        .map((w) => `${w.id}:${w.weight.toFixed(4)}`)
+        .join("|");
+      if (active !== key) {
+        active = key;
+        const tint = [0, 0, 0],
+          tint2 = [0, 0, 0];
+        let gas = 0;
+        for (const w of weights) {
+          const v = spaceVista(w.id);
+          const t = v.nebulaAsset ? tint2 : tint;
+          for (let i = 0; i < 3; i++)
+            t[i] += v.nebulaTint[i] * v.nebulaStrength * w.weight;
+          if (v.id !== "deep-space") gas += w.weight;
+        }
+        skyMat.setTexture("nebula", nebula);
+        skyMat.setTexture("nebula2", violet);
+        skyMat.setVector3("tint", Vector3.FromArray(tint));
+        skyMat.setVector3("tint2", Vector3.FromArray(tint2));
+        skyMat.setFloat("gasStrength", gas);
+        skyMat.setFloat("seed", 17);
       }
       if (!options.reducedMotion) age += Math.min(options.dt, 0.1);
       const camera = scene.activeCamera?.globalPosition ?? Vector3.Zero();
@@ -671,9 +708,23 @@ export function createSpaceEnvironment(scene: Scene) {
           entries.delete(id);
         }
       const rangePlane = updateBodyRangePlane(scene.activeCamera, farPlane);
-      const star = options.bodies.find(body => body.appearance === 'yellow-main-sequence-r013');
-      if (star && primaryLight) orientStellarLight(primaryLight, new Vector3(star.x-options.x,star.height,-(star.y-options.y)), camera);
-      reviewedSystem.update(options.bodies, options, camera, rangePlane, age, options.planetsEnabled !== false);
+      const star = options.bodies.find(
+        (body) => body.appearance === "yellow-main-sequence-r013",
+      );
+      if (star && primaryLight)
+        orientStellarLight(
+          primaryLight,
+          new Vector3(star.x - options.x, star.height, -(star.y - options.y)),
+          camera,
+        );
+      reviewedSystem.update(
+        options.bodies,
+        options,
+        camera,
+        rangePlane,
+        age,
+        options.planetsEnabled !== false,
+      );
       const blend = 1 - Math.exp(-Math.min(options.dt, 0.1) * 18);
       for (const body of options.bodies) {
         if (isReviewedSystemBody(body)) continue;
@@ -769,7 +820,10 @@ export function createSpaceEnvironment(scene: Scene) {
             (Math.floor(age * 10) / 10) * entry.cloudSpeed * 0.3;
         for (const mat of entry.materials) {
           mat.setFloat("time", age);
-          mat.setVector3("cameraPosition", scene.floatingOriginMode ? Vector3.Zero() : camera);
+          mat.setVector3(
+            "cameraPosition",
+            scene.floatingOriginMode ? Vector3.Zero() : camera,
+          );
           if (primaryLight) {
             mat.setVector3(
               "lightDirection",
@@ -783,7 +837,9 @@ export function createSpaceEnvironment(scene: Scene) {
         }
       }
       heroShadows.update(
-        [...entries.values(), ...reviewedSystem.shadowCandidates()].filter((entry) => entry.node.isEnabled()),
+        [...entries.values(), ...reviewedSystem.shadowCandidates()].filter(
+          (entry) => entry.node.isEnabled(),
+        ),
       );
       // Bounded seeded world-cell field with snapped spacing LOD. As the viewport
       // expands, cells cover it without pinning individual particles to the camera.
@@ -791,7 +847,13 @@ export function createSpaceEnvironment(scene: Scene) {
         scene.activeCamera instanceof TargetCamera
           ? scene.activeCamera.getTarget()
           : Vector3.Zero();
-      dustField.update(camera, target, options);
+      const dust = weights.reduce(
+        (sum, w) => sum + spaceVista(w.id).dust * w.weight,
+        0,
+      );
+      dustField.mesh.setEnabled(dust > 0);
+      dustField.mesh.visibility = dust;
+      if (dust > 0) dustField.update(camera, target, options);
     },
     dispose() {
       disposed = true;

@@ -1,0 +1,14 @@
+{
+  "design_id": "shipyard.roof.frontier",
+  "revision": 4,
+  "owner_quote": "That looks good, make this the \"live\" roof of the current in game ship please.",
+  "kit_sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+  "editable_source": "assets/source/published-roof/r004/roof-kit.blend",
+  "source_sha256": "d9230a4e0359b7b551c4ea45604b4850c04a515fec1b985fc0132050c0ee31d2",
+  "placed_parts": 73,
+  "canonical_components": 26,
+  "triangles": 34200,
+  "decals": 3,
+  "preserved_non_roof_parts": 189,
+  "archive": "assets/source/archive/pre-roof-r004-2026-09-09"
+}

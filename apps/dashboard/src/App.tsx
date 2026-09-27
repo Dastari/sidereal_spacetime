@@ -1,3 +1,4 @@
+import { StudioAuthGate } from "./authoring/StudioAuthGate";
 import "@fontsource/barlow-condensed/500.css";
 import "@fontsource/barlow-condensed/600.css";
 import "@fontsource/barlow/400.css";
@@ -21,6 +22,7 @@ import {
   Orbit,
   Palette,
   Redo2,
+  Rocket,
   RotateCw,
   Shield,
   Ship,
@@ -35,7 +37,9 @@ import "./editor/theme.css";
 import "./style.css";
 const AssemblyEditor = lazy(() => import("./shipyard/AssemblyEditor"));
 const LayoutEditor = lazy(() => import("./shipyard/layout/LayoutEditor"));
+const MapEditor = lazy(() => import("./map-editor/MapEditor"));
 const PlanetStudio = lazy(() => import("./planet-studio/PlanetStudio"));
+const PrefabShipyard = lazy(() => import("./shipyard/prefab/PrefabShipyard"));
 const tools = [
   [
     "World explorer",
@@ -111,21 +115,43 @@ const tools = [
   ],
 ] as const;
 type Route =
-  "planets" | "dashboard" | "shipyard" | "assembly" | "models" | "components";
+  | "map"
+  | "planets"
+  | "dashboard"
+  | "shipyard"
+  | "prefabs"
+  | "assembly"
+  | "models"
+  | "components";
+const ROUTE_PATHS: Partial<Record<Route, string>> = {
+  dashboard: "/",
+  prefabs: "/shipyard/prefabs",
+};
 const currentRoute = (): Route =>
-  location.pathname.includes("shipyard") &&
-  new URLSearchParams(location.search).has("assembly")
-    ? "assembly"
-    : location.pathname.includes("planets")
-      ? "planets"
-      : location.pathname.includes("models")
-        ? "models"
-        : location.pathname.includes("shipyard")
-          ? "shipyard"
-          : location.pathname.includes("components")
-            ? "components"
-            : "dashboard";
+  location.pathname === "/map"
+    ? "map"
+    : location.pathname.startsWith("/shipyard/prefabs")
+      ? "prefabs"
+      : location.pathname.includes("shipyard") &&
+          new URLSearchParams(location.search).has("assembly")
+        ? "assembly"
+        : location.pathname.includes("planets")
+          ? "planets"
+          : location.pathname.includes("models")
+            ? "models"
+            : location.pathname.includes("shipyard")
+              ? "shipyard"
+              : location.pathname.includes("components")
+                ? "components"
+                : "dashboard";
 export default function App() {
+  return (
+    <StudioAuthGate>
+      <StudioApp />
+    </StudioAuthGate>
+  );
+}
+function StudioApp() {
   const [route, setRoute] = useState<Route>(currentRoute);
   const [toolDetail, setToolDetail] = useState<(typeof tools)[number] | null>(
     null,
@@ -156,7 +182,7 @@ export default function App() {
     return () => window.removeEventListener("popstate", pop);
   }, []);
   const navigate = (next: Route) => {
-    history.pushState({}, "", next === "dashboard" ? "/" : `/${next}`);
+    history.pushState({}, "", ROUTE_PATHS[next] ?? `/${next}`);
     setRoute(next);
   };
   useEffect(() => {
@@ -192,54 +218,20 @@ export default function App() {
   clientUrl.hash = "";
   return (
     <div className="app">
-      <header className="app-header">
-        <a
-          href="/"
-          className="brand"
-          onClick={(e) => {
-            e.preventDefault();
-            navigate("dashboard");
-          }}
-        >
-          <span className="brand-symbol">
-            <Orbit size={26} />
-          </span>
-          Sidereal<span className="edition">Creator</span>
-        </a>
-        <nav aria-label="Workspace">
-          <button
-            className={route === "dashboard" ? "selected" : ""}
-            onClick={() => navigate("dashboard")}
-          >
-            Workspaces
-          </button>
-          <button
-            className={
-              route === "shipyard" || route === "assembly" ? "selected" : ""
-            }
-            onClick={() => navigate("shipyard")}
-          >
-            Shipyard
-          </button>
-          <button
-            className={route === "planets" ? "selected" : ""}
-            onClick={() => navigate("planets")}
-          >
-            Genesis
-          </button>
-          <a
-            className="nav-link"
-            href={import.meta.env.VITE_CLIENT_URL ?? clientUrl.href}
-          >
-            Open game <ArrowUpRight size={14} />
-          </a>
-        </nav>
-        <div className="account">
-          <ThemePicker />
-        </div>
-      </header>
       <div className="workspace">
-        <aside className="rail" aria-label="Creator tools">
+        <nav className="rail studio-rail" aria-label="Creator workspaces">
+          <a
+            className="studio-mark"
+            href="/"
+            aria-label="Sidereal Creator home"
+            title="Sidereal Creator"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("dashboard");
+            }}
+          >
+            <Orbit size={26} />
+          </a>
           <ToolButton
             label="Workspaces"
             active={route === "dashboard"}
@@ -254,7 +246,37 @@ export default function App() {
           >
             <Ship />
           </ToolButton>
+          <ToolButton
+            label="Prefab ships"
+            active={route === "prefabs"}
+            onClick={() => navigate("prefabs")}
+          >
+            <Rocket />
+          </ToolButton>
+          <ToolButton
+            label="Map editor"
+            active={route === "map"}
+            onClick={() => navigate("map")}
+          >
+            <Compass />
+          </ToolButton>
+          <ToolButton
+            label="Genesis"
+            active={route === "planets"}
+            onClick={() => navigate("planets")}
+          >
+            <FlaskConical />
+          </ToolButton>
           <span className="rail-spacer" />
+          <a
+            className="tool-button"
+            aria-label="Open game"
+            title="Open game"
+            href={import.meta.env.VITE_CLIENT_URL ?? clientUrl.href}
+          >
+            <ArrowUpRight />
+          </a>
+          <ThemePicker />
           <ToolButton
             label="UI component workshop"
             active={route === "components"}
@@ -270,7 +292,7 @@ export default function App() {
           >
             <BookOpen />
           </a>
-        </aside>
+        </nav>
         <WorkspaceBoundary key={route}>
           <Suspense
             fallback={
@@ -279,8 +301,12 @@ export default function App() {
               </div>
             }
           >
-            {route === "planets" ? (
+            {route === "map" ? (
+              <MapEditor />
+            ) : route === "planets" ? (
               <PlanetStudio />
+            ) : route === "prefabs" ? (
+              <PrefabShipyard />
             ) : route === "shipyard" || route === "assembly" ? (
               route === "assembly" ? (
                 <AssemblyEditor />
@@ -418,11 +444,13 @@ export default function App() {
                         key={title}
                         className="suite-row"
                         onClick={() =>
-                          title === "Shipyard"
-                            ? navigate("shipyard")
-                            : title === "Genesis"
-                              ? navigate("planets")
-                              : setToolDetail(tool)
+                          title === "Firmament" || title === "World explorer"
+                            ? navigate("map")
+                            : title === "Shipyard"
+                              ? navigate("shipyard")
+                              : title === "Genesis"
+                                ? navigate("planets")
+                                : setToolDetail(tool)
                         }
                       >
                         <span className="suite-icon">
@@ -433,11 +461,13 @@ export default function App() {
                           <p>{description}</p>
                         </div>
                         <Status>
-                          {title === "Shipyard"
-                            ? "Layout planner ready"
-                            : title === "Genesis"
-                              ? "Generator ready"
-                              : milestone + " planned"}
+                          {title === "Firmament" || title === "World explorer"
+                            ? "Map editor"
+                            : title === "Shipyard"
+                              ? "Layout planner ready"
+                              : title === "Genesis"
+                                ? "Generator ready"
+                                : milestone + " planned"}
                         </Status>
                         <ArrowUpRight size={18} />
                       </button>
@@ -536,11 +566,6 @@ export default function App() {
           </Suspense>
         </WorkspaceBoundary>
       </div>
-      <footer className="app-footer">
-        <span>Sidereal Creator 0.1</span>
-        <span>New UI · authoring tools are planned phases</span>
-        <span>Independent dashboard</span>
-      </footer>
     </div>
   );
 }

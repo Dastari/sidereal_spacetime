@@ -1,5 +1,6 @@
 # Reusable backed armor kit r005
 
+Current candidate: **family-03 / library-02 / browser final-02**, passed independent Astra review with16 native and21 browser images. The owner authorized merging the native delivery and making it available in the editor. It is now live for editable review; final artistic sign-off and game installation remain pending.
 Current candidate: **family-03 / library-02 / browser final-02**, passed independent Astra review with16 native and21 browser images. Exact owner sign-off and live installation remain pending.
 
 The new kit uses actual closed 0.75 m backing solids between the unchanged structure datum and the 0.25 m decorative frame/face. This new family reserves 1 m outward. Inward structural walls remain 250 mm. Native heights are 0.75, 1.5, 2.25 and 3 m. Source Blender geometry, maps and contacts remain distinct from gameplay collision, pressure and damage.
@@ -42,3 +43,9 @@ See [specification](../../../../docs/handoffs/armor_block_kit_spec_20260914.md) 
 Run `python3 scripts/art_library/armor_block_kit.py --out NEW_DIRECTORY --full` through its dev.toml-managed Blender wrapper. The output must be fresh. Run `armor_block_kit_check.py NEW_DIRECTORY`, `armor_block_kit_contacts.py NEW_DIRECTORY`, then `pack_armor_block_review.py NEW_DIRECTORY NEW_LIBRARY_DIRECTORY`. The GLBs in models.tar.xz extract beneath the native directory with their original paths. Validation receipts are immutable; rerun against a fresh extracted copy. Blender source preserves editable meshes/materials/sockets; the packed GLB preserves every exported geometry/material byte while sharing repeated textures.
 
 The browser helper requires an explicitly selected compatible game source candidate and the preserved qualified document. Build with `node scripts/art_library/build_armor_block_review.mjs --source GAME_CANDIDATE --review PRIVATE_REVIEW_DIRECTORY`; the capture scripts record private asset routing and camera choices. This review route is not a production Shipyard feature.
+
+## Normal Shipyard editor — 2026-09-15
+
+Open [Shipyard](https://sidereal.tail7a58a6.ts.net:8445/shipyard), then **New → Open Wayfarer armor review**. This separate local draft contains all 42 armor blocks and 42 retained fittings/context parts, with the same native geometry and recorded poses as final-02. All 76 native variants are in the Hull palette. Individual pieces support normal selection, move, height, Shift-drag, measurement, Undo and save/reload. Existing drafts stay saved.
+
+[Actual editor](editor-01/assembled.png), [entry action](editor-01/open-review.png), [measurement](editor-01/measurement.png), and [activation check-in](../../../../docs/handoffs/armor_editor_live_checkin_20260915.md) document the deployed candidate. This is editor publication only; the installed game ship and physical pins remain unchanged. The convenient boundary planner and new family’s authority/mount qualification remain future integration.

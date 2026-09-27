@@ -1,0 +1,11 @@
+import {readFileSync,writeFileSync} from 'node:fs';
+import {NullEngine} from '@babylonjs/core/Engines/nullEngine';
+import {Scene} from '@babylonjs/core/scene';
+import {TransformNode} from '@babylonjs/core/Meshes/transformNode';
+import {Vector3,Matrix} from '@babylonjs/core/Maths/math.vector';
+import {createCrewVisual} from '../packages/render/src/crew';
+const e=new NullEngine(),s=new Scene(e),p=new TransformNode('ship',s);
+const c=await createCrewVisual(s,p,new Uint8Array(readFileSync('assets/runtime/crew/frontier-crew.glb')));
+c.update({moving:false,seated:false,reducedMotion:true});
+const bones=Object.fromEntries(s.transformNodes.filter(n=>/^(pelvis|spine|head|upper_arm|forearm|hand|thigh|shin|foot)/.test(n.name)).map(n=>{n.computeWorldMatrix(true);return[n.name,{position:n.getAbsolutePosition().asArray(),local:n.position.asArray(),rotation:n.rotationQuaternion?.asArray()}]}));
+writeFileSync('assets/art-library/designs/crew.animation.aim/revisions/r001/rig-audit.json',JSON.stringify(bones,null,2));console.log(bones);s.dispose();e.dispose();

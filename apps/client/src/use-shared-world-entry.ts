@@ -6,7 +6,7 @@ import {
   useSyncExternalStore,
 } from "react";
 import { getSharedWorldBinding, type DbConnection } from "@sidereal/net";
-import type { SharedEntryState } from "../../../packages/canvas-ui/src/shared-entry";
+import type { SharedEntryState } from "@sidereal/canvas-ui/shared-entry";
 import {
   createSharedWorldJoinSession,
   sharedJoinJournalKey,

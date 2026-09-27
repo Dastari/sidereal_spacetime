@@ -1,4 +1,5 @@
 import type { LayoutStructure } from "@sidereal/content/layout-structure";
+import { readEnvelopeFields } from "./layout-envelope-admission";
 const object = (v: unknown): v is Record<string, unknown> =>
   !!v && typeof v === "object" && !Array.isArray(v);
 const text = (v: unknown, max = 160) =>
@@ -7,6 +8,17 @@ const integer = (v: unknown, min = -8192, max = 8192) =>
   Number.isSafeInteger(v) && Number(v) >= min && Number(v) <= max;
 /** Bounded admission before any geometry allocation. Unknown future semantics fail closed. */
 export function readLayoutStructure(value: unknown): LayoutStructure {
+  if (object(value) && value.schema === "sidereal.layout-structure.v2") {
+    const {
+      wallConvention: _wall,
+      boundaryTreatments: _boundaries,
+      navigationReservations: _navigation,
+      deckProfiles: _profiles,
+      ...base
+    } = value;
+    readLayoutStructure({ ...base, schema: "sidereal.layout-structure.v1" });
+    return readEnvelopeFields(value);
+  }
   const fail = (): never => {
     throw new Error(
       "Invalid structural authoring contract or unsupported revision",

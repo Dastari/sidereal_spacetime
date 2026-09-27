@@ -1,0 +1,543 @@
+{
+  "schema": "sidereal.armor-thumbnails.v1",
+  "sourceSha256": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8",
+  "renderer": "Blender 4.3.2 Cycles CPU 32 samples AgX",
+  "size": [
+    256,
+    256
+  ],
+  "assets": [
+    {
+      "id": "armor-block-f94c0ba2aa04f31fb6a5",
+      "file": "armor-block-f94c0ba2aa04f31fb6a5.png",
+      "sha256": "a783f957303245a4111b959a92dfc8164cf2e4a8f4ec6203d9e10bf48b51e2eb",
+      "nodePrefix": "GEO-armor-block-f94c0ba2aa04f31fb6a5--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-7c657ee01a90318dec3e",
+      "file": "armor-block-7c657ee01a90318dec3e.png",
+      "sha256": "13695ef0fee59f287d86816641c197fdbf6db6e5c38d87b39f1067ab3554706c",
+      "nodePrefix": "GEO-armor-block-7c657ee01a90318dec3e--",
+      "meshCount": 22
+    },
+    {
+      "id": "armor-block-fe79dfaf2e1542dbd67c",
+      "file": "armor-block-fe79dfaf2e1542dbd67c.png",
+      "sha256": "30024abb7a1f76fa04d3bf59a197c903247b76812a057f8a71ef21595c2b7131",
+      "nodePrefix": "GEO-armor-block-fe79dfaf2e1542dbd67c--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-9ca59f6db637d3afceb9",
+      "file": "armor-block-9ca59f6db637d3afceb9.png",
+      "sha256": "26d2138ddd7130dd7cca75d0f51ad794fd52162b1bd8baaa286836c439fef707",
+      "nodePrefix": "GEO-armor-block-9ca59f6db637d3afceb9--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-70b34597548b284a0a7f",
+      "file": "armor-block-70b34597548b284a0a7f.png",
+      "sha256": "958040c1369f4bbbd1b4317794962529859f78fcda13d364c42a5146dd8805e2",
+      "nodePrefix": "GEO-armor-block-70b34597548b284a0a7f--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-cd2f17ea0cf58cb60b7f",
+      "file": "armor-block-cd2f17ea0cf58cb60b7f.png",
+      "sha256": "e77efd00f771a613116cc8b1ca14b7f0061260e6dd5cc9caaf6c7b98fcb6f8d5",
+      "nodePrefix": "GEO-armor-block-cd2f17ea0cf58cb60b7f--",
+      "meshCount": 15
+    },
+    {
+      "id": "armor-block-1676c64748013f376c0a",
+      "file": "armor-block-1676c64748013f376c0a.png",
+      "sha256": "c96ba0f15e99b37bed991af4ea772bd0e6fd31ad94702346cefbd3e0ce47b49f",
+      "nodePrefix": "GEO-armor-block-1676c64748013f376c0a--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-a6743a347ee2fcdd1ce9",
+      "file": "armor-block-a6743a347ee2fcdd1ce9.png",
+      "sha256": "ac93a77ea529deb73c72c75336c63ffb18bc73e2fddc33150f8b168f75b60c18",
+      "nodePrefix": "GEO-armor-block-a6743a347ee2fcdd1ce9--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-62ad930c45227d5287a0",
+      "file": "armor-block-62ad930c45227d5287a0.png",
+      "sha256": "11773aeb5c979c909b86dee75fd66b5f4439db0427f73aaa4bc4b47e48d76a5e",
+      "nodePrefix": "GEO-armor-block-62ad930c45227d5287a0--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-e1affbf19f4b7fa30311",
+      "file": "armor-block-e1affbf19f4b7fa30311.png",
+      "sha256": "5511bf9cabc623d89fe047c80cd2f35ed4858fdd46dd106eb186e78cbe9ef97d",
+      "nodePrefix": "GEO-armor-block-e1affbf19f4b7fa30311--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-926961217b49c21a526b",
+      "file": "armor-block-926961217b49c21a526b.png",
+      "sha256": "49c2a40674d607aa19ed299c4dbe4923c51affa0fb2a984995996d2a09b6a185",
+      "nodePrefix": "GEO-armor-block-926961217b49c21a526b--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-137adc2153a878094d60",
+      "file": "armor-block-137adc2153a878094d60.png",
+      "sha256": "aed63823ad95281f349a22b06fd24c2b8eec64590ca71e3a01d4bc40dbc21c4a",
+      "nodePrefix": "GEO-armor-block-137adc2153a878094d60--",
+      "meshCount": 14
+    },
+    {
+      "id": "armor-block-e40f082abbcbe4f55a62",
+      "file": "armor-block-e40f082abbcbe4f55a62.png",
+      "sha256": "d7f6f7bf0fab3cf2b9633d424b65ffff6aafee5e915dcb63bb89015c9897e8c8",
+      "nodePrefix": "GEO-armor-block-e40f082abbcbe4f55a62--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-649dcbda86c17c7952c9",
+      "file": "armor-block-649dcbda86c17c7952c9.png",
+      "sha256": "f34d81f63da31500471c7e81e2762f66d88cc1e42899f9f2ca7f5054eff969c7",
+      "nodePrefix": "GEO-armor-block-649dcbda86c17c7952c9--",
+      "meshCount": 22
+    },
+    {
+      "id": "armor-block-2b558e7ac8eb4184c2af",
+      "file": "armor-block-2b558e7ac8eb4184c2af.png",
+      "sha256": "e9c1bfd2d389781141dcc359bf28a8a31035d96359d53aa1e51a1444ba6b6fae",
+      "nodePrefix": "GEO-armor-block-2b558e7ac8eb4184c2af--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-b235419d9a165659f2e8",
+      "file": "armor-block-b235419d9a165659f2e8.png",
+      "sha256": "2e495bca65e23f3330e0d59d6210d99c44141dd03da906608d49f0603e128ef4",
+      "nodePrefix": "GEO-armor-block-b235419d9a165659f2e8--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-fabbd7b0578ea00b5791",
+      "file": "armor-block-fabbd7b0578ea00b5791.png",
+      "sha256": "55af5ed4b1e5de1037ce59f3d4cfcc77e053fbe494e61334a6113bc924c75c11",
+      "nodePrefix": "GEO-armor-block-fabbd7b0578ea00b5791--",
+      "meshCount": 6
+    },
+    {
+      "id": "armor-block-e120acd13dae3b493668",
+      "file": "armor-block-e120acd13dae3b493668.png",
+      "sha256": "9becaaf62f6ab29f960ad3bb7f62304f83b84ec7af66b9aa74da45b6407776c1",
+      "nodePrefix": "GEO-armor-block-e120acd13dae3b493668--",
+      "meshCount": 15
+    },
+    {
+      "id": "armor-block-98477a5dd3e88b931589",
+      "file": "armor-block-98477a5dd3e88b931589.png",
+      "sha256": "43b3c48ade8774463322f17cf4548151af6298678835d559fa9cbbe16e4162a5",
+      "nodePrefix": "GEO-armor-block-98477a5dd3e88b931589--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-a7ef36310c50dc565d00",
+      "file": "armor-block-a7ef36310c50dc565d00.png",
+      "sha256": "cfb7654552b9011e17272e412f09e10f56e3a68b2ede21ddfecb7b6b0dd693c3",
+      "nodePrefix": "GEO-armor-block-a7ef36310c50dc565d00--",
+      "meshCount": 6
+    },
+    {
+      "id": "armor-block-4896cc9388c49fcb9b2e",
+      "file": "armor-block-4896cc9388c49fcb9b2e.png",
+      "sha256": "f12f698dfc711dff5ecfcc60aa96a63402d9f632d39e6794484f0a079fb45ac0",
+      "nodePrefix": "GEO-armor-block-4896cc9388c49fcb9b2e--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-d3fa0e462a519b5f36f8",
+      "file": "armor-block-d3fa0e462a519b5f36f8.png",
+      "sha256": "51643af6e57530c34b0932415b4ed529f2cf7fbf61b428120cc62a62f4af8561",
+      "nodePrefix": "GEO-armor-block-d3fa0e462a519b5f36f8--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-9069dfa847efce4fe41e",
+      "file": "armor-block-9069dfa847efce4fe41e.png",
+      "sha256": "c92e4b7e16392b97276539c634453fa10b0ebfae99bf7774a7177b6077d7fbbe",
+      "nodePrefix": "GEO-armor-block-9069dfa847efce4fe41e--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-db7ed5477c90dcffe64f",
+      "file": "armor-block-db7ed5477c90dcffe64f.png",
+      "sha256": "1243798e79df706d6a5fb0698e6e2bf90964ed6c721271910da52b288b883547",
+      "nodePrefix": "GEO-armor-block-db7ed5477c90dcffe64f--",
+      "meshCount": 22
+    },
+    {
+      "id": "armor-block-05c9d73568be3ad2e6b8",
+      "file": "armor-block-05c9d73568be3ad2e6b8.png",
+      "sha256": "03b164497f1b76db1905aa1a106fedf40afbd31a97e8b9957da5763f51f0032f",
+      "nodePrefix": "GEO-armor-block-05c9d73568be3ad2e6b8--",
+      "meshCount": 22
+    },
+    {
+      "id": "armor-block-15a405777ecce0335b21",
+      "file": "armor-block-15a405777ecce0335b21.png",
+      "sha256": "7ab654a2c4d699524ed9fcca402a49d5c73430f54d79b90f148c1d151bc8ab08",
+      "nodePrefix": "GEO-armor-block-15a405777ecce0335b21--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-43965fec43941bd88fcc",
+      "file": "armor-block-43965fec43941bd88fcc.png",
+      "sha256": "384fbd25d2188e23ea2a15626d7809b06efc114c16adee44f2560329d99912ee",
+      "nodePrefix": "GEO-armor-block-43965fec43941bd88fcc--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-af0cc716991642374212",
+      "file": "armor-block-af0cc716991642374212.png",
+      "sha256": "710bebc7ff72095af044e1b256fe1df0f575bba9131aabe57c112fcdb3ad35e4",
+      "nodePrefix": "GEO-armor-block-af0cc716991642374212--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-57b9352f1f040b7f0157",
+      "file": "armor-block-57b9352f1f040b7f0157.png",
+      "sha256": "67ee53c486fb1e4b133110cf086328d86fccb9b18effbf8209340a48f1e7d895",
+      "nodePrefix": "GEO-armor-block-57b9352f1f040b7f0157--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-8904b2af208c0ad89e05",
+      "file": "armor-block-8904b2af208c0ad89e05.png",
+      "sha256": "adad7e08072114f5330115a44a3b066ecbe78d86b54bf6481d8c16febb0ed02c",
+      "nodePrefix": "GEO-armor-block-8904b2af208c0ad89e05--",
+      "meshCount": 14
+    },
+    {
+      "id": "armor-block-d475f516a65773f4c21e",
+      "file": "armor-block-d475f516a65773f4c21e.png",
+      "sha256": "1733a8a83096a637decee457f07aac97f604c4bd1ce3996b47c45a5a9ac203be",
+      "nodePrefix": "GEO-armor-block-d475f516a65773f4c21e--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-97e82a0a2ae19def921f",
+      "file": "armor-block-97e82a0a2ae19def921f.png",
+      "sha256": "53ff355b5bb19c3f5752971dbc45da0be8bec33aae1dcd4aa28c12490bbe4661",
+      "nodePrefix": "GEO-armor-block-97e82a0a2ae19def921f--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-57b42efda0a7a7d9ffdd",
+      "file": "armor-block-57b42efda0a7a7d9ffdd.png",
+      "sha256": "65438de929629a1ca362f4f1a98db17aaf383f620bd33f90c897d9cc27fee2c0",
+      "nodePrefix": "GEO-armor-block-57b42efda0a7a7d9ffdd--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-7c3af440c13bfbd854f7",
+      "file": "armor-block-7c3af440c13bfbd854f7.png",
+      "sha256": "bbe63777dbab9770a7b2744dc827c20da47efa64e3ef1a0b9b2cfe9626cbe3e4",
+      "nodePrefix": "GEO-armor-block-7c3af440c13bfbd854f7--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-075003ca42dee3ad88d4",
+      "file": "armor-block-075003ca42dee3ad88d4.png",
+      "sha256": "6d14ce074dd14c63a6ab470f168e68c23e8c57a083d760d73b765770cb27f002",
+      "nodePrefix": "GEO-armor-block-075003ca42dee3ad88d4--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-137dbd4b0d514b60c4c3",
+      "file": "armor-block-137dbd4b0d514b60c4c3.png",
+      "sha256": "48f3f4c779ba78d227034ce3aa38580a83b264c6ccd0fbdf6fac3d389481e65d",
+      "nodePrefix": "GEO-armor-block-137dbd4b0d514b60c4c3--",
+      "meshCount": 14
+    },
+    {
+      "id": "armor-block-cb4ec70047162b4093b9",
+      "file": "armor-block-cb4ec70047162b4093b9.png",
+      "sha256": "882ef8a38c1c2f7eaf3df0ee449f447ff1d8e2649e915ed772bc9720da21f1af",
+      "nodePrefix": "GEO-armor-block-cb4ec70047162b4093b9--",
+      "meshCount": 14
+    },
+    {
+      "id": "armor-block-131df6537810373834cb",
+      "file": "armor-block-131df6537810373834cb.png",
+      "sha256": "c92a930552ac305809703c3340bfa4af1a40c099f6b71a85ee8e175d47236d79",
+      "nodePrefix": "GEO-armor-block-131df6537810373834cb--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-79d4507d7b58226cbe80",
+      "file": "armor-block-79d4507d7b58226cbe80.png",
+      "sha256": "2c78af849ee70a7d125f05ccb16c7a202007ed3eea775e1ddbd4178f0623441b",
+      "nodePrefix": "GEO-armor-block-79d4507d7b58226cbe80--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-edc8f579626e43feb839",
+      "file": "armor-block-edc8f579626e43feb839.png",
+      "sha256": "20f3419902947b85b09c251e4c8f154424321aac410612cf2cea71a849b4f5b8",
+      "nodePrefix": "GEO-armor-block-edc8f579626e43feb839--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-e7911c4aae9fd2fecbb8",
+      "file": "armor-block-e7911c4aae9fd2fecbb8.png",
+      "sha256": "39a629300c289e66beaff29bfceedb30f9c76d931443e9314f8b7b605bdcc034",
+      "nodePrefix": "GEO-armor-block-e7911c4aae9fd2fecbb8--",
+      "meshCount": 22
+    },
+    {
+      "id": "armor-block-649b14141fa27ecd47e6",
+      "file": "armor-block-649b14141fa27ecd47e6.png",
+      "sha256": "4ea0c27c90c78a80471932b41d4f81bad007d7612407326cf0055f9560953f65",
+      "nodePrefix": "GEO-armor-block-649b14141fa27ecd47e6--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-fc5a10216de60493ab08",
+      "file": "armor-block-fc5a10216de60493ab08.png",
+      "sha256": "b29cd96fec780d2275c22fe93ef7473ebe26b6229b7027ea16763720f650368a",
+      "nodePrefix": "GEO-armor-block-fc5a10216de60493ab08--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-204079fa21328c629295",
+      "file": "armor-block-204079fa21328c629295.png",
+      "sha256": "b8bcf33a76848b20b7df1ab41c21bae851e1045804350346b43a841befe7fbf8",
+      "nodePrefix": "GEO-armor-block-204079fa21328c629295--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-50c9e43a8c6ba5af5141",
+      "file": "armor-block-50c9e43a8c6ba5af5141.png",
+      "sha256": "c33b15fc0daef24409526f7c9598d77d2e1aca9d2aeed64157a1d424d4320b00",
+      "nodePrefix": "GEO-armor-block-50c9e43a8c6ba5af5141--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-e9bc6213d0d76ca7f44b",
+      "file": "armor-block-e9bc6213d0d76ca7f44b.png",
+      "sha256": "4e87050c9a951b67820b57c237fcc7c034e29f46f2c5296cb839ff1cf19b4c27",
+      "nodePrefix": "GEO-armor-block-e9bc6213d0d76ca7f44b--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-f731b556d8884e7d7557",
+      "file": "armor-block-f731b556d8884e7d7557.png",
+      "sha256": "fc9b1dab5385dc0d5521c53f21807df128d939e60ac42d1b301ac1049ce50248",
+      "nodePrefix": "GEO-armor-block-f731b556d8884e7d7557--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-207cbce0274b3e836291",
+      "file": "armor-block-207cbce0274b3e836291.png",
+      "sha256": "c11e4eba7d53ec067ee2edc00bcc236aaa527566e93886164b5595b6a9cd4a89",
+      "nodePrefix": "GEO-armor-block-207cbce0274b3e836291--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-975ae6c56dd5c22ae720",
+      "file": "armor-block-975ae6c56dd5c22ae720.png",
+      "sha256": "242efaf0554cd122879c227e3b1dc2a6bcbc45e4ababf1917ca1653203967daf",
+      "nodePrefix": "GEO-armor-block-975ae6c56dd5c22ae720--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-0609cba1e9e5472c20b6",
+      "file": "armor-block-0609cba1e9e5472c20b6.png",
+      "sha256": "d21c28943e4807fc9c7a65cb837ae80d585d055b99f075a6f7e424f7ee0e0d0a",
+      "nodePrefix": "GEO-armor-block-0609cba1e9e5472c20b6--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-fbbf224dbd286d805ac1",
+      "file": "armor-block-fbbf224dbd286d805ac1.png",
+      "sha256": "4d37deae120d7002d63a253c51b60d669562dcb981b863139dedf3cfbfe003e8",
+      "nodePrefix": "GEO-armor-block-fbbf224dbd286d805ac1--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-49384936da4b4c531fcc",
+      "file": "armor-block-49384936da4b4c531fcc.png",
+      "sha256": "05e9c8c8e52bc136231a4d6c425f81d62dbbd193df8dcbcecebbc546f24d8f21",
+      "nodePrefix": "GEO-armor-block-49384936da4b4c531fcc--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-e8152b71edd21a544d55",
+      "file": "armor-block-e8152b71edd21a544d55.png",
+      "sha256": "96c2c9e802e1ded848a41e4ff278e822e19b7e9024eb1dcf370b8ad5077eb4d2",
+      "nodePrefix": "GEO-armor-block-e8152b71edd21a544d55--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-c2da9d9d47c98c01ceb8",
+      "file": "armor-block-c2da9d9d47c98c01ceb8.png",
+      "sha256": "0d1d572a3766ab9b78e5e4abcdaae4d7d43d6f87ae30e3ca7f83a3de5b0ee91a",
+      "nodePrefix": "GEO-armor-block-c2da9d9d47c98c01ceb8--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-e7a26fe3b6e058621d39",
+      "file": "armor-block-e7a26fe3b6e058621d39.png",
+      "sha256": "2a3946c711035dafb6972ff1bb371b03906f7ff9a16502ed8928a06da60bd45a",
+      "nodePrefix": "GEO-armor-block-e7a26fe3b6e058621d39--",
+      "meshCount": 12
+    },
+    {
+      "id": "armor-block-8233c1a3a948a91de0c7",
+      "file": "armor-block-8233c1a3a948a91de0c7.png",
+      "sha256": "62fea3c3f79e7f536a8478efa30d890ceeaf18405563b409da2d6aa456e8fb14",
+      "nodePrefix": "GEO-armor-block-8233c1a3a948a91de0c7--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-a252a121923cfb248f94",
+      "file": "armor-block-a252a121923cfb248f94.png",
+      "sha256": "a1a1310f6c7ffdddc1221531f91ba8055c395e3e6cfbb4d63693f51a39126cf4",
+      "nodePrefix": "GEO-armor-block-a252a121923cfb248f94--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-981bd24736c640366791",
+      "file": "armor-block-981bd24736c640366791.png",
+      "sha256": "19d99ad9995586f2a3150a651d86455bdb32a0981a0111eb78e068169022a0e1",
+      "nodePrefix": "GEO-armor-block-981bd24736c640366791--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-7bcf58fae727b968e126",
+      "file": "armor-block-7bcf58fae727b968e126.png",
+      "sha256": "369c421c4f7c0a39f658abca7bd586789d6d5821bbf1c75f79631f44a0f5f834",
+      "nodePrefix": "GEO-armor-block-7bcf58fae727b968e126--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-825d61aeb52f08f61c14",
+      "file": "armor-block-825d61aeb52f08f61c14.png",
+      "sha256": "21214fcf76def092411273d825f6a4baa65f1570eaaca0c75ecaf40de47c36ad",
+      "nodePrefix": "GEO-armor-block-825d61aeb52f08f61c14--",
+      "meshCount": 9
+    },
+    {
+      "id": "armor-block-bb2e153a868e9214017f",
+      "file": "armor-block-bb2e153a868e9214017f.png",
+      "sha256": "fa4b229fd8088c919e6c5615ae199b800ac7e280443f22b6d6ade9cff9b723ad",
+      "nodePrefix": "GEO-armor-block-bb2e153a868e9214017f--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-b5debfc1efb6816ed06d",
+      "file": "armor-block-b5debfc1efb6816ed06d.png",
+      "sha256": "f52c22a6b6f1510fd417e441c415de79d876efcc67795caf45db3f8637cad169",
+      "nodePrefix": "GEO-armor-block-b5debfc1efb6816ed06d--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-19cb454187f2b808d0f7",
+      "file": "armor-block-19cb454187f2b808d0f7.png",
+      "sha256": "cd4ff587f00790df793fd0f94b1bd049b0e7902fa882f3727dfdb1fa79cc4311",
+      "nodePrefix": "GEO-armor-block-19cb454187f2b808d0f7--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-8c601c2467812dda7c97",
+      "file": "armor-block-8c601c2467812dda7c97.png",
+      "sha256": "fb70f2a04f9dfba87c0eac6d2e97bde679f950ab13bf72666d70a1d80db6de81",
+      "nodePrefix": "GEO-armor-block-8c601c2467812dda7c97--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-04506299cdccdc3362d3",
+      "file": "armor-block-04506299cdccdc3362d3.png",
+      "sha256": "74d636f64e7b81edb8125667deca15dfa913eaf5b342e32575df229b5c7eb3cb",
+      "nodePrefix": "GEO-armor-block-04506299cdccdc3362d3--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-b9889f7ac1379ef477d3",
+      "file": "armor-block-b9889f7ac1379ef477d3.png",
+      "sha256": "ba5576f6e8cd6fdf2c4c5ae9551ea7649027dda41168d64ec7f1eda4dbe6a988",
+      "nodePrefix": "GEO-armor-block-b9889f7ac1379ef477d3--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-e465b7594b2433a77396",
+      "file": "armor-block-e465b7594b2433a77396.png",
+      "sha256": "be580f553ab7c0b2d72cb0eda3ab0b5cf609e39ebd607fd9590029dbd5184756",
+      "nodePrefix": "GEO-armor-block-e465b7594b2433a77396--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-c3e51deb6848ddb10001",
+      "file": "armor-block-c3e51deb6848ddb10001.png",
+      "sha256": "af1672120544a72db8e3fc17bf30d0350cee7c396022f4a3e3a9e9a420e21d98",
+      "nodePrefix": "GEO-armor-block-c3e51deb6848ddb10001--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-b8ebf4aa6991e098a6d3",
+      "file": "armor-block-b8ebf4aa6991e098a6d3.png",
+      "sha256": "40271a1ce0238ad7ade967083eddcd7bdb9701bf7e47da085f9965560a9a17ad",
+      "nodePrefix": "GEO-armor-block-b8ebf4aa6991e098a6d3--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-bdffe58423963910d02b",
+      "file": "armor-block-bdffe58423963910d02b.png",
+      "sha256": "f3b61252df31a0cc5c4daea1a3836e566f6eb9c767b93ba4b7bde0cf3cee81bb",
+      "nodePrefix": "GEO-armor-block-bdffe58423963910d02b--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-098c86a675e3e951ace9",
+      "file": "armor-block-098c86a675e3e951ace9.png",
+      "sha256": "30d5a86090c066365514387688ead5eeca5b9eff2a5e2a69e9c0d3a4c3356444",
+      "nodePrefix": "GEO-armor-block-098c86a675e3e951ace9--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-0f4edf0963be28b7952b",
+      "file": "armor-block-0f4edf0963be28b7952b.png",
+      "sha256": "c7a480f81ec27b2203bf8af30ece7f810f04088032f46c66362466dbc644ab02",
+      "nodePrefix": "GEO-armor-block-0f4edf0963be28b7952b--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-eae57557166988330b70",
+      "file": "armor-block-eae57557166988330b70.png",
+      "sha256": "fc7a922ef10e6743fac3f4b8700d0ef735f7361a49bcae694d43a2330d696be8",
+      "nodePrefix": "GEO-armor-block-eae57557166988330b70--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-54094cde041737badaf2",
+      "file": "armor-block-54094cde041737badaf2.png",
+      "sha256": "f1f065060e67de57f7eafea958697e8554c3fec5bb30549076621efb1afccab1",
+      "nodePrefix": "GEO-armor-block-54094cde041737badaf2--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-2cce8582f894eec65110",
+      "file": "armor-block-2cce8582f894eec65110.png",
+      "sha256": "dcb5efc7f88ec0d4d8fd752d7136e272db9dff6e22c45b2d30bb554c1178ecf1",
+      "nodePrefix": "GEO-armor-block-2cce8582f894eec65110--",
+      "meshCount": 4
+    },
+    {
+      "id": "armor-block-aabac0a89386b4aa9045",
+      "file": "armor-block-aabac0a89386b4aa9045.png",
+      "sha256": "7bb89ca9e35bcfac0961b2fbcb86ca99b60879a15160558dd516b1e633f13121",
+      "nodePrefix": "GEO-armor-block-aabac0a89386b4aa9045--",
+      "meshCount": 12
+    }
+  ]
+}

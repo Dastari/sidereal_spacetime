@@ -1,11 +1,15 @@
+import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
 import { createFlightActiveSet } from "./flight-active-set";
 import { createFastSnapshot } from "./fast-snapshot";
-import { createStaticMaterialFreeze, invalidateStaticMaterials } from "./static-material-freeze";
+import {
+  createStaticMaterialFreeze,
+  invalidateStaticMaterials,
+} from "./static-material-freeze";
 import { createDebugVisibilityRevision } from "./debug-visibility-revision";
-import { createShipGlowOccluders } from './ship-glow-occluders';
-import { setMeshRole } from './mesh-roles';
-import { legacyMeshRole, legacyCutawayFade } from './legacy-mesh-role';
+import { createShipGlowOccluders } from "./ship-glow-occluders";
+import { setMeshRole } from "./mesh-roles";
+import { legacyMeshRole, legacyCutawayFade } from "./legacy-mesh-role";
 import {
   loadNativeStairEgress,
   type NativeStairEgressGeometry,
@@ -37,7 +41,11 @@ import {
 } from "./local-light-budget";
 import { createAntialiasing } from "./antialiasing-pipeline";
 import { createRenderEngine } from "./render-engine";
-import { readRenderBackend, createRenderBackendPreference, type RenderBackend } from "./render-backend";
+import {
+  readRenderBackend,
+  createRenderBackendPreference,
+  type RenderBackend,
+} from "./render-backend";
 import { invalidatesTemporalHistory } from "./antialiasing-history";
 import type { AntialiasingSettings } from "./antialiasing-settings";
 import { maintainSceneTransmission } from "./transmission-lifecycle";
@@ -53,6 +61,7 @@ export {
 import { createCombatAim } from "./combat-aim";
 import { posePlacementHeading } from "./crew/pose-integration-motion";
 import { createDebugFeatures, type DebugFeature } from "./debug-features";
+import { createDebugCollisionSource } from "./debug-collision-source";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { cabinIsVisible, createCabinVisibility } from "./cabin-visibility";
 import { LAB_INTERACTIONS } from "../../content/src/interactions";
@@ -63,11 +72,16 @@ import { loadInstalledEquipment } from "./installed-equipment";
 import { createObjectPresentation } from "./object-presentation";
 import { applyCutawayVisibility, prepareCutawayMeshes } from "./cutaway";
 import { createShipLighting } from "./ship-lighting";
-import { createFlightEffects } from "./flight-effects";
+import {
+  createFlightEffects,
+  type FlightEffectActuator,
+} from "./flight-effects";
 import { createRenderDiagnostics } from "./diagnostics";
 import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
+import { createVoxelCrewVisual } from "./crew/voxel-crew";
+import type { CrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { Camera } from "@babylonjs/core/Cameras/camera";
@@ -79,6 +93,10 @@ import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTextur
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { CABIN_ROOMS } from "../../content/src/interior";
+import {
+  loadPrefabShipPresentation,
+  type PrefabShipViewHandle,
+} from "./prefab-ship-presentation";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { CreateTorus } from "@babylonjs/core/Meshes/Builders/torusBuilder";
 import { Material } from "@babylonjs/core/Materials/material";
@@ -124,7 +142,7 @@ export type SceneState = {
   objectLights?: readonly { placementId: string; enabled: boolean }[];
   vx?: number;
   vy?: number;
-  actuatorOutputs?: readonly { actuatorId: string; throttle: number }[];
+  flightActuators?: readonly FlightEffectActuator[];
   /** Omitted for authoring previews; null explicitly means empty authoritative hand. */
   equippedAsset?: EquipmentAsset | null;
   heading: number;
@@ -139,6 +157,7 @@ export type SceneState = {
   seatFacing?: number;
   sprinting?: boolean;
   vistaId?: string;
+  spaceRegion?: SpaceRegion;
   reducedMotion?: boolean;
   bodies?: readonly SpaceBodyState[];
   crewAppearance?: CrewAppearance;
@@ -155,6 +174,8 @@ export interface WorldOptions {
   /** Allow known authored exhaust geometry; accepted telemetry still drives it. */
   authoredFlightEffects?: boolean;
   equipmentPose?: EquipmentPoseConfiguration;
+  /** Crew art bundle. "voxel" is the CHAR-BODY proposal behind an explicit local preview flag. */
+  crewBundle?: CrewBundle;
   onObjectSelected?: (placementId?: string) => void;
   source?: "voxel" | "original" | "engine-original" | "engine-voxel";
   onScene?: (scene: Scene) => void;
@@ -199,11 +220,20 @@ async function buildWorld(
   let initialStateApplied = false;
   let equipmentPending = false;
   let backendStorage: Storage | undefined;
-  try { backendStorage = globalThis.localStorage; } catch { /* Device storage can be blocked. */ }
+  try {
+    backendStorage = globalThis.localStorage;
+  } catch {
+    /* Device storage can be blocked. */
+  }
   const requestedBackend = readRenderBackend(backendStorage);
-  const pageUrl = typeof window === "undefined" ? undefined : new URL(window.location.href);
-  const recoveringWebGL = pageUrl?.searchParams.get("rendererFallback") === "webgl";
-  const createdEngine = await createRenderEngine(canvas, recoveringWebGL ? "webgl" : requestedBackend);
+  const pageUrl =
+    typeof window === "undefined" ? undefined : new URL(window.location.href);
+  const recoveringWebGL =
+    pageUrl?.searchParams.get("rendererFallback") === "webgl";
+  const createdEngine = await createRenderEngine(
+    canvas,
+    recoveringWebGL ? "webgl" : requestedBackend,
+  );
   if (!createdEngine.engine) {
     if (pageUrl) {
       pageUrl.searchParams.set("rendererFallback", "webgl");
@@ -212,8 +242,12 @@ async function buildWorld(
     throw Error("Reloading with WebGL after WebGPU initialization failed.");
   }
   const engine = createdEngine.engine;
-  const backend = createRenderBackendPreference(createdEngine.active, requestedBackend, backendStorage,
-    recoveringWebGL ? "WebGL recovery mode." : createdEngine.reason);
+  const backend = createRenderBackendPreference(
+    createdEngine.active,
+    requestedBackend,
+    backendStorage,
+    recoveringWebGL ? "WebGL recovery mode." : createdEngine.reason,
+  );
   const scene = new Scene(engine);
   const transmissionLifecycle = maintainSceneTransmission(scene);
   // Object selection performs one explicit click ray; camera/HUD use DOM input.
@@ -252,7 +286,10 @@ async function buildWorld(
   // Start rendering only once the scene's loaders and wiring are assembled.
   const shipRoot = new TransformNode("ship-frame", scene);
   const environment = createSpaceEnvironment(scene);
-  let crew: Awaited<ReturnType<typeof createCrewVisual>> | undefined;
+  let crew:
+    | Awaited<ReturnType<typeof createCrewVisual>>
+    | Awaited<ReturnType<typeof createVoxelCrewVisual>>
+    | undefined;
   let equipmentPose:
     | ReturnType<
         Awaited<ReturnType<typeof createCrewVisual>>["createPoseController"]
@@ -299,6 +336,9 @@ async function buildWorld(
       ) => ReturnType<typeof resolveConstructionTraversalFrame>)
     | undefined;
   let disposeConstruction: (() => void) | undefined;
+  // Trusted prefab ships (SHIPS-PREFABS): the dressed ship replaces the native
+  // floor-plate presentation; collision and walking stay authoritative.
+  let prefabView: PrefabShipViewHandle | undefined;
   let lastStairPosition: [number, number] | undefined;
   let stairTravelHeading: number | undefined;
   const engineStudy = options.source?.startsWith("engine-") ?? false;
@@ -346,6 +386,15 @@ async function buildWorld(
             accepted && "destinationDeckId" in accepted ? accepted : undefined,
           );
       if ("dispose" in loaded) disposeConstruction = loaded.dispose;
+      if (options.construction) {
+        prefabView = await loadPrefabShipPresentation(
+          scene,
+          shipRoot,
+          options.construction.documentJson,
+        );
+        if (prefabView)
+          for (const mesh of imported.meshes) mesh.setEnabled(false);
+      }
     } else {
       imported = await SceneLoader.ImportMeshAsync(
         "",
@@ -396,14 +445,21 @@ async function buildWorld(
     await environment.ready;
     options.onLoadStage?.("crew");
     if (!options.source || options.source === "voxel") {
-      crew = await createCrewVisual(
-        scene,
-        shipRoot,
-        options.equipmentPose?.crewUrl,
-      );
-      if (options.equipmentPose) {
-        equipmentPose = crew.createPoseController();
-        equipmentPose.setAimSpace(options.equipmentPose.aimSpace);
+      if (options.crewBundle === "voxel") {
+        // Proposal voxel crew: authored actions drive the arms; the legacy aim-space
+        // controller targets the r008 rig and stays unbound.
+        crew = await createVoxelCrewVisual(scene, shipRoot);
+      } else {
+        const legacy = await createCrewVisual(
+          scene,
+          shipRoot,
+          options.equipmentPose?.crewUrl,
+        );
+        crew = legacy;
+        if (options.equipmentPose) {
+          equipmentPose = legacy.createPoseController();
+          equipmentPose.setAimSpace(options.equipmentPose.aimSpace);
+        }
       }
       avatar.dispose();
       avatar = crew.root;
@@ -437,7 +493,10 @@ async function buildWorld(
     if (legacyCutawayFade(mesh)) mesh.metadata.cutawayFade = true;
   }
   const roof = imported.meshes.filter(
-    (m) => m.getTotalVertices() > 0 && m.metadata?.role === "roof" && m.metadata?.cutawayFade,
+    (m) =>
+      m.getTotalVertices() > 0 &&
+      m.metadata?.role === "roof" &&
+      m.metadata?.cutawayFade,
   );
   prepareCutawayMeshes(roof);
   const lighting =
@@ -457,6 +516,7 @@ async function buildWorld(
     ),
   );
   const fixturePlacements = shipEquipment;
+  const debugCollision = createDebugCollisionSource(options.construction);
   const debugFeatures = createDebugFeatures(
     scene,
     [
@@ -466,6 +526,30 @@ async function buildWorld(
       ),
     ],
     [avatar, marker],
+    {
+      characterRoots: () => [avatar],
+      collisionScope: () =>
+        options.constructionEgress
+          ? "Standalone egress preview has no admitted collision frame"
+          : debugCollision.resolve({
+              deckId: state.constructionDeckId,
+              doors: state.constructionDoors,
+            }).scope,
+      collisionFrames: () => {
+        if (options.constructionEgress) return [];
+        const source = debugCollision.resolve({
+          deckId: state.constructionDeckId,
+          doors: state.constructionDoors,
+        });
+        const world = shipRoot.computeWorldMatrix(true);
+        return source.frames.map((frame, i) => ({
+          id: `walking:${i}`,
+          frame,
+          world,
+          scope: source.scope,
+        }));
+      },
+    },
   );
   const labels = new TransformNode("room-labels", scene);
   labels.parent = shipRoot;
@@ -486,7 +570,7 @@ async function buildWorld(
     // Stand in front of the innermost service insert, facing into the room.
     plate.position.set(Math.sign(room.x) * 4.35, 2.0625, -room.y);
     plate.rotation.y = (Math.sign(room.x) * Math.PI) / 2;
-    plate.metadata = { side: Math.sign(room.x), role: 'equipment' };
+    plate.metadata = { side: Math.sign(room.x), role: "equipment" };
     const texture = new DynamicTexture(
       "room-sign-" + room.id,
       { width: 512, height: 96 },
@@ -531,15 +615,20 @@ async function buildWorld(
     options.constructionEgress
       ? {
           meshes: [] as Mesh[],
-          update(_outputs: unknown, _motion?: boolean) {},
+          update(_outputs: unknown, _motion?: boolean) {
+            return false;
+          },
           dispose() {},
         }
       : createFlightEffects(scene, shipRoot);
   const localGlowOcclusion = createShipGlowOccluders(scene, shipRoot, glow);
-  const refreshLocalGlow = () => localGlowOcclusion.set([
-    ...flightEffects.meshes, ...emitters, ...imported.meshes,
-    ...(crew?.root.getChildMeshes() ?? []),
-  ]);
+  const refreshLocalGlow = () =>
+    localGlowOcclusion.set([
+      ...flightEffects.meshes,
+      ...emitters,
+      ...imported.meshes,
+      ...(crew?.root.getChildMeshes() ?? []),
+    ]);
   refreshLocalGlow();
   environment.setOccluders([
     ...imported.meshes,
@@ -838,15 +927,29 @@ async function buildWorld(
         seated: state.seated ?? false,
         sprinting: state.sprinting ?? false,
         reducedMotion: state.reducedMotion,
+        shotSequence: state.combat?.shotSequence,
       });
     const poseItem = selectedAsset
       ? options.equipmentPose?.items[selectedAsset]
       : undefined;
+    avatar.position.set(displayed.localX, walkingElevation, -displayed.localY);
+    if (traversalFrame?.acceptedPositionM) {
+      const [x, y, z] = traversalFrame.acceptedPositionM;
+      avatar.position.set(x, z, -y);
+    }
+    const desiredAim = state.combat?.active
+      ? combatAim.aim(displayed.localX, displayed.localY, state.combat.range, {
+          deckHeight: avatar.position.y,
+          origin: equipment?.getMuzzleWorld()?.position,
+        })
+      : undefined;
     if (equipmentPose && poseItem)
       equipmentPose.update(
         {
-          yaw: state.combat?.angle ?? -avatar.rotation.y,
-          pitch: 0,
+          // Immediate local presentation; accepted intent/shot authority still
+          // travels through the existing combat reducers and sequence.
+          yaw: desiredAim?.angle ?? state.combat?.angle ?? -avatar.rotation.y,
+          pitch: desiredAim?.pitch ?? 0,
           facing: -avatar.rotation.y,
           active: !!state.combat?.active,
           moving: walking,
@@ -862,11 +965,6 @@ async function buildWorld(
         dt,
       );
     // Native r002 deck datum; this offset is presentation, not simulation height.
-    avatar.position.set(displayed.localX, walkingElevation, -displayed.localY);
-    if (traversalFrame?.acceptedPositionM) {
-      const [x, y, z] = traversalFrame.acceptedPositionM;
-      avatar.position.set(x, z, -y);
-    }
     marker.position.copyFrom(avatar.position);
     marker.position.y += 0.02;
     marker.setEnabled(cabinVisible && blend > 0.2);
@@ -884,7 +982,8 @@ async function buildWorld(
       if (label.metadata?.side)
         label.setEnabled(label.metadata.side * Math.cos(cameraLocal) < 0);
     lighting.update(blend, avatar.position.x, -avatar.position.z);
-    flightEffects.update(state.actuatorOutputs ?? [], state.reducedMotion);
+    if (flightEffects.update(state.flightActuators ?? [], state.reducedMotion))
+      refreshLocalGlow();
     camera.alpha +=
       angleDelta(
         camera.alpha,
@@ -896,7 +995,8 @@ async function buildWorld(
       transition;
     const c = Math.cos(displayed.heading),
       s = Math.sin(displayed.heading);
-    const actorBlend = blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
+    const actorBlend =
+      blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
     const targetLocalX =
       (constructionFrame?.centerX ?? 0) * (1 - actorBlend) +
       avatar.position.x * actorBlend;
@@ -926,7 +1026,11 @@ async function buildWorld(
         focus.height,
         -(focus.y - displayed.y),
       );
-      const observed = observation.frame(celestialObservationRadius(focus, aspect), dt, state.reducedMotion);
+      const observed = observation.frame(
+        celestialObservationRadius(focus, aspect),
+        dt,
+        state.reducedMotion,
+      );
       camera.alpha = observed.alpha;
       camera.beta = observed.beta;
       camera.radius = observed.radius;
@@ -934,9 +1038,11 @@ async function buildWorld(
     camera.minZ = Math.max(0.1, camera.radius * 0.02);
     camera.maxZ = Math.max(1600, camera.radius + 1600);
     updateConstructionView?.(camera.position, state.interior);
+    prefabView?.setInterior(state.interior);
     camera.getViewMatrix(true);
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,
+      region: state.spaceRegion,
       x: displayed.x,
       y: displayed.y,
       vx: state.vx ?? 0,
@@ -964,9 +1070,22 @@ async function buildWorld(
     );
     const updateCpuMs = performance.now() - frameStarted;
     staticMaterials.prepare();
-    const snapshotCandidate = fastSnapshot?.prepare({ready:!firstFrame && !state.inspect && !focusedBodyId,
-      reducedMotion:!!state.reducedMotion,temporal:antialiasing.snapshot().effective.mode === "taa",displayRevision:0}) ?? false;
-    flightActiveSet.prepare(!snapshotCandidate && !firstFrame && !!state.seated && !state.interior && !state.inspect && !focusedBodyId && blend < .001);
+    const snapshotCandidate =
+      fastSnapshot?.prepare({
+        ready: !firstFrame && !state.inspect && !focusedBodyId,
+        reducedMotion: !!state.reducedMotion,
+        temporal: antialiasing.snapshot().effective.mode === "taa",
+        displayRevision: 0,
+      }) ?? false;
+    flightActiveSet.prepare(
+      !snapshotCandidate &&
+        !firstFrame &&
+        !!state.seated &&
+        !state.interior &&
+        !state.inspect &&
+        !focusedBodyId &&
+        blend < 0.001,
+    );
     scene.render();
     diagnostics.recordFrameCpu(performance.now() - frameStarted, updateCpuMs);
     if (
@@ -1080,6 +1199,10 @@ async function buildWorld(
     );
   });
   return {
+    /** Presentation-only crew handle for review harnesses (never simulation state). */
+    getCrewVisual() {
+      return crew;
+    },
     getAntialiasing() {
       return antialiasing.snapshot();
     },
@@ -1125,6 +1248,10 @@ async function buildWorld(
             displayed.localX,
             displayed.localY,
             state.combat?.range ?? 60,
+            {
+              deckHeight: avatar.position.y,
+              origin: equipment?.getMuzzleWorld()?.position,
+            },
           )?.angle
         : undefined;
     },
@@ -1137,6 +1264,7 @@ async function buildWorld(
             renderBackend: createdEngine.active,
             snapshotRendering: fastSnapshot?.snapshot(),
             debugFeatures: debugFeatures.snapshot(),
+            debugOverlays: debugFeatures.overlaySnapshot(),
             localLightBudget: localLights.snapshot(),
             planetBuild: environment.planetBuildSnapshot(),
           }
@@ -1163,11 +1291,18 @@ async function buildWorld(
       remoteShipIds: remoteShips?.getRootIds() ?? [],
     }),
     update(next: SceneState) {
-      if (next.interior !== state.interior || next.inspect !== state.inspect || next.seated !== state.seated) {
-        fastSnapshot?.invalidate();flightActiveSet.invalidate();
+      if (
+        next.interior !== state.interior ||
+        next.inspect !== state.inspect ||
+        next.seated !== state.seated
+      ) {
+        fastSnapshot?.invalidate();
+        flightActiveSet.invalidate();
       }
       const temporalNow = performance.now();
-      if (invalidatesTemporalHistory(state, next, temporalNow - temporalStateAt))
+      if (
+        invalidatesTemporalHistory(state, next, temporalNow - temporalStateAt)
+      )
         antialiasing.resetHistory();
       temporalStateAt = temporalNow;
       if (!initialStateApplied) {
@@ -1247,6 +1382,7 @@ async function buildWorld(
       diagnostics.dispose();
       debugFeatures.dispose();
       disposeConstruction?.();
+      prefabView?.dispose();
       disposeConstruction = undefined;
       scene.dispose();
       engine.dispose();

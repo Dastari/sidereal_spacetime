@@ -1,4 +1,9 @@
 import {
+  importConstructionSource,
+  copyConstructionSource,
+  storedConstructionSource,
+} from "../../authoring/construction-document";
+import {
   createBlankLayout,
   createWayfarerFloorplanDraft,
   floorplanOnlyCopy,
@@ -7,6 +12,9 @@ import {
   type RedesignProposal,
 } from "./redesign-document";
 import type { HullEnvelope } from "@sidereal/content/layout-structure";
+import rebuiltWayfarer from "@sidereal/content/wayfarer-exterior-r005.json";
+import { createArmorReviewDraft } from "./armor-review";
+import { resetLegacyLocalDrafts } from "./reset-local-drafts";
 import type { PartCatalog } from "@sidereal/content/assembly";
 import {
   createWayfarerTemplateDraft,
@@ -30,9 +38,9 @@ import {
   layoutFixture,
   migrateAssembly,
   type LayoutDocument,
-} from "../../../../../packages/content/src/ship-layout";
-import { readLayout } from "../../../../../packages/sim/src/layout-validation";
-import type { CompiledLayout } from "../../../../../packages/sim/src/layout-compiler";
+} from "@sidereal/content/ship-layout";
+import { readLayout } from "@sidereal/sim/layout-validation";
+import type { CompiledLayout } from "@sidereal/sim/layout-compiler";
 import {
   DEFAULT_VIEW,
   push,
@@ -71,6 +79,7 @@ function boot() {
     identity =
       localStorage.getItem("sidereal.layout.local-profile.v1") ?? uuid();
     localStorage.setItem("sidereal.layout.local-profile.v1", identity);
+    resetLegacyLocalDrafts(localStorage, identity);
     const key = localStorage.getItem(`sidereal.layout.active.v1:${identity}`);
     raw = key ? localStorage.getItem(key) : null;
     if (key && !raw)
@@ -101,7 +110,7 @@ function boot() {
     const doc = createBlankLayout(
       "ship",
       "Untitled ship",
-      HULL_SIZE_CATALOG[0],
+      { ...HULL_SIZE_CATALOG[0], height: 112 },
       uuid(),
       uuid(),
     );
@@ -284,7 +293,11 @@ export function useLayout() {
     replaceExisting = false,
   ) {
     try {
-      if (copy) d = { ...d, id: uuid() };
+      if (copy) {
+        const previous = d.id;
+        d = { ...d, id: uuid() };
+        copyConstructionSource(previous, d.id);
+      }
       readLayout(d);
       setRecovery("");
       localStorage.removeItem(
@@ -359,6 +372,14 @@ export function useLayout() {
   }
   return {
     adopt,
+    createArmorReview: () => {
+      try {
+        return adoptPreservingCurrent(createArmorReviewDraft(uuid()));
+      } catch (e) {
+        setError(String(e));
+        return false;
+      }
+    },
     adoptServer: (d: LayoutDocument) => adopt(d, false, false, true),
     doc,
     history,
@@ -455,6 +476,9 @@ export function useLayout() {
                   schema: "sidereal.layout-recovery.v1",
                   sequence: sequence.current,
                   writer: writer.current,
+                  constructionSource: doc
+                    ? storedConstructionSource(doc.id)
+                    : undefined,
                   history,
                   view,
                 },
@@ -548,6 +572,19 @@ export function useLayout() {
         return false;
       }
     },
+    createRebuiltWayfarer: () => {
+      try {
+        const next = structuredClone(
+          rebuiltWayfarer.layout,
+        ) as unknown as LayoutDocument;
+        next.id = uuid();
+        next.name = "Wayfarer · rebuilt";
+        return adoptPreservingCurrent(next);
+      } catch (e) {
+        setError(String(e));
+        return false;
+      }
+    },
     createFloorplanFromCurrent: (hull?: HullEnvelope) => {
       try {
         if (!latest.current.history)
@@ -617,7 +654,14 @@ export function useLayout() {
         const parsed = JSON.parse(raw);
         if (parsed.schema === "sidereal.layout-recovery.v1") {
           const c = readCheckpoint(raw);
+          const metadata = JSON.parse(raw).constructionSource;
           const newId = uuid();
+          if (metadata)
+            importConstructionSource(
+              JSON.stringify(metadata),
+              c.history.present.id,
+              newId,
+            );
           c.history.present.id = newId;
           c.history.past.forEach((d) => (d.id = newId));
           c.history.future.forEach((d) => (d.id = newId));
@@ -633,6 +677,13 @@ export function useLayout() {
           setError(
             "Imported a separate draft with its original history and source revision.",
           );
+        } else if (parsed.schema === "sidereal.construction.v1") {
+          const source = importConstructionSource(
+            raw,
+            parsed.layout.id,
+            uuid(),
+          );
+          adopt(source.layout);
         } else if (
           (parsed.present ?? parsed).schema === "sidereal.assembly-draft.v1"
         )

@@ -1,0 +1,647 @@
+{
+  "design_id": "shipyard.floor.mapped-deck-kit",
+  "revision": 2,
+  "status": "unsigned draft",
+  "owner_direction": "Add angled floor shapes and long triangles; replace raised shallow detail with normal/bump maps to lower rendering cost.",
+  "shape_count": 12,
+  "units": "metres; Blender XY deck plane, Z up; renderer X/height/-Y",
+  "nominal_grid_m": 2,
+  "placement_snap_m": 0.03125,
+  "thickness_m": 0.1875,
+  "top_plane_m": 0.1875,
+  "visual_geometry": "Closed extruded silhouette, 4 mm two-segment perimeter bevel; no raised panel/fastener/grip runtime geometry.",
+  "maps": {
+    "size_px": 1024,
+    "period_m": 2,
+    "normal": "Blender Cycles selected-to-active tangent-space +Y; includes authored plate bevel/fastener/grip detail and subtle shader bump",
+    "height": "Editable 0\u201316 mm source height, retained separately; not runtime displacement",
+    "orm": "R ambient occlusion, G roughness, B metallic; no directional light baked into base color",
+    "material": "Predominantly nonmetal molded polymer; steel only in small fastener texture regions; no floor emitters or per-tile lights"
+  },
+  "lighting": "Normals need illumination and do not reduce light count automatically. Compare identical lights first, then one key + environment/fill; no frame-rate claim without measurement.",
+  "proxies": "Any occupancy/collision representation is independent; angled previews require polygon-derived occupancy, not filled bounding boxes.",
+  "components": [
+    {
+      "slug": "square-2m",
+      "label": "Square / 2 \u00d7 2 m",
+      "id": "part-a3f5c1c3caa171a94d6c",
+      "node_prefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "area_m2": 4.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 108,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-a3f5c1c3caa171a94d6c--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "half-2x1",
+      "label": "Half / 2 \u00d7 1 m",
+      "id": "part-926a2afada18f96d51a3",
+      "node_prefix": "GEO-part-926a2afada18f96d51a3--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "area_m2": 2.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          1.0,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 108,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-926a2afada18f96d51a3--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "quarter-1m",
+      "label": "Quarter / 1 \u00d7 1 m",
+      "id": "part-0b833a4f3016609e9b96",
+      "node_prefix": "GEO-part-0b833a4f3016609e9b96--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          1,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "area_m2": 1.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.0,
+          1.0,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 108,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-0b833a4f3016609e9b96--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "strip-4x1",
+      "label": "Long strip / 4 \u00d7 1 m",
+      "id": "part-baa2e4a6cbe886a5c292",
+      "node_prefix": "GEO-part-baa2e4a6cbe886a5c292--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "area_m2": 4.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          4.0,
+          1.0,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 108,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-baa2e4a6cbe886a5c292--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "triangle-45",
+      "label": "Triangle / 2 \u00d7 2 m / 45\u00b0",
+      "id": "part-771cc318e835d7a08abd",
+      "node_prefix": "GEO-part-771cc318e835d7a08abd--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "area_m2": 2.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.998000144958496,
+          1.998000144958496,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 80,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-771cc318e835d7a08abd--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "triangle-long-left",
+      "label": "Long triangle left / 4 \u00d7 2 m",
+      "id": "part-79328356071c674a2c8b",
+      "node_prefix": "GEO-part-79328356071c674a2c8b--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "area_m2": 4.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          3.9977800846099854,
+          1.998445987701416,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 80,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-79328356071c674a2c8b--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "triangle-long-right",
+      "label": "Long triangle right / 4 \u00d7 2 m",
+      "id": "part-e0dde5e97e9bed05b4b6",
+      "node_prefix": "GEO-part-e0dde5e97e9bed05b4b6--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          2
+        ]
+      ],
+      "area_m2": 4.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0022194599732756615,
+          0.0,
+          0.0
+        ],
+        "max": [
+          4.0,
+          1.9984462261199951,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 80,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-e0dde5e97e9bed05b4b6--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "triangle-slim-left",
+      "label": "Slender triangle left / 4 \u00d7 1 m",
+      "id": "part-cf72797120e52d05662c",
+      "node_prefix": "GEO-part-cf72797120e52d05662c--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "area_m2": 2.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          3.997692108154297,
+          0.9990298748016357,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 80,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-cf72797120e52d05662c--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "triangle-slim-right",
+      "label": "Slender triangle right / 4 \u00d7 1 m",
+      "id": "part-e315cf681838afff216e",
+      "node_prefix": "GEO-part-e315cf681838afff216e--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          4,
+          0
+        ],
+        [
+          4,
+          1
+        ]
+      ],
+      "area_m2": 2.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.002308165654540062,
+          0.0,
+          0.0
+        ],
+        "max": [
+          4.0,
+          0.9990298748016357,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 80,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-e315cf681838afff216e--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "corner-clipped",
+      "label": "Clipped corner / 2 \u00d7 2 m",
+      "id": "part-94474fb38b16d77e6429",
+      "node_prefix": "GEO-part-94474fb38b16d77e6429--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          2,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          0,
+          2
+        ]
+      ],
+      "area_m2": 3.5,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          2.0,
+          2.0,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 136,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-94474fb38b16d77e6429--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "taper-4m",
+      "label": "Taper / 4 m / 2 to 1 m",
+      "id": "part-73f48194371a682af29c",
+      "node_prefix": "GEO-part-73f48194371a682af29c--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          2,
+          0
+        ],
+        [
+          1.5,
+          4
+        ],
+        [
+          0.5,
+          4
+        ]
+      ],
+      "area_m2": 6.0,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0004961389931850135,
+          0.0,
+          0.0
+        ],
+        "max": [
+          1.9995038509368896,
+          4.0,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 108,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-73f48194371a682af29c--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    },
+    {
+      "slug": "triangle-1m",
+      "label": "Small triangle / 1 \u00d7 1 m / 45\u00b0",
+      "id": "part-7902f7617fb23eb8abe3",
+      "node_prefix": "GEO-part-7902f7617fb23eb8abe3--floor",
+      "polygon_xy_m": [
+        [
+          0,
+          0
+        ],
+        [
+          1,
+          0
+        ],
+        [
+          0,
+          1
+        ]
+      ],
+      "area_m2": 0.5,
+      "thickness_m": 0.1875,
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          0.9980000257492065,
+          0.9980000257492065,
+          0.1875
+        ]
+      },
+      "runtime_triangles": 80,
+      "uv_period_m": 2,
+      "texels_per_m": 512.0,
+      "perimeter_bevel_m": 0.004,
+      "lights": [],
+      "source_mesh": "floor-kit.blend / RUNTIME-MASTERS / GEO-part-7902f7617fb23eb8abe3--floor",
+      "normal_bake_source": "BAKE-SOURCE-editable-relief",
+      "supported_rotation": "quarter turns; shape angle is authored",
+      "gameplay": {
+        "status": "proposal; no authority change",
+        "dry_mass_kg": null,
+        "payload_kg_m2": null,
+        "health_hp": null,
+        "basis": "Requires installed structural material/support definition. Visual thickness and texture do not determine strength or mass."
+      }
+    }
+  ],
+  "change": "Triangulate evaluated perimeter mesh before exporting tangents; enable backface culling for closed floor solids.",
+  "map_provenance": {
+    "source_revision": 1,
+    "source_blend_sha256": "3e0ae4ab61b948c61ef42b50c5c7764219e5f62832c64688d5e301b655f66e84",
+    "maps": "Byte-identical real Cycles bakes copied from prior source revision; no resampling or invented generation."
+  }
+}

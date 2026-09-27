@@ -92,5 +92,6 @@ class DeliveryTests(unittest.TestCase):
 
 class DeliveryHttpTests(unittest.TestCase):
     def test_native_http_protocol_and_managed_preview(self):
-        subprocess.run(['node', '--test', 'scripts/glb_delivery.test.mjs'],
-            cwd=Path(__file__).resolve().parents[1], check=True, capture_output=True, text=True)
+        result = subprocess.run(['node', '--test', 'scripts/glb_delivery.test.mjs'],
+            cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

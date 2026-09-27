@@ -1,0 +1,1346 @@
+{
+  "cargo-pods-ore-etc--iron-ore-loose-sample-1": [
+    88,
+    695,
+    124,
+    732
+  ],
+  "cargo-pods-ore-etc--iron-ore-loose-sample-2": [
+    50,
+    727,
+    94,
+    764
+  ],
+  "cargo-pods-ore-etc--iron-ore-loose-sample-3": [
+    26,
+    752,
+    55,
+    782
+  ],
+  "cargo-pods-ore-etc--iron-ore-loose-sample-4": [
+    49,
+    765,
+    95,
+    808
+  ],
+  "cargo-pods-ore-etc--copper-ore-loose-sample-1": [
+    211,
+    683,
+    245,
+    717
+  ],
+  "cargo-pods-ore-etc--copper-ore-loose-sample-2": [
+    138,
+    713,
+    171,
+    745
+  ],
+  "cargo-pods-ore-etc--copper-ore-loose-sample-3": [
+    165,
+    737,
+    198,
+    770
+  ],
+  "cargo-pods-ore-etc--copper-ore-loose-sample-4": [
+    137,
+    757,
+    171,
+    794
+  ],
+  "cargo-pods-ore-etc--gold-nugget-loose-sample-1": [
+    330,
+    692,
+    358,
+    728
+  ],
+  "cargo-pods-ore-etc--gold-nugget-loose-sample-2": [
+    260,
+    712,
+    294,
+    750
+  ],
+  "cargo-pods-ore-etc--gold-nugget-loose-sample-3": [
+    280,
+    750,
+    302,
+    770
+  ],
+  "cargo-pods-ore-etc--gold-nugget-loose-sample-4": [
+    260,
+    764,
+    284,
+    793
+  ],
+  "cargo-pods-ore-etc--rare-crystal-loose-sample-1": [
+    454,
+    698,
+    477,
+    725
+  ],
+  "cargo-pods-ore-etc--rare-crystal-loose-sample-2": [
+    375,
+    715,
+    413,
+    752
+  ],
+  "cargo-pods-ore-etc--rare-crystal-loose-sample-3": [
+    374,
+    752,
+    436,
+    813
+  ],
+  "cargo-pods-ore-etc--rare-crystal-loose-sample-4": [
+    438,
+    755,
+    478,
+    805
+  ],
+  "cargo-pods-ore-etc--ice-loose-sample-1": [
+    555,
+    684,
+    592,
+    720
+  ],
+  "cargo-pods-ore-etc--ice-loose-sample-2": [
+    489,
+    712,
+    517,
+    744
+  ],
+  "cargo-pods-ore-etc--ice-loose-sample-3": [
+    510,
+    735,
+    552,
+    775
+  ],
+  "cargo-pods-ore-etc--ice-loose-sample-4": [
+    490,
+    763,
+    518,
+    797
+  ],
+  "cargo-pods-ore-etc--exotic-ore-loose-sample-1": [
+    677,
+    686,
+    711,
+    719
+  ],
+  "cargo-pods-ore-etc--exotic-ore-loose-sample-2": [
+    666,
+    726,
+    709,
+    765
+  ],
+  "cargo-pods-ore-etc--exotic-ore-loose-sample-3": [
+    607,
+    742,
+    662,
+    803
+  ],
+  "cargo-pods-ore-etc--exotic-ore-loose-sample-4": [
+    665,
+    773,
+    710,
+    812
+  ],
+  "cargo-pods-ore-etc--crystal-canister": [
+    1237,
+    616,
+    1310,
+    719
+  ],
+  "cargo-pods-ore-etc--crystal-canister-variant-1": [
+    1202,
+    704,
+    1237,
+    736
+  ],
+  "cargo-pods-ore-etc--crystal-canister-variant-2": [
+    1305,
+    698,
+    1334,
+    739
+  ],
+  "cargo-pods-ore-etc--crystal-canister-variant-3": [
+    1347,
+    696,
+    1377,
+    739
+  ],
+  "cargo-pods-ore-etc--crystal-canister-variant-4": [
+    1389,
+    698,
+    1419,
+    739
+  ],
+  "more-turrents-missiles-guns--weapon-mount-small": [
+    45,
+    852,
+    108,
+    901
+  ],
+  "more-turrents-missiles-guns--weapon-mount-medium": [
+    111,
+    860,
+    145,
+    906
+  ],
+  "more-turrents-missiles-guns--weapon-mount-large": [
+    24,
+    895,
+    81,
+    955
+  ],
+  "more-turrents-missiles-guns--weapon-mount-fixed": [
+    80,
+    895,
+    153,
+    944
+  ],
+  "more-turrents-missiles-guns--weapon-mount-gimbal": [
+    43,
+    932,
+    103,
+    985
+  ],
+  "more-turrents-missiles-guns--weapon-mount-heavy": [
+    104,
+    940,
+    151,
+    981
+  ],
+  "more-turrents-missiles-guns--barrel-emitter-ballistic": [
+    166,
+    861,
+    214,
+    900
+  ],
+  "more-turrents-missiles-guns--barrel-emitter-laser": [
+    166,
+    890,
+    245,
+    937
+  ],
+  "more-turrents-missiles-guns--barrel-emitter-plasma": [
+    243,
+    855,
+    302,
+    900
+  ],
+  "more-turrents-missiles-guns--barrel-emitter-gauss": [
+    169,
+    929,
+    245,
+    979
+  ],
+  "more-turrents-missiles-guns--barrel-emitter-ion": [
+    245,
+    904,
+    301,
+    949
+  ],
+  "more-turrents-missiles-guns--barrel-emitter-beam": [
+    228,
+    946,
+    294,
+    984
+  ],
+  "more-turrents-missiles-guns--missile-tube-single-long": [
+    313,
+    864,
+    368,
+    913
+  ],
+  "more-turrents-missiles-guns--missile-tube-single-box": [
+    367,
+    855,
+    405,
+    900
+  ],
+  "more-turrents-missiles-guns--missile-tube-twin": [
+    315,
+    917,
+    352,
+    966
+  ],
+  "more-turrents-missiles-guns--missile-tube-quad": [
+    352,
+    895,
+    407,
+    949
+  ],
+  "more-turrents-missiles-guns--missile-tube-hex": [
+    407,
+    855,
+    448,
+    905
+  ],
+  "more-turrents-missiles-guns--missile-tube-pod": [
+    407,
+    904,
+    448,
+    976
+  ],
+  "more-turrents-missiles-guns--ammo-energy-ammo-drum": [
+    465,
+    870,
+    499,
+    934
+  ],
+  "more-turrents-missiles-guns--ammo-energy-missile-magazine": [
+    507,
+    852,
+    547,
+    905
+  ],
+  "more-turrents-missiles-guns--ammo-energy-energy-cell": [
+    555,
+    858,
+    587,
+    927
+  ],
+  "more-turrents-missiles-guns--ammo-energy-fuel-pod": [
+    559,
+    930,
+    589,
+    981
+  ],
+  "more-turrents-missiles-guns--ammo-energy-compact-drum": [
+    464,
+    936,
+    494,
+    981
+  ],
+  "more-turrents-missiles-guns--ammo-energy-energy-pack": [
+    505,
+    943,
+    552,
+    983
+  ],
+  "more-turrents-missiles-guns--support-module-cooling-unit": [
+    610,
+    859,
+    647,
+    909
+  ],
+  "more-turrents-missiles-guns--support-module-recoil-block": [
+    653,
+    859,
+    696,
+    912
+  ],
+  "more-turrents-missiles-guns--support-module-targeting-pod": [
+    700,
+    859,
+    738,
+    911
+  ],
+  "more-turrents-missiles-guns--support-module-control-unit": [
+    608,
+    909,
+    666,
+    966
+  ],
+  "more-turrents-missiles-guns--support-module-power-pack": [
+    656,
+    939,
+    688,
+    984
+  ],
+  "more-turrents-missiles-guns--support-module-heavy-cooler": [
+    676,
+    907,
+    739,
+    970
+  ],
+  "more-turrents-missiles-guns--mount-adapter-small-plate": [
+    754,
+    859,
+    806,
+    905
+  ],
+  "more-turrents-missiles-guns--mount-adapter-medium-plate": [
+    810,
+    860,
+    850,
+    898
+  ],
+  "more-turrents-missiles-guns--mount-adapter-extension": [
+    854,
+    863,
+    885,
+    895
+  ],
+  "more-turrents-missiles-guns--mount-adapter-angle-bracket": [
+    754,
+    901,
+    844,
+    946
+  ],
+  "more-turrents-missiles-guns--mount-adapter-heavy-plate": [
+    760,
+    942,
+    821,
+    983
+  ],
+  "more-turrents-missiles-guns--mount-adapter-ring": [
+    827,
+    941,
+    883,
+    983
+  ],
+  "characters-weapons-items--leadership-icon": [
+    19,
+    518,
+    43,
+    544
+  ],
+  "characters-weapons-items--systems-repair-icon": [
+    157,
+    518,
+    181,
+    544
+  ],
+  "characters-weapons-items--treat-injuries-icon": [
+    295,
+    518,
+    319,
+    544
+  ],
+  "characters-weapons-items--ship-control-icon": [
+    438,
+    518,
+    462,
+    544
+  ],
+  "characters-weapons-items--security-icon": [
+    587,
+    518,
+    611,
+    544
+  ],
+  "characters-weapons-items--heavy-firepower-icon": [
+    736,
+    518,
+    760,
+    544
+  ],
+  "characters-weapons-items--salvage-icon": [
+    881,
+    518,
+    905,
+    544
+  ],
+  "characters-weapons-items--scouting-icon": [
+    1029,
+    518,
+    1053,
+    544
+  ],
+  "characters-weapons-items--research-icon": [
+    1173,
+    518,
+    1197,
+    544
+  ],
+  "characters-weapons-items--fabrication-icon": [
+    1313,
+    518,
+    1337,
+    544
+  ],
+  "characters-weapons-items--diplomacy-icon": [
+    19,
+    546,
+    43,
+    572
+  ],
+  "characters-weapons-items--efficiency-icon": [
+    157,
+    546,
+    181,
+    572
+  ],
+  "characters-weapons-items--remove-status-icon": [
+    295,
+    546,
+    319,
+    572
+  ],
+  "characters-weapons-items--evasion-icon": [
+    438,
+    546,
+    462,
+    572
+  ],
+  "characters-weapons-items--crowd-control-icon": [
+    587,
+    546,
+    611,
+    572
+  ],
+  "characters-weapons-items--durability-icon": [
+    736,
+    546,
+    760,
+    572
+  ],
+  "characters-weapons-items--resource-recovery-icon": [
+    881,
+    546,
+    905,
+    572
+  ],
+  "characters-weapons-items--intel-gathering-icon": [
+    1029,
+    546,
+    1053,
+    572
+  ],
+  "characters-weapons-items--data-analysis-icon": [
+    1173,
+    546,
+    1197,
+    572
+  ],
+  "characters-weapons-items--modifications-icon": [
+    1313,
+    546,
+    1337,
+    572
+  ],
+  "characters-weapons-items--crew-morale-icon": [
+    19,
+    574,
+    43,
+    600
+  ],
+  "characters-weapons-items--upgrades-icon": [
+    157,
+    574,
+    181,
+    600
+  ],
+  "characters-weapons-items--keep-crew-alive-icon": [
+    295,
+    574,
+    319,
+    600
+  ],
+  "characters-weapons-items--precision-icon": [
+    438,
+    574,
+    462,
+    600
+  ],
+  "characters-weapons-items--threat-detection-icon": [
+    587,
+    574,
+    611,
+    600
+  ],
+  "characters-weapons-items--frontline-icon": [
+    736,
+    574,
+    760,
+    600
+  ],
+  "characters-weapons-items--field-repairs-icon": [
+    881,
+    574,
+    905,
+    600
+  ],
+  "characters-weapons-items--stealth-icon": [
+    1029,
+    574,
+    1053,
+    600
+  ],
+  "characters-weapons-items--new-technology-icon": [
+    1173,
+    574,
+    1197,
+    600
+  ],
+  "characters-weapons-items--resource-crafting-icon": [
+    1313,
+    574,
+    1337,
+    600
+  ],
+  "ui-elements--large-window-frame": [
+    24,
+    105,
+    184,
+    199
+  ],
+  "ui-elements--medium-window-frame": [
+    189,
+    109,
+    306,
+    196
+  ],
+  "ui-elements--small-window-frame": [
+    315,
+    116,
+    419,
+    194
+  ],
+  "ui-elements--minimal-window-frame": [
+    427,
+    120,
+    515,
+    194
+  ],
+  "ui-elements--disabled-toggle": [
+    508,
+    480,
+    602,
+    508
+  ],
+  "ui-elements--gem-counter": [
+    1173,
+    458,
+    1246,
+    499
+  ],
+  "ui-elements--document-counter": [
+    1252,
+    458,
+    1299,
+    499
+  ],
+  "ui-elements--credit-counter": [
+    1308,
+    458,
+    1424,
+    499
+  ],
+  "ui-elements--cube-counter": [
+    1173,
+    503,
+    1238,
+    539
+  ],
+  "ui-elements--shield-notification-badge": [
+    1244,
+    503,
+    1321,
+    539
+  ],
+  "ui-elements--inventory-counter": [
+    1326,
+    503,
+    1400,
+    539
+  ],
+  "ui-elements--loading-arc": [
+    680,
+    739,
+    737,
+    815
+  ],
+  "ui-elements--percent-spinner": [
+    748,
+    739,
+    821,
+    815
+  ],
+  "ui-elements--dot-spinner": [
+    831,
+    739,
+    881,
+    806
+  ],
+  "ui-elements--general-progress-bar": [
+    939,
+    415,
+    1143,
+    443
+  ],
+  "ui-elements--health-progress-bar": [
+    939,
+    446,
+    1143,
+    472
+  ],
+  "ui-elements--shield-progress-bar": [
+    939,
+    474,
+    1143,
+    500
+  ],
+  "ui-elements--energy-progress-bar": [
+    939,
+    502,
+    1143,
+    526
+  ],
+  "ui-elements--experience-progress-bar": [
+    939,
+    527,
+    1143,
+    544
+  ],
+  "ui-elements--new-chip": [
+    355,
+    589,
+    396,
+    615
+  ],
+  "ui-elements--popular-chip": [
+    398,
+    589,
+    458,
+    615
+  ],
+  "ui-elements--rare-chip": [
+    460,
+    589,
+    500,
+    615
+  ],
+  "ui-elements--epic-chip": [
+    501,
+    589,
+    536,
+    615
+  ],
+  "ui-elements--legendary-chip": [
+    538,
+    589,
+    600,
+    615
+  ],
+  "ui-elements--online-status-chip": [
+    355,
+    653,
+    412,
+    682
+  ],
+  "ui-elements--offline-status-chip": [
+    414,
+    653,
+    473,
+    682
+  ],
+  "ui-elements--busy-status-chip": [
+    474,
+    653,
+    528,
+    682
+  ],
+  "ui-elements--mission-status-chip": [
+    530,
+    653,
+    600,
+    682
+  ],
+  "ui-elements--previous-page": [
+    913,
+    734,
+    950,
+    770
+  ],
+  "ui-elements--page-one-selected": [
+    962,
+    734,
+    991,
+    770
+  ],
+  "ui-elements--page-two": [
+    992,
+    734,
+    1017,
+    770
+  ],
+  "ui-elements--page-three": [
+    1018,
+    734,
+    1043,
+    770
+  ],
+  "ui-elements--page-four": [
+    1044,
+    734,
+    1068,
+    770
+  ],
+  "ui-elements--page-five": [
+    1069,
+    734,
+    1096,
+    770
+  ],
+  "ui-elements--next-page": [
+    1104,
+    734,
+    1139,
+    770
+  ],
+  "ui-elements--ship-modules-shortcut": [
+    1070,
+    1018,
+    1140,
+    1061
+  ],
+  "ui-elements--crew-shortcut": [
+    1141,
+    1018,
+    1211,
+    1061
+  ],
+  "ui-elements--cargo-shortcut": [
+    1212,
+    1018,
+    1282,
+    1061
+  ],
+  "ui-elements--map-shortcut": [
+    1283,
+    1018,
+    1353,
+    1061
+  ],
+  "ui-elements--jump-shortcut": [
+    1354,
+    1018,
+    1424,
+    1061
+  ],
+  "ui-elements-3--map-tab": [
+    520,
+    20,
+    580,
+    67
+  ],
+  "ui-elements-3--ship-tab": [
+    580,
+    20,
+    648,
+    67
+  ],
+  "ui-elements-3--inventory-tab": [
+    648,
+    20,
+    764,
+    67
+  ],
+  "ui-elements-3--crafting-tab": [
+    768,
+    20,
+    858,
+    67
+  ],
+  "ui-elements-3--skills-tab": [
+    860,
+    20,
+    939,
+    67
+  ],
+  "ui-elements-3--missions-tab": [
+    940,
+    20,
+    1036,
+    67
+  ],
+  "ui-elements-3--database-tab": [
+    1037,
+    20,
+    1147,
+    67
+  ],
+  "ui-elements-3--all-items-category": [
+    76,
+    149,
+    181,
+    195
+  ],
+  "ui-elements-3--weapons-category": [
+    187,
+    149,
+    286,
+    195
+  ],
+  "ui-elements-3--modules-category": [
+    290,
+    149,
+    388,
+    195
+  ],
+  "ui-elements-3--resources-category": [
+    391,
+    149,
+    494,
+    195
+  ],
+  "ui-elements-3--consumables-category": [
+    498,
+    149,
+    622,
+    195
+  ],
+  "ui-elements-3--components-category": [
+    627,
+    149,
+    752,
+    195
+  ],
+  "ui-elements-3--quest-category": [
+    757,
+    149,
+    847,
+    195
+  ],
+  "ui-elements-3--medkit": [
+    33,
+    255,
+    106,
+    338
+  ],
+  "ui-elements-3--purple-crystal": [
+    106,
+    255,
+    177,
+    338
+  ],
+  "ui-elements-3--iron-ore": [
+    177,
+    255,
+    248,
+    338
+  ],
+  "ui-elements-3--gold-crate": [
+    248,
+    255,
+    319,
+    338
+  ],
+  "ui-elements-3--pulse-rifle": [
+    319,
+    255,
+    392,
+    338
+  ],
+  "ui-elements-3--blue-canister": [
+    392,
+    255,
+    452,
+    338
+  ],
+  "ui-elements-3--circuit-board": [
+    452,
+    255,
+    512,
+    338
+  ],
+  "ui-elements-3--pale-container": [
+    512,
+    255,
+    578,
+    338
+  ],
+  "ui-elements-3--power-coupling": [
+    33,
+    343,
+    106,
+    426
+  ],
+  "ui-elements-3--blue-crystal": [
+    106,
+    343,
+    177,
+    426
+  ],
+  "ui-elements-3--red-salvage-crate": [
+    177,
+    343,
+    248,
+    426
+  ],
+  "ui-elements-3--pistol": [
+    248,
+    343,
+    319,
+    426
+  ],
+  "ui-elements-3--long-pistol": [
+    319,
+    343,
+    392,
+    426
+  ],
+  "ui-elements-3--power-node": [
+    392,
+    343,
+    452,
+    426
+  ],
+  "ui-elements-3--gray-container": [
+    452,
+    343,
+    512,
+    426
+  ],
+  "ui-elements-3--orange-battery": [
+    512,
+    343,
+    578,
+    426
+  ],
+  "ui-elements-3--cargo-module": [
+    33,
+    431,
+    102,
+    514
+  ],
+  "ui-elements-3--blue-cell": [
+    102,
+    431,
+    170,
+    514
+  ],
+  "ui-elements-3--reactor-core": [
+    170,
+    431,
+    238,
+    514
+  ],
+  "ui-elements-3--small-tech-crate": [
+    238,
+    431,
+    307,
+    514
+  ],
+  "ui-elements-3--fuel-can": [
+    307,
+    431,
+    376,
+    514
+  ],
+  "ui-elements-3--metal-plate": [
+    376,
+    431,
+    445,
+    514
+  ],
+  "ui-elements-3--cable-coil": [
+    445,
+    431,
+    512,
+    514
+  ],
+  "ui-elements-3--purple-crystal-stack": [
+    512,
+    431,
+    578,
+    514
+  ],
+  "ui-elements-3--dark-power-cube": [
+    33,
+    519,
+    102,
+    602
+  ],
+  "ui-elements-3--microprocessor": [
+    102,
+    519,
+    170,
+    602
+  ],
+  "ui-elements-3--small-hardpoint": [
+    170,
+    519,
+    238,
+    602
+  ],
+  "ui-elements-3--green-crate": [
+    238,
+    519,
+    307,
+    602
+  ],
+  "ui-elements-3--engine-cartridge": [
+    307,
+    519,
+    376,
+    602
+  ],
+  "ui-elements-3--red-crystals": [
+    376,
+    519,
+    445,
+    602
+  ],
+  "ui-elements-3--data-crate": [
+    445,
+    519,
+    512,
+    602
+  ],
+  "ui-elements-3--metal-plates": [
+    512,
+    519,
+    578,
+    602
+  ],
+  "ui-elements-3--wallet-footer": [
+    38,
+    723,
+    253,
+    777
+  ],
+  "ui-elements-3--cargo-capacity-footer": [
+    265,
+    723,
+    513,
+    777
+  ],
+  "ui-elements-3--inventory-mass-footer": [
+    529,
+    723,
+    892,
+    777
+  ],
+  "ui-elements-5--medkit-stack-icon": [
+    866,
+    732,
+    926,
+    797
+  ],
+  "ui-elements-5--blue-cell-icon": [
+    926,
+    732,
+    987,
+    797
+  ],
+  "ui-elements-5--orange-cell-icon": [
+    987,
+    732,
+    1046,
+    797
+  ],
+  "ui-elements-5--green-orb-icon": [
+    1046,
+    732,
+    1107,
+    797
+  ],
+  "ui-elements-5--power-capsule-icon": [
+    1107,
+    732,
+    1167,
+    797
+  ],
+  "ui-elements-5--purple-orb-icon": [
+    1167,
+    732,
+    1226,
+    797
+  ],
+  "ui-elements-5--triangular-relic-icon": [
+    1226,
+    732,
+    1286,
+    797
+  ],
+  "ui-elements-5--datapad-icon": [
+    1286,
+    732,
+    1346,
+    797
+  ],
+  "ui-elements-5--blue-case-icon": [
+    1346,
+    732,
+    1407,
+    797
+  ],
+  "ui-elements-5--gold-crate-stack-icon": [
+    1407,
+    732,
+    1470,
+    797
+  ],
+  "ui-elements-5--empty-inventory-one": [
+    1470,
+    732,
+    1531,
+    797
+  ],
+  "ui-elements-5--empty-inventory-two": [
+    1531,
+    732,
+    1592,
+    797
+  ],
+  "ui-elements-5--dash-action": [
+    465,
+    852,
+    535,
+    921
+  ],
+  "ui-elements-5--missile-action": [
+    535,
+    852,
+    605,
+    921
+  ],
+  "ui-elements-5--shield-action": [
+    605,
+    852,
+    675,
+    921
+  ],
+  "ui-elements-5--drone-action": [
+    675,
+    852,
+    745,
+    921
+  ],
+  "ui-elements-5--heal-action": [
+    745,
+    852,
+    815,
+    921
+  ],
+  "ui-elements-5--warp-action": [
+    815,
+    852,
+    891,
+    921
+  ],
+  "ui-elements-5--empty-action-one": [
+    891,
+    852,
+    962,
+    921
+  ],
+  "ui-elements-5--empty-action-two": [
+    962,
+    852,
+    1034,
+    921
+  ],
+  "ui-elements-5--map-tab": [
+    429,
+    12,
+    526,
+    60
+  ],
+  "ui-elements-5--journal-tab": [
+    526,
+    12,
+    636,
+    60
+  ],
+  "ui-elements-5--character-tab": [
+    636,
+    12,
+    768,
+    60
+  ],
+  "ui-elements-5--inventory-tab": [
+    768,
+    12,
+    881,
+    60
+  ],
+  "ui-elements-5--ship-tab": [
+    881,
+    12,
+    946,
+    60
+  ],
+  "ui-elements-5--crafting-tab": [
+    946,
+    12,
+    1044,
+    60
+  ],
+  "ui-elements-5--missions-tab": [
+    1044,
+    12,
+    1143,
+    60
+  ],
+  "ui-elements-5--database-tab": [
+    1143,
+    12,
+    1248,
+    60
+  ],
+  "ui-elements-5--purple-beam-weapon": [
+    865,
+    660,
+    935,
+    729
+  ],
+  "ui-elements-5--purple-rifle": [
+    935,
+    660,
+    1003,
+    729
+  ],
+  "ui-elements-5--gold-rail-rifle": [
+    1003,
+    660,
+    1073,
+    729
+  ],
+  "ui-elements-5--green-gun": [
+    1073,
+    660,
+    1140,
+    729
+  ],
+  "ui-elements-5--helmet-icon": [
+    1140,
+    660,
+    1207,
+    729
+  ],
+  "ui-elements-5--armor-icon": [
+    1207,
+    660,
+    1275,
+    729
+  ],
+  "ui-elements-5--backpack-icon": [
+    1275,
+    660,
+    1341,
+    729
+  ],
+  "ui-elements-5--orange-crate-icon": [
+    1341,
+    660,
+    1407,
+    729
+  ],
+  "ui-elements-5--broken-frame-icon": [
+    1407,
+    660,
+    1473,
+    729
+  ],
+  "ui-elements-5--cross-brace-icon": [
+    1473,
+    660,
+    1537,
+    729
+  ],
+  "ui-elements-5--crystal-stack-icon": [
+    1537,
+    660,
+    1596,
+    729
+  ],
+  "ui-elements-5--red-canister-icon": [
+    1596,
+    660,
+    1651,
+    729
+  ]
+}

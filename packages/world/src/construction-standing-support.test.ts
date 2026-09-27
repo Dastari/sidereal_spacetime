@@ -1,12 +1,12 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
-import { planConstructionInstance } from "../../sim/src/construction-instance";
-import { qualifiedWayfarerWalkingBindings } from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
+import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
 import { createConstructionStandingSupport } from "./construction-standing-support";
 
 function fixture() {

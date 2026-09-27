@@ -1,3 +1,4 @@
+import { markShipFlightDirty } from "./construction-flight-dirty";
 import {
   SenderError,
   type InferSchema,
@@ -32,6 +33,7 @@ export function createConstructionStairWorldHooks(
   ctx: StairWorldContext,
 ): StairAuthorityHooks {
   return {
+    physicalChanged: (id) => markShipFlightDirty(ctx, id),
     mayConsumeMovement(owner, characterId) {
       return (
         auth.canConsume(ctx, owner) && consumeInputControl(ctx, characterId)

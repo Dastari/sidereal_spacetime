@@ -1,3 +1,7 @@
+import { toCenterOfMassMotion } from "../packages/sim/src/flight-frame";
+import { WAYFARER_FLIGHT_SPEED } from "../packages/content/src/physical-definitions";
+import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
+import { systemMapDenialSmoke } from "./system-map-smoke";
 import {
   LEGACY_SYSTEM_SEED,
   solarBodyForLegacyKey,
@@ -64,6 +68,7 @@ async function client(token?: string) {
           tables.ownStations,
           tables.ownAuthoredFlights,
           tables.ownAuthoredFlightFittings,
+          tables.ownAuthoredFlightPhysics,
           tables.ownGameShipAccess,
           tables.ownConstructionLocation,
           tables.ownEditReceipts,
@@ -241,6 +246,14 @@ if (restore) {
     );
     const ship = [...a.db.ownShips.iter()][0];
     const other = [...b.db.ownShips.iter()][0];
+    for (const row of [ship, other])
+      for (const column of ["massKg", "thrustN", "turnAcceleration"])
+        assert.equal(
+          Object.hasOwn(row, column),
+          false,
+          "obsolete flight rating leaked: " + column,
+        );
+    summary.compiled_only_ship_projection = true;
     assert.notEqual(ship.id, other.id);
     assert.deepEqual(
       [ship.x, ship.y, other.x, other.y],
@@ -305,12 +318,16 @@ if (restore) {
     const celestial = sharedBodies(a).filter((r) => r.kind === "planet");
     assert.equal(
       celestial.length,
-      11,
-      "all ten planet families plus a mixed world are admitted for observation",
+      SHARED_SYSTEM_SEED.bodies.filter((b) => b.kind === "planet").length,
+      "the current authored planet and moon chart is admitted for observation",
     );
     assert(
-      celestial.some((r) => r.appearance === "temperate-volcanic"),
-      "mixed terrain/effect preset is server-authored",
+      celestial.every((r) =>
+        SHARED_SYSTEM_SEED.bodies.some(
+          (b) => b.id === r.id && b.appearance === r.appearance,
+        ),
+      ),
+      "every celestial appearance matches its server-authored pin",
     );
     assert(
       celestial.filter((r) => Math.hypot(r.x, r.y) > 1000).length >= 8,
@@ -389,9 +406,22 @@ if (restore) {
       };
       for (let i = 0; i < 6; i++) await commandFlight(1, 1);
       const moving = [...flight.db.ownShips.iter()][0];
+      const physics = [...flight.db.ownAuthoredFlightPhysics.iter()].find(
+        (p) => p.shipId === moving.id,
+      )!;
+      assert.equal(
+        physics.status,
+        "ready",
+        "live physical compilation is ready",
+      );
+      const envelope = JSON.parse(physics.envelopeJson);
+      const turnLimit =
+        Math.min(envelope.left, envelope.right) / WAYFARER_FLIGHT_SPEED.forward;
       assert(
-        Math.hypot(moving.vx, moving.vy) > 0.5 && moving.omega > 0.1,
-        "available engines accelerate and turn",
+        Math.hypot(moving.vx, moving.vy) > 0.5 &&
+          moving.omega > turnLimit * 0.5 &&
+          moving.omega <= turnLimit + 1e-6,
+        "available engines accelerate and turn within the derived envelope",
       );
       for (let i = 0; i < 45; i++) await commandFlight(0, 0);
       assert(
@@ -423,12 +453,16 @@ if (restore) {
       const expired = [...flight.db.ownShips.iter()][0];
       await new Promise((r) => setTimeout(r, 300));
       const coast = [...flight.db.ownShips.iter()][0];
-      assert.equal(
-        coast.vx,
-        expired.vx,
-        "expired control cannot continue assisted thrust",
+      const expiredCOM = toCenterOfMassMotion(expired, physics);
+      const coastCOM = toCenterOfMassMotion(coast, physics);
+      assert(
+        Math.abs(coastCOM.vx - expiredCOM.vx) < 1e-10,
+        "expired control preserves COM velocity X",
       );
-      assert.equal(coast.vy, expired.vy, "expired control coasts");
+      assert(
+        Math.abs(coastCOM.vy - expiredCOM.vy) < 1e-10,
+        "expired control preserves COM velocity Y",
+      );
       assert.equal(
         coast.omega,
         expired.omega,
@@ -665,7 +699,19 @@ if (restore) {
       ownActor().localY < 8.325,
       "central native doorway remains walkable",
     );
-    await walkNative(a, 2, 7.5);
+    const rebuilt =
+      [...a.db.ownGameShipAccess.iter()][0]?.templateSha256 ===
+      CURRENT_WAYFARER_STARTER.sha256;
+    if (rebuilt) {
+      await walkFor(1, 0, 1100);
+      assert(
+        ownActor().localX > 1.65 && ownActor().localX < 1.75,
+        "new corridor wall blocks crew at its inward face",
+      );
+      await walkNative(a, 0, 7.5);
+      await walkNative(a, 0, 7);
+      await walkNative(a, 2.6, 7);
+    } else await walkNative(a, 2, 7.5);
     await walkFor(0, -1, 1500);
     summary.authoritative_native_bow_collision = true;
     const atWall = [...a.db.ownCharacters.iter()][0];
@@ -674,8 +720,10 @@ if (restore) {
       "crew reached the room partition",
     );
     assert(
-      atWall.localY >= 5.65 && atWall.localY < 5.9,
-      "authority stops crew at the visible bulkhead",
+      rebuilt
+        ? Math.abs(atWall.localY - (5.25 + 0.3)) < 0.01
+        : atWall.localY >= 5.65 && atWall.localY < 5.9,
+      `authority stops crew at the visible bulkhead: ${atWall.localX},${atWall.localY}`,
     );
     summary.authoritative_room_collision = true;
     const inventoryClient = await client();
@@ -760,6 +808,7 @@ if (restore) {
       combatReconnect.connection.disconnect();
     }
     summary.combat_authority_energy_aim_cooldown_retry_persistence = true;
+    summary.system_map_denial = await systemMapDenialSmoke(a);
     summary.construction_authority_denials = await constructionDenialSmoke(
       a,
       b,

@@ -21,8 +21,5 @@ export default __t.row({
   vy: __t.f64(),
   heading: __t.f64(),
   omega: __t.f64(),
-  massKg: __t.f64().name("mass_kg"),
-  thrustN: __t.f64().name("thrust_n"),
-  turnAcceleration: __t.f64().name("turn_acceleration"),
   tick: __t.u64(),
 });

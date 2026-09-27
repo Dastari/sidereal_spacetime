@@ -1,0 +1,938 @@
+{
+  "schema": "sidereal.construction-cockpit-adaptation-audit.v1",
+  "status": "read-only installed-source audit; no collision/pressure qualification or migration",
+  "sourceHashes": {
+    "assets/runtime/assembly/hull-manifest.json": "2e275052217da4b20a92ab40a9a9f098dc011557f7611b6b0c6f40f71ea22695",
+    "assets/runtime/assembly/floor-manifest.json": "b652b30b5ba1125798b6eaecf36e6281cced1cff8f0d7ca6fd6a95d05f720302",
+    "assets/runtime/assembly/wayfarer.json": "1f723510ac156089903fbd0d711a2f6adff1da35433e2ac02afde94fa4a00deb"
+  },
+  "hullRevision": 6,
+  "finishCandidate": {
+    "study": "native-r006-polymer-04",
+    "base_revision": 6,
+    "mapping_sha256": "f9a2bee34286f350c960c1f2e9f95a3840e8fb3553478ba18813ed7809248576",
+    "authorization": "Owner requested continued geometry/plastic integration; local candidate only, not exact final art approval"
+  },
+  "roofPublication": {
+    "design_id": "shipyard.roof.frontier",
+    "revision": 4,
+    "owner_quote": "That looks good, make this the \"live\" roof of the current in game ship please.",
+    "kit_sha256": "8f2af39abadfff8a944e59840ccfa8190959778b1b914adfc0293005363c546f",
+    "editable_source": "assets/source/published-roof/r004/roof-kit.blend",
+    "source_sha256": "d9230a4e0359b7b551c4ea45604b4850c04a515fec1b985fc0132050c0ee31d2",
+    "placed_parts": 73,
+    "canonical_components": 26,
+    "triangles": 34200,
+    "decals": 3,
+    "preserved_non_roof_parts": 189,
+    "archive": "assets/source/archive/pre-roof-r004-2026-09-09"
+  },
+  "sideArmorPublication": {
+    "design_id": "shipyard.hull.side-armor",
+    "revision": 3,
+    "owner_quote": "Great make them live please.",
+    "kit_sha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
+    "editable_source": "assets/source/published-side-hull/r003/side-hull-kit.blend",
+    "source_sha256": "70c57b06a2c170c28840e0566f077d3561e0b40c4f5e978d36940273ceec1abd",
+    "placed_parts": 18,
+    "canonical_components": 7,
+    "triangles": 33648,
+    "decals": 2,
+    "preserved_non_side-hull_parts": 244,
+    "archive": "assets/source/archive/pre-side-hull-r003-2026-09-09"
+  },
+  "placementOffsetAlreadyApplied": [
+    0,
+    4,
+    0
+  ],
+  "cockpitEntries": [
+    {
+      "assetId": "part-437732483fa4d7acbcbc",
+      "label": "Outer armor outer-diagonal-cheek / r006",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-437732483fa4d7acbcbc/clean.glb",
+        "sha256": "6992c7d5fb25376f3d12d881f66ab002108ed275a63661ca84025968ca3cadfe",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            4.024903774261475,
+            2.075246572494507,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r005-outer-diagonal-cheek-starboard",
+          "assetId": "part-437732483fa4d7acbcbc",
+          "position": [
+            1,
+            11,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "pilot-r005-outer-diagonal-cheek-port",
+          "assetId": "part-437732483fa4d7acbcbc",
+          "position": [
+            -1,
+            11,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": true,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-48cf8b9cf29d0b226ec4",
+      "label": "Pilot canopy-side / r004",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-48cf8b9cf29d0b226ec4/clean.glb",
+        "sha256": "65195aefcb5bf72da62839db8fec6123188af9f5ac17024cbe7d6d2cf8959b79",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.06499999761581421,
+            0.09198706597089767,
+            -0.0700000450015068
+          ],
+          "max": [
+            2.0061984062194824,
+            0.8948594927787781,
+            1.3825000524520874
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-canopy-side-08",
+          "assetId": "part-48cf8b9cf29d0b226ec4",
+          "position": [
+            3,
+            9,
+            1.3125
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-4a1d28344c5ee632b249",
+      "label": "Pilot canopy-nose / r004",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-4a1d28344c5ee632b249/clean.glb",
+        "sha256": "d6859439499041ad474afd3d07b4fa1a67512eb7d90fb99720edfbfe5301a5f4",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.0061983224004507065,
+            0.09198706597089767,
+            -0.07000003755092621
+          ],
+          "max": [
+            2.0061984062194824,
+            0.8948594927787781,
+            1.382500171661377
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-canopy-nose-16",
+          "assetId": "part-4a1d28344c5ee632b249",
+          "position": [
+            1,
+            13,
+            1.3125
+          ],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-4c25a5fd9da0bce537f5",
+      "label": "Pilot hull-straight / r004",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-4c25a5fd9da0bce537f5/clean.glb",
+        "sha256": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.03700000420212746,
+            0
+          ],
+          "max": [
+            2,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-hull-straight-07",
+          "assetId": "part-4c25a5fd9da0bce537f5",
+          "position": [
+            3,
+            9,
+            0.1875
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "pilot-r004-hull-straight-09",
+          "assetId": "part-4c25a5fd9da0bce537f5",
+          "position": [
+            -3,
+            11,
+            0.1875
+          ],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-540c83fc49ee792d9a4a",
+      "label": "Pilot hull-diagonal45 / r004",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-540c83fc49ee792d9a4a/clean.glb",
+        "sha256": "118f1f2406b0c699517be811d77e585f49d5b9c7d650013f873885dbe74329a5",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            0.0176776684820652,
+            0
+          ],
+          "max": [
+            1.982322335243225,
+            2,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-hull-diagonal45-11",
+          "assetId": "part-540c83fc49ee792d9a4a",
+          "position": [
+            3,
+            11,
+            0.1875
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "pilot-r004-hull-diagonal45-13",
+          "assetId": "part-540c83fc49ee792d9a4a",
+          "position": [
+            -1,
+            13,
+            0.1875
+          ],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-624989ddf1192dceee75",
+      "label": "Pilot canopy-side-left / r004",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-624989ddf1192dceee75/clean.glb",
+        "sha256": "9dcf37d5a749a152be66657b100a8d83c59856b4c3b4dc967387bf000723e792",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.0061983224004507065,
+            0.09198712557554245,
+            -0.0700000450015068
+          ],
+          "max": [
+            2.065000057220459,
+            0.8948594331741333,
+            1.3825000524520874
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-canopy-side-left-10",
+          "assetId": "part-624989ddf1192dceee75",
+          "position": [
+            -3,
+            11,
+            1.3125
+          ],
+          "rotation": -1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-63a0c40bbb71cfeba4dd",
+      "label": "Outer armor outer-bow-bumper / r006",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-63a0c40bbb71cfeba4dd/clean.glb",
+        "sha256": "3d0fd05cf021b3b5badf68e2e9f1011b5b621e64355390f61508a18a5e4cf61d",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            4,
+            0.6324999928474426,
+            1.5499999523162842
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r005-outer-bow-bumper-center",
+          "assetId": "part-63a0c40bbb71cfeba4dd",
+          "position": [
+            -2,
+            13,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-70c422bca2d395c35ecb",
+      "label": "Doorway frame (future door mount)",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-70c422bca2d395c35ecb/clean.glb",
+        "sha256": "825a836cb96f74363c83c1d5be4efc1a11df0ef71bbdafff8b2abb222cebdad6",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.0820000022649765,
+            0
+          ],
+          "max": [
+            2,
+            0.375,
+            2.4375
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-airlock-frame-22",
+          "assetId": "part-70c422bca2d395c35ecb",
+          "position": [
+            1,
+            9,
+            0.1875
+          ],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-9f79f3a40a72f9b7ad4a",
+      "label": "Pilot corner-buttress / r004",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-9f79f3a40a72f9b7ad4a/clean.glb",
+        "sha256": "1b787888f92e9a7691337c02b297a8895703544003ddcec8eb655ff1ffe91af3",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            2.115000009536743,
+            2.115000009536743,
+            2.7200000286102295
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-corner-buttress-17",
+          "assetId": "part-9f79f3a40a72f9b7ad4a",
+          "position": [
+            3,
+            9,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "pilot-r004-corner-buttress-18",
+          "assetId": "part-9f79f3a40a72f9b7ad4a",
+          "position": [
+            -3,
+            9,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": true,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-b70713e9836547941e3f",
+      "label": "Pilot canopy-diagonal45 / r004",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-b70713e9836547941e3f/clean.glb",
+        "sha256": "9495f6771dbeafaa24530562acd95a744414674853d7a13e45d2866f59e42526",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            -0.4204133152961731,
+            0.1051405593752861,
+            -0.07000010460615158
+          ],
+          "max": [
+            1.8948595523834229,
+            2.4204132556915283,
+            1.3825000524520874
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-canopy-diagonal45-12",
+          "assetId": "part-b70713e9836547941e3f",
+          "position": [
+            3,
+            11,
+            1.3125
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "pilot-r004-canopy-diagonal45-14",
+          "assetId": "part-b70713e9836547941e3f",
+          "position": [
+            -1,
+            13,
+            1.3125
+          ],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-e7dddd4628bd6be8efb7",
+      "label": "Pilot rear-partition / r004",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-e7dddd4628bd6be8efb7/clean.glb",
+        "sha256": "53d58e142047665409aadeb232a83f0c5a1901da705234f2ffc8bda4f211e5c9",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.00800000037997961,
+            0
+          ],
+          "max": [
+            1.625,
+            0.382999986410141,
+            2.4375
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-rear-partition-23",
+          "assetId": "part-e7dddd4628bd6be8efb7",
+          "position": [
+            -2.625,
+            8.625,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "pilot-r004-rear-partition-24",
+          "assetId": "part-e7dddd4628bd6be8efb7",
+          "position": [
+            1,
+            8.625,
+            0.1875
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-e965a5502d9fe4c25406",
+      "label": "Outer armor outer-shoulder-transition / r006",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-e965a5502d9fe4c25406/clean.glb",
+        "sha256": "e34ba9c660088550058053cf9dff5a93bdc1b198d9262ba9f6f3acc05644a2fa",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 6,
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            0.8140870332717896,
+            2,
+            2.9375
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r005-outer-shoulder-transition-starboard",
+          "assetId": "part-e965a5502d9fe4c25406",
+          "position": [
+            5,
+            9,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": []
+        },
+        {
+          "id": "pilot-r005-outer-shoulder-transition-port",
+          "assetId": "part-e965a5502d9fe4c25406",
+          "position": [
+            -5,
+            9,
+            -0.25
+          ],
+          "rotation": 0,
+          "flipped": true,
+          "removedCells": []
+        }
+      ]
+    },
+    {
+      "assetId": "part-ecd751f76e602db806a3",
+      "label": "Pilot bow-transom / r004",
+      "visual": {
+        "url": "/assets/assembly/hull/finish-r004/part-ecd751f76e602db806a3/clean.glb",
+        "sha256": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d",
+        "designId": "shipyard.hull.pilot-section",
+        "revision": 4,
+        "bounds": {
+          "min": [
+            0,
+            -0.03199999779462814,
+            0
+          ],
+          "max": [
+            2,
+            0.375,
+            1.125
+          ]
+        },
+        "damagePreview": "unsupported"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-bow-transom-15",
+          "assetId": "part-ecd751f76e602db806a3",
+          "position": [
+            1,
+            13,
+            0.1875
+          ],
+          "rotation": 3.141592653589793,
+          "flipped": false,
+          "removedCells": []
+        }
+      ]
+    }
+  ],
+  "cockpitFloorEntries": [
+    {
+      "assetId": "part-a3f5c1c3caa171a94d6c",
+      "label": "Square / 2 \u00d7 2 m / r002 review candidate",
+      "visual": {
+        "url": "/assets/assembly/floor/r002/kit.glb",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "designId": "shipyard.floor.mapped-deck-kit",
+        "revision": 2,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            2.0,
+            2.0,
+            0.1875
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-floor-square-00",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -3,
+            9,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-square-01",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1,
+            9,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-square-02",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            1,
+            9,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-square-03",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1,
+            11,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-square-04",
+          "assetId": "part-a3f5c1c3caa171a94d6c",
+          "position": [
+            -1,
+            7,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-7a1a34a2a908f8ff455b",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        }
+      ]
+    },
+    {
+      "assetId": "part-771cc318e835d7a08abd",
+      "label": "Triangle / 2 \u00d7 2 m / 45\u00b0 / r002 review candidate",
+      "visual": {
+        "url": "/assets/assembly/floor/r002/kit.glb",
+        "sha256": "138b483f6052f01e23883b8d8b48bb72cdbace44727c8e717b1e6351c3593585",
+        "designId": "shipyard.floor.mapped-deck-kit",
+        "revision": 2,
+        "bounds": {
+          "min": [
+            0.0,
+            0.0,
+            0.0
+          ],
+          "max": [
+            1.998000144958496,
+            1.998000144958496,
+            0.1875
+          ]
+        },
+        "damagePreview": "unsupported",
+        "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor"
+      },
+      "placements": [
+        {
+          "id": "pilot-r004-floor-corner45-05",
+          "assetId": "part-771cc318e835d7a08abd",
+          "position": [
+            1,
+            11,
+            0
+          ],
+          "rotation": 0,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-04c2fbf8cdd53d6bf70f",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        },
+        {
+          "id": "pilot-r004-floor-corner45-06",
+          "assetId": "part-771cc318e835d7a08abd",
+          "position": [
+            -1,
+            11,
+            0
+          ],
+          "rotation": 1.5707963267948966,
+          "flipped": false,
+          "removedCells": [],
+          "fittingProxy": {
+            "assetId": "part-04c2fbf8cdd53d6bf70f",
+            "offset": [
+              0.0,
+              0.0,
+              0
+            ],
+            "maxZ": 0.1875
+          }
+        }
+      ]
+    }
+  ],
+  "existingFixturePositions": [
+    {
+      "id": "equipment-control-seat",
+      "assetId": "part-c0b6b036f5b3dd8bd2f3",
+      "position": [
+        0,
+        10.25,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-control-console",
+      "assetId": "part-d9f37a5f7ea6e8d13254",
+      "position": [
+        0,
+        11.25,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-bridge-bank--1.3",
+      "assetId": "part-75910d7a0d27dfc17aaf",
+      "position": [
+        -1.3125,
+        11.25,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-bridge-bank-1.3",
+      "assetId": "part-0f14bf002f4c11854337",
+      "position": [
+        1.25,
+        11.25,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    }
+  ],
+  "legacyCollisionMigration": {
+    "pilot_layout_revision": 3,
+    "scope": "R006 standing crew enclosure, rear partitions/doorway and forward-offset asteroid-contact capsule",
+    "crew_radius_m": 0.3,
+    "canopy_sample_height_m": 2.25,
+    "canopy_inset_m": 0.732,
+    "bridge_center_half_width_m": 1.968,
+    "nose_center_max_y_m": 11.968,
+    "door_clear_width_m": 1.25,
+    "hull_capsule": {
+      "radius": 5.4,
+      "halfLength": 7.125,
+      "longitudinalOffset": 1.125
+    },
+    "state_preservation": "Original station/item/container UUIDs, ship mass/inertia and COM retained; invalid prior crew positions repaired on enterLab",
+    "publication": "Managed non-destructive normal local database update completed; final isolated smoke and actual client boundary review passed",
+    "source_sha256": {
+      "packages/content/src/pilot-layout.ts": "45f6a4961c097ab0b43791a648b33b4a2fdab90337d29a23b834513dc4d995a5",
+      "packages/content/src/interior.ts": "275c2e9dd8b5e75aa9daa4be0a22898e2f3adcd8e4784eef8fe5bf0b8dba1b6d",
+      "packages/content/src/space.ts": "f2b1c049ad22a12ce6f072217f738a1d3358a6b68884e32b19938603e77d8204",
+      "packages/sim/src/collision.ts": "d34ffa5a1cfab225b7c828022c7b6813d1f559c05f17773744506c4b7fbd8322",
+      "packages/world/src/pilot-layout.ts": "8e24a62bdb5520a852e523f3f68184e95424ed9ca073939784cc24e38020dbd7",
+      "packages/sim/src/index.ts": "a6097fe21eb369fc0ee7f22c536db9fe1e0ee1007befe774757d56b828ea9d1b"
+    },
+    "live_validation": {
+      "diagonal_center_sum_m": 12.5405316,
+      "rear_jamb_stop_y_m": 9.300098,
+      "doorway": "Keyboard passage in both directions; original helm remains usable without camera change",
+      "scope": "Actual client diagonal/jamb/doorway/helm; exact straight/nose bounds separately covered by pure/isolated tests",
+      "screenshots": [
+        "output/playwright/native-r006-final-bow-deck.png",
+        "output/playwright/native-r006-final-roof-flight.png",
+        "output/playwright/native-r006-final-doorway.png"
+      ]
+    }
+  },
+  "requiredNominalFootprintMetres": [
+    [
+      -3,
+      9
+    ],
+    [
+      3,
+      9
+    ],
+    [
+      3,
+      11
+    ],
+    [
+      1,
+      13
+    ],
+    [
+      -1,
+      13
+    ],
+    [
+      -3,
+      11
+    ]
+  ],
+  "requiredWalkDatumM": 0.1875,
+  "adaptationGaps": [
+    "Installed native glass and cockpit frame lack accepted construction surface/contact/free-volume contracts. Preserve latest native geometry and add authored interfaces/proxies.",
+    "Original 1.25m rear doorway is not an airlock or functional sealed door; native matching leaf, frame seal and threshold needed.",
+    "Generic r004 boundary family is an optional closed-room kit and cannot replace sloped cockpit canopy geometry.",
+    "r005 final-a004 base inserts qualify r002 floor/r004 wall masks only, not pilot cockpit frames, roof butt seams or door contacts.",
+    "Current frontier roof r004 and side armor r003 must be retained; main authored template must not use historical R006 review snapshot.",
+    "Local structural damage/collision adapters and pressure regions need validated geometry separately from native visuals."
+  ]
+}

@@ -6,6 +6,10 @@ import { packArmorIssue } from "@sidereal/sim/armor-issue";
 import { LAB_STORAGE_FIXTURES } from "../../content/src/storage-fixtures";
 import { CABIN_PARTITIONS } from "../../content/src/interior";
 import { interactionLineOfSight } from "../../sim/src/interactions";
+import { planBackpackEquip } from "@sidereal/sim/backpack-swap";
+import { prepareGroundDrop } from "./inventory-ground";
+import { createGroundAccess } from "./inventory-ground-access";
+import { retargetGroundPlacement } from "@sidereal/sim/ground-placement";
 import {
   SenderError,
   t,
@@ -39,11 +43,12 @@ function snapshot(ctx: ReadContext, characterId: string) {
   return legacyInventorySnapshot(ctx, characterId);
 }
 
-export function access(ctx: ReadContext) {
+export function access(ctx: ReadContext, nowMicros = 0n) {
   const actor = actorFor(ctx);
   if (!actor?.connected) return;
   const data = snapshot(ctx, actor.id);
   const bindings = [...ctx.db.storageBinding.by_character.filter(actor.id)];
+  const groundAccess = createGroundAccess(ctx, actor, nowMicros);
   const carriedContainer = (id: string, path: string[] = []): boolean => {
     if (path.length > 6 || path.includes(id)) return false;
     const container = data.containers.find((c) => c.id === id);
@@ -69,6 +74,8 @@ export function access(ctx: ReadContext) {
       );
     }
     const binding = bindings.find((binding) => binding.containerId === id);
+    if (binding?.placementId.startsWith("ground:"))
+      return !!groundAccess.position(container, binding, 1.8);
     const fixture = LAB_STORAGE_FIXTURES.find(
       (fixture) => fixture.placementId === binding?.placementId,
     );
@@ -102,6 +109,7 @@ export function access(ctx: ReadContext) {
     canContainer,
     carriedContainer,
     bindings,
+    groundAccess,
   };
 }
 export const stateProjection = t.row("InventoryStatus", {
@@ -359,7 +367,7 @@ export function transaction(
   request: unknown,
   apply: (a: NonNullable<ReturnType<typeof access>>) => void,
 ) {
-  const a = access(ctx);
+  const a = access(ctx, ctx.timestamp.microsSinceUnixEpoch);
   if (!a?.pockets) fail("Character inventory unavailable");
   if (!/^[a-zA-Z0-9:_-]{1,80}$/.test(args.operationId))
     fail("Invalid inventory operation ID");
@@ -430,7 +438,7 @@ export function commitItems(
     }
   }
 }
-function equip(
+export function equip(
   ctx: Context,
   a: NonNullable<ReturnType<typeof access>>,
   itemId: string,
@@ -441,6 +449,50 @@ function equip(
   if (!slot) fail("Item cannot be equipped");
   if (item.equipmentSlot === slot) return;
   const previous = a.data.items.find((i) => i.equipmentSlot === slot);
+  if (slot === "back") {
+    const plan = (data: typeof a.data, destination?: string) =>
+      planBackpackEquip(
+        data,
+        INVENTORY_DEFINITIONS,
+        LIQUID_DENSITY_KG_PER_LITRE,
+        a.pockets!.id,
+        CHARACTER_CARRY_LIMIT_KG,
+        item.id,
+        destination,
+      );
+    let swapped: GridItem[];
+    try {
+      swapped = plan(a.data);
+    } catch (error) {
+      if (!previous) throw error;
+      // Exchanging into the incoming source may be impossible (e.g. the new
+      // pack is inside the old pack). Stage a server-positioned drop instead.
+      const drop = prepareGroundDrop(ctx, a, previous.id);
+      const data = {
+        ...a.data,
+        containers: [...a.data.containers, drop.container],
+      };
+      swapped = plan(data, drop.container.id);
+      commitItems(ctx, { ...a, data }, swapped);
+      ctx.db.inventoryContainer.insert(drop.container);
+      ctx.db.storageBinding.insert(drop.binding);
+      return;
+    }
+    commitItems(ctx, a, swapped);
+    const binding =
+      previous &&
+      a.bindings.find(
+        (b) =>
+          b.containerId === item.containerId &&
+          b.placementId.startsWith("ground:"),
+      );
+    if (binding)
+      ctx.db.storageBinding.id.update({
+        ...binding,
+        placementId: retargetGroundPlacement(binding.placementId, previous.id),
+      });
+    return;
+  }
   let items = a.data.items.map((i) =>
     i.id === itemId
       ? {
