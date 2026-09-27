@@ -580,7 +580,16 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
           place(kitId.canopy("straight.w1", "deck", true), ex, ey, 0, rot, "deck");
         }
       }
-      if (isDeck) for (let u = 0; u < L; u++) place(kitId.shellStraight(), p[0] + d[0] * (u + 1), p[1] + d[1] * (u + 1), 0, rot, "deck");
+      if (isDeck) {
+        // The shell band leaves exterior door spans open (the hatch sits recessed in that gap).
+        const doorSpans = exteriorDoors.map((dr) => [dr.a, dr.b] as [Pt, Pt]);
+        for (let u = 0; u < L; u++) {
+          const a: Pt = [p[0] + d[0] * u, p[1] + d[1] * u];
+          const b: Pt = [p[0] + d[0] * (u + 1), p[1] + d[1] * (u + 1)];
+          if (onSegments(doorSpans, a, b)) continue;
+          place(kitId.shellStraight(), b[0], b[1], 0, rot, "deck");
+        }
+      }
       if (rim) {
         for (let u = 0; u < L; u++) {
           const px = p[0] + d[0] * (u + 0.5) + nrm[0] * 0.3;
