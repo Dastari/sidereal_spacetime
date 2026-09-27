@@ -9,6 +9,7 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
+import { createGlowOccluders } from "./glow-occluders";
 
 /** Game-side handle over the SHIPS-PREFABS dressed ship view. */
 export interface PrefabShipViewHandle {
@@ -65,6 +66,9 @@ export async function loadPrefabShipPresentation(
   // edges, exhaust). The game's instrument glow layer stays untouched; one grading path.
   const glow = new GlowLayer("prefab-ship-glow", scene, { mainTextureFixedSize: 512, blurKernelSize: 40 });
   glow.intensity = GAME_SHIP_GLOW;
+  // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind
+  // housings, walls and hull plates do not bloom through them.
+  const occluders = createGlowOccluders(glow);
   const fill = new HemisphericLight("prefab-ship-fill", new Vector3(0.2, 1, -0.3), scene);
   fill.intensity = 0.85;
   fill.diffuse = new Color3(0.92, 0.94, 1);
@@ -84,9 +88,9 @@ export async function loadPrefabShipPresentation(
         m.environmentIntensity = /-(floor|wall)-/.test(m.name) ? GAME_INTERIOR_ENVIRONMENT : GAME_SHIP_ENVIRONMENT;
       }
     }
-    if (glow)
-      for (const mesh of view.emissiveMeshes())
-        if (!glowing.has(mesh)) glowing.add(mesh), glow.addIncludedOnlyMesh(mesh as Mesh);
+    const emissive = new Set<AbstractMesh>(view.emissiveMeshes());
+    for (const mesh of emissive) if (!glowing.has(mesh)) glowing.add(mesh), glow.addIncludedOnlyMesh(mesh as Mesh);
+    occluders.set(meshes.filter((m) => !emissive.has(m) && m.isEnabled()));
   };
   adapt();
   // Draw-cost evidence: one line per presentation after its first rendered frame.
@@ -108,6 +112,7 @@ export async function loadPrefabShipPresentation(
     },
     metrics: () => view.metrics(),
     dispose() {
+      occluders.dispose();
       glow.dispose();
       fill.dispose();
       view.dispose();
