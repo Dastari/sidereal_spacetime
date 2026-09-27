@@ -1,7 +1,7 @@
 import { SenderError } from "spacetimedb/server";
 import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
-import { CURRENT_WAYFARER_STARTER } from "../../content/src/wayfarer-current-starter";
+import { CURRENT_WAYFARER_STARTER } from "@sidereal/content/wayfarer-current-starter";
 import {
   archiveJson,
   archiveRow,
@@ -77,7 +77,8 @@ registerPrefabShipSpawner({
   prefabId: LEGACY_WAYFARER_PREFAB_ID,
   catalogRevision: "legacy-wayfarer",
   legacy: true,
-  description: "Legacy rebuilt Wayfarer r002 (being removed; isolated regression only)",
+  description:
+    "Legacy rebuilt Wayfarer r002 (being removed; isolated regression only)",
   blueprintSha256: CURRENT_WAYFARER_STARTER.sha256,
   spawn(ctx, actor, request) {
     if (request.pose.kind !== "berth")
@@ -107,7 +108,8 @@ export function parseSpawnPose(json: string): PrefabSpawnPose {
     throw new SenderError("Spawn pose must be JSON");
   }
   const pose = value as Record<string, unknown>;
-  if (pose?.kind === "berth" && Object.keys(pose).length === 1) return { kind: "berth" };
+  if (pose?.kind === "berth" && Object.keys(pose).length === 1)
+    return { kind: "berth" };
   if (
     pose?.kind === "at" &&
     typeof pose.systemId === "string" &&
@@ -144,7 +146,9 @@ export function boardPrefabShip(
   sequence: { next: number },
 ) {
   if (actor.shipId !== "")
-    throw new SenderError("Character already has a ship; wipe or retire it first");
+    throw new SenderError(
+      "Character already has a ship; wipe or retire it first",
+    );
   if ([...ctx.db.ship.by_owner.filter(actor.owner)].length)
     throw new SenderError("Account already owns a ship");
   if (
@@ -153,12 +157,21 @@ export function boardPrefabShip(
     ctx.db.worldAdmission.characterId.find(actor.id) ||
     ctx.db.input.characterId.find(actor.id)
   )
-    throw new SenderError("Character presence rows must be clear before boarding");
+    throw new SenderError(
+      "Character presence rows must be clear before boarding",
+    );
   const mapBefore = archiveJson(mapRowCounts(ctx.db));
   const receipt = ctx.db.personalStarterReceipt.owner.find(actor.owner);
   if (receipt) {
     // Entitlement history for the removed ship; the spawner may not reuse it.
-    archiveRow(ctx.db, operationId, sequence, "personalStarterReceipt", "deleted", receipt);
+    archiveRow(
+      ctx.db,
+      operationId,
+      sequence,
+      "personalStarterReceipt",
+      "deleted",
+      receipt,
+    );
     ctx.db.personalStarterReceipt.owner.delete(actor.owner);
   }
   archiveRow(ctx.db, operationId, sequence, "character", "updated", actor);
@@ -189,7 +202,9 @@ export function boardPrefabShip(
     !ctx.db.worldAdmission.characterId.find(actor.id) ||
     [...ctx.db.character.by_owner.filter(actor.owner)].length !== 1
   )
-    throw new SenderError("Prefab spawn did not board the character with valid ownership");
+    throw new SenderError(
+      "Prefab spawn did not board the character with valid ownership",
+    );
   if (
     request.pose.kind === "at" &&
     (motion.systemId !== request.pose.systemId ||
@@ -202,16 +217,30 @@ export function boardPrefabShip(
     throw new SenderError("Prefab spawn would change map state; aborted");
 
   // Personal containers follow their character onto the new ship.
-  for (const container of [...ctx.db.inventoryContainer.by_character.filter(actor.id)]) {
+  for (const container of [
+    ...ctx.db.inventoryContainer.by_character.filter(actor.id),
+  ]) {
     if (container.shipId !== "") continue;
-    archiveRow(ctx.db, operationId, sequence, "inventoryContainer", "updated", container);
+    archiveRow(
+      ctx.db,
+      operationId,
+      sequence,
+      "inventoryContainer",
+      "updated",
+      container,
+    );
     ctx.db.inventoryContainer.id.update({ ...container, shipId });
   }
   return {
     shipId,
     shipName: ship.name,
     deckId,
-    pose: { systemId: motion.systemId, x: motion.x, y: motion.y, heading: motion.heading },
+    pose: {
+      systemId: motion.systemId,
+      x: motion.x,
+      y: motion.y,
+      heading: motion.heading,
+    },
   };
 }
 
@@ -256,14 +285,28 @@ export function assignPrefabShip(ctx: Context, args: AssignPrefabShipArgs) {
     expectedCharacterShipId: args.expectedCharacterShipId,
     allowLegacy: args.allowLegacy,
   });
-  if (priorOperation(ctx.db, ctx.sender, args.operationId, "assign-prefab", request))
+  if (
+    priorOperation(
+      ctx.db,
+      ctx.sender,
+      args.operationId,
+      "assign-prefab",
+      request,
+    )
+  )
     return;
-  const spawner = requireSpawner(args.prefabId, args.expectedCatalogRevision, args.allowLegacy);
+  const spawner = requireSpawner(
+    args.prefabId,
+    args.expectedCatalogRevision,
+    args.allowLegacy,
+  );
   const pose = parseSpawnPose(args.spawnPoseJson);
   const actor = ctx.db.character.id.find(args.characterId);
   if (!actor) throw new SenderError("Character not found");
   if (actor.shipId !== args.expectedCharacterShipId)
-    throw new SenderError("Character ship changed since the request was prepared");
+    throw new SenderError(
+      "Character ship changed since the request was prepared",
+    );
   const sequence = { next: 0 };
   const result = boardPrefabShip(
     ctx,

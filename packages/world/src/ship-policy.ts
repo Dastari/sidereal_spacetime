@@ -1,19 +1,26 @@
 import { SenderError } from "spacetimedb/server";
 import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
-import { archiveJson, priorOperation, requireShipOperator } from "./ship-operator";
+import {
+  archiveJson,
+  priorOperation,
+  requireShipOperator,
+} from "./ship-operator";
 import { issueWayfarerPersonalKit } from "./wayfarer-personal-kit";
-import { boardPrefabShip, prefabShipSpawner, requireSpawner } from "./ship-assign";
+import {
+  boardPrefabShip,
+  prefabShipSpawner,
+  requireSpawner,
+} from "./ship-assign";
 import { createWayfarerStarterAuthority } from "./wayfarer-starter-authority";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadDb = {
   shipPolicy: {
     id: {
-      find(id: string):
-        | { starterPrefabId: string; revision: bigint }
-        | null
-        | undefined;
+      find(
+        id: string,
+      ): { starterPrefabId: string; revision: bigint } | null | undefined;
     };
   };
 };
@@ -54,10 +61,22 @@ export function setStarterPrefab(
     expectedCatalogRevision: args.expectedCatalogRevision,
     allowLegacy: args.allowLegacy,
   });
-  if (priorOperation(ctx.db, ctx.sender, args.operationId, "starter-policy", request))
+  if (
+    priorOperation(
+      ctx.db,
+      ctx.sender,
+      args.operationId,
+      "starter-policy",
+      request,
+    )
+  )
     return;
   if (args.prefabId)
-    requireSpawner(args.prefabId, args.expectedCatalogRevision, args.allowLegacy);
+    requireSpawner(
+      args.prefabId,
+      args.expectedCatalogRevision,
+      args.allowLegacy,
+    );
   const prior = ctx.db.shipPolicy.id.find(SHIP_POLICY_ID);
   const row = {
     id: SHIP_POLICY_ID,
@@ -90,7 +109,11 @@ export function createShiplessCharacter(ctx: Context, name: string) {
   if ([...ctx.db.character.by_owner.filter(ctx.sender)].length)
     throw new SenderError("Account already has a character");
   let id = ctx.newUuidV4().toString();
-  for (let i = 0; ctx.db.character.id.find(id) || ctx.db.inventoryItem.id.find(id); i++) {
+  for (
+    let i = 0;
+    ctx.db.character.id.find(id) || ctx.db.inventoryItem.id.find(id);
+    i++
+  ) {
     if (i > 8) throw new SenderError("Fresh character UUID required");
     id = ctx.newUuidV4().toString();
   }

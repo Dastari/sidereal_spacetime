@@ -238,10 +238,18 @@ if (restore) {
   execFileSync(
     ".tools/spacetime/spacetime",
     [
-      "--root-dir=.tools/spacetime", "call", "--server", host, "--yes", "--no-config",
-      database, "operator_set_starter_prefab",
+      "--root-dir=.tools/spacetime",
+      "call",
+      "--server",
+      host,
+      "--yes",
+      "--no-config",
+      database,
+      "operator_set_starter_prefab",
       JSON.stringify(`smoke-legacy-starter-${Date.now()}`),
-      JSON.stringify("legacy-wayfarer-r002"), JSON.stringify("legacy-wayfarer"), "true",
+      JSON.stringify("legacy-wayfarer-r002"),
+      JSON.stringify("legacy-wayfarer"),
+      "true",
     ],
     { stdio: "inherit" },
   );

@@ -146,6 +146,7 @@ export function countRows(db: unknown, table: string) {
 
 export function mapRowCounts(db: unknown) {
   const counts: Record<string, number> = {};
-  for (const table of PRESERVED_MAP_TABLES) counts[table] = countRows(db, table);
+  for (const table of PRESERVED_MAP_TABLES)
+    counts[table] = countRows(db, table);
   return counts;
 }

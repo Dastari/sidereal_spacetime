@@ -596,8 +596,10 @@ export default function App({
     actorName: actor?.name ?? "",
     shipName: awaitingShip
       ? "No ship assigned"
-      : (gameShipAccess ? ship?.name : constructionInstance?.name) ??
-      (constructionScene.egress ? "Stairway / safe exit" : (ship?.name ?? "")),
+      : ((gameShipAccess ? ship?.name : constructionInstance?.name) ??
+        (constructionScene.egress
+          ? "Stairway / safe exit"
+          : (ship?.name ?? ""))),
     seated,
     nearStation,
     interior,

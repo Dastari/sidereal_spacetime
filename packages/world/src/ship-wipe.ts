@@ -84,13 +84,15 @@ const ROW_BUDGET = 200_000;
 
 function iterRows(db: Db, table: keyof Db): Row[] {
   const rows: Row[] = [];
-  for (const row of (db[table] as unknown as { iter(): Iterable<Row> }).iter()) {
-    if (rows.length >= ROW_BUDGET) throw new SenderError("Ship wipe row budget exceeded");
+  for (const row of (
+    db[table] as unknown as { iter(): Iterable<Row> }
+  ).iter()) {
+    if (rows.length >= ROW_BUDGET)
+      throw new SenderError("Ship wipe row budget exceeded");
     rows.push(row);
   }
   return rows;
 }
-
 
 /** Personal inventory = everything whose containment root is the character's
  * carried pockets (including equipped items and nested bags/liquids). All other
@@ -142,20 +144,26 @@ export type ShipWipeArgs = {
 export function planShipWipe(ctx: Context) {
   const inventory = classifyInventory(ctx);
   const tables: Record<string, number> = {};
-  for (const table of WIPED_SHIP_TABLES) tables[table] = countRows(ctx.db, table);
+  for (const table of WIPED_SHIP_TABLES)
+    tables[table] = countRows(ctx.db, table);
   const derived = {
     inventoryItem: inventory.shipHeldItems.size,
     inventoryContainer: inventory.shipHeldContainers.size,
-    inventoryItemMembership: [...ctx.db.inventoryItemMembership.iter()]
-      .filter((m) => inventory.shipHeldItems.has(m.itemId)).length,
-    inventoryContainerScope: [...ctx.db.inventoryContainerScope.iter()]
-      .filter((s) => inventory.shipHeldContainers.has(s.containerId)).length,
-    inventoryHotbar: [...ctx.db.inventoryHotbar.iter()]
-      .filter((h) => inventory.shipHeldItems.has(h.itemId)).length,
-    storageBinding: [...ctx.db.storageBinding.iter()]
-      .filter((b) => inventory.shipHeldContainers.has(b.containerId)).length,
-    weaponEnergy: [...ctx.db.weaponEnergy.iter()]
-      .filter((w) => inventory.shipHeldItems.has(w.itemId)).length,
+    inventoryItemMembership: [...ctx.db.inventoryItemMembership.iter()].filter(
+      (m) => inventory.shipHeldItems.has(m.itemId),
+    ).length,
+    inventoryContainerScope: [...ctx.db.inventoryContainerScope.iter()].filter(
+      (s) => inventory.shipHeldContainers.has(s.containerId),
+    ).length,
+    inventoryHotbar: [...ctx.db.inventoryHotbar.iter()].filter((h) =>
+      inventory.shipHeldItems.has(h.itemId),
+    ).length,
+    storageBinding: [...ctx.db.storageBinding.iter()].filter((b) =>
+      inventory.shipHeldContainers.has(b.containerId),
+    ).length,
+    weaponEnergy: [...ctx.db.weaponEnergy.iter()].filter((w) =>
+      inventory.shipHeldItems.has(w.itemId),
+    ).length,
   };
   const characters = [...ctx.db.character.iter()].map((a) => ({
     id: a.id,
@@ -163,10 +171,12 @@ export function planShipWipe(ctx: Context) {
     owner: a.owner.toHexString(),
     shipId: a.shipId,
     connected: a.connected,
-    personalItems: [...ctx.db.inventoryItem.by_character.filter(a.id)]
-      .filter((i) => inventory.personalItems.has(i.id)).length,
-    archivedItems: [...ctx.db.inventoryItem.by_character.filter(a.id)]
-      .filter((i) => inventory.shipHeldItems.has(i.id)).length,
+    personalItems: [...ctx.db.inventoryItem.by_character.filter(a.id)].filter(
+      (i) => inventory.personalItems.has(i.id),
+    ).length,
+    archivedItems: [...ctx.db.inventoryItem.by_character.filter(a.id)].filter(
+      (i) => inventory.shipHeldItems.has(i.id),
+    ).length,
   }));
   const ships = [...ctx.db.ship.iter()].map((s) => ({
     id: s.id,
@@ -214,7 +224,8 @@ export function planShipWipe(ctx: Context) {
           break;
         }
         containerId =
-          ctx.db.inventoryItem.id.find(container.parentItemId)?.containerId ?? "";
+          ctx.db.inventoryItem.id.find(container.parentItemId)?.containerId ??
+          "";
       }
       return {
         itemId: i.id,
@@ -262,9 +273,9 @@ function archiveDelete(
   row: Row,
 ) {
   archiveRow(ctx.db, operationId, sequence, table, "deleted", row);
-  (ctx.db[table as keyof Db] as unknown as { delete(row: Row): boolean }).delete(
-    row,
-  );
+  (
+    ctx.db[table as keyof Db] as unknown as { delete(row: Row): boolean }
+  ).delete(row);
 }
 
 function archiveUpdate(
@@ -290,7 +301,8 @@ export function wipePlayerShips(ctx: Context, args: ShipWipeArgs) {
     expectedInstances: args.expectedInstances,
     expectedCharacters: args.expectedCharacters,
   });
-  if (priorOperation(ctx.db, ctx.sender, args.operationId, kind, request)) return;
+  if (priorOperation(ctx.db, ctx.sender, args.operationId, kind, request))
+    return;
   const { inventory, summary } = planShipWipe(ctx);
   const mismatch =
     summary.counts.ships !== args.expectedShips ||
@@ -307,7 +319,9 @@ export function wipePlayerShips(ctx: Context, args: ShipWipeArgs) {
     });
   if (args.dryRun) {
     record({ expectedCountsMatch: !mismatch });
-    console.log(`ship wipe dry-run ${args.operationId}: ${archiveJson(summary.counts)}`);
+    console.log(
+      `ship wipe dry-run ${args.operationId}: ${archiveJson(summary.counts)}`,
+    );
     return;
   }
   if (mismatch)
@@ -322,27 +336,44 @@ export function wipePlayerShips(ctx: Context, args: ShipWipeArgs) {
   const op = args.operationId;
 
   // 1. Ship-held inventory and its metadata (before-images archived).
-  for (const row of [...ctx.db.inventoryHotbar.iter()].filter((h) => inventory.shipHeldItems.has(h.itemId)))
+  for (const row of [...ctx.db.inventoryHotbar.iter()].filter((h) =>
+    inventory.shipHeldItems.has(h.itemId),
+  ))
     archiveDelete(ctx, op, sequence, "inventoryHotbar", row);
-  for (const row of [...ctx.db.weaponEnergy.iter()].filter((w) => inventory.shipHeldItems.has(w.itemId)))
+  for (const row of [...ctx.db.weaponEnergy.iter()].filter((w) =>
+    inventory.shipHeldItems.has(w.itemId),
+  ))
     archiveDelete(ctx, op, sequence, "weaponEnergy", row);
-  for (const row of [...ctx.db.storageBinding.iter()].filter((b) => inventory.shipHeldContainers.has(b.containerId)))
+  for (const row of [...ctx.db.storageBinding.iter()].filter((b) =>
+    inventory.shipHeldContainers.has(b.containerId),
+  ))
     archiveDelete(ctx, op, sequence, "storageBinding", row);
-  for (const row of [...ctx.db.inventoryItemMembership.iter()].filter((m) => inventory.shipHeldItems.has(m.itemId)))
+  for (const row of [...ctx.db.inventoryItemMembership.iter()].filter((m) =>
+    inventory.shipHeldItems.has(m.itemId),
+  ))
     archiveDelete(ctx, op, sequence, "inventoryItemMembership", row);
-  for (const row of [...ctx.db.inventoryContainerScope.iter()].filter((s) => inventory.shipHeldContainers.has(s.containerId)))
+  for (const row of [...ctx.db.inventoryContainerScope.iter()].filter((s) =>
+    inventory.shipHeldContainers.has(s.containerId),
+  ))
     archiveDelete(ctx, op, sequence, "inventoryContainerScope", row);
-  for (const row of [...ctx.db.inventoryItem.iter()].filter((i) => inventory.shipHeldItems.has(i.id)))
+  for (const row of [...ctx.db.inventoryItem.iter()].filter((i) =>
+    inventory.shipHeldItems.has(i.id),
+  ))
     archiveDelete(ctx, op, sequence, "inventoryItem", row);
-  for (const row of [...ctx.db.inventoryContainer.iter()].filter((c) => inventory.shipHeldContainers.has(c.id)))
+  for (const row of [...ctx.db.inventoryContainer.iter()].filter((c) =>
+    inventory.shipHeldContainers.has(c.id),
+  ))
     archiveDelete(ctx, op, sequence, "inventoryContainer", row);
 
   // 2. Every ship/instance-scoped row.
   for (const table of WIPED_SHIP_TABLES)
-    for (const row of iterRows(ctx.db, table)) archiveDelete(ctx, op, sequence, table, row);
+    for (const row of iterRows(ctx.db, table))
+      archiveDelete(ctx, op, sequence, table, row);
 
   // 3. Personal containers no longer reference a ship that does not exist.
-  for (const container of [...ctx.db.inventoryContainer.iter()].filter((c) => c.shipId !== "")) {
+  for (const container of [...ctx.db.inventoryContainer.iter()].filter(
+    (c) => c.shipId !== "",
+  )) {
     archiveUpdate(ctx, op, sequence, "inventoryContainer", container);
     ctx.db.inventoryContainer.id.update({ ...container, shipId: "" });
   }

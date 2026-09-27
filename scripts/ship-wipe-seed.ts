@@ -13,7 +13,9 @@ import { walkNative } from "./native-starter-smoke";
 const host = process.env.SIDEREAL_SMOKE_URL ?? "";
 const database = process.env.SIDEREAL_SMOKE_DATABASE ?? "";
 const evidenceDirectory = process.env.SIDEREAL_SMOKE_EVIDENCE_DIR ?? ".runtime";
-const accounts = (process.env.SIDEREAL_SEED_ACCOUNTS ?? "Owner Main,Crew Two,Crew Three").split(",");
+const accounts = (
+  process.env.SIDEREAL_SEED_ACCOUNTS ?? "Owner Main,Crew Two,Crew Three"
+).split(",");
 if (!host || !database.endsWith("-smoke"))
   throw Error("Ship wipe seed requires an isolated -smoke database");
 if (new URL(host).port === "3100") throw Error("Refusing the live server port");
@@ -58,7 +60,10 @@ for (const [index, name] of accounts.entries()) {
   await c.reducers.enterLab({ name });
   await wait(() => c.db.ownShips.count() === 1n, `${name} starter ship`);
   await c.reducers.claimStarterKit({});
-  await wait(() => c.db.ownInventoryItems.count() === 7n, `${name} starter kit`);
+  await wait(
+    () => c.db.ownInventoryItems.count() === 7n,
+    `${name} starter kit`,
+  );
   const actor = [...c.db.ownCharacters.iter()][0]!;
   const record: Record<string, unknown> = {
     name,
@@ -72,13 +77,21 @@ for (const [index, name] of accounts.entries()) {
     const find = (d: string) => kit().find((i) => i.definitionId === d)!;
     const state = () => [...c.db.ownInventoryState.iter()][0]!;
     await c.reducers.claimInputControl({});
-    for (const [px, py] of [[0, -1.5], [0, 3], [-2.4, 3], [-3.5, 2.75]] as const)
+    for (const [px, py] of [
+      [0, -1.5],
+      [0, 3],
+      [-2.4, 3],
+      [-3.5, 2.75],
+    ] as const)
       await walkNative(c, px, py);
-    const cargo = () => [...c.db.ownReachableCargoContainers.iter()].filter((x) => x.placedObjectId);
+    const cargo = () =>
+      [...c.db.ownReachableCargoContainers.iter()].filter(
+        (x) => x.placedObjectId,
+      );
     await wait(() => cargo().length === 4, "reachable cargo");
     const revision = (id: string) =>
-      [...c.db.ownCarriedInventoryRevisions.iter()].find((r) => r.id === id)?.revision ??
-      cargo().find((r) => r.id === id)?.revision;
+      [...c.db.ownCarriedInventoryRevisions.iter()].find((r) => r.id === id)
+        ?.revision ?? cargo().find((r) => r.id === id)?.revision;
     const pistol = find("compact-pistol");
     const root = cargo()[0]!;
     await c.reducers.transferScopedCargoItem({
@@ -94,14 +107,20 @@ for (const [index, name] of accounts.entries()) {
       expectedDestinationRevision: revision(root.id)!,
       expectedCharacterRevision: state().revision,
     });
-    await wait(() => !kit().some((i) => i.id === pistol.id), "pistol stored in ship cargo");
+    await wait(
+      () => !kit().some((i) => i.id === pistol.id),
+      "pistol stored in ship cargo",
+    );
     const scanner = find("scanner");
     await c.reducers.dropInventoryItem({
       itemId: scanner.id,
       expectedRevision: state().revision,
       operationId: "ship-wipe-seed-drop-1",
     });
-    await wait(() => [...c.db.ownGroundItems.iter()].some((i) => i.id === scanner.id), "ground scanner");
+    await wait(
+      () => [...c.db.ownGroundItems.iter()].some((i) => i.id === scanner.id),
+      "ground scanner",
+    );
     record.cargoItemId = pistol.id;
     record.groundItemId = scanner.id;
     // Personal = the carried kit minus the stored pistol and the dropped scanner.
@@ -116,10 +135,17 @@ for (const [index, name] of accounts.entries()) {
   c.disconnect();
 }
 const out = join(evidenceDirectory, "ship-wipe-seed.json");
-writeFileSync(out, JSON.stringify({ database, accounts: seeded }, null, 1), { mode: 0o600 });
+writeFileSync(out, JSON.stringify({ database, accounts: seeded }, null, 1), {
+  mode: 0o600,
+});
 console.log(
   JSON.stringify(
-    { seeded: seeded.map(({ token: _t, ...r }) => ({ ...r, kit: (r.kit as string[]).length })) },
+    {
+      seeded: seeded.map(({ token: _t, ...r }) => ({
+        ...r,
+        kit: (r.kit as string[]).length,
+      })),
+    },
     null,
     1,
   ),

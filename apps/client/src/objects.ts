@@ -175,4 +175,3 @@ export function interactionLabel(row: InteractionRow) {
       ? "Turn grow light off"
       : "Turn grow light on";
 }
-

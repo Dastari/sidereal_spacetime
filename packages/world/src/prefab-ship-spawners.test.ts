@@ -21,7 +21,7 @@ import {
   prefabConstructionDocument,
 } from "@sidereal/sim/prefab-construction";
 import { prefabFlightModel } from "@sidereal/sim/prefab-flight";
-import { flightDefinitionCatalogHash } from "../../sim/src/flight-definition";
+import { flightDefinitionCatalogHash } from "@sidereal/sim/flight-definition";
 import { prefabShipSpawner, prefabShipSpawners } from "./ship-assign";
 import { FED_WREN_PIN, REGISTERED_PREFAB_PINS } from "./prefab-ship-spawners";
 import { trustedPrefabTemplate } from "./prefab-ship-authority";

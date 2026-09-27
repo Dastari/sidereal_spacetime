@@ -90,7 +90,9 @@ export function GameLoadingScreen({
         </div>
       </div>
       <footer>
-        <span>{awaitingShip ? "WASD to move" : "WASD to move · TAB to change view"}</span>
+        <span>
+          {awaitingShip ? "WASD to move" : "WASD to move · TAB to change view"}
+        </span>
         <button onClick={onSignOut}>Sign out</button>
       </footer>
     </section>

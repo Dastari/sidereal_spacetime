@@ -509,7 +509,9 @@ async function buildWorld(
   );
   prepareCutawayMeshes(roof);
   const lighting =
-    options.construction || options.constructionEgress || options.vessel === "none"
+    options.construction ||
+    options.constructionEgress ||
+    options.vessel === "none"
       ? createConstructionLighting(scene, imported.meshes)
       : createShipLighting(scene, shipRoot, imported.meshes);
   environment.setPrimaryLight(lighting.primaryLight);
@@ -791,34 +793,35 @@ async function buildWorld(
   let sharedExteriorReady = false;
   const remoteShips =
     options.sharedWorld && options.sharedWorld.stockExterior !== false
-    ? createRemoteShips(scene, options.sharedWorld.store, {
-        assetId: SHARED_STOCK_EXTERIOR_ID,
-        localShipId: options.sharedWorld.localShipId,
-        loadPrototype: async () => {
-          const response = await fetch(
-            "/assets/assembly/wayfarer-exterior-r001.json",
-            { signal: options.signal },
-          );
-          if (!response.ok) throw Error("Shared exterior manifest unavailable");
-          const manifest = (await response.json()) as StockExteriorManifest;
-          const prototype = await loadRemoteShipPrototype(
-            scene,
-            manifest,
-            SHARED_STOCK_EXTERIOR_ID,
-          );
-          sharedExteriorReady = true;
-          return prototype;
-        },
-        onError: (error) => {
-          const message =
-            error instanceof Error
-              ? error.message
-              : "Shared ship exterior unavailable";
-          assetFailure = true;
-          options.onLoadError?.(message);
-        },
-      })
-    : undefined;
+      ? createRemoteShips(scene, options.sharedWorld.store, {
+          assetId: SHARED_STOCK_EXTERIOR_ID,
+          localShipId: options.sharedWorld.localShipId,
+          loadPrototype: async () => {
+            const response = await fetch(
+              "/assets/assembly/wayfarer-exterior-r001.json",
+              { signal: options.signal },
+            );
+            if (!response.ok)
+              throw Error("Shared exterior manifest unavailable");
+            const manifest = (await response.json()) as StockExteriorManifest;
+            const prototype = await loadRemoteShipPrototype(
+              scene,
+              manifest,
+              SHARED_STOCK_EXTERIOR_ID,
+            );
+            sharedExteriorReady = true;
+            return prototype;
+          },
+          onError: (error) => {
+            const message =
+              error instanceof Error
+                ? error.message
+                : "Shared ship exterior unavailable";
+            assetFailure = true;
+            options.onLoadError?.(message);
+          },
+        })
+      : undefined;
   if (remoteShips) {
     options.onLoadStage?.("environment");
     // Import the shared exterior before drawing too: otherwise its sequential
