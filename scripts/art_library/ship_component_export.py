@@ -56,7 +56,7 @@ import ship_component_art as A  # noqa: E402
 A.install(K)
 THEME = "orion"
 Piece, T, SLOTS, SI = K.Piece, K.T, K.SLOTS, K.SI
-EXPORT_REVISION = "r003"
+EXPORT_REVISION = "r004"
 BEVEL = 0.012
 
 
@@ -586,21 +586,6 @@ def vtol(sz):
     return p
 
 
-def hatch_exterior(sz):
-    W = 16
-    p = Piece("x.hatch-exterior.SM", "mount", "top", (W, W, 0))
-    K.frame_top(p, 0, 0, W, W, 0, 3, 2, "secondary")
-    p.disc("z", 8, 8, 6, 0, 4, "primary")
-    p.disc("z", 8, 8, 4, 4, 5, "metal", rin=3)
-    p.b(7, 4, 4, 9, 12, 5, "metal").b(4, 7, 4, 12, 9, 5, "metal")
-    hazard(p, 0, W, 0, 1, 3, 4)
-    p.b(14, 14, 3, 15, 15, 5, "emit_b")
-    p.size = (W, W, 5)
-    return p
-
-
-# =============================================================================== face builders (kit face convention)
-# x in [0, W] along the face, +Y outward from the mount plane, z up; engines centred at z = W/2.
 def resonance(sz):
     n = K.SIZE_CELLS[sz]
     W = 16 * n
@@ -668,64 +653,163 @@ def salvage_arm(sz):
     return p
 
 
-def cargo_door_w(width_m, height_m):
-    W, Hh = int(width_m * 16), int(height_m * 16)
-    p = Piece(f"x.cargo-door.{width_m}m", "mount", "face", (W, 5, Hh))
-    K.frame(p, 0, 0, W, Hh, 0, 4, 4, "secondary")
-    slats = max(3, (Hh - 8) // 8)
-    sh = (Hh - 8) // slats
-    for i in range(slats):
-        z0 = 4 + i * sh
-        p.b(4, 0, z0 + 1, W - 4, 2, z0 + sh, "primary")
-        p.b(5, 2, z0 + sh - 2, W - 5, 3, z0 + sh - 1, "trim")
-    hazard(p, 0, W, 3, 5, 0, 3, step=3)
-    p.b(4, 2, 4, 5, 3, Hh - 4, "metal").b(W - 5, 2, 4, W - 4, 3, Hh - 4, "metal")
-    p.b(1, 3, Hh - 3, 4, 5, Hh - 1, "emit_b").b(W - 4, 3, Hh - 3, W - 1, 5, Hh - 1, "emit_b")
-    p.b(W // 2 - 2, 3, Hh - 3, W // 2 + 2, 5, Hh - 1, "emit_a")
-    return p
+# =============================================================================== edge hatches (r004)
+GRAMMAR_PATH = ROOT / "packages/content/src/construction-grammar.v1.json"
+
+
+def edge_frame():
+    """Edge hatch frame in texels from the construction grammar (same rule as
+    edgeHatchFrameTexels in packages/content/src/ship-components-source.ts): floor top to wall top,
+    clear opening to the deck's upper cassette tier top (the rim is the lintel), tier seams for the
+    jamb grooves, and the side cassette face plane (depth of the kit's cassette panel)."""
+    g = json.loads(GRAMMAR_PATH.read_text())
+    z0, z1 = g["heightClasses"]["deck"]["z"]
+    r = g["tierRule"]
+    two = z1 - z0 >= r["twoTierMinTexels"]
+    tier_top = z1 - (r["twoTierRimTexels"] if two else r["oneTierRimTexels"])
+    floor, top = g["deck"]["floorTopTexels"], g["deck"]["wallTopTexels"]
+    opening_top = min(tier_top, top - 1)
+    seams = [z0 + r["lowerTierTexels"]] if two else []
+    face = K.cas_panel(32, 16).size[1]                       # cassette face plane (texels outward)
+    return {"H": top - floor, "open": opening_top - floor, "seams": [s - floor for s in seams],
+            "band0": z0 - floor, "face": face}
+
+
+def lit_hazard(p, x0, x1, y0, y1, z0, z1, step=2):
+    """Amber/black hazard stripes (emit_b reads as the reference's yellow; trim is theme-dark)."""
+    for i, x in enumerate(range(x0, x1, step)):
+        p.b(x, y0, z0, min(x + step, x1), y1, z1, "emit_b" if i % 2 == 0 else "dark")
+
+
+def edge_surround(p, W, F, jamb, seams, H, lintel_slot="emit_a"):
+    """Jambs flush with the cassette face (y 0..F) with grooves on the tier seams, a base plate
+    under the hull band, and a 1-texel lintel strip over the rim face up to the wall top."""
+    for xa, xb in ((0, jamb), (W - jamb, W)):
+        cuts = [0] + [s for s in seams if 0 < s < H - 1] + [H - 1]
+        for k in range(len(cuts) - 1):
+            a, b = cuts[k] + (1 if k else 0), cuts[k + 1]
+            p.b(xa, 0, a, xb, F, b, "primary")
+            if k:
+                p.b(xa, 0, cuts[k], xb, F - 1, cuts[k] + 1, "secondary")      # seam groove
+        p.b(xa, 0, H - 1, xb, F, H, "secondary")
+    p.b(jamb, F - 1, H - 1, W - jamb, F, H, lintel_slot)                   # lintel strip on the rim face
 
 
 def airlock_ext():
-    W, Hh = 32, 44
-    p = Piece("x.airlock-exterior.MD", "mount", "face", (W, 16, Hh))
-    K.frame(p, 0, 0, W, Hh, 0, 12, 4, "secondary")                          # outer collar (protrudes)
-    p.b(4, 0, 0, W - 4, 2, 4, "dark")
-    K.frame(p, 4, 4, W - 4, Hh - 2, 10, 14, 2, "primary")
-    p.b(6, 11, 4, W - 6, 13, Hh - 4, "metal")                               # outer door
-    p.b(W // 2 - 1, 13, 6, W // 2 + 1, 14, Hh - 6, "dark")
-    hazard(p, 0, W, 12, 14, 0, 3, step=3)
-    p.disc("y", W // 2, Hh - 8, 3, 13, 15, "trim", rin=1)
-    p.b(1, 12, Hh - 4, 3, 16, Hh - 2, "emit_b").b(W - 3, 12, Hh - 4, W - 1, 16, Hh - 2, "emit_a")
+    """Exterior airlock recessed into the hull side band (reference 'AIRLOCK'): flush jambs, glowing
+    cyan chamfered frame, dark recessed double door, amber/black landing lip at deck level."""
+    f = edge_frame()
+    W, H, F, O = 32, f["H"], f["face"], f["open"]
+    p = Piece("x.airlock-exterior.MD", "mount", "face", (W, F + 2, H))
+    jamb = 5
+    edge_surround(p, W, F, jamb, f["seams"], H)
+    x0, x1 = jamb, W - jamb
+    # dark recess: back plate + recessed double door 2 texels behind the face plane
+    p.b(x0, 0, 0, x1, 1, O, "dark")
+    mid = W // 2
+    for a, b in ((x0 + 1, mid), (mid, x1 - 1)):
+        p.b(a, 1, 1, b, F - 2, O - 1, "secondary")
+        p.b(a + 2, F - 2, O - 10, b - 2, F - 1, O - 6, "glass")             # door window
+        p.b(a + 1, F - 2, 12, b - 1, F - 1, 13, "metal")                     # kick rail
+    # glowing cyan frame: jamb inner edges up to the opening top, lintel strip above (edge_surround)
+    p.b(x0, F - 1, 1, x0 + 1, F, H - 1, "emit_a").b(x1 - 1, F - 1, 1, x1, F, H - 1, "emit_a")
+    # landing lip at deck level with hazard stripes
+    lit_hazard(p, 2, W - 2, F, F + 2, 0, 1, step=2)                        # outside the opening plane
+    # status lights and control panel on the jambs
+    p.b(1, F, O - 6, 3, F + 1, O - 4, "emit_b").b(W - 3, F, O - 6, W - 1, F + 1, O - 4, "emit_a")
+    p.b(W - 4, F - 1, 14, W - 1, F, 20, "glass")
+    p.size = (W, F + 2, H)
     return p
 
 
 def airlock_int():
-    W, Hh = 32, 44
-    p = Piece("x.airlock-interior.SM", "mount", "face", (W, 8, Hh))
-    K.frame(p, 0, 0, W, Hh, 0, 8, 3, "secondary")
-    p.b(3, 2, 0, W - 3, 6, Hh - 3, "primary")
-    p.b(W // 2 - 1, 5, 2, W // 2 + 1, 7, Hh - 5, "dark")
-    hazard(p, 3, W - 3, 5, 7, 0, 2, step=3)
-    p.b(W - 3, 7, 18, W - 1, 8, 24, "emit_a")
+    """Interior airlock door on a partition: same frame height as the deck walls, cyan jamb lights."""
+    f = edge_frame()
+    W, H, F, O = 32, f["H"], f["face"], f["open"]
+    p = Piece("x.airlock-interior.SM", "mount", "face", (W, F, H))
+    jamb = 5
+    edge_surround(p, W, F, jamb, [], H, lintel_slot="secondary")
+    mid = W // 2
+    for a, b in ((jamb, mid), (mid, W - jamb)):
+        p.b(a, 0, 0, b, F - 1, O, "secondary")
+        p.b(a + 2, F - 1, O - 10, b - 2, F, O - 6, "glass")
+    p.b(jamb, F - 1, 0, jamb + 1, F, O, "emit_a").b(W - jamb - 1, F - 1, 0, W - jamb, F, O, "emit_a")
+    p.b(jamb + 1, F - 1, O - 1, W - jamb - 1, F, O, "emit_a")
+    p.size = (W, F, H)
+    return p
+
+
+def cargo_door_w(width_m, _height_m=None):
+    """Cargo bay door recessed into the hull side band: flush jambs with seam grooves, recessed
+    roll-up slat door, amber corner lights and a hazard-striped lintel and landing lip."""
+    f = edge_frame()
+    W, H, F, O = int(width_m * 16), f["H"], f["face"], f["open"]
+    p = Piece(f"x.cargo-door.{width_m}m", "mount", "face", (W, F + 2, H))
+    jamb = 2
+    edge_surround(p, W, F, jamb, f["seams"], H, lintel_slot="emit_b")
+    p.b(jamb, 0, 0, W - jamb, 1, O, "dark")
+    z = 1
+    k = 0
+    while z < O - 1:                                                     # slats, 2 texels behind the face
+        h = min(3, O - 1 - z)
+        p.b(jamb, 1, z, W - jamb, F - 2, z + h - 1, "primary" if k % 2 == 0 else "metal")
+        p.b(jamb, 1, z + h - 1, W - jamb, F - 3, z + h, "secondary")
+        z += h
+        k += 1
+    for xa in (jamb, W - jamb - 1):                                     # guide rails
+        p.b(xa, 1, 0, xa + 1, F - 1, O, "trim")
+    p.b(0, F, O - 3, 2, F + 1, O - 1, "emit_b").b(W - 2, F, O - 3, W, F + 1, O - 1, "emit_b")
+    lit_hazard(p, 1, W - 1, F, F + 2, 0, 1, step=3)
+    p.size = (W, F + 2, H)
     return p
 
 
 def docking_port(sz):
+    """Docking port recessed into the hull side band: flush collar plate, recessed octagonal hatch
+    with a glowing cyan seal ring at the face plane, latch blocks and a hazard lip."""
+    f = edge_frame()
     n = {"MD": 2, "LG": 3}[sz]
-    W, Hh = 16 * n, int((2.75 if sz == "MD" else 3.25) * 16)
-    L = int((1.2 if sz == "MD" else 1.6) * 16)
-    p = Piece(f"x.docking-port.{sz}", "mount", "face", (W, L, Hh))
-    cz = Hh // 2
-    r = min(W, Hh) // 2 - 1
-    p.b(0, 0, 0, W, 2, Hh, "trim")
-    p.disc("y", W // 2, cz, r, 2, L - 4, "secondary", rin=r - 4)            # collar
-    p.disc("y", W // 2, cz, r - 4, 2, 4, "primary")                           # inner hatch
-    p.disc("y", W // 2, cz, r + 1, L - 4, L - 2, "trim", rin=r - 3)
-    p.disc("y", W // 2, cz, r, L - 2, L, "emit_a", rin=r - 2)                 # seal ring
-    for a in range(4):                                                         # latches
+    W, H, F, O = 16 * n, f["H"], f["face"], f["open"]
+    p = Piece(f"x.docking-port.{sz}", "mount", "face", (W, F + 2, H))
+    edge_surround(p, W, F, 2, f["seams"], H, lintel_slot="secondary")
+    cx, cz = W // 2, (O + 2) // 2
+    r = min(W // 2 - 3, (O - 4) // 2)
+    for z in range(0, O):                                                 # collar plate around the hatch
+        dz = z + 0.5 - cz
+        hw = int(math.ceil(math.sqrt(max(0.0, (r + 1) ** 2 - dz * dz)))) if abs(dz) < r + 1 else 0
+        if hw == 0:
+            p.b(2, 0, z, W - 2, F - 1, z + 1, "secondary")
+        else:
+            if cx - hw > 2:
+                p.b(2, 0, z, cx - hw, F - 1, z + 1, "secondary")
+            if cx + hw < W - 2:
+                p.b(cx + hw, 0, z, W - 2, F - 1, z + 1, "secondary")
+    p.disc("y", cx, cz, r + 1, F - 1, F, "emit_a", rin=r)                 # seal ring on the face plane
+    p.disc("y", cx, cz, r, 0, F - 2, "dark")                              # recessed hatch
+    p.disc("y", cx, cz, r - 2, F - 2, F - 1, "metal", rin=r - 3)
+    p.b(cx - 1, F - 2, cz - r + 2, cx + 1, F - 1, cz + r - 2, "trim")
+    for a in range(4):                                                    # latches
         ang = a * math.pi / 2 + math.pi / 4
-        x, z = W // 2 + int(r * 0.9 * math.cos(ang)), cz + int(r * 0.9 * math.sin(ang))
-        p.b(x - 2, L - 6, z - 2, x + 2, L, z + 2, "accent")
+        x, z = cx + int((r + 2) * math.cos(ang)), cz + int((r + 2) * math.sin(ang))
+        p.b(x - 1, F - 1, z - 1, x + 1, F, z + 1, "accent")
+    lit_hazard(p, 2, W - 2, F, F + 2, 0, 1, step=3)
+    p.size = (W, F + 2, H)
+    return p
+
+
+
+def hatch_exterior(sz):
+    """Flush roof hatch: low rim ring, recessed lid and amber/black hazard corners (2 texels)."""
+    W = 16
+    p = Piece("x.hatch-exterior.SM", "mount", "top", (W, W, 2))
+    K.frame_top(p, 1, 1, W - 1, W - 1, 0, 2, 2, "secondary")
+    p.b(3, 3, 0, W - 3, W - 3, 1, "primary")
+    p.disc("z", 8, 8, 4, 1, 2, "metal", rin=3)
+    p.b(7, 5, 1, 9, 11, 2, "trim")
+    for x, y in ((1, 1), (W - 3, 1), (1, W - 3), (W - 3, W - 3)):
+        lit_hazard(p, x, x + 2, y, y + 2, 1, 2, step=1)
+    p.b(13, 13, 1, 14, 14, 2, "emit_b")
+    p.size = (W, W, 2)
     return p
 
 
@@ -752,7 +836,7 @@ WEAPON_KEYS = {"wpn.pd": "pd", "wpn.autocannon": "autocannon", "wpn.laser": "las
                "wpn.missile": "missile", "wpn.flak": "flak", "x.plasma": "plasma"}
 UTILITY_KEYS = {"wpn.shield": "shield", "wpn.tractor": "tractor", "wpn.sensor": "sensor", "wpn.clamp": "clamp",
                 "wpn.beacon": "beacon"}
-NO_GREEBLE = ("resonance", "vtol", "console-navigation", "console-command", "console-fire-control",
+NO_GREEBLE = ("resonance", "vtol", "docking-port", "hatch-exterior", "console-navigation", "console-command", "console-fire-control",
               "console-engineering", "console-sensor", "hydroponics", "crew-bunk")
 
 
@@ -806,15 +890,17 @@ def build_piece(component):
         piece = FACE[kind](size)
         if detail:
             A.greeble(K, piece, key, slots=("primary", "secondary"), lights=0.05, skip_top=True)
-        zc = 0 if kind == "docking-port" else piece.size[2] / 2
-        return piece, "face", zc
+        return piece, "face", piece.size[2] / 2
     if kind == "cargo-door":
         width = int(size.rstrip("m"))
-        return cargo_door_w(width, hi[2]), "face", 0
+        piece = cargo_door_w(width)
+        return piece, "face", piece.size[2] / 2            # edge hatches are z-centred (floor top at base)
     if kind == "airlock-exterior":
-        return airlock_ext(), "face", 0
+        piece = airlock_ext()
+        return piece, "face", piece.size[2] / 2
     if kind == "airlock-interior":
-        return airlock_int(), "face", 0
+        piece = airlock_int()
+        return piece, "face", piece.size[2] / 2
     raise KeyError(key)
 
 
