@@ -38,7 +38,10 @@ import {
   type ShipKitManifest,
   type ShipKitSlot,
 } from "@sidereal/content/ship-kit";
-import { deckObjectVisualUrl } from "@sidereal/content/ship-furniture";
+import {
+  deckObjectVisualUrl,
+  interiorArtQuarterTurns,
+} from "@sidereal/content/ship-furniture";
 import {
   prefabOrigin,
   type PrefabComponentCatalog,
@@ -85,6 +88,7 @@ import {
   type MountSocket,
 } from "./frames";
 import { loadGlbGeometry, loadJsonOnce, type GlbGeometry } from "./glb-library";
+import { resolveCoplanarLayers } from "./coplanar";
 import {
   placeholderMaterial,
   plumeMaterial,
@@ -95,6 +99,30 @@ import {
 
 const roleOf = (mesh: Mesh): string =>
   (mesh.metadata as { role?: string } | null)?.role ?? "hull";
+
+/** Coplanar winner order: things mounted in or on the ship over the structure that carries them,
+ * then detail slots over body slots (trim over the panel it sits on, screens over their bezel). */
+const ROLE_DEPTH: Partial<Record<MeshRole, number>> = {
+  hull: 0,
+  roof: 1,
+  floor: 2,
+  wall: 3,
+  equipment: 4,
+  effect: 5,
+};
+const SLOT_DEPTH: Record<ShipKitSlot, number> = {
+  primary: 0,
+  secondary: 1,
+  dark: 2,
+  metal: 3,
+  trim: 4,
+  accent: 5,
+  emit_a: 6,
+  emit_b: 7,
+  glass: 8,
+};
+export const coplanarPriority = (role: MeshRole, slot: ShipKitSlot) =>
+  (ROLE_DEPTH[role] ?? 0) * 16 + SLOT_DEPTH[slot];
 
 export type PrefabShipPresentation = "flight" | "deck";
 
@@ -290,6 +318,16 @@ function socketOf(c: ComponentPlacement): MountSocket {
   return m.attach;
 }
 
+/** Placement quarter turns plus the art turn that points an interior GLB's +Y (access side) the
+ * way the facing convention needs (ship-furniture.ts: a console's operator looks at `facing`). */
+function artQuarterTurns(c: ComponentPlacement): number {
+  const extra =
+    c.placement.mount.attach === "interior" && c.placement.spec
+      ? interiorArtQuarterTurns(c.placement.spec.id)
+      : 0;
+  return (c.placement.quarterTurns + extra) % 4;
+}
+
 function standinSocketOf(c: ComponentPlacement): StandinSocket {
   return c.placement.mount.attach;
 }
@@ -375,6 +413,11 @@ export async function createPrefabShipView(
       ts: number;
     };
     const groups = new Map<string, Group>();
+    // Every appended placement primitive, per presentation, for the coplanar pass below.
+    const chunks: Record<
+      "flight" | "deck",
+      { group: Group; first: number; count: number; priority: number }[]
+    > = { flight: [], deck: [] };
     const views = (tag: DressView): ("flight" | "deck")[] =>
       tag === "both" ? ["flight", "deck"] : [tag];
     const add = (
@@ -404,7 +447,14 @@ export async function createPrefabShipView(
               ts: 0,
             }),
           );
+        const first = g.indices.length;
         appendTransformed(g, geo.positions, geo.normals, geo.indices, m);
+        chunks[view].push({
+          group: g,
+          first,
+          count: geo.indices.length,
+          priority: coplanarPriority(role, slot),
+        });
         const tris = geo.indices.length / 3;
         g.roles.set(role, (g.roles.get(role) ?? 0) + tris);
         if (glb) g.glb += tris;
@@ -436,6 +486,21 @@ export async function createPrefabShipView(
       if (geo) add(st.tag, st.slot, role, geo, localToParent(st.mesh), false);
       st.mesh.dispose();
     }
+    // Coplanar faces of different materials (trim flush with a body panel, a module flush with a
+    // wall, a floor flush with a hull base) z-fight. Give each overlap one deterministic winner by
+    // role, then slot, before the geometry is frozen into meshes.
+    for (const view of ["flight", "deck"] as const)
+      resolveCoplanarLayers(
+        chunks[view].map((c) => ({
+          positions: c.group.positions,
+          normals: c.group.normals,
+          indices: c.group.indices,
+          first: c.first,
+          count: c.count,
+          priority: c.priority,
+          material: c.group.key,
+        })),
+      );
     for (const g of groups.values()) {
       if (!g.indices.length) continue;
       const role = [...g.roles].sort((a, b) => b[1] - a[1])[0][0];
@@ -600,7 +665,7 @@ export async function createPrefabShipView(
           const place = componentMatrix(
             c.placement.anchor,
             c.placement.anchorZ * TEXEL,
-            c.placement.quarterTurns,
+            artQuarterTurns(c),
           );
           // Edge hatches (airlocks, cargo doors, docking ports) are authored to the grammar's deck
           // height classes (flush with the side cassettes, top at the tier top), so no rescaling.
@@ -638,7 +703,7 @@ export async function createPrefabShipView(
       const place = componentMatrix(
         c.placement.anchor,
         c.placement.anchorZ * TEXEL,
-        c.placement.quarterTurns,
+        artQuarterTurns(c),
       );
       appendStandin(s, place, perTag[c.view]);
       if (s.nozzle && isMainEngine(c))
@@ -764,7 +829,11 @@ export async function createPrefabShipView(
             o.at[0] + o.size[0] / 2,
             o.at[1] + o.size[1] / 2,
           ];
-          const place = componentMatrix(anchor, z0, FACING_QT[o.facing]);
+          const place = componentMatrix(
+            anchor,
+            z0,
+            (FACING_QT[o.facing] + interiorArtQuarterTurns(o.designId)) % 4,
+          );
           pushMatrix(
             matrices[o.view],
             multiply(

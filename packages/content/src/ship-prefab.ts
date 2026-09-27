@@ -1,4 +1,5 @@
 import { bowJoinErrors, bowWalkable } from "./bow-profiles";
+import { interiorArtQuarterTurns } from "./ship-furniture";
 /**
  * Prefab ship document v1: grammar data only (docs/shipyard_player_builder_design.md §3, §8, §12).
  *
@@ -628,6 +629,12 @@ const FORWARD_QT: Record<FaceNormal, 0 | 1 | 2 | 3> = {
   aft: 2,
   starboard: 3,
 };
+const OPPOSITE_FACING: Record<FaceNormal, FaceNormal> = {
+  fore: "aft",
+  aft: "fore",
+  port: "starboard",
+  starboard: "port",
+};
 const OUTWARD_QT: Record<FaceNormal, 0 | 1 | 2 | 3> = {
   aft: 0,
   starboard: 1,
@@ -1191,7 +1198,8 @@ export function deriveInterior(
     });
     if (spec.control) {
       // Control rooms: the pilot seat faces fore on the room's centre line near the bow end;
-      // consoles sit ahead of it and banks behind it.
+      // consoles sit ahead of it (their operator looks fore) and banks behind it (worked from the
+      // room side, so their operator looks aft). See the facing convention in ship-furniture.ts.
       const cy = (y0 + y1) / 2;
       const bowward = x1 > (ox0 + ox1) / 2;
       const seatX = bowward ? x1 - 1.6 : x0 + 1.0;
@@ -1206,13 +1214,14 @@ export function deriveInterior(
         if (at[0] < x0 + 0.2 || at[0] + sd > x1 - 0.2 || sw > y1 - y0 - 0.4)
           continue;
         const control = designId.endsWith("pilot-seat");
+        const behindSeat = !control && !designId.endsWith("command-console");
         sockets.push({
           designId,
           room: room.id,
           at,
           size: [sd, sw],
           heightTexels: h,
-          facing: "fore",
+          facing: behindSeat ? "aft" : "fore",
           control,
         });
         if (control)
@@ -1273,7 +1282,11 @@ export function deriveInterior(
         at,
         size,
         heightTexels: h,
-        facing: pick.facing,
+        // Fixtures open into the room; a wall console's operator looks at the wall.
+        facing:
+          interiorArtQuarterTurns(designId) === 2
+            ? OPPOSITE_FACING[pick.facing]
+            : pick.facing,
         control: false,
       });
       u += sw + 0.3;
@@ -1319,6 +1332,22 @@ export function deriveInterior(
       }
     }
 
+  // One object per footprint: a room-type socket gives way to an interior module that occupies
+  // it (the engineering reactor socket under a mounted reactor, the quarters bunk under a bunk
+  // module, the command console under a helm). Every consumer (dresser, collision, stats) sees
+  // the same set, so nothing is drawn or counted twice.
+  const moduleRects = catalog
+    ? doc.mounts
+        .filter((m) => m.attach === "interior" && catalog.get(m.component))
+        .map((m) => placeMount(m, catalog.get(m.component), []).rect)
+    : [];
+  const freeSockets = sockets.filter((s) => {
+    const r = [s.at[0], s.at[1], s.at[0] + s.size[0], s.at[1] + s.size[1]];
+    return !moduleRects.some(
+      (q) => r[0] < q[2] && q[0] < r[2] && r[1] < q[3] && q[1] < r[3],
+    );
+  });
+
   return {
     deck,
     volume: vg.volume.id,
@@ -1328,7 +1357,7 @@ export function deriveInterior(
     partitions,
     doors,
     posts,
-    sockets,
+    sockets: freeSockets,
     lights,
     labels,
     compartments,
