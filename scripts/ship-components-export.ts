@@ -1,6 +1,6 @@
 /**
  * Regenerates the checked-in ship component catalog snapshot and the
- * generated tables in docs/ship_components.md from the canonical TypeScript
+ * generated tables (docs/ship_components.md when present, else `--tables PATH` for the wiki) from the canonical TypeScript
  * source. Pure file generation: no services, database or publication.
  *
  *   npm run ship-components:export            write files
@@ -8,7 +8,7 @@
  *   npm run ship-components:export -- --diagram out.json [--fit balance.md-corvette]
  *     also writes auto-wired network data for the Blender port diagram
  */
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { buildShipComponentCatalog } from "../packages/content/src/ship-components-source";
 import {
@@ -272,13 +272,19 @@ const generated =
   `### Balance sheets (reference fits, bus mode)\n\n${balanceTable()}\n\n### Component tables\n\n${catalogTable()}\n`;
 const begin = "<!-- ship-components:generated:begin -->",
   end = "<!-- ship-components:generated:end -->";
-const doc = readFileSync(docPath, "utf8");
-const a = doc.indexOf(begin),
-  b = doc.indexOf(end);
-if (a < 0 || b < a)
+// docs/ship_components.md moved to the wiki (2026-09-26): without it the tables go to --tables
+// (a path outside the repository, for the wiki page) and only the JSON snapshot is checked.
+const doc = existsSync(docPath) ? readFileSync(docPath, "utf8") : null;
+const a = doc?.indexOf(begin) ?? -1,
+  b = doc?.indexOf(end) ?? -1;
+if (doc !== null && (a < 0 || b < a))
   throw new Error("docs/ship_components.md is missing generated markers");
 const nextDoc =
-  doc.slice(0, a + begin.length) + "\n" + generated + doc.slice(b);
+  doc === null
+    ? null
+    : doc.slice(0, a + begin.length) + "\n" + generated + doc.slice(b);
+const tablesIndex = process.argv.indexOf("--tables");
+if (tablesIndex > 0) writeFileSync(process.argv[tablesIndex + 1], generated);
 const stale: string[] = [];
 const current = (() => {
   try {
@@ -288,7 +294,7 @@ const current = (() => {
   }
 })();
 if (current !== json) stale.push(jsonPath);
-if (doc !== nextDoc) stale.push(docPath);
+if (doc !== nextDoc && nextDoc !== null) stale.push(docPath);
 if (check) {
   if (stale.length) {
     console.error(
@@ -303,7 +309,7 @@ if (check) {
   );
 } else {
   writeFileSync(jsonPath, json);
-  writeFileSync(docPath, nextDoc);
+  if (nextDoc !== null) writeFileSync(docPath, nextDoc);
   console.log(
     `Wrote ${catalog.components.length} components; updated ${stale.length} file(s).`,
   );

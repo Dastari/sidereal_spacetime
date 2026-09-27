@@ -5,8 +5,8 @@
  "catalog": {
   "schema": "sidereal.ship-components.v1",
   "id": "ship-components-v1",
-  "revision": 1,
-  "sha256": "dd22399bce8899347390572e1cc8988088019889f4bde18a7409238814b94426"
+  "revision": 2,
+  "sha256": "2728f8b4c3d0a1e954a441c37edb3ee9c8156da092850be9c49efbebdb2cdfc1"
  },
  "generator": {
   "script": "scripts/art_library/ship_component_export.py",
@@ -40,6 +40,58 @@
   "published": "copied to apps by scripts/prepare_app.py PUBLISHED_RUNTIME; br/gz sidecars at build"
  },
  "components": [
+  {
+   "id": "ion-drive.sm",
+   "kitKey": "ion.SM",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/runtime/ship-components/r004/ion-drive.sm.glb",
+   "sha256": "c525f2fb96f92c8c8222a48f3a432eb00cc2ec39491c8d5fa77063b9148a3ac5",
+   "bytes": 79796,
+   "boxes": 183,
+   "triangles": 1360,
+   "vertices": 1376,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -2.75,
+     -0.5
+    ],
+    [
+     0.5,
+     0.0,
+     0.5
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -2.75,
+     -0.5
+    ],
+    [
+     0.5,
+     0,
+     0.5
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "fuel-in"
+   ]
+  },
   {
    "id": "ion-drive.md",
    "kitKey": "ion.MD",
@@ -816,6 +868,53 @@
    ]
   },
   {
+   "id": "rcs.md",
+   "kitKey": "rcs.MD",
+   "frame": "face",
+   "kitConvention": "face",
+   "glb": "assets/runtime/ship-components/r004/rcs.md.glb",
+   "sha256": "5824919cf5ff17c246555d60cd727c114c2c34d22bcd6f52e3d146bcbdf2c56c",
+   "bytes": 7500,
+   "boxes": 9,
+   "triangles": 80,
+   "vertices": 72,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot4_metal"
+   ],
+   "boundsM": [
+    [
+     -0.625,
+     -1.0,
+     -0.625
+    ],
+    [
+     0.625,
+     0.0,
+     0.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.625,
+     -1,
+     -0.625
+    ],
+    [
+     0.625,
+     0,
+     0.625
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "fuel-in"
+   ]
+  },
+  {
    "id": "reactor.md",
    "kitKey": "x.reactor.MD",
    "frame": "interior",
@@ -921,6 +1020,55 @@
     "data-in",
     "coolant-in",
     "fuel-in"
+   ]
+  },
+  {
+   "id": "fuel-tank.sm",
+   "kitKey": "x.fuel-tank.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/fuel-tank.sm.glb",
+   "sha256": "d5d1e52e90d34f48f3c9de4b9fec5ae2b0abf9ff4abefc8565a1d1d614850503",
+   "bytes": 22568,
+   "boxes": 34,
+   "triangles": 308,
+   "vertices": 264,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.3125,
+     -0.375,
+     0.0
+    ],
+    [
+     0.3125,
+     0.375,
+     0.9375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "fuel-out"
    ]
   },
   {
@@ -3647,7 +3795,7 @@
  ],
  "source": {
   "blend": "assets/art-library/ship-components/r004/source/ship-components-r004-runtime.blend",
-  "sha256": "c3d90c8466222b98ea7a916dea5c9aa599c823ffe580aa265e06eea12d4ba8d6",
+  "sha256": "7e134fb09dd536b860dc5fa18736f46ca5bec77d0b091f48de76d9f6fcd353d7",
   "note": "editable Blender source saved by this export; GLBs are exported from it"
  },
  "requiredComponentIds": [
@@ -3670,6 +3818,7 @@
   "flak-cannon.md",
   "flak-cannon.sm",
   "fuel-tank.md",
+  "fuel-tank.sm",
   "hydroponics.sm",
   "ion-drive.lg",
   "ion-drive.md",
@@ -3677,6 +3826,7 @@
   "ion-drive.salvaged.md",
   "ion-drive.salvaged.sm",
   "ion-drive.salvaged.xl",
+  "ion-drive.sm",
   "ion-drive.xl",
   "laser-cannon.md",
   "laser-cannon.sm",
@@ -3697,6 +3847,7 @@
   "radiator.lg",
   "radiator.md",
   "railgun.lg",
+  "rcs.md",
   "rcs.sm",
   "reactor.lg",
   "reactor.md",

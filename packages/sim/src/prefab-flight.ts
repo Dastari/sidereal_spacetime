@@ -45,6 +45,8 @@ import { readConstructionDraft } from "./construction-transactions";
 import { prefabComponentCatalogFor } from "./prefab-catalog";
 import { spatialCell, validateSpacePoint } from "./spatial-cells";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import { WAYFARER_FLIGHT_PROFILE } from "@sidereal/content/physical-definitions";
+import type { FlightProfile } from "./ifcs";
 
 export const PREFAB_FLIGHT_CATALOG_ID = "prefab-physical-v1";
 /** RCS nozzle push directions as game-frame quarter turns (0 pushes fore). */
@@ -55,6 +57,16 @@ const RCS_DIRECTIONS: [string, number][] = [
   ["starboard", 3],
 ];
 export const PREFAB_FLIGHT_REVISION = 1;
+/**
+ * IFCS profile for prefab ships. Gains and turn caps match the Wayfarer profile; the linear
+ * acceleration cap is lifted to 6 m/s^2 so each ship's compiled thrust envelope, not a shared
+ * 3 m/s^2 ceiling, decides how hard it accelerates (S starters about 4-5, M/L about 2-2.5).
+ * Speed limits stay the Wayfarer values.
+ */
+export const PREFAB_FLIGHT_PROFILE: FlightProfile = Object.freeze({
+  ...WAYFARER_FLIGHT_PROFILE,
+  maxAcceleration: 6,
+});
 const FLOOR_KG_PER_M2 = 40;
 const WALL_KG_PER_M = 60;
 
