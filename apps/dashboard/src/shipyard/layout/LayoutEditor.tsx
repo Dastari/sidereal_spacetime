@@ -33,6 +33,7 @@ import {
 import { LayoutToolbar } from "./LayoutToolbar";
 import { LayerVisibility } from "./LayerVisibility";
 import { NewLayoutDialog } from "./NewLayoutDialog";
+import { withArmorReviewCatalog } from "./armor-review";
 import { transformTiles, type ViewState } from "./state";
 import wayfarerTemplate from "./templates/wayfarer-r001.json";
 import { useLayout, uuid } from "./useLayout";
@@ -154,7 +155,7 @@ export default function LayoutEditor() {
           )
         )
           throw new Error("Invalid part catalog");
-        setCatalog(c);
+        setCatalog(withArmorReviewCatalog(c));
       })
       .catch((e) => {
         if (!cancelled)
@@ -603,6 +604,10 @@ export default function LayoutEditor() {
           }
         >
           <HullWorkspace
+            leftWidth={view.leftWidth}
+            rightWidth={view.rightWidth}
+            onLeftResize={(leftWidth) => updateView({ leftWidth })}
+            onRightResize={(rightWidth) => updateView({ rightWidth })}
             onDeckChange={(deckId) => updateView({ deckId })}
             sharedViewport={sharedViewport}
             layers={view.layers}

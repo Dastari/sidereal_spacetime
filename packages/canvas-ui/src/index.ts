@@ -5,7 +5,10 @@ import {
   type SharedEntryState,
   type SharedEntryActions,
 } from "./shared-entry";
-import { appearanceControlsHeight, drawAppearanceControls } from "./appearance-controls";
+import {
+  appearanceControlsHeight,
+  drawAppearanceControls,
+} from "./appearance-controls";
 import { dismissGroundLootMenu, drawGroundLoot } from "./ground-loot";
 import type { GroundItemLabel } from "@sidereal/render/ground-items";
 import type { LocalLightLimit } from "../../render/src/local-light-budget";
@@ -16,7 +19,10 @@ import type {
   AntialiasingSnapshot,
 } from "@sidereal/render/antialiasing-settings";
 import type { GraphicsSettings } from "../../render/src/graphics-settings";
-import type { RenderBackend, RenderBackendSnapshot } from "@sidereal/render/render-backend";
+import type {
+  RenderBackend,
+  RenderBackendSnapshot,
+} from "@sidereal/render/render-backend";
 import {
   createObjectDetailsUI,
   type ObjectDetailsState,
@@ -117,9 +123,7 @@ export type GameUIActions = {
   objectDetails?: ObjectDetailsActions;
   interact?: () => void;
   diagnostics?: (enabled: boolean) => RenderDiagnostics | undefined;
-  diagnosticsToggle?: (
-    key: import("./diagnostics").DebugFeature,
-  ) => void;
+  diagnosticsToggle?: (key: import("./diagnostics").DebugFeature) => void;
   diagnosticsReset?: () => void;
   view: () => void;
   station: () => void;
@@ -278,7 +282,9 @@ export function createGameUI(
         state.pending,
         {
           equip: actions.inventory?.equipItem,
-          backpackEquipped: state.inventory?.items.some((i) => i.equipmentSlot === "back"),
+          backpackEquipped: state.inventory?.items.some(
+            (i) => i.equipmentSlot === "back",
+          ),
         },
       );
     else dismissGroundLootMenu(ui);
@@ -744,7 +750,8 @@ export function createGameUI(
       ui.ctx.rect(viewport.x, viewport.y, viewport.w, viewport.h);
       ui.ctx.clip();
       if (tab === "Graphics") {
-        const antialiasingState = actions.readAntialiasing?.() ?? state.antialiasing;
+        const antialiasingState =
+          actions.readAntialiasing?.() ?? state.antialiasing;
         const backendState = actions.readRenderBackend?.();
         drawGraphicsMenu(
           ui,
@@ -758,7 +765,12 @@ export function createGameUI(
             ? { state: antialiasingState, set: actions.antialiasing }
             : undefined,
           backendState && actions.renderBackend && actions.applyRenderBackend
-            ? {state:backendState,set:actions.renderBackend,apply:actions.applyRenderBackend} : undefined,
+            ? {
+                state: backendState,
+                set: actions.renderBackend,
+                apply: actions.applyRenderBackend,
+              }
+            : undefined,
         );
       } else if (tab === "Display") {
         ui.slider(
@@ -1005,9 +1017,14 @@ export function createGameUI(
         w - 36,
       );
     ui.setWorldCursor(
-      state.combat?.enabled && state.interior && !state.seated && !menu &&
-        !inventory?.isOpen() && state.status === "ready"
-        ? COMBAT_CURSOR : "default",
+      state.combat?.enabled &&
+        state.interior &&
+        !state.seated &&
+        !menu &&
+        !inventory?.isOpen() &&
+        state.status === "ready"
+        ? COMBAT_CURSOR
+        : "default",
     );
   };
   return {

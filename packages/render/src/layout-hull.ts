@@ -1,5 +1,8 @@
+import { createHullPaintBinding } from "./hull-paint";
+import { hullPaintKey } from "@sidereal/content/hull-paint";
 import { isExteriorAsset } from "@sidereal/content/layout-asset-scope";
 import { framedWayfarerVisual } from "./framed-wayfarer-visuals";
+import { batchStaticMaterials } from "./static-material-batches";
 import { createVertexMeasurement } from "./layout-vertex-measurement";
 import type { MeasurementPoint } from "./layout-measurement";
 import { createLayoutDoorwayPreview } from "./layout-doorway-preview";
@@ -279,7 +282,10 @@ export function createHullViewport(
   const prototypes = new Map<string, Mesh[]>(),
     pending = new Map<string, Promise<void>>(),
     failed = new Set<string>();
-  const nodes = new Map<string, { assetId: string; node: TransformNode }>();
+  const nodes = new Map<
+    string,
+    { assetId: string; node: TransformNode; paintKey: string }
+  >();
   let disposed = false,
     state: HullViewState | undefined,
     projection = initialCamera ? (initialProjection ?? "") : "",
@@ -426,7 +432,18 @@ export function createHullViewport(
       const work = loadEquipmentPrototypes(scene, assets)
         .then((found) => {
           if (disposed) return;
-          for (const [id, meshes] of found) prototypes.set(id, meshes);
+          for (const [id, meshes] of found) {
+            const asset = assets.find((a) => a.id === id);
+            // Native armor has many editable Blender objects per block. Batch
+            // its immutable prototypes by material before creating instances;
+            // each placed block keeps its own transform, picking ID and undo.
+            prototypes.set(
+              id,
+              asset?.visual?.designId === "shipyard.hull.armor-block-review"
+                ? batchStaticMaterials(meshes, "hull")
+                : meshes,
+            );
+          }
           if (state) update(state);
         })
         .catch((e) => {
@@ -749,7 +766,11 @@ export function createHullViewport(
       }
     for (const p of next.parts) {
       let entry = nodes.get(p.id);
-      if (entry && entry.assetId !== p.assetId) {
+      if (
+        entry &&
+        (entry.assetId !== p.assetId ||
+          entry.paintKey !== hullPaintKey(p.paint))
+      ) {
         entry.node.dispose();
         nodes.delete(p.id);
         entry = undefined;
@@ -759,10 +780,16 @@ export function createHullViewport(
         if (!sources) continue;
         const node = new TransformNode("hull-placement-" + p.id, scene);
         node.metadata = { partId: p.id };
+        const painter = createHullPaintBinding(
+          node,
+          catalog.assets.find((a) => a.id === p.assetId)!,
+          p.paint,
+        );
         for (const source of sources) {
-          const mesh = source.createInstance(
-            "hull-" + p.id + "--" + source.name,
-          );
+          const name = "hull-" + p.id + "--" + source.name;
+          const mesh = painter
+            ? painter.clone(source, name)
+            : source.createInstance(name);
           mesh.parent = node;
           mesh.isVisible = true;
           mesh.isPickable = true;
@@ -772,7 +799,7 @@ export function createHullViewport(
             role: source.metadata?.role ?? "hull",
           };
         }
-        entry = { assetId: p.assetId, node };
+        entry = { assetId: p.assetId, node, paintKey: hullPaintKey(p.paint) };
         nodes.set(p.id, entry);
       }
       for (const mesh of entry.node.getChildMeshes())

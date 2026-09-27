@@ -1,1 +1,11 @@
-{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["planet_reference_candidate_hardware_proposed.ts","planet_reference_review_hardware_proposed.ts","planet_reference_pbr_channels_hardware_proposed.test.ts","planet_reference_direct_paths.ts","planet_reference_lod_recorder.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "planet_reference_candidate_hardware_proposed.ts",
+    "planet_reference_review_hardware_proposed.ts",
+    "planet_reference_pbr_channels_hardware_proposed.test.ts",
+    "planet_reference_direct_paths.ts",
+    "planet_reference_lod_recorder.ts"
+  ]
+}

@@ -223,7 +223,7 @@ it("keeps base native solver immutable while permitting only the exact bounded r
 
 it("rebuild candidate reuses real junction families and keeps every passage and cockpit approach open", async () => {
   const { default: source } =
-    await import("../../content/src/wayfarer-rebuild-r002.json");
+    await import("@sidereal/content/wayfarer-rebuild-r002.json");
   const { planWayfarerRebuildNative } =
     await import("./wayfarer-rebuild-native-plan");
   const layout =

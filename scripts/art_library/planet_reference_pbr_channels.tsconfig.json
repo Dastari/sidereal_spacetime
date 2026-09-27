@@ -1,1 +1,4 @@
-{"extends":"../../tsconfig.json","include":["planet_reference_pbr_channels.test.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "include": ["planet_reference_pbr_channels.test.ts"]
+}

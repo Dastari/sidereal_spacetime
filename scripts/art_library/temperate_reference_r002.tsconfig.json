@@ -1,1 +1,9 @@
-{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["temperate_reference_composition_r002.ts","temperate_reference_composition_r002.test.ts","temperate_reference_r002.vitest.config.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "temperate_reference_composition_r002.ts",
+    "temperate_reference_composition_r002.test.ts",
+    "temperate_reference_r002.vitest.config.ts"
+  ]
+}

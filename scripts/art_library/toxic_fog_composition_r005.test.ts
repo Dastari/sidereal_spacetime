@@ -1,22 +1,98 @@
-import {expect,it}from'vitest';import{readFileSync}from'node:fs';
-import {NullEngine}from'@babylonjs/core/Engines/nullEngine';import{Scene}from'@babylonjs/core/scene';import{Mesh}from'@babylonjs/core/Meshes/mesh';import{VertexData}from'@babylonjs/core/Meshes/mesh.vertexData';import{VertexBuffer}from'@babylonjs/core/Buffers/buffer';
-import{referenceMaterial}from'./planet_reference_materials';import{composeToxicFog}from'./toxic_fog_composition_r005';
-const kit=JSON.parse(readFileSync('output/playwright/planet-reference-20260914/toxic-fog-r005/kit.json','utf8'));
-it('caps native geometry and preserves authored anchor identities with deterministic buffers',()=>{
- const a=composeToxicFog(kit,38,1),b=composeToxicFog(kit,38,1);expect(a).toEqual(b);expect(a[0].ranges).toHaveLength(12);expect(a[0].indices.length/3).toBeLessThan(50000);
- expect(composeToxicFog(kit,38,0)[0].indices).toHaveLength(0);
- const anchored=composeToxicFog(kit,38,1,0,[{partId:'vent-a',position:[1.10,0,0]},{partId:'vent-b',position:[0,1.12,0]}]);expect(anchored[0].ranges.map(r=>r.partId)).toEqual(['toxic-fog:vent-a','toxic-fog:vent-b']);expect(()=>composeToxicFog(kit,38,1,0,Array.from({length:13},(_,i)=>({partId:String(i),position:[1,0,0]})))).toThrow('at most12');
+import { expect, it } from "vitest";
+import { readFileSync } from "node:fs";
+import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
+import { Scene } from "@babylonjs/core/scene";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
+import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
+import { referenceMaterial } from "./planet_reference_materials";
+import { composeToxicFog } from "./toxic_fog_composition_r005";
+const kit = JSON.parse(
+  readFileSync(
+    "output/playwright/planet-reference-20260914/toxic-fog-r005/kit.json",
+    "utf8",
+  ),
+);
+it("caps native geometry and preserves authored anchor identities with deterministic buffers", () => {
+  const a = composeToxicFog(kit, 38, 1),
+    b = composeToxicFog(kit, 38, 1);
+  expect(a).toEqual(b);
+  expect(a[0].ranges).toHaveLength(12);
+  expect(a[0].indices.length / 3).toBeLessThan(50000);
+  expect(composeToxicFog(kit, 38, 0)[0].indices).toHaveLength(0);
+  const anchored = composeToxicFog(kit, 38, 1, 0, [
+    { partId: "vent-a", position: [1.1, 0, 0] },
+    { partId: "vent-b", position: [0, 1.12, 0] },
+  ]);
+  expect(anchored[0].ranges.map((r) => r.partId)).toEqual([
+    "toxic-fog:vent-a",
+    "toxic-fog:vent-b",
+  ]);
+  expect(() =>
+    composeToxicFog(
+      kit,
+      38,
+      1,
+      0,
+      Array.from({ length: 13 }, (_, i) => ({
+        partId: String(i),
+        position: [1, 0, 0],
+      })),
+    ),
+  ).toThrow("at most12");
 });
-it('coverage and drift preserve geometry/UV identity instead of creating new particles',()=>{
- const a=composeToxicFog(kit,38,.4)[0],b=composeToxicFog(kit,38,1)[0],rotated=composeToxicFog(kit,38,.4,.7)[0];
- expect(a.positions).toEqual(b.positions.slice(0,a.positions.length));expect(a.uvs).toEqual(rotated.uvs);expect(a.indices).toEqual(rotated.indices);expect(a.ranges).toEqual(rotated.ranges);
- for(let i=0;i<a.positions.length;i+=3){expect(Math.hypot(...a.positions.slice(i,i+3))).toBeCloseTo(Math.hypot(...rotated.positions.slice(i,i+3)),6);expect(Math.hypot(...a.normals.slice(i,i+3))).toBeCloseTo(1,5);}
+it("coverage and drift preserve geometry/UV identity instead of creating new particles", () => {
+  const a = composeToxicFog(kit, 38, 0.4)[0],
+    b = composeToxicFog(kit, 38, 1)[0],
+    rotated = composeToxicFog(kit, 38, 0.4, 0.7)[0];
+  expect(a.positions).toEqual(b.positions.slice(0, a.positions.length));
+  expect(a.uvs).toEqual(rotated.uvs);
+  expect(a.indices).toEqual(rotated.indices);
+  expect(a.ranges).toEqual(rotated.ranges);
+  for (let i = 0; i < a.positions.length; i += 3) {
+    expect(Math.hypot(...a.positions.slice(i, i + 3))).toBeCloseTo(
+      Math.hypot(...rotated.positions.slice(i, i + 3)),
+      6,
+    );
+    expect(Math.hypot(...a.normals.slice(i, i + 3))).toBeCloseTo(1, 5);
+  }
 });
-it('NullEngine retains PBR alpha and native UV/normal attributes without a smoke shader',()=>{
- const engine=new NullEngine(),scene=new Scene(engine);try{const b=composeToxicFog(kit,38,.2)[0],mesh=new Mesh('toxic-fog',scene);mesh.metadata={role:'planet',planetWeather:true,trianglePlacementRanges:b.ranges};const data=new VertexData();Object.assign(data,b);data.applyToMesh(mesh);const material=referenceMaterial(scene,kit.materials[0]);mesh.material=material;expect(material.needAlphaBlending()).toBe(true);expect(material.useAlphaFromAlbedoTexture).toBe(true);expect(mesh.isVerticesDataPresent(VertexBuffer.UVKind)).toBe(true);expect(mesh.isVerticesDataPresent(VertexBuffer.NormalKind)).toBe(true);expect(material.emissiveColor.asArray()).toEqual([0,0,0]);}finally{scene.dispose();engine.dispose();}
+it("NullEngine retains PBR alpha and native UV/normal attributes without a smoke shader", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  try {
+    const b = composeToxicFog(kit, 38, 0.2)[0],
+      mesh = new Mesh("toxic-fog", scene);
+    mesh.metadata = {
+      role: "planet",
+      planetWeather: true,
+      trianglePlacementRanges: b.ranges,
+    };
+    const data = new VertexData();
+    Object.assign(data, b);
+    data.applyToMesh(mesh);
+    const material = referenceMaterial(scene, kit.materials[0]);
+    mesh.material = material;
+    expect(material.needAlphaBlending()).toBe(true);
+    expect(material.useAlphaFromAlbedoTexture).toBe(true);
+    expect(mesh.isVerticesDataPresent(VertexBuffer.UVKind)).toBe(true);
+    expect(mesh.isVerticesDataPresent(VertexBuffer.NormalKind)).toBe(true);
+    expect(material.emissiveColor.asArray()).toEqual([0, 0, 0]);
+  } finally {
+    scene.dispose();
+    engine.dispose();
+  }
 });
-it('retains sparse crossed native card geometry, zero-density perimeter UVs and air-like IOR',()=>{
- expect(kit.materials).toHaveLength(1);expect(kit.materials[0].ior).toBe(1);expect(kit.materials[0].doubleSided).toBe(true);
- const batches=composeToxicFog(kit,38,1);expect(batches.reduce((n,b)=>n+b.indices.length/3,0)).toBe(6912);
- for(const variant of kit.variants){expect(variant.indices.length/3).toBe(576);expect(Math.min(...variant.uvs)).toBe(0);expect(Math.max(...variant.uvs)).toBe(1);expect(variant.normals.every(Number.isFinite)).toBe(true);}
+it("retains sparse crossed native card geometry, zero-density perimeter UVs and air-like IOR", () => {
+  expect(kit.materials).toHaveLength(1);
+  expect(kit.materials[0].ior).toBe(1);
+  expect(kit.materials[0].doubleSided).toBe(true);
+  const batches = composeToxicFog(kit, 38, 1);
+  expect(batches.reduce((n, b) => n + b.indices.length / 3, 0)).toBe(6912);
+  for (const variant of kit.variants) {
+    expect(variant.indices.length / 3).toBe(576);
+    expect(Math.min(...variant.uvs)).toBe(0);
+    expect(Math.max(...variant.uvs)).toBe(1);
+    expect(variant.normals.every(Number.isFinite)).toBe(true);
+  }
 });

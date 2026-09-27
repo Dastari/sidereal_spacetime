@@ -9,3 +9,7 @@
 *.zip filter=lfs diff=lfs merge=lfs -text
 assets/art-library/framed-wayfarer/r004/hull/*/models.tar.xz filter=lfs diff=lfs merge=lfs -text
 assets/art-library/framed-wayfarer/r005/*/models.tar.xz filter=lfs diff=lfs merge=lfs -text
+
+# Exact native inputs shared by clean builds and CI.
+assets/ci/*.tar.xz filter=lfs diff=lfs merge=lfs -text
+assets/ci/fixtures/*.tar.xz filter=lfs diff=lfs merge=lfs -text

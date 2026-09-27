@@ -18,10 +18,10 @@ import {
   planLayoutDoorways,
   loadLayoutDoorways,
 } from "./layout-doorway-preview";
-import { DOORWAY250_VISUALS } from "../../content/src/construction-doorway-visuals";
+import { DOORWAY250_VISUALS } from "@sidereal/content/construction-doorway-visuals";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
 import { proposeWallOpening } from "@sidereal/sim/layout-structure";
-import { createDoorway250ReviewLayout } from "../../content/src/doorway250-review-layout";
+import { createDoorway250ReviewLayout } from "@sidereal/content/doorway250-review-layout";
 const engines: NullEngine[] = [];
 afterEach(() => {
   for (const engine of engines.splice(0)) engine.dispose();

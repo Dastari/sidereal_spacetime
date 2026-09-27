@@ -1,9 +1,9 @@
 import type { ConstructionDocument } from "@sidereal/content/construction";
-import { CABIN_COLLIDERS } from "../../content/src/interior";
+import { CABIN_COLLIDERS } from "@sidereal/content/interior";
 import {
   constrainLabDeck,
   LAB_CREW_CLEARANCE,
-} from "../../content/src/pilot-layout";
+} from "@sidereal/content/pilot-layout";
 import type { Point } from "@sidereal/content/ship-layout";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import {
@@ -34,7 +34,7 @@ import { REFIT_FUEL_ATTACHMENT } from "@sidereal/sim/wayfarer-refit-audit";
 import {
   QUALIFIED_WAYFARER_SHA256,
   qualifiedWayfarerWalkingBindings,
-} from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/wayfarer-walking-bindings";
 import type { ConstructionRenderInput } from "./construction-instance";
 
 export interface DebugCollisionAcceptedState {

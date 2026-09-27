@@ -58,7 +58,10 @@ export function ShipSystemsPanel({
         if (!disposed)
           setError("Ship systems are unavailable. Reconnect and try again.");
       })
-      .subscribe([tables.ownAuthoredFlights, tables.ownAuthoredFlightPowerFittings]);
+      .subscribe([
+        tables.ownAuthoredFlights,
+        tables.ownAuthoredFlightPowerFittings,
+      ]);
     return () => {
       disposed = true;
       for (const table of watched) {
@@ -84,7 +87,9 @@ export function ShipSystemsPanel({
     const currentBinding = [...connection.db.ownAuthoredFlights.iter()].find(
       (row) => row.shipId === currentActor?.shipId,
     );
-    const engine = [...connection.db.ownAuthoredFlightPowerFittings.iter()].find(
+    const engine = [
+      ...connection.db.ownAuthoredFlightPowerFittings.iter(),
+    ].find(
       (row) =>
         row.shipId === currentBinding?.shipId &&
         row.placedObjectId === placedObjectId &&

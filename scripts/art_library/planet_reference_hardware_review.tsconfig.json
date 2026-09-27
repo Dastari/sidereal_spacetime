@@ -1,1 +1,10 @@
-{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["planet_reference_direct_paths.ts","planet_reference_lod_recorder.ts","planet_reference_hardware_review.test.ts","planet_reference_hardware_review.vitest.config.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "planet_reference_direct_paths.ts",
+    "planet_reference_lod_recorder.ts",
+    "planet_reference_hardware_review.test.ts",
+    "planet_reference_hardware_review.vitest.config.ts"
+  ]
+}

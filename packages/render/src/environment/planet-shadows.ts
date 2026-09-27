@@ -71,33 +71,51 @@ export function createPlanetShadows(scene: Scene) {
     },
     /** Prepare the exact initial, returned-far and hero light orders before a
      * pending native level is made ready. Babylon appends restored lights. */
-    prepare(mesh: Mesh, nextFrame: () => Promise<void>, options: { signal?: AbortSignal; opaqueRefraction?: boolean } = {}) {
+    prepare(
+      mesh: Mesh,
+      nextFrame: () => Promise<void>,
+      options: { signal?: AbortSignal; opaqueRefraction?: boolean } = {},
+    ) {
       const { signal, opaqueRefraction } = options;
       const epoch = lightEpoch;
-      const run = preparationTail.catch(() => {}).then(async () => {
-        const check = () => {
-          if (disposed || epoch !== lightEpoch || signal?.aborted || mesh.isDisposed())
-            throw new Error("Planet shadow preparation invalidated");
-        };
-        check();
-        if (!primary) throw new Error("Planet shadow preparation requires primary light");
-        const far = mesh.lightSources.filter(light => light !== key);
-        const other = far.filter(light => light !== primary);
-        const returned = far.includes(primary) ? [...other, primary] : other;
-        preparationYield = async () => { await nextFrame(); check(); };
-        await preparation.prepare({
-          mesh,
-          signal,
-          opaqueRefraction,
-          cast: mesh.metadata?.planetShadow?.cast !== false,
-          variants: [
-            { lights: far, receiveShadows: mesh.receiveShadows },
-            { lights: returned, receiveShadows: mesh.receiveShadows },
-            { lights: [...other, key], receiveShadows: mesh.metadata?.planetShadow?.receive !== false },
-          ],
+      const run = preparationTail
+        .catch(() => {})
+        .then(async () => {
+          const check = () => {
+            if (
+              disposed ||
+              epoch !== lightEpoch ||
+              signal?.aborted ||
+              mesh.isDisposed()
+            )
+              throw new Error("Planet shadow preparation invalidated");
+          };
+          check();
+          if (!primary)
+            throw new Error("Planet shadow preparation requires primary light");
+          const far = mesh.lightSources.filter((light) => light !== key);
+          const other = far.filter((light) => light !== primary);
+          const returned = far.includes(primary) ? [...other, primary] : other;
+          preparationYield = async () => {
+            await nextFrame();
+            check();
+          };
+          await preparation.prepare({
+            mesh,
+            signal,
+            opaqueRefraction,
+            cast: mesh.metadata?.planetShadow?.cast !== false,
+            variants: [
+              { lights: far, receiveShadows: mesh.receiveShadows },
+              { lights: returned, receiveShadows: mesh.receiveShadows },
+              {
+                lights: [...other, key],
+                receiveShadows: mesh.metadata?.planetShadow?.receive !== false,
+              },
+            ],
+          });
+          check();
         });
-        check();
-      });
       preparationTail = run;
       return run;
     },

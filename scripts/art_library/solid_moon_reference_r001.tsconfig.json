@@ -1,1 +1,8 @@
-{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["solid_moon_reference_composition_r001.ts","solid_moon_reference_composition_r001.test.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "solid_moon_reference_composition_r001.ts",
+    "solid_moon_reference_composition_r001.test.ts"
+  ]
+}

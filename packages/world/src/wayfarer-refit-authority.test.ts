@@ -1,4 +1,4 @@
-import { WAYFARER_STARTER } from "../../content/src/wayfarer-starter";
+import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";

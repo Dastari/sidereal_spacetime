@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { createDoorway250ReviewLayout } from "../../../../../packages/content/src/doorway250-review-layout";
+import { createDoorway250ReviewLayout } from "@sidereal/content/doorway250-review-layout";
 import { compileLayout } from "@sidereal/sim/layout-compiler";
 import { applyLayoutGesture } from "./layout-gestures";
 import type { LayoutDocument } from "@sidereal/content/ship-layout";

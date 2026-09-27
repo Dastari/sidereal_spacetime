@@ -1,3 +1,5 @@
+import { createHullPaintBinding } from "./hull-paint";
+import { hullPaintKey } from "@sidereal/content/hull-paint";
 import { categoryMeshRole, setMeshRole } from "./mesh-roles";
 import { updateHullDecals } from "./hull-decals";
 import { loadEquipmentPrototypes } from "./installed-equipment";
@@ -114,6 +116,7 @@ export async function createAssemblyEditor(
     string,
     {
       assetId: string;
+      paintKey: string;
       node: TransformNode;
       lighting: ReturnType<typeof createEquipmentLighting>;
     }
@@ -282,7 +285,11 @@ export async function createAssemblyEditor(
         }
       for (const part of doc.parts) {
         let entry = nodes.get(part.id);
-        if (entry && entry.assetId !== part.assetId) {
+        if (
+          entry &&
+          (entry.assetId !== part.assetId ||
+            entry.paintKey !== hullPaintKey(part.paint))
+        ) {
           entry.lighting.dispose();
           entry.node.dispose();
           nodes.delete(part.id);
@@ -312,6 +319,11 @@ export async function createAssemblyEditor(
           }
           const node = new TransformNode("placement-" + part.id, scene);
           node.metadata = { partId: part.id };
+          const painter = createHullPaintBinding(
+            node,
+            catalog.assets.find((a) => a.id === part.assetId)!,
+            part.paint,
+          );
           const fixtures = catalog.assets.find(
             (a) => a.id === part.assetId,
           )?.lights;
@@ -319,9 +331,11 @@ export async function createAssemblyEditor(
             // Babylon hardware instances bind source-mesh lighting. A lightweight
             // clone shares geometry but permits lights scoped to this placement.
             const name = part.id + "--" + source.name;
-            const instance = fixtures?.length
-              ? source.clone(name, node, true)!
-              : source.createInstance(name);
+            const instance = painter
+              ? painter.clone(source, name)
+              : fixtures?.length
+                ? source.clone(name, node, true)!
+                : source.createInstance(name);
             instance.metadata = {
               ...source.metadata,
               partId: part.id,
@@ -336,7 +350,12 @@ export async function createAssemblyEditor(
           }
           const lighting = createEquipmentLighting(scene, node, fixtures);
           lighting.setMeshes(node.getChildMeshes());
-          entry = { assetId: part.assetId, node, lighting };
+          entry = {
+            assetId: part.assetId,
+            node,
+            lighting,
+            paintKey: hullPaintKey(part.paint),
+          };
           nodes.set(part.id, entry);
         }
         updateHullDecals(scene, entry.node, part.decals, part.flipped);

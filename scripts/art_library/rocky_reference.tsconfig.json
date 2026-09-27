@@ -1,5 +1,9 @@
 {
- "extends":"../../tsconfig.json",
- "compilerOptions":{"noEmit":true},
- "include":["rocky_reference_composition.ts","rocky_reference_composition.test.ts","rocky_reference.vitest.config.ts"]
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "rocky_reference_composition.ts",
+    "rocky_reference_composition.test.ts",
+    "rocky_reference.vitest.config.ts"
+  ]
 }
