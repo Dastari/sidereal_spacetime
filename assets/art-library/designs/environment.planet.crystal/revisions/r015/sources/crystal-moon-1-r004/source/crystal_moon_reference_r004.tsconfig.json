@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["crystal_moon_reference_composition_r003.ts","crystal_moon_reference_composition_r004.test.ts"]}

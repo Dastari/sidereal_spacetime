@@ -8,11 +8,11 @@ import { CONSTRUCTION_BOUNDARY_PIN } from "@sidereal/content/construction-bounda
 import { CONSTRUCTION_BOUNDARY_FAMILY_PIN } from "@sidereal/content/construction-boundary-family";
 import { emptyLayout, stampTile } from "@sidereal/content/ship-layout";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
-import { CABIN_COLLIDERS } from "../../content/src/interior";
+import { CABIN_COLLIDERS } from "@sidereal/content/interior";
 import {
   constrainLabDeck,
   LAB_CREW_CLEARANCE,
-} from "../../content/src/pilot-layout";
+} from "@sidereal/content/pilot-layout";
 import {
   createNativeAirlockDocument,
   bindNativeAirlockPlan,
@@ -47,7 +47,7 @@ import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 import {
   qualifiedWayfarerWalkingBindings,
   QUALIFIED_WAYFARER_SHA256,
-} from "../../sim/src/wayfarer-walking-bindings";
+} from "@sidereal/sim/wayfarer-walking-bindings";
 import { REFIT_FUEL_ATTACHMENT } from "@sidereal/sim/wayfarer-refit-audit";
 import { canonicalPolygon, inside } from "@sidereal/sim/layout-geometry";
 import { createDebugCollisionSource } from "./debug-collision-source";

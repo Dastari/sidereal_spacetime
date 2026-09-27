@@ -1,1 +1,10 @@
-{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["toxic_fog_reference_integration.ts","toxic_fog_reference_material.ts","toxic_fog_reference_integration.test.ts","toxic_fog_reference.vitest.config.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "toxic_fog_reference_integration.ts",
+    "toxic_fog_reference_material.ts",
+    "toxic_fog_reference_integration.test.ts",
+    "toxic_fog_reference.vitest.config.ts"
+  ]
+}

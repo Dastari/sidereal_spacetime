@@ -1,0 +1,1 @@
+Rejected: imported GLB vertex splitting at optical seams is not native closed topology. Successor9 appends original editable Blender objects directly; do not weld independent pieces or waive manifold checks.

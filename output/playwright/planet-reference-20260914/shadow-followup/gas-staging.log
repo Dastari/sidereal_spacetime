@@ -1,0 +1,34 @@
+{
+  "directory": "/root/sidereal_spacetime/scripts/art_library/review-staging/gas-r005",
+  "manifest": {
+    "scope": "explicit isolated local review; no production publication",
+    "revision": "gas-r005",
+    "source": "output/playwright/planet-reference-20260914/gas-r005",
+    "files": {
+      "frontier-workshop.hdr": {
+        "sha256": "11f358cce19278c6115633430d1b1d5c7fc2dc35a16f73468b46dcf6724a4364",
+        "bytes": 55248
+      },
+      "gas-albedo-generated.png": {
+        "sha256": "1043b2f9253ff2bb8197335016fc0819b05984e9b77f2489e06758e3d7aba7da",
+        "bytes": 2383804
+      },
+      "kit.json": {
+        "sha256": "516f79ced2b76c0e82e2d3bc4399b306d137d901f281c1d34c466a76b1477130",
+        "bytes": 8745362
+      },
+      "ring-dust-0.png": {
+        "sha256": "7041fa1d8a8f2fdd0f2dbcbc8c77ce4b491e78b79759b44d3e4ae4f6d853c73e",
+        "bytes": 3267917
+      },
+      "ring-dust-1.png": {
+        "sha256": "27e20a0ac8a669a94866bc80ddb9078f34b12b32df537ff8beefa25e38518d79",
+        "bytes": 3275831
+      },
+      "ring-dust-2.png": {
+        "sha256": "dd37b7192e49d7fa4114d384d9ba61ec6147859ca9d5261529b9ea1badb455b4",
+        "bytes": 3258461
+      }
+    }
+  }
+}

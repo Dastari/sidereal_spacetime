@@ -29,7 +29,7 @@ it('retains the original deep shaft floor with bounded compact blue columns',()=
 it('preserves corrected Ice21 material exports while replacing regional morphology',()=>{
  const old=JSON.parse(readFileSync('output/playwright/planet-reference-20260914/ice-r021/kit.json','utf8'))as NativePlanetKit;
  expect(kit.materials).toEqual(old.materials);
- 
+
  for(let role=0;role<5;role++)for(const channel of ['albedo','orm'])expect(readFileSync(`output/playwright/planet-reference-20260914/ice-r025/ice-${role}-${channel}.png`)).toEqual(readFileSync(`output/playwright/planet-reference-20260914/ice-r021/ice-${role}-${channel}.png`));
  const area=(source:NativePlanetKit)=>{const v=source.variants.find(v=>v.name==='snow-cut-region')!;let total=0;for(let i=0;i<v.indices.length;i+=3){if(![2,3].includes(v.triangleMaterials[i/3]))continue;const p=[0,1,2].map(k=>Vector3.FromArray(v.positions,v.indices[i+k]*3));if(p.reduce((n,v)=>n+v.z,0)<=0)continue;total+=Vector3.Cross(p[1].subtract(p[0]),p[2].subtract(p[0])).length()/2;}return total;};
  expect(area(kit)).toBeGreaterThan(area(old)*1.25);

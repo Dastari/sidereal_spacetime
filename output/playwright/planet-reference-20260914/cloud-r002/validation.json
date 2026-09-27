@@ -1,0 +1,72 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "coordinates": "Blender Z up, cloud centred around Z0; drift/composition is renderer presentation",
+  "partsManifold": true,
+  "variants": [
+    {
+      "name": "cloud-swept-bank",
+      "vertices": 952,
+      "triangles": 1836,
+      "bounds": [
+        [
+          -1.3770884275436401,
+          1.3202465772628784
+        ],
+        [
+          -0.39956381916999817,
+          0.5111981630325317
+        ],
+        [
+          -0.2624431252479553,
+          0.6577562689781189
+        ]
+      ]
+    },
+    {
+      "name": "cloud-towering-bank",
+      "vertices": 896,
+      "triangles": 1728,
+      "bounds": [
+        [
+          -1.0330699682235718,
+          1.010252833366394
+        ],
+        [
+          -0.43787479400634766,
+          0.43534162640571594
+        ],
+        [
+          -0.22241397202014923,
+          0.9444653987884521
+        ]
+      ]
+    },
+    {
+      "name": "cloud-broken-wisp",
+      "vertices": 728,
+      "triangles": 1404,
+      "bounds": [
+        [
+          -1.272229790687561,
+          1.0059207677841187
+        ],
+        [
+          -0.32276836037635803,
+          0.3214396834373474
+        ],
+        [
+          -0.17680306732654572,
+          0.438835084438324
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "kit.json": "ae4a1f95517ff4425d0f7ab532c2d91e960b6512f833c23d01b816e717dbdd01",
+    "cloud-towering-bank.glb": "ad314c0cf1be032a114ce548b9f061112bd57c941730ca0746f3984155aad8a5",
+    "kit.blend": "03f1fa782d490f3dea18b099906fd6098cc2a45157690d312caec6ee43b7af8a",
+    "cloud-swept-bank.glb": "d5786184f2b7ae1c4e7c31d212ea66f10ddb15ec583ef152b0ea2a29c0427a16",
+    "cloud-broken-wisp.glb": "c76cb6c0c78059e30570a1382eb710c59ef9a1a3cd5bc548c42d97cc730dd3f9",
+    "kit-preview.png": "6601e5e12012207eaf5fd1ddb160d43cdad0ac0bc8edc27dba198870efc474c2"
+  }
+}

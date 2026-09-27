@@ -21,7 +21,7 @@ describe("canonical shared-system seed and explicit admission", () => {
     ensureCanonicalSystem(db);
     const before = writes();
     expect(db.worldSystem.rows.size).toBe(1);
-    expect(db.systemBody.rows.size).toBe(16);
+    expect(db.systemBody.rows.size).toBe(SHARED_SYSTEM_SEED.bodies.length);
     const rock = SHARED_SYSTEM_SEED.bodies[0];
     const motion = db.bodyWorldMotion.bodyId.find(rock.id);
     db.bodyWorldMotion.bodyId.update({ ...motion, x: 7, serverTick: 12n });
@@ -36,7 +36,7 @@ describe("canonical shared-system seed and explicit admission", () => {
     joinSharedSystem(ctx(), args());
     joinSharedSystem(ctx(2, other), args(2));
     expect(db.worldSystem.rows.size).toBe(1);
-    expect(db.systemBody.rows.size).toBe(16);
+    expect(db.systemBody.rows.size).toBe(SHARED_SYSTEM_SEED.bodies.length);
     const a = db.shipWorldMotion.shipId.find("ship1"),
       b = db.shipWorldMotion.shipId.find("ship2");
     expect(a.systemId).toBe(b.systemId);
@@ -144,7 +144,7 @@ describe("canonical shared-system seed and explicit admission", () => {
     expect(() => ensureCanonicalSystem(db)).toThrow(/incomplete/);
     db.worldSystem.id.update({
       ...db.worldSystem.id.find(SHARED_SYSTEM_SEED.systemId),
-      seedRevision: 2n,
+      seedRevision: 99n,
     });
     expect(() => ensureCanonicalSystem(db)).toThrow(/migration/);
   });

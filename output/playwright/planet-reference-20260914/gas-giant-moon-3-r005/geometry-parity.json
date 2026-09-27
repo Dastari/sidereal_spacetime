@@ -1,0 +1,10 @@
+{
+  "variants": 11,
+  "positionsNormalsUVIndices": "all exact r004",
+  "firstSixMaterials": "all exact r004",
+  "all16Textures": "all bytes exact r004",
+  "changedNativeMaterialFaces": 592,
+  "totalNativeFaces": 36554,
+  "changedFraction": 0.016195218033594135,
+  "iorNormalization": "all corrected GLB BIN chunks independently byte-compared, exact"
+}

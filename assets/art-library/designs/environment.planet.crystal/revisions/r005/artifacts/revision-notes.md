@@ -1,0 +1,9 @@
+# Crystal r005 native finish
+
+Major crystal geometry and composed transforms are unchanged from source3/composition4. Two additional medium clusters per region use an independent seeded stream so major crystal rotations and existing outcrop placement remain stable. Regional geography and all geometry are retained across LOD levels.
+
+Existing fracture cliffs and low shelves gain selected chipped lips and irregular perimeter cuts. Native offline-authored PBR albedo and ORM images give dark rock subtle pigment/fracture and roughness hierarchy. Crystal broad faces gain face-local gradients in base color; emitting core/edge roles use the same gradient image for emission to prevent constant emission washing out depth. This is ordinary textured PBR, no replacement shader, extra lights or transmission claim. JSON materials carry baseColorTexture, metallicRoughnessTexture (R1/Groughness/B0), optional emissiveTexture, invertY=false and complete factors. Native UV/corner normals are exported and transported through spherical mapping.
+
+Three tests and TypeScript checking pass: unchanged previous major crystal placement, 36 retained medium groups, bounded <90k composed triangles, identical LOD attributes, and NullEngine UV/normal upload. The 11-variant JSON/GLB attribute audit has zero material differences, attribute gaps or position/normal/UV mismatches. Emission texture sharing is independently checked. Actual native preview inspected; first roughness-reset/regular-grain attempt retained under attempt-01-roughness-reset. Source textures are procedural native authoring assets packed in editable Blender source, with no directional shadow bake.
+
+Whole-planet PBR/glow and local magenta influence are pending parent diagnostics; this is not visual acceptance or hardware timing evidence.

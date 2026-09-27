@@ -1,0 +1,25 @@
+{
+  "referenceId": "planets--volcanic-moon-1",
+  "foundation": "/root/sidereal_spacetime/scripts/art_library/build_rocky_native_kit_r010.py",
+  "foundationSha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+  "runtimeStyle": "moon",
+  "status": "isolated authored candidate; exact variant visual review pending",
+  "seed": 1523,
+  "family": "volcanic",
+  "count": 12,
+  "scales": [
+    0.41,
+    0.38,
+    0.43,
+    0.39,
+    0.4,
+    0.38,
+    0.42,
+    0.39,
+    0.43,
+    0.37,
+    0.41,
+    0.4
+  ],
+  "cue": "Purple charcoal crater crust with connected localized orange fissures and a few molten rim exposures"
+}

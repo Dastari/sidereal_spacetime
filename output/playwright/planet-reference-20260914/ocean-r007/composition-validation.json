@@ -1,0 +1,16 @@
+{
+  "testsPassed": 6,
+  "typescript": "passed",
+  "nativeHighTriangles": 147902,
+  "materialDefinitions": 16,
+  "extraIslandMaterialDefinitions": 6,
+  "parity": "All ten variants: zero material/corner differences or gaps; all embedded textures byte-identical to authored PNGs",
+  "preservation": "Ocean6 water, reef, grove JSON variants/GLBs/maps exact; island topology unchanged and maximum native vertex offset <.03 source units",
+  "lod": "Major authored positions/normals/UVs/ranges exact across levels",
+  "status": "Frozen for actual two-angle and ~300px body review",
+  "hashes": {
+    "kit.json": "71c2918ae71f8d074bfb8a8d94bc76f7271dd94e8a20c2c1b1f323f30d057f22",
+    "generator.py": "4c7a6c151b3ccb10a0e340d24d3158d2b495b029dd4e3ba7d7bdbb18bf9e464a",
+    "composition-r007.ts": "c22cbc5fe97e0f17d1c39ea0e7b85b624574f8a59ac000eae50a729f4c38fcac"
+  }
+}

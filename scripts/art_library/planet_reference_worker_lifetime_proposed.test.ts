@@ -1,11 +1,164 @@
-import{it,expect}from'vitest';
-import{NullEngine}from'@babylonjs/core/Engines/nullEngine';import{Scene}from'@babylonjs/core/scene';import{TransformNode}from'@babylonjs/core/Meshes/transformNode';import{Mesh}from'@babylonjs/core/Meshes/mesh';import{PBRMaterial}from'@babylonjs/core/Materials/PBR/pbrMaterial';
-import{createPlanetLODCache}from'../../packages/render/src/environment/planet-lod-cache';
-import{createReferenceWorkerLifetime,createReferenceUploadLifetime,referenceFixedDetail,type ReferenceWorkerTransport}from'./planet_reference_worker_lifetime_proposed';
-class FakeWorker implements ReferenceWorkerTransport{messages:unknown[]=[];terminated=0;onmessage:ReferenceWorkerTransport['onmessage']=null;onerror:ReferenceWorkerTransport['onerror']=null;onmessageerror:ReferenceWorkerTransport['onmessageerror']=null;postMessage(v:unknown){this.messages.push(v);}terminate(){this.terminated++;}reply(data:unknown){this.onmessage?.({data}as MessageEvent);}}
-const flush=async()=>{for(let i=0;i<8;i++)await Promise.resolve();};
-it('initializes once, routes overlapping jobs, rejects deferred jobs and ignores late completions after disposal',async()=>{const w=new FakeWorker(),client=createReferenceWorkerLifetime<{value:number}>(w,{kitURL:'/selected/kit.json'});const a=client.request({lod:2}),b=client.request({lod:0});w.reply({id:2,value:4});expect(await b).toEqual({value:4});const rejected=expect(a).rejects.toThrow('disposed');const late=w.onmessage;client.dispose();await rejected;late?.({data:{id:1,value:9}}as MessageEvent);expect(client.stats()).toEqual({disposed:true,pending:0});expect(w.terminated).toBe(1);expect(w.messages).toEqual([{type:'initialize',id:0,kitURL:'/selected/kit.json'},{type:'build',id:1,lod:2},{type:'build',id:2,lod:0}]);await expect(client.request({lod:1})).rejects.toThrow('disposed');});
-it('fails all waiting jobs on initialization or transport failure without fallback',async()=>{for(const kind of ['init','transport']){const w=new FakeWorker(),client=createReferenceWorkerLifetime(w,{}),p=client.request({lod:0}),rejected=expect(p).rejects.toThrow('broken');if(kind==='init')w.reply({id:0,error:'broken'});else w.onerror?.({message:'broken'}as ErrorEvent);await rejected;expect(w.terminated).toBe(1);}});
-it('NullEngine removes a partially uploaded node on disposal and preserves the shared material',async()=>{const engine=new NullEngine(),scene=new Scene(engine);try{const material=new PBRMaterial('shared',scene),node=new TransformNode('pending',scene),mesh=new Mesh('part',scene);node.metadata=mesh.metadata={role:'planet'};mesh.parent=node;mesh.material=material;const life=createReferenceUploadLifetime();let resume!:()=>void;const blocked=new Promise<void>(r=>resume=r);const build=life.build(node,async()=>{await life.yieldFrame(()=>blocked);throw new Error('unreachable');});const rejected=expect(build).rejects.toThrow('disposed');life.dispose();expect(node.isDisposed()).toBe(true);resume();await rejected;expect(scene.materials).toContain(material);expect(scene.meshes).not.toContain(mesh);}finally{scene.dispose();engine.dispose();}});
-it('NullEngine keeps old ready node visible until ready swap, retains nodes/material identity, and cleans failed uploads',async()=>{const engine=new NullEngine(),scene=new Scene(engine);try{const material=new PBRMaterial('shared',scene),life=createReferenceUploadLifetime();const release=new Map<number,()=>void>();const cache=createPlanetLODCache(async lod=>{const node=new TransformNode('lod',scene);node.metadata={role:'planet',lod};node.setEnabled(false);return life.build(node,async()=>{const mesh=new Mesh('part',scene);mesh.metadata={role:'planet',partId:'hero'};mesh.parent=node;mesh.material=material;await new Promise<void>(r=>release.set(lod,r));}).then(root=>({root}));},v=>v.root.dispose(false,false));cache.update(2,20);release.get(2)!();await flush();cache.update(2,20);const old=scene.transformNodes.find(n=>n.metadata?.lod===2)!;cache.update(0,300);expect(old.isEnabled()).toBe(true);release.get(0)!();await flush();expect(old.isEnabled()).toBe(true);cache.update(0,300);expect(old.isEnabled()).toBe(false);cache.update(2,20);expect(old.isEnabled()).toBe(true);expect(cache.snapshot().retained.sort()).toEqual([0,2]);expect(scene.meshes.every(m=>m.material===material)).toBe(true);const failed=new TransformNode('failed',scene);await expect(life.build(failed,async()=>{throw new Error('compile failed');})).rejects.toThrow('compile failed');expect(failed.isDisposed()).toBe(true);life.dispose();cache.dispose();expect(scene.meshes).toHaveLength(0);expect(scene.materials).toContain(material);}finally{scene.dispose();engine.dispose();}});
-it('fixed detail is explicitly revision-qualified while unknown and moon layouts retain LOD behavior',()=>{for(const revision of ['ice-r025','ice-r026'])expect(referenceFixedDetail('single-glacial-cut-diagnostic',revision)).toBe(true);for(const revision of [null,'ice-r024','ice-r027','ice-moon-1-r002'])expect(referenceFixedDetail('single-glacial-cut-diagnostic',revision)).toBe(false);expect(referenceFixedDetail('ice-moon-glacial','ice-r025')).toBe(false);expect(referenceFixedDetail('gas-bands-and-rings',null)).toBe(true);});
+import { it, expect } from "vitest";
+import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
+import { Scene } from "@babylonjs/core/scene";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
+import { createPlanetLODCache } from "../../packages/render/src/environment/planet-lod-cache";
+import {
+  createReferenceWorkerLifetime,
+  createReferenceUploadLifetime,
+  referenceFixedDetail,
+  type ReferenceWorkerTransport,
+} from "./planet_reference_worker_lifetime_proposed";
+class FakeWorker implements ReferenceWorkerTransport {
+  messages: unknown[] = [];
+  terminated = 0;
+  onmessage: ReferenceWorkerTransport["onmessage"] = null;
+  onerror: ReferenceWorkerTransport["onerror"] = null;
+  onmessageerror: ReferenceWorkerTransport["onmessageerror"] = null;
+  postMessage(v: unknown) {
+    this.messages.push(v);
+  }
+  terminate() {
+    this.terminated++;
+  }
+  reply(data: unknown) {
+    this.onmessage?.({ data } as MessageEvent);
+  }
+}
+const flush = async () => {
+  for (let i = 0; i < 8; i++) await Promise.resolve();
+};
+it("initializes once, routes overlapping jobs, rejects deferred jobs and ignores late completions after disposal", async () => {
+  const w = new FakeWorker(),
+    client = createReferenceWorkerLifetime<{ value: number }>(w, {
+      kitURL: "/selected/kit.json",
+    });
+  const a = client.request({ lod: 2 }),
+    b = client.request({ lod: 0 });
+  w.reply({ id: 2, value: 4 });
+  expect(await b).toEqual({ value: 4 });
+  const rejected = expect(a).rejects.toThrow("disposed");
+  const late = w.onmessage;
+  client.dispose();
+  await rejected;
+  late?.({ data: { id: 1, value: 9 } } as MessageEvent);
+  expect(client.stats()).toEqual({ disposed: true, pending: 0 });
+  expect(w.terminated).toBe(1);
+  expect(w.messages).toEqual([
+    { type: "initialize", id: 0, kitURL: "/selected/kit.json" },
+    { type: "build", id: 1, lod: 2 },
+    { type: "build", id: 2, lod: 0 },
+  ]);
+  await expect(client.request({ lod: 1 })).rejects.toThrow("disposed");
+});
+it("fails all waiting jobs on initialization or transport failure without fallback", async () => {
+  for (const kind of ["init", "transport"]) {
+    const w = new FakeWorker(),
+      client = createReferenceWorkerLifetime(w, {}),
+      p = client.request({ lod: 0 }),
+      rejected = expect(p).rejects.toThrow("broken");
+    if (kind === "init") w.reply({ id: 0, error: "broken" });
+    else w.onerror?.({ message: "broken" } as ErrorEvent);
+    await rejected;
+    expect(w.terminated).toBe(1);
+  }
+});
+it("NullEngine removes a partially uploaded node on disposal and preserves the shared material", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  try {
+    const material = new PBRMaterial("shared", scene),
+      node = new TransformNode("pending", scene),
+      mesh = new Mesh("part", scene);
+    node.metadata = mesh.metadata = { role: "planet" };
+    mesh.parent = node;
+    mesh.material = material;
+    const life = createReferenceUploadLifetime();
+    let resume!: () => void;
+    const blocked = new Promise<void>((r) => (resume = r));
+    const build = life.build(node, async () => {
+      await life.yieldFrame(() => blocked);
+      throw new Error("unreachable");
+    });
+    const rejected = expect(build).rejects.toThrow("disposed");
+    life.dispose();
+    expect(node.isDisposed()).toBe(true);
+    resume();
+    await rejected;
+    expect(scene.materials).toContain(material);
+    expect(scene.meshes).not.toContain(mesh);
+  } finally {
+    scene.dispose();
+    engine.dispose();
+  }
+});
+it("NullEngine keeps old ready node visible until ready swap, retains nodes/material identity, and cleans failed uploads", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  try {
+    const material = new PBRMaterial("shared", scene),
+      life = createReferenceUploadLifetime();
+    const release = new Map<number, () => void>();
+    const cache = createPlanetLODCache(
+      async (lod) => {
+        const node = new TransformNode("lod", scene);
+        node.metadata = { role: "planet", lod };
+        node.setEnabled(false);
+        return life
+          .build(node, async () => {
+            const mesh = new Mesh("part", scene);
+            mesh.metadata = { role: "planet", partId: "hero" };
+            mesh.parent = node;
+            mesh.material = material;
+            await new Promise<void>((r) => release.set(lod, r));
+          })
+          .then((root) => ({ root }));
+      },
+      (v) => v.root.dispose(false, false),
+    );
+    cache.update(2, 20);
+    release.get(2)!();
+    await flush();
+    cache.update(2, 20);
+    const old = scene.transformNodes.find((n) => n.metadata?.lod === 2)!;
+    cache.update(0, 300);
+    expect(old.isEnabled()).toBe(true);
+    release.get(0)!();
+    await flush();
+    expect(old.isEnabled()).toBe(true);
+    cache.update(0, 300);
+    expect(old.isEnabled()).toBe(false);
+    cache.update(2, 20);
+    expect(old.isEnabled()).toBe(true);
+    expect(cache.snapshot().retained.sort()).toEqual([0, 2]);
+    expect(scene.meshes.every((m) => m.material === material)).toBe(true);
+    const failed = new TransformNode("failed", scene);
+    await expect(
+      life.build(failed, async () => {
+        throw new Error("compile failed");
+      }),
+    ).rejects.toThrow("compile failed");
+    expect(failed.isDisposed()).toBe(true);
+    life.dispose();
+    cache.dispose();
+    expect(scene.meshes).toHaveLength(0);
+    expect(scene.materials).toContain(material);
+  } finally {
+    scene.dispose();
+    engine.dispose();
+  }
+});
+it("fixed detail is explicitly revision-qualified while unknown and moon layouts retain LOD behavior", () => {
+  for (const revision of ["ice-r025", "ice-r026"])
+    expect(
+      referenceFixedDetail("single-glacial-cut-diagnostic", revision),
+    ).toBe(true);
+  for (const revision of [null, "ice-r024", "ice-r027", "ice-moon-1-r002"])
+    expect(
+      referenceFixedDetail("single-glacial-cut-diagnostic", revision),
+    ).toBe(false);
+  expect(referenceFixedDetail("ice-moon-glacial", "ice-r025")).toBe(false);
+  expect(referenceFixedDetail("gas-bands-and-rings", null)).toBe(true);
+});

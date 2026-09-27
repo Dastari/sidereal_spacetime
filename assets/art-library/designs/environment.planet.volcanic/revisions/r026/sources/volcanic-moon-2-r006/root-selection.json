@@ -1,0 +1,41 @@
+{
+  "status": "Root-authorized actual runtime hit-directed selection",
+  "variant": "battered-region-a",
+  "evidence": [
+    "output/playwright/planet-reference-20260914/volcanic-moon-2-r005/bank-placement-probe.json",
+    "output/playwright/planet-reference-20260914/reviews/volcanic-r006-native-hot-inspection.log",
+    "output/playwright/planet-reference-20260914/reviews/volcanic-moon2-r005.md"
+  ],
+  "hotObjects": [
+    "GEO-battered-region-a-warm-inset-mineral",
+    "GEO-battered-region-a-warm-inset-mineral-rise",
+    "GEO-battered-region-a-exposed-hot-fracture-1"
+  ],
+  "maximumCenterDistance": 0.14,
+  "maximumCornerDistance": 0.22,
+  "maximumHeightDifference": 0.09,
+  "intent": "Extend the existing native warm shoulder material onto immediately adjacent actual A cold bank faces at selected existing hot junctions. Preserve r005 B-edge exactly, no geometry or global material changes. Bounds are proposed upper selection distances, not claimed visible coverage.",
+  "hitMapping": [
+    {
+      "placement": "crust-0",
+      "batchFace": 73,
+      "localMaterialTriangle": 73,
+      "nativeObject": "GEO-battered-region-a-warm-inset-mineral"
+    },
+    {
+      "placement": "crust-4",
+      "batchFace": 2659,
+      "firstTriangle": 2220,
+      "localMaterialTriangle": 439,
+      "nativeObject": "GEO-battered-region-a-warm-inset-mineral-rise"
+    },
+    {
+      "placement": "crust-4",
+      "batchFace": 3239,
+      "firstTriangle": 2220,
+      "localMaterialTriangle": 1019,
+      "nativeObject": "GEO-battered-region-a-exposed-hot-fracture-1"
+    }
+  ],
+  "mappingBasis": "Preserved A source order has 383 warm-inset hot triangles,271 rise,18+18 caps,268 fracture0,280 fracture1,178 fracture2. Actual runtime hit ordinal identifies these three core objects; local cold banks selected by nearest native core distance."
+}

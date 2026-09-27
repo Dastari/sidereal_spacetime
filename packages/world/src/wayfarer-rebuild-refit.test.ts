@@ -1,4 +1,4 @@
-import { WAYFARER_STARTER } from "../../content/src/wayfarer-starter";
+import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => {
@@ -127,11 +127,15 @@ import {
   refitWayfarerRebuild,
   type WayfarerRebuildRefitHooks,
 } from "./wayfarer-rebuild-refit";
-import { readConstructionDraft } from "../../sim/src/construction-transactions";
-import { WAYFARER_REBUILD_SOURCE } from "../../sim/src/wayfarer-rebuild-contract";
+import { readConstructionDraft } from "@sidereal/sim/construction-transactions";
+import { WAYFARER_REBUILD_SOURCE } from "@sidereal/sim/wayfarer-rebuild-contract";
 function prepared() {
   const f = fixture();
-  const created = createWayfarerStarterAuthority(f.ctx, "Refit review", WAYFARER_STARTER);
+  const created = createWayfarerStarterAuthority(
+    f.ctx,
+    "Refit review",
+    WAYFARER_STARTER,
+  );
   const actor = created.actor;
   const instance = f.db.constructionInstance.id.find(actor.shipId);
   const mappings = JSON.parse(instance.idMapJson);
@@ -478,7 +482,7 @@ test("real native wall collision rejects an actor at a new partition before allo
   expect(f.snapshot()).toBe(before);
 });
 
-import { REFIT_FUEL_ATTACHMENT } from "../../sim/src/wayfarer-refit-audit";
+import { REFIT_FUEL_ATTACHMENT } from "@sidereal/sim/wayfarer-refit-audit";
 test("real qualification conserves an exact attached legacy fuel tank, contents and binding UUIDs", () => {
   const f = prepared(),
     hooks = qualifiedWayfarerRebuildHooks(),

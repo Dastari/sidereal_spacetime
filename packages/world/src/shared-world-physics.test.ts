@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { ZoneBudgetError } from "@sidereal/sim/zones";
 vi.mock("spacetimedb/server", () => ({ SenderError: class extends Error {} }));
 import { joinSharedSystem, ensureCanonicalSystem } from "./shared-world";
 import {
@@ -24,6 +25,7 @@ function stepSharedWorld(
   recordConsumption: Parameters<
     typeof stepCompiledSharedWorld
   >[2]["recordConsumption"] = () => {},
+  extra: Partial<Parameters<typeof stepCompiledSharedWorld>[2]> = {},
 ) {
   return stepCompiledSharedWorld(ctx, undefined, {
     recordConsumption,
@@ -60,6 +62,7 @@ function stepSharedWorld(
         exhaustY: -Math.cos(a.rotation),
       })),
     }),
+    ...extra,
   });
 }
 function setup() {
@@ -104,6 +107,7 @@ it("accepted consumption advances the sample clock even with unchanged motion an
     .spyOn(systemSpace, "stepSystemSpace")
     .mockImplementationOnce((bodies) => ({
       bodies,
+      trace: [],
       changedBodyIds: [],
       commands: [],
       impacts: 0,
@@ -497,4 +501,34 @@ it("initial invalid definitions reject the island and erase stale burn telemetry
   });
   expect(f.db.actuatorOutput.rows.size).toBe(0);
   expect(f.db.shipWorldMotion.shipId.find("ship1")).toEqual(before);
+});
+
+// Zone hooks (main's system-map/zone work) combined with compiled IFCS stepping.
+it("zone-only commits stamp the sample and cannot replay at the same tick", () => {
+  const f = setup();
+  rest(f);
+  stepSharedWorld(f.physics());
+  const zones = vi.fn(() => true),
+    ctx = { ...f.physics(), timestamp: { microsSinceUnixEpoch: 150000n } },
+    extra = { canPilot: () => false, zones };
+  expect(stepSharedWorld(ctx, undefined, extra).changedMotions).toBe(0);
+  expect(zones).toHaveBeenCalledOnce();
+  expect(stepSharedWorld(ctx, undefined, extra).reason).toBe(
+    "sample-already-applied",
+  );
+  expect(zones).toHaveBeenCalledOnce();
+});
+
+it("zone work exhaustion preserves pre-step motions", () => {
+  const f = setup(),
+    before = [...f.db.shipWorldMotion.rows.values()].map((r) => ({ ...r })),
+    report = stepSharedWorld(f.physics(), undefined, {
+      canPilot: () => false,
+      zones: () => {
+        throw new ZoneBudgetError();
+      },
+    });
+  expect(report.reason).toBe("zone-work-budget");
+  expect(report.status).toBe("exhausted");
+  expect([...f.db.shipWorldMotion.rows.values()]).toEqual(before);
 });

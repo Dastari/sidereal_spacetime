@@ -1,0 +1,10 @@
+{
+  "testsPassed": 4,
+  "testCommand": "blender -b --python scripts/art_library/test_gas_r004_material_preservation.py",
+  "kitParity": "5 variants, zero material or corner mismatches/gaps; embedded texture bytes identical",
+  "geometry": "Exact Gas3 JSON variants and GLB accessor buffer bytes, exact body/debris GLBs and body texture",
+  "rgbInput": "Decoded RGB identical in each RGBA export; generated source file preserved",
+  "uv": "Angular U unchanged; radial V1 inner, V0 outer; no sampling transform",
+  "sourceHash": "b7c1a00a6f3284f1ed9159726c6e878a86ea40b3fb1256f71e24f751ed3caa16",
+  "status": "Frozen draft; actual PBR daylight, seam and planet-cast shadow review pending"
+}

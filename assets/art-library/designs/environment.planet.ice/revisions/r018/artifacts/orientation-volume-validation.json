@@ -1,0 +1,36 @@
+{
+  "closedAngularColumns": [
+    {
+      "part": "GEO-hero-blue-column",
+      "volume": 0.15150775180084747,
+      "dimensions": [
+        0.45000070333480835,
+        0.38267356157302856,
+        1.6299999952316284
+      ],
+      "verticalWallArea": 1.845636036247015
+    },
+    {
+      "part": "GEO-blue-column-companion",
+      "volume": 0.09811281310158014,
+      "dimensions": [
+        0.35957902669906616,
+        0.3456457173451781,
+        1.3700000047683716
+      ],
+      "verticalWallArea": 1.3233820125460625
+    },
+    {
+      "part": "GEO-blue-column-short",
+      "volume": 0.07868051175627272,
+      "dimensions": [
+        0.34812861680984497,
+        0.2778460383415222,
+        1.1600000262260437
+      ],
+      "verticalWallArea": 1.1575295254588127
+    }
+  ],
+  "sourceUp": "Blender Z maps to radial outward under compositor18",
+  "snowCorniceThickness": 0.038
+}

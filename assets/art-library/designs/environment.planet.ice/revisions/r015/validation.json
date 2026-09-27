@@ -1,0 +1,49 @@
+{
+  "body": {
+    "id": "583218cf-677c-4c58-a966-7fa7c2b948f2",
+    "x": -3400,
+    "y": -2400,
+    "height": -180,
+    "radius": 70,
+    "seed": 47
+  },
+  "camera": {
+    "target": [
+      -3400,
+      -180,
+      2400
+    ],
+    "radius": 350
+  },
+  "native": {
+    "revision": "ice-r015",
+    "lod": 0,
+    "triangles": 74864
+  },
+  "environmentReady": true,
+  "environment": "/assets/materials/frontier-workshop.hdr",
+  "inputs": {
+    "target": [
+      -3400,
+      -180,
+      2400
+    ],
+    "radius": 254.15216297579184,
+    "alpha": 0.12799999999999995,
+    "beta": 0.8503166181245092
+  },
+  "return": {
+    "target": [
+      0,
+      0.8,
+      -6.1499999999999995
+    ],
+    "radius": 46.99580837575128,
+    "alpha": -2.6915926535897934,
+    "beta": 0.9553166181245092
+  },
+  "authorityUnchanged": true,
+  "method": "Actual App/DB on required tailnet; WorldHandle.focusBody selected Frost after paused-render UI pagination timing failed. Pointer wheel/right-drag; focusBody(undefined) returns. One actual full scene frame, continuous scene rendering paused. Not a new destination-button proof.",
+  "image": "output/playwright/native-ice-r015-actual-observe.png",
+  "artStatus": "Working local candidate installed, final art unapproved; fan-like blue walls, shingled snow and weak gloss remain."
+}

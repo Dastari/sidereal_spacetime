@@ -1,0 +1,447 @@
+{
+  "schema": "sidereal.native-identity-finish-parity.v1",
+  "status": "pass",
+  "beforeManifestSha256": "09918f37bbdb7f66764363a01857d488ea17c02fe69a5b399f9a11fe0a8166de",
+  "afterManifestSha256": "2e199dba85fe112fd3249c1837cf73c581939ef327aaaf517b47c8d9e25eede9",
+  "checkerSha256": "279b745a2e64731da283720fe5c33afaf430e079a78094f07e892c972ebac2fc",
+  "unchangedExistingModels": [
+    {
+      "modelId": "armor-block-f94c0ba2aa04f31fb6a5",
+      "geometryAndMetricUvSha256": "840ef6efcca02d1107e7e9140b5faa39dce2802f909bade4b61bfb63efae00cf"
+    },
+    {
+      "modelId": "armor-block-7c657ee01a90318dec3e",
+      "geometryAndMetricUvSha256": "fa2f52daf4f48c042a7a2f4ef5759ce6b408ab1244da723d7dd2e98642498899"
+    },
+    {
+      "modelId": "armor-block-fe79dfaf2e1542dbd67c",
+      "geometryAndMetricUvSha256": "18239b7b9432cb78936068e9dca4921f8e500a019ab3d8dcd6f9da95a1b1ce78"
+    },
+    {
+      "modelId": "armor-block-9ca59f6db637d3afceb9",
+      "geometryAndMetricUvSha256": "01e74894157c6c2ebc92c9f09b0645a9531a8b388565683b4f10c1d90f4f9948"
+    },
+    {
+      "modelId": "armor-block-70b34597548b284a0a7f",
+      "geometryAndMetricUvSha256": "d1973e7c0d4547837b8c71ca7e5b606236f1e6488e70c5e1060dd40df6691a2b"
+    },
+    {
+      "modelId": "armor-block-cd2f17ea0cf58cb60b7f",
+      "geometryAndMetricUvSha256": "1e1118456b081e5380208a943057767c50089799368b0c545b00cf73ff953881"
+    },
+    {
+      "modelId": "armor-block-1676c64748013f376c0a",
+      "geometryAndMetricUvSha256": "cde6a91ce72a154d8a53603cd50e142534c96dd989ab63a4f1d18c97a5299a00"
+    },
+    {
+      "modelId": "armor-block-a6743a347ee2fcdd1ce9",
+      "geometryAndMetricUvSha256": "c7ce3130515d275641dcd19ca23cc66c602c327912130817c72cf21859c55f7e"
+    },
+    {
+      "modelId": "armor-block-62ad930c45227d5287a0",
+      "geometryAndMetricUvSha256": "3eb25fe1b470380596ef9841885d52537a96a1d92d3aed3f2131b250a05cdfb7"
+    },
+    {
+      "modelId": "armor-block-e1affbf19f4b7fa30311",
+      "geometryAndMetricUvSha256": "6bdece219b6ba71fc340e4237e4406e00c8b39f37b9458f23d4cd7aae677a7af"
+    },
+    {
+      "modelId": "armor-block-926961217b49c21a526b",
+      "geometryAndMetricUvSha256": "e4dc9bf23bd9fdf399ba60b4f5cda0ab5dd3dc93ead862663698bb8d098c10f6"
+    },
+    {
+      "modelId": "armor-block-137adc2153a878094d60",
+      "geometryAndMetricUvSha256": "e092ebd30a394d298c624a4e81ad2af6c738ab347622414bf5b4e14096b08e72"
+    },
+    {
+      "modelId": "armor-block-e40f082abbcbe4f55a62",
+      "geometryAndMetricUvSha256": "d788b85508bad6ca372415a212ea1d27cce5fffa12931586df41633465ea11ba"
+    },
+    {
+      "modelId": "armor-block-649dcbda86c17c7952c9",
+      "geometryAndMetricUvSha256": "aa0d78cc6c3f1e033eadd73086b4213eb118afa4ade9496425f7c890117d0ca4"
+    },
+    {
+      "modelId": "armor-block-2b558e7ac8eb4184c2af",
+      "geometryAndMetricUvSha256": "d0003b21f2103585ac6e9e2bcf72f9343a1b50e9a7c186f23197d31c8e8bb4ef"
+    },
+    {
+      "modelId": "armor-block-b235419d9a165659f2e8",
+      "geometryAndMetricUvSha256": "6be5304348a0f23b5421756e1b504e20ca5c5e1492d6d7aaab0c11d83a15760a"
+    },
+    {
+      "modelId": "armor-block-fabbd7b0578ea00b5791",
+      "geometryAndMetricUvSha256": "559f102a2091a53fc75b795ab689b18e2c1d3720bdb99097d5fb823451fe1265"
+    },
+    {
+      "modelId": "armor-block-e120acd13dae3b493668",
+      "geometryAndMetricUvSha256": "1e14478b816630a82e7489d406560169e3e2ab61f7d416edd10c54024379d1d1"
+    },
+    {
+      "modelId": "armor-block-98477a5dd3e88b931589",
+      "geometryAndMetricUvSha256": "03b81f799f7c811b87ff9f57905515d773d6d9ec835ea4c25ffe3c499eae3ee5"
+    },
+    {
+      "modelId": "armor-block-a7ef36310c50dc565d00",
+      "geometryAndMetricUvSha256": "ec4091b76d846f00f0632c2c6a77825c4fe39aeb5564eedb84e216349b0e1bf2"
+    },
+    {
+      "modelId": "armor-block-4896cc9388c49fcb9b2e",
+      "geometryAndMetricUvSha256": "9e5f807ccbe7b424488b8625954613c5be8c46fc8982f6ab2f36de83fadd4f31"
+    },
+    {
+      "modelId": "armor-block-d3fa0e462a519b5f36f8",
+      "geometryAndMetricUvSha256": "3e134b6af1780bdb81d2c547f0294d5d9f5a8bd620687ed88c16439df31bab3c"
+    },
+    {
+      "modelId": "armor-block-9069dfa847efce4fe41e",
+      "geometryAndMetricUvSha256": "938ebc8749b9a44cb4f60f968e676514126e920b607cebcea09eb159e3bbd4d6"
+    },
+    {
+      "modelId": "armor-block-db7ed5477c90dcffe64f",
+      "geometryAndMetricUvSha256": "c01f8e87c8f715b5a85344af1f59dfb11a427458177da21a716610aa1c39df8d"
+    },
+    {
+      "modelId": "armor-block-05c9d73568be3ad2e6b8",
+      "geometryAndMetricUvSha256": "1d97eb2bbfb72fbefa88c3c8cac438bd94c8b921a2b970356120df44b8672cd4"
+    },
+    {
+      "modelId": "armor-block-15a405777ecce0335b21",
+      "geometryAndMetricUvSha256": "8a3ce63da542305e753ca892e906bc5a6f1e973e41464cee94db748b6c7d3cc4"
+    },
+    {
+      "modelId": "armor-block-43965fec43941bd88fcc",
+      "geometryAndMetricUvSha256": "934c63c8dbc7dd47ab87a333e5a54e2b54fb3006e7a5bf070f5e8c622036a645"
+    },
+    {
+      "modelId": "armor-block-af0cc716991642374212",
+      "geometryAndMetricUvSha256": "8e5606b4fa8130444e9eea1c81b099ccc8ce4b28e6b9d0c7aa1ec37692e12d73"
+    },
+    {
+      "modelId": "armor-block-57b9352f1f040b7f0157",
+      "geometryAndMetricUvSha256": "654dfd576cd6041d675fde2092f873a0a59b77d09a37b861ed617e5df908b3bd"
+    },
+    {
+      "modelId": "armor-block-8904b2af208c0ad89e05",
+      "geometryAndMetricUvSha256": "02ebfdcd1d83d8f405120e0e300561c0b93b4611fa277374b3e186905e6dc15c"
+    },
+    {
+      "modelId": "armor-block-d475f516a65773f4c21e",
+      "geometryAndMetricUvSha256": "09d327ac665640d0a8088f5e804a94a0914b90392d63d17ad44b702e327d0bdb"
+    },
+    {
+      "modelId": "armor-block-97e82a0a2ae19def921f",
+      "geometryAndMetricUvSha256": "9cc1296b50e240aad96ea16142f5488cff6750fc956aaa16a6566b02299f9813"
+    },
+    {
+      "modelId": "armor-block-57b42efda0a7a7d9ffdd",
+      "geometryAndMetricUvSha256": "3187aac264f4df0dd0064ce339709c9be40209d57280764e5fce211e3077332f"
+    },
+    {
+      "modelId": "armor-block-7c3af440c13bfbd854f7",
+      "geometryAndMetricUvSha256": "d095c702ac07e4f8aafd999015319501a661a5050c843d9dc478d0de35ff929d"
+    },
+    {
+      "modelId": "armor-block-075003ca42dee3ad88d4",
+      "geometryAndMetricUvSha256": "676a68e3f61d851a71e7a1e44c39861fa187a889980e3dd02c43811b17e4e372"
+    },
+    {
+      "modelId": "armor-block-137dbd4b0d514b60c4c3",
+      "geometryAndMetricUvSha256": "92c37ca963e7ef9ec60a1c92c49f812168515cc441ab1988a6caa38fa4c9a914"
+    },
+    {
+      "modelId": "armor-block-cb4ec70047162b4093b9",
+      "geometryAndMetricUvSha256": "ffe68ea060d367efd48634d73824c6f1907aef4904b35dfa351e9c91b33d479b"
+    },
+    {
+      "modelId": "armor-block-131df6537810373834cb",
+      "geometryAndMetricUvSha256": "363f11487c52a9e525b9a26c22990053f741f6963f3fee1651a6397a0cb673ba"
+    },
+    {
+      "modelId": "armor-block-79d4507d7b58226cbe80",
+      "geometryAndMetricUvSha256": "107a83e61358999fb3e02da9a7dc9c78371f1699e4e8b0d28d26df164a4ebfe8"
+    },
+    {
+      "modelId": "armor-block-edc8f579626e43feb839",
+      "geometryAndMetricUvSha256": "62c3201040ccfca35cb117bfac5cb6ac6c0c659faf99ab36e95e451573ea3059"
+    },
+    {
+      "modelId": "armor-block-e7911c4aae9fd2fecbb8",
+      "geometryAndMetricUvSha256": "0c4fcbabdc589d23cbaf5e0a96d0b0c4b83cb7f9d61bbca8c0583d9282b85c6c"
+    },
+    {
+      "modelId": "armor-block-649b14141fa27ecd47e6",
+      "geometryAndMetricUvSha256": "ecbe75336d7183724e2470c8198d11d949c4c310b3048b6973bb24be903fa263"
+    },
+    {
+      "modelId": "armor-block-fc5a10216de60493ab08",
+      "geometryAndMetricUvSha256": "36ea9f61488372d563b3080fb28e7195de09de5ec7aacaf76214989a44a2d185"
+    },
+    {
+      "modelId": "armor-block-204079fa21328c629295",
+      "geometryAndMetricUvSha256": "51fac7da99eef9a2efaace03511e005f6c22160664d40a0da210e333b7887ba5"
+    },
+    {
+      "modelId": "armor-block-50c9e43a8c6ba5af5141",
+      "geometryAndMetricUvSha256": "ff7275ddf3d9e3d491fc3a5f7ae1fbf0064d05b0033e27c70e831e97fd01a9cf"
+    },
+    {
+      "modelId": "armor-block-e9bc6213d0d76ca7f44b",
+      "geometryAndMetricUvSha256": "0d04c6e956d25836a7eaadbe87543bb27058148c4cd71a74a929cef605e0fb84"
+    },
+    {
+      "modelId": "armor-block-f731b556d8884e7d7557",
+      "geometryAndMetricUvSha256": "3da73295fce735248bbd22f259581b97a96030d50122aa7eb4507c770c1d2a5b"
+    },
+    {
+      "modelId": "armor-block-207cbce0274b3e836291",
+      "geometryAndMetricUvSha256": "6439379fe694d1286a295e9e07b602616b3f9b63f8be960f9b7a89a7a363ba2c"
+    },
+    {
+      "modelId": "armor-block-975ae6c56dd5c22ae720",
+      "geometryAndMetricUvSha256": "02a9b88a90d4ef78d3d60f34b8837e03f9731d49e13da8177d821b559780106a"
+    },
+    {
+      "modelId": "armor-block-0609cba1e9e5472c20b6",
+      "geometryAndMetricUvSha256": "d79bed7201f5e3f04d1de275078027eba6b7b461dd26e00b40ec0079ac915ec5"
+    },
+    {
+      "modelId": "armor-block-fbbf224dbd286d805ac1",
+      "geometryAndMetricUvSha256": "528c4286e45390cb3e9a4aa161ddbb8d5a8a5df5511e65d0d1739c85088ec1ed"
+    },
+    {
+      "modelId": "armor-block-49384936da4b4c531fcc",
+      "geometryAndMetricUvSha256": "5f7f32efa5d0966aa827295a99e1f8d59100b11c6088ddb8bd24c33856ac24e5"
+    },
+    {
+      "modelId": "armor-block-e8152b71edd21a544d55",
+      "geometryAndMetricUvSha256": "80dea5e66dc39c62624477ccec3e007d3139c9a09bbdfad8b791baa3bfd13daf"
+    },
+    {
+      "modelId": "armor-block-c2da9d9d47c98c01ceb8",
+      "geometryAndMetricUvSha256": "2c3205416cfd67e8c06867f6b9c88dcb5ebcc1f248e25464e693508cd531d061"
+    },
+    {
+      "modelId": "armor-block-e7a26fe3b6e058621d39",
+      "geometryAndMetricUvSha256": "d8bbaf39f1201414c9e584248e91e28d7f8275d4ee70e42c5f339c1d4cb9dd86"
+    },
+    {
+      "modelId": "armor-block-8233c1a3a948a91de0c7",
+      "geometryAndMetricUvSha256": "3f71c37058ab55f113e09c0a34f108fd5f08e3a0133a803d54610eff67ea7b49"
+    },
+    {
+      "modelId": "armor-block-a252a121923cfb248f94",
+      "geometryAndMetricUvSha256": "2164c8ee880f6e28c05c54167fb07f68d31db58c28df8d505fc5be2b9d5056b4"
+    },
+    {
+      "modelId": "armor-block-981bd24736c640366791",
+      "geometryAndMetricUvSha256": "0d861f982651796a5937b82bce4febebc5ab8d3e021cbc381e29598f99d04253"
+    },
+    {
+      "modelId": "armor-block-7bcf58fae727b968e126",
+      "geometryAndMetricUvSha256": "fdaf66fe70ab3897a72802ebf6345522fe588c4432ac2d7e3ee8571e7f5f044c"
+    },
+    {
+      "modelId": "armor-block-825d61aeb52f08f61c14",
+      "geometryAndMetricUvSha256": "bf688190184f5725d7d566a2a2adcfc11d0ec3c5074afcea44668199053c575c"
+    },
+    {
+      "modelId": "armor-block-bb2e153a868e9214017f",
+      "geometryAndMetricUvSha256": "8f54032c0d30fdebad79848e90ac91891aa561e630ee935f60dd97eb4a9cc2f1"
+    },
+    {
+      "modelId": "armor-block-b5debfc1efb6816ed06d",
+      "geometryAndMetricUvSha256": "e06f3a542e60cb511e030cdd236b71f475bc2ddbcfba87d0c8d0cacb2788da34"
+    },
+    {
+      "modelId": "armor-block-19cb454187f2b808d0f7",
+      "geometryAndMetricUvSha256": "9b69fce8bba21d4bbfe1198981dfd316f8c0a791a8fddc6e0be66962b516d00d"
+    },
+    {
+      "modelId": "armor-block-8c601c2467812dda7c97",
+      "geometryAndMetricUvSha256": "5ab43bc07d516fc8f55bdfe6ba05268cb90b5b061ea06b2a5c1fb2f2dda8d2ae"
+    },
+    {
+      "modelId": "armor-block-04506299cdccdc3362d3",
+      "geometryAndMetricUvSha256": "73e1ecb2494407b6f801cd4b73822a678fa7fa2cc3d6ac59e04f99183b9650ac"
+    },
+    {
+      "modelId": "armor-block-b9889f7ac1379ef477d3",
+      "geometryAndMetricUvSha256": "0a4e17485949c29ee958a2b790bc1fe826902479da5572c2df7aebe983b62ae9"
+    },
+    {
+      "modelId": "armor-block-e465b7594b2433a77396",
+      "geometryAndMetricUvSha256": "7fcfe9b2a51cfa606b17397ac36a62450097a24b7f8885f7e9652857da2681b8"
+    },
+    {
+      "modelId": "armor-block-c3e51deb6848ddb10001",
+      "geometryAndMetricUvSha256": "8797a6f1c767181428906115bf7ca0f216f12fef2a6cfe4217190123a6fd45ac"
+    },
+    {
+      "modelId": "armor-block-b8ebf4aa6991e098a6d3",
+      "geometryAndMetricUvSha256": "3d9782c7788e9cff2216902fed1df7633b79d734e6d4c8bac99f911def145f64"
+    },
+    {
+      "modelId": "armor-block-bdffe58423963910d02b",
+      "geometryAndMetricUvSha256": "cb1ab6cbd2f82b61faa976f3ba8b1c536287c29d196629a341dff39dff05ff8e"
+    },
+    {
+      "modelId": "armor-block-098c86a675e3e951ace9",
+      "geometryAndMetricUvSha256": "098cb8e5ba6ffff6f19288341d27f10ecef61f4ca6a13107cc6e84f8f993f77d"
+    },
+    {
+      "modelId": "armor-block-0f4edf0963be28b7952b",
+      "geometryAndMetricUvSha256": "69006b9ebb374c51ee1a11857bb3d8b8edb57787ff4a04b376bdac7c0b0c6696"
+    },
+    {
+      "modelId": "armor-block-eae57557166988330b70",
+      "geometryAndMetricUvSha256": "3ef541765c677f3920b62709656776e6162fbfe5de08920d53c7f06ab2cc10be"
+    },
+    {
+      "modelId": "armor-block-54094cde041737badaf2",
+      "geometryAndMetricUvSha256": "cc1c3e7f631aed14603c3ab4bd219725991ec4a5f5f03c19698ad996b22f02ac"
+    },
+    {
+      "modelId": "armor-block-2cce8582f894eec65110",
+      "geometryAndMetricUvSha256": "366a4cf7b34b7c09795310915db505489811ff931d53cb49af10dd896452bd76"
+    }
+  ],
+  "physicalMaterialMaps": [
+    {
+      "path": "textures/armor-normal.png",
+      "sha256": "54429532ad55e8a286ba7750a9c94927edbbc54973bb4f464ec5e5b4c6e4c1b9",
+      "byteIdentical": true
+    },
+    {
+      "path": "textures/armor-roughness.png",
+      "sha256": "808b0809c453ca5617764e53785467a2f9dc669a786e6859520602d52cc9f2a8",
+      "byteIdentical": true
+    }
+  ],
+  "baseColorChangePixelBounds": [
+    777,
+    913,
+    883,
+    948
+  ],
+  "allowedIdentityRegionPixelBounds": [
+    768,
+    832,
+    896,
+    1024
+  ],
+  "assemblyParity": [
+    {
+      "name": "joined-bay",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    },
+    {
+      "name": "solid-section",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    },
+    {
+      "name": "convex-45-half-height",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    },
+    {
+      "name": "concave-90",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    },
+    {
+      "name": "wayfarer",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": [
+        "wayfarer-011",
+        "wayfarer-035"
+      ]
+    },
+    {
+      "name": "alternate-station",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    },
+    {
+      "name": "alternate-tug",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    },
+    {
+      "name": "heights",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    },
+    {
+      "name": "bulkheads",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    },
+    {
+      "name": "directions-32",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    },
+    {
+      "name": "junction-registry",
+      "placementTransformsUnchanged": true,
+      "identityToPlainFinishOnly": []
+    }
+  ],
+  "wayfarerIdentityFaces": [
+    {
+      "placementId": "wayfarer-010",
+      "edgeIndex": 1,
+      "graphicFit": {
+        "kind": "bounded-single-bay-color-graphic",
+        "text": "WF-01",
+        "graphicMetricUvBounds": [
+          0.140625,
+          1.30078125,
+          1.4453125,
+          1.640625
+        ],
+        "surfaceTexelsPerMetre": 64,
+        "graphicAntialiasSupersample": 4,
+        "normalAndRoughnessUnchanged": true,
+        "note": "Graphic color pixels are composed inside one physical face inset. Underlying surface UV scale, normals and roughness are not normalized or stretched.",
+        "safeFaceMetricUvBounds": [
+          0.025,
+          0.3825,
+          1.5300000000000002,
+          2.6175
+        ]
+      }
+    },
+    {
+      "placementId": "wayfarer-036",
+      "edgeIndex": 9,
+      "graphicFit": {
+        "kind": "bounded-single-bay-color-graphic",
+        "text": "WF-01",
+        "graphicMetricUvBounds": [
+          0.140625,
+          1.30078125,
+          1.4453125,
+          1.640625
+        ],
+        "surfaceTexelsPerMetre": 64,
+        "graphicAntialiasSupersample": 4,
+        "normalAndRoughnessUnchanged": true,
+        "note": "Graphic color pixels are composed inside one physical face inset. Underlying surface UV scale, normals and roughness are not normalized or stretched.",
+        "safeFaceMetricUvBounds": [
+          0.025,
+          0.3825,
+          1.5300000000000002,
+          2.6175
+        ]
+      }
+    }
+  ],
+  "newDisplayFixtureModels": [
+    "armor-block-aabac0a89386b4aa9045"
+  ],
+  "scope": "Existing position, normal, tangent, UV and index streams, node transforms, bounds, contacts and backing parameters are identical. Only bounded identity base-color pixels and two identity-to-plain fixture finishes changed. An additional numerically equivalent 2m identity display specimen is isolated from existing placements."
+}

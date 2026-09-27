@@ -1,0 +1,156 @@
+{
+  "scope": "Normal unrouted Shipyard editor, not a game spawn/refit or artistic sign-off",
+  "url": "https://sidereal.tail7a58a6.ts.net:8445/shipyard",
+  "action": "New \u2192 Open Wayfarer armor review",
+  "entry": {
+    "head": "9c58c07774d7d3c4a58a40c49e90f2a2c647249c",
+    "dirtyFiles": [],
+    "log": [
+      "9c58c077 R16: complete Shipyard rebuild surfaces and native Wayfarer armor",
+      "2af5fb3e IFCS phase 6: verify compiled-only flight, unified installation, redacted client ratings and isolated smoke",
+      "c2d26673 IFCS phase 5: verify compiled plumes, mass review and forward-turn-removal browser evidence",
+      "146c4401 IFCS phase 4: verify computer power cutoff, bounded supply and accepted thrust consumption",
+      "cd09510c IFCS phase 3: verify compiled authority, passenger COM motion, availability producers and additive migration"
+    ],
+    "pins": {
+      "assets/runtime/assembly/catalog-shipyard-r005.json": "9fa3db94ed61a84f3e9d52b0d404d1433931747bbd268fceefe6a4e2a6ead237",
+      "assets/runtime/assembly/catalog.json": "f92e1e487106794b188bcb4e5a3e2f0cada7047b81ddfc0ee8bd9434964063ac",
+      "assets/runtime/assembly/wayfarer.json": "1f723510ac156089903fbd0d711a2f6adff1da35433e2ac02afde94fa4a00deb",
+      "assets/runtime/assembly/hull-manifest.json": "2e275052217da4b20a92ab40a9a9f098dc011557f7611b6b0c6f40f71ea22695",
+      "packages/content/src/ship-hull-interfaces.v1.json": "2379415fc3501b6818daa3b17174d52fa8a91c330c9a1107271b5fcc4efd4e03",
+      "packages/render/src/framed-wayfarer-visuals.json": "51d225e900a0267c9f8ca5d0202521bdc1c21e420a3ec91ec3140844bd607410",
+      "assets/art-library/framed-wayfarer/r005/library-02/hull.glb": "dcc978612d390e08895cb8dc9011d02e3ffe2a83be9480bcaa7bbc04fce4d1c8"
+    },
+    "release": {
+      "origin": "https://sidereal.dastari.net",
+      "sha256": "048e6f35a49fffb161d1361dda21cf5f53e69c1e24f73c978525fe99299c7b88",
+      "release": "/root/sidereal_spacetime/.runtime/public-client/releases/20260914-141801-048e6f35a49f"
+    },
+    "authorization": "Owner explicitly requests reviewed armor live in normal Shipyard editor; PR3 already merged."
+  },
+  "browser": {
+    "url": "https://sidereal.tail7a58a6.ts.net:8445/shipyard",
+    "canvases": 1,
+    "dataset": {
+      "engine": "Babylon.js v9.25.0",
+      "floorSlabs": "51",
+      "nativeFloorIssues": "[]",
+      "nativeWallPieces": "169",
+      "nativeWallMeshes": "855",
+      "nativeWallIssues": "[]",
+      "nativeWallFallback": "false",
+      "nativeDoorwayPieces": "0",
+      "nativeDoorwayMeshes": "0",
+      "nativeDoorwayIssues": "[]",
+      "structuralWallGuides": "0",
+      "placements": "84",
+      "expectedPlacements": "84",
+      "camera": "{\"alpha\":-2.75,\"beta\":0.955,\"radius\":42,\"target\":[0,1,-1]}",
+      "meshes": "356",
+      "measurementPoints": "[[-5.834999978542328,-8.392500042915344,0.554999977350235],[-2.625,-9.75,3.1875]]",
+      "gestureActive": "false"
+    },
+    "publishDisabled": true
+  },
+  "editing": {
+    "pickedId": "8d8569e4-434c-5265-926d-39812832dfa5",
+    "originalHeight": "0.1875",
+    "editedHeight": "0.21875",
+    "shiftDraggedHeight": "1.1875",
+    "reload": [
+      {
+        "name": "Wayfarer \u00b7 armor review",
+        "height": 0.25,
+        "sequence": 9,
+        "past": 1
+      },
+      {
+        "name": "Wayfarer \u00b7 armor review",
+        "height": 0.1875,
+        "sequence": 6,
+        "past": 0
+      }
+    ],
+    "savedDraftsBeforeReload": 4,
+    "publishDisabled": true
+  },
+  "measurement": {
+    "targets": [
+      {
+        "id": "8d8569e4-434c-5265-926d-39812832dfa5",
+        "x": 1079.032478753252,
+        "y": 582.828411705577,
+        "vertex": [
+          -5.834999978542328,
+          -8.392500042915344,
+          0.554999977350235
+        ]
+      },
+      {
+        "id": "4d26360a-ee6d-5353-943d-4218b68fff38",
+        "x": 1077.0883509468824,
+        "y": 484.3298230016207,
+        "vertex": [
+          -2.625,
+          -9.75,
+          3.1875
+        ]
+      }
+    ],
+    "measuredPoints": [
+      [
+        -5.834999978542328,
+        -8.392500042915344,
+        0.554999977350235
+      ],
+      [
+        -2.625,
+        -9.75,
+        3.1875
+      ]
+    ],
+    "hardwareScalingVerified": true
+  },
+  "baseline": {
+    "camera": {
+      "alpha": -2.75,
+      "beta": 0.955,
+      "radius": 42,
+      "target": [
+        0,
+        1,
+        -1
+      ]
+    },
+    "draws": 374,
+    "renderCpuMedianMs": 5.600000381469727,
+    "samples": 15,
+    "canvases": 1,
+    "parts": "74"
+  },
+  "candidate": {
+    "camera": {
+      "alpha": -2.75,
+      "beta": 0.955,
+      "radius": 42,
+      "target": [
+        0,
+        1,
+        -1
+      ]
+    },
+    "draws": 251,
+    "renderCpuMedianMs": 5,
+    "samples": 15,
+    "canvases": 1,
+    "parts": "84"
+  },
+  "applicationConsoleErrors": 0,
+  "performanceMethod": "Same camera, 20 manual render frames, first 5 discarded; median of 15 warmed samples. Short headless editor sample, not physical-GPU/game F3 qualification.",
+  "retainedFailures": [
+    "First review fixture used different structural IDs and did not select the existing exact native wall family; corrected by verified inverse identity mapping, without geometry or validator changes.",
+    "First full-wall editor capture exceeded sampled CPU budget; batching immutable armor prototypes by material corrected it while preserving placement IDs.",
+    "Measurement automation initially used the wrong accessible name, then omitted Babylon hardware scaling; final coordinates use the product helpers and passed actual mouse clicks.",
+    "One full check during concurrent browser work timed out in an unrelated planet terrain test; serialized full check passes 2063 tests without threshold changes."
+  ]
+}

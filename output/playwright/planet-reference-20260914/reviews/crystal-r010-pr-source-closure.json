@@ -1,0 +1,117 @@
+[
+  {
+    "path": "scripts/art_library/build_crystal_moon_fractures_r006.py",
+    "prStatus": "missing",
+    "sourceSHA256": "c627656fcfb221ef5adf58214a636f9130c322d97dfe09bdfd5f0e6d2bc2dd82"
+  },
+  {
+    "path": "scripts/art_library/build_crystal_moon_fractures_r007.py",
+    "prStatus": "missing",
+    "sourceSHA256": "20df6c7aef3247108ae81368f691e8461f991e0fb8c0be65cb49d89483a4913d"
+  },
+  {
+    "path": "scripts/art_library/build_crystal_moon_fractures_r008.py",
+    "prStatus": "missing",
+    "sourceSHA256": "205b94120db132b6dad1aad3b1573df2532cd312537ea3265c3f8f84d2b7f29b"
+  },
+  {
+    "path": "scripts/art_library/build_crystal_moon_fractures_r009.py",
+    "prStatus": "missing",
+    "sourceSHA256": "c8635292ecac1a8222361ce50f8f917d3bebb8e89098b3dfc696318daeacdd62"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r006.test.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "49b36f18e5e7a3c264f9c2e79b375ed1f586c2779ff11db5edd2febd8150470a"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r006.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "da5d453ad4ac8ece6637b4c60945bcb039d8658591f7a3e590ca1b1d1df76b2b"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r007.test.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "feccf1ce8b6e0d0ead488b64be4bee911f27e07b4240ec11a36c7c0e5ee58872"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r007.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "da5d453ad4ac8ece6637b4c60945bcb039d8658591f7a3e590ca1b1d1df76b2b"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r008.test.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "7bee47be17b274a9d3b6be37c0c9d5cce2d007ca10fca41c1b2beeb9f6a39755"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r008.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "da5d453ad4ac8ece6637b4c60945bcb039d8658591f7a3e590ca1b1d1df76b2b"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_composition_r009.test.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "6eb851734df393c1606cf02c3a96e8333ae5c6c40f31879a06c626eefd057e3a"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r006.tsconfig.json",
+    "prStatus": "missing",
+    "sourceSHA256": "c4d27a1cd0b4a1e4595598c0c842f4ec453e1f4a70b030477997a142ff12bb4f"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r006.vitest.config.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "d72f5e2e4d843878e8ab7ad25d5bef0dcddb52b6cd7142c880ea4919dd8221a3"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r007.tsconfig.json",
+    "prStatus": "missing",
+    "sourceSHA256": "780e7e7c96df5739e69197608476c5b67db3854a5570b1fb719bc42a4e639367"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r007.vitest.config.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "564ef001460da599f1803f4877f4cff6eb7a689b172e424f287383241497f251"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r008.tsconfig.json",
+    "prStatus": "missing",
+    "sourceSHA256": "761d76c6a093f654a93fdef0bb6327454d5c6072b27d117180d6d2c5d07db324"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r008.vitest.config.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "c2069c2ce50348be74f47e5f376f6539b2ba5cf1039e241201847ef3a17831db"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r009.tsconfig.json",
+    "prStatus": "missing",
+    "sourceSHA256": "c915373a050469de58490dce3283d102d4aa454cbfb1e7c2ae50a38ab249f5cc"
+  },
+  {
+    "path": "scripts/art_library/crystal_moon_reference_r009.vitest.config.ts",
+    "prStatus": "missing",
+    "sourceSHA256": "a010572043375b8a9807fdda19142ecdea48b5b2332e5b4316e032b697e222cc"
+  },
+  {
+    "path": "scripts/art_library/planet_reference_worker.ts",
+    "prStatus": "different",
+    "sourceSHA256": "ef5d5bfe9b5eba10aae8f93591abe88d6939b80dfb01c2a4c190481215bdd132"
+  },
+  {
+    "path": "scripts/art_library/planet_reference_worker_lifetime.ts",
+    "prStatus": "different",
+    "sourceSHA256": "20876877d1be41b25454a31fe93bd9c1d7a6f5bfcb8f60ecd55f1fb85694b739"
+  },
+  {
+    "path": "scripts/art_library/planet_reference_worker_lifetime.test.ts",
+    "prStatus": "different",
+    "sourceSHA256": "0d1c551ff724365c939a1f58196be1594954bb1bea890fa2a065fde85fb7fb38"
+  },
+  {
+    "path": "scripts/art_library/audit_native_kit_attributes.py",
+    "prStatus": "identical",
+    "sourceSHA256": "8acdd9bb33b3c8e3afcfba9250f58328285573d2500ee664c42a40c988be69b6"
+  }
+]

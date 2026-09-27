@@ -1,0 +1,169 @@
+{
+  "viewSettlements": [
+    {
+      "label": "close",
+      "startFrame": 148,
+      "endFrame": 158,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 1.0529033447245055,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 2323.6000003814697,
+        "localLights": 0,
+        "transmissionMaterials": 2,
+        "transmissionTargets": 1
+      }
+    },
+    {
+      "label": "angle2",
+      "startFrame": 158,
+      "endFrame": 161,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 5.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 0,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 2323.6000003814697,
+        "localLights": 0,
+        "transmissionMaterials": 2,
+        "transmissionTargets": 1
+      }
+    },
+    {
+      "label": "reference-scale",
+      "startFrame": 161,
+      "endFrame": 164,
+      "stableFrames": 3,
+      "camera": {
+        "alpha": 2.6529033447245056,
+        "beta": 1.1694941410002127,
+        "radius": 13.5
+      },
+      "candidate": {
+        "active": 0,
+        "pendingBuilds": 0,
+        "retained": [
+          0
+        ],
+        "smokeImplemented": true,
+        "smokeMeshes": 0,
+        "smokeTriangles": 0,
+        "retainedSmokeMeshes": 0,
+        "requestedLOD": 1,
+        "fixedDetail": true,
+        "workerPending": 0,
+        "buildMs": 2323.6000003814697,
+        "localLights": 0,
+        "transmissionMaterials": 2,
+        "transmissionTargets": 1
+      }
+    }
+  ],
+  "viewport": {
+    "width": 900,
+    "height": 900
+  },
+  "canvas": {
+    "width": 900,
+    "height": 900
+  },
+  "stats": {
+    "style": "ice",
+    "seed": 904,
+    "frames": 164,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "smokeImplemented": true,
+      "smokeMeshes": 0,
+      "smokeTriangles": 0,
+      "retainedSmokeMeshes": 0,
+      "requestedLOD": 1,
+      "fixedDetail": true,
+      "workerPending": 0,
+      "buildMs": 2323.6000003814697,
+      "localLights": 0,
+      "transmissionMaterials": 2,
+      "transmissionTargets": 1
+    },
+    "baselineEnvironmentEnabled": false,
+    "meshes": 8,
+    "triangles": 363460,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": []
+  },
+  "shadowsEnabled": true,
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [],
+  "checkoutHead": "2af5fb3e98057f577b61a657e71f61067c7d338b",
+  "sourceRoot": "/root/sidereal_spacetime",
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "ice",
+    "revision": "ice-r026",
+    "seed": 904,
+    "radius": 5.5,
+    "alpha": null,
+    "beta": null,
+    "bias": null,
+    "depth_bias": null,
+    "glow": false,
+    "local_light": false,
+    "prefix": "broader-shadow-fixed",
+    "reference_scale": true,
+    "weather_revision": "cloud-r002",
+    "sample_surfaces": false,
+    "unit": false,
+    "staged": false,
+    "target": null,
+    "shadows_off": false,
+    "reference_radius": 13.5
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=ice&seed=904&candidate=1&reviewRevision=ice-r026&capture=1789391699632591087",
+  "images": {
+    "broader-shadow-fixed-seed904.png": "4b09d2a15fc1831ebb12d492aae29bfb025eec2c4e9e77b844857c9b9a2347d3",
+    "broader-shadow-fixed-seed904-angle2.png": "507702ad5c348a54cdfe454f04d67da637c486ebf4e7f556ad979f66dc0e7aa8",
+    "broader-shadow-fixed-seed904-reference-scale.png": "525de38156a9f07837173beeea7cc96283e742843374e19176f8e696d4517ca8"
+  },
+  "kitSha256": "cd6210c54b001bbaa7e753de0a5af3965b572a19d1d4913427ac4d7398cd3574"
+}

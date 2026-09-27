@@ -1,7 +1,7 @@
-import { WAYFARER_REBUILD_SOURCE } from "../../sim/src/wayfarer-rebuild-contract";
+import { WAYFARER_REBUILD_SOURCE } from "@sidereal/sim/wayfarer-rebuild-contract";
 import { planLayoutDoorways } from "./layout-doorway-plan";
 import { doorwayWallSpans } from "./layout-doorway-walls";
-import { planWayfarerRebuildGame } from "../../sim/src/wayfarer-rebuild-game";
+import { planWayfarerRebuildGame } from "@sidereal/sim/wayfarer-rebuild-game";
 import { complexVisualPerimeters } from "./layout-complex-visual-plan";
 import type { LayoutDocument } from "@sidereal/content/ship-layout";
 import { INSET_VISUAL_PARTS } from "./inset-visual-registry";

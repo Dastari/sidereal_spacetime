@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /root/sidereal_spacetime/.runtime/worktrees/yellow-star-system
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  12:52:04
+   Duration  814ms (transform 364ms, setup 0ms, import 684ms, tests 17ms, environment 0ms)
+

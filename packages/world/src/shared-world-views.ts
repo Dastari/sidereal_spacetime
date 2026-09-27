@@ -1,3 +1,4 @@
+import { SOLAR_SYSTEM_BODY_LIMIT } from "@sidereal/content/shared-system";
 import {
   acceptedPassengerAccess,
   type PassengerAccessDatabase,
@@ -196,7 +197,7 @@ function bodyContacts(
       BigInt(cell.cellX),
       BigInt(cell.cellY),
     ])) {
-      if (++examined > 32) return [];
+      if (++examined > SOLAR_SYSTEM_BODY_LIMIT) return [];
       const body = ctx.db.systemBody.id.find(motion.bodyId);
       if (
         !body ||
@@ -213,7 +214,7 @@ function bodyContacts(
     }
   const descriptions = limited(
     ctx.db.systemBody.by_system.filter(origin.admitted.systemId),
-    32,
+    SOLAR_SYSTEM_BODY_LIMIT,
   );
   if (!descriptions) return [];
   for (const body of descriptions)

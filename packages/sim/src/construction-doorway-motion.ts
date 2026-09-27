@@ -1,6 +1,6 @@
 import type { Point } from "@sidereal/content/ship-layout";
 import { transformPoint } from "@sidereal/content/ship-layout";
-import { DOORWAY250_VISUALS } from "../../content/src/construction-doorway-visuals";
+import { DOORWAY250_VISUALS } from "@sidereal/content/construction-doorway-visuals";
 import type { DeckObstacle } from "./construction-collision";
 
 /** Deliberately separate from the retained reflected legacy door-motion frame. */

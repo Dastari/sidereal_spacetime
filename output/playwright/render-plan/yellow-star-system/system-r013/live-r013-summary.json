@@ -1,0 +1,33 @@
+{
+  "ship": {
+    "afterCount": 3,
+    "beforeCount": 3,
+    "rowsUnchanged": true
+  },
+  "character": {
+    "afterCount": 3,
+    "beforeCount": 3,
+    "rowsUnchanged": true
+  },
+  "inventory_item": {
+    "afterCount": 21,
+    "beforeCount": 21,
+    "rowsUnchanged": true
+  },
+  "system_body": {
+    "afterCount": 33,
+    "kinds": {
+      "star": 1,
+      "planet": 28,
+      "asteroid": 4
+    }
+  },
+  "world_system": {
+    "afterCount": 1,
+    "seedSha256": "822d8146bfc803f2b47cd6a07e01ea362955096fe4e0a89325a1171754b38d4c"
+  },
+  "celestial_migration_receipt": {
+    "afterCount": 1,
+    "status": "applied"
+  }
+}

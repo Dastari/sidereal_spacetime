@@ -19,24 +19,24 @@ export function PublicationDialog({
   return (
     <dialog
       ref={ref}
+      className="template-library-dialog"
       onCancel={onClose}
-      className="layout-dialog design-start-dialog"
-      aria-label="Publish design"
+      aria-labelledby="template-library-title"
     >
       <header>
-        <h2>Publish design</h2>
-        <button aria-label="Close publication" onClick={onClose}>
-          ×
+        <div>
+          <h2 id="template-library-title">Ship templates</h2>
+          <p>
+            Save a workspace draft, publish a revision, then create an
+            independent test ship.
+          </p>
+        </div>
+        <button onClick={onClose} aria-label="Close ship templates">
+          Close
         </button>
       </header>
-      <Suspense fallback={<p role="status">Loading publication…</p>}>
-        <ConstructionPanel
-          doc={editor.doc}
-          onLoad={(d) => {
-            editor.adoptServer(d);
-            onClose();
-          }}
-        />
+      <Suspense fallback={<p>Opening template library…</p>}>
+        <ConstructionPanel doc={editor.doc} onLoad={editor.adoptServer} />
       </Suspense>
     </dialog>
   );

@@ -1,4 +1,4 @@
-import { setMeshRole } from './mesh-roles';
+import { setMeshRole } from "./mesh-roles";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { LinesMesh } from "@babylonjs/core/Meshes/linesMesh";
@@ -96,7 +96,7 @@ export function createDebugOverlays(
         meshes.set(id, { mesh, topology });
       }
       mesh.color.copyFrom(color);
-      mesh.metadata = { debugOverlay: true, ...metadata, role: 'effect' };
+      mesh.metadata = { debugOverlay: true, ...metadata, role: "effect" };
     }
     if (flags.skeleton) {
       const roots = sources.characterRoots?.() ?? [];

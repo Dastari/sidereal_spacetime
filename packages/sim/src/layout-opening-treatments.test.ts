@@ -1,5 +1,5 @@
 import { expect, it } from "vitest";
-import { createDoorway250ReviewLayout } from "../../content/src/doorway250-review-layout";
+import { createDoorway250ReviewLayout } from "@sidereal/content/doorway250-review-layout";
 import { compileLayout } from "./layout-compiler";
 import { proposeWallOpening } from "./layout-structure";
 import { remapOpeningTreatments } from "./layout-opening-treatments";

@@ -1,0 +1,19 @@
+### Ran Playwright code
+```js
+await (async (page)=>{
+ await page.unroute("**/planet-reference-kit.json");await page.route("**/planet-reference-kit.json",r=>r.fulfill({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/toxic-r004/kit.json",contentType:"application/json"}));
+ await page.unroute("**/planet-reference-cloud-kit.json");await page.route("**/planet-reference-cloud-kit.json",r=>r.fulfill({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/cloud-r002/kit.json",contentType:"application/json"}));
+ await page.unroute("**/planet-reference-assets/**");await page.route("**/planet-reference-assets/**",r=>r.fulfill({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/toxic-r004/"+r.request().url().split("/planet-reference-assets/")[1]}));
+ await page.goto("about:blank");await page.goto("http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=toxic&seed=38&candidate=1&capture=1789357118091014496&shadowBias=0.006&glow=1");
+ await page.waitForFunction(()=>window.planetReview?.stats().candidate?.error||(window.planetReview?.stats().candidate?.active===0&&window.planetReview.stats().frames>15),{},{timeout:60000});
+ const error=await page.evaluate(()=>window.planetReview.stats().candidate.error);if(error)throw new Error(error);
+ await page.evaluate(()=>{const r=window.planetReview;r.engine.stopRenderLoop();r.camera.radius=5.5;r.scene.render();});await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/toxic-r004/corrected-seed38.png"});
+ await page.evaluate(()=>{const r=window.planetReview;r.camera.alpha+=1.6;r.scene.render();});await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/toxic-r004/corrected-seed38-angle2.png"});
+await page.evaluate(()=>{const r=window.planetReview;r.camera.radius=13.5;r.scene.render();});await page.screenshot({path:"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/toxic-r004/corrected-seed38-reference-scale.png"});
+})(page);
+```
+### Page
+- Page URL: http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=toxic&seed=38&candidate=1&capture=1789357118091014496&shadowBias=0.006&glow=1
+- Page Title: Planet reference review — isolated
+### Events
+- New console entries: .playwright-cli/console-2026-09-14T01-01-13-194Z.log#L1819

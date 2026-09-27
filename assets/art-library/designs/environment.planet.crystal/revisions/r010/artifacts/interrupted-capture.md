@@ -1,0 +1,1 @@
+corrected-seed38 attempt was interrupted by root navigation during reference-scale capture. No complete JSON record; do not use it as the three-view review gate. Preserved images/log for provenance. Capture runner now rejects concurrent sessions with an advisory lock; retry uses a fresh prefix.

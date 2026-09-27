@@ -1,0 +1,457 @@
+{
+  "schema": "sidereal.planet-moon-preservation.v1",
+  "recorded_at": "2026-09-14T05:38:14.807605+00:00",
+  "design_id": "environment.planet.desert",
+  "canonical_checkpoint_revision": 15,
+  "pinned_main_revision": 14,
+  "pre_checkpoint_ledger_sha256": "3c054ec3e9c079e9cad4b5962b713420cc08d8c8614cd8001a194306d22b0ec3",
+  "scope": "Retrospective moon candidate preservation; no main-world replacement, owner approval, production publication or hardware/LOD acceptance. Original source-art revision numbering retained separately.",
+  "variants": [
+    {
+      "reference_id": "planets--desert-moon-1",
+      "source_revision": 1,
+      "original_output_directory": "output/playwright/planet-reference-20260914/desert-moon-1-r001",
+      "artifact_directory": "designs/environment.planet.desert/revisions/r015/desert-moon-1/source-r001",
+      "working_gate": "bounded agent working visual pass; no owner sign-off",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "angular-outcrops.glb",
+          "sha256": "61b45df7c74696826fab8378979567d0e39362236bbeb947fd48a4ce614ba212",
+          "bytes": 339748
+        },
+        {
+          "filename": "battered-region-a.glb",
+          "sha256": "f68f3aa3e78d0ea674e2d56fca8a2cee586f09869c740f021c9419cdbd5e150b",
+          "bytes": 1115076
+        },
+        {
+          "filename": "battered-region-b.glb",
+          "sha256": "dd0c8d34102f196b6b4d2eb11c368f3e540b5bec0781709239c25e7badd5c080",
+          "bytes": 1111004
+        },
+        {
+          "filename": "build_solid_moon_native_variants_r001.py",
+          "sha256": "3b0453e19c304f1928d2b3f025f90f1f85ccd9f3ea52f96f7d39b7a21c23e899",
+          "bytes": 3541
+        },
+        {
+          "filename": "corrected-seed38-angle2.png",
+          "sha256": "66b95f5ca014eaea2ab05f7d523a1f3f98007d630f59000e9f90b3b5a47751d7",
+          "bytes": 416118
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "ce5566d606a4dd2b5a3fee126e9a52631f12be0fbaa84ef11d099b9334cfb329",
+          "bytes": 2781
+        },
+        {
+          "filename": "corrected-seed38-reference-scale.png",
+          "sha256": "5b513e75a39b93d459d5a20398d84c36ed331156f1bc84365c1398dd48c500b2",
+          "bytes": 19452
+        },
+        {
+          "filename": "corrected-seed38.json",
+          "sha256": "f5cf71da0c4f9a9b7b27fa815158ee36ab9a5b8fb185b309749b9dcdbef7f081",
+          "bytes": 2514
+        },
+        {
+          "filename": "corrected-seed38.png",
+          "sha256": "50a9270d45c1f32da6146db91130d29827e0bf0c0494739491ec3847e08d98b5",
+          "bytes": 441154
+        },
+        {
+          "filename": "crater-broken.glb",
+          "sha256": "4e57a75f9a756fb3b5565b9b7df7cf7ef4fbbf1e3faab5c8e81db34668ebd3a4",
+          "bytes": 568028
+        },
+        {
+          "filename": "crater-large.glb",
+          "sha256": "aba5c55071b91fac51c8108707bdbd517641347ef52c67a7e1db1d47e44da99d",
+          "bytes": 568024
+        },
+        {
+          "filename": "crater-small.glb",
+          "sha256": "98897f96e47325bfa14bb099521aab877dc9d3a4a44b7c4516a6dda229063b10",
+          "bytes": 568036
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "ba65da994983ac1dae1a08d5852008fd993a4dcc36d97c8776451ebab89d38f3",
+          "bytes": 11908
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+          "bytes": 19405
+        },
+        {
+          "filename": "fractured-shelf.glb",
+          "sha256": "cd0346121d21e7e4e2703d24a4bba6a64c1cf89c4ce25962ce0edbb4e09a26e0",
+          "bytes": 339736
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "9c3f6415ad692c4ca438379888f4ec2d22eba3e3147ab67fbf61bbff2b979310",
+          "bytes": 19799
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "44fc3adb6190b3f50ff01b37a12a38f6500b4a07f9b5776d9520d8d11e5b87f6",
+          "bytes": 121364
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "a42aff0d43a37020fd7057b4e23ab03eb72261ca06b1405fcc933252e2bd6825",
+          "bytes": 143964
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "54f18d03d51f1506b270f78acabab9c328b41308c46fb03e00853902fc7437d3",
+          "bytes": 233176
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "bf439a160e9943eb6727413f11e3173fabc71cb80127d95923e61816eb96497e",
+          "bytes": 1091740
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "c18b45fadd5ff39c6d77930efe326ef1f9d601b07f903d943092d303553d5794",
+          "bytes": 4439646
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "83a1ceb44cf8a5f3b2a9a7473d1e9b9202a4119be05c49322cb5a22941fd3c20",
+          "bytes": 16268357
+        },
+        {
+          "filename": "mineral-seam.glb",
+          "sha256": "6a6c1412dc02d6591c8f9cee4d2c602ce0882469a5ef13f8d5d4bc0807ebbf65",
+          "bytes": 221312
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "e8377a47622c14ca4025d692abe69c6ac2f9480fb6756b7c1c8c66e1f91a0ec9",
+          "bytes": 1690
+        },
+        {
+          "filename": "rocky-0-albedo.png",
+          "sha256": "bd0b9434980391bdae5f596ab3803cc618c2d567879419e339da1c49a6542ba1",
+          "bytes": 76936
+        },
+        {
+          "filename": "rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-1-albedo.png",
+          "sha256": "21d56467302d525e92cbec98b0b08cbdb65624c092e7ca17a2f9bb7990f578c6",
+          "bytes": 78696
+        },
+        {
+          "filename": "rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991
+        },
+        {
+          "filename": "rocky-2-albedo.png",
+          "sha256": "14e45f8fdd6edddf9adf5a0cc31ec971a04738e46dfddb69ea13b6bff29a7692",
+          "bytes": 54755
+        },
+        {
+          "filename": "rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022
+        },
+        {
+          "filename": "rocky-3-albedo.png",
+          "sha256": "211ec56fe430fb0ff992de2bf5aeedbf160e58bf0370b287cc3ed74aa80784fb",
+          "bytes": 66402
+        },
+        {
+          "filename": "rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213
+        },
+        {
+          "filename": "rocky-4-albedo.png",
+          "sha256": "3a761fb681b386d812047fa24f65fdaa510665a3e48edb4d07cf9a1993f8ec95",
+          "bytes": 73159
+        },
+        {
+          "filename": "rocky-4-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-5-albedo.png",
+          "sha256": "da985b76d5aa06eb63df3ad59fae767eaea7e67a8c5981d053160f8475d050e6",
+          "bytes": 79391
+        },
+        {
+          "filename": "rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335
+        },
+        {
+          "filename": "solid_moon_reference_composition_r001.test.ts",
+          "sha256": "85867246726b822571f647233604bf21a7e7ee1df1e24ce8d5eabf30479b9820",
+          "bytes": 5215
+        },
+        {
+          "filename": "solid_moon_reference_composition_r001.ts",
+          "sha256": "8f7b2b05e4778be45e94d465061974d314f1f2df2082913f886e2d7ce9303ca0",
+          "bytes": 5147
+        },
+        {
+          "filename": "solid_moon_reference_r001.tsconfig.json",
+          "sha256": "d7fb9b83d10b699c83d13aa57d27c12e39b7499add88f168bf580bd5733fb52a",
+          "bytes": 170
+        },
+        {
+          "filename": "solid_moon_reference_r001.vitest.config.ts",
+          "sha256": "2052980b30a3d6cad34f281bc0be62327f225ff682f56003f17cccecd41562d1",
+          "bytes": 175
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "336737cf4a9e9a8b9fa7ff4d9d7ee40eb7d23b4a10750689108e87f5a9b80bb5",
+          "bytes": 6956
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "7fb7501935c7950d8d2f4466d9302a7c803345a275e7692b824d22c5ae2e30cf",
+          "bytes": 922
+        }
+      ]
+    },
+    {
+      "reference_id": "planets--desert-moon-2",
+      "source_revision": 1,
+      "original_output_directory": "output/playwright/planet-reference-20260914/desert-moon-2-r001",
+      "artifact_directory": "designs/environment.planet.desert/revisions/r015/desert-moon-2/source-r001",
+      "working_gate": "bounded agent working visual pass; no owner sign-off",
+      "source_timestamp_note": "Original files copied with metadata; capture JSON retains actual timestamps/context where present. Checkpoint time is not authoring time.",
+      "files": [
+        {
+          "filename": "angular-outcrops.glb",
+          "sha256": "4577072d8115da79038c4eb3fa63dc1b15dfee5a39c7e049db2d9b7b9cee4d1d",
+          "bytes": 314788
+        },
+        {
+          "filename": "battered-region-a.glb",
+          "sha256": "101ed6af5589e6ea26a3a58ac9977f39a7fcee9af270a94fee11e8a87f0689da",
+          "bytes": 1077380
+        },
+        {
+          "filename": "battered-region-b.glb",
+          "sha256": "6bbeead41a97c1e89d23890a6bbad62111a2bff7e4dcdd573edc1de90aeae572",
+          "bytes": 1073324
+        },
+        {
+          "filename": "build_solid_moon_native_variants_r001.py",
+          "sha256": "3b0453e19c304f1928d2b3f025f90f1f85ccd9f3ea52f96f7d39b7a21c23e899",
+          "bytes": 3541
+        },
+        {
+          "filename": "corrected-seed38-angle2.png",
+          "sha256": "25c1861cb9d4fd142741e48668eae3ae44464ae564c490c8e1327634184ec025",
+          "bytes": 379212
+        },
+        {
+          "filename": "corrected-seed38-capture.log",
+          "sha256": "42fe4f133e21a94bf2c4ac1ebb8600c73633d7dab7e245912d53da4068c6ccb0",
+          "bytes": 2781
+        },
+        {
+          "filename": "corrected-seed38-reference-scale.png",
+          "sha256": "c590477080d326867351e0822f62c3eeb0b1e9ec00f259e85dce8640e64011a1",
+          "bytes": 19321
+        },
+        {
+          "filename": "corrected-seed38.json",
+          "sha256": "3e935b3ec826baa9380dcf42ee28c1140130ebd5a27b5998694641068f1a98fc",
+          "bytes": 2525
+        },
+        {
+          "filename": "corrected-seed38.png",
+          "sha256": "c483badc821a43665b7169a88f675344715c0bf6f4da4a165ec7158d76d51820",
+          "bytes": 408036
+        },
+        {
+          "filename": "crater-broken.glb",
+          "sha256": "5071195e66e6446d8ad3fdacedc008eb200cb613ae67a83164deae02982f98a9",
+          "bytes": 532404
+        },
+        {
+          "filename": "crater-large.glb",
+          "sha256": "8b5d63f2af8e3d095bf568703daea4506e0731eadaa562c578b37fc4ba61e831",
+          "bytes": 532400
+        },
+        {
+          "filename": "crater-small.glb",
+          "sha256": "81cd2aad7354dfcaedad6e9c3c6661691cedcf0704d2d0fd548e6425fa129979",
+          "bytes": 532412
+        },
+        {
+          "filename": "exact-reference.png",
+          "sha256": "d3bda7fe043b226343be684fc6f982e64a2a3663f8af6248603ed76e73b68890",
+          "bytes": 12115
+        },
+        {
+          "filename": "foundation-source.py",
+          "sha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+          "bytes": 19405
+        },
+        {
+          "filename": "fractured-shelf.glb",
+          "sha256": "8da3c9c54a9ca83629e232b51a647106fbaf0ffe5af3f90f04e79735095c8d6b",
+          "bytes": 314776
+        },
+        {
+          "filename": "generator.py",
+          "sha256": "a23ac44b8ae5bc194aca9fa37d2fed53ecdb79bd9d0598dca247deb03e825426",
+          "bytes": 19804
+        },
+        {
+          "filename": "ground-sphere-low.glb",
+          "sha256": "90bd4efa543193d7e583534a6bdd0b181b77b6c048f2de2e56fcb9b5973c2fba",
+          "bytes": 112968
+        },
+        {
+          "filename": "ground-sphere-medium.glb",
+          "sha256": "da2a122fbeb930216c33ba13ef5a38c512573743601260aba42e600af7f6a4b1",
+          "bytes": 135568
+        },
+        {
+          "filename": "ground-sphere.glb",
+          "sha256": "087ff9dab87905abb3d07e0c98bd2fcc758ecdafd494d010bfea5731afa04d9b",
+          "bytes": 224780
+        },
+        {
+          "filename": "kit-preview.png",
+          "sha256": "b834d0b45059041bd4b1cfb9fd599f74f0882850956d5b9a5d55477f56557589",
+          "bytes": 1149153
+        },
+        {
+          "filename": "kit.blend",
+          "sha256": "6cb55f9f598c6e2b5e1e90f4aab56dd673c6d7f9cb6ee6a7766321e48d493c4d",
+          "bytes": 4395990
+        },
+        {
+          "filename": "kit.json",
+          "sha256": "4d4b1a295643ad05bb37012d517e75d05a41a63e7032ea9dc6e75b7bf5d375be",
+          "bytes": 16268357
+        },
+        {
+          "filename": "mineral-seam.glb",
+          "sha256": "02672fe1b6561f56d6273964fb5cac400f058636935020db6fd4019421d7d2a8",
+          "bytes": 204668
+        },
+        {
+          "filename": "revision-notes.md",
+          "sha256": "a8b55716247f4d18074f9409c2a6ea9331de55c2c69b37c55e3e107786408fb2",
+          "bytes": 1680
+        },
+        {
+          "filename": "rocky-0-albedo.png",
+          "sha256": "fbe25227e522ca05e7e6eb7dfe706735d47d8e86e1444795c01d496669c26ceb",
+          "bytes": 68540
+        },
+        {
+          "filename": "rocky-0-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-1-albedo.png",
+          "sha256": "decb57230a5981be72df1bd9705b67dc3daec4bcb363226aacc73a59a158254e",
+          "bytes": 70737
+        },
+        {
+          "filename": "rocky-1-orm.png",
+          "sha256": "0593e12979b67f6cf388e98f4c9c34be28b3ecd8ebc461f3db934ddf17e59717",
+          "bytes": 33991
+        },
+        {
+          "filename": "rocky-2-albedo.png",
+          "sha256": "69d5d4ec13a768bdcf80e738dbe380c911ec6b65edf76966adc160d814c4a6ed",
+          "bytes": 50140
+        },
+        {
+          "filename": "rocky-2-orm.png",
+          "sha256": "b2956f5f43b085819687e9a25c2eff0a94d00b7cf621fbf1ede8cb31ca698de8",
+          "bytes": 33022
+        },
+        {
+          "filename": "rocky-3-albedo.png",
+          "sha256": "e8db113c787dea797ddfa2131a2afdd0f568c7f61c2f6ade140be2e4246b2a35",
+          "bytes": 57793
+        },
+        {
+          "filename": "rocky-3-orm.png",
+          "sha256": "c271e87d98b61c8db4650a1a32b90c6f4b2c2396ca7280ae580640c2960acdb9",
+          "bytes": 33213
+        },
+        {
+          "filename": "rocky-4-albedo.png",
+          "sha256": "ee3d98c16452184fcce1f47ce9d6f3935fd8b2fd97e998f38bdeef0a3daeaed3",
+          "bytes": 65125
+        },
+        {
+          "filename": "rocky-4-orm.png",
+          "sha256": "57e875d6626ebcb956ee2e51015b80dc492d1672fcbe82db7a158ceab4a31e26",
+          "bytes": 33670
+        },
+        {
+          "filename": "rocky-5-albedo.png",
+          "sha256": "266ddf691896ecb5eee1b255a50cc4f1f79aa48e99cac3575b002ff7592aa9ba",
+          "bytes": 73342
+        },
+        {
+          "filename": "rocky-5-orm.png",
+          "sha256": "2fa54a79e516be87a6a551d398b86c959e3b3dacfcfaef39a32e62297b227b66",
+          "bytes": 33335
+        },
+        {
+          "filename": "solid_moon_reference_composition_r001.test.ts",
+          "sha256": "85867246726b822571f647233604bf21a7e7ee1df1e24ce8d5eabf30479b9820",
+          "bytes": 5215
+        },
+        {
+          "filename": "solid_moon_reference_composition_r001.ts",
+          "sha256": "8f7b2b05e4778be45e94d465061974d314f1f2df2082913f886e2d7ce9303ca0",
+          "bytes": 5147
+        },
+        {
+          "filename": "solid_moon_reference_r001.tsconfig.json",
+          "sha256": "d7fb9b83d10b699c83d13aa57d27c12e39b7499add88f168bf580bd5733fb52a",
+          "bytes": 170
+        },
+        {
+          "filename": "solid_moon_reference_r001.vitest.config.ts",
+          "sha256": "2052980b30a3d6cad34f281bc0be62327f225ff682f56003f17cccecd41562d1",
+          "bytes": 175
+        },
+        {
+          "filename": "validation.json",
+          "sha256": "19612ef864b5b2bc5b4b780b923b8f0cdd7278b303486ba4e51e3a71fa387cef",
+          "bytes": 6956
+        },
+        {
+          "filename": "variant-recipe.json",
+          "sha256": "cabb6157c4d09e3c97587d71bc2c29dc04c5c4213dce370b2a40d768bf06f541",
+          "bytes": 917
+        }
+      ]
+    }
+  ],
+  "review_reports": [
+    {
+      "path": "designs/environment.planet.desert/revisions/r015/reviews/six-solid-moon-variants-r001.md",
+      "sha256": "69adaa605f0a92436bbd98c6c8ae6ab98267a4c6cf908d023ad829ef7a8cb05b"
+    }
+  ]
+}

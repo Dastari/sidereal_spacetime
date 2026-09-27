@@ -1,5 +1,8 @@
+import { createHullPaintBinding } from "./hull-paint";
+import { hullPaintKey } from "@sidereal/content/hull-paint";
 import { isExteriorAsset } from "@sidereal/content/layout-asset-scope";
 import { framedWayfarerVisual } from "./framed-wayfarer-visuals";
+import { batchStaticMaterials } from "./static-material-batches";
 import { createVertexMeasurement } from "./layout-vertex-measurement";
 import type { MeasurementPoint } from "./layout-measurement";
 import { createLayoutDoorwayPreview } from "./layout-doorway-preview";
@@ -80,7 +83,7 @@ export interface HullViewState {
   selected: string;
   visible: ReadonlySet<PartCategory>;
   preview?: LayoutPreviewPolicy;
-  tool: "select" | "orbit" | "place" | "measure";
+  tool: "select" | "orbit" | "place" | "measure" | "pan";
   assetId: string;
   height: number;
   snap: number;
@@ -171,6 +174,23 @@ export function createHullViewport(
     buttons: number[];
   };
   pointerInput.buttons = [1, 2];
+  let space = false;
+  const navigation = () => {
+    // A top-locked preview owns the camera; external measuring keeps the
+    // primary button for measurement picks instead of orbiting.
+    const lockTop = state?.lockTop || state?.preview?.lockTop;
+    const pan = space || state?.tool === "pan";
+    pointerInput.buttons = lockTop
+      ? []
+      : pan || (state?.tool === "orbit" && !externalMeasuring)
+        ? [0, 1, 2]
+        : [1, 2];
+    camera.movement.input.setInteraction(
+      "pointer",
+      { button: 0 },
+      pan ? "pan" : "rotate",
+    );
+  };
   camera.movement.input.addEntry({
     source: "pointer",
     button: 1,
@@ -279,7 +299,10 @@ export function createHullViewport(
   const prototypes = new Map<string, Mesh[]>(),
     pending = new Map<string, Promise<void>>(),
     failed = new Set<string>();
-  const nodes = new Map<string, { assetId: string; node: TransformNode }>();
+  const nodes = new Map<
+    string,
+    { assetId: string; node: TransformNode; paintKey: string }
+  >();
   let disposed = false,
     state: HullViewState | undefined,
     projection = initialCamera ? (initialProjection ?? "") : "",
@@ -426,7 +449,18 @@ export function createHullViewport(
       const work = loadEquipmentPrototypes(scene, assets)
         .then((found) => {
           if (disposed) return;
-          for (const [id, meshes] of found) prototypes.set(id, meshes);
+          for (const [id, meshes] of found) {
+            const asset = assets.find((a) => a.id === id);
+            // Native armor has many editable Blender objects per block. Batch
+            // its immutable prototypes by material before creating instances;
+            // each placed block keeps its own transform, picking ID and undo.
+            prototypes.set(
+              id,
+              asset?.visual?.designId === "shipyard.hull.armor-block-review"
+                ? batchStaticMaterials(meshes, "hull")
+                : meshes,
+            );
+          }
           if (state) update(state);
         })
         .catch((e) => {
@@ -484,9 +518,12 @@ export function createHullViewport(
     requestRender();
     if (!state || e.button !== 0) return;
     canvas.focus({ preventScroll: true });
+    if (state.tool === "orbit" || state.tool === "pan" || space) {
+      down = undefined;
+      return;
+    }
     down = { x: e.clientX, y: e.clientY };
     if (state.tool === "measure") return;
-    if (state.tool === "orbit") return;
     if (state.tool === "place") return;
     const id = pick(e)?.pickedMesh?.metadata?.partId as string | undefined;
     if (!id) {
@@ -609,6 +646,8 @@ export function createHullViewport(
     }
   }
   function cancel() {
+    space = false;
+    navigation();
     requestRender();
     if (drag) {
       const node = nodes.get(drag.id)?.node;
@@ -658,6 +697,11 @@ export function createHullViewport(
     }
   };
   const key = (e: KeyboardEvent) => {
+    if (e.code === "Space" && (document.activeElement === canvas || space)) {
+      e.preventDefault();
+      space = e.type === "keydown";
+      navigation();
+    }
     if (e.key === "Escape") cancel();
   };
   const context = (e: Event) => e.preventDefault();
@@ -671,6 +715,7 @@ export function createHullViewport(
   canvas.addEventListener("wheel", requestRender, { passive: true });
   window.addEventListener("blur", cancel);
   window.addEventListener("keydown", key);
+  window.addEventListener("keyup", key);
   const syncSurface = () => {
     engine.setHardwareScalingLevel(
       editorRenderScale(
@@ -724,12 +769,8 @@ export function createHullViewport(
     grid.position.y = next.height - origin.y - 0.025;
     if (next.tool !== "place") hideGhost();
     loadNeeded(next.parts);
+    navigation();
     const lockTop = next.lockTop || next.preview?.lockTop;
-    pointerInput.buttons = lockTop
-      ? []
-      : next.tool === "orbit" && !externalMeasuring
-        ? [0, 1, 2]
-        : [1, 2];
     camera.mode = next.projection === "3D" && !lockTop ? 0 : 1;
     const orientation = lockTop
       ? { alpha: Math.PI / 2, beta: 0.000001 }
@@ -749,7 +790,11 @@ export function createHullViewport(
       }
     for (const p of next.parts) {
       let entry = nodes.get(p.id);
-      if (entry && entry.assetId !== p.assetId) {
+      if (
+        entry &&
+        (entry.assetId !== p.assetId ||
+          entry.paintKey !== hullPaintKey(p.paint))
+      ) {
         entry.node.dispose();
         nodes.delete(p.id);
         entry = undefined;
@@ -759,10 +804,16 @@ export function createHullViewport(
         if (!sources) continue;
         const node = new TransformNode("hull-placement-" + p.id, scene);
         node.metadata = { partId: p.id };
+        const painter = createHullPaintBinding(
+          node,
+          catalog.assets.find((a) => a.id === p.assetId)!,
+          p.paint,
+        );
         for (const source of sources) {
-          const mesh = source.createInstance(
-            "hull-" + p.id + "--" + source.name,
-          );
+          const name = "hull-" + p.id + "--" + source.name;
+          const mesh = painter
+            ? painter.clone(source, name)
+            : source.createInstance(name);
           mesh.parent = node;
           mesh.isVisible = true;
           mesh.isPickable = true;
@@ -772,7 +823,7 @@ export function createHullViewport(
             role: source.metadata?.role ?? "hull",
           };
         }
-        entry = { assetId: p.assetId, node };
+        entry = { assetId: p.assetId, node, paintKey: hullPaintKey(p.paint) };
         nodes.set(p.id, entry);
       }
       for (const mesh of entry.node.getChildMeshes())
@@ -1028,13 +1079,7 @@ export function createHullViewport(
     setMeasuring(active: boolean) {
       externalMeasuring = active;
       measurement.setActive(active || state?.tool === "measure");
-      if (state)
-        pointerInput.buttons =
-          state.lockTop || state.preview?.lockTop
-            ? []
-            : state.tool === "orbit" && !active
-              ? [0, 1, 2]
-              : [1, 2];
+      if (state) navigation();
     },
     measureAt: measurement.measureAt,
     clearMeasurements: measurement.clear,
@@ -1119,6 +1164,7 @@ export function createHullViewport(
       canvas.removeEventListener("wheel", requestRender);
       window.removeEventListener("blur", cancel);
       window.removeEventListener("keydown", key);
+      window.removeEventListener("keyup", key);
       engine.stopRenderLoop();
       // Let in-flight GLB/BRDF texture work finish before releasing its engine.
       // Switching editor modes during a load must not execute a shader callback

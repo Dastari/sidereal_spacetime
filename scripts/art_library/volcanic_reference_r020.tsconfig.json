@@ -1,1 +1,9 @@
-{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["volcanic_reference_composition_r020.ts","volcanic_reference_composition_r020.test.ts","volcanic_reference_r020.vitest.config.ts"]}
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "volcanic_reference_composition_r020.ts",
+    "volcanic_reference_composition_r020.test.ts",
+    "volcanic_reference_r020.vitest.config.ts"
+  ]
+}

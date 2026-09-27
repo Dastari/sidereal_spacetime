@@ -1,0 +1,86 @@
+{
+  "stats": {
+    "style": "toxic",
+    "seed": 38,
+    "frames": 25,
+    "candidate": {
+      "active": 0,
+      "pendingBuilds": 0,
+      "retained": [
+        0
+      ],
+      "requestedLOD": 0,
+      "buildMs": 1112.5,
+      "localLights": 0
+    },
+    "build": {
+      "lastBuildMs": 1144.7000007629395,
+      "pendingBuilds": 0,
+      "pendingWeatherBuilds": 0
+    },
+    "meshes": 11,
+    "triangles": 294386,
+    "renderer": {
+      "vendor": "Google Inc. (Google)",
+      "renderer": "ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)",
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)"
+    },
+    "lods": [
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "activeLOD": 0,
+        "enabled": false
+      },
+      {
+        "name": "reference-review-layers",
+        "role": "planet",
+        "layeredPlanet": true,
+        "lod": 0,
+        "resolution": 54,
+        "requestedResolution": 96,
+        "budgetReduced": true,
+        "trees": 0,
+        "terrainFaces": 81413,
+        "enabled": false
+      }
+    ]
+  },
+  "camera": {
+    "alpha": 2.6529033447245056,
+    "beta": 1.1694941410002127,
+    "radius": 13.5
+  },
+  "shadows": [
+    {
+      "casters": 2,
+      "normalBias": 0.006
+    },
+    {
+      "casters": 10,
+      "normalBias": 0.006
+    }
+  ],
+  "method": "Isolated Babylon review; software renderer timing is not hardware acceptance",
+  "request": {
+    "style": "toxic",
+    "revision": "toxic-r005",
+    "seed": 38,
+    "radius": 5.5,
+    "bias": 0.006,
+    "glow": true,
+    "local_light": false,
+    "prefix": "cleared-fog",
+    "reference_scale": true,
+    "weather_revision": "toxic-fog-r005",
+    "sample_surfaces": false
+  },
+  "url": "http://127.0.0.1:5173/@fs/root/sidereal_spacetime/scripts/art_library/planet_reference_review.html?style=toxic&seed=38&candidate=1&capture=1789358543633168476&shadowBias=0.006&glow=1",
+  "images": {
+    "cleared-fog-seed38.png": "58a2a14dcaf4dc99e3929780d7d0a2d9797da265ad349083bf8ede077992fa8a",
+    "cleared-fog-seed38-angle2.png": "705612997fe00af8919106007501a7db1b8fff355c400b96d4acafae6fd33743",
+    "cleared-fog-seed38-reference-scale.png": "cd79863ca19a9071a5cd6e8064889ae007ea5b2e549d183d564ab22ec6a89750"
+  },
+  "kitSha256": "28571c06767951a8548269448450d2ea3074041878d65222a5ae369ed524a576"
+}

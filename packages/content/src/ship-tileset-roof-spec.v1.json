@@ -29,365 +29,140 @@
     {
       "id": "square-2m",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          64,
-          0
-        ],
-        [
-          64,
-          64
-        ],
-        [
-          0,
-          64
-        ]
+        [0, 0],
+        [64, 0],
+        [64, 64],
+        [0, 64]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "half-2x1",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          64,
-          0
-        ],
-        [
-          64,
-          32
-        ],
-        [
-          0,
-          32
-        ]
+        [0, 0],
+        [64, 0],
+        [64, 32],
+        [0, 32]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "quarter-1m",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          32,
-          0
-        ],
-        [
-          32,
-          32
-        ],
-        [
-          0,
-          32
-        ]
+        [0, 0],
+        [32, 0],
+        [32, 32],
+        [0, 32]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "strip-4x1",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          128,
-          0
-        ],
-        [
-          128,
-          32
-        ],
-        [
-          0,
-          32
-        ]
+        [0, 0],
+        [128, 0],
+        [128, 32],
+        [0, 32]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "triangle-45",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          64,
-          0
-        ],
-        [
-          0,
-          64
-        ]
+        [0, 0],
+        [64, 0],
+        [0, 64]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "triangle-long-left",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          128,
-          0
-        ],
-        [
-          0,
-          64
-        ]
+        [0, 0],
+        [128, 0],
+        [0, 64]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "triangle-long-right",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          128,
-          0
-        ],
-        [
-          128,
-          64
-        ]
+        [0, 0],
+        [128, 0],
+        [128, 64]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "triangle-slim-left",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          128,
-          0
-        ],
-        [
-          0,
-          32
-        ]
+        [0, 0],
+        [128, 0],
+        [0, 32]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "triangle-slim-right",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          128,
-          0
-        ],
-        [
-          128,
-          32
-        ]
+        [0, 0],
+        [128, 0],
+        [128, 32]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "corner-clipped",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          64,
-          0
-        ],
-        [
-          64,
-          32
-        ],
-        [
-          32,
-          64
-        ],
-        [
-          0,
-          64
-        ]
+        [0, 0],
+        [64, 0],
+        [64, 32],
+        [32, 64],
+        [0, 64]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "taper-4m",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          64,
-          0
-        ],
-        [
-          48,
-          128
-        ],
-        [
-          16,
-          128
-        ]
+        [0, 0],
+        [64, 0],
+        [48, 128],
+        [16, 128]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     },
     {
       "id": "triangle-1m",
       "footprintUnits": [
-        [
-          0,
-          0
-        ],
-        [
-          32,
-          0
-        ],
-        [
-          0,
-          32
-        ]
+        [0, 0],
+        [32, 0],
+        [0, 32]
       ],
-      "reservationZUnits": [
-        0,
-        4
-      ],
-      "allowedQuarterTurns": [
-        0,
-        1,
-        2,
-        3
-      ],
+      "reservationZUnits": [0, 4],
+      "allowedQuarterTurns": [0, 1, 2, 3],
       "reflection": "requires-export-validation"
     }
   ],

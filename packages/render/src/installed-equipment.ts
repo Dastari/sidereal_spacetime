@@ -1,3 +1,4 @@
+import { createHullPaintBinding } from "./hull-paint";
 import { canInstancePlacement } from "./placement-instance";
 import { framedWayfarerVisual } from "./framed-wayfarer-visuals";
 import { framedEnginePrototype } from "./framed-engine-prototype";
@@ -88,7 +89,12 @@ export async function loadEquipmentPrototypes(
   const retained = new Set([...result.values()].flat());
   for (const library of libraries.values()) {
     for (const mesh of library.meshes)
-      if (!retained.has(mesh) && !mesh.isDisposed() && mesh.getChildren().length === 0) mesh.dispose(true, false);
+      if (
+        !retained.has(mesh) &&
+        !mesh.isDisposed() &&
+        mesh.getChildren().length === 0
+      )
+        mesh.dispose(true, false);
   }
   return result;
 }
@@ -115,6 +121,7 @@ export function equipmentPlacement(
   );
   node.rotation.y = placement.rotation;
   node.scaling.x = placement.flipped ? -1 : 1;
+  const painter = createHullPaintBinding(node, asset, placement.paint);
   const meshes: AbstractMesh[] = sources.map((source) => {
     const name = "GEO-" + placement.id + "--native--" + source.name;
     const instanceable = canInstancePlacement(asset, source);
@@ -128,9 +135,11 @@ export function equipmentPlacement(
         materialRole: "opaque",
       };
     }
-    const mesh = instanceable
-      ? source.createInstance(name)
-      : source.clone(name, node, true)!;
+    const mesh = painter
+      ? painter.clone(source, name)
+      : instanceable
+        ? source.createInstance(name)
+        : source.clone(name, node, true)!;
     mesh.parent = node;
     mesh.isVisible = true;
     mesh.isPickable = true;

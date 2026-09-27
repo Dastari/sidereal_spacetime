@@ -303,16 +303,122 @@ export function enterReview(
   if (nativeOrigin)
     ctx.db.constructionLocation.characterId.update(reviewLocation);
   else ctx.db.constructionLocation.insert(reviewLocation);
-  commitFlightCharacter(ctx, {
-    ...actor,
-    shipId: instance.id,
-    localX: entry[0],
-    localY: entry[1],
-    sprinting: false,
-  }, row => ctx.db.character.id.update(row));
+  commitFlightCharacter(
+    ctx,
+    {
+      ...actor,
+      shipId: instance.id,
+      localX: entry[0],
+      localY: entry[1],
+      sprinting: false,
+    },
+    (row) => ctx.db.character.id.update(row),
+  );
   clearControls(ctx, actor.id);
   receipt(ctx, op.key, op.request, instance.id, 1n);
 }
+/** Atomic A → B review transit. The original home record is retained verbatim. */
+export function switchReview(
+  ctx: Context,
+  args: {
+    instanceId: string;
+    expectedInstanceRevision: bigint;
+    expectedVisitId: string;
+    expectedRevision: bigint;
+    operationId: string;
+  },
+) {
+  const actor = actorFor(ctx),
+    target = ctx.db.constructionInstance.id.find(args.instanceId);
+  if (!actor?.connected || !target?.owner.isEqual(ctx.sender))
+    throw new SenderError("Owned test ship and connected character required");
+  requireGrant(ctx, target.workspaceId, "instance.spawn");
+  const location = ctx.db.constructionLocation.characterId.find(actor.id);
+  const op = operation(
+    ctx,
+    args.operationId,
+    {
+      kind: "switch-construction-review",
+      ...args,
+      expectedRevision: String(args.expectedRevision),
+      expectedInstanceRevision: String(args.expectedInstanceRevision),
+    },
+    args.expectedRevision,
+    location?.revision ?? 0n,
+  );
+  if (op.replay) return;
+  if (
+    !location ||
+    location.visitId !== args.expectedVisitId ||
+    actor.shipId !== location.instanceId ||
+    !location.returnShipId ||
+    target.id === location.instanceId ||
+    target.id === location.returnShipId
+  )
+    throw new SenderError("Current temporary test-ship visit required");
+  if (
+    target.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE ||
+    !ctx.db.ship.id.find(location.returnShipId)
+  )
+    throw new SenderError("Dedicated test ship and valid home required");
+  if (target.revision !== args.expectedInstanceRevision)
+    throw new SenderError("Test ship revision changed");
+  requireStandingConstructionActor(ctx, actor.id);
+  requireNoConstructionStair(ctx, actor.id);
+  if (
+    ctx.db.couchSeat.characterId.find(actor.id) ||
+    ctx.db.constructionPilotSeat.characterId.find(actor.id) ||
+    ctx.db.constructionFlightReview.characterId.find(actor.id) ||
+    ctx.db.station.shipId.find(actor.shipId)?.occupantId === actor.id
+  )
+    throw new SenderError(
+      "Stand up and end flight review before switching test ships",
+    );
+  const saved = ctx.db.constructionReviewOrigin.characterId.find(actor.id);
+  if (
+    saved &&
+    (!saved.owner.isEqual(ctx.sender) ||
+      saved.reviewInstanceId !== location.instanceId)
+  )
+    throw new SenderError("Original return relation changed");
+  const entry = qualifiedConstructionReviewEntry(
+    constructionCollision(ctx, target, target.spawnDeckId),
+    target,
+  );
+  for (const other of ctx.db.constructionLocation.by_instance.filter(
+    target.id,
+  )) {
+    const occupant = ctx.db.character.id.find(other.characterId);
+    if (
+      other.deckId === target.spawnDeckId &&
+      occupant &&
+      Math.hypot(occupant.localX - entry[0], occupant.localY - entry[1]) < 0.6
+    )
+      throw new SenderError("Test ship entry is occupied");
+  }
+  ctx.db.constructionLocation.characterId.update({
+    ...location,
+    visitId: ctx.newUuidV4().toString(),
+    instanceId: target.id,
+    deckId: target.spawnDeckId,
+    revision: location.revision + 1n,
+  });
+  if (saved)
+    ctx.db.constructionReviewOrigin.characterId.update({
+      ...saved,
+      reviewInstanceId: target.id,
+    });
+  ctx.db.character.id.update({
+    ...actor,
+    shipId: target.id,
+    localX: entry[0],
+    localY: entry[1],
+    sprinting: false,
+  });
+  clearControls(ctx, actor.id);
+  receipt(ctx, op.key, op.request, target.id, location.revision + 1n);
+}
+
 export function leaveReview(
   ctx: Context,
   args: {
@@ -367,13 +473,17 @@ export function leaveReview(
   )
     throw new SenderError("Valid review return location required");
   // Returning must remain possible after a workspace grant expires.
-  commitFlightCharacter(ctx, {
-    ...actor,
-    shipId: location.returnShipId,
-    localX: location.returnX,
-    localY: location.returnY,
-    sprinting: false,
-  }, row => ctx.db.character.id.update(row));
+  commitFlightCharacter(
+    ctx,
+    {
+      ...actor,
+      shipId: location.returnShipId,
+      localX: location.returnX,
+      localY: location.returnY,
+      sprinting: false,
+    },
+    (row) => ctx.db.character.id.update(row),
+  );
   ctx.db.constructionLocation.characterId.delete(actor.id);
   clearControls(ctx, actor.id);
   receipt(
@@ -401,9 +511,11 @@ export function ownLocation(ctx: ReadContext) {
     deck = ctx.db.constructionDeck.id.find(location.deckId);
   if (!instance || !deck) return [];
   const passenger = !instance.owner.isEqual(ctx.sender);
-  if (passenger && !acceptedPassengerAccess(ctx, actor.id).readInterior) return [];
+  if (passenger && !acceptedPassengerAccess(ctx, actor.id).readInterior)
+    return [];
   if (
-    instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE && !passenger &&
+    instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE &&
+    !passenger &&
     !ownedGameShipAccess(ctx, instance.id, deck.id).readInterior
   )
     return [];
@@ -448,7 +560,11 @@ export function stepActor(
   // A retained review visit does not restore workspace interaction after revocation.
   const passenger = !instance.owner.isEqual(actor.owner);
   const mayWalk = passenger
-    ? acceptedPassengerAccess({ ...ctx, sender: actor.owner }, actor.id, ctx.timestamp.microsSinceUnixEpoch).walkDeck
+    ? acceptedPassengerAccess(
+        { ...ctx, sender: actor.owner },
+        actor.id,
+        ctx.timestamp.microsSinceUnixEpoch,
+      ).walkDeck
     : instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE
       ? ownedGameShipAccess(
           { ...ctx, sender: actor.owner },
@@ -458,7 +574,8 @@ export function stepActor(
         ).walkDeck
       : stairHooks.mayEnter(actor.owner, instance.workspaceId);
   if (!mayWalk) return true;
-  if (!passenger && tryEnterConstructionStair(ctx, stairHooks, actor.id)) return true;
+  if (!passenger && tryEnterConstructionStair(ctx, stairHooks, actor.id))
+    return true;
   const frame = constructionCollision(ctx, instance, location.deckId);
   const norm = Math.max(1, Math.hypot(command.dx, command.dy)),
     distance = (command.sprint ? SPRINT_SPEED_MPS : WALK_SPEED_MPS) * 0.05;
@@ -507,12 +624,16 @@ export function stepActor(
   }
   const sprinting = command.sprint && moved;
   if (moved || actor.sprinting !== sprinting)
-    commitFlightCharacter(ctx, {
-      ...actor,
-      localX: next.position[0],
-      localY: next.position[1],
-      sprinting,
-    }, row => ctx.db.character.id.update(row));
+    commitFlightCharacter(
+      ctx,
+      {
+        ...actor,
+        localX: next.position[0],
+        localY: next.position[1],
+        sprinting,
+      },
+      (row) => ctx.db.character.id.update(row),
+    );
   return true;
 }
 
@@ -524,17 +645,22 @@ export function readableInstances(ctx: ReadContext) {
       .filter((g) => !g.revoked && g.capability === "draft.read")
       .map((g) => g.workspaceId),
   );
-  const owned = [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)].filter(
-    (instance) =>
-      instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE
-        ? ownedGameShipAccess(ctx, instance.id, instance.spawnDeckId)
-            .readInterior
-        : workspaces.has(instance.workspaceId),
+  const owned = [
+    ...ctx.db.constructionInstance.by_owner.filter(ctx.sender),
+  ].filter((instance) =>
+    instance.workspaceId === GAME_OWNED_TEMPLATE_NAMESPACE
+      ? ownedGameShipAccess(ctx, instance.id, instance.spawnDeckId).readInterior
+      : workspaces.has(instance.workspaceId),
   );
   const a = actorFor(ctx);
-  if (a && !owned.some(i => i.id === a.shipId)) {
+  if (a && !owned.some((i) => i.id === a.shipId)) {
     const i = ctx.db.constructionInstance.id.find(a.shipId);
-    if (i && !i.owner.isEqual(ctx.sender) && acceptedPassengerAccess(ctx,a.id).readInterior) owned.push(i);
+    if (
+      i &&
+      !i.owner.isEqual(ctx.sender) &&
+      acceptedPassengerAccess(ctx, a.id).readInterior
+    )
+      owned.push(i);
   }
   return owned;
 }

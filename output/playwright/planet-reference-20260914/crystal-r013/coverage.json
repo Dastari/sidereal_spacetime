@@ -1,0 +1,38 @@
+[
+  {
+    "seed": 1,
+    "before": {
+      "visible": 54,
+      "holeDegrees": 34.87111994255772
+    },
+    "after": {
+      "visible": 64,
+      "holeDegrees": 23.61937148397047
+    },
+    "triangles": 147754
+  },
+  {
+    "seed": 38,
+    "before": {
+      "visible": 54,
+      "holeDegrees": 34.4919004086579
+    },
+    "after": {
+      "visible": 64,
+      "holeDegrees": 22.747851742559988
+    },
+    "triangles": 147754
+  },
+  {
+    "seed": 91,
+    "before": {
+      "visible": 54,
+      "holeDegrees": 38.937457772907955
+    },
+    "after": {
+      "visible": 64,
+      "holeDegrees": 21.95515593868722
+    },
+    "triangles": 147754
+  }
+]

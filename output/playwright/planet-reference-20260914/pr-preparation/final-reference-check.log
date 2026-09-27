@@ -1,0 +1,537 @@
+
+> sidereal-spacetime@0.1.0 art:reference:check
+> python3 scripts/art_library/run_reference_checks.py
+
+Running: npx tsc -p scripts/art_library/reference_review.tsconfig.json
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_moon_reference_composition_r002.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  18:23:02
+   Duration  7.37s (transform 41ms, setup 0ms, import 240ms, tests 7.06s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  18:23:10
+   Duration  3.59s (transform 66ms, setup 0ms, import 216ms, tests 3.31s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_moon_reference_composition_r004.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  18:23:14
+   Duration  372ms (transform 129ms, setup 0ms, import 254ms, tests 52ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_reference_composition_r013.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  18:23:15
+   Duration  17.60s (transform 117ms, setup 0ms, import 237ms, tests 17.29s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/gas_reference_composition.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  18:23:33
+   Duration  161ms (transform 16ms, setup 0ms, import 48ms, tests 37ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/hybrid_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  14 passed (14)
+   Start at  18:23:33
+   Duration  9.77s (transform 111ms, setup 0ms, import 351ms, tests 9.36s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_moon_blue_cut_r003.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  18:23:43
+   Duration  7.22s (transform 123ms, setup 0ms, import 311ms, tests 6.83s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_moon_reference_composition_r002.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  18:23:51
+   Duration  26.41s (transform 78ms, setup 0ms, import 558ms, tests 25.77s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_moon_reference_composition_r003.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  11 passed (11)
+   Start at  18:24:18
+   Duration  33.92s (transform 45ms, setup 0ms, import 523ms, tests 33.33s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_reference_composition_r025.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  18:24:52
+   Duration  5.69s (transform 75ms, setup 0ms, import 280ms, tests 5.34s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ice_reference_optics_r026.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  18:24:58
+   Duration  5.59s (transform 67ms, setup 0ms, import 232ms, tests 5.30s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/native_cloud_composition_r002.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  18:25:04
+   Duration  2.52s (transform 32ms, setup 0ms, import 117ms, tests 2.33s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/native_deformation_normals.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  18:25:07
+   Duration  93ms (transform 21ms, setup 0ms, import 28ms, tests 2ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/ocean_reference_composition_r007.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  18:25:08
+   Duration  8.50s (transform 116ms, setup 0ms, import 1.35s, tests 7.09s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_composition.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  1 passed (1)
+   Start at  18:25:17
+   Duration  8.47s (transform 26ms, setup 0ms, import 198ms, tests 8.20s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_hardware_review.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  18:25:25
+   Duration  228ms (transform 63ms, setup 0ms, import 152ms, tests 13ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_local_lights.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  18:25:26
+   Duration  304ms (transform 102ms, setup 0ms, import 204ms, tests 36ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_materials.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  18:25:27
+   Duration  246ms (transform 109ms, setup 0ms, import 174ms, tests 11ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_pbr_channels.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  18:25:27
+   Duration  458ms (transform 138ms, setup 0ms, import 337ms, tests 59ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_transmission.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  18:25:28
+   Duration  248ms (transform 93ms, setup 0ms, import 170ms, tests 16ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/planet_reference_worker_lifetime.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  18:25:28
+   Duration  247ms (transform 83ms, setup 0ms, import 166ms, tests 14ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/rocky_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  18:25:29
+   Duration  841ms (transform 100ms, setup 0ms, import 201ms, tests 576ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/rocky_reference_composition_r010.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  18:25:30
+   Duration  1.68s (transform 61ms, setup 0ms, import 179ms, tests 1.44s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/solid_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  19 passed (19)
+   Start at  18:25:32
+   Duration  12.59s (transform 53ms, setup 0ms, import 326ms, tests 12.19s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/temperate_reference_composition_r003.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  18:25:45
+   Duration  1.66s (transform 34ms, setup 0ms, import 143ms, tests 1.45s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_fog_composition_r005.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  4 passed (4)
+   Start at  18:25:47
+   Duration  759ms (transform 55ms, setup 0ms, import 139ms, tests 556ms, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_fog_reference_clearance.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  18:25:48
+   Duration  2.58s (transform 54ms, setup 0ms, import 178ms, tests 2.34s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_fog_reference_integration.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  18:25:51
+   Duration  1.82s (transform 53ms, setup 0ms, import 181ms, tests 1.57s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_moon_reference_composition_r001.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  18:25:53
+   Duration  4.17s (transform 33ms, setup 0ms, import 186ms, tests 3.90s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/toxic_reference_composition_r007.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  18:25:58
+   Duration  7.74s (transform 46ms, setup 0ms, import 283ms, tests 7.39s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/volcanic_moon_reference_composition_r002.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  8 passed (8)
+   Start at  18:26:06
+   Duration  6.37s (transform 96ms, setup 0ms, import 252ms, tests 6.04s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/volcanic_reference_composition_r023.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  3 passed (3)
+   Start at  18:26:13
+   Duration  3.16s (transform 42ms, setup 0ms, import 247ms, tests 2.85s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/gas_moon_luminous_trial_r005.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  6 passed (6)
+   Start at  18:26:16
+   Duration  4.11s (transform 106ms, setup 0ms, import 284ms, tests 3.76s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/volcanic_moon_reference_composition_r004.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  18:26:21
+   Duration  5.51s (transform 117ms, setup 0ms, import 233ms, tests 5.20s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_moon_reference_composition_r005.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  7 passed (7)
+   Start at  18:26:27
+   Duration  1.30s (transform 70ms, setup 0ms, import 145ms, tests 1.08s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_moon_reference_composition_r009.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  18:26:28
+   Duration  1.55s (transform 27ms, setup 0ms, import 115ms, tests 1.37s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/volcanic_moon2_shoulders_r005.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  18:26:30
+   Duration  2.30s (transform 28ms, setup 0ms, import 37ms, tests 2.20s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/volcanic_moon2_shoulders_r006.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  18:26:33
+   Duration  2.27s (transform 27ms, setup 0ms, import 34ms, tests 2.17s, environment 0ms)
+
+Running: npx vitest run --config scripts/art_library/reference_review.vitest.config.ts scripts/art_library/crystal_moon_reference_composition_r010.test.ts --maxWorkers=1 --no-file-parallelism
+(!) Your Vite config uses features that are unsupported by `configLoader: 'native'`, which is planned to become the default in a future major version of Vite:
+  - JSON import "./reference_review_test_files.json" without import attributes (scripts/art_library/reference_review.vitest.config.ts:2:19). Add `with { type: 'json' }`
+Set `VITE_CONFIG_NATIVE_IGNORE_WARNING=true` to suppress this warning.
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  1 passed (1)
+      Tests  9 passed (9)
+   Start at  18:26:35
+   Duration  1.57s (transform 40ms, setup 0ms, import 132ms, tests 1.37s, environment 0ms)
+
+Running: python3 -m unittest discover -s scripts/art_library -p test_*reference*.py
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.010s
+
+OK
+Running: python3 -m unittest discover -s scripts/art_library -p test_native_kit_attribute_audit.py
+......
+----------------------------------------------------------------------
+Ran 6 tests in 0.001s
+
+OK
+Running: python3 -m unittest discover -s scripts/art_library -p test_preserve_native_kit_ior.py
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+Running: python3 -m unittest discover -s scripts/art_library -p test_ice_moon_runtime_projection.py
+.....
+----------------------------------------------------------------------
+Ran 5 tests in 0.007s
+
+OK
+All reference checks passed

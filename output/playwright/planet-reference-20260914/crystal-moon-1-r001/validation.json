@@ -1,0 +1,246 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "coordinates": "Blender Z up, formation roots buried below Z0; ground sphere radius1",
+  "partsManifold": true,
+  "variants": [
+    {
+      "name": "colossal-cluster",
+      "vertices": 840,
+      "triangles": 280,
+      "bounds": [
+        [
+          -0.9171302318572998,
+          0.8565324544906616
+        ],
+        [
+          -0.6610029339790344,
+          0.4543665945529938
+        ],
+        [
+          -0.09099999815225601,
+          1.065999984741211
+        ]
+      ]
+    },
+    {
+      "name": "leaning-colossal-cluster",
+      "vertices": 630,
+      "triangles": 210,
+      "bounds": [
+        [
+          -0.7956178784370422,
+          0.7784436941146851
+        ],
+        [
+          -0.5699843764305115,
+          0.4636102318763733
+        ],
+        [
+          -0.09099999815225601,
+          1.027000069618225
+        ]
+      ]
+    },
+    {
+      "name": "medium-cluster",
+      "vertices": 630,
+      "triangles": 210,
+      "bounds": [
+        [
+          -0.39074042439460754,
+          0.4730721414089203
+        ],
+        [
+          -0.41128095984458923,
+          0.2772422730922699
+        ],
+        [
+          -0.09099999815225601,
+          0.6694999933242798
+        ]
+      ]
+    },
+    {
+      "name": "single-crystal",
+      "vertices": 210,
+      "triangles": 70,
+      "bounds": [
+        [
+          -0.22085152566432953,
+          0.32620489597320557
+        ],
+        [
+          -0.22416265308856964,
+          0.23882028460502625
+        ],
+        [
+          -0.09099999815225601,
+          0.9425000548362732
+        ]
+      ]
+    },
+    {
+      "name": "fracture-cliffs",
+      "vertices": 990,
+      "triangles": 330,
+      "bounds": [
+        [
+          -0.8138359785079956,
+          0.5470880270004272
+        ],
+        [
+          -0.4345270097255707,
+          0.4596540033817291
+        ],
+        [
+          -0.2199999988079071,
+          0.3199999928474426
+        ]
+      ]
+    },
+    {
+      "name": "low-fractured-shelf",
+      "vertices": 660,
+      "triangles": 220,
+      "bounds": [
+        [
+          -0.7934640049934387,
+          0.7212479710578918
+        ],
+        [
+          -0.3696489930152893,
+          0.3786419928073883
+        ],
+        [
+          -0.2199999988079071,
+          0.2199999988079071
+        ]
+      ]
+    },
+    {
+      "name": "crystal-battered-region-a",
+      "vertices": 41634,
+      "triangles": 13878,
+      "bounds": [
+        [
+          -1.9900000095367432,
+          1.9500000476837158
+        ],
+        [
+          -1.4500000476837158,
+          1.4800000190734863
+        ],
+        [
+          -0.4300000071525574,
+          0.3400000035762787
+        ]
+      ]
+    },
+    {
+      "name": "crystal-battered-region-b",
+      "vertices": 41370,
+      "triangles": 13790,
+      "bounds": [
+        [
+          -1.9900000095367432,
+          1.9500000476837158
+        ],
+        [
+          -1.4500000476837158,
+          1.4800000190734863
+        ],
+        [
+          -0.4300000071525574,
+          0.3400000035762787
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "vertices": 15360,
+      "triangles": 5120,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "vertices": 3840,
+      "triangles": 1280,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "vertices": 960,
+      "triangles": 320,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "ground-sphere-medium.glb": "c9f118c73040ff358ef2a21b1da4f185cf8a2e6e7628ce9ac84286b4791ab178",
+    "variant-recipe.json": "919a11fa8b6118c511b3b229b511a7fe6bbc8f68861b85f314db0c1257f2384c",
+    "material-6-albedo.png": "b0dbc3bb1cf2cf4c907e3dc384a90876e606ddba275532b9b2e17d854fa622d0",
+    "material-0-orm.png": "88c0ac10019cfd6fdb660918337fa57ab8218b7d516fc5d23d8b389991a900c0",
+    "material-1-albedo.png": "8fd53936a984a4ca45f412d85c1170845b9b60bc8d31f2248f01b374f0986b4d",
+    "generator.py": "bbac6d44ba12dbed548090d623d5b3ddbdbdc750aed0a403dd4596b9f44d8655",
+    "medium-cluster.glb": "6de6c83e471378c03140402266853fa8e909993f8049d9fbfd049e8186da2232",
+    "crystal-battered-region-b.glb": "fc202f89de17c1caf32abfcb00e6654b323f509c83aa687d3ad9517fc0ebb377",
+    "material-4-albedo.png": "ade51d3554d45db962dfd9eb94d2b01ec3918a2302a457abe5f484201243a684",
+    "leaning-colossal-cluster.glb": "976b42ce06a940abc8b21c3069184b10ae30776a86d97152497764d2ccb2bbdf",
+    "ground-sphere-low.glb": "edf99ea63703e9488e987def8049e770d44cf9eac91d7f3fb0a214ad316be1aa",
+    "material-3-albedo.png": "089aab239000499176d4f27877810d5008a6793022505267379596d3fbbcc3ab",
+    "kit-preview.png": "208454d1d1f18aedb1dfef725ae1f05ac18577ad3908ee2c1667b996381f6ee8",
+    "material-1-orm.png": "6efb129044b4951f6166bb8c036fe006019fb1ad02d62878746c1462829099a9",
+    "material-2-albedo.png": "0cd0275b8bcf5928f6f8c9841a5685abc0fd12e9afa8f75f6bd525edae73c8c0",
+    "colossal-cluster.glb": "cf47f863620c5db7ed2294b6bb3e84a7d76b64dc115d5d4441fd325654811187",
+    "low-fractured-shelf.glb": "30de91e1f0685ff14741d4bf3c223ac02a335c90407434a7055330c956ec00f5",
+    "material-5-albedo.png": "cb4932b9cb01c7ff40c36547659997f72af6790eee0c051bf72bfba71ac4ff34",
+    "kit.json": "f3404c5e520c9ef4815f07093016287c4ae249e36c1a461b96d32dce3a6a334b",
+    "crystal-battered-region-a.glb": "c9c75c086fde6f8dc53a2a9d89b36df2218b5388342c95956fd50a963e0411fd",
+    "kit.blend": "bc56c72ad4d40759433a4361f2fdb55234851110a0a4ba8ccdb441c025d5e9c5",
+    "material-0-albedo.png": "2ca2d463d0accfa0fa19fadbc622a2703978a565a0ee96c932fc6d92450f0f94",
+    "material-2-orm.png": "534e846c8e8f2c29484f60b45ecb163f838ba315673fd5967f7978da88686b22",
+    "foundation-source.py": "f169c80e578789f719090496741b3757403e1e661489c4d8409bdc9f57a70759",
+    "single-crystal.glb": "75a630a948642159e9a7f41874e26f7eeacaf882f37549d64b5ecdb53fdd3954",
+    "ground-sphere.glb": "466dda9ff3d180004a30fae487f7719052795a939e13ab2b9bf7fa941089ba15",
+    "fracture-cliffs.glb": "0be39ef36ed34abf04ebc5fd4575aac19c9488932e7b441543785d642d5e03ca",
+    "material-7-albedo.png": "1b435921c7ae73c71fa3d8254af9f9c0b50018e4d959432ef2dd6f4fc73312aa"
+  }
+}

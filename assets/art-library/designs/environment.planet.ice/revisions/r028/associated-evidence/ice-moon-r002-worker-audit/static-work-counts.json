@@ -1,0 +1,12 @@
+{
+  "groundTriangles": 67984,
+  "cornerVertices": 203952,
+  "uniquePositions": 34330,
+  "uniquePositionNormals": 152754,
+  "positionDuplication": 5.9409263035246145,
+  "normalDuplication": 1.3351663458894694,
+  "groundSubstrateCallsByCode": 1019760,
+  "regionFrameComputationsByCode": 10197600,
+  "floorQueriesWorstCaseByCode": 91778400,
+  "approxFloorQueriesPositiveHemisphere": 45889200.0
+}

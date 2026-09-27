@@ -1,0 +1,160 @@
+[
+  {
+    "candidate": "crystal-moon-1-r006",
+    "kit": "output/playwright/planet-reference-20260914/crystal-moon-1-r006/kit.json",
+    "kitSha256": "e1b2172c09883367b1e7117b6974e5e3085915eb82d34f64a4e5607c00b1b35d",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "connected-crystalline-body",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-1-r006/connected-crystalline-body.glb",
+        "glbSha256": "4af340765d170ec2bef7ca9d3752c93715748ecd96ee4f2461ef4f39c5021ee1",
+        "jsonCorners": 13764,
+        "glbCorners": 13764,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 1.5950760584271784e-07,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 1,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  },
+  {
+    "candidate": "crystal-moon-2-r006",
+    "kit": "output/playwright/planet-reference-20260914/crystal-moon-2-r006/kit.json",
+    "kitSha256": "054f48fe120fb1b3bd38a52a0f9d923cc878e8301fdbf1fe76bebb085421360a",
+    "materialDifferences": [],
+    "attributeGaps": [],
+    "variants": [
+      {
+        "name": "connected-crystalline-body",
+        "glb": "output/playwright/planet-reference-20260914/crystal-moon-2-r006/connected-crystalline-body.glb",
+        "glbSha256": "7bbca9c551d4e4eda5bb76c5acbbe70ec69a3d376ee8183df152903d0676fdce",
+        "jsonCorners": 5304,
+        "glbCorners": 5304,
+        "glbAttributes": [
+          "NORMAL",
+          "POSITION",
+          "TEXCOORD_0"
+        ],
+        "positionMaterialCornerDifference": 0,
+        "normalsCornerDifference": 0,
+        "uvsCornerDifference": 0,
+        "maximumMatchedPositionDelta": 0,
+        "maximumMatchedNormalDelta": 1.1720581281863996e-07,
+        "maximumMatchedUVDelta": 2.9802322387695312e-08,
+        "tolerances": {
+          "position": 1e-05,
+          "normal": 0.0001,
+          "uv": 1e-05
+        },
+        "textures": [
+          {
+            "material": "crystal-violet",
+            "field": "baseColorTexture",
+            "expected": "material-3-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-magenta",
+            "field": "baseColorTexture",
+            "expected": "material-4-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-dark-facet",
+            "field": "baseColorTexture",
+            "expected": "material-5-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-bright-edge",
+            "field": "baseColorTexture",
+            "expected": "material-6-albedo.png",
+            "status": "byte-identical"
+          },
+          {
+            "material": "crystal-core-plane",
+            "field": "baseColorTexture",
+            "expected": "material-7-albedo.png",
+            "status": "byte-identical"
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Material/position-matched corner multisets check values at explicit tolerances independently of index ordering, not mesh topology equivalence.",
+      "Only explicit JSON material fields are compared; source-side omissions remain unspecified.",
+      "Normals compared only when carried in JSON. Reconstruction of omitted normals by a renderer is outside this artifact audit.",
+      "Geometry converted from BlenderZ-up JSON to glTFY-up and accumulated node transforms; UVs follow recorded glTF convention."
+    ],
+    "summary": {
+      "variants": 1,
+      "materialDifferenceOccurrences": 0,
+      "attributeGaps": 0,
+      "variantErrors": 0,
+      "positionMismatchVariants": 0,
+      "normalMismatchVariants": 0,
+      "uvMismatchVariants": 0
+    }
+  }
+]

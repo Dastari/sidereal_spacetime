@@ -1,10 +1,15 @@
+import type { SpaceRegion } from "@sidereal/sim/space-background";
+import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
 import { createFlightActiveSet } from "./flight-active-set";
 import { createFastSnapshot } from "./fast-snapshot";
-import { createStaticMaterialFreeze, invalidateStaticMaterials } from "./static-material-freeze";
+import {
+  createStaticMaterialFreeze,
+  invalidateStaticMaterials,
+} from "./static-material-freeze";
 import { createDebugVisibilityRevision } from "./debug-visibility-revision";
-import { createShipGlowOccluders } from './ship-glow-occluders';
-import { setMeshRole } from './mesh-roles';
-import { legacyMeshRole, legacyCutawayFade } from './legacy-mesh-role';
+import { createShipGlowOccluders } from "./ship-glow-occluders";
+import { setMeshRole } from "./mesh-roles";
+import { legacyMeshRole, legacyCutawayFade } from "./legacy-mesh-role";
 import {
   loadNativeStairEgress,
   type NativeStairEgressGeometry,
@@ -36,7 +41,11 @@ import {
 } from "./local-light-budget";
 import { createAntialiasing } from "./antialiasing-pipeline";
 import { createRenderEngine } from "./render-engine";
-import { readRenderBackend, createRenderBackendPreference, type RenderBackend } from "./render-backend";
+import {
+  readRenderBackend,
+  createRenderBackendPreference,
+  type RenderBackend,
+} from "./render-backend";
 import { invalidatesTemporalHistory } from "./antialiasing-history";
 import type { AntialiasingSettings } from "./antialiasing-settings";
 import { maintainSceneTransmission } from "./transmission-lifecycle";
@@ -63,7 +72,10 @@ import { loadInstalledEquipment } from "./installed-equipment";
 import { createObjectPresentation } from "./object-presentation";
 import { applyCutawayVisibility, prepareCutawayMeshes } from "./cutaway";
 import { createShipLighting } from "./ship-lighting";
-import { createFlightEffects, type FlightEffectActuator } from "./flight-effects";
+import {
+  createFlightEffects,
+  type FlightEffectActuator,
+} from "./flight-effects";
 import { createRenderDiagnostics } from "./diagnostics";
 import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
@@ -143,6 +155,7 @@ export type SceneState = {
   seatFacing?: number;
   sprinting?: boolean;
   vistaId?: string;
+  spaceRegion?: SpaceRegion;
   reducedMotion?: boolean;
   bodies?: readonly SpaceBodyState[];
   crewAppearance?: CrewAppearance;
@@ -203,11 +216,20 @@ async function buildWorld(
   let initialStateApplied = false;
   let equipmentPending = false;
   let backendStorage: Storage | undefined;
-  try { backendStorage = globalThis.localStorage; } catch { /* Device storage can be blocked. */ }
+  try {
+    backendStorage = globalThis.localStorage;
+  } catch {
+    /* Device storage can be blocked. */
+  }
   const requestedBackend = readRenderBackend(backendStorage);
-  const pageUrl = typeof window === "undefined" ? undefined : new URL(window.location.href);
-  const recoveringWebGL = pageUrl?.searchParams.get("rendererFallback") === "webgl";
-  const createdEngine = await createRenderEngine(canvas, recoveringWebGL ? "webgl" : requestedBackend);
+  const pageUrl =
+    typeof window === "undefined" ? undefined : new URL(window.location.href);
+  const recoveringWebGL =
+    pageUrl?.searchParams.get("rendererFallback") === "webgl";
+  const createdEngine = await createRenderEngine(
+    canvas,
+    recoveringWebGL ? "webgl" : requestedBackend,
+  );
   if (!createdEngine.engine) {
     if (pageUrl) {
       pageUrl.searchParams.set("rendererFallback", "webgl");
@@ -216,8 +238,12 @@ async function buildWorld(
     throw Error("Reloading with WebGL after WebGPU initialization failed.");
   }
   const engine = createdEngine.engine;
-  const backend = createRenderBackendPreference(createdEngine.active, requestedBackend, backendStorage,
-    recoveringWebGL ? "WebGL recovery mode." : createdEngine.reason);
+  const backend = createRenderBackendPreference(
+    createdEngine.active,
+    requestedBackend,
+    backendStorage,
+    recoveringWebGL ? "WebGL recovery mode." : createdEngine.reason,
+  );
   const scene = new Scene(engine);
   const transmissionLifecycle = maintainSceneTransmission(scene);
   // Object selection performs one explicit click ray; camera/HUD use DOM input.
@@ -453,7 +479,10 @@ async function buildWorld(
     if (legacyCutawayFade(mesh)) mesh.metadata.cutawayFade = true;
   }
   const roof = imported.meshes.filter(
-    (m) => m.getTotalVertices() > 0 && m.metadata?.role === "roof" && m.metadata?.cutawayFade,
+    (m) =>
+      m.getTotalVertices() > 0 &&
+      m.metadata?.role === "roof" &&
+      m.metadata?.cutawayFade,
   );
   prepareCutawayMeshes(roof);
   const lighting =
@@ -485,11 +514,13 @@ async function buildWorld(
     [avatar, marker],
     {
       characterRoots: () => [avatar],
-      collisionScope: () => options.constructionEgress
-        ? "Standalone egress preview has no admitted collision frame"
-        : debugCollision.resolve({
-            deckId: state.constructionDeckId, doors: state.constructionDoors,
-          }).scope,
+      collisionScope: () =>
+        options.constructionEgress
+          ? "Standalone egress preview has no admitted collision frame"
+          : debugCollision.resolve({
+              deckId: state.constructionDeckId,
+              doors: state.constructionDoors,
+            }).scope,
       collisionFrames: () => {
         if (options.constructionEgress) return [];
         const source = debugCollision.resolve({
@@ -498,7 +529,10 @@ async function buildWorld(
         });
         const world = shipRoot.computeWorldMatrix(true);
         return source.frames.map((frame, i) => ({
-          id: `walking:${i}`, frame, world, scope: source.scope,
+          id: `walking:${i}`,
+          frame,
+          world,
+          scope: source.scope,
         }));
       },
     },
@@ -522,7 +556,7 @@ async function buildWorld(
     // Stand in front of the innermost service insert, facing into the room.
     plate.position.set(Math.sign(room.x) * 4.35, 2.0625, -room.y);
     plate.rotation.y = (Math.sign(room.x) * Math.PI) / 2;
-    plate.metadata = { side: Math.sign(room.x), role: 'equipment' };
+    plate.metadata = { side: Math.sign(room.x), role: "equipment" };
     const texture = new DynamicTexture(
       "room-sign-" + room.id,
       { width: 512, height: 96 },
@@ -567,15 +601,20 @@ async function buildWorld(
     options.constructionEgress
       ? {
           meshes: [] as Mesh[],
-          update(_outputs: unknown, _motion?: boolean) { return false; },
+          update(_outputs: unknown, _motion?: boolean) {
+            return false;
+          },
           dispose() {},
         }
       : createFlightEffects(scene, shipRoot);
   const localGlowOcclusion = createShipGlowOccluders(scene, shipRoot, glow);
-  const refreshLocalGlow = () => localGlowOcclusion.set([
-    ...flightEffects.meshes, ...emitters, ...imported.meshes,
-    ...(crew?.root.getChildMeshes() ?? []),
-  ]);
+  const refreshLocalGlow = () =>
+    localGlowOcclusion.set([
+      ...flightEffects.meshes,
+      ...emitters,
+      ...imported.meshes,
+      ...(crew?.root.getChildMeshes() ?? []),
+    ]);
   refreshLocalGlow();
   environment.setOccluders([
     ...imported.meshes,
@@ -928,7 +967,8 @@ async function buildWorld(
       if (label.metadata?.side)
         label.setEnabled(label.metadata.side * Math.cos(cameraLocal) < 0);
     lighting.update(blend, avatar.position.x, -avatar.position.z);
-    if (flightEffects.update(state.flightActuators ?? [], state.reducedMotion)) refreshLocalGlow();
+    if (flightEffects.update(state.flightActuators ?? [], state.reducedMotion))
+      refreshLocalGlow();
     camera.alpha +=
       angleDelta(
         camera.alpha,
@@ -940,7 +980,8 @@ async function buildWorld(
       transition;
     const c = Math.cos(displayed.heading),
       s = Math.sin(displayed.heading);
-    const actorBlend = blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
+    const actorBlend =
+      blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
     const targetLocalX =
       (constructionFrame?.centerX ?? 0) * (1 - actorBlend) +
       avatar.position.x * actorBlend;
@@ -970,7 +1011,11 @@ async function buildWorld(
         focus.height,
         -(focus.y - displayed.y),
       );
-      const observed = observation.frame(focus.radius, dt, state.reducedMotion);
+      const observed = observation.frame(
+        celestialObservationRadius(focus, aspect),
+        dt,
+        state.reducedMotion,
+      );
       camera.alpha = observed.alpha;
       camera.beta = observed.beta;
       camera.radius = observed.radius;
@@ -982,6 +1027,7 @@ async function buildWorld(
     camera.getViewMatrix(true);
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,
+      region: state.spaceRegion,
       x: displayed.x,
       y: displayed.y,
       vx: state.vx ?? 0,
@@ -1009,9 +1055,22 @@ async function buildWorld(
     );
     const updateCpuMs = performance.now() - frameStarted;
     staticMaterials.prepare();
-    const snapshotCandidate = fastSnapshot?.prepare({ready:!firstFrame && !state.inspect && !focusedBodyId,
-      reducedMotion:!!state.reducedMotion,temporal:antialiasing.snapshot().effective.mode === "taa",displayRevision:0}) ?? false;
-    flightActiveSet.prepare(!snapshotCandidate && !firstFrame && !!state.seated && !state.interior && !state.inspect && !focusedBodyId && blend < .001);
+    const snapshotCandidate =
+      fastSnapshot?.prepare({
+        ready: !firstFrame && !state.inspect && !focusedBodyId,
+        reducedMotion: !!state.reducedMotion,
+        temporal: antialiasing.snapshot().effective.mode === "taa",
+        displayRevision: 0,
+      }) ?? false;
+    flightActiveSet.prepare(
+      !snapshotCandidate &&
+        !firstFrame &&
+        !!state.seated &&
+        !state.interior &&
+        !state.inspect &&
+        !focusedBodyId &&
+        blend < 0.001,
+    );
     scene.render();
     diagnostics.recordFrameCpu(performance.now() - frameStarted, updateCpuMs);
     if (
@@ -1170,7 +1229,10 @@ async function buildWorld(
             displayed.localX,
             displayed.localY,
             state.combat?.range ?? 60,
-            { deckHeight: avatar.position.y, origin: equipment?.getMuzzleWorld()?.position },
+            {
+              deckHeight: avatar.position.y,
+              origin: equipment?.getMuzzleWorld()?.position,
+            },
           )?.angle
         : undefined;
     },
@@ -1210,11 +1272,18 @@ async function buildWorld(
       remoteShipIds: remoteShips?.getRootIds() ?? [],
     }),
     update(next: SceneState) {
-      if (next.interior !== state.interior || next.inspect !== state.inspect || next.seated !== state.seated) {
-        fastSnapshot?.invalidate();flightActiveSet.invalidate();
+      if (
+        next.interior !== state.interior ||
+        next.inspect !== state.inspect ||
+        next.seated !== state.seated
+      ) {
+        fastSnapshot?.invalidate();
+        flightActiveSet.invalidate();
       }
       const temporalNow = performance.now();
-      if (invalidatesTemporalHistory(state, next, temporalNow - temporalStateAt))
+      if (
+        invalidatesTemporalHistory(state, next, temporalNow - temporalStateAt)
+      )
         antialiasing.resetHistory();
       temporalStateAt = temporalNow;
       if (!initialStateApplied) {

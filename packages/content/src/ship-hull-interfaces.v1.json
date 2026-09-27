@@ -4,21 +4,9 @@
   "latticePerMeter": 32,
   "newAuthoringFrame": {
     "origin": "attachment plane at module midpoint and deck base",
-    "outward": [
-      1,
-      0,
-      0
-    ],
-    "tangent": [
-      0,
-      1,
-      0
-    ],
-    "up": [
-      0,
-      0,
-      1
-    ],
+    "outward": [1, 0, 0],
+    "tangent": [0, 1, 0],
+    "up": [0, 0, 1],
     "requiredSockets": [
       "HULL_ATTACH",
       "HULL_EDGE_START",
@@ -33,19 +21,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        -1,
-        0
-      ],
-      "tangent": [
-        0,
-        -1
-      ],
+      "attachmentPointM": [0.1875, 0, 0],
+      "outward": [-1, 0],
+      "tangent": [0, -1],
       "heightM": 2.9375
     },
     {
@@ -53,19 +31,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        0.3125,
-        0,
-        0
-      ],
-      "outward": [
-        -1,
-        0
-      ],
-      "tangent": [
-        0,
-        -1
-      ],
+      "attachmentPointM": [0.3125, 0, 0],
+      "outward": [-1, 0],
+      "tangent": [0, -1],
       "heightM": 2.9375
     },
     {
@@ -73,19 +41,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        0.25,
-        0,
-        0
-      ],
-      "outward": [
-        -1,
-        0
-      ],
-      "tangent": [
-        0,
-        -1
-      ],
+      "attachmentPointM": [0.25, 0, 0],
+      "outward": [-1, 0],
+      "tangent": [0, -1],
       "heightM": 2.9375
     },
     {
@@ -93,19 +51,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        -1,
-        0
-      ],
-      "tangent": [
-        0,
-        -1
-      ],
+      "attachmentPointM": [0.1875, 0, 0],
+      "outward": [-1, 0],
+      "tangent": [0, -1],
       "heightM": 2.9375
     },
     {
@@ -113,19 +61,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        -1,
-        0
-      ],
-      "tangent": [
-        0,
-        -1
-      ],
+      "attachmentPointM": [0.1875, 0, 0],
+      "outward": [-1, 0],
+      "tangent": [0, -1],
       "heightM": 2.9375
     },
     {
@@ -133,19 +71,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        0.3125,
-        0,
-        0
-      ],
-      "outward": [
-        -1,
-        0
-      ],
-      "tangent": [
-        0,
-        -1
-      ],
+      "attachmentPointM": [0.3125, 0, 0],
+      "outward": [-1, 0],
+      "tangent": [0, -1],
       "heightM": 2.9375
     },
     {
@@ -153,19 +81,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        -1,
-        0
-      ],
-      "tangent": [
-        0,
-        -1
-      ],
+      "attachmentPointM": [0.1875, 0, 0],
+      "outward": [-1, 0],
+      "tangent": [0, -1],
       "heightM": 2.9375
     },
     {
@@ -173,19 +91,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        0.3125,
-        0,
-        0
-      ],
-      "outward": [
-        -1,
-        0
-      ],
-      "tangent": [
-        0,
-        -1
-      ],
+      "attachmentPointM": [0.3125, 0, 0],
+      "outward": [-1, 0],
+      "tangent": [0, -1],
       "heightM": 2.9375
     },
     {
@@ -193,19 +101,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        -1,
-        0
-      ],
-      "tangent": [
-        0,
-        -1
-      ],
+      "attachmentPointM": [0.1875, 0, 0],
+      "outward": [-1, 0],
+      "tangent": [0, -1],
       "heightM": 2.9375
     },
     {
@@ -213,19 +111,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        -0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
-      "tangent": [
-        0,
-        1
-      ],
+      "attachmentPointM": [-0.1875, 0, 0],
+      "outward": [1, 0],
+      "tangent": [0, 1],
       "heightM": 2.9375
     },
     {
@@ -233,19 +121,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        -0.25,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
-      "tangent": [
-        0,
-        1
-      ],
+      "attachmentPointM": [-0.25, 0, 0],
+      "outward": [1, 0],
+      "tangent": [0, 1],
       "heightM": 2.9375
     },
     {
@@ -253,19 +131,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        -0.25,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
-      "tangent": [
-        0,
-        1
-      ],
+      "attachmentPointM": [-0.25, 0, 0],
+      "outward": [1, 0],
+      "tangent": [0, 1],
       "heightM": 2.9375
     },
     {
@@ -273,19 +141,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        -0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
-      "tangent": [
-        0,
-        1
-      ],
+      "attachmentPointM": [-0.1875, 0, 0],
+      "outward": [1, 0],
+      "tangent": [0, 1],
       "heightM": 2.9375
     },
     {
@@ -293,19 +151,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        -0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
-      "tangent": [
-        0,
-        1
-      ],
+      "attachmentPointM": [-0.1875, 0, 0],
+      "outward": [1, 0],
+      "tangent": [0, 1],
       "heightM": 2.9375
     },
     {
@@ -313,19 +161,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        -0.25,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
-      "tangent": [
-        0,
-        1
-      ],
+      "attachmentPointM": [-0.25, 0, 0],
+      "outward": [1, 0],
+      "tangent": [0, 1],
       "heightM": 2.9375
     },
     {
@@ -333,19 +171,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        -0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
-      "tangent": [
-        0,
-        1
-      ],
+      "attachmentPointM": [-0.1875, 0, 0],
+      "outward": [1, 0],
+      "tangent": [0, 1],
       "heightM": 2.9375
     },
     {
@@ -353,19 +181,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        -0.25,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
-      "tangent": [
-        0,
-        1
-      ],
+      "attachmentPointM": [-0.25, 0, 0],
+      "outward": [1, 0],
+      "tangent": [0, 1],
       "heightM": 2.9375
     },
     {
@@ -373,19 +191,9 @@
       "nativeSha256": "eeef5b0cd37893c28b88fd54111b9cb58f086fba23b56a62fb6d7d44052c5ff7",
       "family": "side-armor-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        -0.1875,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
-      "tangent": [
-        0,
-        1
-      ],
+      "attachmentPointM": [-0.1875, 0, 0],
+      "outward": [1, 0],
+      "tangent": [0, 1],
       "heightM": 2.9375
     },
     {
@@ -393,19 +201,9 @@
       "nativeSha256": "784dd8b2c80ac94890d6a6b47d27953d8139d092f7184c116f9fdbd999f3f8fb",
       "family": "cockpit-straight-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        1,
-        0,
-        0
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "tangent": [
-        1,
-        0
-      ],
+      "attachmentPointM": [1, 0, 0],
+      "outward": [0, -1],
+      "tangent": [1, 0],
       "heightM": 1.125
     },
     {
@@ -413,19 +211,9 @@
       "nativeSha256": "01b77863ca3da67edcd24968f80f6e128ef42f7d32d4750e86bb72b2574295cd",
       "family": "cockpit-straight-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        1,
-        0,
-        0
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "tangent": [
-        1,
-        0
-      ],
+      "attachmentPointM": [1, 0, 0],
+      "outward": [0, -1],
+      "tangent": [1, 0],
       "heightM": 1.125
     },
     {
@@ -433,19 +221,9 @@
       "nativeSha256": "65195aefcb5bf72da62839db8fec6123188af9f5ac17024cbe7d6d2cf8959b79",
       "family": "cockpit-straight-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        1,
-        0,
-        0
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "tangent": [
-        1,
-        0
-      ],
+      "attachmentPointM": [1, 0, 0],
+      "outward": [0, -1],
+      "tangent": [1, 0],
       "heightM": 1.4525000974535942
     },
     {
@@ -453,19 +231,9 @@
       "nativeSha256": "d6859439499041ad474afd3d07b4fa1a67512eb7d90fb99720edfbfe5301a5f4",
       "family": "cockpit-straight-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        1,
-        0,
-        0
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "tangent": [
-        1,
-        0
-      ],
+      "attachmentPointM": [1, 0, 0],
+      "outward": [0, -1],
+      "tangent": [1, 0],
       "heightM": 1.4525002092123032
     },
     {
@@ -473,19 +241,9 @@
       "nativeSha256": "59dd466fd25f5555fd8d29bd4183c2e5c7dd99884586bc7f251a2736fbe396d1",
       "family": "cockpit-straight-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        1,
-        0,
-        0
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "tangent": [
-        1,
-        0
-      ],
+      "attachmentPointM": [1, 0, 0],
+      "outward": [0, -1],
+      "tangent": [1, 0],
       "heightM": 1.125
     },
     {
@@ -493,19 +251,9 @@
       "nativeSha256": "9dcf37d5a749a152be66657b100a8d83c59856b4c3b4dc967387bf000723e792",
       "family": "cockpit-straight-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        1,
-        0,
-        0
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "tangent": [
-        1,
-        0
-      ],
+      "attachmentPointM": [1, 0, 0],
+      "outward": [0, -1],
+      "tangent": [1, 0],
       "heightM": 1.4525000974535942
     },
     {
@@ -513,289 +261,153 @@
       "nativeSha256": "29ef84b9b36290094d9053f7635fe160ca5a1767af14eecc2d965ae7405f5f1d",
       "family": "cockpit-straight-2m",
       "spanM": 2,
-      "attachmentPointM": [
-        1,
-        0,
-        0
-      ],
-      "outward": [
-        0,
-        -1
-      ],
-      "tangent": [
-        1,
-        0
-      ],
+      "attachmentPointM": [1, 0, 0],
+      "outward": [0, -1],
+      "tangent": [1, 0],
       "heightM": 1.125
     },
     {
       "assetId": "part-357cf42235c1a190e1d6",
       "nativeSha256": "3b25ca7fcde2fd054076d0b84fc463701230ef2f68cfbc638a1d44173a7d74a9",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-b9ca98146302dec24dd6",
       "nativeSha256": "9c8a425853a723547b789b872f282ad03e9efafa6d1724ec0364a721b3ec3784",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-f85394947090b7609d41",
       "nativeSha256": "61b12a335a653486b1d12371ecd5b9159821294a128fda1e00021e56e613aef7",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-08dac7402c764c4d89d7",
       "nativeSha256": "c84f5950fa0e31e1f966e043706993f1e2b2edaaf6149aa5f725f93eb472b995",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-62c859bcc51b318b2c65",
       "nativeSha256": "5f9dcc01666d63a4aa702b92f50a8abb4ccbe99e04b11cb87bb9496ac2c07258",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-0211e6d7960f233accb7",
       "nativeSha256": "9fc96538375bfdec44b3ac832d9100b1cdfcbd2f751654fa30ff540bddb1440a",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-5b7cee528aeb6959eb7c",
       "nativeSha256": "ae5e7d1e0100d5a1fcf7cc341a2d3504cbd0eb8f98548e9af2f73c3f8aee861f",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-151314086c02e30e06f4",
       "nativeSha256": "3e1fa2b7d8b302e602844c9ae0ae38a5c7c2b6090d86b05fe70bbb5852de4afd",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-9ab3a7a3dbc68586c530",
       "nativeSha256": "c7bb6a556bb6994ace8c1bdbd41ccd5fd4eba7bf8d6fdf1058e70a470854eb40",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-679e9e22f0af30b070a3",
       "nativeSha256": "b2905c1756dfa3e13467be9e3d35b03017cb38d64d984ffb02e7efeb3322d559",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-d16f3e3a2db2188e5ed6",
       "nativeSha256": "dec0304492e5f58b968d1c547183132e21f9ee9333b607e195bcf14d1517afe2",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-d3e5e45b0f3f60b3fa0a",
       "nativeSha256": "3b6ca75b0a2302fb6f2f4456988f9f19d9266602aff0e1e89da921f4427caad9",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-e43ac94780eb7a1adc50",
       "nativeSha256": "47ebe1c2493985afacc9e35b18b33ba32ef52a9bb72a0bbf3706d6cde30741cf",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-5cd7ebc9a8d894fb2b3a",
       "nativeSha256": "a47626d013c69d22eeef2a6e55b87b4fc70ccecd0f01ff4ae7b84188e03f6627",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-64b068a5a6e987c1d518",
       "nativeSha256": "00b58ac661647cf4be62502e7e92face84f918524eb43cabc6440fd6b3571037",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-9b292ad82d675d682b8b",
       "nativeSha256": "25be3e2df4292455bf63148e6934a73599c2ad6dbe09644118f9b3d63efefc79",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-77e9c39b3c50d6dd66f7",
       "nativeSha256": "83162077528937afc25358b0a88e6b58e7151a4981f3030df853b6438ac5fd77",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     },
     {
       "assetId": "part-c9e43b70cbc1f9f77b1f",
       "nativeSha256": "41127699fdae0a4d31b29a7b9fc1845e3ddfa280f2e7f3f36d1ec857d236dc75",
       "spanM": 2,
-      "attachmentPointM": [
-        0,
-        0,
-        0
-      ],
-      "outward": [
-        1,
-        0
-      ],
+      "attachmentPointM": [0, 0, 0],
+      "outward": [1, 0],
       "heightM": 3
     }
   ]

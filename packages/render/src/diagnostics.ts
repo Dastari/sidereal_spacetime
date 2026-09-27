@@ -1,13 +1,16 @@
 import type { Scene } from "@babylonjs/core/scene";
-import { readSceneCapture, type CaptureDiagnostics } from "./capture-diagnostics";
+import {
+  readSceneCapture,
+  type CaptureDiagnostics,
+} from "./capture-diagnostics";
 import { meshesByRole, type MeshRoleCounts } from "./mesh-roles";
 import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstrumentation";
 import type { Observer } from "@babylonjs/core/Misc/observable";
 
 export type RenderDiagnostics = {
-  planetBuild?: {lastBuildMs?:number;pendingBuilds:number};
+  planetBuild?: { lastBuildMs?: number; pendingBuilds: number };
   renderBackend?: import("./render-backend").RenderBackend;
-  snapshotRendering?: {enabled:boolean;armed:boolean;reason:string};
+  snapshotRendering?: { enabled: boolean; armed: boolean; reason: string };
   sceneCapture?: CaptureDiagnostics;
   meshesByRole?: MeshRoleCounts;
   debugOverlays?: import("./debug-overlays").DebugOverlaySnapshot;

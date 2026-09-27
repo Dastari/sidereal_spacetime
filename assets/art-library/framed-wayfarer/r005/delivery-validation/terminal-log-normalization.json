@@ -1,0 +1,35 @@
+{
+  "normalization": "Removed ANSI control codes and trailing terminal whitespace only. Original logs retained in task .runtime directories.",
+  "logs": [
+    {
+      "path": "docs.log",
+      "rawSha256": "1bc16e62447895f7be18b790a953c09db2b5487907906ce269bf3be8669a480f",
+      "normalizedSha256": "1bc16e62447895f7be18b790a953c09db2b5487907906ce269bf3be8669a480f"
+    },
+    {
+      "path": "check.log",
+      "rawSha256": "42fb32992e9d5592d182f8c7820551b0e295752e2e859783470c0325ea559814",
+      "normalizedSha256": "42fb32992e9d5592d182f8c7820551b0e295752e2e859783470c0325ea559814"
+    },
+    {
+      "path": "build.log",
+      "rawSha256": "c1440be674ab92bbeac8fd554df0927e5617a7721e8cd3127d13c6c97047eeb0",
+      "normalizedSha256": "d4eda6daed7fe7d14b59054cae4e79280842e95b0b34a5b741ea7e77cc2737d6"
+    },
+    {
+      "path": "art-check.log",
+      "rawSha256": "afa5c8b8d34cf6ff35d583ca937a514330034c40b08f2147144f09b1d59a5ea0",
+      "normalizedSha256": "afa5c8b8d34cf6ff35d583ca937a514330034c40b08f2147144f09b1d59a5ea0"
+    },
+    {
+      "path": "rebuild.log",
+      "rawSha256": "6e4441b28b9f130f2264d028995bbd74f73641c193cb37ddb4e426168e45016d",
+      "normalizedSha256": "9fc16a7b460f2bd08740ccc4185c839fb29531abfca2419b25c592414c313484"
+    },
+    {
+      "path": "art-library-check.log",
+      "rawSha256": "efbedd1b754a0ade6ce63ef647ac0733f34f59e282ee2da51065f960d799aa76",
+      "normalizedSha256": "efbedd1b754a0ade6ce63ef647ac0733f34f59e282ee2da51065f960d799aa76"
+    }
+  ]
+}

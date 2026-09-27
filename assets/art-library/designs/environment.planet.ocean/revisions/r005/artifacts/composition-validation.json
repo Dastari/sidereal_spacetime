@@ -1,0 +1,18 @@
+{
+  "testsPassed": 5,
+  "typescript": "passed",
+  "highTriangles": 110156,
+  "sceneGuard": 111000,
+  "oldGuard": 110000,
+  "guardReason": "Exact r005 source kit composition has 110156 triangles before and after mapping; no new topology introduced.",
+  "lod": "Major islands, coasts and groves byte-identical at every LOD; authored ground sphere changes resolution.",
+  "checks": [
+    "Every radial height preserved against r004 mapping of same r005 kit",
+    "Inverse tangent map is 1.4x for island and supporting grove",
+    "Indices and placement ranges exact",
+    "NullEngine plateau ray resolves island-0 at all LODs",
+    "Finite unit normals, CCW geometry, ground unchanged"
+  ],
+  "sourceSha256": "795d82abfd5b304ac6fdc7eee3cdf01bb1773b2d8f75e4de7b743114ff87a4ee",
+  "kitSha256": "f347a6b76b0b8040f44358c7c1af85fb302384505eff771a735ead735096f5d9"
+}

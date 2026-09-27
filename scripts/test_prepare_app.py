@@ -5,7 +5,7 @@ import re
 import tempfile
 import unittest
 
-from prepare_app import PUBLISHED_RUNTIME, ROOT, check_references, prepare
+from prepare_app import EDITOR_NATIVE_ASSETS, PUBLISHED_RUNTIME, ROOT, check_references, prepare
 
 ASSET_LITERAL = re.compile(r'["\'`](/assets/[^"\'`\s]+)')
 
@@ -18,6 +18,8 @@ def write(root: Path, name: str, text: str | None = None) -> None:
 
 def seed_runtime(root: Path) -> None:
     """Every allowlisted entry must exist; a missing one is a broken build, not a skip."""
+    for source in EDITOR_NATIVE_ASSETS:
+        write(root, source)
     for entry in PUBLISHED_RUNTIME:
         path = root / "assets/runtime" / entry
         if entry.endswith(".glb"):
@@ -48,6 +50,10 @@ class PrepareAppTests(unittest.TestCase):
                     for name in ("docs", "reference", "PIVOT.md", "help/stale.md"):
                         self.assertFalse((output / name).exists(), str(output / name))
                 self.assertEqual((public / "help/shipyard.md").exists(), app == "dashboard")
+                for source, destination in EDITOR_NATIVE_ASSETS.items():
+                    self.assertEqual((public / destination).exists(), app == "dashboard")
+                    if app == "dashboard":
+                        self.assertEqual((public / destination).read_text(), source)
             self.assertTrue((root / "docs/handoffs/private.md").exists())
             self.assertTrue((root / "reference/legacy.md").exists())
 
@@ -108,6 +114,24 @@ class PrepareAppTests(unittest.TestCase):
             (root / "assets/runtime/construction/floor-finishes").rmdir()
             with self.assertRaises(FileNotFoundError):
                 prepare("client", root)
+
+    def test_shared_celestials_are_exact_and_do_not_require_the_sibling_app(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            seed_runtime(root)
+            for name in ("reviewed-planets", "reviewed-stars"):
+                source = root / "assets/reviewed-celestials" / name / "revision/asset.bin"
+                source.parent.mkdir(parents=True)
+                source.write_bytes(bytes(range(256)))
+                stale = root / "apps/client/public" / name / "old.bin"
+                stale.parent.mkdir(parents=True)
+                stale.write_text("stale")
+            prepare("client", root)
+            self.assertFalse((root / "apps/dashboard").exists())
+            for name in ("reviewed-planets", "reviewed-stars"):
+                output = root / "apps/client/public" / name
+                self.assertFalse((output / "old.bin").exists())
+                self.assertEqual((output / "revision/asset.bin").read_bytes(), bytes(range(256)))
 
     def test_invalid_app_cannot_choose_an_arbitrary_destination(self):
         with tempfile.TemporaryDirectory() as folder:

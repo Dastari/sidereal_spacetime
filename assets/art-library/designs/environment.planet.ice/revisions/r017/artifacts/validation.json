@@ -1,0 +1,96 @@
+{
+  "publication": "isolated draft; existing ice-r015 untouched",
+  "sourceComponentsManifold": true,
+  "attributes": "Corner-expanded native normals and UVs preserve authored hard edges, snow smoothing and seams",
+  "variants": [
+    {
+      "name": "snow-cut-region",
+      "triangles": 4928,
+      "normalCount": 14784,
+      "uvCount": 14784,
+      "bounds": [
+        [
+          -1.8899106979370117,
+          2.307384490966797
+        ],
+        [
+          -1.6249163150787354,
+          1.3551563024520874
+        ],
+        [
+          -0.8399999737739563,
+          1.036429762840271
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "triangles": 5120,
+      "normalCount": 15360,
+      "uvCount": 15360,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "triangles": 1280,
+      "normalCount": 3840,
+      "uvCount": 3840,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "triangles": 320,
+      "normalCount": 960,
+      "uvCount": 960,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "ground-sphere-medium.glb": "8d5707cac3509fe8eebdf1cafe1064373986096fa441fbc318f650f1964ea338",
+    "kit.blend": "d5f0813cfef8b7720336841f2282eb7759ecc735578f1374bd05f6e2f7fce005",
+    "snow-cut-region.glb": "c0c1fac1c99fe654ee349bd3b9455d0a5fa3c90b223f73821515925614fe9e52",
+    "ground-sphere.glb": "78a43540b9063fa51af6f7f53907b14fec11e80d1afb61e2581d94a1b141c16a",
+    "kit.json": "6f6673c23cc8dfe1797befd35f24c25e98ee8b86877508af8b2491f0ad3d3d8f",
+    "ground-sphere-low.glb": "c85e620127a9ddabf0dcc05fb1260bc60e54c6f5475e09cb67c6bdbe01596129",
+    "kit-preview.png": "ca0a45bdeb37c8d841209a7de3789ae97bc211db0a607375ee066620e42c173f"
+  }
+}

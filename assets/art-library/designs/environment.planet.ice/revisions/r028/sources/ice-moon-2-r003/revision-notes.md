@@ -1,0 +1,5 @@
+# Ice moon2 r003 — one broader blue glacial cut
+
+Reuses exact frozen r002 native geometry, UVs, normals, material definitions and texture maps. Runtime kit includes the same three used variants already proven by the r002 projection audit; unused native LOD exports remain in source history. One explicit existing snow-open-gorge placement at normal[-.86,.02,.51], scale.36, angle.6 interrupts the large white district identified in the second seed38 view. No new mesh is voxel-generated or decimated. Native .blend and GLBs are unchanged; the new composition recipe is the visual change.
+
+Compositor r004 preserves r003 floor/index optimizations and adds the explicit placement before preparing the final substrate clearance. Three tests pass: exact retained native fields/materials, allLOD buffer/range equality at185,904triangles, and an actual NullEngine material-bearing ray identifying the added cut rather than old white ground. The first test attempt omitted a material and only resolved bounds; its failure log is preserved, then the actual material-bearing intersection test passes. Actual visual review remains pending. No owner approval or publication.

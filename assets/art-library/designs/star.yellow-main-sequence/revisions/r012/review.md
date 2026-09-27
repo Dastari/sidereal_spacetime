@@ -1,0 +1,1 @@
+Native refinement exceeds existing eight MiB upload cap at 14,013,408 bytes. Not loaded or visually accepted. Preserve the candidate, author intermediate native cell density; do not decimate or increase the upload budget.

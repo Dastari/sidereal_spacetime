@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/root/sidereal_spacetime/scripts/art_library/capture_planet_reference.py", line 33, in <module>
+    if r.returncode or '### Error' in r.stdout:raise RuntimeError((r.stdout+r.stderr)[-3000:])
+                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ### Error
+Error: page.waitForFunction: Target page, context or browser has been closed
+

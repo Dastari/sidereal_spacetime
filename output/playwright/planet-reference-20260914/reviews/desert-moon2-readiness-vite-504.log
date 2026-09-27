@@ -1,0 +1,28 @@
+[     866ms] [LOG] BJS - [23:28:08]: Babylon.js v9.25.0 - WebGL2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[   21231ms] [LOG] BJS - [23:28:28]: Babylon.js v9.25.0 - WebGL2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[   39778ms] [LOG] BJS - [23:28:47]: Babylon.js v9.25.0 - WebGL2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[   89602ms] [LOG] BJS - [23:29:36]: Babylon.js v9.25.0 - WebGL2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  139098ms] [LOG] BJS - [23:30:26]: Babylon.js v9.25.0 - WebGL2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  188492ms] [LOG] BJS - [23:31:15]: Babylon.js v9.25.0 - WebGL2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  236914ms] [LOG] BJS - [23:32:04]: Babylon.js v9.25.0 - WebGL2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  287962ms] [LOG] BJS - [23:32:55]: Babylon.js v9.25.0 - WebGL2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  337427ms] [LOG] BJS - [23:33:44]: Babylon.js v9.25.0 - WebGL2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  357940ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://127.0.0.1:5173/node_modules/.vite/deps/glowMapMerge.fragment-BLjz5iy0.js?v=b1d8236b:0
+[  357940ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://127.0.0.1:5173/node_modules/.vite/deps/glowMapMerge.vertex-CurcBrZx.js?v=b1d8236b:0
+[  357940ms] [ERROR] Failed to load resource: the server responded with a status of 504 (Outdated Optimize Dep) @ http://127.0.0.1:5173/node_modules/.vite/deps/glowBlurPostProcess.fragment-R6W-D1nJ.js?v=b1d8236b:0
+[  360225ms] [ERROR] BJS - [23:34:07]: Unable to compile effect: @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  360226ms] [ERROR] BJS - [23:34:07]: Uniforms: offset textureSampler textureSampler2 @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  360226ms] [ERROR] BJS - [23:34:07]: Attributes: position @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  360226ms] [ERROR] BJS - [23:34:07]: Defines:
+#define EMISSIVE 
+ @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  360226ms] [ERROR] BJS - [23:34:07]: Error: Effect async shader preparation failed for "glowMapMerge": Failed to fetch dynamically imported module: http://127.0.0.1:5173/node_modules/.vite/deps/glowMapMerge.fragment-BLjz5iy0.js?v=b1d8236b
+Caused by: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5173/node_modules/.vite/deps/glowMapMerge.fragment-BLjz5iy0.js?v=b1d8236b @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  360226ms] [ERROR] BJS - [23:34:07]: Unable to compile effect: @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  360226ms] [ERROR] BJS - [23:34:07]: Uniforms: world mBones viewProjection glowColor morphTargetInfluences morphTargetCount boneTextureInfo diffuseMatrix emissiveMatrix opacityMatrix opacityIntensity morphTargetTextureInfo morphTargetTextureIndices bakedVertexAnimationSettings bakedVertexAnimationTextureSizeInverted bakedVertexAnimationTime bakedVertexAnimationTexture glowIntensity vClipPlane vClipPlane2 vClipPlane3 vClipPlane4 vClipPlane5 vClipPlane6 diffuseSampler emissiveSampler opacitySampler boneSampler morphTargets bakedVertexAnimationTexture @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  360226ms] [ERROR] BJS - [23:34:07]: Attributes: position @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  360226ms] [ERROR] BJS - [23:34:07]: Defines:
+#define NUM_BONE_INFLUENCERS 0
+#define GLOW @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39
+[  360226ms] [ERROR] BJS - [23:34:07]: Error: Effect async shader preparation failed for "glowMapGeneration": Failed to fetch dynamically imported module: http://127.0.0.1:5173/node_modules/.vite/deps/glowMapMerge.fragment-BLjz5iy0.js?v=b1d8236b
+Caused by: TypeError: Failed to fetch dynamically imported module: http://127.0.0.1:5173/node_modules/.vite/deps/glowMapMerge.fragment-BLjz5iy0.js?v=b1d8236b @ http://127.0.0.1:5173/node_modules/.vite/deps/timingTools-oEV2kJJ8.js?v=b1d8236b:39

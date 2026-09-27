@@ -1,3 +1,8 @@
+import {
+  validateHullPaint,
+  canPaintHullAsset,
+  type HullPaint,
+} from "./hull-paint";
 import { classifyLegacyYaw } from "./placement-orientation";
 /** Editable visual placements use the game's exact east/north/up metre frame.
  * This local document is not installed inventory, collision, damage or a control grant. */
@@ -79,6 +84,7 @@ export function layoutVisualParts(
         {
           id: f.id,
           assetId: f.definitionId,
+          ...(f.paint ? { paint: structuredClone(f.paint) } : {}),
           position: [
             f.position[0] / 32 - offset[0],
             f.position[1] / 32 - offset[1],
@@ -133,6 +139,8 @@ export function editVisualPart(
     f.position = [Math.round(anchor[0]), Math.round(anchor[1])];
     f.quarterTurns = turns;
     f.reflected = part.flipped;
+    if (part.paint) f.paint = structuredClone(part.paint);
+    else delete f.paint;
   } else if (doc.assembly)
     doc.assembly.parts = doc.assembly.parts.map((p) =>
       p.id === part.id ? part : p,
@@ -149,4 +157,26 @@ export function assemblyDocument(
     name: doc.name,
     parts: layoutVisualParts(doc, catalog),
   };
+}
+
+/** Cosmetic edits must not resolve attachments or snap a component's transform. */
+export function paintVisualPart(
+  current: LayoutDocument,
+  id: string,
+  paint: HullPaint | undefined,
+  catalog: PartCatalog,
+): LayoutDocument {
+  validateHullPaint(paint);
+  const doc = structuredClone(current);
+  const target =
+    doc.assembly?.parts.find((p) => p.id === id) ??
+    doc.fittings.find((f) => f.id === id);
+  if (!target) throw Error("Component is unavailable");
+  const assetId = "assetId" in target ? target.assetId : target.definitionId;
+  const asset = catalog.assets.find((a) => a.id === assetId);
+  if (!asset || !canPaintHullAsset(asset))
+    throw Error("This component has no hull paint controls");
+  if (paint && Object.keys(paint).length) target.paint = structuredClone(paint);
+  else delete target.paint;
+  return doc;
 }

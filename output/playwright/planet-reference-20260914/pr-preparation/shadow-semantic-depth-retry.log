@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /root/sidereal-planet-reference-review
+
+
+ Test Files  2 passed (2)
+      Tests  3 passed (3)
+   Start at  22:35:02
+   Duration  395ms (transform 50ms, setup 0ms, import 215ms, tests 44ms, environment 0ms)
+

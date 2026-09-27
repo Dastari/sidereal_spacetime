@@ -1,0 +1,1 @@
+{"extends":"../../tsconfig.json","compilerOptions":{"noEmit":true},"include":["volcanic_moon_reference_composition_r003.ts","volcanic_moon_reference_composition_r003.test.ts"]}

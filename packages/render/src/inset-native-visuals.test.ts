@@ -24,7 +24,9 @@ function setup() {
   const parent = new TransformNode("owner", scene);
   const containers: AssetContainer[] = [];
   const fetcher = vi.fn(async (url: string) => {
-    const bytes = readFileSync("apps/client/public" + url);
+    const bytes = readFileSync(
+      "assets/runtime/" + url.replace(/^\/assets\//, ""),
+    );
     return {
       ok: true,
       arrayBuffer: async () =>

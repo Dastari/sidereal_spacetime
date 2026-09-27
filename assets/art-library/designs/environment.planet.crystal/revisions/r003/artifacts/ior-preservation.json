@@ -1,0 +1,205 @@
+{
+  "source": "output/playwright/planet-reference-20260914/crystal-r002",
+  "action": "Only explicit source IOR is corrected; original exports remain untouched. No visual acceptance claimed.",
+  "files": [
+    {
+      "file": "single-crystal.glb",
+      "sourceSha256": "cdcf5c3d6030e75b168de06a51fb313f2b5f9cf2410f44d8c4ea898332cc0fd3",
+      "successorSha256": "9f4683cec65cbd45f076f617c63b753d0a61b189c316667b5900a0984435a267",
+      "changes": [
+        {
+          "material": "crystal-violet",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-magenta",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-dark-facet",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-bright-edge",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-core-plane",
+          "before": 1.5,
+          "after": 1.48
+        }
+      ],
+      "binByteIdentical": true
+    },
+    {
+      "file": "crystal-battered-region-a.glb",
+      "sourceSha256": "1859805cbb81aa9a0c282de31d72669683000a47a71dd11e13b44515e8783259",
+      "successorSha256": "1859805cbb81aa9a0c282de31d72669683000a47a71dd11e13b44515e8783259",
+      "changes": [],
+      "binByteIdentical": true
+    },
+    {
+      "file": "kit-preview.png",
+      "sourceSha256": "0c51dad58691ab402ed5939d88e027a4e7ab4a7349eb4eec38cc92b467b0b365",
+      "successorSha256": "0c51dad58691ab402ed5939d88e027a4e7ab4a7349eb4eec38cc92b467b0b365",
+      "changes": []
+    },
+    {
+      "file": "low-fractured-shelf.glb",
+      "sourceSha256": "8dd16abf9bd568709ca2eac7d77601e08b048ffbc043ead273e0032f1f479bc4",
+      "successorSha256": "8dd16abf9bd568709ca2eac7d77601e08b048ffbc043ead273e0032f1f479bc4",
+      "changes": [],
+      "binByteIdentical": true
+    },
+    {
+      "file": "ground-sphere.glb",
+      "sourceSha256": "5ce33ad71c08f8f3d925552e19c27dca55e22efc05cee4d2e9313230df7e73f7",
+      "successorSha256": "5ce33ad71c08f8f3d925552e19c27dca55e22efc05cee4d2e9313230df7e73f7",
+      "changes": [],
+      "binByteIdentical": true
+    },
+    {
+      "file": "ground-sphere-low.glb",
+      "sourceSha256": "a17000ed955103715d88f76a0da7b33567c1741d0dd6df8c4f216640417db878",
+      "successorSha256": "a17000ed955103715d88f76a0da7b33567c1741d0dd6df8c4f216640417db878",
+      "changes": [],
+      "binByteIdentical": true
+    },
+    {
+      "file": "fracture-cliffs.glb",
+      "sourceSha256": "c477d721a503c4dfe79ac6ce106897c45fcd9523fd4a2768785b2999bb68f17e",
+      "successorSha256": "c477d721a503c4dfe79ac6ce106897c45fcd9523fd4a2768785b2999bb68f17e",
+      "changes": [],
+      "binByteIdentical": true
+    },
+    {
+      "file": "kit.blend",
+      "sourceSha256": "b5333276e7ec10175d4f5187adcff8902214c9c4d1d498142cab2705b795140f",
+      "successorSha256": "b5333276e7ec10175d4f5187adcff8902214c9c4d1d498142cab2705b795140f",
+      "changes": []
+    },
+    {
+      "file": "leaning-colossal-cluster.glb",
+      "sourceSha256": "1859289835325c6631f9bb3a707a5271775f3751739713c406b235c4bf6f5fbf",
+      "successorSha256": "9aee8a6611255b654fe24065578662b7d559dd256105b3db2bd9292c53b14178",
+      "changes": [
+        {
+          "material": "crystal-violet",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-magenta",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-dark-facet",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-bright-edge",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-core-plane",
+          "before": 1.5,
+          "after": 1.48
+        }
+      ],
+      "binByteIdentical": true
+    },
+    {
+      "file": "ground-sphere-medium.glb",
+      "sourceSha256": "d88ce6e822a62a5e5dddb29086bc52a2161811f06dd086c197c30ca06e81026d",
+      "successorSha256": "d88ce6e822a62a5e5dddb29086bc52a2161811f06dd086c197c30ca06e81026d",
+      "changes": [],
+      "binByteIdentical": true
+    },
+    {
+      "file": "colossal-cluster.glb",
+      "sourceSha256": "0e8ef00cbea98645a24f9432dc7a8be482c0c51a107dc873d7b6a1b72df1d6fc",
+      "successorSha256": "7a06937304f55a413bb613c58412c7784e17bad49bce20545372dbcb817a10d5",
+      "changes": [
+        {
+          "material": "crystal-violet",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-magenta",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-dark-facet",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-bright-edge",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-core-plane",
+          "before": 1.5,
+          "after": 1.48
+        }
+      ],
+      "binByteIdentical": true
+    },
+    {
+      "file": "medium-cluster.glb",
+      "sourceSha256": "7623aa1d5c747186f9deed5991dd21143e4757c04f3fd546e794cdbe510f8135",
+      "successorSha256": "92a203c0852e95feb828b6ee7292334ddfc6573890978cbecf02bc5e397dda81",
+      "changes": [
+        {
+          "material": "crystal-violet",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-magenta",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-dark-facet",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-bright-edge",
+          "before": 1.5,
+          "after": 1.48
+        },
+        {
+          "material": "crystal-core-plane",
+          "before": 1.5,
+          "after": 1.48
+        }
+      ],
+      "binByteIdentical": true
+    },
+    {
+      "file": "kit.json",
+      "sourceSha256": "3027e13fea6942857c9c21852a6c75f1425b780594e57fa867057780a830cbca",
+      "successorSha256": "3027e13fea6942857c9c21852a6c75f1425b780594e57fa867057780a830cbca",
+      "changes": []
+    },
+    {
+      "file": "crystal-battered-region-b.glb",
+      "sourceSha256": "ff838baf9414a00e030ee7eefb33eb164176237da44d19e631846f0a5e627eb6",
+      "successorSha256": "ff838baf9414a00e030ee7eefb33eb164176237da44d19e631846f0a5e627eb6",
+      "changes": [],
+      "binByteIdentical": true
+    }
+  ]
+}

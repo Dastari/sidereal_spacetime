@@ -11,6 +11,21 @@ import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { planetShadowCoverage } from "./planet-shadow-coverage";
 import { createPlanetShadows } from "./planet-shadows";
 
+test("tight vertex envelope respects translation and nonuniform parent scaling", () => {
+  const engine = new NullEngine(), scene = new Scene(engine);
+  const root = new TransformNode("body", scene);
+  root.position.set(10, 20, 30);
+  root.scaling.set(2, 3, 4);
+  const mesh = CreateBox("authored envelope", { size: 2 }, scene);
+  mesh.parent = root;
+  mesh.position.x = 1;
+  mesh.metadata = { role: "planet", planetShadowRadius: Math.sqrt(3) };
+  expect(planetShadowCoverage(root, [mesh], 1)).toBeCloseTo(2 + Math.sqrt(3) * 4);
+  mesh.metadata.planetShadowRadius = NaN;
+  expect(planetShadowCoverage(root, [mesh], 1)).toBeGreaterThan(1);
+  scene.dispose(); engine.dispose();
+});
+
 test("active ring bounds fit scaled parents, cache between updates and retain body bias", () => {
   const engine = new NullEngine(),
     scene = new Scene(engine);

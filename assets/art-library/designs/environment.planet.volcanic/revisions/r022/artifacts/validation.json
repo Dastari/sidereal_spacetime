@@ -1,0 +1,141 @@
+{
+  "publication": "isolated draft; no owner final sign-off",
+  "coordinates": "Blender Z up, formation roots buried below Z0; ground sphere radius1",
+  "partsManifold": true,
+  "variants": [
+    {
+      "name": "volcanic-region-a",
+      "vertices": 24264,
+      "triangles": 8088,
+      "bounds": [
+        [
+          -1.909999966621399,
+          1.8799999952316284
+        ],
+        [
+          -1.4299999475479126,
+          1.399999976158142
+        ],
+        [
+          -0.27000001072883606,
+          0.5964711904525757
+        ]
+      ]
+    },
+    {
+      "name": "volcanic-region-b",
+      "vertices": 23652,
+      "triangles": 7884,
+      "bounds": [
+        [
+          -1.909999966621399,
+          1.8799999952316284
+        ],
+        [
+          -1.4299999475479126,
+          1.399999976158142
+        ],
+        [
+          -0.27000001072883606,
+          0.5964711904525757
+        ]
+      ]
+    },
+    {
+      "name": "volcanic-region-c",
+      "vertices": 23730,
+      "triangles": 7910,
+      "bounds": [
+        [
+          -1.909999966621399,
+          1.8799999952316284
+        ],
+        [
+          -1.4299999475479126,
+          1.399999976158142
+        ],
+        [
+          -0.27000001072883606,
+          0.44999998807907104
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere",
+      "vertices": 245760,
+      "triangles": 81920,
+      "bounds": [
+        [
+          -1.0,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-medium",
+      "vertices": 61440,
+      "triangles": 20480,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    },
+    {
+      "name": "ground-sphere-low",
+      "vertices": 15360,
+      "triangles": 5120,
+      "bounds": [
+        [
+          -0.9999999403953552,
+          1.0
+        ],
+        [
+          -0.9999999403953552,
+          0.9999999403953552
+        ],
+        [
+          -1.0,
+          1.0
+        ]
+      ]
+    }
+  ],
+  "sha256": {
+    "kit.json": "271b6cf3af3852199bf3f3ba412b92806067d3a1bad26070e83bc6d22a67fca0",
+    "volcanic-region-a.glb": "1136a5d3b5cd4eaf19cdc90568622aa596306d951268e0b60a18a7f59c5aecb0",
+    "basalt-1-albedo.png": "295f5a006db60db275f99aa20c918bed1b8d4bd3d2721a80f60179b38b8355d7",
+    "basalt-1-orm.png": "b1816901174aa8e828fbf00ef981495180ce10cd6ed5385b3a54eb58c5d22715",
+    "ground-sphere.glb": "c27ea5bc79ce3ef46996baa1a183dc9d4c4177f6261c7188cb5aa07fdcfbf349",
+    "basalt-0-orm.png": "b1816901174aa8e828fbf00ef981495180ce10cd6ed5385b3a54eb58c5d22715",
+    "basalt-4-albedo.png": "8acca88fc267445505c80401e63e8b95a2367f9f6f4e39e46c2fe6dfae7e5cbf",
+    "basalt-4-orm.png": "47fb9e8df1f5dd88fc57a929257bc7547e97f43241066f8fcc0a6767aaecc419",
+    "ground-sphere-low.glb": "3ce7095455ff581feb3aebc4f1bb2ba72305a47c8f8dfcb92a6d716d0194ae86",
+    "basalt-2-albedo.png": "6cb862d9a23c578932d820d1bed7132da1c05f5d250e24ee9fd96fde914c5508",
+    "basalt-2-orm.png": "b1816901174aa8e828fbf00ef981495180ce10cd6ed5385b3a54eb58c5d22715",
+    "kit.blend": "1081c4351424bdb4fa9ef648ba2cb04322908cb75b437eb49030653738884948",
+    "volcanic-region-c.glb": "3604a1e9c47cd6207c1b69a5ab8ea1150c043331e42b3a74406ca705e84b068d",
+    "kit-preview.png": "887cfe0468403dad41605f1c9aec6016abeaa93fa75465b61541ea1f732d5c65",
+    "volcanic-region-b.glb": "a2c7286a74a22a3a419b8b5f1d00c08eda5533181e938f2b013c3ab99a2da36b",
+    "basalt-0-albedo.png": "80e5d4f0c043848a4ff9324125919c8deba2d13d0ea8d86c04d0b5786cc9d2b7",
+    "ground-sphere-medium.glb": "5a7691348b7c86f518ab5e5efc61251850ad892eb4bafd605c49b2680222116b",
+    "lava-flow.png": "4622dfb4a176b3280db4ecce97ef78a383102de41574b4d0553ca40b15ba49fd"
+  }
+}

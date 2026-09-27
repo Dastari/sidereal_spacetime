@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { useRef, useState } from "react";
 import { PublicationDialog } from "./PublicationDialog";
+import { hasArmorReviewParts } from "./armor-review";
 import type { useLayout } from "./useLayout";
 export function DocumentBar({
   editor,
@@ -23,8 +24,8 @@ export function DocumentBar({
   commit: (change: (doc: LayoutDocument) => LayoutDocument) => void;
   onNew: () => void;
 }) {
-  const input = useRef<HTMLInputElement>(null);
   const [publishing, setPublishing] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
   return (
     <header className="layout-document-bar">
       <Ship className="document-symbol" size={23} />
@@ -77,10 +78,19 @@ export function DocumentBar({
         </button>
         <button
           className="layout-primary"
-          disabled={blocked}
+          disabled={blocked || hasArmorReviewParts(editor.doc)}
+          title={
+            hasArmorReviewParts(editor.doc)
+              ? "This armor kit is available for editor review. Game installation is not yet qualified."
+              : undefined
+          }
           onClick={() => setPublishing(true)}
         >
-          Publish
+          Templates
+        </button>
+        <button onClick={editor.exportDraft}>
+          <Download size={16} />
+          Export
         </button>
         <details className="layout-file-menu">
           <summary>File</summary>

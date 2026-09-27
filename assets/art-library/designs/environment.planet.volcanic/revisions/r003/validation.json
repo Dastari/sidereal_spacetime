@@ -1,0 +1,98 @@
+[
+  {
+    "seed": 0,
+    "coverage": 0,
+    "triangles": 136296,
+    "placements": 2400,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1328755073959509
+  },
+  {
+    "seed": 0,
+    "coverage": 0.55,
+    "triangles": 102124,
+    "placements": 1758,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1328755073959509
+  },
+  {
+    "seed": 0,
+    "coverage": 1,
+    "triangles": 78824,
+    "placements": 1332,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1328755073959509
+  },
+  {
+    "seed": 89,
+    "coverage": 0,
+    "triangles": 137420,
+    "placements": 2400,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1405964599586904
+  },
+  {
+    "seed": 89,
+    "coverage": 0.55,
+    "triangles": 102096,
+    "placements": 1773,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1405964599586904
+  },
+  {
+    "seed": 89,
+    "coverage": 1,
+    "triangles": 78152,
+    "placements": 1350,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1405964599586904
+  },
+  {
+    "seed": 9187,
+    "coverage": 0,
+    "triangles": 139352,
+    "placements": 2400,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1400044028117327
+  },
+  {
+    "seed": 9187,
+    "coverage": 0.55,
+    "triangles": 100448,
+    "placements": 1718,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1400044028117327
+  },
+  {
+    "seed": 9187,
+    "coverage": 1,
+    "triangles": 75984,
+    "placements": 1278,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1400044028117327
+  },
+  {
+    "seed": 4294967295,
+    "coverage": 0,
+    "triangles": 141336,
+    "placements": 2400,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1199331061540145
+  },
+  {
+    "seed": 4294967295,
+    "coverage": 0.55,
+    "triangles": 105128,
+    "placements": 1784,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1199331061540145
+  },
+  {
+    "seed": 4294967295,
+    "coverage": 1,
+    "triangles": 79820,
+    "placements": 1337,
+    "radialMin": 0.6499995203330518,
+    "radialMax": 1.1199331061540145
+  }
+]

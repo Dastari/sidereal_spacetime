@@ -60,3 +60,13 @@ The owner explicitly authorized replacing the stopped legacy game upstream. Mana
 ## Compressed login resources — 2026-09-09
 
 Public browser verification exposed CSS/JS404 only when the request accepted gzip. Direct CT requests reproduced the same failure, ruling out NPM. `/opt/keycloak/data` had been created as root after installation and the service could not create its runtime gzip cache. Managed `python3 scripts/dev.py keycloak-repair-cache` created only `/opt/keycloak/data/tmp` as keycloak:keycloak0750. The install recipe now ensures this directory exists. No restart, realm change or source/config permission broadening was needed. The exact failing stylesheet and password-visibility script now return200 with their proper MIME and gzip content encoding through the public proxy. Browser recheck is recorded in the public login handoff.
+
+## Retained development review identity (2026-09-21)
+
+The owner requested a reusable semi-permanent game/editor account, retained until
+an explicit go-live retirement decision. Use the [review account runbook](../../docs/review_account.md)
+for its stable identity, private credential locations and normal PKCE workflow.
+Managed `keycloak-development-review-account` verifies/reuses the account without
+password resets. Separate `keycloak-development-review-grant` / `-revoke` commands
+manage temporary construction-administrator access; role cleanup never deletes
+the account. The older deleted review identity is not silently recreated.

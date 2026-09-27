@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { expect, it } from "vitest";
-import { DOORWAY250_VISUALS } from "../../content/src/construction-doorway-visuals";
-import { createDoorway250ReviewLayout } from "../../content/src/doorway250-review-layout";
+import { DOORWAY250_VISUALS } from "@sidereal/content/construction-doorway-visuals";
+import { createDoorway250ReviewLayout } from "@sidereal/content/doorway250-review-layout";
 import { constructionHash } from "./construction-transactions";
 import { compileLayout } from "./layout-compiler";
 import { transformPoint, type Point } from "@sidereal/content/ship-layout";

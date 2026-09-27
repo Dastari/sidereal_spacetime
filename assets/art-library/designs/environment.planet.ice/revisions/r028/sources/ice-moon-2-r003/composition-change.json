@@ -1,0 +1,21 @@
+{
+  "sourceRevision": "ice-moon-2-r002",
+  "fullSourceKitSha256": "15cc6b11bcdc0abb94987bf36f632bdf0a71ef315b7e66d76c3da90bb66ae64e",
+  "keptSourceVariants": [
+    "snow-cut-region",
+    "snow-open-gorge",
+    "ground-sphere"
+  ],
+  "sourceGeometryMaterialsTextures": "unchanged; unused native LOD variants omitted from runtime payload only",
+  "change": "One additional existing snow-open-gorge placement interrupts the large white district with a broader blue cut",
+  "additionalRegion": {
+    "normal": [
+      -0.86,
+      0.02,
+      0.51
+    ],
+    "scale": 0.36,
+    "angle": 0.6
+  },
+  "approval": null
+}

@@ -18,30 +18,14 @@
       "id": "floor-contact-square-2m",
       "floorId": "square-2m",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          2,
-          0
-        ],
-        [
-          2,
-          2
-        ],
-        [
-          0,
-          2
-        ]
+        [0, 0],
+        [2, 0],
+        [2, 2],
+        [0, 2]
       ],
       "nodePrefix": "GEO-part-a3f5c1c3caa171a94d6c--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -50,30 +34,14 @@
       "id": "floor-contact-half-2x1",
       "floorId": "half-2x1",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          2,
-          0
-        ],
-        [
-          2,
-          1
-        ],
-        [
-          0,
-          1
-        ]
+        [0, 0],
+        [2, 0],
+        [2, 1],
+        [0, 1]
       ],
       "nodePrefix": "GEO-part-926a2afada18f96d51a3--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -82,30 +50,14 @@
       "id": "floor-contact-quarter-1m",
       "floorId": "quarter-1m",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          0
-        ],
-        [
-          1,
-          1
-        ],
-        [
-          0,
-          1
-        ]
+        [0, 0],
+        [1, 0],
+        [1, 1],
+        [0, 1]
       ],
       "nodePrefix": "GEO-part-0b833a4f3016609e9b96--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -114,30 +66,14 @@
       "id": "floor-contact-strip-4x1",
       "floorId": "strip-4x1",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          4,
-          0
-        ],
-        [
-          4,
-          1
-        ],
-        [
-          0,
-          1
-        ]
+        [0, 0],
+        [4, 0],
+        [4, 1],
+        [0, 1]
       ],
       "nodePrefix": "GEO-part-baa2e4a6cbe886a5c292--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -146,26 +82,13 @@
       "id": "floor-contact-triangle-45",
       "floorId": "triangle-45",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          2,
-          0
-        ],
-        [
-          0,
-          2
-        ]
+        [0, 0],
+        [2, 0],
+        [0, 2]
       ],
       "nodePrefix": "GEO-part-771cc318e835d7a08abd--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -174,26 +97,13 @@
       "id": "floor-contact-triangle-long-left",
       "floorId": "triangle-long-left",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          4,
-          0
-        ],
-        [
-          0,
-          2
-        ]
+        [0, 0],
+        [4, 0],
+        [0, 2]
       ],
       "nodePrefix": "GEO-part-79328356071c674a2c8b--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -202,26 +112,13 @@
       "id": "floor-contact-triangle-long-right",
       "floorId": "triangle-long-right",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          4,
-          0
-        ],
-        [
-          4,
-          2
-        ]
+        [0, 0],
+        [4, 0],
+        [4, 2]
       ],
       "nodePrefix": "GEO-part-e0dde5e97e9bed05b4b6--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -230,26 +127,13 @@
       "id": "floor-contact-triangle-slim-left",
       "floorId": "triangle-slim-left",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          4,
-          0
-        ],
-        [
-          0,
-          1
-        ]
+        [0, 0],
+        [4, 0],
+        [0, 1]
       ],
       "nodePrefix": "GEO-part-cf72797120e52d05662c--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -258,26 +142,13 @@
       "id": "floor-contact-triangle-slim-right",
       "floorId": "triangle-slim-right",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          4,
-          0
-        ],
-        [
-          4,
-          1
-        ]
+        [0, 0],
+        [4, 0],
+        [4, 1]
       ],
       "nodePrefix": "GEO-part-e315cf681838afff216e--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -286,34 +157,15 @@
       "id": "floor-contact-corner-clipped",
       "floorId": "corner-clipped",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          2,
-          0
-        ],
-        [
-          2,
-          1
-        ],
-        [
-          1,
-          2
-        ],
-        [
-          0,
-          2
-        ]
+        [0, 0],
+        [2, 0],
+        [2, 1],
+        [1, 2],
+        [0, 2]
       ],
       "nodePrefix": "GEO-part-94474fb38b16d77e6429--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -322,30 +174,14 @@
       "id": "floor-contact-taper-4m",
       "floorId": "taper-4m",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          2,
-          0
-        ],
-        [
-          1.5,
-          4
-        ],
-        [
-          0.5,
-          4
-        ]
+        [0, 0],
+        [2, 0],
+        [1.5, 4],
+        [0.5, 4]
       ],
       "nodePrefix": "GEO-part-73f48194371a682af29c--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -354,26 +190,13 @@
       "id": "floor-contact-triangle-1m",
       "floorId": "triangle-1m",
       "footprintM": [
-        [
-          0,
-          0
-        ],
-        [
-          1,
-          0
-        ],
-        [
-          0,
-          1
-        ]
+        [0, 0],
+        [1, 0],
+        [0, 1]
       ],
       "nodePrefix": "GEO-part-7902f7617fb23eb8abe3--floor",
       "sourceToNominal": {
-        "translation": [
-          0,
-          0,
-          0
-        ],
+        "translation": [0, 0, 0],
         "quarterTurns": 0,
         "reflected": false
       }
@@ -396,29 +219,15 @@
       "floors": [
         {
           "floorId": "square-2m",
-          "originM": [
-            0,
-            0
-          ]
+          "originM": [0, 0]
         },
         {
           "floorId": "square-2m",
-          "originM": [
-            2,
-            0
-          ]
+          "originM": [2, 0]
         }
       ],
-      "contactMinM": [
-        1,
-        0,
-        0.1875
-      ],
-      "contactMaxM": [
-        3,
-        0.25,
-        0.1875
-      ],
+      "contactMinM": [1, 0, 0.1875],
+      "contactMaxM": [3, 0.25, 0.1875],
       "expectedAreaM2": 0.5
     },
     {

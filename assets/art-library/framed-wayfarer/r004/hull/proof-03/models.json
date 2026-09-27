@@ -1,0 +1,669 @@
+{
+  "schema": "sidereal.armor-cassette-hull-native.v1",
+  "revision": 4,
+  "stage": "initial-independent-review-proof",
+  "models": [
+    {
+      "slug": "armor-red-service-w200-h300",
+      "path": "models/armor-red-service-w200-h300/model.glb",
+      "sha256": "c6f55596a262457f6691fd7837c059bf2371cabe688dc7215ea015269db143c6",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "sockets": {
+        "HULL_ATTACH": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        },
+        "HULL_EDGE_START": {
+          "position": [
+            0,
+            -1.0,
+            0
+          ],
+          "normal": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "HULL_EDGE_END": {
+          "position": [
+            0,
+            1.0,
+            0
+          ],
+          "normal": [
+            0,
+            1,
+            0
+          ]
+        },
+        "HULL_TOP": {
+          "position": [
+            0,
+            0,
+            3
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      "nodePrefix": "GEO-armor-red-service-w200-h300--",
+      "renderGroups": {
+        "armor": {
+          "nodePrefix": "GEO-armor-red-service-w200-h300--ARMOR",
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          },
+          "triangles": 944
+        },
+        "liner": {
+          "nodePrefix": "GEO-armor-red-service-w200-h300--LINER",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          },
+          "triangles": 12
+        }
+      },
+      "authoredMeshCount": 24,
+      "triangles": 956,
+      "nonuniformScale": false,
+      "revision": 4,
+      "family": "side",
+      "variant": "red-service",
+      "widthM": 2,
+      "heightM": 3,
+      "pairRole": null,
+      "visualBayWidthM": 2,
+      "interfaceLatticeM": 0.03125,
+      "cassetteFaceX": 0.28125
+    },
+    {
+      "slug": "armor-vent-w200-h300",
+      "path": "models/armor-vent-w200-h300/model.glb",
+      "sha256": "5b595d73d1aa506c90bb72e0fc5c52093260f9bad0c82ae59d3f556eefae9110",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "sockets": {
+        "HULL_ATTACH": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        },
+        "HULL_EDGE_START": {
+          "position": [
+            0,
+            -1.0,
+            0
+          ],
+          "normal": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "HULL_EDGE_END": {
+          "position": [
+            0,
+            1.0,
+            0
+          ],
+          "normal": [
+            0,
+            1,
+            0
+          ]
+        },
+        "HULL_TOP": {
+          "position": [
+            0,
+            0,
+            3
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      "nodePrefix": "GEO-armor-vent-w200-h300--",
+      "renderGroups": {
+        "armor": {
+          "nodePrefix": "GEO-armor-vent-w200-h300--ARMOR",
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          },
+          "triangles": 1164
+        },
+        "liner": {
+          "nodePrefix": "GEO-armor-vent-w200-h300--LINER",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          },
+          "triangles": 12
+        }
+      },
+      "authoredMeshCount": 29,
+      "triangles": 1176,
+      "nonuniformScale": false,
+      "revision": 4,
+      "family": "side",
+      "variant": "vent",
+      "widthM": 2,
+      "heightM": 3,
+      "pairRole": null,
+      "visualBayWidthM": 2,
+      "interfaceLatticeM": 0.03125,
+      "cassetteFaceX": 0.28125
+    },
+    {
+      "slug": "armor-plain-pair-left-w200-h300",
+      "path": "models/armor-plain-pair-left-w200-h300/model.glb",
+      "sha256": "f386d818e7619b343d08be7ad55ffe67fcbf315d3d3292c58fc61c1d0cecad30",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "sockets": {
+        "HULL_ATTACH": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        },
+        "HULL_EDGE_START": {
+          "position": [
+            0,
+            -1.0,
+            0
+          ],
+          "normal": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "HULL_EDGE_END": {
+          "position": [
+            0,
+            1.0,
+            0
+          ],
+          "normal": [
+            0,
+            1,
+            0
+          ]
+        },
+        "HULL_TOP": {
+          "position": [
+            0,
+            0,
+            3
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      "nodePrefix": "GEO-armor-plain-pair-left-w200-h300--",
+      "renderGroups": {
+        "armor": {
+          "nodePrefix": "GEO-armor-plain-pair-left-w200-h300--ARMOR",
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          },
+          "triangles": 536
+        },
+        "liner": {
+          "nodePrefix": "GEO-armor-plain-pair-left-w200-h300--LINER",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          },
+          "triangles": 12
+        }
+      },
+      "authoredMeshCount": 14,
+      "triangles": 548,
+      "nonuniformScale": false,
+      "revision": 4,
+      "family": "side",
+      "variant": "plain",
+      "widthM": 2,
+      "heightM": 3,
+      "pairRole": "left",
+      "visualBayWidthM": 4,
+      "interfaceLatticeM": 0.03125,
+      "cassetteFaceX": 0.28125
+    },
+    {
+      "slug": "armor-plain-pair-right-w200-h300",
+      "path": "models/armor-plain-pair-right-w200-h300/model.glb",
+      "sha256": "a236d83b67ef0822442bc59ee45c08fb3fc47bb7442da52f6773bcb6de1f0b34",
+      "bounds": {
+        "min": [
+          0.0,
+          -1.0,
+          0.0
+        ],
+        "max": [
+          0.5,
+          1.0,
+          3.0
+        ]
+      },
+      "sockets": {
+        "HULL_ATTACH": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        },
+        "HULL_EDGE_START": {
+          "position": [
+            0,
+            -1.0,
+            0
+          ],
+          "normal": [
+            0,
+            -1,
+            0
+          ]
+        },
+        "HULL_EDGE_END": {
+          "position": [
+            0,
+            1.0,
+            0
+          ],
+          "normal": [
+            0,
+            1,
+            0
+          ]
+        },
+        "HULL_TOP": {
+          "position": [
+            0,
+            0,
+            3
+          ],
+          "normal": [
+            0,
+            0,
+            1
+          ]
+        }
+      },
+      "nodePrefix": "GEO-armor-plain-pair-right-w200-h300--",
+      "renderGroups": {
+        "armor": {
+          "nodePrefix": "GEO-armor-plain-pair-right-w200-h300--ARMOR",
+          "bounds": {
+            "min": [
+              0.03125,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.5,
+              1.0,
+              3.0
+            ]
+          },
+          "triangles": 536
+        },
+        "liner": {
+          "nodePrefix": "GEO-armor-plain-pair-right-w200-h300--LINER",
+          "bounds": {
+            "min": [
+              0.0,
+              -1.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              1.0,
+              3.0
+            ]
+          },
+          "triangles": 12
+        }
+      },
+      "authoredMeshCount": 14,
+      "triangles": 548,
+      "nonuniformScale": false,
+      "revision": 4,
+      "family": "side",
+      "variant": "plain",
+      "widthM": 2,
+      "heightM": 3,
+      "pairRole": "right",
+      "visualBayWidthM": 4,
+      "interfaceLatticeM": 0.03125,
+      "cassetteFaceX": 0.28125
+    },
+    {
+      "slug": "front-bow-bumper",
+      "path": "models/front-bow-bumper/model.glb",
+      "sha256": "62fd3c50900ca7aa5c66a9e3af99f9c6897deabe7af2cbdb839654a5363aedb6",
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          4.0,
+          0.625,
+          1.5499999523162842
+        ]
+      },
+      "sockets": {
+        "HULL_ATTACH": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        }
+      },
+      "nodePrefix": "GEO-front-bow-bumper--",
+      "renderGroups": {
+        "armor": {
+          "nodePrefix": "GEO-front-bow-bumper--ARMOR",
+          "bounds": {
+            "min": [
+              0.25,
+              0.125,
+              0.0
+            ],
+            "max": [
+              3.75,
+              0.625,
+              1.5499999523162842
+            ]
+          },
+          "triangles": 320
+        },
+        "liner": {
+          "nodePrefix": "GEO-front-bow-bumper--LINER",
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              4.0,
+              0.03125,
+              1.4800000190734863
+            ]
+          },
+          "triangles": 12
+        }
+      },
+      "authoredMeshCount": 9,
+      "triangles": 332,
+      "nonuniformScale": false,
+      "revision": 4,
+      "family": "front",
+      "assetId": "part-63a0c40bbb71cfeba4dd",
+      "existingBounds": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          4,
+          0.6324999928474426,
+          1.5499999523162842
+        ]
+      },
+      "glazingChanged": false,
+      "innerVisibleLinerPreserved": true
+    },
+    {
+      "slug": "front-shoulder-transition",
+      "path": "models/front-shoulder-transition/model.glb",
+      "sha256": "fc5a9aa7b19a370046458647dde41081ac44cec4c8cd28a9837b7616cda33d9c",
+      "bounds": {
+        "min": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "max": [
+          0.7445136904716492,
+          2.0,
+          2.9375
+        ]
+      },
+      "sockets": {
+        "HULL_ATTACH": {
+          "position": [
+            0,
+            0,
+            0
+          ],
+          "normal": [
+            1,
+            0,
+            0
+          ]
+        }
+      },
+      "nodePrefix": "GEO-front-shoulder-transition--",
+      "renderGroups": {
+        "armor": {
+          "nodePrefix": "GEO-front-shoulder-transition--ARMOR",
+          "bounds": {
+            "min": [
+              0.004042099695652723,
+              0.0,
+              0.0
+            ],
+            "max": [
+              0.7445136904716492,
+              1.9725483655929565,
+              2.928647994995117
+            ]
+          },
+          "triangles": 360
+        },
+        "liner": {
+          "nodePrefix": "GEO-front-shoulder-transition--LINER",
+          "bounds": {
+            "min": [
+              0.0,
+              0.0,
+              0.0
+            ],
+            "max": [
+              0.03125,
+              2.0,
+              2.9375
+            ]
+          },
+          "triangles": 8
+        }
+      },
+      "authoredMeshCount": 9,
+      "triangles": 368,
+      "nonuniformScale": false,
+      "revision": 4,
+      "family": "front",
+      "assetId": "part-e965a5502d9fe4c25406",
+      "existingBounds": {
+        "min": [
+          0,
+          0,
+          0
+        ],
+        "max": [
+          0.8140870332717896,
+          2,
+          2.9375
+        ]
+      },
+      "glazingChanged": false,
+      "innerVisibleLinerPreserved": true
+    }
+  ],
+  "source": "source.blend",
+  "sourceSha256": "afcd1198c151a6ac13211bc9ded4148b5a1db9c86f5602851f3d6ff75a6524df",
+  "recipeSha256": "3e7ea26e0778e58a9bb2a4b41d7d6f2f8fd9e7a25943208447d9281e74ae3cff",
+  "textureTexelsPerMetre": 128,
+  "maps": [
+    {
+      "path": "textures/armor-basecolor.png",
+      "sha256": "3c9c1b66122ffa85151f6f048071c713264db44570865453be54282a4579565b"
+    },
+    {
+      "path": "textures/armor-normal.png",
+      "sha256": "59f597574077fb73b99cf75f35a845e4b9ab09e5e39c89fc88752a4c516cb903"
+    },
+    {
+      "path": "textures/armor-roughness.png",
+      "sha256": "8db3823384c5b5335e9b1e4cfd93f00d35e3ed7ed68eb87074d28b5c3aba58d7"
+    }
+  ],
+  "sourceDependencies": [
+    {
+      "path": "scripts/art_library/armor_cassette_interfaces.json",
+      "sha256": "888fa44f8d4dd9a72ffa3956aca7affd1b7b121962ebe89b4e7c23d6e942159d"
+    }
+  ],
+  "interfaceProvenance": {
+    "sourceCatalogSha256": "9fa3db94ed61a84f3e9d52b0d404d1433931747bbd268fceefe6a4e2a6ead237",
+    "currentCatalogAvailableAndBoundsMatched": true
+  },
+  "limits": [
+    "No live publication or authority changes.",
+    "Separate inboard liner and exterior armor groups; no opaque glazing cover.",
+    "Independent visual review required before full-family propagation.",
+    "No pressure/collision/damage qualification from these visible surfaces."
+  ]
+}

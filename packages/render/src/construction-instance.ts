@@ -1,4 +1,7 @@
-import { planWayfarerExteriorGame, type WayfarerExteriorDocument } from "@sidereal/sim/wayfarer-exterior-qualification";
+import {
+  planWayfarerExteriorGame,
+  type WayfarerExteriorDocument,
+} from "@sidereal/sim/wayfarer-exterior-qualification";
 import { planWayfarerRebuildGame } from "@sidereal/sim/wayfarer-rebuild-game";
 import { INSET_VISUAL_PARTS } from "./inset-visual-registry";
 import { createLayoutFloorSlabs } from "./layout-floor-slabs";
@@ -240,10 +243,12 @@ export async function loadConstructionInstance(
   );
   const isInset = document.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id;
   const rebuilt = document.wayfarerExterior
-    ? planWayfarerExteriorGame(document as WayfarerExteriorDocument, { shipId: input.instanceId })
+    ? planWayfarerExteriorGame(document as WayfarerExteriorDocument, {
+        shipId: input.instanceId,
+      })
     : document.wayfarerRebuild
-    ? planWayfarerRebuildGame(document)
-    : undefined;
+      ? planWayfarerRebuildGame(document)
+      : undefined;
   const insetPlan = rebuilt
     ? {
         requests: rebuilt.nativeVisualRequests,

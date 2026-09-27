@@ -1,0 +1,25 @@
+{
+  "referenceId": "planets--toxic-moon-1",
+  "foundation": "/root/sidereal_spacetime/scripts/art_library/build_rocky_native_kit_r010.py",
+  "foundationSha256": "591061696339368d9f7570392726b5ee11038e992987e21b92a6ebbb8bc2af50",
+  "runtimeStyle": "moon",
+  "status": "isolated authored candidate, exact visual review pending",
+  "seed": 1747,
+  "family": "toxic",
+  "cover": 0.24,
+  "scales": [
+    0.4,
+    0.38,
+    0.42,
+    0.39,
+    0.41,
+    0.38,
+    0.43,
+    0.39,
+    0.4,
+    0.37,
+    0.42,
+    0.4
+  ],
+  "cue": "Dark olive crater body, narrow yellow-green exposed rims and localized wet chemical crust"
+}

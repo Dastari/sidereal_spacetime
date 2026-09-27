@@ -1,0 +1,21 @@
+{
+  "pass": true,
+  "priorMaterialNamesColorsRoughnessPreserved": true,
+  "checks": [
+    {
+      "name": "volcanic-region-a",
+      "maxEdgeLength": 0.2999999523162842,
+      "triangles": 3838
+    },
+    {
+      "name": "volcanic-region-b",
+      "maxEdgeLength": 0.2999999523162842,
+      "triangles": 3910
+    },
+    {
+      "name": "volcanic-region-c",
+      "maxEdgeLength": 0.2999999523162842,
+      "triangles": 3290
+    }
+  ]
+}

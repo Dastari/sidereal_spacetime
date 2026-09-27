@@ -1,0 +1,150 @@
+[
+  {
+    "id": "desert-r014-seed117",
+    "status": "existing"
+  },
+  {
+    "id": "desert-r014-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/desert-r014/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 1, \"pendingBuilds\": 0, \"retained\": [0, 1], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": false, \"workerPending\": 0, \"buildMs\": 772, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "rocky-r010-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/rocky-r010/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 504.29999923706055, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "rocky-r010-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/rocky-r010/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 610.1000003814697, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "ocean-r007-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/ocean-r007/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 1, \"pendingBuilds\": 0, \"retained\": [0, 1], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": false, \"workerPending\": 0, \"buildMs\": 322.5, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "ocean-r007-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/ocean-r007/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 1, \"pendingBuilds\": 0, \"retained\": [0, 1], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": false, \"workerPending\": 0, \"buildMs\": 311, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "temperate-r003-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/temperate-r003/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 1, \"pendingBuilds\": 0, \"retained\": [0, 1], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": false, \"workerPending\": 0, \"buildMs\": 545.5, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "temperate-r003-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/temperate-r003/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 1, \"pendingBuilds\": 0, \"retained\": [0, 1], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": false, \"workerPending\": 0, \"buildMs\": 522.8000011444092, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "toxic-r007-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/toxic-r007/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 1546.3999996185303, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "toxic-r007-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/toxic-r007/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 1432.7000007629395, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "crystal-r013-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-r013/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 771.6000003814697, \"localLights\": 4, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "crystal-r013-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/crystal-r013/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 760.1000003814697, \"localLights\": 4, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "volcanic-r023-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/volcanic-r023/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 1, \"pendingBuilds\": 0, \"retained\": [0, 1], \"smokeImplemented\": true, \"smokeMeshes\": 1, \"smokeTriangles\": 33440, \"retainedSmokeMeshes\": 2, \"requestedLOD\": 1, \"fixedDetail\": false, \"workerPending\": 0, \"buildMs\": 679.6000003814697, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "volcanic-r023-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/volcanic-r023/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 1, \"pendingBuilds\": 0, \"retained\": [0, 1], \"smokeImplemented\": true, \"smokeMeshes\": 1, \"smokeTriangles\": 33440, \"retainedSmokeMeshes\": 2, \"requestedLOD\": 1, \"fixedDetail\": false, \"workerPending\": 0, \"buildMs\": 646.6999988555908, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "ice-r026-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/ice-r026/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 2459.2000007629395, \"localLights\": 0, \"transmissionMaterials\": 2, \"transmissionTargets\": 1}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "ice-r026-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/ice-r026/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 2323.6000003814697, \"localLights\": 0, \"transmissionMaterials\": 2, \"transmissionTargets\": 1}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "gas-r005-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/gas-r005/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 12.799999237060547, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "gas-r005-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/gas-r005/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 13.5, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "rocky-moon-r002-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/rocky-moon-r002/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 577.1000003814697, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "rocky-moon-r002-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/rocky-moon-r002/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 578.1000003814697, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "rocky-moon-2-r001-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/rocky-moon-2-r001/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 646.3000011444092, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "rocky-moon-2-r001-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/rocky-moon-2-r001/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 2, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 588.1999988555908, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "desert-moon-1-r001-seed117",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/desert-moon-1-r001/broader-shadow-fixed-seed117.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 588.3999996185303, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "desert-moon-1-r001-seed904",
+    "exitCode": 0,
+    "output": "{\"record\": \"/root/sidereal_spacetime/output/playwright/planet-reference-20260914/desert-moon-1-r001/broader-shadow-fixed-seed904.json\", \"candidate\": {\"active\": 0, \"pendingBuilds\": 0, \"retained\": [0], \"smokeImplemented\": true, \"smokeMeshes\": 0, \"smokeTriangles\": 0, \"retainedSmokeMeshes\": 0, \"requestedLOD\": 1, \"fixedDetail\": true, \"workerPending\": 0, \"buildMs\": 644, \"localLights\": 0, \"transmissionMaterials\": 0, \"transmissionTargets\": 0}, \"renderer\": {\"vendor\": \"Google Inc. (Google)\", \"renderer\": \"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\", \"version\": \"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"}}\n",
+    "error": ""
+  },
+  {
+    "id": "desert-moon-2-r001-seed117",
+    "exitCode": 1,
+    "output": "",
+    "error": "Traceback (most recent call last):\n  File \"/root/sidereal_spacetime/scripts/art_library/capture_planet_reference.py\", line 41, in <module>\n    if r.returncode or '### Error' in r.stdout:raise RuntimeError((r.stdout+r.stderr)[-3000:])\n                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nRuntimeError: ### Error\nError: page.evaluate: Error: Capture view did not settle: close {\"style\":\"moon\",\"seed\":117,\"frames\":81,\"candidate\":{\"active\":0,\"pendingBuilds\":0,\"retained\":[0],\"smokeImplemented\":true,\"smokeMeshes\":0,\"smokeTriangles\":0,\"retainedSmokeMeshes\":0,\"requestedLOD\":0,\"fixedDetail\":true,\"workerPending\":0,\"buildMs\":584.8000011444092,\"localLights\":0,\"transmissionMaterials\":0,\"transmissionTargets\":0},\"baselineEnvironmentEnabled\":false,\"meshes\":6,\"triangles\":342258,\"renderer\":{\"vendor\":\"Google Inc. (Google)\",\"renderer\":\"ANGLE (Google, Vulkan 1.3.0 (SwiftShader Device (Subzero) (0x0000C0DE)), SwiftShader driver)\",\"version\":\"WebGL 2.0 (OpenGL ES 3.0 Chromium)\"},\"lods\":[]}\n    at eval (eval at evaluate (:311:30), <anonymous>:10:35)\n\n"
+  }
+]

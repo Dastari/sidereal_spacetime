@@ -1,0 +1,17 @@
+{
+  "testsPassed": 4,
+  "originalToxic2RegressionTestsPassed": 1,
+  "typescript": "passed",
+  "trianglesAllLOD": 68720,
+  "diagnostic": "optional fourth argument true gives single camera-facing region",
+  "geometry": "Three connected native boolean-cut crust variants, closed/manifold, authored normals/UVs",
+  "clearance": "Native upward-surface index depresses substrate; actual NullEngine samples see liquid before ground in the diagnostic and all twelve seeded full-body regions",
+  "parity": "Six variants, zero material or supplied attribute differences/gaps; embedded albedo/normal/ORM maps byte-identical",
+  "hashes": {
+    "kit.json": "20a4432c13133a4e802e59e02a1bfc4e2b1db5d72e9f08a5a828aa6966969ca3",
+    "generator.py": "9422c45cc3212d5a5359a0728cbc4654a7aeae668c6ad791a8dff0badaaec75d",
+    "composition-r003.ts": "1194c94b53c1609249ed9d8657c75a52c27f2b95e3d7270cca3c379363a84da0",
+    "native_surface_clearance.ts": "1d53cf1407395d7a9e8182e95f150df3f41baf8d48db2ff6a1aeada935c2cb28"
+  },
+  "status": "Frozen draft; actual planet reference and hardware review pending"
+}
