@@ -1,0 +1,137 @@
+{
+  "design_id": "shipyard.equipment.wall-locker",
+  "revision": 5,
+  "reference_ids": [
+    "internal-components-2--locker"
+  ],
+  "purpose": "Two-door personal supply locker; access from either cabin side.",
+  "dimensions_m": [
+    0.5,
+    1.5,
+    1.3125
+  ],
+  "dimension_status": "current catalog envelope; validate measured new bounds",
+  "origin": "bottom center; X east/width, Y north/depth, Z up; runtime X/-Z and Y height",
+  "variants": [
+    {
+      "asset_id": "part-c03ec0260cd7329050a8",
+      "name": "standard",
+      "placement_ids": [
+        "equipment-locker--4.7--6",
+        "equipment-locker--4.7--2",
+        "equipment-locker--4.7-2",
+        "equipment-locker-4.7--6",
+        "equipment-locker-4.7--2",
+        "equipment-locker-4.7-2"
+      ],
+      "bounds_m": {
+        "min": [
+          -0.25,
+          -0.75,
+          0
+        ],
+        "max": [
+          0.25,
+          0.75,
+          1.3125
+        ]
+      }
+    }
+  ],
+  "canonical_geometry": "shared recipe; bridge bank retains two IDs and explicit handed service panels",
+  "crew": {
+    "height_m": 1.8,
+    "standing_clearance_height_m": 2.1,
+    "access_clearance_m": 0.6,
+    "basis": "Human reach/egress proposal; collision and animated rig fitting are not implemented by this review",
+    "access": "front -Y; locker both X faces; bunk/medical both X sides; sofa -X; pilot +Y"
+  },
+  "interfaces": [
+    {
+      "name": "SOCK_MOUNT",
+      "position_m": [
+        0,
+        0,
+        0
+      ],
+      "status": "proposed"
+    },
+    {
+      "name": "SOCK_POWER",
+      "position_m": [
+        0,
+        0.75,
+        0.125
+      ],
+      "status": "proposed"
+    },
+    {
+      "name": "SOCK_DATA",
+      "position_m": [
+        0.125,
+        0.75,
+        0.1875
+      ],
+      "status": "proposed"
+    }
+  ],
+  "stats": {
+    "dry_mass": {
+      "value": 55,
+      "unit": "kg",
+      "status": "proposed",
+      "basis": "Furniture frame or compact machinery class estimate; excludes contents/crew, not voxel-density derived"
+    },
+    "power": {
+      "value": 0,
+      "unit": "W",
+      "status": "proposed",
+      "basis": "Design discussion estimate; negative is proposed generation, no reducer wiring"
+    },
+    "capacity": {
+      "value": 0.25,
+      "unit": "storage_m3",
+      "status": "proposed",
+      "basis": "Count of visible intended user/plant stations; reactor heat is unvalidated engineering proposal"
+    }
+  },
+  "materials": {
+    "shell": "pale enamel/polymer, metalness 0.05 roughness .36",
+    "frame": "dark indigo, roughness .48",
+    "service": "burgundy enamel",
+    "structure": "exposed steel .8 metallic",
+    "cushions": "fabric/foam .82 roughness",
+    "emitter": "opaque cyan insert, constant emission; no unsupported glass"
+  },
+  "collision": "Closed material-bearing voxels for preview; intended authoritative collision linkage pending. Clearance envelopes stay separate from geometry.",
+  "animation": "Named component solids retained; mechanical/crew animation not yet authored.",
+  "lod": "One measured hero voxel mesh; no fleet/LOD performance claim.",
+  "uncertainties": [
+    "Back and underside are inferred, not observed.",
+    "Reference perspective and cropped edges do not establish depth.",
+    "Proposed stats are neither approved design nor implemented authority.",
+    "Placement and animation fit require review before publication."
+  ],
+  "pipeline": {
+    "pitch_m": 0.03125,
+    "sampler": "scripts/voxelize_blender.py",
+    "mesher": "packages/sim/src/voxels.ts meshChunk",
+    "optics": "opaque-only; reject transmission rather than flattening it"
+  },
+  "review_status": "unsigned; reference silhouettes, fit/rig and proposed stats await owner feedback",
+  "mounting_profile": {
+    "body_depth_m": 0.375,
+    "projecting_cap_height_interval_m": [
+      1.125,
+      1.25
+    ],
+    "upper_spine_depth_m": 0.125,
+    "basis": "Actual wall recess and unchanged original placement occupancy"
+  },
+  "visual_pipeline": "Authored Blender mesh/material \u2192 GLB. No sampled remesh used for undamaged visuals.",
+  "occupancy_proxy": {
+    "source_revision": ".runtime/art-library/equipment/shipyard.equipment.wall-locker/r004",
+    "status": "Retained separate last validated occupancy proxy for fixture placement; fine visible details and deformation are not exact damage geometry.",
+    "damage_preview": "Current local damage tool may replace native surfaces with coarse remesh; pending fidelity decision."
+  }
+}

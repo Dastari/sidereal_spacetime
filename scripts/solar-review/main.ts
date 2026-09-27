@@ -1,3 +1,4 @@
+import { createCharacterPreview } from "../../packages/render/src/character-preview";
 import {
   createWorld,
   loadEquipmentPoseConfiguration,
@@ -31,6 +32,18 @@ let state: SceneState = {
   bodies,
 };
 const controller = new AbortController();
+let portrait: ReturnType<typeof createCharacterPreview> | undefined;
+let portraitOpen = false;
+const portraitButton = document.querySelector<HTMLButtonElement>("#portrait")!;
+portraitButton.addEventListener("click", () => {
+  portraitOpen = !portraitOpen;
+  if (portraitOpen && !portrait) {
+    portrait = createCharacterPreview();
+    portrait.canvas.className = "portrait";
+    document.body.append(portrait.canvas);
+  }
+  if (portrait) portrait.canvas.hidden = !portraitOpen;
+});
 let frames = 0;
 let world: Awaited<ReturnType<typeof createWorld>> | undefined;
 let latestDiagnostics: ReturnType<NonNullable<typeof world>["getDiagnostics"]>;
@@ -53,6 +66,10 @@ loadEquipmentPoseConfiguration()
       signal: controller.signal,
       onScene: (scene) => {
         Object.assign((window as any).solarReview, { scene });
+        // Match the production HUD: portrait rendering nests inside onBeforeRender.
+        scene.onBeforeRenderObservable.add(() => {
+          if (portraitOpen) portrait?.render(performance.now() / 1000);
+        });
         scene.onAfterRenderObservable.add(() => {
           frames++;
           if (frames % 10 === 0 && world) {
@@ -63,6 +80,10 @@ loadEquipmentPoseConfiguration()
             }
             const data = {
               frames,
+              portrait: {
+                open: portraitOpen,
+                status: portrait?.presentationStatus,
+              },
               floatingOrigin: scene.floatingOriginMode,
               diagnostics: latestDiagnostics,
               diagnosticsUpdatedFrame,
@@ -99,6 +120,7 @@ for (const mode of ["deck", "flight"])
   });
 if (import.meta.hot)
   import.meta.hot.dispose(() => {
+    portrait?.dispose();
     controller.abort();
     world?.dispose();
   });

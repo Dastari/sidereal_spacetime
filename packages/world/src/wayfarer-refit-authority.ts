@@ -1,3 +1,4 @@
+import { markShipFlightDirty } from "./construction-flight-dirty";
 import { requireQualifiedPreservedFuelMount } from "@sidereal/sim/wayfarer-refit-mount";
 import type {
   Infer,
@@ -259,11 +260,6 @@ export function refitExistingWayfarer(ctx: RefitContext, args: RefitRequest) {
         ctx.db.constructionFlightFitting.id.find(id)
       ),
   });
-  for (const key of ["massKg", "thrustN", "turnAcceleration"] as const)
-    if (s.ship[key] !== p.flight.ship[key])
-      throw Error(
-        "Changed legacy flight ratings require a separate qualified conversion",
-      );
   // Telemetry is a replaceable projection, not an installed component identity.
   // Legacy output keys use source labels; native outputs use fitting UUIDs.
   // Reject unknown keys, then replace the complete set atomically so obsolete
@@ -475,6 +471,7 @@ export function refitExistingWayfarer(ctx: RefitContext, args: RefitRequest) {
       placedObjectId: fitting.placedObjectId,
       sourceDeviceId: fitting.sourceDeviceId,
       definitionId: fitting.definitionId,
+      definitionRevision: 1,
       kind: fitting === f.computer ? "computer" : "actuator",
       installed: true,
       powered: true,
@@ -540,6 +537,7 @@ export function refitExistingWayfarer(ctx: RefitContext, args: RefitRequest) {
     completedMicros: ctx.timestamp.microsSinceUnixEpoch,
   };
   ctx.db.wayfarerRefitReceipt.insert(result);
+  markShipFlightDirty(ctx, instance.id);
   return result;
 }
 export function ownWayfarerRefitAttachments(ctx: RefitReadContext) {

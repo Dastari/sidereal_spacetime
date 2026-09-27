@@ -1,3 +1,8 @@
+import type {
+  Pt,
+  ShapeTilePlacement,
+  HeightClassId,
+} from "./construction-grammar";
 import type { LayoutDocument } from "./ship-layout";
 import type { InterfacePlacement } from "./tileset-interfaces";
 export const CONSTRUCTION_SCHEMA = "sidereal.construction.v1" as const;
@@ -56,6 +61,19 @@ export interface ConstructionDocument {
   floors: ConstructionFloor[];
   /** Optional exact native wall/door candidate. Absence preserves historical floor-only reviews. */
   boundaryKit?: { id: string; revision: string; sha256: string };
+  /** Exact rebuilt Wayfarer source with explicit instance identity substitution. */
+  wayfarerRebuild?: {
+    revision: "r002";
+    nativeVisualsSha256: string;
+    identities: Record<string, string>;
+  };
+  /** Exact exterior-only successor; independently proves the eighteen new native hull bounds. */
+  wayfarerExterior?: {
+    revision: "r005";
+    baseSourceSha256: string;
+    nativeProofSha256: string;
+    identities: Record<string, string>;
+  };
   /** Matching native ceiling surfaces only on decks with an authored roof. */
   roofKit?: { id: string; revision: string; sha256: string };
   /** Exact bounded native enclosure review, not a generic pressure flag. */
@@ -82,7 +100,20 @@ export interface ConstructionReadiness {
   nativeDamage: boolean;
   flight: boolean;
 }
+export interface PrefabStructureTile {
+  volume: string;
+  tile: ShapeTilePlacement;
+  height: HeightClassId;
+  footprint: Pt[];
+  /** Surface sockets and pressure faces in prefab metres; base/roof datums in texels. */
+  envelope: { at: Pt; keel: number; roof: number }[];
+  pressure: { a: Pt; b: Pt; seals: true; material: "primary" }[];
+  roofMaterial: "primary" | "glass";
+  roofSeals: true;
+}
 export interface ConstructionSnapshot {
+  /** Compiler-derived grammar structure; optional while legacy prefabs remain supported. */
+  prefabStructure?: PrefabStructureTile[];
   schema: typeof CONSTRUCTION_SCHEMA;
   compiler: typeof CONSTRUCTION_COMPILER;
   canonical: string;

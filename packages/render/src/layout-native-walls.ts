@@ -66,6 +66,14 @@ export function planLayoutNativeWalls(
   };
   if (!input) return plan;
   const walls = input.walls.filter((w) => w.deckId === input.deckId);
+  if (walls.some((w) => w.treatment)) {
+    plan.issues.push({
+      key: "treatment-family",
+      message:
+        "Boundary treatments require their qualified native family; legacy r004 cannot represent this design.",
+    });
+    return plan;
+  }
   if (!walls.length) return plan;
   const issue = (key: string, message: string) =>
     plan.issues.push({ key, message });
@@ -84,7 +92,7 @@ export function planLayoutNativeWalls(
   if (walls.some((w) => w.source === "perimeter"))
     issue(
       "exterior-alignment",
-      "Native r004 walls straddle the floor boundary. The target outward-only exterior wall interface is not yet qualified.",
+      "Native r004 walls straddle the floor boundary. The target inward 250 mm boundary wall interface is not yet qualified.",
     );
   const raw = walls.flatMap((w) => {
     if (

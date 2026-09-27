@@ -1,3 +1,7 @@
+import {
+  commitFlightCharacter,
+  markShipFlightDirty,
+} from "./construction-flight-dirty";
 import type { Identity } from "spacetimedb";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import {
@@ -933,12 +937,16 @@ export function stepConstructionTraversals(
     if (placement.releaseReservation) {
       changed = true;
       demand(validActor && actor && visit, "terminal actor/location missing");
-      ctx.db.character.id.update({
-        ...actor,
-        localX: placement.positionM[0],
-        localY: placement.positionM[1],
-        sprinting: false,
-      });
+      commitFlightCharacter(
+        ctx,
+        {
+          ...actor,
+          localX: placement.positionM[0],
+          localY: placement.positionM[1],
+          sprinting: false,
+        },
+        (row) => ctx.db.character.id.update(row),
+      );
       ctx.db.constructionLocation.characterId.update({
         ...visit,
         deckId: placement.deckId,
@@ -973,6 +981,11 @@ export function stepConstructionTraversals(
         }) === encode(prior);
       if (!equivalent) {
         ctx.db.constructionTraversal.characterId.update(updated);
+        if (
+          updated.acceptedX !== row.acceptedX ||
+          updated.acceptedY !== row.acceptedY
+        )
+          markShipFlightDirty(ctx, row.instanceId);
         changed = true;
       }
       clearInputs(ctx, row.characterId);

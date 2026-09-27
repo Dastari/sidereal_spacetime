@@ -9,6 +9,7 @@ interface Visit {
 }
 interface Instance {
   id: string;
+  revision?: bigint;
   name: string;
   documentJson: string;
   blueprintSha256?: string;

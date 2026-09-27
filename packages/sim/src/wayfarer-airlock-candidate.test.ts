@@ -14,7 +14,10 @@ const inputs = () => ({
     "utf8",
   ),
   mapping: readFileSync(resolve(kit, "replacement-mapping.json"), "utf8"),
-  walking: readFileSync(resolve(kit, "native-walking-projection-v2.json"), "utf8"),
+  walking: readFileSync(
+    resolve(kit, "native-walking-projection-v2.json"),
+    "utf8",
+  ),
   motion: readFileSync(
     resolve(kit, "native-motion-neighbor-qualification.json"),
     "utf8",

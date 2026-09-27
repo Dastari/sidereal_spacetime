@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import type { DbConnection } from "@sidereal/net";
 import { createOperationId } from "./operation-id";
 import "./ship-refit.css";
+import { ShipRebuildPanel } from "./ShipRebuildPanel";
 
 export function ShipRefitPanel({
   connection,
@@ -19,7 +20,8 @@ export function ShipRefitPanel({
     [...connection.db.ownWayfarerRefitOffer.iter()].find(
       (o) => o.characterId === actor?.id && o.shipId === actor.shipId,
     );
-  if (!offer) return null;
+  if (!offer)
+    return <ShipRebuildPanel connection={connection} onError={onError} />;
   async function refit() {
     if (!connection || sending.current) return;
     const currentActor = [...connection.db.ownCharacters.iter()][0];

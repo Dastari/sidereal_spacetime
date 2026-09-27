@@ -1,14 +1,13 @@
 import { SenderError, t } from "spacetimedb/server";
-import { access, transaction, commitItems } from "./inventory";
-import { firstInventoryPlacement } from "../../sim/src/inventory";
+import { access, transaction, commitItems, equip } from "./inventory";
+import { prepareGroundDrop } from "./inventory-ground";
+import { firstInventoryPlacement } from "@sidereal/sim/inventory";
 import {
   INVENTORY_DEFINITIONS,
   inventoryDefinition,
   LIQUID_DENSITY_KG_PER_LITRE,
   CHARACTER_CARRY_LIMIT_KG,
-} from "../../content/src/inventory";
-import { interactionLineOfSight } from "../../sim/src/interactions";
-import { CABIN_PARTITIONS } from "../../content/src/interior";
+} from "@sidereal/content/inventory";
 type Context = Parameters<typeof transaction>[0];
 type Mutation = Parameters<typeof transaction>[1];
 type Access = NonNullable<ReturnType<typeof access>>;
@@ -71,6 +70,16 @@ export function transferItem(
     (a) => {
       if (!a.canItem(args.itemId))
         throw new SenderError("Item is out of reach");
+      const item = a.data.items.find((i) => i.id === args.itemId)!;
+      if (
+        !args.containerId &&
+        ground(a, item.containerId) &&
+        inventoryDefinition(item.definitionId).equipSlot === "back" &&
+        !a.data.items.some((i) => i.equipmentSlot === "back")
+      ) {
+        equip(ctx, a, item.id);
+        return;
+      }
       const items = transfer(a, args.itemId, destinations(a, args.containerId));
       if (!items)
         throw new SenderError("No room or payload capacity in the destination");
@@ -148,29 +157,10 @@ export function storeAll(
 export function dropItem(ctx: Context, args: Mutation & { itemId: string }) {
   transaction(ctx, args, "drop-item", [args.itemId], (a) => {
     if (!a.canItem(args.itemId)) throw new SenderError("Item is out of reach");
-    if (
-      ctx.db.station.shipId.find(a.actor.shipId)?.occupantId === a.actor.id ||
-      ctx.db.couchSeat.characterId.find(a.actor.id)
-    )
-      throw new SenderError("Stand up before dropping equipment");
     const item = a.data.items.find((i) => i.id === args.itemId)!;
     if (ground(a, item.containerId))
       throw new SenderError("Item is already on the ground");
-    const d = inventoryDefinition(item.definitionId),
-      id = ctx.newUuidV4().toString();
-    const container = {
-      ...a.pockets!,
-      id,
-      parentItemId: "",
-      carried: false,
-      name: d.name,
-      width: d.width,
-      height: d.height,
-      maxMassKg: 1_000_000,
-      shipId: a.actor.shipId,
-      localX: a.actor.localX,
-      localY: a.actor.localY,
-    };
+    const { container, binding } = prepareGroundDrop(ctx, a, item.id);
     const next = {
       ...a,
       data: { ...a.data, containers: [...a.data.containers, container] },
@@ -179,7 +169,7 @@ export function dropItem(ctx: Context, args: Mutation & { itemId: string }) {
       i.id === item.id
         ? {
             ...i,
-            containerId: id,
+            containerId: container.id,
             equipmentSlot: "",
             x: 0,
             y: 0,
@@ -190,12 +180,7 @@ export function dropItem(ctx: Context, args: Mutation & { itemId: string }) {
     // commitItems validates the whole nested inventory before writing any item.
     commitItems(ctx, next, items);
     ctx.db.inventoryContainer.insert(container);
-    ctx.db.storageBinding.insert({
-      id: a.actor.id + ":ground:" + id,
-      characterId: a.actor.id,
-      containerId: id,
-      placementId: "ground:" + item.id,
-    });
+    ctx.db.storageBinding.insert(binding);
   });
 }
 export const groundItemProjection = t.row("VisibleGroundItem", {
@@ -204,6 +189,9 @@ export const groundItemProjection = t.row("VisibleGroundItem", {
   localX: t.f64(),
   localY: t.f64(),
   reachable: t.bool(),
+  instanceId: t.string(),
+  deckId: t.string(),
+  elevationM: t.f64(),
 });
 /** Private actor/lab ownership is retained; only discovered ground visuals are projected. */
 export function groundItemsView(ctx: Parameters<typeof access>[0]) {
@@ -213,19 +201,8 @@ export function groundItemsView(ctx: Parameters<typeof access>[0]) {
     .filter((b) => b.placementId.startsWith("ground:"))
     .flatMap((b) => {
       const c = a.data.containers.find((c) => c.id === b.containerId);
-      if (
-        !c ||
-        c.shipId !== a.actor.shipId ||
-        Math.hypot(c.localX - a.actor.localX, c.localY - a.actor.localY) > 12 ||
-        !interactionLineOfSight(
-          a.actor.localX,
-          a.actor.localY,
-          c.localX,
-          c.localY,
-          CABIN_PARTITIONS,
-        )
-      )
-        return [];
+      const placement = c && a.groundAccess.position(c, b, 12);
+      if (!c || !placement) return [];
       return a.data.items
         .filter((i) => i.containerId === c.id)
         .map((i) => ({
@@ -234,6 +211,7 @@ export function groundItemsView(ctx: Parameters<typeof access>[0]) {
           localX: c.localX,
           localY: c.localY,
           reachable: a.canContainer(c.id),
+          ...placement,
         }));
     });
 }

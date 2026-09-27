@@ -56,3 +56,27 @@ body,
   padding: 0.55rem;
   cursor: pointer;
 }
+
+/* Character without a ship (after an operator wipe or while unassigned). */
+.no-ship-notice {
+  position: absolute;
+  top: 88px;
+  left: 16px;
+  display: grid;
+  gap: 4px;
+  max-width: min(300px, calc(100vw - 32px));
+  padding: 10px 16px;
+  border: 1px solid rgba(120, 180, 230, 0.45);
+  border-radius: 8px;
+  background: rgba(10, 16, 30, 0.82);
+  color: #dce8f4;
+  font-size: 13px;
+  line-height: 1.35;
+  text-align: left;
+  pointer-events: none;
+}
+.no-ship-notice strong {
+  color: #8fd0ff;
+  font-size: 14px;
+  letter-spacing: 0.02em;
+}

@@ -1,0 +1,34 @@
+{
+  "recordedAt": "2026-09-14T21:57:10.639704+00:00",
+  "scope": "Formatting-only delivery follow-up; runtime catalog values, native geometry and poses exactly equal to the browser-verified candidate. No new art revision.",
+  "previousDeliverySha256": "45cda7d8a41645d8ce2aedde7fc657536ef200234e0af45a4d4a1fb7a26e6ec4",
+  "catalogSemanticSha256": "b36ff145a489ccad8ebc0bb60a859799081ae4ae530115582df5429600c205d4",
+  "catalogDataUnchanged": true,
+  "generatorFormattingReproducesByteForByte": true,
+  "sourceHashes": {
+    "apps/dashboard/package.json": "d817c88cdcc944f1c643a4b7e954805449bb0f230ce7e6c14d1f7836bdd3c8c8",
+    "apps/dashboard/src/shipyard/layout/DocumentBar.tsx": "c1ba47b922e8078614204854c66f3709feb3e9e3e2b3805373cc0e2bed7efa19",
+    "apps/dashboard/src/shipyard/layout/LayoutEditor.tsx": "6f4d3fd8525b571d4e2e52f0bf14ccd7d78ca64384e6743f620130251ef8e560",
+    "apps/dashboard/src/shipyard/layout/NewLayoutDialog.tsx": "d398d12b8101f2594b29f6eebd7214db3c7bdde9a25be60d1678e5a9f8b3d382",
+    "apps/dashboard/src/shipyard/layout/useLayout.ts": "58e03b103d09c741e13a58eb3e94daf3d03f3b9de1395525c7f0e0679a4a346f",
+    "apps/dashboard/src/shipyard/layout/armor-review.ts": "b14e12cde7e3cd9f3442ded86eab00d630ae1019ee8fa92d8f1e510a97b3aa69",
+    "apps/dashboard/src/shipyard/layout/armor-review.test.ts": "0f5201a1ed542302bf8bad39213f48c8e100fb338c321a714fca30bfc012b737",
+    "apps/dashboard/src/shipyard/layout/armor-kit-r005.json": "9edca3929b9ec9cf3a11df6b92fe3a896f27e7b949c6a6d6f95ec87cd369e59d",
+    "packages/render/package.json": "8424937c3cae2e5a1dbd46ebc865b6fd058217b5c1903a46d0dba4d4bb228c74",
+    "packages/render/src/layout-hull.ts": "833148dc10accc8b6ccfbb0a8dbf3cc351043f4ad9b386cadc3c88a952cc4ed2",
+    "scripts/prepare_app.py": "e829397f0bf7b0c3dd79b7f3e3f9d9fdefef7f08a2d8b911cc280bcfd053e44c",
+    "scripts/test_prepare_app.py": "2460a14d49794625d2f814331498fe50a4eafac48fc83a70aa2beddcc3d98c72",
+    "scripts/art_library/build_armor_editor.py": "f4ce928db16c7f630ce3ff19ab1a3e96da7297c3e75aa31d7fbddba4234211f1",
+    "package-lock.json": "44e618ee2b7b2435bda46052be5c06a9b12ba9d7dee59b5b763b6ff672addeb6"
+  },
+  "verification": {
+    "focusedTests": "5 pass",
+    "catalogPrettier": "pass",
+    "pythonCompilation": "pass",
+    "fullCheckBuildArtAndBrowser": "previous exact semantic candidate receipts remain valid"
+  },
+  "logs": {
+    "catalog-format.log": "17aa973d3f004560237d9a95171210b0671deff23d61628eecf7322ff5938f20",
+    "catalog-tests.log": "551ea935bf3ef728c6c3dc3e73bec395b3288c33cce72b6401ab56adba25783b"
+  }
+}

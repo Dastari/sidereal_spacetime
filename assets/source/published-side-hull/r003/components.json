@@ -1,0 +1,1154 @@
+[
+  {
+    "slug": "part-18280ba6cc037eb433dc",
+    "variant": "vent",
+    "side": -1,
+    "node_prefix": "GEO-part-18280ba6cc037eb433dc--surface",
+    "bounds": {
+      "min": [
+        -0.6200000047683716,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.1875,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          -0.6299999999999999,
+          -0.1,
+          2.12
+        ],
+        "direction": [
+          0.45,
+          0,
+          -1
+        ],
+        "color": [
+          0.06,
+          0.7,
+          1
+        ],
+        "intensity": 0.65,
+        "range": 1.5,
+        "angle": 1.35
+      }
+    ],
+    "objects": [
+      "GEO-part-18280ba6cc037eb433dc--inner-armor-carrier",
+      "GEO-part-18280ba6cc037eb433dc--continuous-upper-shoulder",
+      "GEO-part-18280ba6cc037eb433dc--continuous-lower-sill",
+      "GEO-part-18280ba6cc037eb433dc--shoulder-armor",
+      "GEO-part-18280ba6cc037eb433dc--shoulder-clamp",
+      "GEO-part-18280ba6cc037eb433dc--shoulder-clamp.001",
+      "GEO-part-18280ba6cc037eb433dc--top-recess",
+      "GEO-part-18280ba6cc037eb433dc--top-grille",
+      "GEO-part-18280ba6cc037eb433dc--top-grille.001",
+      "GEO-part-18280ba6cc037eb433dc--top-grille.002",
+      "GEO-part-18280ba6cc037eb433dc--top-grille.003",
+      "GEO-part-18280ba6cc037eb433dc--recessed-service-backplane",
+      "GEO-part-18280ba6cc037eb433dc--lower-armor",
+      "GEO-part-18280ba6cc037eb433dc--upper-armor",
+      "GEO-part-18280ba6cc037eb433dc--deep-vent-well",
+      "GEO-part-18280ba6cc037eb433dc--horizontal-louver",
+      "GEO-part-18280ba6cc037eb433dc--horizontal-louver.001",
+      "GEO-part-18280ba6cc037eb433dc--horizontal-louver.002",
+      "GEO-part-18280ba6cc037eb433dc--horizontal-louver.003",
+      "GEO-part-18280ba6cc037eb433dc--horizontal-louver.004",
+      "GEO-part-18280ba6cc037eb433dc--horizontal-louver.005",
+      "GEO-part-18280ba6cc037eb433dc--vent-side-jamb",
+      "GEO-part-18280ba6cc037eb433dc--vent-side-jamb.001",
+      "GEO-part-18280ba6cc037eb433dc--vent-header",
+      "GEO-part-18280ba6cc037eb433dc--vent-header.001",
+      "GEO-part-18280ba6cc037eb433dc--light-socket",
+      "GEO-part-18280ba6cc037eb433dc--emissive-lens",
+      "GEO-part-18280ba6cc037eb433dc--flanking-left-strap",
+      "GEO-part-18280ba6cc037eb433dc--flanking-right-strap",
+      "GEO-part-18280ba6cc037eb433dc--stepped-left-shoulder",
+      "GEO-part-18280ba6cc037eb433dc--small-service-groove",
+      "GEO-part-18280ba6cc037eb433dc--lower-skirt-corner",
+      "GEO-part-18280ba6cc037eb433dc--lower-skirt-corner.001",
+      "GEO-part-18280ba6cc037eb433dc--amber-socket",
+      "GEO-part-18280ba6cc037eb433dc--amber-lens",
+      "GEO-part-18280ba6cc037eb433dc--lower-lock",
+      "GEO-part-18280ba6cc037eb433dc--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-a754ceb1ebef9f1395d9",
+    "variant": "red-service",
+    "side": -1,
+    "node_prefix": "GEO-part-a754ceb1ebef9f1395d9--surface",
+    "bounds": {
+      "min": [
+        -0.4950000047683716,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.3125,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-a754ceb1ebef9f1395d9--inner-armor-carrier",
+      "GEO-part-a754ceb1ebef9f1395d9--continuous-upper-shoulder",
+      "GEO-part-a754ceb1ebef9f1395d9--continuous-lower-sill",
+      "GEO-part-a754ceb1ebef9f1395d9--shoulder-armor",
+      "GEO-part-a754ceb1ebef9f1395d9--shoulder-clamp",
+      "GEO-part-a754ceb1ebef9f1395d9--wrapped-top-clamp",
+      "GEO-part-a754ceb1ebef9f1395d9--recessed-service-backplane",
+      "GEO-part-a754ceb1ebef9f1395d9--lower-armor",
+      "GEO-part-a754ceb1ebef9f1395d9--service-door-collar",
+      "GEO-part-a754ceb1ebef9f1395d9--red-pressed-service-door",
+      "GEO-part-a754ceb1ebef9f1395d9--door-top-shadow",
+      "GEO-part-a754ceb1ebef9f1395d9--hinge",
+      "GEO-part-a754ceb1ebef9f1395d9--hinge.001",
+      "GEO-part-a754ceb1ebef9f1395d9--recessed-handle",
+      "GEO-part-a754ceb1ebef9f1395d9--handle-grip",
+      "GEO-part-a754ceb1ebef9f1395d9--warning-tab",
+      "GEO-part-a754ceb1ebef9f1395d9--light-socket",
+      "GEO-part-a754ceb1ebef9f1395d9--emissive-lens",
+      "GEO-part-a754ceb1ebef9f1395d9--door-panel-score",
+      "GEO-part-a754ceb1ebef9f1395d9--door-panel-score.001",
+      "GEO-part-a754ceb1ebef9f1395d9--door-data-plate",
+      "GEO-part-a754ceb1ebef9f1395d9--door-status-dot",
+      "GEO-part-a754ceb1ebef9f1395d9--door-status-dot.001",
+      "GEO-part-a754ceb1ebef9f1395d9--door-status-dot.002",
+      "GEO-part-a754ceb1ebef9f1395d9--lower-lock",
+      "GEO-part-a754ceb1ebef9f1395d9--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-3da4aef9b526b104b324",
+    "variant": "twin-vent",
+    "side": -1,
+    "node_prefix": "GEO-part-3da4aef9b526b104b324--surface",
+    "bounds": {
+      "min": [
+        -0.5575000047683716,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.25,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-3da4aef9b526b104b324--inner-armor-carrier",
+      "GEO-part-3da4aef9b526b104b324--continuous-upper-shoulder",
+      "GEO-part-3da4aef9b526b104b324--continuous-lower-sill",
+      "GEO-part-3da4aef9b526b104b324--shoulder-armor",
+      "GEO-part-3da4aef9b526b104b324--shoulder-clamp",
+      "GEO-part-3da4aef9b526b104b324--top-recess",
+      "GEO-part-3da4aef9b526b104b324--top-grille",
+      "GEO-part-3da4aef9b526b104b324--top-grille.001",
+      "GEO-part-3da4aef9b526b104b324--top-grille.002",
+      "GEO-part-3da4aef9b526b104b324--top-grille.003",
+      "GEO-part-3da4aef9b526b104b324--recessed-service-backplane",
+      "GEO-part-3da4aef9b526b104b324--lower-armor",
+      "GEO-part-3da4aef9b526b104b324--upper-armor",
+      "GEO-part-3da4aef9b526b104b324--deep-vent-well",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.001",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.002",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.003",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.004",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.005",
+      "GEO-part-3da4aef9b526b104b324--vent-side-jamb",
+      "GEO-part-3da4aef9b526b104b324--vent-side-jamb.001",
+      "GEO-part-3da4aef9b526b104b324--vent-header",
+      "GEO-part-3da4aef9b526b104b324--vent-header.001",
+      "GEO-part-3da4aef9b526b104b324--deep-vent-well.001",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.006",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.007",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.008",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.009",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.010",
+      "GEO-part-3da4aef9b526b104b324--horizontal-louver.011",
+      "GEO-part-3da4aef9b526b104b324--vent-side-jamb.002",
+      "GEO-part-3da4aef9b526b104b324--vent-side-jamb.003",
+      "GEO-part-3da4aef9b526b104b324--vent-header.002",
+      "GEO-part-3da4aef9b526b104b324--vent-header.003",
+      "GEO-part-3da4aef9b526b104b324--light-socket",
+      "GEO-part-3da4aef9b526b104b324--emissive-lens",
+      "GEO-part-3da4aef9b526b104b324--flanking-left-strap",
+      "GEO-part-3da4aef9b526b104b324--flanking-right-strap",
+      "GEO-part-3da4aef9b526b104b324--stepped-left-shoulder",
+      "GEO-part-3da4aef9b526b104b324--small-service-groove",
+      "GEO-part-3da4aef9b526b104b324--lower-skirt-corner",
+      "GEO-part-3da4aef9b526b104b324--lower-skirt-corner.001",
+      "GEO-part-3da4aef9b526b104b324--amber-socket",
+      "GEO-part-3da4aef9b526b104b324--amber-lens",
+      "GEO-part-3da4aef9b526b104b324--lower-lock",
+      "GEO-part-3da4aef9b526b104b324--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-e21a69be0c5b6a98e812",
+    "variant": "utility",
+    "side": -1,
+    "node_prefix": "GEO-part-e21a69be0c5b6a98e812--surface",
+    "bounds": {
+      "min": [
+        -0.6549999713897705,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.1875,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          -0.6299999999999999,
+          -0.1,
+          2.12
+        ],
+        "direction": [
+          0.45,
+          0,
+          -1
+        ],
+        "color": [
+          0.06,
+          0.7,
+          1
+        ],
+        "intensity": 0.65,
+        "range": 1.5,
+        "angle": 1.35
+      }
+    ],
+    "objects": [
+      "GEO-part-e21a69be0c5b6a98e812--inner-armor-carrier",
+      "GEO-part-e21a69be0c5b6a98e812--continuous-upper-shoulder",
+      "GEO-part-e21a69be0c5b6a98e812--continuous-lower-sill",
+      "GEO-part-e21a69be0c5b6a98e812--shoulder-armor",
+      "GEO-part-e21a69be0c5b6a98e812--shoulder-clamp",
+      "GEO-part-e21a69be0c5b6a98e812--shoulder-clamp.001",
+      "GEO-part-e21a69be0c5b6a98e812--top-recess",
+      "GEO-part-e21a69be0c5b6a98e812--top-grille",
+      "GEO-part-e21a69be0c5b6a98e812--top-grille.001",
+      "GEO-part-e21a69be0c5b6a98e812--top-grille.002",
+      "GEO-part-e21a69be0c5b6a98e812--top-grille.003",
+      "GEO-part-e21a69be0c5b6a98e812--recessed-service-backplane",
+      "GEO-part-e21a69be0c5b6a98e812--lower-armor",
+      "GEO-part-e21a69be0c5b6a98e812--utility-housing",
+      "GEO-part-e21a69be0c5b6a98e812--projecting-utility-pod",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-dark-inset",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-recess-louver",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-recess-louver.001",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-recess-louver.002",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-recess-louver.003",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-amber-indicator",
+      "GEO-part-e21a69be0c5b6a98e812--sloped-pod-shoulder",
+      "GEO-part-e21a69be0c5b6a98e812--projecting-utility-pod.001",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-dark-inset.001",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-recess-louver.004",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-recess-louver.005",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-recess-louver.006",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-recess-louver.007",
+      "GEO-part-e21a69be0c5b6a98e812--utility-pod-amber-indicator.001",
+      "GEO-part-e21a69be0c5b6a98e812--sloped-pod-shoulder.001",
+      "GEO-part-e21a69be0c5b6a98e812--machinery-spacer",
+      "GEO-part-e21a69be0c5b6a98e812--machinery-spacer.001",
+      "GEO-part-e21a69be0c5b6a98e812--machinery-spacer.002",
+      "GEO-part-e21a69be0c5b6a98e812--machinery-spacer.003",
+      "GEO-part-e21a69be0c5b6a98e812--dark-service-spine",
+      "GEO-part-e21a69be0c5b6a98e812--utility-port",
+      "GEO-part-e21a69be0c5b6a98e812--socket-cyan-strip",
+      "GEO-part-e21a69be0c5b6a98e812--utility-rail",
+      "GEO-part-e21a69be0c5b6a98e812--utility-rail.001",
+      "GEO-part-e21a69be0c5b6a98e812--projecting-coupler",
+      "GEO-part-e21a69be0c5b6a98e812--socket-amber",
+      "GEO-part-e21a69be0c5b6a98e812--lower-lock",
+      "GEO-part-e21a69be0c5b6a98e812--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-91c8f3d728f25c968810",
+    "variant": "identity",
+    "side": -1,
+    "node_prefix": "GEO-part-91c8f3d728f25c968810--surface",
+    "bounds": {
+      "min": [
+        -0.6200000047683716,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.1875,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-91c8f3d728f25c968810--inner-armor-carrier",
+      "GEO-part-91c8f3d728f25c968810--continuous-upper-shoulder",
+      "GEO-part-91c8f3d728f25c968810--continuous-lower-sill",
+      "GEO-part-91c8f3d728f25c968810--shoulder-armor",
+      "GEO-part-91c8f3d728f25c968810--shoulder-clamp",
+      "GEO-part-91c8f3d728f25c968810--wrapped-top-clamp",
+      "GEO-part-91c8f3d728f25c968810--recessed-service-backplane",
+      "GEO-part-91c8f3d728f25c968810--lower-armor",
+      "GEO-part-91c8f3d728f25c968810--name-shield",
+      "GEO-part-91c8f3d728f25c968810--armor-edge",
+      "GEO-part-91c8f3d728f25c968810--armor-edge.001",
+      "GEO-part-91c8f3d728f25c968810--registration-red-key",
+      "GEO-part-91c8f3d728f25c968810--light-socket",
+      "GEO-part-91c8f3d728f25c968810--emissive-lens",
+      "GEO-part-91c8f3d728f25c968810--identity-attachment",
+      "GEO-part-91c8f3d728f25c968810--identity-attachment.001",
+      "GEO-part-91c8f3d728f25c968810--name-panel-seam",
+      "GEO-part-91c8f3d728f25c968810--lower-lock",
+      "GEO-part-91c8f3d728f25c968810--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-0fe602115d20ec950357",
+    "variant": "red-service",
+    "side": -1,
+    "node_prefix": "GEO-part-0fe602115d20ec950357--surface",
+    "bounds": {
+      "min": [
+        -0.4950000047683716,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.3125,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-0fe602115d20ec950357--inner-armor-carrier",
+      "GEO-part-0fe602115d20ec950357--continuous-upper-shoulder",
+      "GEO-part-0fe602115d20ec950357--continuous-lower-sill",
+      "GEO-part-0fe602115d20ec950357--shoulder-armor",
+      "GEO-part-0fe602115d20ec950357--shoulder-clamp",
+      "GEO-part-0fe602115d20ec950357--wrapped-top-clamp",
+      "GEO-part-0fe602115d20ec950357--recessed-service-backplane",
+      "GEO-part-0fe602115d20ec950357--lower-armor",
+      "GEO-part-0fe602115d20ec950357--service-door-collar",
+      "GEO-part-0fe602115d20ec950357--red-pressed-service-door",
+      "GEO-part-0fe602115d20ec950357--door-top-shadow",
+      "GEO-part-0fe602115d20ec950357--hinge",
+      "GEO-part-0fe602115d20ec950357--hinge.001",
+      "GEO-part-0fe602115d20ec950357--recessed-handle",
+      "GEO-part-0fe602115d20ec950357--handle-grip",
+      "GEO-part-0fe602115d20ec950357--warning-tab",
+      "GEO-part-0fe602115d20ec950357--light-socket",
+      "GEO-part-0fe602115d20ec950357--emissive-lens",
+      "GEO-part-0fe602115d20ec950357--door-panel-score",
+      "GEO-part-0fe602115d20ec950357--door-panel-score.001",
+      "GEO-part-0fe602115d20ec950357--door-data-plate",
+      "GEO-part-0fe602115d20ec950357--door-status-dot",
+      "GEO-part-0fe602115d20ec950357--door-status-dot.001",
+      "GEO-part-0fe602115d20ec950357--door-status-dot.002",
+      "GEO-part-0fe602115d20ec950357--lower-lock",
+      "GEO-part-0fe602115d20ec950357--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-0ac1e39dec34655a366f",
+    "variant": "vent",
+    "side": -1,
+    "node_prefix": "GEO-part-0ac1e39dec34655a366f--surface",
+    "bounds": {
+      "min": [
+        -0.6200000047683716,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.1875,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          -0.6299999999999999,
+          -0.1,
+          2.12
+        ],
+        "direction": [
+          0.45,
+          0,
+          -1
+        ],
+        "color": [
+          0.06,
+          0.7,
+          1
+        ],
+        "intensity": 0.65,
+        "range": 1.5,
+        "angle": 1.35
+      }
+    ],
+    "objects": [
+      "GEO-part-0ac1e39dec34655a366f--inner-armor-carrier",
+      "GEO-part-0ac1e39dec34655a366f--continuous-upper-shoulder",
+      "GEO-part-0ac1e39dec34655a366f--continuous-lower-sill",
+      "GEO-part-0ac1e39dec34655a366f--shoulder-armor",
+      "GEO-part-0ac1e39dec34655a366f--shoulder-clamp",
+      "GEO-part-0ac1e39dec34655a366f--shoulder-clamp.001",
+      "GEO-part-0ac1e39dec34655a366f--top-recess",
+      "GEO-part-0ac1e39dec34655a366f--top-grille",
+      "GEO-part-0ac1e39dec34655a366f--top-grille.001",
+      "GEO-part-0ac1e39dec34655a366f--top-grille.002",
+      "GEO-part-0ac1e39dec34655a366f--top-grille.003",
+      "GEO-part-0ac1e39dec34655a366f--recessed-service-backplane",
+      "GEO-part-0ac1e39dec34655a366f--lower-armor",
+      "GEO-part-0ac1e39dec34655a366f--upper-armor",
+      "GEO-part-0ac1e39dec34655a366f--deep-vent-well",
+      "GEO-part-0ac1e39dec34655a366f--horizontal-louver",
+      "GEO-part-0ac1e39dec34655a366f--horizontal-louver.001",
+      "GEO-part-0ac1e39dec34655a366f--horizontal-louver.002",
+      "GEO-part-0ac1e39dec34655a366f--horizontal-louver.003",
+      "GEO-part-0ac1e39dec34655a366f--horizontal-louver.004",
+      "GEO-part-0ac1e39dec34655a366f--horizontal-louver.005",
+      "GEO-part-0ac1e39dec34655a366f--vent-side-jamb",
+      "GEO-part-0ac1e39dec34655a366f--vent-side-jamb.001",
+      "GEO-part-0ac1e39dec34655a366f--vent-header",
+      "GEO-part-0ac1e39dec34655a366f--vent-header.001",
+      "GEO-part-0ac1e39dec34655a366f--light-socket",
+      "GEO-part-0ac1e39dec34655a366f--emissive-lens",
+      "GEO-part-0ac1e39dec34655a366f--flanking-left-strap",
+      "GEO-part-0ac1e39dec34655a366f--flanking-right-strap",
+      "GEO-part-0ac1e39dec34655a366f--stepped-left-shoulder",
+      "GEO-part-0ac1e39dec34655a366f--small-service-groove",
+      "GEO-part-0ac1e39dec34655a366f--lower-skirt-corner",
+      "GEO-part-0ac1e39dec34655a366f--lower-skirt-corner.001",
+      "GEO-part-0ac1e39dec34655a366f--amber-socket",
+      "GEO-part-0ac1e39dec34655a366f--amber-lens",
+      "GEO-part-0ac1e39dec34655a366f--lower-lock",
+      "GEO-part-0ac1e39dec34655a366f--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-dd83177cdf0e1d968cb7",
+    "variant": "plain-service",
+    "side": -1,
+    "node_prefix": "GEO-part-dd83177cdf0e1d968cb7--surface",
+    "bounds": {
+      "min": [
+        -0.4950000047683716,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.3125,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-dd83177cdf0e1d968cb7--inner-armor-carrier",
+      "GEO-part-dd83177cdf0e1d968cb7--continuous-upper-shoulder",
+      "GEO-part-dd83177cdf0e1d968cb7--continuous-lower-sill",
+      "GEO-part-dd83177cdf0e1d968cb7--shoulder-armor",
+      "GEO-part-dd83177cdf0e1d968cb7--shoulder-clamp",
+      "GEO-part-dd83177cdf0e1d968cb7--top-recess",
+      "GEO-part-dd83177cdf0e1d968cb7--top-grille",
+      "GEO-part-dd83177cdf0e1d968cb7--top-grille.001",
+      "GEO-part-dd83177cdf0e1d968cb7--top-grille.002",
+      "GEO-part-dd83177cdf0e1d968cb7--top-grille.003",
+      "GEO-part-dd83177cdf0e1d968cb7--recessed-service-backplane",
+      "GEO-part-dd83177cdf0e1d968cb7--lower-armor",
+      "GEO-part-dd83177cdf0e1d968cb7--pale-service-door",
+      "GEO-part-dd83177cdf0e1d968cb7--inset-small-service-box",
+      "GEO-part-dd83177cdf0e1d968cb7--deep-vent-well",
+      "GEO-part-dd83177cdf0e1d968cb7--horizontal-louver",
+      "GEO-part-dd83177cdf0e1d968cb7--horizontal-louver.001",
+      "GEO-part-dd83177cdf0e1d968cb7--horizontal-louver.002",
+      "GEO-part-dd83177cdf0e1d968cb7--horizontal-louver.003",
+      "GEO-part-dd83177cdf0e1d968cb7--horizontal-louver.004",
+      "GEO-part-dd83177cdf0e1d968cb7--horizontal-louver.005",
+      "GEO-part-dd83177cdf0e1d968cb7--vent-side-jamb",
+      "GEO-part-dd83177cdf0e1d968cb7--vent-side-jamb.001",
+      "GEO-part-dd83177cdf0e1d968cb7--vent-header",
+      "GEO-part-dd83177cdf0e1d968cb7--vent-header.001",
+      "GEO-part-dd83177cdf0e1d968cb7--light-socket",
+      "GEO-part-dd83177cdf0e1d968cb7--emissive-lens",
+      "GEO-part-dd83177cdf0e1d968cb7--amber-socket",
+      "GEO-part-dd83177cdf0e1d968cb7--amber-lens",
+      "GEO-part-dd83177cdf0e1d968cb7--lower-lock",
+      "GEO-part-dd83177cdf0e1d968cb7--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-b351480b6386fb131dc0",
+    "variant": "forward-vent",
+    "side": -1,
+    "node_prefix": "GEO-part-b351480b6386fb131dc0--surface",
+    "bounds": {
+      "min": [
+        -0.6200000047683716,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.1875,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          -0.6299999999999999,
+          -0.1,
+          2.12
+        ],
+        "direction": [
+          0.45,
+          0,
+          -1
+        ],
+        "color": [
+          0.06,
+          0.7,
+          1
+        ],
+        "intensity": 0.65,
+        "range": 1.5,
+        "angle": 1.35
+      }
+    ],
+    "objects": [
+      "GEO-part-b351480b6386fb131dc0--inner-armor-carrier",
+      "GEO-part-b351480b6386fb131dc0--continuous-upper-shoulder",
+      "GEO-part-b351480b6386fb131dc0--continuous-lower-sill",
+      "GEO-part-b351480b6386fb131dc0--shoulder-armor",
+      "GEO-part-b351480b6386fb131dc0--shoulder-clamp",
+      "GEO-part-b351480b6386fb131dc0--shoulder-clamp.001",
+      "GEO-part-b351480b6386fb131dc0--top-recess",
+      "GEO-part-b351480b6386fb131dc0--top-grille",
+      "GEO-part-b351480b6386fb131dc0--top-grille.001",
+      "GEO-part-b351480b6386fb131dc0--top-grille.002",
+      "GEO-part-b351480b6386fb131dc0--top-grille.003",
+      "GEO-part-b351480b6386fb131dc0--recessed-service-backplane",
+      "GEO-part-b351480b6386fb131dc0--lower-armor",
+      "GEO-part-b351480b6386fb131dc0--upper-armor",
+      "GEO-part-b351480b6386fb131dc0--deep-vent-well",
+      "GEO-part-b351480b6386fb131dc0--horizontal-louver",
+      "GEO-part-b351480b6386fb131dc0--horizontal-louver.001",
+      "GEO-part-b351480b6386fb131dc0--horizontal-louver.002",
+      "GEO-part-b351480b6386fb131dc0--horizontal-louver.003",
+      "GEO-part-b351480b6386fb131dc0--horizontal-louver.004",
+      "GEO-part-b351480b6386fb131dc0--horizontal-louver.005",
+      "GEO-part-b351480b6386fb131dc0--vent-side-jamb",
+      "GEO-part-b351480b6386fb131dc0--vent-side-jamb.001",
+      "GEO-part-b351480b6386fb131dc0--vent-header",
+      "GEO-part-b351480b6386fb131dc0--vent-header.001",
+      "GEO-part-b351480b6386fb131dc0--light-socket",
+      "GEO-part-b351480b6386fb131dc0--emissive-lens",
+      "GEO-part-b351480b6386fb131dc0--flanking-left-strap",
+      "GEO-part-b351480b6386fb131dc0--flanking-right-strap",
+      "GEO-part-b351480b6386fb131dc0--stepped-left-shoulder",
+      "GEO-part-b351480b6386fb131dc0--small-service-groove",
+      "GEO-part-b351480b6386fb131dc0--lower-skirt-corner",
+      "GEO-part-b351480b6386fb131dc0--lower-skirt-corner.001",
+      "GEO-part-b351480b6386fb131dc0--amber-socket",
+      "GEO-part-b351480b6386fb131dc0--amber-lens",
+      "GEO-part-b351480b6386fb131dc0--lower-lock",
+      "GEO-part-b351480b6386fb131dc0--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-7b28f47930a6f7cbdf10",
+    "variant": "vent",
+    "side": 1,
+    "node_prefix": "GEO-part-7b28f47930a6f7cbdf10--surface",
+    "bounds": {
+      "min": [
+        -0.1875,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.6200000047683716,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          0.6299999999999999,
+          -0.1,
+          2.12
+        ],
+        "direction": [
+          -0.45,
+          0,
+          -1
+        ],
+        "color": [
+          0.06,
+          0.7,
+          1
+        ],
+        "intensity": 0.65,
+        "range": 1.5,
+        "angle": 1.35
+      }
+    ],
+    "objects": [
+      "GEO-part-7b28f47930a6f7cbdf10--inner-armor-carrier",
+      "GEO-part-7b28f47930a6f7cbdf10--continuous-upper-shoulder",
+      "GEO-part-7b28f47930a6f7cbdf10--continuous-lower-sill",
+      "GEO-part-7b28f47930a6f7cbdf10--shoulder-armor",
+      "GEO-part-7b28f47930a6f7cbdf10--shoulder-clamp",
+      "GEO-part-7b28f47930a6f7cbdf10--shoulder-clamp.001",
+      "GEO-part-7b28f47930a6f7cbdf10--top-recess",
+      "GEO-part-7b28f47930a6f7cbdf10--top-grille",
+      "GEO-part-7b28f47930a6f7cbdf10--top-grille.001",
+      "GEO-part-7b28f47930a6f7cbdf10--top-grille.002",
+      "GEO-part-7b28f47930a6f7cbdf10--top-grille.003",
+      "GEO-part-7b28f47930a6f7cbdf10--recessed-service-backplane",
+      "GEO-part-7b28f47930a6f7cbdf10--lower-armor",
+      "GEO-part-7b28f47930a6f7cbdf10--upper-armor",
+      "GEO-part-7b28f47930a6f7cbdf10--deep-vent-well",
+      "GEO-part-7b28f47930a6f7cbdf10--horizontal-louver",
+      "GEO-part-7b28f47930a6f7cbdf10--horizontal-louver.001",
+      "GEO-part-7b28f47930a6f7cbdf10--horizontal-louver.002",
+      "GEO-part-7b28f47930a6f7cbdf10--horizontal-louver.003",
+      "GEO-part-7b28f47930a6f7cbdf10--horizontal-louver.004",
+      "GEO-part-7b28f47930a6f7cbdf10--horizontal-louver.005",
+      "GEO-part-7b28f47930a6f7cbdf10--vent-side-jamb",
+      "GEO-part-7b28f47930a6f7cbdf10--vent-side-jamb.001",
+      "GEO-part-7b28f47930a6f7cbdf10--vent-header",
+      "GEO-part-7b28f47930a6f7cbdf10--vent-header.001",
+      "GEO-part-7b28f47930a6f7cbdf10--light-socket",
+      "GEO-part-7b28f47930a6f7cbdf10--emissive-lens",
+      "GEO-part-7b28f47930a6f7cbdf10--flanking-left-strap",
+      "GEO-part-7b28f47930a6f7cbdf10--flanking-right-strap",
+      "GEO-part-7b28f47930a6f7cbdf10--stepped-left-shoulder",
+      "GEO-part-7b28f47930a6f7cbdf10--small-service-groove",
+      "GEO-part-7b28f47930a6f7cbdf10--lower-skirt-corner",
+      "GEO-part-7b28f47930a6f7cbdf10--lower-skirt-corner.001",
+      "GEO-part-7b28f47930a6f7cbdf10--amber-socket",
+      "GEO-part-7b28f47930a6f7cbdf10--amber-lens",
+      "GEO-part-7b28f47930a6f7cbdf10--lower-lock",
+      "GEO-part-7b28f47930a6f7cbdf10--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-3cb4b658b677f06829b6",
+    "variant": "red-service",
+    "side": 1,
+    "node_prefix": "GEO-part-3cb4b658b677f06829b6--surface",
+    "bounds": {
+      "min": [
+        -0.25,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5575000047683716,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-3cb4b658b677f06829b6--inner-armor-carrier",
+      "GEO-part-3cb4b658b677f06829b6--continuous-upper-shoulder",
+      "GEO-part-3cb4b658b677f06829b6--continuous-lower-sill",
+      "GEO-part-3cb4b658b677f06829b6--shoulder-armor",
+      "GEO-part-3cb4b658b677f06829b6--shoulder-clamp",
+      "GEO-part-3cb4b658b677f06829b6--wrapped-top-clamp",
+      "GEO-part-3cb4b658b677f06829b6--recessed-service-backplane",
+      "GEO-part-3cb4b658b677f06829b6--lower-armor",
+      "GEO-part-3cb4b658b677f06829b6--service-door-collar",
+      "GEO-part-3cb4b658b677f06829b6--red-pressed-service-door",
+      "GEO-part-3cb4b658b677f06829b6--door-top-shadow",
+      "GEO-part-3cb4b658b677f06829b6--hinge",
+      "GEO-part-3cb4b658b677f06829b6--hinge.001",
+      "GEO-part-3cb4b658b677f06829b6--recessed-handle",
+      "GEO-part-3cb4b658b677f06829b6--handle-grip",
+      "GEO-part-3cb4b658b677f06829b6--warning-tab",
+      "GEO-part-3cb4b658b677f06829b6--light-socket",
+      "GEO-part-3cb4b658b677f06829b6--emissive-lens",
+      "GEO-part-3cb4b658b677f06829b6--door-panel-score",
+      "GEO-part-3cb4b658b677f06829b6--door-panel-score.001",
+      "GEO-part-3cb4b658b677f06829b6--door-data-plate",
+      "GEO-part-3cb4b658b677f06829b6--door-status-dot",
+      "GEO-part-3cb4b658b677f06829b6--door-status-dot.001",
+      "GEO-part-3cb4b658b677f06829b6--door-status-dot.002",
+      "GEO-part-3cb4b658b677f06829b6--lower-lock",
+      "GEO-part-3cb4b658b677f06829b6--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-0558bcda4ab0cb8c9f70",
+    "variant": "twin-vent",
+    "side": 1,
+    "node_prefix": "GEO-part-0558bcda4ab0cb8c9f70--surface",
+    "bounds": {
+      "min": [
+        -0.25,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5575000047683716,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-0558bcda4ab0cb8c9f70--inner-armor-carrier",
+      "GEO-part-0558bcda4ab0cb8c9f70--continuous-upper-shoulder",
+      "GEO-part-0558bcda4ab0cb8c9f70--continuous-lower-sill",
+      "GEO-part-0558bcda4ab0cb8c9f70--shoulder-armor",
+      "GEO-part-0558bcda4ab0cb8c9f70--shoulder-clamp",
+      "GEO-part-0558bcda4ab0cb8c9f70--top-recess",
+      "GEO-part-0558bcda4ab0cb8c9f70--top-grille",
+      "GEO-part-0558bcda4ab0cb8c9f70--top-grille.001",
+      "GEO-part-0558bcda4ab0cb8c9f70--top-grille.002",
+      "GEO-part-0558bcda4ab0cb8c9f70--top-grille.003",
+      "GEO-part-0558bcda4ab0cb8c9f70--recessed-service-backplane",
+      "GEO-part-0558bcda4ab0cb8c9f70--lower-armor",
+      "GEO-part-0558bcda4ab0cb8c9f70--upper-armor",
+      "GEO-part-0558bcda4ab0cb8c9f70--deep-vent-well",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.001",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.002",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.003",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.004",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.005",
+      "GEO-part-0558bcda4ab0cb8c9f70--vent-side-jamb",
+      "GEO-part-0558bcda4ab0cb8c9f70--vent-side-jamb.001",
+      "GEO-part-0558bcda4ab0cb8c9f70--vent-header",
+      "GEO-part-0558bcda4ab0cb8c9f70--vent-header.001",
+      "GEO-part-0558bcda4ab0cb8c9f70--deep-vent-well.001",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.006",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.007",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.008",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.009",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.010",
+      "GEO-part-0558bcda4ab0cb8c9f70--horizontal-louver.011",
+      "GEO-part-0558bcda4ab0cb8c9f70--vent-side-jamb.002",
+      "GEO-part-0558bcda4ab0cb8c9f70--vent-side-jamb.003",
+      "GEO-part-0558bcda4ab0cb8c9f70--vent-header.002",
+      "GEO-part-0558bcda4ab0cb8c9f70--vent-header.003",
+      "GEO-part-0558bcda4ab0cb8c9f70--light-socket",
+      "GEO-part-0558bcda4ab0cb8c9f70--emissive-lens",
+      "GEO-part-0558bcda4ab0cb8c9f70--flanking-left-strap",
+      "GEO-part-0558bcda4ab0cb8c9f70--flanking-right-strap",
+      "GEO-part-0558bcda4ab0cb8c9f70--stepped-left-shoulder",
+      "GEO-part-0558bcda4ab0cb8c9f70--small-service-groove",
+      "GEO-part-0558bcda4ab0cb8c9f70--lower-skirt-corner",
+      "GEO-part-0558bcda4ab0cb8c9f70--lower-skirt-corner.001",
+      "GEO-part-0558bcda4ab0cb8c9f70--amber-socket",
+      "GEO-part-0558bcda4ab0cb8c9f70--amber-lens",
+      "GEO-part-0558bcda4ab0cb8c9f70--lower-lock",
+      "GEO-part-0558bcda4ab0cb8c9f70--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-8ddb637a40bd23dfd03a",
+    "variant": "utility",
+    "side": 1,
+    "node_prefix": "GEO-part-8ddb637a40bd23dfd03a--surface",
+    "bounds": {
+      "min": [
+        -0.1875,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.6549999713897705,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          0.6299999999999999,
+          -0.1,
+          2.12
+        ],
+        "direction": [
+          -0.45,
+          0,
+          -1
+        ],
+        "color": [
+          0.06,
+          0.7,
+          1
+        ],
+        "intensity": 0.65,
+        "range": 1.5,
+        "angle": 1.35
+      }
+    ],
+    "objects": [
+      "GEO-part-8ddb637a40bd23dfd03a--inner-armor-carrier",
+      "GEO-part-8ddb637a40bd23dfd03a--continuous-upper-shoulder",
+      "GEO-part-8ddb637a40bd23dfd03a--continuous-lower-sill",
+      "GEO-part-8ddb637a40bd23dfd03a--shoulder-armor",
+      "GEO-part-8ddb637a40bd23dfd03a--shoulder-clamp",
+      "GEO-part-8ddb637a40bd23dfd03a--shoulder-clamp.001",
+      "GEO-part-8ddb637a40bd23dfd03a--top-recess",
+      "GEO-part-8ddb637a40bd23dfd03a--top-grille",
+      "GEO-part-8ddb637a40bd23dfd03a--top-grille.001",
+      "GEO-part-8ddb637a40bd23dfd03a--top-grille.002",
+      "GEO-part-8ddb637a40bd23dfd03a--top-grille.003",
+      "GEO-part-8ddb637a40bd23dfd03a--recessed-service-backplane",
+      "GEO-part-8ddb637a40bd23dfd03a--lower-armor",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-housing",
+      "GEO-part-8ddb637a40bd23dfd03a--projecting-utility-pod",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-dark-inset",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-recess-louver",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-recess-louver.001",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-recess-louver.002",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-recess-louver.003",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-amber-indicator",
+      "GEO-part-8ddb637a40bd23dfd03a--sloped-pod-shoulder",
+      "GEO-part-8ddb637a40bd23dfd03a--projecting-utility-pod.001",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-dark-inset.001",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-recess-louver.004",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-recess-louver.005",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-recess-louver.006",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-recess-louver.007",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-pod-amber-indicator.001",
+      "GEO-part-8ddb637a40bd23dfd03a--sloped-pod-shoulder.001",
+      "GEO-part-8ddb637a40bd23dfd03a--machinery-spacer",
+      "GEO-part-8ddb637a40bd23dfd03a--machinery-spacer.001",
+      "GEO-part-8ddb637a40bd23dfd03a--machinery-spacer.002",
+      "GEO-part-8ddb637a40bd23dfd03a--machinery-spacer.003",
+      "GEO-part-8ddb637a40bd23dfd03a--dark-service-spine",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-port",
+      "GEO-part-8ddb637a40bd23dfd03a--socket-cyan-strip",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-rail",
+      "GEO-part-8ddb637a40bd23dfd03a--utility-rail.001",
+      "GEO-part-8ddb637a40bd23dfd03a--projecting-coupler",
+      "GEO-part-8ddb637a40bd23dfd03a--socket-amber",
+      "GEO-part-8ddb637a40bd23dfd03a--lower-lock",
+      "GEO-part-8ddb637a40bd23dfd03a--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-1c0570cdd9d7bc9d67da",
+    "variant": "identity",
+    "side": 1,
+    "node_prefix": "GEO-part-1c0570cdd9d7bc9d67da--surface",
+    "bounds": {
+      "min": [
+        -0.1875,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.6200000047683716,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-1c0570cdd9d7bc9d67da--inner-armor-carrier",
+      "GEO-part-1c0570cdd9d7bc9d67da--continuous-upper-shoulder",
+      "GEO-part-1c0570cdd9d7bc9d67da--continuous-lower-sill",
+      "GEO-part-1c0570cdd9d7bc9d67da--shoulder-armor",
+      "GEO-part-1c0570cdd9d7bc9d67da--shoulder-clamp",
+      "GEO-part-1c0570cdd9d7bc9d67da--wrapped-top-clamp",
+      "GEO-part-1c0570cdd9d7bc9d67da--recessed-service-backplane",
+      "GEO-part-1c0570cdd9d7bc9d67da--lower-armor",
+      "GEO-part-1c0570cdd9d7bc9d67da--name-shield",
+      "GEO-part-1c0570cdd9d7bc9d67da--armor-edge",
+      "GEO-part-1c0570cdd9d7bc9d67da--armor-edge.001",
+      "GEO-part-1c0570cdd9d7bc9d67da--registration-red-key",
+      "GEO-part-1c0570cdd9d7bc9d67da--light-socket",
+      "GEO-part-1c0570cdd9d7bc9d67da--emissive-lens",
+      "GEO-part-1c0570cdd9d7bc9d67da--identity-attachment",
+      "GEO-part-1c0570cdd9d7bc9d67da--identity-attachment.001",
+      "GEO-part-1c0570cdd9d7bc9d67da--name-panel-seam",
+      "GEO-part-1c0570cdd9d7bc9d67da--lower-lock",
+      "GEO-part-1c0570cdd9d7bc9d67da--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-505abaccb2279cad2d0f",
+    "variant": "red-service",
+    "side": 1,
+    "node_prefix": "GEO-part-505abaccb2279cad2d0f--surface",
+    "bounds": {
+      "min": [
+        -0.25,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5575000047683716,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-505abaccb2279cad2d0f--inner-armor-carrier",
+      "GEO-part-505abaccb2279cad2d0f--continuous-upper-shoulder",
+      "GEO-part-505abaccb2279cad2d0f--continuous-lower-sill",
+      "GEO-part-505abaccb2279cad2d0f--shoulder-armor",
+      "GEO-part-505abaccb2279cad2d0f--shoulder-clamp",
+      "GEO-part-505abaccb2279cad2d0f--wrapped-top-clamp",
+      "GEO-part-505abaccb2279cad2d0f--recessed-service-backplane",
+      "GEO-part-505abaccb2279cad2d0f--lower-armor",
+      "GEO-part-505abaccb2279cad2d0f--service-door-collar",
+      "GEO-part-505abaccb2279cad2d0f--red-pressed-service-door",
+      "GEO-part-505abaccb2279cad2d0f--door-top-shadow",
+      "GEO-part-505abaccb2279cad2d0f--hinge",
+      "GEO-part-505abaccb2279cad2d0f--hinge.001",
+      "GEO-part-505abaccb2279cad2d0f--recessed-handle",
+      "GEO-part-505abaccb2279cad2d0f--handle-grip",
+      "GEO-part-505abaccb2279cad2d0f--warning-tab",
+      "GEO-part-505abaccb2279cad2d0f--light-socket",
+      "GEO-part-505abaccb2279cad2d0f--emissive-lens",
+      "GEO-part-505abaccb2279cad2d0f--door-panel-score",
+      "GEO-part-505abaccb2279cad2d0f--door-panel-score.001",
+      "GEO-part-505abaccb2279cad2d0f--door-data-plate",
+      "GEO-part-505abaccb2279cad2d0f--door-status-dot",
+      "GEO-part-505abaccb2279cad2d0f--door-status-dot.001",
+      "GEO-part-505abaccb2279cad2d0f--door-status-dot.002",
+      "GEO-part-505abaccb2279cad2d0f--lower-lock",
+      "GEO-part-505abaccb2279cad2d0f--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-f307639bad50377eba7b",
+    "variant": "vent",
+    "side": 1,
+    "node_prefix": "GEO-part-f307639bad50377eba7b--surface",
+    "bounds": {
+      "min": [
+        -0.1875,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.6200000047683716,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          0.6299999999999999,
+          -0.1,
+          2.12
+        ],
+        "direction": [
+          -0.45,
+          0,
+          -1
+        ],
+        "color": [
+          0.06,
+          0.7,
+          1
+        ],
+        "intensity": 0.65,
+        "range": 1.5,
+        "angle": 1.35
+      }
+    ],
+    "objects": [
+      "GEO-part-f307639bad50377eba7b--inner-armor-carrier",
+      "GEO-part-f307639bad50377eba7b--continuous-upper-shoulder",
+      "GEO-part-f307639bad50377eba7b--continuous-lower-sill",
+      "GEO-part-f307639bad50377eba7b--shoulder-armor",
+      "GEO-part-f307639bad50377eba7b--shoulder-clamp",
+      "GEO-part-f307639bad50377eba7b--shoulder-clamp.001",
+      "GEO-part-f307639bad50377eba7b--top-recess",
+      "GEO-part-f307639bad50377eba7b--top-grille",
+      "GEO-part-f307639bad50377eba7b--top-grille.001",
+      "GEO-part-f307639bad50377eba7b--top-grille.002",
+      "GEO-part-f307639bad50377eba7b--top-grille.003",
+      "GEO-part-f307639bad50377eba7b--recessed-service-backplane",
+      "GEO-part-f307639bad50377eba7b--lower-armor",
+      "GEO-part-f307639bad50377eba7b--upper-armor",
+      "GEO-part-f307639bad50377eba7b--deep-vent-well",
+      "GEO-part-f307639bad50377eba7b--horizontal-louver",
+      "GEO-part-f307639bad50377eba7b--horizontal-louver.001",
+      "GEO-part-f307639bad50377eba7b--horizontal-louver.002",
+      "GEO-part-f307639bad50377eba7b--horizontal-louver.003",
+      "GEO-part-f307639bad50377eba7b--horizontal-louver.004",
+      "GEO-part-f307639bad50377eba7b--horizontal-louver.005",
+      "GEO-part-f307639bad50377eba7b--vent-side-jamb",
+      "GEO-part-f307639bad50377eba7b--vent-side-jamb.001",
+      "GEO-part-f307639bad50377eba7b--vent-header",
+      "GEO-part-f307639bad50377eba7b--vent-header.001",
+      "GEO-part-f307639bad50377eba7b--light-socket",
+      "GEO-part-f307639bad50377eba7b--emissive-lens",
+      "GEO-part-f307639bad50377eba7b--flanking-left-strap",
+      "GEO-part-f307639bad50377eba7b--flanking-right-strap",
+      "GEO-part-f307639bad50377eba7b--stepped-left-shoulder",
+      "GEO-part-f307639bad50377eba7b--small-service-groove",
+      "GEO-part-f307639bad50377eba7b--lower-skirt-corner",
+      "GEO-part-f307639bad50377eba7b--lower-skirt-corner.001",
+      "GEO-part-f307639bad50377eba7b--amber-socket",
+      "GEO-part-f307639bad50377eba7b--amber-lens",
+      "GEO-part-f307639bad50377eba7b--lower-lock",
+      "GEO-part-f307639bad50377eba7b--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-66a37b7990899a620125",
+    "variant": "plain-service",
+    "side": 1,
+    "node_prefix": "GEO-part-66a37b7990899a620125--surface",
+    "bounds": {
+      "min": [
+        -0.25,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.5575000047683716,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [],
+    "objects": [
+      "GEO-part-66a37b7990899a620125--inner-armor-carrier",
+      "GEO-part-66a37b7990899a620125--continuous-upper-shoulder",
+      "GEO-part-66a37b7990899a620125--continuous-lower-sill",
+      "GEO-part-66a37b7990899a620125--shoulder-armor",
+      "GEO-part-66a37b7990899a620125--shoulder-clamp",
+      "GEO-part-66a37b7990899a620125--top-recess",
+      "GEO-part-66a37b7990899a620125--top-grille",
+      "GEO-part-66a37b7990899a620125--top-grille.001",
+      "GEO-part-66a37b7990899a620125--top-grille.002",
+      "GEO-part-66a37b7990899a620125--top-grille.003",
+      "GEO-part-66a37b7990899a620125--recessed-service-backplane",
+      "GEO-part-66a37b7990899a620125--lower-armor",
+      "GEO-part-66a37b7990899a620125--pale-service-door",
+      "GEO-part-66a37b7990899a620125--inset-small-service-box",
+      "GEO-part-66a37b7990899a620125--deep-vent-well",
+      "GEO-part-66a37b7990899a620125--horizontal-louver",
+      "GEO-part-66a37b7990899a620125--horizontal-louver.001",
+      "GEO-part-66a37b7990899a620125--horizontal-louver.002",
+      "GEO-part-66a37b7990899a620125--horizontal-louver.003",
+      "GEO-part-66a37b7990899a620125--horizontal-louver.004",
+      "GEO-part-66a37b7990899a620125--horizontal-louver.005",
+      "GEO-part-66a37b7990899a620125--vent-side-jamb",
+      "GEO-part-66a37b7990899a620125--vent-side-jamb.001",
+      "GEO-part-66a37b7990899a620125--vent-header",
+      "GEO-part-66a37b7990899a620125--vent-header.001",
+      "GEO-part-66a37b7990899a620125--light-socket",
+      "GEO-part-66a37b7990899a620125--emissive-lens",
+      "GEO-part-66a37b7990899a620125--amber-socket",
+      "GEO-part-66a37b7990899a620125--amber-lens",
+      "GEO-part-66a37b7990899a620125--lower-lock",
+      "GEO-part-66a37b7990899a620125--lower-lock.001"
+    ]
+  },
+  {
+    "slug": "part-2143e7c0fcb3b5b3270f",
+    "variant": "forward-vent",
+    "side": 1,
+    "node_prefix": "GEO-part-2143e7c0fcb3b5b3270f--surface",
+    "bounds": {
+      "min": [
+        -0.1875,
+        -1.0,
+        0.0
+      ],
+      "max": [
+        0.6200000047683716,
+        1.0,
+        2.9375
+      ]
+    },
+    "lights": [
+      {
+        "position": [
+          0.6299999999999999,
+          -0.1,
+          2.12
+        ],
+        "direction": [
+          -0.45,
+          0,
+          -1
+        ],
+        "color": [
+          0.06,
+          0.7,
+          1
+        ],
+        "intensity": 0.65,
+        "range": 1.5,
+        "angle": 1.35
+      }
+    ],
+    "objects": [
+      "GEO-part-2143e7c0fcb3b5b3270f--inner-armor-carrier",
+      "GEO-part-2143e7c0fcb3b5b3270f--continuous-upper-shoulder",
+      "GEO-part-2143e7c0fcb3b5b3270f--continuous-lower-sill",
+      "GEO-part-2143e7c0fcb3b5b3270f--shoulder-armor",
+      "GEO-part-2143e7c0fcb3b5b3270f--shoulder-clamp",
+      "GEO-part-2143e7c0fcb3b5b3270f--shoulder-clamp.001",
+      "GEO-part-2143e7c0fcb3b5b3270f--top-recess",
+      "GEO-part-2143e7c0fcb3b5b3270f--top-grille",
+      "GEO-part-2143e7c0fcb3b5b3270f--top-grille.001",
+      "GEO-part-2143e7c0fcb3b5b3270f--top-grille.002",
+      "GEO-part-2143e7c0fcb3b5b3270f--top-grille.003",
+      "GEO-part-2143e7c0fcb3b5b3270f--recessed-service-backplane",
+      "GEO-part-2143e7c0fcb3b5b3270f--lower-armor",
+      "GEO-part-2143e7c0fcb3b5b3270f--upper-armor",
+      "GEO-part-2143e7c0fcb3b5b3270f--deep-vent-well",
+      "GEO-part-2143e7c0fcb3b5b3270f--horizontal-louver",
+      "GEO-part-2143e7c0fcb3b5b3270f--horizontal-louver.001",
+      "GEO-part-2143e7c0fcb3b5b3270f--horizontal-louver.002",
+      "GEO-part-2143e7c0fcb3b5b3270f--horizontal-louver.003",
+      "GEO-part-2143e7c0fcb3b5b3270f--horizontal-louver.004",
+      "GEO-part-2143e7c0fcb3b5b3270f--horizontal-louver.005",
+      "GEO-part-2143e7c0fcb3b5b3270f--vent-side-jamb",
+      "GEO-part-2143e7c0fcb3b5b3270f--vent-side-jamb.001",
+      "GEO-part-2143e7c0fcb3b5b3270f--vent-header",
+      "GEO-part-2143e7c0fcb3b5b3270f--vent-header.001",
+      "GEO-part-2143e7c0fcb3b5b3270f--light-socket",
+      "GEO-part-2143e7c0fcb3b5b3270f--emissive-lens",
+      "GEO-part-2143e7c0fcb3b5b3270f--flanking-left-strap",
+      "GEO-part-2143e7c0fcb3b5b3270f--flanking-right-strap",
+      "GEO-part-2143e7c0fcb3b5b3270f--stepped-left-shoulder",
+      "GEO-part-2143e7c0fcb3b5b3270f--small-service-groove",
+      "GEO-part-2143e7c0fcb3b5b3270f--lower-skirt-corner",
+      "GEO-part-2143e7c0fcb3b5b3270f--lower-skirt-corner.001",
+      "GEO-part-2143e7c0fcb3b5b3270f--amber-socket",
+      "GEO-part-2143e7c0fcb3b5b3270f--amber-lens",
+      "GEO-part-2143e7c0fcb3b5b3270f--lower-lock",
+      "GEO-part-2143e7c0fcb3b5b3270f--lower-lock.001"
+    ]
+  }
+]

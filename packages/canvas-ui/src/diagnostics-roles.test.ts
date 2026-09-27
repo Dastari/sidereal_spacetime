@@ -2,8 +2,8 @@ import { expect, test, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
-import { createRenderDiagnostics } from "../../render/src/diagnostics";
-import { setMeshRole } from "../../render/src/mesh-roles";
+import { createRenderDiagnostics } from "@sidereal/render/diagnostics";
+import { setMeshRole } from "@sidereal/render/mesh-roles";
 import { createDiagnosticsUI } from "./diagnostics";
 import type { CanvasUI } from "./toolkit";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
@@ -44,8 +44,16 @@ test("F3 presents role counts and keeps the full inventory scrollable", () => {
   try {
     panel.toggle();
     panel.draw();
-    expect(text.mock.calls.some(c => c[0] === "Capture size / MSAA")).toBe(true);
-    expect(text.mock.calls.some(c => c[0] === `${capture.inputTexture.width} × ${capture.inputTexture.height} / ${capture.inputTexture.samples}×`)).toBe(true);
+    expect(text.mock.calls.some((c) => c[0] === "Capture size / MSAA")).toBe(
+      true,
+    );
+    expect(
+      text.mock.calls.some(
+        (c) =>
+          c[0] ===
+          `${capture.inputTexture.width} × ${capture.inputTexture.height} / ${capture.inputTexture.samples}×`,
+      ),
+    ).toBe(true);
     expect(text.mock.calls.some((c) => c[0] === "Meshes by role")).toBe(true);
     expect(text.mock.calls.some((c) => c[0] === "floor")).toBe(true);
     expect(text.mock.calls.some((c) => c[0] === "0 / 1")).toBe(true);

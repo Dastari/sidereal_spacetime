@@ -39,6 +39,36 @@ Project skills in `.agents/skills`: frontend-design, playwright, security-best-p
 
 2026-09-09 owner character/pose activation: the owner explicitly authorized the new character models and equipment poses in the normal game without a query gate. Keep the installed modular r008 bodies/components and the paired published r002 handheld meshes, sockets and aim-space data together as documented in docs/handoffs/character_pose_live_release.md. The historical pose crew GLB is a comparison source, not the modular runtime body. Publication permission is separate from final artistic sign-off; keep fit/playback limitations in the living ledgers and validate both bodies with mixed actual armor.
 
+2026-09-10 approved character/F3 release: the owner explicitly approved the current r003 paired handheld/pose art and installed r008 modular character/armor bundle, then authorized public activation and instructed no backup. Normal game client8246 now uses /assets/crew/poses/r003/ with the r008 body/rig; preserve r002 as history. See docs/handoffs/character_f3_public_release_20260910.md for exact hashes, signed approval records and remaining technical playback/performance work. This supersedes the r002 runtime pairing above; it does not approve unrelated reference-only designs or future art revisions.
+
+2026-09-25 owner ship-structure/builder decision: hull, armor, exterior walls, partitions, floors and roofs are voxel-destructible ship structure. Their visuals come from ordered role-tagged primitive layers (grammar data or Blender), sampled at 1/16 m on the global ship lattice and detailed by one deterministic faction style pass. For ship structure only, this supersedes the 2026-09-08 direction to preserve authored Blender surfaces in the visual export. Props, modules and equipment stay authored meshes with entity health and damage states. The player build cell is 1 m, with slope and arc shape tiles; walls and objects snap finer. Rooms are labels only. Players modify developer prefab ships within blueprint size classes, and installed engines bound performance. Launch is single-deck, but the data model carries multi-deck from day one. Grading targets higher gamma and saturation and lower contrast. Damage must still pass server authority before chunks rebuild, and existing native kits and live pins are unchanged until an explicit migration. See docs/shipyard_player_builder_design.md; the samples there are proposals, not approved art.
+
+## Git Workflow
+
+All substantive changes MUST be delivered through a GitHub Pull Request.
+
+Never commit directly to `main`.
+Never push directly to `main`.
+Never merge a PR unless explicitly instructed by the user.
+
+For every task:
+
+1. Fetch the latest remote state.
+2. Inspect existing branches and open PRs.
+3. Create a descriptive branch from the current upstream `main`.
+4. Make changes.
+5. Run the project's required tests, linting and build checks.
+6. Commit logical units of work using descriptive commits.
+7. Push the branch to `origin`.
+8. Create or update a GitHub Pull Request using `gh`.
+9. Include:
+   - Summary
+   - Changes made
+   - Testing performed
+   - Any risks or outstanding issues
+10. Return the PR URL to the user.
+
+The task is not considered complete until the PR exists.
 ## Agent Mail coordination
 
 At the beginning of substantive work, read [Agent Mail operations](docs/agent_mail.md).

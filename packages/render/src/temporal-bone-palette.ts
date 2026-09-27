@@ -101,7 +101,7 @@ export function createTemporalBonePalette(scene: Scene) {
         null,
         true,
       );
-      mesh.metadata = {...source.metadata, role: 'proxy'};
+      mesh.metadata = { ...source.metadata, role: "proxy" };
       mesh.skeleton = trialSkeleton;
       mesh.isVisible = false;
       mesh.isPickable = false;

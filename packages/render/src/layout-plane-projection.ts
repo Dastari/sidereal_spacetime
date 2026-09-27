@@ -36,3 +36,9 @@ export function layoutPlaneMatrix(
     w[2],
   ];
 }
+
+/** Camera tilt (radians from straight down) beyond which the floorplan overlay
+ * is no longer drawn as an SVG raster. A tilted camera makes the plane
+ * projection perspective, and a raster warped through a perspective smears at
+ * grazing angles, so the scene draws the grid and hull boundary itself. */
+export const PLAN_OVERLAY_TILT_LIMIT = 0.12;

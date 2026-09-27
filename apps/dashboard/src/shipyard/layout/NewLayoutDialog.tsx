@@ -17,6 +17,7 @@ export function NewLayoutDialog({
   const dialog = useRef<HTMLDialogElement>(null);
   const [name, setName] = useState("Untitled ship"),
     [kind, setKind] = useState<"ship" | "station-module">("ship");
+  const [height, setHeight] = useState(3.5);
   const [sizeId, setSizeId] = useState(editor.hullCatalogue[0]?.id ?? "");
   const size = editor.hullCatalogue.find((s) => s.id === sizeId);
   useEffect(() => {
@@ -38,7 +39,7 @@ export function NewLayoutDialog({
       aria-label="New ship design"
     >
       <header>
-        <h2>Start a ship design</h2>
+        <h2>New design</h2>
         <button aria-label="Close new design" onClick={onClose}>
           ×
         </button>
@@ -46,9 +47,40 @@ export function NewLayoutDialog({
       <p>
         Your current draft stays saved. These actions create a separate design.
       </p>
+      <section className="design-start-alternatives">
+        <button
+          className="layout-primary"
+          disabled={editor.blocked}
+          onClick={() => {
+            if (!editor.createArmorReview()) return;
+            onResetSelection();
+            editor.setView((view) => ({
+              ...view,
+              mode: "Hull",
+              projection: "3D",
+              layers: {
+                ...view.layers,
+                floor: true,
+                walls: true,
+                roof: false,
+                objects: true,
+                exteriorHull: true,
+                labels: false,
+                routes: false,
+                pressure: false,
+              },
+            }));
+            onClose();
+          }}
+        >
+          <Ship size={20} />
+          <span>Open Wayfarer armor review</span>
+        </button>
+        <p>Editable armor blocks and fittings. Game installation is pending.</p>
+      </section>
       <section className="design-start-primary">
         <h3>
-          <SquareDashed size={20} /> Blank floorplan
+          <SquareDashed size={20} /> Boundary floorplan
         </h3>
         <label>
           Design name
@@ -72,7 +104,7 @@ export function NewLayoutDialog({
             </select>
           </label>
           <label>
-            Hull size
+            Footprint
             <select
               aria-label="New design hull size"
               value={sizeId}
@@ -80,13 +112,24 @@ export function NewLayoutDialog({
             >
               {editor.hullCatalogue.map((s) => (
                 <option key={s.id} value={s.id}>
-                  {s.name} · {s.width / 32} × {s.length / 32} × {s.height / 32}{" "}
-                  m
+                  {s.name} · {s.width / 32} × {s.length / 32} m
                 </option>
               ))}
             </select>
           </label>
         </div>
+        <label>
+          Envelope height (m)
+          <input
+            aria-label="New design height"
+            type="number"
+            min={1.3125}
+            max={256}
+            step={0.03125}
+            value={height}
+            onChange={(e) => setHeight(Number(e.target.value))}
+          />
+        </label>
         <button
           className="layout-primary"
           disabled={editor.blocked || !size}
@@ -95,42 +138,53 @@ export function NewLayoutDialog({
             done(
               editor.createBlank(
                 kind,
-                { ...size, origin: [-size.width / 2, -size.length / 2, 0] },
+                {
+                  ...size,
+                  height: Math.round(height * 32),
+                  origin: [-size.width / 2, -size.length / 2, 0],
+                },
                 name,
               ),
             )
           }
         >
-          Create empty design
+          Create floorplan
         </button>
-        <p>
-          No inherited tiles, walls, rooms or equipment. Draw the first floor to
-          begin.
-        </p>
+        <p>Draw floors, then select an edge to set its wall or opening.</p>
       </section>
-      <section className="design-start-alternatives">
-        <button
-          disabled={editor.blocked}
-          onClick={() =>
-            done(editor.createFloorplanFromWayfarer(wayfarerTemplate))
-          }
-        >
-          <ScanLine size={20} />
-          <span>
-            Use Wayfarer footprint
-            <small>
-              Editable floors only. Build your own rooms and fittings.
-            </small>
-          </span>
-        </button>
-        <button disabled={editor.blocked} onClick={inspectWayfarer}>
-          <Ship size={20} />
-          <span>
-            Inspect assembled Wayfarer
-            <small>Includes the retained ship model and equipment.</small>
-          </span>
-        </button>
-      </section>
+      <details className="editor-disclosure">
+        <summary>Import an existing design</summary>
+        <section className="design-start-alternatives">
+          <button
+            disabled={editor.blocked}
+            onClick={() => done(editor.createRebuiltWayfarer())}
+          >
+            <Ship size={20} />
+            <span>Open rebuilt Wayfarer</span>
+          </button>
+          <button
+            disabled={editor.blocked}
+            onClick={() =>
+              done(editor.createFloorplanFromWayfarer(wayfarerTemplate))
+            }
+          >
+            <ScanLine size={20} />
+            <span>
+              Use Wayfarer footprint
+              <small>
+                Editable floors only. Build your own rooms and fittings.
+              </small>
+            </span>
+          </button>
+          <button disabled={editor.blocked} onClick={inspectWayfarer}>
+            <Ship size={20} />
+            <span>
+              Inspect assembled Wayfarer
+              <small>Includes the retained ship model and equipment.</small>
+            </span>
+          </button>
+        </section>
+      </details>
       {editor.error && <p role="alert">{editor.error}</p>}
       <details className="editor-disclosure">
         <summary>Open a saved local draft</summary>

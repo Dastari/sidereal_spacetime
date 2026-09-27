@@ -2,7 +2,7 @@ import { expect, it, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { Material } from "@babylonjs/core/Materials/material";
-import { planetRecipe } from "../../../content/src/environment";
+import { planetRecipe } from "@sidereal/content/environment";
 import { buildPlanetData, buildPlanetWeather } from "./planet-build";
 import { createPlanetLODRuntime } from "./planet-lod-runtime";
 it("precompiles retained levels with shared body materials and disposes ownership once", async () => {

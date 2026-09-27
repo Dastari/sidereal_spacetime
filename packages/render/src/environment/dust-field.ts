@@ -39,7 +39,10 @@ class DustMotionPlugin extends MaterialPluginBase {
   override getUniforms(language = ShaderLanguage.GLSL) {
     return {
       ubo: names.map((name) => ({ name, size: 4, type: "vec4" })),
-      vertex: language === ShaderLanguage.GLSL ? names.map((name) => `uniform vec4 ${name};`).join("\n") : "",
+      vertex:
+        language === ShaderLanguage.GLSL
+          ? names.map((name) => `uniform vec4 ${name};`).join("\n")
+          : "",
     };
   }
   override bindForSubMesh(buffer: UniformBuffer) {
@@ -49,9 +52,10 @@ class DustMotionPlugin extends MaterialPluginBase {
     });
   }
   override getCustomCode(type: string, language = ShaderLanguage.GLSL) {
-    if (type === "vertex" && language === ShaderLanguage.WGSL) return {
-      CUSTOM_VERTEX_DEFINITIONS: "attribute dustGrain: vec4f;",
-      CUSTOM_VERTEX_UPDATE_WORLDPOS: `
+    if (type === "vertex" && language === ShaderLanguage.WGSL)
+      return {
+        CUSTOM_VERTEX_DEFINITIONS: "attribute dustGrain: vec4f;",
+        CUSTOM_VERTEX_UPDATE_WORLDPOS: `
 var dustOffset: vec3f = uniforms.dustOffset2.xyz;
 if (vertexInputs.dustGrain.y < 0.5) { dustOffset = uniforms.dustOffset0.xyz; }
 else if (vertexInputs.dustGrain.y < 1.5) { dustOffset = uniforms.dustOffset1.xyz; }
@@ -65,7 +69,7 @@ dustVertex.x = dustRotated.x; dustVertex.z = dustRotated.y;
 worldPos = finalWorld * vec4f(dustVertex, 1.0);
 worldPos = vec4f(worldPos.xyz + dustOffset, worldPos.w);
 `,
-    };
+      };
     return type === "vertex"
       ? {
           CUSTOM_VERTEX_DEFINITIONS: "attribute vec4 dustGrain;",
@@ -281,11 +285,13 @@ export function createDustField(scene: Scene, root: TransformNode) {
         speed: motion.speed,
         streakLength: motion.length,
       });
-      let uniformChanged = rebuild, cursor = 0;
-      for (const uniform of plugin.values) for (const value of uniform) {
-        if (previousUniforms[cursor] !== value) uniformChanged = true;
-        previousUniforms[cursor++] = value;
-      }
+      let uniformChanged = rebuild,
+        cursor = 0;
+      for (const uniform of plugin.values)
+        for (const value of uniform) {
+          if (previousUniforms[cursor] !== value) uniformChanged = true;
+          previousUniforms[cursor++] = value;
+        }
       if (uniformChanged) snapshotRevision++;
       mesh.metadata.snapshotRevision = snapshotRevision;
     },

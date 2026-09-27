@@ -3,7 +3,7 @@ import {
   type ConstructionFlightPlan,
   type FlightSpawnPlacement,
   type QualifiedFlightInstance,
-} from "../../sim/src/construction-flight";
+} from "@sidereal/sim/construction-flight";
 
 export interface ConstructionFlightRequest {
   instanceId: string;
@@ -20,7 +20,7 @@ export interface ConstructionFlightReceipt {
 }
 /** Synchronous reducer-transaction contract. No deferred writes or client plan.
  * A concrete ctx.db adapter must retain private tables and auth.gameAction.
- * This module is unregistered while the matched cargo release is being reviewed. */
+ * All installation paths delegate to the same validated transaction writer. */
 export interface ConstructionFlightRepository {
   principalId: string;
   requireLiveGame(): void;
@@ -35,11 +35,7 @@ export interface ConstructionFlightRepository {
   reserveServerBerth(instanceId: string): FlightSpawnPlacement;
   allocateUuid(): string;
   identityExists(id: string): boolean;
-  insertShip(plan: ConstructionFlightPlan): void;
-  insertMotion(plan: ConstructionFlightPlan): void;
-  insertStation(plan: ConstructionFlightPlan): void;
-  insertFittings(plan: ConstructionFlightPlan): void;
-  insertBinding(plan: ConstructionFlightPlan): void;
+  insertPlan(plan: ConstructionFlightPlan): void;
   insertReceipt(row: ConstructionFlightReceipt): void;
 }
 /** Additive bridge only: never rewrites an existing ship, actor, admission,
@@ -92,11 +88,7 @@ export function installConstructionFlight(
     stationId: plan.station.id,
     revision: 1n,
   };
-  db.insertShip(plan);
-  db.insertMotion(plan);
-  db.insertStation(plan);
-  db.insertFittings(plan);
-  db.insertBinding(plan);
+  db.insertPlan(plan);
   db.insertReceipt(result);
   return result;
 }

@@ -1,0 +1,52 @@
+{
+  "revision": "r003",
+  "publication": "not published",
+  "owner_final_signoff": null,
+  "files": {
+    "equipment/handheld-source.blend": {
+      "sha256": "649dd3b63d2f1cfe07eadd49de7e33968386dd0a7d41d09f5c2f890be7395f3f",
+      "bytes": 1718848
+    },
+    "runtime-aim-space.json": {
+      "sha256": "ec269e27b11673dc9080da6114d51ddfdfff26f8acad773c4e0951c4168e1885",
+      "bytes": 66599
+    },
+    "profile-socket-metadata.json": {
+      "sha256": "f9f35de6789cdc6c37373368c57b181d48e07643206e06922b58ff0939a0bc03",
+      "bytes": 9343
+    },
+    "equipment/manifest.json": {
+      "sha256": "d68ea8798b56eb0b29f086ba295aa1661aebdbb809c94a675960cf254b7d43f1",
+      "bytes": 3582
+    },
+    "equipment/carbine.glb": {
+      "sha256": "394d9577d078c21b1066743ab9dd5760d63fb9f6a161e4e823ae2ebbec25f983",
+      "bytes": 217272
+    },
+    "equipment/long-rifle.glb": {
+      "sha256": "1aff2054ef80836d2e13624dca342fa99e1c43518ef0c9cfe180fddefdd96031",
+      "bytes": 232452
+    },
+    "equipment/compact-pistol.glb": {
+      "sha256": "5a6516f85126486d37ffb0ecf9d12bfeac25f28a0b35976d7d7128aa98b4bbbb",
+      "bytes": 105192
+    },
+    "equipment/heavy-handgun.glb": {
+      "sha256": "329cd64ccbdeba1e12e6df85c8ecd331c3e8b3781e95a3cb434f5b61834e36e9",
+      "bytes": 119440
+    },
+    "equipment/flashlight.glb": {
+      "sha256": "6ebe55855b087ca2b983c0856a440d4d984d26d390ae88ec076183e3fdf46643",
+      "bytes": 32696
+    },
+    "equipment/plasma-cutter.glb": {
+      "sha256": "1fdc536778e0726a88ca1eb0d569524c8de0176607d9d31ee993e9df1e4f0371",
+      "bytes": 81744
+    },
+    "equipment/sample-scanner.glb": {
+      "sha256": "8e1a9a64f22f41bc9e171dbe63c93b9605dbc9582f5987029741c6cd586fee74",
+      "bytes": 72052
+    }
+  },
+  "validation_sha256": "0b3455a3b1f5bb44321318725470f27e0ffcc221b64861f5b19d0239c7e843c7"
+}

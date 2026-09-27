@@ -6,7 +6,7 @@ export interface StructuralToolSettings {
   wallFinish: string;
 }
 export const DEFAULT_STRUCTURAL_TOOLS: StructuralToolSettings = {
-  doorWidth: 32,
+  doorWidth: 40,
   doorKind: "door",
   wallFace: "left",
   wallFinish: "standard",

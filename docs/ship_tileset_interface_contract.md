@@ -1,5 +1,54 @@
 # Ship tileset interface contract
 
+## Adopted boundary-treatment architecture — owner confirmation 2026-09-11
+
+The owner explicitly confirmed adoption of `reference/sidereal_ship_editor_structural_envelope.md` with the reviewed corrections. Floor polygon union generates structural boundaries; each boundary resolves a treatment, which may be a wall, glazed/sill assembly, opening, interface or deliberate open edge. Independent internal partitions use the same geometric vocabulary. Authored intent, compiled boundaries, native geometry, collision, seal coverage and runtime state remain distinct.
+
+Corrections governing the reference: structural wall thickness is 250 mm **inward** of the fixed tile edge; the 2 m module and supported subdivisions remain; navigation is separate from structural floor coverage; physical properties derive from qualified adapters and server state rather than editor booleans; native Blender families provide supported geometry; edge splits/merges retain explicit lineage and report attachment conflicts; labels remain independent from pressure compartments; A/B/C1 minimum completion retains multi-deck traversal, rooms and pressure before later contracts.
+
+The standard vertical profile is now **owner-approved**: 0.1875 m floor + 3 m clear height + 0.125 m roof + 0.1875 m service void = 3.5 m pitch. Standard opaque wall heights are 0.75/1.5/2.25/3 m. Smaller deck/space profiles must be representable explicitly for ducts, connecting bridges and small craft, with their own native interfaces and actor-clearance qualification. Earlier statements that these dimensions are pending are historical and superseded.
+
+This confirmation resumes implementation after the owner's requested pause. It does not approve new art or change existing live native/collision pins. The straight-wall request remains a bounded initial treatment-family task, not the architecture for every boundary.
+
+
+## Owner wall-convention override — 2026-09-11
+
+The owner superseded the earlier outward-wall requirement during the completion
+phase 0 check-in: “Interior walls need to sit INSIDE the tile.. So a 1x1 meter floor
+tile should have a 250mm inside wall.” The tile/floorplan perimeter is therefore
+the fixed **outer construction boundary**, not an advertised unobstructed walking
+edge. New boundary-wall geometry occupies **250 mm (8 lattice units) inward** of
+that boundary. Its exterior mating plane remains on the nominal tile edge, so
+external hull/armor pieces have repeatable dimensions for ships and stations.
+Smaller object placement increments and actual wall-volume exclusion determine
+interior fit; the grid does not grant permission to intersect a wall. All body,
+trim and frame geometry must fit its declared reservation.
+
+This supersedes references below to outward-only walls, preserving the full floor
+polygon as usable space, and fixing old intersections specifically by shifting
+walls outside the floor boundary. Existing native revisions, measured audit results
+and live installations remain historical evidence and are not rewritten or approved
+by this direction. Actual contacts, collision, support and seals still require
+qualification. A shared internal divider must have one explicit reservation/side
+binding, not two accidentally overlapping room-perimeter walls.
+
+The owner suggested quarter-, half- and three-quarter-height wall variants for the
+Wayfarer bow. Treat height as an explicit family parameter with matching sill,
+glazing/frame and roof interfaces; never stretch an unrelated mesh. Keep the floor
+polygon continuous and model standing-clearance/navigation restrictions separately.
+A partial-height opaque wall is not an airtight full-height boundary: its qualified
+upper infill and closure must be accounted for. Preserve the existing swept-cockpit
+visual target through explicit span bindings; do not replace it with opaque walls.
+
+**Vertical dimensions remain pending.** The owner has not approved the earlier
+3.5 m pitch / 2.8125 m clear-height proposal. A new proposal is 3 m clear height
+with 0.75/1.5/2.25/3 m wall variants; 3.5 m pitch comprising 0.1875 m floor,
+3 m clear height, 0.125 m roof and 0.1875 m service void. These all fit the existing
+1/32 m lattice. They are a question to the owner, not permission to author dependent
+native pieces. Keep the 2 m structural module and its supported 1 m subdivisions;
+the owner's 1 m example does not remove the 2 m module.
+
+
 Status: required construction contract, proposed implementation specification. No asset is certified by this document alone. Owner reference and clarification: 2026-09-09.
 
 This extends [the construction rebuild](ship_construction_rebuild.md). The owner must be able to request a faction tileset with named shapes and dimensions and receive native Blender assets that demonstrably assemble in the same Shipyard system. A visually similar collection is insufficient: connection geometry and functional interfaces must be machine-readable and validated.

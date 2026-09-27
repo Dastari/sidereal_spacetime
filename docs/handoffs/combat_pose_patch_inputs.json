@@ -1,0 +1,5 @@
+{
+  "packages/render/src/index.ts": "01561b8dad4832e41166f8322980e431b7bc6692fe4d0740fa20de0c94d04d16",
+  "packages/render/src/combat-aim.ts": "ebc7ecf9822029531ad71324e7f8c227e9fb11805e8fd670163f45e6391604d2",
+  "apps/client/src/App.tsx": "24c23766671f9e580b845a9636a9d5d26e4d6a055cb82de3d0a4519172613479"
+}

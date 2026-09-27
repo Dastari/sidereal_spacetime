@@ -154,3 +154,29 @@ describe("compiled structural wall authoring guides", () => {
     engine.dispose();
   });
 });
+
+describe("plan-projection guides", () => {
+  it("traces only the floor-level span when baseOnly is requested", () => {
+    const { guide } = fixture();
+    const full = layoutStructuralLines(guide);
+    const base = layoutStructuralLines(guide, [0, 0, 0], { baseOnly: true });
+    expect(base.length).toBe(full.length);
+    expect(full.some((line) => line.points.length === 5)).toBe(true);
+    for (const line of base) expect(line.points.length).toBe(2);
+    // Base points are unchanged; only the wall-top ring is dropped.
+    for (const [i, line] of base.entries())
+      expect(line.points).toEqual(full[i].points.slice(0, 2));
+  });
+  it("rebuilds the mesh when the option changes", () => {
+    const engine = new NullEngine(),
+      scene = new Scene(engine);
+    const guides = createLayoutStructuralGuides(scene);
+    const { guide } = fixture();
+    guides.update(guide, true, [0, 0, 0]);
+    const fullVertices = guides.mesh!.getTotalVertices();
+    guides.update(guide, true, [0, 0, 0], { baseOnly: true });
+    expect(guides.mesh!.getTotalVertices()).toBeLessThan(fullVertices);
+    guides.dispose();
+    engine.dispose();
+  });
+});
