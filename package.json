@@ -23,6 +23,7 @@
     "world:generate": "python3 scripts/dev.py generate",
     "world:publish": "python3 scripts/dev.py publish",
     "smoke": "python3 scripts/dev.py smoke",
+    "smoke:ship-wipe": "python3 scripts/ship_wipe_rehearsal.py",
     "art:export": "python3 scripts/dev.py export-art",
     "art:setup": "python3 scripts/setup_art.py",
     "art:mcp": "python3 scripts/dev.py mcp",

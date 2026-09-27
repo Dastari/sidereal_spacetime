@@ -168,6 +168,9 @@ export interface WorldOptions {
     store: RemoteShipStore;
     localShipId: () => string | undefined;
     bodies: (nowMs: number) => readonly SpaceBodyState[] | undefined;
+    /** false: never load or draw the retired stock Wayfarer exterior for other
+     * players' ships (its assets are not delivered to the game client). */
+    stockExterior?: boolean;
   };
   construction?: ConstructionRenderInput & { visitId?: string };
   constructionEgress?: NativeStairEgressGeometry;
@@ -178,6 +181,9 @@ export interface WorldOptions {
   crewBundle?: CrewBundle;
   onObjectSelected?: (placementId?: string) => void;
   source?: "voxel" | "original" | "engine-original" | "engine-voxel";
+  /** "none": the character has no ship. Render the environment and crew only;
+   * never fetch the retired legacy stock-ship assets. */
+  vessel?: "none";
   onScene?: (scene: Scene) => void;
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
@@ -395,6 +401,9 @@ async function buildWorld(
         if (prefabView)
           for (const mesh of imported.meshes) mesh.setEnabled(false);
       }
+    } else if (options.vessel === "none") {
+      imported = { meshes: [] };
+      installed = [];
     } else {
       imported = await SceneLoader.ImportMeshAsync(
         "",
@@ -500,7 +509,9 @@ async function buildWorld(
   );
   prepareCutawayMeshes(roof);
   const lighting =
-    options.construction || options.constructionEgress
+    options.construction ||
+    options.constructionEgress ||
+    options.vessel === "none"
       ? createConstructionLighting(scene, imported.meshes)
       : createShipLighting(scene, shipRoot, imported.meshes);
   environment.setPrimaryLight(lighting.primaryLight);
@@ -557,7 +568,9 @@ async function buildWorld(
   emissive.emissiveColor = Color3.FromHexString("#31bafa");
   emissive.disableLighting = true;
   const emitters: Mesh[] = [];
-  for (const room of options.construction || options.constructionEgress
+  for (const room of options.construction ||
+  options.constructionEgress ||
+  options.vessel === "none"
     ? []
     : CABIN_ROOMS) {
     const plate = CreatePlane(
@@ -612,7 +625,8 @@ async function buildWorld(
   glow.intensity = 0.4;
   const flightEffects =
     (options.construction && !options.authoredFlightEffects) ||
-    options.constructionEgress
+    options.constructionEgress ||
+    options.vessel === "none"
       ? {
           meshes: [] as Mesh[],
           update(_outputs: unknown, _motion?: boolean) {
@@ -777,35 +791,37 @@ async function buildWorld(
   canvas.addEventListener("contextmenu", context);
   window.addEventListener("blur", up);
   let sharedExteriorReady = false;
-  const remoteShips = options.sharedWorld
-    ? createRemoteShips(scene, options.sharedWorld.store, {
-        assetId: SHARED_STOCK_EXTERIOR_ID,
-        localShipId: options.sharedWorld.localShipId,
-        loadPrototype: async () => {
-          const response = await fetch(
-            "/assets/assembly/wayfarer-exterior-r001.json",
-            { signal: options.signal },
-          );
-          if (!response.ok) throw Error("Shared exterior manifest unavailable");
-          const manifest = (await response.json()) as StockExteriorManifest;
-          const prototype = await loadRemoteShipPrototype(
-            scene,
-            manifest,
-            SHARED_STOCK_EXTERIOR_ID,
-          );
-          sharedExteriorReady = true;
-          return prototype;
-        },
-        onError: (error) => {
-          const message =
-            error instanceof Error
-              ? error.message
-              : "Shared ship exterior unavailable";
-          assetFailure = true;
-          options.onLoadError?.(message);
-        },
-      })
-    : undefined;
+  const remoteShips =
+    options.sharedWorld && options.sharedWorld.stockExterior !== false
+      ? createRemoteShips(scene, options.sharedWorld.store, {
+          assetId: SHARED_STOCK_EXTERIOR_ID,
+          localShipId: options.sharedWorld.localShipId,
+          loadPrototype: async () => {
+            const response = await fetch(
+              "/assets/assembly/wayfarer-exterior-r001.json",
+              { signal: options.signal },
+            );
+            if (!response.ok)
+              throw Error("Shared exterior manifest unavailable");
+            const manifest = (await response.json()) as StockExteriorManifest;
+            const prototype = await loadRemoteShipPrototype(
+              scene,
+              manifest,
+              SHARED_STOCK_EXTERIOR_ID,
+            );
+            sharedExteriorReady = true;
+            return prototype;
+          },
+          onError: (error) => {
+            const message =
+              error instanceof Error
+                ? error.message
+                : "Shared ship exterior unavailable";
+            assetFailure = true;
+            options.onLoadError?.(message);
+          },
+        })
+      : undefined;
   if (remoteShips) {
     options.onLoadStage?.("environment");
     // Import the shared exterior before drawing too: otherwise its sequential
