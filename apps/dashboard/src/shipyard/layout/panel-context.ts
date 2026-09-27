@@ -1,9 +1,9 @@
+import { type FloorStamp } from "./floor-stamps";
 import type { PartAsset, PartCatalog } from "@sidereal/content/assembly";
 import {
   type LayoutDocument,
   type Point,
   type ServiceChannel,
-  type Shape,
 } from "@sidereal/content/ship-layout";
 import type { CompiledLayout } from "@sidereal/sim/layout-compiler";
 import type { Tool } from "./LayoutCanvas";
@@ -23,8 +23,8 @@ export interface LayoutPanelContext {
   commit: (change: (doc: LayoutDocument) => LayoutDocument) => void;
   search: string;
   setSearch: (value: string) => void;
-  shape: Shape;
-  setShape: (value: Shape) => void;
+  shape: FloorStamp;
+  setShape: (value: FloorStamp) => void;
   tool: Tool;
   setTool: (value: Tool) => void;
   roomType: string;
@@ -37,8 +37,8 @@ export interface LayoutPanelContext {
   catalogError: string;
   asset: PartAsset | undefined;
   setAsset: (asset: PartAsset) => void;
-  inspector: "Inspector" | "Layers" | "Validation";
-  setInspector: (value: "Inspector" | "Layers" | "Validation") => void;
+  inspector: "Inspector" | "Validation";
+  setInspector: (value: "Inspector" | "Validation") => void;
   selectedTile: LayoutDocument["tiles"][number] | undefined;
   selectedWallKey?: string;
   selectedRoom: LayoutDocument["rooms"][number] | undefined;

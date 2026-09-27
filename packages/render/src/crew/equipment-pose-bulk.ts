@@ -1,7 +1,7 @@
 import {
   characterComponent,
   type EquippedCharacterComponents,
-} from "../../../content/src/character-components";
+} from "@sidereal/content/character-components";
 
 /** Clearance padding in metres for the solver's upper-body proxies. The authored
  * bounds are Blender X/Y/Z (width/depth/height), not the inventory footprint.

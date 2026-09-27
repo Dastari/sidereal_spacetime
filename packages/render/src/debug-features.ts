@@ -1,7 +1,21 @@
 import type { Scene } from "@babylonjs/core/scene";
+import { createIndirectLightingOverride } from "./debug-indirect-lighting";
+import {
+  createDebugOverlays,
+  type DebugOverlaySources,
+} from "./debug-overlays";
 
 export type DebugFeature =
-  "lighting" | "equipment" | "shadows" | "glow" | "planets" | "characters";
+  | "lighting"
+  | "equipment"
+  | "shadows"
+  | "glow"
+  | "planets"
+  | "characters"
+  | "globalIllumination"
+  | "skeleton"
+  | "lightBounds"
+  | "collision";
 export type DebugFeatures = Record<DebugFeature, boolean>;
 type EnabledNode = {
   isEnabled(checkAncestors?: boolean): boolean;
@@ -14,6 +28,7 @@ export function createDebugFeatures(
   scene: Scene,
   equipment: readonly EnabledNode[],
   characters: readonly EnabledNode[] = [],
+  sources: DebugOverlaySources = {},
 ) {
   const flags: DebugFeatures = {
     lighting: true,
@@ -22,7 +37,14 @@ export function createDebugFeatures(
     glow: true,
     planets: true,
     characters: true,
+    globalIllumination: true,
+    skeleton: false,
+    lightBounds: false,
+    collision: false,
   };
+  const initialFlags = { ...flags };
+  const indirect = createIndirectLightingOverride(scene);
+  let overlays: ReturnType<typeof createDebugOverlays> | undefined;
   const defaults = {
     lighting: scene.lightsEnabled,
     shadows: scene.shadowsEnabled,
@@ -39,6 +61,10 @@ export function createDebugFeatures(
     hidden.clear();
   }
   function apply() {
+    indirect.apply(flags.globalIllumination);
+    if (flags.skeleton || flags.lightBounds || flags.collision)
+      overlays ??= createDebugOverlays(scene, sources);
+    overlays?.setFlags(flags);
     scene.lightsEnabled = defaults.lighting && flags.lighting;
     // Babylon schedules shadow maps independently of lightsEnabled. Lighting
     // Off must close that gate too, while preserving the separate shadow intent.
@@ -65,12 +91,22 @@ export function createDebugFeatures(
   }
   return {
     snapshot: () => ({ ...flags }),
+    overlaySnapshot: () =>
+      overlays?.snapshot() ?? {
+        skeletons: 0,
+        lights: 0,
+        collisionFrames: 0,
+        collisionScopes: [],
+      },
     toggle(key: DebugFeature) {
       flags[key] = !flags[key];
       restoreEquipment();
       apply();
     },
     beforeFrame(key?: string | number) {
+      // Restore first so normal lighting/environment updates can supply fresh
+      // values; the local GI override is layered over those in afterFrame.
+      indirect.restore();
       if (key === undefined || key !== frameKey) {
         restoreEquipment();
         frameKey = key;
@@ -78,12 +114,14 @@ export function createDebugFeatures(
     },
     afterFrame: apply,
     reset() {
-      for (const key of Object.keys(flags) as DebugFeature[]) flags[key] = true;
+      Object.assign(flags, initialFlags);
       restoreEquipment();
       apply();
     },
     dispose() {
       restoreEquipment();
+      indirect.dispose();
+      overlays?.dispose();
       scene.lightsEnabled = defaults.lighting;
       scene.shadowsEnabled = defaults.shadows;
       for (const [effect, enabled] of effects) effect.isEnabled = enabled;

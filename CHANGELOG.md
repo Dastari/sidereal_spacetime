@@ -1,3 +1,44 @@
+## Unreleased — Prefab ships from the construction grammar, 2026-09-26
+
+Developer prefab ships are now grammar data: 1 m shape tiles, hull volumes, rooms, doors and typed mounts that reference the ship component catalog. One TypeScript dresser turns them into the r001 structure kit (217 exported GLBs) with flight (roofed) and deck (cut-away) views, rendered in Babylon and in headless Blender review renders. Prefabs publish through the existing construction authority with strict re-derivation, compile flight from component stats, and can be installed on a character with `installPrefabShip`. The isolated `--prefab` smoke assigns, walks, seats and flies Wren, Jackal and Lumen. The Shipyard gains a prefab editor (`/shipyard/prefabs`) that can rebuild all twelve developer prefabs. Proposed art and balance; not owner-approved. Live assignment and game-client rendering are pending (see the wiki page Ships/Prefab Ship System).
+
+## Unreleased — Shipyard player builder design, 2026-09-25
+
+Recorded the owner's decisions on player ship building and voxel-destructible ship structure. Added a design for the construction rules, an agent-friendly author → voxelise → style pipeline, damage authority, efficiency budget, a shared editor core and a phased plan. Evidence comes from a deterministic headless Blender prototype, `scripts/art_library/voxel_style_prototype.py`, which outputs a Wayfarer-style section with slope/arc bow, styled voxels and impact damage. Documentation and prototype only; no runtime, authority or asset changes.
+
+r004 adds a reusable component kit prototype, `scripts/art_library/ship_kit_prototype.py`. It has 59 voxel-aligned pieces covering hull shapes, face cassettes, glazing, roof modules, external mounts, interior edge types and decorators. The pieces use nine material slots, so three faction themes render on the same meshes, and it adds tiling detail bump, mask decals and theme decorators. The design gains §12: kit contract, theming, decals, wall and pressure edge types, glazing families, hull shapes, mounts and faction strategy.
+
+r005 adds denser face and roof pieces (176 kit pieces), stepped slope and curve skins, a general hull rasteriser and a data-driven dresser. Seven combined designs (fighter, shuttle, corvette, frigate, pirate raider, alien explorer, station) and three blueprint sheets (components, shape tiles, designs) are rendered from the same kit.
+
+r006 adds size-class hardpoints (SM 1×1 to XL 4×4 m). Ion drives are segmented octagonal pods with flange, housing, conduit and nozzle sub-parts plus presentation plumes; thrust blocks, RCS thrusters, turrets and cannons also come in size classes. It also adds 0.25 m slope stepping and five more shape tiles.
+
+r007 adds modular mount assemblies (connector, rotation base, gimbal, head, payload) for 11 weapon and utility kinds in SM/MD/LG, with face-mount variants. The ion drive becomes round, with chunk blocks, a bolted cap and deeper nozzles, and a salvaged ion geometry variant is added. The ships are refitted.
+
+r008 adds an interior architecture kit: floor tiles, edge walls with pressure semantics, doors, derived junction posts, pipework, fixtures, ceiling tiles and 1.75 m cutaway variants. A deck generator builds a full 11-room corvette deck from a room plan. Interior objects are art-library design-id sockets, and a room pod exploded view is included.
+
+# Changelog
+
+## Dashboard/render 0.3.0, content/sim 0.2.0 — component paint, 2026-09-15
+
+Primary and secondary paint controls for placed hull components, engines and thrusters. Optional per-placement colours survive drafts, copies and exports without changing native geometry, snapping or physical state. Native atlas/material masks preserve surface maps, glazing and emissive details. Reset restores the authored appearance; painted copies share immutable meshes/textures and release their own material bindings.
+
+## Dashboard 0.2.2 — distinct native armor choices, 2026-09-15
+
+Collapse 13 equivalent native armor variants in the palette and label total depth so the 0.5 m bulkheads remain distinct from 1 m exterior armor. All placed native IDs and their exact models remain resolvable.
+
+## Dashboard 0.2.1 — palette sizing and native previews, 2026-09-15
+
+Hull and Objects now share Structure’s persisted, keyboard-accessible drawer resize controls. Palette cards wrap within narrow drawers. All 76 r005 armor variants have static previews rendered from their exact native GLB, published only to the dashboard without extra WebGL canvases.
+
+## CI reproducibility repair — 2026-09-15
+
+Hosted validation found two additional Python native-pin reads that depended on the author checkout. Resolve them against the current repository without changing hashes or provenance, and guard geometry tests against accidental reads from the old checkout. Source quality is re-enabled for hosted verification.
+
+Restore omitted native build/test inputs from a compact, hash-verified LFS bundle; resolve test assets relative to the checkout and use canonical runtime files. Terrain budget tests retain their assertions with one case per recipe. Correct package-boundary imports and existing changed-file formatting violations without broadening the quality baseline. Private Python image fixtures replace developer-only output paths and Blender-only decoding. Source quality checks run once per PR and on main pushes, cancel superseded runs, and support manual dispatch. The workflow was paused during the initial review; hosted verification now runs on the repair PR. This is not a runtime release.
+
+## Dashboard 0.2.0 — native armor editor review, 2026-09-15
+
+The normal Shipyard can open an editable Wayfarer using the exact reviewed r005 backed armor, with all 76 native variants in the Hull palette. New-design loading preserves the current draft; pieces use normal selection, transform, measurement, undo and save tools. Dashboard publication includes the hash-pinned native GLB; canvas-ui 0.1.2 declares the matching render 0.2.0 workspace dependency. Game installation remains unqualified and is kept separate from editor review.
 ## 2026-09-22 — Studio 0.11.0
 
 - Draw closed polygons and Bézier boundaries directly with a pen; close on the first anchor, double-click or Enter, retaining invalid drafts for correction.
@@ -72,11 +113,29 @@ and client reload/approval requirements.
 ## 2026-09-15 — Genesis reviewed native planets (dashboard/render 0.2.1)
 
 Genesis now defaults to all 28 reviewed Blender planet and moon variants, including selective transparent ice shards. Selection and seeded composition use validated worker-owned assets, shared PBR materials, precompiled retained LODs and ready-only replacement. Preserved the procedural editor as a separate mode. Added exact catalog/provenance, lossless bounded payload packaging and worker/NullEngine lifecycle tests.
+## Unreleased — Shipyard player builder design, 2026-09-25
+
+Recorded the owner's decisions on player ship building and voxel-destructible ship structure. Added a design for the construction rules, an agent-friendly author → voxelise → style pipeline, damage authority, efficiency budget, a shared editor core and a phased plan. Evidence comes from a deterministic headless Blender prototype, `scripts/art_library/voxel_style_prototype.py`, which outputs a Wayfarer-style section with slope/arc bow, styled voxels and impact damage. Documentation and prototype only; no runtime, authority or asset changes.
+
+r004 adds a reusable component kit prototype, `scripts/art_library/ship_kit_prototype.py`. It has 59 voxel-aligned pieces covering hull shapes, face cassettes, glazing, roof modules, external mounts, interior edge types and decorators. The pieces use nine material slots, so three faction themes render on the same meshes, and it adds tiling detail bump, mask decals and theme decorators. The design gains §12: kit contract, theming, decals, wall and pressure edge types, glazing families, hull shapes, mounts and faction strategy.
+
+r005 adds denser face and roof pieces (176 kit pieces), stepped slope and curve skins, a general hull rasteriser and a data-driven dresser. Seven combined designs (fighter, shuttle, corvette, frigate, pirate raider, alien explorer, station) and three blueprint sheets (components, shape tiles, designs) are rendered from the same kit.
+
+r006 adds size-class hardpoints (SM 1×1 to XL 4×4 m). Ion drives are segmented octagonal pods with flange, housing, conduit and nozzle sub-parts plus presentation plumes; thrust blocks, RCS thrusters, turrets and cannons also come in size classes. It also adds 0.25 m slope stepping and five more shape tiles.
+
+r007 adds modular mount assemblies (connector, rotation base, gimbal, head, payload) for 11 weapon and utility kinds in SM/MD/LG, with face-mount variants. The ion drive becomes round, with chunk blocks, a bolted cap and deeper nozzles, and a salvaged ion geometry variant is added. The ships are refitted.
+
+r008 adds an interior architecture kit: floor tiles, edge walls with pressure semantics, doors, derived junction posts, pipework, fixtures, ceiling tiles and 1.75 m cutaway variants. A deck generator builds a full 11-room corvette deck from a room plan. Interior objects are art-library design-id sockets, and a room pod exploded view is included.
 
 ## Unreleased — Wayfarer exterior armor native r004
 
 Added separate Blender-authored exterior armor with broad paired bays, recessed cassettes, wrapped ribs and fitted bow returns. Fine surface details use shared color, normal and roughness maps. The 46-model final-03 family passes native checks and independent comparison of 14 native and 8 exact game-renderer images. Sources, compressed exact exports, validation and review evidence are retained in the art library. This is a review candidate; the installed ship and physical interfaces are unchanged.
 
+## 0.1.1 — framed Wayfarer presentation, 2026-09-14
+
+Native Blender hull bays and front panels replace the installed Wayfarer surfaces through an explicitly pinned cosmetic revision. Main engines and small thrusters share the pale/red/navy finish; achieved output drives stepped translucent exhaust. Local game, Shipyard and public stock exterior rendering share the new assets. Physical catalog, collision, pressure, placement, power and thrust definitions remain unchanged.
+
+Editable sources, prior revisions and exact native/browser evidence are retained under `assets/art-library/framed-wayfarer`. Release validation and deployment status are recorded in `docs/handoffs/wayfarer_framed_native_checkin_20260914.md`. This version covers render, canvas UI dependency integration, client and dashboard; final artistic approval remains pending.
 - 2026-09-15: Render/dashboard0.3.0: native yellow-main-sequence star r007 passes independent Astra reference working review; animated shared flares, optically thin corona, warm-light evidence and NullEngine lifetime tests. System integration pending.
 
 - 2026-09-15: Render/dashboard 0.3.1: Genesis planet view now includes the reviewed Yellow Main Sequence Star, active flares, star-specific controls, verified cancellable GLB loading, and restored planet illumination when switching bodies.

@@ -45,7 +45,7 @@ export function placeStructuralOpening(
     kind: settings.doorKind,
     clearance: 16,
     sill: 0,
-    setback: 4,
+    setback: settings.doorKind === "door" ? 12 : 4,
   });
 }
 export function changeStructuralOpening(

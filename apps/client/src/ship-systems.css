@@ -1,0 +1,27 @@
+.ship-systems-toggle {
+  right: 15rem;
+}
+.ship-power-connections {
+  display: grid;
+  gap: 0.75rem;
+}
+.ship-service-panel .ship-power-connections > label {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+.ship-power-connections input {
+  accent-color: #40cdeb;
+  width: 1rem;
+  height: 1rem;
+}
+.ship-power-connections small {
+  display: block;
+  color: #a7beca;
+}
+@media (max-width: 540px) {
+  .ship-systems-toggle {
+    right: auto;
+    left: 1rem;
+  }
+}

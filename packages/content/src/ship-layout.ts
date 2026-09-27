@@ -1,3 +1,4 @@
+import type { HullPaint } from "./hull-paint";
 /** Versioned design intent only. No layout object is an installed world instance. */
 export const LAYOUT_SCHEMA = "sidereal.layout-draft.v1" as const;
 export const LAYOUT_COMPILER = "floorplan-1" as const;
@@ -99,6 +100,8 @@ export interface LayoutRoom {
   type: string;
   seed: Point;
   boundaryIds: string[];
+  /** Explicit map-label area. Omitted legacy rooms derive their area from the seed's walls. */
+  tileIds?: string[];
   access: "crew" | "visitors" | "restricted";
   floorTheme: string;
   wallTheme: string;
@@ -134,6 +137,7 @@ export interface LayoutRoute {
   capacity: number | null;
 }
 export interface LayoutFitting {
+  paint?: HullPaint;
   id: string;
   deckId: string;
   definitionId: string;
@@ -147,6 +151,8 @@ export interface LayoutFitting {
   container: { columns: number; rows: number; contents: never[] } | null;
 }
 export interface LayoutDocument {
+  /** Logical device circuits only; physical cable/pipe routes are authored separately. */
+  serviceConnections?: LayoutServiceConnection[];
   /** Opt-in structural authoring rules; absent in preserved v1 sources. */
   structure?: import("./layout-structure").LayoutStructure;
   /** Optional backwards-compatible visual assembly, separate from floor topology and authority. */
@@ -178,6 +184,14 @@ export interface LayoutDocument {
     placements: unknown[];
     unresolved: string[];
   } | null;
+}
+export interface LayoutServiceConnection {
+  id: string;
+  channel: ServiceChannel;
+  fromDeviceId: string;
+  fromPortId: string;
+  toDeviceId: string;
+  toPortId: string;
 }
 export function emptyLayout(
   id: string,

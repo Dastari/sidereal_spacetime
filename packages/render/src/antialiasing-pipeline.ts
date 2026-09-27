@@ -43,7 +43,9 @@ export function createAntialiasing(
   options: { storage?: Store; temporalResetIntegrated?: boolean } = {},
 ) {
   const engine = scene.getEngine();
-  const instanceAttributes = engine.isWebGPU ? createTemporalInstanceAttributes(scene) : undefined;
+  const instanceAttributes = engine.isWebGPU
+    ? createTemporalInstanceAttributes(scene)
+    : undefined;
   const skinHistory = createTemporalSkinHistory();
   const bonePalettes = createTemporalBonePalette(scene);
   let bonePaletteStatus = { changed: false, pending: false, qualified: 0 };

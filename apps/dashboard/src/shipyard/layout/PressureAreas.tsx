@@ -20,14 +20,10 @@ export function PressureAreas({
   doc,
   result,
   deckId,
-  enabled,
-  onToggle,
 }: {
   doc: LayoutDocument;
   result: CompiledLayout;
   deckId: string;
-  enabled: boolean;
-  onToggle(value: boolean): void;
 }) {
   const preview = useMemo(
     () => previewPressureAreas(doc, result),
@@ -36,18 +32,7 @@ export function PressureAreas({
   const areas = preview.areas.filter((a) => a.deckId === deckId);
   return (
     <section className="pressure-areas" aria-label="Pressure layout">
-      <label className="layout-check">
-        <input
-          type="checkbox"
-          checked={enabled}
-          onChange={(e) => onToggle(e.target.checked)}
-        />
-        Show pressure areas
-      </label>
-      <p className="layout-note">
-        Design enclosure · doors assumed closed. Room names are labels; they do
-        not seal spaces.
-      </p>
+      <h3>Pressure areas</h3>
       {!preview.valid ? (
         <p role="status">Resolve layout errors before checking enclosure.</p>
       ) : !areas.length ? (

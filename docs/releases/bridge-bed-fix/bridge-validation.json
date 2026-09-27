@@ -1,0 +1,12 @@
+{
+  "status": "passed",
+  "restoredTallPanels": [
+    "pilot-r004-rear-partition-23",
+    "pilot-r004-rear-partition-24"
+  ],
+  "removedDuplicateCells": 6624,
+  "preservedPlacementRecords": 262,
+  "retainedInteriorCells": 69447,
+  "doorwayFrame": "retained",
+  "authority": "Unchanged; duplicate lower visual wall retired"
+}

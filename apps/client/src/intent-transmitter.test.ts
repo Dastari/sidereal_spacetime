@@ -1,14 +1,11 @@
 import { expect, it, vi } from "vitest";
 import { createIntentTransmitter } from "./intent-transmitter";
-import {
-  solveFlight,
-  pilotDesiredMotion,
-} from "../../../packages/sim/src/ifcs";
+import { solveFlight, pilotDesiredMotion } from "@sidereal/sim/ifcs";
 import {
   LAB_FLIGHT_MASS,
   LAB_FLIGHT_ACTUATORS,
   LAB_FLIGHT_PROFILE,
-} from "../../../packages/content/src/flight";
+} from "@sidereal/content/flight";
 const idle = { throttle: 0, turn: 0, dx: 0, dy: 0, sprint: false };
 const walk = { ...idle, dx: 1 };
 const flush = async () => {

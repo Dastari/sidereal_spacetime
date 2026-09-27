@@ -1,0 +1,38 @@
+{
+  "bed": {
+    "base_signed_revision": 5,
+    "revision": 6,
+    "owner_quote": "The frontend redesign added wall infront of the bridge area which is conflciting.. Can you remove it? Also the double bed model has z-fighting with the bed posts.. can you fix that too. Publish both once done",
+    "message_reference": "Current owner bridge-wall/bunk-post bug report with explicit publication request",
+    "scope": "Four post depths .14 to .18 m only; correction publication authorized, no new final design sign-off claimed",
+    "glb_sha256": "a5b58c4707df1e37aa70fa40e7d052e63be141df7703cd75337abe0e7610b4c7",
+    "source_sha256": "3d428aeb087f40eaf661222cb8cbc6e9226a36efac7263cc3ea808178dffd2e3"
+  },
+  "bridge": {
+    "owner_quote": "Keep the tall doorway surround; remove the duplicate lower wall",
+    "scope": "Tall native Blender rear panels and doorway retained; duplicate lower legacy visual wall removed. Collision and all equipment unchanged.",
+    "region": {
+      "layer": "partitions",
+      "min": [
+        -3.5,
+        8.375,
+        -100
+      ],
+      "max": [
+        3.5,
+        9.25,
+        100
+      ]
+    }
+  },
+  "archive": "assets/source/archive/pre-bridge-bed-fix",
+  "validation": {
+    "project_check_log": ".runtime/art-library/bridge-bed-fix/clarified-check.log",
+    "build_log": ".runtime/art-library/bridge-bed-fix/clarified-build.log",
+    "art_check_log": ".runtime/art-library/bridge-bed-fix/clarified-art-check.log",
+    "all_other_placements": 262,
+    "bunk_triangles_before": 5712,
+    "bunk_triangles_after": 5712,
+    "library_check_limitation": "Unrelated non-contiguous history in shipyard.structure.roof-kit"
+  }
+}

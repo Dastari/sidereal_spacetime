@@ -6,6 +6,14 @@ import {
   type CharacterHairStyle,
   type EquippedCharacterComponents,
 } from "@sidereal/content/character-components";
+import {
+  CHARACTER_FACE_DEFAULTS,
+  CHARACTER_PERSONAL_APPEARANCE_KEYS,
+  type CharacterExpression,
+  type CharacterFaceDetail,
+  type CharacterFacialHair,
+  type CharacterFaceAge,
+} from "@sidereal/content/appearance";
 import looks from "../../../content/src/crew-looks.json";
 export type CrewLook = keyof typeof looks;
 /** Local visual slots only: these values grant no equipment or gameplay capability. */
@@ -35,6 +43,11 @@ export type CrewAppearance = {
   light?: string;
   skin?: string;
   hair?: string;
+  eyes?: string;
+  expression?: CharacterExpression;
+  faceDetail?: CharacterFaceDetail;
+  facialHair?: CharacterFacialHair;
+  faceAge?: CharacterFaceAge;
   hairStyle?: CharacterHairStyle;
   helmet?:
     | "none"
@@ -105,6 +118,7 @@ export function resolveCrewAppearance(
     light: "#50D7F0",
     skin: "#bb805e",
     hair: "#47312c",
+    ...CHARACTER_FACE_DEFAULTS,
     backpack: true,
     weapon: "none",
     weaponFixture: true,
@@ -114,6 +128,24 @@ export function resolveCrewAppearance(
     ...Object.fromEntries(
       Object.entries(input).filter(([, value]) => value !== undefined),
     ),
+  };
+}
+
+/** A uniform changes its preset slots, while explicitly chosen features persist. */
+export function mergeCrewAppearance(
+  previous: CrewAppearance,
+  next: CrewAppearance,
+): CrewAppearance {
+  if (!next.outfit || next.outfit === (previous.outfit ?? "crew"))
+    return { ...previous, ...next };
+  return {
+    ...Object.fromEntries(
+      CHARACTER_PERSONAL_APPEARANCE_KEYS.filter(
+        (key) => previous[key] !== undefined,
+      ).map((key) => [key, previous[key]]),
+    ),
+    weapon: previous.weapon ?? "none",
+    ...next,
   };
 }
 

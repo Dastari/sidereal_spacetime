@@ -63,15 +63,34 @@ export function createBlankLayout(
   freshId(deckId);
   if (draftId === deckId)
     throw Error("Draft and deck identities must be distinct.");
-  if (hull.height < 32)
+  const clearHeight = Math.min(96, hull.height - 16);
+  if (clearHeight < 26)
     throw Error(
-      "Selected hull height cannot hold the minimum 1m authoring deck.",
+      "Selected hull cannot hold the minimum deck profile (1.3125 m).",
     );
   const d = emptyLayout(draftId, deckId, kind);
   d.name = name.trim() || "Untitled ship";
   d.decks[0].elevation = hull.origin[2];
-  d.decks[0].ceiling = Math.min(96, hull.height);
-  return setHullEnvelope(d, hull);
+  d.decks[0].ceiling = clearHeight + 6;
+  const next = setHullEnvelope(d, hull);
+  next.structure = {
+    ...next.structure!,
+    schema: "sidereal.layout-structure.v2",
+    wallConvention: "inset250-v1",
+    boundaryTreatments: [],
+    navigationReservations: [],
+    deckProfiles: [
+      {
+        deckId,
+        floorThickness: 6,
+        clearHeight,
+        roofThickness: 4,
+        serviceVoid: 6,
+        pitch: clearHeight + 16,
+      },
+    ],
+  };
+  return readLayout(next);
 }
 export function createBlankDesign(input: {
   id: string;

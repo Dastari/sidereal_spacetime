@@ -1,0 +1,387 @@
+{
+  "purpose": "Reusable Frontier ship top panels, native Blender replacement draft; preserves all installed identities and current ship frame.",
+  "units": "metres",
+  "origin_axes": "Blender local X east, Y north, Z up. Existing centered 2m legacy datums retained. Vestibule lower-left datum, swept cockpit original datum, sloped collar original datum.",
+  "revision": 4,
+  "design_id": "shipyard.roof.frontier",
+  "coverage": {
+    "placed_roof_count": 73,
+    "components": 26,
+    "retired_unplaced_legacy_palette_assets": [
+      {
+        "id": "part-4cc10bea50462151551e",
+        "label": "roof  1 4",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.5
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-0852d726f42e315c86e5",
+        "label": "roof 0 4",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.5
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-de026fd7e962df61ffd0",
+        "label": "roof 1 4",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.5
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-1f09f4c68827e149fa9c",
+        "label": "roof  2 5",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.6875
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-7fa7517c047ae56f4b28",
+        "label": "roof  3 5",
+        "bounds": {
+          "min": [
+            -0.25,
+            -0.375,
+            0
+          ],
+          "max": [
+            0.3125,
+            0.4375,
+            0.5625
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-c4ebd0e128bf0763b85d",
+        "label": "roof  1 5",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.6875
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-0033c1002bfadaf3e0b6",
+        "label": "roof 0 5",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.8125
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-0206b2454e1dbd5e3274",
+        "label": "roof 2 5",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.6875
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-eb56b82575d151efa88d",
+        "label": "roof 3 5",
+        "bounds": {
+          "min": [
+            -0.25,
+            -0.375,
+            0
+          ],
+          "max": [
+            0.3125,
+            0.4375,
+            0.5625
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-e38c1e630241ecc0b307",
+        "label": "roof  2 6",
+        "bounds": {
+          "min": [
+            -0.375,
+            -0.375,
+            0
+          ],
+          "max": [
+            0.375,
+            0.375,
+            0.5
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-0ef98e6e5bb5837bb2ed",
+        "label": "roof  1 6",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.6875
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-f6c7a7c712b8f5b5ff8e",
+        "label": "roof 0 6",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.8125
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-5579825aaf92eda0f9b6",
+        "label": "roof 1 6",
+        "bounds": {
+          "min": [
+            -1,
+            -1,
+            0
+          ],
+          "max": [
+            1,
+            1,
+            0.6875
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-8b4b8c4170ff037ee643",
+        "label": "roof 2 6",
+        "bounds": {
+          "min": [
+            -0.375,
+            -0.375,
+            0
+          ],
+          "max": [
+            0.375,
+            0.375,
+            0.5
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-a683b4cc337dc2f749e3",
+        "label": "roof 0 7",
+        "bounds": {
+          "min": [
+            -1,
+            -0.25,
+            0
+          ],
+          "max": [
+            1,
+            0.25,
+            0.5
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-7401b331645b083cdd2d",
+        "label": "roof  1 7",
+        "bounds": {
+          "min": [
+            -0.3125,
+            -0.25,
+            0
+          ],
+          "max": [
+            0.3125,
+            0.25,
+            0.4375
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-2c5bc4e281f43ec5e8d4",
+        "label": "roof 1 7",
+        "bounds": {
+          "min": [
+            -0.3125,
+            -0.25,
+            0
+          ],
+          "max": [
+            0.3125,
+            0.25,
+            0.4375
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      },
+      {
+        "id": "part-a71041f7edfcbbd17fd1",
+        "label": "Pilot roof-corner45 / r001",
+        "bounds": {
+          "min": [
+            0,
+            0,
+            0
+          ],
+          "max": [
+            1.987272024154663,
+            1.987272024154663,
+            0.1875
+          ]
+        },
+        "status": "Retired legacy visual draft; no placement uses this asset. Do not choose it in new roof drafts; use native named masters from this kit with measured new footprint. No forced migration of unsupported existing saved drafts.",
+        "replacement_family": "Swept pilot-roof for retired bridge polygons; center/transition/shoulder/edge kit for mainbody rectangles."
+      }
+    ]
+  },
+  "interfaces": {
+    "main_grid_m": 2,
+    "main_placement_height_m": 2.6875,
+    "fore_shoulder_height_m": 2.5625,
+    "fore_shoulder_variant_offset_m": 0.125,
+    "quiet_top_world_m": 3.5475,
+    "pressure_and_damage": "Visual revisions do not implement pressure, authoritative damage, refit or power. Native damage preview unsupported. Source closed-shell cells are separate editor occupancy representation.",
+    "cutaway": "Every mapped asset retains category roof; decal example planes inherit roof visibility in staged runtime."
+  },
+  "material_roles": {
+    "pale_dark_burgundy": "Pigmented satin polymer/enamel, metallic0, UV roughness~.29",
+    "steel": "Recessed radiator hardware, metallic.78",
+    "cyan_amber": "Principled emission; fixture descriptors separate renderer proposal, no authoritative power grant",
+    "maps": "Tangent mapped normal relief on pale/red/steel surfaces; separate calm micro-normal on dark central surfaces. UV roughness controls satin specular response. 3 PNG maps embedded/shared with validated tangents; basepigment,geometry unchanged."
+  },
+  "stats": [
+    {
+      "field": "panel dimensions",
+      "unit": "m",
+      "status": "proposed",
+      "basis": "Measured current datums and reference composition; percomponent bounds in components.json"
+    },
+    {
+      "field": "triangle/material budget",
+      "unit": "triangles/materials",
+      "status": "measured implementation",
+      "basis": "Validated exact GLB accessors; validation.json"
+    },
+    {
+      "field": "mass,armorHP,powerDraw",
+      "unit": "not assigned",
+      "status": "not implemented",
+      "basis": "No gameplay balances inferred from appearance"
+    }
+  ],
+  "lights": {
+    "basis": "Sparse cyan recessed source surfaces and amber utilities; bounded short-range renderer descriptors. No pointlight emitted by text decals.",
+    "status": "Eight bounded spotlights verified through actual Babylon createEquipmentLighting API. RGB,position,direction,angle,range,intensity validated. Actual appearance pending browser."
+  },
+  "proxy": {
+    "basis": "Union of individually closed evaluated authored meshes at .0625m BVH scanline sampling. Sampling copies use constant material; subcell source details omitted explicitly in each samples.json. Source visual mesh/materials untouched.",
+    "placement_gate": "placement-validation.json passes all73 in complete current ship, no broadphase exemptions."
+  },
+  "publication": false,
+  "owner_final_approval": false,
+  "changes_from_r003": [
+    "Calm dark-material normalmap removes undesigned centerfield strokes",
+    "Valid localroofspot descriptors enable illumination previously silentlyskipped",
+    "Blenderkey/fill moved awayfromdirectmirror washout; runtimepigmentsunchanged"
+  ]
+}
