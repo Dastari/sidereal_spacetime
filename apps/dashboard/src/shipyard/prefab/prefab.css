@@ -1679,3 +1679,12 @@ section.prefab-preview > .prefab-preview-status:only-child {
   color: #cfe3ff;
   word-break: break-all;
 }
+
+/* Canopy glass runs along the hull outline (exterior edge type "canopy"). */
+.pf-canopy {
+  fill: none;
+  stroke: #5fd4ff;
+  stroke-width: 4;
+  stroke-dasharray: 8 3;
+  stroke-linecap: butt;
+}
