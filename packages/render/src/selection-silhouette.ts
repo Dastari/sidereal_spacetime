@@ -1,14 +1,14 @@
 import { placementTriangleIndices } from "./structural-batches";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
-import type { Scene } from '@babylonjs/core/scene';
-import type { AbstractMesh } from '@babylonjs/core/Meshes/abstractMesh';
-import { ShaderMaterial } from '@babylonjs/core/Materials/shaderMaterial';
-import { RenderTargetTexture } from '@babylonjs/core/Materials/Textures/renderTargetTexture';
-import { Texture } from '@babylonjs/core/Materials/Textures/texture';
-import { PostProcess } from '@babylonjs/core/PostProcesses/postProcess';
-import { ShaderStore } from '@babylonjs/core/Engines/shaderStore';
-import { Color4 } from '@babylonjs/core/Maths/math.color';
+import type { Scene } from "@babylonjs/core/scene";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
+import { ShaderMaterial } from "@babylonjs/core/Materials/shaderMaterial";
+import { RenderTargetTexture } from "@babylonjs/core/Materials/Textures/renderTargetTexture";
+import { Texture } from "@babylonjs/core/Materials/Textures/texture";
+import { PostProcess } from "@babylonjs/core/PostProcesses/postProcess";
+import { ShaderStore } from "@babylonjs/core/Engines/shaderStore";
+import { Color4 } from "@babylonjs/core/Maths/math.color";
 
 const vertexSource = `precision highp float;
 attribute vec3 position;
@@ -39,18 +39,33 @@ void main() {
 }`;
 
 /** One cached union mask; no selection render passes while inactive. */
-export function createSelectionSilhouette(scene: Scene, meshes: AbstractMesh[], placementId: string) {
+export function createSelectionSilhouette(
+  scene: Scene,
+  meshes: AbstractMesh[],
+  placementId: string,
+) {
   const engine = scene.getEngine();
-  const size = () => ({width: engine.getRenderWidth(), height: engine.getRenderHeight()});
-  const mask = new RenderTargetTexture('object-selection-mask', size(), scene, false, true,
-    undefined, false, Texture.NEAREST_SAMPLINGMODE);
-  mask.clearColor = new Color4(0,0,0,1);
+  const size = () => ({
+    width: engine.getRenderWidth(),
+    height: engine.getRenderHeight(),
+  });
+  const mask = new RenderTargetTexture(
+    "object-selection-mask",
+    size(),
+    scene,
+    false,
+    true,
+    undefined,
+    false,
+    Texture.NEAREST_SAMPLINGMODE,
+  );
+  mask.clearColor = new Color4(0, 0, 0, 1);
   mask.renderParticles = false;
   // Each selected instance needs its own black/white mask state. Offscreen
   // geometry-sharing proxies avoid per-instance material overrides on a shared
   // source and keep the authored material untouched.
   const proxies: { source: InstancedMesh; mesh: Mesh }[] = [];
-  const maskMeshes = meshes.map(source => {
+  const maskMeshes = meshes.map((source) => {
     if (!(source instanceof InstancedMesh)) return source;
     const mesh = new Mesh("selection-instance-mask", scene);
     source.sourceMesh.geometry?.applyToMesh(mesh);
@@ -63,7 +78,12 @@ export function createSelectionSilhouette(scene: Scene, meshes: AbstractMesh[], 
   });
   const batchProxies: { source: Mesh; mesh: Mesh }[] = [];
   for (const source of meshes) {
-    if (!(source instanceof Mesh) || !source.metadata?.trianglePlacements || source.metadata?.partId) continue;
+    if (
+      !(source instanceof Mesh) ||
+      !source.metadata?.trianglePlacements ||
+      source.metadata?.partId
+    )
+      continue;
     const mesh = new Mesh("selection-placement-mask", scene);
     source.geometry?.applyToMesh(mesh);
     mesh.makeGeometryUnique();
@@ -84,51 +104,87 @@ export function createSelectionSilhouette(scene: Scene, meshes: AbstractMesh[], 
     }
   });
   mask.activeCamera = scene.activeCamera;
-  const materials = [0,1].map(selected => {
-    const material = new ShaderMaterial(`selection-mask-${selected}`, scene,
-      {vertexSource,fragmentSource}, {attributes:['position'],uniforms:['worldViewProjection','selected']});
-    material.setFloat('selected', selected);
+  const materials = [0, 1].map((selected) => {
+    const material = new ShaderMaterial(
+      `selection-mask-${selected}`,
+      scene,
+      { vertexSource, fragmentSource },
+      {
+        attributes: ["position"],
+        uniforms: ["worldViewProjection", "selected"],
+      },
+    );
+    material.setFloat("selected", selected);
     material.backFaceCulling = false;
     return material;
   });
-  const camera=scene.activeCamera;
-  let selected: string | undefined, attached=false, maskRendered=false;
+  const camera = scene.activeCamera;
+  let selected: string | undefined,
+    attached = false,
+    maskRendered = false;
   // Overrides are confined to this render pass. Visible fading walls still
   // block the mask; disabled cutaway meshes disappear normally. Never include
   // the invisible shadow proxies, which intentionally survive roof cutaway.
-  const edge = new PostProcess('object-selection-silhouette','siderealSelectionEdge',
-    ['texel'],['selectionMask'],1,null,Texture.NEAREST_SAMPLINGMODE,engine);
-  edge.onApply = effect => {
-    effect.setTexture('selectionMask',mask);
-    effect.setFloat2('texel',1/mask.getSize().width,1/mask.getSize().height);
+  const edge = new PostProcess(
+    "object-selection-silhouette",
+    "siderealSelectionEdge",
+    ["texel"],
+    ["selectionMask"],
+    1,
+    null,
+    Texture.NEAREST_SAMPLINGMODE,
+    engine,
+  );
+  edge.onApply = (effect) => {
+    effect.setTexture("selectionMask", mask);
+    effect.setFloat2(
+      "texel",
+      1 / mask.getSize().width,
+      1 / mask.getSize().height,
+    );
   };
-  const resize = engine.onResizeObservable.add(() => {mask.resize(size());maskRendered=false;});
-  mask.onAfterRenderObservable.add(()=>{maskRendered=true;});
-  function select(id?:string) {
-    selected=id;
+  const resize = engine.onResizeObservable.add(() => {
+    mask.resize(size());
+    maskRendered = false;
+  });
+  mask.onAfterRenderObservable.add(() => {
+    maskRendered = true;
+  });
+  function select(id?: string) {
+    selected = id;
     for (const { source, mesh } of batchProxies) {
       const indices = id ? placementTriangleIndices(source, id) : [];
       mesh.setEnabled(indices.length > 0);
       if (indices.length) mesh.setIndices(indices);
       mesh.metadata.partId = id;
     }
-    for (const mesh of maskMeshes) mask.setMaterialForRendering(mesh,
-      id ? materials[mesh.metadata?.partId===id?1:0] : undefined);
+    for (const mesh of maskMeshes)
+      mask.setMaterialForRendering(
+        mesh,
+        id ? materials[mesh.metadata?.partId === id ? 1 : 0] : undefined,
+      );
     if (id) {
-      if (!scene.customRenderTargets.includes(mask)) scene.customRenderTargets.push(mask);
+      if (!scene.customRenderTargets.includes(mask))
+        scene.customRenderTargets.push(mask);
     } else {
-      camera?.detachPostProcess(edge);attached=false;
-      const index=scene.customRenderTargets.indexOf(mask);
-      if(index>=0)scene.customRenderTargets.splice(index,1);
+      camera?.detachPostProcess(edge);
+      attached = false;
+      const index = scene.customRenderTargets.indexOf(mask);
+      if (index >= 0) scene.customRenderTargets.splice(index, 1);
     }
   }
   // Compiling a new postprocess while it is already attached can blank the
   // camera for a frame. Warm both effects first, then attach on a frame boundary.
-  const ready=scene.onBeforeRenderObservable.add(()=>{
-    if (!selected || attached || !camera || !maskRendered || !edge.isReady()) return;
-    const sample=maskMeshes.find(mesh=>mesh.metadata?.partId===selected);
-    if (!sample || !materials.every(material=>material.isReady(sample))) return;
-    camera.attachPostProcess(edge);attached=true;
+  const ready = scene.onBeforeRenderObservable.add(() => {
+    if (!selected || attached || !camera || !maskRendered || !edge.isReady())
+      return;
+    const sample = maskMeshes.find(
+      (mesh) => mesh.metadata?.partId === selected,
+    );
+    if (!sample || !materials.every((material) => material.isReady(sample)))
+      return;
+    camera.attachPostProcess(edge);
+    attached = true;
   });
   select(placementId);
   return {
@@ -140,10 +196,11 @@ export function createSelectionSilhouette(scene: Scene, meshes: AbstractMesh[], 
       engine.onResizeObservable.remove(resize);
       edge.dispose(camera ?? undefined);
       const index = scene.customRenderTargets.indexOf(mask);
-      if (index >= 0) scene.customRenderTargets.splice(index,1);
+      if (index >= 0) scene.customRenderTargets.splice(index, 1);
       for (const mesh of maskMeshes) mask.setMaterialForRendering(mesh);
       mask.dispose();
-      for (const { mesh } of [...proxies, ...batchProxies]) mesh.dispose(false, false);
+      for (const { mesh } of [...proxies, ...batchProxies])
+        mesh.dispose(false, false);
       for (const material of materials) material.dispose();
     },
   };

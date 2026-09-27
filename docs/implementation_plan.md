@@ -1,7 +1,7 @@
 # Implementation sequence and acceptance gates
 
 Status: Accepted direction; implementation staged
-Last updated: 2026-09-10
+Last updated: 2026-09-14
 Owners: Sidereal project
 
 ## Status discipline
@@ -70,3 +70,18 @@ pending owner art approvals and evidence are in the
 
 
 2026-09-10 deployed shared-entry checkpoint: dedicated Dastari original-token admission and account persistence are retained; per-socket keyed shared caches, nine-cell ship queries, canonical bodies, native remote exterior interpolation and normal explicit legacy migration are connected. Fresh-account PKCE auto-admission and exact old-module → current private-account upgrade/retry checks passed. Combined validation: 932 tests in 159 files, 76 document checks, full world/client/dashboard build, installed art checks, lifecycle Python checks and isolated authority smoke. Exact public world/client and fresh recovery pins are in [normal shared activation](handoffs/shared_world_normal_activation.md). This does not complete M2–M9 or turn review instances into supplied, damage-ready ships.
+
+
+2026-09-14 compiled IFCS checkpoint: phases 0–6 of the accepted update are
+implemented, with versioned placed-part/cargo/crew mass, COM/inertia integration,
+minimum-newton allocation, derived control bounds, validated availability producers
+and compiled presentation. Explicit passenger admission and two-client movement,
+cargo relocation, removal, damage, power cutoff and invalid-definition rejection
+have isolated evidence. Phase 5 has real forward/turn/removed-thruster browser
+evidence; phase 6 removes fixture-fed live paths and dead client ratings while
+preserving private base columns. Phase 3 alone was owner-approved and published
+non-destructively to the shared database; subsequent phases are isolated releases.
+This closes the bounded IFCS update, not M2/M4/M6 overall: routed resource debit,
+weapon-hit producers, general structural qualification and broader networking
+acceptance remain future work. See the [IFCS progress and evidence](handoffs/ifcs_update_progress_20260914.md)
+for per-phase gates and the independent export's preexisting documentation gap.

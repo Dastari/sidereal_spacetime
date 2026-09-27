@@ -1,0 +1,67 @@
+{
+  "parts": 18,
+  "triangles": 33648,
+  "enabled": true,
+  "sideDecals": [
+    {
+      "name": "hull-marking-side-registration--1",
+      "enabled": true,
+      "alphaMode": 2
+    },
+    {
+      "name": "hull-marking-side-registration-1",
+      "enabled": true,
+      "alphaMode": 2
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "placement-superstructure--3--4-fixture-0",
+      "enabled": true,
+      "range": 1.5
+    },
+    {
+      "name": "placement-superstructure--3--1-fixture-0",
+      "enabled": true,
+      "range": 1.5
+    },
+    {
+      "name": "placement-superstructure--3-2-fixture-0",
+      "enabled": true,
+      "range": 1.5
+    },
+    {
+      "name": "placement-superstructure--3-4-fixture-0",
+      "enabled": true,
+      "range": 1.5
+    },
+    {
+      "name": "placement-superstructure-3--4-fixture-0",
+      "enabled": true,
+      "range": 1.5
+    },
+    {
+      "name": "placement-superstructure-3--1-fixture-0",
+      "enabled": true,
+      "range": 1.5
+    },
+    {
+      "name": "placement-superstructure-3-2-fixture-0",
+      "enabled": true,
+      "range": 1.5
+    },
+    {
+      "name": "placement-superstructure-3-4-fixture-0",
+      "enabled": true,
+      "range": 1.5
+    }
+  ],
+  "status": "passed",
+  "url": "http://localhost:5173/",
+  "assetSource": "Installed published asset URLs; no asset overrides",
+  "captureMethod": "Normal development game entry, paced frames and camera framing",
+  "screenshots": {
+    "game-deck.png": "6b43bf690a361206165fb74846b690f22c30b46bfb81c718e7bac2ccf0e05c8b",
+    "game-flight.png": "8afa9fad5f7838094b7f1fa7464a5209b8af1bdbafa74ca2ca6acda08abf9dd9"
+  }
+}

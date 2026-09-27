@@ -22,6 +22,7 @@ import {
   Orbit,
   Palette,
   Redo2,
+  Rocket,
   RotateCw,
   Shield,
   Ship,
@@ -38,6 +39,7 @@ const AssemblyEditor = lazy(() => import("./shipyard/AssemblyEditor"));
 const LayoutEditor = lazy(() => import("./shipyard/layout/LayoutEditor"));
 const MapEditor = lazy(() => import("./map-editor/MapEditor"));
 const PlanetStudio = lazy(() => import("./planet-studio/PlanetStudio"));
+const PrefabShipyard = lazy(() => import("./shipyard/prefab/PrefabShipyard"));
 const tools = [
   [
     "World explorer",
@@ -117,24 +119,31 @@ type Route =
   | "planets"
   | "dashboard"
   | "shipyard"
+  | "prefabs"
   | "assembly"
   | "models"
   | "components";
+const ROUTE_PATHS: Partial<Record<Route, string>> = {
+  dashboard: "/",
+  prefabs: "/shipyard/prefabs",
+};
 const currentRoute = (): Route =>
   location.pathname === "/map"
     ? "map"
-    : location.pathname.includes("shipyard") &&
-        new URLSearchParams(location.search).has("assembly")
-      ? "assembly"
-      : location.pathname.includes("planets")
-        ? "planets"
-        : location.pathname.includes("models")
-          ? "models"
-          : location.pathname.includes("shipyard")
-            ? "shipyard"
-            : location.pathname.includes("components")
-              ? "components"
-              : "dashboard";
+    : location.pathname.startsWith("/shipyard/prefabs")
+      ? "prefabs"
+      : location.pathname.includes("shipyard") &&
+          new URLSearchParams(location.search).has("assembly")
+        ? "assembly"
+        : location.pathname.includes("planets")
+          ? "planets"
+          : location.pathname.includes("models")
+            ? "models"
+            : location.pathname.includes("shipyard")
+              ? "shipyard"
+              : location.pathname.includes("components")
+                ? "components"
+                : "dashboard";
 export default function App() {
   return (
     <StudioAuthGate>
@@ -173,7 +182,7 @@ function StudioApp() {
     return () => window.removeEventListener("popstate", pop);
   }, []);
   const navigate = (next: Route) => {
-    history.pushState({}, "", next === "dashboard" ? "/" : `/${next}`);
+    history.pushState({}, "", ROUTE_PATHS[next] ?? `/${next}`);
     setRoute(next);
   };
   useEffect(() => {
@@ -238,6 +247,13 @@ function StudioApp() {
             <Ship />
           </ToolButton>
           <ToolButton
+            label="Prefab ships"
+            active={route === "prefabs"}
+            onClick={() => navigate("prefabs")}
+          >
+            <Rocket />
+          </ToolButton>
+          <ToolButton
             label="Map editor"
             active={route === "map"}
             onClick={() => navigate("map")}
@@ -289,6 +305,8 @@ function StudioApp() {
               <MapEditor />
             ) : route === "planets" ? (
               <PlanetStudio />
+            ) : route === "prefabs" ? (
+              <PrefabShipyard />
             ) : route === "shipyard" || route === "assembly" ? (
               route === "assembly" ? (
                 <AssemblyEditor />

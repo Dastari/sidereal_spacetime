@@ -271,6 +271,10 @@ def load_designs():
     # inventing reference coverage, review, or approval evidence.
     for design in designs:
         for revision in design["revisions"]:
+            # A newly registered reference-only companion has no completed
+            # review. Display that absence without changing its private ledger.
+            if revision.get("stage") in ("reference-only", "in-progress"):
+                revision.setdefault("review", None)
             if "stage" not in revision and revision.get("state") == "in-progress":
                 revision.setdefault("stage", "in-progress")
                 revision.setdefault("change", revision.get("notes", "Specialist draft in progress."))
@@ -299,6 +303,8 @@ def refresh():
     for d in ds:
         folder=design_path(d["id"]).parent
         lines=[f"# {d['id']}","",f"Stable asset UUID: `{d['asset_uuid']}`", "",f"Current design revision: **r{d['current_revision']:03}**. State: **{d['state']}**. Owner final sign-off for current revision: **{'YES' if d['owner_final_signoff'] and d['owner_final_signoff']['revision']==d['current_revision'] else 'NO'}**.","",d["mapping_status"],"", "[Canonical machine-readable ledger](design.json) · [Agent workflow](../../WORKFLOW.md)","", "## Revision history",""]
+        if (approval:=d["owner_final_signoff"]) and approval["revision"]==d["current_revision"] and approval.get("approval_mode")=="artistic-with-technical-pending":
+            lines[6:6]=["**Owner artistic approval is recorded; technical evidence remains incomplete.** "+approval["technical_pending"]["notes"],""]
         lines[2:2]=["**Replacement model direction:** author Blender meshes and materials; TypeScript voxel-solid art is being phased out. Preserve authored visual surfaces and keep required gameplay proxies separate. Read [the migration contract](../../../../docs/blender_asset_migration.md) and [workflow](../../WORKFLOW.md).", ""]
         for r in d["revisions"]:
             lines.extend([f"### r{r['revision']:03} — {r['stage']}","",r["change"],"",f"Hypothesis: {r['hypothesis'] or 'No reconstruction yet.'}","",f"Review: {json.dumps(r['review'],ensure_ascii=False) if r['review'] else 'No completed review.'}",""])
@@ -428,17 +434,49 @@ def required_roles(d):
     return {"blender-source","glb","cutout","blender-close","runtime-close","runtime-top","validation"}
 
 
-def ready(d,r):
-    errors=[];roles={e["role"] for e in r["evidence"]}
-    if missing:=required_roles(d)-roles:errors.append("Missing evidence roles: "+", ".join(sorted(missing)))
+def evidence_integrity(r):
+    errors=[]
     if not r["covered_reference_ids"]:errors.append("No explicit reference/variant coverage")
-    if not r["review"] or r["review"].get("outcome")!="pass":errors.append("Agent review has not passed")
     for e in r["evidence"]:
         p=within(LIB/e["path"])
         if not p.exists() or digest(p)!=e["sha256"]:errors.append("Missing/changed evidence: "+e["path"])
         elif e["role"]=="cutout" and not png_alpha(p):errors.append("Cutout lacks an alpha channel: "+e["path"])
         if e["role"].startswith("runtime") or e["role"].startswith("ui-"):
             if not e.get("capture_context"):errors.append("Runtime/UI evidence lacks capture context")
+    return errors
+
+
+def ready(d,r):
+    errors=[];roles={e["role"] for e in r["evidence"]}
+    if missing:=required_roles(d)-roles:errors.append("Missing evidence roles: "+", ".join(sorted(missing)))
+    if not r["review"] or r["review"].get("outcome")!="pass":errors.append("Agent review has not passed")
+    return errors+evidence_integrity(r)
+
+
+def final_approval(d,r,owner_quote,message_reference,art_only=False,technical_notes=None):
+    """Record an explicit owner decision without inventing technical completion."""
+    if not owner_quote.strip() or not message_reference.strip():
+        raise ValueError("Explicit owner quote and actual message reference required")
+    errors=evidence_integrity(r) if art_only else ready(d,r)
+    if art_only:
+        if r["revision"]<1 or not r["evidence"]:errors.append("Artistic sign-off requires delivered revision evidence")
+        if not technical_notes or not technical_notes.strip():errors.append("Artistic-only sign-off requires explicit technical limitations")
+    if errors:raise ValueError("Cannot sign off: "+"; ".join(errors))
+    approval=dict(revision=r["revision"],owner_quote=owner_quote,message_reference=message_reference,recorded_at=now(),covered_reference_ids=r["covered_reference_ids"],evidence_hashes={e["path"]:e["sha256"] for e in r["evidence"]},scope="final-design-only; no runtime publication implied")
+    if art_only:
+        approval["approval_mode"]="artistic-with-technical-pending"
+        approval["technical_pending"]={"status":"incomplete","readiness_gaps":ready(d,r),"notes":technical_notes}
+    return approval
+
+
+def approval_readiness(d,r,approval):
+    if approval.get("approval_mode")!="artistic-with-technical-pending":return ready(d,r)
+    errors=evidence_integrity(r)
+    pending=approval.get("technical_pending",{})
+    if pending.get("status")!="incomplete" or not str(pending.get("notes","")).strip():
+        errors.append("Artistic approval lacks explicit pending technical validation")
+    if pending.get("readiness_gaps")!=ready(d,r):errors.append("Artistic approval technical evidence status changed")
+    if r["revision"]<1 or not r["evidence"]:errors.append("Artistic sign-off requires delivered revision evidence")
     return errors
 
 
@@ -488,7 +526,7 @@ def check(deep=False):
             revision=revision_record(d,approval["revision"])
             if not approval["owner_quote"] or not approval["message_reference"]:errors.append("Missing owner approval evidence: "+d["id"])
             if approval["covered_reference_ids"]!=revision["covered_reference_ids"]:errors.append("Approval coverage mismatch: "+d["id"])
-            errors.extend(d["id"]+": "+e for e in ready(d,revision))
+            errors.extend(d["id"]+": "+e for e in approval_readiness(d,revision,approval))
         if d["state"]=="signed-off" and (not approval or approval["revision"]!=d["current_revision"]):errors.append("False final status: "+d["id"])
     if read(LIB/"status.json")!=state_summary():errors.append("Stale generated index/status; run index")
     if errors:raise ValueError("\n".join(errors))
@@ -539,11 +577,7 @@ def mutate(args):
             r["stage"]=d["state"];d["assigned_to"]=None
         elif args.command=="signoff":
             if r["stage"]=="signed-off":raise ValueError("This revision already has final sign-off")
-            errors=ready(d,r)
-            if errors:raise ValueError("Cannot sign off: "+"; ".join(errors))
-            if not args.owner_quote.strip() or not args.message_reference.strip():raise ValueError("Explicit owner quote and actual message reference required")
-            evidence_hashes={e["path"]:e["sha256"] for e in r["evidence"]}
-            approval=dict(revision=r["revision"],owner_quote=args.owner_quote,message_reference=args.message_reference,recorded_at=now(),covered_reference_ids=r["covered_reference_ids"],evidence_hashes=evidence_hashes,scope="final-design-only; no runtime publication implied")
+            approval=final_approval(d,r,args.owner_quote,args.message_reference,getattr(args,"art_only",False),getattr(args,"technical_notes",None))
             d["approvals"].append(approval);d["owner_final_signoff"]=approval;d["state"]="signed-off";r["stage"]="signed-off"
         elif args.command=="block":
             if r["stage"]=="signed-off":raise ValueError("Signed-off history is immutable; start a new revision")
@@ -566,7 +600,10 @@ def main():
         elif name=="feedback":
             p.add_argument("--author",choices=["owner","agent"],required=True);p.add_argument("--text",required=True);p.add_argument("--message-reference")
         elif name=="review":p.add_argument("--outcome",choices=["pass","fail"],required=True);p.add_argument("--notes",required=True)
-        elif name=="signoff":p.add_argument("--owner-quote",required=True);p.add_argument("--message-reference",required=True)
+        elif name=="signoff":
+            p.add_argument("--owner-quote",required=True);p.add_argument("--message-reference",required=True)
+            p.add_argument("--art-only",action="store_true",help="Record explicit owner artistic approval while preserving incomplete technical evidence; never an inferred agent approval")
+            p.add_argument("--technical-notes",help="Required with --art-only: factual limitations that remain after artistic approval")
         elif name=="block":p.add_argument("--notes",required=True)
     args=parser.parse_args()
     try:

@@ -15,16 +15,30 @@ export function readSceneCapture(scene: Scene): CaptureDiagnostics | undefined {
     const target = prepass.defaultRT;
     return describe(target.name, target.renderTarget);
   }
-  const first = scene.activeCamera?._postProcesses.find(pass => !!pass);
+  const first = scene.activeCamera?._postProcesses.find((pass) => !!pass);
   if (!first) return undefined;
   // Babylon 9.25 activate() chooses these before its own allocated input target.
   const pass = first as unknown as {
     _shareOutputWithPostProcess?: PostProcess;
     _forcedOutputTexture?: RenderTargetWrapper;
   };
-  return describe(first.name, pass._shareOutputWithPostProcess?.inputTexture ??
-    pass._forcedOutputTexture ?? first.inputTexture);
+  return describe(
+    first.name,
+    pass._shareOutputWithPostProcess?.inputTexture ??
+      pass._forcedOutputTexture ??
+      first.inputTexture,
+  );
 }
-function describe(name: string, target: RenderTargetWrapper | null | undefined): CaptureDiagnostics {
-  return target ? {name,width:target.width,height:target.height,samples:target.samples} : {name};
+function describe(
+  name: string,
+  target: RenderTargetWrapper | null | undefined,
+): CaptureDiagnostics {
+  return target
+    ? {
+        name,
+        width: target.width,
+        height: target.height,
+        samples: target.samples,
+      }
+    : { name };
 }

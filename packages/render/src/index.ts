@@ -61,6 +61,7 @@ export {
 import { createCombatAim } from "./combat-aim";
 import { posePlacementHeading } from "./crew/pose-integration-motion";
 import { createDebugFeatures, type DebugFeature } from "./debug-features";
+import { createDebugCollisionSource } from "./debug-collision-source";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { cabinIsVisible, createCabinVisibility } from "./cabin-visibility";
 import { LAB_INTERACTIONS } from "../../content/src/interactions";
@@ -71,11 +72,16 @@ import { loadInstalledEquipment } from "./installed-equipment";
 import { createObjectPresentation } from "./object-presentation";
 import { applyCutawayVisibility, prepareCutawayMeshes } from "./cutaway";
 import { createShipLighting } from "./ship-lighting";
-import { createFlightEffects } from "./flight-effects";
+import {
+  createFlightEffects,
+  type FlightEffectActuator,
+} from "./flight-effects";
 import { createRenderDiagnostics } from "./diagnostics";
 import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
+import { createVoxelCrewVisual } from "./crew/voxel-crew";
+import type { CrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { Camera } from "@babylonjs/core/Cameras/camera";
@@ -87,6 +93,10 @@ import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTextur
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { CABIN_ROOMS } from "../../content/src/interior";
+import {
+  loadPrefabShipPresentation,
+  type PrefabShipViewHandle,
+} from "./prefab-ship-presentation";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { CreateTorus } from "@babylonjs/core/Meshes/Builders/torusBuilder";
 import { Material } from "@babylonjs/core/Materials/material";
@@ -132,7 +142,7 @@ export type SceneState = {
   objectLights?: readonly { placementId: string; enabled: boolean }[];
   vx?: number;
   vy?: number;
-  actuatorOutputs?: readonly { actuatorId: string; throttle: number }[];
+  flightActuators?: readonly FlightEffectActuator[];
   /** Omitted for authoring previews; null explicitly means empty authoritative hand. */
   equippedAsset?: EquipmentAsset | null;
   heading: number;
@@ -164,6 +174,8 @@ export interface WorldOptions {
   /** Allow known authored exhaust geometry; accepted telemetry still drives it. */
   authoredFlightEffects?: boolean;
   equipmentPose?: EquipmentPoseConfiguration;
+  /** Crew art bundle. "voxel" is the CHAR-BODY proposal behind an explicit local preview flag. */
+  crewBundle?: CrewBundle;
   onObjectSelected?: (placementId?: string) => void;
   source?: "voxel" | "original" | "engine-original" | "engine-voxel";
   onScene?: (scene: Scene) => void;
@@ -274,7 +286,10 @@ async function buildWorld(
   // Start rendering only once the scene's loaders and wiring are assembled.
   const shipRoot = new TransformNode("ship-frame", scene);
   const environment = createSpaceEnvironment(scene);
-  let crew: Awaited<ReturnType<typeof createCrewVisual>> | undefined;
+  let crew:
+    | Awaited<ReturnType<typeof createCrewVisual>>
+    | Awaited<ReturnType<typeof createVoxelCrewVisual>>
+    | undefined;
   let equipmentPose:
     | ReturnType<
         Awaited<ReturnType<typeof createCrewVisual>>["createPoseController"]
@@ -321,6 +336,9 @@ async function buildWorld(
       ) => ReturnType<typeof resolveConstructionTraversalFrame>)
     | undefined;
   let disposeConstruction: (() => void) | undefined;
+  // Trusted prefab ships (SHIPS-PREFABS): the dressed ship replaces the native
+  // floor-plate presentation; collision and walking stay authoritative.
+  let prefabView: PrefabShipViewHandle | undefined;
   let lastStairPosition: [number, number] | undefined;
   let stairTravelHeading: number | undefined;
   const engineStudy = options.source?.startsWith("engine-") ?? false;
@@ -368,6 +386,15 @@ async function buildWorld(
             accepted && "destinationDeckId" in accepted ? accepted : undefined,
           );
       if ("dispose" in loaded) disposeConstruction = loaded.dispose;
+      if (options.construction) {
+        prefabView = await loadPrefabShipPresentation(
+          scene,
+          shipRoot,
+          options.construction.documentJson,
+        );
+        if (prefabView)
+          for (const mesh of imported.meshes) mesh.setEnabled(false);
+      }
     } else {
       imported = await SceneLoader.ImportMeshAsync(
         "",
@@ -418,14 +445,21 @@ async function buildWorld(
     await environment.ready;
     options.onLoadStage?.("crew");
     if (!options.source || options.source === "voxel") {
-      crew = await createCrewVisual(
-        scene,
-        shipRoot,
-        options.equipmentPose?.crewUrl,
-      );
-      if (options.equipmentPose) {
-        equipmentPose = crew.createPoseController();
-        equipmentPose.setAimSpace(options.equipmentPose.aimSpace);
+      if (options.crewBundle === "voxel") {
+        // Proposal voxel crew: authored actions drive the arms; the legacy aim-space
+        // controller targets the r008 rig and stays unbound.
+        crew = await createVoxelCrewVisual(scene, shipRoot);
+      } else {
+        const legacy = await createCrewVisual(
+          scene,
+          shipRoot,
+          options.equipmentPose?.crewUrl,
+        );
+        crew = legacy;
+        if (options.equipmentPose) {
+          equipmentPose = legacy.createPoseController();
+          equipmentPose.setAimSpace(options.equipmentPose.aimSpace);
+        }
       }
       avatar.dispose();
       avatar = crew.root;
@@ -482,6 +516,7 @@ async function buildWorld(
     ),
   );
   const fixturePlacements = shipEquipment;
+  const debugCollision = createDebugCollisionSource(options.construction);
   const debugFeatures = createDebugFeatures(
     scene,
     [
@@ -491,6 +526,30 @@ async function buildWorld(
       ),
     ],
     [avatar, marker],
+    {
+      characterRoots: () => [avatar],
+      collisionScope: () =>
+        options.constructionEgress
+          ? "Standalone egress preview has no admitted collision frame"
+          : debugCollision.resolve({
+              deckId: state.constructionDeckId,
+              doors: state.constructionDoors,
+            }).scope,
+      collisionFrames: () => {
+        if (options.constructionEgress) return [];
+        const source = debugCollision.resolve({
+          deckId: state.constructionDeckId,
+          doors: state.constructionDoors,
+        });
+        const world = shipRoot.computeWorldMatrix(true);
+        return source.frames.map((frame, i) => ({
+          id: `walking:${i}`,
+          frame,
+          world,
+          scope: source.scope,
+        }));
+      },
+    },
   );
   const labels = new TransformNode("room-labels", scene);
   labels.parent = shipRoot;
@@ -556,7 +615,9 @@ async function buildWorld(
     options.constructionEgress
       ? {
           meshes: [] as Mesh[],
-          update(_outputs: unknown, _motion?: boolean) {},
+          update(_outputs: unknown, _motion?: boolean) {
+            return false;
+          },
           dispose() {},
         }
       : createFlightEffects(scene, shipRoot);
@@ -866,15 +927,29 @@ async function buildWorld(
         seated: state.seated ?? false,
         sprinting: state.sprinting ?? false,
         reducedMotion: state.reducedMotion,
+        shotSequence: state.combat?.shotSequence,
       });
     const poseItem = selectedAsset
       ? options.equipmentPose?.items[selectedAsset]
       : undefined;
+    avatar.position.set(displayed.localX, walkingElevation, -displayed.localY);
+    if (traversalFrame?.acceptedPositionM) {
+      const [x, y, z] = traversalFrame.acceptedPositionM;
+      avatar.position.set(x, z, -y);
+    }
+    const desiredAim = state.combat?.active
+      ? combatAim.aim(displayed.localX, displayed.localY, state.combat.range, {
+          deckHeight: avatar.position.y,
+          origin: equipment?.getMuzzleWorld()?.position,
+        })
+      : undefined;
     if (equipmentPose && poseItem)
       equipmentPose.update(
         {
-          yaw: state.combat?.angle ?? -avatar.rotation.y,
-          pitch: 0,
+          // Immediate local presentation; accepted intent/shot authority still
+          // travels through the existing combat reducers and sequence.
+          yaw: desiredAim?.angle ?? state.combat?.angle ?? -avatar.rotation.y,
+          pitch: desiredAim?.pitch ?? 0,
           facing: -avatar.rotation.y,
           active: !!state.combat?.active,
           moving: walking,
@@ -890,11 +965,6 @@ async function buildWorld(
         dt,
       );
     // Native r002 deck datum; this offset is presentation, not simulation height.
-    avatar.position.set(displayed.localX, walkingElevation, -displayed.localY);
-    if (traversalFrame?.acceptedPositionM) {
-      const [x, y, z] = traversalFrame.acceptedPositionM;
-      avatar.position.set(x, z, -y);
-    }
     marker.position.copyFrom(avatar.position);
     marker.position.y += 0.02;
     marker.setEnabled(cabinVisible && blend > 0.2);
@@ -912,7 +982,8 @@ async function buildWorld(
       if (label.metadata?.side)
         label.setEnabled(label.metadata.side * Math.cos(cameraLocal) < 0);
     lighting.update(blend, avatar.position.x, -avatar.position.z);
-    flightEffects.update(state.actuatorOutputs ?? [], state.reducedMotion);
+    if (flightEffects.update(state.flightActuators ?? [], state.reducedMotion))
+      refreshLocalGlow();
     camera.alpha +=
       angleDelta(
         camera.alpha,
@@ -967,6 +1038,7 @@ async function buildWorld(
     camera.minZ = Math.max(0.1, camera.radius * 0.02);
     camera.maxZ = Math.max(1600, camera.radius + 1600);
     updateConstructionView?.(camera.position, state.interior);
+    prefabView?.setInterior(state.interior);
     camera.getViewMatrix(true);
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,
@@ -1127,6 +1199,10 @@ async function buildWorld(
     );
   });
   return {
+    /** Presentation-only crew handle for review harnesses (never simulation state). */
+    getCrewVisual() {
+      return crew;
+    },
     getAntialiasing() {
       return antialiasing.snapshot();
     },
@@ -1172,6 +1248,10 @@ async function buildWorld(
             displayed.localX,
             displayed.localY,
             state.combat?.range ?? 60,
+            {
+              deckHeight: avatar.position.y,
+              origin: equipment?.getMuzzleWorld()?.position,
+            },
           )?.angle
         : undefined;
     },
@@ -1184,6 +1264,7 @@ async function buildWorld(
             renderBackend: createdEngine.active,
             snapshotRendering: fastSnapshot?.snapshot(),
             debugFeatures: debugFeatures.snapshot(),
+            debugOverlays: debugFeatures.overlaySnapshot(),
             localLightBudget: localLights.snapshot(),
             planetBuild: environment.planetBuildSnapshot(),
           }
@@ -1301,6 +1382,7 @@ async function buildWorld(
       diagnostics.dispose();
       debugFeatures.dispose();
       disposeConstruction?.();
+      prefabView?.dispose();
       disposeConstruction = undefined;
       scene.dispose();
       engine.dispose();

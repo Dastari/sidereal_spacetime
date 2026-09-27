@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { CHARACTER_COMPONENT_SETS } from "../../../content/src/character-components";
+import { CHARACTER_COMPONENT_SETS } from "@sidereal/content/character-components";
 import { equipmentPoseArmorBulk } from "./equipment-pose-bulk";
 
 describe("equipped component pose clearance", () => {

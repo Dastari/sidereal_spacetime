@@ -1,0 +1,2791 @@
+{
+  "schema": "sidereal.assembly-draft.v1",
+  "id": "wayfarer-study",
+  "name": "Wayfarer",
+  "parts": [
+    {
+      "id": "floor--2--4",
+      "assetId": "part-13b30dda6355f0ff17b3",
+      "position": [
+        -4,
+        -8,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--1--4",
+      "assetId": "part-ca866457d5caccb943a9",
+      "position": [
+        -2,
+        -8,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-0--4",
+      "assetId": "part-ce04d53853da84dd9d81",
+      "position": [
+        0,
+        -8,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-1--4",
+      "assetId": "part-b02132179cb305a21417",
+      "position": [
+        2,
+        -8,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-2--4",
+      "assetId": "part-15bc4d24f27173de47ce",
+      "position": [
+        4,
+        -8,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--2--3",
+      "assetId": "part-7b265b4d073afc9bf127",
+      "position": [
+        -4,
+        -6,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--1--3",
+      "assetId": "part-ffc5518d9892477ad05b",
+      "position": [
+        -2,
+        -6,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-0--3",
+      "assetId": "part-7ceebee6336152691b53",
+      "position": [
+        0,
+        -6,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-1--3",
+      "assetId": "part-c5fa343376505f993a45",
+      "position": [
+        2,
+        -6,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-2--3",
+      "assetId": "part-a735909957b9e773f219",
+      "position": [
+        4,
+        -6,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--2--2",
+      "assetId": "part-749baebbcaac89945d5c",
+      "position": [
+        -4,
+        -4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--1--2",
+      "assetId": "part-395319254b5dd541b5c9",
+      "position": [
+        -2,
+        -4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-0--2",
+      "assetId": "part-ce04d53853da84dd9d81",
+      "position": [
+        0,
+        -4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-1--2",
+      "assetId": "part-67c91d419e31812795c4",
+      "position": [
+        2,
+        -4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-2--2",
+      "assetId": "part-b90945c434415efcef4d",
+      "position": [
+        4,
+        -4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--2--1",
+      "assetId": "part-a561ef19a47095f7af9b",
+      "position": [
+        -4,
+        -2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--1--1",
+      "assetId": "part-79da3bdf7a767bb89c8b",
+      "position": [
+        -2,
+        -2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-0--1",
+      "assetId": "part-1a05e8da6e2c1ec33a1c",
+      "position": [
+        0,
+        -2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-1--1",
+      "assetId": "part-f720d0e3287882975690",
+      "position": [
+        2,
+        -2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-2--1",
+      "assetId": "part-2ae59f43b3e997e6ee94",
+      "position": [
+        4,
+        -2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--2-0",
+      "assetId": "part-df324c9b4e916c78412f",
+      "position": [
+        -4,
+        0,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--1-0",
+      "assetId": "part-f75dd89e6deed9eefdb9",
+      "position": [
+        -2,
+        0,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-0-0",
+      "assetId": "part-ce04d53853da84dd9d81",
+      "position": [
+        0,
+        0,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-1-0",
+      "assetId": "part-1f69531882e3417aadf4",
+      "position": [
+        2,
+        0,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-2-0",
+      "assetId": "part-27d644c2d1643c69a713",
+      "position": [
+        4,
+        0,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--2-1",
+      "assetId": "part-d5094b4fbaf77ad6ebeb",
+      "position": [
+        -4,
+        2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--1-1",
+      "assetId": "part-add5f7040084fbad8df6",
+      "position": [
+        -2,
+        2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-0-1",
+      "assetId": "part-7ec54250fbcf112c0861",
+      "position": [
+        0,
+        2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-1-1",
+      "assetId": "part-1a7d03bf8c7aabde4976",
+      "position": [
+        2,
+        2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-2-1",
+      "assetId": "part-8d853ce060a72d6e1e39",
+      "position": [
+        4,
+        2,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--2-2",
+      "assetId": "part-7b265b4d073afc9bf127",
+      "position": [
+        -4,
+        4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor--1-2",
+      "assetId": "part-152849dcee209e8ef9ac",
+      "position": [
+        -2,
+        4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-0-2",
+      "assetId": "part-2ecd61f4910b8988dd2c",
+      "position": [
+        0,
+        4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-1-2",
+      "assetId": "part-0f1f4618418c21228e80",
+      "position": [
+        2,
+        4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "floor-2-2",
+      "assetId": "part-c2db52503da57679ba31",
+      "position": [
+        4,
+        4,
+        -0.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--3--5",
+      "assetId": "part-f4b0cfbfdcdfd800e350",
+      "position": [
+        -5.125,
+        -9.125,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--2--5",
+      "assetId": "part-9a74ad0724eb741a2b63",
+      "position": [
+        -4,
+        -9.1875,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--3--4",
+      "assetId": "part-070229a9a22dcd1fc3e1",
+      "position": [
+        -5.1875,
+        -8,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--2--4",
+      "assetId": "part-a086c1f719d417b167f3",
+      "position": [
+        -4,
+        -8,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--3--3",
+      "assetId": "part-328e6e9149ea347b95d7",
+      "position": [
+        -5.125,
+        -6,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--2--3",
+      "assetId": "part-6e64c7b0aa0165cbe846",
+      "position": [
+        -4.6875,
+        -6,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--3--2",
+      "assetId": "part-f198db40cdb355118c21",
+      "position": [
+        -5.1875,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--2--2",
+      "assetId": "part-1f4f2ce23a20dba31e8b",
+      "position": [
+        -4,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--3--1",
+      "assetId": "part-328e6e9149ea347b95d7",
+      "position": [
+        -5.125,
+        -2,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--2--1",
+      "assetId": "part-8027121656ac690dd209",
+      "position": [
+        -4.6875,
+        -2,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--3-0",
+      "assetId": "part-0e4aefe72a90960922e9",
+      "position": [
+        -5.1875,
+        0,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--2-0",
+      "assetId": "part-96878a6d75e5c294b532",
+      "position": [
+        -4,
+        0,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--3-1",
+      "assetId": "part-328e6e9149ea347b95d7",
+      "position": [
+        -5.125,
+        2,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--2-1",
+      "assetId": "part-6c3fb1c92331674881a0",
+      "position": [
+        -4,
+        2,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--3-2",
+      "assetId": "part-070229a9a22dcd1fc3e1",
+      "position": [
+        -5.1875,
+        4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--2-2",
+      "assetId": "part-2adc55eddecec9617cf7",
+      "position": [
+        -4.6875,
+        4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-2--5",
+      "assetId": "part-a7c31e5a4591741723d0",
+      "position": [
+        4,
+        -9.1875,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-3--5",
+      "assetId": "part-305bece95974253b0fbc",
+      "position": [
+        5.125,
+        -9.125,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-2--4",
+      "assetId": "part-262364013153b9117f95",
+      "position": [
+        4,
+        -8,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-3--4",
+      "assetId": "part-915dc23e886f070d75c4",
+      "position": [
+        5.125,
+        -8,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-2--3",
+      "assetId": "part-c8b14cc871b1aad06c36",
+      "position": [
+        4.6875,
+        -6,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-3--3",
+      "assetId": "part-29a2b4f5499e93c9edca",
+      "position": [
+        5.125,
+        -6,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-2--2",
+      "assetId": "part-0bf0c79e5a52a9cee388",
+      "position": [
+        4,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-3--2",
+      "assetId": "part-386f7415c520e22bd6b6",
+      "position": [
+        5.125,
+        -4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-2--1",
+      "assetId": "part-16ad11623e8457b9fa65",
+      "position": [
+        4.6875,
+        -2,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-3--1",
+      "assetId": "part-29a2b4f5499e93c9edca",
+      "position": [
+        5.125,
+        -2,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-2-0",
+      "assetId": "part-3b538ddb00f4d1a7d749",
+      "position": [
+        4,
+        0,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-3-0",
+      "assetId": "part-23d5284bc8c7e3ad49d7",
+      "position": [
+        5.125,
+        0,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-2-1",
+      "assetId": "part-c561706cce53aba7f13e",
+      "position": [
+        4.1875,
+        2,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-3-1",
+      "assetId": "part-29a2b4f5499e93c9edca",
+      "position": [
+        5.125,
+        2,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-2-2",
+      "assetId": "part-3b10a5b6237f977755ea",
+      "position": [
+        4.6875,
+        4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-3-2",
+      "assetId": "part-915dc23e886f070d75c4",
+      "position": [
+        5.125,
+        4,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--1--5",
+      "assetId": "part-4d2655e20be90a6b2257",
+      "position": [
+        -2,
+        -9.125,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--1--4",
+      "assetId": "part-8a552b558b8807293eed",
+      "position": [
+        -2,
+        -8,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-0--5",
+      "assetId": "part-b4de51cd37611d574002",
+      "position": [
+        0,
+        -9.125,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-0--4",
+      "assetId": "part-494f1ec5dcdcd3375a1a",
+      "position": [
+        0,
+        -8.875,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-1--5",
+      "assetId": "part-4d2655e20be90a6b2257",
+      "position": [
+        2,
+        -9.125,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-1--4",
+      "assetId": "part-422bf815cc05a72270f8",
+      "position": [
+        2,
+        -8,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-control-seat",
+      "assetId": "part-c0b6b036f5b3dd8bd2f3",
+      "position": [
+        0,
+        6,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-control-console",
+      "assetId": "part-d9f37a5f7ea6e8d13254",
+      "position": [
+        0,
+        7.25,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-locker--4.7--6",
+      "assetId": "part-c03ec0260cd7329050a8",
+      "position": [
+        -4.6875,
+        -6,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-locker--4.7--2",
+      "assetId": "part-c03ec0260cd7329050a8",
+      "position": [
+        -4.6875,
+        -2,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-locker--4.7-2",
+      "assetId": "part-c03ec0260cd7329050a8",
+      "position": [
+        -4.6875,
+        2,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-locker-4.7--6",
+      "assetId": "part-c03ec0260cd7329050a8",
+      "position": [
+        4.6875,
+        -6,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-locker-4.7--2",
+      "assetId": "part-c03ec0260cd7329050a8",
+      "position": [
+        4.6875,
+        -2,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-locker-4.7-2",
+      "assetId": "part-c03ec0260cd7329050a8",
+      "position": [
+        4.6875,
+        2,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3--5",
+      "assetId": "part-77cb6148602659b39502",
+      "position": [
+        -5.375,
+        -9.25,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--2--5",
+      "assetId": "part-cc46be4cf37030e6a389",
+      "position": [
+        -4,
+        -9.375,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3--4",
+      "assetId": "part-18280ba6cc037eb433dc",
+      "position": [
+        -5.5,
+        -8,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3--3",
+      "assetId": "part-a754ceb1ebef9f1395d9",
+      "position": [
+        -5.625,
+        -6,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3--2",
+      "assetId": "part-3da4aef9b526b104b324",
+      "position": [
+        -5.5625,
+        -4,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3--1",
+      "assetId": "part-e21a69be0c5b6a98e812",
+      "position": [
+        -5.5,
+        -2,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3-0",
+      "assetId": "part-91c8f3d728f25c968810",
+      "position": [
+        -5.5,
+        0,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3-1",
+      "assetId": "part-0fe602115d20ec950357",
+      "position": [
+        -5.625,
+        2,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3-2",
+      "assetId": "part-0ac1e39dec34655a366f",
+      "position": [
+        -5.5,
+        4,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3-3",
+      "assetId": "part-dd83177cdf0e1d968cb7",
+      "position": [
+        -5.625,
+        6,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--3-4",
+      "assetId": "part-b351480b6386fb131dc0",
+      "position": [
+        -5.5,
+        8,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-2--5",
+      "assetId": "part-9046031ff83521748fa1",
+      "position": [
+        4,
+        -9.375,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3--5",
+      "assetId": "part-f4ffbb8320323e7acc45",
+      "position": [
+        5.375,
+        -9.25,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3--4",
+      "assetId": "part-7b28f47930a6f7cbdf10",
+      "position": [
+        5.5,
+        -8,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3--3",
+      "assetId": "part-3cb4b658b677f06829b6",
+      "position": [
+        5.5625,
+        -6,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3--2",
+      "assetId": "part-0558bcda4ab0cb8c9f70",
+      "position": [
+        5.5625,
+        -4,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3--1",
+      "assetId": "part-8ddb637a40bd23dfd03a",
+      "position": [
+        5.5,
+        -2,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3-0",
+      "assetId": "part-1c0570cdd9d7bc9d67da",
+      "position": [
+        5.5,
+        0,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3-1",
+      "assetId": "part-505abaccb2279cad2d0f",
+      "position": [
+        5.5625,
+        2,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3-2",
+      "assetId": "part-f307639bad50377eba7b",
+      "position": [
+        5.5,
+        4,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3-3",
+      "assetId": "part-66a37b7990899a620125",
+      "position": [
+        5.5625,
+        6,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-3-4",
+      "assetId": "part-2143e7c0fcb3b5b3270f",
+      "position": [
+        5.5,
+        8,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure--1--5",
+      "assetId": "part-c65fb5ae4553c6c26a8a",
+      "position": [
+        -2,
+        -9.375,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-0--5",
+      "assetId": "part-dd8a6e1947e768593d77",
+      "position": [
+        0,
+        -9.375,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "superstructure-1--5",
+      "assetId": "part-c65fb5ae4553c6c26a8a",
+      "position": [
+        2,
+        -9.375,
+        -0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--1--3",
+      "assetId": "part-4f7ae9b4ef6a0797b795",
+      "position": [
+        -1.375,
+        -6,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--1--2",
+      "assetId": "part-ddf6d537b7d731206eb9",
+      "position": [
+        -2.125,
+        -4,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--1--1",
+      "assetId": "part-03ff3a1f9d4a892cbaab",
+      "position": [
+        -1.375,
+        -2.5,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--1-0",
+      "assetId": "part-700cbf3cd394356b4eaf",
+      "position": [
+        -2.0625,
+        0,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--1-1",
+      "assetId": "part-b68b5bb424b607ab7458",
+      "position": [
+        -2.0625,
+        1.75,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall--1-2",
+      "assetId": "part-dea5602de2d4f24d79cb",
+      "position": [
+        -1.375,
+        4.25,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-1--3",
+      "assetId": "part-880c67421085b52fac3c",
+      "position": [
+        1.375,
+        -6,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-1--2",
+      "assetId": "part-6084a1d605103c8b6110",
+      "position": [
+        2.0625,
+        -4,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-1--1",
+      "assetId": "part-0975008f8da949152b98",
+      "position": [
+        1.375,
+        -2.5,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-1-0",
+      "assetId": "part-8041df3803cadce3c472",
+      "position": [
+        2.0625,
+        0,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-1-1",
+      "assetId": "part-1850147a0c9d014b6db4",
+      "position": [
+        1.75,
+        1.75,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "wall-1-2",
+      "assetId": "part-6661a7a3369cae1e3e9d",
+      "position": [
+        1.375,
+        4.25,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-engineering",
+      "assetId": "part-77728ecc8ad36b0ff45f",
+      "position": [
+        -3.6875,
+        -6,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-hydroponics-tray--2.4",
+      "assetId": "part-acbbef7209c4ef100693",
+      "position": [
+        -3.6875,
+        -2.375,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-hydroponics-tray--1.5",
+      "assetId": "part-acbbef7209c4ef100693",
+      "position": [
+        -3.6875,
+        -1.5,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-hydroponics-tray--0.6",
+      "assetId": "part-acbbef7209c4ef100693",
+      "position": [
+        -3.6875,
+        -0.625,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-storage-container-2.15-0.25",
+      "assetId": "part-827961a32d599c00edef",
+      "position": [
+        -3.6875,
+        2.0625,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-storage-container-2.15-1",
+      "assetId": "part-827961a32d599c00edef",
+      "position": [
+        -3.6875,
+        2.0625,
+        1
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-storage-container-3.5-0.25",
+      "assetId": "part-56f197cde09c88860e9c",
+      "position": [
+        -3.6875,
+        3.4375,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-storage-container-3.5-1",
+      "assetId": "part-56f197cde09c88860e9c",
+      "position": [
+        -3.6875,
+        3.4375,
+        1
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-crew",
+      "assetId": "part-c41467ac46f6b350df24",
+      "position": [
+        3.6875,
+        -6,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-medbay",
+      "assetId": "part-cc610ba071b8eb38ab8c",
+      "position": [
+        3.6875,
+        -1.5,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "room-lounge",
+      "assetId": "part-73df516feb786d73fc5e",
+      "position": [
+        3.6875,
+        3,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-bridge-bank--1.3",
+      "assetId": "part-75910d7a0d27dfc17aaf",
+      "position": [
+        -1.3125,
+        7.25,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "equipment-bridge-bank-1.3",
+      "assetId": "part-0f14bf002f4c11854337",
+      "position": [
+        1.25,
+        7.25,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--3--5",
+      "assetId": "part-50898252a921c7be50b3",
+      "position": [
+        -5.125,
+        -9.25,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--2--5",
+      "assetId": "part-5c53af159a14e3454da7",
+      "position": [
+        -4,
+        -9.25,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--3--4",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        -5.125,
+        -8,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--2--4",
+      "assetId": "part-b86fe448a0cdd955e88b",
+      "position": [
+        -4,
+        -8,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--1--5",
+      "assetId": "part-712235769fd1db178911",
+      "position": [
+        -2,
+        -9.25,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--1--4",
+      "assetId": "part-d5a958cd5c64f788d607",
+      "position": [
+        -2,
+        -8,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-0--5",
+      "assetId": "part-712235769fd1db178911",
+      "position": [
+        0,
+        -9.25,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-0--4",
+      "assetId": "part-ccf7c8d305f71dc5f596",
+      "position": [
+        0,
+        -8,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-1--5",
+      "assetId": "part-712235769fd1db178911",
+      "position": [
+        2,
+        -9.25,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-1--4",
+      "assetId": "part-3a18bc76a2d47e563b4b",
+      "position": [
+        2,
+        -8,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-2--5",
+      "assetId": "part-1d5c3e6be30e7f2cda99",
+      "position": [
+        4,
+        -9.25,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-2--4",
+      "assetId": "part-acb9d36d47113a25ad84",
+      "position": [
+        4,
+        -8,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-3--5",
+      "assetId": "part-50898252a921c7be50b3",
+      "position": [
+        5.125,
+        -9.25,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-3--4",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        5.125,
+        -8,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--3--3",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        -5.125,
+        -6,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--2--3",
+      "assetId": "part-34accc51ea8752a66670",
+      "position": [
+        -4,
+        -6,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--1--3",
+      "assetId": "part-e188bf92bb905027d600",
+      "position": [
+        -2,
+        -6,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-0--3",
+      "assetId": "part-06fe670dace09ce26bdf",
+      "position": [
+        0,
+        -6,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-1--3",
+      "assetId": "part-e14864df3df74006207a",
+      "position": [
+        2,
+        -6,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-2--3",
+      "assetId": "part-df744c52b2f4f085efc3",
+      "position": [
+        4,
+        -6,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-3--3",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        5.125,
+        -6,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--3--2",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        -5.125,
+        -4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--2--2",
+      "assetId": "part-834cca417ad1520fb91b",
+      "position": [
+        -4,
+        -4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--1--2",
+      "assetId": "part-06c58ee456dae94b1772",
+      "position": [
+        -2,
+        -4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-0--2",
+      "assetId": "part-2760976b04d38507b400",
+      "position": [
+        0,
+        -4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-1--2",
+      "assetId": "part-a4eed62e70496db38a2a",
+      "position": [
+        2,
+        -4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-2--2",
+      "assetId": "part-8ca6ba766169b463abbf",
+      "position": [
+        4,
+        -4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-3--2",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        5.125,
+        -4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--3--1",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        -5.125,
+        -2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--2--1",
+      "assetId": "part-9c1ccfb3902a1e19de44",
+      "position": [
+        -4,
+        -2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--1--1",
+      "assetId": "part-2353952b313ac7582770",
+      "position": [
+        -2,
+        -2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-0--1",
+      "assetId": "part-e7f6d59dd9f860ed57d6",
+      "position": [
+        0,
+        -2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-1--1",
+      "assetId": "part-ca1cbb89761ec5c604b8",
+      "position": [
+        2,
+        -2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-2--1",
+      "assetId": "part-196967a04cc184797d72",
+      "position": [
+        4,
+        -2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-3--1",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        5.125,
+        -2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--3-0",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        -5.125,
+        0,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--2-0",
+      "assetId": "part-9fe552c6f9293ec26860",
+      "position": [
+        -4,
+        0,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--1-0",
+      "assetId": "part-61e4ccf651374ea0d773",
+      "position": [
+        -2,
+        0,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-0-0",
+      "assetId": "part-701ca6e3c7861c04acbf",
+      "position": [
+        0,
+        0,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-1-0",
+      "assetId": "part-a87c82cebb4bbbf8db11",
+      "position": [
+        2,
+        0,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-2-0",
+      "assetId": "part-ae18e82003fce6d677bc",
+      "position": [
+        4,
+        0,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-3-0",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        5.125,
+        0,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--3-1",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        -5.125,
+        2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--2-1",
+      "assetId": "part-229a43bbe1eb96367621",
+      "position": [
+        -4,
+        2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--1-1",
+      "assetId": "part-5838f5816573759b23e7",
+      "position": [
+        -2,
+        2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-0-1",
+      "assetId": "part-4c52da8cda73444f19d3",
+      "position": [
+        0,
+        2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-1-1",
+      "assetId": "part-771b73697fcd1af0ffe1",
+      "position": [
+        2,
+        2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-2-1",
+      "assetId": "part-4a4b34fe2247bfa2ed2a",
+      "position": [
+        4,
+        2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-3-1",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        5.125,
+        2,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--3-2",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        -5.125,
+        4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--2-2",
+      "assetId": "part-12e80210cf3fd09756c0",
+      "position": [
+        -4,
+        4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof--1-2",
+      "assetId": "part-d4a9faaa669f3ecc29fd",
+      "position": [
+        -2,
+        4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-0-2",
+      "assetId": "part-8f65f9fd39b16b2bec9e",
+      "position": [
+        0,
+        4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-1-2",
+      "assetId": "part-b5a08afd6c5d6c897d51",
+      "position": [
+        2,
+        4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-2-2",
+      "assetId": "part-ecfd7775a5086626cd96",
+      "position": [
+        4,
+        4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "roof-3-2",
+      "assetId": "part-05049180a0e5eceefc12",
+      "position": [
+        5.125,
+        4,
+        2.6875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "decoration-0--3",
+      "assetId": "part-309c54ab7d04658a554d",
+      "position": [
+        0.75,
+        -5.1875,
+        3.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "decoration-0-1",
+      "assetId": "part-309c54ab7d04658a554d",
+      "position": [
+        0.75,
+        1.5625,
+        3.375
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "drives-main--3.6",
+      "assetId": "part-e8b51ac6443c73becfcb",
+      "position": [
+        -3.625,
+        -11.5625,
+        0.125
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "drives-main-3.6",
+      "assetId": "part-4d754a140cc642ded990",
+      "position": [
+        3.625,
+        -11.5625,
+        0.125
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "drives-main-0",
+      "assetId": "part-e15ef10ca93701b58ccb",
+      "position": [
+        0,
+        -11,
+        0.1875
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "drives-maneuver--1--6.5",
+      "assetId": "part-a9dcbf6707ca20039a5c",
+      "position": [
+        -6.375,
+        -6.5,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "drives-maneuver--1-6.5",
+      "assetId": "part-a9dcbf6707ca20039a5c",
+      "position": [
+        -6.375,
+        6.5,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "drives-maneuver-1--6.5",
+      "assetId": "part-a06cfaab58b430855803",
+      "position": [
+        6.375,
+        -6.5,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "drives-maneuver-1-6.5",
+      "assetId": "part-a06cfaab58b430855803",
+      "position": [
+        6.375,
+        6.5,
+        0.25
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "drives-retro--1",
+      "assetId": "part-393498d8c8af6149ef28",
+      "position": [
+        -5.5,
+        8,
+        0.3125
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "drives-retro-1",
+      "assetId": "part-393498d8c8af6149ef28",
+      "position": [
+        5.5,
+        8,
+        0.3125
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-square-00",
+      "assetId": "part-5adddce8ec67610eb184",
+      "position": [
+        -5,
+        5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-square-02",
+      "assetId": "part-5adddce8ec67610eb184",
+      "position": [
+        -3,
+        5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-square-04",
+      "assetId": "part-5adddce8ec67610eb184",
+      "position": [
+        -1,
+        5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-square-06",
+      "assetId": "part-5adddce8ec67610eb184",
+      "position": [
+        1,
+        5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-square-08",
+      "assetId": "part-5adddce8ec67610eb184",
+      "position": [
+        3,
+        5,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-square-10",
+      "assetId": "part-5adddce8ec67610eb184",
+      "position": [
+        -3,
+        7,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-square-12",
+      "assetId": "part-5adddce8ec67610eb184",
+      "position": [
+        -1,
+        7,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-square-14",
+      "assetId": "part-5adddce8ec67610eb184",
+      "position": [
+        1,
+        7,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-corner45-16",
+      "assetId": "part-4d0b42d4ad4a5f878bf4",
+      "position": [
+        3,
+        7,
+        0
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-floor-corner45-18",
+      "assetId": "part-4d0b42d4ad4a5f878bf4",
+      "position": [
+        -3,
+        7,
+        0
+      ],
+      "rotation": 1.5707963267948966,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-hull-straight-20",
+      "assetId": "part-9f076369bde5b227829a",
+      "position": [
+        5,
+        5,
+        0.1875
+      ],
+      "rotation": 1.5707963267948966,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-hull-straight-22",
+      "assetId": "part-9f076369bde5b227829a",
+      "position": [
+        -5,
+        7,
+        0.1875
+      ],
+      "rotation": -1.5707963267948966,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-hull-straight-28",
+      "assetId": "part-9f076369bde5b227829a",
+      "position": [
+        3,
+        9,
+        0.1875
+      ],
+      "rotation": 3.141592653589793,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-hull-straight-32",
+      "assetId": "part-9f076369bde5b227829a",
+      "position": [
+        -1,
+        9,
+        0.1875
+      ],
+      "rotation": 3.141592653589793,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-hull-diagonal45-24",
+      "assetId": "part-4a8eab4b82796b19ebfe",
+      "position": [
+        5,
+        7,
+        0.1875
+      ],
+      "rotation": 1.5707963267948966,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-hull-diagonal45-26",
+      "assetId": "part-4a8eab4b82796b19ebfe",
+      "position": [
+        -3,
+        9,
+        0.1875
+      ],
+      "rotation": 3.141592653589793,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-bow-transom-30",
+      "assetId": "part-9211fc86e04c4b23402b",
+      "position": [
+        1,
+        9,
+        0.1875
+      ],
+      "rotation": 3.141592653589793,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-canopy-straight-21",
+      "assetId": "part-1c7076c89e3593dd5587",
+      "position": [
+        5,
+        5,
+        1.3125
+      ],
+      "rotation": 1.5707963267948966,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-canopy-straight-23",
+      "assetId": "part-1c7076c89e3593dd5587",
+      "position": [
+        -5,
+        7,
+        1.3125
+      ],
+      "rotation": -1.5707963267948966,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-canopy-straight-29",
+      "assetId": "part-1c7076c89e3593dd5587",
+      "position": [
+        3,
+        9,
+        1.3125
+      ],
+      "rotation": 3.141592653589793,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-canopy-straight-31",
+      "assetId": "part-1c7076c89e3593dd5587",
+      "position": [
+        1,
+        9,
+        1.3125
+      ],
+      "rotation": 3.141592653589793,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-canopy-straight-33",
+      "assetId": "part-1c7076c89e3593dd5587",
+      "position": [
+        -1,
+        9,
+        1.3125
+      ],
+      "rotation": 3.141592653589793,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-canopy-diagonal45-25",
+      "assetId": "part-d244db24147e2f1a4b9a",
+      "position": [
+        5,
+        7,
+        1.3125
+      ],
+      "rotation": 1.5707963267948966,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-canopy-diagonal45-27",
+      "assetId": "part-d244db24147e2f1a4b9a",
+      "position": [
+        -3,
+        9,
+        1.3125
+      ],
+      "rotation": 3.141592653589793,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-square-01",
+      "assetId": "part-14404bc85f3a72ad3ab8",
+      "position": [
+        -5,
+        5,
+        2.625
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-square-03",
+      "assetId": "part-14404bc85f3a72ad3ab8",
+      "position": [
+        -3,
+        5,
+        2.625
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-square-05",
+      "assetId": "part-14404bc85f3a72ad3ab8",
+      "position": [
+        -1,
+        5,
+        2.625
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-square-07",
+      "assetId": "part-14404bc85f3a72ad3ab8",
+      "position": [
+        1,
+        5,
+        2.625
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-square-09",
+      "assetId": "part-14404bc85f3a72ad3ab8",
+      "position": [
+        3,
+        5,
+        2.625
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-square-11",
+      "assetId": "part-14404bc85f3a72ad3ab8",
+      "position": [
+        -3,
+        7,
+        2.625
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-square-13",
+      "assetId": "part-14404bc85f3a72ad3ab8",
+      "position": [
+        -1,
+        7,
+        2.625
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-square-15",
+      "assetId": "part-14404bc85f3a72ad3ab8",
+      "position": [
+        1,
+        7,
+        2.625
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-corner45-17",
+      "assetId": "part-a71041f7edfcbbd17fd1",
+      "position": [
+        3,
+        7,
+        2.625
+      ],
+      "rotation": 0,
+      "flipped": false,
+      "removedCells": []
+    },
+    {
+      "id": "pilot-review-roof-corner45-19",
+      "assetId": "part-a71041f7edfcbbd17fd1",
+      "position": [
+        -3,
+        7,
+        2.625
+      ],
+      "rotation": 1.5707963267948966,
+      "flipped": false,
+      "removedCells": []
+    }
+  ]
+}

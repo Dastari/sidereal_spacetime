@@ -1,0 +1,17 @@
+{
+  "extends": "../../tsconfig.json",
+  "include": [
+    "mesh_construction.ts",
+    "mesh_equipment_review.ts",
+    "check_equipment_fit.ts",
+    "check_hull_review.ts",
+    "check_pilot_context.ts",
+    "check_pilot_r002.ts",
+    "check_pilot_r003.ts",
+    "check_pilot_r004.ts",
+    "check_pilot_r005.ts",
+    "check_pilot_r006.ts",
+    "check_floor_review.ts",
+    "check_roof_placement.ts"
+  ]
+}

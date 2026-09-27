@@ -11,7 +11,7 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { equipmentPlacement } from "./installed-equipment";
 import { canInstancePlacement } from "./placement-instance";
 import { createObjectPresentation } from "./object-presentation";
-import type { PartAsset } from "../../content/src/assembly";
+import type { PartAsset } from "@sidereal/content/assembly";
 import manifest from "./instanceable-assets.json";
 
 test("pinned opaque kits instance with independent identity, transforms and selection masks", () => {

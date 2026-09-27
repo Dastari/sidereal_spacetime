@@ -8,40 +8,6 @@ export type Motion = {
 };
 export type Intent = { throttle: number; turn: number };
 export const DT = 1 / 60;
-export function integrate(
-  state: Motion,
-  intent: Intent,
-  massKg: number,
-  thrustN: number,
-  turnAcceleration: number,
-): Motion {
-  if (
-    ![
-      state.x,
-      state.y,
-      state.vx,
-      state.vy,
-      state.heading,
-      state.omega,
-      intent.throttle,
-      intent.turn,
-      massKg,
-      thrustN,
-      turnAcceleration,
-    ].every(Number.isFinite) ||
-    massKg <= 0
-  )
-    throw new Error("Invalid physical state");
-  const omega =
-    state.omega +
-    Math.max(-1, Math.min(1, intent.turn)) * turnAcceleration * DT;
-  const heading = state.heading + omega * DT;
-  const acceleration =
-    (Math.max(-1, Math.min(1, intent.throttle)) * thrustN) / massKg;
-  const vx = state.vx - Math.sin(heading) * acceleration * DT;
-  const vy = state.vy + Math.cos(heading) * acceleration * DT;
-  return { x: state.x + vx * DT, y: state.y + vy * DT, vx, vy, heading, omega };
-}
 export const WALK_SPEED_MPS = 2.5;
 export const SPRINT_SPEED_MPS = 4.5;
 export function walk(
@@ -57,7 +23,8 @@ export function walk(
   }[] = [],
   sprint = false,
   constrain: (x: number, y: number) => { x: number; y: number } = (px, py) => ({
-    x: Math.max(-4, Math.min(4, px)), y: Math.max(-8, Math.min(8, py)),
+    x: Math.max(-4, Math.min(4, px)),
+    y: Math.max(-8, Math.min(8, py)),
   }),
 ): { x: number; y: number } {
   if (![x, y, dx, dy].every(Number.isFinite) || typeof sprint !== "boolean")
@@ -78,7 +45,10 @@ export function walk(
     );
   if (blocked(next.x, y)) next.x = x;
   const constrainedY = constrain(next.x, rawY);
-  if (Math.abs(constrainedY.x - next.x) < 1e-9 && !blocked(next.x, constrainedY.y))
+  if (
+    Math.abs(constrainedY.x - next.x) < 1e-9 &&
+    !blocked(next.x, constrainedY.y)
+  )
     next.y = constrainedY.y;
   return next;
 }
