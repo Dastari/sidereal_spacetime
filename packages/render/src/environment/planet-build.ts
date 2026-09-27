@@ -1,7 +1,7 @@
 import {
   planetEffects,
   type PlanetRecipe,
-} from "../../../content/src/environment";
+} from "@sidereal/content/environment";
 import {
   buildLayeredTerrain,
   terrainResolution,

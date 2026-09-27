@@ -1,3 +1,13 @@
+import { derivePrefabStructure } from "./prefab-structure";
+import {
+  planWayfarerExteriorGame,
+  verifyQualifiedWayfarerExterior,
+  type WayfarerExteriorDocument,
+} from "./wayfarer-exterior-qualification";
+import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
+import { verifyWayfarerRebuildSource } from "./wayfarer-rebuild-contract";
+import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
+import { planPinnedInsetBoundaries } from "./construction-inset-boundaries";
 import { readNativeAirlockDocument } from "./construction-airlock-document";
 import { validateNativeStairRoomDocument } from "./construction-stairs-document";
 import { validateNativeTraversalRoomDocument } from "./construction-traversal-document";
@@ -21,7 +31,7 @@ import {
   type ConstructionSnapshot,
 } from "@sidereal/content/construction";
 import floorKitJson from "@sidereal/content/construction-floor-interfaces.json";
-import type { TilesetInterface } from "../../content/src/tileset-interfaces";
+import type { TilesetInterface } from "@sidereal/content/tileset-interfaces";
 import { readLayout } from "./layout-validation";
 import { compileLayout } from "./layout-compiler";
 import {
@@ -30,6 +40,16 @@ import {
   compareText,
 } from "./layout-geometry";
 import { fitTileset } from "./tileset-fit";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import { prefabComponentCatalogFor } from "./prefab-catalog";
+import {
+  isPrefabConstruction,
+  prefabConstructionDocument,
+  restorePrefabSourceIdentities,
+  type PrefabConstructionDocument,
+} from "./prefab-construction";
+/** Pure memo of prefab canonicals already proven equal to their grammar derivation. */
+const VERIFIED_PREFAB_CANONICALS = new Set<string>();
 export const PINNED_FLOOR_KIT = floorKitJson as unknown as TilesetInterface;
 export const constructionHash = (text: string | Uint8Array) =>
   bytesToHex(
@@ -86,7 +106,10 @@ export function constructionOperation(
   return { request: canonical, replay: null };
 }
 /** Pure server/client shared compiler. Input admission precedes any quadratic fit work. */
-export function readConstructionDraft(raw: string): {
+export function readConstructionDraft(
+  raw: string,
+  options: { prefabDerivation?: boolean } = {},
+): {
   canonical: string;
   sha256: string;
 } {
@@ -111,6 +134,9 @@ export function readConstructionDraft(raw: string): {
           "traversalRoom",
           "stairRoom",
           "airlockRoom",
+          "wayfarerRebuild",
+          "wayfarerExterior",
+          "prefab",
         ].includes(k),
     )
   )
@@ -138,7 +164,9 @@ export function readConstructionDraft(raw: string): {
       (stableStringify(input.boundaryKit) !==
         stableStringify(CONSTRUCTION_BOUNDARY_PIN) &&
         stableStringify(input.boundaryKit) !==
-          stableStringify(CONSTRUCTION_BOUNDARY_FAMILY_PIN)))
+          stableStringify(CONSTRUCTION_BOUNDARY_FAMILY_PIN) &&
+        stableStringify(input.boundaryKit) !==
+          stableStringify(CONSTRUCTION_INSET_VISUAL_PIN)))
   )
     throw Error("Pinned boundary interface revision mismatch");
   if (
@@ -217,13 +245,77 @@ export function readConstructionDraft(raw: string): {
     (a, b) => compareText(a.id, b.id) || compareText(a.revision, b.revision),
   );
   normalized.floors.sort((a, b) => compareText(a.id, b.id));
+  normalized.layout.serviceConnections?.sort((a, b) => compareText(a.id, b.id));
+  if (normalized.wayfarerRebuild) verifyWayfarerRebuildSource(normalized);
+  if (normalized.wayfarerExterior)
+    verifyQualifiedWayfarerExterior(normalized as WayfarerExteriorDocument);
   const canonical = stableStringify(normalized);
+  if (input.prefab !== undefined && !options.prefabDerivation) {
+    // Prefab ships: the walkable layout and floor bindings must equal their grammar
+    // derivation exactly (after the same normalisation), and nothing else may ride along.
+    // Spawned instances carry an injective identity map back to the source ids.
+    const verifiedKey = constructionHash(canonical);
+    if (!VERIFIED_PREFAB_CANONICALS.has(verifiedKey)) {
+      const binding = input.prefab as Record<string, unknown>;
+      const keys = Object.keys(binding ?? {})
+        .sort()
+        .join(",");
+      if (
+        !record(binding) ||
+        (keys !== "catalog,document,revision,schema" &&
+          keys !== "catalog,document,identities,revision,schema") ||
+        typeof binding.catalog !== "string"
+      )
+        throw Error("Unsupported prefab binding");
+      const catalog = prefabComponentCatalogFor(binding.catalog);
+      const expected = prefabConstructionDocument(
+        readShipPrefab(binding.document),
+        catalog,
+      );
+      const { identities, ...sourceBinding } = binding;
+      if (stableStringify(expected.prefab) !== stableStringify(sourceBinding))
+        throw Error("Prefab binding is not canonical");
+      const source =
+        identities === undefined
+          ? (normalized as unknown as PrefabConstructionDocument)
+          : restorePrefabSourceIdentities(
+              JSON.parse(canonical) as PrefabConstructionDocument,
+              identities,
+            );
+      if (identities === undefined && normalized.layout.source !== null)
+        throw Error("Spawned prefab instance requires an identity map");
+      const derived = readConstructionDraft(JSON.stringify(expected), {
+        prefabDerivation: true,
+      });
+      const actual =
+        identities === undefined
+          ? canonical
+          : readConstructionDraft(JSON.stringify(source), {
+              prefabDerivation: true,
+            }).canonical;
+      if (derived.canonical !== actual)
+        throw Error("Prefab layout differs from its grammar derivation");
+      if (VERIFIED_PREFAB_CANONICALS.size >= 64)
+        VERIFIED_PREFAB_CANONICALS.clear();
+      VERIFIED_PREFAB_CANONICALS.add(verifiedKey);
+    }
+  }
   return { canonical, sha256: constructionHash(canonical) };
 }
 export function compileConstruction(raw: string): ConstructionSnapshot {
   const snapshot = readConstructionDraft(raw),
     input = JSON.parse(snapshot.canonical) as ConstructionDocument,
     layout = input.layout;
+  const inset = input.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id;
+  if (
+    layout.structure?.schema === "sidereal.layout-structure.v2" &&
+    !inset &&
+    !input.wayfarerRebuild &&
+    !input.wayfarerExterior
+  )
+    throw Error(
+      "Boundary-treatment native installation adapters are not yet qualified",
+    );
   if (!input.floors.length || input.floors.length !== layout.tiles.length)
     throw Error("Every semantic floor requires one native interface binding");
   const decks = new Map(layout.decks.map((d) => [d.id, d])),
@@ -276,7 +368,12 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
   if (input.stairRoom) validateNativeStairRoomDocument(input);
   if (input.pressureRoom) validateNativePressureRoomDocument(input);
   if (input.traversalRoom) validateNativeTraversalRoomDocument(input);
-  if (input.boundaryKit?.revision === "r004")
+  if (input.wayfarerExterior)
+    planWayfarerExteriorGame(input as WayfarerExteriorDocument);
+  else if (input.wayfarerRebuild) planWayfarerRebuildGame(input);
+  else if (inset)
+    for (const deck of layout.decks) planPinnedInsetBoundaries(input, deck.id);
+  else if (input.boundaryKit?.revision === "r004")
     for (const deck of layout.decks) planPinnedBoundaryFamily(layout, deck.id);
   else if (input.boundaryKit)
     for (const deck of layout.decks)
@@ -291,6 +388,13 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
     schema: CONSTRUCTION_SCHEMA,
     compiler: CONSTRUCTION_COMPILER,
     ...snapshot,
+    ...(isPrefabConstruction(input)
+      ? {
+          prefabStructure: derivePrefabStructure(
+            readShipPrefab(input.prefab.document),
+          ),
+        }
+      : {}),
     readiness: {
       geometry: true,
       nativeFloors: true,

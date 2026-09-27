@@ -1,0 +1,9 @@
+
+ RUN  v4.1.11 /root/shipyard-armor-editor-pr
+
+
+ Test Files  1 passed (1)
+      Tests  5 passed (5)
+   Start at  08:01:41
+   Duration  1.09s (transform 770ms, setup 0ms, import 909ms, tests 103ms, environment 0ms)
+

@@ -1,4 +1,4 @@
-import type { Point } from "../../content/src/ship-layout";
+import type { FloorTile, Point } from "@sidereal/content/ship-layout";
 export const compareText = (a: string, b: string) =>
   a < b ? -1 : a > b ? 1 : 0;
 export const comparePoint = (a: Point, b: Point) => a[0] - b[0] || a[1] - b[1];
@@ -104,4 +104,51 @@ export function cacheFingerprint(value: unknown): string {
   for (const c of stableStringify(value))
     h = Math.imul(h ^ c.charCodeAt(0), 16777619);
   return (h >>> 0).toString(16).padStart(8, "0");
+}
+
+/** Exact segment support: convex clipping intervals represented as rational pairs. */
+export function segmentSupported(
+  a: Point,
+  b: Point,
+  tiles: FloorTile[],
+): boolean {
+  type Ratio = [number, number];
+  const cmp = (a: Ratio, b: Ratio) =>
+    BigInt(a[0]) * BigInt(b[1]) - BigInt(b[0]) * BigInt(a[1]);
+  const intervals: { lo: Ratio; hi: Ratio }[] = [];
+  for (const t of tiles) {
+    let lo: Ratio = [0, 1],
+      hi: Ratio = [1, 1],
+      valid = true;
+    for (let i = 0; i < t.vertices.length; i++) {
+      const p = t.vertices[i],
+        q = t.vertices[(i + 1) % t.vertices.length],
+        ca = cross(p, q, a),
+        cb = cross(p, q, b),
+        delta = cb - ca;
+      if (delta === 0) {
+        if (ca < 0) {
+          valid = false;
+          break;
+        }
+        continue;
+      }
+      const r: Ratio = delta > 0 ? [-ca, delta] : [ca, -delta];
+      if (delta > 0 && cmp(r, lo) > 0) lo = r;
+      if (delta < 0 && cmp(r, hi) < 0) hi = r;
+      if (cmp(lo, hi) > 0) {
+        valid = false;
+        break;
+      }
+    }
+    if (valid) intervals.push({ lo, hi });
+  }
+  intervals.sort((a, b) => Number(cmp(a.lo, b.lo)));
+  let end: Ratio = [0, 1];
+  for (const i of intervals) {
+    if (cmp(i.lo, end) > 0) return false;
+    if (cmp(i.hi, end) > 0) end = i.hi;
+    if (cmp(end, [1, 1]) >= 0) return true;
+  }
+  return false;
 }

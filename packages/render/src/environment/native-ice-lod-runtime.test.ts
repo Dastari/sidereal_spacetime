@@ -2,7 +2,7 @@ import { afterEach, expect, it, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { Material } from "@babylonjs/core/Materials/material";
-import { planetRecipe } from "../../../content/src/environment";
+import { planetRecipe } from "@sidereal/content/environment";
 import type { NativePlanetKit } from "./native-planet-composition";
 import { createPlanetWorkerClient } from "./planet-worker-client";
 import { createNativeIceLODRuntime } from "./native-ice-lod-runtime";

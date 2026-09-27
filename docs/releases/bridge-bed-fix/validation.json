@@ -1,0 +1,45 @@
+{
+  "status": "passed",
+  "changes": [
+    {
+      "object": "GEO-bunk-post",
+      "previous_depth_m": 0.1400001049041748,
+      "depth_m": 0.18,
+      "panel_face_separation_m": 0.02
+    },
+    {
+      "object": "GEO-bunk-post.001",
+      "previous_depth_m": 0.1400001049041748,
+      "depth_m": 0.18,
+      "panel_face_separation_m": 0.02
+    },
+    {
+      "object": "GEO-bunk-post.002",
+      "previous_depth_m": 0.1400001049041748,
+      "depth_m": 0.18,
+      "panel_face_separation_m": 0.02
+    },
+    {
+      "object": "GEO-bunk-post.003",
+      "previous_depth_m": 0.1400001049041748,
+      "depth_m": 0.18,
+      "panel_face_separation_m": 0.02
+    }
+  ],
+  "bounds_m": {
+    "min": [
+      -0.6700000166893005,
+      -1.333125114440918,
+      0.0
+    ],
+    "max": [
+      0.6700000166893005,
+      1.333125114440918,
+      1.9900000095367432
+    ]
+  },
+  "triangles": 5712,
+  "materials": 9,
+  "occupancy": "Existing proxy retained; visual bounds remain within catalog envelope",
+  "glb_sha256": "a5b58c4707df1e37aa70fa40e7d052e63be141df7703cd75337abe0e7610b4c7"
+}

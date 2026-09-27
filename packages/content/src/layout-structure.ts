@@ -7,7 +7,7 @@ export interface HullEnvelope {
   width: number;
   length: number;
   height: number;
-  /** Minimum usable X/Y and lowest deck datum. Armor may extend outside XY. */
+  /** Minimum structural X/Y and lowest floor-bottom datum. This is not navigation clearance. Armor has separate declared reservations. */
   origin: [number, number, number];
 }
 export interface FloorStyle {
@@ -15,7 +15,7 @@ export interface FloorStyle {
   /** Exact native asset revision; assigning this does not qualify its geometry. */
   model?: { assetId: string; revision: string };
 }
-export interface LayoutStructure {
+export interface LayoutStructureV1 {
   schema: "sidereal.layout-structure.v1";
   hull: HullEnvelope;
   /** Wall nodes on supported subdivisions of the 64-unit / 2 m module. */
@@ -32,3 +32,13 @@ export interface LayoutStructure {
     top: number;
   }[];
 }
+
+/** Explicit opt-in. Retained v1 documents keep their original interpretation. */
+export interface LayoutStructureV2 extends Omit<LayoutStructureV1, "schema"> {
+  schema: "sidereal.layout-structure.v2";
+  wallConvention: "inset250-v1";
+  boundaryTreatments: import("./layout-boundary-treatments").BoundaryTreatmentOverride[];
+  navigationReservations: import("./layout-boundary-treatments").NavigationReservation[];
+  deckProfiles: import("./layout-boundary-treatments").StructuralDeckProfile[];
+}
+export type LayoutStructure = LayoutStructureV1 | LayoutStructureV2;

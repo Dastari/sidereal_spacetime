@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    ".": "./src/index.ts"
+    ".": "./src/index.ts",
+    "./shared-entry": "./src/shared-entry.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",

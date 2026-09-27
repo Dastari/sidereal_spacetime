@@ -1,9 +1,11 @@
+import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
 import { firstInventoryPlacement } from "../packages/sim/src/inventory";
 import {
   INVENTORY_DEFINITIONS,
   LIQUID_DENSITY_KG_PER_LITRE,
 } from "../packages/content/src/inventory";
 import { walkNative } from "./native-starter-smoke";
+import { backpackSmoke } from "./backpack-smoke";
 import assert from "node:assert/strict";
 import type { DbConnection } from "../packages/net/src/generated";
 export async function inventorySmoke(
@@ -208,8 +210,11 @@ export async function inventorySmoke(
   // Native starters own empty instance containers. Personal inventory remains
   // private; scoped transfers validate both container revisions and item identity.
   await a.reducers.claimInputControl({});
+  const rebuilt =
+    [...a.db.ownGameShipAccess.iter()][0]?.templateSha256 ===
+    CURRENT_WAYFARER_STARTER.sha256;
   for (const [x, y] of [
-    [-2, -1.5],
+    ...(rebuilt ? [] : [[-2, -1.5]]),
     [0, -1.5],
     [0, 3],
     [-2.4, 3],
@@ -483,6 +488,7 @@ export async function inventorySmoke(
     packGrid.id,
     "quick pickup prefers backpack",
   );
+  const backpack = await backpackSmoke(a, b, wait);
   // Pin the final equipped item explicitly for the reconnect evidence contract.
   await a.reducers.equipInventoryItem({ ...mutation(), itemId: scanner.id });
   return {
@@ -490,5 +496,6 @@ export async function inventorySmoke(
     packId: pack.id,
     pistolId: pistol.id,
     revision: state().revision.toString(),
+    backpack,
   };
 }

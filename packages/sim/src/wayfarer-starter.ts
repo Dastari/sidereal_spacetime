@@ -1,3 +1,11 @@
+import { CURRENT_WAYFARER_STARTER } from "@sidereal/content/wayfarer-current-starter";
+import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
+import {
+  compileDeckCollision,
+  resolveDeckCollision,
+  canOccupyDeck,
+} from "./construction-collision";
+import type { WayfarerStarterTemplate } from "@sidereal/content/wayfarer-current-starter";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import { compileConstruction } from "./construction-transactions";
 import { planConstructionInstance } from "./construction-instance";
@@ -12,6 +20,7 @@ import {
  * transaction; neither is accepted in the onboarding reducer request. */
 export function planWayfarerStarter(input: {
   characterId: string;
+  template?: WayfarerStarterTemplate;
   berth: FlightSpawnPlacement;
   allocateUuid(): string;
   identityExists(id: string): boolean;
@@ -31,15 +40,16 @@ export function planWayfarerStarter(input: {
     used.add(key);
     return id;
   };
-  const snapshot = compileConstruction(WAYFARER_STARTER.documentJson);
-  if (snapshot.sha256 !== WAYFARER_STARTER.sha256)
+  const template = input.template ?? WAYFARER_STARTER;
+  const snapshot = compileConstruction(template.documentJson);
+  if (snapshot.sha256 !== template.sha256)
     throw Error("Trusted starter source hash mismatch");
   const instance = planConstructionInstance(
     snapshot,
     {
-      blueprintRevisionId: WAYFARER_STARTER.blueprintId,
-      expectedBlueprintSha256: WAYFARER_STARTER.sha256,
-      sourceDeckId: WAYFARER_STARTER.sourceDeckId,
+      blueprintRevisionId: template.blueprintId,
+      expectedBlueprintSha256: template.sha256,
+      sourceDeckId: template.sourceDeckId,
       bodyRadiusM: 0.3,
       bodyHeightM: 1.8,
       perimeterHalfWidthM: 0,
@@ -52,6 +62,32 @@ export function planWayfarerStarter(input: {
     },
     fresh,
   );
+  if (template.sha256 === CURRENT_WAYFARER_STARTER.sha256) {
+    const geometry = planWayfarerRebuildGame(instance.document);
+    const frame = resolveDeckCollision(
+      compileDeckCollision(instance.document.layout, instance.spawn.deckId, {
+        shipId: instance.instanceId,
+        perimeterHalfWidthM: 0,
+        partitionHalfWidthM: 0,
+        obstacles: geometry.instanceObstacles,
+      }),
+      [],
+    );
+    const position: [number, number] = [0, -2];
+    if (
+      !canOccupyDeck(
+        frame,
+        {
+          shipId: instance.instanceId,
+          deckId: instance.spawn.deckId,
+          position,
+        },
+        0.3,
+      )
+    )
+      throw Error("Rebuilt starter corridor spawn is not clear");
+    instance.spawn.positionM = position;
+  }
   const functional = planQualifiedWayfarerFunctionalSeeds(instance, fresh);
   const flight = planQualifiedConstructionFlight(
     {
@@ -68,7 +104,7 @@ export function planWayfarerStarter(input: {
     [...used],
   );
   return {
-    entitlement: WAYFARER_STARTER.entitlement,
+    entitlement: template.entitlement,
     characterId: input.characterId,
     instance,
     functional,

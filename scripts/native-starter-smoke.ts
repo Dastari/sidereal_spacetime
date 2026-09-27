@@ -1,3 +1,4 @@
+import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
 import assert from "node:assert/strict";
 import type { DbConnection } from "../packages/net/src/generated";
 import { QUALIFIED_PILOT_APPROACH } from "../packages/sim/src/construction-pilot";
@@ -45,11 +46,19 @@ export async function walkNative(c: DbConnection, x: number, y: number) {
 }
 export async function enterNativePilot(c: DbConnection, fromSpawn = false) {
   if (fromSpawn) {
-    for (const [x, y] of [
-      [-2, -1.5],
-      [0, -1.5],
-      [0, 7],
-    ])
+    const rebuilt =
+      [...c.db.ownGameShipAccess.iter()][0]?.templateSha256 ===
+      CURRENT_WAYFARER_STARTER.sha256;
+    for (const [x, y] of rebuilt
+      ? [
+          [0, -2],
+          [0, 7],
+        ]
+      : [
+          [-2, -1.5],
+          [0, -1.5],
+          [0, 7],
+        ])
       await walkNative(c, x!, y!);
   }
   await walkNative(c, ...QUALIFIED_PILOT_APPROACH);

@@ -1,4 +1,4 @@
-import type { PlanetRecipe } from "../../../content/src/environment";
+import type { PlanetRecipe } from "@sidereal/content/environment";
 import type { NativePlanetKit } from "./native-planet-composition";
 import { composeNativeGlacialInterior } from "./native-glacial-interior";
 /** Preserve authored surfaces and optical attributes; prepare transferable buffers off-thread. */

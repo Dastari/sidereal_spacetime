@@ -1,4 +1,4 @@
-import { setMeshRole } from '../mesh-roles';
+import { setMeshRole } from "../mesh-roles";
 import { Scene } from "@babylonjs/core/scene";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
@@ -27,7 +27,8 @@ export function createPlanetMesh(
   data.applyToMesh(mesh);
   mesh.hasVertexAlpha = false;
   mesh.isPickable = false;
-  mesh.metadata = { role: "planet",
+  mesh.metadata = {
+    role: "planet",
     voxelPlanet: true,
     style: recipe.style,
     faces: geometry.faces,

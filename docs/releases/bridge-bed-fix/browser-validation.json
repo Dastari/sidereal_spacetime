@@ -1,0 +1,10 @@
+{
+  "tallPanels": [
+    "pilot-r004-rear-partition-23",
+    "pilot-r004-rear-partition-24"
+  ],
+  "doorway": true,
+  "url": "http://sidereal.tail7a58a6.ts.net:5173/",
+  "duplicateLowerWall": "6624 cells retired; audit passed",
+  "bunk": "R006 unchanged"
+}

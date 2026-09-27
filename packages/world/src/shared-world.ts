@@ -278,7 +278,13 @@ function caller(ctx: SharedJoinContext, args: JoinSharedSystemArgs) {
 }
 /** Deterministic server berth. Conservative hull bounding circles guarantee no
  * overlap without replacing the actual capsule contact representation. */
-export function reserveBerth(db: SharedWorldDatabase, systemId: string) {
+/** `ownRadiusM` lets larger prefab hulls reserve a wider berth; the default is the
+ * existing Wayfarer lab hull, so current callers are unchanged. */
+export function reserveBerth(
+  db: SharedWorldDatabase,
+  systemId: string,
+  ownRadiusM?: number,
+) {
   const ships = bounded(
     db.shipWorldMotion.by_system.filter(systemId),
     SHARED_SYSTEM_MAX_SHIPS,
@@ -311,7 +317,9 @@ export function reserveBerth(db: SharedWorldDatabase, systemId: string) {
     const berth = { x: axis(i % 16), y: axis(Math.floor(i / 16)) };
     if (
       obstacles.every(
-        (o) => Math.hypot(berth.x - o.x, berth.y - o.y) > radius + o.radius + 4,
+        (o) =>
+          Math.hypot(berth.x - o.x, berth.y - o.y) >
+          Math.max(radius, ownRadiusM ?? 0) + o.radius + 4,
       )
     )
       return berth;
@@ -380,9 +388,12 @@ export function joinSharedSystem(
     "Legacy body",
   );
   const aliases: LegacyAliasRow[] = legacy.map((body) => {
-    const canonical = body.kind === 'asteroid'
-      ? SHARED_SYSTEM_SEED.bodies.find(candidate => candidate.key === body.key)
-      : solarBodyForLegacyKey(body.key);
+    const canonical =
+      body.kind === "asteroid"
+        ? SHARED_SYSTEM_SEED.bodies.find(
+            (candidate) => candidate.key === body.key,
+          )
+        : solarBodyForLegacyKey(body.key);
     if (!canonical || body.kind !== canonical.kind)
       throw new SenderError("Legacy body requires explicit canonical mapping");
     if (ctx.db.legacyBodyAlias.legacyBodyId.find(body.id))

@@ -1,9 +1,17 @@
+import { markShipFlightDirty } from "./construction-flight-dirty";
 import {
   planQualifiedConstructionFlight,
   type ConstructionFlightPlan,
 } from "@sidereal/sim/construction-flight";
 import type { ConstructionFlightContext } from "./construction-flight-authority";
+import {
+  PREFAB_FLIGHT_DEFINITION,
+  planPrefabConstructionFlight,
+} from "@sidereal/sim/prefab-flight";
 
+export type PrefabConstructionFlightPlan = ReturnType<
+  typeof planPrefabConstructionFlight
+>;
 const serialize = (value: unknown) =>
   JSON.stringify(value, (_, v) => (typeof v === "bigint" ? v.toString() : v));
 
@@ -13,7 +21,7 @@ const serialize = (value: unknown) =>
  * seat, grant access, mutate actors/admission/inventory, or write receipts. */
 export function insertQualifiedFlightPlan(
   ctx: ConstructionFlightContext,
-  plan: ConstructionFlightPlan,
+  plan: ConstructionFlightPlan | PrefabConstructionFlightPlan,
 ) {
   const instance = ctx.db.constructionInstance.id.find(plan.instanceId);
   if (!instance?.owner.isEqual(ctx.sender))
@@ -30,7 +38,13 @@ export function insertQualifiedFlightPlan(
     ...plan.actuators.map((a) => a.id),
   ];
   let cursor = 0;
-  const rebuilt = planQualifiedConstructionFlight(instance, plan.motion, () => {
+  // The planner is chosen by the plan's own definition pin; the prefab planner refuses
+  // non-prefab documents, so a forged plan cannot switch reconstruction paths.
+  const planner =
+    plan.definitionId === PREFAB_FLIGHT_DEFINITION
+      ? planPrefabConstructionFlight
+      : planQualifiedConstructionFlight;
+  const rebuilt = planner(instance, plan.motion, () => {
     const id = ids[cursor++];
     if (
       !id ||
@@ -74,6 +88,7 @@ export function insertQualifiedFlightPlan(
     placedObjectId: c.placedObjectId,
     sourceDeviceId: c.sourceDeviceId,
     definitionId: c.definitionId,
+    definitionRevision: c.definitionRevision,
     kind: "computer",
     installed: c.installed,
     powered: c.powered,
@@ -87,6 +102,7 @@ export function insertQualifiedFlightPlan(
       placedObjectId: a.placedObjectId,
       sourceDeviceId: a.sourceDeviceId,
       definitionId: a.definitionId,
+      definitionRevision: a.definitionRevision,
       kind: "actuator",
       installed: true,
       powered: true,
@@ -106,4 +122,5 @@ export function insertQualifiedFlightPlan(
     lifecycle: plan.activation,
     revision: 1n,
   });
+  markShipFlightDirty(ctx, plan.ship.id);
 }

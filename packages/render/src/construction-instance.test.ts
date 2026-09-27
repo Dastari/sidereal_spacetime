@@ -1,14 +1,116 @@
-import {afterEach,expect,test,vi} from 'vitest';
-import {NullEngine} from '@babylonjs/core/Engines/nullEngine';
-import {Scene} from '@babylonjs/core/scene';
-import {TransformNode} from '@babylonjs/core/Meshes/transformNode';
-import {Mesh} from '@babylonjs/core/Meshes/mesh';
-import {emptyLayout,stampTile} from '../../content/src/ship-layout';
-import {bindConstructionLayout} from '../../sim/src/construction-layout';
-import {PINNED_FLOOR_KIT} from '../../sim/src/construction-transactions';
-vi.mock('./installed-equipment',()=>({loadEquipmentPrototypes:async()=>new Map(),equipmentPlacement:(scene:Scene,parent:TransformNode,asset:any,p:any)=>{const node=new TransformNode(p.id,scene);node.parent=parent;node.metadata={partId:p.id,assetId:asset.id};node.position.set(p.position[0],p.position[2],-p.position[1]);const mesh=new Mesh('native-'+p.id,scene);mesh.parent=node;return {node,meshes:[mesh],lighting:{}};}}));
-import {loadConstructionInstance} from './construction-instance';
-afterEach(()=>vi.unstubAllGlobals());
-function fixture(){const layout=emptyLayout('instance','lower');layout.decks.push({...layout.decks[0],id:'upper',name:'Upper',order:1,elevation:128});layout.tiles.push(stampTile('lower-floor','lower','rectangle',[0,0]),stampTile('upper-floor','upper','rectangle',[64,0]));const doc=bindConstructionLayout(layout).document;const n=PINNED_FLOOR_KIT.parts.find(p=>p.id==='square-2m')!.native;const catalog={entries:[{asset:{id:n.assetId,category:'floor',visual:{sha256:n.sha256,nodePrefix:n.nodePrefix,revision:2}},placements:[{id:'old-wayfarer-floor',position:[-5,-9,0]}]}]};return {doc,catalog};}
-test('selected deck uses only authored instance placement and metre elevation, ignoring installed Wayfarer placements',async()=>{const {doc,catalog}=fixture();vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,json:async()=>catalog})));const engine=new NullEngine(),scene=new Scene(engine),root=new TransformNode('instance',scene);try{const result=await loadConstructionInstance(scene,root,{instanceId:'instance',deckId:'upper',documentJson:JSON.stringify(doc)});expect(result.placements).toHaveLength(1);expect(result.placements[0].node.metadata).toMatchObject({partId:'upper-floor',instanceId:'instance',deckId:'upper'});expect(result.placements[0].node.position.asArray()).toEqual([2,4,-0]);expect(result.walkingElevation).toBe(4.1875);expect(result.placements[0].meshes[0].isPickable).toBe(true);expect(result.placements[0].meshes[0].metadata).toMatchObject({partId:"upper-floor",category:"floor",instanceId:"instance",deckId:"upper"});expect(scene.meshes.some(m=>m.name.includes('old-wayfarer'))).toBe(false);}finally{scene.dispose();engine.dispose();}});
-test('wrong native revision hash fails instead of substituting a current catalog asset',async()=>{const {doc,catalog}=fixture();catalog.entries[0].asset.visual.sha256='0'.repeat(64);vi.stubGlobal('fetch',vi.fn(async()=>({ok:true,json:async()=>catalog})));const engine=new NullEngine(),scene=new Scene(engine);try{await expect(loadConstructionInstance(scene,new TransformNode('instance',scene),{instanceId:'instance',deckId:'upper',documentJson:JSON.stringify(doc)})).rejects.toThrow('Pinned');}finally{scene.dispose();engine.dispose();}});
+import { afterEach, expect, test, vi } from "vitest";
+import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
+import { Scene } from "@babylonjs/core/scene";
+import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { emptyLayout, stampTile } from "../../content/src/ship-layout";
+import { bindConstructionLayout } from "../../sim/src/construction-layout";
+import { PINNED_FLOOR_KIT } from "../../sim/src/construction-transactions";
+vi.mock("./installed-equipment", () => ({
+  loadEquipmentPrototypes: async () => new Map(),
+  equipmentPlacement: (
+    scene: Scene,
+    parent: TransformNode,
+    asset: any,
+    p: any,
+  ) => {
+    const node = new TransformNode(p.id, scene);
+    node.parent = parent;
+    node.metadata = { partId: p.id, assetId: asset.id };
+    node.position.set(p.position[0], p.position[2], -p.position[1]);
+    const mesh = new Mesh("native-" + p.id, scene);
+    mesh.parent = node;
+    return { node, meshes: [mesh], lighting: {} };
+  },
+}));
+import { loadConstructionInstance } from "./construction-instance";
+afterEach(() => vi.unstubAllGlobals());
+function fixture() {
+  const layout = emptyLayout("instance", "lower");
+  layout.decks.push({
+    ...layout.decks[0],
+    id: "upper",
+    name: "Upper",
+    order: 1,
+    elevation: 128,
+  });
+  layout.tiles.push(
+    stampTile("lower-floor", "lower", "rectangle", [0, 0]),
+    stampTile("upper-floor", "upper", "rectangle", [64, 0]),
+  );
+  const doc = bindConstructionLayout(layout).document;
+  const n = PINNED_FLOOR_KIT.parts.find((p) => p.id === "square-2m")!.native;
+  const catalog = {
+    entries: [
+      {
+        asset: {
+          id: n.assetId,
+          category: "floor",
+          visual: { sha256: n.sha256, nodePrefix: n.nodePrefix, revision: 2 },
+        },
+        placements: [{ id: "old-wayfarer-floor", position: [-5, -9, 0] }],
+      },
+    ],
+  };
+  return { doc, catalog };
+}
+test("selected deck uses only authored instance placement and metre elevation, ignoring installed Wayfarer placements", async () => {
+  const { doc, catalog } = fixture();
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => ({ ok: true, json: async () => catalog })),
+  );
+  const engine = new NullEngine(),
+    scene = new Scene(engine),
+    root = new TransformNode("instance", scene);
+  try {
+    const result = await loadConstructionInstance(scene, root, {
+      instanceId: "instance",
+      deckId: "upper",
+      documentJson: JSON.stringify(doc),
+    });
+    expect(result.placements).toHaveLength(1);
+    expect(result.placements[0].node.metadata).toMatchObject({
+      partId: "upper-floor",
+      instanceId: "instance",
+      deckId: "upper",
+    });
+    expect(result.placements[0].node.position.asArray()).toEqual([2, 4, -0]);
+    expect(result.walkingElevation).toBe(4.1875);
+    expect(result.placements[0].meshes[0].isPickable).toBe(true);
+    expect(result.placements[0].meshes[0].metadata).toMatchObject({
+      partId: "upper-floor",
+      category: "floor",
+      instanceId: "instance",
+      deckId: "upper",
+    });
+    expect(scene.meshes.some((m) => m.name.includes("old-wayfarer"))).toBe(
+      false,
+    );
+  } finally {
+    scene.dispose();
+    engine.dispose();
+  }
+});
+test("wrong native revision hash fails instead of substituting a current catalog asset", async () => {
+  const { doc, catalog } = fixture();
+  catalog.entries[0].asset.visual.sha256 = "0".repeat(64);
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => ({ ok: true, json: async () => catalog })),
+  );
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  try {
+    await expect(
+      loadConstructionInstance(scene, new TransformNode("instance", scene), {
+        instanceId: "instance",
+        deckId: "upper",
+        documentJson: JSON.stringify(doc),
+      }),
+    ).rejects.toThrow("Pinned");
+  } finally {
+    scene.dispose();
+    engine.dispose();
+  }
+});

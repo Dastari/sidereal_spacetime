@@ -1,6 +1,9 @@
-import { setMeshRole } from '../mesh-roles';
-import { bindPoseEquipment } from './pose-anchors';
-import { EQUIPMENT_POSE_ITEMS, type EquipmentPoseItem } from '../../../content/src/equipment-poses';
+import { setMeshRole } from "../mesh-roles";
+import { bindPoseEquipment } from "./pose-anchors";
+import {
+  EQUIPMENT_POSE_ITEMS,
+  type EquipmentPoseItem,
+} from "../../../content/src/equipment-poses";
 import { equipmentAimSource, validAnchors } from "./anchors";
 export type { EquipmentAimSource, GripBasis } from "./anchors";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -55,7 +58,7 @@ export async function createEquipmentVisual(
   const root = new TransformNode(`equipment-placement:${asset}`, scene);
   root.parent = parent;
   container.addAllToScene();
-  for (const mesh of container.meshes) setMeshRole(mesh, 'equipment');
+  for (const mesh of container.meshes) setMeshRole(mesh, "equipment");
   for (const node of container.rootNodes) node.parent = root;
   const imported = container.rootNodes[0];
   const aim =
@@ -67,8 +70,12 @@ export async function createEquipmentVisual(
   let disposed = false;
   return {
     root,
-    createPoseBinding(poseParent: TransformNode, item: EquipmentPoseItem = EQUIPMENT_POSE_ITEMS[asset]) {
-      if (disposed || !(imported instanceof TransformNode)) throw new Error('Equipment visual unavailable');
+    createPoseBinding(
+      poseParent: TransformNode,
+      item: EquipmentPoseItem = EQUIPMENT_POSE_ITEMS[asset],
+    ) {
+      if (disposed || !(imported instanceof TransformNode))
+        throw new Error("Equipment visual unavailable");
       if (!item) throw new Error(`No equipment pose metadata for ${asset}`);
       return bindPoseEquipment(root, imported, item, poseParent);
     },

@@ -1,0 +1,113 @@
+import { readFileSync, writeFileSync } from "node:fs";
+import { createHash } from "node:crypto";
+const hash = (path: string) =>
+  createHash("sha256").update(readFileSync(path)).digest("hex");
+const sourcePaths = [
+  "packages/content/src/ship-tileset-wall-spec.v1.json",
+  "assets/art-library/designs/shipyard.structure.inset-boundary-wall/revisions/r005/blender-source.blend",
+  "assets/art-library/designs/shipyard.hull.pilot-section/revisions/r006/blender-source.blend",
+  "assets/runtime/assembly/hull/finish-r004/part-48cf8b9cf29d0b226ec4/clean.glb",
+];
+const spec = {
+  schema: "sidereal.tileset-fixed-window-request.v1",
+  latticePerMeter: 32,
+  wallConvention: "inset250-v1",
+  sourceFrame:
+    "Blender X along boundary, Y inward, Z up; floor-relative metres; applied transforms",
+  placementFloorTopM: 0.1875,
+  standardRoofUndersideM: 3.1875,
+  sources: sourcePaths.map((path) => ({ path, sha256: hash(path) })),
+  frame: {
+    id: "window-frame-2m",
+    outerMinM: [0, 0, 0],
+    outerMaxM: [2, 0.25, 3],
+    apertureMinM: [0.25, 0, 0.75],
+    apertureMaxM: [1.75, 0.25, 2.25],
+    description:
+      "2m full-span frame, 250mm jambs, 750mm sill and upper band. The 1.5m-square opening crosses the entire frame depth. Full native end contacts at X0/2, floor contact Z0 and roof contact Z3; no trim crosses reservation.",
+  },
+  pane: {
+    id: "window-pane-1.5m",
+    minM: [0.25, 0.109375, 0.75],
+    maxM: [1.75, 0.140625, 2.25],
+    material: "Blue laminated glazing",
+    description:
+      "Closed 31.25mm fixed pane, centered in the wall depth. All four perimeter faces contact complete matching native frame patches. Separate named frame and pane surfaces; no hinge or portal is granted.",
+  },
+  companionSpans: {
+    lengthM: 0.75,
+    inwardDepthM: 0.25,
+    heightsM: [0.75, 1.5, 2.25, 3],
+    idPattern: "window-companion-span-q{quarter}",
+    description:
+      "Exact residual native exterior span, preserving inward-wall r005 panel/material language and full end contacts. No scaling of exported pieces.",
+  },
+  fixture: {
+    id: "window-in-4x2-room",
+    floorParts: [
+      { id: "square-2m", originM: [0, 0] },
+      { id: "square-2m", originM: [2, 0] },
+    ],
+    footprintM: [
+      [0, 0],
+      [4, 0],
+      [4, 2],
+      [0, 2],
+    ],
+    windowOriginM: [1, 0, 0.1875],
+    companionOriginsM: [
+      [0.25, 0, 0.1875],
+      [3, 0, 0.1875],
+    ],
+    corners: [
+      { profileId: "corner-7daf02f77db4", originM: [0, 0] },
+      { profileId: "corner-2d29d106ea4c", originM: [4, 0] },
+      { profileId: "corner-5b03c711aa8b", originM: [4, 2] },
+      { profileId: "corner-0792c389209e", originM: [0, 2] },
+    ],
+    remainingSpans: [
+      { lengthM: 1.5, originM: [4, 0.25], quarterTurns: 1 },
+      { lengthM: 3.5, originM: [3.75, 2], quarterTurns: 2 },
+      { lengthM: 1.5, originM: [0, 1.75], quarterTurns: 3 },
+    ],
+    retainedNativeFamilies: {
+      floor:
+        "assets/art-library/designs/shipyard.floor.mapped-deck-kit/revisions/r002/",
+      convex:
+        "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/",
+      roof: "assets/art-library/designs/shipyard.structure.roof125/revisions/r000/",
+    },
+    qualificationTransforms: {
+      quarterTurns: [0, 1, 2, 3],
+      reflectedAcrossX: [false, true],
+    },
+  },
+  requirements: [
+    "This freezes a bounded new native study, not owner artistic approval. Existing swept cockpit/glass/roof pins remain unchanged and are not qualified by this straight window.",
+    "Blender meshes and editable materials are visual authority. Preserve copied exact reference crops, native source materials and meaningful revisions. Do not derive visual meshes from TypeScript solids.",
+    "Preserve the current Blue laminated glazing alpha-BLEND/double-sided/basecolor/metallic/roughness behavior. Do not claim optical transmission/IOR or invent pressure/damage/material-strength values.",
+    "All source and exported nodes are closed manifold, finite and contained; frame aperture remains genuinely open around the separate pane. No degenerate/overlapping cap triangles or hidden opaque infill behind glass.",
+    "Four complete pane-frame contact patches: left/right area0.046875m2 each, top/bottom area0.046875m2 each; full31.25mm pane thickness. Opposing normals, no actual native gap or positive-volume overlap.",
+    "Conformance fixtures use actual retained native floor/roof/corners/spans; record hashes for every dependency. Do not substitute ideal floor/roof planes for their exported surfaces; any incomplete contact remains an explicit failing result.",
+    "Validate all8 rotated/mirrored assembled fixtures and six new GLBs, with original1micrometre export allowance. Negative1mm gap/overlap, wrong height and opposing-normal/winding checks must fail. No tolerance relaxation.",
+    "Deliver individual opaque-background views with visible glazing, both interior/exterior assembled views, roof-on closure and roof-off inspection. Transparent material stays transparent; no display-only conversion to opaque glass.",
+    "Separate collision/seal/support/damage metadata remain unqualified pending root integration and game evidence. Static contact measurement is not a physical capability grant. No runtime catalogs, bindings, publication or live state changes.",
+  ],
+};
+const outputs = new Map([
+  [
+    "packages/content/src/ship-tileset-window-spec.v1.json",
+    JSON.stringify(spec, null, 2) + "\n",
+  ],
+  [
+    "docs/ship_tileset_window_authoring_requirements.md",
+    `# Fixed inward250 window native request\n\nGenerated by scripts/generate_ship_tileset_window_spec.ts. Machine-readable source: packages/content/src/ship-tileset-window-spec.v1.json.\n\nOne2m full-height frame and separate1.5m-square pane, plus four0.75m residual wall spans. These are a new unapproved native study.\n\n${spec.requirements.map((s) => `- ${s}`).join("\n")}\n`,
+  ],
+]);
+for (const [path, content] of outputs) {
+  if (process.argv.includes("--check")) {
+    if (readFileSync(path, "utf8") !== content)
+      throw Error(`Stale request: ${path}`);
+  } else writeFileSync(path, content);
+}
+console.log(hash("packages/content/src/ship-tileset-window-spec.v1.json"));

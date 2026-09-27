@@ -9,10 +9,14 @@ A browser-first, single-server space RPG foundation with SpacetimeDB authority, 
 **Start with [PIVOT.md](PIVOT.md).** It carries the game scope, architecture decisions, authoring rebuild and phased acceptance gates.
 
 ```sh
+git lfs pull
+python3 scripts/prepare_ci_assets.py
 npm ci
 npm run setup
 npm run dev
 ```
+
+Clean-checkout native inputs and CI prerequisites are documented in [CI reproducibility](docs/ci_reproducibility.md). The bootstrap verifies exact native hashes and refuses to overwrite local edits.
 
 Open http://localhost:5173 (LAN http://10.0.1.200:5173). Create a local test character. WASD pilots from the seat; TAB changes exterior/interior view; E leaves/enters the seat; WASD walks while unseated in the interior. The same voxel-built Blender ship is used in flight and on foot. E transitions smoothly between the seat’s overhead camera and a fixed-elevation isometric camera; right-drag orbits and the wheel zooms. Rooms and furnishings have server-side collision in this lab fixture. Full modular gameplay, replay prediction, account login, inventory and authoring tools are planned phases.
 

@@ -3,7 +3,7 @@ import type { Scene } from "@babylonjs/core/scene";
 import type { Material } from "@babylonjs/core/Materials/material";
 import type { ShaderMaterial } from "@babylonjs/core/Materials/shaderMaterial";
 import type { BaseTexture } from "@babylonjs/core/Materials/Textures/baseTexture";
-import type { PlanetRecipe } from "../../../content/src/environment";
+import type { PlanetRecipe } from "@sidereal/content/environment";
 import type { NativePlanetKit } from "./native-planet-composition";
 import type { PlanetLOD } from "./layered-planet";
 import type { createPlanetWorkerClient } from "./planet-worker-client";

@@ -1,0 +1,6891 @@
+{
+  "schema": "sidereal.inset-native-visual-kit.v1",
+  "id": "shipyard.structure.inset250",
+  "revision": "r000",
+  "latticePerMeter": 32,
+  "floorThicknessUnits": 6,
+  "artApproval": "unapproved",
+  "physicalQualification": "unqualified",
+  "sourcePins": {
+    "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/delivery-manifest.json": "cafa3d5dbc13b63786415bf2c489a85cd19133658304a69dc39bf993ebc572cb",
+    "assets/art-library/designs/shipyard.structure.convex-inset-boundary/revisions/r004/interfaces.json": "dbeccad2b7d36dd34d28ec761c721e5311e3f352d8247670a581e92725fd19c5",
+    "assets/art-library/designs/shipyard.structure.floor-contact250/revisions/r011/export-audit.json": "92c2f5a907e7272636a33ef176f1198dbbc818ca767ae2bb3ada37b55a6401a3",
+    "assets/art-library/designs/shipyard.structure.internal250/revisions/r000/delivery-manifest.json": "74564ff85482f4ecd1422ea2f34b2b1e29f1808cc9b827747e0bcdc500b54d84",
+    "assets/art-library/designs/shipyard.structure.internal250/revisions/r000/interfaces.json": "bf065e94704c98f35404cbcbe771aa989f1a54b996e52f76252cfa71d5a02c8a",
+    "assets/art-library/designs/shipyard.structure.roof125/revisions/r000/delivery-manifest.json": "5e7c8582d0b21d698a50a205c0e9e96a56d77a488426a2c8909b07e57af8ca26",
+    "assets/art-library/designs/shipyard.structure.roof125/revisions/r000/interfaces.json": "6c9e1bd4038558d023fb29a4655bd5f47ef29423540b777f324e0cb11c7a8609",
+    "assets/art-library/designs/shipyard.structure.union-junction250/revisions/r001/delivery-manifest.json": "faef895a5350ec27d1d987939d0c2fc473d43c3c1972d8fb54a6b3ee32af89cb",
+    "assets/art-library/designs/shipyard.structure.union-junction250/revisions/r001/interfaces.json": "d5b5f7a7a3e9363ae4cc6587ee6b9fd4b434b03607964fdb9c495276f81d5440",
+    "packages/content/src/construction-floor-interfaces.json": "76f3f46c8e479106059945be0bfe23000d235d7c1731ad3d91524c3d894e1d16",
+    "packages/content/src/ship-tileset-corner-spec.v1.json": "3c94dbaba8dfa33c466c23eb83b6b2a10637d27683b8ce055327000e94be2ac4",
+    "packages/content/src/ship-tileset-floor-contact-spec.v1.json": "a9b8f3a2b9d361ff9084e953666a66b3cd99ab907c946b8f0f02a866a0b14d33",
+    "packages/content/src/ship-tileset-internal-spec.v1.json": "f8dc612cf7ce856043431d98180a1f00d3cfac17031a2e1ca96e28118496f200",
+    "packages/content/src/ship-tileset-union-junction-spec.v1.json": "46b06de54bfd81993716e0acea0d840ded94a6bcf45a0cc13a610ba0bddac6c4"
+  },
+  "parts": [
+    {
+      "key": "convex-r004/corner-038e1fdb1c66-q1",
+      "family": "convex-r004",
+      "profileId": "corner-038e1fdb1c66",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-038e1fdb1c66-q1.glb",
+      "sha256": "7dc9a8fd771f8be87d324f1f5befa7b866a50a7df79d57b6684ccd9abe93cf57",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.031008683647302117,
+          -0.24806946917841693
+        ],
+        [
+          0.21706078553111482,
+          -0.2790781528257191
+        ],
+        [
+          0.22069555463432966,
+          -0.25
+        ],
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          0.25,
+          0
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-038e1fdb1c66-q2",
+      "family": "convex-r004",
+      "profileId": "corner-038e1fdb1c66",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-038e1fdb1c66-q2.glb",
+      "sha256": "f9dc72d287274cde047c69c844e7321330c5a5bf877c823c7e0c62401323dc05",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.031008683647302117,
+          -0.24806946917841693
+        ],
+        [
+          0.21706078553111482,
+          -0.2790781528257191
+        ],
+        [
+          0.22069555463432966,
+          -0.25
+        ],
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          0.25,
+          0
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-038e1fdb1c66-q3",
+      "family": "convex-r004",
+      "profileId": "corner-038e1fdb1c66",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-038e1fdb1c66-q3.glb",
+      "sha256": "c7a990450b794dd7f413a615523d10684a7accaea6fd129e2fbe2ba26411e001",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.031008683647302117,
+          -0.24806946917841693
+        ],
+        [
+          0.21706078553111482,
+          -0.2790781528257191
+        ],
+        [
+          0.22069555463432966,
+          -0.25
+        ],
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          0.25,
+          0
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-038e1fdb1c66-q4",
+      "family": "convex-r004",
+      "profileId": "corner-038e1fdb1c66",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-038e1fdb1c66-q4.glb",
+      "sha256": "1af54414b3869c35b60d63c9bfae43d5ab5b38e7a805928f456f74542be9d2db",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.031008683647302117,
+          -0.24806946917841693
+        ],
+        [
+          0.21706078553111482,
+          -0.2790781528257191
+        ],
+        [
+          0.22069555463432966,
+          -0.25
+        ],
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          0.25,
+          0
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-066e750b2c42-q1",
+      "family": "convex-r004",
+      "profileId": "corner-066e750b2c42",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-066e750b2c42-q1.glb",
+      "sha256": "523f87434550ca14f3af52b35b0ccb5ba893154edab8d4b5e33976b5df55b5c9",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -1.9706019534202053,
+          0.4926504883550513
+        ],
+        [
+          -2.0312358596792883,
+          0.25011486331871835
+        ],
+        [
+          -2.0307764064044154,
+          0.25
+        ],
+        [
+          -2.03125,
+          0.25
+        ],
+        [
+          -2.03125,
+          0
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-066e750b2c42-q2",
+      "family": "convex-r004",
+      "profileId": "corner-066e750b2c42",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-066e750b2c42-q2.glb",
+      "sha256": "8f5942a984efb3ee22b6e7c3fb79d485b78c0d4dbc50f5fe6c9684b25f67c526",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -1.9706019534202053,
+          0.4926504883550513
+        ],
+        [
+          -2.0312358596792883,
+          0.25011486331871835
+        ],
+        [
+          -2.0307764064044154,
+          0.25
+        ],
+        [
+          -2.03125,
+          0.25
+        ],
+        [
+          -2.03125,
+          0
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-066e750b2c42-q3",
+      "family": "convex-r004",
+      "profileId": "corner-066e750b2c42",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-066e750b2c42-q3.glb",
+      "sha256": "11c13c94dbc8d68c92566c4e32ce19a09552ab9e4ce883f113cba61ae8186098",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -1.9706019534202053,
+          0.4926504883550513
+        ],
+        [
+          -2.0312358596792883,
+          0.25011486331871835
+        ],
+        [
+          -2.0307764064044154,
+          0.25
+        ],
+        [
+          -2.03125,
+          0.25
+        ],
+        [
+          -2.03125,
+          0
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-066e750b2c42-q4",
+      "family": "convex-r004",
+      "profileId": "corner-066e750b2c42",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-066e750b2c42-q4.glb",
+      "sha256": "955a27cace193b49ee1d3efdc2b701a40fedd16e639ae6807cb17438c698c342",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -1.9706019534202053,
+          0.4926504883550513
+        ],
+        [
+          -2.0312358596792883,
+          0.25011486331871835
+        ],
+        [
+          -2.0307764064044154,
+          0.25
+        ],
+        [
+          -2.03125,
+          0.25
+        ],
+        [
+          -2.03125,
+          0
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-0792c389209e-q1",
+      "family": "convex-r004",
+      "profileId": "corner-0792c389209e",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-0792c389209e-q1.glb",
+      "sha256": "d47f11e842bd9c3ba30203a7d8f7cfa6c3dccc3a6adae66f9ecef508ba430cc4",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.25
+        ],
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          0.25,
+          0
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-0792c389209e-q2",
+      "family": "convex-r004",
+      "profileId": "corner-0792c389209e",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-0792c389209e-q2.glb",
+      "sha256": "245e24cec4427e24c8e1b049a15c52c320cc456330cd3e39374e22dfd8673092",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.25
+        ],
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          0.25,
+          0
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-0792c389209e-q3",
+      "family": "convex-r004",
+      "profileId": "corner-0792c389209e",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-0792c389209e-q3.glb",
+      "sha256": "739cb7fd2f66166c5ef648ba911fd59c58cc77347e6854aca7c9c0e0dc9ccbb5",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.25
+        ],
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          0.25,
+          0
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-0792c389209e-q4",
+      "family": "convex-r004",
+      "profileId": "corner-0792c389209e",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-0792c389209e-q4.glb",
+      "sha256": "2b8730cdad08dd0de3058471c36a26a10664088d05af2636765c9ca65272513a",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.25
+        ],
+        [
+          0.25,
+          -0.25
+        ],
+        [
+          0.25,
+          0
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-27bbc6bbfe48-q1",
+      "family": "convex-r004",
+      "profileId": "corner-27bbc6bbfe48",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-27bbc6bbfe48-q1.glb",
+      "sha256": "bc742307f94eac1b7a7e9b8c33b4644f4e13d132a255c018a4db875b86586946",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.625
+        ],
+        [
+          0.25,
+          -0.625
+        ],
+        [
+          0.25,
+          -0.6035533905932738
+        ],
+        [
+          0.2651650429449553,
+          -0.618718433538229
+        ],
+        [
+          0.44194173824159216,
+          -0.44194173824159216
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-27bbc6bbfe48-q2",
+      "family": "convex-r004",
+      "profileId": "corner-27bbc6bbfe48",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-27bbc6bbfe48-q2.glb",
+      "sha256": "05c481c6a52ae0dfb0fb571752ea9510f1a058ef18f08d49d070c7ba2894f83e",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.625
+        ],
+        [
+          0.25,
+          -0.625
+        ],
+        [
+          0.25,
+          -0.6035533905932738
+        ],
+        [
+          0.2651650429449553,
+          -0.618718433538229
+        ],
+        [
+          0.44194173824159216,
+          -0.44194173824159216
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-27bbc6bbfe48-q3",
+      "family": "convex-r004",
+      "profileId": "corner-27bbc6bbfe48",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-27bbc6bbfe48-q3.glb",
+      "sha256": "4eb1c4a90ab01065241d4e6f0ed95b9441846be877aeed5129becaea227a57e0",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.625
+        ],
+        [
+          0.25,
+          -0.625
+        ],
+        [
+          0.25,
+          -0.6035533905932738
+        ],
+        [
+          0.2651650429449553,
+          -0.618718433538229
+        ],
+        [
+          0.44194173824159216,
+          -0.44194173824159216
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-27bbc6bbfe48-q4",
+      "family": "convex-r004",
+      "profileId": "corner-27bbc6bbfe48",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-27bbc6bbfe48-q4.glb",
+      "sha256": "981be6afdf9e9b7d249ee5b549421f73f2b1a52932b60c31a63c0d4ea5ece137",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.625
+        ],
+        [
+          0.25,
+          -0.625
+        ],
+        [
+          0.25,
+          -0.6035533905932738
+        ],
+        [
+          0.2651650429449553,
+          -0.618718433538229
+        ],
+        [
+          0.44194173824159216,
+          -0.44194173824159216
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-29777051ce28-q1",
+      "family": "convex-r004",
+      "profileId": "corner-29777051ce28",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-29777051ce28-q1.glb",
+      "sha256": "85041e05e9164a1e3ea0c4524aa72afb58b0f90c02331e7bae2dd0993e124048",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.40625
+        ],
+        [
+          0.25,
+          -0.40625
+        ],
+        [
+          0.25,
+          -0.4045084971874737
+        ],
+        [
+          0.25155764746872633,
+          -0.40528732092183684
+        ],
+        [
+          0.3633610463437158,
+          -0.1816805231718579
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-29777051ce28-q2",
+      "family": "convex-r004",
+      "profileId": "corner-29777051ce28",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-29777051ce28-q2.glb",
+      "sha256": "a6df6ad18d5eb32525ef97fe2e73597a6958ea16b77bf40511b9d6a344068154",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.40625
+        ],
+        [
+          0.25,
+          -0.40625
+        ],
+        [
+          0.25,
+          -0.4045084971874737
+        ],
+        [
+          0.25155764746872633,
+          -0.40528732092183684
+        ],
+        [
+          0.3633610463437158,
+          -0.1816805231718579
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-29777051ce28-q3",
+      "family": "convex-r004",
+      "profileId": "corner-29777051ce28",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-29777051ce28-q3.glb",
+      "sha256": "c7bef14964db8676c692dc2432415ca7b87b7d61ac8739d6909ebac317fd2e21",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.40625
+        ],
+        [
+          0.25,
+          -0.40625
+        ],
+        [
+          0.25,
+          -0.4045084971874737
+        ],
+        [
+          0.25155764746872633,
+          -0.40528732092183684
+        ],
+        [
+          0.3633610463437158,
+          -0.1816805231718579
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-29777051ce28-q4",
+      "family": "convex-r004",
+      "profileId": "corner-29777051ce28",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-29777051ce28-q4.glb",
+      "sha256": "06ad6fccc51f20f979e52adc756b1e4914da9d4016b4ec2d7510ed80439923c5",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.40625
+        ],
+        [
+          0.25,
+          -0.40625
+        ],
+        [
+          0.25,
+          -0.4045084971874737
+        ],
+        [
+          0.25155764746872633,
+          -0.40528732092183684
+        ],
+        [
+          0.3633610463437158,
+          -0.1816805231718579
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-297afe177bc0-q1",
+      "family": "convex-r004",
+      "profileId": "corner-297afe177bc0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-297afe177bc0-q1.glb",
+      "sha256": "7f3d3259722c4426042c782fb91d22f10e3ceedb67b52b608c265f01572eef7d",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.125,
+          0
+        ],
+        [
+          -0.125,
+          -0.25
+        ],
+        [
+          -0.1035533905932738,
+          -0.25
+        ],
+        [
+          -0.08838834764831843,
+          -0.2651650429449553
+        ],
+        [
+          0.08838834764831843,
+          -0.08838834764831843
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-297afe177bc0-q2",
+      "family": "convex-r004",
+      "profileId": "corner-297afe177bc0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-297afe177bc0-q2.glb",
+      "sha256": "f67ef9a221dce178cee38d14fb80e962a378bcedabee0aa27611a3959d9ebc94",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.125,
+          0
+        ],
+        [
+          -0.125,
+          -0.25
+        ],
+        [
+          -0.1035533905932738,
+          -0.25
+        ],
+        [
+          -0.08838834764831843,
+          -0.2651650429449553
+        ],
+        [
+          0.08838834764831843,
+          -0.08838834764831843
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-297afe177bc0-q3",
+      "family": "convex-r004",
+      "profileId": "corner-297afe177bc0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-297afe177bc0-q3.glb",
+      "sha256": "5f6404de1d06d1d747d644b05582589afdfbe61ca0b947331ccf852e2278d015",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.125,
+          0
+        ],
+        [
+          -0.125,
+          -0.25
+        ],
+        [
+          -0.1035533905932738,
+          -0.25
+        ],
+        [
+          -0.08838834764831843,
+          -0.2651650429449553
+        ],
+        [
+          0.08838834764831843,
+          -0.08838834764831843
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-297afe177bc0-q4",
+      "family": "convex-r004",
+      "profileId": "corner-297afe177bc0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-297afe177bc0-q4.glb",
+      "sha256": "463898a4115d0da6e2657f24d5f818da1a1dbe3f145e4efe765f8f748e06cca6",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.125,
+          0
+        ],
+        [
+          -0.125,
+          -0.25
+        ],
+        [
+          -0.1035533905932738,
+          -0.25
+        ],
+        [
+          -0.08838834764831843,
+          -0.2651650429449553
+        ],
+        [
+          0.08838834764831843,
+          -0.08838834764831843
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-2d29d106ea4c-q1",
+      "family": "convex-r004",
+      "profileId": "corner-2d29d106ea4c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-2d29d106ea4c-q1.glb",
+      "sha256": "f0a981c7b9dba4af4305ffb90c58d70716498d779864c86d2669f763a5832efe",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.25
+        ],
+        [
+          -0.25,
+          0.25
+        ],
+        [
+          -0.25,
+          0
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-2d29d106ea4c-q2",
+      "family": "convex-r004",
+      "profileId": "corner-2d29d106ea4c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-2d29d106ea4c-q2.glb",
+      "sha256": "9f799f391ec2496adbd915bef804f408da9bfe8023a1ac57ca30e980690c694c",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.25
+        ],
+        [
+          -0.25,
+          0.25
+        ],
+        [
+          -0.25,
+          0
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-2d29d106ea4c-q3",
+      "family": "convex-r004",
+      "profileId": "corner-2d29d106ea4c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-2d29d106ea4c-q3.glb",
+      "sha256": "3bfcdd9b58485ef535527bf6ccf03e151dcd92eafc0a1a4850290170c80a3035",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.25
+        ],
+        [
+          -0.25,
+          0.25
+        ],
+        [
+          -0.25,
+          0
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-2d29d106ea4c-q4",
+      "family": "convex-r004",
+      "profileId": "corner-2d29d106ea4c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-2d29d106ea4c-q4.glb",
+      "sha256": "fc5ea9b0aee5cd83d4b69d0abf4dc4dc33927a8d09114b505a8c44aaf3b3ed49",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.25
+        ],
+        [
+          -0.25,
+          0.25
+        ],
+        [
+          -0.25,
+          0
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-39bf3f85c8f0-q1",
+      "family": "convex-r004",
+      "profileId": "corner-39bf3f85c8f0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-39bf3f85c8f0-q1.glb",
+      "sha256": "8e19607bcd4e084a6c12e53ac967f2e5737a0d794450ec7a87bb5373f456fbce",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.44194173824159216,
+          0.44194173824159216
+        ],
+        [
+          -0.618718433538229,
+          0.2651650429449553
+        ],
+        [
+          -0.6035533905932738,
+          0.25
+        ],
+        [
+          -0.625,
+          0.25
+        ],
+        [
+          -0.625,
+          0
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-39bf3f85c8f0-q2",
+      "family": "convex-r004",
+      "profileId": "corner-39bf3f85c8f0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-39bf3f85c8f0-q2.glb",
+      "sha256": "b680d3e8084ca0855bd361645322104d55e3e78498e8ccb2163c711326954a99",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.44194173824159216,
+          0.44194173824159216
+        ],
+        [
+          -0.618718433538229,
+          0.2651650429449553
+        ],
+        [
+          -0.6035533905932738,
+          0.25
+        ],
+        [
+          -0.625,
+          0.25
+        ],
+        [
+          -0.625,
+          0
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-39bf3f85c8f0-q3",
+      "family": "convex-r004",
+      "profileId": "corner-39bf3f85c8f0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-39bf3f85c8f0-q3.glb",
+      "sha256": "d5dd45e7c890dd46d9cb166ae280b81bb61bde16fe7185babe3acca3eb70359e",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.44194173824159216,
+          0.44194173824159216
+        ],
+        [
+          -0.618718433538229,
+          0.2651650429449553
+        ],
+        [
+          -0.6035533905932738,
+          0.25
+        ],
+        [
+          -0.625,
+          0.25
+        ],
+        [
+          -0.625,
+          0
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-39bf3f85c8f0-q4",
+      "family": "convex-r004",
+      "profileId": "corner-39bf3f85c8f0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-39bf3f85c8f0-q4.glb",
+      "sha256": "7c4f7bc6738476c1fe0b01e4685240ce063fe0d35ddd401eb059590f19186f9b",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.44194173824159216,
+          0.44194173824159216
+        ],
+        [
+          -0.618718433538229,
+          0.2651650429449553
+        ],
+        [
+          -0.6035533905932738,
+          0.25
+        ],
+        [
+          -0.625,
+          0.25
+        ],
+        [
+          -0.625,
+          0
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-3a548dbae7c0-q1",
+      "family": "convex-r004",
+      "profileId": "corner-3a548dbae7c0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-3a548dbae7c0-q1.glb",
+      "sha256": "43271bbe03151638184db8061f451c32c16aa3454443f419c8c9d1ca51651b42",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.34375
+        ],
+        [
+          0.25,
+          -0.34375
+        ],
+        [
+          0.25,
+          -0.32019410160110384
+        ],
+        [
+          0.2728525781658746,
+          -0.32590724614257244
+        ],
+        [
+          0.3334864844249578,
+          -0.08337162110623945
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-3a548dbae7c0-q2",
+      "family": "convex-r004",
+      "profileId": "corner-3a548dbae7c0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-3a548dbae7c0-q2.glb",
+      "sha256": "bc27e10325ef2da2bd85f73fbe665d816c8e7ed7649dbad90e33c44c6f4f044a",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.34375
+        ],
+        [
+          0.25,
+          -0.34375
+        ],
+        [
+          0.25,
+          -0.32019410160110384
+        ],
+        [
+          0.2728525781658746,
+          -0.32590724614257244
+        ],
+        [
+          0.3334864844249578,
+          -0.08337162110623945
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-3a548dbae7c0-q3",
+      "family": "convex-r004",
+      "profileId": "corner-3a548dbae7c0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-3a548dbae7c0-q3.glb",
+      "sha256": "acbc316fa9cc72f99389aa9a819c43f49877f1d6f0d20f346d65a0e7e9a2b96a",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.34375
+        ],
+        [
+          0.25,
+          -0.34375
+        ],
+        [
+          0.25,
+          -0.32019410160110384
+        ],
+        [
+          0.2728525781658746,
+          -0.32590724614257244
+        ],
+        [
+          0.3334864844249578,
+          -0.08337162110623945
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-3a548dbae7c0-q4",
+      "family": "convex-r004",
+      "profileId": "corner-3a548dbae7c0",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-3a548dbae7c0-q4.glb",
+      "sha256": "cc4adf958df483aaff694ac95f9f56963fb60101ba3496691ea0f730b7add91d",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          -0.34375
+        ],
+        [
+          0.25,
+          -0.34375
+        ],
+        [
+          0.25,
+          -0.32019410160110384
+        ],
+        [
+          0.2728525781658746,
+          -0.32590724614257244
+        ],
+        [
+          0.3334864844249578,
+          -0.08337162110623945
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-5b03c711aa8b-q1",
+      "family": "convex-r004",
+      "profileId": "corner-5b03c711aa8b",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-5b03c711aa8b-q1.glb",
+      "sha256": "dad9f90e217ea0b61299229f0ef2a5e457a04bdf3780141e7fdad8652265e3de",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.25,
+          0
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          0,
+          -0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-5b03c711aa8b-q2",
+      "family": "convex-r004",
+      "profileId": "corner-5b03c711aa8b",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-5b03c711aa8b-q2.glb",
+      "sha256": "76771ab9b39341991972d4b65c7d9fb8bd09c186fcd97835b241e6714fd45c41",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.25,
+          0
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          0,
+          -0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-5b03c711aa8b-q3",
+      "family": "convex-r004",
+      "profileId": "corner-5b03c711aa8b",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-5b03c711aa8b-q3.glb",
+      "sha256": "21a0c65440e0a3ad7f0b18caa2d7c24f9ab7b2b4ba34dd4414300e7cab08c942",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.25,
+          0
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          0,
+          -0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-5b03c711aa8b-q4",
+      "family": "convex-r004",
+      "profileId": "corner-5b03c711aa8b",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-5b03c711aa8b-q4.glb",
+      "sha256": "05c44aeb508c334e95312333fe99c4d6d7a7a4aa39697776d743d221ef8d6f59",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.25,
+          0
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          0,
+          -0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-63d3be8c58ed-q1",
+      "family": "convex-r004",
+      "profileId": "corner-63d3be8c58ed",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-63d3be8c58ed-q1.glb",
+      "sha256": "953d51f7577f67afd0a2993f8925f60705bf54ad2a88cbe3a98f1e9c7e7bb353",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.08838834764831843,
+          0.08838834764831843
+        ],
+        [
+          -0.2651650429449553,
+          -0.08838834764831843
+        ],
+        [
+          -0.25,
+          -0.1035533905932738
+        ],
+        [
+          -0.25,
+          -0.125
+        ],
+        [
+          0,
+          -0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-63d3be8c58ed-q2",
+      "family": "convex-r004",
+      "profileId": "corner-63d3be8c58ed",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-63d3be8c58ed-q2.glb",
+      "sha256": "ae6d2a6cf8974b930e956f423335088f1df8a9be7b2a27f49c801bc56f0d7b20",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.08838834764831843,
+          0.08838834764831843
+        ],
+        [
+          -0.2651650429449553,
+          -0.08838834764831843
+        ],
+        [
+          -0.25,
+          -0.1035533905932738
+        ],
+        [
+          -0.25,
+          -0.125
+        ],
+        [
+          0,
+          -0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-63d3be8c58ed-q3",
+      "family": "convex-r004",
+      "profileId": "corner-63d3be8c58ed",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-63d3be8c58ed-q3.glb",
+      "sha256": "652d64118b59936acd1ee39a61c908e5f7524b8686e2702caedfb196470417d4",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.08838834764831843,
+          0.08838834764831843
+        ],
+        [
+          -0.2651650429449553,
+          -0.08838834764831843
+        ],
+        [
+          -0.25,
+          -0.1035533905932738
+        ],
+        [
+          -0.25,
+          -0.125
+        ],
+        [
+          0,
+          -0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-63d3be8c58ed-q4",
+      "family": "convex-r004",
+      "profileId": "corner-63d3be8c58ed",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-63d3be8c58ed-q4.glb",
+      "sha256": "4c0ef8f2250127797d3f8271429d744ab484a547a4c72e55cd4002005ffb1a4e",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.08838834764831843,
+          0.08838834764831843
+        ],
+        [
+          -0.2651650429449553,
+          -0.08838834764831843
+        ],
+        [
+          -0.25,
+          -0.1035533905932738
+        ],
+        [
+          -0.25,
+          -0.125
+        ],
+        [
+          0,
+          -0.125
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-678333fcbc12-q1",
+      "family": "convex-r004",
+      "profileId": "corner-678333fcbc12",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-678333fcbc12-q1.glb",
+      "sha256": "611bca23e31c1655ddb11d1c95411d107fde7144985e653ee3b52ffbf9ce7bd4",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.9503288904374106,
+          0.4751644452187053
+        ],
+        [
+          -1.0621322893124001,
+          0.25155764746872633
+        ],
+        [
+          -1.0590169943749475,
+          0.25
+        ],
+        [
+          -1.0625,
+          0.25
+        ],
+        [
+          -1.0625,
+          0
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-678333fcbc12-q2",
+      "family": "convex-r004",
+      "profileId": "corner-678333fcbc12",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-678333fcbc12-q2.glb",
+      "sha256": "97f4dc854de2f60bdb7e737e1c5ef3eaaa0c11c149c9aeb8371381cf6811639e",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.9503288904374106,
+          0.4751644452187053
+        ],
+        [
+          -1.0621322893124001,
+          0.25155764746872633
+        ],
+        [
+          -1.0590169943749475,
+          0.25
+        ],
+        [
+          -1.0625,
+          0.25
+        ],
+        [
+          -1.0625,
+          0
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-678333fcbc12-q3",
+      "family": "convex-r004",
+      "profileId": "corner-678333fcbc12",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-678333fcbc12-q3.glb",
+      "sha256": "dbbe91ec5518d3701beb85f979617e3acb4a8c531986d1f11970cc5cac41b6d1",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.9503288904374106,
+          0.4751644452187053
+        ],
+        [
+          -1.0621322893124001,
+          0.25155764746872633
+        ],
+        [
+          -1.0590169943749475,
+          0.25
+        ],
+        [
+          -1.0625,
+          0.25
+        ],
+        [
+          -1.0625,
+          0
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-678333fcbc12-q4",
+      "family": "convex-r004",
+      "profileId": "corner-678333fcbc12",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-678333fcbc12-q4.glb",
+      "sha256": "242022303d2251e5a7ea6dc27f43eebff7b7540b8754321b96cfb1d442fe27b5",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.9503288904374106,
+          0.4751644452187053
+        ],
+        [
+          -1.0621322893124001,
+          0.25155764746872633
+        ],
+        [
+          -1.0590169943749475,
+          0.25
+        ],
+        [
+          -1.0625,
+          0.25
+        ],
+        [
+          -1.0625,
+          0
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-7131004f967c-q1",
+      "family": "convex-r004",
+      "profileId": "corner-7131004f967c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-7131004f967c-q1.glb",
+      "sha256": "f0991d49ce1614e65e1b561128dd2e9b3405df3bb269de45971b3febc0dc7ea4",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2.03125,
+          0
+        ],
+        [
+          2.03125,
+          0.25
+        ],
+        [
+          2.0307764064044154,
+          0.25
+        ],
+        [
+          2.0312358596792883,
+          0.25011486331871835
+        ],
+        [
+          1.9706019534202053,
+          0.4926504883550513
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-7131004f967c-q2",
+      "family": "convex-r004",
+      "profileId": "corner-7131004f967c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-7131004f967c-q2.glb",
+      "sha256": "fba9210b3c1159550c68d1f7706336d3cbdad7c68814c4ac622a53e90c7c5387",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2.03125,
+          0
+        ],
+        [
+          2.03125,
+          0.25
+        ],
+        [
+          2.0307764064044154,
+          0.25
+        ],
+        [
+          2.0312358596792883,
+          0.25011486331871835
+        ],
+        [
+          1.9706019534202053,
+          0.4926504883550513
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-7131004f967c-q3",
+      "family": "convex-r004",
+      "profileId": "corner-7131004f967c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-7131004f967c-q3.glb",
+      "sha256": "887b32a34db1a3d17654e8b975d151e322fbddf99c50d6943aa494cb52f4dfbd",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2.03125,
+          0
+        ],
+        [
+          2.03125,
+          0.25
+        ],
+        [
+          2.0307764064044154,
+          0.25
+        ],
+        [
+          2.0312358596792883,
+          0.25011486331871835
+        ],
+        [
+          1.9706019534202053,
+          0.4926504883550513
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-7131004f967c-q4",
+      "family": "convex-r004",
+      "profileId": "corner-7131004f967c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-7131004f967c-q4.glb",
+      "sha256": "1f01ca0532183c2fd484ce9461edff2cf7a8ef87c0c6a6d921386121444ec0f3",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2.03125,
+          0
+        ],
+        [
+          2.03125,
+          0.25
+        ],
+        [
+          2.0307764064044154,
+          0.25
+        ],
+        [
+          2.0312358596792883,
+          0.25011486331871835
+        ],
+        [
+          1.9706019534202053,
+          0.4926504883550513
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-767950ddb43f-q1",
+      "family": "convex-r004",
+      "profileId": "corner-767950ddb43f",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-767950ddb43f-q1.glb",
+      "sha256": "88a1afcdc4cfc19a25daa036cb0d2324c61c44fa4e216982dfc4ad0eb8726c41",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.3125,
+          0
+        ],
+        [
+          0.3125,
+          0.25
+        ],
+        [
+          0.28319555463432966,
+          0.25
+        ],
+        [
+          0.2868303237375446,
+          0.279078152825719
+        ],
+        [
+          0.038760854559127644,
+          0.31008683647302115
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-767950ddb43f-q2",
+      "family": "convex-r004",
+      "profileId": "corner-767950ddb43f",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-767950ddb43f-q2.glb",
+      "sha256": "7190d25e2d43e304c31e0b57876d782df0fcec61da69cd2afa664fe66b407826",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.3125,
+          0
+        ],
+        [
+          0.3125,
+          0.25
+        ],
+        [
+          0.28319555463432966,
+          0.25
+        ],
+        [
+          0.2868303237375446,
+          0.279078152825719
+        ],
+        [
+          0.038760854559127644,
+          0.31008683647302115
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-767950ddb43f-q3",
+      "family": "convex-r004",
+      "profileId": "corner-767950ddb43f",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-767950ddb43f-q3.glb",
+      "sha256": "1703d94b8330f873a77804d5aeb13f3d6496df5a80ef27018d98fadb9b782f73",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.3125,
+          0
+        ],
+        [
+          0.3125,
+          0.25
+        ],
+        [
+          0.28319555463432966,
+          0.25
+        ],
+        [
+          0.2868303237375446,
+          0.279078152825719
+        ],
+        [
+          0.038760854559127644,
+          0.31008683647302115
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-767950ddb43f-q4",
+      "family": "convex-r004",
+      "profileId": "corner-767950ddb43f",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-767950ddb43f-q4.glb",
+      "sha256": "3004f0832b6653ad43bce8a41619cd535bf81880e3b601d9bfbc3041650932ae",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.3125,
+          0
+        ],
+        [
+          0.3125,
+          0.25
+        ],
+        [
+          0.28319555463432966,
+          0.25
+        ],
+        [
+          0.2868303237375446,
+          0.279078152825719
+        ],
+        [
+          0.038760854559127644,
+          0.31008683647302115
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-7daf02f77db4-q1",
+      "family": "convex-r004",
+      "profileId": "corner-7daf02f77db4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-7daf02f77db4-q1.glb",
+      "sha256": "e8467cc96154431fd16afd912d39cd07820735266bc6c263e8224a7334aeed10",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.25,
+          0
+        ],
+        [
+          0.25,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-7daf02f77db4-q2",
+      "family": "convex-r004",
+      "profileId": "corner-7daf02f77db4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-7daf02f77db4-q2.glb",
+      "sha256": "9425bb927ca790672aac057d27fe065c34f9927995b8fc962f3ded66619db5cf",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.25,
+          0
+        ],
+        [
+          0.25,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-7daf02f77db4-q3",
+      "family": "convex-r004",
+      "profileId": "corner-7daf02f77db4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-7daf02f77db4-q3.glb",
+      "sha256": "d3360f2bcf0ed35d3fcd6058d100175060e6a0fae344eb0f4293e9777dcdebb2",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.25,
+          0
+        ],
+        [
+          0.25,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-7daf02f77db4-q4",
+      "family": "convex-r004",
+      "profileId": "corner-7daf02f77db4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-7daf02f77db4-q4.glb",
+      "sha256": "25bbd1d039eace5e389150ed2153b743ac569c0a6c22e6e3dea0d7a5aa2c1fcc",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.25,
+          0
+        ],
+        [
+          0.25,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-928dc2ac014c-q1",
+      "family": "convex-r004",
+      "profileId": "corner-928dc2ac014c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-928dc2ac014c-q1.glb",
+      "sha256": "0e4453f747fb6ed11ecc04989f4caeb25a850dab2a440c927987f5ae641d126b",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.3334864844249578,
+          -0.08337162110623945
+        ],
+        [
+          -0.2728525781658746,
+          -0.32590724614257244
+        ],
+        [
+          -0.25,
+          -0.32019410160110384
+        ],
+        [
+          -0.25,
+          -0.34375
+        ],
+        [
+          0,
+          -0.34375
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-928dc2ac014c-q2",
+      "family": "convex-r004",
+      "profileId": "corner-928dc2ac014c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-928dc2ac014c-q2.glb",
+      "sha256": "047afd04fb2afd729a029da2e8db0791e2ccad9238f9fb8b2769aab395f82ebb",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.3334864844249578,
+          -0.08337162110623945
+        ],
+        [
+          -0.2728525781658746,
+          -0.32590724614257244
+        ],
+        [
+          -0.25,
+          -0.32019410160110384
+        ],
+        [
+          -0.25,
+          -0.34375
+        ],
+        [
+          0,
+          -0.34375
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-928dc2ac014c-q3",
+      "family": "convex-r004",
+      "profileId": "corner-928dc2ac014c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-928dc2ac014c-q3.glb",
+      "sha256": "03a0bc86adc37babf1f0d8d4c34eff01f8a808589a08335b022f47a3634a77c0",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.3334864844249578,
+          -0.08337162110623945
+        ],
+        [
+          -0.2728525781658746,
+          -0.32590724614257244
+        ],
+        [
+          -0.25,
+          -0.32019410160110384
+        ],
+        [
+          -0.25,
+          -0.34375
+        ],
+        [
+          0,
+          -0.34375
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-928dc2ac014c-q4",
+      "family": "convex-r004",
+      "profileId": "corner-928dc2ac014c",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-928dc2ac014c-q4.glb",
+      "sha256": "27e22bea54dd82975595c3e9050c614e9b93aaaf29a2ebc07bdf16b6078b4ef7",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.3334864844249578,
+          -0.08337162110623945
+        ],
+        [
+          -0.2728525781658746,
+          -0.32590724614257244
+        ],
+        [
+          -0.25,
+          -0.32019410160110384
+        ],
+        [
+          -0.25,
+          -0.34375
+        ],
+        [
+          0,
+          -0.34375
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-92e88753312e-q1",
+      "family": "convex-r004",
+      "profileId": "corner-92e88753312e",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-92e88753312e-q1.glb",
+      "sha256": "8e16c001ed1f75fc4bfa5a2f4c20239c1f5f31fca77f92ae52e7e64126cef5db",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.038760854559127644,
+          0.31008683647302115
+        ],
+        [
+          -0.2868303237375446,
+          0.279078152825719
+        ],
+        [
+          -0.28319555463432966,
+          0.25
+        ],
+        [
+          -0.3125,
+          0.25
+        ],
+        [
+          -0.3125,
+          0
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-92e88753312e-q2",
+      "family": "convex-r004",
+      "profileId": "corner-92e88753312e",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-92e88753312e-q2.glb",
+      "sha256": "b7ba9bd90dd69e8489cdadb5db93ba1890b87dcf4a953c15f9b3d4409c21bb69",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.038760854559127644,
+          0.31008683647302115
+        ],
+        [
+          -0.2868303237375446,
+          0.279078152825719
+        ],
+        [
+          -0.28319555463432966,
+          0.25
+        ],
+        [
+          -0.3125,
+          0.25
+        ],
+        [
+          -0.3125,
+          0
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-92e88753312e-q3",
+      "family": "convex-r004",
+      "profileId": "corner-92e88753312e",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-92e88753312e-q3.glb",
+      "sha256": "35340b5d27efb1f0fc38c01184955c2334480b24dac1f6657bd27c39a89a8a61",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.038760854559127644,
+          0.31008683647302115
+        ],
+        [
+          -0.2868303237375446,
+          0.279078152825719
+        ],
+        [
+          -0.28319555463432966,
+          0.25
+        ],
+        [
+          -0.3125,
+          0.25
+        ],
+        [
+          -0.3125,
+          0
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-92e88753312e-q4",
+      "family": "convex-r004",
+      "profileId": "corner-92e88753312e",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-92e88753312e-q4.glb",
+      "sha256": "ce12475da2899b51b8c03ca1f0f320a2f43064db8058730dae7704ff1f9aea68",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.038760854559127644,
+          0.31008683647302115
+        ],
+        [
+          -0.2868303237375446,
+          0.279078152825719
+        ],
+        [
+          -0.28319555463432966,
+          0.25
+        ],
+        [
+          -0.3125,
+          0.25
+        ],
+        [
+          -0.3125,
+          0
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-b2015da1f9f4-q1",
+      "family": "convex-r004",
+      "profileId": "corner-b2015da1f9f4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-b2015da1f9f4-q1.glb",
+      "sha256": "43c44100dc1098f4f58bf28944f66e09f154c0d300237a312b1f911bcdbed2bc",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.3633610463437158,
+          -0.1816805231718579
+        ],
+        [
+          -0.25155764746872633,
+          -0.40528732092183684
+        ],
+        [
+          -0.25,
+          -0.4045084971874737
+        ],
+        [
+          -0.25,
+          -0.40625
+        ],
+        [
+          0,
+          -0.40625
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-b2015da1f9f4-q2",
+      "family": "convex-r004",
+      "profileId": "corner-b2015da1f9f4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-b2015da1f9f4-q2.glb",
+      "sha256": "9c438eee8492039e27f5e7aa59738a0139077d954917c36cd9b700ba3483d03e",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.3633610463437158,
+          -0.1816805231718579
+        ],
+        [
+          -0.25155764746872633,
+          -0.40528732092183684
+        ],
+        [
+          -0.25,
+          -0.4045084971874737
+        ],
+        [
+          -0.25,
+          -0.40625
+        ],
+        [
+          0,
+          -0.40625
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-b2015da1f9f4-q3",
+      "family": "convex-r004",
+      "profileId": "corner-b2015da1f9f4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-b2015da1f9f4-q3.glb",
+      "sha256": "1a2f5886ae4a6b2a989413de2cc3388aaf00556cbfd884e0e26e9337bc2223db",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.3633610463437158,
+          -0.1816805231718579
+        ],
+        [
+          -0.25155764746872633,
+          -0.40528732092183684
+        ],
+        [
+          -0.25,
+          -0.4045084971874737
+        ],
+        [
+          -0.25,
+          -0.40625
+        ],
+        [
+          0,
+          -0.40625
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-b2015da1f9f4-q4",
+      "family": "convex-r004",
+      "profileId": "corner-b2015da1f9f4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-b2015da1f9f4-q4.glb",
+      "sha256": "b9cc32512b30f55afba054ca54ddad468e84578d4a1fca8f5b2eec29fcec8604",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.3633610463437158,
+          -0.1816805231718579
+        ],
+        [
+          -0.25155764746872633,
+          -0.40528732092183684
+        ],
+        [
+          -0.25,
+          -0.4045084971874737
+        ],
+        [
+          -0.25,
+          -0.40625
+        ],
+        [
+          0,
+          -0.40625
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-fad62e313309-q1",
+      "family": "convex-r004",
+      "profileId": "corner-fad62e313309",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-fad62e313309-q1.glb",
+      "sha256": "f4821fe7f6f9ccadc177e6d71cccc32356322e9f76ec47ca90227063a2232fc8",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.0625,
+          0
+        ],
+        [
+          1.0625,
+          0.25
+        ],
+        [
+          1.0590169943749475,
+          0.25
+        ],
+        [
+          1.0621322893124001,
+          0.25155764746872633
+        ],
+        [
+          0.9503288904374106,
+          0.4751644452187053
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-fad62e313309-q2",
+      "family": "convex-r004",
+      "profileId": "corner-fad62e313309",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-fad62e313309-q2.glb",
+      "sha256": "323d21d478b25b6a69b8b0778f8a6b57f4ffc4cf9f400117892ec32c8c811374",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.0625,
+          0
+        ],
+        [
+          1.0625,
+          0.25
+        ],
+        [
+          1.0590169943749475,
+          0.25
+        ],
+        [
+          1.0621322893124001,
+          0.25155764746872633
+        ],
+        [
+          0.9503288904374106,
+          0.4751644452187053
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-fad62e313309-q3",
+      "family": "convex-r004",
+      "profileId": "corner-fad62e313309",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-fad62e313309-q3.glb",
+      "sha256": "8527c085b14360de28c751c36ab7e652f92aed005045a0c374f70cd853c85d8d",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.0625,
+          0
+        ],
+        [
+          1.0625,
+          0.25
+        ],
+        [
+          1.0590169943749475,
+          0.25
+        ],
+        [
+          1.0621322893124001,
+          0.25155764746872633
+        ],
+        [
+          0.9503288904374106,
+          0.4751644452187053
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-fad62e313309-q4",
+      "family": "convex-r004",
+      "profileId": "corner-fad62e313309",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-fad62e313309-q4.glb",
+      "sha256": "cf59c5067f06086fca1555be5547f4f8ba0b93c0374e8833c0f2f7024c6fec62",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.0625,
+          0
+        ],
+        [
+          1.0625,
+          0.25
+        ],
+        [
+          1.0590169943749475,
+          0.25
+        ],
+        [
+          1.0621322893124001,
+          0.25155764746872633
+        ],
+        [
+          0.9503288904374106,
+          0.4751644452187053
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/corner-fd4c62dd46de-q1",
+      "family": "convex-r004",
+      "profileId": "corner-fd4c62dd46de",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-fd4c62dd46de-q1.glb",
+      "sha256": "fa381b8c2eb1654b5d2306644709ff356eab28f999abf6c354b3d6eaef0911dd",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.25,
+          0
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          -0.22069555463432966,
+          -0.25
+        ],
+        [
+          -0.21706078553111482,
+          -0.2790781528257191
+        ],
+        [
+          0.031008683647302117,
+          -0.24806946917841693
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/corner-fd4c62dd46de-q2",
+      "family": "convex-r004",
+      "profileId": "corner-fd4c62dd46de",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-fd4c62dd46de-q2.glb",
+      "sha256": "f13584f95e1cbbd3b1ac0ec7edda105c449351c1fb2ea67ec7fdcc7cf54df2ea",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.25,
+          0
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          -0.22069555463432966,
+          -0.25
+        ],
+        [
+          -0.21706078553111482,
+          -0.2790781528257191
+        ],
+        [
+          0.031008683647302117,
+          -0.24806946917841693
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/corner-fd4c62dd46de-q3",
+      "family": "convex-r004",
+      "profileId": "corner-fd4c62dd46de",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-fd4c62dd46de-q3.glb",
+      "sha256": "efc400caddbe5ce5d528357ebf7060e963d5e5a619ac0922ddac0fd2e66849ef",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.25,
+          0
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          -0.22069555463432966,
+          -0.25
+        ],
+        [
+          -0.21706078553111482,
+          -0.2790781528257191
+        ],
+        [
+          0.031008683647302117,
+          -0.24806946917841693
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/corner-fd4c62dd46de-q4",
+      "family": "convex-r004",
+      "profileId": "corner-fd4c62dd46de",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/corner-fd4c62dd46de-q4.glb",
+      "sha256": "d472c09cbdc56ea24c406b477324a452d86f9f9c7544cb1ad237d865b7bb48b5",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          -0.25,
+          0
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          -0.22069555463432966,
+          -0.25
+        ],
+        [
+          -0.21706078553111482,
+          -0.2790781528257191
+        ],
+        [
+          0.031008683647302117,
+          -0.24806946917841693
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-2ffbe443095f-q1",
+      "family": "convex-r004",
+      "profileId": "span-2ffbe443095f",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-2ffbe443095f-q1.glb",
+      "sha256": "5eccd7034dda566f4f39fae547d2f946c6d05fb9d4f02082d58d92b1259cac47",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2.6875,
+          0
+        ],
+        [
+          2.6875,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-2ffbe443095f-q2",
+      "family": "convex-r004",
+      "profileId": "span-2ffbe443095f",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-2ffbe443095f-q2.glb",
+      "sha256": "81e8b550727e240d22a994eb9243d8b6811d0936b17a2fa64710f76956c8876b",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2.6875,
+          0
+        ],
+        [
+          2.6875,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-2ffbe443095f-q3",
+      "family": "convex-r004",
+      "profileId": "span-2ffbe443095f",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-2ffbe443095f-q3.glb",
+      "sha256": "3d285fd55ba5948cc4b9c27628774f0b5f849a557c22f2029d3c84b37f5bb398",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2.6875,
+          0
+        ],
+        [
+          2.6875,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-2ffbe443095f-q4",
+      "family": "convex-r004",
+      "profileId": "span-2ffbe443095f",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-2ffbe443095f-q4.glb",
+      "sha256": "1a2aa122c5b2089ff336459a9604de50a491ded16ccf00350635fae0e89ffcea",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          2.6875,
+          0
+        ],
+        [
+          2.6875,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-42c2fafec189-q1",
+      "family": "convex-r004",
+      "profileId": "span-42c2fafec189",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-42c2fafec189-q1.glb",
+      "sha256": "f023550870917c9624a719891e3ed9107f5501946cf11ad725d3ab16b892dc56",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.625,
+          0
+        ],
+        [
+          0.625,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-42c2fafec189-q2",
+      "family": "convex-r004",
+      "profileId": "span-42c2fafec189",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-42c2fafec189-q2.glb",
+      "sha256": "102bc3c86a96b48b84b5698803365f6d7679b04d850e47d20d3ed4306a5e7132",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.625,
+          0
+        ],
+        [
+          0.625,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-42c2fafec189-q3",
+      "family": "convex-r004",
+      "profileId": "span-42c2fafec189",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-42c2fafec189-q3.glb",
+      "sha256": "88974d2f50c9f74f779140edec4170dbeb95cfb248cc30d38bf636ef692218a8",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.625,
+          0
+        ],
+        [
+          0.625,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-42c2fafec189-q4",
+      "family": "convex-r004",
+      "profileId": "span-42c2fafec189",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-42c2fafec189-q4.glb",
+      "sha256": "abef4edd8ce2d8915e8c309e3d852851e9508ac7bb843ac79adf94e325d72f63",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.625,
+          0
+        ],
+        [
+          0.625,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-46ad1428ec2d-q1",
+      "family": "convex-r004",
+      "profileId": "span-46ad1428ec2d",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-46ad1428ec2d-q1.glb",
+      "sha256": "357a312566c4618ae51fe18fdb3097366d98e50b2fc969b3cc98ff2853814f4f",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.0033859549995796,
+          0
+        ],
+        [
+          3.0033859549995796,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-46ad1428ec2d-q2",
+      "family": "convex-r004",
+      "profileId": "span-46ad1428ec2d",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-46ad1428ec2d-q2.glb",
+      "sha256": "2d2f5c7a89e2f5cd14aebb74536ae14d5101d663bbae91894dcf5bf511d1039d",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.0033859549995796,
+          0
+        ],
+        [
+          3.0033859549995796,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-46ad1428ec2d-q3",
+      "family": "convex-r004",
+      "profileId": "span-46ad1428ec2d",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-46ad1428ec2d-q3.glb",
+      "sha256": "5a02959d39d52831379adfb0c59833028670e1b30cc803a2ba4249fc97081ed3",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.0033859549995796,
+          0
+        ],
+        [
+          3.0033859549995796,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-46ad1428ec2d-q4",
+      "family": "convex-r004",
+      "profileId": "span-46ad1428ec2d",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-46ad1428ec2d-q4.glb",
+      "sha256": "73b94f1313b960cc61fc7d2521c7e902504b5a295adbf0da9c41639c46a5761c",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.0033859549995796,
+          0
+        ],
+        [
+          3.0033859549995796,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-52c003e77e74-q1",
+      "family": "convex-r004",
+      "profileId": "span-52c003e77e74",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-52c003e77e74-q1.glb",
+      "sha256": "d016104459f2f4949934cd124cff5b70ac230baeeaad4f5f54d9d6514e04d250",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.125,
+          0
+        ],
+        [
+          0.125,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-52c003e77e74-q2",
+      "family": "convex-r004",
+      "profileId": "span-52c003e77e74",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-52c003e77e74-q2.glb",
+      "sha256": "d94d6e5a4de60af152c7d88863a9d8403d6e7be09bd47d9469b19003504b1a8e",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.125,
+          0
+        ],
+        [
+          0.125,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-52c003e77e74-q3",
+      "family": "convex-r004",
+      "profileId": "span-52c003e77e74",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-52c003e77e74-q3.glb",
+      "sha256": "39d95b74a08617d5a15b5a6610c25a6348c2c4cb0143335af610a1c131ff2612",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.125,
+          0
+        ],
+        [
+          0.125,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-52c003e77e74-q4",
+      "family": "convex-r004",
+      "profileId": "span-52c003e77e74",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-52c003e77e74-q4.glb",
+      "sha256": "bd232880d17043b21e346ec48c231ea016d256542f13c12062a22c096f778a85",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.125,
+          0
+        ],
+        [
+          0.125,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-59b5e5d6c2be-q1",
+      "family": "convex-r004",
+      "profileId": "span-59b5e5d6c2be",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-59b5e5d6c2be-q1.glb",
+      "sha256": "3a7638eee842b0e4e7e0a507b004120c07efafcb08e6fec08d4d112b27b4c665",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.40625,
+          0
+        ],
+        [
+          0.40625,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-59b5e5d6c2be-q2",
+      "family": "convex-r004",
+      "profileId": "span-59b5e5d6c2be",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-59b5e5d6c2be-q2.glb",
+      "sha256": "f82bd0382058a5c7ac2a5e688f6c6b7b73d1d9c50fee0292f521636f44ea8679",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.40625,
+          0
+        ],
+        [
+          0.40625,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-59b5e5d6c2be-q3",
+      "family": "convex-r004",
+      "profileId": "span-59b5e5d6c2be",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-59b5e5d6c2be-q3.glb",
+      "sha256": "d01213ee79da73298932cce1ea3fd9b9d3a0c02413f0e5d42a0226cf35a8ab54",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.40625,
+          0
+        ],
+        [
+          0.40625,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-59b5e5d6c2be-q4",
+      "family": "convex-r004",
+      "profileId": "span-59b5e5d6c2be",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-59b5e5d6c2be-q4.glb",
+      "sha256": "27bbfd285353045ef16ea49d0a1ec460b977bcb200ee50e9d1c494a81c18327c",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.40625,
+          0
+        ],
+        [
+          0.40625,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-5edda386a671-q1",
+      "family": "convex-r004",
+      "profileId": "span-5edda386a671",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-5edda386a671-q1.glb",
+      "sha256": "1e29e9951a728b1454c071681eb903a27bea06e9a6026feda3cf718557e00fb4",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.1642135623730951,
+          0
+        ],
+        [
+          1.1642135623730951,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-5edda386a671-q2",
+      "family": "convex-r004",
+      "profileId": "span-5edda386a671",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-5edda386a671-q2.glb",
+      "sha256": "a1ef6ef4cb4c2ec12cdd7cc98b5694d92d7b925be3081adb978478fad6c9d0be",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.1642135623730951,
+          0
+        ],
+        [
+          1.1642135623730951,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-5edda386a671-q3",
+      "family": "convex-r004",
+      "profileId": "span-5edda386a671",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-5edda386a671-q3.glb",
+      "sha256": "0c6bbcc67fd9ed263225aac105aff2c4d8ee696f15635c148a34db32342a5391",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.1642135623730951,
+          0
+        ],
+        [
+          1.1642135623730951,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-5edda386a671-q4",
+      "family": "convex-r004",
+      "profileId": "span-5edda386a671",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-5edda386a671-q4.glb",
+      "sha256": "f7d2823148e1e4e1bbcf7a854181b6f0f2cd81696e37adbe1124288d21138da8",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.1642135623730951,
+          0
+        ],
+        [
+          1.1642135623730951,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-6061800993be-q1",
+      "family": "convex-r004",
+      "profileId": "span-6061800993be",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-6061800993be-q1.glb",
+      "sha256": "ad3a77f3ac5b64930782385152ed25d6b83ba1c7f776bc876a503cb76b828a06",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.5784271247461903,
+          0
+        ],
+        [
+          1.5784271247461903,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-6061800993be-q2",
+      "family": "convex-r004",
+      "profileId": "span-6061800993be",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-6061800993be-q2.glb",
+      "sha256": "63203ddf7700772043ffe77066cb9029ef13e064a8ab83848ac6b517522626ed",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.5784271247461903,
+          0
+        ],
+        [
+          1.5784271247461903,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-6061800993be-q3",
+      "family": "convex-r004",
+      "profileId": "span-6061800993be",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-6061800993be-q3.glb",
+      "sha256": "2e1df87ac0ea685a0bacbe233163651dbeb181115ee51b2f1079aa160e912a52",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.5784271247461903,
+          0
+        ],
+        [
+          1.5784271247461903,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-6061800993be-q4",
+      "family": "convex-r004",
+      "profileId": "span-6061800993be",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-6061800993be-q4.glb",
+      "sha256": "40b5afeaa8c12a99efd9edf7985165085a1c382f9a3800cbdb0c703987e62004",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.5784271247461903,
+          0
+        ],
+        [
+          1.5784271247461903,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-66bc3db80552-q1",
+      "family": "convex-r004",
+      "profileId": "span-66bc3db80552",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-66bc3db80552-q1.glb",
+      "sha256": "226ed48655265ffb50b863b309ff7cc21e53aa86dfc7280025c05d0b564b7e49",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.7481056256176606,
+          0
+        ],
+        [
+          1.7481056256176606,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-66bc3db80552-q2",
+      "family": "convex-r004",
+      "profileId": "span-66bc3db80552",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-66bc3db80552-q2.glb",
+      "sha256": "d10fd75bb8eb3e38d39459a37671f4f1b364c7955c6ab65dd0b90643b9b076a0",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.7481056256176606,
+          0
+        ],
+        [
+          1.7481056256176606,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-66bc3db80552-q3",
+      "family": "convex-r004",
+      "profileId": "span-66bc3db80552",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-66bc3db80552-q3.glb",
+      "sha256": "aa0565708c19e9f94398e0fd0e67a13bfe06f2b8f41f7cf5cef7651e2ebf9a8f",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.7481056256176606,
+          0
+        ],
+        [
+          1.7481056256176606,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-66bc3db80552-q4",
+      "family": "convex-r004",
+      "profileId": "span-66bc3db80552",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-66bc3db80552-q4.glb",
+      "sha256": "694622fba5bc5cb8e297b10e04df3be4112be78ffe416df1c7d9dd8cd0171cb2",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.7481056256176606,
+          0
+        ],
+        [
+          1.7481056256176606,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-68175b8ba1df-q1",
+      "family": "convex-r004",
+      "profileId": "span-68175b8ba1df",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-68175b8ba1df-q1.glb",
+      "sha256": "feff60ce999778c0cf5cd0e00040872e5f3c8f0c92035b0be0e9e21321942ad4",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.34375,
+          0
+        ],
+        [
+          1.34375,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-68175b8ba1df-q2",
+      "family": "convex-r004",
+      "profileId": "span-68175b8ba1df",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-68175b8ba1df-q2.glb",
+      "sha256": "d4b1474315e9481d699163aa2900dfa112abc1c0fe0756bb0d05f59743b30308",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.34375,
+          0
+        ],
+        [
+          1.34375,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-68175b8ba1df-q3",
+      "family": "convex-r004",
+      "profileId": "span-68175b8ba1df",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-68175b8ba1df-q3.glb",
+      "sha256": "edef91e016653774b3270872abaf59ace07b325b3764f6e41be8248125d4e3f3",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.34375,
+          0
+        ],
+        [
+          1.34375,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-68175b8ba1df-q4",
+      "family": "convex-r004",
+      "profileId": "span-68175b8ba1df",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-68175b8ba1df-q4.glb",
+      "sha256": "798f383fd78d0fa1165825deba0fd27b1344f0bc49a8f95b20c94b8f674ef0de",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.34375,
+          0
+        ],
+        [
+          1.34375,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-8a199b120cf4-q1",
+      "family": "convex-r004",
+      "profileId": "span-8a199b120cf4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-8a199b120cf4-q1.glb",
+      "sha256": "9d85031d6452b72238bbe4e24371d9a38cd555a9860b9994924463130e39f930",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.5,
+          0
+        ],
+        [
+          3.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-8a199b120cf4-q2",
+      "family": "convex-r004",
+      "profileId": "span-8a199b120cf4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-8a199b120cf4-q2.glb",
+      "sha256": "432c081489fdf0722677df33b168b2bc17e14c863b55ed60537e13d3a8e14a08",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.5,
+          0
+        ],
+        [
+          3.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-8a199b120cf4-q3",
+      "family": "convex-r004",
+      "profileId": "span-8a199b120cf4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-8a199b120cf4-q3.glb",
+      "sha256": "4f95f1eced5bcf1a8c06c35319555b4ce74326cd1fe3d7532f2569de6ae252c8",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.5,
+          0
+        ],
+        [
+          3.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-8a199b120cf4-q4",
+      "family": "convex-r004",
+      "profileId": "span-8a199b120cf4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-8a199b120cf4-q4.glb",
+      "sha256": "6cb88337193597a1f68471cd0e221976885a9eb7e49143ac3c3002f2f948795d",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.5,
+          0
+        ],
+        [
+          3.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-910b1ee0f548-q1",
+      "family": "convex-r004",
+      "profileId": "span-910b1ee0f548",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-910b1ee0f548-q1.glb",
+      "sha256": "11610d161f9956763b5d9c726b2652a519ecb2ac17e180950137c588d6dfc61e",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.4686288741492746,
+          0
+        ],
+        [
+          3.4686288741492746,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-910b1ee0f548-q2",
+      "family": "convex-r004",
+      "profileId": "span-910b1ee0f548",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-910b1ee0f548-q2.glb",
+      "sha256": "8fc1132710bc70b09182f0f13ca3d17747f60c62221b648e54473e58490b6085",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.4686288741492746,
+          0
+        ],
+        [
+          3.4686288741492746,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-910b1ee0f548-q3",
+      "family": "convex-r004",
+      "profileId": "span-910b1ee0f548",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-910b1ee0f548-q3.glb",
+      "sha256": "f6245c033f262b41b38657ffa33995e939a83f3154a4f24ed64c3ce116fbf4ea",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.4686288741492746,
+          0
+        ],
+        [
+          3.4686288741492746,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-910b1ee0f548-q4",
+      "family": "convex-r004",
+      "profileId": "span-910b1ee0f548",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-910b1ee0f548-q4.glb",
+      "sha256": "caac10f2a1d472d4db309aa654d64b5b86d46c9325bdd07368e8f325deb8e70d",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          3.4686288741492746,
+          0
+        ],
+        [
+          3.4686288741492746,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-9f29a130438b-q1",
+      "family": "convex-r004",
+      "profileId": "span-9f29a130438b",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-9f29a130438b-q1.glb",
+      "sha256": "b0fece97e06bf1d0d6a6de52a65ab7452889ff5d268d695c90c27e08de99d0a3",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.5,
+          0
+        ],
+        [
+          1.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-9f29a130438b-q2",
+      "family": "convex-r004",
+      "profileId": "span-9f29a130438b",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-9f29a130438b-q2.glb",
+      "sha256": "731bf786f10b6514d9ce88d6b5da4ded9d8930c062e3d696bc6013cfe981932a",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.5,
+          0
+        ],
+        [
+          1.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-9f29a130438b-q3",
+      "family": "convex-r004",
+      "profileId": "span-9f29a130438b",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-9f29a130438b-q3.glb",
+      "sha256": "3c74ca9fbabf02b77cead0079a56ec81154ab62673673793b52e0a7b41cf08d9",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.5,
+          0
+        ],
+        [
+          1.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-9f29a130438b-q4",
+      "family": "convex-r004",
+      "profileId": "span-9f29a130438b",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-9f29a130438b-q4.glb",
+      "sha256": "bd620d8a3eac161363852e823e01c2965d7b65ec4748e839397b5d6b45a298de",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.5,
+          0
+        ],
+        [
+          1.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-c8553b4df280-q1",
+      "family": "convex-r004",
+      "profileId": "span-c8553b4df280",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-c8553b4df280-q1.glb",
+      "sha256": "f549a8fabf28cfa1c57590e38b88db2127ca10924b5c99b146de201a05abc29d",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.16421356237309515,
+          0
+        ],
+        [
+          0.16421356237309515,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-c8553b4df280-q2",
+      "family": "convex-r004",
+      "profileId": "span-c8553b4df280",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-c8553b4df280-q2.glb",
+      "sha256": "4d6e1de29ad4faf35392d510ad863087810d735d2129f10aae6943f7cab0f845",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.16421356237309515,
+          0
+        ],
+        [
+          0.16421356237309515,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-c8553b4df280-q3",
+      "family": "convex-r004",
+      "profileId": "span-c8553b4df280",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-c8553b4df280-q3.glb",
+      "sha256": "ce5a8b14669baa5f3797fecba8bcab564df3a2e4d1095ec1d4b9b3ae52f06505",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.16421356237309515,
+          0
+        ],
+        [
+          0.16421356237309515,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-c8553b4df280-q4",
+      "family": "convex-r004",
+      "profileId": "span-c8553b4df280",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-c8553b4df280-q4.glb",
+      "sha256": "1750fc285fcf4ceb958bf2061c6df06968bb287f9a97216d9306f39611022e0f",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.16421356237309515,
+          0
+        ],
+        [
+          0.16421356237309515,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-d21d9ccd17a4-q1",
+      "family": "convex-r004",
+      "profileId": "span-d21d9ccd17a4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-d21d9ccd17a4-q1.glb",
+      "sha256": "160291005c6412bd912bfab28f09d0e71bc0f304e9b557ecb856c8bf4d0f801d",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.71875,
+          0
+        ],
+        [
+          1.71875,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-d21d9ccd17a4-q2",
+      "family": "convex-r004",
+      "profileId": "span-d21d9ccd17a4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-d21d9ccd17a4-q2.glb",
+      "sha256": "54e5d4bfe9e7e19dfb04b43cbd585c6981e4233f5fa9ac5cfea6c90394dd6cc3",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.71875,
+          0
+        ],
+        [
+          1.71875,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-d21d9ccd17a4-q3",
+      "family": "convex-r004",
+      "profileId": "span-d21d9ccd17a4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-d21d9ccd17a4-q3.glb",
+      "sha256": "5beef3eac4ac5d09f1d2409d73bbb870b6dbb1933df518783d2a19d64351860c",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.71875,
+          0
+        ],
+        [
+          1.71875,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-d21d9ccd17a4-q4",
+      "family": "convex-r004",
+      "profileId": "span-d21d9ccd17a4",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-d21d9ccd17a4-q4.glb",
+      "sha256": "cc0b732c0fec14a157f623836032152742b93bd7df3504b845a9dfe1d4230276",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.71875,
+          0
+        ],
+        [
+          1.71875,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-d2cbad71ff33-q1",
+      "family": "convex-r004",
+      "profileId": "span-d2cbad71ff33",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-d2cbad71ff33-q1.glb",
+      "sha256": "fd1a11ff730ce10e73b1d699ecf6d0b1c870bcf4615509e36015bb63904e7b01",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0
+        ],
+        [
+          0.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-d2cbad71ff33-q2",
+      "family": "convex-r004",
+      "profileId": "span-d2cbad71ff33",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-d2cbad71ff33-q2.glb",
+      "sha256": "b2a1ad70d77b507fed15b3f2e521b5b52615a99ba194bd9f0e323b6dbf9af9e3",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0
+        ],
+        [
+          0.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-d2cbad71ff33-q3",
+      "family": "convex-r004",
+      "profileId": "span-d2cbad71ff33",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-d2cbad71ff33-q3.glb",
+      "sha256": "babb2e9d46de51f1b7696b8641c0611b3294bc08bca6bb4e2e38f7179f40dbfc",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0
+        ],
+        [
+          0.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-d2cbad71ff33-q4",
+      "family": "convex-r004",
+      "profileId": "span-d2cbad71ff33",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-d2cbad71ff33-q4.glb",
+      "sha256": "411d041a8c33adb54e9b2eacad8dc829413d024161c49f53d836acbd3a212e23",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0.5,
+          0
+        ],
+        [
+          0.5,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-da22917605ca-q1",
+      "family": "convex-r004",
+      "profileId": "span-da22917605ca",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-da22917605ca-q1.glb",
+      "sha256": "6fab878762df19744537f98895312e623d6626ab009ac1d5a7d4ddd9826d6eea",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.375,
+          0
+        ],
+        [
+          1.375,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-da22917605ca-q2",
+      "family": "convex-r004",
+      "profileId": "span-da22917605ca",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-da22917605ca-q2.glb",
+      "sha256": "f6d53d8fae4bce5e09a9f93cdd75ae3a9895ebf0809a906830cceff518a43150",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.375,
+          0
+        ],
+        [
+          1.375,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-da22917605ca-q3",
+      "family": "convex-r004",
+      "profileId": "span-da22917605ca",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-da22917605ca-q3.glb",
+      "sha256": "ffb1a2427cd8c9bfda9df8af633627fed36d8e27e898c15b4355285e55412f71",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.375,
+          0
+        ],
+        [
+          1.375,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-da22917605ca-q4",
+      "family": "convex-r004",
+      "profileId": "span-da22917605ca",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-da22917605ca-q4.glb",
+      "sha256": "e13714328ec496480e81c81a6cafaa9e4047dd53884ae49a1593d57b956ea8ba",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.375,
+          0
+        ],
+        [
+          1.375,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "convex-r004/span-e2718d14114d-q1",
+      "family": "convex-r004",
+      "profileId": "span-e2718d14114d",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-e2718d14114d-q1.glb",
+      "sha256": "f53f00d427cef0bb1c788c880d367b3e0005fe8e3566ae6d896f2a902c3c72ce",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.125,
+          0
+        ],
+        [
+          1.125,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "convex-r004/span-e2718d14114d-q2",
+      "family": "convex-r004",
+      "profileId": "span-e2718d14114d",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-e2718d14114d-q2.glb",
+      "sha256": "81cd3b30e5a92a47039745ffd878e70e75c45f23fe9d43a478a981610220aa95",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.125,
+          0
+        ],
+        [
+          1.125,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "convex-r004/span-e2718d14114d-q3",
+      "family": "convex-r004",
+      "profileId": "span-e2718d14114d",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-e2718d14114d-q3.glb",
+      "sha256": "4f022b0efa10ebcaa2c88d618bdd117fa86638ab46fbdd2e092dc7d810ebb0a9",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.125,
+          0
+        ],
+        [
+          1.125,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "convex-r004/span-e2718d14114d-q4",
+      "family": "convex-r004",
+      "profileId": "span-e2718d14114d",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/convex-r004/span-e2718d14114d-q4.glb",
+      "sha256": "051bdd108c18d57bb6d491b5667a6d00976de8e703f849df248529a3856a2212",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          1.125,
+          0
+        ],
+        [
+          1.125,
+          0.25
+        ],
+        [
+          0,
+          0.25
+        ]
+      ],
+      "heightM": 3.0,
+      "quarterHeight": 4
+    },
+    {
+      "key": "floor-contact-r011/corner-clipped",
+      "family": "floor-contact-r011",
+      "profileId": "corner-clipped",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/corner-clipped.glb",
+      "sha256": "89b9efc5804bbf91a39e87a5af8a8c733d345898435592261f776de4f4732410",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/half-2x1",
+      "family": "floor-contact-r011",
+      "profileId": "half-2x1",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/half-2x1.glb",
+      "sha256": "0797787eb7f0d77b1a8c5fe0293403624f809897b2547737390a665ce2a53dc9",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/quarter-1m",
+      "family": "floor-contact-r011",
+      "profileId": "quarter-1m",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/quarter-1m.glb",
+      "sha256": "ec60cc820b39eed2e80f8d9a1bb71894d62ac19f14916565ca1cdbaee4e7c9ab",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/square-2m",
+      "family": "floor-contact-r011",
+      "profileId": "square-2m",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/square-2m.glb",
+      "sha256": "315c287b9fd2230fab33e6cf4ac4bafdbd53be40ffb506677963f1fbd3a44e59",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/strip-4x1",
+      "family": "floor-contact-r011",
+      "profileId": "strip-4x1",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/strip-4x1.glb",
+      "sha256": "1c991e219e18804c1602336fe989926536aa036fcea1c7a5e67ea209ccb57610",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          4.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/taper-4m",
+      "family": "floor-contact-r011",
+      "profileId": "taper-4m",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/taper-4m.glb",
+      "sha256": "efacb7f5221361f05b4c5bd84510d4ad7c4f984498a19f9e0f9d29599c70ea0b",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          1.5,
+          4.0
+        ],
+        [
+          0.5,
+          4.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/triangle-1m",
+      "family": "floor-contact-r011",
+      "profileId": "triangle-1m",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/triangle-1m.glb",
+      "sha256": "3e96b00a27afb8af03ec5092e25877e16793710fd847f88ace6065dd83ff3131",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/triangle-45",
+      "family": "floor-contact-r011",
+      "profileId": "triangle-45",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/triangle-45.glb",
+      "sha256": "24fc230b98ecc5bfbb354d4a3899638cd5482c1cdfbf0d9e5a5071056654c806",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/triangle-long-left",
+      "family": "floor-contact-r011",
+      "profileId": "triangle-long-left",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/triangle-long-left.glb",
+      "sha256": "a081574d561133e50cf315bc770a97cbef8a86d644e223c16d57bb3c9d4e6e54",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/triangle-long-right",
+      "family": "floor-contact-r011",
+      "profileId": "triangle-long-right",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/triangle-long-right.glb",
+      "sha256": "6be1f003edec015ce4ea2df82fa0a2201f82e1edfa43c95ccaa5e7d3788df966",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          4.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/triangle-slim-left",
+      "family": "floor-contact-r011",
+      "profileId": "triangle-slim-left",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/triangle-slim-left.glb",
+      "sha256": "9771ca7d619e7b2c4f31a377503ba5c94316318db9aab86f9ed1abbea26becd9",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "floor-contact-r011/triangle-slim-right",
+      "family": "floor-contact-r011",
+      "profileId": "triangle-slim-right",
+      "kind": "floor-contact",
+      "url": "/assets/construction/inset250-r000/floor-contact-r011/triangle-slim-right.glb",
+      "sha256": "68f4c69345ba2fc4029e711987733f7234c3731ca0dacd8173fa8f4eafb126a3",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          4.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.1875
+    },
+    {
+      "key": "internal-r000/internal-core-q1",
+      "family": "internal-r000",
+      "profileId": "internal-core",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-core-q1.glb",
+      "sha256": "9168765e3452cae8167afcb3c4dc3a96c83d900307c13a305330ba602069967a",
+      "footprintM": [
+        [
+          -0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          -0.125,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "internal-r000/internal-core-q2",
+      "family": "internal-r000",
+      "profileId": "internal-core",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-core-q2.glb",
+      "sha256": "a73f07148105011b4222831f24f9f1894999dc2b16608d2d61236a85a1ecd360",
+      "footprintM": [
+        [
+          -0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          -0.125,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "internal-r000/internal-core-q3",
+      "family": "internal-r000",
+      "profileId": "internal-core",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-core-q3.glb",
+      "sha256": "f8d1870869bf73a766e52be4a6aceb1042e7615a09e51a71e0258a8ce066e96e",
+      "footprintM": [
+        [
+          -0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          -0.125,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "internal-r000/internal-core-q4",
+      "family": "internal-r000",
+      "profileId": "internal-core",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-core-q4.glb",
+      "sha256": "06a0ecf68be56a4ee542bb99794fe27736dc93a7aa03f108231299fb14935336",
+      "footprintM": [
+        [
+          -0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          -0.125,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "internal-r000/internal-end-q1",
+      "family": "internal-r000",
+      "profileId": "internal-end",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-end-q1.glb",
+      "sha256": "1f0a209ef92dbc1d327a031e34bd17c1580d575d0736aae1bc888e527070f5b9",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "internal-r000/internal-end-q2",
+      "family": "internal-r000",
+      "profileId": "internal-end",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-end-q2.glb",
+      "sha256": "e781db1650f8c86c1b3af9c17a0194ab4d29f58b36d918202cae97a0f928bd8f",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "internal-r000/internal-end-q3",
+      "family": "internal-r000",
+      "profileId": "internal-end",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-end-q3.glb",
+      "sha256": "68235c57d472f18f92bdff3a99833bfcd666e7f475784c7be4344fabd790cc03",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "internal-r000/internal-end-q4",
+      "family": "internal-r000",
+      "profileId": "internal-end",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-end-q4.glb",
+      "sha256": "d8369d36436b4f7e0804522bf22ed3e2f6f4f814173ef93dcfacb9c36cd94349",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.125,
+          -0.125
+        ],
+        [
+          0.125,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "internal-r000/internal-span-0.75-q1",
+      "family": "internal-r000",
+      "profileId": "internal-span-0.75",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-0.75-q1.glb",
+      "sha256": "9649cbe25c2968240c66c7e680f9f4f396d39b72d654fbe2b60f4a2d7784e041",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.75,
+          -0.125
+        ],
+        [
+          0.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "internal-r000/internal-span-0.75-q2",
+      "family": "internal-r000",
+      "profileId": "internal-span-0.75",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-0.75-q2.glb",
+      "sha256": "04108058967a5d9c85be7665c25ad69d733722b9191ed0cc0923a83821ddeab7",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.75,
+          -0.125
+        ],
+        [
+          0.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "internal-r000/internal-span-0.75-q3",
+      "family": "internal-r000",
+      "profileId": "internal-span-0.75",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-0.75-q3.glb",
+      "sha256": "1e96372647b25720ecb922d04ad43a55139700787a74e3749b7b32ee6390bba4",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.75,
+          -0.125
+        ],
+        [
+          0.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "internal-r000/internal-span-0.75-q4",
+      "family": "internal-r000",
+      "profileId": "internal-span-0.75",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-0.75-q4.glb",
+      "sha256": "cd47ff815e4e93751c14b13590c3ad4eecfd7490261a37cf57a2f8a147399159",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.75,
+          -0.125
+        ],
+        [
+          0.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "internal-r000/internal-span-0.875-q1",
+      "family": "internal-r000",
+      "profileId": "internal-span-0.875",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-0.875-q1.glb",
+      "sha256": "073a3dfba1d2e8a31080a3faf04e7a4e7671c1bfcc0600bac55187a3fdabe120",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.875,
+          -0.125
+        ],
+        [
+          0.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "internal-r000/internal-span-0.875-q2",
+      "family": "internal-r000",
+      "profileId": "internal-span-0.875",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-0.875-q2.glb",
+      "sha256": "9c2593479485298431d86f877565a96e0c41fdbfccaec20d50d454cdd8be43ec",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.875,
+          -0.125
+        ],
+        [
+          0.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "internal-r000/internal-span-0.875-q3",
+      "family": "internal-r000",
+      "profileId": "internal-span-0.875",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-0.875-q3.glb",
+      "sha256": "132776c73eceb642077743665aa88c49086f58f3e04ae9a561a594317e68306d",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.875,
+          -0.125
+        ],
+        [
+          0.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "internal-r000/internal-span-0.875-q4",
+      "family": "internal-r000",
+      "profileId": "internal-span-0.875",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-0.875-q4.glb",
+      "sha256": "35a6ab48419827c0fe59dc8663c115d2dd17ea1851b0b3fdc973f3ee8a27ab8b",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.875,
+          -0.125
+        ],
+        [
+          0.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "internal-r000/internal-span-1-q1",
+      "family": "internal-r000",
+      "profileId": "internal-span-1",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1-q1.glb",
+      "sha256": "857961be3e7a91f9064faeffa88f1ae5bcf6a96f367b0f325877bd5d7617c785",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1,
+          -0.125
+        ],
+        [
+          1,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "internal-r000/internal-span-1-q2",
+      "family": "internal-r000",
+      "profileId": "internal-span-1",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1-q2.glb",
+      "sha256": "9caeab7c0fa7ff0ad3aed41890707f763a5132a1652c0732dc060beeb5e25c28",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1,
+          -0.125
+        ],
+        [
+          1,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "internal-r000/internal-span-1-q3",
+      "family": "internal-r000",
+      "profileId": "internal-span-1",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1-q3.glb",
+      "sha256": "8bce91f896b3fbd6a32b0302e606b5183b6b83a06f0e68fa5ee6fee3fbcba7a4",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1,
+          -0.125
+        ],
+        [
+          1,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "internal-r000/internal-span-1-q4",
+      "family": "internal-r000",
+      "profileId": "internal-span-1",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1-q4.glb",
+      "sha256": "f8be8a5108807b69122605c6ee9cf0eba68e8e0fc098fb5dcb56b4e80b147180",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1,
+          -0.125
+        ],
+        [
+          1,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "internal-r000/internal-span-1.75-q1",
+      "family": "internal-r000",
+      "profileId": "internal-span-1.75",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1.75-q1.glb",
+      "sha256": "50894ad0e2ba2448ef710bbbe29cbdfbdbab0c2234f3468c77b28b34cf07aba3",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.75,
+          -0.125
+        ],
+        [
+          1.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "internal-r000/internal-span-1.75-q2",
+      "family": "internal-r000",
+      "profileId": "internal-span-1.75",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1.75-q2.glb",
+      "sha256": "3597e13f6d4df62861a8db0000c9a1e79d9407de26c1f752d31f3d219f873369",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.75,
+          -0.125
+        ],
+        [
+          1.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "internal-r000/internal-span-1.75-q3",
+      "family": "internal-r000",
+      "profileId": "internal-span-1.75",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1.75-q3.glb",
+      "sha256": "820c15468d1f2f0d1023b22d4e6a1e26b7d36ee379e787b7bd87ba8c32bab9a8",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.75,
+          -0.125
+        ],
+        [
+          1.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "internal-r000/internal-span-1.75-q4",
+      "family": "internal-r000",
+      "profileId": "internal-span-1.75",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1.75-q4.glb",
+      "sha256": "653f0184bc864dd2f1a3dd33bed43bc4d0d00dec0edd53114fa533a0a33f035a",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.75,
+          -0.125
+        ],
+        [
+          1.75,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "internal-r000/internal-span-1.875-q1",
+      "family": "internal-r000",
+      "profileId": "internal-span-1.875",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1.875-q1.glb",
+      "sha256": "1628c405869b57a12015886ec68a648646cd242036c3009fd3c38bff381ca3eb",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.875,
+          -0.125
+        ],
+        [
+          1.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "internal-r000/internal-span-1.875-q2",
+      "family": "internal-r000",
+      "profileId": "internal-span-1.875",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1.875-q2.glb",
+      "sha256": "abb8b24a32a96d496fb54436e08eced1cd3ece9e10cae86995a9d2f55f11613a",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.875,
+          -0.125
+        ],
+        [
+          1.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "internal-r000/internal-span-1.875-q3",
+      "family": "internal-r000",
+      "profileId": "internal-span-1.875",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1.875-q3.glb",
+      "sha256": "219736d54abca4f9c6aac97fc930450f79dfcbc5f3d3edd81e06f0801d75332e",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.875,
+          -0.125
+        ],
+        [
+          1.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "internal-r000/internal-span-1.875-q4",
+      "family": "internal-r000",
+      "profileId": "internal-span-1.875",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-1.875-q4.glb",
+      "sha256": "b95e798ef57489f52ec97884834ed3ed8ece047e478b5745a7b3f41c7e9fe560",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.875,
+          -0.125
+        ],
+        [
+          1.875,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "internal-r000/internal-span-2-q1",
+      "family": "internal-r000",
+      "profileId": "internal-span-2",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-2-q1.glb",
+      "sha256": "1544dfb583f3b0a8bd3a182d343ab5f62226dda2a086eef5ed9865643e2d8a65",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          2,
+          -0.125
+        ],
+        [
+          2,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "internal-r000/internal-span-2-q2",
+      "family": "internal-r000",
+      "profileId": "internal-span-2",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-2-q2.glb",
+      "sha256": "5f27ba07198e294893d6f3efeec4bd467d3042e4a3bc9b2266d97eddddc5aeda",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          2,
+          -0.125
+        ],
+        [
+          2,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "internal-r000/internal-span-2-q3",
+      "family": "internal-r000",
+      "profileId": "internal-span-2",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-2-q3.glb",
+      "sha256": "e97f50643d87efe2a5077f6a411443a7906e1df213ca7398af838b027a9fde0b",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          2,
+          -0.125
+        ],
+        [
+          2,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "internal-r000/internal-span-2-q4",
+      "family": "internal-r000",
+      "profileId": "internal-span-2",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/internal-r000/internal-span-2-q4.glb",
+      "sha256": "99f89061ee1ebd621edea213504be872dec067475d731035caf0b1f6525246a2",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          2,
+          -0.125
+        ],
+        [
+          2,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "roof-r000/corner-clipped",
+      "family": "roof-r000",
+      "profileId": "corner-clipped",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/corner-clipped.glb",
+      "sha256": "8c36951bc89ae7abbd6db917a4adf1cd1b2309d92bded305146428d1bfd018d8",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          1.0,
+          2.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/half-2x1",
+      "family": "roof-r000",
+      "profileId": "half-2x1",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/half-2x1.glb",
+      "sha256": "0cd6dc928676866081c08d43c044fa784b7c8bc0c86e3352b135567f7a0b60b5",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/quarter-1m",
+      "family": "roof-r000",
+      "profileId": "quarter-1m",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/quarter-1m.glb",
+      "sha256": "21297aceff05c8eaa1300187f8bf35840f30c5941af53f71aae21da86d0fda48",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          1.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/square-2m",
+      "family": "roof-r000",
+      "profileId": "square-2m",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/square-2m.glb",
+      "sha256": "983a30e46bdddce4089ae58cc17b94f326b912e61337a04a19be5a2ae53e7949",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          2.0,
+          2.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/strip-4x1",
+      "family": "roof-r000",
+      "profileId": "strip-4x1",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/strip-4x1.glb",
+      "sha256": "feddbef7e3a66b9a162f3e56ba25b52b7c5e91de9198efb2444548b5285a72c1",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          4.0,
+          1.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/taper-4m",
+      "family": "roof-r000",
+      "profileId": "taper-4m",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/taper-4m.glb",
+      "sha256": "b466988f4949746b5e0252fc05cd71a856313efbcf20fcb9c6e6a7cd7f91519a",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          1.5,
+          4.0
+        ],
+        [
+          0.5,
+          4.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/triangle-1m",
+      "family": "roof-r000",
+      "profileId": "triangle-1m",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/triangle-1m.glb",
+      "sha256": "edad47f563d2e16559a72ea79f8feafabcdb573f8b34aa922b9825387f3723f5",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          1.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/triangle-45",
+      "family": "roof-r000",
+      "profileId": "triangle-45",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/triangle-45.glb",
+      "sha256": "a5f31c19e866a71bf95830dee29c69a779f34061c38ebc3a78718f8ced2875f1",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          2.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/triangle-long-left",
+      "family": "roof-r000",
+      "profileId": "triangle-long-left",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/triangle-long-left.glb",
+      "sha256": "a7b218baad79509b039fdb39731e177d36555802f09b6bff3921c5371463be33",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          0.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/triangle-long-right",
+      "family": "roof-r000",
+      "profileId": "triangle-long-right",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/triangle-long-right.glb",
+      "sha256": "b9e0170351431dfa7ed7df61190761d0bc4343a8f0afac6458f3aa3d59ada823",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          4.0,
+          2.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/triangle-slim-left",
+      "family": "roof-r000",
+      "profileId": "triangle-slim-left",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/triangle-slim-left.glb",
+      "sha256": "7b829fec763016f7ac2e9d7222c2892feb3d518ec5416cdb1b1d9d0495dee0e7",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          0.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "roof-r000/triangle-slim-right",
+      "family": "roof-r000",
+      "profileId": "triangle-slim-right",
+      "kind": "roof",
+      "url": "/assets/construction/inset250-r000/roof-r000/triangle-slim-right.glb",
+      "sha256": "dc0d290bc953e33e0c14a1bb171ded8aa43867d88f1361c24937a11b831ececc",
+      "footprintM": [
+        [
+          0.0,
+          0.0
+        ],
+        [
+          4.0,
+          0.0
+        ],
+        [
+          4.0,
+          1.0
+        ]
+      ],
+      "heightM": 0.125
+    },
+    {
+      "key": "union-r001/concave-90-q1",
+      "family": "union-r001",
+      "profileId": "concave-90",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/concave-90-q1.glb",
+      "sha256": "9a4efc629aa28e8d7cdf3fa922f32a3700b14c50e83e864982c16afe57af1d67",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.125
+        ],
+        [
+          -0.25,
+          0.125
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          0.125,
+          -0.25
+        ],
+        [
+          0.125,
+          0
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "union-r001/concave-90-q2",
+      "family": "union-r001",
+      "profileId": "concave-90",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/concave-90-q2.glb",
+      "sha256": "60b4fb63c3bbfa4a028766da340c872d06069617a282813592fb103471c82b82",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.125
+        ],
+        [
+          -0.25,
+          0.125
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          0.125,
+          -0.25
+        ],
+        [
+          0.125,
+          0
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "union-r001/concave-90-q3",
+      "family": "union-r001",
+      "profileId": "concave-90",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/concave-90-q3.glb",
+      "sha256": "42fc6822e35ce48cbe26a48bcfd5817b7151e19f0f53556978dd30f5f7704a89",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.125
+        ],
+        [
+          -0.25,
+          0.125
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          0.125,
+          -0.25
+        ],
+        [
+          0.125,
+          0
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "union-r001/concave-90-q4",
+      "family": "union-r001",
+      "profileId": "concave-90",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/concave-90-q4.glb",
+      "sha256": "12dd2438912a2833332c6995ff0b200c52ee044663a752ac09d0014ddc8fec80",
+      "footprintM": [
+        [
+          0,
+          0
+        ],
+        [
+          0,
+          0.125
+        ],
+        [
+          -0.25,
+          0.125
+        ],
+        [
+          -0.25,
+          -0.25
+        ],
+        [
+          0.125,
+          -0.25
+        ],
+        [
+          0.125,
+          0
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "union-r001/exterior-t-q1",
+      "family": "union-r001",
+      "profileId": "exterior-t",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/exterior-t-q1.glb",
+      "sha256": "6e5751f5f75419c0eaa079afb55e488a5664731d0435d340733783940fa2bd4a",
+      "footprintM": [
+        [
+          -0.125,
+          0
+        ],
+        [
+          0.125,
+          0
+        ],
+        [
+          0.125,
+          0.375
+        ],
+        [
+          -0.125,
+          0.375
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "union-r001/exterior-t-q2",
+      "family": "union-r001",
+      "profileId": "exterior-t",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/exterior-t-q2.glb",
+      "sha256": "3111740bbe7fec0053c9b7884c9c7a0df797df1bd5cd1b922b6f4eaf95be536f",
+      "footprintM": [
+        [
+          -0.125,
+          0
+        ],
+        [
+          0.125,
+          0
+        ],
+        [
+          0.125,
+          0.375
+        ],
+        [
+          -0.125,
+          0.375
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "union-r001/exterior-t-q3",
+      "family": "union-r001",
+      "profileId": "exterior-t",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/exterior-t-q3.glb",
+      "sha256": "c9a67fd0f8a007250059814c3a5b35218e6552d86d5784cb02023b57e229cc8c",
+      "footprintM": [
+        [
+          -0.125,
+          0
+        ],
+        [
+          0.125,
+          0
+        ],
+        [
+          0.125,
+          0.375
+        ],
+        [
+          -0.125,
+          0.375
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "union-r001/exterior-t-q4",
+      "family": "union-r001",
+      "profileId": "exterior-t",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/exterior-t-q4.glb",
+      "sha256": "85bb0cfa3eb3eb1aa40ce645ba9b68858154c0cfb705300aa5ff35575a89e454",
+      "footprintM": [
+        [
+          -0.125,
+          0
+        ],
+        [
+          0.125,
+          0
+        ],
+        [
+          0.125,
+          0.375
+        ],
+        [
+          -0.125,
+          0.375
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "union-r001/internal-span-0.25-q1",
+      "family": "union-r001",
+      "profileId": "internal-span-0.25",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-0.25-q1.glb",
+      "sha256": "f3fe90cd67eae363beeec89c4e71ef6a5a21ad5d40fac103a564220e83722f79",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.25,
+          -0.125
+        ],
+        [
+          0.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "union-r001/internal-span-0.25-q2",
+      "family": "union-r001",
+      "profileId": "internal-span-0.25",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-0.25-q2.glb",
+      "sha256": "408aeb17cef0c349698858b4754f53d455bff278f2b331cbb8126f8daa50cf2a",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.25,
+          -0.125
+        ],
+        [
+          0.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "union-r001/internal-span-0.25-q3",
+      "family": "union-r001",
+      "profileId": "internal-span-0.25",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-0.25-q3.glb",
+      "sha256": "e4cc1a5bb5fe65661bb05cdbe7c2832fcfcca24daa6c9b11e926c828e843e3f5",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.25,
+          -0.125
+        ],
+        [
+          0.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "union-r001/internal-span-0.25-q4",
+      "family": "union-r001",
+      "profileId": "internal-span-0.25",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-0.25-q4.glb",
+      "sha256": "948791527ddd964e10dd396b2ee56288b16efba06ce58ef7900e4eb4f54b23aa",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.25,
+          -0.125
+        ],
+        [
+          0.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "union-r001/internal-span-0.5-q1",
+      "family": "union-r001",
+      "profileId": "internal-span-0.5",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-0.5-q1.glb",
+      "sha256": "39a976bec920cf2efcf3783df63b0567a21b00d255eabcc0397f77d3609672fb",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.5,
+          -0.125
+        ],
+        [
+          0.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "union-r001/internal-span-0.5-q2",
+      "family": "union-r001",
+      "profileId": "internal-span-0.5",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-0.5-q2.glb",
+      "sha256": "e132770aa5fc03c6e275a99afb93fc10026724a7a8bfff3c720947ffeca544b2",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.5,
+          -0.125
+        ],
+        [
+          0.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "union-r001/internal-span-0.5-q3",
+      "family": "union-r001",
+      "profileId": "internal-span-0.5",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-0.5-q3.glb",
+      "sha256": "fd1b9dd6dc4e3167841a26d5e3db2d6043877661d932c3275df99bc43aa32e87",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.5,
+          -0.125
+        ],
+        [
+          0.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "union-r001/internal-span-0.5-q4",
+      "family": "union-r001",
+      "profileId": "internal-span-0.5",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-0.5-q4.glb",
+      "sha256": "d1f38605afce69258abb2198ada84d649b08915764f4f8b1fea146a0acc07ebf",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          0.5,
+          -0.125
+        ],
+        [
+          0.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "union-r001/internal-span-1.25-q1",
+      "family": "union-r001",
+      "profileId": "internal-span-1.25",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-1.25-q1.glb",
+      "sha256": "5fbcba4e2dc901c7b5157cc859c2de02babdaad32f4c82a5dde39390696c100e",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.25,
+          -0.125
+        ],
+        [
+          1.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "union-r001/internal-span-1.25-q2",
+      "family": "union-r001",
+      "profileId": "internal-span-1.25",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-1.25-q2.glb",
+      "sha256": "de52f78eab4081b27e5755a01f779c900fc5d28ca0f8b42844101f80701dc690",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.25,
+          -0.125
+        ],
+        [
+          1.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "union-r001/internal-span-1.25-q3",
+      "family": "union-r001",
+      "profileId": "internal-span-1.25",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-1.25-q3.glb",
+      "sha256": "d255ed4ad4cb60f09eaa0d682d118e966530381fe7e7dc0e39b083f79f529d28",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.25,
+          -0.125
+        ],
+        [
+          1.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "union-r001/internal-span-1.25-q4",
+      "family": "union-r001",
+      "profileId": "internal-span-1.25",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-1.25-q4.glb",
+      "sha256": "8e4a22250279542c4ebb832bb0f37bcd21305b2eefcbb3e5e37103583b893ef7",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.25,
+          -0.125
+        ],
+        [
+          1.25,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    },
+    {
+      "key": "union-r001/internal-span-1.5-q1",
+      "family": "union-r001",
+      "profileId": "internal-span-1.5",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-1.5-q1.glb",
+      "sha256": "185462e8f9a74397aade5fa6408e0a147868beb3a9132f5c9d216c48728dd7d7",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.5,
+          -0.125
+        ],
+        [
+          1.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 0.75,
+      "quarterHeight": 1
+    },
+    {
+      "key": "union-r001/internal-span-1.5-q2",
+      "family": "union-r001",
+      "profileId": "internal-span-1.5",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-1.5-q2.glb",
+      "sha256": "7632b0c8da4640b29d343c57369157ed5dcbba22dbbe3c1b39a812dc1105c85a",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.5,
+          -0.125
+        ],
+        [
+          1.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 1.5,
+      "quarterHeight": 2
+    },
+    {
+      "key": "union-r001/internal-span-1.5-q3",
+      "family": "union-r001",
+      "profileId": "internal-span-1.5",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-1.5-q3.glb",
+      "sha256": "4ed1310e0a57d88bf567ad149d3e5bb9a8e0580ba718c817d97d4f4b48c0f8c0",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.5,
+          -0.125
+        ],
+        [
+          1.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 2.25,
+      "quarterHeight": 3
+    },
+    {
+      "key": "union-r001/internal-span-1.5-q4",
+      "family": "union-r001",
+      "profileId": "internal-span-1.5",
+      "kind": "wall",
+      "url": "/assets/construction/inset250-r000/union-r001/internal-span-1.5-q4.glb",
+      "sha256": "8aa0c4f097d965fbb720f8fef488fe4d2b41f0f03049072f51acdf6950399cb3",
+      "footprintM": [
+        [
+          0,
+          -0.125
+        ],
+        [
+          1.5,
+          -0.125
+        ],
+        [
+          1.5,
+          0.125
+        ],
+        [
+          0,
+          0.125
+        ]
+      ],
+      "heightM": 3,
+      "quarterHeight": 4
+    }
+  ]
+}
