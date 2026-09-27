@@ -4,7 +4,7 @@ import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import type { Scene } from "@babylonjs/core/scene";
 import type { ShaderMaterial } from "@babylonjs/core/Materials/shaderMaterial";
-import type { PlanetRecipe } from "../../../content/src/environment";
+import type { PlanetRecipe } from "@sidereal/content/environment";
 import type { NativePlanetKit } from "./native-planet-composition";
 import type { PlanetLOD } from "./layered-planet";
 import type { createPlanetWorkerClient } from "./planet-worker-client";

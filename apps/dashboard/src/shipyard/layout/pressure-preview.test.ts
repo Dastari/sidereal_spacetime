@@ -173,3 +173,56 @@ it("keeps all decks represented and explicitly discloses missing cross-deck aper
 it("empty design has no invented pressurized area", () => {
   expect(previewPressureAreas(emptyLayout("blank", "deck")).areas).toEqual([]);
 });
+
+it("never infers a sealed area from unqualified boundary-treatment intent", () => {
+  const doc = emptyLayout("boundary-pressure", "main");
+  doc.decks[0].ceiling = 102;
+  doc.decks[0].roof = true;
+  doc.tiles = [stampTile("floor", "main", "rectangle", [0, 0])];
+  doc.structure = {
+    schema: "sidereal.layout-structure.v2",
+    wallConvention: "inset250-v1",
+    grid: 16,
+    hull: {
+      id: "test",
+      revision: "1",
+      name: "Test",
+      width: 64,
+      length: 64,
+      height: 112,
+      origin: [0, 0, 0],
+    },
+    wallFaces: {},
+    tileStyles: {},
+    armor: [],
+    boundaryTreatments: [],
+    navigationReservations: [],
+    deckProfiles: [
+      {
+        deckId: "main",
+        floorThickness: 6,
+        clearHeight: 96,
+        roofThickness: 4,
+        serviceVoid: 6,
+        pitch: 112,
+      },
+    ],
+  };
+  const wall = compileLayout(doc).walls[0];
+  doc.structure.boundaryTreatments = [
+    {
+      id: "open",
+      deckId: "main",
+      source: wall.source,
+      sourceAnchorId: wall.anchorId,
+      a: wall.a,
+      b: wall.b,
+      treatment: "open",
+    },
+  ];
+  const preview = previewPressureAreas(doc);
+  expect(preview.valid).toBe(true);
+  expect(preview.areas).toHaveLength(1);
+  expect(preview.areas[0].status).toBe("incomplete");
+  expect(preview.assumptions.join(" ")).not.toContain("assumed closed");
+});

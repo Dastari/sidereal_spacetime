@@ -1,7 +1,7 @@
 import { readFileSync } from "node:fs";
 import { test, expect } from "vitest";
-import proof from "../../content/src/wayfarer-walking-proof.json";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import proof from "@sidereal/content/wayfarer-walking-proof.json";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,

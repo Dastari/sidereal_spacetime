@@ -1,0 +1,35 @@
+{
+  "recordedAt": "2026-09-14T22:03:28.453924+00:00",
+  "scope": "Align canvas-ui dependency with render0.2.0; canvas-ui package0.1.2. Runtime catalog data and native geometry remain unchanged.",
+  "sourceHashes": {
+    "apps/dashboard/package.json": "d817c88cdcc944f1c643a4b7e954805449bb0f230ce7e6c14d1f7836bdd3c8c8",
+    "apps/dashboard/src/shipyard/layout/DocumentBar.tsx": "c1ba47b922e8078614204854c66f3709feb3e9e3e2b3805373cc0e2bed7efa19",
+    "apps/dashboard/src/shipyard/layout/LayoutEditor.tsx": "6f4d3fd8525b571d4e2e52f0bf14ccd7d78ca64384e6743f620130251ef8e560",
+    "apps/dashboard/src/shipyard/layout/NewLayoutDialog.tsx": "d398d12b8101f2594b29f6eebd7214db3c7bdde9a25be60d1678e5a9f8b3d382",
+    "apps/dashboard/src/shipyard/layout/useLayout.ts": "58e03b103d09c741e13a58eb3e94daf3d03f3b9de1395525c7f0e0679a4a346f",
+    "apps/dashboard/src/shipyard/layout/armor-review.ts": "b14e12cde7e3cd9f3442ded86eab00d630ae1019ee8fa92d8f1e510a97b3aa69",
+    "apps/dashboard/src/shipyard/layout/armor-review.test.ts": "0f5201a1ed542302bf8bad39213f48c8e100fb338c321a714fca30bfc012b737",
+    "apps/dashboard/src/shipyard/layout/armor-kit-r005.json": "9edca3929b9ec9cf3a11df6b92fe3a896f27e7b949c6a6d6f95ec87cd369e59d",
+    "packages/render/package.json": "8424937c3cae2e5a1dbd46ebc865b6fd058217b5c1903a46d0dba4d4bb228c74",
+    "packages/render/src/layout-hull.ts": "833148dc10accc8b6ccfbb0a8dbf3cc351043f4ad9b386cadc3c88a952cc4ed2",
+    "scripts/prepare_app.py": "e829397f0bf7b0c3dd79b7f3e3f9d9fdefef7f08a2d8b911cc280bcfd053e44c",
+    "scripts/test_prepare_app.py": "2460a14d49794625d2f814331498fe50a4eafac48fc83a70aa2beddcc3d98c72",
+    "scripts/art_library/build_armor_editor.py": "f4ce928db16c7f630ce3ff19ab1a3e96da7297c3e75aa31d7fbddba4234211f1",
+    "package-lock.json": "b89d993b3cff04381671323dde13294aa1c499ca57f9195eb69fc62aae172ada",
+    "packages/canvas-ui/package.json": "8186d364bb9483c40580ce52f2b7096d9a8c692680b176fecd11c6a60cc4101e"
+  },
+  "previousDeliverySha256": "8a7cfe6759144b600d0b5c435ccef677da642df37a6f5309ed53d3d3ace4feb6",
+  "isolatedNpmCi": "pass,175 packages installed",
+  "isolatedArmorTests": "5 pass",
+  "isolatedFullCheck": "typecheck passes; test run has37 failed files/66 failed tests due missing baseline source assets and unhydrated baseline LFS pointers. No new armor test fails. Shared working copy full check passes2063tests.",
+  "isolatedQuality": "broader R16 branch has47 lint and407 formatting violations; scoped changed source lint/format passes. No baseline widened.",
+  "ci": "Previous run failed on stale private render version pin; corrected dependency passes clean install. Later CI results are attached to PR4.",
+  "referenceInventory": "existing unregistered reference remains unchanged",
+  "logs": {
+    "npm-ci.log": "499875f037634365b7a0deeff4e8bb5bac930dd14b18d020861db20e527afa95",
+    "isolated-armor-tests.log": "1fdefd8f7aad64a669bed67fe812cf7976311a9b9f110ea06806c7eed8ebf679",
+    "isolated-check.log": "e6e3068bbb146cc1fe7eda11d06d260ffc23bc2251e09c21b62011f6512271c7",
+    "isolated-lint.log": "0d55d93647ba313d05bb80f564d531a11470c734c69e2caba2de6e59e21cf216",
+    "isolated-format.log": "3b9ef231d1ed70f95df3caf29c8244ecb64cd6637239c3d9e77d4b737c8d66a4"
+  }
+}

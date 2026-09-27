@@ -1,18 +1,18 @@
 import { readFileSync } from "node:fs";
 import { expect, test } from "vitest";
-import { WAYFARER_CONVERSION_PIN as PIN } from "../../content/src/wayfarer-conversion-candidate";
+import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import {
   createWayfarerConversionCandidate,
   type WayfarerPinnedInputs,
-} from "../../sim/src/wayfarer-conversion-candidate";
-import { qualifiedWayfarerWalkingBindings } from "../../sim/src/wayfarer-walking-bindings";
-import { planConstructionInstance } from "../../sim/src/construction-instance";
+} from "@sidereal/sim/wayfarer-conversion-candidate";
+import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 import {
   installConstructionFlight,
   type ConstructionFlightRepository,
   type ConstructionFlightReceipt,
 } from "./construction-flight";
-import type { ConstructionFlightPlan } from "../../sim/src/construction-flight";
+import type { ConstructionFlightPlan } from "@sidereal/sim/construction-flight";
 const snapshot = createWayfarerConversionCandidate(
   Object.fromEntries(
     Object.keys(PIN.sources).map((p) => [p, readFileSync(p, "utf8")]),
@@ -83,11 +83,10 @@ function fixture() {
     }),
     allocateUuid: uuid,
     identityExists: () => false,
-    insertShip: (p) => insert("ship", p),
-    insertMotion: (p) => insert("motion", p),
-    insertStation: (p) => insert("station", p),
-    insertFittings: (p) => insert("fittings", p),
-    insertBinding: (p) => insert("binding", p),
+    insertPlan: (p) => {
+      for (const kind of ["ship", "motion", "station", "fittings", "binding"])
+        insert(kind, p);
+    },
     insertReceipt: (r) => {
       data.receipts.set(r.id, r);
       writeCount++;

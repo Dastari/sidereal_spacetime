@@ -1,3 +1,4 @@
+import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
 import assert from "node:assert/strict";
 import type { DbConnection } from "../packages/net/src/generated";
 export async function interactionSmoke(
@@ -88,7 +89,10 @@ export async function interactionSmoke(
     }
     await intent(0, 0);
   };
-  await move(-2, -1.5);
+  const rebuilt =
+    [...a.db.ownGameShipAccess.iter()][0]?.templateSha256 ===
+    CURRENT_WAYFARER_STARTER.sha256;
+  if (!rebuilt) await move(-2, -1.5);
   await move(0, -1.5);
   await move(0, 3);
   await move(2.25, 3);
@@ -137,6 +141,10 @@ export async function interactionSmoke(
   await wait(() => !couch().seatedByYou, "stand clears seat");
   await move(0, 3);
   await move(0, -1.5);
+  if (rebuilt) {
+    await move(0, -1);
+    await move(-2.4, -1);
+  }
   await move(-2.4, -1.5);
   await assert.rejects(
     a.reducers.interactObject({
@@ -155,6 +163,10 @@ export async function interactionSmoke(
   await a.reducers.interactObject(toggle);
   await wait(() => !light().enabled, "authoritative grow light off");
   await a.reducers.interactObject(toggle);
+  if (rebuilt) {
+    await move(-2.4, -1);
+    await move(0, -1);
+  }
   await move(0, -1.5);
   await move(0, 3);
   await assert.rejects(

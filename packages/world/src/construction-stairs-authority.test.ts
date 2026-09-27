@@ -72,6 +72,7 @@ function fixture() {
     egress = 0,
     combat = 0;
   const db: any = {
+    constructionFlightBinding: table("shipId"),
     constructionPilotSeat: table("characterId", { by_owner: "owner" }),
     constructionFlightReview: table("characterId"),
     constructionStairLink: table("id", {
@@ -100,6 +101,7 @@ function fixture() {
     newUuidV4: () => ({ toString: () => `walk-${++serial}` }),
   };
   const hooks: StairAuthorityHooks = {
+    physicalChanged: () => {},
     mayConsumeMovement: (p) => admitted && p.isEqual(owner),
     mayEnter: () => permission,
     incompatibleActivity: () => incompatible,

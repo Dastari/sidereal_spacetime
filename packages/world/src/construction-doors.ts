@@ -1,3 +1,6 @@
+import { acceptedPassengerAccess } from "./construction-passenger-access";
+import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
+import { planPinnedInsetBoundaries } from "@sidereal/sim/construction-inset-boundaries";
 import { cargoCarrierCollision } from "./construction-cargo-carriers";
 import { addWayfarerRefitCollision } from "./wayfarer-refit-collision";
 import {
@@ -8,8 +11,8 @@ import {
 import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
 import {
   qualifiedWayfarerInstanceObstacles,
-  QUALIFIED_WAYFARER_SHA256,
-} from "../../sim/src/wayfarer-walking-bindings";
+  isQualifiedWayfarerBlueprint,
+} from "@sidereal/sim/wayfarer-walking-bindings";
 import { nativeStairRoomCollision } from "@sidereal/sim/construction-stairs-document";
 import {
   validateNativePressureRoomDocument,
@@ -74,7 +77,12 @@ export function installDoors(
     });
     return;
   }
-  if (!document.boundaryKit || document.boundaryKit.revision === "r004") return;
+  if (
+    !document.boundaryKit ||
+    document.boundaryKit.revision === "r004" ||
+    document.boundaryKit.id === CONSTRUCTION_INSET_VISUAL_PIN.id
+  )
+    return;
   for (const deck of document.layout.decks) {
     const plan = planNativeBoundaries(document.layout, deck.id, {
       floorTopUnits: 6,
@@ -113,12 +121,13 @@ export function constructionCollision(
     if (baseCache.size >= 32) baseCache.clear();
     const document = JSON.parse(instance.documentJson) as ConstructionDocument;
     const width = document.boundaryKit?.revision === "r001" ? 0.0625 : 0;
-    const wayfarer =
-      document.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256
-        ? ctx.db.constructionInstance.id.find(instance.id)
-        : undefined;
+    const wayfarer = isQualifiedWayfarerBlueprint(
+      document.layout.source?.blueprintRevision,
+    )
+      ? ctx.db.constructionInstance.id.find(instance.id)
+      : undefined;
     if (
-      document.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256 &&
+      isQualifiedWayfarerBlueprint(document.layout.source?.blueprintRevision) &&
       !wayfarer
     )
       throw new Error("Qualified Wayfarer instance record required");
@@ -128,15 +137,17 @@ export function constructionCollision(
       partitionHalfWidthM: document.pressureRoom ? 0.0625 : width,
       obstacles: wayfarer
         ? qualifiedWayfarerInstanceObstacles(wayfarer, deckId)
-        : document.stairRoom
-          ? nativeStairRoomCollision(document, deckId)
-          : document.traversalRoom
-            ? nativeTraversalRoomCollision(document, deckId)
-            : document.pressureRoom
-              ? nativePressureRoomCollision(document, deckId)
-              : document.boundaryKit?.revision === "r004"
-                ? pinnedFamilyCollision(document.layout, deckId)
-                : [],
+        : document.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id
+          ? planPinnedInsetBoundaries(document, deckId).obstacles
+          : document.stairRoom
+            ? nativeStairRoomCollision(document, deckId)
+            : document.traversalRoom
+              ? nativeTraversalRoomCollision(document, deckId)
+              : document.pressureRoom
+                ? nativePressureRoomCollision(document, deckId)
+                : document.boundaryKit?.revision === "r004"
+                  ? pinnedFamilyCollision(document.layout, deckId)
+                  : [],
     });
     baseCache.set(key, base);
   }
@@ -316,7 +327,21 @@ export const doorProjection = t.row("ConstructionDoorStatus", {
 });
 export function ownDoors(ctx: ReadContext) {
   const acceptedAirlocks = new Set(ownNativeAirlocks(ctx).map((a) => a.id));
-  return [...ctx.db.constructionInstance.by_owner.filter(ctx.sender)]
+  const instances = [
+    ...ctx.db.constructionInstance.by_owner.filter(ctx.sender),
+  ];
+  const actors = [...ctx.db.character.by_owner.filter(ctx.sender)];
+  const actor = actors.length === 1 ? actors[0] : undefined;
+  if (actor && !instances.some((i) => i.id === actor.shipId)) {
+    const i = ctx.db.constructionInstance.id.find(actor.shipId);
+    if (
+      i &&
+      !i.owner.isEqual(ctx.sender) &&
+      acceptedPassengerAccess(ctx, actor.id).readInterior
+    )
+      instances.push(i);
+  }
+  return instances
     .filter(
       (i) =>
         !ctx.db.constructionAirlock.id.find(i.id) || acceptedAirlocks.has(i.id),

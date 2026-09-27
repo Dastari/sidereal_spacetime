@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { DEFAULT_VIEW } from "./state";
+import { DEFAULT_VIEW, type ViewState } from "./state";
 import {
   enterEditorMode,
   enterStructuralTool,
@@ -7,7 +7,7 @@ import {
 } from "./editor-mode-policy";
 
 describe("Shipyard working layers", () => {
-  it.each(["Structure", "Rooms", "Systems"] as const)(
+  it.each(["Structure", "Systems"] as const)(
     "enters %s on the top working plane",
     (mode) => {
       const before = {
@@ -18,9 +18,7 @@ describe("Shipyard working layers", () => {
       const after = enterEditorMode(before, mode);
       expect(after.projection).toBe("Top");
       expect(after.camera).toBe(before.camera);
-      expect(after.layers.roof).toBe(false);
-      expect(after.layers.exteriorHull).toBe(false);
-      expect(after.layers.routes).toBe(mode === "Systems");
+      expect(after.layers).toBe(before.layers);
     },
   );
   it("preserves manual layer overrides while staying in a mode", () => {
@@ -38,6 +36,31 @@ describe("Shipyard working layers", () => {
     };
     expect(enterEditorMode(before, "Hull").projection).toBe("3D");
     expect(enterStructuralTool(before).projection).toBe("Top");
+    expect(enterStructuralTool(before).layers).toBe(before.layers);
+  });
+  it("retains all visibility choices across every mode and enforces the Structure camera lock", () => {
+    let view: ViewState = {
+      ...DEFAULT_VIEW,
+      layers: {
+        ...DEFAULT_VIEW.layers,
+        roof: true,
+        walls: false,
+        objects: false,
+        routes: false,
+        exteriorHull: true,
+      },
+    };
+    const layers = view.layers;
+    for (const mode of ["Objects", "Hull", "Systems", "Structure"] as const) {
+      view = enterEditorMode(view, mode);
+      expect(view.layers).toBe(layers);
+      expect(layoutPreviewPolicy(view).layers.walls).toBe(false);
+      expect(layoutPreviewPolicy(view).layers.roof).toBe(true);
+      expect(layoutPreviewPolicy(view).lockTop).toBe(mode === "Structure");
+    }
+    expect(
+      enterEditorMode({ ...view, projection: "3D" }, "Structure").projection,
+    ).toBe("Top");
   });
   it("separates schematic object visibility from native solid meshes", () => {
     const view = enterEditorMode(

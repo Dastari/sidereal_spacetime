@@ -1,5 +1,5 @@
 import type { PackedPlanetGeometry } from "./planet-build";
-import { setMeshRole } from '../mesh-roles';
+import { setMeshRole } from "../mesh-roles";
 import { Scene } from "@babylonjs/core/scene";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
@@ -19,9 +19,11 @@ export function createLavaSpill(
   setMeshRole(mesh, "planet");
   data.positions = prepared?.positions ?? geometry.positions;
   data.colors = prepared?.colors ?? geometry.colors;
-  data.indices = prepared?.indices ?? geometry.indices.map(
-    (_, i) => geometry.indices[i % 3 === 1 ? i + 1 : i % 3 === 2 ? i - 1 : i],
-  );
+  data.indices =
+    prepared?.indices ??
+    geometry.indices.map(
+      (_, i) => geometry.indices[i % 3 === 1 ? i + 1 : i % 3 === 2 ? i - 1 : i],
+    );
   data.applyToMesh(mesh);
   const material = new ShaderMaterial(
     name + "-lava-spill-material",
@@ -41,6 +43,10 @@ export function createLavaSpill(
   material.setFloat("time", 0);
   mesh.material = material;
   mesh.isPickable = false;
-  mesh.metadata = { role: "planet", planetLavaSpill: true, faces: geometry.faces };
+  mesh.metadata = {
+    role: "planet",
+    planetLavaSpill: true,
+    faces: geometry.faces,
+  };
   return { mesh, material };
 }

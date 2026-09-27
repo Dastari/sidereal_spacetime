@@ -15,6 +15,7 @@ const config = JSON.parse(
   database: string;
   databaseUrl: string;
   clientPort: number;
+  publicClientUrl: string;
   dashboardPort: number;
   allowedHosts: string[];
   authIssuer: string;
@@ -25,6 +26,9 @@ export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
   plugins: [react()],
   define: {
+    "import.meta.env.VITE_PUBLIC_CLIENT_URL": JSON.stringify(
+      config.publicClientUrl,
+    ),
     "import.meta.env.VITE_AUTH_ISSUER": JSON.stringify(config.authIssuer),
     "import.meta.env.VITE_AUTH_ORIGIN": JSON.stringify(config.authOrigin),
     "import.meta.env.VITE_AUTHORING_CLIENT_ID": JSON.stringify(

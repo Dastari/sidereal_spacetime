@@ -1,5 +1,54 @@
 # Shipyard completion plan and acceptance contract
 
+## Adopted boundary-treatment architecture — owner confirmation 2026-09-11
+
+The owner explicitly confirmed adoption of `reference/sidereal_ship_editor_structural_envelope.md` with the reviewed corrections. Floor polygon union generates structural boundaries; each boundary resolves a treatment, which may be a wall, glazed/sill assembly, opening, interface or deliberate open edge. Independent internal partitions use the same geometric vocabulary. Authored intent, compiled boundaries, native geometry, collision, seal coverage and runtime state remain distinct.
+
+Corrections governing the reference: structural wall thickness is 250 mm **inward** of the fixed tile edge; the 2 m module and supported subdivisions remain; navigation is separate from structural floor coverage; physical properties derive from qualified adapters and server state rather than editor booleans; native Blender families provide supported geometry; edge splits/merges retain explicit lineage and report attachment conflicts; labels remain independent from pressure compartments; A/B/C1 minimum completion retains multi-deck traversal, rooms and pressure before later contracts.
+
+The standard vertical profile is now **owner-approved**: 0.1875 m floor + 3 m clear height + 0.125 m roof + 0.1875 m service void = 3.5 m pitch. Standard opaque wall heights are 0.75/1.5/2.25/3 m. Smaller deck/space profiles must be representable explicitly for ducts, connecting bridges and small craft, with their own native interfaces and actor-clearance qualification. Earlier statements that these dimensions are pending are historical and superseded.
+
+This confirmation resumes implementation after the owner's requested pause. It does not approve new art or change existing live native/collision pins. The straight-wall request remains a bounded initial treatment-family task, not the architecture for every boundary.
+
+
+## Owner wall-convention override — 2026-09-11
+
+The owner superseded the earlier outward-wall requirement during the completion
+phase 0 check-in: “Interior walls need to sit INSIDE the tile.. So a 1x1 meter floor
+tile should have a 250mm inside wall.” The tile/floorplan perimeter is therefore
+the fixed **outer construction boundary**, not an advertised unobstructed walking
+edge. New boundary-wall geometry occupies **250 mm (8 lattice units) inward** of
+that boundary. Its exterior mating plane remains on the nominal tile edge, so
+external hull/armor pieces have repeatable dimensions for ships and stations.
+Smaller object placement increments and actual wall-volume exclusion determine
+interior fit; the grid does not grant permission to intersect a wall. All body,
+trim and frame geometry must fit its declared reservation.
+
+This supersedes references below to outward-only walls, preserving the full floor
+polygon as usable space, and fixing old intersections specifically by shifting
+walls outside the floor boundary. Existing native revisions, measured audit results
+and live installations remain historical evidence and are not rewritten or approved
+by this direction. Actual contacts, collision, support and seals still require
+qualification. A shared internal divider must have one explicit reservation/side
+binding, not two accidentally overlapping room-perimeter walls.
+
+The owner suggested quarter-, half- and three-quarter-height wall variants for the
+Wayfarer bow. Treat height as an explicit family parameter with matching sill,
+glazing/frame and roof interfaces; never stretch an unrelated mesh. Keep the floor
+polygon continuous and model standing-clearance/navigation restrictions separately.
+A partial-height opaque wall is not an airtight full-height boundary: its qualified
+upper infill and closure must be accounted for. Preserve the existing swept-cockpit
+visual target through explicit span bindings; do not replace it with opaque walls.
+
+**Vertical dimensions remain pending.** The owner has not approved the earlier
+3.5 m pitch / 2.8125 m clear-height proposal. A new proposal is 3 m clear height
+with 0.75/1.5/2.25/3 m wall variants; 3.5 m pitch comprising 0.1875 m floor,
+3 m clear height, 0.125 m roof and 0.1875 m service void. These all fit the existing
+1/32 m lattice. They are a question to the owner, not permission to author dependent
+native pieces. Keep the 2 m structural module and its supported 1 m subdivisions;
+the owner's 1 m example does not remove the 2 m module.
+
+
 Date: 2026-09-11. Owner-requested implementation plan for another agent.
 Status: required work; this document is not a completion or art-approval record.
 Scope: the usable Creator/Shipyard, its shared construction contracts, the authored
@@ -21,6 +70,56 @@ Existing character/pose, inventory UI, login and renderer work has other owners;
 coordinate narrow integration contracts and preserve their changes. Do not replace
 those systems as incidental scope. The current owner authorization permits validated
 implementation and deployment; final artistic sign-off on new revisions is separate.
+
+### 1a. Contracts, gates and minimum viable completion (added 2026-09-11)
+
+This plan is large. To keep it deliverable it is split into four contracts, each
+with its own exit gate and an owner check-in before the next begins. The phase
+table in section 10 and the acceptance suite in section 11 remain the detailed
+requirements; this section says how they group and what "done enough" means.
+
+| Contract | Covers | Phases | Owner check-in |
+| --- | --- | --- | --- |
+| A. Tileset specification and wall family | Machine-readable interface spec, conformance fixtures, cockpit boundary variants, outward wall family decision, first native families authored against the spec | 0, 1 (contracts), 2 | Yes: owner freezes wall family, deck pitch and hull envelope before Contract B asset work depends on them |
+| B. Editor and semantic model | Versioned semantic contracts, finite placement/rotation, Creator UI, rooms/pressure overlay, draft/publish/spawn path | 1, 3 | Yes: owner reviews blank-to-layout and reopened Wayfarer in the browser |
+| C. Gameplay integrations, one gate each | C1 stairs/ladders and doors/pressure; C2 utilities and mounted systems; C3 cargo grids/stacks; C4 powered lifts and the damage demonstration | 4, 5, part of 6 | After C1 and after C3 |
+| D. Wayfarer rebuild, live migration, release | Semantic Wayfarer, coarse collision/render integration, Dastari's dry-run and refit, combined release | 6, 7 | Yes: owner approves the conservation report before the live refit |
+
+Contracts A and B may run in parallel with distinct owners once the shared
+contracts in phase 1 are agreed. C starts when B's contracts are frozen. D is
+last and never interleaved with A's dimensional changes: the old wall family
+remains installable until the rebuilt Wayfarer is accepted.
+
+**Minimum viable completion.** If work stalls, this is the state that still
+yields a usable Shipyard and must be reached first: start an empty design,
+draw a multi-deck floorplan with generated exterior walls, internal walls,
+doors and room labels, publish it, spawn two independent instances, walk both,
+climb between decks by stairs or ladder, and have closed doors seal pressure
+between compartments. That is acceptance items 1, 2, 4, 5, the stair half of 6,
+the door half of 7, and item 10. Everything else in the suite is required for
+full completion but is not to be started ahead of this minimum.
+
+**Deferred to Contract C4.** Powered elevators with car position, shaft/landing
+doors, interlocks, passengers and interruption recovery; the structural breach
+and equipment-health demonstration. Stairs and ladders prove multi-deck for the
+minimum. These remain required for the final gate.
+
+**Decisions the integration agent must escalate to the owner, not make:**
+
+- Exterior wall family and thickness (the 125 mm centred preview and the 250 mm
+  outward candidate are different families; downstream jambs, glazing frames,
+  roof edges and armor adapters depend on the choice).
+- Deck pitch, clear room height and service-void allowance.
+- Hull class envelope values and any permitted overhang numbers.
+- Any change that alters the live Wayfarer's collision revision or installed
+  native pins before Contract D.
+- Any validator the agent wants to relax, and any new art revision it wants to
+  treat as approved.
+- Any schema change that cannot be applied additively to the live database.
+
+When blocked on one of these, record the question and the proposed default in
+`docs/handoffs/shipyard_completion_progress.md`, continue independent work,
+and do not proceed past the dependent gate until answered.
 
 ## 2. Read and reconcile before editing
 
@@ -44,9 +143,20 @@ The old `ship_layout_editor_design.md` remains useful background, but its origin
 single-playable-plane completion scope and older status descriptions are superseded.
 
 Visual references:
-`reference/art/editor-mockup-{1,2,3,4}.png` (open all four), plus the latest owner
+`reference/art/editor-mockup-{1,2,3,4,5}.png` (open all five), plus the latest owner
 screenshots in the conversation. Prioritize a large central canvas, compact chrome,
 contextual side panels and the Systems schematic seen in the Last Starship example.
+
+**Owner direction 2026-09-11:** `editor-mockup-5.png` is the basis for the Creator
+theme and for every future dashboard route. Its structure is the target: a single
+top application bar (product mark, primary routes, global search, help/settings,
+account), a document bar (name, saved state, undo/redo, Save, Test, Publish), a
+left palette with named categories and icon tiles, a canvas with a floating design
+summary card (dimensions, mass, block count, validity), and a right panel with
+Ship information, Statistics, Systems status and a Design validation checklist.
+Keep the current dark palette family; adopt the mockup's spacing, card grouping and
+iconography. Contract B owns the Creator theme; extract shared tokens and components
+into `packages/ui` so the Genesis and later Foundry/Atelier routes reuse them.
 References and private handoffs must not be copied wholesale into public assets.
 
 At takeover, record HEAD, dirty files, active owners, current native revision/hash
@@ -55,12 +165,13 @@ in source commits `42ae336b` and `3062d447`; these are baseline landmarks, not a
 to reset the tree to either commit. This is a shared working tree; no blanket add,
 reset, clean, stale patch application or restoration over another owner's work.
 
-Operational follow-up: read `docs/handoffs/shipyard_hmr_database_recovery_20260911.md`.
-The database recently stopped during extreme disk pressure; recovery left only about
-3.2 GB headroom. Before builds, asset exports or release snapshots, measure required
-peak space and resolve storage capacity safely. Do not duplicate entire art libraries
-into each candidate or delete player databases/recovery archives to make room. Use
-atomic source-file replacement; dashboard HMR now waits for writes to stabilize.
+Operational follow-up: read `docs/handoffs/shipyard_hmr_database_recovery_20260911.md`
+for the recovery history. The disk pressure that stopped the database has been
+resolved by the owner; on 2026-09-11 the pool reported about 521 GB free. Storage is
+not a planning constraint for this work. The remaining rules still apply: do not
+duplicate entire art libraries into each candidate, never delete player databases or
+recovery archives, use atomic source-file replacement, and note that dashboard HMR
+waits for writes to stabilize.
 
 ## 3. Verified starting point and important gaps
 
@@ -76,6 +187,21 @@ atomic source-file replacement; dashboard HMR now waits for writes to stabilize.
 | Services | Pure bounded 3D geometry/capacity rules in `construction-services.ts` | Editor/runtime mapping, resource/device authority and persistence; no free power/fuel/air |
 | Cargo | Existing inventory/container and bounded cargo authority work | Complete cargo-grid UI and compatible supported mixed-size stacks; audit actual current release |
 | Wayfarer | Pinned native 262-placement reference and authoritative starter/refit paths | Fully semantic template, corrected interfaces/lockers, glazed cockpit boundaries, navigation reservations |
+
+**Authority that already exists and must be reused, verified against source on
+2026-09-11.** Reducers in `packages/world/src/index.ts`: `setConstructionGrant`,
+`saveConstructionDraft`, `publishConstructionBlueprint`, `spawnConstructionBlueprint`,
+`enterConstructionReview`, `leaveConstructionReview`, `setConstructionDoor`,
+`beginConstructionTraversal`, `cancelConstructionTraversal`, `refitExistingWayfarer`.
+Tables under `packages/world/src/construction-*-tables.ts`: draft, blueprint,
+instance, deck, location, door, grant, receipt; traversal with link, reservation,
+clock and audit; stair link, reservation, walk and audit; atmosphere with clock and
+native pressure; cargo grid, placement, operation and assembly; flight binding,
+fitting, station, receipt and review; pilot seat. Shared-world tables with system
+and cell columns are in `packages/world/src/shared-world-tables.ts`. Pure rules for
+services are in `packages/sim/src/construction-services.ts`. Start phase 0 from this
+list; extend these rather than introducing parallel draft, publish, spawn or
+traversal paths.
 
 Current template source `packages/content/src/wayfarer-starter-r001.json` contains
 51 semantic floors and retained native parts, but no semantic partitions/openings/
@@ -436,6 +562,17 @@ Other ships render exteriors only, with an appropriate exterior-window treatment
 do not load/render all their interior equipment/lights. Preserve current optimization
 work, batching, selection identity and bounded lights; measure regression costs.
 
+**Performance budget.** The rendering register in `docs/rendering_performance_plan.md`
+has brought on-foot Deck to about 955 draw calls, 1,372 total meshes, 528 materials
+and about 6 ms Render CPU on the owner's RTX 4080 laptop at 1574 × 907. Shipyard work
+must not regress those numbers for the single local ship, and its targets remain
+Deck under 900 draw calls, total meshes under 500, materials under 80 and Render CPU
+under 6 ms. Generated walls, floors, roofs and fittings must enter the same batching,
+instancing and role-metadata paths as the existing native placements. Record F3
+counters for the rebuilt Wayfarer and for a two-ship scene with a remote exterior
+before and after each contract; a regression over 10% on draw calls or Render CPU
+blocks that contract's gate until explained or fixed.
+
 Retain the owner damage split: structural walls/floor/roof/hull/armor and supported
 external components use separate localized voxel damage representations; interior
 beds/chairs/lockers/reactors/hydroponics/containers use entity health and later damaged
@@ -491,16 +628,17 @@ owner, files, source pins, current state, check/evidence, next action and blocke
 Keep it current after each milestone. Do not mark an entire phase complete because
 one fixed fixture passed. Do not stop after writing another proposal.
 
-| Phase | Deliverable | Exit gate |
-| --- | --- | --- |
-| 0 | Current-state audit, owner/file map, approved asset gaps and migration plan | Reproducible baseline and explicit current-vs-needed matrix |
-| 1 | Versioned semantic contracts, navigation reservations, boundary variants, finite placement transforms | Migration and pure geometry tests; no fine-angle round-trip loss |
-| 2 | Native interface qualification + generated floor/wall/roof/cockpit assembly | Square/diagonal/taper/T/cross/opening fixtures render and fit; no opaque cockpit duplicate |
-| 3 | Coherent Creator UI, smaller snap/rotate, Rooms/pressure display, mounts and editable template path | Real browser blank-to-layout and reopen/edit proof at desktop and smaller viewport |
-| 4 | Qualified multi-deck traversal, doors/pressure/external airlock | Actual game movement/cycling, interruption and persisted state proof |
-| 5 | 3D utilities, cargo grids/stacks, supported device integration | Resource conservation and stacking/removal tests; real game demonstrations |
-| 6 | Rebuilt semantic Wayfarer, coarse collision/render integration and damage example | Two independent spawns, editable capture, state-conserving refit and breach proof |
-| 7 | Combined release, multiplayer/restart, performance and final visual review | Exact tested artifacts activated; acceptance checklist and honest residual limitations |
+| Phase | Contract | Deliverable | Exit gate |
+| --- | --- | --- | --- |
+| 0 | A | Current-state audit, owner/file map, approved asset gaps, migration plan, and the owner decisions listed in section 1a frozen | Reproducible baseline and explicit current-vs-needed matrix; wall family, deck pitch and hull envelope recorded as owner decisions |
+| 1 | A/B | Versioned semantic contracts, navigation reservations, boundary variants, finite placement transforms | Migration and pure geometry tests; no fine-angle round-trip loss |
+| 2 | A | Native interface qualification + generated floor/wall/roof/cockpit assembly | Square/diagonal/taper/T/cross/opening fixtures render and fit; no opaque cockpit duplicate; owner check-in |
+| 3 | B | Coherent Creator UI, smaller snap/rotate, Rooms/pressure display, mounts and editable template path | Real browser blank-to-layout and reopen/edit proof at desktop and smaller viewport; owner check-in |
+| 4 | C1 | Qualified multi-deck traversal by stairs/ladders, doors/pressure/external airlock | Actual game movement/cycling, interruption and persisted state proof; minimum viable completion reached; owner check-in |
+| 5 | C2, C3 | 3D utilities, cargo grids/stacks, supported device integration | Resource conservation and stacking/removal tests; real game demonstrations; owner check-in after C3 |
+| 5b | C4 | Powered lifts with interlocks; structural breach and equipment-health demonstration | Occupied/obstructed landing, power loss and reconnect proofs; breach changes surface, collision and enclosure through authority |
+| 6 | D | Rebuilt semantic Wayfarer, coarse collision/render integration, Dastari dry-run and refit | Two independent spawns, editable capture, owner-approved conservation report, state-conserving refit |
+| 7 | D | Combined release, multiplayer/restart, performance and final visual review | Exact tested artifacts activated; performance budget met; acceptance checklist and honest residual limitations |
 
 Asset work should begin during phase 1 so it does not wait for UI completion. UI and
 pure-rule work may proceed in parallel after shared contracts are agreed. One owner
@@ -532,8 +670,9 @@ browser slot, use a named session, and blank/close it when done.
 5. **View continuity:** every tab shares alignment; temporary editing projection and
    layer choices restore predictably; resize/DPI/orbit does not shift picking; no
    selection flash, duplicate mesh or recreated viewport/asset library per click.
-6. **Multi-deck:** real ordinary walking up/down stairs, stop/reverse, safe ladder,
-   powered elevator/landing interlocks, occupied/obstructed destination and reconnect.
+6. **Multi-deck:** real ordinary walking up/down stairs, stop/reverse, safe ladder
+   (minimum viable); powered elevator/landing interlocks, occupied/obstructed
+   destination and reconnect (Contract C4).
 7. **Pressure:** adjacent named and unnamed compartments; open/close door changes
    connectivity; external airlock cycles; missing roof/breach vents only connected
    volume; transparent sealed window is not a passage; finite gas survives restart.
@@ -549,8 +688,9 @@ browser slot, use a named session, and blank/close it when done.
     fuel, weapon energy and fitting identities are reconciled with receipts; old
     blueprints and unsupported drafts remain recoverable.
 12. **Performance/damage:** coarse ship collision; remote interiors/lights suppressed;
-    structural breach/collision/pressure effect and separate equipment health effect;
-    measured CPU/GPU/draw counts against a comparable multi-ship baseline.
+    F3 counters within the section 8 performance budget for the rebuilt Wayfarer and
+    a two-ship scene (Contract D); structural breach/collision/pressure effect and
+    separate equipment health effect (Contract C4).
 
 Run focused tests per phase, then `npm run check`, `npm run build`, relevant format/
 lint and Python checks, `npm run art:check`, native fitting validators and authority

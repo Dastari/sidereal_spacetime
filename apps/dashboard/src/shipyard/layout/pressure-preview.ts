@@ -67,6 +67,16 @@ export function previewPressureAreas(
     diagnostics: compiled.diagnostics.filter((d) => d.severity === "error"),
   };
   if (!compiled.valid || !compiled.tiles.length) return result;
+  const boundaryTreatments =
+    doc.structure?.schema === "sidereal.layout-structure.v2";
+  if (boundaryTreatments) {
+    result.assumptions = [
+      "Boundary-treatment intent does not establish seal coverage or measured pressure. Room names remain informational.",
+    ];
+    result.limitations.push(
+      "Boundary-treatment pressure topology requires qualified full 3D floor, roof, wall and opening adapters.",
+    );
+  }
   const decks = new Map(doc.decks.map((d) => [d.id, d]));
   const partitions = new Map(
     doc.decks.map((d) => [
@@ -170,6 +180,12 @@ export function previewPressureAreas(
     group.tileIds.sort(order);
     group.reasons = [...reasons.get(id)!];
     if (group.reasons.length) group.status = "vented-design";
+    if (boundaryTreatments) {
+      group.status = "incomplete";
+      group.reasons.push(
+        "Boundary treatments have not been qualified for pressure enclosure.",
+      );
+    }
     if (incompleteDecks.has(group.deckId)) {
       group.status = "incomplete";
       group.reasons.push(

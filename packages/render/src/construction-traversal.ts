@@ -1,4 +1,4 @@
-import { setMeshRole } from './mesh-roles';
+import { setMeshRole } from "./mesh-roles";
 import {
   SceneLoader,
   type ISceneLoaderAsyncResult,
@@ -175,9 +175,11 @@ export async function loadConstructionTraversal(
         ".glb",
       );
       imports.push(imported);
-      const meshes = imported.meshes.map(m => setMeshRole(m, "floor")).filter(
-        (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
-      );
+      const meshes = imported.meshes
+        .map((m) => setMeshRole(m, "floor"))
+        .filter(
+          (m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0,
+        );
       prototypes.set(sourceId, {
         meshes,
         matrices: new Map(
@@ -210,7 +212,12 @@ export async function loadConstructionTraversal(
         nativeNodePrefix: part.nodePrefix,
         constructionTraversal: true,
         traversalRole: roles[i],
-        role: roles[i] === "lower-roof" ? "roof" : roles[i] === "ladder" ? "equipment" : "floor",
+        role:
+          roles[i] === "lower-roof"
+            ? "roof"
+            : roles[i] === "ladder"
+              ? "equipment"
+              : "floor",
         deckId:
           roles[i] === "lower-floor" || roles[i] === "lower-roof"
             ? input.lowerDeckId
