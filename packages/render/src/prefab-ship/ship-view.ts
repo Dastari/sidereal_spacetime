@@ -64,7 +64,7 @@ export type PrefabShipPresentation = "flight" | "deck";
 export interface PrefabShipViewOptions {
   catalog: PrefabComponentCatalog;
   view: PrefabShipPresentation;
-  /** Kit GLB directory, with trailing slash. Default "/assets/ship-kit/<SHIP_KIT_REVISION>/". */
+  /** Kit GLB directory, with trailing slash. Default `/assets/ship-kit/${SHIP_KIT_REVISION}/`. */
   kitBaseUrl?: string;
   parent?: TransformNode;
   /** When set, component GLBs load from `${componentsBaseUrl}${basename(spec.visual.url)}`. */
