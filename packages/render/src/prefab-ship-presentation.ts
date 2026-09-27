@@ -53,7 +53,7 @@ export async function loadPrefabShipPresentation(
   const catalog = prefabComponentCatalogFor(binding.catalog);
   const { createPrefabShipView } = await import("./prefab-ship/ship-view");
   let interior = true;
-  // Published component (ship-components/r002) and deck furniture (ship-furniture/r001) GLBs;
+  // Published component (ship-components/r002) and interior object (ship-objects/r001) GLBs;
   // anything unpublished falls back to stand-ins inside the view. One ceiling light per room.
   const view = await createPrefabShipView(scene, doc, {
     catalog,
@@ -68,6 +68,15 @@ export async function loadPrefabShipPresentation(
   // edges, exhaust). The game's instrument glow layer stays untouched; one grading path.
   const glow = new GlowLayer("prefab-ship-glow", scene, { mainTextureFixedSize: 512, blurKernelSize: 40 });
   glow.intensity = GAME_SHIP_GLOW;
+  // Per-slot bloom: amber (emit_b) covers large areas (radiator fins, roof vents) and would wash
+  // out the hull, so it glows at a third; cyan trims and canopy edges keep most of their halo.
+  glow.customEmissiveColorSelector = (mesh, _sub, material, result) => {
+    const src = material as typeof material & { emissiveColor?: Color3; emissiveIntensity?: number };
+    const c = src.emissiveColor;
+    if (!c) return result.set(0, 0, 0, 0);
+    const k = (src.emissiveIntensity ?? 1) * (/emit_b|radiator/.test(`${material.name} ${mesh.name}`) ? 0.3 : 0.85);
+    result.set(c.r * k, c.g * k, c.b * k, material.alpha);
+  };
   // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind
   // housings, walls and hull plates do not bloom through them.
   const occluders = createGlowOccluders(glow);

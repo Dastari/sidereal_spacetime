@@ -42,6 +42,7 @@ import { appendTransformed, localToParent, meshGeometry, type MergeGroup } from 
 import { appendStandin, componentStandin, emitPlume, type StandinSocket } from "./component-standins";
 import { applyDecalTheme, buildDecals, disposeDecals, type DecalHandle } from "./decals";
 import {
+  basisMatrix,
   componentMatrix,
   frameOfSocket,
   GLTF_TO_ZUP,
@@ -75,8 +76,9 @@ export interface PrefabShipViewOptions {
   roomLights?: number;
   /** Skip component and furniture GLB lookups and always draw procedural stand-ins. */
   standinComponents?: boolean;
-  /** When set, deck furniture GLBs load from `${furnitureBaseUrl}${basename(url)}`. */
-  furnitureBaseUrl?: string;
+  /** Deck object GLBs (SHIPS-COMPONENTS ship-objects) load from `${objectsBaseUrl}<designId>.glb`.
+   * Default `/assets/ship-objects/r001/`. */
+  objectsBaseUrl?: string;
   /** Merge static geometry into one mesh per (view, slot, role). Default true; false keeps
    * per-piece thin instances (useful for editors that inspect pieces). */
   batch?: boolean;
@@ -384,7 +386,18 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
           const spec = c.placement.spec;
           const authored = frameOfSocket(spec?.attach[0]);
           const place = componentMatrix(c.placement.anchor, c.placement.anchorZ * TEXEL, c.placement.quarterTurns);
-          const m = multiply(multiply(GLTF_TO_ZUP, mountRotation(authored, socketOf(c))), place);
+          // Edge hatches (airlocks, cargo doors) stand in the hull wall: fit them under the deck
+          // roof (low-profile decks) by scaling their height only; never taller than the wall.
+          let m = multiply(multiply(GLTF_TO_ZUP, mountRotation(authored, socketOf(c))), place);
+          if (c.placement.mount.attach === "edge") {
+            const b = geom.bounds;
+            const zs = [0, 1, 2, 3, 4, 5, 6, 7].map((k) => transformPoint(m, [b[k & 1 ? 3 : 0], b[k & 2 ? 4 : 1], b[k & 4 ? 5 : 2]])[2]);
+            const z0 = Math.min(...zs);
+            const top = G.deck.roofTexels * TEXEL;
+            const fit = Math.max(...zs) > top && top > z0 ? (top - z0) / (Math.max(...zs) - z0) : 1;
+            // Scale about the hatch's base in the prefab frame (z-up): x/y unchanged.
+            if (fit < 1) m = multiply(m, multiply(multiply(basisMatrix([1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, -z0]), basisMatrix([1, 0, 0], [0, 1, 0], [0, 0, fit])), basisMatrix([1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, z0])));
+          }
           pushMatrix(matrices[c.view], m);
           if (isMainEngine(c)) {
             // Nozzle exit: the GLB's outward extreme (component -Y is glTF +Z).
@@ -445,7 +458,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
   function objectUrl(designId: string): string | null {
     const url = deckObjectVisualUrl(designId);
     if (!url) return null;
-    const base = url.includes("/ship-furniture/") ? options.furnitureBaseUrl : options.componentsBaseUrl;
+    const base = options.objectsBaseUrl;
     return base ? base + url.split("/").pop() : url;
   }
 

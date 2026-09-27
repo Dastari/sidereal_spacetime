@@ -27,7 +27,7 @@ PUBLISHED_RUNTIME = (
     "ship-kit/r001",
     "ship-kit/r002",
     "ship-components/r002",
-    "ship-furniture/r001",
+    "ship-objects/r001",
     "construction/boundary-r001",
     "construction/boundary-r004",
     "construction/floor-finishes",

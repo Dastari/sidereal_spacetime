@@ -429,6 +429,10 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
 
   const otherCovers = (v: VolumeGeometry, x: number, y: number, z0: number, z1: number) =>
     geoms.some((w) => w !== v && w.z[0] < z1 && z0 < w.z[1] && insideOutline(w.outline!, x, y));
+  // Cassette tiers only give way when another volume hides most of the tier (a wing covering the
+  // lower 5 texels of an upper tier still leaves a visible band that needs cassettes).
+  const mostlyCovered = (v: VolumeGeometry, x: number, y: number, z0: number, z1: number) =>
+    geoms.some((w) => w !== v && insideOutline(w.outline!, x, y) && Math.min(z1, w.z[1]) - Math.max(z0, w.z[0]) > 0.6 * (z1 - z0));
 
   const interior = deckId ? deriveInterior(doc, 0, options.catalog) : null;
   // Exterior outline runs marked as canopy glass (edge type "canopy"), as outline segment keys.
@@ -502,7 +506,7 @@ export function dressShip(doc: ShipPrefabDocumentV1, options: DressOptions): Dre
         for (let u = 0; u < L; u++) {
           const px = p[0] + d[0] * (u + 0.5) + nrm[0] * 0.3;
           const py = p[1] + d[1] * (u + 0.5) + nrm[1] * 0.3;
-          if (otherCovers(g, px, py, t0, t1)) holes.push([u, u + 1]);
+          if (mostlyCovered(g, px, py, t0, t1)) holes.push([u, u + 1]);
         }
         for (const mp of mounts) {
           if (mp.mount.attach !== "face") continue;
