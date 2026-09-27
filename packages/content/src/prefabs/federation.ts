@@ -1,19 +1,66 @@
+import { withBow } from "../bow-profiles";
 /** Federation (Orion Crest line): warm white, navy and crimson; tidy symmetric hulls. */
-import { door, edge, face, module, opening, polygonTiles, prefab, room, skylight, top, volume } from "./builders";
+import {
+  door,
+  edge,
+  face,
+  module,
+  opening,
+  polygonTiles,
+  prefab,
+  room,
+  skylight,
+  top,
+  volume,
+} from "./builders";
 
 /** Starter candidate: two-person courier with a sloped bow and swept wings. */
 export const FED_WREN = prefab({
   id: "fed.s.wren",
   name: "Wren",
-  description: "Orion Crest light courier. Sloped bow, swept wings, one airlock and a snug four-room deck. Starter candidate.",
+  description:
+    "Orion Crest light courier. Sloped bow, swept wings, one airlock and a snug four-room deck. Starter candidate.",
   faction: "Federation",
   role: "Courier",
   theme: "federation",
   sizeClass: "S",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [9, 0], [11, 2], [11, 4], [9, 6], [0, 6]]), { spine: true, logo: true }),
-    volume("wing-s", "plate", "wing", polygonTiles([[0, -2], [3, -2], [5, 0], [0, 0]])),
-    volume("wing-p", "plate", "wing", polygonTiles([[0, 6], [5, 6], [3, 8], [0, 8]])),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      polygonTiles([
+        [0, 0],
+        [9, 0],
+        [11, 2],
+        [11, 4],
+        [9, 6],
+        [0, 6],
+      ]).map((t) => (t.x >= 8 ? withBow(t, (t.x - 7) as 1 | 2 | 3) : t)),
+      { spine: true, logo: true },
+    ),
+    volume(
+      "wing-s",
+      "plate",
+      "wing",
+      polygonTiles([
+        [0, -2],
+        [3, -2],
+        [5, 0],
+        [0, 0],
+      ]),
+    ),
+    volume(
+      "wing-p",
+      "plate",
+      "wing",
+      polygonTiles([
+        [0, 6],
+        [5, 6],
+        [3, 8],
+        [0, 8],
+      ]),
+    ),
   ],
   rooms: [
     room("engine", "ENGINE", "engineering", [0, 0, 3, 6]),
@@ -29,8 +76,7 @@ export const FED_WREN = prefab({
     door("d-bridge", [7, 2], [7, 4], "door.sliding"),
     edge("g-bridge-s", [7, 0], [7, 2], "wall.glazed"),
     edge("g-bridge-p", [7, 4], [7, 6], "wall.glazed"),
-    // Cockpit canopy: framed glass along the whole bow (both chamfers and the nose), sealing.
-    edge("canopy-bow", [9, 0], [9, 6], "canopy"),
+    // Pressure glass is the inset roof face of the bow tiles; the outer shoulder edges are armour.
   ],
   mounts: [
     face("main-s", "ion-drive.md", "aft", [0, 1.5]),
@@ -44,29 +90,65 @@ export const FED_WREN = prefab({
     top("dish", "sensor-dish.sm", [1, 4]),
     top("rad-a", "radiator.md", [1, 1]),
     top("rad-b", "radiator.md", [3, 3]),
-    module("helm", "console.navigation.sm", [9, 2.5], "fore"),
+    module("helm", "console.navigation.sm", [8, 2.5], "fore"),
     module("core", "computer-core.sm", [7, 0.5], "port"),
     module("reactor", "reactor.md", [0, 1.5], "fore"),
     module("life", "life-support.sm", [2, 0], "port"),
     module("bunk", "crew-bunk.sm", [3.5, 4.5], "starboard"),
   ],
-  skylights: [skylight("sky", [7, 2], [2, 2])],
+  skylights: [],
   markings: { name: "WREN", number: "OC-11", emblem: "planet" },
 });
+
+FED_WREN.revision = 2;
 
 /** Medium: the prototype Wayfarer-class corvette, re-cut on the 1 m grammar. */
 export const FED_CREST = prefab({
   id: "fed.m.crest",
   name: "Orion Crest",
-  description: "Federation corvette: eleven rooms around a central spine, glazed bridge and lounge, twin large ion drives.",
+  description:
+    "Federation corvette: eleven rooms around a central spine, glazed bridge and lounge, twin large ion drives.",
   faction: "Federation",
   role: "Corvette",
   theme: "federation",
   sizeClass: "M",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [20, 0], [24, 4], [24, 6], [20, 10], [0, 10]]), { spine: true }),
-    volume("plate-p", "plate", "wing", polygonTiles([[4, 10], [12, 10], [9, 13], [4, 13]])),
-    volume("plate-s", "plate", "wing", polygonTiles([[4, -3], [9, -3], [12, 0], [4, 0]])),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      polygonTiles([
+        [0, 0],
+        [20, 0],
+        [24, 4],
+        [24, 6],
+        [20, 10],
+        [0, 10],
+      ]),
+      { spine: true },
+    ),
+    volume(
+      "plate-p",
+      "plate",
+      "wing",
+      polygonTiles([
+        [4, 10],
+        [12, 10],
+        [9, 13],
+        [4, 13],
+      ]),
+    ),
+    volume(
+      "plate-s",
+      "plate",
+      "wing",
+      polygonTiles([
+        [4, -3],
+        [9, -3],
+        [12, 0],
+        [4, 0],
+      ]),
+    ),
   ],
   rooms: [
     room("eng", "ENGINEERING", "engineering", [0, 0, 4, 10]),
@@ -133,17 +215,73 @@ export const FED_CREST = prefab({
 export const FED_BASTION = prefab({
   id: "fed.l.bastion",
   name: "Bastion",
-  description: "Orion Crest frigate: armoured side pods, railguns, missile racks and a shielded command deck.",
+  description:
+    "Orion Crest frigate: armoured side pods, railguns, missile racks and a shielded command deck.",
   faction: "Federation",
   role: "Frigate",
   theme: "federation",
   sizeClass: "L",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [30, 0], [36, 3], [36, 9], [30, 12], [0, 12]]), { spine: true }),
-    volume("pod-s", "hull", "pod", polygonTiles([[6, -4], [21, -4], [25, 0], [6, 0]]), { logo: false }),
-    volume("pod-p", "hull", "pod", polygonTiles([[6, 12], [25, 12], [21, 16], [6, 16]]), { logo: false }),
-    volume("fin-s", "plate", "wing", polygonTiles([[26, -2], [28, -2], [30, 0], [26, 0]])),
-    volume("fin-p", "plate", "wing", polygonTiles([[26, 12], [30, 12], [28, 14], [26, 14]])),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      polygonTiles([
+        [0, 0],
+        [30, 0],
+        [36, 3],
+        [36, 9],
+        [30, 12],
+        [0, 12],
+      ]),
+      { spine: true },
+    ),
+    volume(
+      "pod-s",
+      "hull",
+      "pod",
+      polygonTiles([
+        [6, -4],
+        [21, -4],
+        [25, 0],
+        [6, 0],
+      ]),
+      { logo: false },
+    ),
+    volume(
+      "pod-p",
+      "hull",
+      "pod",
+      polygonTiles([
+        [6, 12],
+        [25, 12],
+        [21, 16],
+        [6, 16],
+      ]),
+      { logo: false },
+    ),
+    volume(
+      "fin-s",
+      "plate",
+      "wing",
+      polygonTiles([
+        [26, -2],
+        [28, -2],
+        [30, 0],
+        [26, 0],
+      ]),
+    ),
+    volume(
+      "fin-p",
+      "plate",
+      "wing",
+      polygonTiles([
+        [26, 12],
+        [30, 12],
+        [28, 14],
+        [26, 14],
+      ]),
+    ),
   ],
   rooms: [
     room("eng", "ENGINEERING", "engineering", [0, 0, 6, 12]),
@@ -235,13 +373,29 @@ export const FED_BASTION = prefab({
 export const FED_MERIDIAN = prefab({
   id: "fed.m.meridian",
   name: "Meridian",
-  description: "Wayfarer-class reference corvette: capsule hull, faceted glazed bow, three stern drives. Art calibration ship.",
+  description:
+    "Wayfarer-class reference corvette: capsule hull, faceted glazed bow, three stern drives. Art calibration ship.",
   faction: "Federation",
   role: "Corvette",
   theme: "federation",
   sizeClass: "M",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [22, 0], [26, 2], [27, 4], [27, 8], [26, 10], [22, 12], [0, 12]]), { spine: true }),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      polygonTiles([
+        [0, 0],
+        [22, 0],
+        [26, 2],
+        [27, 4],
+        [27, 8],
+        [26, 10],
+        [22, 12],
+        [0, 12],
+      ]),
+      { spine: true },
+    ),
   ],
   rooms: [
     room("eng", "ENGINEERING", "engineering", [0, 0, 4, 12]),

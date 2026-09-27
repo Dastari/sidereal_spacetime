@@ -21,8 +21,20 @@ const MOUNTS: [string, string[]][] = [
   ["/assets/materials/", ["assets/runtime/materials"]],
   ["/assets/environment/", ["assets/runtime/environment"]],
   // Component GLBs: the published runtime copy (any art revision) first, else the art-library export.
-  ["/assets/ship-components/r001/", ["assets/runtime/ship-components/r001", "assets/art-library/ship-components/r001/glb"]],
-  ["/assets/ship-components/r002/", ["assets/runtime/ship-components/r002", "assets/art-library/ship-components/r002/glb"]],
+  [
+    "/assets/ship-components/r001/",
+    [
+      "assets/runtime/ship-components/r001",
+      "assets/art-library/ship-components/r001/glb",
+    ],
+  ],
+  [
+    "/assets/ship-components/r002/",
+    [
+      "assets/runtime/ship-components/r002",
+      "assets/art-library/ship-components/r002/glb",
+    ],
+  ],
   // game.html (the real game renderer) needs the rest of the published runtime tree.
   ["/assets/", ["assets/runtime"]],
 ];
@@ -77,12 +89,22 @@ export default defineConfig({
   root: fileURLToPath(new URL(".", import.meta.url)),
   plugins: [repositoryAssets()],
   publicDir: false,
+  esbuild: { jsx: "automatic" },
   clearScreen: false,
   server: {
     host: "127.0.0.1",
     fs: {
       allow: [repo],
-      deny: [".env", ".env.*", "**/.git/**", "**/.runtime/**", "**/.spacetime-data/**", "**/ops/**", "**/dev.toml", "*.{crt,pem,key,p12,pfx,cer,der}"],
+      deny: [
+        ".env",
+        ".env.*",
+        "**/.git/**",
+        "**/.runtime/**",
+        "**/.spacetime-data/**",
+        "**/ops/**",
+        "**/dev.toml",
+        "*.{crt,pem,key,p12,pfx,cer,der}",
+      ],
     },
   },
 });

@@ -59,6 +59,20 @@ const INTERIOR: Partial<Record<"floor" | "wall", Partial<Record<ShipKitSlot, [nu
 
 /** Slot material for a mesh role: interior roles get the architectural palette. */
 export function roleSlotMaterial(scene: Scene, theme: ShipThemeId, slot: ShipKitSlot, role: string): PBRMaterial {
+  // Navigation is a separate finish of the existing emitter slot, not a tenth
+  // authoring slot. Only the dedicated canopy.nav kit piece uses this role.
+  if (role === "effect" && slot === "emit_b") {
+    const key = `navigation:${theme}`;
+    const p = pool(scene);
+    const found = p.get(key);
+    if (found) return found as PBRMaterial;
+    const m = slotMaterial(scene, theme, slot).clone(`prefab-${key}`) as PBRMaterial;
+    m.albedoColor = new Color3(0.35, 0.002, 0.006);
+    m.emissiveColor = new Color3(1, 0.008, 0.025);
+    m.emissiveIntensity = 1.3;
+    p.set(key, m);
+    return m;
+  }
   const colour = (INTERIOR as Record<string, Partial<Record<ShipKitSlot, [number, number, number]>> | undefined>)[role]?.[slot];
   if (!colour) return slotMaterial(scene, theme, slot);
   const key = `interior:${theme}:${role}:${slot}`;
@@ -88,7 +102,7 @@ export function slotMaterial(scene: Scene, theme: ShipThemeId, slot: ShipKitSlot
   m.roughness = t.roughness;
   if (t.emissive) {
     m.emissiveColor = new Color3(...t.colour);
-    m.emissiveIntensity = slot === "glass" ? 0.18 : emissiveIntensity(t.emissive);
+    m.emissiveIntensity = slot === "glass" ? 0.06 : emissiveIntensity(t.emissive);
   }
   if (t.alpha !== undefined) {
     m.alpha = t.alpha;

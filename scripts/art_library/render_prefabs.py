@@ -21,6 +21,7 @@ Usage (normally through `npm run prefab:render`):
       --dumps DIR --out DIR [--only id,id] [--shots flight_top,flight_iso,deck_iso,deck_top]
       [--samples 32] [--scale 1.0] [--sheets] [--no-ships]
 """
+from pathlib import Path
 import argparse
 import json
 import math
@@ -77,7 +78,7 @@ def slot_material(key, slot, s, theme, detail):
         b.inputs["Roughness"].default_value = s.get("roughness", 0.04)
         b.inputs["Alpha"].default_value = s.get("alpha", 0.35)
         b.inputs["Emission Color"].default_value = (*col, 1)
-        b.inputs["Emission Strength"].default_value = s.get("emissive", 0.9)
+        b.inputs["Emission Strength"].default_value = 0.18  # runtime glass finish
         m.surface_render_method = "BLENDED"
         return m
     if slot in ("emit_a", "emit_b"):
@@ -269,10 +270,11 @@ def slot_of(name):
     return base if base in SLOTS else "primary"
 
 
-def import_glb(path):
+def import_glb(path,node=None):
     """Import a GLB once; returns [(mesh, [slot per material index])] in the Z-up authoring frame."""
-    if path in ASSETS:
-        return ASSETS[path]
+    key=(path,node)
+    if key in ASSETS:
+        return ASSETS[key]
     before = set(bpy.data.objects)
     bpy.ops.import_scene.gltf(filepath=path)
     new = [o for o in bpy.data.objects if o not in before]
@@ -281,11 +283,13 @@ def import_glb(path):
         if o.type == "MESH":
             me = o.data.copy()
             me.transform(o.matrix_world)
-            parts.append((me, [slot_of(m.name) if m else "primary" for m in me.materials]))
+            part=(me, [slot_of(m.name) if m else "primary" for m in me.materials])
+            parts.append(part)
+            ASSETS[(path,o.name)]=[part]
     for o in new:
         bpy.data.objects.remove(o, do_unlink=True)
-    ASSETS[path] = parts
-    return parts
+    ASSETS[(path,None)] = parts
+    return ASSETS[key]
 
 
 def link_parts(parts, name, matrix, mats, coll):
@@ -417,10 +421,15 @@ class Ship:
     def build(self):
         d = self.d["dressed"]
         kitdir = os.path.join(REPO, self.d["kitDir"])
+        manifest=json.loads(Path(kitdir,"manifest.json").read_text())["pieces"]
         for k in d["kit"]:
-            parts = import_glb(os.path.join(kitdir, f"{k['piece']}.glb"))
-            m = Matrix.Translation((k["x"], k["y"], k["z"])) @ Matrix.Rotation(math.radians(k["rotDeg"]), 4, "Z")
-            for ob in link_parts(parts, k["piece"], m, self.mats, self.colls[k["view"]]):
+            entry=manifest[k["piece"]]
+            parts = import_glb(os.path.join(kitdir, entry["file"]),entry.get("node"))
+            m = Matrix.Translation((k["x"], k["y"], k["z"])) @ Matrix.Rotation(math.radians(k["rotDeg"]), 4, "Z") @ Matrix.Diagonal((-1 if k.get("mirror") else 1, 1, 1, 1))
+            mats = self.mats
+            if k["piece"].startswith(("canopy.nav.","bow.")):
+                mats = {**mats, "emit_b": emission_material("navigation-red", (1, .008, .025), 5)}
+            for ob in link_parts(parts, k["piece"], m, mats, self.colls[k["view"]]):
                 self.add(ob, k["view"])
             self.counts["kit"] += 1
         for g in d["generated"]:

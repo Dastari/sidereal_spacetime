@@ -49,6 +49,18 @@ sys.path.insert(0, str(HERE))
 import ship_kit_prototype as proto  # noqa: E402  (importable: main() is guarded)
 import ship_kit_modules as modules  # noqa: E402  (r002 universal hull modules: swept closed solids)
 
+import ship_kit_canopy_legacy as legacy
+for name in ["canopy_module","canopy_straight"]:
+    def make_legacy(*args, _name=name):
+        old=getattr(legacy,_name)(*args)
+        piece=modules.MeshPiece(old.id)
+        piece.verts,piece.faces,piece.slots,piece.decals=old.verts,old.faces,old.slots,old.decals
+        return piece
+    modules.BUILDERS[name+"_upright"]=make_legacy
+
+from bow_modules import bow_module
+modules.BUILDERS["bow_module"] = bow_module
+
 SCHEMA = "sidereal.ship-kit-manifest.v1"
 FRAME = "piece-local metres: prototype +X/+Y plan, +Z up; glTF Y-up (x, z, -y)"
 SLOTS = list(proto.SLOTS)
@@ -228,6 +240,9 @@ def module_object(piece, mats):
     me.update()
     ob = bpy.data.objects.new(piece.id, me)
     bpy.context.scene.collection.objects.link(ob)
+    if getattr(piece,"exact_sockets",False):
+        me.polygons.foreach_set("use_smooth", [False]*len(me.polygons))
+        return ob
     md = ob.modifiers.new("brick", "BEVEL")
     md.width, md.segments = BEVEL["width"], BEVEL["segments"]
     md.limit_method, md.angle_limit = "ANGLE", math.radians(BEVEL["angle_deg"])
@@ -375,7 +390,7 @@ def coplanar_summary(specs):
             "unresolvedPieces": sorted(k for k, r in per.items() if r["unresolved"]),
             "offsetPairs": sum(len(r["seps"]) for r in per.values()),
             "offsetPairsBelow0p25mm": sum(1 for r in per.values() for x in r["seps"] if x < 0.25 - 1e-9),
-            "maxOffsetMm": max(max(box_offsets(build_piece(s).boxes)) for s in specs) * 1000.0,
+            "maxOffsetMm": max((max(box_offsets(build_piece(s).boxes),default=0) for s in specs),default=0) * 1000.0,
             "minSeparationMm": round(min(seps), 5) if seps else None}
 
 
@@ -403,15 +418,22 @@ def import_glb(path):
 def verify(out, manifest, specs):
     """Re-import every GLB: triangle count, material names and bounds (in Blender Z-up) must match."""
     problems = []
-    for spec in specs:
+    loaded_path=None;by_name={};digest=None
+    for spec in sorted(specs,key=lambda s:manifest["pieces"].get(s["id"],{}).get("file","")):
         e = manifest["pieces"].get(spec["id"])
         if e is None:
             problems.append(f"{spec['id']}: missing from manifest")
             continue
         path = out / e["file"]
-        if hashlib.sha256(path.read_bytes()).hexdigest() != e["sha256"]:
+        if path != loaded_path:
+            clear_scene()
+            for mat in list(bpy.data.materials):
+                if mat.users==0:bpy.data.materials.remove(mat)
+            obs = [o for o in import_glb(path) if o.type == "MESH"]
+            by_name={o.name:o for o in obs};digest=hashlib.sha256(path.read_bytes()).hexdigest();loaded_path=path
+        if digest != e["sha256"]:
             problems.append(f"{spec['id']}: sha256 mismatch")
-        obs = [o for o in import_glb(path) if o.type == "MESH"]
+        obs = [by_name[e["node"]]] if e.get("node") in by_name else ([] if e.get("node") else list(by_name.values()))
         if len(obs) != 1:
             problems.append(f"{spec['id']}: {len(obs)} mesh objects")
         else:
@@ -430,7 +452,7 @@ def verify(out, manifest, specs):
             want = [v * T for v in e["bounds"]]
             if max(abs(a - b) for a, b in zip(got, want)) > INFLATE_CAP_M + 1e-4:   # offsets move faces < 0.5 mm
                 problems.append(f"{spec['id']}: re-import bounds {[round(v, 4) for v in got]} != {want}")
-        clear_scene()
+    clear_scene()
     return problems
 
 
@@ -477,7 +499,11 @@ def render_sheet(out, manifest, specs, sheet_path, samples, cols=10, sx=5.0, sy=
     for n, spec in enumerate(specs):
         r, c = divmod(n, cols)
         cx, cy = -c * sx, r * sy
-        obs = [o for o in import_glb(out / manifest["pieces"][spec["id"]]["file"]) if o.type == "MESH"]
+        entry=manifest["pieces"][spec["id"]]
+        imported=import_glb(out / entry["file"])
+        obs = [o for o in imported if o.type == "MESH" and (not entry.get("node") or o.name==entry["node"])]
+        for ob in imported:
+            if ob not in obs:bpy.data.objects.remove(ob,do_unlink=True)
         b = manifest["pieces"][spec["id"]]["bounds"]
         mx, my = (b[0] + b[3]) / 2 * T, (b[1] + b[4]) / 2 * T
         for o in obs:
@@ -540,7 +566,7 @@ def main():
         manifest = json.loads(mpath.read_text())
     else:
         keep = [] if a.blend and not only else None
-        entries, failures = export_all(specs, out, only, prior, keep)
+        entries, failures = export_all([s for s in specs if s["family"] != "bow"], out, only, prior, keep)
         if keep:
             # Editable Blender source: every piece as a mesh object with its live bevel modifier.
             coll = bpy.data.collections.new(f"ship-kit-{doc['revision']}")
@@ -553,26 +579,32 @@ def main():
             bpy.ops.wm.save_as_mainfile(filepath=str(blend), compress=True)
             print(f"SHIP_KIT_BLEND {blend}")
             clear_scene()
-        if not only:
-            for stale in sorted(set(p.name for p in out.glob("*.glb")) - {f"{i}.glb" for i in ids}):
-                (out / stale).unlink()
         manifest = write_manifest(out, doc["revision"], entries)
+        if any(s['family']=='bow' and (not only or s['id'] in only) for s in specs):
+            import export_bow_kit
+            export_bow_kit.main(out=out, pieces=resolve(a.pieces))
+            manifest=json.loads(mpath.read_text())
+        if not only:
+            live={e['file'] for e in manifest['pieces'].values()}
+            for stale in sorted(set(p.name for p in out.glob("*.glb")) - live):
+                (out / stale).unlink()
     t_export = time.time() - t0
     check = [s for s in specs if not only or s["id"] in only]
     problems = failures + verify(out, manifest, check)
     t_verify = time.time() - t0 - t_export
-    fam = {}
+    fam = {};family_files={}
     for s in specs:
         e = manifest["pieces"].get(s["id"])
         if e:
             f = fam.setdefault(s["family"], [0, 0, 0])
             f[0] += 1
             f[1] += e["triangles"]
-            f[2] += (out / e["file"]).stat().st_size
+            seen=family_files.setdefault(s["family"],set())
+            if e["file"] not in seen:f[2] += (out / e["file"]).stat().st_size;seen.add(e["file"])
     summary = {
         "pieces": len(manifest["pieces"]), "specs": len(specs),
         "triangles": sum(e["triangles"] for e in manifest["pieces"].values()),
-        "glbBytes": sum((out / e["file"]).stat().st_size for e in manifest["pieces"].values()),
+        "glbBytes": sum((out / file).stat().st_size for file in {e["file"] for e in manifest["pieces"].values()}),
         "voxelAligned": sum(1 for e in manifest["pieces"].values() if e["voxelAligned"]),
         "families": {k: {"pieces": v[0], "triangles": v[1], "bytes": v[2]} for k, v in sorted(fam.items())},
         "maxTriangles": max(((e["triangles"], k) for k, e in manifest["pieces"].items()), default=None),

@@ -9,8 +9,10 @@ fairings, turret housings, blisters, station modules) is dressed by the same mod
 - face.<shape>.<class>[.cut]    angled outer face along the tile's non-axis edge: cassette panels in
                                 tiers with relief, vents, trims, lights, a roof-to-face chamfer and a
                                 keel chamfer (".cut": deck-view variant capped at the shell cut)
-- canopy.<shape>.<class>[.cut]  the same edge as framed cockpit glass: sill, mullions, transom,
-                                blue emissive frame edge; the glass slot is the pressure boundary
+- canopy.<shape>.<class>[.cut]  projecting sloped windscreen, stepped rising keel, armor eyebrow,
+                                crash rail, crimson band and instrument consoles
+- canopy.corner{5,45,90}.<class>[.cut]  convex wraparound joins at a hull vertex
+- canopy.nav.<class>           twin navigation lenses on the same one-metre face socket
 - canopy.straight.w1.<class>[.cut]  one metre of straight canopy glass
 - shellwall.<shape>             deck-view thick exterior wall along the angled edge (inner cassettes,
                                 light strips, dark cap)
@@ -241,7 +243,6 @@ def hull_body(shape, hc, cockpit=False):
         deep = [inner.at(a, 7.0) for a in inner.acc[:-1]]
         if abs(area(deep)) > 16:
             p.prism(ccw(deep), sill, z1 - 3, "dark")                                   # cockpit interior
-            p.prism(ccw([inner.at(a, 6.5) for a in inner.acc[:-1]]), sill + 3, sill + 4, "emit_a")   # console line
     p.prism(inset, z1 - 1, z1, "primary")
     p.prism(inset, zb, zb + 1, "secondary")
     return p
@@ -303,37 +304,118 @@ def face_module(shape, hc, cut=None):
     return p
 
 
-def canopy_face(ch, hc, pid, cut=None, frame_step=8.0):
-    """Framed cockpit glass along a chain: sill cassettes, glass pane, mullions, transom, emissive edge."""
+def canopy_face(ch, hc, pid, cut=None, frame_step=24.0, joint=False):
+    """Projecting windscreen / cheek / rising-keel shell. Attachment stays at d=0;
+    positive d is outside the host. Height never exceeds the host roof. The 1 m face
+    and tile chains share the same profile, as does the radial corner connector.
+    This is visual envelope only, not added walkable space or a control socket.
+    """
     z0, z1, zb = class_z(hc)
-    tiers, rim = volume_tiers(z0, z1)
-    sill = tiers[0][0] + max(6, (tiers[0][1] - tiers[0][0]) // 2)
-    top = rim[0] if rim else z1
+    height = z1 - zb
+    if height < 30:
+        # Thin fairings share the authored profile without inverted panes or
+        # instrument blocks protruding through their roof.
+        scale = height / 43
+        class DepthChain:
+            length = ch.length
+            @staticmethod
+            def at(s, d):
+                return ch.at(s, d * scale)
+            @staticmethod
+            def cuts(a, b):
+                return ch.cuts(a, b)
+        p = canopy_face(DepthChain(), "deck", pid, None, frame_step, joint)
+        p.verts = [(x, y, zb + z * scale) for x, y, z in p.verts]
+        return p
+    nose = round(zb + height * .40)
+    chin = round(zb + height * .23)
+    reach = round(min(24, height * .58))
     L = ch.length
     p = MeshPiece(pid)
-    cap = cut
-    if z0 > zb:
-        sweep(p, ch, 0, L, [(0, zb), (1.0, zb), (3.0, z0), (0, z0)], "trim")
-    band(p, ch, 0, L, 0, 3, zb, sill, "secondary", cap)                                 # sill
-    band(p, ch, 0, L, 3, 3.5, sill - 3, sill - 2, "emit_a", cap)
-    band(p, ch, 0, L, -0.5, 1.5, sill, top, "glass", cap)                               # pane (pressure boundary)
-    band(p, ch, 0, L, -0.75, 3, sill, sill + 1, "trim", cap)                           # lower frame
-    band(p, ch, 0, L, -0.75, 3, top - 1, top, "trim", cap)                             # upper frame
-    band(p, ch, 0, L, -1.0, -0.75, sill + 1, sill + 1.5, "emit_a", cap)                # inner blue edge
-    mid = (sill + top) / 2
-    band(p, ch, 0, L, -0.5, 2.5, mid - 0.5, mid + 0.5, "secondary", cap)               # transom
-    n = max(1, round(L / frame_step))
-    for i in range(n + 1):                                                               # mullions
-        s = L * i / n
-        band(p, ch, max(0, s - 0.6), min(L, s + 0.6), -0.75, 3, sill, top, "secondary", cap)
-    if rim and (cap is None or rim[0] < cap):
-        r0, r1 = rim
-        if cap is None:
-            sweep(p, ch, 0, L, [(0, r0), (3.5, r0), (3.5, r0 + 1), (0.5, r1), (0, r1)], "secondary")
-            band(p, ch, 0, L, 3.5, 4.0, r0, r0 + 1, "emit_a")
-    if cap is not None:
-        band(p, ch, 0, L, -1.5, 4, cap - 2, cap, "dark")
+    top = min(z1, cut) if cut is not None else z1
+
+    # Six stacked bevelled courses describe the rising keel, not a vertical slab.
+    for i in range(6):
+        a, b = reach * i / 6, reach * (i + 1) / 6
+        bottom = round(zb + (chin - zb) * i / 5)
+        band(p, ch, 0, L, a, b + .125, bottom, nose - 3,
+             "secondary" if i < 2 else "primary")
+    band(p, ch, 0, L, 0, reach + 1, nose - 3, nose + 1, "dark")
+    # Crimson waist and broad pale crash rail, split into cassettes at real seams.
+    for i, (a, b) in enumerate(panels(L, 16)):
+        gap = 0 if joint else .3
+        band(p, ch, a + gap, b - gap, reach - 2, reach + 1.5, nose - 2, nose, "accent")
+        band(p, ch, a + gap, b - gap, reach - 1, reach + 2, nose, nose + 3, "primary")
+        if not joint and b - a > 7:
+            band(p, ch, a + 2, b - 2, reach + 1.5, reach + 2.25, nose - 5, nose - 3, "dark")
+            for u in range(3, int(b - a) - 2, 3):
+                band(p, ch, a + u, a + u + 1, reach + 2, reach + 2.5, nose - 5, nose - 3, "metal")
+            # A red lens in its crimson bezel; cyan instrument lights are inside.
+            band(p, ch, a + 2, a + 5, reach + 2, reach + 2.6, nose + .5, nose + 2.5, "accent")
+
+    # Pressure glazing slopes DOWN AND OUT; no transom / bedroom-window grid.
+    low = nose + 3
+    if cut is None:
+        glass_profile = [(1, z1 - 3), (reach - 1, low + 1), (reach - .5, low + 1.5), (1.5, z1 - 3)]
+        sweep(p, ch, 0, L, glass_profile, "glass")
+        sweep(p, ch, 0, L, [(-1, z1 - 4), (3, z1 - 4), (3, z1 - 1), (-1, z1)], "secondary")
+        band(p, ch, 0, L, reach - 2, reach + 1, low, low + 1.5, "secondary")
+        if not joint:
+            n = max(1, round(L / frame_step))
+            for i in range(n + 1):
+                u = L * i / n
+                sweep(p, ch, max(0, u - 1.15), min(L, u + 1.15),
+                      [(-1, z1 - 2), (reach, low), (reach + 1, low + 2), (1, z1)], "secondary")
+            # Stepped armor eyebrow around the windscreen perimeter. Mullions
+            # remain strong dark spars instead of striped ladder-like rails.
+            for step in range(3):
+                band(p, ch, 0, L, step * 2, step * 2 + 2.1, z1 - step * 2 - 2, z1 - step * 2, "primary")
+            # Readable console faces below the windscreen. Separate blocks/screens,
+            # not an emissive band. Authored here and pooled into the same 9 slots.
+            for a, b in panels(L, 16):
+                sweep(p, ch, a + 2, b - 2, [(4, nose + 1), (12, nose + 1), (12, nose + 6), (5, nose + 9)], "dark")
+                sweep(p, ch, a + 4, b - 4, [(6, nose + 8.85), (8, nose + 8), (8, nose + 8.25), (6, nose + 9.1)], "emit_a")
+                band(p, ch, a + 3, a + 5, 12, 13, nose + 3, nose + 4, "emit_b")
+                band(p, ch, a + 6, b - 3, 12, 13, nose + 3, nose + 3.5, "metal")
+    else:
+        band(p, ch, 0, L, -1, 3, top - 2, top, "secondary")
     return p
+
+
+def canopy_nav(hc):
+    """Twin red navigation lenses; same one-metre face socket and nine kit slots.
+    The runtime gives this emitter the navigation finish without recolouring
+    the host's amber equipment lights. No gameplay or lamp entity is created.
+    """
+    _, z1, zb = class_z(hc)
+    height = z1 - zb
+    reach = round(min(24, height * .58))
+    nose = round(zb + height * .40)
+    p = MeshPiece(f"canopy.nav.{hc}")
+    ch = Chain([(16, 0), (0, 0)])
+    band(p, ch, 4, 12, reach + 2, reach + 3, nose, nose + 3, "dark")
+    for u in (5, 9):
+        band(p, ch, u - .5, u + 2.5, reach + 3, reach + 3.5, nose + .25, nose + 2.75, "accent")
+        band(p, ch, u, u + 2, reach + 3.5, reach + 4, nose + .75, nose + 2.25, "emit_b")
+    return p
+
+
+def canopy_corner(hc, cut=None, degrees=5):
+    """Universal 5/45/90-degree convex joining sectors; dresser rotates them
+    through the actual outline turn. Origin is the hull vertex, +X outward at start.
+    No ship-specific dimensions, material, generated runtime geometry or sockets.
+    """
+    class RadialChain:
+        length = 16
+        @staticmethod
+        def at(s, d):
+            angle = math.radians(degrees * s / 16)
+            return d * math.cos(angle), d * math.sin(angle)
+        @staticmethod
+        def cuts(a, b):
+            n = max(1, math.ceil(degrees / 15))
+            return [a + (b - a) * i / n for i in range(n + 1)]
+    return canopy_face(RadialChain(), hc, f"canopy.corner{degrees}.{hc}{'.cut' if cut else ''}", cut, joint=True)
 
 
 def canopy_module(shape, hc, cut=None):
@@ -341,8 +423,8 @@ def canopy_module(shape, hc, cut=None):
 
 
 def canopy_straight(hc, cut=None):
-    """One metre of straight canopy along +X in the cassette frame (outward +Y... kit faces use -Y)."""
-    ch = Chain([(16, 0), (0, 0)], side=1)   # travel -X, outward = right of travel = -Y like cassettes
+    """One metre of canopy in the cassette frame: local +X along face, +Y outward."""
+    ch = Chain([(16, 0), (0, 0)], side=1)   # travel -X; right of travel is +Y
     return canopy_face(ch, hc, f"canopy.straight.w1.{hc}{'.cut' if cut else ''}", cut)
 
 
@@ -442,6 +524,8 @@ BUILDERS = {
     "face_module": face_module,
     "canopy_module": canopy_module,
     "canopy_straight": canopy_straight,
+    "canopy_corner": canopy_corner,
+    "canopy_nav": canopy_nav,
     "shellwall": shellwall,
     "shell_straight": shell_straight,
     "corner_post": corner_post,

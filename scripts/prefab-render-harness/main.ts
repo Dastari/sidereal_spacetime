@@ -10,6 +10,7 @@
  * Sets window.__prefabReady = true once everything is loaded and a few frames have rendered;
  * window.__prefabMetrics holds per-ship metrics, window.__prefabError any failure.
  */
+import { BOW_REVIEW_POD, BOW_HOSTS } from "./bow-fixtures";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
@@ -27,10 +28,17 @@ import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTextur
 import { ImageProcessingConfiguration } from "@babylonjs/core/Materials/imageProcessingConfiguration";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
-import { SHIP_THEME_IDS, type ShipPrefabDocumentV1, type ShipThemeId } from "@sidereal/content/ship-prefab";
+import {
+  SHIP_THEME_IDS,
+  type ShipPrefabDocumentV1,
+  type ShipThemeId,
+} from "@sidereal/content/ship-prefab";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { createGraphicsSettings } from "@sidereal/render/graphics-settings";
-import { createPrefabShipView, type PrefabShipView } from "@sidereal/render/prefab-ship";
+import {
+  createPrefabShipView,
+  type PrefabShipView,
+} from "@sidereal/render/prefab-ship";
 
 declare global {
   interface Window {
@@ -44,7 +52,10 @@ const q = new URLSearchParams(location.search);
 const view = q.get("view") === "deck" ? "deck" : "flight";
 const cam = (q.get("cam") ?? "iso") as "iso" | "top" | "side" | "rear";
 const themeParam = q.get("theme") as ShipThemeId | null;
-const theme = themeParam && (SHIP_THEME_IDS as readonly string[]).includes(themeParam) ? themeParam : undefined;
+const theme =
+  themeParam && (SHIP_THEME_IDS as readonly string[]).includes(themeParam)
+    ? themeParam
+    : undefined;
 const lineup = q.get("lineup") === "1";
 const width = Number(q.get("w")) || window.innerWidth;
 const height = Number(q.get("h")) || window.innerHeight;
@@ -59,7 +70,12 @@ canvas.style.height = `${height}px`;
 function nebulaBackdrop(scene: Scene) {
   const w = 1024;
   const h = 576;
-  const tex = new DynamicTexture("nebula", { width: w, height: h }, scene, false);
+  const tex = new DynamicTexture(
+    "nebula",
+    { width: w, height: h },
+    scene,
+    false,
+  );
   const ctx = tex.getContext() as unknown as CanvasRenderingContext2D;
   const bg = ctx.createLinearGradient(0, 0, w, h);
   bg.addColorStop(0, "#1a0b3a");
@@ -68,7 +84,7 @@ function nebulaBackdrop(scene: Scene) {
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, w, h);
   let seed = 7;
-  const rnd = () => ((seed = (seed * 16807) % 2147483647) / 2147483647);
+  const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
   const blobs: [number, number, number, string][] = [
     [0.22, 0.18, 0.42, "rgba(150,60,230,0.35)"],
     [0.8, 0.75, 0.5, "rgba(90,40,200,0.3)"],
@@ -98,8 +114,14 @@ function shipExtent(v: PrefabShipView) {
   return { length: x1 - x0, beam: y1 - y0 };
 }
 
-function placeCamera(camera: FreeCamera, kind: typeof cam, target: Vector3, radius: number, aspect: number) {
-  const fit = radius / Math.sin(camera.fov / 2) / Math.min(1, aspect) * 0.92;
+function placeCamera(
+  camera: FreeCamera,
+  kind: typeof cam,
+  target: Vector3,
+  radius: number,
+  aspect: number,
+) {
+  const fit = (radius / Math.sin(camera.fov / 2) / Math.min(1, aspect)) * 0.92;
   const dirs: Record<typeof cam, Vector3> = {
     // Port-forward quarter, above: bow toward the lower left like reference/art/3d-rpg-after.png.
     iso: new Vector3(-0.78, 0.95, -0.52),
@@ -109,11 +131,16 @@ function placeCamera(camera: FreeCamera, kind: typeof cam, target: Vector3, radi
   };
   const vec = (k: string) => {
     const v = q.get(k)?.split(",").map(Number);
-    return v && v.length === 3 && v.every(Number.isFinite) ? new Vector3(v[0], v[1], v[2]) : null;
+    return v && v.length === 3 && v.every(Number.isFinite)
+      ? new Vector3(v[0], v[1], v[2])
+      : null;
   };
   const d = (vec("dir") ?? dirs[kind]).normalize();
   target = vec("at") ?? target;
-  camera.upVector = kind === "top" && !vec("dir") ? new Vector3(-1, 0, 0) : new Vector3(0, 1, 0);
+  camera.upVector =
+    kind === "top" && !vec("dir")
+      ? new Vector3(-1, 0, 0)
+      : new Vector3(0, 1, 0);
   camera.position = target.add(d.scale(fit / (Number(q.get("zoom")) || 1)));
   camera.setTarget(target);
 }
@@ -121,34 +148,61 @@ function placeCamera(camera: FreeCamera, kind: typeof cam, target: Vector3, radi
 async function main() {
   if (q.get("list") === "1") {
     window.__prefabMetrics = PREFAB_SHIPS.map((p) => ({ id: p.id }));
+    if (q.get("freeze") === "1") engine.stopRenderLoop();
     window.__prefabReady = true;
     return;
   }
-  const engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true, antialias: true });
+  const engine = new Engine(canvas, true, {
+    preserveDrawingBuffer: true,
+    stencil: true,
+    antialias: true,
+  });
   engine.setSize(width, height);
   const scene = new Scene(engine);
   scene.useRightHandedSystem = true;
   scene.clearColor = new Color4(0.07, 0.04, 0.14, 1);
   nebulaBackdrop(scene);
-  scene.environmentTexture = new HDRCubeTexture("/assets/materials/frontier-workshop.hdr", scene, 128, false, true, false, true);
+  scene.environmentTexture = new HDRCubeTexture(
+    "/assets/materials/frontier-workshop.hdr",
+    scene,
+    128,
+    false,
+    true,
+    false,
+    true,
+  );
   scene.environmentIntensity = 0.55;
   scene.imageProcessingConfiguration.toneMappingEnabled = true;
-  scene.imageProcessingConfiguration.toneMappingType = ImageProcessingConfiguration.TONEMAPPING_ACES;
+  scene.imageProcessingConfiguration.toneMappingType =
+    ImageProcessingConfiguration.TONEMAPPING_ACES;
   scene.imageProcessingConfiguration.exposure = 1.35;
   const hemi = new HemisphericLight("fill", new Vector3(0.2, 1, 0.1), scene);
   hemi.intensity = 0.75;
   hemi.groundColor = new Color3(0.22, 0.12, 0.35);
   const key = new DirectionalLight("key", new Vector3(0.45, -1, 0.3), scene);
   key.intensity = 2.4;
-  const camera = new FreeCamera("harness-camera", new Vector3(0, 30, 30), scene);
+  const camera = new FreeCamera(
+    "harness-camera",
+    new Vector3(0, 30, 30),
+    scene,
+  );
   camera.fov = 0.5;
   camera.minZ = 0.1;
   camera.maxZ = 2000;
   new FxaaPostProcess("fxaa", 1, camera);
-  createGraphicsSettings(scene, { getItem: () => null, setItem: () => undefined }).set({ saturation: 1.3, contrast: 0.94, gamma: 1.06 });
+  createGraphicsSettings(scene, {
+    getItem: () => null,
+    setItem: () => undefined,
+  }).set({ saturation: 1.3, contrast: 0.94, gamma: 1.06 });
 
   const catalog = defaultPrefabComponentCatalog();
-  const docs: ShipPrefabDocumentV1[] = lineup ? [...PREFAB_SHIPS] : [prefabById(q.get("prefab") ?? PREFAB_SHIPS[0].id) ?? PREFAB_SHIPS[0]];
+  const docs: ShipPrefabDocumentV1[] = lineup
+    ? [...PREFAB_SHIPS]
+    : [
+        BOW_HOSTS.find((p) => p.id === q.get("prefab")) ??
+          prefabById(q.get("prefab") ?? PREFAB_SHIPS[0].id) ??
+          PREFAB_SHIPS[0],
+      ];
   const views: PrefabShipView[] = [];
   const anchors: TransformNode[] = [];
   let offset = 0;
@@ -176,7 +230,9 @@ async function main() {
   if (lineup) for (const a of anchors) a.position.x -= offset / 2 - 3;
 
   const lengths = views.map((v) => shipExtent(v).length);
-  const radius = lineup ? Math.hypot(offset / 2, Math.max(...lengths) / 2) : Math.hypot(lengths[0] / 2, shipExtent(views[0]).beam / 2, 2);
+  const radius = lineup
+    ? Math.hypot(offset / 2, Math.max(...lengths) / 2)
+    : Math.hypot(lengths[0] / 2, shipExtent(views[0]).beam / 2, 2);
   placeCamera(camera, cam, new Vector3(0, 1.2, 0), radius, width / height);
 
   // Per-frame draw counting: SceneInstrumentation resets the engine counter every frame, and
@@ -185,23 +241,40 @@ async function main() {
   let glowDraws = 0;
   let glowStart = 0;
   if (q.get("glow") !== "0") {
-    const glow = new GlowLayer("glow", scene, { mainTextureFixedSize: 1024, blurKernelSize: 32 });
-    glow.onBeforeRenderMainTextureObservable.add(() => (glowStart = engine._drawCalls.current));
-    glow.onAfterComposeObservable.add(() => (glowDraws = engine._drawCalls.current - glowStart));
+    const glow = new GlowLayer("glow", scene, {
+      mainTextureFixedSize: 1024,
+      blurKernelSize: 32,
+    });
+    glow.onBeforeRenderMainTextureObservable.add(
+      () => (glowStart = engine._drawCalls.current),
+    );
+    glow.onAfterComposeObservable.add(
+      () => (glowDraws = engine._drawCalls.current - glowStart),
+    );
     glow.intensity = 0.7;
-    for (const v of views) for (const m of v.emissiveMeshes()) glow.addIncludedOnlyMesh(m);
+    for (const v of views)
+      for (const m of v.emissiveMeshes()) glow.addIncludedOnlyMesh(m);
   }
 
   await scene.whenReadyAsync();
   engine.runRenderLoop(() => scene.render());
-  for (let i = 0; i < 6; i++) await new Promise((r) => requestAnimationFrame(r));
+  for (let i = 0; i < 6; i++)
+    await new Promise((r) => requestAnimationFrame(r));
 
   const labels = document.getElementById("labels")!;
   if (lineup) {
-    const vp = new Viewport(0, 0, 1, 1).toGlobal(engine.getRenderWidth(), engine.getRenderHeight());
+    const vp = new Viewport(0, 0, 1, 1).toGlobal(
+      engine.getRenderWidth(),
+      engine.getRenderHeight(),
+    );
     views.forEach((v, i) => {
       const { length } = shipExtent(v);
-      const p = Vector3.Project(new Vector3(anchors[i].position.x, 0, length / 2 + 3), Matrix.Identity(), scene.getTransformMatrix(), vp);
+      const p = Vector3.Project(
+        new Vector3(anchors[i].position.x, 0, length / 2 + 3),
+        Matrix.Identity(),
+        scene.getTransformMatrix(),
+        vp,
+      );
       const div = document.createElement("div");
       div.className = "label";
       div.style.left = `${p.x}px`;
@@ -211,10 +284,20 @@ async function main() {
     });
   }
   const frameDraws = instrumentation.drawCallsCounter.current;
-  const metrics = views.map((v, i) => ({ id: docs[i].id, view, ...v.metrics(), drawCalls: frameDraws, glowDraws, mainDraws: frameDraws - glowDraws }));
+  const metrics = views.map((v, i) => ({
+    id: docs[i].id,
+    view,
+    ...v.metrics(),
+    drawCalls: frameDraws,
+    glowDraws,
+    mainDraws: frameDraws - glowDraws,
+  }));
   window.__prefabMetrics = metrics;
   document.getElementById("hud")!.textContent = metrics
-    .map((m) => `${m.id} ${m.view}: ${m.drawCalls} draws/frame (main ${m.mainDraws}, glow ${m.glowDraws}), ${m.meshes} meshes, ${m.instances} inst, ${(m.triangles / 1000).toFixed(1)}k tris, ${m.pieces} pieces`)
+    .map(
+      (m) =>
+        `${m.id} ${m.view}: ${m.drawCalls} draws/frame (main ${m.mainDraws}, glow ${m.glowDraws}), ${m.meshes} meshes, ${m.instances} inst, ${(m.triangles / 1000).toFixed(1)}k tris, ${m.pieces} pieces`,
+    )
     .join("\n");
   window.__prefabReady = true;
 }

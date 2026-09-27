@@ -12,6 +12,7 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { LoadAssetContainerAsync } from "@babylonjs/core/Loading/sceneLoader";
 import "@babylonjs/loaders/glTF";
+import { selectGlbNode } from "./glb-node";
 
 export interface GlbPrimitive {
   /** glTF material name (slot name for kit pieces). */
@@ -45,7 +46,13 @@ function cache(scene: Scene) {
 
 /** True when the bytes start with the binary glTF magic (guards against SPA HTML fallbacks). */
 export function isGlb(bytes: Uint8Array): boolean {
-  return bytes.length >= 12 && bytes[0] === 0x67 && bytes[1] === 0x6c && bytes[2] === 0x54 && bytes[3] === 0x46;
+  return (
+    bytes.length >= 12 &&
+    bytes[0] === 0x67 &&
+    bytes[1] === 0x6c &&
+    bytes[2] === 0x54 &&
+    bytes[3] === 0x46
+  );
 }
 
 async function fetchGlb(url: string): Promise<Uint8Array | null> {
@@ -64,48 +71,99 @@ function extract(mesh: Mesh): GlbPrimitive | null {
   if (!data.positions || !data.indices || !data.positions.length) return null;
   data.transform(mesh.computeWorldMatrix(true));
   const positions = Float32Array.from(data.positions);
-  const normals = data.normals ? Float32Array.from(data.normals) : new Float32Array(positions.length);
-  if (!data.normals) VertexData.ComputeNormals(positions, data.indices, normals);
-  const b: [number, number, number, number, number, number] = [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
+  const normals = data.normals
+    ? Float32Array.from(data.normals)
+    : new Float32Array(positions.length);
+  if (!data.normals)
+    VertexData.ComputeNormals(positions, data.indices, normals);
+  const b: [number, number, number, number, number, number] = [
+    Infinity,
+    Infinity,
+    Infinity,
+    -Infinity,
+    -Infinity,
+    -Infinity,
+  ];
   for (let i = 0; i < positions.length; i += 3)
     for (let k = 0; k < 3; k++) {
       b[k] = Math.min(b[k], positions[i + k]);
       b[k + 3] = Math.max(b[k + 3], positions[i + k]);
     }
-  return { material: mesh.material?.name ?? "", positions, normals, indices: Uint32Array.from(data.indices), triangles: data.indices.length / 3, bounds: b };
+  return {
+    material: mesh.material?.name ?? "",
+    positions,
+    normals,
+    indices: Uint32Array.from(data.indices),
+    triangles: data.indices.length / 3,
+    bounds: b,
+  };
 }
 
-async function load(scene: Scene, url: string): Promise<GlbGeometry | null> {
-  const bytes = await fetchGlb(url);
+const files = new WeakMap<Scene, Map<string, Promise<Uint8Array | null>>>();
+async function load(
+  scene: Scene,
+  url: string,
+  node?: string,
+): Promise<GlbGeometry | null> {
+  let c = files.get(scene);
+  if (!c) files.set(scene, (c = new Map()));
+  let pending = c.get(url);
+  if (!pending) c.set(url, (pending = fetchGlb(url)));
+  const bytes = await pending;
   if (!bytes) return null;
-  const container = await LoadAssetContainerAsync(bytes, scene, { pluginExtension: ".glb" });
+  const container = await LoadAssetContainerAsync(
+    node ? selectGlbNode(bytes, node) : bytes,
+    scene,
+    {
+      pluginExtension: ".glb",
+    },
+  );
   try {
     const primitives = container.meshes
       .filter((m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0)
       .map(extract)
       .filter((p): p is GlbPrimitive => !!p);
-    const bounds: [number, number, number, number, number, number] = [Infinity, Infinity, Infinity, -Infinity, -Infinity, -Infinity];
+    if (!primitives.length)
+      throw Error("GLB has no extractable indexed mesh primitives");
+    const bounds: [number, number, number, number, number, number] = [
+      Infinity,
+      Infinity,
+      Infinity,
+      -Infinity,
+      -Infinity,
+      -Infinity,
+    ];
     for (const p of primitives)
       for (let k = 0; k < 3; k++) {
         bounds[k] = Math.min(bounds[k], p.bounds[k]);
         bounds[k + 3] = Math.max(bounds[k + 3], p.bounds[k + 3]);
       }
-    return { url, primitives, triangles: primitives.reduce((n, p) => n + p.triangles, 0), bounds };
+    return {
+      url,
+      primitives,
+      triangles: primitives.reduce((n, p) => n + p.triangles, 0),
+      bounds,
+    };
   } finally {
     container.dispose();
   }
 }
 
 /** Load (once per scene) the geometry of a GLB. Resolves null when the file is missing or not a GLB. */
-export function loadGlbGeometry(scene: Scene, url: string): Promise<GlbGeometry | null> {
+export function loadGlbGeometry(
+  scene: Scene,
+  url: string,
+  node?: string,
+): Promise<GlbGeometry | null> {
   const c = cache(scene);
-  let p = c.get(url);
+  const key = node ? `${url}#${node}` : url;
+  let p = c.get(key);
   if (!p) {
-    p = load(scene, url).catch((e) => {
+    p = load(scene, url, node).catch((e) => {
       console.warn(`prefab-ship: failed to load ${url}`, e);
       return null;
     });
-    c.set(url, p);
+    c.set(key, p);
   }
   return p;
 }

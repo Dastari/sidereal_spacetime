@@ -14,7 +14,8 @@ export type Pt = readonly [number, number];
 export type ShapeTileId = keyof typeof grammarJson.shapeTiles;
 export type HeightClassId = keyof typeof grammarJson.heightClasses;
 export type MountSizeId = keyof typeof grammarJson.mountSizes;
-export type BlueprintSizeClassId = keyof typeof grammarJson.blueprintSizeClasses;
+export type BlueprintSizeClassId =
+  keyof typeof grammarJson.blueprintSizeClasses;
 export type EdgeTypeId = keyof typeof grammarJson.edgeTypes;
 export type RoomTypeId = keyof typeof grammarJson.roomTypes;
 export type FloorKindId = (typeof grammarJson.floorKinds)[number];
@@ -67,6 +68,17 @@ export const CONSTRUCTION_GRAMMAR = grammarJson as unknown as {
     exteriorWallTexels: number;
     partitionTexels: number;
     minCorridorCells: number;
+  };
+  bowProfiles: {
+    shellThicknessTexels: Record<HeightClassId, [number, number]>;
+    revision: number;
+    labels: string[];
+    roofFractions: number[][];
+    keelFractions: number[][];
+    roofThicknessTexels: number;
+    floorThicknessTexels: number;
+    wallThicknessTexels: number;
+    minimumClearanceTexels: number;
   };
   heightClasses: Record<HeightClassId, HeightClass>;
   tierRule: {
@@ -169,12 +181,17 @@ export const ccw = (poly: readonly Pt[]): Pt[] =>
   signedArea(poly) > 0 ? [...poly] : [...poly].reverse();
 
 /** Even-odd point in polygon. */
-export function insidePolygon(poly: readonly Pt[], x: number, y: number): boolean {
+export function insidePolygon(
+  poly: readonly Pt[],
+  x: number,
+  y: number,
+): boolean {
   let c = false;
   for (let i = 0, n = poly.length; i < n; i++) {
     const [x0, y0] = poly[i];
     const [x1, y1] = poly[(i + 1) % n];
-    if (y0 > y !== y1 > y && x < x0 + ((y - y0) * (x1 - x0)) / (y1 - y0)) c = !c;
+    if (y0 > y !== y1 > y && x < x0 + ((y - y0) * (x1 - x0)) / (y1 - y0))
+      c = !c;
   }
   return c;
 }
@@ -185,7 +202,9 @@ export interface Outline {
 }
 
 export function insideOutline(o: Outline, x: number, y: number): boolean {
-  return insidePolygon(o.outer, x, y) && !o.holes.some((h) => insidePolygon(h, x, y));
+  return (
+    insidePolygon(o.outer, x, y) && !o.holes.some((h) => insidePolygon(h, x, y))
+  );
 }
 
 export function outlineArea(o: Outline): number {
@@ -216,7 +235,8 @@ export function arcPoints(
 export function shapeTileLocalPolygon(shape: ShapeTileId): Pt[] {
   const spec = G.shapeTiles[shape];
   if (!spec) throw Error(`Unknown shape tile ${shape}`);
-  if (spec.kind === "polygon") return ccw(spec.points!.map(([x, y]) => [x, y] as Pt));
+  if (spec.kind === "polygon")
+    return ccw(spec.points!.map(([x, y]) => [x, y] as Pt));
   const r = spec.radius!;
   const n = G.arcSegmentsPerRadius * r;
   if (!spec.concave) return ccw([[0, 0], ...arcPoints(0, 0, r, 0, 90, n)]);
@@ -234,9 +254,13 @@ export interface ShapeTilePlacement {
   rot: QuarterTurn;
   /** Mirror across the local vertical axis before rotating. */
   reflected: boolean;
+  /** Tile-local vertical profile, transformed with the tile. Omission preserves legacy geometry. */
+  bow?: { step: 0 | 1 | 2 | 3; axis: QuarterTurn };
 }
 
-export function placedTileSize(t: Pick<ShapeTilePlacement, "shape" | "rot">): [number, number] {
+export function placedTileSize(
+  t: Pick<ShapeTilePlacement, "shape" | "rot">,
+): [number, number] {
   const [w, h] = G.shapeTiles[t.shape].size;
   return t.rot % 2 ? [h, w] : [w, h];
 }
@@ -264,7 +288,8 @@ function splitAxisEdge(a: Pt, b: Pt): [Pt, Pt][] {
   const lo = Math.min(a[axis], b[axis]);
   const hi = Math.max(a[axis], b[axis]);
   const cuts = [lo];
-  for (let v = Math.floor(lo) + 1; v < hi - 1e-9; v++) if (v > lo + 1e-9) cuts.push(v);
+  for (let v = Math.floor(lo) + 1; v < hi - 1e-9; v++)
+    if (v > lo + 1e-9) cuts.push(v);
   cuts.push(hi);
   const forward = b[axis] > a[axis];
   if (!forward) cuts.reverse();
@@ -279,7 +304,10 @@ function splitAxisEdge(a: Pt, b: Pt): [Pt, Pt][] {
 
 const turnAngle = (din: Pt, dout: Pt) => {
   // Signed angle from din to dout in (-pi, pi]; positive is a left (CCW) turn.
-  return Math.atan2(din[0] * dout[1] - din[1] * dout[0], din[0] * dout[0] + din[1] * dout[1]);
+  return Math.atan2(
+    din[0] * dout[1] - din[1] * dout[0],
+    din[0] * dout[0] + din[1] * dout[1],
+  );
 };
 
 /** Merge consecutive collinear edges of a closed loop. */
@@ -306,7 +334,10 @@ export function simplifyLoop(loop: readonly Pt[]): Pt[] {
   // Start on the lowest-left vertex so outlines are canonical.
   let best = 0;
   for (let i = 1; i < pts.length; i++)
-    if (pts[i][1] < pts[best][1] - 1e-9 || (Math.abs(pts[i][1] - pts[best][1]) < 1e-9 && pts[i][0] < pts[best][0]))
+    if (
+      pts[i][1] < pts[best][1] - 1e-9 ||
+      (Math.abs(pts[i][1] - pts[best][1]) < 1e-9 && pts[i][0] < pts[best][0])
+    )
       best = i;
   return [...pts.slice(best), ...pts.slice(0, best)];
 }
@@ -328,7 +359,10 @@ export function unionTiles(tiles: readonly ShapeTilePlacement[]): TileUnion {
   for (const t of tiles) {
     const poly = placedTilePolygon(t);
     for (let i = 0; i < poly.length; i++) {
-      for (const [a, b] of splitAxisEdge(poly[i], poly[(i + 1) % poly.length])) {
+      for (const [a, b] of splitAxisEdge(
+        poly[i],
+        poly[(i + 1) % poly.length],
+      )) {
         const k = `${key(a)}|${key(b)}`;
         const reverse = `${key(b)}|${key(a)}`;
         if (edges.has(reverse)) edges.delete(reverse);
@@ -337,7 +371,10 @@ export function unionTiles(tiles: readonly ShapeTilePlacement[]): TileUnion {
     }
   }
   const outgoing = new Map<string, [Pt, Pt][]>();
-  for (const e of [...edges.values()].sort((m, n) => key(m[0]).localeCompare(key(n[0])) || key(m[1]).localeCompare(key(n[1])))) {
+  for (const e of [...edges.values()].sort(
+    (m, n) =>
+      key(m[0]).localeCompare(key(n[0])) || key(m[1]).localeCompare(key(n[1])),
+  )) {
     const k = key(e[0]);
     if (!outgoing.has(k)) outgoing.set(k, []);
     outgoing.get(k)!.push(e);
@@ -353,7 +390,9 @@ export function unionTiles(tiles: readonly ShapeTilePlacement[]): TileUnion {
         used.add(e);
         loop.push(e[0]);
         const din: Pt = [e[1][0] - e[0][0], e[1][1] - e[0][1]];
-        const next = (outgoing.get(key(e[1])) ?? []).filter((c) => !used.has(c));
+        const next = (outgoing.get(key(e[1])) ?? []).filter(
+          (c) => !used.has(c),
+        );
         if (!next.length) break;
         next.sort(
           (m, n) =>
@@ -379,7 +418,9 @@ export const COVERAGE_SAMPLES_PER_CELL = 8;
  * Deterministic coverage sampling (8x8 per cell). Returns sample keys per tile index so
  * callers can find overlaps (a sample claimed by two tiles).
  */
-export function tileOverlaps(tiles: readonly ShapeTilePlacement[]): [number, number][] {
+export function tileOverlaps(
+  tiles: readonly ShapeTilePlacement[],
+): [number, number][] {
   const owner = new Map<string, number>();
   const pairs = new Set<string>();
   const n = COVERAGE_SAMPLES_PER_CELL;
@@ -395,7 +436,8 @@ export function tileOverlaps(tiles: readonly ShapeTilePlacement[]): [number, num
             if (!insidePolygon(poly, x, y)) continue;
             const k = `${cx}:${cy}:${i}:${j}`;
             const prev = owner.get(k);
-            if (prev !== undefined && prev !== ti) pairs.add(`${Math.min(prev, ti)}:${Math.max(prev, ti)}`);
+            if (prev !== undefined && prev !== ti)
+              pairs.add(`${Math.min(prev, ti)}:${Math.max(prev, ti)}`);
             else owner.set(k, ti);
           }
   });
@@ -407,8 +449,16 @@ export function fullCells(o: Outline): [number, number][] {
   const xs = o.outer.map((p) => p[0]);
   const ys = o.outer.map((p) => p[1]);
   const out: [number, number][] = [];
-  for (let cx = Math.floor(Math.min(...xs)); cx < Math.ceil(Math.max(...xs)); cx++)
-    for (let cy = Math.floor(Math.min(...ys)); cy < Math.ceil(Math.max(...ys)); cy++) {
+  for (
+    let cx = Math.floor(Math.min(...xs));
+    cx < Math.ceil(Math.max(...xs));
+    cx++
+  )
+    for (
+      let cy = Math.floor(Math.min(...ys));
+      cy < Math.ceil(Math.max(...ys));
+      cy++
+    ) {
       const pts: Pt[] = [
         [cx + 0.02, cy + 0.02],
         [cx + 0.98, cy + 0.02],
@@ -438,7 +488,11 @@ export function volumeTiers(z0: number, z1: number): VolumeTiers {
       ],
       rim: [z1 - r.twoTierRimTexels, z1],
     };
-  if (h >= r.oneTierMinTexels) return { tiers: [[z0, z1 - r.oneTierRimTexels]], rim: [z1 - r.oneTierRimTexels, z1] };
+  if (h >= r.oneTierMinTexels)
+    return {
+      tiers: [[z0, z1 - r.oneTierRimTexels]],
+      rim: [z1 - r.oneTierRimTexels, z1],
+    };
   return { tiers: [[z0, z1]], rim: null };
 }
 
@@ -460,7 +514,10 @@ export function cassetteHeights(): { cassettes: number[]; rims: number[] } {
     }
     if (rim) rims.add(rim[1] - rim[0]);
   }
-  return { cassettes: [...cassettes].sort((a, b) => a - b), rims: [...rims].sort((a, b) => a - b) };
+  return {
+    cassettes: [...cassettes].sort((a, b) => a - b),
+    rims: [...rims].sort((a, b) => a - b),
+  };
 }
 
 export type FaceNormal = "fore" | "aft" | "port" | "starboard";
@@ -488,7 +545,9 @@ export function normalOf(v: Pt): FaceNormal | null {
 }
 
 /** Axis-aligned outline edges with their outward normal (outer loops are CCW). */
-export function axisFaces(loop: readonly Pt[]): { a: Pt; b: Pt; normal: FaceNormal; length: number }[] {
+export function axisFaces(
+  loop: readonly Pt[],
+): { a: Pt; b: Pt; normal: FaceNormal; length: number }[] {
   const out: { a: Pt; b: Pt; normal: FaceNormal; length: number }[] = [];
   for (let i = 0; i < loop.length; i++) {
     const a = loop[i];

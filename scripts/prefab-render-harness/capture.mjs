@@ -81,6 +81,7 @@ async function launchChrome() {
       "--headless",
       "--no-sandbox",
       "--hide-scrollbars",
+      "--disable-dev-shm-usage",
       "--remote-debugging-address=127.0.0.1",
       "--remote-debugging-port=0",
       "--use-gl=angle",
@@ -182,9 +183,10 @@ async function main() {
       shots.push({ name: `${id}_${view}_${cam}`, query: `prefab=${id}&view=${view}&cam=${cam}` });
   if (!only?.length && !game) shots.push({ name: "lineup", query: "lineup=1&view=flight&cam=iso" });
 
-  // --shots deck,flight,...: keep only these shot suffixes (game mode).
+  if(args.includes("--plan")) shots.splice(0,shots.length,{name:"shipyard_plan",page:"plan.html",query:"review=bow"});
+  // --shots: keep named suffixes (game: bow/flight/etc; prefab: flight_iso/etc).
   const keepShots = opt("--shots", "")?.split(",").filter(Boolean);
-  if (keepShots?.length) shots.splice(0, shots.length, ...shots.filter((s) => keepShots.some((k) => s.name.endsWith(`_game_${k}`))));
+  if (keepShots?.length) shots.splice(0, shots.length, ...shots.filter((s) => keepShots.some((k) => (s.name.endsWith(`_game_${k}`) || s.name.endsWith(`_${k}`)))));
   const metrics = {};
   for (const s of shots) {
     logs.length = 0;
@@ -214,7 +216,9 @@ async function main() {
     metrics[s.name] = JSON.parse(m.result.value);
     const shot = await page("Page.captureScreenshot", { format: "png" });
     writeFileSync(join(out, `${s.name}.png`), Buffer.from(shot.data, "base64"));
-    const summary = (metrics[s.name] ?? []).map((x) => `${x.drawCalls} draws (main ${x.mainDraws}, glow ${x.glowDraws}), ${x.meshes} meshes, ${x.instances} inst, ${(x.triangles / 1000).toFixed(1)}k tris`).join(" | ");
+    const summary = (metrics[s.name] ?? []).map((x) => x.shipDraws !== undefined
+      ? `${x.drawCalls} frame draws, ${x.shipDraws} ship draws, ${x.meshes} meshes, ${((x.origin?.triangles ?? 0) / 1000).toFixed(1)}k tris`
+      : `${x.drawCalls} draws (main ${x.mainDraws}, glow ${x.glowDraws}), ${x.meshes} meshes, ${x.instances} inst, ${(x.triangles / 1000).toFixed(1)}k tris`).join(" | ");
     console.log(`${s.name}.png  ${((Date.now() - t0) / 1000).toFixed(1)} s  ${summary}`);
     for (const l of new Set(logs)) console.log(`   ${l.slice(0, 300)}`);
   }

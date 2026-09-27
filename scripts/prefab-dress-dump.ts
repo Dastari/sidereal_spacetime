@@ -94,7 +94,7 @@ for (const doc of PREFAB_SHIPS) {
     texelM: TEXEL,
     slots: SHIP_KIT_SLOTS,
     grammar: { deck: G.deck },
-    kitDir: "assets/runtime/ship-kit/r001",
+    kitDir: "assets/runtime/ship-kit/r002",
     theme: { id: theme.id, label: theme.label, slots: theme.slots, wear: theme.wear, wearColour: theme.wearColour, inkOnDark: theme.inkOnDark, inkOnLight: theme.inkOnLight, plume: theme.plume },
     stats,
     issues: issues.map((i) => ({ severity: i.severity, code: i.code, message: i.message })),

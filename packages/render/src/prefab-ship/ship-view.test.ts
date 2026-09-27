@@ -116,3 +116,17 @@ it("prefab meshes cull back faces, not the outward faces", async () => {
     expect(m.sideOrientation, m.name).toBe(Constants.MATERIAL_CounterClockWiseSideOrientation);
   }
 });
+
+it("pools red navigation lenses without recolouring the ship's amber emitter slot", async () => {
+  const { roleSlotMaterial, slotMaterial } = await import("./materials");
+  const engine = new NullEngine();
+  engines.push(engine);
+  const scene = new Scene(engine);
+  const navigation = roleSlotMaterial(scene, "federation", "emit_b", "effect");
+  const equipment = slotMaterial(scene, "federation", "emit_b");
+  expect(navigation).toBe(roleSlotMaterial(scene, "federation", "emit_b", "effect"));
+  expect(navigation).not.toBe(equipment);
+  expect(navigation.emissiveColor.r).toBeGreaterThan(20 * navigation.emissiveColor.g);
+  expect(equipment.emissiveColor.g).toBeGreaterThan(0.3);
+  expect(roleSlotMaterial(scene, "federation", "primary", "effect")).toBe(slotMaterial(scene, "federation", "primary"));
+});

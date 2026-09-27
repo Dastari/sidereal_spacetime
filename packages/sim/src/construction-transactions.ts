@@ -1,3 +1,4 @@
+import { derivePrefabStructure } from "./prefab-structure";
 import {
   planWayfarerExteriorGame,
   verifyQualifiedWayfarerExterior,
@@ -42,6 +43,7 @@ import { fitTileset } from "./tileset-fit";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "./prefab-catalog";
 import {
+  isPrefabConstruction,
   prefabConstructionDocument,
   restorePrefabSourceIdentities,
   type PrefabConstructionDocument,
@@ -255,7 +257,9 @@ export function readConstructionDraft(
     const verifiedKey = constructionHash(canonical);
     if (!VERIFIED_PREFAB_CANONICALS.has(verifiedKey)) {
       const binding = input.prefab as Record<string, unknown>;
-      const keys = Object.keys(binding ?? {}).sort().join(",");
+      const keys = Object.keys(binding ?? {})
+        .sort()
+        .join(",");
       if (
         !record(binding) ||
         (keys !== "catalog,document,revision,schema" &&
@@ -264,7 +268,10 @@ export function readConstructionDraft(
       )
         throw Error("Unsupported prefab binding");
       const catalog = prefabComponentCatalogFor(binding.catalog);
-      const expected = prefabConstructionDocument(readShipPrefab(binding.document), catalog);
+      const expected = prefabConstructionDocument(
+        readShipPrefab(binding.document),
+        catalog,
+      );
       const { identities, ...sourceBinding } = binding;
       if (stableStringify(expected.prefab) !== stableStringify(sourceBinding))
         throw Error("Prefab binding is not canonical");
@@ -277,14 +284,19 @@ export function readConstructionDraft(
             );
       if (identities === undefined && normalized.layout.source !== null)
         throw Error("Spawned prefab instance requires an identity map");
-      const derived = readConstructionDraft(JSON.stringify(expected), { prefabDerivation: true });
+      const derived = readConstructionDraft(JSON.stringify(expected), {
+        prefabDerivation: true,
+      });
       const actual =
         identities === undefined
           ? canonical
-          : readConstructionDraft(JSON.stringify(source), { prefabDerivation: true }).canonical;
+          : readConstructionDraft(JSON.stringify(source), {
+              prefabDerivation: true,
+            }).canonical;
       if (derived.canonical !== actual)
         throw Error("Prefab layout differs from its grammar derivation");
-      if (VERIFIED_PREFAB_CANONICALS.size >= 64) VERIFIED_PREFAB_CANONICALS.clear();
+      if (VERIFIED_PREFAB_CANONICALS.size >= 64)
+        VERIFIED_PREFAB_CANONICALS.clear();
       VERIFIED_PREFAB_CANONICALS.add(verifiedKey);
     }
   }
@@ -376,6 +388,13 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
     schema: CONSTRUCTION_SCHEMA,
     compiler: CONSTRUCTION_COMPILER,
     ...snapshot,
+    ...(isPrefabConstruction(input)
+      ? {
+          prefabStructure: derivePrefabStructure(
+            readShipPrefab(input.prefab.document),
+          ),
+        }
+      : {}),
     readiness: {
       geometry: true,
       nativeFloors: true,

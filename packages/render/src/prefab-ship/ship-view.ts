@@ -200,7 +200,7 @@ function applyFrame(node: TransformNode, origin: [number, number]) {
 }
 
 const roleOfPiece = (piece: string): MeshRole =>
-  piece.startsWith("roof.") || piece.startsWith("deco.") ? "roof" : piece.startsWith("int.floor") ? "floor" : piece.startsWith("int.") ? "wall" : "hull";
+  piece.startsWith("canopy.nav.") ? "effect" : piece.startsWith("roof.") || piece.startsWith("deco.") ? "roof" : piece.startsWith("int.floor") ? "floor" : piece.startsWith("int.") ? "wall" : "hull";
 
 const roleOfGenerated = (kind: string): MeshRole => (kind === "floor-slab" ? "floor" : kind === "slope-wall" || kind === "shell-band" ? "wall" : "hull");
 
@@ -322,7 +322,7 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       [...byPiece].map(async ([piece, matrices]) => {
         const file = manifest?.pieces[piece]?.file ?? (manifest ? null : `${piece}.glb`);
         if (!file) return warnOnce(`kit:${piece}`, `prefab-ship: kit piece ${piece} is not in ${kitBase}manifest.json`);
-        const geom = await loadGlbGeometry(scene, kitBase + file);
+        const geom = await loadGlbGeometry(scene, kitBase + file, manifest?.pieces[piece]?.node);
         if (!geom) return warnOnce(`kit:${piece}`, `prefab-ship: kit piece ${piece} failed to load from ${kitBase}${file}`);
         addInstanced(out, geom, piece, matrices, roleOfPiece(piece));
       }),
@@ -334,8 +334,9 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
       const slot = slotOfMaterialName(p.material);
       if (!slot) warnOnce(`material:${geom.url}:${p.material}`, `prefab-ship: ${geom.url} material "${p.material}" is not a theme slot; using primary`);
       const mesh = makeMesh(scene, `${piece ?? geom.url}:${p.material || i}`, frame, p);
-      mesh.material = roleSlotMaterial(scene, theme, slot ?? "primary", role);
-      setMeshRole(mesh, role);
+      const finishRole = piece?.startsWith("bow.") && slot === "emit_b" ? "effect" : role;
+      mesh.material = roleSlotMaterial(scene, theme, slot ?? "primary", finishRole);
+      setMeshRole(mesh, finishRole);
       out.instanced.push({ mesh, slot: slot ?? "primary", piece, matrices, triangles: p.triangles, count: 0 });
     });
   }
