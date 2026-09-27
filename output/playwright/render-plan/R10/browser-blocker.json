@@ -1,0 +1,23 @@
+{
+  "status": "implemented, unmeasured",
+  "normalGame": {
+    "url": "https://sidereal.tail7a58a6.ts.net:8444/",
+    "engineFrame": 0,
+    "sceneRenderId": 1,
+    "cover": "Preparing the first frame",
+    "visibility": "visible"
+  },
+  "screenshots": {
+    "tab_b": "preview snapshot failed",
+    "tab_c": "preview snapshot failed"
+  },
+  "missing": [
+    "settled Deck",
+    "settled seated Flight",
+    "hardware scale 2 isolation",
+    "Glow Shadows Lighting off sequence",
+    "normal Graphics browser review"
+  ],
+  "snapshotActivation": "Blocked by R6 qualification; scaffold is not runtime imported",
+  "timingAccepted": false
+}

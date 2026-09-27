@@ -1,0 +1,48 @@
+{
+  "scope": "Isolated 320x240 WebGPU PBR compatibility; explicitly submitted frames, not gameplay acceptance",
+  "timingAccepted": false,
+  "pixels": {
+    "phases": [
+      {
+        "frozen": true,
+        "lightsEnabled": false,
+        "meanRGB": 56.11482204861111,
+        "shaderHasLight0": false
+      },
+      {
+        "frozen": true,
+        "lightsEnabled": true,
+        "meanRGB": 67.41858940972222,
+        "shaderHasLight0": true
+      }
+    ],
+    "status": "complete"
+  },
+  "validation": {
+    "phases": [
+      {
+        "effectReady": true,
+        "frozen": true,
+        "lightsEnabled": true,
+        "phase": "on",
+        "validationError": null
+      },
+      {
+        "effectReady": true,
+        "frozen": true,
+        "lightsEnabled": false,
+        "phase": "lighting-off",
+        "validationError": null
+      },
+      {
+        "effectReady": true,
+        "frozen": true,
+        "lightsEnabled": true,
+        "phase": "lighting-on",
+        "validationError": null
+      }
+    ],
+    "status": "complete",
+    "webgpu": true
+  }
+}

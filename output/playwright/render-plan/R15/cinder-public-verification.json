@@ -1,0 +1,24 @@
+{
+  "checkedAt": "2026-09-11T01:19:26.698315+00:00",
+  "release": {
+    "origin": "https://sidereal.dastari.net",
+    "sha256": "f1ffe83c99c27d3b77129cfa5ade892d7f1721761eefaac4184ed9084443bfb1",
+    "release": "/root/sidereal_spacetime/.runtime/public-client/releases/20260911-111900-f1ffe83c99c2"
+  },
+  "indexMatches": true,
+  "files": [
+    {
+      "path": "/assets/index-SWT9d1FU.js",
+      "http": 200,
+      "sha256": "55ecb470e099c185d90449da8f76bf1a2eeea876ec85528dc51a5bdcde007a58",
+      "matchesBuiltBytes": true
+    },
+    {
+      "path": "/assets/planet-worker-DWaXMmKJ.js",
+      "http": 200,
+      "sha256": "aac6cd5aaca9c4ebedf29466553ec72d3756b37e60fb244254f3036ca885b267",
+      "matchesBuiltBytes": true
+    }
+  ],
+  "note": "HTTP identity verification only; no hardware frame timing claimed."
+}

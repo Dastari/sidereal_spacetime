@@ -1,0 +1,136 @@
+{
+  "frame": 0,
+  "raf": 0,
+  "worker": {
+    "completed": "2026-09-11T00:37:38.065Z",
+    "errors": [],
+    "results": [
+      {
+        "buffers": [
+          {
+            "indices": true,
+            "positions": 41364,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 11448,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 0,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 0,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 0,
+            "typed": true
+          }
+        ],
+        "buildMs": 50.099999994039536,
+        "id": 2,
+        "requested": 16,
+        "resolution": 16,
+        "terrainFaces": 3447,
+        "waterFaces": 954
+      },
+      {
+        "buffers": [
+          {
+            "indices": true,
+            "positions": 122784,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 46008,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 0,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 0,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 0,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 33696,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 300960,
+            "typed": true
+          }
+        ],
+        "buildMs": 454.5,
+        "id": 1,
+        "requested": 32,
+        "resolution": 32,
+        "terrainFaces": 10232,
+        "waterFaces": 3834
+      },
+      {
+        "buffers": [
+          {
+            "indices": true,
+            "positions": 1023672,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 413628,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 0,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 0,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 0,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 225216,
+            "typed": true
+          },
+          {
+            "indices": true,
+            "positions": 361152,
+            "typed": true
+          }
+        ],
+        "buildMs": 2570.199999988079,
+        "id": 0,
+        "requested": 96,
+        "resolution": 96,
+        "terrainFaces": 85306,
+        "waterFaces": 34469
+      }
+    ],
+    "started": "2026-09-11T00:37:34.925Z"
+  }
+}

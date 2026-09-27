@@ -1,0 +1,13 @@
+{
+  "scope": "isolated compatibility probe; not Deck/Flight acceptance or timing evidence",
+  "canvas": [320, 240],
+  "webgpu": true,
+  "compilerAssets": "bundled Babylon 9.25 glslang and twgsl",
+  "shaderLanguage": "WGSL",
+  "thinInstances": 560,
+  "shaderCompilationErrors": [],
+  "manualProbeDrawCalls": 1,
+  "gpuValidationError": null,
+  "normalAnimationLoop": "not advancing in preview",
+  "timingAccepted": false
+}

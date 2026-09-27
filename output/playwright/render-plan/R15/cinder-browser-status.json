@@ -1,0 +1,17 @@
+{
+  "checkedAt": "2026-09-11T01:18:31.586Z",
+  "status": {
+    "available": true,
+    "visible": false,
+    "tabId": "tab_d",
+    "url": "https://sidereal.dastari.net/",
+    "title": "Sidereal • Flight deck",
+    "loading": false,
+    "viewportSetting": {
+      "_tag": "freeform",
+      "width": 1280,
+      "height": 800
+    }
+  },
+  "note": "Reopen did not restore visible advancing context. Evaluate returned Preparing the first frame; no RAF or readiness was forced. Cinder and Map/Observe hardware timing/screenshots and isolation counters remain unmeasured."
+}

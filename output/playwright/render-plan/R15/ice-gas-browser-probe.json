@@ -1,0 +1,15 @@
+{
+  "checkedAt": "2026-09-11T02:19:48.770Z",
+  "probe": {
+    "entry": [
+      "https://sidereal.dastari.net/assets/index-yjny0qNn.js",
+      "https://sidereal.dastari.net/assets/index-ZGz1-7jh.css"
+    ],
+    "frame": 0,
+    "raf": 0,
+    "requestedDestination": "Frost Ice",
+    "text": "Account\n◒\nSidereal\n\nWayfarer\n\nPreparing to board\n\nPreparing the first frame\n\nYour ship and equipment will be ready before you enter.\n\nWASD to move · TAB to change view\nSign out",
+    "visible": "visible"
+  },
+  "note": "Frost requested through normal Map Observe focusBody action; no manual render/readiness bypass. Snapshot failed. No transition timing, settled view counts or isolation pass claimed."
+}

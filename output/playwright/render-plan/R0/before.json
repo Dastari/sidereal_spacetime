@@ -1,0 +1,523 @@
+{
+  "date": "2026-09-10",
+  "renderer": "ANGLE NVIDIA RTX 4080 Laptop GPU D3D11",
+  "notes": [
+    "Current development build; differs from owner historical baseline.",
+    "Canvas constrained to 1574 x 907 CSS/render pixels because shared-browser resize timed out. Screenshot preview is scaled to 1280 x 800.",
+    "MSAA 4 default; current TAA has two passes rather than baseline three; restored MSAA after exploratory settings check.",
+    "Flight camera via TAB, actor on foot: seated acceptance remains unverified.",
+    "Flight scale2 changes planet LOD and mesh population, so not a pure fill-rate isolation."
+  ],
+  "states": {
+    "deck": {
+      "activeIndices": 5511552,
+      "activeMeshes": 1396,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 35.264389682754654,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 70.00792250152229,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": true,
+        "lightBounds": false,
+        "lighting": true,
+        "planets": true,
+        "shadows": true,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 5539,
+      "environmentTexturePresent": true,
+      "fps": 17.458100558674346,
+      "frameCpuMs": 57.015395032557194,
+      "frameMs": 57.27999999995036,
+      "hardwareScale": 1,
+      "lights": 4,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 632,
+      "renderCpuMs": 53.26111111086276,
+      "renderHeight": 907,
+      "renderWidth": 1574,
+      "shadowMaps": 1,
+      "textures": 94,
+      "totalMeshes": 2688,
+      "transparentMeshes": 14,
+      "updateCpuMs": 0.4795137402218727
+    },
+    "deck-scale2": {
+      "activeIndices": 5511552,
+      "activeMeshes": 1396,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 35.264389682754654,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 70.00792250152229,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": true,
+        "lightBounds": false,
+        "lighting": true,
+        "planets": true,
+        "shadows": true,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 5539,
+      "environmentTexturePresent": true,
+      "fps": 15.524736079498611,
+      "frameCpuMs": 55.472956310787154,
+      "frameMs": 64.4133333332837,
+      "hardwareScale": 2,
+      "lights": 4,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 631,
+      "renderCpuMs": 55.8866666674614,
+      "renderHeight": 453,
+      "renderWidth": 787,
+      "shadowMaps": 1,
+      "textures": 92,
+      "totalMeshes": 2687,
+      "transparentMeshes": 14,
+      "updateCpuMs": 1.2624321141515846
+    },
+    "deck-glow-off": {
+      "activeIndices": 2798160,
+      "activeMeshes": 1396,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 35.264389682754654,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 70.00792250152229,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": false,
+        "lightBounds": false,
+        "lighting": true,
+        "planets": true,
+        "shadows": true,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 2769,
+      "environmentTexturePresent": true,
+      "fps": 22.780773027590467,
+      "frameCpuMs": 40.70520847784522,
+      "frameMs": 43.89666666661709,
+      "hardwareScale": 1,
+      "lights": 4,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 632,
+      "renderCpuMs": 37.9708333335196,
+      "renderHeight": 907,
+      "renderWidth": 1574,
+      "shadowMaps": 1,
+      "textures": 92,
+      "totalMeshes": 2688,
+      "transparentMeshes": 14,
+      "updateCpuMs": 0.5531225417464676
+    },
+    "deck-shadows-off": {
+      "activeIndices": 1441638,
+      "activeMeshes": 1396,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 35.264389682754654,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 70.00792250152229,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": false,
+        "lightBounds": false,
+        "lighting": true,
+        "planets": true,
+        "shadows": false,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 1395,
+      "environmentTexturePresent": true,
+      "fps": 28.898950004774978,
+      "frameCpuMs": 27.08307271369097,
+      "frameMs": 34.60333333338304,
+      "hardwareScale": 1,
+      "lights": 4,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 632,
+      "renderCpuMs": 24.32187500083819,
+      "renderHeight": 907,
+      "renderWidth": 1574,
+      "shadowMaps": 0,
+      "textures": 92,
+      "totalMeshes": 2688,
+      "transparentMeshes": 14,
+      "updateCpuMs": 0.6681932782328042
+    },
+    "deck-lighting-off": {
+      "activeIndices": 1441638,
+      "activeMeshes": 1396,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 35.264389682754654,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 70.00792250152229,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": false,
+        "lightBounds": false,
+        "lighting": false,
+        "planets": true,
+        "shadows": false,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 1395,
+      "environmentTexturePresent": true,
+      "fps": 30.36129946380017,
+      "frameCpuMs": 30.12367853593498,
+      "frameMs": 32.93666666646801,
+      "hardwareScale": 1,
+      "lights": 0,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 632,
+      "renderCpuMs": 24.87352941097582,
+      "renderHeight": 907,
+      "renderWidth": 1574,
+      "shadowMaps": 0,
+      "textures": 92,
+      "totalMeshes": 2688,
+      "transparentMeshes": 14,
+      "updateCpuMs": 6.081636836946861
+    },
+    "flight": {
+      "activeIndices": 6684462,
+      "activeMeshes": 1106,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 89.14056330730376,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 938.7152127085246,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": true,
+        "lightBounds": false,
+        "lighting": true,
+        "planets": true,
+        "shadows": true,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 4926,
+      "environmentTexturePresent": true,
+      "fps": 12.631047113837433,
+      "frameCpuMs": 73.17576499735108,
+      "frameMs": 79.16999999980132,
+      "hardwareScale": 1,
+      "lights": 4,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 631,
+      "renderCpuMs": 68.7307692324886,
+      "renderHeight": 907,
+      "renderWidth": 1574,
+      "shadowMaps": 1,
+      "textures": 93,
+      "totalMeshes": 2687,
+      "transparentMeshes": 19,
+      "updateCpuMs": 0.5489542879157733
+    },
+    "flight-scale2": {
+      "activeIndices": 3933444,
+      "activeMeshes": 1104,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 89.14056330730376,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 938.7152127085246,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": true,
+        "lightBounds": false,
+        "lighting": true,
+        "planets": true,
+        "shadows": true,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 3854,
+      "environmentTexturePresent": true,
+      "fps": 20.29495332156646,
+      "frameCpuMs": 38.10299366508397,
+      "frameMs": 49.27333333343263,
+      "hardwareScale": 2,
+      "lights": 4,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 629,
+      "renderCpuMs": 39.76666666673763,
+      "renderHeight": 453,
+      "renderWidth": 787,
+      "shadowMaps": 1,
+      "textures": 92,
+      "totalMeshes": 2685,
+      "transparentMeshes": 19,
+      "updateCpuMs": 0.4941743873175887
+    },
+    "flight-glow-off": {
+      "activeIndices": 5266422,
+      "activeMeshes": 1106,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 89.14056330730376,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 938.7152127085246,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": false,
+        "lightBounds": false,
+        "lighting": true,
+        "planets": true,
+        "shadows": true,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 3041,
+      "environmentTexturePresent": true,
+      "fps": 19.768054823385995,
+      "frameCpuMs": 47.44401539652353,
+      "frameMs": 50.58666666671626,
+      "hardwareScale": 1,
+      "lights": 4,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 631,
+      "renderCpuMs": 47.476190475835686,
+      "renderHeight": 907,
+      "renderWidth": 1574,
+      "shadowMaps": 1,
+      "textures": 93,
+      "totalMeshes": 2687,
+      "transparentMeshes": 19,
+      "updateCpuMs": 0.6787806302554033
+    },
+    "flight-shadows-off": {
+      "activeIndices": 4557492,
+      "activeMeshes": 1106,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 89.14056330730376,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 938.7152127085246,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": false,
+        "lightBounds": false,
+        "lighting": true,
+        "planets": true,
+        "shadows": false,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 2106,
+      "environmentTexturePresent": true,
+      "fps": 27.387255796820135,
+      "frameCpuMs": 35.235034474090156,
+      "frameMs": 36.513333333531996,
+      "hardwareScale": 1,
+      "lights": 4,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 631,
+      "renderCpuMs": 33.98214285634458,
+      "renderHeight": 907,
+      "renderWidth": 1574,
+      "shadowMaps": 0,
+      "textures": 93,
+      "totalMeshes": 2687,
+      "transparentMeshes": 19,
+      "updateCpuMs": 0.48609076660212724
+    },
+    "flight-lighting-off": {
+      "activeIndices": 4557492,
+      "activeMeshes": 1106,
+      "allocatedShadowMaps": 2,
+      "cameraElevationDegrees": 89.14056330730376,
+      "cameraPostProcesses": [
+        "sidereal-aa-scene"
+      ],
+      "cameraRadius": 938.7152127085246,
+      "customRenderTargets": 0,
+      "debugFeatures": {
+        "characters": true,
+        "collision": false,
+        "equipment": true,
+        "globalIllumination": true,
+        "glow": false,
+        "lightBounds": false,
+        "lighting": false,
+        "planets": true,
+        "shadows": false,
+        "skeleton": false
+      },
+      "debugOverlays": {
+        "collisionFrames": 0,
+        "collisionScopes": [],
+        "lights": 0,
+        "skeletons": 0
+      },
+      "drawCalls": 2106,
+      "environmentTexturePresent": true,
+      "fps": 17.425650557605728,
+      "frameCpuMs": 49.3529324686621,
+      "frameMs": 57.38666666671636,
+      "hardwareScale": 1,
+      "lights": 0,
+      "localLightBudget": {
+        "eligibleLights": 0,
+        "enabledLights": 0,
+        "enabledShadowLights": 0,
+        "limit": "all"
+      },
+      "materials": 631,
+      "renderCpuMs": 49.688888888392185,
+      "renderHeight": 907,
+      "renderWidth": 1574,
+      "shadowMaps": 0,
+      "textures": 93,
+      "totalMeshes": 2687,
+      "transparentMeshes": 19,
+      "updateCpuMs": 1.2349083607064613
+    }
+  }
+}

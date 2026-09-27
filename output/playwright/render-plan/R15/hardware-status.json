@@ -1,0 +1,20 @@
+{
+  "at": "2026-09-11T00:40:21.281Z",
+  "entry": [
+    "https://sidereal.dastari.net/assets/index-CMhPFBTJ.js"
+  ],
+  "focus": true,
+  "frame": 0,
+  "glError": 0,
+  "pendingAssets": 0,
+  "planetNodes": 0,
+  "rafProbe": {
+    "at": "2026-09-11T00:36:37.471Z",
+    "raf": 0
+  },
+  "renderer": "ANGLE (NVIDIA, NVIDIA GeForce RTX 4080 Laptop GPU (0x000027E0) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+  "sceneReady": false,
+  "text": "Account\n◒\nSidereal\n\nWayfarer\n\nPreparing to board\n\nPreparing the first frame\n\nYour ship and equipment will be ready before you enter.\n\nWASD to move · TAB to change view\nSign out",
+  "url": "https://sidereal.dastari.net/",
+  "visibility": "visible"
+}

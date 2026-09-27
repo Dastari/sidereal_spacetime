@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-11",
+  "backend": "RTX 4080 Laptop WebGL",
+  "entry": "/assets/index-DKNHMjt4.js",
+  "timingAccepted": false,
+  "reason": "Preview hidden/unfocused throttling; changed camera and world population",
+  "manualGameFrames": false,
+  "gl": {
+    "initialStickyError": 1282,
+    "afterRenderProbe": {
+      "startFrame": 6116,
+      "observedFrames": 145,
+      "errors": [
+        {
+          "frame": 6192,
+          "error": 1282
+        }
+      ]
+    },
+    "tracedCalls": 107155,
+    "traceErrors": [],
+    "canvasCaptureError": 0,
+    "wrappersAndObserverRemoved": true,
+    "finalFrame": 16373,
+    "finalError": 0,
+    "status": "Unresolved transient; not reproduced in repeated traced resize/switch checks"
+  },
+  "restored": {
+    "hardwareScale": 1,
+    "glow": true,
+    "shadows": true,
+    "lighting": true,
+    "view": "Deck",
+    "seated": false
+  },
+  "perItemAcceptanceComplete": false
+}

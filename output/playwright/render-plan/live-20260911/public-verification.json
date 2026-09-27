@@ -1,0 +1,23 @@
+{
+  "/": {
+    "status": 200,
+    "sha256": "4ae762ca15ab9bca81ea3e5191943e5c52458d37fcbddede61fbf8973625ea00",
+    "bytes": 2689
+  },
+  "/assets/index-DKNHMjt4.js": {
+    "status": 200,
+    "sha256": "1fd91524f75b56f6a55f07afdc96e4dee83e2c3a93b68cc8a1f3800766790022",
+    "bytes": 1459478
+  },
+  "/v1/ping": {
+    "status": 200,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  "release": {
+    "origin": "https://sidereal.dastari.net",
+    "sha256": "5a4c31c994c91bb6eb2fe667c2bee058dc3c666f0d6d975392d2b6b335012c75",
+    "release": "/root/sidereal_spacetime/.runtime/public-client/releases/20260911-013623-5a4c31c994c9"
+  },
+  "deliveryUnchanged": true
+}

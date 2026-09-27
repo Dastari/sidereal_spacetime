@@ -1,0 +1,118 @@
+{
+  "at": "2026-09-10T14:43:18.713Z",
+  "diagnostics": {
+    "activeIndices": 1441638,
+    "activeMeshes": 393,
+    "allocatedShadowMaps": 2,
+    "cameraElevationDegrees": 35.264389682754654,
+    "cameraPostProcesses": [
+      "sidereal-aa-scene"
+    ],
+    "cameraRadius": 46.99580837575128,
+    "customRenderTargets": 0,
+    "debugFeatures": {
+      "characters": true,
+      "collision": false,
+      "equipment": true,
+      "globalIllumination": true,
+      "glow": false,
+      "lightBounds": false,
+      "lighting": false,
+      "planets": true,
+      "shadows": false,
+      "skeleton": false
+    },
+    "debugOverlays": {
+      "collisionFrames": 0,
+      "collisionScopes": [],
+      "lights": 0,
+      "skeletons": 0
+    },
+    "drawCalls": 277,
+    "environmentTexturePresent": true,
+    "fps": 100.13351134547781,
+    "frameCpuMs": 9.704154636680954,
+    "frameMs": 9.98666666696455,
+    "hardwareScale": 1,
+    "lights": 0,
+    "localLightBudget": {
+      "eligibleLights": 0,
+      "enabledLights": 0,
+      "enabledShadowLights": 0,
+      "limit": "all"
+    },
+    "materials": 505,
+    "meshesByRole": {
+      "cargo": {
+        "active": 34,
+        "total": 34
+      },
+      "crew": {
+        "active": 21,
+        "total": 362
+      },
+      "effect": {
+        "active": 1,
+        "total": 30
+      },
+      "environment": {
+        "active": 4,
+        "total": 6
+      },
+      "equipment": {
+        "active": 155,
+        "total": 155
+      },
+      "floor": {
+        "active": 103,
+        "total": 127
+      },
+      "hull": {
+        "active": 25,
+        "total": 25
+      },
+      "planet": {
+        "active": 3,
+        "total": 30
+      },
+      "proxy": {
+        "active": 0,
+        "total": 1
+      },
+      "remote": {
+        "active": 0,
+        "total": 596
+      },
+      "roof": {
+        "active": 0,
+        "total": 7
+      },
+      "unclassified": {
+        "active": 0,
+        "total": 0
+      },
+      "wall": {
+        "active": 47,
+        "total": 47
+      }
+    },
+    "renderBackend": "webgl",
+    "renderCpuMs": 9.897894736497026,
+    "renderHeight": 907,
+    "renderWidth": 1574,
+    "sceneCapture": {
+      "height": 907,
+      "name": "sidereal-aa-scene",
+      "samples": 4,
+      "width": 1574
+    },
+    "shadowMaps": 0,
+    "textures": 83,
+    "totalMeshes": 1420,
+    "transparentMeshes": 14,
+    "updateCpuMs": 0.2082195482613941
+  },
+  "focus": false,
+  "length": 346956,
+  "visibility": "hidden"
+}

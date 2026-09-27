@@ -1,0 +1,13 @@
+{
+  "nativeRevision": "r013",
+  "assetSha256": "f651ba13ade02fb918c97dd4d3924879dd9c204527a4e43cef90c8c578505bd2",
+  "renderer": "Chromium SwiftShader",
+  "hardwareTimingAcceptance": false,
+  "viewport": [
+    768,
+    768
+  ],
+  "playbackSecondsRequested": 30,
+  "surface": "GPU lift injection fixed; compiled shader regression passes",
+  "review": "Root sees dynamic relief and spot/hot-channel changes; Astra pending"
+}

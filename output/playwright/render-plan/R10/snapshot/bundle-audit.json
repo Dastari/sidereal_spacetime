@@ -1,0 +1,85 @@
+{
+  "audit": {
+    "bundles": [
+      0,
+      0,
+      1,
+      0,
+      1,
+      1,
+      1,
+      1,
+      1,
+      0,
+      2,
+      1
+    ],
+    "mode": 1,
+    "owner": {
+      "armed": true,
+      "enabled": true,
+      "reason": ""
+    },
+    "play": true,
+    "raw": 15,
+    "stats": {
+      "activeIndices": 216,
+      "activeMeshes": 2,
+      "meshesByRole": {
+        "cargo": {
+          "active": 0,
+          "total": 0
+        },
+        "crew": {
+          "active": 0,
+          "total": 0
+        },
+        "effect": {
+          "active": 0,
+          "total": 0
+        },
+        "environment": {
+          "active": 0,
+          "total": 0
+        },
+        "equipment": {
+          "active": 0,
+          "total": 0
+        },
+        "floor": {
+          "active": 0,
+          "total": 0
+        },
+        "hull": {
+          "active": 2,
+          "total": 2
+        },
+        "planet": {
+          "active": 0,
+          "total": 0
+        },
+        "proxy": {
+          "active": 0,
+          "total": 0
+        },
+        "remote": {
+          "active": 0,
+          "total": 0
+        },
+        "roof": {
+          "active": 0,
+          "total": 0
+        },
+        "unclassified": {
+          "active": 0,
+          "total": 0
+        },
+        "wall": {
+          "active": 0,
+          "total": 0
+        }
+      }
+    },
+    "status": "complete"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "status": "capture diagnostics implemented, hardware comparison unmeasured",
+  "existingTab": "tab_b",
+  "freshTab": "tab_c",
+  "url": "https://sidereal.tail7a58a6.ts.net:8444/",
+  "freshTabVisible": true,
+  "freshTabRenderId": 1,
+  "freshTabReady": false,
+  "overlay": "Preparing the first frame",
+  "afterCounters": null,
+  "isolation": null,
+  "aaDefaultChanged": false
+}

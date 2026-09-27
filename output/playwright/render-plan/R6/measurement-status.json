@@ -1,0 +1,7 @@
+{
+  "status": "partial implementation, unmeasured",
+  "reason": "Shared RTX preview reloaded and remains covered by Preparing the first frame; no ready render controller available for baseline captures.",
+  "before": "R4/deck-initial.json (counts only; no accepted R4 Flight)",
+  "after": null,
+  "isolation": null
+}

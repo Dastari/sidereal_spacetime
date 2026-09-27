@@ -1,0 +1,65 @@
+{
+  "above20": [
+    {
+      "frame": 55010,
+      "interval": 72.5,
+      "sceneMs": 22.100000008940697,
+      "time": 1629893.200000003
+    },
+    {
+      "frame": 55119,
+      "interval": 21.900000005960464,
+      "sceneMs": 13,
+      "time": 1630849.200000003
+    },
+    {
+      "frame": 55144,
+      "interval": 34.70000000298023,
+      "sceneMs": 32.29999999701977,
+      "time": 1631125.5
+    },
+    {
+      "frame": 55207,
+      "interval": 26,
+      "sceneMs": 8.699999988079071,
+      "time": 1631903.299999997
+    }
+  ],
+  "firstFull": {
+    "activePlanetMeshes": 7,
+    "cameraRadius": 217.09781237546792,
+    "enabledLevels": 1,
+    "frame": 56379,
+    "interior": false,
+    "interval": 16.5,
+    "lods": [
+      {
+        "enabled": false,
+        "lod": 1,
+        "resolution": 32
+      },
+      {
+        "enabled": false,
+        "lod": 2,
+        "resolution": 16
+      },
+      {
+        "enabled": true,
+        "lod": 0,
+        "resolution": 96
+      }
+    ],
+    "sceneMs": 14.900000005960464,
+    "seated": true,
+    "time": 1641911.100000009,
+    "visible": "visible",
+    "x": 15.962713791421384,
+    "y": 197.40462173329152
+  },
+  "maxInterval": 72.5,
+  "maxSceneMs": 32.29999999701977,
+  "missing": 0,
+  "notDrawn": 127,
+  "rows": 2080,
+  "start": 1630006.100000009
+}

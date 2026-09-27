@@ -1,0 +1,145 @@
+{
+  "job": {
+    "phases": [
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "msaa",
+            "renderScale": 1,
+            "samples": 4
+          },
+          "pending": false,
+          "requested": {
+            "mode": "msaa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 2,
+        "armed": false,
+        "drawCalls": 9,
+        "enabled": false,
+        "instanceBatchFrozen": false,
+        "instanceCullingFlags": [
+          true,
+          true
+        ],
+        "instanceIds": [
+          "-1",
+          "1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 71.08196614583333,
+        "morphInfluencers": 0,
+        "phase": "normal",
+        "reason": "Loading scene",
+        "shaderHasLight0": true,
+        "validationError": null
+      },
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "msaa",
+            "renderScale": 1,
+            "samples": 4
+          },
+          "pending": false,
+          "requested": {
+            "mode": "msaa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 0,
+        "armed": true,
+        "drawCalls": 15,
+        "enabled": true,
+        "instanceBatchFrozen": false,
+        "instanceCullingFlags": [
+          true,
+          true
+        ],
+        "instanceIds": [
+          "-1",
+          "1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 71.08196614583333,
+        "morphInfluencers": 0,
+        "phase": "frozen",
+        "reason": "",
+        "recorded": {
+          "activeIndices": 216,
+          "activeMeshes": 2,
+          "drawCalls": 9,
+          "meshesByRole": {
+            "cargo": {
+              "active": 0,
+              "total": 0
+            },
+            "crew": {
+              "active": 0,
+              "total": 1
+            },
+            "effect": {
+              "active": 0,
+              "total": 0
+            },
+            "environment": {
+              "active": 0,
+              "total": 0
+            },
+            "equipment": {
+              "active": 0,
+              "total": 0
+            },
+            "floor": {
+              "active": 0,
+              "total": 0
+            },
+            "hull": {
+              "active": 2,
+              "total": 2
+            },
+            "planet": {
+              "active": 0,
+              "total": 0
+            },
+            "proxy": {
+              "active": 0,
+              "total": 0
+            },
+            "remote": {
+              "active": 0,
+              "total": 0
+            },
+            "roof": {
+              "active": 0,
+              "total": 0
+            },
+            "unclassified": {
+              "active": 0,
+              "total": 0
+            },
+            "wall": {
+              "active": 0,
+              "total": 0
+            }
+          }
+        },
+        "shaderHasLight0": true,
+        "validationError": null
+      }
+    ],
+    "status": "complete",
+    "webgpu": true
+  }
+}

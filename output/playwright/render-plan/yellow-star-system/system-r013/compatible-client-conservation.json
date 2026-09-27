@@ -1,0 +1,28 @@
+{
+  "unchangedFiles": 5550,
+  "changedExistingFiles": [
+    "apps/client/src/shared-body-presentation.ts",
+    "apps/client/src/shared-body-presentation.test.ts",
+    "packages/render/package.json",
+    "packages/sim/package.json",
+    "packages/canvas-ui/package.json",
+    "packages/content/package.json",
+    "packages/net/package.json",
+    "packages/world/package.json",
+    "packages/net/src/shared-world-store.ts",
+    "packages/content/src/shared-system.ts",
+    "packages/render/src/render-engine.ts",
+    "packages/render/src/index.ts",
+    "packages/render/src/webgpu-backend.ts",
+    "packages/render/src/environment/index.ts",
+    "packages/render/src/environment/planet-worker.ts",
+    "packages/render/src/environment/planet-worker-client.ts",
+    "packages/render/src/environment/layered-planet.ts",
+    "packages/render/src/environment/planet-lod-runtime.ts",
+    "packages/render/src/environment/planet-smoke.ts",
+    "packages/render/src/environment/planet-shadows.test.ts",
+    "packages/render/src/environment/planet-shadows.ts"
+  ],
+  "unexpected": [],
+  "note": "Compared client source, all packages, and original assets against exact live-release source; authored celestial payloads and audited scoped solar changes allowed."
+}

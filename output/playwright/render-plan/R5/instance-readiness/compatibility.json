@@ -1,0 +1,277 @@
+{
+  "kind": "Bounded synthetic WebGPU compatibility, no gameplay timing",
+  "adapter": {
+    "architecture": "lovelace",
+    "isFallbackAdapter": false,
+    "vendor": "nvidia"
+  },
+  "job": {
+    "phases": [
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "msaa",
+            "renderScale": 1,
+            "samples": 4
+          },
+          "pending": false,
+          "requested": {
+            "mode": "msaa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 2,
+        "drawCalls": 2,
+        "frozen": false,
+        "instanceBatchFrozen": false,
+        "instanceIds": [
+          "-1",
+          "1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 67.41655815972223,
+        "pending": false,
+        "phase": "normal",
+        "shaderHasLight0": true,
+        "validationError": null
+      },
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "msaa",
+            "renderScale": 1,
+            "samples": 4
+          },
+          "pending": false,
+          "requested": {
+            "mode": "msaa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 2,
+        "drawCalls": 2,
+        "frozen": true,
+        "instanceBatchFrozen": false,
+        "instanceIds": [
+          "-1",
+          "1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 67.41655815972223,
+        "pending": false,
+        "phase": "frozen",
+        "shaderHasLight0": true,
+        "validationError": null
+      },
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "msaa",
+            "renderScale": 1,
+            "samples": 4
+          },
+          "pending": false,
+          "requested": {
+            "mode": "msaa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 1,
+        "drawCalls": 2,
+        "frozen": true,
+        "instanceBatchFrozen": false,
+        "instanceIds": [
+          "-1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 62.5763671875,
+        "pending": false,
+        "phase": "hidden",
+        "shaderHasLight0": true,
+        "validationError": null
+      },
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "msaa",
+            "renderScale": 1,
+            "samples": 4
+          },
+          "pending": false,
+          "requested": {
+            "mode": "msaa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 2,
+        "drawCalls": 2,
+        "frozen": true,
+        "instanceBatchFrozen": false,
+        "instanceIds": [
+          "-1",
+          "1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 67.41655815972223,
+        "pending": false,
+        "phase": "restored",
+        "shaderHasLight0": true,
+        "validationError": null
+      },
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "msaa",
+            "renderScale": 1,
+            "samples": 4
+          },
+          "pending": false,
+          "requested": {
+            "mode": "msaa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 2,
+        "drawCalls": 2,
+        "frozen": true,
+        "instanceBatchFrozen": false,
+        "instanceIds": [
+          "-1",
+          "1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 56.11500434027778,
+        "pending": false,
+        "phase": "lighting-off",
+        "shaderHasLight0": false,
+        "validationError": null
+      },
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "msaa",
+            "renderScale": 1,
+            "samples": 4
+          },
+          "pending": false,
+          "requested": {
+            "mode": "msaa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 2,
+        "drawCalls": 2,
+        "frozen": true,
+        "instanceBatchFrozen": false,
+        "instanceIds": [
+          "-1",
+          "1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 67.41655815972223,
+        "pending": false,
+        "phase": "lighting-on",
+        "shaderHasLight0": true,
+        "validationError": null
+      },
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "taa",
+            "renderScale": 1,
+            "samples": 1
+          },
+          "pending": false,
+          "requested": {
+            "mode": "taa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 2,
+        "drawCalls": 3,
+        "frozen": true,
+        "instanceBatchFrozen": false,
+        "instanceIds": [
+          "-1",
+          "1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 67.42221354166666,
+        "pending": false,
+        "phase": "taa",
+        "shaderHasLight0": true,
+        "validationError": null
+      },
+      {
+        "aa": {
+          "effective": {
+            "fxaa": false,
+            "mode": "taa",
+            "renderScale": 1,
+            "samples": 1
+          },
+          "pending": false,
+          "requested": {
+            "mode": "taa",
+            "samples": 4
+          },
+          "temporalBonePalettes": {
+            "pending": false,
+            "qualified": 0
+          }
+        },
+        "activeMeshes": 2,
+        "drawCalls": 3,
+        "frozen": false,
+        "instanceBatchFrozen": false,
+        "instanceIds": [
+          "-1",
+          "1"
+        ],
+        "materialFrozen": true,
+        "meanRGB": 67.42221354166666,
+        "pending": false,
+        "phase": "deck",
+        "shaderHasLight0": true,
+        "validationError": null
+      }
+    ],
+    "status": "complete",
+    "webgpu": true
+  }
+}

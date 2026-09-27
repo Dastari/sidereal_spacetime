@@ -1,0 +1,130 @@
+import { Engine } from "@babylonjs/core/Engines/engine";
+import { Scene } from "@babylonjs/core/scene";
+import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
+import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
+import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
+import { CreateSphere } from "@babylonjs/core/Meshes/Builders/sphereBuilder";
+import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
+import { createYellowStarRuntime } from "../../packages/render/src/environment/yellow-star-runtime";
+const canvas = document.querySelector("canvas")!;
+const engine = new Engine(canvas, true, { preserveDrawingBuffer: true });
+engine.setSize(768, 768);
+const scene = new Scene(engine);
+scene.useRightHandedSystem = true;
+scene.clearColor = new Color4(0.002, 0.004, 0.012, 1);
+scene.imageProcessingConfiguration.exposure = 0.75;
+scene.imageProcessingConfiguration.toneMappingEnabled = true;
+scene.imageProcessingConfiguration.toneMappingType = 1;
+const camera = new ArcRotateCamera(
+  "review-camera",
+  Math.atan2(4.7, 2),
+  Math.acos(2 / Math.hypot(2, 4.7, 2)),
+  8.8,
+  Vector3.Zero(),
+  scene,
+);
+camera.fov = 0.52;
+camera.minZ = 0.01;
+camera.attachControl(canvas, true);
+const light = new DirectionalLight(
+  "stellar-illumination",
+  new Vector3(1.4, -0.65, 0).normalize(),
+  scene,
+);
+light.diffuse = new Color3(1, 0.87, 0.61);
+light.intensity = 0.8;
+const glow = new GlowLayer("star-corona", scene, {
+  blurKernelSize: 64,
+  mainTextureRatio: 0.5,
+});
+glow.intensity = 0.3;
+glow.customEmissiveColorSelector = (mesh, _sub, material, result) => {
+  const c = (material as PBRMaterial)?.emissiveColor;
+  if (mesh.metadata?.stellarEjecta) result.set(14, 4, 0.08, 1);
+  else if (mesh.metadata?.stellarFlare) result.set(10, 2, 0.025, 0.6);
+  else if (c) result.set(c.r * 0.5, c.g * 0.5, c.b * 0.5, 1);
+  else result.set(0, 0, 0, 1);
+};
+const receiver = CreateSphere(
+  "neutral-light-receiver",
+  { diameter: 0.25, segments: 24 },
+  scene,
+);
+receiver.position.set(1.4, -0.65, 0);
+receiver.metadata = { role: "environment", partId: "review-neutral-receiver" };
+const material = new PBRMaterial("neutral-reference", scene);
+material.albedoColor = new Color3(0.55, 0.55, 0.55);
+material.roughness = 0.8;
+receiver.material = material;
+let frames = 0;
+let start = performance.now();
+let fixedTime: number | undefined;
+let runtime: Awaited<ReturnType<typeof createYellowStarRuntime>> | undefined;
+const controller = new AbortController();
+Object.assign(window, {
+  starReview: {
+    scene,
+    engine,
+    glow,
+    camera,
+    resetTime: () => {
+      fixedTime = undefined;
+      start = performance.now();
+    },
+    setTime: (time: number) => {
+      fixedTime = time;
+    },
+  },
+});
+document.querySelector("#bloom")!.addEventListener("click", () => {
+  glow.isEnabled = !glow.isEnabled;
+});
+document.querySelector("#light")!.addEventListener("click", () => {
+  scene.lightsEnabled = !scene.lightsEnabled;
+});
+document.querySelector("#angle")!.addEventListener("click", () => {
+  camera.alpha += Math.PI * 0.65;
+});
+engine.runRenderLoop(() => {
+  runtime?.update(fixedTime ?? (performance.now() - start) / 1000);
+  (engine as any)._drawCalls.fetchNewFrame();
+  scene.render();
+  frames++;
+  canvas.dataset.state = JSON.stringify({
+    frames,
+    ready: !!runtime,
+    flareCount: runtime?.flareCount,
+    activeFlares: runtime?.activeFlares,
+    ejectaCount: runtime?.ejectaCount,
+    convectionMaterials: runtime?.convectionMaterials,
+    time: fixedTime ?? (performance.now() - start) / 1000,
+    glow: glow.isEnabled,
+    lighting: scene.lightsEnabled,
+    meshes: scene.meshes.length,
+    instances: scene.meshes.filter((m) => !!(m as any).sourceMesh).length,
+    drawCalls: (engine as any)._drawCalls.current,
+  });
+});
+createYellowStarRuntime(scene, {
+  bodyId: "yellow-review",
+  radius: 1,
+  signal: controller.signal,
+})
+  .then((r) => {
+    runtime = r;
+    r.root.setEnabled(true);
+    document.querySelector("#status")!.textContent =
+      `Native star · rare animated eruptions`;
+  })
+  .catch((e) => {
+    document.querySelector("#status")!.textContent = String(e);
+  });
+
+if (import.meta.hot)
+  import.meta.hot.dispose(() => {
+    controller.abort();
+    scene.dispose();
+    engine.dispose();
+  });

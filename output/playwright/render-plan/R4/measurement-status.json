@@ -1,0 +1,24 @@
+{
+  "status": "implemented, unmeasured for acceptance",
+  "hardware": "ANGLE NVIDIA RTX 4080 Laptop GPU D3D11",
+  "baselineResolution": [
+    1574,
+    907
+  ],
+  "initialDeck": {
+    "drawCalls": 896,
+    "activeMeshes": 393,
+    "totalMeshes": 1439,
+    "materials": 597,
+    "timingValid": false,
+    "reason": "preview throttled around 1 FPS"
+  },
+  "laterProbe": {
+    "drawCalls": 896,
+    "renderCpuMs": 6.500689655542374,
+    "fps": 137.80431787617164,
+    "cameraRadius": 70.49371256362676,
+    "focus": true
+  },
+  "remaining": "Baseline camera changed during capture; exploratory files are not matched acceptance. Preview then intermittently rejected evaluations and reloaded. Seated Flight, both complete isolation sequences and selected-instance hardware review remain outstanding. No timing speedup claimed."
+}

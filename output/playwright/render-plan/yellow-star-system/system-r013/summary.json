@@ -1,0 +1,15 @@
+{
+  "database": "sidereal-spacetime-dev-solar-star-hex-r0001-smoke",
+  "baseline": "deployed IFCS phase3 cd09510c",
+  "beforeBodiesFromServerReceipt": 16,
+  "afterBodies": 33,
+  "bodyKinds": {
+    "asteroid": 4,
+    "planet": 28,
+    "star": 1
+  },
+  "shipsAfter": 10,
+  "migrationStatus": "applied",
+  "seedSha256": "822d8146bfc803f2b47cd6a07e01ea362955096fe4e0a89325a1171754b38d4c",
+  "note": "Pre-update standalone ship query used an invalid column; before celestial count comes from transactional server receipt. Persistent reconnect verifier checks preserved IDs/state; no claim of an independent all-ship before/after UUID-set capture for this run."
+}

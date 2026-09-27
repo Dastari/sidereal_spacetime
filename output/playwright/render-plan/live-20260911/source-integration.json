@@ -1,0 +1,556 @@
+{
+  "baselineClient": "20b3025fefee561e2653b7409c68a81da9385171d45212e09e40fa73871bafad",
+  "commits": [
+    "11ee5e1dacea2f63f9a33c171d35b41bf3b866fe",
+    "e08cff3b3f837b2430beddd0b293c1c2225bd992",
+    "423554d5d17514cd4b2b08fe23aa6a18fcc0a2d5",
+    "d20936471b5d4c8ad98e8f2b79b066e47ac43674",
+    "530231ec3ae536860ffef332d47e7a1696efb869",
+    "2030710e53078a59c43842135868a4b01fdba40b",
+    "0994a6a857a2cbad3c9735a15f874c086b7f6805",
+    "5f7ec3ac4e54e0b1199d61aa8ab85fe198519edc",
+    "c161f741243fcabefe8f24e4ba0cdb2e65424142",
+    "313ebabf93f9b0da9a0b6edaa3c961fa89c9b3b2",
+    "3f493efe6096ff1ed14cc7b8e3dfdc9fb87cab5a",
+    "5b98c4bb6960cee51b1654162df49d100e2b1aad",
+    "7d65ed00fc6a5596724c2a0aab3e1b6dd6446c75",
+    "ffad98ca9fe3df4a0d61a9058fe68d72b855c417",
+    "03b7aa3e978eeec331b8021c32daca6dcb9dbaf2",
+    "cfe55c015eead9e378339ad4254a248c8ef267d5",
+    "bc0976c9129dc02d35693bf25a348bac6c96176b",
+    "b19e54c55aaaf5a7fe1806f3f70e6a72c3ac67c7",
+    "51586ff76a179e413441dbc4591b5c7556c24e8c"
+  ],
+  "resolutions": {
+    "combat-aim.ts": "Current workspace differs from live only by R0 role assignments; included.",
+    "diagnostics.ts": "Combined R0/R3/R10 fields with existing live F3 overlay fields; included.",
+    "construction-authored-assembly.ts": "Included final R4/R5/R6 with already-live scene material registration preserved.",
+    "debug-features.ts": "Included scalar frame revision while preserving live GI restore and overlay behavior.",
+    "layout-hull.ts": "Retained live independent Shipyard baseline; added only role assignments for existing guide/ghost meshes.",
+    "layout-selection.ts, native-wall-batches.ts": "Absent from live baseline, not imported by public candidate; independent authoring-only role deltas not used to introduce unpublished editor code.",
+    "debug-overlays.ts": "Applied retained R0 role-only patch to already-live overlay implementation."
+  },
+  "sourceChanges": [
+    {
+      "path": "apps/client/src/App.tsx",
+      "before": "ac997c25b63030035855db9a4ebad3f56daf1fcdb5db1cf4d7fe935e81f8714b",
+      "after": "5256c97ebda9d12245bf7d3d5e31dc6370e0a070995041cc0e242164e7e0f430"
+    },
+    {
+      "path": "packages/canvas-ui/src/diagnostics-roles.test.ts",
+      "before": null,
+      "after": "572ca6a17dcea4634c9424cfdbcd65a575a0e1ab57b93696016c7b69fa15a3aa"
+    },
+    {
+      "path": "packages/canvas-ui/src/diagnostics.ts",
+      "before": "201fec14529b560873b300190ac6c18a5e385cb0d19584fbb93dff1968fe5c0b",
+      "after": "9411d1bb61affae1d9a3015afc99a87b08b11ba56aa5bf11298c93e3c3acfa2b"
+    },
+    {
+      "path": "packages/canvas-ui/src/graphics-menu.ts",
+      "before": "4ccc11a15536b791213b446735d23e8899cb91ebe5659755f1b5659f36a995d8",
+      "after": "20607de9bd3efeae4ad3368ab42bf18d2ec28a4073a9f8adea628dacdf2c16ae"
+    },
+    {
+      "path": "packages/canvas-ui/src/index.ts",
+      "before": "e79aad8529b7db72416f255db30debbb1c7e39632b694aa4926fc8403a6489bb",
+      "after": "57db3ff28760efd4bb2490de1ae3eba009412b984523228aada2ff1014eedaf9"
+    },
+    {
+      "path": "packages/canvas-ui/src/render-backend-menu.test.ts",
+      "before": null,
+      "after": "92309b17ecf2e81a787974f7b3ef52e4d155c5639cd7131de89287ae362d835d"
+    },
+    {
+      "path": "packages/canvas-ui/src/render-backend-menu.ts",
+      "before": null,
+      "after": "337a16d4bb51a2f7b4e6721b262e3c6fd256dfbed88c62cbb3e90bee6a0190a9"
+    },
+    {
+      "path": "packages/render/src/active-set-revision.ts",
+      "before": null,
+      "after": "e23e2f1c9ccbb9b91b123a698cca5ec2356a195593fe7833c546fe41a5acedc7"
+    },
+    {
+      "path": "packages/render/src/antialiasing-pipeline.ts",
+      "before": "a18ee4fb5c1aa13a6fbf783d00aef2df34dac4548bb998e9eeaef45456b887ad",
+      "after": "4d0a561ffd4cb0b0cdbdc3435c182d8fda5ddedceb36aa2cb1558fbbf66133f7"
+    },
+    {
+      "path": "packages/render/src/assembly-editor.ts",
+      "before": "2f356ec2382a40f560bc712373dafcae592eeb59ecc2cadb4b9ec038e521add6",
+      "after": "85bb0f7f0797072c8cd3cf7a2458b1f2b8fb78b59b09d90f590368de03b7e9c9"
+    },
+    {
+      "path": "packages/render/src/authored-material-pool.test.ts",
+      "before": null,
+      "after": "1f4ca89d3a8286b6103335d9ac8f2caa935252e771f33475808a2f59ebea7df5"
+    },
+    {
+      "path": "packages/render/src/authored-material-pool.ts",
+      "before": null,
+      "after": "383b573c0c63dd8fb425b173f47ded22d1dc12e2a0988387d70d93f2f18ced9e"
+    },
+    {
+      "path": "packages/render/src/capture-diagnostics.test.ts",
+      "before": null,
+      "after": "4c3552f594a3858585996a7337914e7edfcf30dcc882f8b35b708e38e496ddf4"
+    },
+    {
+      "path": "packages/render/src/capture-diagnostics.ts",
+      "before": null,
+      "after": "0656baec4075f8154fda10a5182c14d6eecb09af77cdf717bc70252c9c0bd851"
+    },
+    {
+      "path": "packages/render/src/combat-aim.ts",
+      "before": "64043aeb8011347b962f223c02865cd4807e282aa032c2d26c3f3fef5675eb8c",
+      "after": "de8e7d6dae06020e4cfdcce8bfe58b04b60c4fcbb34ca0583f6e5e47ef9ef69e"
+    },
+    {
+      "path": "packages/render/src/construction-authored-assembly.test.ts",
+      "before": "a21e9dafd402d5f855302b6785b628dbf79c8389a481b0977c192be2f96005d7",
+      "after": "d1f57a5057e479e79a16caa08e4488901423d122e7733e9d95806dd8233396be"
+    },
+    {
+      "path": "packages/render/src/construction-authored-assembly.ts",
+      "before": "ab569d8f014f16da5efbafd494c3d83f28d86810ec0ac90b0560cd0c9d5a4012",
+      "after": "9def335a156bd6ee97912a72b471027421c0e5755c21dff4d8228b370e3a422c"
+    },
+    {
+      "path": "packages/render/src/construction-boundaries.ts",
+      "before": "d07e751fd1ae55548d7b5ffd8e8b514f160d2f67323f206bb8119426abc7fb8e",
+      "after": "9338bc1fb057c3e77782073eb3e787f083e0c52909063fa2ab57dd7c04f440da"
+    },
+    {
+      "path": "packages/render/src/construction-door-seals.ts",
+      "before": "7701f5e8c6b083d36f3cd8ab0fba7618ea781cae5231b92a68c101bb5b37422e",
+      "after": "273b9cc9ac635659607b0e3e5e1676014f7869eac2b763e48022375be9271859"
+    },
+    {
+      "path": "packages/render/src/construction-instance.ts",
+      "before": "3d170074571e4f207898bef072c5367beed83a199335cc45eac537235a7a8676",
+      "after": "4532757ad9abe4550240f2d62d6e21a9c4660bcaac8291948e6779b7f92ccf15"
+    },
+    {
+      "path": "packages/render/src/construction-pressure-room.ts",
+      "before": "6a53b8dab7142c267fc019b43aae8465be9351022cf0d45193d7ec35c80c5c95",
+      "after": "4dd876ebff6b35302eb25b0b8fb607679f0d2db7d5f55caf7bf3a6c00f6f5945"
+    },
+    {
+      "path": "packages/render/src/construction-roofs.ts",
+      "before": "42214f880860d1c5aef53781fe989fe91430e65d968197d74c703c2b89086f97",
+      "after": "b13da2a9c812167994d4468c637adb94eb69c971946db149b31b5a5983862ed8"
+    },
+    {
+      "path": "packages/render/src/construction-traversal.ts",
+      "before": "7e4d619ece0541bab3ffb86c37d47672f26187f8c03d7e937b33e449f12d07b1",
+      "after": "a11c9afda799b848d08f2d00923263bec80b9dbfc4a52721f8e61f9ce8d7928d"
+    },
+    {
+      "path": "packages/render/src/crew/index.ts",
+      "before": "976d3d3e2ac7d58b863bc213ccb474a0a291b35527c9ef65d3a36fa452cd5b49",
+      "after": "029a86ced48aafb729c4d2c42b0123afc77536fbf5f0e24da3cbf13c8d9515ee"
+    },
+    {
+      "path": "packages/render/src/crew/pose-review.ts",
+      "before": "4208bf8a799f2b41d28b6107f636652aa4ed7253ded9c523391505102eba192a",
+      "after": "5af29c4c7be57a49629336403b5a546a0aa85688946a257d9bd4a202118cf8e2"
+    },
+    {
+      "path": "packages/render/src/cutaway.test.ts",
+      "before": "3893eccac2c2a6a7061d0dd346f04a3176340f3e84b1fa02f2aa6f689b42bc42",
+      "after": "9a05b4147c7c16ac985a0f250144f5be2313d8c10cfcfbd602012a2b24eed7be"
+    },
+    {
+      "path": "packages/render/src/cutaway.ts",
+      "before": "ece91bf35d3bf8193ac995de4c74d10038a11a4bb19ba500cfe519d6b3c70bcd",
+      "after": "0c0d42dbbfe6f5baf5faf99febf1bba5c841e834f04f5eaa56e2a10d25a84ac0"
+    },
+    {
+      "path": "packages/render/src/debug-features.ts",
+      "before": "2d1e8b65e73aa7f8c449fe2d62a7cbec11c752f34438beb3d1c839db64bf2a16",
+      "after": "42ced457ba70256b5f294cd6f0cc10d4493d50fa55d9dd4acc7b9bd9ee2fc4a5"
+    },
+    {
+      "path": "packages/render/src/debug-overlays.ts",
+      "before": "cd3cfcdd06996058922d0818582276aaf7c409545e7750a0427ade8aabf4345d",
+      "after": "2b8a73ce9eef2817ccf51a7aae23163456ca9f00298a7f7a9e50ea1d9ffb4869"
+    },
+    {
+      "path": "packages/render/src/debug-visibility-revision.test.ts",
+      "before": null,
+      "after": "e903b6aec29ead042e9e2c6bc5b0056a2987501408d403ed2d1f31b3a7331204"
+    },
+    {
+      "path": "packages/render/src/debug-visibility-revision.ts",
+      "before": null,
+      "after": "945370d761d50f80d3862484b933fd2a974645366ff5b19b65053ae9b96d4964"
+    },
+    {
+      "path": "packages/render/src/diagnostics.ts",
+      "before": "762fad8f882d493cd63d795fb9ceb9ca221351d889430261f776db84bf656ce3",
+      "after": "523e42e161a3758701beb7511c4df3b64f0a045ad5af095a7f66fddb1bdd4270"
+    },
+    {
+      "path": "packages/render/src/environment/body-visibility.test.ts",
+      "before": null,
+      "after": "4b08407a42e9534cb2e6963e79426176ddf7d528c6c433b51a98070bde73318d"
+    },
+    {
+      "path": "packages/render/src/environment/body-visibility.ts",
+      "before": null,
+      "after": "b797fc18fcd30f6a143a7b45b5513f7e38d5e714073af36869edaaa9e341dffd"
+    },
+    {
+      "path": "packages/render/src/environment/body-visual-revision.test.ts",
+      "before": null,
+      "after": "f499404e74c1fcbdea84c3b6edd2c88a62bfc3db916f01c67ca6b7cbb095b521"
+    },
+    {
+      "path": "packages/render/src/environment/body-visual-revision.ts",
+      "before": null,
+      "after": "2ad423695e058d92152d6a393e3df8f7356563161b3ee0cc0903e5b6438ade62"
+    },
+    {
+      "path": "packages/render/src/environment/dust-field.test.ts",
+      "before": null,
+      "after": "60e460e201aa52b294e94e5eb1802b874a0baa8fe6b2ff8cbfa458cebb4e4cb7"
+    },
+    {
+      "path": "packages/render/src/environment/dust-field.ts",
+      "before": null,
+      "after": "70564428ceb535e93dcd142d7aece2be619c3cdeedfd81bb192e113d64f00527"
+    },
+    {
+      "path": "packages/render/src/environment/index.ts",
+      "before": "784ab0383985ca2cc4e55cda78b30bf76c8a000603ea745495ed158b85179089",
+      "after": "e07512c194b1f0eda0efcdf4fc23600a6e0bd38862606133d87a8d615f68f706"
+    },
+    {
+      "path": "packages/render/src/environment/layered-planet.ts",
+      "before": "0b7aa8e7de768c6032cafd1344fb4f96cfb46e184aa99d20aa04d57b897c7b1c",
+      "after": "5f4c02aec6762ed88f50d32a96fca01eac9142920629e32b682e1e66a3745435"
+    },
+    {
+      "path": "packages/render/src/environment/native-planet.ts",
+      "before": "c272c0aee62ab55a48aedfd1a35107a9a12cd4d310b248a8e3d8ee42963bfa99",
+      "after": "6d7e3e2f1cb9a2c187d22c4ca6c63ddd24acde63f8c89ddd38ef4a825579e18a"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-planet.ts",
+      "before": "789209b86d2ce433714f223e45041ab115f491ebbcc8d806e69b0d65aa8828e1",
+      "after": "6c87961001215b843286db66e4cd9a7682d2c47189623a3ac6b340d56fabde0a"
+    },
+    {
+      "path": "packages/render/src/environment/native-volcanic-runtime.ts",
+      "before": "f8ff25b7acb113e03384ee004f96fcf677ff979ad62f0d72725811e74c82980a",
+      "after": "dfc46eefee2a4d8a54f546ee11af2f8a7be14823e5d06ac1489aa078e3c99ab0"
+    },
+    {
+      "path": "packages/render/src/environment/planet-atmosphere.ts",
+      "before": "d0eb9de57429995a94e9ca612aad24db3267501512e79b241d1dfb9048e1ac2b",
+      "after": "ca4c4c1599b6de543b5b93009b6672e7f0b5de4c304fc63a4698404bb0f42c2a"
+    },
+    {
+      "path": "packages/render/src/environment/planet-lava-spill.ts",
+      "before": "58cda7c8542908657757b41abc6d9d5c44c82ba26781844ef9fdc751a66d248d",
+      "after": "8b17ecd7f67e0359075670cfa037331a4109a3b08063526996157694e194618a"
+    },
+    {
+      "path": "packages/render/src/environment/planet-mesh.ts",
+      "before": "959742c74682a293951a2ef33998401b4bf54b16a913bde975db4c015f6511e4",
+      "after": "f1c9f63057824b0c71d4c1b1863913dfd750d9d3aeec72943f2b88f1564f73d8"
+    },
+    {
+      "path": "packages/render/src/environment/planet-smoke.ts",
+      "before": "37b78c4f1be1121eec5875a7a0ca92b011c521515eeb3323aecbd26e1ee8100c",
+      "after": "3d35d70378889427b3a11214c084cce6a24968a756ae5f830bee49a84fb90ea4"
+    },
+    {
+      "path": "packages/render/src/environment/planet-sparkles.ts",
+      "before": "79fdfba9cb2a239c64201ab63ea5bbf51a18d227d0732861f1c999644cea8599",
+      "after": "7f2ea884456a3be0be1284fbbd5d6253024a02fa77f0b7fc634752542a62660f"
+    },
+    {
+      "path": "packages/render/src/environment/runtime.test.ts",
+      "before": "7142c125ade07579a64abfa15b301def2668c8d481b5a6da738732fef6f7687d",
+      "after": "c1bd500348951601b33b64dea858dc6c19b711eb34251fc9efb398d241d69f7e"
+    },
+    {
+      "path": "packages/render/src/equipment/index.ts",
+      "before": "40b19a8edaa6a2093e8456f6a8f6c14d7e7f6867205abbd1558e1896b7b7edc6",
+      "after": "93e0bfdd557c1cbc40a2a6122efb38b4f29f106240de78e211d2437473ffae63"
+    },
+    {
+      "path": "packages/render/src/fast-snapshot.test.ts",
+      "before": null,
+      "after": "4edfef62bec715d0bf0f767b82997018ea4fc9218085b8f9412997d3d509de2a"
+    },
+    {
+      "path": "packages/render/src/fast-snapshot.ts",
+      "before": null,
+      "after": "3e2f396b4e997cdd82346073b4981889423b3661a8324567d3116dec51868d0d"
+    },
+    {
+      "path": "packages/render/src/flight-active-set.test.ts",
+      "before": null,
+      "after": "f88cd4db114a29d5e9854d48e8c9421fbc3f9c04cd5352e89f1bcbad3938d4e5"
+    },
+    {
+      "path": "packages/render/src/flight-active-set.ts",
+      "before": null,
+      "after": "49d9e8b6ad098f4aa07b508b11b1c965e39630c67ab012d11d796db6cd83a226"
+    },
+    {
+      "path": "packages/render/src/flight-effects.ts",
+      "before": "a12dc5c631e7bdc5ab941e21168bbe7a95020f26edd84a8c42f2b59c0019e123",
+      "after": "e41331a6e8438797e385ea8df2f76dabe29190c899e5bcf3d20d4c41fec39ca4"
+    },
+    {
+      "path": "packages/render/src/ground-items.ts",
+      "before": "8bd035b64e989cdfbca183434ffc158cc44dac8b31cc9b46da61a63e9f8857cd",
+      "after": "f479564095ca1e649e24c46afd112d5b03381437440576efce85ed8c9cb65bec"
+    },
+    {
+      "path": "packages/render/src/holographic-disc.ts",
+      "before": "e1b96980403bea02b5d3d27eacb239b35d972c92da86533b93c71ef90398dfb5",
+      "after": "01676c8d204f9affba4a49b5f183558941aae88b19f570940bfbe0622899247e"
+    },
+    {
+      "path": "packages/render/src/hull-decals.ts",
+      "before": "e2c72dd350d856b718a3f2eca759db4588e62ec6aa9ce1e645df927490dc634d",
+      "after": "490a63143f6463dcce1e76f980e0d582a3b0234f9740ba68f5b8b7e879955d26"
+    },
+    {
+      "path": "packages/render/src/index.ts",
+      "before": "95e2039a2c739e6ac70860969636cf40072d5669e6aa805f2a29a77703b55570",
+      "after": "2a0b32fdfcca44a2481b4f6017170ec2ba0c06d106184431c95641f8196d2579"
+    },
+    {
+      "path": "packages/render/src/installed-equipment.ts",
+      "before": "b1a825fd9a530c802cdc772a83ba103d0385227ed5ad70499d5b4a05d6eea829",
+      "after": "d2e0e8c809171f97a80282d30d9c108f95c5aa306c9cbb64e7e4510a1cbea56f"
+    },
+    {
+      "path": "packages/render/src/installed-hull.ts",
+      "before": "222b96370fbdedd16fa476238b1101f9c03b0d48c688dba06d4d154d80b38cd5",
+      "after": "641c7f67d61a88856508b2fec12430522f427513497d2467f114d4a869d460c0"
+    },
+    {
+      "path": "packages/render/src/instanceable-assets.json",
+      "before": null,
+      "after": "1ab0599ced57c09dc254ccc01e90f174bbfc50f374dbf7b587f6dca1377c6b4d"
+    },
+    {
+      "path": "packages/render/src/layout-hull.ts",
+      "before": "f292f5292c89c47338739f2f3655a880bc13309c52937e8c9cd762af5e293a0b",
+      "after": "bf688fd0ea4594b2b6a8bf8798c2f6ee781340587106ad48f2dbee2322c1d40c"
+    },
+    {
+      "path": "packages/render/src/layout-preview.ts",
+      "before": "ef0ea60276d8e48c14bbb917969cbe7d9f172ce548b48c2cec67dcf034287e8e",
+      "after": "cd78de9412a22301e9b580dc122f17e3ffcaa59bc62a0653672d0f1cb528a8a2"
+    },
+    {
+      "path": "packages/render/src/legacy-mesh-role.ts",
+      "before": null,
+      "after": "52dccf4fd82d44577c66336d73ffc8e95f6cc744f289adaa5179d6fbcad3c239"
+    },
+    {
+      "path": "packages/render/src/material-setup.test.ts",
+      "before": null,
+      "after": "af24729b753794b54d6cde38b61da107ffbdd9d664b7ff35638e71b91d9a4941"
+    },
+    {
+      "path": "packages/render/src/material-setup.ts",
+      "before": null,
+      "after": "f95608fbbff98af8aa88531209cd894877bea875e41ead947d3836453d2e6516"
+    },
+    {
+      "path": "packages/render/src/mesh-roles.test.ts",
+      "before": null,
+      "after": "84f7b7e3fa7f89e0d4ccf81d8308c6c8a6a38cd88352f9d72f05c20d41232473"
+    },
+    {
+      "path": "packages/render/src/mesh-roles.ts",
+      "before": null,
+      "after": "071028183f930213e8692d530d72ca4abc7eb074a460531daf7629c0204bd4d1"
+    },
+    {
+      "path": "packages/render/src/native-airlock-scene.ts",
+      "before": "233e22a26e7250d451dc1f5b8de486b2556ff94c823956ee7f4d6e2a41cfbfca",
+      "after": "58f2accf8bd27c3cbdd029d1e01fbecb2b0f5c74d2ae69e9cdcfe3a82336d5b1"
+    },
+    {
+      "path": "packages/render/src/native-stair-scene.ts",
+      "before": "7d7d80caedf8f4e0f572439a946dade3ca6096fa63ada8b9fc75b8a1522f0e42",
+      "after": "536f0f57b317d4457034743541082e0142ae50cfbde0a4cf0506235513ff1b1c"
+    },
+    {
+      "path": "packages/render/src/object-presentation.test.ts",
+      "before": "c0b520a0a0d554bb604d8197b5239f7e0ef14297b1e3d38670307872a2d3956b",
+      "after": "ac44cb905e4a08bb1082ec3a621044b141e3e6e28771b928eea6b2b3f6ab3f33"
+    },
+    {
+      "path": "packages/render/src/object-presentation.ts",
+      "before": "c27946a5329b9965df7b3773880f34a5add9178abd589edb6013b1eda820265f",
+      "after": "1a81eaf567b5a6ddb4e05b103509aecdbb34da804cf5bc883ec2fe70611b6a56"
+    },
+    {
+      "path": "packages/render/src/placement-instance.test.ts",
+      "before": null,
+      "after": "d3801f0fde3c8180fc4c4bd6e7db3ccbf6591afd85c4e64348f98864af0223b8"
+    },
+    {
+      "path": "packages/render/src/placement-instance.ts",
+      "before": null,
+      "after": "a8b6282a460212df8128d3294f7a32262c67df840b7a5ac651443e595afb6c9e"
+    },
+    {
+      "path": "packages/render/src/remote-aft-boundary.ts",
+      "before": "d952f5a587249cff8faf6afc0b3c1d9aa2039f3de3a7de36b66cb7c4a5e05861",
+      "after": "2424211cf0b9762a4c197d8b0cc7efcb6d53a7e958483b45d5860e89ca506d98"
+    },
+    {
+      "path": "packages/render/src/remote-exterior-batches.ts",
+      "before": "ec000e4cbc10c9e51def6fb431133e61cef88aad1a4811dfa233978e5ac8c97d",
+      "after": "1a5b488bdcad161654002e1e631e5c72bfda93dd92a2a63bc7543216feabd0fa"
+    },
+    {
+      "path": "packages/render/src/remote-ships.ts",
+      "before": "f667f8d9eefaeef286f02e4ff3582f8e0bf2249697e08975cfaa40e91175f1bf",
+      "after": "331aecb7eaa3ec6fec10ad8d899b7afe10631120aa3eaefdd38d0f24a8cb04fa"
+    },
+    {
+      "path": "packages/render/src/render-backend.ts",
+      "before": null,
+      "after": "9c60a04d01f227e3dd61e1b0c4851d2e2d8f4983338d4027d17421666de811aa"
+    },
+    {
+      "path": "packages/render/src/render-budget.test.ts",
+      "before": null,
+      "after": "5898168cb500d18a893d9c3bca63ecf2445b5d270704d093efb8dfd79f78dadb"
+    },
+    {
+      "path": "packages/render/src/render-engine.test.ts",
+      "before": null,
+      "after": "242a7406111ba12423c84f56e3d51f964dbb396707038e091e2c5a986ddd3c6a"
+    },
+    {
+      "path": "packages/render/src/render-engine.ts",
+      "before": null,
+      "after": "1fd94848de738708d6327df512f7cb0704bffcdda602d092ba76f0734dd7333e"
+    },
+    {
+      "path": "packages/render/src/selection-silhouette.ts",
+      "before": "046a092d059f61194d1cdfd5b2a603ee72976b8ea6117561931f39ebae5c5e87",
+      "after": "962e7637a61cb7a8bc65f1e3dc5d88c8bdce7ae2eec4243498aafa3d908f7d14"
+    },
+    {
+      "path": "packages/render/src/shadow-batches.test.ts",
+      "before": null,
+      "after": "f1ce562708aef2b4d864ad50d00554a2c609459ca1e3d8430e2ac193a8e53fc6"
+    },
+    {
+      "path": "packages/render/src/shadow-batches.ts",
+      "before": null,
+      "after": "7c9d75af347ba9bfa84d1d88534bcf60aaa0ae4f7606ff1f44e0db4ca853018c"
+    },
+    {
+      "path": "packages/render/src/shadow-policy.ts",
+      "before": null,
+      "after": "390cdb2d006d04c5249dc246d3d72d5623f6035325f02af33ceb83260fb9db88"
+    },
+    {
+      "path": "packages/render/src/ship-glow-occluders.test.ts",
+      "before": null,
+      "after": "41ff32c6db3923f2ed26ad36069b302fd47862f1a9de770474cab8c5ecfeebbf"
+    },
+    {
+      "path": "packages/render/src/ship-glow-occluders.ts",
+      "before": null,
+      "after": "7a8ee049724f43f8c958de4e9ea38157ec7d489399bb0a890d57a5cb2906f714"
+    },
+    {
+      "path": "packages/render/src/ship-lighting.test.ts",
+      "before": "6abf9335ef897f8f50f90e3c998ed1189fb3724f48112f4b5a9fc1cab25ab66a",
+      "after": "1c4cfda105114e747007ba1a952e2e355542a8a0ba3e98cb8c3e5a5e5a8d588f"
+    },
+    {
+      "path": "packages/render/src/ship-lighting.ts",
+      "before": "eaf14f1c784f0b0b372adc29686543a701d4b2052ab5c9b5f5705f1ab864dc25",
+      "after": "2d4999a3c7fbce46ecdee982b0f0f9b525331d68db8a341ad409ae6ba17db5d9"
+    },
+    {
+      "path": "packages/render/src/ship-shadow-cache.test.ts",
+      "before": "a2fdeb4875f313be2fddbbedd3b534500d7384214ae9464add01b3aab0696ef3",
+      "after": "1a728b59385808f208ca282a1fc0b1ce7f5e270d4be39402c3b6a30a33dce5f6"
+    },
+    {
+      "path": "packages/render/src/snapshot-revision.ts",
+      "before": null,
+      "after": "c40fe619ee8460621d710808891a164a0bf620182aafe5470bb55e255bde0439"
+    },
+    {
+      "path": "packages/render/src/static-material-batches.test.ts",
+      "before": "a5d496f962f2a5e25a9cc64f265b245d82f1bb8ba8bbe730bc2cf985731fb5f8",
+      "after": "617d1778c2865e38d86958dd2ee2561010e6bf6a45e944bcab6620ed797d9a99"
+    },
+    {
+      "path": "packages/render/src/static-material-batches.ts",
+      "before": "6f984137ee3de3646da0ad8fd60f5f59174690130e664851dbcf5b032aaa867c",
+      "after": "ea758ed177e588cce8b5abfd0cc16370c953f4cf21014ae29ad7c610b2182b0f"
+    },
+    {
+      "path": "packages/render/src/static-material-freeze.test.ts",
+      "before": null,
+      "after": "f97df5ad7df1c59d48f72f7f0fa49577054eeb1c64686303e49fa9353ea74f70"
+    },
+    {
+      "path": "packages/render/src/static-material-freeze.ts",
+      "before": null,
+      "after": "d8330a3fbed3242a43bb6aa6ed751fb08e6b909cb37d7fa41d79862464e0a948"
+    },
+    {
+      "path": "packages/render/src/static-transform-cache.test.ts",
+      "before": null,
+      "after": "31310ca045088a12738d2d01782c5d7a2bd319c0a2b58af58572f689b6b0f783"
+    },
+    {
+      "path": "packages/render/src/static-transform-cache.ts",
+      "before": null,
+      "after": "7488467114eeb88b8915b2702904ee50aec197c431e1c0fcfacaa04fe9752002"
+    },
+    {
+      "path": "packages/render/src/structural-batches.test.ts",
+      "before": null,
+      "after": "c1cdfb23f5f80a124c3269a569e87f5944a06d23a315eab70d6b4b1b96b67ed9"
+    },
+    {
+      "path": "packages/render/src/structural-batches.ts",
+      "before": null,
+      "after": "86e3eb4352dbd5c7fa13c74bce2e0ae43453e5d430115c335ca173c906422e79"
+    },
+    {
+      "path": "packages/render/src/temporal-bone-palette.ts",
+      "before": "2f40eb920a100d7f0c77f635921be87a9fa59dd213ebcf5e6bc07884b536dd85",
+      "after": "8ebf1091f73c5306de399b394da31282b356a1b3225b31808557f151aa2c92a8"
+    },
+    {
+      "path": "packages/render/src/temporal-instance-attributes.test.ts",
+      "before": null,
+      "after": "4001fb607b62fd86ef218dd22694f014fabc50309562699f297747c517b134a0"
+    },
+    {
+      "path": "packages/render/src/temporal-instance-attributes.ts",
+      "before": null,
+      "after": "bf5fec3b81375fb3205d5c421a50b3a495aa685c153d7a72b46921e1dffbb7af"
+    },
+    {
+      "path": "packages/render/src/webgpu-backend.ts",
+      "before": null,
+      "after": "275f0c6e9a92c0297537fe2c3ec92b0a3cf934875e0a53a5f76738107ab71d5a"
+    }
+  ],
+  "publicationAuthorization": "Owner: Please continue ... Any changes you have made so far should be made live."
+}

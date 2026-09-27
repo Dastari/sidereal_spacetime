@@ -1,0 +1,81 @@
+{
+  "scope": "Isolated WebGPU compatibility only; not Deck/Flight acceptance",
+  "resolution": [
+    320,
+    240
+  ],
+  "glow": {
+    "mainTextureFixedSize": 512,
+    "blurKernelSize": 24
+  },
+  "frames": "12 explicitly submitted frames per mode after final check and build; normal browser RAF stalled",
+  "timingAccepted": false,
+  "instances": 560,
+  "results": [
+    {
+      "aa": {
+        "effective": {
+          "fxaa": false,
+          "mode": "msaa",
+          "renderScale": 1,
+          "samples": 4
+        },
+        "pending": false,
+        "requested": {
+          "mode": "msaa",
+          "samples": 4
+        },
+        "temporalBonePalettes": {
+          "pending": false,
+          "qualified": 0
+        }
+      },
+      "mode": "msaa",
+      "validationError": null
+    },
+    {
+      "aa": {
+        "effective": {
+          "fxaa": false,
+          "mode": "taa",
+          "renderScale": 1,
+          "samples": 1
+        },
+        "pending": false,
+        "requested": {
+          "mode": "taa",
+          "samples": 4
+        },
+        "temporalBonePalettes": {
+          "pending": false,
+          "qualified": 0
+        }
+      },
+      "mode": "taa",
+      "validationError": null
+    },
+    {
+      "aa": {
+        "effective": {
+          "fxaa": true,
+          "mode": "fxaa",
+          "renderScale": 1,
+          "samples": 1
+        },
+        "pending": false,
+        "requested": {
+          "mode": "fxaa",
+          "samples": 4
+        },
+        "temporalBonePalettes": {
+          "pending": false,
+          "qualified": 0
+        }
+      },
+      "mode": "fxaa",
+      "validationError": null
+    }
+  ],
+  "status": "complete",
+  "webgpu": true
+}

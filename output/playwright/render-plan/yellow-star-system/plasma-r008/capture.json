@@ -1,0 +1,31 @@
+{
+  "renderer": "SwiftShader; counts and visual states only",
+  "capture": {
+    "before": {
+      "frames": 9,
+      "ready": true,
+      "flareCount": 180,
+      "ejectaCount": 18,
+      "convectionMaterials": 4,
+      "time": 0.9548999996185302,
+      "glow": true,
+      "lighting": true,
+      "meshes": 388,
+      "instances": 358,
+      "drawCalls": 61
+    },
+    "after": {
+      "frames": 30,
+      "ready": true,
+      "flareCount": 180,
+      "ejectaCount": 18,
+      "convectionMaterials": 4,
+      "time": 12.31170000076294,
+      "glow": true,
+      "lighting": true,
+      "meshes": 388,
+      "instances": 358,
+      "drawCalls": 63
+    }
+  }
+}
