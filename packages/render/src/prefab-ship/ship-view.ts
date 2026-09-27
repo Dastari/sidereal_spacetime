@@ -31,7 +31,7 @@ import { PointLight } from "@babylonjs/core/Lights/pointLight";
 import { Light } from "@babylonjs/core/Lights/light";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import "@babylonjs/core/Meshes/thinInstanceMesh";
-import { G, NORMAL_VECTOR, TEXEL } from "@sidereal/content/construction-grammar";
+import { G, TEXEL } from "@sidereal/content/construction-grammar";
 import { SHIP_KIT_REVISION, SHIP_KIT_SLOTS, type ShipKitManifest, type ShipKitSlot } from "@sidereal/content/ship-kit";
 import { deckObjectVisualUrl } from "@sidereal/content/ship-furniture";
 import { prefabOrigin, type PrefabComponentCatalog, type ShipPrefabDocumentV1, type ShipThemeId } from "@sidereal/content/ship-prefab";
@@ -42,7 +42,6 @@ import { appendTransformed, localToParent, meshGeometry, type MergeGroup } from 
 import { appendStandin, componentStandin, emitPlume, type StandinSocket } from "./component-standins";
 import { applyDecalTheme, buildDecals, disposeDecals, type DecalHandle } from "./decals";
 import {
-  basisMatrix,
   componentMatrix,
   frameOfSocket,
   GLTF_TO_ZUP,
@@ -386,33 +385,13 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
           const spec = c.placement.spec;
           const authored = frameOfSocket(spec?.attach[0]);
           const place = componentMatrix(c.placement.anchor, c.placement.anchorZ * TEXEL, c.placement.quarterTurns);
-          // Edge hatches (airlocks, cargo doors) stand in the hull wall: fit them under the deck
-          // roof (low-profile decks) by scaling their height only; never taller than the wall.
-          let m = multiply(multiply(GLTF_TO_ZUP, mountRotation(authored, socketOf(c))), place);
-          if (c.placement.mount.attach === "edge") {
-            const b = geom.bounds;
-            const zs = [0, 1, 2, 3, 4, 5, 6, 7].map((k) => transformPoint(m, [b[k & 1 ? 3 : 0], b[k & 2 ? 4 : 1], b[k & 4 ? 5 : 2]])[2]);
-            const z0 = Math.min(...zs);
-            const top = G.deck.roofTexels * TEXEL;
-            const fit = Math.max(...zs) > top && top > z0 ? (top - z0) / (Math.max(...zs) - z0) : 1;
-            // TEMPORARY until SHIPS-COMPONENTS' re-authored edge hatches land (sized to the height
-            // classes): scale about the hatch's base in the prefab frame (z-up). No-op once they fit.
-            if (fit < 1) m = multiply(m, multiply(multiply(basisMatrix([1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, -z0]), basisMatrix([1, 0, 0], [0, 1, 0], [0, 0, fit])), basisMatrix([1, 0, 0], [0, 1, 0], [0, 0, 1], [0, 0, z0])));
-            // Recess into the hull side band: the hatch's outermost face sits flush with the
-            // cassette faces (4 texels proud of the outline), not proud of the hull.
-            const [nx, ny] = NORMAL_VECTOR[c.placement.mount.normal ?? "aft"];
-            const [ax, ay] = c.placement.anchor;
-            const reach = Math.max(...[0, 1, 2, 3, 4, 5, 6, 7].map((k) => {
-              const p = transformPoint(m, [b[k & 1 ? 3 : 0], b[k & 2 ? 4 : 1], b[k & 4 ? 5 : 2]]);
-              return (p[0] - ax) * nx + (p[1] - ay) * ny;
-            }));
-            const flush = 4 * TEXEL;
-            if (reach > flush) m = multiply(m, basisMatrix([1, 0, 0], [0, 1, 0], [0, 0, 1], [-nx * (reach - flush), -ny * (reach - flush), 0]));
-          }
+          // Edge hatches (airlocks, cargo doors, docking ports) are authored to the grammar's deck
+          // height classes (flush with the side cassettes, top at the tier top), so no rescaling.
+          const m = multiply(multiply(GLTF_TO_ZUP, mountRotation(authored, socketOf(c))), place);
           pushMatrix(matrices[c.view], m);
           if (isMainEngine(c)) {
             // Nozzle exit: the GLB's outward extreme (component -Y is glTF +Z).
-            const r = Math.min(geom.bounds[3] - geom.bounds[0], geom.bounds[4] - geom.bounds[1]) * 0.32;
+            const r = Math.min(geom.bounds[3] - geom.bounds[0], geom.bounds[4] - geom.bounds[1]) * 0.26;
             emitPlumeAt(plumes[c.view], place, [0, -geom.bounds[5], 0], r, c);
           }
         }
@@ -455,7 +434,8 @@ export async function createPrefabShipView(scene: Scene, doc: ShipPrefabDocument
     const local = newBuilder();
     const colours: number[] = [];
     const main = !!c.placement.spec?.thrustN;
-    emitPlume(local, colours, at, radius, (main ? 3.2 : 1.2) * radius + (main ? 1.5 : 0.3));
+    // Compact exhaust like the reference engine assemblies: about one nozzle diameter long.
+    emitPlume(local, colours, at, radius, (main ? 2.0 : 1.2) * radius);
     const base = target.g.positions.length / 3;
     for (let i = 0; i < local.positions.length; i += 3) {
       const p = transformPoint(place, [local.positions[i], local.positions[i + 1], local.positions[i + 2]]);

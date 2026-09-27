@@ -4,6 +4,7 @@
  * Query: ?prefab=<id>&view=flight|deck&theme=<id>&cam=iso|top|side|rear&w=..&h=..
  *        &zoom=<factor> &at=x,y,z (Babylon-space target) &dir=x,y,z (camera direction) for close-ups
  *        &components=/assets/ship-components/<rev>/ (component GLB base URL override)
+ *        &objects=/assets/ship-objects/<rev>/ (load interior object GLBs instead of placeholders)
  *        &lineup=1 (all PREFAB_SHIPS in a row) &standins=1 (force component stand-ins)
  *        &glow=0 &lights=<0-4 deck point lights>
  * Sets window.__prefabReady = true once everything is loaded and a few frames have rendered;
@@ -160,6 +161,7 @@ async function main() {
       parent: anchor,
       standinComponents: q.get("standins") === "1",
       componentsBaseUrl: q.get("components") ?? undefined,
+      objectsBaseUrl: q.get("objects") ?? undefined,
       batch: q.get("batch") !== "0",
       roomLights: Number(q.get("lights") ?? 0),
     });

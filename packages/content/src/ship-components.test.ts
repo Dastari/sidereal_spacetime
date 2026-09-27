@@ -40,7 +40,7 @@ describe("ship component catalog v1", () => {
       expect(sizes(k).length, k).toBeGreaterThan(0);
     expect(sizes("side-cannon")).toBe("SM,MD,LG");
     expect(["cargo-door.2m", "cargo-door.4m", "cargo-door.6m"].every((id) => byId.has(id))).toBe(true);
-    expect(byId.get("cargo-door.6m")!.access!.openingWidthM).toBe(6);
+    expect(byId.get("cargo-door.6m")!.access!.openingWidthM).toBe(5.75); // 6 m module, 2-texel jambs each side
     for (const id of ["airlock.exterior.md", "airlock.interior.sm", "hatch.sm", "hatch.exterior.sm", "docking-port.md", "radar-array.lg", "scanner-mast.md", "relay-beacon.sm", "salvage-arm.md", "docking-clamp.lg", "drone-bay.md", "air-filter.sm", "oxygen-tank.md", "gravity-unit.md", "console.navigation.sm", "console.command.sm", "magazine.ballistic.lg", "magazine.missile.md", "magazine.torpedo.lg", "armor-plate.heavy.sm", "solar-array.md", "heat-sink.md", "aux-generator.sm"])
       expect(byId.has(id), id).toBe(true);
     expect(byId.get("vtol-thruster.sm")!.status).toBe("future");
@@ -121,7 +121,7 @@ describe("ship component catalog v1", () => {
     expect(byId.get("reactor.md")!.art.artLibraryDesignId).toBe("shipyard.equipment.reactor");
     expect(byId.get("console.command.sm")!.art.artLibraryDesignId).toBe("shipyard.equipment.command-console");
     expect(byId.get("airlock.exterior.md")!.art.artLibraryDesignId).toBe("shipyard.structure.external-airlock");
-    expect(byId.get("ion-drive.md")!.art).toMatchObject({ kitKey: "ion.MD", glb: "assets/art-library/ship-components/r002/glb/ion-drive.md.glb" });
+    expect(byId.get("ion-drive.md")!.art).toMatchObject({ kitKey: "ion.MD", glb: "assets/art-library/ship-components/r004/glb/ion-drive.md.glb" });
     expect(byId.get("armor-plate.light.sm")!.art.glb).toBeNull();
   });
 

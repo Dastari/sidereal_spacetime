@@ -38,11 +38,12 @@ KIT_PATH = HERE / "ship_kit_prototype.py"
 
 def load_kit():
     src = KIT_PATH.read_text()
-    head, sep, tail = src.rpartition("\nmain()")
-    if "\nif __name__ == \"__main__\":" in src:          # guarded kit (feat/prefab-ships): import as-is
-        head, sep, tail = src, "guarded", ""
-    if not sep or tail.strip():
-        raise RuntimeError("ship_kit_prototype.py no longer ends with an unguarded main() call")
+    if "if __name__ == \"__main__\":" in src:
+        head = src                                   # guarded kit: import without running main()
+    else:
+        head, sep, tail = src.rpartition("\nmain()")
+        if not sep or tail.strip():
+            raise RuntimeError("ship_kit_prototype.py main() call not found")
     mod = types.ModuleType("ship_kit")
     mod.__file__ = str(KIT_PATH)
     exec(compile(head, str(KIT_PATH), "exec"), mod.__dict__)
@@ -55,7 +56,7 @@ import ship_component_art as A  # noqa: E402
 A.install(K)
 THEME = "orion"
 Piece, T, SLOTS, SI = K.Piece, K.T, K.SLOTS, K.SI
-EXPORT_REVISION = "r002"
+EXPORT_REVISION = "r004"
 BEVEL = 0.012
 
 
@@ -66,6 +67,15 @@ def args():
     p.add_argument("--out", default=str(ROOT / "assets/art-library/ship-components" / EXPORT_REVISION))
     p.add_argument("--only", default="")
     p.add_argument("--no-glb", action="store_true")
+    p.add_argument("--runtime", action="store_true",
+                   help="compact runtime export: merged cuboids, hidden boxes dropped, flat <out>/<id>.glb")
+    p.add_argument("--ids-file", default="", help="JSON list of component ids to export")
+    p.add_argument("--objects", action="store_true",
+                   help="export the prefab interior objects (ship_object_art.py) instead of catalog components")
+    p.add_argument("--save-blend", default="",
+                   help="save the editable Blender source (.blend, compressed) with every exported component")
+    p.add_argument("--runtime-bevel", type=float, default=0.0,
+                   help="runtime brick bevel in metres (0: none; per-row bevels striate round parts in Babylon)")
     p.add_argument("--sheets", default="")
     p.add_argument("--samples", type=int, default=32)
     p.add_argument("--sheet-keys", default="", help="comma list: catalog keys, weapons-top, exploded-ion, exploded-weapons, damage, variants")
@@ -131,9 +141,15 @@ def reactor(w, d, h):
     zz = z + 3
     for i in range(bands):
         p.disc("z", cx, cy, r, zz, zz + 4, "primary" if i % 2 == 0 else "accent")
-        p.disc("z", cx, cy, r + 1, zz + 4, zz + 6, "emit_a" if i == bands // 2 else "dark")
+        p.disc("z", cx, cy, r + 1, zz + 4, zz + 6, "dark")
+        if i == bands // 2:                                               # one thin reactor ring
+            p.disc("z", cx, cy, r + 1, zz + 4, zz + 5, "emit_a", rin=r - 1)   # hollow: deck cutaways show the body
         zz += 6
-    p.disc("z", cx, cy, r - 2, zz, zz + 3, "metal").disc("z", cx, cy, max(2, r // 2), zz + 3, zz + 5, "emit_a")
+    # r003: navy cap with a small bright core (the r002 core bloomed into a disc in Babylon)
+    # large flat caps stay rough (trim/secondary): a flat metal disc mirrors the environment in Babylon
+    p.disc("z", cx, cy, r - 2, zz, zz + 3, "trim").disc("z", cx, cy, max(2, r // 2), zz + 3, zz + 5, "secondary")
+    p.disc("z", cx, cy, max(2, r // 2) + 1, zz + 3, zz + 4, "metal", rin=max(1, r // 2))
+    p.disc("z", cx, cy, max(1, r // 5), zz + 3, zz + 6, "emit_a")
     for sx in (2, w - 5):                                               # frame posts
         for sy in (2, d - 5):
             p.b(sx, sy, z, sx + 3, sy + 3, zz + 2, "secondary")
@@ -172,7 +188,7 @@ def capacitor(w, d, h):
         r = min(sp, d) // 2 - 2
         p.disc("z", cx, d // 2, r, z, h - 3, "primary")
         for zz in range(z + 3, h - 6, 5):
-            p.disc("z", cx, d // 2, r + 1, zz, zz + 1, "emit_a")
+            p.disc("z", cx, d // 2, r + 1, zz, zz + 1, "emit_a", rin=max(1, r - 1))
         p.disc("z", cx, d // 2, r - 1, h - 3, h - 1, "metal").disc("z", cx, d // 2, max(1, r // 2), h - 1, h, "emit_b")
     p.b(1, 0, z, w - 1, 2, z + 4, "accent")
     return p
@@ -257,7 +273,7 @@ def shield_generator(w, d, h):
     K.extrude(p, "z", cx, cy, K.section_rows(r, max(1, r // 3)), z, z + 3, "secondary")
     K.extrude(p, "z", cx, cy, K.section_rows(r - 2, max(1, r // 3)), z + 3, h - 4, "primary")
     for zz in range(z + 5, h - 6, 4):
-        K.extrude(p, "z", cx, cy, K.section_rows(r - 1, max(1, r // 3)), zz, zz + 1, "emit_a")
+        K.extrude(p, "z", cx, cy, K.section_rows(r - 1, max(1, r // 3), rin=max(1, r - 3)), zz, zz + 1, "emit_a")
     p.disc("z", cx, cy, max(2, r - 4), h - 4, h - 2, "metal").disc("z", cx, cy, max(1, r // 2), h - 2, h, "emit_a")
     p.b(cx - 3, d - 3, z, cx + 3, d, z + 8, "accent").b(cx - 2, d - 1, z + 2, cx + 2, d, z + 6, "emit_b")
     return p
@@ -570,21 +586,6 @@ def vtol(sz):
     return p
 
 
-def hatch_exterior(sz):
-    W = 16
-    p = Piece("x.hatch-exterior.SM", "mount", "top", (W, W, 0))
-    K.frame_top(p, 0, 0, W, W, 0, 3, 2, "secondary")
-    p.disc("z", 8, 8, 6, 0, 4, "primary")
-    p.disc("z", 8, 8, 4, 4, 5, "metal", rin=3)
-    p.b(7, 4, 4, 9, 12, 5, "metal").b(4, 7, 4, 12, 9, 5, "metal")
-    hazard(p, 0, W, 0, 1, 3, 4)
-    p.b(14, 14, 3, 15, 15, 5, "emit_b")
-    p.size = (W, W, 5)
-    return p
-
-
-# =============================================================================== face builders (kit face convention)
-# x in [0, W] along the face, +Y outward from the mount plane, z up; engines centred at z = W/2.
 def resonance(sz):
     n = K.SIZE_CELLS[sz]
     W = 16 * n
@@ -652,64 +653,163 @@ def salvage_arm(sz):
     return p
 
 
-def cargo_door_w(width_m, height_m):
-    W, Hh = int(width_m * 16), int(height_m * 16)
-    p = Piece(f"x.cargo-door.{width_m}m", "mount", "face", (W, 5, Hh))
-    K.frame(p, 0, 0, W, Hh, 0, 4, 4, "secondary")
-    slats = max(3, (Hh - 8) // 8)
-    sh = (Hh - 8) // slats
-    for i in range(slats):
-        z0 = 4 + i * sh
-        p.b(4, 0, z0 + 1, W - 4, 2, z0 + sh, "primary")
-        p.b(5, 2, z0 + sh - 2, W - 5, 3, z0 + sh - 1, "trim")
-    hazard(p, 0, W, 3, 5, 0, 3, step=3)
-    p.b(4, 2, 4, 5, 3, Hh - 4, "metal").b(W - 5, 2, 4, W - 4, 3, Hh - 4, "metal")
-    p.b(1, 3, Hh - 3, 4, 5, Hh - 1, "emit_b").b(W - 4, 3, Hh - 3, W - 1, 5, Hh - 1, "emit_b")
-    p.b(W // 2 - 2, 3, Hh - 3, W // 2 + 2, 5, Hh - 1, "emit_a")
-    return p
+# =============================================================================== edge hatches (r004)
+GRAMMAR_PATH = ROOT / "packages/content/src/construction-grammar.v1.json"
+
+
+def edge_frame():
+    """Edge hatch frame in texels from the construction grammar (same rule as
+    edgeHatchFrameTexels in packages/content/src/ship-components-source.ts): floor top to wall top,
+    clear opening to the deck's upper cassette tier top (the rim is the lintel), tier seams for the
+    jamb grooves, and the side cassette face plane (depth of the kit's cassette panel)."""
+    g = json.loads(GRAMMAR_PATH.read_text())
+    z0, z1 = g["heightClasses"]["deck"]["z"]
+    r = g["tierRule"]
+    two = z1 - z0 >= r["twoTierMinTexels"]
+    tier_top = z1 - (r["twoTierRimTexels"] if two else r["oneTierRimTexels"])
+    floor, top = g["deck"]["floorTopTexels"], g["deck"]["wallTopTexels"]
+    opening_top = min(tier_top, top - 1)
+    seams = [z0 + r["lowerTierTexels"]] if two else []
+    face = K.cas_panel(32, 16).size[1]                       # cassette face plane (texels outward)
+    return {"H": top - floor, "open": opening_top - floor, "seams": [s - floor for s in seams],
+            "band0": z0 - floor, "face": face}
+
+
+def lit_hazard(p, x0, x1, y0, y1, z0, z1, step=2):
+    """Amber/black hazard stripes (emit_b reads as the reference's yellow; trim is theme-dark)."""
+    for i, x in enumerate(range(x0, x1, step)):
+        p.b(x, y0, z0, min(x + step, x1), y1, z1, "emit_b" if i % 2 == 0 else "dark")
+
+
+def edge_surround(p, W, F, jamb, seams, H, lintel_slot="emit_a"):
+    """Jambs flush with the cassette face (y 0..F) with grooves on the tier seams, a base plate
+    under the hull band, and a 1-texel lintel strip over the rim face up to the wall top."""
+    for xa, xb in ((0, jamb), (W - jamb, W)):
+        cuts = [0] + [s for s in seams if 0 < s < H - 1] + [H - 1]
+        for k in range(len(cuts) - 1):
+            a, b = cuts[k] + (1 if k else 0), cuts[k + 1]
+            p.b(xa, 0, a, xb, F, b, "primary")
+            if k:
+                p.b(xa, 0, cuts[k], xb, F - 1, cuts[k] + 1, "secondary")      # seam groove
+        p.b(xa, 0, H - 1, xb, F, H, "secondary")
+    p.b(jamb, F - 1, H - 1, W - jamb, F, H, lintel_slot)                   # lintel strip on the rim face
 
 
 def airlock_ext():
-    W, Hh = 32, 44
-    p = Piece("x.airlock-exterior.MD", "mount", "face", (W, 16, Hh))
-    K.frame(p, 0, 0, W, Hh, 0, 12, 4, "secondary")                          # outer collar (protrudes)
-    p.b(4, 0, 0, W - 4, 2, 4, "dark")
-    K.frame(p, 4, 4, W - 4, Hh - 2, 10, 14, 2, "primary")
-    p.b(6, 11, 4, W - 6, 13, Hh - 4, "metal")                               # outer door
-    p.b(W // 2 - 1, 13, 6, W // 2 + 1, 14, Hh - 6, "dark")
-    hazard(p, 0, W, 12, 14, 0, 3, step=3)
-    p.disc("y", W // 2, Hh - 8, 3, 13, 15, "trim", rin=1)
-    p.b(1, 12, Hh - 4, 3, 16, Hh - 2, "emit_b").b(W - 3, 12, Hh - 4, W - 1, 16, Hh - 2, "emit_a")
+    """Exterior airlock recessed into the hull side band (reference 'AIRLOCK'): flush jambs, glowing
+    cyan chamfered frame, dark recessed double door, amber/black landing lip at deck level."""
+    f = edge_frame()
+    W, H, F, O = 32, f["H"], f["face"], f["open"]
+    p = Piece("x.airlock-exterior.MD", "mount", "face", (W, F + 2, H))
+    jamb = 5
+    edge_surround(p, W, F, jamb, f["seams"], H)
+    x0, x1 = jamb, W - jamb
+    # dark recess: back plate + recessed double door 2 texels behind the face plane
+    p.b(x0, 0, 0, x1, 1, O, "dark")
+    mid = W // 2
+    for a, b in ((x0 + 1, mid), (mid, x1 - 1)):
+        p.b(a, 1, 1, b, F - 2, O - 1, "secondary")
+        p.b(a + 2, F - 2, O - 10, b - 2, F - 1, O - 6, "glass")             # door window
+        p.b(a + 1, F - 2, 12, b - 1, F - 1, 13, "metal")                     # kick rail
+    # glowing cyan frame: jamb inner edges up to the opening top, lintel strip above (edge_surround)
+    p.b(x0, F - 1, 1, x0 + 1, F, H - 1, "emit_a").b(x1 - 1, F - 1, 1, x1, F, H - 1, "emit_a")
+    # landing lip at deck level with hazard stripes
+    lit_hazard(p, 2, W - 2, F, F + 2, 0, 1, step=2)                        # outside the opening plane
+    # status lights and control panel on the jambs
+    p.b(1, F, O - 6, 3, F + 1, O - 4, "emit_b").b(W - 3, F, O - 6, W - 1, F + 1, O - 4, "emit_a")
+    p.b(W - 4, F - 1, 14, W - 1, F, 20, "glass")
+    p.size = (W, F + 2, H)
     return p
 
 
 def airlock_int():
-    W, Hh = 32, 44
-    p = Piece("x.airlock-interior.SM", "mount", "face", (W, 8, Hh))
-    K.frame(p, 0, 0, W, Hh, 0, 8, 3, "secondary")
-    p.b(3, 2, 0, W - 3, 6, Hh - 3, "primary")
-    p.b(W // 2 - 1, 5, 2, W // 2 + 1, 7, Hh - 5, "dark")
-    hazard(p, 3, W - 3, 5, 7, 0, 2, step=3)
-    p.b(W - 3, 7, 18, W - 1, 8, 24, "emit_a")
+    """Interior airlock door on a partition: same frame height as the deck walls, cyan jamb lights."""
+    f = edge_frame()
+    W, H, F, O = 32, f["H"], f["face"], f["open"]
+    p = Piece("x.airlock-interior.SM", "mount", "face", (W, F, H))
+    jamb = 5
+    edge_surround(p, W, F, jamb, [], H, lintel_slot="secondary")
+    mid = W // 2
+    for a, b in ((jamb, mid), (mid, W - jamb)):
+        p.b(a, 0, 0, b, F - 1, O, "secondary")
+        p.b(a + 2, F - 1, O - 10, b - 2, F, O - 6, "glass")
+    p.b(jamb, F - 1, 0, jamb + 1, F, O, "emit_a").b(W - jamb - 1, F - 1, 0, W - jamb, F, O, "emit_a")
+    p.b(jamb + 1, F - 1, O - 1, W - jamb - 1, F, O, "emit_a")
+    p.size = (W, F, H)
+    return p
+
+
+def cargo_door_w(width_m, _height_m=None):
+    """Cargo bay door recessed into the hull side band: flush jambs with seam grooves, recessed
+    roll-up slat door, amber corner lights and a hazard-striped lintel and landing lip."""
+    f = edge_frame()
+    W, H, F, O = int(width_m * 16), f["H"], f["face"], f["open"]
+    p = Piece(f"x.cargo-door.{width_m}m", "mount", "face", (W, F + 2, H))
+    jamb = 2
+    edge_surround(p, W, F, jamb, f["seams"], H, lintel_slot="emit_b")
+    p.b(jamb, 0, 0, W - jamb, 1, O, "dark")
+    z = 1
+    k = 0
+    while z < O - 1:                                                     # slats, 2 texels behind the face
+        h = min(3, O - 1 - z)
+        p.b(jamb, 1, z, W - jamb, F - 2, z + h - 1, "primary" if k % 2 == 0 else "metal")
+        p.b(jamb, 1, z + h - 1, W - jamb, F - 3, z + h, "secondary")
+        z += h
+        k += 1
+    for xa in (jamb, W - jamb - 1):                                     # guide rails
+        p.b(xa, 1, 0, xa + 1, F - 1, O, "trim")
+    p.b(0, F, O - 3, 2, F + 1, O - 1, "emit_b").b(W - 2, F, O - 3, W, F + 1, O - 1, "emit_b")
+    lit_hazard(p, 1, W - 1, F, F + 2, 0, 1, step=3)
+    p.size = (W, F + 2, H)
     return p
 
 
 def docking_port(sz):
+    """Docking port recessed into the hull side band: flush collar plate, recessed octagonal hatch
+    with a glowing cyan seal ring at the face plane, latch blocks and a hazard lip."""
+    f = edge_frame()
     n = {"MD": 2, "LG": 3}[sz]
-    W, Hh = 16 * n, int((2.75 if sz == "MD" else 3.25) * 16)
-    L = int((1.2 if sz == "MD" else 1.6) * 16)
-    p = Piece(f"x.docking-port.{sz}", "mount", "face", (W, L, Hh))
-    cz = Hh // 2
-    r = min(W, Hh) // 2 - 1
-    p.b(0, 0, 0, W, 2, Hh, "trim")
-    p.disc("y", W // 2, cz, r, 2, L - 4, "secondary", rin=r - 4)            # collar
-    p.disc("y", W // 2, cz, r - 4, 2, 4, "primary")                           # inner hatch
-    p.disc("y", W // 2, cz, r + 1, L - 4, L - 2, "trim", rin=r - 3)
-    p.disc("y", W // 2, cz, r, L - 2, L, "emit_a", rin=r - 2)                 # seal ring
-    for a in range(4):                                                         # latches
+    W, H, F, O = 16 * n, f["H"], f["face"], f["open"]
+    p = Piece(f"x.docking-port.{sz}", "mount", "face", (W, F + 2, H))
+    edge_surround(p, W, F, 2, f["seams"], H, lintel_slot="secondary")
+    cx, cz = W // 2, (O + 2) // 2
+    r = min(W // 2 - 3, (O - 4) // 2)
+    for z in range(0, O):                                                 # collar plate around the hatch
+        dz = z + 0.5 - cz
+        hw = int(math.ceil(math.sqrt(max(0.0, (r + 1) ** 2 - dz * dz)))) if abs(dz) < r + 1 else 0
+        if hw == 0:
+            p.b(2, 0, z, W - 2, F - 1, z + 1, "secondary")
+        else:
+            if cx - hw > 2:
+                p.b(2, 0, z, cx - hw, F - 1, z + 1, "secondary")
+            if cx + hw < W - 2:
+                p.b(cx + hw, 0, z, W - 2, F - 1, z + 1, "secondary")
+    p.disc("y", cx, cz, r + 1, F - 1, F, "emit_a", rin=r)                 # seal ring on the face plane
+    p.disc("y", cx, cz, r, 0, F - 2, "dark")                              # recessed hatch
+    p.disc("y", cx, cz, r - 2, F - 2, F - 1, "metal", rin=r - 3)
+    p.b(cx - 1, F - 2, cz - r + 2, cx + 1, F - 1, cz + r - 2, "trim")
+    for a in range(4):                                                    # latches
         ang = a * math.pi / 2 + math.pi / 4
-        x, z = W // 2 + int(r * 0.9 * math.cos(ang)), cz + int(r * 0.9 * math.sin(ang))
-        p.b(x - 2, L - 6, z - 2, x + 2, L, z + 2, "accent")
+        x, z = cx + int((r + 2) * math.cos(ang)), cz + int((r + 2) * math.sin(ang))
+        p.b(x - 1, F - 1, z - 1, x + 1, F, z + 1, "accent")
+    lit_hazard(p, 2, W - 2, F, F + 2, 0, 1, step=3)
+    p.size = (W, F + 2, H)
+    return p
+
+
+
+def hatch_exterior(sz):
+    """Flush roof hatch: low rim ring, recessed lid and amber/black hazard corners (2 texels)."""
+    W = 16
+    p = Piece("x.hatch-exterior.SM", "mount", "top", (W, W, 2))
+    K.frame_top(p, 1, 1, W - 1, W - 1, 0, 2, 2, "secondary")
+    p.b(3, 3, 0, W - 3, W - 3, 1, "primary")
+    p.disc("z", 8, 8, 4, 1, 2, "metal", rin=3)
+    p.b(7, 5, 1, 9, 11, 2, "trim")
+    for x, y in ((1, 1), (W - 3, 1), (1, W - 3), (W - 3, W - 3)):
+        lit_hazard(p, x, x + 2, y, y + 2, 1, 2, step=1)
+    p.b(13, 13, 1, 14, 14, 2, "emit_b")
+    p.size = (W, W, 2)
     return p
 
 
@@ -736,7 +836,7 @@ WEAPON_KEYS = {"wpn.pd": "pd", "wpn.autocannon": "autocannon", "wpn.laser": "las
                "wpn.missile": "missile", "wpn.flak": "flak", "x.plasma": "plasma"}
 UTILITY_KEYS = {"wpn.shield": "shield", "wpn.tractor": "tractor", "wpn.sensor": "sensor", "wpn.clamp": "clamp",
                 "wpn.beacon": "beacon"}
-NO_GREEBLE = ("resonance", "vtol", "console-navigation", "console-command", "console-fire-control",
+NO_GREEBLE = ("resonance", "vtol", "docking-port", "hatch-exterior", "console-navigation", "console-command", "console-fire-control",
               "console-engineering", "console-sensor", "hydroponics", "crew-bunk")
 
 
@@ -790,15 +890,17 @@ def build_piece(component):
         piece = FACE[kind](size)
         if detail:
             A.greeble(K, piece, key, slots=("primary", "secondary"), lights=0.05, skip_top=True)
-        zc = 0 if kind == "docking-port" else piece.size[2] / 2
-        return piece, "face", zc
+        return piece, "face", piece.size[2] / 2
     if kind == "cargo-door":
         width = int(size.rstrip("m"))
-        return cargo_door_w(width, hi[2]), "face", 0
+        piece = cargo_door_w(width)
+        return piece, "face", piece.size[2] / 2            # edge hatches are z-centred (floor top at base)
     if kind == "airlock-exterior":
-        return airlock_ext(), "face", 0
+        piece = airlock_ext()
+        return piece, "face", piece.size[2] / 2
     if kind == "airlock-interior":
-        return airlock_int(), "face", 0
+        piece = airlock_int()
+        return piece, "face", piece.size[2] / 2
     raise KeyError(key)
 
 
@@ -846,15 +948,25 @@ def slot_materials():
     return mats
 
 
-def boxes_mesh(name, boxes):
+# boxes_mesh face order (-z, +z, -y, +x, +y, -x) as indices into hidden_faces' (-x, +x, -y, +y, -z, +z)
+FACE_TO_HIDDEN = (4, 5, 2, 1, 3, 0)
+
+
+def boxes_mesh(name, boxes, hidden=None):
     verts, faces, idx = [], [], []
-    for x0, y0, z0, x1, y1, z1, slot in boxes:
+    for n, (x0, y0, z0, x1, y1, z1, slot) in enumerate(boxes):
+        keep = [not hidden[n][FACE_TO_HIDDEN[f]] for f in range(6)] if hidden else [True] * 6
+        if not any(keep):
+            continue
         o = len(verts)
         verts += [(x * T, y * T, z * T) for x, y, z in
                   ((x0, y0, z0), (x1, y0, z0), (x1, y1, z0), (x0, y1, z0), (x0, y0, z1), (x1, y0, z1), (x1, y1, z1), (x0, y1, z1))]
-        faces += [(o, o + 3, o + 2, o + 1), (o + 4, o + 5, o + 6, o + 7), (o, o + 1, o + 5, o + 4),
-                  (o + 1, o + 2, o + 6, o + 5), (o + 2, o + 3, o + 7, o + 6), (o + 3, o, o + 4, o + 7)]
-        idx += [SI[slot]] * 6
+        quads = [(o, o + 3, o + 2, o + 1), (o + 4, o + 5, o + 6, o + 7), (o, o + 1, o + 5, o + 4),
+                 (o + 1, o + 2, o + 6, o + 5), (o + 2, o + 3, o + 7, o + 6), (o + 3, o, o + 4, o + 7)]
+        for f in range(6):
+            if keep[f]:
+                faces.append(quads[f])
+                idx.append(SI[slot])
     me = bpy.data.meshes.new(name)
     me.from_pydata(verts, [], faces)
     me.polygons.foreach_set("material_index", idx)
@@ -876,6 +988,103 @@ def clip_boxes(boxes, envelope):
     return out
 
 
+def hidden_faces(boxes):
+    """Runtime culling: for each box, which of its six faces (-x,+x,-y,+y,-z,+z) is fully covered by
+    other opaque boxes (glass never hides). Culled faces are removed before the brick bevel;
+    boundary edges are not bevelled, so hidden seams cost no triangles. Visible surfaces and
+    slots are unchanged."""
+    import numpy as np
+    if not boxes:
+        return []
+    q = [tuple(int(round(v * 2)) for v in b[:6]) for b in boxes]
+    lo = [min(b[i] for b in q) - 1 for i in range(3)]
+    hi = [max(b[i + 3] for b in q) + 1 for i in range(3)]
+    occ = np.zeros(tuple(hi[i] - lo[i] for i in range(3)), dtype=bool)
+    for (x0, y0, z0, x1, y1, z1), b in zip(q, boxes):
+        if b[6] != "glass":
+            occ[x0 - lo[0]:x1 - lo[0], y0 - lo[1]:y1 - lo[1], z0 - lo[2]:z1 - lo[2]] = True
+    out = []
+    for x0, y0, z0, x1, y1, z1 in q:
+        X0, Y0, Z0, X1, Y1, Z1 = x0 - lo[0], y0 - lo[1], z0 - lo[2], x1 - lo[0], y1 - lo[1], z1 - lo[2]
+        out.append((
+            bool(occ[X0 - 1, Y0:Y1, Z0:Z1].all()), bool(occ[X1, Y0:Y1, Z0:Z1].all()),
+            bool(occ[X0:X1, Y0 - 1, Z0:Z1].all()), bool(occ[X0:X1, Y1, Z0:Z1].all()),
+            bool(occ[X0:X1, Y0:Y1, Z0 - 1].all()), bool(occ[X0:X1, Y0:Y1, Z1].all()),
+        ))
+    return out
+
+
+def trim_buried_emissive(boxes):
+    """Runtime: remove the parts of emissive boxes that lie inside opaque boxes. Glow layers draw
+    emissive meshes without opaque occluders, so buried emissive volume (e.g. a full-length reactor
+    gap cylinder under a nacelle band) would bloom through the housing. Visible emissive surfaces
+    are unchanged; kept voxels are merged back into boxes per slot."""
+    import numpy as np
+    emit = [b for b in boxes if b[6] in ("emit_a", "emit_b")]
+    if not emit:
+        return boxes
+    solid = [b for b in boxes if b[6] not in ("emit_a", "emit_b", "glass")]
+    q = lambda b: tuple(int(round(v * 2)) for v in b[:6])
+    lo = [min(q(b)[i] for b in boxes) for i in range(3)]
+    hi = [max(q(b)[i + 3] for b in boxes) for i in range(3)]
+    occ = np.zeros(tuple(hi[i] - lo[i] for i in range(3)), dtype=bool)
+    for b in solid:
+        x0, y0, z0, x1, y1, z1 = q(b)
+        occ[x0 - lo[0]:x1 - lo[0], y0 - lo[1]:y1 - lo[1], z0 - lo[2]:z1 - lo[2]] = True
+    out = list(solid) + [b for b in boxes if b[6] == "glass"]
+    for slot in ("emit_a", "emit_b"):
+        keep = np.zeros(occ.shape, dtype=bool)
+        for b in emit:
+            if b[6] != slot:
+                continue
+            x0, y0, z0, x1, y1, z1 = q(b)
+            sl = (slice(x0 - lo[0], x1 - lo[0]), slice(y0 - lo[1], y1 - lo[1]), slice(z0 - lo[2], z1 - lo[2]))
+            keep[sl] |= ~occ[sl]
+        done = np.zeros(occ.shape, dtype=bool)
+        for x, y, z in np.argwhere(keep):
+            if done[x, y, z]:
+                continue
+            x1 = x + 1
+            while x1 < keep.shape[0] and keep[x1, y, z] and not done[x1, y, z]:
+                x1 += 1
+            y1 = y + 1
+            while y1 < keep.shape[1] and keep[x:x1, y1, z].all() and not done[x:x1, y1, z].any():
+                y1 += 1
+            z1 = z + 1
+            while z1 < keep.shape[2] and keep[x:x1, y:y1, z1].all() and not done[x:x1, y:y1, z1].any():
+                z1 += 1
+            done[x:x1, y:y1, z:z1] = True
+            out.append(((x + lo[0]) / 2, (y + lo[1]) / 2, (z + lo[2]) / 2,
+                        (x1 + lo[0]) / 2, (y1 + lo[1]) / 2, (z1 + lo[2]) / 2, slot))
+    return out
+
+
+RUNTIME = {"on": False}
+# Nacelles built from stepped round sections (axis along part Y through x = z = 0).
+ROUND_DRIVES = ("ion-drive", "resonance-drive")
+
+
+def radial_normals(me, radial=0.7):
+    """Runtime shading for stepped round nacelles: side and top faces get normals blended toward the
+    radial direction from the nacelle axis, so bands and ribs light like rings on a cylinder instead
+    of flat terraces. End faces (along the axis) keep their flat normals; geometry is unchanged."""
+    me.polygons.foreach_set("use_smooth", [True] * len(me.polygons))
+    loops = []
+    for poly in me.polygons:
+        n = poly.normal
+        for li in poly.loop_indices:
+            if abs(n.y) > 0.5:
+                loops.append(tuple(n))
+                continue
+            v = me.vertices[me.loops[li].vertex_index].co
+            r = Vector((v.x, 0.0, v.z))
+            if r.length < 1e-6:
+                loops.append(tuple(n))
+                continue
+            loops.append(tuple((n * (1 - radial) + r.normalized() * radial).normalized()))
+    me.normals_split_custom_set(loops)
+
+
 def catalog_boxes(component):
     piece, conv, zc = build_piece(component)
     return clip_boxes(to_catalog(piece, conv, zc), component["mount"]["envelopeM"]), conv
@@ -883,9 +1092,15 @@ def catalog_boxes(component):
 
 def component_object(component, mats, coll, bevel=True):
     boxes, conv = catalog_boxes(component)
-    me = boxes_mesh(component["id"], boxes)
+    if RUNTIME["on"]:
+        boxes = trim_buried_emissive(boxes)
+    me = boxes_mesh(component["id"], boxes, hidden_faces(boxes) if RUNTIME["on"] else None)
     for m in mats:
         me.materials.append(m)
+    if not bevel:                                    # no hardened bevel normals: shade boxes flat
+        me.polygons.foreach_set("use_smooth", [False] * len(me.polygons))
+        if RUNTIME["on"] and component["kind"] in ROUND_DRIVES:
+            radial_normals(me)
     ob = bpy.data.objects.new(component["id"], me)
     coll.objects.link(ob)
     if bevel:
@@ -939,26 +1154,36 @@ def clear_collection(coll):
 
 def export_all(catalog, a):
     out = Path(a.out)
-    (out / "glb").mkdir(parents=True, exist_ok=True)
+    RUNTIME["on"] = a.runtime
+    RUNTIME["bevel"] = a.runtime_bevel
+    gdir = out if a.runtime else out / "glb"
+    gdir.mkdir(parents=True, exist_ok=True)
     only = {s for s in a.only.split(",") if s}
+    if a.ids_file:
+        only |= set(json.loads(Path(a.ids_file).read_text()))
     sc = bpy.context.scene
     coll = bpy.data.collections.new("export")
     sc.collection.children.link(coll)
     mats = slot_materials()
     rows = []
+    layout = []
     for c in catalog["components"]:
         if not c["art"]["kitKey"] or (only and c["id"] not in only):
             continue
+        cc = bpy.data.collections.new(c["id"])                     # one collection per component
+        coll.children.link(cc)
         root = bpy.data.objects.new(f"component.{c['id']}", None)
-        coll.objects.link(root)
+        cc.objects.link(root)
         for k, v in (("componentId", c["id"]), ("sizeClass", c["sizeClass"]), ("schema", catalog["schema"]),
                      ("catalogRevision", catalog["revision"]), ("frame", c["mount"]["frame"]), ("status", "proposed")):
             root[k] = v
-        ob, boxes, conv = component_object(c, mats, coll)
+        ob, boxes, conv = component_object(c, mats, cc, bevel=not a.runtime or a.runtime_bevel > 0)
+        if a.runtime and a.runtime_bevel > 0:
+            ob.modifiers["brick"].width = a.runtime_bevel
         ob.parent = root
-        empties = port_empties(c, root, coll)
+        empties = port_empties(c, root, cc)
         tris, verts, lo, hi, used = measure(ob)
-        glb = out / "glb" / f"{c['id']}.glb"
+        glb = gdir / f"{c['id']}.glb"
         if not a.no_glb:
             bpy.ops.object.select_all(action="DESELECT")
             for o in [root, ob, *empties]:
@@ -981,13 +1206,97 @@ def export_all(catalog, a):
             "envelopeOverhangM": round(max(0.0, over), 4),
             "ports": [p["id"] for p in c["ports"]],
         })
-        clear_collection(coll)
+        if a.save_blend:
+            # keep the editable source; exclude it from evaluation while the rest export
+            bpy.context.view_layer.layer_collection.children["export"].children[cc.name].exclude = True
+            layout.append((root, c))
+        else:
+            clear_collection(cc)
+            bpy.data.collections.remove(cc)
         print(f"[export] {c['id']:32s} tris={tris:6d} over={max(0.0, over):.3f} m")
+    if a.save_blend:
+        for n, (root, c) in enumerate(layout):                      # browsable 12-column grid, 6 m pitch
+            root.location = ((n % 12) * 6.0, -(n // 12) * 6.0, 0.0)
+            bpy.context.view_layer.layer_collection.children["export"].children[c["id"]].exclude = False
+        path = Path(a.save_blend)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        bpy.ops.wm.save_as_mainfile(filepath=str(path), compress=True, check_existing=False)
+        print(f"[export] saved source {path}")
     return rows
+
+
+OBJECTS_REVISION = "r001"
+
+
+def export_objects(a):
+    """Runtime GLBs for prefab interior objects: <out>/<designId>.glb, flat shaded, hidden faces
+    culled, nine fixed slots, plus manifest and the editable .blend source (--save-blend)."""
+    import ship_object_art as O
+    out = Path(a.out)
+    out.mkdir(parents=True, exist_ok=True)
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    sc = bpy.context.scene
+    coll = bpy.data.collections.new("objects")
+    sc.collection.children.link(coll)
+    mats = slot_materials()
+    make = O.builders(K, sys.modules[__name__])
+    rows = []
+    for n, (did, (w, d, h)) in enumerate(sorted(O.OBJECT_SIZES.items())):
+        piece = make[did](w, d, h)
+        piece.size = (w, d, h)
+        env = [[-w / 32, -d / 32, 0.0], [w / 32, d / 32, h / 16]]
+        boxes = clip_boxes(to_catalog(piece, "interior", 0), env)
+        cc = bpy.data.collections.new(did)
+        coll.children.link(cc)
+        root = bpy.data.objects.new(f"object.{did}", None)
+        cc.objects.link(root)
+        root["designId"], root["frame"], root["status"] = did, "interior: footprint centre on floor, front +Y", "proposed"
+        me = boxes_mesh(did, boxes, hidden_faces(boxes))
+        for m in mats:
+            me.materials.append(m)
+        me.polygons.foreach_set("use_smooth", [False] * len(me.polygons))
+        ob = bpy.data.objects.new(did, me)
+        cc.objects.link(ob)
+        ob.parent = root
+        tris, verts, lo, hi, used = measure(ob)
+        glb = out / f"{did}.glb"
+        bpy.ops.object.select_all(action="DESELECT")
+        root.select_set(True)
+        ob.select_set(True)
+        bpy.context.view_layer.objects.active = root
+        bpy.ops.export_scene.gltf(filepath=str(glb), export_format="GLB", use_selection=True, export_apply=True,
+                                  export_extras=True, export_yup=True, export_cameras=False, export_lights=False,
+                                  export_animations=False, export_materials="EXPORT")
+        root.location = ((n % 7) * 5.0, -(n // 7) * 5.0, 0.0)
+        rows.append({"designId": did, "sizeTexels": [w, d, h], "glb": str(glb.relative_to(ROOT)) if glb.is_relative_to(ROOT) else str(glb),
+                     "sha256": sha256(glb), "bytes": glb.stat().st_size, "triangles": tris, "boxes": len(boxes),
+                     "materialSlotsUsed": [f"slot{i}_{SLOTS[i]}" for i in used],
+                     "boundsM": [[round(v, 4) for v in lo], [round(v, 4) for v in hi]]})
+        print(f"[objects] {did:40s} tris={tris}")
+    manifest = {"schema": "sidereal.ship-object-art.v1", "revision": OBJECTS_REVISION,
+                "status": "proposed art published to the runtime for review; not owner-approved",
+                "frame": "interior: origin at footprint centre on the floor, +X along the wall (w), +Y front (d), +Z up; glTF (x, y, z) -> (x, z, -y)",
+                "sizes": "construction-grammar.v1.json socket [designId, w, d, h] texels (1/16 m)",
+                "materialSlots": [f"slot{i}_{s}" for i, s in enumerate(SLOTS)],
+                "generator": {"script": str(Path(__file__).resolve().relative_to(ROOT)), "sha256": sha256(__file__),
+                              "builders": str((HERE / "ship_object_art.py").relative_to(ROOT)),
+                              "buildersSha256": sha256(HERE / "ship_object_art.py"), "blender": bpy.app.version_string},
+                "requiredObjectIds": sorted(O.OBJECT_SIZES), "objects": rows}
+    if a.save_blend:
+        path = Path(a.save_blend)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        bpy.ops.wm.save_as_mainfile(filepath=str(path), compress=True, check_existing=False)
+        blend = path.resolve()
+        manifest["source"] = {"blend": str(blend.relative_to(ROOT)) if blend.is_relative_to(ROOT) else str(blend),
+                              "sha256": sha256(blend), "note": "editable Blender source saved by this export"}
+    (out / "manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
+    print(f"[objects] {len(rows)} objects")
 
 
 def main():
     a = args()
+    if a.objects:
+        return export_objects(a)
     catalog = json.loads(Path(a.catalog).read_text())
     bpy.ops.wm.read_factory_settings(use_empty=True)
     rows = export_all(catalog, a)
@@ -1004,10 +1313,23 @@ def main():
         "units": "metres; 1 texel = 1/16 m brick grid",
         "axes": "Blender Z-up part frame (+X starboard, +Y forward, +Z up); glTF is +Y up: (x, y, z) -> (x, z, -y)",
         "materialSlots": [f"slot{i}_{s}" for i, s in enumerate(SLOTS)],
-        "bevel": {"widthM": BEVEL, "segments": 1, "angleLimitDeg": 30, "applied": True},
+        "bevel": ({"widthM": a.runtime_bevel, "segments": 1, "angleLimitDeg": 30, "applied": a.runtime_bevel > 0}
+                  if a.runtime else {"widthM": BEVEL, "segments": 1, "angleLimitDeg": 30, "applied": True}),
         "excluded": "plumes, labels, decals and damage-state variants (pristine only)",
+        "runtime": ({"compaction": "box faces fully covered by opaque neighbours removed before the bevel",
+                     "published": "copied to apps by scripts/prepare_app.py PUBLISHED_RUNTIME; br/gz sidecars at build"}
+                    if a.runtime else None),
         "components": rows,
     }
+    if a.save_blend:
+        blend = Path(a.save_blend).resolve()
+        manifest["source"] = {"blend": str(blend.relative_to(ROOT)) if blend.is_relative_to(ROOT) else str(blend),
+                              "sha256": sha256(blend),
+                              "note": "editable Blender source saved by this export; GLBs are exported from it"}
+    if a.runtime:
+        manifest["status"] = "proposed art published to the runtime for review; not owner-approved"
+        if a.ids_file:
+            manifest["requiredComponentIds"] = sorted(json.loads(Path(a.ids_file).read_text()))
     if not a.only:
         (out / "manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
     print(f"[export] {len(rows)} components")

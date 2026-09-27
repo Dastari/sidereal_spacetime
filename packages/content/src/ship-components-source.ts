@@ -24,11 +24,12 @@ import {
   type ShipSizeClass,
   type ShipVec3,
 } from "./ship-components";
+import { CONSTRUCTION_GRAMMAR } from "./construction-grammar";
 
 export const SHIP_COMPONENT_CATALOG_ID = "ship-components-v1";
 export const SHIP_COMPONENT_CATALOG_REVISION = 1;
 /** Art-library revision directory that holds the exported component GLBs. */
-export const SHIP_COMPONENT_ART_REVISION = "r002";
+export const SHIP_COMPONENT_ART_REVISION = "r004";
 export const shipComponentGlbPath = (id: string) =>
   `assets/art-library/ship-components/${SHIP_COMPONENT_ART_REVISION}/glb/${id}.glb`;
 
@@ -53,10 +54,41 @@ const interior = (w: number, d: number, h: number): Box => [
   [-w / 2, -d / 2, 0],
   [w / 2, d / 2, h],
 ];
-/** Edge modules sit on the edge line and stand outward (-Y) by `depth`. */
-const edge = (w: number, depth: number, h: number): Box => [
-  [-w / 2, -depth, 0],
-  [w / 2, 0, h],
+/**
+ * Edge hatch frame (airlocks, cargo doors, docking ports) from the construction grammar, in texels:
+ * from the deck floor top to the wall top. The clear opening reaches the deck volume's upper
+ * cassette tier top (the rim band is the lintel); tier seams are returned for the art.
+ * Edge modules are recessed into the hull side band: they stand outward only to the cassette face
+ * plus a landing lip, so re-deriving heights here keeps them aligned if the grammar changes.
+ */
+export function edgeHatchFrameTexels() {
+  const g = CONSTRUCTION_GRAMMAR;
+  const [z0, z1] = g.heightClasses.deck.z;
+  const r = g.tierRule;
+  const twoTier = z1 - z0 >= r.twoTierMinTexels;
+  const tierTop = z1 - (twoTier ? r.twoTierRimTexels : r.oneTierRimTexels);
+  const top = g.deck.wallTopTexels;
+  // Clear opening up to the upper tier top (rim band as lintel), leaving a lintel strip below the wall top.
+  const openingTop = Math.min(tierTop, top - 1);
+  return {
+    floorTop: g.deck.floorTopTexels,
+    top,
+    height: top - g.deck.floorTopTexels,
+    openingHeight: openingTop - g.deck.floorTopTexels,
+    seams: twoTier ? [z0, z0 + r.lowerTierTexels, tierTop] : [z0, tierTop],
+    texelsPerMeter: g.texelsPerMeter,
+  };
+}
+const EDGE_FRAME = edgeHatchFrameTexels();
+/** Edge hatch frame height in metres (floor top to wall top). */
+export const EDGE_HATCH_HEIGHT_M = EDGE_FRAME.height / EDGE_FRAME.texelsPerMeter;
+/**
+ * Edge modules sit on the hull edge line, reach outward (-Y) by `depth` (cassette face plus
+ * landing lip) and are z-centred on the frame: placement puts the centre at floor top + height/2.
+ */
+const edge = (w: number, depth: number): Box => [
+  [-w / 2, -depth, -EDGE_HATCH_HEIGHT_M / 2],
+  [w / 2, 0, EDGE_HATCH_HEIGHT_M / 2],
 ];
 
 const CONNECTOR: Record<ShipComponentChannel, [string, string]> = {
@@ -94,7 +126,7 @@ function layoutPorts(
       position = [x, r3(lo[1] + Math.min(0.25, (hi[1] - lo[1]) / 4)), 0];
       normal = [0, 0, -1];
     } else if (socket === "edge") {
-      position = [r3(Math.max(lo[0], Math.min(hi[0], x))), 0, 0.25];
+      position = [r3(Math.max(lo[0], Math.min(hi[0], x))), 0, r3(lo[2] + 0.25)];
       normal = [0, 1, 0];
     } else {
       position = [x, 0, 0];
@@ -1565,7 +1597,7 @@ const cargoDoorSpec: KindSpec = {
   sockets: ["edge"],
   idSuffix: (i) => `${[2, 4, 6][i]}m`,
   cells: (i) => [[2, 4, 6][i], 1],
-  envelope: (i) => edge([2, 4, 6][i], 0.3125, [2.75, 3.25, 3.25][i]),
+  envelope: (i) => edge([2, 4, 6][i], 0.375),
   clearance: (i) => ({ kind: "door-swing", lengthM: [1.5, 2, 2.5][i], arcDeg: 0 }),
   massKg: [250, 600, 1100],
   hp: [200, 400, 600],
@@ -1576,8 +1608,8 @@ const cargoDoorSpec: KindSpec = {
   stats: (i) =>
     access({
       kind: "cargo-door",
-      openingWidthM: [2, 4, 6][i],
-      openingHeightM: [2.5, 3, 3][i],
+      openingWidthM: [2, 4, 6][i] - 0.25,
+      openingHeightM: EDGE_FRAME.openingHeight / EDGE_FRAME.texelsPerMeter,
       cycleS: [3, 5, 7][i],
       pressureSeal: true,
       throughputM3PerMin: [3, 8, 15][i],
@@ -1597,7 +1629,7 @@ const airlockSpecs: KindSpec[] = [
     sizes: ["MD"],
     sockets: ["edge"],
     cells: () => [2, 1],
-    envelope: () => edge(2, 1, 2.75),
+    envelope: () => edge(2, 0.375),
     clearance: () => ({ kind: "door-swing", lengthM: 1.2, arcDeg: 0 }),
     massKg: [450],
     hp: [300],
@@ -1622,7 +1654,7 @@ const airlockSpecs: KindSpec[] = [
     sizes: ["SM"],
     sockets: ["edge"],
     cells: () => [2, 1],
-    envelope: () => edge(2, 0.5, 2.75),
+    envelope: () => edge(2, 0.25),
     massKg: [220],
     hp: [200],
     armor: [4],
@@ -1664,7 +1696,7 @@ const hatchSpecs: KindSpec[] = [
     sizes: ["SM"],
     sockets: ["top", "bottom"],
     cells: () => [1, 1],
-    envelope: () => topMount(1, 1, 0.35),
+    envelope: () => topMount(1, 1, 0.125),
     massKg: [120],
     hp: [220],
     armor: [6],
@@ -1685,7 +1717,7 @@ const dockingPortSpec: KindSpec = {
   sizes: MDLG,
   sockets: ["edge", "top"],
   cells: (i) => [[2, 1], [3, 1]][i] as [number, number],
-  envelope: (i) => edge([2, 3][i], [1.2, 1.6][i], [2.75, 3.25][i]),
+  envelope: (i) => edge([2, 3][i], 0.375),
   massKg: [700, 1500],
   hp: [320, 540],
   armor: [6, 8],
@@ -1701,8 +1733,9 @@ const dockingPortSpec: KindSpec = {
   stats: (i) =>
     access({
       kind: "docking-port",
-      openingWidthM: [1.4, 2.4][i],
-      openingHeightM: [2.2, 2.6][i],
+      // Round hatch inside the grammar frame (see docking_port in ship_component_export.py).
+      openingWidthM: Math.min([2, 3][i] * 16 - 6, EDGE_FRAME.openingHeight - 4) / EDGE_FRAME.texelsPerMeter,
+      openingHeightM: Math.min([2, 3][i] * 16 - 6, EDGE_FRAME.openingHeight - 4) / EDGE_FRAME.texelsPerMeter,
       cycleS: [20, 25][i],
       pressureSeal: true,
       throughputM3PerMin: [4, 12][i],
