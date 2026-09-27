@@ -79,7 +79,8 @@ export interface PilotRepository {
   clearInputAndAim(characterId: string): void;
 }
 /** Prefab stations carry their re-derived pose; the Wayfarer seat keeps its constants. */
-const seatOf = (s: PilotStation) => s.pose?.position ?? QUALIFIED_PILOT_POSITION;
+const seatOf = (s: PilotStation) =>
+  s.pose?.position ?? QUALIFIED_PILOT_POSITION;
 const inScope = (a: PilotActor, s: PilotStation) =>
   a.shipId === s.shipId && a.deckId === s.deckId;
 export function enterConstructionPilot(db: PilotRepository, args: PilotAction) {
@@ -132,10 +133,7 @@ export function enterConstructionPilot(db: PilotRepository, args: PilotAction) {
     nearby.some(
       (other) =>
         other.id !== a.id &&
-        Math.hypot(
-          other.x - seatOf(s)[0],
-          other.y - seatOf(s)[1],
-        ) < 0.6,
+        Math.hypot(other.x - seatOf(s)[0], other.y - seatOf(s)[1]) < 0.6,
     )
   )
     throw Error("Pilot seat space occupied");
@@ -182,10 +180,7 @@ export function constructionPilotCanControl(
     seat.shipId === s.shipId &&
     seat.deckId === s.deckId &&
     seat.instanceRevision === s.instanceRevision &&
-    Math.hypot(
-      a.x - seatOf(s)[0],
-      a.y - seatOf(s)[1],
-    ) < 1e-5 &&
+    Math.hypot(a.x - seatOf(s)[0], a.y - seatOf(s)[1]) < 1e-5 &&
     db.hasCurrentAccess(a, s) &&
     db.hasOperationalFlight(s.shipId) &&
     db.hasInputLease(a.id)

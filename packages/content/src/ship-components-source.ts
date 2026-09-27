@@ -81,7 +81,8 @@ export function edgeHatchFrameTexels() {
 }
 const EDGE_FRAME = edgeHatchFrameTexels();
 /** Edge hatch frame height in metres (floor top to wall top). */
-export const EDGE_HATCH_HEIGHT_M = EDGE_FRAME.height / EDGE_FRAME.texelsPerMeter;
+export const EDGE_HATCH_HEIGHT_M =
+  EDGE_FRAME.height / EDGE_FRAME.texelsPerMeter;
 /**
  * Edge modules sit on the hull edge line, reach outward (-Y) by `depth` (cassette face plus
  * landing lip) and are z-centred on the frame: placement puts the centre at floor top + height/2.
@@ -163,7 +164,10 @@ interface KindSpec {
   sockets: readonly ShipMountSocket[];
   cells?: (i: number, s: ShipSizeClass) => readonly [number, number];
   envelope: (i: number, s: ShipSizeClass) => Box;
-  clearance?: (i: number, s: ShipSizeClass) => ShipComponentDefinition["mount"]["clearance"];
+  clearance?: (
+    i: number,
+    s: ShipSizeClass,
+  ) => ShipComponentDefinition["mount"]["clearance"];
   massKg: PerSize<number>;
   hp: PerSize<number>;
   armor?: PerSize<number>;
@@ -180,10 +184,29 @@ interface KindSpec {
   coolantSupplyLps?: PerSize<number>;
   /** Coolant return/flow-through capacity for radiators and heat sinks. */
   coolantThroughLps?: PerSize<number>;
-  fuel?: { idle?: PerSize<number>; active?: PerSize<number>; capacityL?: PerSize<number>; outLps?: PerSize<number> };
-  air?: { supplyM3s?: PerSize<number>; crewSupported?: PerSize<number>; reserveCrewHours?: PerSize<number>; intakeM3s?: PerSize<number> };
-  data?: { demandKbps?: PerSize<number>; supplyKbps?: PerSize<number>; controlSlots?: PerSize<number>; slotsUsed?: PerSize<number> };
-  ammoFeed?: { direction: "in" | "out"; capacity: PerSize<number>; medium: string };
+  fuel?: {
+    idle?: PerSize<number>;
+    active?: PerSize<number>;
+    capacityL?: PerSize<number>;
+    outLps?: PerSize<number>;
+  };
+  air?: {
+    supplyM3s?: PerSize<number>;
+    crewSupported?: PerSize<number>;
+    reserveCrewHours?: PerSize<number>;
+    intakeM3s?: PerSize<number>;
+  };
+  data?: {
+    demandKbps?: PerSize<number>;
+    supplyKbps?: PerSize<number>;
+    controlSlots?: PerSize<number>;
+    slotsUsed?: PerSize<number>;
+  };
+  ammoFeed?: {
+    direction: "in" | "out";
+    capacity: PerSize<number>;
+    medium: string;
+  };
   extraPorts?: (i: number, s: ShipSizeClass) => PortSpec[];
   stats?: (i: number, s: ShipSizeClass) => Partial<ShipComponentDefinition>;
   cost: PerSize<number>;
@@ -196,7 +219,7 @@ interface KindSpec {
 }
 const zero = (sizes: Sizes) => sizes.map(() => 0);
 const at = (v: PerSize<number> | undefined, i: number) => (v ? v[i] : 0);
-const repeat = <T,>(sizes: Sizes, v: T): T[] => sizes.map(() => v);
+const repeat = <T>(sizes: Sizes, v: T): T[] => sizes.map(() => v);
 
 function build(spec: KindSpec): ShipComponentDefinition[] {
   return spec.sizes.map((s, i) => {
@@ -240,9 +263,19 @@ function build(spec: KindSpec): ShipComponentDefinition[] {
     const dataDemand = at(spec.data?.demandKbps, i),
       dataSupply = at(spec.data?.supplyKbps, i);
     if (dataDemand > 0)
-      ports.push({ id: "data-in", channel: "data", direction: "in", capacity: dataDemand });
+      ports.push({
+        id: "data-in",
+        channel: "data",
+        direction: "in",
+        capacity: dataDemand,
+      });
     if (dataSupply > 0)
-      ports.push({ id: "data-out", channel: "data", direction: "out", capacity: dataSupply });
+      ports.push({
+        id: "data-out",
+        channel: "data",
+        direction: "out",
+        capacity: dataSupply,
+      });
     const through = at(spec.coolantThroughLps, i);
     if (coolantDemand > 0 || through > 0)
       ports.push({
@@ -254,19 +287,44 @@ function build(spec: KindSpec): ShipComponentDefinition[] {
     const pump = at(spec.coolantSupplyLps, i);
     // Pumps drive the loop; flow-through parts (radiators, sinks) pass it on.
     if (pump > 0 || through > 0)
-      ports.push({ id: "coolant-out", channel: "coolant", direction: "out", capacity: Math.max(pump, through) });
+      ports.push({
+        id: "coolant-out",
+        channel: "coolant",
+        direction: "out",
+        capacity: Math.max(pump, through),
+      });
     const fuelActive = at(spec.fuel?.active, i),
       fuelCap = at(spec.fuel?.capacityL, i);
     if (fuelActive > 0)
-      ports.push({ id: "fuel-in", channel: "fuel", direction: "in", capacity: ceil1(fuelActive * 1.25) || 0.1 });
+      ports.push({
+        id: "fuel-in",
+        channel: "fuel",
+        direction: "in",
+        capacity: ceil1(fuelActive * 1.25) || 0.1,
+      });
     if (fuelCap > 0)
-      ports.push({ id: "fuel-out", channel: "fuel", direction: "out", capacity: at(spec.fuel?.outLps, i) });
+      ports.push({
+        id: "fuel-out",
+        channel: "fuel",
+        direction: "out",
+        capacity: at(spec.fuel?.outLps, i),
+      });
     const airOut = at(spec.air?.supplyM3s, i);
     if (airOut > 0)
-      ports.push({ id: "air-out", channel: "ventilation", direction: "out", capacity: airOut });
+      ports.push({
+        id: "air-out",
+        channel: "ventilation",
+        direction: "out",
+        capacity: airOut,
+      });
     const airIn = at(spec.air?.intakeM3s, i);
     if (airIn > 0)
-      ports.push({ id: "air-in", channel: "ventilation", direction: "in", capacity: airIn });
+      ports.push({
+        id: "air-in",
+        channel: "ventilation",
+        direction: "in",
+        capacity: airIn,
+      });
     if (spec.ammoFeed)
       ports.push({
         id: spec.ammoFeed.direction === "in" ? "ammo-in" : "ammo-out",
@@ -381,7 +439,9 @@ const g0 = 9.80665;
 /** Effective specific impulse implied by thrust and fuel flow (0 when fuel-free). */
 const isp = (thrustKn: number, fuelLps: number) =>
   fuelLps > 0
-    ? Math.round((thrustKn * 1000) / (fuelLps * SHIP_THERMAL_MODEL.fuelKgPerL * g0))
+    ? Math.round(
+        (thrustKn * 1000) / (fuelLps * SHIP_THERMAL_MODEL.fuelKgPerL * g0),
+      )
     : 0;
 const propulsion = (
   role: NonNullable<ShipComponentDefinition["propulsion"]>["role"],
@@ -424,8 +484,10 @@ const ionSpec = (variant: "standard" | "salvaged"): KindSpec => {
     sizes: ALL,
     sockets: ["rear", "face"],
     // The salvaged bypass pipe and patches stand 0.0625 m proud on one side.
-    envelope: (i, s) => outward(SHIP_SIZE_CELLS[s] + (k ? 0.125 : 0), ION_LEN[i]),
-    clearance: (i, s) => plumeClear(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 3.3),
+    envelope: (i, s) =>
+      outward(SHIP_SIZE_CELLS[s] + (k ? 0.125 : 0), ION_LEN[i]),
+    clearance: (i, s) =>
+      plumeClear(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 3.3),
     massKg: m([380, 900, 2000, 4200], k ? 1.12 : 1),
     hp: m([140, 300, 520, 820], k ? 0.7 : 1),
     armor: [2, 3, 4, 5],
@@ -448,7 +510,10 @@ const ionSpec = (variant: "standard" | "salvaged"): KindSpec => {
         k ? r3(ION_FUEL[i] * 1.15) : ION_FUEL[i],
         5,
         1.2,
-        { lengthM: r2(SHIP_SIZE_CELLS[s] * 2.2), radiusM: r2(SHIP_SIZE_CELLS[s] * 0.31) },
+        {
+          lengthM: r2(SHIP_SIZE_CELLS[s] * 2.2),
+          radiusM: r2(SHIP_SIZE_CELLS[s] * 0.31),
+        },
       ),
     cost: m([4200, 9800, 21000, 42000], k ? 0.4 : 1),
     buildTimeS: m([120, 240, 480, 900], k ? 0.6 : 1),
@@ -471,7 +536,8 @@ const blockSpec: KindSpec = {
   sizes: ALL,
   sockets: ["rear", "face"],
   // Collar and side trims stand 0.125 m proud of the hardpoint square.
-  envelope: (i, s) => outward(SHIP_SIZE_CELLS[s] + 0.25, BLOCK_LEN[i], BLOCK_H[i] + 0.25),
+  envelope: (i, s) =>
+    outward(SHIP_SIZE_CELLS[s] + 0.25, BLOCK_LEN[i], BLOCK_H[i] + 0.25),
   clearance: (i, s) => plumeClear(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 3),
   massKg: [320, 800, 1800, 3800],
   hp: [160, 340, 600, 950],
@@ -479,7 +545,11 @@ const blockSpec: KindSpec = {
   destroyedEffect: "fire",
   crew: { automation: "computer", station: "pilot" },
   power: { idle: [1, 1.5, 3, 5], active: [10, 20, 38, 70] },
-  heat: { idle: [1, 2, 3, 5], active: [20, 42, 85, 160], peak: [25, 53, 106, 200] },
+  heat: {
+    idle: [1, 2, 3, 5],
+    active: [20, 42, 85, 160],
+    peak: [25, 53, 106, 200],
+  },
   fuel: { active: BLOCK_FUEL },
   data: { demandKbps: [20, 20, 30, 40], slotsUsed: [1, 1, 1, 1] },
   stats: (i, s) =>
@@ -491,7 +561,8 @@ const blockSpec: KindSpec = {
   buildTimeS: [100, 200, 420, 780],
   techTier: [1, 1, 2, 2],
   kitKey: (_i, s) => `block.${s}`,
-  notes: "Chemical/fusion torch block: 45% more thrust than the ion drive of the same size, ~7x the propellant, little power. XL has twin nozzles and is rear-only.",
+  notes:
+    "Chemical/fusion torch block: 45% more thrust than the ion drive of the same size, ~7x the propellant, little power. XL has twin nozzles and is rear-only.",
 };
 
 const RES_THRUST = [13, 28, 58];
@@ -504,8 +575,13 @@ const resonanceSpec: KindSpec = {
   sizes: SML,
   sockets: ["rear", "face"],
   // Crystal fins stand proud of the pod by 0.0625 m per size step.
-  envelope: (i, s) => outward(SHIP_SIZE_CELLS[s] + 0.125 * SHIP_SIZE_CELLS[s], [1.875, 2.625, 3.75][i]),
-  clearance: (_i, s) => plumeClear(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 2.6),
+  envelope: (i, s) =>
+    outward(
+      SHIP_SIZE_CELLS[s] + 0.125 * SHIP_SIZE_CELLS[s],
+      [1.875, 2.625, 3.75][i],
+    ),
+  clearance: (_i, s) =>
+    plumeClear(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 2.6),
   massKg: [300, 720, 1600],
   hp: [120, 260, 460],
   armor: [2, 3, 4],
@@ -524,7 +600,8 @@ const resonanceSpec: KindSpec = {
   buildTimeS: [300, 600, 1200],
   techTier: [4, 4, 4],
   kitKey: (_i, s) => `x.resonance.${s}`,
-  notes: "Alien variant: propellant-free (power only), lighter and cooler, explodes when destroyed. Faction-locked tech tier 4.",
+  notes:
+    "Alien variant: propellant-free (power only), lighter and cooler, explodes when destroyed. Faction-locked tech tier 4.",
 };
 
 const rcsSpec: KindSpec = {
@@ -544,11 +621,16 @@ const rcsSpec: KindSpec = {
   heat: { idle: [0, 0], active: [2, 4] },
   fuel: { active: [0.015, 0.04] },
   data: { demandKbps: [10, 10], slotsUsed: [0, 0] },
-  stats: (i) => propulsion("maneuver", [3, 9][i], [0.015, 0.04][i], 0, 0.1, { lengthM: [0.8, 1.4][i], radiusM: [0.12, 0.22][i] }),
+  stats: (i) =>
+    propulsion("maneuver", [3, 9][i], [0.015, 0.04][i], 0, 0.1, {
+      lengthM: [0.8, 1.4][i],
+      radiusM: [0.12, 0.22][i],
+    }),
   cost: [600, 1500],
   buildTimeS: [30, 60],
   kitKey: (_i, s) => `rcs.${s}`,
-  notes: "Monopropellant attitude thruster. Both sizes fit a single 1 m cell; RCS clusters share the ship's IFCS computer slot.",
+  notes:
+    "Monopropellant attitude thruster. Both sizes fit a single 1 m cell; RCS clusters share the ship's IFCS computer slot.",
 };
 
 const vtolSpec: KindSpec = {
@@ -558,7 +640,8 @@ const vtolSpec: KindSpec = {
   status: "future",
   sizes: SMMD,
   sockets: ["bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 0.6),
+  envelope: (_i, s) =>
+    topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 0.6),
   massKg: [260, 620],
   hp: [120, 260],
   crew: { automation: "computer", station: "pilot" },
@@ -566,12 +649,17 @@ const vtolSpec: KindSpec = {
   heat: { idle: [0, 1], active: [18, 40] },
   fuel: { active: [0.1, 0.22] },
   data: { demandKbps: [20, 20], slotsUsed: [1, 1] },
-  stats: (i) => propulsion("vertical", [20, 45][i], [0.1, 0.22][i], 10, 0.3, { lengthM: [1.5, 2.5][i], radiusM: [0.3, 0.55][i] }),
+  stats: (i) =>
+    propulsion("vertical", [20, 45][i], [0.1, 0.22][i], 10, 0.3, {
+      lengthM: [1.5, 2.5][i],
+      radiusM: [0.3, 0.55][i],
+    }),
   cost: [3800, 8800],
   buildTimeS: [120, 240],
   techTier: [2, 2],
   kitKey: (_i, s) => `x.vtol.${s}`,
-  notes: "FUTURE: vertical gameplay needs its own design and tests (AGENTS.md). Rejected by the compiler unless future parts are allowed; never feeds planar flight.",
+  notes:
+    "FUTURE: vertical gameplay needs its own design and tests (AGENTS.md). Rejected by the compiler unless future parts are allowed; never feeds planar flight.",
 };
 
 const warpSpec: KindSpec = {
@@ -581,7 +669,11 @@ const warpSpec: KindSpec = {
   status: "future",
   sizes: ["LG", "XL"],
   sockets: ["interior"],
-  cells: (i) => [[3, 4], [4, 5]][i] as [number, number],
+  cells: (i) =>
+    [
+      [3, 4],
+      [4, 5],
+    ][i] as [number, number],
   envelope: (i) => interior([3, 4][i], [4, 5][i], [2.6, 3.2][i]),
   massKg: [6500, 12000],
   hp: [600, 1000],
@@ -597,7 +689,8 @@ const warpSpec: KindSpec = {
   buildTimeS: [3600, 7200],
   techTier: [4, 4],
   kitKey: (_i, s) => `x.warp.${s}`,
-  notes: "FUTURE: jump travel is not designed. Charge draw shown so power planning can reserve it.",
+  notes:
+    "FUTURE: jump travel is not designed. Charge draw shown so power planning can reserve it.",
 };
 
 // --------------------------------------------------------------------- power
@@ -607,15 +700,26 @@ const reactorSpec: KindSpec = {
   family: "power",
   sizes: SML,
   sockets: ["interior"],
-  cells: (i) => [[2, 2], [3, 3], [4, 4]][i] as [number, number],
-  envelope: (i) => interior([1.8, 2.8, 3.8][i], [1.8, 2.8, 3.8][i], [1.9, 2.6, 3.2][i]),
+  cells: (i) =>
+    [
+      [2, 2],
+      [3, 3],
+      [4, 4],
+    ][i] as [number, number],
+  envelope: (i) =>
+    interior([1.8, 2.8, 3.8][i], [1.8, 2.8, 3.8][i], [1.9, 2.6, 3.2][i]),
   massKg: [600, 1500, 3800],
   hp: [300, 650, 1100],
   armor: [6, 8, 10],
   destroyedEffect: "explosion",
   explosionDamage: [400, 900, 2000],
   crew: { automation: "computer", station: "engineer" },
-  power: { idle: [2, 5, 10], active: [2, 5, 10], peak: [2, 5, 10], generation: [250, 700, 1800] },
+  power: {
+    idle: [2, 5, 10],
+    active: [2, 5, 10],
+    peak: [2, 5, 10],
+    generation: [250, 700, 1800],
+  },
   heat: { idle: [10, 25, 60], active: [50, 140, 360], peak: [60, 170, 430] },
   fuel: { idle: [0.0008, 0.002, 0.005], active: [0.004, 0.01, 0.024] },
   data: { demandKbps: [40, 60, 80], slotsUsed: [1, 1, 1] },
@@ -624,7 +728,8 @@ const reactorSpec: KindSpec = {
   techTier: [1, 2, 3],
   kitKey: (_i, s) => `x.reactor.${s}`,
   artLibraryDesignId: (i) => (i === 1 ? "shipyard.equipment.reactor" : null),
-  notes: "Generation is rated output. Waste heat ~20% of delivered power at full load; fuel scales with load. The art-library reactor review lists 1 MW / 200 kW heat, which is not an approved stat.",
+  notes:
+    "Generation is rated output. Waste heat ~20% of delivered power at full load; fuel scales with load. The art-library reactor review lists 1 MW / 200 kW heat, which is not an approved stat.",
 };
 const batterySpec: KindSpec = {
   kind: "battery",
@@ -632,13 +737,26 @@ const batterySpec: KindSpec = {
   family: "power",
   sizes: SML,
   sockets: ["interior"],
-  cells: (i) => [[1, 1], [1, 2], [2, 2]][i] as [number, number],
-  envelope: (i) => interior([0.9, 0.9, 1.8][i], [0.9, 1.8, 1.8][i], [1.4, 1.6, 1.8][i]),
+  cells: (i) =>
+    [
+      [1, 1],
+      [1, 2],
+      [2, 2],
+    ][i] as [number, number],
+  envelope: (i) =>
+    interior([0.9, 0.9, 1.8][i], [0.9, 1.8, 1.8][i], [1.4, 1.6, 1.8][i]),
   massKg: [180, 450, 1100],
   hp: [120, 240, 420],
   armor: [3, 4, 5],
   destroyedEffect: "fire",
-  power: { idle: [0, 0, 0], active: [0, 0, 0], peak: [0, 0, 0], storageKwh: [20, 60, 160], discharge: [120, 320, 800], charge: [60, 160, 400] },
+  power: {
+    idle: [0, 0, 0],
+    active: [0, 0, 0],
+    peak: [0, 0, 0],
+    storageKwh: [20, 60, 160],
+    discharge: [120, 320, 800],
+    charge: [60, 160, 400],
+  },
   heat: { idle: [0, 0, 0], active: [4, 10, 24] },
   data: { demandKbps: [5, 5, 10] },
   cost: [2400, 6000, 14500],
@@ -652,21 +770,35 @@ const capacitorSpec: KindSpec = {
   family: "power",
   sizes: SML,
   sockets: ["interior"],
-  cells: (i) => [[1, 1], [1, 1], [2, 1]][i] as [number, number],
-  envelope: (i) => interior([0.8, 0.9, 1.8][i], [0.8, 0.9, 0.9][i], [1.0, 1.6, 1.6][i]),
+  cells: (i) =>
+    [
+      [1, 1],
+      [1, 1],
+      [2, 1],
+    ][i] as [number, number],
+  envelope: (i) =>
+    interior([0.8, 0.9, 1.8][i], [0.8, 0.9, 0.9][i], [1.0, 1.6, 1.6][i]),
   massKg: [90, 220, 520],
   hp: [80, 160, 280],
   armor: [2, 3, 4],
   destroyedEffect: "explosion",
   explosionDamage: [60, 150, 400],
-  power: { idle: [0, 0, 0], active: [0, 0, 0], peak: [0, 0, 0], storageKwh: [0.4, 1.2, 3.5], discharge: [1200, 3000, 7500], charge: [150, 400, 1000] },
+  power: {
+    idle: [0, 0, 0],
+    active: [0, 0, 0],
+    peak: [0, 0, 0],
+    storageKwh: [0.4, 1.2, 3.5],
+    discharge: [1200, 3000, 7500],
+    charge: [150, 400, 1000],
+  },
   heat: { idle: [0, 0, 0], active: [3, 8, 20] },
   data: { demandKbps: [5, 5, 10] },
   cost: [1800, 4400, 10500],
   buildTimeS: [60, 120, 240],
   techTier: [2, 2, 3],
   kitKey: (_i, s) => `x.capacitor.${s}`,
-  notes: "Small store, very high discharge. Pulse weapons (railgun, plasma) need a bank holding at least one shot each.",
+  notes:
+    "Small store, very high discharge. Pulse weapons (railgun, plasma) need a bank holding at least one shot each.",
 };
 const fuelTankSpec: KindSpec = {
   kind: "fuel-tank",
@@ -675,7 +807,8 @@ const fuelTankSpec: KindSpec = {
   sizes: SML,
   sockets: ["interior"],
   cells: (_i, s) => [SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s]],
-  envelope: (i) => interior([0.9, 1.9, 2.9][i], [0.9, 1.9, 2.9][i], [0.9, 0.9, 1.1][i] + 0.4),
+  envelope: (i) =>
+    interior([0.9, 1.9, 2.9][i], [0.9, 1.9, 2.9][i], [0.9, 0.9, 1.1][i] + 0.4),
   massKg: [120, 320, 850],
   hp: [100, 220, 420],
   armor: [2, 3, 4],
@@ -684,7 +817,8 @@ const fuelTankSpec: KindSpec = {
   cost: [900, 2200, 5500],
   buildTimeS: [60, 120, 240],
   kitKey: (_i, s) => `x.fuel-tank.${s}`,
-  notes: "Dry mass shown; fuel adds 0.8 kg/L (inventory `liquid:fuel`). Shared by reactors, engines, RCS and aux generators.",
+  notes:
+    "Dry mass shown; fuel adds 0.8 kg/L (inventory `liquid:fuel`). Shared by reactors, engines, RCS and aux generators.",
 };
 const solarSpec: KindSpec = {
   kind: "solar-array",
@@ -692,7 +826,8 @@ const solarSpec: KindSpec = {
   family: "power",
   sizes: SMMD,
   sockets: ["top", "face"],
-  envelope: (i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], [0.5, 0.65][i]),
+  envelope: (i, s) =>
+    topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], [0.5, 0.65][i]),
   massKg: [60, 160],
   hp: [40, 80],
   power: { idle: [0, 0], active: [0, 0], peak: [0, 0], generation: [12, 35] },
@@ -729,7 +864,8 @@ const radiatorSpec: KindSpec = {
   family: "thermal",
   sizes: SML,
   sockets: ["top", "face"],
-  envelope: (i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], [0.6, 0.9, 1.2][i]),
+  envelope: (i, s) =>
+    topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], [0.6, 0.9, 1.2][i]),
   massKg: [90, 240, 600],
   hp: [60, 120, 200],
   armor: [0, 1, 1],
@@ -739,7 +875,8 @@ const radiatorSpec: KindSpec = {
   cost: [1100, 2800, 6600],
   buildTimeS: [60, 120, 240],
   kitKey: (_i, s) => `x.radiator.${s}`,
-  notes: "Rejects heat only while pumps move coolant to it: effective rejection = min(radiators, pumps x 25 kW per L/s).",
+  notes:
+    "Rejects heat only while pumps move coolant to it: effective rejection = min(radiators, pumps x 25 kW per L/s).",
 };
 const pumpSpec: KindSpec = {
   kind: "coolant-pump",
@@ -747,8 +884,14 @@ const pumpSpec: KindSpec = {
   family: "thermal",
   sizes: SML,
   sockets: ["interior"],
-  cells: (i) => [[1, 1], [1, 1], [2, 1]][i] as [number, number],
-  envelope: (i) => interior([0.8, 0.9, 1.8][i], [0.8, 0.9, 0.9][i], [0.9, 1.2, 1.4][i]),
+  cells: (i) =>
+    [
+      [1, 1],
+      [1, 1],
+      [2, 1],
+    ][i] as [number, number],
+  envelope: (i) =>
+    interior([0.8, 0.9, 1.8][i], [0.8, 0.9, 0.9][i], [0.9, 1.2, 1.4][i]),
   massKg: [80, 180, 420],
   hp: [80, 150, 260],
   armor: [2, 3, 4],
@@ -761,7 +904,8 @@ const pumpSpec: KindSpec = {
   cost: [700, 1600, 3800],
   buildTimeS: [45, 90, 180],
   kitKey: (_i, s) => `x.coolant-pump.${s}`,
-  notes: "Supplies loop flow (out) and takes the return (in). 1 L/s carries 25 kW.",
+  notes:
+    "Supplies loop flow (out) and takes the return (in). 1 L/s carries 25 kW.",
 };
 const heatSinkSpec: KindSpec = {
   kind: "heat-sink",
@@ -769,7 +913,11 @@ const heatSinkSpec: KindSpec = {
   family: "thermal",
   sizes: SMMD,
   sockets: ["interior"],
-  cells: (i) => [[1, 1], [2, 1]][i] as [number, number],
+  cells: (i) =>
+    [
+      [1, 1],
+      [2, 1],
+    ][i] as [number, number],
   envelope: (i) => interior([0.9, 1.8][i], 0.9, [1.2, 1.4][i]),
   massKg: [150, 400],
   hp: [120, 240],
@@ -823,7 +971,11 @@ function weaponSpec(k: WeaponKind): KindSpec {
     sockets: k.sockets ?? ["top", "face", "bottom"],
     envelope: (_i, s) =>
       k.faceOnly
-        ? outward(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 2.15, SHIP_SIZE_CELLS[s] * 0.9)
+        ? outward(
+            SHIP_SIZE_CELLS[s],
+            SHIP_SIZE_CELLS[s] * 2.15,
+            SHIP_SIZE_CELLS[s] * 0.9,
+          )
         : topMount(
             SHIP_SIZE_CELLS[s],
             SHIP_SIZE_CELLS[s],
@@ -854,7 +1006,14 @@ function weaponSpec(k: WeaponKind): KindSpec {
   };
 }
 const W = (
-  p: Omit<WeaponStats, "capacitorKjPerShot" | "heatPerShotKj" | "areaRadiusM" | "projectilesPerShot" | "roundsPerShot"> &
+  p: Omit<
+    WeaponStats,
+    | "capacitorKjPerShot"
+    | "heatPerShotKj"
+    | "areaRadiusM"
+    | "projectilesPerShot"
+    | "roundsPerShot"
+  > &
     Partial<WeaponStats>,
 ): WeaponStats => ({
   projectilesPerShot: 1,
@@ -904,7 +1063,8 @@ const weaponKinds: WeaponKind[] = [
       }),
     cost: [2600, 6200],
     buildTimeS: [90, 180],
-    notes: "Autonomous under a fire-control slot; intercepts missiles and fighters.",
+    notes:
+      "Autonomous under a fire-control slot; intercepts missiles and fighters.",
   },
   {
     kind: "autocannon",
@@ -936,7 +1096,8 @@ const weaponKinds: WeaponKind[] = [
       }),
     cost: [3000, 7200, 16000],
     buildTimeS: [90, 180, 360],
-    notes: "Versatile ballistic mount; twin barrels fire together (damage per projectile).",
+    notes:
+      "Versatile ballistic mount; twin barrels fire together (damage per projectile).",
   },
   {
     kind: "laser-cannon",
@@ -973,7 +1134,8 @@ const weaponKinds: WeaponKind[] = [
     cost: [4200, 10000, 23000],
     buildTimeS: [120, 240, 480],
     techTier: [2, 2, 3],
-    notes: "Hitscan (projectile speed 0). No ammunition; 70% of shot energy becomes heat.",
+    notes:
+      "Hitscan (projectile speed 0). No ammunition; 70% of shot energy becomes heat.",
   },
   {
     kind: "railgun",
@@ -1013,7 +1175,8 @@ const weaponKinds: WeaponKind[] = [
     cost: [22000, 52000],
     buildTimeS: [480, 960],
     techTier: [3, 3],
-    notes: "Pulse weapon: capacitor bank must hold one shot; the reactor pays the average draw. Needs a gunner station.",
+    notes:
+      "Pulse weapon: capacitor bank must hold one shot; the reactor pays the average draw. Needs a gunner station.",
   },
   {
     kind: "missile-pod",
@@ -1049,7 +1212,8 @@ const weaponKinds: WeaponKind[] = [
     cost: [5200, 12000, 26000],
     buildTimeS: [150, 300, 600],
     techTier: [2, 2, 3],
-    notes: "Salvo launcher (4/8/12 tubes); shots per minute are salvos. Loaded pods explode when destroyed.",
+    notes:
+      "Salvo launcher (4/8/12 tubes); shots per minute are salvos. Loaded pods explode when destroyed.",
   },
   {
     kind: "torpedo-launcher",
@@ -1086,7 +1250,8 @@ const weaponKinds: WeaponKind[] = [
     cost: [18000, 40000],
     buildTimeS: [480, 900],
     techTier: [3, 3],
-    notes: "Heavy anti-capital strike through a hull face; needs a gunner station and a torpedo rack.",
+    notes:
+      "Heavy anti-capital strike through a hull face; needs a gunner station and a torpedo rack.",
   },
   {
     kind: "flak-cannon",
@@ -1117,7 +1282,8 @@ const weaponKinds: WeaponKind[] = [
       }),
     cost: [2800, 6600, 14500],
     buildTimeS: [90, 180, 360],
-    notes: "Six-barrel burst cluster; area damage against small craft and missiles.",
+    notes:
+      "Six-barrel burst cluster; area damage against small craft and missiles.",
   },
   {
     kind: "plasma-turret",
@@ -1158,7 +1324,8 @@ const weaponKinds: WeaponKind[] = [
     cost: [14000, 32000],
     buildTimeS: [360, 720],
     techTier: [3, 4],
-    notes: "Short-range high damage; the hottest weapon per shot (85% of shot energy). Capacitor-fed.",
+    notes:
+      "Short-range high damage; the hottest weapon per shot (85% of shot energy). Capacitor-fed.",
   },
   {
     kind: "side-cannon",
@@ -1190,7 +1357,8 @@ const weaponKinds: WeaponKind[] = [
       }),
     cost: [2200, 5200, 12000],
     buildTimeS: [80, 160, 320],
-    notes: "Hull-face broadside sponson with a limited 90 degree arc; LG has twin barrels.",
+    notes:
+      "Hull-face broadside sponson with a limited 90 degree arc; LG has twin barrels.",
   },
 ];
 
@@ -1210,7 +1378,9 @@ const magazine = (
 ): Partial<ShipComponentDefinition> => ({
   magazine: {
     ammoClass,
-    ammoTypes: AMMO_TYPES.filter((a) => a.ammoClass === ammoClass).map((a) => a.id),
+    ammoTypes: AMMO_TYPES.filter((a) => a.ammoClass === ammoClass).map(
+      (a) => a.id,
+    ),
     capacityKg,
   },
 });
@@ -1221,8 +1391,14 @@ const magBallisticSpec: KindSpec = {
   variant: "ballistic",
   sizes: SML,
   sockets: ["interior"],
-  cells: (i) => [[1, 1], [2, 1], [2, 2]][i] as [number, number],
-  envelope: (i) => interior([0.9, 1.8, 1.8][i], [0.9, 0.9, 1.8][i], [1.2, 1.4, 1.6][i]),
+  cells: (i) =>
+    [
+      [1, 1],
+      [2, 1],
+      [2, 2],
+    ][i] as [number, number],
+  envelope: (i) =>
+    interior([0.9, 1.8, 1.8][i], [0.9, 0.9, 1.8][i], [1.2, 1.4, 1.6][i]),
   massKg: [240, 560, 1300],
   hp: [150, 300, 520],
   armor: [6, 8, 10],
@@ -1235,7 +1411,8 @@ const magBallisticSpec: KindSpec = {
   cost: [1200, 2800, 6200],
   buildTimeS: [60, 120, 240],
   kitKey: (_i, s) => `x.magazine-ballistic.${s}`,
-  notes: "Armoured locker with a conveyor feed. Capacity by mass (see ammo types).",
+  notes:
+    "Armoured locker with a conveyor feed. Capacity by mass (see ammo types).",
 };
 const magMissileSpec: KindSpec = {
   kind: "magazine",
@@ -1244,7 +1421,11 @@ const magMissileSpec: KindSpec = {
   variant: "missile",
   sizes: MDLG,
   sockets: ["interior"],
-  cells: (i) => [[2, 1], [3, 2]][i] as [number, number],
+  cells: (i) =>
+    [
+      [2, 1],
+      [3, 2],
+    ][i] as [number, number],
   envelope: (i) => interior([1.8, 2.8][i], [0.9, 1.8][i], [1.4, 1.8][i]),
   massKg: [500, 1200],
   hp: [260, 480],
@@ -1291,8 +1472,14 @@ const shieldGenSpec: KindSpec = {
   family: "defense",
   sizes: SML,
   sockets: ["interior"],
-  cells: (i) => [[1, 1], [2, 2], [3, 3]][i] as [number, number],
-  envelope: (i) => interior([0.9, 1.8, 2.8][i], [0.9, 1.8, 2.8][i], [1.4, 1.9, 2.4][i]),
+  cells: (i) =>
+    [
+      [1, 1],
+      [2, 2],
+      [3, 3],
+    ][i] as [number, number],
+  envelope: (i) =>
+    interior([0.9, 1.8, 2.8][i], [0.9, 1.8, 2.8][i], [1.4, 1.9, 2.4][i]),
   massKg: [350, 850, 2000],
   hp: [160, 340, 600],
   armor: [4, 6, 8],
@@ -1315,7 +1502,8 @@ const shieldGenSpec: KindSpec = {
   buildTimeS: [240, 480, 960],
   techTier: [2, 3, 3],
   kitKey: (_i, s) => `x.shield-generator.${s}`,
-  notes: "Stores shield capacity; idle draw holds the field, active draw recharges it. Needs at least one emitter whose bubble covers the hull.",
+  notes:
+    "Stores shield capacity; idle draw holds the field, active draw recharges it. Needs at least one emitter whose bubble covers the hull.",
 };
 const shieldEmitterSpec: KindSpec = {
   kind: "shield-emitter",
@@ -1323,7 +1511,12 @@ const shieldEmitterSpec: KindSpec = {
   family: "defense",
   sizes: SML,
   sockets: ["top", "face", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.38)),
+  envelope: (_i, s) =>
+    topMount(
+      SHIP_SIZE_CELLS[s],
+      SHIP_SIZE_CELLS[s],
+      r2(SHIP_SIZE_CELLS[s] * 1.38),
+    ),
   massKg: [60, 150, 380],
   hp: [50, 110, 200],
   armor: [1, 2, 3],
@@ -1344,7 +1537,8 @@ const shieldEmitterSpec: KindSpec = {
   buildTimeS: [90, 180, 360],
   techTier: [2, 2, 3],
   kitKey: (_i, s) => `wpn.shield.${s}`,
-  notes: "Projects the generator's field; the ship bubble radius is the largest emitter radius.",
+  notes:
+    "Projects the generator's field; the ship bubble radius is the largest emitter radius.",
 };
 const ARMOR = [
   { v: "light", mass: 60, hp: 120, r: [0.1, 0.1, 0.05, 0.05], cost: 150 },
@@ -1369,14 +1563,20 @@ const armorSpecs: KindSpec[] = ARMOR.map((a, n) => ({
       class: a.v,
       hpPerCell: a.hp,
       massKgPerCell: a.mass,
-      resist: { kinetic: a.r[0], thermal: a.r[1], explosive: a.r[2], plasma: a.r[3] },
+      resist: {
+        kinetic: a.r[0],
+        thermal: a.r[1],
+        explosive: a.r[2],
+        plasma: a.r[3],
+      },
     },
   }),
   cost: [a.cost],
   buildTimeS: [[20, 40, 70, 90][n]],
   techTier: [([1, 1, 2, 3] as const)[n]],
   kitKey: () => null,
-  notes: "Per 1 m x 1 m hull cell. Armour is voxel ship structure (design doc 5): stats feed the damage model; its art comes from the structure style pass, not a component GLB.",
+  notes:
+    "Per 1 m x 1 m hull cell. Armour is voxel ship structure (design doc 5): stats feed the damage model; its art comes from the structure style pass, not a component GLB.",
 }));
 
 // ------------------------------------------------------------------- sensors
@@ -1395,8 +1595,17 @@ const dishSpec: KindSpec = {
   family: "sensor",
   sizes: SML,
   sockets: ["top", "face", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.44)),
-  clearance: (_i, s) => ({ kind: "sweep", lengthM: SHIP_SIZE_CELLS[s] * 0.6, arcDeg: 360 }),
+  envelope: (_i, s) =>
+    topMount(
+      SHIP_SIZE_CELLS[s],
+      SHIP_SIZE_CELLS[s],
+      r2(SHIP_SIZE_CELLS[s] * 1.44),
+    ),
+  clearance: (_i, s) => ({
+    kind: "sweep",
+    lengthM: SHIP_SIZE_CELLS[s] * 0.6,
+    arcDeg: 360,
+  }),
   massKg: [120, 300, 700],
   hp: [60, 120, 220],
   crew: { automation: "computer", station: "sensor" },
@@ -1415,8 +1624,17 @@ const radarSpec: KindSpec = {
   family: "sensor",
   sizes: MDLG,
   sockets: ["top", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 0.9)),
-  clearance: (_i, s) => ({ kind: "sweep", lengthM: SHIP_SIZE_CELLS[s] * 0.6, arcDeg: 360 }),
+  envelope: (_i, s) =>
+    topMount(
+      SHIP_SIZE_CELLS[s],
+      SHIP_SIZE_CELLS[s],
+      r2(SHIP_SIZE_CELLS[s] * 0.9),
+    ),
+  clearance: (_i, s) => ({
+    kind: "sweep",
+    lengthM: SHIP_SIZE_CELLS[s] * 0.6,
+    arcDeg: 360,
+  }),
   massKg: [420, 950],
   hp: [140, 260],
   crew: { automation: "computer", station: "sensor" },
@@ -1436,7 +1654,12 @@ const scannerSpec: KindSpec = {
   family: "sensor",
   sizes: SMMD,
   sockets: ["top", "face"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.82)),
+  envelope: (_i, s) =>
+    topMount(
+      SHIP_SIZE_CELLS[s],
+      SHIP_SIZE_CELLS[s],
+      r2(SHIP_SIZE_CELLS[s] * 1.82),
+    ),
   massKg: [90, 220],
   hp: [50, 100],
   crew: { automation: "computer", station: "sensor" },
@@ -1455,7 +1678,12 @@ const beaconSpec: KindSpec = {
   family: "sensor",
   sizes: SMMD,
   sockets: ["top"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.69)),
+  envelope: (_i, s) =>
+    topMount(
+      SHIP_SIZE_CELLS[s],
+      SHIP_SIZE_CELLS[s],
+      r2(SHIP_SIZE_CELLS[s] * 1.69),
+    ),
   massKg: [70, 180],
   hp: [40, 90],
   crew: { automation: "computer" },
@@ -1477,7 +1705,12 @@ const tractorSpec: KindSpec = {
   family: "utility",
   sizes: SML,
   sockets: ["top", "face", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.32)),
+  envelope: (_i, s) =>
+    topMount(
+      SHIP_SIZE_CELLS[s],
+      SHIP_SIZE_CELLS[s],
+      r2(SHIP_SIZE_CELLS[s] * 1.32),
+    ),
   clearance: (i) => ({ kind: "beam", lengthM: [120, 220, 350][i], arcDeg: 30 }),
   massKg: [250, 650, 1500],
   hp: [90, 190, 340],
@@ -1498,7 +1731,8 @@ const tractorSpec: KindSpec = {
   buildTimeS: [180, 360, 720],
   techTier: [2, 2, 3],
   kitKey: (_i, s) => `wpn.tractor.${s}`,
-  notes: "Force is applied to both bodies; target mass limit is for full control.",
+  notes:
+    "Force is applied to both bodies; target mass limit is for full control.",
 };
 const salvageSpec: KindSpec = {
   kind: "salvage-arm",
@@ -1506,7 +1740,8 @@ const salvageSpec: KindSpec = {
   family: "utility",
   sizes: MDLG,
   sockets: ["face", "top"],
-  envelope: (_i, s) => outward(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 1.8, SHIP_SIZE_CELLS[s]),
+  envelope: (_i, s) =>
+    outward(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 1.8, SHIP_SIZE_CELLS[s]),
   clearance: (i) => ({ kind: "sweep", lengthM: [10, 18][i], arcDeg: 120 }),
   massKg: [600, 1400],
   hp: [200, 360],
@@ -1516,7 +1751,14 @@ const salvageSpec: KindSpec = {
   heat: { idle: [0, 1], active: [8, 18] },
   data: { demandKbps: [80, 120], slotsUsed: [1, 1] },
   stats: (i) =>
-    tool({ kind: "salvage", rangeM: [10, 18][i], forceKn: [4, 10][i], maxTargetMassKg: [2000, 8000][i], rateKgPerS: [2, 5][i], drones: 0 }),
+    tool({
+      kind: "salvage",
+      rangeM: [10, 18][i],
+      forceKn: [4, 10][i],
+      maxTargetMassKg: [2000, 8000][i],
+      rateKgPerS: [2, 5][i],
+      drones: 0,
+    }),
   cost: [6000, 14000],
   buildTimeS: [240, 480],
   techTier: [2, 2],
@@ -1529,7 +1771,12 @@ const clampSpec: KindSpec = {
   family: "utility",
   sizes: MDLG,
   sockets: ["top", "face", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 1.22)),
+  envelope: (_i, s) =>
+    topMount(
+      SHIP_SIZE_CELLS[s],
+      SHIP_SIZE_CELLS[s],
+      r2(SHIP_SIZE_CELLS[s] * 1.22),
+    ),
   massKg: [500, 1200],
   hp: [240, 420],
   armor: [6, 8],
@@ -1537,7 +1784,15 @@ const clampSpec: KindSpec = {
   power: { idle: [0.5, 1], active: [12, 25] },
   heat: { idle: [0, 0], active: [2, 4] },
   data: { demandKbps: [20, 30] },
-  stats: (i) => tool({ kind: "clamp", rangeM: [3, 5][i], forceKn: 0, maxTargetMassKg: [80000, 300000][i], rateKgPerS: 0, drones: 0 }),
+  stats: (i) =>
+    tool({
+      kind: "clamp",
+      rangeM: [3, 5][i],
+      forceKn: 0,
+      maxTargetMassKg: [80000, 300000][i],
+      rateKgPerS: 0,
+      drones: 0,
+    }),
   cost: [3600, 8600],
   buildTimeS: [150, 300],
   kitKey: (_i, s) => `wpn.clamp.${s}`,
@@ -1549,7 +1804,13 @@ const miningSpec: KindSpec = {
   family: "utility",
   sizes: SML,
   sockets: ["top", "face", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 0.95), r2(SHIP_SIZE_CELLS[s] * 0.5)),
+  envelope: (_i, s) =>
+    topMount(
+      SHIP_SIZE_CELLS[s],
+      SHIP_SIZE_CELLS[s],
+      r2(SHIP_SIZE_CELLS[s] * 0.95),
+      r2(SHIP_SIZE_CELLS[s] * 0.5),
+    ),
   clearance: (i) => ({ kind: "beam", lengthM: [120, 200, 300][i], arcDeg: 60 }),
   massKg: [280, 700, 1600],
   hp: [100, 210, 380],
@@ -1557,7 +1818,15 @@ const miningSpec: KindSpec = {
   power: { idle: [1, 3, 6], active: [45, 120, 300] },
   heat: { idle: [0, 1, 2], active: [32, 84, 210] },
   data: { demandKbps: [60, 80, 100], slotsUsed: [1, 1, 1] },
-  stats: (i) => tool({ kind: "mining", rangeM: [120, 200, 300][i], forceKn: 0, maxTargetMassKg: 0, rateKgPerS: [0.4, 1.2, 3][i], drones: 0 }),
+  stats: (i) =>
+    tool({
+      kind: "mining",
+      rangeM: [120, 200, 300][i],
+      forceKn: 0,
+      maxTargetMassKg: 0,
+      rateKgPerS: [0.4, 1.2, 3][i],
+      drones: 0,
+    }),
   cost: [3800, 9000, 21000],
   buildTimeS: [150, 300, 600],
   kitKey: (_i, s) => `x.mining-laser.${s}`,
@@ -1569,8 +1838,17 @@ const droneBaySpec: KindSpec = {
   family: "utility",
   sizes: MDLG,
   sockets: ["top", "bottom"],
-  envelope: (_i, s) => topMount(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s], r2(SHIP_SIZE_CELLS[s] * 0.72)),
-  clearance: (_i, s) => ({ kind: "door-swing", lengthM: SHIP_SIZE_CELLS[s], arcDeg: 0 }),
+  envelope: (_i, s) =>
+    topMount(
+      SHIP_SIZE_CELLS[s],
+      SHIP_SIZE_CELLS[s],
+      r2(SHIP_SIZE_CELLS[s] * 0.72),
+    ),
+  clearance: (_i, s) => ({
+    kind: "door-swing",
+    lengthM: SHIP_SIZE_CELLS[s],
+    arcDeg: 0,
+  }),
   massKg: [900, 2000],
   hp: [260, 460],
   armor: [4, 6],
@@ -1579,16 +1857,27 @@ const droneBaySpec: KindSpec = {
   power: { idle: [3, 6], active: [20, 40] },
   heat: { idle: [1, 2], active: [5, 10] },
   data: { demandKbps: [800, 1600], slotsUsed: [2, 4] },
-  stats: (i) => tool({ kind: "drone-bay", rangeM: [2000, 3500][i], forceKn: 0, maxTargetMassKg: 0, rateKgPerS: 0, drones: [2, 4][i] }),
+  stats: (i) =>
+    tool({
+      kind: "drone-bay",
+      rangeM: [2000, 3500][i],
+      forceKn: 0,
+      maxTargetMassKg: 0,
+      rateKgPerS: 0,
+      drones: [2, 4][i],
+    }),
   cost: [12000, 26000],
   buildTimeS: [360, 720],
   techTier: [3, 3],
   kitKey: (_i, s) => `x.drone-bay.${s}`,
-  notes: "Launch hatch plus drone cradles. Drones and their stats are not modelled yet; each drone uses a control slot.",
+  notes:
+    "Launch hatch plus drone cradles. Drones and their stats are not modelled yet; each drone uses a control slot.",
 };
 
 // ----------------------------------------------------------- structure/edge
-const access = (a: NonNullable<ShipComponentDefinition["access"]>) => ({ access: a });
+const access = (a: NonNullable<ShipComponentDefinition["access"]>) => ({
+  access: a,
+});
 const cargoDoorSpec: KindSpec = {
   kind: "cargo-door",
   name: "Cargo bay door",
@@ -1598,7 +1887,11 @@ const cargoDoorSpec: KindSpec = {
   idSuffix: (i) => `${[2, 4, 6][i]}m`,
   cells: (i) => [[2, 4, 6][i], 1],
   envelope: (i) => edge([2, 4, 6][i], 0.375),
-  clearance: (i) => ({ kind: "door-swing", lengthM: [1.5, 2, 2.5][i], arcDeg: 0 }),
+  clearance: (i) => ({
+    kind: "door-swing",
+    lengthM: [1.5, 2, 2.5][i],
+    arcDeg: 0,
+  }),
   massKg: [250, 600, 1100],
   hp: [200, 400, 600],
   armor: [4, 6, 8],
@@ -1618,7 +1911,8 @@ const cargoDoorSpec: KindSpec = {
   cost: [1500, 3400, 6200],
   buildTimeS: [90, 180, 300],
   kitKey: (i) => `x.cargo-door.${[2, 4, 6][i]}m`,
-  notes: "Hull-edge module that is also a pressure boundary. Bays are pumped down before opening, so no air is lost per cycle.",
+  notes:
+    "Hull-edge module that is also a pressure boundary. Bays are pumped down before opening, so no air is lost per cycle.",
 };
 const airlockSpecs: KindSpec[] = [
   {
@@ -1639,7 +1933,15 @@ const airlockSpecs: KindSpec[] = [
     air: { intakeM3s: [0.2] },
     data: { demandKbps: [10] },
     stats: () =>
-      access({ kind: "airlock", openingWidthM: 1.2, openingHeightM: 2.2, cycleS: 12, pressureSeal: true, throughputM3PerMin: 1, airLossM3PerCycle: 0.3 }),
+      access({
+        kind: "airlock",
+        openingWidthM: 1.2,
+        openingHeightM: 2.2,
+        cycleS: 12,
+        pressureSeal: true,
+        throughputM3PerMin: 1,
+        airLossM3PerCycle: 0.3,
+      }),
     cost: [3200],
     buildTimeS: [180],
     kitKey: () => "x.airlock-exterior.MD",
@@ -1661,7 +1963,15 @@ const airlockSpecs: KindSpec[] = [
     power: { idle: [0.1], active: [3] },
     data: { demandKbps: [5] },
     stats: () =>
-      access({ kind: "airlock", openingWidthM: 1.2, openingHeightM: 2.2, cycleS: 6, pressureSeal: true, throughputM3PerMin: 1.5, airLossM3PerCycle: 0 }),
+      access({
+        kind: "airlock",
+        openingWidthM: 1.2,
+        openingHeightM: 2.2,
+        cycleS: 6,
+        pressureSeal: true,
+        throughputM3PerMin: 1.5,
+        airLossM3PerCycle: 0,
+      }),
     cost: [1200],
     buildTimeS: [90],
     kitKey: () => "x.airlock-interior.SM",
@@ -1682,11 +1992,20 @@ const hatchSpecs: KindSpec[] = [
     armor: [4],
     power: { idle: [0.05], active: [1] },
     stats: () =>
-      access({ kind: "hatch", openingWidthM: 0.9, openingHeightM: 0.9, cycleS: 3, pressureSeal: true, throughputM3PerMin: 0.5, airLossM3PerCycle: 0 }),
+      access({
+        kind: "hatch",
+        openingWidthM: 0.9,
+        openingHeightM: 0.9,
+        cycleS: 3,
+        pressureSeal: true,
+        throughputM3PerMin: 0.5,
+        airLossM3PerCycle: 0,
+      }),
     cost: [400],
     buildTimeS: [40],
     kitKey: () => "x.hatch.SM",
-    notes: "Floor/roof hatch for the multi-deck shaft rules (launch is single-deck).",
+    notes:
+      "Floor/roof hatch for the multi-deck shaft rules (launch is single-deck).",
   },
   {
     kind: "hatch",
@@ -1703,11 +2022,20 @@ const hatchSpecs: KindSpec[] = [
     destroyedEffect: "air-leak",
     power: { idle: [0.05], active: [1.5] },
     stats: () =>
-      access({ kind: "hatch", openingWidthM: 0.9, openingHeightM: 0.9, cycleS: 4, pressureSeal: true, throughputM3PerMin: 0.4, airLossM3PerCycle: 0.8 }),
+      access({
+        kind: "hatch",
+        openingWidthM: 0.9,
+        openingHeightM: 0.9,
+        cycleS: 4,
+        pressureSeal: true,
+        throughputM3PerMin: 0.4,
+        airLossM3PerCycle: 0.8,
+      }),
     cost: [600],
     buildTimeS: [60],
     kitKey: () => "x.hatch-exterior.SM",
-    notes: "Emergency/EVA hatch through the hull roof; loses the trunk volume per cycle.",
+    notes:
+      "Emergency/EVA hatch through the hull roof; loses the trunk volume per cycle.",
   },
 ];
 const dockingPortSpec: KindSpec = {
@@ -1716,7 +2044,11 @@ const dockingPortSpec: KindSpec = {
   family: "structure",
   sizes: MDLG,
   sockets: ["edge", "top"],
-  cells: (i) => [[2, 1], [3, 1]][i] as [number, number],
+  cells: (i) =>
+    [
+      [2, 1],
+      [3, 1],
+    ][i] as [number, number],
   envelope: (i) => edge([2, 3][i], 0.375),
   massKg: [700, 1500],
   hp: [320, 540],
@@ -1725,17 +2057,41 @@ const dockingPortSpec: KindSpec = {
   power: { idle: [0.5, 1], active: [8, 14] },
   data: { demandKbps: [20, 40] },
   extraPorts: (i) => [
-    { id: "shore-power", channel: "power", direction: "both", capacity: [100, 300][i] },
-    { id: "shore-data", channel: "data", direction: "both", capacity: [1000, 4000][i] },
-    { id: "shore-fuel", channel: "fuel", direction: "both", capacity: [2, 6][i] },
-    { id: "shore-air", channel: "ventilation", direction: "both", capacity: [0.3, 0.8][i] },
+    {
+      id: "shore-power",
+      channel: "power",
+      direction: "both",
+      capacity: [100, 300][i],
+    },
+    {
+      id: "shore-data",
+      channel: "data",
+      direction: "both",
+      capacity: [1000, 4000][i],
+    },
+    {
+      id: "shore-fuel",
+      channel: "fuel",
+      direction: "both",
+      capacity: [2, 6][i],
+    },
+    {
+      id: "shore-air",
+      channel: "ventilation",
+      direction: "both",
+      capacity: [0.3, 0.8][i],
+    },
   ],
   stats: (i) =>
     access({
       kind: "docking-port",
       // Round hatch inside the grammar frame (see docking_port in ship_component_export.py).
-      openingWidthM: Math.min([2, 3][i] * 16 - 6, EDGE_FRAME.openingHeight - 4) / EDGE_FRAME.texelsPerMeter,
-      openingHeightM: Math.min([2, 3][i] * 16 - 6, EDGE_FRAME.openingHeight - 4) / EDGE_FRAME.texelsPerMeter,
+      openingWidthM:
+        Math.min([2, 3][i] * 16 - 6, EDGE_FRAME.openingHeight - 4) /
+        EDGE_FRAME.texelsPerMeter,
+      openingHeightM:
+        Math.min([2, 3][i] * 16 - 6, EDGE_FRAME.openingHeight - 4) /
+        EDGE_FRAME.texelsPerMeter,
       cycleS: [20, 25][i],
       pressureSeal: true,
       throughputM3PerMin: [4, 12][i],
@@ -1745,7 +2101,8 @@ const dockingPortSpec: KindSpec = {
   buildTimeS: [240, 480],
   techTier: [2, 2],
   kitKey: (_i, s) => `x.docking-port.${s}`,
-  notes: "Sealed ship-to-station/ship-to-ship collar with shore power, data, fuel and air pass-through (both directions).",
+  notes:
+    "Sealed ship-to-station/ship-to-ship collar with shore power, data, fuel and air pass-through (both directions).",
 };
 
 // ------------------------------------------------------------------ interior
@@ -1755,8 +2112,14 @@ const lifeSupportSpec: KindSpec = {
   family: "interior",
   sizes: SML,
   sockets: ["interior"],
-  cells: (i) => [[1, 1], [2, 1], [2, 2]][i] as [number, number],
-  envelope: (i) => interior([0.9, 1.8, 1.8][i], [0.9, 0.9, 1.8][i], [1.8, 2.0, 2.2][i]),
+  cells: (i) =>
+    [
+      [1, 1],
+      [2, 1],
+      [2, 2],
+    ][i] as [number, number],
+  envelope: (i) =>
+    interior([0.9, 1.8, 1.8][i], [0.9, 0.9, 1.8][i], [1.8, 2.0, 2.2][i]),
   massKg: [200, 480, 1100],
   hp: [120, 240, 420],
   armor: [2, 3, 4],
@@ -1769,7 +2132,8 @@ const lifeSupportSpec: KindSpec = {
   cost: [3000, 7200, 16500],
   buildTimeS: [120, 240, 480],
   kitKey: (_i, s) => `x.life-support.${s}`,
-  notes: "Oxygen generation, CO2 scrubbing and circulation. Crew supported is continuous capacity.",
+  notes:
+    "Oxygen generation, CO2 scrubbing and circulation. Crew supported is continuous capacity.",
 };
 const airFilterSpec: KindSpec = {
   kind: "air-filter",
@@ -1783,11 +2147,16 @@ const airFilterSpec: KindSpec = {
   hp: [60, 120],
   power: { idle: [1, 2], active: [2, 5] },
   heat: { idle: [0, 1], active: [1, 2] },
-  air: { supplyM3s: [0.15, 0.4], crewSupported: [3, 8], intakeM3s: [0.15, 0.4] },
+  air: {
+    supplyM3s: [0.15, 0.4],
+    crewSupported: [3, 8],
+    intakeM3s: [0.15, 0.4],
+  },
   cost: [700, 1700],
   buildTimeS: [40, 80],
   kitKey: (_i, s) => `x.air-filter.${s}`,
-  notes: "Extra scrubbing/circulation capacity; does not generate oxygen reserves.",
+  notes:
+    "Extra scrubbing/circulation capacity; does not generate oxygen reserves.",
 };
 const oxygenSpec: KindSpec = {
   kind: "oxygen-tank",
@@ -1795,7 +2164,11 @@ const oxygenSpec: KindSpec = {
   family: "interior",
   sizes: SMMD,
   sockets: ["interior"],
-  cells: (i) => [[1, 1], [2, 1]][i] as [number, number],
+  cells: (i) =>
+    [
+      [1, 1],
+      [2, 1],
+    ][i] as [number, number],
   envelope: (i) => interior([0.9, 1.8][i], 0.9, [1.6, 1.8][i]),
   massKg: [120, 350],
   hp: [80, 160],
@@ -1824,7 +2197,8 @@ const hydroponicsSpec: KindSpec = {
   buildTimeS: [60],
   kitKey: () => "x.hydroponics.SM",
   artLibraryDesignId: () => "shipyard.equipment.hydroponics",
-  notes: "Supplementary oxygen/food; mass/power follow the art-library review numbers (not approved).",
+  notes:
+    "Supplementary oxygen/food; mass/power follow the art-library review numbers (not approved).",
 };
 const gravitySpec: KindSpec = {
   kind: "gravity-unit",
@@ -1832,7 +2206,11 @@ const gravitySpec: KindSpec = {
   family: "interior",
   sizes: MDLG,
   sockets: ["interior"],
-  cells: (i) => [[2, 2], [3, 3]][i] as [number, number],
+  cells: (i) =>
+    [
+      [2, 2],
+      [3, 3],
+    ][i] as [number, number],
   envelope: (i) => interior([1.8, 2.8][i], [1.8, 2.8][i], [1.6, 2.0][i]),
   massKg: [800, 1900],
   hp: [200, 360],
@@ -1846,7 +2224,8 @@ const gravitySpec: KindSpec = {
   buildTimeS: [300, 600],
   techTier: [3, 3],
   kitKey: (_i, s) => `x.gravity.${s}`,
-  notes: "Artificial gravity over the listed deck area. Without it crews walk in magnetic boots (gameplay TBD).",
+  notes:
+    "Artificial gravity over the listed deck area. Without it crews walk in magnetic boots (gameplay TBD).",
 };
 const coreSpec: KindSpec = {
   kind: "computer-core",
@@ -1854,7 +2233,12 @@ const coreSpec: KindSpec = {
   family: "interior",
   sizes: SML,
   sockets: ["interior"],
-  cells: (i) => [[1, 1], [1, 1], [2, 1]][i] as [number, number],
+  cells: (i) =>
+    [
+      [1, 1],
+      [1, 1],
+      [2, 1],
+    ][i] as [number, number],
   envelope: (i) => interior([0.9, 0.9, 1.8][i], 0.9, [1.2, 1.9, 2.1][i]),
   massKg: [80, 180, 400],
   hp: [80, 160, 280],
@@ -1867,15 +2251,56 @@ const coreSpec: KindSpec = {
   buildTimeS: [120, 240, 480],
   techTier: [1, 2, 3],
   kitKey: (_i, s) => `x.computer-core.${s}`,
-  notes: "IFCS flight computer and fire control. A powered core is required for fly-by-wire (maps to the flight compiler's `computer` kind; SM = the existing 500 W lab computer).",
+  notes:
+    "IFCS flight computer and fire control. A powered core is required for fly-by-wire (maps to the flight compiler's `computer` kind; SM = the existing 500 W lab computer).",
 };
 const consoleSpecs: KindSpec[] = (
   [
-    ["navigation", "Navigation console", "pilot", "flight", "shipyard.equipment.pilot-seat", 1.5, 40],
-    ["command", "Command console", "command", "command", "shipyard.equipment.command-console", 0.35, 60],
-    ["fire-control", "Fire-control console", "gunner", "fire-control", null, 0.8, 120],
-    ["engineering", "Engineering console", "engineer", "engineering", null, 0.6, 80],
-    ["sensor", "Sensor console", "sensor", "sensors", "shipyard.equipment.bridge-bank", 0.6, 150],
+    [
+      "navigation",
+      "Navigation console",
+      "pilot",
+      "flight",
+      "shipyard.equipment.pilot-seat",
+      1.5,
+      40,
+    ],
+    [
+      "command",
+      "Command console",
+      "command",
+      "command",
+      "shipyard.equipment.command-console",
+      0.35,
+      60,
+    ],
+    [
+      "fire-control",
+      "Fire-control console",
+      "gunner",
+      "fire-control",
+      null,
+      0.8,
+      120,
+    ],
+    [
+      "engineering",
+      "Engineering console",
+      "engineer",
+      "engineering",
+      null,
+      0.6,
+      80,
+    ],
+    [
+      "sensor",
+      "Sensor console",
+      "sensor",
+      "sensors",
+      "shipyard.equipment.bridge-bank",
+      0.6,
+      150,
+    ],
   ] as const
 ).map(([v, name, station, grants, art, kw, kbps]) => ({
   kind: "console",
@@ -1918,7 +2343,8 @@ const bunkSpec: KindSpec = {
   buildTimeS: [40],
   kitKey: () => "x.crew-bunk.SM",
   artLibraryDesignId: () => "shipyard.equipment.crew-bunk",
-  notes: "Two berths. Mass/power follow the art-library review numbers (not approved).",
+  notes:
+    "Two berths. Mass/power follow the art-library review numbers (not approved).",
 };
 
 const SPECS: readonly KindSpec[] = [
@@ -1970,7 +2396,11 @@ const SPECS: readonly KindSpec[] = [
 
 /** XL propulsion is rear-only (grammar rule, design doc r006). */
 function applyGrammar(c: ShipComponentDefinition): ShipComponentDefinition {
-  if (c.family === "propulsion" && c.sizeClass === "XL" && c.mount.sockets.includes("rear"))
+  if (
+    c.family === "propulsion" &&
+    c.sizeClass === "XL" &&
+    c.mount.sockets.includes("rear")
+  )
     return { ...c, mount: { ...c.mount, sockets: ["rear"], rearOnly: true } };
   return c;
 }
@@ -1980,9 +2410,7 @@ function clean(c: ShipComponentDefinition): ShipComponentDefinition {
 }
 
 export function buildShipComponentCatalog(): ShipComponentCatalog {
-  const components = SPECS.flatMap(build)
-    .map(applyGrammar)
-    .map(clean);
+  const components = SPECS.flatMap(build).map(applyGrammar).map(clean);
   return {
     schema: SHIP_COMPONENT_SCHEMA,
     id: SHIP_COMPONENT_CATALOG_ID,

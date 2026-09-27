@@ -28,7 +28,7 @@ export function createPlanetAtmosphere(
     { vertexSource: surfaceVertex, fragmentSource: planetHaloFragment },
     {
       attributes: ["position", "normal", "uv"],
-      uniforms: ["world", "worldViewProjection", "primary", "strength"],
+      uniforms: ["world", "viewProjection", "primary", "strength"],
       needAlphaBlending: true,
     },
   );

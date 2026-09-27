@@ -20,8 +20,30 @@ export type Vec3 = readonly [number, number, number];
 export type Mat4 = number[];
 
 /** Build a Babylon-layout matrix from the images of the three basis vectors and a translation. */
-export function basisMatrix(ex: Vec3, ey: Vec3, ez: Vec3, t: Vec3 = [0, 0, 0]): Mat4 {
-  return [ex[0], ex[1], ex[2], 0, ey[0], ey[1], ey[2], 0, ez[0], ez[1], ez[2], 0, t[0], t[1], t[2], 1];
+export function basisMatrix(
+  ex: Vec3,
+  ey: Vec3,
+  ez: Vec3,
+  t: Vec3 = [0, 0, 0],
+): Mat4 {
+  return [
+    ex[0],
+    ex[1],
+    ex[2],
+    0,
+    ey[0],
+    ey[1],
+    ey[2],
+    0,
+    ez[0],
+    ez[1],
+    ez[2],
+    0,
+    t[0],
+    t[1],
+    t[2],
+    1,
+  ];
 }
 
 /** Transform a point by a Babylon-layout matrix (row vector convention). */
@@ -35,7 +57,11 @@ export function transformPoint(m: Mat4, p: Vec3): [number, number, number] {
 
 /** Transform a direction (no translation). */
 export function transformDirection(m: Mat4, d: Vec3): [number, number, number] {
-  return [d[0] * m[0] + d[1] * m[4] + d[2] * m[8], d[0] * m[1] + d[1] * m[5] + d[2] * m[9], d[0] * m[2] + d[1] * m[6] + d[2] * m[10]];
+  return [
+    d[0] * m[0] + d[1] * m[4] + d[2] * m[8],
+    d[0] * m[1] + d[1] * m[5] + d[2] * m[9],
+    d[0] * m[2] + d[1] * m[6] + d[2] * m[10],
+  ];
 }
 
 /** Apply `a` first, then `b` (row vectors: result = a * b). */
@@ -52,7 +78,11 @@ export function multiply(a: Mat4, b: Mat4): Mat4 {
 
 /** Determinant of the 3x3 rotation part (1 for proper rotations, -1 for mirrors). */
 export function det3(m: Mat4): number {
-  return m[0] * (m[5] * m[10] - m[6] * m[9]) - m[1] * (m[4] * m[10] - m[6] * m[8]) + m[2] * (m[4] * m[9] - m[5] * m[8]);
+  return (
+    m[0] * (m[5] * m[10] - m[6] * m[9]) -
+    m[1] * (m[4] * m[10] - m[6] * m[8]) +
+    m[2] * (m[4] * m[9] - m[5] * m[8])
+  );
 }
 
 /** Prefab frame -> ship-local Babylon frame (`root` space). */
@@ -63,7 +93,10 @@ export function prefabFrameMatrix(origin: readonly [number, number]): Mat4 {
 }
 
 /** Prefab point -> ship-local Babylon point. */
-export function prefabToShipLocal(p: Vec3, origin: readonly [number, number]): [number, number, number] {
+export function prefabToShipLocal(
+  p: Vec3,
+  origin: readonly [number, number],
+): [number, number, number] {
   return [-(p[1] - origin[1]), p[2], -(p[0] - origin[0])];
 }
 
@@ -91,21 +124,39 @@ export function rotZTranslate(deg: number, t: Vec3): Mat4 {
 const MIRROR_X: Mat4 = basisMatrix([-1, 0, 0], [0, 1, 0], [0, 0, 1]);
 
 /** Kit piece -> prefab frame; `mirror` reflects piece-local X before the rotation (tile modules). */
-export function kitInstanceMatrix(x: number, y: number, z: number, rotDeg: number, mirror = false): Mat4 {
+export function kitInstanceMatrix(
+  x: number,
+  y: number,
+  z: number,
+  rotDeg: number,
+  mirror = false,
+): Mat4 {
   const zup = mirror ? multiply(GLTF_TO_ZUP, MIRROR_X) : GLTF_TO_ZUP;
   return multiply(zup, rotZTranslate(rotDeg, [x, y, z]));
 }
 
 /** Component frame at quarterTurns 0 -> prefab axes: +Y forward -> +X fore, +X starboard -> -Y. */
-export const COMPONENT_TO_PREFAB: Mat4 = basisMatrix([0, -1, 0], [1, 0, 0], [0, 0, 1]);
+export const COMPONENT_TO_PREFAB: Mat4 = basisMatrix(
+  [0, -1, 0],
+  [1, 0, 0],
+  [0, 0, 1],
+);
 
 /** Component frame -> prefab frame for a mount placement (anchor metres, anchorZ metres). */
-export function componentMatrix(anchor: readonly [number, number], anchorZ: number, quarterTurns: number): Mat4 {
-  return multiply(COMPONENT_TO_PREFAB, rotZTranslate(90 * quarterTurns, [anchor[0], anchor[1], anchorZ]));
+export function componentMatrix(
+  anchor: readonly [number, number],
+  anchorZ: number,
+  quarterTurns: number,
+): Mat4 {
+  return multiply(
+    COMPONENT_TO_PREFAB,
+    rotZTranslate(90 * quarterTurns, [anchor[0], anchor[1], anchorZ]),
+  );
 }
 
 export type MountFrame = "top" | "face" | "interior";
-export type MountSocket = "top" | "face" | "rear" | "edge" | "interior" | "bottom";
+export type MountSocket =
+  "top" | "face" | "rear" | "edge" | "interior" | "bottom";
 
 /**
  * Authored-frame -> socket-frame rotation, a local copy of `shipMountRotation` in
@@ -114,14 +165,25 @@ export type MountSocket = "top" | "face" | "rear" | "edge" | "interior" | "botto
  * top on bottom: roll 180 about +Y; face on bottom: (x, y, z) -> (x, -z, y).
  */
 export function mountRotation(frame: MountFrame, socket: MountSocket): Mat4 {
-  if (frame === "top" && socket === "bottom") return basisMatrix([-1, 0, 0], [0, 1, 0], [0, 0, -1]);
-  if (frame === "top" && (socket === "face" || socket === "rear" || socket === "edge")) return basisMatrix([0, 0, -1], [1, 0, 0], [0, -1, 0]);
-  if (frame === "face" && socket === "top") return basisMatrix([1, 0, 0], [0, 0, -1], [0, 1, 0]);
-  if (frame === "face" && socket === "bottom") return basisMatrix([1, 0, 0], [0, 0, 1], [0, -1, 0]);
+  if (frame === "top" && socket === "bottom")
+    return basisMatrix([-1, 0, 0], [0, 1, 0], [0, 0, -1]);
+  if (
+    frame === "top" &&
+    (socket === "face" || socket === "rear" || socket === "edge")
+  )
+    return basisMatrix([0, 0, -1], [1, 0, 0], [0, -1, 0]);
+  if (frame === "face" && socket === "top")
+    return basisMatrix([1, 0, 0], [0, 0, -1], [0, 1, 0]);
+  if (frame === "face" && socket === "bottom")
+    return basisMatrix([1, 0, 0], [0, 0, 1], [0, -1, 0]);
   return basisMatrix([1, 0, 0], [0, 1, 0], [0, 0, 1]);
 }
 
 /** Authored frame implied by a component's first accepted socket (mirrors `shipMountFrameOf`). */
 export function frameOfSocket(socket: MountSocket | undefined): MountFrame {
-  return socket === "top" || socket === "bottom" ? "top" : socket === "interior" ? "interior" : "face";
+  return socket === "top" || socket === "bottom"
+    ? "top"
+    : socket === "interior"
+      ? "interior"
+      : "face";
 }

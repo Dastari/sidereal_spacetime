@@ -15,9 +15,18 @@ import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-cat
 import { prefabStats } from "@sidereal/content/ship-prefab";
 import { compileConstruction } from "@sidereal/sim/construction-transactions";
 import { planConstructionInstance } from "@sidereal/sim/construction-instance";
-import { PREFAB_DECK_ID, prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
-import { planPrefabConstructionFlight, prefabFlightModelFor } from "@sidereal/sim/prefab-flight";
-import { prefabPilotPose, qualifyPilotGeometry } from "@sidereal/sim/construction-pilot";
+import {
+  PREFAB_DECK_ID,
+  prefabConstructionDocument,
+} from "@sidereal/sim/prefab-construction";
+import {
+  planPrefabConstructionFlight,
+  prefabFlightModelFor,
+} from "@sidereal/sim/prefab-flight";
+import {
+  prefabPilotPose,
+  qualifyPilotGeometry,
+} from "@sidereal/sim/construction-pilot";
 import { TRUSTED_PREFAB_BLUEPRINT_PREFIX } from "@sidereal/sim/game-ship-access";
 import { GAME_OWNED_TEMPLATE_NAMESPACE } from "./game-ship-access-authority";
 import { ensureCanonicalSystem, reserveBerth } from "./shared-world";
@@ -26,10 +35,15 @@ import { insertQualifiedFlightPlan } from "./construction-flight-writer";
 import { compileShipFlight } from "./construction-flight-compilation";
 import { readConstructionFlightInput } from "./construction-flight-input";
 import { resolveShipFlightDefinition } from "./construction-flight-resolver";
-import { commitFlightCharacter, markShipFlightDirty } from "./construction-flight-dirty";
+import {
+  commitFlightCharacter,
+  markShipFlightDirty,
+} from "./construction-flight-dirty";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
-export type PrefabCharacterRow = NonNullable<ReturnType<Context["db"]["character"]["id"]["find"]>>;
+export type PrefabCharacterRow = NonNullable<
+  ReturnType<Context["db"]["character"]["id"]["find"]>
+>;
 
 /** Where the new ship appears: a reserved berth, or explicit world XY metres and heading. */
 export type PrefabShipPose =
@@ -51,7 +65,9 @@ export function trustedPrefabTemplate(prefabId: string) {
   const prefab = prefabById(prefabId);
   if (!prefab) throw Error("Unknown prefab ship " + prefabId);
   const catalog = defaultPrefabComponentCatalog();
-  const snapshot = compileConstruction(JSON.stringify(prefabConstructionDocument(prefab, catalog)));
+  const snapshot = compileConstruction(
+    JSON.stringify(prefabConstructionDocument(prefab, catalog)),
+  );
   return {
     prefab,
     catalogRevision: catalog.revision,
@@ -61,7 +77,11 @@ export function trustedPrefabTemplate(prefabId: string) {
 }
 
 /** Install and board. Throws (rolling back the transaction) on any failed precondition. */
-export function installPrefabShip(ctx: Context, actor: PrefabCharacterRow, request: PrefabShipRequest): { shipId: string; deckId: string } {
+export function installPrefabShip(
+  ctx: Context,
+  actor: PrefabCharacterRow,
+  request: PrefabShipRequest,
+): { shipId: string; deckId: string } {
   const template = trustedPrefabTemplate(request.prefabId);
   const owner = actor.owner;
   // Every writer below acts for the character's account, not the operator.
@@ -106,7 +126,9 @@ export function installPrefabShip(ctx: Context, actor: PrefabCharacterRow, reque
     allocate,
   );
   const shipId = plan.instanceId;
-  const name = (request.name ?? template.prefab.name).trim().slice(0, 40) || template.prefab.name;
+  const name =
+    (request.name ?? template.prefab.name).trim().slice(0, 40) ||
+    template.prefab.name;
   const documentJson = JSON.stringify(plan.document);
   ctx.db.constructionInstance.insert({
     id: shipId,
@@ -138,15 +160,38 @@ export function installPrefabShip(ctx: Context, actor: PrefabCharacterRow, reque
   installDoors(ctx, shipId, plan.document);
 
   // Placement: a berth sized for this hull, or the caller's explicit pose.
-  const model = prefabFlightModelFor(`${shipId}:${plan.blueprintSha256}`, documentJson);
+  const model = prefabFlightModelFor(
+    `${shipId}:${plan.blueprintSha256}`,
+    documentJson,
+  );
   const system = ensureCanonicalSystem(ctx.db);
   const serverTick = ctx.timestamp.microsSinceUnixEpoch / 50_000n;
   const placement =
     request.pose.kind === "berth"
-      ? { systemId: system.id, ...reserveBerth(ctx.db, system.id, model.hull.radius + model.hull.halfLength), serverTick }
-      : { systemId: request.pose.systemId, x: request.pose.x, y: request.pose.y, serverTick };
+      ? {
+          systemId: system.id,
+          ...reserveBerth(
+            ctx.db,
+            system.id,
+            model.hull.radius + model.hull.halfLength,
+          ),
+          serverTick,
+        }
+      : {
+          systemId: request.pose.systemId,
+          x: request.pose.x,
+          y: request.pose.y,
+          serverTick,
+        };
   const flight = planPrefabConstructionFlight(
-    { id: shipId, revision: 1n, blueprintSha256: plan.blueprintSha256, documentJson, spawnDeckId: plan.spawn.deckId, name },
+    {
+      id: shipId,
+      revision: 1n,
+      blueprintSha256: plan.blueprintSha256,
+      documentJson,
+      spawnDeckId: plan.spawn.deckId,
+      name,
+    },
     placement,
     allocate,
   );
@@ -163,10 +208,21 @@ export function installPrefabShip(ctx: Context, actor: PrefabCharacterRow, reque
   const binding = ctx.db.constructionFlightBinding.shipId.find(shipId);
   const instance = ctx.db.constructionInstance.id.find(shipId)!;
   const station = ctx.db.station.id.find(flight.station.id);
-  const mapping = ctx.db.constructionFlightStation.stationId.find(flight.station.id);
-  if (!binding || !station || !mapping || binding.lifecycle !== "installed-dormant" || station.occupantId || station.operational)
+  const mapping = ctx.db.constructionFlightStation.stationId.find(
+    flight.station.id,
+  );
+  if (
+    !binding ||
+    !station ||
+    !mapping ||
+    binding.lifecycle !== "installed-dormant" ||
+    station.occupantId ||
+    station.operational
+  )
     throw Error("Complete empty dormant prefab flight required");
-  compileShipFlight(ctx.db, shipId, (id) => readConstructionFlightInput(ctx, id));
+  compileShipFlight(ctx.db, shipId, (id) =>
+    readConstructionFlightInput(ctx, id),
+  );
   const definition = resolveShipFlightDefinition(
     {
       binding: () => binding,
@@ -178,7 +234,8 @@ export function installPrefabShip(ctx: Context, actor: PrefabCharacterRow, reque
     },
     shipId,
   );
-  if (definition.status !== "dormant") throw Error("Prefab flight definition required: " + definition.reason);
+  if (definition.status !== "dormant")
+    throw Error("Prefab flight definition required: " + definition.reason);
   qualifyPilotGeometry({
     instance,
     frame: constructionCollision(ctx, instance, binding.deckId),
@@ -187,11 +244,19 @@ export function installPrefabShip(ctx: Context, actor: PrefabCharacterRow, reque
     pose: prefabPilotPose([station.localX, station.localY]),
   });
   ctx.db.station.id.update({ ...station, operational: true });
-  ctx.db.constructionFlightBinding.shipId.update({ ...binding, lifecycle: "active", revision: binding.revision + 1n });
+  ctx.db.constructionFlightBinding.shipId.update({
+    ...binding,
+    lifecycle: "active",
+    revision: binding.revision + 1n,
+  });
 
   // Board the existing character.
   const [x, y] = plan.spawn.positionM;
-  commitFlightCharacter(ctx, { ...actor, shipId, localX: x, localY: y, sprinting: false }, (row) => ctx.db.character.id.update(row));
+  commitFlightCharacter(
+    ctx,
+    { ...actor, shipId, localX: x, localY: y, sprinting: false },
+    (row) => ctx.db.character.id.update(row),
+  );
   markShipFlightDirty(ctx, shipId);
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
   const locationRow = {
@@ -207,11 +272,26 @@ export function installPrefabShip(ctx: Context, actor: PrefabCharacterRow, reque
   if (location) ctx.db.constructionLocation.characterId.update(locationRow);
   else ctx.db.constructionLocation.insert(locationRow);
   const input = ctx.db.input.characterId.find(actor.id);
-  const inputRow = { characterId: actor.id, sequence: input?.sequence ?? 0n, throttle: 0, turn: 0, dx: 0, dy: 0, updatedMicros: ctx.timestamp.microsSinceUnixEpoch, sprint: false };
+  const inputRow = {
+    characterId: actor.id,
+    sequence: input?.sequence ?? 0n,
+    throttle: 0,
+    turn: 0,
+    dx: 0,
+    dy: 0,
+    updatedMicros: ctx.timestamp.microsSinceUnixEpoch,
+    sprint: false,
+  };
   if (input) ctx.db.input.characterId.update(inputRow);
   else ctx.db.input.insert(inputRow);
   const admission = ctx.db.worldAdmission.characterId.find(actor.id);
-  const admissionRow = { characterId: actor.id, owner, shipId, systemId: flight.motion.systemId, revision: (admission?.revision ?? 0n) + 1n };
+  const admissionRow = {
+    characterId: actor.id,
+    owner,
+    shipId,
+    systemId: flight.motion.systemId,
+    revision: (admission?.revision ?? 0n) + 1n,
+  };
   if (admission) ctx.db.worldAdmission.characterId.update(admissionRow);
   else ctx.db.worldAdmission.insert(admissionRow);
   ctx.db.gameShipAccess.insert({
@@ -240,10 +320,22 @@ export function prefabSpawnerFor(prefabId: string) {
     blueprintSha256: template.snapshot.sha256,
     legacy: false as const,
     description: `${template.prefab.name} (${template.prefab.faction} ${template.prefab.role}, size ${template.prefab.sizeClass}, ${stats.lengthM}x${stats.beamM} m)`,
-    spawn: (ctx: Context, actor: PrefabCharacterRow, request: { pose: PrefabShipPose; name: string }) =>
-      installPrefabShip(ctx, actor, { prefabId, pose: request.pose, name: request.name }),
+    spawn: (
+      ctx: Context,
+      actor: PrefabCharacterRow,
+      request: { pose: PrefabShipPose; name: string },
+    ) =>
+      installPrefabShip(ctx, actor, {
+        prefabId,
+        pose: request.pose,
+        name: request.name,
+      }),
   };
 }
 
 /** The small ships offered to the owner as starters. */
-export const STARTER_PREFAB_IDS = ["fed.s.wren", "rj.s.jackal", "au.s.lumen"] as const;
+export const STARTER_PREFAB_IDS = [
+  "fed.s.wren",
+  "rj.s.jackal",
+  "au.s.lumen",
+] as const;

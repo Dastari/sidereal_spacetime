@@ -1,19 +1,49 @@
 /** Aurelian Synod (alien): lavender, violet and gold; rounded bows, crescent wings, crystal decorators. */
-import { arcTile, door, edge, face, module, opening, polygonTiles, prefab, rectTiles, room, top, volume } from "./builders";
+import {
+  arcTile,
+  door,
+  edge,
+  face,
+  module,
+  opening,
+  polygonTiles,
+  prefab,
+  rectTiles,
+  room,
+  top,
+  volume,
+} from "./builders";
 
 /** Starter candidate: round-nosed seedling scout with twin crescent fins. */
 export const AU_LUMEN = prefab({
   id: "au.s.lumen",
   name: "Lumen",
-  description: "Aurelian seedling scout: a round crystal-lit bridge, garden hold and resonance drives. Starter candidate.",
+  description:
+    "Aurelian seedling scout: a round crystal-lit bridge, garden hold and resonance drives. Starter candidate.",
   faction: "Aurelian Synod",
   role: "Scout",
   theme: "aurelian",
   sizeClass: "S",
   volumes: [
-    volume("hull", "hull", "deck", [...rectTiles(0, 0, 8, 6), arcTile(8, 3, 3, "ne"), arcTile(8, 0, 3, "se")], { logo: true }),
-    volume("fin-p", "plate", "wing", [...rectTiles(0, 6, 2, 8), arcTile(2, 6, 2, "ne")]),
-    volume("fin-s", "plate", "wing", [...rectTiles(0, -2, 2, 0), arcTile(2, -2, 2, "se")]),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      [
+        ...rectTiles(0, 0, 8, 6),
+        arcTile(8, 3, 3, "ne"),
+        arcTile(8, 0, 3, "se"),
+      ],
+      { logo: true },
+    ),
+    volume("fin-p", "plate", "wing", [
+      ...rectTiles(0, 6, 2, 8),
+      arcTile(2, 6, 2, "ne"),
+    ]),
+    volume("fin-s", "plate", "wing", [
+      ...rectTiles(0, -2, 2, 0),
+      arcTile(2, -2, 2, "se"),
+    ]),
   ],
   rooms: [
     room("engine", "RESONATOR", "engineering", [0, 0, 3, 6]),
@@ -55,7 +85,8 @@ export const AU_LUMEN = prefab({
 export const AU_CRESCENT = prefab({
   id: "au.m.crescent",
   name: "Crescent",
-  description: "Aurelian explorer: semicircular crown bridge, crescent wings with point defence, twin large resonance drives.",
+  description:
+    "Aurelian explorer: semicircular crown bridge, crescent wings with point defence, twin large resonance drives.",
   faction: "Aurelian Synod",
   role: "Explorer",
   theme: "aurelian",
@@ -75,8 +106,16 @@ export const AU_CRESCENT = prefab({
       ],
       { spine: true },
     ),
-    volume("wing-p", "plate", "wing", [...rectTiles(4, 8, 10, 10), arcTile(10, 8, 2, "ne"), arcTile(2, 8, 2, "nw")]),
-    volume("wing-s", "plate", "wing", [...rectTiles(4, -2, 10, 0), arcTile(10, -2, 2, "se"), arcTile(2, -2, 2, "sw")]),
+    volume("wing-p", "plate", "wing", [
+      ...rectTiles(4, 8, 10, 10),
+      arcTile(10, 8, 2, "ne"),
+      arcTile(2, 8, 2, "nw"),
+    ]),
+    volume("wing-s", "plate", "wing", [
+      ...rectTiles(4, -2, 10, 0),
+      arcTile(10, -2, 2, "se"),
+      arcTile(2, -2, 2, "sw"),
+    ]),
   ],
   rooms: [
     room("eng", "RESONATOR", "engineering", [0, 0, 4, 8]),
@@ -130,16 +169,45 @@ export const AU_CRESCENT = prefab({
 export const AU_CATHEDRAL = prefab({
   id: "au.l.cathedral",
   name: "Cathedral",
-  description: "Aurelian cruiser: long nave, round crown bridge with a crystal spire, crescent wings and paired plasma turrets.",
+  description:
+    "Aurelian cruiser: long nave, round crown bridge with a crystal spire, crescent wings and paired plasma turrets.",
   faction: "Aurelian Synod",
   role: "Cruiser",
   theme: "aurelian",
   sizeClass: "L",
   volumes: [
-    volume("hull", "hull", "deck", [...rectTiles(0, 0, 28, 12), ...rectTiles(28, 4, 32, 8), arcTile(28, 8, 4, "ne"), arcTile(28, 0, 4, "se")], { spine: true }),
-    volume("spire", "plate", "plate", polygonTiles([[32, 5], [34, 6], [32, 7]])),
-    volume("wing-p", "plate", "wing", [...rectTiles(8, 12, 20, 14), arcTile(20, 12, 2, "ne"), arcTile(6, 12, 2, "nw")]),
-    volume("wing-s", "plate", "wing", [...rectTiles(8, -2, 20, 0), arcTile(20, -2, 2, "se"), arcTile(6, -2, 2, "sw")]),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      [
+        ...rectTiles(0, 0, 28, 12),
+        ...rectTiles(28, 4, 32, 8),
+        arcTile(28, 8, 4, "ne"),
+        arcTile(28, 0, 4, "se"),
+      ],
+      { spine: true },
+    ),
+    volume(
+      "spire",
+      "plate",
+      "plate",
+      polygonTiles([
+        [32, 5],
+        [34, 6],
+        [32, 7],
+      ]),
+    ),
+    volume("wing-p", "plate", "wing", [
+      ...rectTiles(8, 12, 20, 14),
+      arcTile(20, 12, 2, "ne"),
+      arcTile(6, 12, 2, "nw"),
+    ]),
+    volume("wing-s", "plate", "wing", [
+      ...rectTiles(8, -2, 20, 0),
+      arcTile(20, -2, 2, "se"),
+      arcTile(6, -2, 2, "sw"),
+    ]),
   ],
   rooms: [
     room("eng", "RESONATORS", "engineering", [0, 0, 5, 12]),

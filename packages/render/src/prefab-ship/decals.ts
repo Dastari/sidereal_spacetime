@@ -20,11 +20,15 @@ import { setMeshRole } from "../mesh-roles";
 /** Extra lift along the normal on top of the dresser's 4 mm, against z-fighting. */
 const LIFT = 0.0015;
 
-const luminance = (c: readonly number[]) => 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+const luminance = (c: readonly number[]) =>
+  0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
 
 function quadSize(d: Pick<DecalPlacement, "corners">): [number, number] {
   const [a, b, , e] = d.corners;
-  return [Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]), Math.hypot(e[0] - a[0], e[1] - a[1], e[2] - a[2])];
+  return [
+    Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]),
+    Math.hypot(e[0] - a[0], e[1] - a[1], e[2] - a[2]),
+  ];
 }
 
 /**
@@ -32,7 +36,9 @@ function quadSize(d: Pick<DecalPlacement, "corners">): [number, number] {
  * Local heuristic until the dresser reports the backing slot: numbers are always plate decals,
  * plate emblems are square while the roof logo emblem is 2:1.
  */
-export function decalOnPlate(d: Pick<DecalPlacement, "kind" | "corners">): boolean {
+export function decalOnPlate(
+  d: Pick<DecalPlacement, "kind" | "corners">,
+): boolean {
   if (d.kind === "number") return true;
   if (d.kind !== "emblem") return false;
   const [w, h] = quadSize(d);
@@ -40,9 +46,14 @@ export function decalOnPlate(d: Pick<DecalPlacement, "kind" | "corners">): boole
 }
 
 /** Ink colour for a decal: contrast against its backing slot (logo modules `secondary`, plates `primary`). */
-export function decalInk(theme: ShipThemeId, decal: Pick<DecalPlacement, "kind" | "corners">): [number, number, number] {
+export function decalInk(
+  theme: ShipThemeId,
+  decal: Pick<DecalPlacement, "kind" | "corners">,
+): [number, number, number] {
   const t = SHIP_THEMES[theme];
-  const backing = decalOnPlate(decal) ? t.slots.primary.colour : t.slots.secondary.colour;
+  const backing = decalOnPlate(decal)
+    ? t.slots.primary.colour
+    : t.slots.secondary.colour;
   return luminance(backing) > 0.18 ? t.inkOnLight : t.inkOnDark;
 }
 
@@ -54,16 +65,34 @@ export interface DecalHandle {
 }
 
 /** Build one quad per decal (parented to the prefab-frame node). */
-export function buildDecals(scene: Scene, parent: TransformNode, dressed: DressedShip, theme: ShipThemeId): DecalHandle[] {
+export function buildDecals(
+  scene: Scene,
+  parent: TransformNode,
+  dressed: DressedShip,
+  theme: ShipThemeId,
+): DecalHandle[] {
   const out: DecalHandle[] = [];
   dressed.decals.forEach((d, i) => {
-    const text = d.kind === "name" ? dressed.markings.name : d.kind === "number" ? dressed.markings.number : null;
+    const text =
+      d.kind === "name"
+        ? dressed.markings.name
+        : d.kind === "number"
+          ? dressed.markings.number
+          : null;
     if (d.kind === "emblem" && dressed.markings.emblem === "none") return;
     if (text !== null && !text.trim()) return;
     const [w, h] = quadSize(d);
     const tw = 512;
-    const th = Math.max(32, Math.min(1024, Math.round((tw * h) / Math.max(w, 1e-3) / 8) * 8));
-    const texture = new DynamicTexture(`prefab-decal-${dressed.id}-${i}`, { width: tw, height: th }, scene, true);
+    const th = Math.max(
+      32,
+      Math.min(1024, Math.round((tw * h) / Math.max(w, 1e-3) / 8) * 8),
+    );
+    const texture = new DynamicTexture(
+      `prefab-decal-${dressed.id}-${i}`,
+      { width: tw, height: th },
+      scene,
+      true,
+    );
     texture.hasAlpha = true;
     const ctx = texture.getContext() as unknown as CanvasRenderingContext2D;
     if (text !== null) drawTextMask(ctx, tw, th, text);
@@ -78,7 +107,11 @@ export function buildDecals(scene: Scene, parent: TransformNode, dressed: Dresse
     material.zOffset = -2;
     const mesh = new Mesh(`prefab-decal-${dressed.id}-${d.kind}-${i}`, scene);
     const n = d.normal;
-    const lift = (p: readonly number[]) => [p[0] + n[0] * LIFT, p[1] + n[1] * LIFT, p[2] + n[2] * LIFT];
+    const lift = (p: readonly number[]) => [
+      p[0] + n[0] * LIFT,
+      p[1] + n[1] * LIFT,
+      p[2] + n[2] * LIFT,
+    ];
     const vd = new VertexData();
     vd.positions = d.corners.flatMap(lift);
     vd.normals = [0, 1, 2, 3].flatMap(() => [n[0], n[1], n[2]]);

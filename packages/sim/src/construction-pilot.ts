@@ -18,7 +18,9 @@ export const QUALIFIED_PILOT_POSE: PilotPose = {
   approach: QUALIFIED_PILOT_APPROACH,
 };
 /** Prefab stations: the seat is the derived pilot station, approached from 0.875 m aft. */
-export const prefabPilotPose = (station: readonly [number, number]): PilotPose => ({
+export const prefabPilotPose = (
+  station: readonly [number, number],
+): PilotPose => ({
   position: [station[0], station[1]],
   approach: [station[0], station[1] - 0.875],
 });
@@ -153,7 +155,11 @@ function qualifyPoseGeometry(g: PilotGeometry, pose: PilotPose) {
   )
     throw new PilotGeometryError("Pilot support surface is unqualified");
   if (
-    !canOccupyDeck(frame, point(frame, pose.approach[0], pose.approach[1]), 0.3) ||
+    !canOccupyDeck(
+      frame,
+      point(frame, pose.approach[0], pose.approach[1]),
+      0.3,
+    ) ||
     !canOccupyDeck(frame, point(frame, pose.position[0], pose.position[1]), 0.3)
   )
     throw new PilotGeometryError("Pilot approach/seat is obstructed");
@@ -163,9 +169,19 @@ function qualifyPoseGeometry(g: PilotGeometry, pose: PilotPose) {
     [pose.position[0] - pose.approach[0], pose.position[1] - pose.approach[1]],
     0.3,
   );
-  if (Math.hypot(swept.position[0] - pose.position[0], swept.position[1] - pose.position[1]) > 1e-5)
+  if (
+    Math.hypot(
+      swept.position[0] - pose.position[0],
+      swept.position[1] - pose.position[1],
+    ) > 1e-5
+  )
     throw new PilotGeometryError("Pilot seating transition is obstructed");
-  return { frame, transition: frame, approachHeight: approachHeight!, seatHeight: seatHeight! };
+  return {
+    frame,
+    transition: frame,
+    approachHeight: approachHeight!,
+    seatHeight: seatHeight!,
+  };
 }
 /** Recovery considers a bounded same-deck area and never crosses a wall or uses
  * the seat exception for ordinary walking. Call only for a currently seated actor. */

@@ -1,11 +1,23 @@
 import { describe, expect, it } from "vitest";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
-import { compileConstruction, readConstructionDraft } from "./construction-transactions";
+import {
+  compileConstruction,
+  readConstructionDraft,
+} from "./construction-transactions";
 import { compileLayout } from "./layout-compiler";
-import { PREFAB_DECK_ID, prefabConstructionDocument, prefabLayout } from "./prefab-construction";
+import {
+  PREFAB_DECK_ID,
+  prefabConstructionDocument,
+  prefabLayout,
+} from "./prefab-construction";
 import { planConstructionInstance } from "./construction-instance";
-import { canOccupyDeck, compileDeckCollision, resolveDeckCollision, sweepDeckCircle } from "./construction-collision";
+import {
+  canOccupyDeck,
+  compileDeckCollision,
+  resolveDeckCollision,
+  sweepDeckCircle,
+} from "./construction-collision";
 import { prefabWalkRoute } from "./prefab-construction";
 import { prefabFlightModel } from "./prefab-flight";
 import { prefabPilotPose } from "./construction-pilot";
@@ -18,18 +30,26 @@ describe("prefab construction documents", () => {
       const doc = prefabConstructionDocument(prefab, catalog);
       const layout = compileLayout(doc.layout);
       const errors = layout.diagnostics.filter((d) => d.severity === "error");
-      expect(errors.map((d) => `${d.code}:${d.ids?.join?.(",") ?? ""}`)).toEqual([]);
+      expect(
+        errors.map((d) => `${d.code}:${d.ids?.join?.(",") ?? ""}`),
+      ).toEqual([]);
       expect(doc.layout.openings.length).toBeGreaterThan(0);
       const snapshot = compileConstruction(JSON.stringify(doc));
       expect(snapshot.readiness.geometry).toBe(true);
       // Deterministic derivation.
-      expect(readConstructionDraft(JSON.stringify(prefabConstructionDocument(prefab, catalog))).sha256).toBe(snapshot.sha256);
+      expect(
+        readConstructionDraft(
+          JSON.stringify(prefabConstructionDocument(prefab, catalog)),
+        ).sha256,
+      ).toBe(snapshot.sha256);
     });
 
   it("rejects a layout that drifts from the grammar derivation", () => {
     const doc = prefabConstructionDocument(PREFAB_SHIPS[0], catalog);
     doc.layout.partitions.pop();
-    expect(() => readConstructionDraft(JSON.stringify(doc))).toThrow(/derivation/);
+    expect(() => readConstructionDraft(JSON.stringify(doc))).toThrow(
+      /derivation/,
+    );
   });
 
   it("rejects an invalid prefab and an unknown catalog revision", () => {
@@ -51,16 +71,26 @@ describe("prefab construction documents", () => {
     const bridge = layout.rooms.find((r) => r.type === "bridge")!;
     const engine = layout.rooms.find((r) => r.type === "engineering")!;
     expect(bridge.seed[1]).toBeGreaterThan(engine.seed[1]);
-    expect(Math.max(...ys) - Math.min(...ys)).toBeGreaterThan(Math.max(...xs) - Math.min(...xs));
+    expect(Math.max(...ys) - Math.min(...ys)).toBeGreaterThan(
+      Math.max(...xs) - Math.min(...xs),
+    );
   });
 });
 
 describe("prefab instances", () => {
-  const uuid = (n: number) => `00000000-0000-4000-8000-${n.toString(16).padStart(12, "0")}`;
-  for (const id of ["fed.s.wren", "rj.s.jackal", "au.s.lumen", "fed.m.meridian"])
+  const uuid = (n: number) =>
+    `00000000-0000-4000-8000-${n.toString(16).padStart(12, "0")}`;
+  for (const id of [
+    "fed.s.wren",
+    "rj.s.jackal",
+    "au.s.lumen",
+    "fed.m.meridian",
+  ])
     it(`${id} spawns a walkable instance whose document still admits`, () => {
       const prefab = PREFAB_SHIPS.find((p) => p.id === id)!;
-      const snapshot = compileConstruction(JSON.stringify(prefabConstructionDocument(prefab, catalog)));
+      const snapshot = compileConstruction(
+        JSON.stringify(prefabConstructionDocument(prefab, catalog)),
+      );
       let n = 0;
       const plan = planConstructionInstance(
         snapshot,
@@ -84,17 +114,47 @@ describe("prefab instances", () => {
       tampered.layout.partitions.pop();
       expect(() => readConstructionDraft(JSON.stringify(tampered))).toThrow();
       const frame = resolveDeckCollision(
-        compileDeckCollision(plan.document.layout, plan.spawn.deckId, { shipId: plan.instanceId, perimeterHalfWidthM: 0, partitionHalfWidthM: 0 }),
+        compileDeckCollision(plan.document.layout, plan.spawn.deckId, {
+          shipId: plan.instanceId,
+          perimeterHalfWidthM: 0,
+          partitionHalfWidthM: 0,
+        }),
         [],
       );
-      expect(canOccupyDeck(frame, { shipId: plan.instanceId, deckId: plan.spawn.deckId, position: plan.spawn.positionM }, 0.3)).toBe(true);
+      expect(
+        canOccupyDeck(
+          frame,
+          {
+            shipId: plan.instanceId,
+            deckId: plan.spawn.deckId,
+            position: plan.spawn.positionM,
+          },
+          0.3,
+        ),
+      ).toBe(true);
       // Walk from the spawn to the pilot approach through door passages and sit down.
       const model = prefabFlightModel(prefab, catalog);
       const pose = prefabPilotPose(model.station!);
-      let at: [number, number] = [plan.spawn.positionM[0], plan.spawn.positionM[1]];
-      for (const target of [...prefabWalkRoute(prefab, catalog, at, pose.approach), [pose.position[0], pose.position[1]] as [number, number]]) {
-        const swept = sweepDeckCircle(frame, { shipId: plan.instanceId, deckId: plan.spawn.deckId, position: at }, [target[0] - at[0], target[1] - at[1]], 0.3);
-        expect(Math.hypot(swept.position[0] - target[0], swept.position[1] - target[1])).toBeLessThan(1e-5);
+      let at: [number, number] = [
+        plan.spawn.positionM[0],
+        plan.spawn.positionM[1],
+      ];
+      for (const target of [
+        ...prefabWalkRoute(prefab, catalog, at, pose.approach),
+        [pose.position[0], pose.position[1]] as [number, number],
+      ]) {
+        const swept = sweepDeckCircle(
+          frame,
+          { shipId: plan.instanceId, deckId: plan.spawn.deckId, position: at },
+          [target[0] - at[0], target[1] - at[1]],
+          0.3,
+        );
+        expect(
+          Math.hypot(
+            swept.position[0] - target[0],
+            swept.position[1] - target[1],
+          ),
+        ).toBeLessThan(1e-5);
         at = target;
       }
     });

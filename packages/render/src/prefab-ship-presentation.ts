@@ -16,7 +16,9 @@ export interface PrefabShipViewHandle {
   setInterior(interior: boolean): void;
   dispose(): void;
   /** Mesh-origin and draw metrics of the dressed view (evidence/diagnostics). */
-  metrics(): ReturnType<import("./prefab-ship/ship-view").PrefabShipView["metrics"]>;
+  metrics(): ReturnType<
+    import("./prefab-ship/ship-view").PrefabShipView["metrics"]
+  >;
 }
 
 /** The game's space scene has no image-based environment, so metallic PBR slots
@@ -63,24 +65,40 @@ export async function loadPrefabShipPresentation(
   // The native construction loader also builds boundary guide meshes for the same layout; the
   // dressed view replaces them visually (walking and collision stay authoritative), so hide them.
   for (const mesh of shipRoot.getChildMeshes())
-    if (mesh.name.startsWith("construction-boundary-guide") && !mesh.isDescendantOf(view.root)) mesh.setEnabled(false);
+    if (
+      mesh.name.startsWith("construction-boundary-guide") &&
+      !mesh.isDescendantOf(view.root)
+    )
+      mesh.setEnabled(false);
   // Bloom: a ship-owned glow layer over the ship's emissive meshes only (light strips, canopy
   // edges, exhaust). The game's instrument glow layer stays untouched; one grading path.
-  const glow = new GlowLayer("prefab-ship-glow", scene, { mainTextureFixedSize: 512, blurKernelSize: 40 });
+  const glow = new GlowLayer("prefab-ship-glow", scene, {
+    mainTextureFixedSize: 512,
+    blurKernelSize: 40,
+  });
   glow.intensity = GAME_SHIP_GLOW;
   // Per-slot bloom: amber (emit_b) covers large areas (radiator fins, roof vents) and would wash
   // out the hull, so it glows at a third; cyan trims and canopy edges keep most of their halo.
   glow.customEmissiveColorSelector = (mesh, _sub, material, result) => {
-    const src = material as typeof material & { emissiveColor?: Color3; emissiveIntensity?: number };
+    const src = material as typeof material & {
+      emissiveColor?: Color3;
+      emissiveIntensity?: number;
+    };
     const c = src.emissiveColor;
     if (!c) return result.set(0, 0, 0, 0);
-    const k = (src.emissiveIntensity ?? 1) * (/emit_b|radiator/.test(`${material.name} ${mesh.name}`) ? 0.3 : 0.85);
+    const k =
+      (src.emissiveIntensity ?? 1) *
+      (/emit_b|radiator/.test(`${material.name} ${mesh.name}`) ? 0.3 : 0.85);
     result.set(c.r * k, c.g * k, c.b * k, material.alpha);
   };
   // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind
   // housings, walls and hull plates do not bloom through them.
   const occluders = createGlowOccluders(glow);
-  const fill = new HemisphericLight("prefab-ship-fill", new Vector3(0.2, 1, -0.3), scene);
+  const fill = new HemisphericLight(
+    "prefab-ship-fill",
+    new Vector3(0.2, 1, -0.3),
+    scene,
+  );
   fill.intensity = 0.25;
   fill.diffuse = new Color3(0.92, 0.94, 1);
   fill.groundColor = new Color3(0.32, 0.34, 0.42);
@@ -92,16 +110,23 @@ export async function loadPrefabShipPresentation(
     for (const mesh of meshes) {
       const m = mesh.material;
       if (m instanceof PBRMaterial) {
-        if ((m.metallic ?? 0) > GAME_MAX_METALLIC) m.metallic = GAME_MAX_METALLIC;
+        if ((m.metallic ?? 0) > GAME_MAX_METALLIC)
+          m.metallic = GAME_MAX_METALLIC;
         // The space scene's image environment is dim (tuned for the open sky); ship panels
         // take a fuller share of it so light greys read as light grey, not flat lavender.
         // Interior-palette clones (materials.ts roleSlotMaterial) are named prefab-<theme>-<role>-<slot>.
-        m.environmentIntensity = /-(floor|wall)-/.test(m.name) ? GAME_INTERIOR_ENVIRONMENT : GAME_SHIP_ENVIRONMENT;
-        m.directIntensity = /-(floor|wall)-/.test(m.name) ? 0.9 : GAME_SHIP_DIRECT;
+        m.environmentIntensity = /-(floor|wall)-/.test(m.name)
+          ? GAME_INTERIOR_ENVIRONMENT
+          : GAME_SHIP_ENVIRONMENT;
+        m.directIntensity = /-(floor|wall)-/.test(m.name)
+          ? 0.9
+          : GAME_SHIP_DIRECT;
       }
     }
     const emissive = new Set<AbstractMesh>(view.emissiveMeshes());
-    for (const mesh of emissive) if (!glowing.has(mesh)) glowing.add(mesh), glow.addIncludedOnlyMesh(mesh as Mesh);
+    for (const mesh of emissive)
+      if (!glowing.has(mesh))
+        (glowing.add(mesh), glow.addIncludedOnlyMesh(mesh as Mesh));
     occluders.set(meshes.filter((m) => !emissive.has(m) && m.isEnabled()));
   };
   adapt();

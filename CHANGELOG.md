@@ -18,6 +18,14 @@ r008 adds an interior architecture kit: floor tiles, edge walls with pressure se
 
 # Changelog
 
+## 2026-09-21 — Character pose clearance CPU (render 0.5.3)
+
+Removed temporary vector/array allocation from pose box-overlap checks while
+preserving all 15 separating axes and exact clearance results. A reproducible
+benchmark measures 7.68× faster checks; a bounded full-pose harness measures
+30–32% lower pose CPU, not whole-game FPS. Added equivalence coverage and retained
+the performance findings in `docs/handoffs/performance_audit_20260921.md`.
+Public deployment is unchanged.
 ## Dashboard/render 0.3.0, content/sim 0.2.0 — component paint, 2026-09-15
 
 Primary and secondary paint controls for placed hull components, engines and thrusters. Optional per-placement colours survive drafts, copies and exports without changing native geometry, snapping or physical state. Native atlas/material masks preserve surface maps, glazing and emissive details. Reset restores the authored appearance; painted copies share immutable meshes/textures and release their own material bindings.
@@ -102,6 +110,10 @@ The normal Shipyard can open an editable Wayfarer using the exact reviewed r005 
 - Correct LFS attributes for canonical native JSON payloads and replace an obsolete smoke assertion with the pinned current celestial chart.
 
 # Changelog
+
+## 2026-09-15 — Stable Observe and character preview (render 0.5.2, client 0.4.1, dashboard 0.5.1)
+
+Fixed displaced planetary atmospheres by using separate camera-relative world and view/projection uploads. Nested character portraits now restore Babylon's shared coordinate context after construction, rendering and disposal, and retain high-precision matrices. This prevents opening Character from corrupting world geometry and lighting. Authored surfaces, colors, LOD and simulation state are unchanged. Added numerical orbit and nested-render/disposal regression tests.
 
 ## 2026-09-15 — Stellar Observe framing (render 0.5.1)
 

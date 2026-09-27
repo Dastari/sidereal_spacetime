@@ -1,19 +1,65 @@
 /** Riftjack pirates: rusted brown, black, blood red and hazard yellow; asymmetric, mismatched fits. */
-import { door, edge, face, module, opening, polygonTiles, prefab, room, top, volume } from "./builders";
+import {
+  door,
+  edge,
+  face,
+  module,
+  opening,
+  polygonTiles,
+  prefab,
+  room,
+  top,
+  volume,
+} from "./builders";
 
 /** Starter candidate: a lopsided salvage cutter with a mismatched engine pair. */
 export const RJ_JACKAL = prefab({
   id: "rj.s.jackal",
   name: "Jackal",
-  description: "Riftjack salvage cutter: lopsided nose, bolted-on side pod, salvaged ion drive beside a thrust block. Starter candidate.",
+  description:
+    "Riftjack salvage cutter: lopsided nose, bolted-on side pod, salvaged ion drive beside a thrust block. Starter candidate.",
   faction: "Riftjack",
   role: "Cutter",
   theme: "riftjack",
   sizeClass: "S",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [8, 0], [11, 3], [11, 4], [7, 6], [0, 6]]), { logo: true }),
-    volume("pod-s", "hull", "cabin", polygonTiles([[0, -2], [4, -2], [4, 0], [0, 0]]), { logo: false }),
-    volume("armour-p", "plate", "plate", polygonTiles([[1, 6], [5, 6], [5, 7], [1, 7]])),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      polygonTiles([
+        [0, 0],
+        [8, 0],
+        [11, 3],
+        [11, 4],
+        [7, 6],
+        [0, 6],
+      ]),
+      { logo: true },
+    ),
+    volume(
+      "pod-s",
+      "hull",
+      "cabin",
+      polygonTiles([
+        [0, -2],
+        [4, -2],
+        [4, 0],
+        [0, 0],
+      ]),
+      { logo: false },
+    ),
+    volume(
+      "armour-p",
+      "plate",
+      "plate",
+      polygonTiles([
+        [1, 6],
+        [5, 6],
+        [5, 7],
+        [1, 7],
+      ]),
+    ),
   ],
   rooms: [
     room("engine", "ENGINE", "engineering", [0, 0, 3, 6]),
@@ -55,16 +101,60 @@ export const RJ_JACKAL = prefab({
 export const RJ_MARAUDER = prefab({
   id: "rj.m.marauder",
   name: "Marauder",
-  description: "Riftjack raider: armoured port pod, nose ram, salvaged drives and a heavy dorsal autocannon.",
+  description:
+    "Riftjack raider: armoured port pod, nose ram, salvaged drives and a heavy dorsal autocannon.",
   faction: "Riftjack",
   role: "Raider",
   theme: "riftjack",
   sizeClass: "M",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [18, 0], [22, 2], [22, 6], [18, 8], [0, 8]]), { spine: true }),
-    volume("pod-p", "hull", "pod", polygonTiles([[4, 8], [15, 8], [12, 11], [4, 11]]), { logo: false }),
-    volume("plate-s", "plate", "wing", polygonTiles([[6, -2], [10, -2], [12, 0], [6, 0]])),
-    volume("ram", "plate", "plate", polygonTiles([[22, 3], [24, 4], [22, 5]])),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      polygonTiles([
+        [0, 0],
+        [18, 0],
+        [22, 2],
+        [22, 6],
+        [18, 8],
+        [0, 8],
+      ]),
+      { spine: true },
+    ),
+    volume(
+      "pod-p",
+      "hull",
+      "pod",
+      polygonTiles([
+        [4, 8],
+        [15, 8],
+        [12, 11],
+        [4, 11],
+      ]),
+      { logo: false },
+    ),
+    volume(
+      "plate-s",
+      "plate",
+      "wing",
+      polygonTiles([
+        [6, -2],
+        [10, -2],
+        [12, 0],
+        [6, 0],
+      ]),
+    ),
+    volume(
+      "ram",
+      "plate",
+      "plate",
+      polygonTiles([
+        [22, 3],
+        [24, 4],
+        [22, 5],
+      ]),
+    ),
   ],
   rooms: [
     room("eng", "ENGINE", "engineering", [0, 0, 4, 8]),
@@ -119,17 +209,75 @@ export const RJ_MARAUDER = prefab({
 export const RJ_MAW = prefab({
   id: "rj.l.maw",
   name: "Maw",
-  description: "Riftjack capital raider: mandible jaws around a salvage arm, lopsided armoured pods and three mismatched XL/LG drives.",
+  description:
+    "Riftjack capital raider: mandible jaws around a salvage arm, lopsided armoured pods and three mismatched XL/LG drives.",
   faction: "Riftjack",
   role: "Carrier raider",
   theme: "riftjack",
   sizeClass: "L",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [28, 0], [32, 2], [32, 12], [28, 14], [0, 14]]), { spine: true }),
-    volume("jaw-s", "plate", "wing", polygonTiles([[32, 2], [38, 0], [38, 2], [34, 4], [32, 4]])),
-    volume("jaw-p", "plate", "wing", polygonTiles([[32, 10], [34, 10], [38, 12], [38, 14], [32, 12]])),
-    volume("pod-s", "hull", "pod", polygonTiles([[4, -4], [20, -4], [24, 0], [4, 0]]), { logo: false }),
-    volume("pod-p", "hull", "pod", polygonTiles([[6, 14], [22, 14], [18, 18], [6, 18]]), { logo: false }),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      polygonTiles([
+        [0, 0],
+        [28, 0],
+        [32, 2],
+        [32, 12],
+        [28, 14],
+        [0, 14],
+      ]),
+      { spine: true },
+    ),
+    volume(
+      "jaw-s",
+      "plate",
+      "wing",
+      polygonTiles([
+        [32, 2],
+        [38, 0],
+        [38, 2],
+        [34, 4],
+        [32, 4],
+      ]),
+    ),
+    volume(
+      "jaw-p",
+      "plate",
+      "wing",
+      polygonTiles([
+        [32, 10],
+        [34, 10],
+        [38, 12],
+        [38, 14],
+        [32, 12],
+      ]),
+    ),
+    volume(
+      "pod-s",
+      "hull",
+      "pod",
+      polygonTiles([
+        [4, -4],
+        [20, -4],
+        [24, 0],
+        [4, 0],
+      ]),
+      { logo: false },
+    ),
+    volume(
+      "pod-p",
+      "hull",
+      "pod",
+      polygonTiles([
+        [6, 14],
+        [22, 14],
+        [18, 18],
+        [6, 18],
+      ]),
+      { logo: false },
+    ),
   ],
   rooms: [
     room("eng", "ENGINES", "engineering", [0, 0, 6, 14]),

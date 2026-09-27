@@ -29,7 +29,7 @@ jobs:
       - run: python -m venv .runtime/construction-enclosure-python
       - run: .runtime/construction-enclosure-python/bin/python -m pip install -r scripts/geometry_tests/requirements.txt
       - run: npm run typecheck
-      - run: npm test -- --maxWorkers=2
+      - run: npm test
       - run: node --test scripts/quality-rules.test.mjs
       - run: npm run lint
       - run: npm run format:check

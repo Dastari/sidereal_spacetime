@@ -1,19 +1,70 @@
 /** Frontier industrial and Vitreous Choir crystalline designs. */
-import { door, edge, face, module, opening, polygonTiles, prefab, room, top, volume } from "./builders";
+import {
+  door,
+  edge,
+  face,
+  module,
+  opening,
+  polygonTiles,
+  prefab,
+  room,
+  top,
+  volume,
+} from "./builders";
 
 /** Medium industrial: boxy hauler with ore bins, cab, mining lasers and salvage arms. */
 export const IND_MULE = prefab({
   id: "ind.m.mule",
   name: "Mule",
-  description: "Frontier mining hauler: forward cab, twin ore bins, 4 m cargo door, mining lasers and salvage arms.",
+  description:
+    "Frontier mining hauler: forward cab, twin ore bins, 4 m cargo door, mining lasers and salvage arms.",
   faction: "Frontier Guilds",
   role: "Mining hauler",
   theme: "industrial",
   sizeClass: "M",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 0], [20, 0], [20, 2], [23, 2], [25, 4], [25, 6], [23, 8], [20, 8], [20, 10], [0, 10]]), { spine: true }),
-    volume("bin-s", "hull", "pod", polygonTiles([[3, -3], [13, -3], [13, 0], [3, 0]]), { logo: false }),
-    volume("bin-p", "hull", "pod", polygonTiles([[3, 10], [12, 10], [12, 13], [3, 13]]), { logo: false }),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      polygonTiles([
+        [0, 0],
+        [20, 0],
+        [20, 2],
+        [23, 2],
+        [25, 4],
+        [25, 6],
+        [23, 8],
+        [20, 8],
+        [20, 10],
+        [0, 10],
+      ]),
+      { spine: true },
+    ),
+    volume(
+      "bin-s",
+      "hull",
+      "pod",
+      polygonTiles([
+        [3, -3],
+        [13, -3],
+        [13, 0],
+        [3, 0],
+      ]),
+      { logo: false },
+    ),
+    volume(
+      "bin-p",
+      "hull",
+      "pod",
+      polygonTiles([
+        [3, 10],
+        [12, 10],
+        [12, 13],
+        [3, 13],
+      ]),
+      { logo: false },
+    ),
   ],
   rooms: [
     room("eng", "ENGINES", "engineering", [0, 0, 4, 10]),
@@ -75,15 +126,50 @@ export const IND_MULE = prefab({
 export const CRY_SHARD = prefab({
   id: "cry.m.shard",
   name: "Shard",
-  description: "Vitreous Choir envoy: faceted crystal hull, twin spike wings, resonance drives and a singing lance.",
+  description:
+    "Vitreous Choir envoy: faceted crystal hull, twin spike wings, resonance drives and a singing lance.",
   faction: "Vitreous Choir",
   role: "Envoy",
   theme: "crystalline",
   sizeClass: "M",
   volumes: [
-    volume("hull", "hull", "deck", polygonTiles([[0, 2], [2, 0], [14, 0], [22, 4], [14, 8], [2, 8], [0, 6]]), { spine: true }),
-    volume("spike-p", "plate", "wing", polygonTiles([[4, 8], [12, 8], [6, 11], [4, 11]])),
-    volume("spike-s", "plate", "wing", polygonTiles([[4, -3], [6, -3], [12, 0], [4, 0]])),
+    volume(
+      "hull",
+      "hull",
+      "deck",
+      polygonTiles([
+        [0, 2],
+        [2, 0],
+        [14, 0],
+        [22, 4],
+        [14, 8],
+        [2, 8],
+        [0, 6],
+      ]),
+      { spine: true },
+    ),
+    volume(
+      "spike-p",
+      "plate",
+      "wing",
+      polygonTiles([
+        [4, 8],
+        [12, 8],
+        [6, 11],
+        [4, 11],
+      ]),
+    ),
+    volume(
+      "spike-s",
+      "plate",
+      "wing",
+      polygonTiles([
+        [4, -3],
+        [6, -3],
+        [12, 0],
+        [4, 0],
+      ]),
+    ),
   ],
   rooms: [
     room("eng", "RESONANCE", "engineering", [0, 0, 4, 8]),

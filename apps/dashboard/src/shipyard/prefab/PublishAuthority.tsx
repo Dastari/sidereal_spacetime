@@ -5,15 +5,23 @@
  */
 import { useEffect, useRef, useState } from "react";
 import type { User } from "oidc-client-ts";
-import { compileConstruction } from "../../../../../packages/sim/src/construction-transactions";
-import { createConnectionSession } from "../../../../../packages/net/src/connection-session";
-import { connectConstruction } from "../../../../../packages/net/src/construction";
-import type { DbConnection } from "../../../../../packages/net/src/generated";
+import { compileConstruction } from "@sidereal/sim/construction-transactions";
+import { createConnectionSession } from "@sidereal/net/connection-session";
+import { connectConstruction } from "@sidereal/net/construction";
+import type { DbConnection } from "@sidereal/net/generated";
 import { authoringAuth, loadAuthoringAccount } from "../../authoring/auth";
 import { uuid } from "../layout/useLayout";
 import type { PrefabPublication } from "./publish";
 
-export default function PublishAuthority({ publication, name, revision }: { publication: PrefabPublication; name: string; revision: number }) {
+export default function PublishAuthority({
+  publication,
+  name,
+  revision,
+}: {
+  publication: PrefabPublication;
+  name: string;
+  revision: number;
+}) {
   const [user, setUser] = useState<User | null>(null);
   const [connection, setConnection] = useState<DbConnection | null>(null);
   const [status, setStatus] = useState("signed out");
@@ -61,15 +69,28 @@ export default function PublishAuthority({ publication, name, revision }: { publ
       { kind: "oidc", token: user.id_token },
     );
     return () => session.dispose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [authenticated]);
 
   void serial;
-  const grants = connection ? [...connection.db.ownConstructionGrants.iter()] : [];
-  const drafts = connection ? [...connection.db.ownConstructionDrafts.iter()].filter((d) => d.workspaceId === workspace) : [];
-  const blueprints = connection ? [...connection.db.ownConstructionBlueprints.iter()].filter((b) => b.workspaceId === workspace) : [];
+  const grants = connection
+    ? [...connection.db.ownConstructionGrants.iter()]
+    : [];
+  const drafts = connection
+    ? [...connection.db.ownConstructionDrafts.iter()].filter(
+        (d) => d.workspaceId === workspace,
+      )
+    : [];
+  const blueprints = connection
+    ? [...connection.db.ownConstructionBlueprints.iter()].filter(
+        (b) => b.workspaceId === workspace,
+      )
+    : [];
   const remote = drafts.find((d) => d.id === publication.draftId);
-  const allowed = (cap: string) => status === "ready" && grants.some((g) => g.workspaceId === workspace && g.capability === cap && !g.revoked);
+  const allowed = (cap: string) =>
+    status === "ready" &&
+    grants.some(
+      (g) => g.workspaceId === workspace && g.capability === cap && !g.revoked,
+    );
   useEffect(() => {
     if (workspace) return;
     const g = grants.find((x) => !x.revoked);
@@ -77,8 +98,11 @@ export default function PublishAuthority({ publication, name, revision }: { publ
   }, [serial, workspace, grants]);
 
   const operation = (request: unknown[]) => {
-    const key = JSON.stringify(request, (_, v) => (typeof v === "bigint" ? v.toString() : v));
-    if (!pending.current || pending.current.request !== key) pending.current = { request: key, operationId: uuid() };
+    const key = JSON.stringify(request, (_, v) =>
+      typeof v === "bigint" ? v.toString() : v,
+    );
+    if (!pending.current || pending.current.request !== key)
+      pending.current = { request: key, operationId: uuid() };
     return pending.current.operationId;
   };
   const run = async (label: string, action: () => Promise<void>) => {
@@ -96,28 +120,62 @@ export default function PublishAuthority({ publication, name, revision }: { publ
     }
   };
   const save = () =>
-    run(`Saved ${name} revision ${revision} to workspace ${workspace}`, async () => {
-      const expectedRevision = remote?.revision ?? 0n;
-      const args = { workspaceId: workspace, draftId: publication.draftId, documentJson: publication.documentJson, expectedRevision };
-      await connection!.reducers.saveConstructionDraft({ ...args, operationId: operation(["save", args]) });
-    });
+    run(
+      `Saved ${name} revision ${revision} to workspace ${workspace}`,
+      async () => {
+        const expectedRevision = remote?.revision ?? 0n;
+        const args = {
+          workspaceId: workspace,
+          draftId: publication.draftId,
+          documentJson: publication.documentJson,
+          expectedRevision,
+        };
+        await connection!.reducers.saveConstructionDraft({
+          ...args,
+          operationId: operation(["save", args]),
+        });
+      },
+    );
   const publish = () =>
-    run(`Published ${name} revision ${revision} as an immutable blueprint`, async () => {
-      const local = compileConstruction(publication.documentJson);
-      if (!remote || remote.sha256 !== local.sha256) throw Error("Save this exact document to the workspace before publishing");
-      const args = { workspaceId: workspace, draftId: publication.draftId, expectedRevision: remote.revision };
-      await connection!.reducers.publishConstructionBlueprint({ ...args, operationId: operation(["publish", args]) });
-    });
-  const spawn = (blueprintId: string, expectedSha256: string, sourceDeckId: string) =>
+    run(
+      `Published ${name} revision ${revision} as an immutable blueprint`,
+      async () => {
+        const local = compileConstruction(publication.documentJson);
+        if (!remote || remote.sha256 !== local.sha256)
+          throw Error(
+            "Save this exact document to the workspace before publishing",
+          );
+        const args = {
+          workspaceId: workspace,
+          draftId: publication.draftId,
+          expectedRevision: remote.revision,
+        };
+        await connection!.reducers.publishConstructionBlueprint({
+          ...args,
+          operationId: operation(["publish", args]),
+        });
+      },
+    );
+  const spawn = (
+    blueprintId: string,
+    expectedSha256: string,
+    sourceDeckId: string,
+  ) =>
     run("Review instance requested", async () => {
       const args = { blueprintId, expectedSha256, sourceDeckId };
-      await connection!.reducers.spawnConstructionBlueprint({ ...args, operationId: operation(["spawn", args]) });
+      await connection!.reducers.spawnConstructionBlueprint({
+        ...args,
+        operationId: operation(["spawn", args]),
+      });
     });
 
   if (!user)
     return (
       <div className="pf-authority">
-        <p>Sign in with a Shipyard authoring account. Workspace access is granted by an administrator; ship ownership grants none.</p>
+        <p>
+          Sign in with a Shipyard authoring account. Workspace access is granted
+          by an administrator; ship ownership grants none.
+        </p>
         <button
           onClick={() => {
             if (location.origin !== import.meta.env.VITE_AUTH_ORIGIN) {
@@ -137,25 +195,52 @@ export default function PublishAuthority({ publication, name, revision }: { publ
   return (
     <div className="pf-authority">
       <p>
-        {user.profile.preferred_username ?? user.profile.name ?? "Signed-in account"}, connection {status}.
+        {user.profile.preferred_username ??
+          user.profile.name ??
+          "Signed-in account"}
+        , connection {status}.
       </p>
       <label className="pf-field">
         <span>Workspace id</span>
-        <input value={workspace} onChange={(e) => setWorkspace(e.target.value.trim())} aria-label="Construction workspace" />
+        <input
+          value={workspace}
+          onChange={(e) => setWorkspace(e.target.value.trim())}
+          aria-label="Construction workspace"
+        />
       </label>
       <p className="layout-note">
         Draft {publication.draftId}
-        {remote ? `, workspace revision ${String(remote.revision)}` : ", not yet in this workspace"}.
+        {remote
+          ? `, workspace revision ${String(remote.revision)}`
+          : ", not yet in this workspace"}
+        .
       </p>
       <div className="pf-row">
-        <button disabled={busy || !workspace || !allowed("draft.write")} onClick={() => void save()}>
+        <button
+          disabled={busy || !workspace || !allowed("draft.write")}
+          onClick={() => void save()}
+        >
           Save workspace draft
         </button>
-        <button className="layout-primary" disabled={busy || !remote || !allowed("blueprint.publish") || !allowed("draft.read")} onClick={() => void publish()}>
+        <button
+          className="layout-primary"
+          disabled={
+            busy ||
+            !remote ||
+            !allowed("blueprint.publish") ||
+            !allowed("draft.read")
+          }
+          onClick={() => void publish()}
+        >
           Publish immutable blueprint
         </button>
       </div>
-      {!grants.some((g) => !g.revoked) && status === "ready" && <p className="layout-note">No workspace grant on this account. An administrator must grant access.</p>}
+      {!grants.some((g) => !g.revoked) && status === "ready" && (
+        <p className="layout-note">
+          No workspace grant on this account. An administrator must grant
+          access.
+        </p>
+      )}
       {blueprints.map((b) => {
         let label = b.id;
         let deck = "";
@@ -171,15 +256,29 @@ export default function PublishAuthority({ publication, name, revision }: { publ
             <span>
               {label} <small>{b.sha256.slice(0, 12)}</small>
             </span>
-            <button disabled={busy || !deck || !allowed("instance.spawn")} onClick={() => void spawn(b.id, b.sha256, deck)}>
+            <button
+              disabled={busy || !deck || !allowed("instance.spawn")}
+              onClick={() => void spawn(b.id, b.sha256, deck)}
+            >
               Spawn review instance
             </button>
           </div>
         );
       })}
       {notice && <p className="pf-ok">{notice}</p>}
-      {error && <p className="pf-error" role="alert">{error}</p>}
-      <button className="pf-link" onClick={() => void authoringAuth().signoutRedirect().catch((e) => setError(String(e)))}>
+      {error && (
+        <p className="pf-error" role="alert">
+          {error}
+        </p>
+      )}
+      <button
+        className="pf-link"
+        onClick={() =>
+          void authoringAuth()
+            .signoutRedirect()
+            .catch((e) => setError(String(e)))
+        }
+      >
         Sign out
       </button>
     </div>

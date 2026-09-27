@@ -1,5 +1,12 @@
 /** Cached derivations shared by the plan, stats and validation panels. */
-import { readShipPrefab, volumeGeometry, type PrefabIssue, type PrefabVolume, type ShipPrefabDocumentV1, type VolumeGeometry } from "@sidereal/content/ship-prefab";
+import {
+  readShipPrefab,
+  volumeGeometry,
+  type PrefabIssue,
+  type PrefabVolume,
+  type ShipPrefabDocumentV1,
+  type VolumeGeometry,
+} from "@sidereal/content/ship-prefab";
 import type { PrefabSelection } from "./commands";
 
 const geometryCache = new WeakMap<PrefabVolume, VolumeGeometry>();
@@ -34,8 +41,14 @@ export function admissionIssue(doc: ShipPrefabDocumentV1): PrefabIssue | null {
 export function issueSelection(issue: PrefabIssue): PrefabSelection | null {
   const r = issue.ref;
   if (r.kind === "document") return null;
-  if (r.kind === "volume") return r.tile !== undefined ? { kind: "tile", volume: r.id, index: r.tile } : { kind: "volume", id: r.id };
+  if (r.kind === "volume")
+    return r.tile !== undefined
+      ? { kind: "tile", volume: r.id, index: r.tile }
+      : { kind: "volume", id: r.id };
   return { kind: r.kind, id: r.id } as PrefabSelection;
 }
 
-export const sameSelection = (a: PrefabSelection | null, b: PrefabSelection | null) => JSON.stringify(a) === JSON.stringify(b);
+export const sameSelection = (
+  a: PrefabSelection | null,
+  b: PrefabSelection | null,
+) => JSON.stringify(a) === JSON.stringify(b);

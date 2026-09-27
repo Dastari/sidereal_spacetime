@@ -104,7 +104,9 @@ def main(out=OUT,pieces=ROOT/'packages/content/src/ship-kit-pieces.v1.json'):
         path=source/f'bow_{hc}.blend'
         bpy.ops.wm.save_as_mainfile(filepath=str(path),compress=True)
         print('BOW_HEIGHT_EXPORTED',hc,len(group),(out/filename).stat().st_size,flush=True)
-    (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+    # Same canonical form as ship_kit_export.write_manifest: sorted pieces, sorted keys, indent 1.
+    manifest['pieces']={k:manifest['pieces'][k] for k in sorted(manifest['pieces'])}
+    (out/'manifest.json').write_text(json.dumps(manifest,indent=1,sort_keys=True)+'\n')
     # Delete only superseded individual bow outputs, never the earlier canopy families.
     for path in out.glob('bow.*.glb'):path.unlink()
     print('BOW_EXPORT_VALIDATED',total,flush=True)

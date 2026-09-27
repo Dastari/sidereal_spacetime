@@ -100,12 +100,7 @@ export const SHIP_THERMAL_MODEL = {
 } as const;
 
 export type ShipMountSocket =
-  | "top"
-  | "face"
-  | "rear"
-  | "bottom"
-  | "edge"
-  | "interior";
+  "top" | "face" | "rear" | "bottom" | "edge" | "interior";
 export type ShipComponentStatus = "proposed" | "future";
 export type ShipFaction = "common" | "federation" | "riftjack" | "aurelian";
 export type ShipVec3 = readonly [number, number, number];
@@ -164,7 +159,10 @@ export function shipMountRotation(
       [0, 1, 0],
       [0, 0, -1],
     ];
-  if (frame === "top" && (socket === "face" || socket === "rear" || socket === "edge"))
+  if (
+    frame === "top" &&
+    (socket === "face" || socket === "rear" || socket === "edge")
+  )
     // (x, y, z) -> (y, -z, -x)
     return [
       [0, 1, 0],
@@ -203,12 +201,7 @@ export interface ShipComponentIntegrity {
   /** Flat per-hit reduction before hp loss. */
   armor: number;
   destroyedEffect:
-    | "none"
-    | "fire"
-    | "explosion"
-    | "coolant-leak"
-    | "fuel-leak"
-    | "air-leak";
+    "none" | "fire" | "explosion" | "coolant-leak" | "fuel-leak" | "air-leak";
   /** Damage dealt to neighbours in a 3 m radius when destroyed (explosion only). */
   explosionDamage: number;
 }
@@ -307,7 +300,12 @@ export interface ShipArmorStats {
   /** Per 1 m x 1 m face cell. */
   hpPerCell: number;
   massKgPerCell: number;
-  resist: { kinetic: number; thermal: number; explosive: number; plasma: number };
+  resist: {
+    kinetic: number;
+    thermal: number;
+    explosive: number;
+    plasma: number;
+  };
 }
 export interface ShipSensorStats {
   kind: "dish" | "radar" | "scanner" | "relay";
@@ -454,10 +452,7 @@ export function validateShipComponentCatalog(
     ];
     if (!numeric.every(isFiniteNonNegative))
       bad(id, "negative or non-finite system value");
-    if (
-      c.power.idleKw > c.power.activeKw ||
-      c.power.activeKw > c.power.peakKw
-    )
+    if (c.power.idleKw > c.power.activeKw || c.power.activeKw > c.power.peakKw)
       bad(id, "power idle <= active <= peak violated");
     if (c.heat.idleKw > c.heat.activeKw || c.heat.activeKw > c.heat.peakKw)
       bad(id, "heat idle <= active <= peak violated");
@@ -480,9 +475,7 @@ export function validateShipComponentCatalog(
         bad(id, `port ${p.id} geometry`);
       else if (Math.abs(Math.hypot(...p.normal) - 1) > 1e-9)
         bad(id, `port ${p.id} normal not unit`);
-      else if (
-        p.position.some((v, i) => v < lo[i] - 1e-9 || v > hi[i] + 1e-9)
-      )
+      else if (p.position.some((v, i) => v < lo[i] - 1e-9 || v > hi[i] + 1e-9))
         bad(id, `port ${p.id} outside envelope`);
     }
     const has = (ch: ShipComponentChannel, dir: "in" | "out") =>
@@ -505,10 +498,7 @@ export function validateShipComponentCatalog(
       c.fluids.coolantDemandLps <= 0
     )
       bad(id, "hot component without coolant demand");
-    if (
-      c.fluids.fuelActiveLps > 0 &&
-      !has("fuel", "in")
-    )
+    if (c.fluids.fuelActiveLps > 0 && !has("fuel", "in"))
       bad(id, "burns fuel without a fuel input");
     if (c.fluids.fuelCapacityL > 0 && !has("fuel", "out"))
       bad(id, "stores fuel without a fuel output");

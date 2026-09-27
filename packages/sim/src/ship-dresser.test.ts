@@ -6,7 +6,7 @@ import {
   volume,
   polygonTiles,
   edge,
-} from "../../content/src/prefabs/builders";
+} from "@sidereal/content/prefabs/builders";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { shipKitPiecesFile } from "@sidereal/content/ship-kit";

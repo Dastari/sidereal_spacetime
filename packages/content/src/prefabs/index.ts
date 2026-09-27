@@ -24,7 +24,11 @@ export const PREFAB_SHIPS: readonly ShipPrefabDocumentV1[] = [
 ];
 
 /** Small ships offered to the owner as starter candidates (one per faction). */
-export const STARTER_CANDIDATES: readonly string[] = ["fed.s.wren", "rj.s.jackal", "au.s.lumen"];
+export const STARTER_CANDIDATES: readonly string[] = [
+  "fed.s.wren",
+  "rj.s.jackal",
+  "au.s.lumen",
+];
 
 export function prefabById(id: string): ShipPrefabDocumentV1 | undefined {
   return PREFAB_SHIPS.find((p) => p.id === id);

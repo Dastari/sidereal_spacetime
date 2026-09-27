@@ -84,7 +84,13 @@
     "./ship-components-source": "./src/ship-components-source.ts",
     "./ship-components.v1.json": "./src/ship-components.v1.json",
     "./ship-components-reference-fits": "./src/ship-components-reference-fits.ts",
-    "./bow-profiles": "./src/bow-profiles.ts"
+    "./bow-profiles": "./src/bow-profiles.ts",
+    "./crew-armor": "./src/crew-armor.ts",
+    "./crew-heads": "./src/crew-heads.ts",
+    "./crew-voxel-bundle": "./src/crew-voxel-bundle.ts",
+    "./crew-voxel-face": "./src/crew-voxel-face.ts",
+    "./prefabs/builders": "./src/prefabs/builders.ts",
+    "./crew-items": "./src/crew-items.ts"
   },
   "dependencies": {}
 }

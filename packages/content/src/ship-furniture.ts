@@ -29,5 +29,7 @@ export const DECK_OBJECT_DESIGNS: readonly string[] = [
 
 /** GLB URL for a deck-object design, or null when it keeps the placeholder. */
 export function deckObjectVisualUrl(designId: string): string | null {
-  return DECK_OBJECT_DESIGNS.includes(designId) ? `/assets/ship-objects/${SHIP_OBJECT_ART_REVISION}/${designId}.glb` : null;
+  return DECK_OBJECT_DESIGNS.includes(designId)
+    ? `/assets/ship-objects/${SHIP_OBJECT_ART_REVISION}/${designId}.glb`
+    : null;
 }

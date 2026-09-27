@@ -6,7 +6,13 @@
  */
 import type { ShipKitSlot } from "@sidereal/content/ship-kit";
 import type { PrefabComponentSpec } from "@sidereal/content/ship-prefab";
-import { KIT_CHAMFER_M, emitBox, newBuilder, pushPoly, type GeometryBuilder } from "./box-mesher";
+import {
+  KIT_CHAMFER_M,
+  emitBox,
+  newBuilder,
+  pushPoly,
+  type GeometryBuilder,
+} from "./box-mesher";
 import { transformDirection, transformPoint, type Mat4 } from "./frames";
 
 export interface StandinBox {
@@ -37,8 +43,20 @@ export interface Standin {
   nozzle?: { at: [number, number, number]; radius: number };
 }
 
-const box = (centre: [number, number, number], size: [number, number, number], slot: ShipKitSlot): StandinBox => ({ kind: "box", centre, size, slot });
-const cyl = (centre: [number, number, number], axis: "x" | "y" | "z", length: number, d0: number, d1: number, slot: ShipKitSlot, tessellation = 16): StandinCylinder => ({
+const box = (
+  centre: [number, number, number],
+  size: [number, number, number],
+  slot: ShipKitSlot,
+): StandinBox => ({ kind: "box", centre, size, slot });
+const cyl = (
+  centre: [number, number, number],
+  axis: "x" | "y" | "z",
+  length: number,
+  d0: number,
+  d1: number,
+  slot: ShipKitSlot,
+  tessellation = 16,
+): StandinCylinder => ({
   kind: "cylinder",
   centre,
   axis,
@@ -52,13 +70,17 @@ const cyl = (centre: [number, number, number], axis: "x" | "y" | "z", length: nu
 export type StandinSocket = "top" | "face" | "edge" | "interior";
 
 /** Build a stand-in for a spec on a socket class. */
-export function componentStandin(spec: PrefabComponentSpec | undefined, socket: StandinSocket): Standin {
+export function componentStandin(
+  spec: PrefabComponentSpec | undefined,
+  socket: StandinSocket,
+): Standin {
   const w = Math.max(1, spec?.cells[0] ?? 1);
   const d = Math.max(1, spec?.cells[1] ?? 1);
   const h = Math.max(0.25, (spec?.heightTexels ?? 16) / 16);
   const cat = spec?.category ?? "";
   if (socket === "face" || socket === "edge") {
-    if (cat === "propulsion") return engine(w * 0.92, h * 0.92, d, !!spec?.thrustN);
+    if (cat === "propulsion")
+      return engine(w * 0.92, h * 0.92, d, !!spec?.thrustN);
     if (cat === "weapon") return sideGun(w, h, d);
     if (socket === "edge" || cat === "cargo-door") return hatch(w, h);
     return facePod(w, h, d);
@@ -80,11 +102,35 @@ function engine(w: number, h: number, d: number, main: boolean): Standin {
   const collar = Math.min(0.25, len * 0.15);
   const parts: StandinPart[] = [
     box([0, -collar / 2, 0], [w, collar, h], "secondary"),
-    box([0, -collar - (len * 0.55) / 2, 0], [w * 0.86, len * 0.55, h * 0.86], "primary"),
-    box([0, -collar - len * 0.22, h * 0.43 + 0.04], [w * 0.6, len * 0.3, 0.08], "accent"),
+    box(
+      [0, -collar - (len * 0.55) / 2, 0],
+      [w * 0.86, len * 0.55, h * 0.86],
+      "primary",
+    ),
+    box(
+      [0, -collar - len * 0.22, h * 0.43 + 0.04],
+      [w * 0.6, len * 0.3, 0.08],
+      "accent",
+    ),
     box([0, -collar - len * 0.4, 0], [w * 0.92, 0.12, h * 0.92], "trim"),
-    cyl([0, -collar - len * 0.55 - (len * 0.45) / 2, 0], "y", len * 0.45, r * 1.5, r * 1.9, "metal", 20),
-    cyl([0, -collar - len + 0.03, 0], "y", 0.06, r * 1.45, r * 1.45, "emit_a", 20),
+    cyl(
+      [0, -collar - len * 0.55 - (len * 0.45) / 2, 0],
+      "y",
+      len * 0.45,
+      r * 1.5,
+      r * 1.9,
+      "metal",
+      20,
+    ),
+    cyl(
+      [0, -collar - len + 0.03, 0],
+      "y",
+      0.06,
+      r * 1.45,
+      r * 1.45,
+      "emit_a",
+      20,
+    ),
   ];
   return { parts, nozzle: { at: [0, -collar - len, 0], radius: r * 0.8 } };
 }
@@ -128,9 +174,29 @@ function turret(w: number, d: number, h: number): Standin {
     parts: [
       cyl([0, 0, h * 0.12], "z", h * 0.24, s * 0.9, s * 0.95, "secondary", 16),
       box([0, 0, h * 0.24 + h * 0.2], [s * 0.7, s * 0.8, h * 0.4], "primary"),
-      box([0, s * 0.15, h * 0.24 + h * 0.4 + 0.03], [s * 0.4, s * 0.3, 0.06], "accent"),
-      cyl([-s * 0.13, s * 0.4 + barrel / 2, h * 0.44], "y", barrel, s * 0.12, s * 0.12, "metal", 10),
-      cyl([s * 0.13, s * 0.4 + barrel / 2, h * 0.44], "y", barrel, s * 0.12, s * 0.12, "metal", 10),
+      box(
+        [0, s * 0.15, h * 0.24 + h * 0.4 + 0.03],
+        [s * 0.4, s * 0.3, 0.06],
+        "accent",
+      ),
+      cyl(
+        [-s * 0.13, s * 0.4 + barrel / 2, h * 0.44],
+        "y",
+        barrel,
+        s * 0.12,
+        s * 0.12,
+        "metal",
+        10,
+      ),
+      cyl(
+        [s * 0.13, s * 0.4 + barrel / 2, h * 0.44],
+        "y",
+        barrel,
+        s * 0.12,
+        s * 0.12,
+        "metal",
+        10,
+      ),
       box([0, -s * 0.3, h * 0.3], [s * 0.5, 0.05, 0.08], "emit_b"),
     ],
   };
@@ -148,11 +214,19 @@ function dish(w: number, h: number): Standin {
 }
 
 function radiator(w: number, d: number, h: number): Standin {
-  const parts: StandinPart[] = [box([0, 0, 0.08], [w * 0.95, d * 0.95, 0.16], "secondary")];
+  const parts: StandinPart[] = [
+    box([0, 0, 0.08], [w * 0.95, d * 0.95, 0.16], "secondary"),
+  ];
   const fins = Math.max(3, Math.round(w * 4));
   for (let i = 0; i < fins; i++) {
     const x = -w * 0.42 + (i * (w * 0.84)) / (fins - 1);
-    parts.push(box([x, 0, 0.16 + h * 0.4], [0.06, d * 0.85, h * 0.8], i % 2 ? "metal" : "trim"));
+    parts.push(
+      box(
+        [x, 0, 0.16 + h * 0.4],
+        [0.06, d * 0.85, h * 0.8],
+        i % 2 ? "metal" : "trim",
+      ),
+    );
   }
   parts.push(box([0, d * 0.46, 0.2], [w * 0.8, 0.05, 0.06], "emit_b"));
   return { parts };
@@ -171,7 +245,11 @@ function console_(w: number, d: number, h: number): Standin {
   const top = Math.min(1.0, h);
   return {
     parts: [
-      box([0, -d * 0.1, top * 0.4], [w * 0.85, d * 0.5, top * 0.8], "secondary"),
+      box(
+        [0, -d * 0.1, top * 0.4],
+        [w * 0.85, d * 0.5, top * 0.8],
+        "secondary",
+      ),
       box([0, d * 0.05, top * 0.82], [w * 0.9, d * 0.55, 0.06], "trim"),
       box([0, -d * 0.25, top * 0.82 + 0.3], [w * 0.8, 0.06, 0.5], "dark"),
       box([0, -d * 0.21, top * 0.82 + 0.3], [w * 0.7, 0.02, 0.4], "emit_a"),
@@ -210,7 +288,10 @@ export function emitCylinder(out: GeometryBuilder, c: StandinCylinder) {
     const quad = [at(-h, a0, r0), at(-h, a1, r0), at(h, a1, r1), at(h, a0, r1)];
     pushPoly(out, r1 > 0 ? quad : quad.slice(0, 3), nrm);
   }
-  for (const [t, r, s] of [[-h, r0, -1], [h, r1, 1]] as const) {
+  for (const [t, r, s] of [
+    [-h, r0, -1],
+    [h, r1, 1],
+  ] as const) {
     if (r <= 0) continue;
     const ring: [number, number, number][] = [];
     for (let i = 0; i < n; i++) ring.push(at(t, (i / n) * Math.PI * 2, r));
@@ -221,13 +302,23 @@ export function emitCylinder(out: GeometryBuilder, c: StandinCylinder) {
 }
 
 /** Append a stand-in, transformed by `m` (socket frame -> target frame), into per-slot builders. */
-export function appendStandin(standin: Standin, m: Mat4, builders: Map<ShipKitSlot, GeometryBuilder>) {
+export function appendStandin(
+  standin: Standin,
+  m: Mat4,
+  builders: Map<ShipKitSlot, GeometryBuilder>,
+) {
   for (const part of standin.parts) {
     const local = newBuilder();
     if (part.kind === "box") {
       const lo = part.centre.map((c, k) => c - part.size[k] / 2);
       const hi = part.centre.map((c, k) => c + part.size[k] / 2);
-      emitBox(local, lo, hi, Math.min(KIT_CHAMFER_M * 2, 0.3 * Math.min(...part.size)), () => false);
+      emitBox(
+        local,
+        lo,
+        hi,
+        Math.min(KIT_CHAMFER_M * 2, 0.3 * Math.min(...part.size)),
+        () => false,
+      );
     } else emitCylinder(local, part);
     let out = builders.get(part.slot);
     if (!out) builders.set(part.slot, (out = newBuilder()));
@@ -245,32 +336,65 @@ export function appendStandin(standin: Standin, m: Mat4, builders: Map<ShipKitSl
  * matching the stepped blue exhaust of reference/art engine assemblies. Vertex colours carry the
  * fade; the plume material is additive and unlit. `sides` is kept for call compatibility.
  */
-export function emitPlume(out: GeometryBuilder, colours: number[], at: readonly [number, number, number], radius: number, length: number, rings = 6, _sides = 0) {
+export function emitPlume(
+  out: GeometryBuilder,
+  colours: number[],
+  at: readonly [number, number, number],
+  radius: number,
+  length: number,
+  rings = 6,
+  _sides = 0,
+) {
   const T = 1 / 16;
   const snap = (v: number) => Math.max(T, Math.round(v / T) * T);
   const steps = Math.max(4, rings);
   const slab = (r: number, y0: number, y1: number, fade: number) => {
     const before = out.positions.length / 3;
-    emitBox(out, [at[0] - r, at[1] - y1, at[2] - r], [at[0] + r, at[1] - y0, at[2] + r], 0, () => false);
-    for (let i = before; i < out.positions.length / 3; i++) colours.push(fade, fade, fade, fade);
+    emitBox(
+      out,
+      [at[0] - r, at[1] - y1, at[2] - r],
+      [at[0] + r, at[1] - y0, at[2] + r],
+      0,
+      () => false,
+    );
+    for (let i = before; i < out.positions.length / 3; i++)
+      colours.push(fade, fade, fade, fade);
   };
   for (let k = 0; k < steps; k++) {
     const t0 = k / steps;
     const t1 = (k + 1) / steps;
-    const fade = Math.pow(1 - t0, 2.6);                      // quick falloff
+    const fade = Math.pow(1 - t0, 2.6); // quick falloff
     // Additive and double-sided: dim outer shell, bright short core at the nozzle.
     slab(snap(radius * (1 - 0.75 * t0)), t0 * length, t1 * length, fade * 0.16);
-    if (t0 < 0.6) slab(snap(radius * 0.5 * (1 - 0.6 * t0)), t0 * length, t1 * length, fade * 0.75);
+    if (t0 < 0.6)
+      slab(
+        snap(radius * 0.5 * (1 - 0.6 * t0)),
+        t0 * length,
+        t1 * length,
+        fade * 0.75,
+      );
   }
   out.boxes += 1;
 }
 
 /** Append `src` transformed by a proper rotation + translation (normals rotate, winding kept). */
-export function appendTransformed(out: GeometryBuilder, src: GeometryBuilder, m: Mat4) {
+export function appendTransformed(
+  out: GeometryBuilder,
+  src: GeometryBuilder,
+  m: Mat4,
+) {
   const base = out.positions.length / 3;
   for (let i = 0; i < src.positions.length; i += 3) {
-    const p = transformPoint(m, [src.positions[i], src.positions[i + 1], src.positions[i + 2]]);
-    const q = transformDirection(m, [src.normals[i], src.normals[i + 1], src.normals[i + 2]]);
+    const p = transformPoint(m, [
+      src.positions[i],
+      src.positions[i + 1],
+      src.positions[i + 2],
+    ]);
+    const q = transformDirection(m, [
+      src.normals[i],
+      src.normals[i + 1],
+      src.normals[i + 2],
+    ]);
     out.positions.push(p[0], p[1], p[2]);
     out.normals.push(q[0], q[1], q[2]);
   }

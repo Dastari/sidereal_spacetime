@@ -583,12 +583,35 @@ export function dressShip(
       for (let cy = s.at[1]; cy < s.at[1] + s.size[1]; cy++)
         topTaken.add(`${cx},${cy}`);
 
-  const otherCovers = (v: VolumeGeometry, x: number, y: number, z0: number, z1: number) =>
-    geoms.some((w) => w !== v && w.z[0] < z1 && z0 < w.z[1] && insideOutline(w.outline!, x, y));
+  const otherCovers = (
+    v: VolumeGeometry,
+    x: number,
+    y: number,
+    z0: number,
+    z1: number,
+  ) =>
+    geoms.some(
+      (w) =>
+        w !== v &&
+        w.z[0] < z1 &&
+        z0 < w.z[1] &&
+        insideOutline(w.outline!, x, y),
+    );
   // Cassette tiers only give way when another volume hides most of the tier (a wing covering the
   // lower 5 texels of an upper tier still leaves a visible band that needs cassettes).
-  const mostlyCovered = (v: VolumeGeometry, x: number, y: number, z0: number, z1: number) =>
-    geoms.some((w) => w !== v && insideOutline(w.outline!, x, y) && Math.min(z1, w.z[1]) - Math.max(z0, w.z[0]) > 0.6 * (z1 - z0));
+  const mostlyCovered = (
+    v: VolumeGeometry,
+    x: number,
+    y: number,
+    z0: number,
+    z1: number,
+  ) =>
+    geoms.some(
+      (w) =>
+        w !== v &&
+        insideOutline(w.outline!, x, y) &&
+        Math.min(z1, w.z[1]) - Math.max(z0, w.z[0]) > 0.6 * (z1 - z0),
+    );
 
   const interior = deckId ? deriveInterior(doc, 0, options.catalog) : null;
   // Exterior outline runs marked as canopy glass (edge type "canopy"), as outline segment keys.

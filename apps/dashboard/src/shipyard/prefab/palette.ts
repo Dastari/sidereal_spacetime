@@ -32,7 +32,8 @@ const MOUNT_COLOURS: Record<string, string> = {
   console: "#8fd0ff",
 };
 
-export const mountColour = (category: string | undefined) => MOUNT_COLOURS[(category ?? "").split(".")[0]] ?? "#e6edf3";
+export const mountColour = (category: string | undefined) =>
+  MOUNT_COLOURS[(category ?? "").split(".")[0]] ?? "#e6edf3";
 
 export const CATEGORY_LABELS: Record<string, string> = {
   propulsion: "Propulsion",
@@ -50,7 +51,11 @@ export const CATEGORY_LABELS: Record<string, string> = {
 };
 
 /** Linear RGB (theme data) to an sRGB hex swatch. */
-export function linearToHex([r, g, b]: readonly [number, number, number]): string {
+export function linearToHex([r, g, b]: readonly [
+  number,
+  number,
+  number,
+]): string {
   const c = (v: number) => {
     const x = Math.max(0, Math.min(1, v));
     const s = x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055;

@@ -6,6 +6,12 @@ import {
 } from "../../../content/src/equipment-poses";
 import { equipmentAimSource, validAnchors } from "./anchors";
 export type { EquipmentAimSource, GripBasis } from "./anchors";
+export {
+  applyCrewItemTheme,
+  createVoxelItemFx,
+  createVoxelItemVisual,
+  crewItemHandSocketRotation,
+} from "./voxel-items";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";

@@ -28,7 +28,9 @@
 }
 .prefab-editor kbd,
 .prefab-library kbd {
-  font: 500 10px/1 Barlow, sans-serif;
+  font:
+    500 10px/1 Barlow,
+    sans-serif;
   color: var(--muted);
   border: 1px solid var(--line);
   border-bottom-width: 2px;
@@ -61,7 +63,9 @@
   min-width: 0;
 }
 .prefab-editor .pf-title h1 {
-  font: 600 19px/1.15 "Barlow Condensed", sans-serif;
+  font:
+    600 19px/1.15 "Barlow Condensed",
+    sans-serif;
   letter-spacing: 0.01em;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -440,7 +444,11 @@
 }
 .pf-kind.plate {
   height: 4px;
-  background: repeating-linear-gradient(90deg, #6d98b0 0 3px, transparent 3px 5px);
+  background: repeating-linear-gradient(
+    90deg,
+    #6d98b0 0 3px,
+    transparent 3px 5px
+  );
 }
 .pf-tile-grid {
   display: grid;
@@ -559,31 +567,56 @@ button[aria-pressed="true"] .pf-tile-shape {
 }
 .pf-edge-swatch.t-wall-glazed,
 .pf-edge-swatch.t-window {
-  background: repeating-linear-gradient(90deg, var(--pf-glass) 0 5px, transparent 5px 7px);
+  background: repeating-linear-gradient(
+    90deg,
+    var(--pf-glass) 0 5px,
+    transparent 5px 7px
+  );
 }
 .pf-edge-swatch.t-window {
   height: 2px;
 }
 .pf-edge-swatch.t-wall-half {
   height: 2px;
-  background: repeating-linear-gradient(90deg, #a9bcc8 0 3px, transparent 3px 6px);
+  background: repeating-linear-gradient(
+    90deg,
+    #a9bcc8 0 3px,
+    transparent 3px 6px
+  );
 }
 .pf-edge-swatch.t-open {
   height: 2px;
-  background: repeating-linear-gradient(90deg, #d6c28a 0 2px, transparent 2px 5px);
+  background: repeating-linear-gradient(
+    90deg,
+    #d6c28a 0 2px,
+    transparent 2px 5px
+  );
 }
 .pf-edge-swatch[class*="t-door"] {
   height: 6px;
   background: var(--pf-door);
 }
 .pf-edge-swatch.t-door-airlock {
-  background: linear-gradient(90deg, var(--pf-door) 0 40%, var(--pf-door-ext) 40% 60%, var(--pf-door) 60%);
+  background: linear-gradient(
+    90deg,
+    var(--pf-door) 0 40%,
+    var(--pf-door-ext) 40% 60%,
+    var(--pf-door) 60%
+  );
 }
 .pf-edge-swatch.t-door-blast {
-  background: repeating-linear-gradient(135deg, var(--pf-door) 0 3px, #5a3a14 3px 5px);
+  background: repeating-linear-gradient(
+    135deg,
+    var(--pf-door) 0 3px,
+    #5a3a14 3px 5px
+  );
 }
 .pf-edge-swatch.t-door-forcefield {
-  background: repeating-linear-gradient(90deg, #7af3ff 0 2px, transparent 2px 4px);
+  background: repeating-linear-gradient(
+    90deg,
+    #7af3ff 0 2px,
+    transparent 2px 4px
+  );
 }
 
 /* ---------------------------------------------------------------- left: mount palette */
@@ -602,7 +635,9 @@ button[aria-pressed="true"] .pf-tile-shape {
   display: inline-grid;
   place-items: center;
   min-width: 26px;
-  font: 600 10px/1 Barlow, sans-serif;
+  font:
+    600 10px/1 Barlow,
+    sans-serif;
   padding: 3px 4px;
   border-radius: 3px;
   border: 1px solid var(--line);
@@ -656,7 +691,9 @@ button[aria-pressed="true"] .pf-tile-shape {
   gap: 3px;
 }
 .pf-palette-group h3 {
-  font: 600 11px/1.2 Barlow, sans-serif;
+  font:
+    600 11px/1.2 Barlow,
+    sans-serif;
   color: var(--muted);
   margin: 0 0 3px;
   padding-bottom: 4px;
@@ -953,21 +990,27 @@ button[aria-pressed="true"] .pf-tile-shape {
 }
 .pf-room-label {
   fill: #eef6fa;
-  font: 600 11px Barlow, sans-serif;
+  font:
+    600 11px Barlow,
+    sans-serif;
   letter-spacing: 0.04em;
   text-anchor: middle;
   dominant-baseline: central;
 }
 .pf-mount-label {
   fill: #dbe8f0;
-  font: 500 9px Barlow, sans-serif;
+  font:
+    500 9px Barlow,
+    sans-serif;
   text-anchor: middle;
   dominant-baseline: central;
   opacity: 0.85;
 }
 .pf-limit-label {
   fill: rgba(158, 196, 216, 0.75);
-  font: 500 10px Barlow, sans-serif;
+  font:
+    500 10px Barlow,
+    sans-serif;
 }
 .pf-limit-label.over {
   fill: var(--pf-bad);
@@ -1133,7 +1176,8 @@ section.prefab-preview > .prefab-preview-status:only-child {
   font-weight: 600;
 }
 .pf-stats dt[title] {
-  text-decoration: underline dotted color-mix(in srgb, var(--muted) 60%, transparent);
+  text-decoration: underline dotted
+    color-mix(in srgb, var(--muted) 60%, transparent);
   text-underline-offset: 3px;
   cursor: help;
 }
@@ -1181,7 +1225,9 @@ section.prefab-preview > .prefab-preview-status:only-child {
   margin-bottom: 8px;
 }
 .pf-keys h2 {
-  font: 600 13px Barlow, sans-serif;
+  font:
+    600 13px Barlow,
+    sans-serif;
 }
 .prefab-editor .pf-keys header button {
   min-height: 26px;
@@ -1278,7 +1324,9 @@ section.prefab-preview > .prefab-preview-status:only-child {
   z-index: 1;
 }
 .pf-dialog-head h2 {
-  font: 600 20px "Barlow Condensed", sans-serif;
+  font:
+    600 20px "Barlow Condensed",
+    sans-serif;
 }
 .layout-editor .pf-publish .pf-dialog-head button {
   margin: 0;
@@ -1315,7 +1363,9 @@ section.prefab-preview > .prefab-preview-status:only-child {
   background: var(--accent);
 }
 .pf-publish-step h3 {
-  font: 600 14px Barlow, sans-serif;
+  font:
+    600 14px Barlow,
+    sans-serif;
   margin: 0 0 6px;
 }
 .layout-editor .pf-publish-step p {
@@ -1372,7 +1422,9 @@ section.prefab-preview > .prefab-preview-status:only-child {
   background: var(--creator-surface);
 }
 .pf-library-head h1 {
-  font: 600 30px/1.1 "Barlow Condensed", sans-serif;
+  font:
+    600 30px/1.1 "Barlow Condensed",
+    sans-serif;
   letter-spacing: 0.01em;
 }
 .pf-library-head p {
@@ -1397,14 +1449,18 @@ section.prefab-preview > .prefab-preview-status:only-child {
   background: var(--creator-surface);
 }
 .pf-new h2 {
-  font: 600 15px Barlow, sans-serif;
+  font:
+    600 15px Barlow,
+    sans-serif;
   margin-bottom: 12px;
 }
 .pf-new .pf-field {
   margin-bottom: 12px;
 }
 .pf-library-lists > h2 {
-  font: 600 15px Barlow, sans-serif;
+  font:
+    600 15px Barlow,
+    sans-serif;
   margin: 0 0 12px;
 }
 .pf-library-lists > h2 ~ h2 {
@@ -1440,13 +1496,15 @@ section.prefab-preview > .prefab-preview-status:only-child {
   border-radius: 0;
   background:
     linear-gradient(var(--pf-grid-minor) 1px, transparent 1px) 0 0 / 10px 10px,
-    linear-gradient(90deg, var(--pf-grid-minor) 1px, transparent 1px) 0 0 / 10px 10px,
+    linear-gradient(90deg, var(--pf-grid-minor) 1px, transparent 1px) 0 0 / 10px
+      10px,
     var(--pf-plan);
 }
 .prefab-library .pf-card-open:hover:not(:disabled) {
   background:
     linear-gradient(var(--pf-grid-major) 1px, transparent 1px) 0 0 / 10px 10px,
-    linear-gradient(90deg, var(--pf-grid-major) 1px, transparent 1px) 0 0 / 10px 10px,
+    linear-gradient(90deg, var(--pf-grid-major) 1px, transparent 1px) 0 0 / 10px
+      10px,
     var(--pf-plan);
 }
 .pf-card-open img {
@@ -1467,10 +1525,14 @@ section.prefab-preview > .prefab-preview-status:only-child {
   display: flex;
   align-items: baseline;
   gap: 8px;
-  font: 600 18px/1.15 "Barlow Condensed", sans-serif;
+  font:
+    600 18px/1.15 "Barlow Condensed",
+    sans-serif;
 }
 .pf-card-body h2 small {
-  font: 500 10px Barlow, sans-serif;
+  font:
+    500 10px Barlow,
+    sans-serif;
   color: var(--accent);
   border: 1px solid color-mix(in srgb, var(--accent) 50%, transparent);
   border-radius: 3px;

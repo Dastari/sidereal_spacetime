@@ -80,7 +80,10 @@ export function NumberField({
     const n = Number(draft);
     if (!Number.isFinite(n)) return setDraft(String(value));
     const snapped = Math.round(n / step) * step;
-    const clamped = Math.min(max ?? Infinity, Math.max(min ?? -Infinity, snapped));
+    const clamped = Math.min(
+      max ?? Infinity,
+      Math.max(min ?? -Infinity, snapped),
+    );
     setDraft(String(clamped));
     if (clamped !== value) onCommit(clamped);
   };
@@ -135,16 +138,36 @@ export function SelectField<T extends string>({
   );
 }
 
-export function CheckField({ label, checked, onChange, disabled }: { label: string; checked: boolean; onChange: (v: boolean) => void; disabled?: boolean }) {
+export function CheckField({
+  label,
+  checked,
+  onChange,
+  disabled,
+}: {
+  label: string;
+  checked: boolean;
+  onChange: (v: boolean) => void;
+  disabled?: boolean;
+}) {
   return (
     <label className="pf-check">
-      <input type="checkbox" checked={checked} disabled={disabled} onChange={(e) => onChange(e.target.checked)} />
+      <input
+        type="checkbox"
+        checked={checked}
+        disabled={disabled}
+        onChange={(e) => onChange(e.target.checked)}
+      />
       {label}
     </label>
   );
 }
 
 /** Grammar label characters (names, room labels). */
-export const labelFilter = (v: string) => v.replace(/[^A-Za-z0-9 ._/'&-]/g, "").slice(0, 32);
+export const labelFilter = (v: string) =>
+  v.replace(/[^A-Za-z0-9 ._/'&-]/g, "").slice(0, 32);
 /** Hull marking characters: upper case only. */
-export const markingFilter = (max: number) => (v: string) => v.toUpperCase().replace(/[^A-Z0-9 ._/-]/g, "").slice(0, max);
+export const markingFilter = (max: number) => (v: string) =>
+  v
+    .toUpperCase()
+    .replace(/[^A-Z0-9 ._/-]/g, "")
+    .slice(0, max);

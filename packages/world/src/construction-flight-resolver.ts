@@ -104,7 +104,10 @@ export function resolveShipFlightDefinition(
   if (db.dirty(shipId)) reason = reason || "flight-compilation-pending";
   if (compiled.status !== "ready")
     reason = reason || compiled.reason || "flight-compilation-rejected";
-  if (compiled.definitionHash !== (prefab ? binding!.definitionSha256 : catalogHash))
+  if (
+    compiled.definitionHash !==
+    (prefab ? binding!.definitionSha256 : catalogHash)
+  )
     reason = reason || "physical-definition-catalog-mismatch";
   if (
     compiled.shipId !== shipId ||
@@ -154,7 +157,8 @@ export function resolveShipFlightDefinition(
     for (const device of [...actuators, ...computers]) {
       const fitting = byId.get(device.id);
       const physical = prefab
-        ? device.definitionRevision === 1 && prefabFittingFor(device.definitionId)
+        ? device.definitionRevision === 1 &&
+          prefabFittingFor(device.definitionId)
           ? { fittingDefinitionId: prefabFittingFor(device.definitionId)! }
           : undefined
         : WAYFARER_PHYSICAL_CATALOG.definitions.find(

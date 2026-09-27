@@ -14,7 +14,15 @@
  */
 
 /** [x0, y0, z0, x1, y1, z1, slot index] in texels (1/16 m). Same shape as the dresser's DressBox. */
-export type TexelBox = readonly [number, number, number, number, number, number, number];
+export type TexelBox = readonly [
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+  number,
+];
 
 export interface BoxMesherOptions {
   /** Metres per texel. Default 1/16. */
@@ -52,7 +60,9 @@ export const CHAMFERED_BOX_TRIANGLES = 44;
  * (primary, secondary, accent, trim, metal, dark, emit_a, emit_b, glass). Base panels stay put,
  * overlay stripes (dark vents, metal/trim bands, lights) sit fractionally proud.
  */
-export const DEFAULT_SLOT_INFLATION: readonly number[] = [0, 0, 0, 0.0005, 0.0005, 0.00025, 0.00075, 0.00075, -0.00025];
+export const DEFAULT_SLOT_INFLATION: readonly number[] = [
+  0, 0, 0, 0.0005, 0.0005, 0.00025, 0.00075, 0.00075, -0.00025,
+];
 
 /** Growable triangle soup (prefab frame metres). */
 export interface GeometryBuilder {
@@ -62,7 +72,12 @@ export interface GeometryBuilder {
   boxes: number;
 }
 
-export const newBuilder = (): GeometryBuilder => ({ positions: [], normals: [], indices: [], boxes: 0 });
+export const newBuilder = (): GeometryBuilder => ({
+  positions: [],
+  normals: [],
+  indices: [],
+  boxes: 0,
+});
 
 const AXES: readonly [number, number][] = [
   [0, -1],
@@ -95,7 +110,15 @@ export function hiddenFaces(boxes: readonly TexelBox[]): Set<number> {
   boxes.forEach((b, i) =>
     AXES.forEach(([axis, side], f) => {
       const opposite = seen.get(`${faceKey(b, axis, side)}|${-side}`);
-      if (opposite?.some((id) => Math.floor(id / 6) !== i && boxes[Math.floor(id / 6)][6] !== GLASS_SLOT && b[6] !== GLASS_SLOT)) hidden.add(i * 6 + f);
+      if (
+        opposite?.some(
+          (id) =>
+            Math.floor(id / 6) !== i &&
+            boxes[Math.floor(id / 6)][6] !== GLASS_SLOT &&
+            b[6] !== GLASS_SLOT,
+        )
+      )
+        hidden.add(i * 6 + f);
     }),
   );
   return hidden;
@@ -104,7 +127,11 @@ export function hiddenFaces(boxes: readonly TexelBox[]): Set<number> {
 const GLASS_SLOT = 8;
 
 /** Append a convex polygon with a flat normal, wound counter-clockwise seen from the normal side. */
-export function pushPoly(out: GeometryBuilder, pts: readonly (readonly [number, number, number])[], n: readonly [number, number, number]) {
+export function pushPoly(
+  out: GeometryBuilder,
+  pts: readonly (readonly [number, number, number])[],
+  n: readonly [number, number, number],
+) {
   const base = out.positions.length / 3;
   for (const p of pts) {
     out.positions.push(p[0], p[1], p[2]);
@@ -126,19 +153,36 @@ export function pushPoly(out: GeometryBuilder, pts: readonly (readonly [number, 
  * Emit one chamfered box. `lo`/`hi` are the outer bounds (metres), `c` the chamfer, `hidden(f)`
  * whether face f (AXES order) is culled.
  */
-export function emitBox(out: GeometryBuilder, lo: readonly number[], hi: readonly number[], c: number, hidden: (f: number) => boolean) {
+export function emitBox(
+  out: GeometryBuilder,
+  lo: readonly number[],
+  hi: readonly number[],
+  c: number,
+  hidden: (f: number) => boolean,
+) {
   const inLo = [lo[0] + c, lo[1] + c, lo[2] + c];
   const inHi = [hi[0] - c, hi[1] - c, hi[2] - c];
-  const outer = (axis: number, side: number) => (side > 0 ? hi[axis] : lo[axis]);
-  const inner = (axis: number, side: number) => (side > 0 ? inHi[axis] : inLo[axis]);
-  const pt = (vals: number[]): [number, number, number] => [vals[0], vals[1], vals[2]];
+  const outer = (axis: number, side: number) =>
+    side > 0 ? hi[axis] : lo[axis];
+  const inner = (axis: number, side: number) =>
+    side > 0 ? inHi[axis] : inLo[axis];
+  const pt = (vals: number[]): [number, number, number] => [
+    vals[0],
+    vals[1],
+    vals[2],
+  ];
   // Faces.
   AXES.forEach(([axis, side], f) => {
     if (hidden(f)) return;
     const u = (axis + 1) % 3;
     const v = (axis + 2) % 3;
     const corners: [number, number, number][] = [];
-    for (const [su, sv] of [[-1, -1], [1, -1], [1, 1], [-1, 1]] as const) {
+    for (const [su, sv] of [
+      [-1, -1],
+      [1, -1],
+      [1, 1],
+      [-1, 1],
+    ] as const) {
       const p = [0, 0, 0];
       p[axis] = outer(axis, side);
       p[u] = inner(u, su);
@@ -152,7 +196,11 @@ export function emitBox(out: GeometryBuilder, lo: readonly number[], hi: readonl
   if (c <= 0) return;
   const r2 = Math.SQRT1_2;
   // Edge strips between two faces (axes a < b), running along the third axis t.
-  for (const [a, b] of [[0, 1], [0, 2], [1, 2]] as const) {
+  for (const [a, b] of [
+    [0, 1],
+    [0, 2],
+    [1, 2],
+  ] as const) {
     const t = 3 - a - b;
     for (const sa of [-1, 1])
       for (const sb of [-1, 1]) {
@@ -175,17 +223,23 @@ export function emitBox(out: GeometryBuilder, lo: readonly number[], hi: readonl
     for (const sy of [-1, 1])
       for (const sz of [-1, 1]) {
         const s = [sx, sy, sz];
-        const tri = [0, 1, 2].map((k) => pt([0, 1, 2].map((a) => (a === k ? outer(a, s[a]) : inner(a, s[a])))));
+        const tri = [0, 1, 2].map((k) =>
+          pt([0, 1, 2].map((a) => (a === k ? outer(a, s[a]) : inner(a, s[a])))),
+        );
         pushPoly(out, tri, [sx * r3, sy * r3, sz * r3]);
       }
 }
 
 /** Mesh a list of texel boxes into chamfered bricks, one geometry per slot index. */
-export function meshBoxes(boxes: readonly TexelBox[], options: BoxMesherOptions = {}): BoxMeshResult {
+export function meshBoxes(
+  boxes: readonly TexelBox[],
+  options: BoxMesherOptions = {},
+): BoxMeshResult {
   const texel = options.texel ?? 1 / 16;
   const chamfer = options.chamfer ?? KIT_CHAMFER_M;
   const inflation = options.inflation ?? DEFAULT_SLOT_INFLATION;
-  const hidden = options.cull === false ? new Set<number>() : hiddenFaces(boxes);
+  const hidden =
+    options.cull === false ? new Set<number>() : hiddenFaces(boxes);
   const builders = new Map<number, GeometryBuilder>();
   let culledFaces = 0;
   boxes.forEach((b, i) => {
@@ -196,7 +250,10 @@ export function meshBoxes(boxes: readonly TexelBox[], options: BoxMesherOptions 
     const e = inflation[slot] ?? 0;
     const lo = [b[0] * texel - e, b[1] * texel - e, b[2] * texel - e];
     const hi = [b[3] * texel + e, b[4] * texel + e, b[5] * texel + e];
-    const c = Math.min(chamfer, 0.3 * Math.min(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]));
+    const c = Math.min(
+      chamfer,
+      0.3 * Math.min(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]),
+    );
     emitBox(out, lo, hi, c, (f) => {
       const h = hidden.has(i * 6 + f);
       if (h) culledFaces++;
@@ -214,5 +271,10 @@ export function meshBoxes(boxes: readonly TexelBox[], options: BoxMesherOptions 
       triangles: g.indices.length / 3,
       boxes: g.boxes,
     }));
-  return { slots, triangles: slots.reduce((n, s) => n + s.triangles, 0), boxes: slots.reduce((n, s) => n + s.boxes, 0), culledFaces };
+  return {
+    slots,
+    triangles: slots.reduce((n, s) => n + s.triangles, 0),
+    boxes: slots.reduce((n, s) => n + s.boxes, 0),
+    culledFaces,
+  };
 }
