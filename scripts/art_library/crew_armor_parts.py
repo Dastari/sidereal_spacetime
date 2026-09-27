@@ -28,7 +28,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 KIT_ID = "crew.armor-v1"
-REVISION = "r005"
+REVISION = "r006"
 SPEC_VERSION = 2
 BODY_REVISION = "r005"
 V = 1.0 / 32.0
@@ -272,6 +272,9 @@ def chest_vols(c, w, tier, style):
             ch.box(-6, fy, 29, -3, fy + 1, 32, S2).box(-5, fy + 1, 31, -4, fy + 2, 34, AC)  # pocket + pen
             ch.box(3, fy, 32, 6, fy + 1, 34, EM)                                            # glowing ID
         if style == "flight":
+            ch.box(-6, fy - 3, 36, 6, fy + 1, 37, S2).cut(-3, fy - 3, 36, 3, fy - 1, 37)    # ribbed jacket collar
+            ch.box(-7, by, 36, 7, by + 2, 37, S2)
+            ch.box(2, fy, 29, 6, fy + 1, 31, S2).box(2, fy + 1, 30, 6, fy + 2, 31, D)       # chest pocket + flap
             ch.paint(-7, by, 31, 7, fy, 33, AC)                                             # chest stripe
             ch.box(-6, fy, 30, -3, fy + 1, 34, S2).box(-5, fy + 1, 31, -4, fy + 2, 33, EM)  # comms unit
             for x0 in (-3, 2):
@@ -319,10 +322,9 @@ def chest_vols(c, w, tier, style):
                 ch.box(x0, fy + 1, 28, x0 + 3, fy + 3, 31, S2).box(x0, fy + 2, 30, x0 + 3, fy + 3, 31, D)
             ch.box(4, fy + 2, 33, 6, fy + 3, 35, EM).box(-6, fy + 2, 33, -4, fy + 3, 35, AC)
     if style == "medic":
-        for x0, x1 in ((-6, -1), (1, 6)):                                                     # bold crimson plates
-            ch.paint(x0, fy, 29, x1, fy + ft, 35, AC)
-        ch.box(-5, fy + 2, 30, -2, fy + 3, 31, P).box(-4, fy + 2, 29, -3, fy + 3, 32, P)     # white cross
-        ch.box(-7, fy - 1, 34, 7, fy + 1, 35, AC)                                             # red band
+        cy = fy + ft + 1                                                                      # big red cross, raised
+        ch.box(-1, cy, 29, 1, cy + 1, 36, AC).box(-4, cy, 31, 4, cy + 1, 33, AC, into=ch.last)
+        ch.box(-7, fy - 1, 28, 7, fy + 1, 29, AC)                                             # red hem band
         sp.box(-w, 8, 26, w, 9, 27, AC)
     if style == "vest":
         ch.box(-5, fy + ft, 32, -3, fy + ft + 1, 34, AC).box(-5, fy + ft + 1, 33, -4, fy + ft + 2, 34, M)   # badge
@@ -674,6 +676,41 @@ LIFT = {"default": 1, "foot": 0, "toe": 0}
 SHIN_LIFT = {"boots": 0, "legs": 1}
 
 
+LIGHTS = {"chest": 2, "back": 1, "belt": 1}      # small indicator lights kept per part (others: none)
+
+
+def cap_lights(vols, slot):
+    """Coordinator review r005: keep only a handful of 1-2 voxel indicator lights per figure. Emissive
+    components larger than 2 cells (glow bars) become metal trims; the smallest lights are kept, up
+    to LIGHTS[slot] per part (0 for paired limb parts)."""
+    keep = LIGHTS.get(slot, 0)
+    comps = []
+    for bone, v in vols.items():
+        seen = set()
+        for c, sl in v.c.items():
+            if sl != EM or c in seen:
+                continue
+            stack, comp = [c], []
+            seen.add(c)
+            while stack:
+                x, y, z = stack.pop()
+                comp.append((x, y, z))
+                for d in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, -1, 0), (0, 0, 1), (0, 0, -1)):
+                    n = (x + d[0], y + d[1], z + d[2])
+                    if n not in seen and v.c.get(n) == EM:
+                        seen.add(n)
+                        stack.append(n)
+            comps.append((len(comp), -max(p[2] for p in comp), bone, comp))
+    comps.sort()
+    kept = [c for c in comps if c[0] <= 2][:keep]
+    for size, _z, bone, comp in comps:
+        if (size, _z, bone, comp) in kept:
+            continue
+        for cell in comp:
+            vols[bone].c[cell] = M
+    return vols
+
+
 def lifted(vols, slot):
     out = {}
     for bone, v in vols.items():
@@ -697,7 +734,7 @@ def build_catalog():
     parts = []
 
     def add(pid, slot, tier, style, name, fits, exhaust=()):
-        fits = {fn: lifted(vols, slot) for fn, vols in fits.items()}
+        fits = {fn: cap_lights(lifted(vols, slot), slot) for fn, vols in fits.items()}
         exhaust = [(b, (x, y, z - 2), r) for b, (x, y, z), r in exhaust]
         parts.append(Part(pid, slot, tier, style, name, fits, SOCKET[slot], MASS[slot][tier], GRID[slot], list(exhaust),
                           ["gear"] + list(HIDES.get(slot, ()))))
@@ -760,49 +797,49 @@ SHEET_COLOURWAYS = ["arctic", "crimson", "cobalt", "amber", "moss", "shadow"]
 # headPreset ids name CHAR-HEADS looks (coordinated on Agent Mail thread "characters"); they
 # are intents until CHAR-HEADS publishes its catalog.
 PRESETS = [
-    {"id": "role.captain", "undersuit": {"suit_primary": "#1d2748", "suit_secondary": "#10152a"}, "name": "Captain", "colourway": "captain", "headPreset": "head.captain-cap",
+    {"id": "role.captain", "heads": {"male": ["acc.officer_cap", "hair.swept_quiff.cap"], "female": ["acc.officer_cap", "hair.long_gathered.cap"], "skin": "#e7a98a", "hair": "#7a4526", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#1d2748", "suit_secondary": "#10152a"}, "name": "Captain", "colourway": "captain", "headPreset": "head.captain-cap",
      "parts": {"chest": "armor.chest.coat", "shoulders": "armor.shoulders.epaulette", "gloves": "armor.gloves.fabric",
                "belt": "armor.belt.sash", "boots": "armor.boots.dress"}},
-    {"id": "role.engineer", "undersuit": {"suit_primary": "#2d2b3f", "suit_secondary": "#1a1926"}, "name": "Engineer", "colourway": "engineer", "headPreset": "head.engineer-helmet",
+    {"id": "role.engineer", "heads": {"male": ["acc.goggles_up", "hair.curly_top.full"], "female": ["acc.goggles_up", "hair.messy_bun.full"], "skin": "#c98a62", "hair": "#4a2f6e", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#2d2b3f", "suit_secondary": "#1a1926"}, "name": "Engineer", "colourway": "engineer", "headPreset": "head.engineer-helmet",
      "parts": {"chest": "armor.chest.harness", "shoulders": "armor.shoulders.light", "gloves": "armor.gloves.work",
                "belt": "armor.belt.tool", "legs": "armor.legs.light", "boots": "armor.boots.light",
                "back": "armor.back.toolpack"}},
-    {"id": "role.medic", "undersuit": {"suit_primary": "#2c2a3a", "suit_secondary": "#1b1a26"}, "name": "Medic", "colourway": "medic", "headPreset": "head.medic-helmet",
+    {"id": "role.medic", "heads": {"male": ["acc.medic_cap", "hair.close_crop.cap"], "female": ["acc.medic_cap", "hair.blunt_bob.cap"], "skin": "#f3c2a2", "hair": "#2a2438", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#2c2a3a", "suit_secondary": "#1b1a26"}, "name": "Medic", "colourway": "medic", "headPreset": "head.medic-helmet",
      "parts": {"chest": "armor.chest.medic", "shoulders": "armor.shoulders.standard", "gloves": "armor.gloves.light",
                "belt": "armor.belt.medic", "legs": "armor.legs.light", "boots": "armor.boots.standard",
                "back": "armor.back.medpack"}},
-    {"id": "role.pilot", "undersuit": {"suit_primary": "#233a8a", "suit_secondary": "#152255"}, "name": "Pilot", "colourway": "pilot", "headPreset": "head.pilot-helmet",
+    {"id": "role.pilot", "heads": {"male": ["acc.headset", "hair.short_waves.full"], "female": ["acc.headset", "hair.high_bun.full"], "skin": "#e0a47f", "hair": "#6b3b1f", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#233a8a", "suit_secondary": "#152255"}, "name": "Pilot", "colourway": "pilot", "headPreset": "head.pilot-helmet",
      "parts": {"chest": "armor.chest.flight", "shoulders": "armor.shoulders.flight", "gloves": "armor.gloves.light",
                "belt": "armor.belt.utility", "legs": "armor.legs.light", "boots": "armor.boots.flight",
                "back": "armor.back.oxygen-single"}},
-    {"id": "role.security", "undersuit": {"suit_primary": "#1f2c63", "suit_secondary": "#121934"}, "name": "Security officer", "colourway": "security", "headPreset": "head.security-cap",
+    {"id": "role.security", "heads": {"male": ["acc.cap", "hair.close_crop.cap"], "female": ["acc.cap", "hair.straight_bob.cap"], "skin": "#8a5a3c", "hair": "#3a2a22", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#1f2c63", "suit_secondary": "#121934"}, "name": "Security officer", "colourway": "security", "headPreset": "head.security-cap",
      "parts": {"chest": "armor.chest.vest", "shoulders": "armor.shoulders.standard", "gloves": "armor.gloves.standard",
                "belt": "armor.belt.holster", "legs": "armor.legs.standard", "boots": "armor.boots.standard",
                "back": "armor.back.backpack-t1"}},
-    {"id": "role.marine", "undersuit": {"suit_primary": "#2e2934", "suit_secondary": "#1a171f"}, "name": "Heavy marine", "colourway": "marine", "headPreset": "head.marine-helmet",
+    {"id": "role.marine", "heads": {"male": ["helmet.tactical", "visor.tactical.tinted"], "female": ["helmet.tactical", "visor.tactical.tinted"], "skin": "#b87955", "hair": "#241a14", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#2e2934", "suit_secondary": "#1a171f"}, "name": "Heavy marine", "colourway": "marine", "headPreset": "head.marine-helmet",
      "parts": {"chest": "armor.chest.heavy", "shoulders": "armor.shoulders.heavy", "gloves": "armor.gloves.heavy",
                "belt": "armor.belt.heavy", "legs": "armor.legs.heavy", "boots": "armor.boots.heavy",
                "back": "armor.back.backpack-t3"}},
-    {"id": "role.salvage", "undersuit": {"suit_primary": "#3a3440", "suit_secondary": "#221f28"}, "name": "Salvage tech", "colourway": "salvage", "headPreset": "head.salvage-helmet",
+    {"id": "role.salvage", "heads": {"male": ["acc.goggles_down", "hair.flat_top.full"], "female": ["acc.goggles_down", "hair.side_undercut.full"], "skin": "#d99b78", "hair": "#7a4a1e", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#3a3440", "suit_secondary": "#221f28"}, "name": "Salvage tech", "colourway": "salvage", "headPreset": "head.salvage-helmet",
      "parts": {"chest": "armor.chest.hazard", "shoulders": "armor.shoulders.standard", "gloves": "armor.gloves.work",
                "belt": "armor.belt.tool", "legs": "armor.legs.standard", "boots": "armor.boots.standard",
-               "back": "armor.back.oxygen-twin"}},
-    {"id": "role.recon", "undersuit": {"suit_primary": "#34402c", "suit_secondary": "#1f261a"}, "name": "Recon scout", "colourway": "recon", "headPreset": "head.recon-goggles",
+               "back": "armor.back.backpack-t3"}},
+    {"id": "role.recon", "heads": {"male": ["acc.hood", "acc.scarf"], "female": ["acc.hood", "acc.scarf"], "skin": "#a8704e", "hair": "#2b3a1e", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#34402c", "suit_secondary": "#1f261a"}, "name": "Recon scout", "colourway": "recon", "headPreset": "head.recon-goggles",
      "parts": {"chest": "armor.chest.tactical", "shoulders": "armor.shoulders.light", "gloves": "armor.gloves.light",
                "belt": "armor.belt.utility", "legs": "armor.legs.light", "boots": "armor.boots.light",
                "back": "armor.back.radio"}},
-    {"id": "role.scientist", "undersuit": {"suit_primary": "#5b3fa8", "suit_secondary": "#34245f"}, "name": "Scientist", "colourway": "scientist", "headPreset": "head.scientist-hair",
+    {"id": "role.scientist", "heads": {"male": ["acc.round_glasses", "hair.afro.full"], "female": ["acc.round_glasses", "hair.silver_bob.full"], "skin": "#6e4630", "hair": "#c9c3d6", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#5b3fa8", "suit_secondary": "#34245f"}, "name": "Scientist", "colourway": "scientist", "headPreset": "head.scientist-hair",
      "parts": {"chest": "armor.chest.labcoat", "gloves": "armor.gloves.fabric", "belt": "armor.belt.plain",
                "boots": "armor.boots.sneaker", "back": "armor.back.backpack-t0"}},
-    {"id": "role.mechanic", "undersuit": {"suit_primary": "#27305a", "suit_secondary": "#161b33"}, "name": "Mechanic", "colourway": "mechanic", "headPreset": "head.mechanic-cap",
+    {"id": "role.mechanic", "heads": {"male": ["acc.cap", "hair.short_spikes.cap"], "female": ["acc.cap", "hair.long_straight.cap"], "skin": "#f1b894", "hair": "#b8452a", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#27305a", "suit_secondary": "#161b33"}, "name": "Mechanic", "colourway": "mechanic", "headPreset": "head.mechanic-cap",
      "parts": {"chest": "armor.chest.overalls", "shoulders": "armor.shoulders.cloth", "gloves": "armor.gloves.work",
                "belt": "armor.belt.tool", "legs": "armor.legs.cargo", "boots": "armor.boots.light",
                "back": "armor.back.toolpack"}},
     # stretch archetypes
-    {"id": "role.civilian", "undersuit": {"suit_primary": "#3e5a86", "suit_secondary": "#26344f"}, "name": "Civilian", "colourway": "civilian", "headPreset": "head.civilian-hair",
+    {"id": "role.civilian", "heads": {"male": ["hair.pompadour.full"], "female": ["hair.long_side_fringe.full"], "skin": "#e8b08e", "hair": "#5a3222", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#3e5a86", "suit_secondary": "#26344f"}, "name": "Civilian", "colourway": "civilian", "headPreset": "head.civilian-hair",
      "parts": {"chest": "armor.chest.jacket", "belt": "armor.belt.plain", "legs": "armor.legs.cargo",
                "boots": "armor.boots.sneaker"}},
-    {"id": "role.jet-trooper", "undersuit": {"suit_primary": "#232d4a", "suit_secondary": "#141a2c"}, "name": "Jet trooper", "colourway": "cobalt", "headPreset": "head.closed-helmet",
+    {"id": "role.jet-trooper", "heads": {"male": ["helmet.closed", "visor.closed.hud"], "female": ["helmet.closed", "visor.closed.hud"], "skin": "#c4876a", "hair": "#2a2020", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#232d4a", "suit_secondary": "#141a2c"}, "name": "Jet trooper", "colourway": "cobalt", "headPreset": "head.closed-helmet",
      "parts": {"chest": "armor.chest.plate", "shoulders": "armor.shoulders.standard", "gloves": "armor.gloves.standard",
                "belt": "armor.belt.standard", "legs": "armor.legs.standard", "boots": "armor.boots.heavy",
                "back": "armor.back.jetpack-heavy"}},

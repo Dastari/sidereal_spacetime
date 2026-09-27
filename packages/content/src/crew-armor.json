@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "kit": "crew.armor-v1",
- "revision": "r005",
+ "revision": "r006",
  "specVersion": 2,
  "status": "proposal; not published; not owner-approved",
  "assetBase": "/assets/crew/armor-v1",
@@ -225,6 +225,19 @@
  "presets": [
   {
    "id": "role.captain",
+   "heads": {
+    "male": [
+     "acc.officer_cap",
+     "hair.swept_quiff.cap"
+    ],
+    "female": [
+     "acc.officer_cap",
+     "hair.long_gathered.cap"
+    ],
+    "skin": "#e7a98a",
+    "hair": "#7a4526",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#1d2748",
     "suit_secondary": "#10152a"
@@ -242,6 +255,19 @@
   },
   {
    "id": "role.engineer",
+   "heads": {
+    "male": [
+     "acc.goggles_up",
+     "hair.curly_top.full"
+    ],
+    "female": [
+     "acc.goggles_up",
+     "hair.messy_bun.full"
+    ],
+    "skin": "#c98a62",
+    "hair": "#4a2f6e",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#2d2b3f",
     "suit_secondary": "#1a1926"
@@ -261,6 +287,19 @@
   },
   {
    "id": "role.medic",
+   "heads": {
+    "male": [
+     "acc.medic_cap",
+     "hair.close_crop.cap"
+    ],
+    "female": [
+     "acc.medic_cap",
+     "hair.blunt_bob.cap"
+    ],
+    "skin": "#f3c2a2",
+    "hair": "#2a2438",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#2c2a3a",
     "suit_secondary": "#1b1a26"
@@ -280,6 +319,19 @@
   },
   {
    "id": "role.pilot",
+   "heads": {
+    "male": [
+     "acc.headset",
+     "hair.short_waves.full"
+    ],
+    "female": [
+     "acc.headset",
+     "hair.high_bun.full"
+    ],
+    "skin": "#e0a47f",
+    "hair": "#6b3b1f",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#233a8a",
     "suit_secondary": "#152255"
@@ -299,6 +351,19 @@
   },
   {
    "id": "role.security",
+   "heads": {
+    "male": [
+     "acc.cap",
+     "hair.close_crop.cap"
+    ],
+    "female": [
+     "acc.cap",
+     "hair.straight_bob.cap"
+    ],
+    "skin": "#8a5a3c",
+    "hair": "#3a2a22",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#1f2c63",
     "suit_secondary": "#121934"
@@ -318,6 +383,19 @@
   },
   {
    "id": "role.marine",
+   "heads": {
+    "male": [
+     "helmet.tactical",
+     "visor.tactical.tinted"
+    ],
+    "female": [
+     "helmet.tactical",
+     "visor.tactical.tinted"
+    ],
+    "skin": "#b87955",
+    "hair": "#241a14",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#2e2934",
     "suit_secondary": "#1a171f"
@@ -337,6 +415,19 @@
   },
   {
    "id": "role.salvage",
+   "heads": {
+    "male": [
+     "acc.goggles_down",
+     "hair.flat_top.full"
+    ],
+    "female": [
+     "acc.goggles_down",
+     "hair.side_undercut.full"
+    ],
+    "skin": "#d99b78",
+    "hair": "#7a4a1e",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#3a3440",
     "suit_secondary": "#221f28"
@@ -351,11 +442,24 @@
     "belt": "armor.belt.tool",
     "legs": "armor.legs.standard",
     "boots": "armor.boots.standard",
-    "back": "armor.back.oxygen-twin"
+    "back": "armor.back.backpack-t3"
    }
   },
   {
    "id": "role.recon",
+   "heads": {
+    "male": [
+     "acc.hood",
+     "acc.scarf"
+    ],
+    "female": [
+     "acc.hood",
+     "acc.scarf"
+    ],
+    "skin": "#a8704e",
+    "hair": "#2b3a1e",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#34402c",
     "suit_secondary": "#1f261a"
@@ -375,6 +479,19 @@
   },
   {
    "id": "role.scientist",
+   "heads": {
+    "male": [
+     "acc.round_glasses",
+     "hair.afro.full"
+    ],
+    "female": [
+     "acc.round_glasses",
+     "hair.silver_bob.full"
+    ],
+    "skin": "#6e4630",
+    "hair": "#c9c3d6",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#5b3fa8",
     "suit_secondary": "#34245f"
@@ -392,6 +509,19 @@
   },
   {
    "id": "role.mechanic",
+   "heads": {
+    "male": [
+     "acc.cap",
+     "hair.short_spikes.cap"
+    ],
+    "female": [
+     "acc.cap",
+     "hair.long_straight.cap"
+    ],
+    "skin": "#f1b894",
+    "hair": "#b8452a",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#27305a",
     "suit_secondary": "#161b33"
@@ -411,6 +541,17 @@
   },
   {
    "id": "role.civilian",
+   "heads": {
+    "male": [
+     "hair.pompadour.full"
+    ],
+    "female": [
+     "hair.long_side_fringe.full"
+    ],
+    "skin": "#e8b08e",
+    "hair": "#5a3222",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#3e5a86",
     "suit_secondary": "#26344f"
@@ -427,6 +568,19 @@
   },
   {
    "id": "role.jet-trooper",
+   "heads": {
+    "male": [
+     "helmet.closed",
+     "visor.closed.hud"
+    ],
+    "female": [
+     "helmet.closed",
+     "visor.closed.hud"
+    ],
+    "skin": "#c4876a",
+    "hair": "#2a2020",
+    "source": "CHAR-HEADS v1 (PR #37)"
+   },
    "undersuit": {
     "suit_primary": "#232d4a",
     "suit_secondary": "#141a2c"
@@ -631,7 +785,7 @@
    "colourway": "salvage"
   },
   "salvage-back": {
-   "part": "armor.back.oxygen-twin",
+   "part": "armor.back.backpack-t3",
    "colourway": "salvage"
   },
   "recon-chest": {
@@ -720,7 +874,7 @@
    "style": "jacket",
    "name": "Crew jacket",
    "glb": "parts/armor.chest.jacket.glb",
-   "sha256": "153ae9640606e6fa357b4cb55be10a0dc307da8821d0328ffc21194a86a9b2d1",
+   "sha256": "61c34dc7f0047b449256ee82e611b459661d55a02998c3440ef9924b582b44e4",
    "bones": [
     "spine",
     "chest"
@@ -760,7 +914,7 @@
    "style": "harness",
    "name": "Light harness vest",
    "glb": "parts/armor.chest.harness.glb",
-   "sha256": "f616c9c943b1b3698c0419af5e630ea133fb484010f370943809e5f16bf46220",
+   "sha256": "93f76c8fd1da8638659b3e0d0911aec1a4f2273d9186b43123a694b936d382b6",
    "bones": [
     "spine",
     "chest"
@@ -800,7 +954,7 @@
    "style": "plate",
    "name": "Standard plate carrier",
    "glb": "parts/armor.chest.plate.glb",
-   "sha256": "8efddd527b4d2f5ba9d2e2f4ddc1eabe600f7fd0dc20a2d554dcece1930bef08",
+   "sha256": "47a541d85e122931c757bae6c874dacf7d0e715f6524478ab064e23c6011c2ed",
    "bones": [
     "spine",
     "chest"
@@ -840,7 +994,7 @@
    "style": "plate",
    "name": "Heavy assault cuirass",
    "glb": "parts/armor.chest.heavy.glb",
-   "sha256": "db6e8fc16301136fd4ebcef63fc23e75a94a0500d2fc4cd81bac38a27ce916da",
+   "sha256": "5c2b182b2fbaabebd245b7ca6900d05bf5c36548c56bf7e1a095b8be62574cc5",
    "bones": [
     "spine",
     "chest"
@@ -881,7 +1035,7 @@
    "style": "coat",
    "name": "Officer's coat",
    "glb": "parts/armor.chest.coat.glb",
-   "sha256": "14a82abd8189764192128c8ab0a54a88ee1b3f9467d6623d3ab53795f0b87159",
+   "sha256": "8a617270b8a3cf4a07f95433e4bdbdc692161c905f9f3d5cece54689d30936c9",
    "bones": [
     "pelvis",
     "spine",
@@ -925,7 +1079,7 @@
    "style": "labcoat",
    "name": "Lab coat",
    "glb": "parts/armor.chest.labcoat.glb",
-   "sha256": "87a78a6bdb7d0e91a93ba696da6abf6683139e948153ffa3bb705f02d87a3452",
+   "sha256": "737065a1f8d62c54311d9a61ee9c7b14dbeae0470910bee06d4108122277d6bd",
    "bones": [
     "pelvis",
     "spine",
@@ -941,8 +1095,8 @@
     "suit_primary",
     "suit_secondary",
     "accent",
-    "dark",
-    "emit"
+    "metal",
+    "dark"
    ],
    "massKg": 1.2,
    "grid": [
@@ -968,7 +1122,7 @@
    "style": "overalls",
    "name": "Work overalls",
    "glb": "parts/armor.chest.overalls.glb",
-   "sha256": "9b579a4573c7530125207fe9271d3cb3a3d2d48a516463e598fb2a4e3d33fb41",
+   "sha256": "b5cbc7eb818e89bc82632d998349b6f48e3cac4ec948ab49c49af011cdb8a91e",
    "bones": [
     "spine",
     "chest"
@@ -1007,7 +1161,7 @@
    "style": "flight",
    "name": "Flight suit harness",
    "glb": "parts/armor.chest.flight.glb",
-   "sha256": "e923b3a934e585652be744860dcf07ffb2a3b4117bd61a93486306beec61b95b",
+   "sha256": "f09b3f09d7ae1c70ae9e7b92b1224dbf52ff81bc5e773595a3f1cbf0467f74aa",
    "bones": [
     "spine",
     "chest"
@@ -1032,11 +1186,11 @@
    "fits": {
     "wide": {
      "mesh": "GEO-armor-armor.chest.flight-wide",
-     "tris": 2092
+     "tris": 2748
     },
     "narrow": {
      "mesh": "GEO-armor-armor.chest.flight-narrow",
-     "tris": 2092
+     "tris": 2748
     }
    }
   },
@@ -1048,7 +1202,7 @@
    "style": "tactical",
    "name": "Tactical chest rig",
    "glb": "parts/armor.chest.tactical.glb",
-   "sha256": "98ea0d6b7860ac858d317e218e60b01bf0b548cd98a8f58a1e8df697e6acfa7a",
+   "sha256": "871aea30ce5aa9af1bf5ac66a7c922c875f671575a9f8bb8aab1e14a3baab2f3",
    "bones": [
     "spine",
     "chest"
@@ -1062,8 +1216,7 @@
     "suit_secondary",
     "accent",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 3.0,
    "grid": [
@@ -1089,7 +1242,7 @@
    "style": "vest",
    "name": "Security vest",
    "glb": "parts/armor.chest.vest.glb",
-   "sha256": "749234c3a9347a86fd7f513d6e70a26bb1452ae653f40d76ce25705eff3cae71",
+   "sha256": "000f5635eaa248ce4737681c37bc30446be1c7b23f15325fbd7bc2318e5bd8ab",
    "bones": [
     "spine",
     "chest"
@@ -1130,7 +1283,7 @@
    "style": "medic",
    "name": "Medical plate",
    "glb": "parts/armor.chest.medic.glb",
-   "sha256": "6f44456c6f63f56ac9b9e4c7f23765af944cde72d0eaa6240b8e7ce2fdda8eb0",
+   "sha256": "3dcff591e7c7627e767624736f600de7067ee994740975efb099711653e1d3d1",
    "bones": [
     "spine",
     "chest"
@@ -1155,11 +1308,11 @@
    "fits": {
     "wide": {
      "mesh": "GEO-armor-armor.chest.medic-wide",
-     "tris": 3860
+     "tris": 3648
     },
     "narrow": {
      "mesh": "GEO-armor-armor.chest.medic-narrow",
-     "tris": 3860
+     "tris": 3648
     }
    }
   },
@@ -1171,7 +1324,7 @@
    "style": "hazard",
    "name": "Hazard-rated plate",
    "glb": "parts/armor.chest.hazard.glb",
-   "sha256": "05e828f9c4b4c622e055049de5e20195b2bd4326d5f1f16739b3eea786a55634",
+   "sha256": "6b85ea4dc0d706368841f1e83592c7ce34856fbf36568b0743a1b0f1ec4342a0",
    "bones": [
     "spine",
     "chest"
@@ -1212,7 +1365,7 @@
    "style": "cloth",
    "name": "Shoulder pads",
    "glb": "parts/armor.shoulders.cloth.glb",
-   "sha256": "8c36f3efd3a0cf6f2295056a13356490f0b582321dde0476662901206109d2b1",
+   "sha256": "fd88ba3eb6b84d27e98732e2c20a38268e15df0b9be1e750f2f15c38dc3e3936",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
@@ -1245,7 +1398,7 @@
    "style": "plain",
    "name": "Light pauldrons",
    "glb": "parts/armor.shoulders.light.glb",
-   "sha256": "e8b11d447f16a012dc07021ab1d21e43cd26590658941bba45cc0267732b968b",
+   "sha256": "5dc006d4ad58f1ca87ec7f8e3275c2331e9c545a99b1e77d23af962e1e1243c2",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
@@ -1257,7 +1410,7 @@
    "slots": [
     "suit_primary",
     "suit_secondary",
-    "emit"
+    "metal"
    ],
    "massKg": 1.0,
    "grid": [
@@ -1279,7 +1432,7 @@
    "style": "plain",
    "name": "Standard pauldrons",
    "glb": "parts/armor.shoulders.standard.glb",
-   "sha256": "b7efdc8222ae755c83997d4c27101eff573c6a8242030bb4aa6ade0cdd74856d",
+   "sha256": "10ec2f5ba9f8f2753d1892a73fc2027197974088249a5036c73aa63eb0fa3433",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
@@ -1291,8 +1444,7 @@
    "slots": [
     "suit_primary",
     "suit_secondary",
-    "metal",
-    "emit"
+    "metal"
    ],
    "massKg": 2.2,
    "grid": [
@@ -1314,7 +1466,7 @@
    "style": "plain",
    "name": "Heavy pauldrons",
    "glb": "parts/armor.shoulders.heavy.glb",
-   "sha256": "c1cd9cbc159ef8cb4fe586c207fb24b6d351071ccc1479d157b2db3e8b31f6ff",
+   "sha256": "1dd84a29f7a1b7a3580d81825c0c6e659bc2b90744cecd0fef600f2926d2c86d",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
@@ -1326,8 +1478,7 @@
    "slots": [
     "suit_primary",
     "suit_secondary",
-    "metal",
-    "emit"
+    "metal"
    ],
    "massKg": 4.0,
    "grid": [
@@ -1349,7 +1500,7 @@
    "style": "epaulette",
    "name": "Officer epaulettes",
    "glb": "parts/armor.shoulders.epaulette.glb",
-   "sha256": "183979b4b9692ad2076ed90c399180ab4034eee7b11c81e0ebc9833cad827ea4",
+   "sha256": "afa8f0fb06f78c60ac0163d5ab87e9769139d2eae83db97aeb415f1b2b4addf3",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
@@ -1383,7 +1534,7 @@
    "style": "flight",
    "name": "Flight pauldrons",
    "glb": "parts/armor.shoulders.flight.glb",
-   "sha256": "f1642b2c8ff556cf8a4b49a3eaa4becb8931de0ddf6db58455035ddf0aa1d1b0",
+   "sha256": "d460fe2a03128057d99bca1622c326a9cee86b1b7446792de2f919d43a905c9b",
    "bones": [
     "upper_arm.R",
     "upper_arm.L"
@@ -1396,7 +1547,7 @@
     "suit_primary",
     "suit_secondary",
     "accent",
-    "emit"
+    "metal"
    ],
    "massKg": 1.0,
    "grid": [
@@ -1418,7 +1569,7 @@
    "style": "plain",
    "name": "Fabric gloves",
    "glb": "parts/armor.gloves.fabric.glb",
-   "sha256": "a73072d87e53928caf93f45e7ebc64a2ef857aecff4c78c15fb1c6cc0bdc627f",
+   "sha256": "8d234a7b7c53da4f66fcb607fd0a5b9bc6e6d29ddbf21cc0e66e6bbfbee5b768",
    "bones": [
     "hand.R",
     "hand.L"
@@ -1452,7 +1603,7 @@
    "style": "plain",
    "name": "Light gloves",
    "glb": "parts/armor.gloves.light.glb",
-   "sha256": "de780c0b27eae2d0169d54df45ed51b10f573d269e8c6bc3521c695b62290115",
+   "sha256": "74f6e1aab1b1c1747ae91675dc02a5a9631662bcef4201aa97f1d038d2b7db78",
    "bones": [
     "forearm.R",
     "forearm.L",
@@ -1490,7 +1641,7 @@
    "style": "plain",
    "name": "Armoured gauntlets",
    "glb": "parts/armor.gloves.standard.glb",
-   "sha256": "72fcc801a4c04c418581924acea0bc473089b73b67fd4bb4ef64d4c01cb5bba9",
+   "sha256": "e1335cd17ccb6061f7e8e728b945ae9d7fe18d687c9599fc90eadf38f4480da7",
    "bones": [
     "forearm.R",
     "forearm.L",
@@ -1507,8 +1658,7 @@
     "suit_secondary",
     "accent",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 0.8,
    "grid": [
@@ -1530,7 +1680,7 @@
    "style": "plain",
    "name": "Heavy gauntlets",
    "glb": "parts/armor.gloves.heavy.glb",
-   "sha256": "8cdbe7e81a54c1e2af0e5c39398c7c0039a7539e691dc119ce03b73707e94358",
+   "sha256": "b93adaa626f0f23d8001afb9293b2f20a8ec5603db7ba218484492426ad7cc48",
    "bones": [
     "forearm.R",
     "forearm.L",
@@ -1547,8 +1697,7 @@
     "suit_secondary",
     "accent",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 1.4,
    "grid": [
@@ -1570,7 +1719,7 @@
    "style": "work",
    "name": "Work gloves",
    "glb": "parts/armor.gloves.work.glb",
-   "sha256": "ea12ef21af8d1521d8f3c3e592a406c42920b7c9bcccc5ffc6e83a391eca3e1e",
+   "sha256": "118783134fcc6aaae78e7cdefffe837b14017f8bd7f3ef135d52f9619d4cdb68",
    "bones": [
     "forearm.R",
     "forearm.L",
@@ -1609,7 +1758,7 @@
    "style": "sneaker",
    "name": "Deck shoes",
    "glb": "parts/armor.boots.sneaker.glb",
-   "sha256": "93e62d002adce0bbb6a1d4c927013f67fa355c77d9a76cc7fb11e393f5d2ab17",
+   "sha256": "69627a940fb012f3d0587aa2347f1fa3b9dccdfd0fc6f286c1dcd1bdd8f00417",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1648,7 +1797,7 @@
    "style": "plain",
    "name": "Work boots",
    "glb": "parts/armor.boots.light.glb",
-   "sha256": "bf25ecab72eb04e6c9aec5773ce036e982d6d2fcef50b1032e76484929c550ed",
+   "sha256": "9a8ce7be30dcec59a6cf380b49be8c05d83f60e15c9b052a5afffc92574f236e",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1686,7 +1835,7 @@
    "style": "plain",
    "name": "Armoured boots",
    "glb": "parts/armor.boots.standard.glb",
-   "sha256": "5652cb5264507b6b21f938f7cfdff74b36c10257926c99b247d1bb39ae33665d",
+   "sha256": "2aeadd329d5147b950e2af90e32c74e1d0a78fd30a537635b2a6be5dfa2aa18f",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1703,8 +1852,7 @@
     "suit_primary",
     "suit_secondary",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 2.0,
    "grid": [
@@ -1726,7 +1874,7 @@
    "style": "plain",
    "name": "Heavy mag boots",
    "glb": "parts/armor.boots.heavy.glb",
-   "sha256": "3eb9dec5d335db49cbab416bdcb5625134a885d4826593ab02669e75ec667965",
+   "sha256": "edc295b10781aa0680becce14c71df4a8c4b5d62f45836309dd9d95e4f993f99",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1743,8 +1891,7 @@
     "suit_primary",
     "suit_secondary",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 3.4,
    "grid": [
@@ -1766,7 +1913,7 @@
    "style": "dress",
    "name": "Dress boots",
    "glb": "parts/armor.boots.dress.glb",
-   "sha256": "82e3ac24f0116b732505303a372619d7f06defcfa5d4eb709bf91010a8dacf26",
+   "sha256": "66ac285429a6e25ad63fb1f5a9de2e7328a46b66e75245b031dad6a0fdec2283",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1805,7 +1952,7 @@
    "style": "flight",
    "name": "Flight boots",
    "glb": "parts/armor.boots.flight.glb",
-   "sha256": "ebdb1452bfde1572c13a613a5e734a61c6ff5c0b960f63a7921d66d380149429",
+   "sha256": "7ea467d6c37db9ee0a1c388927d974e85abb27a6c5ea2c4a5bd1c0ab9bf8bf76",
    "bones": [
     "shin.R",
     "shin.L",
@@ -1844,7 +1991,7 @@
    "style": "cargo",
    "name": "Cargo trousers",
    "glb": "parts/armor.legs.cargo.glb",
-   "sha256": "83d434bc99126069d679035d20be61d70a365175726a04706ee085b118de59cd",
+   "sha256": "ef0c21a72d55fd49710b34a13b310b42f3aaf08598b0c8f2c9ea51f7dec4b77b",
    "bones": [
     "thigh.R",
     "thigh.L"
@@ -1877,7 +2024,7 @@
    "style": "plain",
    "name": "Knee pads and straps",
    "glb": "parts/armor.legs.light.glb",
-   "sha256": "c3e1d97d8b97625614ba5608fb47d2a76c66cacc8d31b121d8578b782f7059e2",
+   "sha256": "5a358075958403fb05ac4e2fe220eef31f15f386864ef0a72e01ec36f9406aac",
    "bones": [
     "thigh.R",
     "thigh.L",
@@ -1914,7 +2061,7 @@
    "style": "plain",
    "name": "Thigh and knee plates",
    "glb": "parts/armor.legs.standard.glb",
-   "sha256": "64bc7984ebc85cf8e422523c9e30955f957bc9c4e61c45e147082eb39c00b2bf",
+   "sha256": "15517f88f75c75026bb00149ce34e28f8000dd69566dc2bf519dbe9485903b26",
    "bones": [
     "thigh.R",
     "thigh.L",
@@ -1928,7 +2075,7 @@
    "slots": [
     "suit_primary",
     "suit_secondary",
-    "emit"
+    "metal"
    ],
    "massKg": 3.0,
    "grid": [
@@ -1950,7 +2097,7 @@
    "style": "plain",
    "name": "Heavy greaves and tassets",
    "glb": "parts/armor.legs.heavy.glb",
-   "sha256": "29a30b88094b35be28c8919d47d7dbfe2b6c9644008df30b2e7a7c83e06aac2b",
+   "sha256": "668cf7088e5f84f8dc6bdd35c82e1b97b3deffa3649fe48a7605b98aad11f4b4",
    "bones": [
     "pelvis",
     "thigh.R",
@@ -1965,7 +2112,7 @@
    "slots": [
     "suit_primary",
     "suit_secondary",
-    "emit"
+    "metal"
    ],
    "massKg": 5.5,
    "grid": [
@@ -1987,7 +2134,7 @@
    "style": "plain",
    "name": "Belt",
    "glb": "parts/armor.belt.plain.glb",
-   "sha256": "83125a0325c3a1a7c17cf2eb292eea73a8619529706413c0608398d47e0d6901",
+   "sha256": "f0fbfb2a3722b364ee610c721f8fc636e3f5c58cd0839aee90e2d091f66bde97",
    "bones": [
     "pelvis"
    ],
@@ -2024,7 +2171,7 @@
    "style": "utility",
    "name": "Utility belt",
    "glb": "parts/armor.belt.utility.glb",
-   "sha256": "8e2c3f29e2cfe9e7000e17c03376f3baca1ef2c1be11688c91e257a1edc2f9f8",
+   "sha256": "a7aabf2dbac5864a367c97aba91d6c51d3e9b59a5915dcdb1b971e4995b9639f",
    "bones": [
     "pelvis"
    ],
@@ -2036,8 +2183,7 @@
     "suit_primary",
     "suit_secondary",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 0.5,
    "grid": [
@@ -2063,7 +2209,7 @@
    "style": "utility",
    "name": "Load-bearing belt",
    "glb": "parts/armor.belt.standard.glb",
-   "sha256": "d0c1fb144b7fd6c4e18930b23242863a23bd0cbdeec0c8aebe5ed38c8a1db047",
+   "sha256": "106a95a475534672c2a4c6beb6f95cb4fd8f4d7ffe0e37a00f16a4e3436902db",
    "bones": [
     "pelvis"
    ],
@@ -2075,8 +2221,7 @@
     "suit_primary",
     "suit_secondary",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 0.9,
    "grid": [
@@ -2102,7 +2247,7 @@
    "style": "utility",
    "name": "Heavy armoured belt",
    "glb": "parts/armor.belt.heavy.glb",
-   "sha256": "ca4c0dbc375b9995d494242bcf1bddba4abc6413f8aaf1411944d53cdb0195e7",
+   "sha256": "e862e5734f47ee5291f60832326b4a1567a622fba9b10d9bb41ace05cb455d65",
    "bones": [
     "pelvis"
    ],
@@ -2114,8 +2259,7 @@
     "suit_primary",
     "suit_secondary",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 1.6,
    "grid": [
@@ -2125,11 +2269,11 @@
    "fits": {
     "wide": {
      "mesh": "GEO-armor-armor.belt.heavy-wide",
-     "tris": 2408
+     "tris": 2396
     },
     "narrow": {
      "mesh": "GEO-armor-armor.belt.heavy-narrow",
-     "tris": 2520
+     "tris": 2508
     }
    }
   },
@@ -2141,7 +2285,7 @@
    "style": "tool",
    "name": "Tool belt",
    "glb": "parts/armor.belt.tool.glb",
-   "sha256": "29d60b051fa5d95f1395018a3659abff88b68e5883a38e20b216a4ffce466846",
+   "sha256": "7380a5bfe7e034df0376c069fa1858be80ea83d108bda26d107afacb8ec6480b",
    "bones": [
     "pelvis"
    ],
@@ -2154,8 +2298,7 @@
     "suit_secondary",
     "accent",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 0.5,
    "grid": [
@@ -2181,7 +2324,7 @@
    "style": "medic",
    "name": "Medic belt",
    "glb": "parts/armor.belt.medic.glb",
-   "sha256": "43e729aecd0264a4addaada7de3e7fd3e515ccae5205906f233cb22b00e86c80",
+   "sha256": "1b7461ee4e2b69e2c62334b2ea2ffd64099c16f8dd7c48eec04bae83d1b17f5f",
    "bones": [
     "pelvis"
    ],
@@ -2194,8 +2337,7 @@
     "suit_secondary",
     "accent",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 0.5,
    "grid": [
@@ -2221,7 +2363,7 @@
    "style": "sash",
    "name": "Officer's belt",
    "glb": "parts/armor.belt.sash.glb",
-   "sha256": "9e4dbb11b56c22c189b2babe738a706b61c2039c9875f0be6738348995924f2e",
+   "sha256": "9d88f5ae0a212bc499df2ba2969a70c23ab2c0d294206f475328f7596c1a6d6e",
    "bones": [
     "pelvis"
    ],
@@ -2257,7 +2399,7 @@
    "style": "holster",
    "name": "Holster belt",
    "glb": "parts/armor.belt.holster.glb",
-   "sha256": "e484aceb7d1579d473660e750908025800d42a3fea0c7220c0eec480439efe2c",
+   "sha256": "9b78e4f04a372504ba3a51cdcf36174e1f0730d6906af983c668548be04b8032",
    "bones": [
     "pelvis"
    ],
@@ -2269,8 +2411,7 @@
     "suit_primary",
     "suit_secondary",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 0.9,
    "grid": [
@@ -2296,7 +2437,7 @@
    "style": "backpack",
    "name": "Day pack",
    "glb": "parts/armor.back.backpack-t0.glb",
-   "sha256": "b00c6fa535ca7c3556ea6948d8868888d1d86858c085d8225d79ec7a2fe18711",
+   "sha256": "eb4960d8257bf4eb9495b1b605db8ebc79be8e3159332caf73fea2affe9c9dbb",
    "bones": [
     "chest"
    ],
@@ -2331,7 +2472,7 @@
    "style": "backpack",
    "name": "Field pack",
    "glb": "parts/armor.back.backpack-t1.glb",
-   "sha256": "1739d9a0d272def1cb84af5f046eceee9679f93875eb90e9038f212a394ccf9d",
+   "sha256": "d172a674d688367a945910f651834044cc05a5899b28f27e3a39bb5125a16e83",
    "bones": [
     "chest"
    ],
@@ -2367,7 +2508,7 @@
    "style": "backpack",
    "name": "Expedition pack",
    "glb": "parts/armor.back.backpack-t2.glb",
-   "sha256": "e7d75cbc40a41fcd6284dc85ecf66c894fe3bfd803c30bfbbcaa9c503174696b",
+   "sha256": "85740845de87223d59b86536d1c518bde4d9bd30ac7dab122f306144c731554d",
    "bones": [
     "chest"
    ],
@@ -2403,7 +2544,7 @@
    "style": "backpack",
    "name": "Heavy combat rig",
    "glb": "parts/armor.back.backpack-t3.glb",
-   "sha256": "49281b1725b8f980a2efad93270bebe1abad7f1f2b80333d4757918db94c56db",
+   "sha256": "f8e780a452f9b094542d43325068f6912314ecb218e99297ba8f2978fa211104",
    "bones": [
     "chest"
    ],
@@ -2439,7 +2580,7 @@
    "style": "oxygen",
    "name": "Oxygen pack",
    "glb": "parts/armor.back.oxygen-single.glb",
-   "sha256": "5d043721a6f800263e49a272d410d7fd277b67cc0118c2aa42795585b7b91e50",
+   "sha256": "431a0926ea94e22085fde697e7300d4566801b200ade6c9f1d29c9f7a73c8510",
    "bones": [
     "chest"
    ],
@@ -2451,8 +2592,7 @@
     "suit_secondary",
     "accent",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 1.2,
    "grid": [
@@ -2474,7 +2614,7 @@
    "style": "oxygen",
    "name": "Twin-tank oxygen pack",
    "glb": "parts/armor.back.oxygen-twin.glb",
-   "sha256": "09e6cf973ea8083dbe4f4e1c7194808f52746c1096051b1b267436a833363609",
+   "sha256": "11718775e1507656d5616207ed3761776469ab7daa064cfd4452535488501a9e",
    "bones": [
     "chest"
    ],
@@ -2485,8 +2625,7 @@
    "slots": [
     "suit_secondary",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 2.4,
    "grid": [
@@ -2508,7 +2647,7 @@
    "style": "jetpack",
    "name": "Light jetpack",
    "glb": "parts/armor.back.jetpack-light.glb",
-   "sha256": "c2a2026031f2a81c12f97242b11c9ce6df2f58a40745bc689420a578dec12b14",
+   "sha256": "6a13830094fc43205a7bc69c246647f6dfe066a65abd3f68d74e3a1c0715ff36",
    "bones": [
     "chest"
    ],
@@ -2576,7 +2715,7 @@
    "style": "jetpack",
    "name": "Heavy jetpack",
    "glb": "parts/armor.back.jetpack-heavy.glb",
-   "sha256": "bd2cf3173bcf5784e5d543277d4c080896c7a6a0a1cf5a79cbf2c7a76f01ded9",
+   "sha256": "0fb814e4288f49e703a85f89aa2d323bec855517deabf4f22c2192f03e29dcda",
    "bones": [
     "chest"
    ],
@@ -2644,7 +2783,7 @@
    "style": "medpack",
    "name": "Medical pack",
    "glb": "parts/armor.back.medpack.glb",
-   "sha256": "58db6c874686814fa6acc224b8d3781aaee5a78e37c9c4f12f792d4db375bad8",
+   "sha256": "33efd2bd7d9ec461e3bd9e665211532e999038de7277e161e832dfcc150377e9",
    "bones": [
     "chest"
    ],
@@ -2656,8 +2795,7 @@
     "suit_secondary",
     "accent",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 1.2,
    "grid": [
@@ -2679,7 +2817,7 @@
    "style": "radio",
    "name": "Recon radio pack",
    "glb": "parts/armor.back.radio.glb",
-   "sha256": "70cc5369ef36640399a4b5aed7d8349c2f0795be8a90199c144149a6a1706614",
+   "sha256": "dc3afe94ab7d6faf7d7f5422965b2b7481286a5467715606a27d4e1aef1b7c95",
    "bones": [
     "chest"
    ],
@@ -2714,7 +2852,7 @@
    "style": "toolpack",
    "name": "Engineer tool pack",
    "glb": "parts/armor.back.toolpack.glb",
-   "sha256": "cc7d4168a1c1dcfe6b42017af94156e8e01de1901de0102a9c9398b38d32c303",
+   "sha256": "8c79f7088b10fa7e6673428ae251917688655cb754d6bfdbbd62b01359aafeb0",
    "bones": [
     "chest"
    ],
@@ -2727,8 +2865,7 @@
     "suit_secondary",
     "accent",
     "metal",
-    "dark",
-    "emit"
+    "dark"
    ],
    "massKg": 1.2,
    "grid": [

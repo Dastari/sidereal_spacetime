@@ -57,6 +57,7 @@ def parse_args():
     p.add_argument("--check", action="store_true")
     p.add_argument("--refs", default=str(REFS))
     p.add_argument("--samples", type=int, default=32)
+    p.add_argument("--heads-dir", default="", help="CHAR-HEADS assets (heads.glb, accessories.glb, hair/*.glb, ...)")
     p.add_argument("--bevel", type=float, default=0.011, help="brick-island edge bevel (m), ~0.35 vox like the body")
     p.add_argument("--save-blend", action="store_true")
     return p.parse_args(argv)
@@ -339,6 +340,84 @@ class Kit:
             ob.hide_render = True
             ob.hide_set(True)
 
+    HEAD_CANDIDATES = [HERE.parents[1] / "assets/runtime/crew/heads/v1", Path("/root/sidereal-scratch/char-armor/heads-v1")]
+
+    def load_heads(self, heads_dir):
+        """Import the CHAR-HEADS GLBs (PR #37) once; nodes are authored in head space (origin = head bone
+        rest head). Figures copy the nodes onto their head bone."""
+        self.head_nodes, self.heads_source = {}, None
+        for d in ([Path(heads_dir)] if heads_dir else []) + self.HEAD_CANDIDATES:
+            if (d / "heads.glb").exists():
+                break
+        else:
+            return
+        coll = bpy.data.collections.new("HEADS")
+        bpy.context.scene.collection.children.link(coll)
+        files = sorted({n.split("/")[0] for n in ["heads", "accessories", "helmets"]} |
+                       {f"hair/{h.split('.')[1]}" for pr in K.PRESETS for v in ("male", "female")
+                        for h in pr.get("heads", {}).get(v, []) if h.startswith("hair.")} | set(f"hair/{h}" for h in FILL_HAIR))
+        for f in files:
+            path = d / f"{f}.glb"
+            if not path.exists():
+                continue
+            before = set(bpy.data.objects)
+            bpy.ops.import_scene.gltf(filepath=str(path))
+            for ob in set(bpy.data.objects) - before:
+                for c in list(ob.users_collection):
+                    c.objects.unlink(ob)
+                coll.objects.link(ob)
+                ob.hide_render = True
+                ob.hide_set(True)
+                if ob.type == "MESH" and not ob.name.endswith("lod1"):
+                    self.head_nodes[ob.name] = (ob, ob.matrix_world.copy())
+        self.heads_source = str(d)
+
+    def head_materials(self, key, skin, hair):
+        """Copies of the imported crew.skin / crew.hair materials with this figure's skin and hair colour."""
+        k = f"headmat.{key}"
+        if k not in self.mats:
+            out = {}
+            for slot, hexcol in (("skin", skin), ("hair", hair)):
+                m = bpy.data.materials.new(f"{k}.{slot}")        # plain slot colour (review tint)
+                m.use_nodes = True
+                b = m.node_tree.nodes["Principled BSDF"]
+                b.inputs["Base Color"].default_value = (*srgb_lin(hexcol), 1)
+                b.inputs["Roughness"].default_value = SLOT_PBR[slot][0]
+                out[slot] = m
+            face_png = Path("/root/sidereal-progress/_shared/crew-body-r005/face/face-neutral.png")
+            if face_png.exists():                       # review only: neutral face canvas over this skin tone
+                m = bpy.data.materials.new(f"{k}.face")
+                m.use_nodes = True
+                nt = m.node_tree
+                b = nt.nodes["Principled BSDF"]
+                b.inputs["Roughness"].default_value = 0.6
+                tex = nt.nodes.new("ShaderNodeTexImage")
+                tex.image = bpy.data.images.get(face_png.name) or bpy.data.images.load(str(face_png))
+                tex.interpolation = "Closest"
+                # canvas from head-space object coordinates: u = (8 - x/V)/16, v = (z/V)/16
+                tc = nt.nodes.new("ShaderNodeTexCoord")
+                sep = nt.nodes.new("ShaderNodeSeparateXYZ")
+                mu = nt.nodes.new("ShaderNodeMath")
+                mu.operation, mu.inputs[1].default_value, mu.inputs[2].default_value = "MULTIPLY_ADD", -2.0, 0.5
+                mv = nt.nodes.new("ShaderNodeMath")
+                mv.operation, mv.inputs[1].default_value = "MULTIPLY", 2.0
+                comb = nt.nodes.new("ShaderNodeCombineXYZ")
+                nt.links.new(tc.outputs["Object"], sep.inputs[0])
+                nt.links.new(sep.outputs["X"], mu.inputs[0])
+                nt.links.new(sep.outputs["Z"], mv.inputs[0])
+                nt.links.new(mu.outputs[0], comb.inputs["X"])
+                nt.links.new(mv.outputs[0], comb.inputs["Y"])
+                nt.links.new(comb.outputs[0], tex.inputs["Vector"])
+                mix = nt.nodes.new("ShaderNodeMix")
+                mix.data_type = "RGBA"
+                mix.inputs[6].default_value = (*srgb_lin(skin), 1)
+                nt.links.new(tex.outputs["Alpha"], mix.inputs["Factor"])
+                nt.links.new(tex.outputs["Color"], mix.inputs[7])
+                nt.links.new(mix.outputs[2], b.inputs["Base Color"])
+                out["face"] = m
+            self.mats[k] = out
+        return self.mats[k]
+
     def material_set(self, key, table):
         if key not in self.mats:
             self.mats[key] = {s: slot_material(f"{key}.{s}", s, table[s]) for s in K.SLOTS}
@@ -381,6 +460,38 @@ def clone(tpl, arm, coll, mats):
     return ob
 
 
+FILL_HAIR = ["curly_top", "long_straight", "short_waves", "high_bun", "afro", "side_bob"]
+FILL_SKIN = ["#f3c2a2", "#c98a62", "#8a5a3c", "#e7a98a", "#6e4630", "#f1b894"]
+FILL_HAIRCOL = ["#8a4a24", "#2a2438", "#c07a2c", "#b8452a", "#c9c3d6", "#4a2f6e"]
+
+
+def attach_head_nodes(kit, arm, coll, nodes, mats):
+    """Copy CHAR-HEADS nodes onto the figure's head bone (head space = head bone rest head)."""
+    bone = arm.data.bones["head"]
+    bpy.context.view_layer.update()
+    bone_mw = arm.matrix_world @ bone.matrix_local @ Matrix.Translation((0, bone.length, 0))
+    out = []
+    for name in nodes:
+        entry = kit.head_nodes.get(name)
+        if entry is None:
+            continue
+        tpl, mw = entry
+        ob = tpl.copy()
+        coll.objects.link(ob)
+        ob.hide_render = False
+        ob.hide_set(False)
+        ob.parent, ob.parent_type, ob.parent_bone = arm, "BONE", "head"
+        ob.matrix_parent_inverse = bone_mw.inverted() @ arm.matrix_world @ Matrix.Translation(bone.head_local)
+        ob.matrix_basis = mw
+        for slot in ob.material_slots:
+            base = (slot.material.name if slot.material else "").split(".")
+            if len(base) > 1 and base[1] in mats:
+                slot.link = "OBJECT"
+                slot.material = mats[base[1]]
+        out.append(ob)
+    return out
+
+
 FACE_YAW = 180.0     # review scenes: characters (facing +Y) turned to face the -Y camera
 
 
@@ -402,6 +513,20 @@ class Figure:
         self.objs = []
         parts = [kit.by_id[i] for i in part_ids]
         hidden = {h for p in parts for h in p.hides}
+        heads = getattr(kit, "head_nodes", None)
+        if body and heads:
+            hp = (preset or {}).get("heads") if isinstance(preset, dict) else None
+            i = Figure.count = getattr(Figure, "count", 0) + 1
+            if hp:
+                nodes, skin, hair = list(hp[variant if variant == "female" else "male"]), hp["skin"], hp["hair"]
+            else:
+                nodes = [f"hair.{FILL_HAIR[i % len(FILL_HAIR)]}.full"]
+                skin, hair = FILL_SKIN[i % len(FILL_SKIN)], FILL_HAIRCOL[i % len(FILL_HAIRCOL)]
+            nodes = [f"head.{'female' if variant == 'female' else 'male'}"] + nodes
+            if any(n.startswith("helmet.") for n in nodes):
+                nodes = [n for n in nodes if not n.startswith("hair.")]
+            self.objs += attach_head_nodes(kit, self.arm, coll, nodes, kit.head_materials(f"{skin}{hair}", skin, hair))
+            hidden = hidden | {"head", "hair"}
         if body:
             bm = kit.body_materials(preset)
             # CHAR-BODY r004 layers: the suit hides the base; worn armour replaces the default gear
@@ -780,7 +905,7 @@ def render(sc, path):
 def fresh_scene(args, res):
     sc = bpy.context.scene
     for c in list(sc.collection.children):
-        if c.name != "TEMPLATES":
+        if c.name not in ("TEMPLATES", "HEADS"):
             for o in list(c.objects):
                 bpy.data.objects.remove(o, do_unlink=True)
             bpy.data.collections.remove(c)
@@ -830,12 +955,12 @@ def sheet_progress(args, kit, out):
     Figure(kit, list(pr["parts"].values()), pr["colourway"], (3.05, 0, -1.72), coll, preset=pr, yaw=-28)
     plinth((3.05, 0, -1.72), coll)
     text("MEDIC (role.medic)", (3.05, 0, 0.32), 0.07, coll)
-    text("CREW ARMOUR r005 (CHAR-BODY r005 fit, proposal)", (1.4, 0, 0.5), 0.075, coll)
+    text("CREW ARMOUR r006 (CHAR-BODY r005 fit, proposal)", (1.4, 0, 0.5), 0.075, coll)
     aim_front(cam, (1.55, 0, -0.75), 4.6, elev=12)
-    render(sc, out / "armor_progress_r005.png")
-    compare(out / "armor_progress_r005.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png",
+    render(sc, out / "armor_progress_r006.png")
+    compare(out / "armor_progress_r006.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png",
                                               Path(args.refs) / "roster-male-03-medic.png"],
-            out / "armor_progress_r005_vs_reference.png")
+            out / "armor_progress_r006_vs_reference.png")
 
 
 TIER_ROWS = [("CHEST", ["armor.chest.jacket", "armor.chest.harness", "armor.chest.plate", "armor.chest.heavy"]),
@@ -861,7 +986,7 @@ def sheet_tiers(args, kit, out):
     y0 = -len(TIER_ROWS) * dz - 1.35
     for c in range(4):
         Figure(kit, [row[1][c] for row in TIER_ROWS], TIER_CW[c], (c * dx, 0, y0), coll, yaw=-20, scale=0.55)
-    text("CREW ARMOUR TIERS (armor-v1 r005 proposal)", (0.93, 0, 0.45), 0.075, coll)
+    text("CREW ARMOUR TIERS (armor-v1 r006 proposal)", (0.93, 0, 0.45), 0.075, coll)
     aim_front(cam, (0.75, 0, -2.3), 6.0, elev=12)
     render(sc, out / "armor_tier_chart.png")
     compare(out / "armor_tier_chart.png", [Path(args.refs) / "roster-male-armor-tiers.png"], out / "armor_tier_chart_vs_reference.png")
@@ -1022,6 +1147,7 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
     bpy.ops.wm.read_factory_settings(use_empty=True)
     kit = Kit(args.bevel, args.body_blend)
+    kit.load_heads(args.heads_dir)
     summary = {"kit": K.KIT_ID, "revision": K.REVISION, "specVersion": K.SPEC_VERSION, "parts": len(kit.parts),
                "body": kit.body_source,
                "actions": sorted(a.name for a in bpy.data.actions)}

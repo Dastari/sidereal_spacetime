@@ -54,11 +54,11 @@ class CrewArmorKitTests(unittest.TestCase):
             self.assertIn(v["part"], self.by, key)
             self.assertEqual(self.by[v["part"]].slot, key.rsplit("-", 1)[1])
 
-    def test_heavy_tiers_carry_emissive_accents(self):
+    def test_emissive_is_a_handful_of_small_indicator_lights(self):
         for p in self.parts:
-            if p.tier == 3:
-                self.assertGreater(F.emissive_surface_share(p), 0.04, p.id)
-
+            for vols in p.fits.values():
+                em = [c for v in vols.values() for c, sl in v.c.items() if sl == K.EM]
+                self.assertLessEqual(len(em), 2 * K.LIGHTS.get(p.slot, 0), p.id)
 
 if __name__ == "__main__":
     unittest.main()
