@@ -106,7 +106,7 @@ function material(
       attributes: ["position", "normal", "uv"],
       uniforms: [
         "world",
-        "worldViewProjection",
+        "viewProjection",
         "time",
         "seed",
         "kind",

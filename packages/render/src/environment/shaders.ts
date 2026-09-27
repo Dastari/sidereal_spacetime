@@ -1,9 +1,11 @@
+// Keep world and view/projection uploads separate: Babylon camera-relative binding
+// can rebase these directly without inverting a combined astronomical WVP matrix.
 export const surfaceVertex = /* glsl */ `
 precision highp float;
 attribute vec3 position; attribute vec3 normal; attribute vec2 uv;
-uniform mat4 worldViewProjection; uniform mat4 world;
+uniform mat4 viewProjection; uniform mat4 world;
 varying vec3 vLocal; varying vec3 vWorld; varying vec3 vNormal; varying vec2 vUV;
-void main(){vLocal=position;vWorld=(world*vec4(position,1.)).xyz;vNormal=normalize(mat3(world)*normal);vUV=uv;gl_Position=worldViewProjection*vec4(position,1.);}
+void main(){vLocal=position;vWorld=(world*vec4(position,1.)).xyz;vNormal=normalize(mat3(world)*normal);vUV=uv;gl_Position=viewProjection*vec4(vWorld,1.);}
 `;
 const noise = /* glsl */ `
 float hash31(vec3 p){p=fract(p*.1031);p+=dot(p,p.yzx+33.33);return fract((p.x+p.y)*p.z);}
