@@ -18,6 +18,14 @@ r008 adds an interior architecture kit: floor tiles, edge walls with pressure se
 
 # Changelog
 
+## 2026-09-21 — Character pose clearance CPU (render 0.5.3)
+
+Removed temporary vector/array allocation from pose box-overlap checks while
+preserving all 15 separating axes and exact clearance results. A reproducible
+benchmark measures 7.68× faster checks; a bounded full-pose harness measures
+30–32% lower pose CPU, not whole-game FPS. Added equivalence coverage and retained
+the performance findings in `docs/handoffs/performance_audit_20260921.md`.
+Public deployment is unchanged.
 ## Dashboard/render 0.3.0, content/sim 0.2.0 — component paint, 2026-09-15
 
 Primary and secondary paint controls for placed hull components, engines and thrusters. Optional per-placement colours survive drafts, copies and exports without changing native geometry, snapping or physical state. Native atlas/material masks preserve surface maps, glazing and emissive details. Reset restores the authored appearance; painted copies share immutable meshes/textures and release their own material bindings.
