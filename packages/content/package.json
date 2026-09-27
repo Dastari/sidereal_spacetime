@@ -88,7 +88,8 @@
     "./ship-components.v1.json": "./src/ship-components.v1.json",
     "./ship-components-reference-fits": "./src/ship-components-reference-fits.ts",
     "./bow-profiles": "./src/bow-profiles.ts",
-    "./prefabs/builders": "./src/prefabs/builders.ts"
+    "./prefabs/builders": "./src/prefabs/builders.ts",
+    "./crew-items": "./src/crew-items.ts"
   },
   "dependencies": {}
 }

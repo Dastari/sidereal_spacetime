@@ -18,19 +18,25 @@ import {
   type CrewItemDefinition,
   type CrewItemSlot,
   type CrewItemSocketName,
-} from "../../../content/src/crew-items";
+} from "@sidereal/content/crew-items";
 import { setMeshRole } from "../mesh-roles";
 import { bindPoseEquipment } from "./pose-anchors";
 
 /** Materials exported by scripts/art_library/crew_items are named `slot:<slot>@<theme>`. */
-export function crewItemSlotFromMaterialName(name: string): CrewItemSlot | undefined {
+export function crewItemSlotFromMaterialName(
+  name: string,
+): CrewItemSlot | undefined {
   const match = /^slot:([a-z_]+)@/.exec(name);
   const slot = match?.[1] as CrewItemSlot | undefined;
   return slot && CREW_ITEM_CATALOG.slots.includes(slot) ? slot : undefined;
 }
 
 /** Recolour loaded slot materials in place (albedo = slot colour x baked per-part shade vertex colour). */
-export function applyCrewItemTheme(materials: readonly Material[], item: CrewItemDefinition, theme = item.defaultTheme) {
+export function applyCrewItemTheme(
+  materials: readonly Material[],
+  item: CrewItemDefinition,
+  theme = item.defaultTheme,
+) {
   const table = crewItemMaterials(item, theme);
   let applied = 0;
   for (const material of materials) {
@@ -41,7 +47,11 @@ export function applyCrewItemTheme(materials: readonly Material[], item: CrewIte
     material.roughness = m.roughness;
     material.metallic = m.metallic;
     if (m.emissive) {
-      material.emissiveColor = new Color3(m.emissive[0], m.emissive[1], m.emissive[2]);
+      material.emissiveColor = new Color3(
+        m.emissive[0],
+        m.emissive[1],
+        m.emissive[2],
+      );
       material.emissiveIntensity = m.emissiveStrength ?? 1;
     }
     if (m.alpha !== undefined) material.alpha = m.alpha;
@@ -69,15 +79,28 @@ export interface VoxelItemVisualOptions {
  * createEquipmentVisual (root, pose binding, muzzle, dispose) plus theme swap and item clips.
  * PRESENTATION ONLY: firing/reload/use clips play for already accepted events or previews.
  */
-export async function createVoxelItemVisual(scene: Scene, parent: TransformNode, itemId: string, options: VoxelItemVisualOptions = {}) {
+export async function createVoxelItemVisual(
+  scene: Scene,
+  parent: TransformNode,
+  itemId: string,
+  options: VoxelItemVisualOptions = {},
+) {
   const item = crewItem(itemId);
   const base = options.baseUrl ?? CREW_ITEM_CATALOG.assetBase;
-  const container = await SceneLoader.LoadAssetContainerAsync(base, item.files[options.lod ?? "lod0"], scene, undefined, ".glb");
-  for (const material of container.materials) if (material instanceof PBRMaterial) material.maxSimultaneousLights = 8;
+  const container = await SceneLoader.LoadAssetContainerAsync(
+    base,
+    item.files[options.lod ?? "lod0"],
+    scene,
+    undefined,
+    ".glb",
+  );
+  for (const material of container.materials)
+    if (material instanceof PBRMaterial) material.maxSimultaneousLights = 8;
   applyCrewItemTheme(container.materials, item, options.theme);
   const root = new TransformNode(`crew-item-placement:${item.id}`, scene);
   root.parent = parent;
-  if (options.localRotation) root.rotationQuaternion = options.localRotation.clone();
+  if (options.localRotation)
+    root.rotationQuaternion = options.localRotation.clone();
   container.addAllToScene();
   for (const mesh of container.meshes) setMeshRole(mesh, "equipment");
   for (const node of container.rootNodes) node.parent = root;
@@ -87,14 +110,27 @@ export async function createVoxelItemVisual(scene: Scene, parent: TransformNode,
   let disposed = false;
   const socketWorld = (name: CrewItemSocketName) => {
     const socket = item.sockets[name];
-    if (disposed || !socket || !(imported instanceof TransformNode)) return undefined;
+    if (disposed || !socket || !(imported instanceof TransformNode))
+      return undefined;
     const chain: TransformNode[] = [];
-    for (let node: TransformNode | null = imported; node; node = node.parent as TransformNode | null) chain.push(node);
-    for (let i = chain.length - 1; i >= 0; i--) chain[i].computeWorldMatrix(true);
+    for (
+      let node: TransformNode | null = imported;
+      node;
+      node = node.parent as TransformNode | null
+    )
+      chain.push(node);
+    for (let i = chain.length - 1; i >= 0; i--)
+      chain[i].computeWorldMatrix(true);
     const m: Matrix = imported.getWorldMatrix();
     return {
-      position: Vector3.TransformCoordinates(Vector3.FromArray(socket.gltfPosition), m),
-      direction: Vector3.TransformNormal(Vector3.FromArray(socket.gltfDirection), m).normalize(),
+      position: Vector3.TransformCoordinates(
+        Vector3.FromArray(socket.gltfPosition),
+        m,
+      ),
+      direction: Vector3.TransformNormal(
+        Vector3.FromArray(socket.gltfDirection),
+        m,
+      ).normalize(),
     };
   };
   return {
@@ -102,20 +138,25 @@ export async function createVoxelItemVisual(scene: Scene, parent: TransformNode,
     root,
     poseItem,
     createPoseBinding(poseParent: TransformNode) {
-      if (disposed || !(imported instanceof TransformNode) || !poseItem) throw new Error(`Crew item ${item.id} has no pose binding`);
+      if (disposed || !(imported instanceof TransformNode) || !poseItem)
+        throw new Error(`Crew item ${item.id} has no pose binding`);
       return bindPoseEquipment(root, imported, poseItem, poseParent);
     },
     /** Plays the item-part clip matching an action and reports the character clip / FX to pair with it. */
     play(action: CrewItemAction) {
       const plan = crewItemActionPlan(item, action);
-      if (!disposed && plan.itemClip) container.animationGroups.find((g) => g.name === plan.itemClip)?.start(action === "idle");
+      if (!disposed && plan.itemClip)
+        container.animationGroups
+          .find((g) => g.name === plan.itemClip)
+          ?.start(action === "idle");
       return plan;
     },
     setTheme(theme: string) {
       if (!disposed) applyCrewItemTheme(container.materials, item, theme);
     },
     socketWorld,
-    getMuzzleWorld: () => socketWorld(item.sockets.muzzle ? "muzzle" : "emitter"),
+    getMuzzleWorld: () =>
+      socketWorld(item.sockets.muzzle ? "muzzle" : "emitter"),
     dispose() {
       if (disposed) return;
       disposed = true;
@@ -126,10 +167,21 @@ export async function createVoxelItemVisual(scene: Scene, parent: TransformNode,
 }
 
 /** Presentation FX instance driven by the pure sampler in @sidereal/content crew-items. */
-export async function createVoxelItemFx(scene: Scene, parent: TransformNode, fxId: string, options: { baseUrl?: string; tint?: Color3; lengthM?: number } = {}) {
+export async function createVoxelItemFx(
+  scene: Scene,
+  parent: TransformNode,
+  fxId: string,
+  options: { baseUrl?: string; tint?: Color3; lengthM?: number } = {},
+) {
   const fx = crewItemFx(fxId);
   const base = options.baseUrl ?? CREW_ITEM_CATALOG.assetBase;
-  const container = await SceneLoader.LoadAssetContainerAsync(base, fx.file, scene, undefined, ".glb");
+  const container = await SceneLoader.LoadAssetContainerAsync(
+    base,
+    fx.file,
+    scene,
+    undefined,
+    ".glb",
+  );
   const root = new TransformNode(`crew-item-fx:${fx.id}`, scene);
   root.parent = parent;
   container.addAllToScene();
@@ -138,14 +190,19 @@ export async function createVoxelItemFx(scene: Scene, parent: TransformNode, fxI
     setMeshRole(mesh, "equipment");
     mesh.isPickable = false;
   }
-  const materials = container.materials.filter((m): m is PBRMaterial => m instanceof PBRMaterial);
+  const materials = container.materials.filter(
+    (m): m is PBRMaterial => m instanceof PBRMaterial,
+  );
   const baseAlpha = materials.map((m) => m.alpha);
   const baseIntensity = materials.map((m) => m.emissiveIntensity);
   if (options.tint && fx.tint !== "fixed")
-    for (const m of materials) if (m.emissiveColor.toLuminance() > 0) m.emissiveColor = options.tint.clone();
+    for (const m of materials)
+      if (m.emissiveColor.toLuminance() > 0)
+        m.emissiveColor = options.tint.clone();
   let t = 0;
   let disposed = false;
-  let lengthScale = fx.lengthM && options.lengthM ? options.lengthM / fx.lengthM : 1;
+  let lengthScale =
+    fx.lengthM && options.lengthM ? options.lengthM / fx.lengthM : 1;
   return {
     fx,
     root,
