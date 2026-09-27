@@ -14,7 +14,8 @@ export function drawTextMask(ctx: Ctx, w: number, h: number, text: string) {
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
   let size = Math.floor(h * 0.78);
-  const font = (s: number) => `800 ${s}px "Arial Black", "Helvetica Neue", Arial, sans-serif`;
+  const font = (s: number) =>
+    `800 ${s}px "Arial Black", "Helvetica Neue", Arial, sans-serif`;
   ctx.font = font(size);
   const maxW = w * 0.92;
   const measured = ctx.measureText(text).width;
@@ -64,7 +65,8 @@ function skull(ctx: Ctx, cx: number, cy: number, r: number) {
   ctx.lineTo(cx + r * 0.08, cy + r * 0.28);
   ctx.closePath();
   ctx.fill();
-  for (const s of [-0.17, 0, 0.17]) ctx.fillRect(cx + s * r - r * 0.025, cy + r * 0.45, r * 0.05, r * 0.25);
+  for (const s of [-0.17, 0, 0.17])
+    ctx.fillRect(cx + s * r - r * 0.025, cy + r * 0.45, r * 0.05, r * 0.25);
   ctx.restore();
   // Crossed bones.
   ctx.lineWidth = r * 0.12;
@@ -122,7 +124,12 @@ function gear(ctx: Ctx, cx: number, cy: number, r: number) {
 }
 
 /** Draw an emblem mask centred in the canvas. */
-export function drawEmblemMask(ctx: Ctx, w: number, h: number, emblem: EmblemId) {
+export function drawEmblemMask(
+  ctx: Ctx,
+  w: number,
+  h: number,
+  emblem: EmblemId,
+) {
   ctx.clearRect(0, 0, w, h);
   ctx.fillStyle = "#fff";
   ctx.strokeStyle = "#fff";

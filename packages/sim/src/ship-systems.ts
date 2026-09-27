@@ -146,7 +146,10 @@ export interface ShipSystemsReport {
   fuel: {
     capacityL: number;
     loadedL: number;
-    modes: Record<ShipSystemsMode, { burnLps: number; enduranceS: number | null }>;
+    modes: Record<
+      ShipSystemsMode,
+      { burnLps: number; enduranceS: number | null }
+    >;
   };
   data: {
     supplyKbps: number;
@@ -230,10 +233,16 @@ export function shipPartToShip(
   mount?: { definition: ShipComponentDefinition; socket: ShipMountSocket },
   point = true,
 ): [number, number, number] {
-  const m = mount ? mul(shipMountRotation(mount.definition.mount.frame, mount.socket), v) : v;
+  const m = mount
+    ? mul(shipMountRotation(mount.definition.mount.frame, mount.socket), v)
+    : v;
   const r = orientShipVector(m, placement.quarterTurns, placement.reflected);
   return point
-    ? [r[0] + placement.position[0], r[1] + placement.position[1], r[2] + placement.position[2]]
+    ? [
+        r[0] + placement.position[0],
+        r[1] + placement.position[1],
+        r[2] + placement.position[2],
+      ]
     : r;
 }
 /** A port's ship-frame position and normal for a placement. Pass `mount`
@@ -268,7 +277,11 @@ export function shipPortsCompatible(
             : to.direction === "out"
               ? "target-is-output"
               : null;
-  return { ok: !reason, reason, flow: reason ? 0 : Math.min(from.capacity, to.capacity) };
+  return {
+    ok: !reason,
+    reason,
+    flow: reason ? 0 : Math.min(from.capacity, to.capacity),
+  };
 }
 
 /** Hardpoint fit per the design grammar (12.8 / r006). A smaller component
@@ -302,7 +315,15 @@ export function fitShipComponentToHardpoint(
 }
 
 // ------------------------------------------------------------------- modes
-type Rule = "main" | "maneuver" | "weapon" | "defense" | "sensor" | "utility" | "always" | "standby";
+type Rule =
+  | "main"
+  | "maneuver"
+  | "weapon"
+  | "defense"
+  | "sensor"
+  | "utility"
+  | "always"
+  | "standby";
 function rule(d: ShipComponentDefinition): Rule {
   if (d.family === "propulsion")
     return d.propulsion?.role === "maneuver"
@@ -318,10 +339,46 @@ function rule(d: ShipComponentDefinition): Rule {
   return "always";
 }
 const MODE_TABLE: Record<ShipSystemsMode, Record<Rule, Load>> = {
-  cruise: { main: "active", maneuver: "active", weapon: "idle", defense: "idle", sensor: "active", utility: "idle", always: "active", standby: "idle" },
-  combat: { main: "active", maneuver: "active", weapon: "active", defense: "active", sensor: "active", utility: "idle", always: "active", standby: "idle" },
-  industry: { main: "idle", maneuver: "active", weapon: "idle", defense: "idle", sensor: "active", utility: "active", always: "active", standby: "idle" },
-  peak: { main: "peak", maneuver: "peak", weapon: "peak", defense: "peak", sensor: "peak", utility: "peak", always: "peak", standby: "peak" },
+  cruise: {
+    main: "active",
+    maneuver: "active",
+    weapon: "idle",
+    defense: "idle",
+    sensor: "active",
+    utility: "idle",
+    always: "active",
+    standby: "idle",
+  },
+  combat: {
+    main: "active",
+    maneuver: "active",
+    weapon: "active",
+    defense: "active",
+    sensor: "active",
+    utility: "idle",
+    always: "active",
+    standby: "idle",
+  },
+  industry: {
+    main: "idle",
+    maneuver: "active",
+    weapon: "idle",
+    defense: "idle",
+    sensor: "active",
+    utility: "active",
+    always: "active",
+    standby: "idle",
+  },
+  peak: {
+    main: "peak",
+    maneuver: "peak",
+    weapon: "peak",
+    defense: "peak",
+    sensor: "peak",
+    utility: "peak",
+    always: "peak",
+    standby: "peak",
+  },
 };
 /** Load of a placed component in a mode. In cruise only forward-pushing main
  * engines burn; retro/lateral main engines idle (combat manoeuvres use all). */
@@ -337,12 +394,27 @@ function loadOf(
   }
   return MODE_TABLE[mode][rule(d)];
 }
-const pick = (v: { idleKw: number; activeKw: number; peakKw: number }, l: Load) =>
-  l === "off" ? 0 : l === "idle" ? v.idleKw : l === "active" ? v.activeKw : v.peakKw;
+const pick = (
+  v: { idleKw: number; activeKw: number; peakKw: number },
+  l: Load,
+) =>
+  l === "off"
+    ? 0
+    : l === "idle"
+      ? v.idleKw
+      : l === "active"
+        ? v.activeKw
+        : v.peakKw;
 /** Lower value = supplied first under brownout. */
 function priority(d: ShipComponentDefinition): number {
   if (d.family === "interior") return 0;
-  if (d.family === "thermal" || d.family === "structure" || d.family === "ammunition" || d.family === "power") return 1;
+  if (
+    d.family === "thermal" ||
+    d.family === "structure" ||
+    d.family === "ammunition" ||
+    d.family === "power"
+  )
+    return 1;
   if (d.family === "sensor") return 2;
   if (d.family === "defense") return 3;
   if (d.family === "propulsion") return 4;
@@ -371,8 +443,14 @@ interface Resolved {
   p: ShipComponentPlacement;
   d: ShipComponentDefinition;
 }
-const hasPort = (d: ShipComponentDefinition, ch: ShipComponentChannel, dir: "in" | "out") =>
-  d.ports.some((p) => p.channel === ch && (p.direction === dir || p.direction === "both"));
+const hasPort = (
+  d: ShipComponentDefinition,
+  ch: ShipComponentChannel,
+  dir: "in" | "out",
+) =>
+  d.ports.some(
+    (p) => p.channel === ch && (p.direction === dir || p.direction === "both"),
+  );
 
 // ------------------------------------------------------------------ compile
 export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
@@ -396,7 +474,12 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
   )
     throw new Error("Ship systems input budget exceeded");
   if (!(hull.massKg >= 0) || !(hull.lengthM > 0) || !(hull.beamM > 0))
-    issue("error", "invalid-hull", [String(hull.id)], "Hull mass/length/beam invalid");
+    issue(
+      "error",
+      "invalid-hull",
+      [String(hull.id)],
+      "Hull mass/length/beam invalid",
+    );
   const fuelFraction = Math.min(1, Math.max(0, input.fuelFraction ?? 1));
   const ammoFraction = Math.min(1, Math.max(0, input.ammoFraction ?? 1));
   const defs = new Map(input.catalog.components.map((c) => [c.id, c]));
@@ -406,13 +489,23 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
   const seen = new Set<string>();
   for (const p of [...components].sort((a, b) => order(a.id, b.id))) {
     if (!p || typeof p.id !== "string" || !p.id || seen.has(p.id)) {
-      issue("error", "duplicate-or-invalid-placement", [String(p?.id)], "Placement ids must be unique non-empty strings");
+      issue(
+        "error",
+        "duplicate-or-invalid-placement",
+        [String(p?.id)],
+        "Placement ids must be unique non-empty strings",
+      );
       continue;
     }
     seen.add(p.id);
     const d = defs.get(p.componentId);
     if (!d) {
-      issue("error", "unknown-component", [p.id], `Unknown component ${p.componentId}`);
+      issue(
+        "error",
+        "unknown-component",
+        [p.id],
+        `Unknown component ${p.componentId}`,
+      );
       continue;
     }
     if (
@@ -420,11 +513,21 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
       ![0, 1, 2, 3].includes(p.quarterTurns) ||
       typeof p.reflected !== "boolean"
     ) {
-      issue("error", "invalid-placement", [p.id], "Position/orientation invalid");
+      issue(
+        "error",
+        "invalid-placement",
+        [p.id],
+        "Position/orientation invalid",
+      );
       continue;
     }
     if (d.status === "future" && !input.allowFuture)
-      issue("error", "future-component", [p.id], `${d.id} is a future placeholder`);
+      issue(
+        "error",
+        "future-component",
+        [p.id],
+        `${d.id} is a future placeholder`,
+      );
     resolved.push({ p, d });
   }
 
@@ -435,26 +538,59 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
     const interiorOk = d.mount.sockets.includes("interior");
     if (!p.hardpointId) {
       if (!interiorOk && hull.hardpoints.length)
-        issue("error", "missing-hardpoint", [p.id], `${d.id} needs a ${d.mount.sockets.join("/")} hardpoint`);
+        issue(
+          "error",
+          "missing-hardpoint",
+          [p.id],
+          `${d.id} needs a ${d.mount.sockets.join("/")} hardpoint`,
+        );
       continue;
     }
     const h = hardpoints.get(p.hardpointId);
     if (!h) {
-      issue("error", "unknown-hardpoint", [p.id], `Unknown hardpoint ${p.hardpointId}`);
+      issue(
+        "error",
+        "unknown-hardpoint",
+        [p.id],
+        `Unknown hardpoint ${p.hardpointId}`,
+      );
       continue;
     }
     const prior = occupied.get(h.id);
-    if (prior) issue("error", "hardpoint-occupied", [prior, p.id], `Hardpoint ${h.id} holds two components`);
+    if (prior)
+      issue(
+        "error",
+        "hardpoint-occupied",
+        [prior, p.id],
+        `Hardpoint ${h.id} holds two components`,
+      );
     occupied.set(h.id, p.id);
     const fit = fitShipComponentToHardpoint(d, h);
-    for (const e of fit.errors) issue("error", e, [p.id], `${d.id} on ${h.id} (${h.socket} ${h.sizeClass})`);
-    for (const w of fit.warnings) issue("warning", w, [p.id], `${d.id} (${d.sizeClass}) on a ${h.sizeClass} hardpoint`);
+    for (const e of fit.errors)
+      issue(
+        "error",
+        e,
+        [p.id],
+        `${d.id} on ${h.id} (${h.socket} ${h.sizeClass})`,
+      );
+    for (const w of fit.warnings)
+      issue(
+        "warning",
+        w,
+        [p.id],
+        `${d.id} (${d.sizeClass}) on a ${h.sizeClass} hardpoint`,
+      );
     if (
       p.position.some((v, i) => Math.abs(v - h.position[i]) > 1e-6) ||
       p.quarterTurns !== h.quarterTurns ||
       p.reflected !== h.reflected
     )
-      issue("error", "hardpoint-transform-mismatch", [p.id], `Placement must use hardpoint ${h.id}'s position and orientation`);
+      issue(
+        "error",
+        "hardpoint-transform-mismatch",
+        [p.id],
+        `Placement must use hardpoint ${h.id}'s position and orientation`,
+      );
   }
 
   // Connections and networks.
@@ -466,24 +602,45 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
     const inputs = new Set<string>();
     const connIds = new Set<string>();
     for (const c of [...connections!].sort((a, b) => order(a.id, b.id))) {
-      if (connIds.has(c.id)) issue("error", "duplicate-connection", [c.id], "Duplicate connection id");
+      if (connIds.has(c.id))
+        issue(
+          "error",
+          "duplicate-connection",
+          [c.id],
+          "Duplicate connection id",
+        );
       connIds.add(c.id);
       const a = byId.get(c.from?.placementId),
         b = byId.get(c.to?.placementId);
       const pa = a?.d.ports.find((x) => x.id === c.from.portId),
         pb = b?.d.ports.find((x) => x.id === c.to.portId);
       if (!a || !b || !pa || !pb || a === b) {
-        issue("error", "connection-endpoint", [c.id], "Connection needs two distinct existing ports");
+        issue(
+          "error",
+          "connection-endpoint",
+          [c.id],
+          "Connection needs two distinct existing ports",
+        );
         continue;
       }
       const compat = shipPortsCompatible(pa, pb);
       if (!compat.ok || pa.channel !== c.channel) {
-        issue("error", "incompatible-ports", [c.id], compat.reason ?? "channel-mismatch");
+        issue(
+          "error",
+          "incompatible-ports",
+          [c.id],
+          compat.reason ?? "channel-mismatch",
+        );
         continue;
       }
       const key = `${b.p.id}:${pb.id}`;
       if (pb.direction === "in" && inputs.has(key))
-        issue("error", "duplicate-input", [c.id], `${key} already has a feeder`);
+        issue(
+          "error",
+          "duplicate-input",
+          [c.id],
+          `${key} already has a feeder`,
+        );
       inputs.add(key);
       connected.add(`${a.p.id}:${pa.id}`);
       connected.add(key);
@@ -492,7 +649,12 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
     }
     for (const { p, d } of resolved)
       for (const port of d.ports)
-        if (port.direction !== "out" && !port.id.startsWith("shore-") && port.channel !== "ammo" && !connected.has(`${p.id}:${port.id}`))
+        if (
+          port.direction !== "out" &&
+          !port.id.startsWith("shore-") &&
+          port.channel !== "ammo" &&
+          !connected.has(`${p.id}:${port.id}`)
+        )
           issue(
             port.channel === "ventilation" ? "warning" : "error",
             "unconnected-port",
@@ -508,14 +670,21 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
   const capacityL = sum(resolved, (r) => r.d.fluids.fuelCapacityL);
   const loadedL = capacityL * fuelFraction;
   const fuelKg = loadedL * SHIP_THERMAL_MODEL.fuelKgPerL;
-  const ammoKg = sum(resolved, (r) => r.d.magazine?.capacityKg ?? 0) * ammoFraction;
+  const ammoKg =
+    sum(resolved, (r) => r.d.magazine?.capacityKg ?? 0) * ammoFraction;
   const totalKg = componentsKg + hull.massKg + fuelKg + ammoKg;
 
   // Power per mode, per island, with priority brownout allocation.
   const powerModes = {} as Record<ShipSystemsMode, ShipPowerModeReport>;
-  const storageKwh = sum(resolved, (r) => (r.d.kind === "battery" ? r.d.power.storageKwh : 0));
-  const batteryDischargeKw = sum(resolved, (r) => (r.d.kind === "battery" ? r.d.power.maxDischargeKw : 0));
-  const capacitorKj = sum(resolved, (r) => (r.d.kind === "capacitor" ? r.d.power.storageKwh * 3600 : 0));
+  const storageKwh = sum(resolved, (r) =>
+    r.d.kind === "battery" ? r.d.power.storageKwh : 0,
+  );
+  const batteryDischargeKw = sum(resolved, (r) =>
+    r.d.kind === "battery" ? r.d.power.maxDischargeKw : 0,
+  );
+  const capacitorKj = sum(resolved, (r) =>
+    r.d.kind === "capacitor" ? r.d.power.storageKwh * 3600 : 0,
+  );
   const generationKw = sum(resolved, (r) => r.d.power.generationKw);
   const reactorLoad = {} as Record<ShipSystemsMode, number>;
   for (const mode of SHIP_SYSTEMS_MODES) {
@@ -531,7 +700,9 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
       used = 0;
     for (const [, members] of [...groups].sort(([a], [b]) => order(a, b))) {
       const gen = sum(members, (r) => r.d.power.generationKw);
-      const bat = sum(members, (r) => (r.d.kind === "battery" ? r.d.power.maxDischargeKw : 0));
+      const bat = sum(members, (r) =>
+        r.d.kind === "battery" ? r.d.power.maxDischargeKw : 0,
+      );
       const loads = members
         .filter((r) => hasPort(r.d, "power", "in"))
         .map((r) => ({ r, kw: pick(r.d.power, loadOf(r.d, mode, r.p)) }));
@@ -542,10 +713,14 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
       if (deficit > bat + 1e-9) brownout = true;
       let available = gen + Math.min(bat, deficit);
       used += Math.min(need, gen);
-      for (const l of loads.sort((a, b) => priority(a.r.d) - priority(b.r.d) || order(a.r.p.id, b.r.p.id))) {
+      for (const l of loads.sort(
+        (a, b) =>
+          priority(a.r.d) - priority(b.r.d) || order(a.r.p.id, b.r.p.id),
+      )) {
         const give = Math.min(l.kw, available);
         available -= give;
-        supply[l.r.p.id] = l.kw > 0 ? r2(give / l.kw) : available > 0 || gen > 0 ? 1 : 0;
+        supply[l.r.p.id] =
+          l.kw > 0 ? r2(give / l.kw) : available > 0 || gen > 0 ? 1 : 0;
       }
       if (explicit && gen === 0 && bat === 0)
         for (const l of loads) supply[l.r.p.id] = 0;
@@ -555,33 +730,69 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
       demandKw: r2(demand),
       generationKw: r2(generationKw),
       balanceKw: r2(generationKw - demand),
-      batteryEnduranceS: deficitTotal > 0 ? (storageKwh > 0 ? Math.round((storageKwh * 3600) / deficitTotal) : 0) : null,
+      batteryEnduranceS:
+        deficitTotal > 0
+          ? storageKwh > 0
+            ? Math.round((storageKwh * 3600) / deficitTotal)
+            : 0
+          : null,
       brownout,
       supply,
     };
   }
   if (!generationKw && resolved.some((r) => r.d.power.peakKw > 0))
-    issue("error", "no-power-generation", [], "Components need power but nothing generates it");
+    issue(
+      "error",
+      "no-power-generation",
+      [],
+      "Components need power but nothing generates it",
+    );
   if (powerModes.cruise.brownout)
-    issue("error", "power-brownout-cruise", [], `Cruise demand ${powerModes.cruise.demandKw} kW exceeds generation and batteries`);
+    issue(
+      "error",
+      "power-brownout-cruise",
+      [],
+      `Cruise demand ${powerModes.cruise.demandKw} kW exceeds generation and batteries`,
+    );
   else if (powerModes.combat.brownout)
-    issue("warning", "power-brownout-combat", [], `Combat demand ${powerModes.combat.demandKw} kW exceeds generation and batteries; low-priority loads shed`);
+    issue(
+      "warning",
+      "power-brownout-combat",
+      [],
+      `Combat demand ${powerModes.combat.demandKw} kW exceeds generation and batteries; low-priority loads shed`,
+    );
   else if (powerModes.combat.balanceKw < 0)
-    issue("info", "power-battery-combat", [], `Combat runs on batteries for ${powerModes.combat.batteryEnduranceS} s`);
+    issue(
+      "info",
+      "power-battery-combat",
+      [],
+      `Combat runs on batteries for ${powerModes.combat.batteryEnduranceS} s`,
+    );
 
   // Heat.
   const radiatorKw = sum(resolved, (r) => r.d.heat.rejectionKw);
   const pumpLps = sum(resolved, (r) => r.d.fluids.coolantSupplyLps);
-  const pumpLimitedKw = Math.min(radiatorKw, pumpLps * SHIP_THERMAL_MODEL.coolantKwPerLps);
+  const pumpLimitedKw = Math.min(
+    radiatorKw,
+    pumpLps * SHIP_THERMAL_MODEL.coolantKwPerLps,
+  );
   const sinkMj = sum(resolved, (r) => r.d.heat.storageMj);
   const passiveKw = hull.passiveHeatRejectionKw;
   const heatModes = {} as Record<ShipSystemsMode, ShipHeatModeReport>;
   for (const mode of SHIP_SYSTEMS_MODES) {
     const generated = sum(resolved, (r) => {
       if (r.d.power.generationKw > 0 && r.d.kind === "reactor")
-        return r.d.heat.idleKw + (pick(r.d.heat, mode === "peak" ? "peak" : "active") - r.d.heat.idleKw) * reactorLoad[mode];
+        return (
+          r.d.heat.idleKw +
+          (pick(r.d.heat, mode === "peak" ? "peak" : "active") -
+            r.d.heat.idleKw) *
+            reactorLoad[mode]
+        );
       const f = powerModes[mode].supply[r.p.id] ?? 1;
-      return pick(r.d.heat, loadOf(r.d, mode, r.p)) * (hasPort(r.d, "power", "in") ? f : 1);
+      return (
+        pick(r.d.heat, loadOf(r.d, mode, r.p)) *
+        (hasPort(r.d, "power", "in") ? f : 1)
+      );
     });
     const rejection = pumpLimitedKw + passiveKw;
     const balance = rejection - generated;
@@ -589,23 +800,42 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
       generatedKw: r2(generated),
       rejectionKw: r2(rejection),
       balanceKw: r2(balance),
-      timeToOverheatS: balance < 0 ? Math.round((sinkMj * 1000) / -balance) : null,
+      timeToOverheatS:
+        balance < 0 ? Math.round((sinkMj * 1000) / -balance) : null,
     };
   }
   if (radiatorKw > pumpLps * SHIP_THERMAL_MODEL.coolantKwPerLps + 1e-9)
-    issue("warning", "radiators-pump-limited", [], `Pumps move ${r2(pumpLps)} L/s: only ${r2(pumpLimitedKw)} of ${r2(radiatorKw)} kW radiator capacity is usable`);
+    issue(
+      "warning",
+      "radiators-pump-limited",
+      [],
+      `Pumps move ${r2(pumpLps)} L/s: only ${r2(pumpLimitedKw)} of ${r2(radiatorKw)} kW radiator capacity is usable`,
+    );
   if (heatModes.cruise.balanceKw < 0)
-    issue("error", "heat-cruise-unsustainable", [], `Cruise heat exceeds rejection by ${-heatModes.cruise.balanceKw} kW`);
+    issue(
+      "error",
+      "heat-cruise-unsustainable",
+      [],
+      `Cruise heat exceeds rejection by ${-heatModes.cruise.balanceKw} kW`,
+    );
   if (heatModes.combat.balanceKw < 0)
     issue(
-      heatModes.combat.timeToOverheatS && heatModes.combat.timeToOverheatS >= 120 ? "info" : "warning",
+      heatModes.combat.timeToOverheatS &&
+        heatModes.combat.timeToOverheatS >= 120
+        ? "info"
+        : "warning",
       "heat-combat-limited",
       [],
       `Combat overheats in ${heatModes.combat.timeToOverheatS} s`,
     );
   const coolantDemand = sum(resolved, (r) => r.d.fluids.coolantDemandLps);
   if (coolantDemand > pumpLps + 1e-9)
-    issue("warning", "coolant-shortfall", [], `Coolant demand ${r2(coolantDemand)} L/s exceeds pump supply ${r2(pumpLps)} L/s`);
+    issue(
+      "warning",
+      "coolant-shortfall",
+      [],
+      `Coolant demand ${r2(coolantDemand)} L/s exceeds pump supply ${r2(pumpLps)} L/s`,
+    );
 
   // Fuel.
   const fuelModes = {} as ShipSystemsReport["fuel"]["modes"];
@@ -613,14 +843,30 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
     const burn = sum(resolved, (r) => {
       const l = loadOf(r.d, mode, r.p);
       if (r.d.kind === "reactor")
-        return r.d.fluids.fuelIdleLps + (r.d.fluids.fuelActiveLps - r.d.fluids.fuelIdleLps) * reactorLoad[mode];
+        return (
+          r.d.fluids.fuelIdleLps +
+          (r.d.fluids.fuelActiveLps - r.d.fluids.fuelIdleLps) *
+            reactorLoad[mode]
+        );
       const f = powerModes[mode].supply[r.p.id] ?? 1;
-      return (l === "idle" || l === "off" ? r.d.fluids.fuelIdleLps : r.d.fluids.fuelActiveLps) * f;
+      return (
+        (l === "idle" || l === "off"
+          ? r.d.fluids.fuelIdleLps
+          : r.d.fluids.fuelActiveLps) * f
+      );
     });
-    fuelModes[mode] = { burnLps: Math.round(burn * 1e4) / 1e4, enduranceS: burn > 0 ? Math.round(loadedL / burn) : null };
+    fuelModes[mode] = {
+      burnLps: Math.round(burn * 1e4) / 1e4,
+      enduranceS: burn > 0 ? Math.round(loadedL / burn) : null,
+    };
   }
   if (resolved.some((r) => r.d.fluids.fuelActiveLps > 0) && capacityL === 0)
-    issue("error", "no-fuel-storage", [], "Fuel burners installed without a fuel tank");
+    issue(
+      "error",
+      "no-fuel-storage",
+      [],
+      "Fuel burners installed without a fuel tank",
+    );
 
   // Data and control.
   const supplyKbps = sum(resolved, (r) => r.d.data.supplyKbps);
@@ -629,95 +875,223 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
   const slotsUsed = sum(resolved, (r) => r.d.data.controlSlotsUsed);
   const cores = resolved.filter((r) => r.d.kind === "computer-core");
   if (resolved.some((r) => r.d.crew.automation === "computer") && !cores.length)
-    issue("error", "no-computer-core", [], "Computer-controlled components need a powered computer core");
+    issue(
+      "error",
+      "no-computer-core",
+      [],
+      "Computer-controlled components need a powered computer core",
+    );
   if (demandKbps > supplyKbps && cores.length)
-    issue("warning", "data-bandwidth-exceeded", [], `Data demand ${demandKbps} kbit/s exceeds ${supplyKbps}`);
+    issue(
+      "warning",
+      "data-bandwidth-exceeded",
+      [],
+      `Data demand ${demandKbps} kbit/s exceeds ${supplyKbps}`,
+    );
   if (slotsUsed > slots && cores.length)
-    issue("error", "control-slots-exceeded", [], `${slotsUsed} control slots used, ${slots} available`);
+    issue(
+      "error",
+      "control-slots-exceeded",
+      [],
+      `${slotsUsed} control slots used, ${slots} available`,
+    );
 
   // Crew and stations.
   const stations: Record<string, number> = {};
   for (const r of resolved)
-    if (r.d.control) stations[r.d.crew.station ?? r.d.control.grants] = (stations[r.d.crew.station ?? r.d.control.grants] ?? 0) + r.d.control.seats;
+    if (r.d.control)
+      stations[r.d.crew.station ?? r.d.control.grants] =
+        (stations[r.d.crew.station ?? r.d.control.grants] ?? 0) +
+        r.d.control.seats;
   const manual: Record<string, number> = {};
   for (const r of resolved)
     if (!r.d.control && r.d.crew.automation === "manual" && r.d.crew.station)
-      manual[r.d.crew.station] = (manual[r.d.crew.station] ?? 0) + r.d.crew.operators;
+      manual[r.d.crew.station] =
+        (manual[r.d.crew.station] ?? 0) + r.d.crew.operators;
   for (const [role, n] of Object.entries(manual))
     if (!stations[role])
-      issue("error", "missing-station", resolved.filter((r) => !r.d.control && r.d.crew.station === role && r.d.crew.automation === "manual").map((r) => r.p.id), `Manual ${role} components need a ${role} console`);
-  if (resolved.some((r) => r.d.propulsion && r.d.propulsion.thrustKn > 0) && !stations.pilot)
-    issue("error", "no-pilot-station", [], "A navigation console (pilot station) is required to fly");
+      issue(
+        "error",
+        "missing-station",
+        resolved
+          .filter(
+            (r) =>
+              !r.d.control &&
+              r.d.crew.station === role &&
+              r.d.crew.automation === "manual",
+          )
+          .map((r) => r.p.id),
+        `Manual ${role} components need a ${role} console`,
+      );
+  if (
+    resolved.some((r) => r.d.propulsion && r.d.propulsion.thrustKn > 0) &&
+    !stations.pilot
+  )
+    issue(
+      "error",
+      "no-pilot-station",
+      [],
+      "A navigation console (pilot station) is required to fly",
+    );
   const stationCrew = sum(Object.values(stations), (n) => n);
   const minimumCrew =
-    stationCrew + sum(Object.entries(manual), ([role, n]) => Math.max(0, n - (stations[role] ?? 0)));
+    stationCrew +
+    sum(Object.entries(manual), ([role, n]) =>
+      Math.max(0, n - (stations[role] ?? 0)),
+    );
   const berths = sum(resolved, (r) => r.d.crew.berths);
   const lifeSupportCrew = sum(resolved, (r) => r.d.fluids.crewSupported);
   const reserveHours = sum(resolved, (r) => r.d.fluids.reserveCrewHours);
   if (minimumCrew > 0 && lifeSupportCrew < Math.max(minimumCrew, berths))
-    issue(lifeSupportCrew < minimumCrew ? "error" : "warning", "life-support-short", [], `Life support for ${lifeSupportCrew}, crew ${minimumCrew}, berths ${berths}`);
+    issue(
+      lifeSupportCrew < minimumCrew ? "error" : "warning",
+      "life-support-short",
+      [],
+      `Life support for ${lifeSupportCrew}, crew ${minimumCrew}, berths ${berths}`,
+    );
   if (berths < minimumCrew)
-    issue("warning", "berths-short", [], `${berths} berths for a minimum crew of ${minimumCrew}`);
+    issue(
+      "warning",
+      "berths-short",
+      [],
+      `${berths} berths for a minimum crew of ${minimumCrew}`,
+    );
 
   // Weapons.
   const weapons = resolved.filter((r) => r.d.weapon);
   const combat = powerModes.combat.supply;
-  const alphaDamage = sum(weapons, (r) => r.d.weapon!.damagePerShot * r.d.weapon!.projectilesPerShot);
+  const alphaDamage = sum(
+    weapons,
+    (r) => r.d.weapon!.damagePerShot * r.d.weapon!.projectilesPerShot,
+  );
   const sustainedDps = sum(
     weapons,
-    (r) => (r.d.weapon!.damagePerShot * r.d.weapon!.projectilesPerShot * r.d.weapon!.shotsPerMinute * (combat[r.p.id] ?? 1)) / 60,
+    (r) =>
+      (r.d.weapon!.damagePerShot *
+        r.d.weapon!.projectilesPerShot *
+        r.d.weapon!.shotsPerMinute *
+        (combat[r.p.id] ?? 1)) /
+      60,
   );
   const ammoTypes = new Map(input.catalog.ammoTypes.map((a) => [a.id, a]));
   const use = new Map<string, number>();
   for (const r of weapons)
     if (r.d.weapon!.ammoType)
-      use.set(r.d.weapon!.ammoType, (use.get(r.d.weapon!.ammoType) ?? 0) + (r.d.weapon!.roundsPerShot * r.d.weapon!.shotsPerMinute) / 60);
+      use.set(
+        r.d.weapon!.ammoType,
+        (use.get(r.d.weapon!.ammoType) ?? 0) +
+          (r.d.weapon!.roundsPerShot * r.d.weapon!.shotsPerMinute) / 60,
+      );
   const magazines = resolved.filter((r) => r.d.magazine);
   const ammo: ShipSystemsReport["weapons"]["ammo"] = [];
   for (const cls of ["ballistic", "missile", "torpedo"] as const) {
-    const types = [...use].filter(([t]) => ammoTypes.get(t)?.ammoClass === cls).sort(([a], [b]) => order(a, b));
+    const types = [...use]
+      .filter(([t]) => ammoTypes.get(t)?.ammoClass === cls)
+      .sort(([a], [b]) => order(a, b));
     if (!types.length) continue;
-    const stockKg = sum(magazines.filter((m) => m.d.magazine!.ammoClass === cls), (m) => m.d.magazine!.capacityKg) * ammoFraction;
-    const kgRate = sum(types, ([t, rate]) => rate * ammoTypes.get(t)!.massKgPerRound);
+    const stockKg =
+      sum(
+        magazines.filter((m) => m.d.magazine!.ammoClass === cls),
+        (m) => m.d.magazine!.capacityKg,
+      ) * ammoFraction;
+    const kgRate = sum(
+      types,
+      ([t, rate]) => rate * ammoTypes.get(t)!.massKgPerRound,
+    );
     for (const [t, rate] of types) {
       const kgPerRound = ammoTypes.get(t)!.massKgPerRound;
       const shareKg = kgRate > 0 ? (stockKg * rate * kgPerRound) / kgRate : 0;
       const stockRounds = Math.floor(shareKg / kgPerRound + 1e-9);
-      ammo.push({ type: t, stockRounds, useRoundsPerS: r2(rate), sustainS: rate > 0 ? Math.round(stockRounds / rate) : null });
+      ammo.push({
+        type: t,
+        stockRounds,
+        useRoundsPerS: r2(rate),
+        sustainS: rate > 0 ? Math.round(stockRounds / rate) : null,
+      });
       if (!stockRounds)
-        issue("error", "no-magazine", weapons.filter((r) => r.d.weapon!.ammoType === t).map((r) => r.p.id), `No ${cls} magazine stock for ${t}`);
+        issue(
+          "error",
+          "no-magazine",
+          weapons.filter((r) => r.d.weapon!.ammoType === t).map((r) => r.p.id),
+          `No ${cls} magazine stock for ${t}`,
+        );
     }
-    const feed = sum(magazines.filter((m) => m.d.magazine!.ammoClass === cls), (m) => m.d.ports.find((p) => p.channel === "ammo")?.capacity ?? 0);
+    const feed = sum(
+      magazines.filter((m) => m.d.magazine!.ammoClass === cls),
+      (m) => m.d.ports.find((p) => p.channel === "ammo")?.capacity ?? 0,
+    );
     const need = sum(types, ([, rate]) => rate);
     if (feed > 0 && feed + 1e-9 < need)
-      issue("warning", "ammo-feed-limited", [], `${cls} magazines feed ${feed} rounds/s, weapons use ${r2(need)}`);
+      issue(
+        "warning",
+        "ammo-feed-limited",
+        [],
+        `${cls} magazines feed ${feed} rounds/s, weapons use ${r2(need)}`,
+      );
   }
   const pulseKj = sum(weapons, (r) => r.d.weapon!.capacitorKjPerShot);
   if (pulseKj > capacitorKj + 1e-9)
-    issue("error", "capacitor-too-small", weapons.filter((r) => r.d.weapon!.capacitorKjPerShot > 0).map((r) => r.p.id), `Pulse weapons need ${pulseKj} kJ of capacitors, ${capacitorKj} installed`);
+    issue(
+      "error",
+      "capacitor-too-small",
+      weapons
+        .filter((r) => r.d.weapon!.capacitorKjPerShot > 0)
+        .map((r) => r.p.id),
+      `Pulse weapons need ${pulseKj} kJ of capacitors, ${capacitorKj} installed`,
+    );
 
   // Defense.
   const generators = resolved.filter((r) => r.d.shield?.role === "generator");
   const emitters = resolved.filter((r) => r.d.shield?.role === "emitter");
   const shieldRadius = Math.max(0, ...emitters.map((r) => r.d.shield!.radiusM));
   if (generators.length && !emitters.length)
-    issue("error", "shield-without-emitter", generators.map((r) => r.p.id), "Shield generators need an emitter");
+    issue(
+      "error",
+      "shield-without-emitter",
+      generators.map((r) => r.p.id),
+      "Shield generators need an emitter",
+    );
   if (emitters.length && !generators.length)
-    issue("warning", "emitter-without-generator", emitters.map((r) => r.p.id), "Shield emitters without a generator do nothing");
+    issue(
+      "warning",
+      "emitter-without-generator",
+      emitters.map((r) => r.p.id),
+      "Shield emitters without a generator do nothing",
+    );
   if (generators.length && emitters.length && shieldRadius < hull.lengthM / 2)
-    issue("warning", "shield-bubble-small", [], `Shield bubble ${shieldRadius} m does not cover half-length ${hull.lengthM / 2} m`);
+    issue(
+      "warning",
+      "shield-bubble-small",
+      [],
+      `Shield bubble ${shieldRadius} m does not cover half-length ${hull.lengthM / 2} m`,
+    );
 
   // Sensors and utility.
   const sensors = resolved.filter((r) => r.d.sensor);
   const tools = resolved.filter((r) => r.d.tool);
-  const toolSum = (k: string, f: (t: NonNullable<ShipComponentDefinition["tool"]>) => number) =>
-    sum(tools.filter((r) => r.d.tool!.kind === k), (r) => f(r.d.tool!));
-  const toolMax = (k: string, f: (t: NonNullable<ShipComponentDefinition["tool"]>) => number) =>
-    Math.max(0, ...tools.filter((r) => r.d.tool!.kind === k).map((r) => f(r.d.tool!)));
+  const toolSum = (
+    k: string,
+    f: (t: NonNullable<ShipComponentDefinition["tool"]>) => number,
+  ) =>
+    sum(
+      tools.filter((r) => r.d.tool!.kind === k),
+      (r) => f(r.d.tool!),
+    );
+  const toolMax = (
+    k: string,
+    f: (t: NonNullable<ShipComponentDefinition["tool"]>) => number,
+  ) =>
+    Math.max(
+      0,
+      ...tools.filter((r) => r.d.tool!.kind === k).map((r) => f(r.d.tool!)),
+    );
 
   // Propulsion: planar thrust by direction (future/vertical/jump excluded).
   const thrusters = resolved.filter(
-    (r) => r.d.propulsion && r.d.status !== "future" && (r.d.propulsion.role === "main" || r.d.propulsion.role === "maneuver"),
+    (r) =>
+      r.d.propulsion &&
+      r.d.status !== "future" &&
+      (r.d.propulsion.role === "main" || r.d.propulsion.role === "maneuver"),
   );
   let fwd = 0,
     rev = 0,
@@ -727,41 +1101,93 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
     revSupplied = 0,
     latSupplied = 0;
   for (const r of thrusters) {
-    const [fx, fy] = orientShipVector([0, 1, 0], r.p.quarterTurns, r.p.reflected);
+    const [fx, fy] = orientShipVector(
+      [0, 1, 0],
+      r.p.quarterTurns,
+      r.p.reflected,
+    );
     const t = r.d.propulsion!.thrustKn;
     const f = combat[r.p.id] ?? 1;
-    if (fy > 0.5) (fwd += t), (fwdSupplied += t * f);
-    if (fy < -0.5) (rev += t), (revSupplied += t * f);
-    if (fx > 0.5) (stb += t), (latSupplied += t * f * 0.5);
-    if (fx < -0.5) (prt += t), (latSupplied += t * f * 0.5);
+    if (fy > 0.5) ((fwd += t), (fwdSupplied += t * f));
+    if (fy < -0.5) ((rev += t), (revSupplied += t * f));
+    if (fx > 0.5) ((stb += t), (latSupplied += t * f * 0.5));
+    if (fx < -0.5) ((prt += t), (latSupplied += t * f * 0.5));
   }
   const tonnes = totalKg / 1000;
 
   // Networks (reported per channel island).
   const networks: ShipNetworkReport[] = [];
-  const channelRates: [ShipComponentChannel, (d: ShipComponentDefinition) => [number, number], string][] = [
-    ["power", (d) => [d.power.generationKw + (d.kind === "battery" ? d.power.maxDischargeKw : 0), d.power.activeKw], "kW"],
-    ["coolant", (d) => [d.fluids.coolantSupplyLps, d.fluids.coolantDemandLps], "L/s"],
-    ["fuel", (d) => [d.ports.find((p) => p.id === "fuel-out")?.capacity ?? 0, d.fluids.fuelActiveLps], "L/s"],
+  const channelRates: [
+    ShipComponentChannel,
+    (d: ShipComponentDefinition) => [number, number],
+    string,
+  ][] = [
+    [
+      "power",
+      (d) => [
+        d.power.generationKw +
+          (d.kind === "battery" ? d.power.maxDischargeKw : 0),
+        d.power.activeKw,
+      ],
+      "kW",
+    ],
+    [
+      "coolant",
+      (d) => [d.fluids.coolantSupplyLps, d.fluids.coolantDemandLps],
+      "L/s",
+    ],
+    [
+      "fuel",
+      (d) => [
+        d.ports.find((p) => p.id === "fuel-out")?.capacity ?? 0,
+        d.fluids.fuelActiveLps,
+      ],
+      "L/s",
+    ],
     ["data", (d) => [d.data.supplyKbps, d.data.demandKbps], "kbit/s"],
-    ["ventilation", (d) => [d.fluids.airSupplyM3s, d.ports.find((p) => p.id === "air-in")?.capacity ?? 0], "m3/s"],
+    [
+      "ventilation",
+      (d) => [
+        d.fluids.airSupplyM3s,
+        d.ports.find((p) => p.id === "air-in")?.capacity ?? 0,
+      ],
+      "m3/s",
+    ],
   ];
   for (const [ch, rate, unit] of channelRates) {
     const groups = new Map<string, Resolved[]>();
-    for (const r of resolved.filter((x) => x.d.ports.some((p) => p.channel === ch))) {
+    for (const r of resolved.filter((x) =>
+      x.d.ports.some((p) => p.channel === ch),
+    )) {
       const k = island(ch, r.p.id);
       groups.set(k, [...(groups.get(k) ?? []), r]);
     }
     for (const [, members] of [...groups].sort(([a], [b]) => order(a, b))) {
       const supply = sum(members, (r) => rate(r.d)[0]),
         demand = sum(members, (r) => rate(r.d)[1]);
-      networks.push({ channel: ch, members: members.map((r) => r.p.id), supply: r2(supply), demand: r2(demand), unit });
+      networks.push({
+        channel: ch,
+        members: members.map((r) => r.p.id),
+        supply: r2(supply),
+        demand: r2(demand),
+        unit,
+      });
       if (explicit && demand > 0 && supply === 0)
-        issue("error", "network-without-supply", members.map((r) => r.p.id), `${ch} network has consumers but no supply`);
+        issue(
+          "error",
+          "network-without-supply",
+          members.map((r) => r.p.id),
+          `${ch} network has consumers but no supply`,
+        );
     }
   }
 
-  issues.sort((a, b) => order(a.severity, b.severity) || order(a.code, b.code) || order(a.ids.join(","), b.ids.join(",")));
+  issues.sort(
+    (a, b) =>
+      order(a.severity, b.severity) ||
+      order(a.code, b.code) ||
+      order(a.ids.join(","), b.ids.join(",")),
+  );
   const status = issues.some((i) => i.severity === "error")
     ? "invalid"
     : issues.some((i) => i.severity === "warning")
@@ -787,7 +1213,8 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
       reverseAccel: tonnes > 0 ? r2(revSupplied / tonnes) : 0,
       lateralAccel: tonnes > 0 ? r2(latSupplied / tonnes) : 0,
       thrustToMassKnPerT: tonnes > 0 ? r2(fwd / tonnes) : 0,
-      mainEngines: thrusters.filter((r) => r.d.propulsion!.role === "main").length,
+      mainEngines: thrusters.filter((r) => r.d.propulsion!.role === "main")
+        .length,
     },
     power: {
       generationKw: r2(generationKw),
@@ -805,12 +1232,18 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
     },
     coolant: { supplyLps: r2(pumpLps), demandLps: r2(coolantDemand) },
     fuel: { capacityL: r2(capacityL), loadedL: r2(loadedL), modes: fuelModes },
-    data: { supplyKbps, demandKbps, controlSlots: slots, controlSlotsUsed: slotsUsed },
+    data: {
+      supplyKbps,
+      demandKbps,
+      controlSlots: slots,
+      controlSlotsUsed: slotsUsed,
+    },
     crew: {
       minimumCrew,
       berths,
       lifeSupportCrew,
-      oxygenReserveHours: minimumCrew > 0 ? r2(reserveHours / minimumCrew) : null,
+      oxygenReserveHours:
+        minimumCrew > 0 ? r2(reserveHours / minimumCrew) : null,
       stations,
     },
     weapons: {
@@ -822,12 +1255,22 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
     },
     defense: {
       shieldHp: sum(generators, (r) => r.d.shield!.capacityHp),
-      shieldRechargePerS: r2(sum(generators, (r) => r.d.shield!.rechargePerS * (combat[r.p.id] ?? 1))),
+      shieldRechargePerS: r2(
+        sum(
+          generators,
+          (r) => r.d.shield!.rechargePerS * (combat[r.p.id] ?? 1),
+        ),
+      ),
       shieldRadiusM: shieldRadius,
       armorPlates: resolved.filter((r) => r.d.armor).length,
     },
     sensors: {
-      maxRangeM: Math.max(0, ...sensors.filter((r) => r.d.sensor!.kind !== "relay").map((r) => r.d.sensor!.rangeM)),
+      maxRangeM: Math.max(
+        0,
+        ...sensors
+          .filter((r) => r.d.sensor!.kind !== "relay")
+          .map((r) => r.d.sensor!.rangeM),
+      ),
       radar360: sensors.some((r) => r.d.sensor!.kind === "radar"),
       commRangeM: Math.max(0, ...sensors.map((r) => r.d.sensor!.commRangeM)),
     },
@@ -838,9 +1281,15 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
       salvageKgPerS: r2(toolSum("salvage", (t) => t.rateKgPerS)),
       clampMaxMassKg: toolMax("clamp", (t) => t.maxTargetMassKg),
       drones: toolSum("drone-bay", (t) => t.drones),
-      cargoThroughputM3PerMin: r2(sum(resolved.filter((r) => r.d.access?.kind === "cargo-door"), (r) => r.d.access!.throughputM3PerMin)),
+      cargoThroughputM3PerMin: r2(
+        sum(
+          resolved.filter((r) => r.d.access?.kind === "cargo-door"),
+          (r) => r.d.access!.throughputM3PerMin,
+        ),
+      ),
       airlocks: resolved.filter((r) => r.d.access?.kind === "airlock").length,
-      dockingPorts: resolved.filter((r) => r.d.access?.kind === "docking-port").length,
+      dockingPorts: resolved.filter((r) => r.d.access?.kind === "docking-port")
+        .length,
       gravityAreaM2: sum(resolved, (r) => r.d.gravity?.areaM2 ?? 0),
     },
     economy: {
@@ -852,13 +1301,15 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
 }
 
 // ------------------------------------------------------------ flight adapter
-export const shipComponentFlightId = (componentId: string) => `component:${componentId}`;
+export const shipComponentFlightId = (componentId: string) =>
+  `component:${componentId}`;
 const hullFlightId = (hullId: string) => `hull:${hullId}`;
 const envelopeCentre = (d: ShipComponentDefinition): [number, number] => {
   const [lo, hi] = d.mount.envelopeM;
   return [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2];
 };
-const planarInertia = (m: number, w: number, l: number) => (m * (w * w + l * l)) / 12;
+const planarInertia = (m: number, w: number, l: number) =>
+  (m * (w * w + l * l)) / 12;
 
 /** Physical definitions for the generic flight compiler. Planar main and
  * maneuver thrusters become actuators (force along part +Y, nozzle at the
@@ -879,7 +1330,11 @@ export function shipComponentFlightCatalog(
       centroid: envelopeCentre(d),
       inertiaKgM2: r2(planarInertia(d.massKg, hi[0] - lo[0], hi[1] - lo[1])),
     };
-    if (d.propulsion && (d.propulsion.role === "main" || d.propulsion.role === "maneuver") && d.propulsion.thrustKn > 0) {
+    if (
+      d.propulsion &&
+      (d.propulsion.role === "main" || d.propulsion.role === "maneuver") &&
+      d.propulsion.thrustKn > 0
+    ) {
       const a: ActuatorDefinition = {
         ...base,
         kind: "actuator",
@@ -909,10 +1364,16 @@ export function shipComponentFlightCatalog(
     centroid: [0, 0],
     inertiaKgM2: r2(planarInertia(hull.massKg, hull.beamM, hull.lengthM)),
   });
-  return { id: `${catalog.id}.${hull.id}`, revision: catalog.revision, definitions };
+  return {
+    id: `${catalog.id}.${hull.id}`,
+    revision: catalog.revision,
+    definitions,
+  };
 }
 
-export function shipComponentFlightHull(hull: ShipHullSystemsProfile): FlightHullDefinition {
+export function shipComponentFlightHull(
+  hull: ShipHullSystemsProfile,
+): FlightHullDefinition {
   const radius = hull.beamM / 2;
   return {
     id: `${hull.id}-capsule`,
@@ -965,7 +1426,11 @@ export function shipComponentFlightInput(
       const c: ShipVec3 = [cx, cy, (lo[2] + hi[2]) / 2];
       const actual = shipPartToShip(p, c, { definition: d, socket });
       const naive = shipPartToShip(p, c);
-      position = [p.position[0] + actual[0] - naive[0], p.position[1] + actual[1] - naive[1], p.position[2]];
+      position = [
+        p.position[0] + actual[0] - naive[0],
+        p.position[1] + actual[1] - naive[1],
+        p.position[2],
+      ];
     }
     parts.push({
       id: p.id,
@@ -975,7 +1440,9 @@ export function shipComponentFlightInput(
       rotation: (p.quarterTurns * Math.PI) / 2,
       flipped: p.reflected,
     });
-    const flightDef = catalog.definitions.find((x) => x.id === shipComponentFlightId(d.id));
+    const flightDef = catalog.definitions.find(
+      (x) => x.id === shipComponentFlightId(d.id),
+    );
     const fraction = report.power.modes[mode].supply[p.id] ?? 1;
     if (flightDef?.kind === "actuator" || flightDef?.kind === "computer") {
       const fitId = `fit:${p.id}`;
@@ -988,13 +1455,18 @@ export function shipComponentFlightInput(
         powered: fraction > 0,
         availability: 1,
       });
-      if (flightDef.kind === "actuator") supply[fitId] = Math.min(1, Math.max(0, fraction));
+      if (flightDef.kind === "actuator")
+        supply[fitId] = Math.min(1, Math.max(0, fraction));
     }
     const contents =
       d.fluids.fuelCapacityL * fuelFraction * SHIP_THERMAL_MODEL.fuelKgPerL +
       (d.magazine?.capacityKg ?? 0) * ammoFraction;
     if (contents > 0)
-      cargo.push({ containerId: `contents:${p.id}`, massKg: r2(contents), position: [p.position[0], p.position[1]] });
+      cargo.push({
+        containerId: `contents:${p.id}`,
+        massKg: r2(contents),
+        position: [p.position[0], p.position[1]],
+      });
   }
   return {
     parts,
@@ -1017,12 +1489,24 @@ export function autoWireShipComponents(
   catalog: ShipComponentCatalog,
   hull: ShipHullSystemsProfile,
   components: readonly ShipComponentPlacement[],
-  channels: readonly ShipComponentChannel[] = ["power", "data", "coolant", "fuel", "ventilation"],
+  channels: readonly ShipComponentChannel[] = [
+    "power",
+    "data",
+    "coolant",
+    "fuel",
+    "ventilation",
+  ],
 ): ShipComponentConnection[] {
-  if (components.length > SHIP_SYSTEMS_LIMITS.components) throw new Error("Ship systems input budget exceeded");
+  if (components.length > SHIP_SYSTEMS_LIMITS.components)
+    throw new Error("Ship systems input budget exceeded");
   const defs = new Map(catalog.components.map((c) => [c.id, c]));
   const sockets = new Map(hull.hardpoints.map((h) => [h.id, h.socket]));
-  type End = { p: ShipComponentPlacement; d: ShipComponentDefinition; port: ShipComponentPort; at: [number, number, number] };
+  type End = {
+    p: ShipComponentPlacement;
+    d: ShipComponentDefinition;
+    port: ShipComponentPort;
+    at: [number, number, number];
+  };
   /** Primary suppliers are tried before flow-through outlets (loop returns). */
   const primary = (d: ShipComponentDefinition, ch: ShipComponentChannel) =>
     ch === "power"
@@ -1043,17 +1527,34 @@ export function autoWireShipComponents(
     const socket = p.hardpointId ? sockets.get(p.hardpointId) : undefined;
     for (const port of d.ports)
       if (channels.includes(port.channel) && !port.id.startsWith("shore-"))
-        ends.push({ p, d, port, at: placedShipPort(p, port, socket ? { definition: d, socket } : undefined).position });
+        ends.push({
+          p,
+          d,
+          port,
+          at: placedShipPort(
+            p,
+            port,
+            socket ? { definition: d, socket } : undefined,
+          ).position,
+        });
   }
   const out: ShipComponentConnection[] = [];
   const load = new Map<string, number>();
   for (const sink of ends.filter((e) => e.port.direction === "in")) {
     const candidates = ends
-      .filter((e) => e.p.id !== sink.p.id && shipPortsCompatible(e.port, sink.port).ok)
+      .filter(
+        (e) =>
+          e.p.id !== sink.p.id && shipPortsCompatible(e.port, sink.port).ok,
+      )
       .map((e) => {
         const key = `${e.p.id}:${e.port.id}`;
-        const spare = e.port.capacity - (load.get(key) ?? 0) >= sink.port.capacity - 1e-9;
-        const dist = Math.hypot(e.at[0] - sink.at[0], e.at[1] - sink.at[1], e.at[2] - sink.at[2]);
+        const spare =
+          e.port.capacity - (load.get(key) ?? 0) >= sink.port.capacity - 1e-9;
+        const dist = Math.hypot(
+          e.at[0] - sink.at[0],
+          e.at[1] - sink.at[1],
+          e.at[2] - sink.at[2],
+        );
         return { e, key, spare, dist, main: primary(e.d, e.port.channel) };
       })
       .sort(
@@ -1098,7 +1599,11 @@ export function shipComponentServicePorts(
       id: `${placement.id}:${port.id}`,
       kind: "port",
       definitionId: definition.id,
-      position: position.map((v) => Math.round(v * 32)) as [number, number, number],
+      position: position.map((v) => Math.round(v * 32)) as [
+        number,
+        number,
+        number,
+      ],
       regionId: location.regionId,
       deckId: location.deckId,
       channel: port.channel,

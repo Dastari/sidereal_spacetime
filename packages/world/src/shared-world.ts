@@ -388,9 +388,12 @@ export function joinSharedSystem(
     "Legacy body",
   );
   const aliases: LegacyAliasRow[] = legacy.map((body) => {
-    const canonical = body.kind === 'asteroid'
-      ? SHARED_SYSTEM_SEED.bodies.find(candidate => candidate.key === body.key)
-      : solarBodyForLegacyKey(body.key);
+    const canonical =
+      body.kind === "asteroid"
+        ? SHARED_SYSTEM_SEED.bodies.find(
+            (candidate) => candidate.key === body.key,
+          )
+        : solarBodyForLegacyKey(body.key);
     if (!canonical || body.kind !== canonical.kind)
       throw new SenderError("Legacy body requires explicit canonical mapping");
     if (ctx.db.legacyBodyAlias.legacyBodyId.find(body.id))

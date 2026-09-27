@@ -144,7 +144,10 @@ export const REFERENCE_FIT_MD_CORVETTE: ShipComponentFit = fit(
     [hp("rcs-as", "face", "MD", 5, -6.5, 1.75, FACE.starboard), "rcs.md"],
     [hp("rcs-np", "face", "MD", -2, 11, 1.75, FACE.front), "rcs.md"],
     [hp("rcs-ns", "face", "MD", 2, 11, 1.75, FACE.front), "rcs.md"],
-    [hp("retro-p", "face", "SM", -3.5, 11, 1.75, FACE.front), "thrust-block.sm"],
+    [
+      hp("retro-p", "face", "SM", -3.5, 11, 1.75, FACE.front),
+      "thrust-block.sm",
+    ],
     [hp("retro-s", "face", "SM", 3.5, 11, 1.75, FACE.front), "thrust-block.sm"],
     [hp("turret-f", "top", "MD", 0, 6, 3.5), "autocannon.md"],
     [hp("turret-a", "top", "MD", 0, -3, 3.5), "laser-cannon.md"],
@@ -205,8 +208,14 @@ export const REFERENCE_FIT_LG_FRIGATE: ShipComponentFit = fit(
     [hp("pod-p", "rear", "MD", -7, -20, 3.5, FACE.rear), "thrust-block.md"],
     [hp("pod-s", "rear", "MD", 7, -20, 3.5, FACE.rear), "thrust-block.md"],
     ...([-12, -4, 4, 12] as const).flatMap((y, n) => [
-      [hp(`rcs-p${n}`, "face", "MD", -8, y, 3.5, FACE.port), "rcs.md"] as [ShipHardpoint, string],
-      [hp(`rcs-s${n}`, "face", "MD", 8, y, 3.5, FACE.starboard), "rcs.md"] as [ShipHardpoint, string],
+      [hp(`rcs-p${n}`, "face", "MD", -8, y, 3.5, FACE.port), "rcs.md"] as [
+        ShipHardpoint,
+        string,
+      ],
+      [hp(`rcs-s${n}`, "face", "MD", 8, y, 3.5, FACE.starboard), "rcs.md"] as [
+        ShipHardpoint,
+        string,
+      ],
     ]),
     [hp("rcs-np", "face", "MD", -3, 20, 3.5, FACE.front), "rcs.md"],
     [hp("rcs-ns", "face", "MD", 3, 20, 3.5, FACE.front), "rcs.md"],
@@ -234,7 +243,10 @@ export const REFERENCE_FIT_LG_FRIGATE: ShipComponentFit = fit(
     [hp("rad-s3", "top", "MD", 6, 12, 7), "radiator.md"],
     [hp("cargo", "edge", "LG", -8, -10, 0, FACE.port), "cargo-door.6m"],
     [hp("lock-p", "edge", "SM", -8, 8, 0, FACE.port), "airlock.exterior.md"],
-    [hp("lock-s", "edge", "SM", 8, 8, 0, FACE.starboard), "airlock.exterior.md"],
+    [
+      hp("lock-s", "edge", "SM", 8, 8, 0, FACE.starboard),
+      "airlock.exterior.md",
+    ],
     [hp("dock", "edge", "SM", 8, -10, 0, FACE.starboard), "docking-port.md"],
   ],
   [

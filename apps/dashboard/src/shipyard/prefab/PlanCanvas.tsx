@@ -227,7 +227,6 @@ function PlanCanvas({
     if (fitted.current === doc.id && !autoFit.current) return;
     fitted.current = doc.id;
     fit();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [doc.id, size.w, size.h]);
 
   useEffect(() => {
@@ -435,14 +434,12 @@ function PlanCanvas({
       default:
         return null;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hoverKey, tools, shown, geoms, stroke, catalog, spec, mirror]);
   const hovered = useMemo(
     () =>
       tools.tool === "select" && hover && !stroke
         ? hitTest(shown, catalog, geoms, hover, layers, 6 / view.s, undefined)
         : null,
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [hoverKey, tools.tool, shown, geoms, layers, stroke, view.s],
   );
 

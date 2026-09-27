@@ -10,7 +10,10 @@ import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Color4 } from "@babylonjs/core/Maths/math.color";
-import type { PrefabComponentCatalog, ShipPrefabDocumentV1 } from "@sidereal/content/ship-prefab";
+import type {
+  PrefabComponentCatalog,
+  ShipPrefabDocumentV1,
+} from "@sidereal/content/ship-prefab";
 import { prefabStats } from "@sidereal/content/ship-prefab";
 import { useEffect, useRef, useState } from "react";
 import { mountEditorCanvas } from "../../editor/mountEditorCanvas";
@@ -24,12 +27,28 @@ async function loadShipView(): Promise<ShipViewModule> {
   return import("@sidereal/render/prefab-ship");
 }
 
-export default function PreviewPanel({ doc, catalog, mode, onMode }: { doc: Doc; catalog: PrefabComponentCatalog; mode: PreviewMode; onMode: (m: PreviewMode) => void }) {
+export default function PreviewPanel({
+  doc,
+  catalog,
+  mode,
+  onMode,
+}: {
+  doc: Doc;
+  catalog: PrefabComponentCatalog;
+  mode: PreviewMode;
+  onMode: (m: PreviewMode) => void;
+}) {
   const host = useRef<HTMLDivElement>(null);
   const [status, setStatus] = useState("Starting the 3D preview");
   const [failed, setFailed] = useState(false);
   const [metrics, setMetrics] = useState("");
-  const ctx = useRef<{ scene: Scene; camera: ArcRotateCamera; view: ShipView | null; busy: Promise<void>; disposed: boolean } | null>(null);
+  const ctx = useRef<{
+    scene: Scene;
+    camera: ArcRotateCamera;
+    view: ShipView | null;
+    busy: Promise<void>;
+    disposed: boolean;
+  } | null>(null);
   const latest = useRef(doc);
   latest.current = doc;
 
@@ -39,26 +58,52 @@ export default function PreviewPanel({ doc, catalog, mode, onMode }: { doc: Doc;
     const canvas = mountEditorCanvas(el, "3D prefab ship preview");
     let engine: Engine;
     try {
-      engine = new Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+      engine = new Engine(canvas, true, {
+        preserveDrawingBuffer: true,
+        stencil: true,
+      });
     } catch (e) {
       setFailed(true);
-      setStatus(`WebGL is unavailable here: ${String(e instanceof Error ? e.message : e)}`);
+      setStatus(
+        `WebGL is unavailable here: ${String(e instanceof Error ? e.message : e)}`,
+      );
       canvas.remove();
       return;
     }
     const scene = new Scene(engine);
     scene.useRightHandedSystem = true;
     scene.clearColor = new Color4(0.03, 0.07, 0.1, 1);
-    const camera = new ArcRotateCamera("prefab-preview-camera", -Math.PI / 3, Math.PI / 3.2, 40, Vector3.Zero(), scene);
+    const camera = new ArcRotateCamera(
+      "prefab-preview-camera",
+      -Math.PI / 3,
+      Math.PI / 3.2,
+      40,
+      Vector3.Zero(),
+      scene,
+    );
     camera.minZ = 0.05;
     camera.maxZ = 2000;
     camera.lowerRadiusLimit = 3;
     camera.upperRadiusLimit = 400;
     camera.wheelDeltaPercentage = 0.01;
     camera.attachControl(canvas, true);
-    new HemisphericLight("prefab-fill", new Vector3(0.2, 1, 0.1), scene).intensity = 0.9;
-    new DirectionalLight("prefab-key", new Vector3(-0.5, -1, 0.35), scene).intensity = 2.2;
-    const state = { scene, camera, view: null as ShipView | null, busy: Promise.resolve(), disposed: false };
+    new HemisphericLight(
+      "prefab-fill",
+      new Vector3(0.2, 1, 0.1),
+      scene,
+    ).intensity = 0.9;
+    new DirectionalLight(
+      "prefab-key",
+      new Vector3(-0.5, -1, 0.35),
+      scene,
+    ).intensity = 2.2;
+    const state = {
+      scene,
+      camera,
+      view: null as ShipView | null,
+      busy: Promise.resolve(),
+      disposed: false,
+    };
     ctx.current = state;
     engine.runRenderLoop(() => scene.render());
     const resize = new ResizeObserver(() => engine.resize());
@@ -71,7 +116,10 @@ export default function PreviewPanel({ doc, catalog, mode, onMode }: { doc: Doc;
     loadShipView()
       .then(async (mod) => {
         if (state.disposed) return;
-        const view = await mod.createPrefabShipView(scene, latest.current, { catalog, view: mode });
+        const view = await mod.createPrefabShipView(scene, latest.current, {
+          catalog,
+          view: mode,
+        });
         if (state.disposed) return view.dispose();
         state.view = view;
         frame(latest.current);
@@ -81,7 +129,9 @@ export default function PreviewPanel({ doc, catalog, mode, onMode }: { doc: Doc;
       .catch((e) => {
         if (state.disposed) return;
         setFailed(true);
-        setStatus(`The 3D ship view is not available yet: ${String(e instanceof Error ? e.message : e)}`);
+        setStatus(
+          `The 3D ship view is not available yet: ${String(e instanceof Error ? e.message : e)}`,
+        );
       });
     return () => {
       state.disposed = true;
@@ -94,7 +144,6 @@ export default function PreviewPanel({ doc, catalog, mode, onMode }: { doc: Doc;
       ctx.current = null;
     };
     // One engine per mounted panel; document and view changes go through update/setView.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [catalog]);
 
   // Debounced document updates, serialised so rebuilds never overlap.
@@ -110,7 +159,11 @@ export default function PreviewPanel({ doc, catalog, mode, onMode }: { doc: Doc;
           setStatus("");
           setMetrics(describe(c.view));
         })
-        .catch((e) => setStatus(`Preview update failed: ${String(e instanceof Error ? e.message : e)}`));
+        .catch((e) =>
+          setStatus(
+            `Preview update failed: ${String(e instanceof Error ? e.message : e)}`,
+          ),
+        );
     }, 250);
     return () => window.clearTimeout(t);
   }, [doc]);
@@ -126,9 +179,18 @@ export default function PreviewPanel({ doc, catalog, mode, onMode }: { doc: Doc;
     <section className="prefab-preview" aria-label="3D preview">
       <header>
         <strong>3D preview</strong>
-        <div className="pf-segmented" role="radiogroup" aria-label="Preview view">
+        <div
+          className="pf-segmented"
+          role="radiogroup"
+          aria-label="Preview view"
+        >
           {(["flight", "deck"] as const).map((m) => (
-            <button key={m} role="radio" aria-checked={mode === m} onClick={() => onMode(m)}>
+            <button
+              key={m}
+              role="radio"
+              aria-checked={mode === m}
+              onClick={() => onMode(m)}
+            >
               {m === "flight" ? "Flight" : "Deck"}
             </button>
           ))}
@@ -137,7 +199,10 @@ export default function PreviewPanel({ doc, catalog, mode, onMode }: { doc: Doc;
       </header>
       <div className="prefab-preview-canvas" ref={host}>
         {status && (
-          <p className={`prefab-preview-status${failed ? " failed" : ""}`} role="status">
+          <p
+            className={`prefab-preview-status${failed ? " failed" : ""}`}
+            role="status"
+          >
             {status}
           </p>
         )}

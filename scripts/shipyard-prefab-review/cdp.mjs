@@ -1,20 +1,38 @@
 // Minimal raw-CDP helper for driving the dashboard (no playwright dependency).
 import { spawn } from "node:child_process";
-import { existsSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import {
+  existsSync,
+  mkdtempSync,
+  readdirSync,
+  rmSync,
+  writeFileSync,
+} from "node:fs";
 import { join } from "node:path";
 
 export const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function chromium() {
   const base = join(process.env.HOME ?? "/root", ".cache/ms-playwright");
-  for (const dir of readdirSync(base).filter((d) => d.startsWith("chromium_headless_shell")).sort().reverse()) {
-    const bin = join(base, dir, "chrome-headless-shell-linux64/chrome-headless-shell");
+  for (const dir of readdirSync(base)
+    .filter((d) => d.startsWith("chromium_headless_shell"))
+    .sort()
+    .reverse()) {
+    const bin = join(
+      base,
+      dir,
+      "chrome-headless-shell-linux64/chrome-headless-shell",
+    );
     if (existsSync(bin)) return bin;
   }
   throw Error("No chrome-headless-shell");
 }
 
-export async function launch({ W = 1600, H = 900, profileRoot = process.env.REVIEW_PROFILE_ROOT ?? "output/shipyard-prefab-review" } = {}) {
+export async function launch({
+  W = 1600,
+  H = 900,
+  profileRoot = process.env.REVIEW_PROFILE_ROOT ??
+    "output/shipyard-prefab-review",
+} = {}) {
   const profile = mkdtempSync(join(profileRoot, "chrome-"));
   const chrome = spawn(
     chromium(),
@@ -70,23 +88,48 @@ export async function launch({ W = 1600, H = 900, profileRoot = process.env.REVI
       pending.set(mid, { ok, fail });
       ws.send(JSON.stringify({ id: mid, method, params, sessionId }));
     });
-  const { targetId } = await send("Target.createTarget", { url: "about:blank" });
-  const { sessionId } = await send("Target.attachToTarget", { targetId, flatten: true });
+  const { targetId } = await send("Target.createTarget", {
+    url: "about:blank",
+  });
+  const { sessionId } = await send("Target.attachToTarget", {
+    targetId,
+    flatten: true,
+  });
   const page = (m, p) => send(m, p, sessionId);
   const logs = [];
   listeners.push((msg) => {
     if (msg.sessionId !== sessionId) return;
-    if (msg.method === "Runtime.consoleAPICalled" && ["warning", "error"].includes(msg.params.type))
-      logs.push(`${msg.params.type}: ${msg.params.args.map((a) => a.value ?? a.description ?? "").join(" ")}`);
-    if (msg.method === "Runtime.exceptionThrown") logs.push(`exception: ${msg.params.exceptionDetails?.exception?.description ?? msg.params.exceptionDetails?.text}`);
+    if (
+      msg.method === "Runtime.consoleAPICalled" &&
+      ["warning", "error"].includes(msg.params.type)
+    )
+      logs.push(
+        `${msg.params.type}: ${msg.params.args.map((a) => a.value ?? a.description ?? "").join(" ")}`,
+      );
+    if (msg.method === "Runtime.exceptionThrown")
+      logs.push(
+        `exception: ${msg.params.exceptionDetails?.exception?.description ?? msg.params.exceptionDetails?.text}`,
+      );
   });
   await page("Runtime.enable");
   await page("Page.enable");
-  await page("Emulation.setDeviceMetricsOverride", { width: W, height: H, deviceScaleFactor: 1, mobile: false });
+  await page("Emulation.setDeviceMetricsOverride", {
+    width: W,
+    height: H,
+    deviceScaleFactor: 1,
+    mobile: false,
+  });
 
   const evaluate = async (expression) => {
-    const r = await page("Runtime.evaluate", { expression, returnByValue: true, awaitPromise: true });
-    if (r.exceptionDetails) throw Error(r.exceptionDetails.exception?.description ?? r.exceptionDetails.text);
+    const r = await page("Runtime.evaluate", {
+      expression,
+      returnByValue: true,
+      awaitPromise: true,
+    });
+    if (r.exceptionDetails)
+      throw Error(
+        r.exceptionDetails.exception?.description ?? r.exceptionDetails.text,
+      );
     return r.result.value;
   };
   const waitFor = async (expression, timeout = 120000) => {
@@ -102,8 +145,23 @@ export async function launch({ W = 1600, H = 900, profileRoot = process.env.REVI
     throw Error(`timeout waiting for ${expression}`);
   };
   const mouse = async (type, x, y, extra = {}) =>
-    page("Input.dispatchMouseEvent", { type, x, y, button: "left", buttons: type === "mouseReleased" ? 0 : 1, clickCount: 1, ...extra });
-  const move = (x, y) => page("Input.dispatchMouseEvent", { type: "mouseMoved", x, y, button: "none", buttons: 0 });
+    page("Input.dispatchMouseEvent", {
+      type,
+      x,
+      y,
+      button: "left",
+      buttons: type === "mouseReleased" ? 0 : 1,
+      clickCount: 1,
+      ...extra,
+    });
+  const move = (x, y) =>
+    page("Input.dispatchMouseEvent", {
+      type: "mouseMoved",
+      x,
+      y,
+      button: "none",
+      buttons: 0,
+    });
   const click = async (x, y) => {
     await move(x, y);
     await mouse("mousePressed", x, y);
@@ -113,15 +171,31 @@ export async function launch({ W = 1600, H = 900, profileRoot = process.env.REVI
     await move(pts[0][0], pts[0][1]);
     await mouse("mousePressed", pts[0][0], pts[0][1]);
     for (const p of pts.slice(1)) {
-      await page("Input.dispatchMouseEvent", { type: "mouseMoved", x: p[0], y: p[1], button: "left", buttons: 1 });
+      await page("Input.dispatchMouseEvent", {
+        type: "mouseMoved",
+        x: p[0],
+        y: p[1],
+        button: "left",
+        buttons: 1,
+      });
       await sleep(40);
     }
     const last = pts[pts.length - 1];
     await mouse("mouseReleased", last[0], last[1]);
   };
   const key = async (k, code = k, extra = {}) => {
-    await page("Input.dispatchKeyEvent", { type: "keyDown", key: k, code, ...extra });
-    await page("Input.dispatchKeyEvent", { type: "keyUp", key: k, code, ...extra });
+    await page("Input.dispatchKeyEvent", {
+      type: "keyDown",
+      key: k,
+      code,
+      ...extra,
+    });
+    await page("Input.dispatchKeyEvent", {
+      type: "keyUp",
+      key: k,
+      code,
+      ...extra,
+    });
   };
   const shot = async (file) => {
     const s = await page("Page.captureScreenshot", { format: "png" });
@@ -144,5 +218,18 @@ export async function launch({ W = 1600, H = 900, profileRoot = process.env.REVI
       /* ignore */
     }
   };
-  return { page, evaluate, waitFor, mouse, move, click, drag, key, shot, worldToScreen, close, logs };
+  return {
+    page,
+    evaluate,
+    waitFor,
+    mouse,
+    move,
+    click,
+    drag,
+    key,
+    shot,
+    worldToScreen,
+    close,
+    logs,
+  };
 }

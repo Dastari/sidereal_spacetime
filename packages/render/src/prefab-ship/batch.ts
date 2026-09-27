@@ -45,8 +45,18 @@ export function appendTransformed(
   // A mirrored transform flips winding; keep front faces outward.
   const flip = M.determinant() < 0;
   for (let i = 0; i < indices.length; i += 3) {
-    if (flip) group.indices.push(base + indices[i], base + indices[i + 2], base + indices[i + 1]);
-    else group.indices.push(base + indices[i], base + indices[i + 1], base + indices[i + 2]);
+    if (flip)
+      group.indices.push(
+        base + indices[i],
+        base + indices[i + 2],
+        base + indices[i + 1],
+      );
+    else
+      group.indices.push(
+        base + indices[i],
+        base + indices[i + 1],
+        base + indices[i + 2],
+      );
   }
 }
 
@@ -62,7 +72,9 @@ export function meshGeometry(mesh: Mesh) {
 /** Matrix taking `mesh` local space into its parent's space. */
 export function localToParent(mesh: Mesh): Float32Array {
   const world = mesh.computeWorldMatrix(true);
-  const parent = mesh.parent ? (mesh.parent as Mesh).computeWorldMatrix(true) : Matrix.Identity();
+  const parent = mesh.parent
+    ? (mesh.parent as Mesh).computeWorldMatrix(true)
+    : Matrix.Identity();
   const inv = new Matrix();
   parent.invertToRef(inv);
   return world.multiply(inv).toArray() as Float32Array;

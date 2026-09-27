@@ -14,7 +14,13 @@ import {
 import type { BlueprintSizeClassId } from "@sidereal/content/construction-grammar";
 import type { ShipThemeId } from "@sidereal/content/ship-prefab";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { applyCommand, createHistory, redo as redoHistory, undo as undoHistory, type History } from "./history";
+import {
+  applyCommand,
+  createHistory,
+  redo as redoHistory,
+  undo as undoHistory,
+  type History,
+} from "./history";
 
 type Doc = ShipPrefabDocumentV1;
 
@@ -46,8 +52,15 @@ function storage(): Storage | null {
 function looksLikePrefab(v: unknown): v is Doc {
   const d = v as Doc;
   return (
-    !!d && typeof d === "object" && typeof d.id === "string" && Array.isArray(d.volumes) && Array.isArray(d.rooms) &&
-    Array.isArray(d.edges) && Array.isArray(d.mounts) && Array.isArray(d.skylights) && !!d.markings
+    !!d &&
+    typeof d === "object" &&
+    typeof d.id === "string" &&
+    Array.isArray(d.volumes) &&
+    Array.isArray(d.rooms) &&
+    Array.isArray(d.edges) &&
+    Array.isArray(d.mounts) &&
+    Array.isArray(d.skylights) &&
+    !!d.markings
   );
 }
 
@@ -55,7 +68,8 @@ export function readDraftRecord(raw: string | null): DraftRecord | null {
   if (!raw) return null;
   try {
     const r = JSON.parse(raw) as DraftRecord;
-    if (r?.schema !== "sidereal.prefab-draft.v1" || !looksLikePrefab(r.doc)) return null;
+    if (r?.schema !== "sidereal.prefab-draft.v1" || !looksLikePrefab(r.doc))
+      return null;
     let doc: Doc = r.doc;
     try {
       doc = readShipPrefab(r.doc);
@@ -83,9 +97,14 @@ export function listDrafts(): DraftRecord[] {
 
 export function writeDraft(doc: Doc): string {
   const savedAt = new Date().toISOString();
-  const record: DraftRecord = { schema: "sidereal.prefab-draft.v1", savedAt, doc };
+  const record: DraftRecord = {
+    schema: "sidereal.prefab-draft.v1",
+    savedAt,
+    doc,
+  };
   const json = JSON.stringify(record);
-  if (json.length > SHIP_PREFAB_LIMITS.bytes * 2) throw Error("Draft exceeds the prefab size limit");
+  if (json.length > SHIP_PREFAB_LIMITS.bytes * 2)
+    throw Error("Draft exceeds the prefab size limit");
   storage()?.setItem(DRAFT_PREFIX + doc.id, json);
   return savedAt;
 }
@@ -97,9 +116,21 @@ export function deleteDraftRecord(id: string) {
 export function buildLibrary(drafts: readonly DraftRecord[]): LibraryEntry[] {
   const out: LibraryEntry[] = PREFAB_SHIPS.map((t) => {
     const d = drafts.find((x) => x.doc.id === t.id);
-    return { id: t.id, doc: d?.doc ?? t, template: t, draft: d ? { savedAt: d.savedAt, doc: d.doc } : null };
+    return {
+      id: t.id,
+      doc: d?.doc ?? t,
+      template: t,
+      draft: d ? { savedAt: d.savedAt, doc: d.doc } : null,
+    };
   });
-  for (const d of drafts) if (!prefabById(d.doc.id)) out.push({ id: d.doc.id, doc: d.doc, template: null, draft: { savedAt: d.savedAt, doc: d.doc } });
+  for (const d of drafts)
+    if (!prefabById(d.doc.id))
+      out.push({
+        id: d.doc.id,
+        doc: d.doc,
+        template: null,
+        draft: { savedAt: d.savedAt, doc: d.doc },
+      });
   return out;
 }
 
@@ -129,14 +160,17 @@ export function usePrefabDocument() {
   const library = useMemo(() => buildLibrary(drafts), [drafts]);
   const refresh = useCallback(() => setDrafts(listDrafts()), []);
 
-  const openDoc = useCallback((doc: Doc, options: { push?: boolean; draftSavedAt?: string } = {}) => {
-    loaded.current = doc;
-    setHist(createHistory(doc));
-    setSaveState(options.draftSavedAt ? "saved" : "template");
-    setSavedAt(options.draftSavedAt ?? "");
-    setError("");
-    writeQuery(doc.id, options.push ?? true);
-  }, []);
+  const openDoc = useCallback(
+    (doc: Doc, options: { push?: boolean; draftSavedAt?: string } = {}) => {
+      loaded.current = doc;
+      setHist(createHistory(doc));
+      setSaveState(options.draftSavedAt ? "saved" : "template");
+      setSavedAt(options.draftSavedAt ?? "");
+      setError("");
+      writeQuery(doc.id, options.push ?? true);
+    },
+    [],
+  );
 
   const open = useCallback(
     (id: string, push = true) => {
@@ -173,12 +207,22 @@ export function usePrefabDocument() {
     sync();
     window.addEventListener("popstate", sync);
     return () => window.removeEventListener("popstate", sync);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const commit = useCallback((label: string, next: Doc | ((doc: Doc) => Doc)) => {
-    setHist((h) => (h ? applyCommand(h, label, typeof next === "function" ? next(h.present) : next) : h));
-  }, []);
+  const commit = useCallback(
+    (label: string, next: Doc | ((doc: Doc) => Doc)) => {
+      setHist((h) =>
+        h
+          ? applyCommand(
+              h,
+              label,
+              typeof next === "function" ? next(h.present) : next,
+            )
+          : h,
+      );
+    },
+    [],
+  );
   const undo = useCallback(() => setHist((h) => (h ? undoHistory(h) : h)), []);
   const redo = useCallback(() => setHist((h) => (h ? redoHistory(h) : h)), []);
 
@@ -193,7 +237,9 @@ export function usePrefabDocument() {
         setError("");
       } catch (e) {
         setSaveState("error");
-        setError(`Draft not saved: ${String(e instanceof Error ? e.message : e)}`);
+        setError(
+          `Draft not saved: ${String(e instanceof Error ? e.message : e)}`,
+        );
       }
     },
     [doc],
@@ -210,13 +256,28 @@ export function usePrefabDocument() {
     return () => window.clearTimeout(t);
   }, [doc, saveNow, refresh]);
 
-  const idTaken = useCallback((id: string) => !!prefabById(id) || listDrafts().some((d) => d.doc.id === id), []);
+  const idTaken = useCallback(
+    (id: string) =>
+      !!prefabById(id) || listDrafts().some((d) => d.doc.id === id),
+    [],
+  );
 
   const create = useCallback(
-    (input: { id: string; name: string; sizeClass: BlueprintSizeClassId; theme: ShipThemeId }) => {
-      if (!ID.test(input.id)) return "Use lower-case letters, digits, dots and dashes for the id";
+    (input: {
+      id: string;
+      name: string;
+      sizeClass: BlueprintSizeClassId;
+      theme: ShipThemeId;
+    }) => {
+      if (!ID.test(input.id))
+        return "Use lower-case letters, digits, dots and dashes for the id";
       if (idTaken(input.id)) return `${input.id} is already in the library`;
-      const doc = blankShipPrefab(input.id, input.name, input.sizeClass, input.theme);
+      const doc = blankShipPrefab(
+        input.id,
+        input.name,
+        input.sizeClass,
+        input.theme,
+      );
       try {
         readShipPrefab(doc);
       } catch (e) {
@@ -258,8 +319,10 @@ export function usePrefabDocument() {
   const changeId = useCallback(
     (id: string) => {
       if (!doc) return "No document";
-      if (!ID.test(id)) return "Use lower-case letters, digits, dots and dashes for the id";
-      if (id !== doc.id && idTaken(id)) return `${id} is already in the library`;
+      if (!ID.test(id))
+        return "Use lower-case letters, digits, dots and dashes for the id";
+      if (id !== doc.id && idTaken(id))
+        return `${id} is already in the library`;
       const previous = doc.id;
       const next = { ...doc, id };
       setHist((h) => (h ? applyCommand(h, "Change id", next) : h));
@@ -279,7 +342,8 @@ export function usePrefabDocument() {
       refresh();
       if (doc?.id === id) {
         const template = prefabById(id);
-        if (template) openDoc(structuredClone(template) as Doc, { push: false });
+        if (template)
+          openDoc(structuredClone(template) as Doc, { push: false });
         else close();
       }
     },
@@ -289,7 +353,8 @@ export function usePrefabDocument() {
   const revertToTemplate = useCallback(() => {
     if (!doc) return;
     const template = prefabById(doc.id);
-    if (template) commit("Revert to template", structuredClone(template) as Doc);
+    if (template)
+      commit("Revert to template", structuredClone(template) as Doc);
   }, [doc, commit]);
 
   const importJson = useCallback(
@@ -300,16 +365,23 @@ export function usePrefabDocument() {
       } catch (e) {
         return `Import refused: ${String(e instanceof Error ? e.message : e)}`;
       }
-      const next = idTaken(parsed.id) ? { ...parsed, id: freeId(parsed.id) } : parsed;
+      const next = idTaken(parsed.id)
+        ? { ...parsed, id: freeId(parsed.id) }
+        : parsed;
       openDoc(next);
       saveNow(next);
       refresh();
-      return next.id === parsed.id ? null : `Imported as ${next.id}; ${parsed.id} is already in the library`;
+      return next.id === parsed.id
+        ? null
+        : `Imported as ${next.id}; ${parsed.id} is already in the library`;
     },
     [idTaken, freeId, openDoc, saveNow, refresh],
   );
 
-  const exportJson = useCallback(() => (doc ? `${JSON.stringify(doc, null, 2)}\n` : ""), [doc]);
+  const exportJson = useCallback(
+    () => (doc ? `${JSON.stringify(doc, null, 2)}\n` : ""),
+    [doc],
+  );
 
   return {
     library,

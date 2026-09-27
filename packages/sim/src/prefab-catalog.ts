@@ -6,8 +6,11 @@
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import type { PrefabComponentCatalog } from "@sidereal/content/ship-prefab";
 
-export function prefabComponentCatalogFor(revision: string): PrefabComponentCatalog {
+export function prefabComponentCatalogFor(
+  revision: string,
+): PrefabComponentCatalog {
   const current = defaultPrefabComponentCatalog();
-  if (revision !== current.revision) throw Error(`Unsupported prefab component catalog ${revision}`);
+  if (revision !== current.revision)
+    throw Error(`Unsupported prefab component catalog ${revision}`);
   return current;
 }

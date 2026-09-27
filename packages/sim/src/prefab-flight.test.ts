@@ -21,13 +21,20 @@ describe("prefab flight compile", () => {
         powered: true,
         availability: 1,
       }));
-      const compiled = compileFlightDefinition(prefabFlightInput(model, identity, { fittings }));
+      const compiled = compileFlightDefinition(
+        prefabFlightInput(model, identity, { fittings }),
+      );
       if (compiled.status !== "ready") throw Error(compiled.reason);
       const stats = prefabStats(prefab, catalog);
       expect(compiled.mass.massKg).toBeCloseTo(stats.massKg, -1);
-      const main = compiled.actuators.filter((a) => !a.definitionId.endsWith("#nozzle"));
+      const main = compiled.actuators.filter(
+        (a) => !a.definitionId.endsWith("#nozzle"),
+      );
       expect(main.every((a) => Math.abs(a.rotation) < 1e-9)).toBe(true);
-      expect(main.reduce((s, a) => s + a.maxThrustN, 0)).toBeCloseTo(stats.thrustN, 3);
+      expect(main.reduce((s, a) => s + a.maxThrustN, 0)).toBeCloseTo(
+        stats.thrustN,
+        3,
+      );
       // RCS clusters give braking and lateral authority.
       if (prefab.mounts.some((m) => m.component.startsWith("rcs.")))
         expect(compiled.envelope.reverse).toBeGreaterThan(0);

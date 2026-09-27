@@ -636,7 +636,9 @@ export function planConstructionInstance(
       ]),
     );
   }
-  const prefab = (spawned as ConstructionDocument & { prefab?: Record<string, unknown> }).prefab;
+  const prefab = (
+    spawned as ConstructionDocument & { prefab?: Record<string, unknown> }
+  ).prefab;
   if (prefab) {
     // Same identity-substitution contract as wayfarerRebuild/wayfarerExterior.
     const identities: Record<string, string> = { [layout.id]: instanceId };
