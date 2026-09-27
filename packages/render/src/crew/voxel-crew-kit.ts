@@ -15,8 +15,15 @@ import {
   resolveHeadLoadout,
   type HeadLoadout,
 } from "@sidereal/content/crew-heads";
-import { CREW_ITEM_CATALOG, crewArmedClass, crewItem } from "../../../content/src/crew-items";
-import { createVoxelItemVisual, crewItemHandSocketRotation } from "../equipment/voxel-items";
+import {
+  CREW_ITEM_CATALOG,
+  crewArmedClass,
+  crewItem,
+} from "@sidereal/content/crew-items";
+import {
+  createVoxelItemVisual,
+  crewItemHandSocketRotation,
+} from "../equipment/voxel-items";
 import { setMeshRole } from "../mesh-roles";
 import type { createVoxelCrewVisual } from "./voxel-crew";
 import { loadRgbaImage } from "./voxel-face";
@@ -36,7 +43,9 @@ function headSpaceNode(scene: Scene, crew: VoxelCrew) {
   if (!joint || !bone) throw new Error("voxel crew has no head joint");
   const node = new TransformNode("crew-head-space", scene);
   node.parent = joint;
-  const local = Matrix.Translation(0, HEAD_ORIGIN_M, 0).multiply(bone.getAbsoluteInverseBindMatrix());
+  const local = Matrix.Translation(0, HEAD_ORIGIN_M, 0).multiply(
+    bone.getAbsoluteInverseBindMatrix(),
+  );
   const s = new Vector3();
   const q = new Quaternion();
   const t = new Vector3();
@@ -48,7 +57,11 @@ function headSpaceNode(scene: Scene, crew: VoxelCrew) {
 }
 
 /** Map legacy appearance to a CHAR-HEADS loadout (presentation default until loadouts persist). */
-export function voxelHeadLoadoutFor(bodyType: string | undefined, skin?: string, hair?: string): HeadLoadout {
+export function voxelHeadLoadoutFor(
+  bodyType: string | undefined,
+  skin?: string,
+  hair?: string,
+): HeadLoadout {
   const female = bodyType === "female";
   return {
     ...DEFAULT_HEAD_LOADOUT,
@@ -65,37 +78,58 @@ export function voxelHeadLoadoutFor(bodyType: string | undefined, skin?: string,
  * reparented into head space, the body's head + default hair are hidden, and the crew face API is
  * pointed at the head's `crew.face` material through CHAR-HEADS' compositor.
  */
-export async function attachVoxelCrewHead(scene: Scene, crew: VoxelCrew, loadout: HeadLoadout) {
+export async function attachVoxelCrewHead(
+  scene: Scene,
+  crew: VoxelCrew,
+  loadout: HeadLoadout,
+) {
   const resolved = resolveHeadLoadout(loadout);
   const files = [...new Set(resolved.nodes.map((n) => n.file))];
   const wanted = new Set(resolved.nodes.map((n) => n.node));
   const containers: AssetContainer[] = await Promise.all(
-    files.map((f) => SceneLoader.LoadAssetContainerAsync("", crewHeadAssetUrl(f), scene, undefined, ".glb")),
+    files.map((f) =>
+      SceneLoader.LoadAssetContainerAsync(
+        "",
+        crewHeadAssetUrl(f),
+        scene,
+        undefined,
+        ".glb",
+      ),
+    ),
   );
   const space = headSpaceNode(scene, crew);
   for (const c of containers) {
     c.addAllToScene();
     for (const g of c.animationGroups) g.stop();
     const gltfRoot = c.rootNodes[0];
-    for (const child of gltfRoot.getChildren() as TransformNode[]) child.parent = space;
+    for (const child of gltfRoot.getChildren() as TransformNode[])
+      child.parent = space;
     for (const node of [...c.transformNodes, ...c.meshes]) {
-      const named = [node, ...(function* () {
-        for (let p = node.parent; p; p = p.parent) yield p;
-      })()].some((n) => wanted.has(n.name));
+      const named = [
+        node,
+        ...(function* () {
+          for (let p = node.parent; p; p = p.parent) yield p;
+        })(),
+      ].some((n) => wanted.has(n.name));
       node.setEnabled(named);
     }
     for (const m of c.meshes) setMeshRole(m, "crew");
     gltfRoot.dispose(true);
   }
   // colour the person slots (skin, hair, eye) on every head material
-  const person: Record<string, string> = { skin: resolved.face.tints.skin, hair: resolved.face.tints.hair, eye: resolved.face.tints.eye };
+  const person: Record<string, string> = {
+    skin: resolved.face.tints.skin,
+    hair: resolved.face.tints.hair,
+    eye: resolved.face.tints.eye,
+  };
   let faceMaterial: PBRMaterial | undefined;
   for (const c of containers)
     for (const m of c.materials) {
       if (!(m instanceof PBRMaterial)) continue;
       const slot = m.name.replace(/^crew\./, "").replace(/\.\d+$/, "");
       if (slot === "face") faceMaterial ??= m;
-      else if (person[slot]) m.albedoColor = Color3.FromHexString(person[slot]).toLinearSpace();
+      else if (person[slot])
+        m.albedoColor = Color3.FromHexString(person[slot]).toLinearSpace();
     }
   crew.setHiddenRegions(["head", "hair"]);
   if (faceMaterial) {
@@ -104,7 +138,16 @@ export async function attachVoxelCrewHead(scene: Scene, crew: VoxelCrew, loadout
       composeHeadFace(
         atlas,
         resolved.face.variant,
-        resolveFaceFrames(loadout, { expression: st.expression, blink: st.blinkEyes ?? null, viseme: st.viseme ?? null, look: st.look ?? 0 }, resolved.face.mouthHidden),
+        resolveFaceFrames(
+          loadout,
+          {
+            expression: st.expression,
+            blink: st.blinkEyes ?? null,
+            viseme: st.viseme ?? null,
+            look: st.look ?? 0,
+          },
+          resolved.face.mouthHidden,
+        ),
         resolved.face.tints,
       ),
     );
@@ -137,21 +180,31 @@ const armedClipsLoaded = new WeakMap<object, Promise<void>>();
  * to that class's baked armed clips (idle/walk/run/aim/shoot, support hand already solved on the
  * item). Returns the item visual (same surface as createEquipmentVisual).
  */
-export async function equipVoxelCrewItem(scene: Scene, crew: VoxelCrew, itemOrLegacyId: string) {
+export async function equipVoxelCrewItem(
+  scene: Scene,
+  crew: VoxelCrew,
+  itemOrLegacyId: string,
+) {
   const itemId = LEGACY_TO_VOXEL_ITEM[itemOrLegacyId] ?? itemOrLegacyId;
   const item = crewItem(itemId);
   if (!armedClipsLoaded.has(crew))
     armedClipsLoaded.set(
       crew,
-      SceneLoader.LoadAssetContainerAsync(CREW_ITEM_CATALOG.assetBase, "armed-actions.glb", scene, undefined, ".glb").then(
-        (armed) => {
-          crew.addClips(armed);
-          armed.dispose();
-        },
-      ),
+      SceneLoader.LoadAssetContainerAsync(
+        CREW_ITEM_CATALOG.assetBase,
+        "armed-actions.glb",
+        scene,
+        undefined,
+        ".glb",
+      ).then((armed) => {
+        crew.addClips(armed);
+        armed.dispose();
+      }),
     );
   const [visual] = await Promise.all([
-    createVoxelItemVisual(scene, crew.socketNodes["socket.hand.R"], itemId, { localRotation: crewItemHandSocketRotation() }),
+    createVoxelItemVisual(scene, crew.socketNodes["socket.hand.R"], itemId, {
+      localRotation: crewItemHandSocketRotation(),
+    }),
     armedClipsLoaded.get(crew),
   ]);
   crew.setArmedClass(crewArmedClass(item));
