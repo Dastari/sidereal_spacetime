@@ -49,7 +49,7 @@ def parse_args():
     argv = sys.argv[sys.argv.index("--") + 1:] if "--" in sys.argv else []
     p = argparse.ArgumentParser()
     p.add_argument("--out", default="/tmp/crew_armor")
-    p.add_argument("--body-blend", default="/root/sidereal-progress/_shared/crew-body-r004/crew-body.blend",
+    p.add_argument("--body-blend", default="/root/sidereal-progress/_shared/crew-body-r005/crew-body.blend",
                    help="CHAR-BODY source (rig, body regions, actions); falls back to the ported mannequin")
     p.add_argument("--export", default="")
     p.add_argument("--content-json", default="")
@@ -830,12 +830,12 @@ def sheet_progress(args, kit, out):
     Figure(kit, list(pr["parts"].values()), pr["colourway"], (3.05, 0, -1.72), coll, preset=pr, yaw=-28)
     plinth((3.05, 0, -1.72), coll)
     text("MEDIC (role.medic)", (3.05, 0, 0.32), 0.07, coll)
-    text("CREW ARMOUR r004 (CHAR-BODY r004 fit, proposal)", (1.4, 0, 0.5), 0.075, coll)
+    text("CREW ARMOUR r005 (CHAR-BODY r005 fit, proposal)", (1.4, 0, 0.5), 0.075, coll)
     aim_front(cam, (1.55, 0, -0.75), 4.6, elev=12)
-    render(sc, out / "armor_progress_r004.png")
-    compare(out / "armor_progress_r004.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png",
+    render(sc, out / "armor_progress_r005.png")
+    compare(out / "armor_progress_r005.png", [Path(args.refs) / "equip-armor-pieces-6-colourways.png",
                                               Path(args.refs) / "roster-male-03-medic.png"],
-            out / "armor_progress_r004_vs_reference.png")
+            out / "armor_progress_r005_vs_reference.png")
 
 
 TIER_ROWS = [("CHEST", ["armor.chest.jacket", "armor.chest.harness", "armor.chest.plate", "armor.chest.heavy"]),
@@ -861,7 +861,7 @@ def sheet_tiers(args, kit, out):
     y0 = -len(TIER_ROWS) * dz - 1.35
     for c in range(4):
         Figure(kit, [row[1][c] for row in TIER_ROWS], TIER_CW[c], (c * dx, 0, y0), coll, yaw=-20, scale=0.55)
-    text("CREW ARMOUR TIERS (armor-v1 r004 proposal)", (0.93, 0, 0.45), 0.075, coll)
+    text("CREW ARMOUR TIERS (armor-v1 r005 proposal)", (0.93, 0, 0.45), 0.075, coll)
     aim_front(cam, (0.75, 0, -2.3), 6.0, elev=12)
     render(sc, out / "armor_tier_chart.png")
     compare(out / "armor_tier_chart.png", [Path(args.refs) / "roster-male-armor-tiers.png"], out / "armor_tier_chart_vs_reference.png")

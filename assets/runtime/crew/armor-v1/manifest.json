@@ -1,7 +1,7 @@
 {
  "schema": "sidereal.crew.armor-manifest/1",
  "kit": "crew.armor-v1",
- "revision": "r004",
+ "revision": "r005",
  "specVersion": 2,
  "status": "proposal; not published; not owner-approved",
  "voxelMeters": 0.03125,
@@ -47,8 +47,8 @@
  },
  "colourways": {
   "arctic": {
-   "suit_primary": "#dcd6ea",
-   "suit_secondary": "#5d5f8a",
+   "suit_primary": "#e4e0f2",
+   "suit_secondary": "#343a6a",
    "accent": "#4f7cff",
    "metal": "#a3abc0",
    "dark": "#2a2b40",
@@ -68,8 +68,8 @@
   },
   "cobalt": {
    "suit_primary": "#2f63e6",
-   "suit_secondary": "#e2e6f0",
-   "accent": "#1b2d7a",
+   "suit_secondary": "#1c2548",
+   "accent": "#e8ecf6",
    "metal": "#a8b2c6",
    "dark": "#161c33",
    "emit": "#5fd2ff",
@@ -77,8 +77,8 @@
    "label": "Cobalt"
   },
   "amber": {
-   "suit_primary": "#f4a61e",
-   "suit_secondary": "#2d2c38",
+   "suit_primary": "#f7a414",
+   "suit_secondary": "#24222e",
    "accent": "#4c83ff",
    "metal": "#aeafb6",
    "dark": "#1c1b24",
@@ -795,20 +795,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 810,
-     "hinge": 291,
-     "other": 519,
-     "bodySelfHinge": 330,
-     "bodySelfOther": 872,
+     "penetratingVoxels": 1069,
+     "hinge": 292,
+     "other": 777,
+     "bodySelfHinge": 360,
+     "bodySelfOther": 719,
      "worstOther": {
-      "armor.gloves.fabric@hand.R -> head": 122,
-      "armor.gloves.fabric@hand.R -> chest": 117,
-      "armor.chest.coat@chest -> hand.R": 50,
-      "armor.gloves.fabric@hand.R -> hand.L": 45,
-      "armor.gloves.fabric@hand.L -> hand.R": 45,
-      "armor.boots.dress@toe.R -> shin.R": 20,
-      "armor.gloves.fabric@hand.R -> forearm.L": 19,
-      "armor.chest.coat@chest -> upper_arm.R": 18
+      "armor.gloves.fabric@hand.R -> chest": 192,
+      "armor.chest.coat@chest -> hand.R": 112,
+      "armor.gloves.fabric@hand.R -> hand.L": 100,
+      "armor.gloves.fabric@hand.L -> hand.R": 100,
+      "armor.gloves.fabric@hand.R -> forearm.L": 39,
+      "armor.gloves.fabric@hand.L -> upper_arm.L": 35,
+      "armor.chest.coat@chest -> upper_arm.L": 24,
+      "armor.chest.coat@chest -> hand.L": 22
      }
     },
     "crouch_idle": {
@@ -865,20 +865,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 802,
-     "hinge": 283,
-     "other": 519,
-     "bodySelfHinge": 328,
-     "bodySelfOther": 872,
+     "penetratingVoxels": 1061,
+     "hinge": 284,
+     "other": 777,
+     "bodySelfHinge": 358,
+     "bodySelfOther": 727,
      "worstOther": {
-      "armor.gloves.fabric@hand.R -> head": 122,
-      "armor.gloves.fabric@hand.R -> chest": 117,
-      "armor.chest.coat@chest -> hand.R": 50,
-      "armor.gloves.fabric@hand.R -> hand.L": 45,
-      "armor.gloves.fabric@hand.L -> hand.R": 45,
-      "armor.boots.dress@toe.R -> shin.R": 20,
-      "armor.gloves.fabric@hand.R -> forearm.L": 19,
-      "armor.chest.coat@chest -> upper_arm.R": 18
+      "armor.gloves.fabric@hand.R -> chest": 192,
+      "armor.chest.coat@chest -> hand.R": 112,
+      "armor.gloves.fabric@hand.R -> hand.L": 100,
+      "armor.gloves.fabric@hand.L -> hand.R": 100,
+      "armor.gloves.fabric@hand.R -> forearm.L": 39,
+      "armor.gloves.fabric@hand.L -> upper_arm.L": 35,
+      "armor.chest.coat@chest -> upper_arm.L": 24,
+      "armor.chest.coat@chest -> hand.L": 22
      }
     },
     "crouch_idle": {
@@ -935,20 +935,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1280,
-     "hinge": 546,
-     "other": 734,
-     "bodySelfHinge": 317,
-     "bodySelfOther": 998,
+     "penetratingVoxels": 1535,
+     "hinge": 562,
+     "other": 973,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 809,
      "worstOther": {
-      "armor.gloves.work@forearm.R -> head": 152,
-      "armor.gloves.work@hand.R -> head": 125,
-      "armor.gloves.work@hand.R -> chest": 113,
-      "armor.gloves.work@hand.R -> hand.L": 45,
-      "armor.gloves.work@hand.L -> hand.R": 45,
-      "armor.chest.harness@chest -> hand.R": 42,
-      "armor.shoulders.light@upper_arm.R -> chest": 33,
-      "armor.gloves.work@hand.R -> forearm.L": 28
+      "armor.gloves.work@hand.R -> chest": 187,
+      "armor.chest.harness@chest -> hand.R": 107,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.gloves.work@forearm.L -> hand.R": 41,
+      "armor.shoulders.light@upper_arm.R -> chest": 40
      }
     },
     "crouch_idle": {
@@ -1005,20 +1005,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1274,
-     "hinge": 540,
-     "other": 734,
-     "bodySelfHinge": 315,
-     "bodySelfOther": 998,
+     "penetratingVoxels": 1529,
+     "hinge": 556,
+     "other": 973,
+     "bodySelfHinge": 345,
+     "bodySelfOther": 817,
      "worstOther": {
-      "armor.gloves.work@forearm.R -> head": 152,
-      "armor.gloves.work@hand.R -> head": 125,
-      "armor.gloves.work@hand.R -> chest": 113,
-      "armor.gloves.work@hand.R -> hand.L": 45,
-      "armor.gloves.work@hand.L -> hand.R": 45,
-      "armor.chest.harness@chest -> hand.R": 42,
-      "armor.shoulders.light@upper_arm.R -> chest": 33,
-      "armor.gloves.work@hand.R -> forearm.L": 28
+      "armor.gloves.work@hand.R -> chest": 187,
+      "armor.chest.harness@chest -> hand.R": 107,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.gloves.work@forearm.L -> hand.R": 41,
+      "armor.shoulders.light@upper_arm.R -> chest": 40
      }
     },
     "crouch_idle": {
@@ -1075,20 +1075,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1146,
-     "hinge": 429,
-     "other": 717,
-     "bodySelfHinge": 317,
-     "bodySelfOther": 970,
+     "penetratingVoxels": 1446,
+     "hinge": 433,
+     "other": 1013,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 805,
      "worstOther": {
-      "armor.gloves.light@hand.R -> head": 125,
-      "armor.gloves.light@hand.R -> chest": 125,
-      "armor.gloves.light@forearm.R -> head": 88,
-      "armor.chest.medic@chest -> hand.R": 55,
-      "armor.gloves.light@hand.R -> hand.L": 45,
-      "armor.gloves.light@hand.L -> hand.R": 45,
-      "armor.shoulders.standard@upper_arm.R -> chest": 41,
-      "armor.shoulders.standard@upper_arm.R -> head": 39
+      "armor.gloves.light@hand.R -> chest": 213,
+      "armor.chest.medic@chest -> hand.R": 132,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
      }
     },
     "crouch_idle": {
@@ -1145,20 +1145,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1140,
-     "hinge": 423,
-     "other": 717,
-     "bodySelfHinge": 315,
-     "bodySelfOther": 970,
+     "penetratingVoxels": 1440,
+     "hinge": 427,
+     "other": 1013,
+     "bodySelfHinge": 345,
+     "bodySelfOther": 813,
      "worstOther": {
-      "armor.gloves.light@hand.R -> head": 125,
-      "armor.gloves.light@hand.R -> chest": 125,
-      "armor.gloves.light@forearm.R -> head": 88,
-      "armor.chest.medic@chest -> hand.R": 55,
-      "armor.gloves.light@hand.R -> hand.L": 45,
-      "armor.gloves.light@hand.L -> hand.R": 45,
-      "armor.shoulders.standard@upper_arm.R -> chest": 41,
-      "armor.shoulders.standard@upper_arm.R -> head": 39
+      "armor.gloves.light@hand.R -> chest": 213,
+      "armor.chest.medic@chest -> hand.R": 132,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
      }
     },
     "crouch_idle": {
@@ -1215,20 +1215,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1097,
-     "hinge": 443,
-     "other": 654,
-     "bodySelfHinge": 317,
-     "bodySelfOther": 944,
+     "penetratingVoxels": 1358,
+     "hinge": 447,
+     "other": 911,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 771,
      "worstOther": {
-      "armor.gloves.light@hand.R -> head": 125,
-      "armor.gloves.light@hand.R -> chest": 115,
-      "armor.gloves.light@forearm.R -> head": 88,
-      "armor.chest.flight@chest -> hand.R": 46,
-      "armor.gloves.light@hand.R -> hand.L": 45,
-      "armor.gloves.light@hand.L -> hand.R": 45,
-      "armor.shoulders.flight@upper_arm.R -> chest": 33,
-      "armor.gloves.light@hand.R -> forearm.L": 27
+      "armor.gloves.light@hand.R -> chest": 197,
+      "armor.chest.flight@chest -> hand.R": 116,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.flight@upper_arm.R -> chest": 40,
+      "armor.gloves.light@hand.L -> upper_arm.L": 38
      }
     },
     "crouch_idle": {
@@ -1285,20 +1285,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1091,
-     "hinge": 437,
-     "other": 654,
-     "bodySelfHinge": 315,
-     "bodySelfOther": 944,
+     "penetratingVoxels": 1352,
+     "hinge": 441,
+     "other": 911,
+     "bodySelfHinge": 345,
+     "bodySelfOther": 779,
      "worstOther": {
-      "armor.gloves.light@hand.R -> head": 125,
-      "armor.gloves.light@hand.R -> chest": 115,
-      "armor.gloves.light@forearm.R -> head": 88,
-      "armor.chest.flight@chest -> hand.R": 46,
-      "armor.gloves.light@hand.R -> hand.L": 45,
-      "armor.gloves.light@hand.L -> hand.R": 45,
-      "armor.shoulders.flight@upper_arm.R -> chest": 33,
-      "armor.gloves.light@hand.R -> forearm.L": 27
+      "armor.gloves.light@hand.R -> chest": 197,
+      "armor.chest.flight@chest -> hand.R": 116,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.flight@upper_arm.R -> chest": 40,
+      "armor.gloves.light@hand.L -> upper_arm.L": 38
      }
     },
     "crouch_idle": {
@@ -1355,20 +1355,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1248,
-     "hinge": 477,
-     "other": 771,
-     "bodySelfHinge": 328,
-     "bodySelfOther": 1023,
+     "penetratingVoxels": 1561,
+     "hinge": 498,
+     "other": 1063,
+     "bodySelfHinge": 359,
+     "bodySelfOther": 859,
      "worstOther": {
-      "armor.gloves.standard@forearm.R -> head": 142,
-      "armor.gloves.standard@hand.R -> head": 125,
-      "armor.gloves.standard@hand.R -> chest": 125,
-      "armor.chest.vest@chest -> hand.R": 55,
-      "armor.gloves.standard@hand.R -> hand.L": 45,
-      "armor.gloves.standard@hand.L -> hand.R": 45,
-      "armor.shoulders.standard@upper_arm.R -> chest": 41,
-      "armor.shoulders.standard@upper_arm.R -> head": 39
+      "armor.gloves.standard@hand.R -> chest": 213,
+      "armor.chest.vest@chest -> hand.R": 132,
+      "armor.gloves.standard@forearm.R -> head": 106,
+      "armor.gloves.standard@hand.R -> hand.L": 100,
+      "armor.gloves.standard@hand.L -> hand.R": 100,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.standard@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
      }
     },
     "crouch_idle": {
@@ -1425,20 +1425,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1242,
-     "hinge": 471,
-     "other": 771,
-     "bodySelfHinge": 326,
-     "bodySelfOther": 1023,
+     "penetratingVoxels": 1555,
+     "hinge": 492,
+     "other": 1063,
+     "bodySelfHinge": 357,
+     "bodySelfOther": 867,
      "worstOther": {
-      "armor.gloves.standard@forearm.R -> head": 142,
-      "armor.gloves.standard@hand.R -> head": 125,
-      "armor.gloves.standard@hand.R -> chest": 125,
-      "armor.chest.vest@chest -> hand.R": 55,
-      "armor.gloves.standard@hand.R -> hand.L": 45,
-      "armor.gloves.standard@hand.L -> hand.R": 45,
-      "armor.shoulders.standard@upper_arm.R -> chest": 41,
-      "armor.shoulders.standard@upper_arm.R -> head": 39
+      "armor.gloves.standard@hand.R -> chest": 213,
+      "armor.chest.vest@chest -> hand.R": 132,
+      "armor.gloves.standard@forearm.R -> head": 106,
+      "armor.gloves.standard@hand.R -> hand.L": 100,
+      "armor.gloves.standard@hand.L -> hand.R": 100,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.standard@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
      }
     },
     "crouch_idle": {
@@ -1495,20 +1495,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1486,
-     "hinge": 529,
-     "other": 957,
-     "bodySelfHinge": 330,
-     "bodySelfOther": 1106,
+     "penetratingVoxels": 1935,
+     "hinge": 553,
+     "other": 1382,
+     "bodySelfHinge": 363,
+     "bodySelfOther": 958,
      "worstOther": {
-      "armor.gloves.heavy@forearm.R -> head": 160,
-      "armor.gloves.heavy@hand.R -> chest": 133,
-      "armor.gloves.heavy@hand.R -> head": 130,
-      "armor.chest.heavy@chest -> hand.R": 65,
-      "armor.shoulders.heavy@upper_arm.R -> head": 64,
-      "armor.shoulders.heavy@upper_arm.R -> chest": 53,
-      "armor.gloves.heavy@hand.R -> hand.L": 51,
-      "armor.gloves.heavy@hand.L -> hand.R": 51
+      "armor.gloves.heavy@hand.R -> chest": 258,
+      "armor.chest.heavy@chest -> hand.R": 173,
+      "armor.gloves.heavy@forearm.R -> head": 124,
+      "armor.gloves.heavy@hand.R -> hand.L": 109,
+      "armor.gloves.heavy@hand.L -> hand.R": 109,
+      "armor.shoulders.heavy@upper_arm.R -> head": 81,
+      "armor.gloves.heavy@hand.L -> chest": 60,
+      "armor.chest.heavy@chest -> hand.L": 58
      }
     },
     "crouch_idle": {
@@ -1565,20 +1565,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1480,
-     "hinge": 523,
-     "other": 957,
-     "bodySelfHinge": 328,
-     "bodySelfOther": 1106,
+     "penetratingVoxels": 1929,
+     "hinge": 547,
+     "other": 1382,
+     "bodySelfHinge": 361,
+     "bodySelfOther": 966,
      "worstOther": {
-      "armor.gloves.heavy@forearm.R -> head": 160,
-      "armor.gloves.heavy@hand.R -> chest": 133,
-      "armor.gloves.heavy@hand.R -> head": 130,
-      "armor.chest.heavy@chest -> hand.R": 65,
-      "armor.shoulders.heavy@upper_arm.R -> head": 64,
-      "armor.shoulders.heavy@upper_arm.R -> chest": 53,
-      "armor.gloves.heavy@hand.R -> hand.L": 51,
-      "armor.gloves.heavy@hand.L -> hand.R": 51
+      "armor.gloves.heavy@hand.R -> chest": 258,
+      "armor.chest.heavy@chest -> hand.R": 173,
+      "armor.gloves.heavy@forearm.R -> head": 124,
+      "armor.gloves.heavy@hand.R -> hand.L": 109,
+      "armor.gloves.heavy@hand.L -> hand.R": 109,
+      "armor.shoulders.heavy@upper_arm.R -> head": 81,
+      "armor.gloves.heavy@hand.L -> chest": 60,
+      "armor.chest.heavy@chest -> hand.L": 58
      }
     },
     "crouch_idle": {
@@ -1635,20 +1635,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1364,
-     "hinge": 560,
-     "other": 804,
-     "bodySelfHinge": 328,
-     "bodySelfOther": 1024,
+     "penetratingVoxels": 1686,
+     "hinge": 588,
+     "other": 1098,
+     "bodySelfHinge": 358,
+     "bodySelfOther": 842,
      "worstOther": {
-      "armor.gloves.work@forearm.R -> head": 152,
-      "armor.gloves.work@hand.R -> head": 125,
-      "armor.gloves.work@hand.R -> chest": 125,
-      "armor.chest.hazard@chest -> hand.R": 55,
-      "armor.gloves.work@hand.R -> hand.L": 45,
-      "armor.gloves.work@hand.L -> hand.R": 45,
-      "armor.shoulders.standard@upper_arm.R -> chest": 41,
-      "armor.shoulders.standard@upper_arm.R -> head": 39
+      "armor.gloves.work@hand.R -> chest": 214,
+      "armor.chest.hazard@chest -> hand.R": 134,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
      }
     },
     "crouch_idle": {
@@ -1705,20 +1705,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1356,
-     "hinge": 552,
-     "other": 804,
-     "bodySelfHinge": 326,
-     "bodySelfOther": 1024,
+     "penetratingVoxels": 1678,
+     "hinge": 580,
+     "other": 1098,
+     "bodySelfHinge": 356,
+     "bodySelfOther": 850,
      "worstOther": {
-      "armor.gloves.work@forearm.R -> head": 152,
-      "armor.gloves.work@hand.R -> head": 125,
-      "armor.gloves.work@hand.R -> chest": 125,
-      "armor.chest.hazard@chest -> hand.R": 55,
-      "armor.gloves.work@hand.R -> hand.L": 45,
-      "armor.gloves.work@hand.L -> hand.R": 45,
-      "armor.shoulders.standard@upper_arm.R -> chest": 41,
-      "armor.shoulders.standard@upper_arm.R -> head": 39
+      "armor.gloves.work@hand.R -> chest": 214,
+      "armor.chest.hazard@chest -> hand.R": 134,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
      }
     },
     "crouch_idle": {
@@ -1775,20 +1775,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1079,
-     "hinge": 431,
-     "other": 648,
-     "bodySelfHinge": 317,
-     "bodySelfOther": 944,
+     "penetratingVoxels": 1342,
+     "hinge": 435,
+     "other": 907,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 772,
      "worstOther": {
-      "armor.gloves.light@hand.R -> head": 125,
-      "armor.gloves.light@hand.R -> chest": 113,
-      "armor.gloves.light@forearm.R -> head": 88,
-      "armor.gloves.light@hand.R -> hand.L": 45,
-      "armor.gloves.light@hand.L -> hand.R": 45,
-      "armor.chest.tactical@chest -> hand.R": 42,
-      "armor.shoulders.light@upper_arm.R -> chest": 33,
-      "armor.gloves.light@hand.R -> forearm.L": 27
+      "armor.gloves.light@hand.R -> chest": 189,
+      "armor.chest.tactical@chest -> hand.R": 109,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.light@upper_arm.R -> chest": 40,
+      "armor.gloves.light@hand.L -> upper_arm.L": 38
      }
     },
     "crouch_idle": {
@@ -1845,20 +1845,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1073,
-     "hinge": 425,
-     "other": 648,
-     "bodySelfHinge": 315,
-     "bodySelfOther": 944,
+     "penetratingVoxels": 1336,
+     "hinge": 429,
+     "other": 907,
+     "bodySelfHinge": 345,
+     "bodySelfOther": 780,
      "worstOther": {
-      "armor.gloves.light@hand.R -> head": 125,
-      "armor.gloves.light@hand.R -> chest": 113,
-      "armor.gloves.light@forearm.R -> head": 88,
-      "armor.gloves.light@hand.R -> hand.L": 45,
-      "armor.gloves.light@hand.L -> hand.R": 45,
-      "armor.chest.tactical@chest -> hand.R": 42,
-      "armor.shoulders.light@upper_arm.R -> chest": 33,
-      "armor.gloves.light@hand.R -> forearm.L": 27
+      "armor.gloves.light@hand.R -> chest": 189,
+      "armor.chest.tactical@chest -> hand.R": 109,
+      "armor.gloves.light@hand.R -> hand.L": 100,
+      "armor.gloves.light@hand.L -> hand.R": 100,
+      "armor.gloves.light@forearm.R -> head": 52,
+      "armor.gloves.light@hand.R -> forearm.L": 49,
+      "armor.shoulders.light@upper_arm.R -> chest": 40,
+      "armor.gloves.light@hand.L -> upper_arm.L": 38
      }
     },
     "crouch_idle": {
@@ -1915,20 +1915,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 735,
-     "hinge": 267,
-     "other": 468,
-     "bodySelfHinge": 330,
-     "bodySelfOther": 856,
+     "penetratingVoxels": 983,
+     "hinge": 268,
+     "other": 715,
+     "bodySelfHinge": 360,
+     "bodySelfOther": 702,
      "worstOther": {
-      "armor.gloves.fabric@hand.R -> head": 122,
-      "armor.gloves.fabric@hand.R -> chest": 117,
-      "armor.chest.labcoat@chest -> hand.R": 50,
-      "armor.gloves.fabric@hand.R -> hand.L": 45,
-      "armor.gloves.fabric@hand.L -> hand.R": 45,
-      "armor.gloves.fabric@hand.R -> forearm.L": 19,
-      "armor.chest.labcoat@chest -> upper_arm.R": 16,
-      "armor.boots.sneaker@toe.R -> shin.R": 15
+      "armor.gloves.fabric@hand.R -> chest": 193,
+      "armor.chest.labcoat@chest -> hand.R": 113,
+      "armor.gloves.fabric@hand.R -> hand.L": 100,
+      "armor.gloves.fabric@hand.L -> hand.R": 100,
+      "armor.gloves.fabric@hand.R -> forearm.L": 39,
+      "armor.gloves.fabric@hand.L -> upper_arm.L": 35,
+      "armor.chest.labcoat@chest -> upper_arm.L": 21,
+      "armor.gloves.fabric@hand.L -> chest": 18
      }
     },
     "crouch_idle": {
@@ -1985,20 +1985,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 729,
-     "hinge": 261,
-     "other": 468,
-     "bodySelfHinge": 328,
-     "bodySelfOther": 856,
+     "penetratingVoxels": 977,
+     "hinge": 262,
+     "other": 715,
+     "bodySelfHinge": 358,
+     "bodySelfOther": 710,
      "worstOther": {
-      "armor.gloves.fabric@hand.R -> head": 122,
-      "armor.gloves.fabric@hand.R -> chest": 117,
-      "armor.chest.labcoat@chest -> hand.R": 50,
-      "armor.gloves.fabric@hand.R -> hand.L": 45,
-      "armor.gloves.fabric@hand.L -> hand.R": 45,
-      "armor.gloves.fabric@hand.R -> forearm.L": 19,
-      "armor.chest.labcoat@chest -> upper_arm.R": 16,
-      "armor.boots.sneaker@toe.R -> shin.R": 15
+      "armor.gloves.fabric@hand.R -> chest": 193,
+      "armor.chest.labcoat@chest -> hand.R": 113,
+      "armor.gloves.fabric@hand.R -> hand.L": 100,
+      "armor.gloves.fabric@hand.L -> hand.R": 100,
+      "armor.gloves.fabric@hand.R -> forearm.L": 39,
+      "armor.gloves.fabric@hand.L -> upper_arm.L": 35,
+      "armor.chest.labcoat@chest -> upper_arm.L": 21,
+      "armor.gloves.fabric@hand.L -> chest": 18
      }
     },
     "crouch_idle": {
@@ -2055,20 +2055,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1235,
-     "hinge": 538,
-     "other": 697,
-     "bodySelfHinge": 319,
-     "bodySelfOther": 981,
+     "penetratingVoxels": 1511,
+     "hinge": 554,
+     "other": 957,
+     "bodySelfHinge": 349,
+     "bodySelfOther": 794,
      "worstOther": {
-      "armor.gloves.work@forearm.R -> head": 152,
-      "armor.gloves.work@hand.R -> head": 125,
-      "armor.gloves.work@hand.R -> chest": 112,
-      "armor.gloves.work@hand.R -> hand.L": 45,
-      "armor.gloves.work@hand.L -> hand.R": 45,
-      "armor.chest.overalls@chest -> hand.R": 42,
-      "armor.gloves.work@hand.R -> forearm.L": 28,
-      "armor.gloves.work@forearm.L -> hand.R": 26
+      "armor.gloves.work@hand.R -> chest": 196,
+      "armor.chest.overalls@chest -> hand.R": 116,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.gloves.work@forearm.L -> hand.R": 41,
+      "armor.gloves.work@hand.L -> upper_arm.L": 38
      }
     },
     "crouch_idle": {
@@ -2125,20 +2125,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1229,
-     "hinge": 532,
-     "other": 697,
-     "bodySelfHinge": 317,
-     "bodySelfOther": 981,
+     "penetratingVoxels": 1505,
+     "hinge": 548,
+     "other": 957,
+     "bodySelfHinge": 347,
+     "bodySelfOther": 802,
      "worstOther": {
-      "armor.gloves.work@forearm.R -> head": 152,
-      "armor.gloves.work@hand.R -> head": 125,
-      "armor.gloves.work@hand.R -> chest": 112,
-      "armor.gloves.work@hand.R -> hand.L": 45,
-      "armor.gloves.work@hand.L -> hand.R": 45,
-      "armor.chest.overalls@chest -> hand.R": 42,
-      "armor.gloves.work@hand.R -> forearm.L": 28,
-      "armor.gloves.work@forearm.L -> hand.R": 26
+      "armor.gloves.work@hand.R -> chest": 196,
+      "armor.chest.overalls@chest -> hand.R": 116,
+      "armor.gloves.work@hand.R -> hand.L": 100,
+      "armor.gloves.work@hand.L -> hand.R": 100,
+      "armor.gloves.work@forearm.R -> head": 95,
+      "armor.gloves.work@hand.R -> forearm.L": 53,
+      "armor.gloves.work@forearm.L -> hand.R": 41,
+      "armor.gloves.work@hand.L -> upper_arm.L": 38
      }
     },
     "crouch_idle": {
@@ -2195,19 +2195,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 140,
+     "penetratingVoxels": 227,
      "hinge": 75,
-     "other": 65,
-     "bodySelfHinge": 387,
-     "bodySelfOther": 888,
+     "other": 152,
+     "bodySelfHinge": 424,
+     "bodySelfOther": 790,
      "worstOther": {
-      "armor.chest.jacket@chest -> upper_arm.R": 16,
+      "armor.chest.jacket@chest -> hand.R": 70,
+      "armor.chest.jacket@chest -> upper_arm.L": 21,
+      "armor.chest.jacket@chest -> upper_arm.R": 17,
       "armor.boots.sneaker@toe.R -> shin.R": 15,
-      "armor.chest.jacket@chest -> hand.R": 14,
-      "armor.chest.jacket@chest -> upper_arm.L": 10,
+      "armor.chest.jacket@chest -> forearm.L": 11,
+      "armor.chest.jacket@chest -> forearm.R": 8,
       "armor.boots.sneaker@shin.R -> toe.R": 5,
-      "armor.boots.sneaker@toe.L -> shin.L": 3,
-      "armor.boots.sneaker@shin.L -> toe.L": 2
+      "armor.boots.sneaker@toe.L -> shin.L": 3
      }
     },
     "crouch_idle": {
@@ -2263,19 +2264,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 134,
+     "penetratingVoxels": 221,
      "hinge": 69,
-     "other": 65,
-     "bodySelfHinge": 385,
-     "bodySelfOther": 888,
+     "other": 152,
+     "bodySelfHinge": 422,
+     "bodySelfOther": 794,
      "worstOther": {
-      "armor.chest.jacket@chest -> upper_arm.R": 16,
+      "armor.chest.jacket@chest -> hand.R": 70,
+      "armor.chest.jacket@chest -> upper_arm.L": 21,
+      "armor.chest.jacket@chest -> upper_arm.R": 17,
       "armor.boots.sneaker@toe.R -> shin.R": 15,
-      "armor.chest.jacket@chest -> hand.R": 14,
-      "armor.chest.jacket@chest -> upper_arm.L": 10,
+      "armor.chest.jacket@chest -> forearm.L": 11,
+      "armor.chest.jacket@chest -> forearm.R": 8,
       "armor.boots.sneaker@shin.R -> toe.R": 5,
-      "armor.boots.sneaker@toe.L -> shin.L": 3,
-      "armor.boots.sneaker@shin.L -> toe.L": 2
+      "armor.boots.sneaker@toe.L -> shin.L": 3
      }
     },
     "crouch_idle": {
@@ -2330,20 +2332,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1294,
-     "hinge": 477,
-     "other": 817,
-     "bodySelfHinge": 328,
-     "bodySelfOther": 1029,
+     "penetratingVoxels": 1605,
+     "hinge": 498,
+     "other": 1107,
+     "bodySelfHinge": 359,
+     "bodySelfOther": 865,
      "worstOther": {
-      "armor.gloves.standard@forearm.R -> head": 142,
-      "armor.gloves.standard@hand.R -> head": 125,
-      "armor.gloves.standard@hand.R -> chest": 125,
-      "armor.chest.plate@chest -> hand.R": 55,
-      "armor.gloves.standard@hand.R -> hand.L": 45,
-      "armor.gloves.standard@hand.L -> hand.R": 45,
-      "armor.shoulders.standard@upper_arm.R -> chest": 41,
-      "armor.shoulders.standard@upper_arm.R -> head": 39
+      "armor.gloves.standard@hand.R -> chest": 213,
+      "armor.chest.plate@chest -> hand.R": 132,
+      "armor.gloves.standard@forearm.R -> head": 106,
+      "armor.gloves.standard@hand.R -> hand.L": 100,
+      "armor.gloves.standard@hand.L -> hand.R": 100,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.standard@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
      }
     },
     "crouch_idle": {
@@ -2400,20 +2402,20 @@
      }
     },
     "aim_rifle": {
-     "penetratingVoxels": 1288,
-     "hinge": 471,
-     "other": 817,
-     "bodySelfHinge": 326,
-     "bodySelfOther": 1029,
+     "penetratingVoxels": 1599,
+     "hinge": 492,
+     "other": 1107,
+     "bodySelfHinge": 357,
+     "bodySelfOther": 873,
      "worstOther": {
-      "armor.gloves.standard@forearm.R -> head": 142,
-      "armor.gloves.standard@hand.R -> head": 125,
-      "armor.gloves.standard@hand.R -> chest": 125,
-      "armor.chest.plate@chest -> hand.R": 55,
-      "armor.gloves.standard@hand.R -> hand.L": 45,
-      "armor.gloves.standard@hand.L -> hand.R": 45,
-      "armor.shoulders.standard@upper_arm.R -> chest": 41,
-      "armor.shoulders.standard@upper_arm.R -> head": 39
+      "armor.gloves.standard@hand.R -> chest": 213,
+      "armor.chest.plate@chest -> hand.R": 132,
+      "armor.gloves.standard@forearm.R -> head": 106,
+      "armor.gloves.standard@hand.R -> hand.L": 100,
+      "armor.gloves.standard@hand.L -> hand.R": 100,
+      "armor.shoulders.standard@upper_arm.R -> chest": 49,
+      "armor.gloves.standard@hand.R -> forearm.L": 49,
+      "armor.shoulders.standard@upper_arm.R -> head": 44
      }
     },
     "crouch_idle": {
@@ -2463,7 +2465,7 @@
    "style": "jacket",
    "name": "Crew jacket",
    "glb": "parts/armor.chest.jacket.glb",
-   "sha256": "9227bc42a7a8f53e5432b72508b94d0243f2bd2e73b471dbfbbdacb8fc8aa7cc",
+   "sha256": "153ae9640606e6fa357b4cb55be10a0dc307da8821d0328ffc21194a86a9b2d1",
    "bytes": 201164,
    "fits": {
     "wide": {
@@ -2531,7 +2533,7 @@
    "style": "harness",
    "name": "Light harness vest",
    "glb": "parts/armor.chest.harness.glb",
-   "sha256": "3bcb226ce359db440c81c980077bde9f45add4a6fdc76fa81d91bc440ae7f270",
+   "sha256": "f616c9c943b1b3698c0419af5e630ea133fb484010f370943809e5f16bf46220",
    "bytes": 190488,
    "fits": {
     "wide": {
@@ -2599,7 +2601,7 @@
    "style": "plate",
    "name": "Standard plate carrier",
    "glb": "parts/armor.chest.plate.glb",
-   "sha256": "846e07eefdae7e8ab8ca144128086edbc51c7b7270505d6217153f769856aadc",
+   "sha256": "8efddd527b4d2f5ba9d2e2f4ddc1eabe600f7fd0dc20a2d554dcece1930bef08",
    "bytes": 234480,
    "fits": {
     "wide": {
@@ -2667,7 +2669,7 @@
    "style": "plate",
    "name": "Heavy assault cuirass",
    "glb": "parts/armor.chest.heavy.glb",
-   "sha256": "1324e939777e0cda1210523010d3ad8bae7b081c5b033598be79f7f0ef70429b",
+   "sha256": "db6e8fc16301136fd4ebcef63fc23e75a94a0500d2fc4cd81bac38a27ce916da",
    "bytes": 284384,
    "fits": {
     "wide": {
@@ -2736,7 +2738,7 @@
    "style": "coat",
    "name": "Officer's coat",
    "glb": "parts/armor.chest.coat.glb",
-   "sha256": "225e46e5ba7a719beab05be3ec1981fde36b9c8a50a44b086031cc986fa30dbd",
+   "sha256": "14a82abd8189764192128c8ab0a54a88ee1b3f9467d6623d3ab53795f0b87159",
    "bytes": 328672,
    "fits": {
     "wide": {
@@ -2808,7 +2810,7 @@
    "style": "labcoat",
    "name": "Lab coat",
    "glb": "parts/armor.chest.labcoat.glb",
-   "sha256": "c7c19f69f23fd9d5056629641de94004bb9821b997aef09720bfcb024452e979",
+   "sha256": "87a78a6bdb7d0e91a93ba696da6abf6683139e948153ffa3bb705f02d87a3452",
    "bytes": 261688,
    "fits": {
     "wide": {
@@ -2879,7 +2881,7 @@
    "style": "overalls",
    "name": "Work overalls",
    "glb": "parts/armor.chest.overalls.glb",
-   "sha256": "9bf486c3a995df1a0e58f374e05651569c5923cf0755e9fa69d0723da4c46321",
+   "sha256": "9b579a4573c7530125207fe9271d3cb3a3d2d48a516463e598fb2a4e3d33fb41",
    "bytes": 139176,
    "fits": {
     "wide": {
@@ -2946,7 +2948,7 @@
    "style": "flight",
    "name": "Flight suit harness",
    "glb": "parts/armor.chest.flight.glb",
-   "sha256": "c03713e91b4e482560fd00e3651801fcdb2091a6e9e003896843131fdbd69283",
+   "sha256": "e923b3a934e585652be744860dcf07ffb2a3b4117bd61a93486306beec61b95b",
    "bytes": 172076,
    "fits": {
     "wide": {
@@ -3015,7 +3017,7 @@
    "style": "tactical",
    "name": "Tactical chest rig",
    "glb": "parts/armor.chest.tactical.glb",
-   "sha256": "05b370a79998eed4a413eaeeea6b5b5f3477d74ca0f6346817570b1e5ed0d59f",
+   "sha256": "98ea0d6b7860ac858d317e218e60b01bf0b548cd98a8f58a1e8df697e6acfa7a",
    "bytes": 261360,
    "fits": {
     "wide": {
@@ -3084,7 +3086,7 @@
    "style": "vest",
    "name": "Security vest",
    "glb": "parts/armor.chest.vest.glb",
-   "sha256": "874e0cc741c8e11f20a688461ddda1dc251d99f6ac39f51f7f5002b7ad430620",
+   "sha256": "749234c3a9347a86fd7f513d6e70a26bb1452ae653f40d76ce25705eff3cae71",
    "bytes": 256144,
    "fits": {
     "wide": {
@@ -3153,7 +3155,7 @@
    "style": "medic",
    "name": "Medical plate",
    "glb": "parts/armor.chest.medic.glb",
-   "sha256": "d1cc6c24a787c86b757cfdd976aabfcfab1abb8c71cffb32078c1440d0d8ed41",
+   "sha256": "6f44456c6f63f56ac9b9e4c7f23765af944cde72d0eaa6240b8e7ce2fdda8eb0",
    "bytes": 282048,
    "fits": {
     "wide": {
@@ -3222,7 +3224,7 @@
    "style": "hazard",
    "name": "Hazard-rated plate",
    "glb": "parts/armor.chest.hazard.glb",
-   "sha256": "50b3e3c7aa3b28fd60cab408362149b36b78bd8a6c77d216960204110e901326",
+   "sha256": "05e828f9c4b4c622e055049de5e20195b2bd4326d5f1f16739b3eea786a55634",
    "bytes": 307240,
    "fits": {
     "wide": {
@@ -3291,7 +3293,7 @@
    "style": "cloth",
    "name": "Shoulder pads",
    "glb": "parts/armor.shoulders.cloth.glb",
-   "sha256": "8bfe38533f296832d3d0ab86fbd77e49ef32ee2c49cec54fd5cac10d63926656",
+   "sha256": "8c36f3efd3a0cf6f2295056a13356490f0b582321dde0476662901206109d2b1",
    "bytes": 38120,
    "fits": {
     "all": {
@@ -3339,7 +3341,7 @@
    "style": "plain",
    "name": "Light pauldrons",
    "glb": "parts/armor.shoulders.light.glb",
-   "sha256": "e03a52d4e903700dac7ba54644c23184ed54a5d0d2d2b1c09603f013226d91e3",
+   "sha256": "e8b11d447f16a012dc07021ab1d21e43cd26590658941bba45cc0267732b968b",
    "bytes": 54564,
    "fits": {
     "all": {
@@ -3388,7 +3390,7 @@
    "style": "plain",
    "name": "Standard pauldrons",
    "glb": "parts/armor.shoulders.standard.glb",
-   "sha256": "4901d4dbd49da91f4f637f67640c9cc03a62d4c9d6de02c73ee2a0727833d708",
+   "sha256": "b7efdc8222ae755c83997d4c27101eff573c6a8242030bb4aa6ade0cdd74856d",
    "bytes": 93552,
    "fits": {
     "all": {
@@ -3438,7 +3440,7 @@
    "style": "plain",
    "name": "Heavy pauldrons",
    "glb": "parts/armor.shoulders.heavy.glb",
-   "sha256": "e410591e0fa4b6bfefd5a6ed5043b77330a145082c57be6d1f3ef6d5690e44c6",
+   "sha256": "c1cd9cbc159ef8cb4fe586c207fb24b6d351071ccc1479d157b2db3e8b31f6ff",
    "bytes": 116284,
    "fits": {
     "all": {
@@ -3488,7 +3490,7 @@
    "style": "epaulette",
    "name": "Officer epaulettes",
    "glb": "parts/armor.shoulders.epaulette.glb",
-   "sha256": "b06d18a30cb299db9e48813e8c9f8534e045eea59e8ebfc0c90f5bb7e4ad381c",
+   "sha256": "183979b4b9692ad2076ed90c399180ab4034eee7b11c81e0ebc9833cad827ea4",
    "bytes": 69536,
    "fits": {
     "all": {
@@ -3537,7 +3539,7 @@
    "style": "flight",
    "name": "Flight pauldrons",
    "glb": "parts/armor.shoulders.flight.glb",
-   "sha256": "86bddbc8d879e432edb8411aa862215e78dccf45f3290b24425e4de8372a0e49",
+   "sha256": "f1642b2c8ff556cf8a4b49a3eaa4becb8931de0ddf6db58455035ddf0aa1d1b0",
    "bytes": 63248,
    "fits": {
     "all": {
@@ -3587,7 +3589,7 @@
    "style": "plain",
    "name": "Fabric gloves",
    "glb": "parts/armor.gloves.fabric.glb",
-   "sha256": "7b73ee5a2a53cacec55c2265990e7868f5283a5a3b2de16a6aea27c721e20e98",
+   "sha256": "a73072d87e53928caf93f45e7ebc64a2ef857aecff4c78c15fb1c6cc0bdc627f",
    "bytes": 75968,
    "fits": {
     "all": {
@@ -3636,7 +3638,7 @@
    "style": "plain",
    "name": "Light gloves",
    "glb": "parts/armor.gloves.light.glb",
-   "sha256": "294e619f3b8f15d7ae3249b5c53e4b54cc2ece314c578106a7a2e25bed1ec0d7",
+   "sha256": "de780c0b27eae2d0169d54df45ed51b10f573d269e8c6bc3521c695b62290115",
    "bytes": 126196,
    "fits": {
     "all": {
@@ -3689,7 +3691,7 @@
    "style": "plain",
    "name": "Armoured gauntlets",
    "glb": "parts/armor.gloves.standard.glb",
-   "sha256": "d69f9f25331a93b4b8a9c09e354dec2ad0a9c6f1c9db692097630430cf1fd04b",
+   "sha256": "72fcc801a4c04c418581924acea0bc473089b73b67fd4bb4ef64d4c01cb5bba9",
    "bytes": 166536,
    "fits": {
     "all": {
@@ -3744,7 +3746,7 @@
    "style": "plain",
    "name": "Heavy gauntlets",
    "glb": "parts/armor.gloves.heavy.glb",
-   "sha256": "7d277f256711467ca06fdd7a1b063fc69fc41631f765952fdf62254a89ab7593",
+   "sha256": "8cdbe7e81a54c1e2af0e5c39398c7c0039a7539e691dc119ce03b73707e94358",
    "bytes": 183344,
    "fits": {
     "all": {
@@ -3799,7 +3801,7 @@
    "style": "work",
    "name": "Work gloves",
    "glb": "parts/armor.gloves.work.glb",
-   "sha256": "1d0b4320f0ab11591070ac13497a0f8d6a53a99c94ad4ee4237b7e617c1553bf",
+   "sha256": "ea12ef21af8d1521d8f3c3e592a406c42920b7c9bcccc5ffc6e83a391eca3e1e",
    "bytes": 134904,
    "fits": {
     "all": {
@@ -3853,7 +3855,7 @@
    "style": "sneaker",
    "name": "Deck shoes",
    "glb": "parts/armor.boots.sneaker.glb",
-   "sha256": "54edf35ae80b176d7210a506d19047802689d7d13cd1d58f625c17a4a5f8305c",
+   "sha256": "93e62d002adce0bbb6a1d4c927013f67fa355c77d9a76cc7fb11e393f5d2ab17",
    "bytes": 105360,
    "fits": {
     "all": {
@@ -3907,7 +3909,7 @@
    "style": "plain",
    "name": "Work boots",
    "glb": "parts/armor.boots.light.glb",
-   "sha256": "f50637997d1df72b7eb1875ae51f4a46baedcb61f18cd28ed741114946ecc52c",
+   "sha256": "bf25ecab72eb04e6c9aec5773ce036e982d6d2fcef50b1032e76484929c550ed",
    "bytes": 92324,
    "fits": {
     "all": {
@@ -3960,7 +3962,7 @@
    "style": "plain",
    "name": "Armoured boots",
    "glb": "parts/armor.boots.standard.glb",
-   "sha256": "7fd1b13309036ac36f1e28e3f594c723fdb5613f2beb084005c6d5edff92998e",
+   "sha256": "5652cb5264507b6b21f938f7cfdff74b36c10257926c99b247d1bb39ae33665d",
    "bytes": 113524,
    "fits": {
     "all": {
@@ -4015,7 +4017,7 @@
    "style": "plain",
    "name": "Heavy mag boots",
    "glb": "parts/armor.boots.heavy.glb",
-   "sha256": "73749efe6e82cdf4f4e627db4c76504a7dba83d17ced62484a031ac305099c86",
+   "sha256": "3eb9dec5d335db49cbab416bdcb5625134a885d4826593ab02669e75ec667965",
    "bytes": 136224,
    "fits": {
     "all": {
@@ -4070,7 +4072,7 @@
    "style": "dress",
    "name": "Dress boots",
    "glb": "parts/armor.boots.dress.glb",
-   "sha256": "4136db28311558eb2a6b124660daeadf5b9f35ead2ada0db335d36beba582ca0",
+   "sha256": "82e3ac24f0116b732505303a372619d7f06defcfa5d4eb709bf91010a8dacf26",
    "bytes": 85860,
    "fits": {
     "all": {
@@ -4124,7 +4126,7 @@
    "style": "flight",
    "name": "Flight boots",
    "glb": "parts/armor.boots.flight.glb",
-   "sha256": "7f9354635d97978d6bc89cb97585d555e7aa144aaa3b88a48edf86a61d990530",
+   "sha256": "ebdb1452bfde1572c13a613a5e734a61c6ff5c0b960f63a7921d66d380149429",
    "bytes": 93448,
    "fits": {
     "all": {
@@ -4178,7 +4180,7 @@
    "style": "cargo",
    "name": "Cargo trousers",
    "glb": "parts/armor.legs.cargo.glb",
-   "sha256": "71dd4e9b254feae0b846713da918fafa2813b8a77279cf4d8d4fdd663d25f58f",
+   "sha256": "83d434bc99126069d679035d20be61d70a365175726a04706ee085b118de59cd",
    "bytes": 30476,
    "fits": {
     "all": {
@@ -4226,7 +4228,7 @@
    "style": "plain",
    "name": "Knee pads and straps",
    "glb": "parts/armor.legs.light.glb",
-   "sha256": "13b905b494821e261804f42ede9d9fad594044891560d5e5174ec88c14b7486f",
+   "sha256": "c3e1d97d8b97625614ba5608fb47d2a76c66cacc8d31b121d8578b782f7059e2",
    "bytes": 47896,
    "fits": {
     "all": {
@@ -4278,7 +4280,7 @@
    "style": "plain",
    "name": "Thigh and knee plates",
    "glb": "parts/armor.legs.standard.glb",
-   "sha256": "37de27aac9253be4e3ff190bdca9e07656702f861fcad615420c0b199321bae0",
+   "sha256": "64bc7984ebc85cf8e422523c9e30955f957bc9c4e61c45e147082eb39c00b2bf",
    "bytes": 69660,
    "fits": {
     "all": {
@@ -4329,7 +4331,7 @@
    "style": "plain",
    "name": "Heavy greaves and tassets",
    "glb": "parts/armor.legs.heavy.glb",
-   "sha256": "8e5dc071e60c200e42f77e3d84e1d79fd0ebfbaceb63fe587de23e37e224c237",
+   "sha256": "29a30b88094b35be28c8919d47d7dbfe2b6c9644008df30b2e7a7c83e06aac2b",
    "bytes": 92356,
    "fits": {
     "all": {
@@ -4381,7 +4383,7 @@
    "style": "plain",
    "name": "Belt",
    "glb": "parts/armor.belt.plain.glb",
-   "sha256": "ab20459a859105f0bbde90cfc94f898fc31ad25379a7695cb8fee7e883088a4d",
+   "sha256": "83125a0325c3a1a7c17cf2eb292eea73a8619529706413c0608398d47e0d6901",
    "bytes": 73608,
    "fits": {
     "wide": {
@@ -4446,7 +4448,7 @@
    "style": "utility",
    "name": "Utility belt",
    "glb": "parts/armor.belt.utility.glb",
-   "sha256": "403d8ca5c08d74715ba9ca2e20454a926247a03967527b2fe164fb56af82a1b5",
+   "sha256": "8e2c3f29e2cfe9e7000e17c03376f3baca1ef2c1be11688c91e257a1edc2f9f8",
    "bytes": 117932,
    "fits": {
     "wide": {
@@ -4513,7 +4515,7 @@
    "style": "utility",
    "name": "Load-bearing belt",
    "glb": "parts/armor.belt.standard.glb",
-   "sha256": "afce623427ce67698644d97060c66dcb0ce8337441954594d3c5eb051235d44d",
+   "sha256": "d0c1fb144b7fd6c4e18930b23242863a23bd0cbdeec0c8aebe5ed38c8a1db047",
    "bytes": 182916,
    "fits": {
     "wide": {
@@ -4580,7 +4582,7 @@
    "style": "utility",
    "name": "Heavy armoured belt",
    "glb": "parts/armor.belt.heavy.glb",
-   "sha256": "aa3373c694288e2a76148efa80fbee5bfe10730793f31dad0a425d2755779b78",
+   "sha256": "ca4c0dbc375b9995d494242bcf1bddba4abc6413f8aaf1411944d53cdb0195e7",
    "bytes": 196904,
    "fits": {
     "wide": {
@@ -4647,7 +4649,7 @@
    "style": "tool",
    "name": "Tool belt",
    "glb": "parts/armor.belt.tool.glb",
-   "sha256": "71753e7cda64f9b4307f057110215ea60b8d600a7fc2fd3e6785d0fe1953d177",
+   "sha256": "29d60b051fa5d95f1395018a3659abff88b68e5883a38e20b216a4ffce466846",
    "bytes": 166084,
    "fits": {
     "wide": {
@@ -4715,7 +4717,7 @@
    "style": "medic",
    "name": "Medic belt",
    "glb": "parts/armor.belt.medic.glb",
-   "sha256": "2599571c6919cbceffbaab36f71234ca3770959d7e19f2f53487087001086a52",
+   "sha256": "43e729aecd0264a4addaada7de3e7fd3e515ccae5205906f233cb22b00e86c80",
    "bytes": 140644,
    "fits": {
     "wide": {
@@ -4783,7 +4785,7 @@
    "style": "sash",
    "name": "Officer's belt",
    "glb": "parts/armor.belt.sash.glb",
-   "sha256": "f94bfd723dc6163e1e49ff39fd18bece77886fbc025ea8b4425fdf8b8c49797b",
+   "sha256": "9e4dbb11b56c22c189b2babe738a706b61c2039c9875f0be6738348995924f2e",
    "bytes": 80504,
    "fits": {
     "wide": {
@@ -4847,7 +4849,7 @@
    "style": "holster",
    "name": "Holster belt",
    "glb": "parts/armor.belt.holster.glb",
-   "sha256": "02e23752325b5a4e20ea5764d77fa418b8cde202b1517ab41e61ce024177b29d",
+   "sha256": "e484aceb7d1579d473660e750908025800d42a3fea0c7220c0eec480439efe2c",
    "bytes": 182912,
    "fits": {
     "wide": {
@@ -4914,7 +4916,7 @@
    "style": "backpack",
    "name": "Day pack",
    "glb": "parts/armor.back.backpack-t0.glb",
-   "sha256": "25001e21200d2b13edde366c25f3531fcdae0db77d34cc30910227fa27b7f2c3",
+   "sha256": "b00c6fa535ca7c3556ea6948d8868888d1d86858c085d8225d79ec7a2fe18711",
    "bytes": 58184,
    "fits": {
     "all": {
@@ -4964,7 +4966,7 @@
    "style": "backpack",
    "name": "Field pack",
    "glb": "parts/armor.back.backpack-t1.glb",
-   "sha256": "9ba8e659936afa8d2d5a463d73a0b742f6e1a9f20739a295a833e563fd831363",
+   "sha256": "1739d9a0d272def1cb84af5f046eceee9679f93875eb90e9038f212a394ccf9d",
    "bytes": 74612,
    "fits": {
     "all": {
@@ -5015,7 +5017,7 @@
    "style": "backpack",
    "name": "Expedition pack",
    "glb": "parts/armor.back.backpack-t2.glb",
-   "sha256": "581ba1f2219b347060199f75fe1fb632eb0be59a1f202822ecb0bec000ad6963",
+   "sha256": "e7d75cbc40a41fcd6284dc85ecf66c894fe3bfd803c30bfbbcaa9c503174696b",
    "bytes": 82180,
    "fits": {
     "all": {
@@ -5066,7 +5068,7 @@
    "style": "backpack",
    "name": "Heavy combat rig",
    "glb": "parts/armor.back.backpack-t3.glb",
-   "sha256": "1f395484097bd48f7210ffaa3423f8d9bd3898ab4828d47ae4e50433f7ab7c17",
+   "sha256": "49281b1725b8f980a2efad93270bebe1abad7f1f2b80333d4757918db94c56db",
    "bytes": 97332,
    "fits": {
     "all": {
@@ -5117,7 +5119,7 @@
    "style": "oxygen",
    "name": "Oxygen pack",
    "glb": "parts/armor.back.oxygen-single.glb",
-   "sha256": "72c8f66b096c4ec940e08e3a9ee846a390e8e49136095c8f3701a7489d90a233",
+   "sha256": "5d043721a6f800263e49a272d410d7fd277b67cc0118c2aa42795585b7b91e50",
    "bytes": 46948,
    "fits": {
     "all": {
@@ -5167,7 +5169,7 @@
    "style": "oxygen",
    "name": "Twin-tank oxygen pack",
    "glb": "parts/armor.back.oxygen-twin.glb",
-   "sha256": "9734f0ef93a08e5df36ff918c830025b796dc1ac264fd598faa8270b7736aefe",
+   "sha256": "09e6cf973ea8083dbe4f4e1c7194808f52746c1096051b1b267436a833363609",
    "bytes": 72372,
    "fits": {
     "all": {
@@ -5216,7 +5218,7 @@
    "style": "jetpack",
    "name": "Light jetpack",
    "glb": "parts/armor.back.jetpack-light.glb",
-   "sha256": "7bddaffcd1f313eff6f3f9cde9eeab813fe2167e2ff4daebc20ffd891ba04582",
+   "sha256": "c2a2026031f2a81c12f97242b11c9ce6df2f58a40745bc689420a578dec12b14",
    "bytes": 90260,
    "fits": {
     "all": {
@@ -5299,7 +5301,7 @@
    "style": "jetpack",
    "name": "Heavy jetpack",
    "glb": "parts/armor.back.jetpack-heavy.glb",
-   "sha256": "fcb357cd4137bb046de5c08f4c6e46e1532d9ce39fdb51ecef8db1c29445803e",
+   "sha256": "bd2cf3173bcf5784e5d543277d4c080896c7a6a0a1cf5a79cbf2c7a76f01ded9",
    "bytes": 97868,
    "fits": {
     "all": {
@@ -5382,7 +5384,7 @@
    "style": "medpack",
    "name": "Medical pack",
    "glb": "parts/armor.back.medpack.glb",
-   "sha256": "103421ebd4ce7214916072b40a04f58d72fcecfd1c214adf28cd1514f1836f92",
+   "sha256": "58db6c874686814fa6acc224b8d3781aaee5a78e37c9c4f12f792d4db375bad8",
    "bytes": 53272,
    "fits": {
     "all": {
@@ -5432,7 +5434,7 @@
    "style": "radio",
    "name": "Recon radio pack",
    "glb": "parts/armor.back.radio.glb",
-   "sha256": "ba1728ae230fecec93b7f89e50fbad44dc73fc817dae7768ebbb79b19dd6335f",
+   "sha256": "70cc5369ef36640399a4b5aed7d8349c2f0795be8a90199c144149a6a1706614",
    "bytes": 50700,
    "fits": {
     "all": {
@@ -5482,7 +5484,7 @@
    "style": "toolpack",
    "name": "Engineer tool pack",
    "glb": "parts/armor.back.toolpack.glb",
-   "sha256": "48f5d4c49bbaca2b7e097557b148be9b7616587f578b4a39999e44de16b8787f",
+   "sha256": "cc7d4168a1c1dcfe6b42017af94156e8e01de1901de0102a9c9398b38d32c303",
    "bytes": 63892,
    "fits": {
     "all": {

@@ -1,6 +1,6 @@
 """Crew voxel armour kit (armor-v1 r003): pure part definitions, no bpy, unit-testable.
 
-Fitted to CHAR-BODY r004 (CHARACTER_SPEC_BODY.json spec_version 2 + owner round 2, ~3 heads). Every part is
+Fitted to the owner-approved CHAR-BODY r005 (CHARACTER_SPEC_BODY.json spec_version 2, ~3 heads). Every part is
 a set of voxel volumes on the 1/32 m grid, one volume per crew_rig bone, rigidly skinned to that bone.
 Authoring frame = CHAR-BODY rest-pose armature voxels: x = character right (+X is .R), y = forward
 (the character faces +Y), z = up, origin = feet centre on the ground; cell (x, y, z) spans
@@ -28,9 +28,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 KIT_ID = "crew.armor-v1"
-REVISION = "r004"
+REVISION = "r005"
 SPEC_VERSION = 2
-BODY_REVISION = "r004"
+BODY_REVISION = "r005"
 V = 1.0 / 32.0
 SLOTS = ["skin", "hair", "eye", "suit_primary", "suit_secondary", "accent", "metal", "dark", "emit", "glass"]
 SI = {s: i for i, s in enumerate(SLOTS)}
@@ -736,10 +736,10 @@ def cw(primary, secondary, accent, metal, dark, emit, glass="#7fd8ff", label="")
 
 
 COLOURWAYS = {
-    "arctic": cw("#dcd6ea", "#5d5f8a", "#4f7cff", "#a3abc0", "#2a2b40", "#56c8ff", label="Arctic"),
+    "arctic": cw("#e4e0f2", "#343a6a", "#4f7cff", "#a3abc0", "#2a2b40", "#56c8ff", label="Arctic"),
     "crimson": cw("#c8263d", "#2e2735", "#f08a2a", "#a0a6b3", "#1b1820", "#ff5a4a", label="Crimson"),
-    "cobalt": cw("#2f63e6", "#e2e6f0", "#1b2d7a", "#a8b2c6", "#161c33", "#5fd2ff", label="Cobalt"),
-    "amber": cw("#f4a61e", "#2d2c38", "#4c83ff", "#aeafb6", "#1c1b24", "#6fd6ff", label="Amber"),
+    "cobalt": cw("#2f63e6", "#1c2548", "#e8ecf6", "#a8b2c6", "#161c33", "#5fd2ff", label="Cobalt"),
+    "amber": cw("#f7a414", "#24222e", "#4c83ff", "#aeafb6", "#1c1b24", "#6fd6ff", label="Amber"),
     "moss": cw("#86b43c", "#2e3528", "#d4e05c", "#929c90", "#161a14", "#8dff5a", label="Moss"),
     "shadow": cw("#4d4864", "#2b283a", "#f08a2a", "#827f96", "#131219", "#ff9a3a", label="Shadow"),
     "captain": cw("#1f2d55", "#e3e8f1", "#f3bb3c", "#d0a84c", "#12182a", "#63c9ff", label="Command navy"),
