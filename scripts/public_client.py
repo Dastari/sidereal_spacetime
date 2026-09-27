@@ -100,17 +100,27 @@ def _command(action, cfg, lifecycle, *, artifact=None, artifact_sha256=None, exp
         (home / 'release.json').write_text(json.dumps(staged, indent=2))
         print('Public build activated:', staged['sha256'])
     if action in ('deploy', 'activate', 'up'):
-        if not (current / 'index.html').is_file():
-            raise RuntimeError('Deploy a public build before starting it')
+        command, env = serve_command(cfg)
         existing = lifecycle.load().get('public-client')
         if not existing or not lifecycle.alive(existing):
             lifecycle.port_free(settings['host'], settings['port'])
-        from public_delivery import launch_options
-        preview_config, preview_env = launch_options(ROOT, cfg)
-        lifecycle.launch('public-client', [
-            'node', 'node_modules/vite/bin/vite.js', 'preview',
-            '--config', preview_config, '--host', settings['host'],
-            '--port', str(settings['port']), '--strictPort', '--outDir', str(current.resolve()),
-        ], preview_env)
+        # A systemd-managed public client re-derives this same command in `public-client-serve`,
+        # so activation (stop, switch `current`, launch) serves the new release either way.
+        lifecycle.launch('public-client', command, env)
         lifecycle.ready(f"http://127.0.0.1:{settings['port']}", 'public-client')
         print('Public game:', cfg['auth']['client_origin'])
+
+
+def serve_command(cfg):
+    """The preview-server command and environment for the currently activated release."""
+    settings = cfg['public_client']
+    current = ROOT / '.runtime/public-client/current'
+    if not (current / 'index.html').is_file():
+        raise RuntimeError('Deploy a public build before starting it')
+    from public_delivery import launch_options
+    preview_config, preview_env = launch_options(ROOT, cfg)
+    return [
+        'node', 'node_modules/vite/bin/vite.js', 'preview',
+        '--config', preview_config, '--host', settings['host'],
+        '--port', str(settings['port']), '--strictPort', '--outDir', str(current.resolve()),
+    ], preview_env

@@ -1,0 +1,39 @@
+# Template rendered by ops/systemd/install.sh, which fills the at-sign tokens from its options.
+[Unit]
+Description=Sidereal SpacetimeDB world database (dev.py database-serve)
+Documentation=https://wiki.sidereal.dastari.net/Operations/Boot%%20Services
+After=network.target
+ConditionPathExists=@ROOT@/scripts/dev.py
+# Crash-loop guard: five failed starts in ten minutes leave the unit failed for an operator.
+StartLimitIntervalSec=600
+StartLimitBurst=5
+
+[Service]
+# dev.py supervises the SpacetimeDB child, records it in @ROOT@/.runtime/processes.json and
+# sends READY=1 only after /v1/ping answers, so `systemctl start` returns when it is usable.
+Type=notify
+NotifyAccess=main
+User=root
+WorkingDirectory=@ROOT@
+Environment=PATH=@PATH@
+Environment=PYTHONUNBUFFERED=1
+Environment=SIDEREAL_SUPERVISOR_UNIT=%n
+ExecStart=@PYTHON@ @ROOT@/scripts/dev.py database-serve
+# SIGTERM goes to the supervisor, which forwards it to the database process group and waits
+# up to 60 s for a clean shutdown; systemd's SIGKILL of the whole cgroup is the backstop.
+KillMode=mixed
+TimeoutStartSec=300
+TimeoutStopSec=90
+Restart=on-failure
+RestartSec=5
+# 3 = already running outside systemd or port taken: fail once, do not loop.
+RestartPreventExitStatus=3
+SyslogIdentifier=sidereal-database
+UMask=0077
+LimitNOFILE=524288
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

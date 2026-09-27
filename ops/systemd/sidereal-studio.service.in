@@ -1,0 +1,35 @@
+# Template rendered by ops/systemd/install.sh, which fills the at-sign tokens from its options.
+[Unit]
+Description=Sidereal Studio / dashboard (dev.py dashboard-serve)
+Documentation=https://wiki.sidereal.dastari.net/Operations/Boot%%20Services
+Wants=sidereal-database.service
+After=network.target sidereal-database.service
+ConditionPathExists=@STUDIO_ROOT@/scripts/dev.py
+StartLimitIntervalSec=600
+StartLimitBurst=5
+
+[Service]
+# Studio may run from its own release checkout (--studio-root); dev.py there only manages
+# this unit because its WorkingDirectory matches that checkout. Start prepares public assets.
+Type=notify
+NotifyAccess=main
+User=root
+WorkingDirectory=@STUDIO_ROOT@
+Environment=PATH=@PATH@
+Environment=PYTHONUNBUFFERED=1
+Environment=SIDEREAL_SUPERVISOR_UNIT=%n
+ExecStart=@PYTHON@ @STUDIO_ROOT@/scripts/dev.py dashboard-serve
+KillMode=mixed
+TimeoutStartSec=600
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=5
+RestartPreventExitStatus=3
+SyslogIdentifier=sidereal-studio
+LimitNOFILE=524288
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target

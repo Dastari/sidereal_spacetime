@@ -47,3 +47,11 @@ version = "v0.3.35"
 port = 8765
 state_dir = "~/.local/share/sidereal-agent-mail"
 project_key = "/root/sidereal_spacetime"
+
+[systemd]
+# System units rendered from ops/systemd/ by ops/systemd/install.sh. dev.py drives a service
+# through systemctl only while its unit is enabled and its WorkingDirectory is this checkout;
+# otherwise the detached process flow is unchanged. SIDEREAL_SYSTEMD=off forces detached.
+database = "sidereal-database.service"
+public-client = "sidereal-public-client.service"
+dashboard = "sidereal-studio.service"

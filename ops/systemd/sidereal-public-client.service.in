@@ -1,0 +1,37 @@
+# Template rendered by ops/systemd/install.sh, which fills the at-sign tokens from its options.
+[Unit]
+Description=Sidereal public game client on sidereal.dastari.net (dev.py public-client-serve)
+Documentation=https://wiki.sidereal.dastari.net/Operations/Boot%%20Services
+# Wants (not Requires): stopping the database for a cold backup must not take the public
+# page down with it; the preview server proxies /v1 and browsers reconnect when it returns.
+Wants=sidereal-database.service
+After=network.target sidereal-database.service
+ConditionPathExists=@ROOT@/scripts/dev.py
+StartLimitIntervalSec=600
+StartLimitBurst=5
+
+[Service]
+# Serves the activated immutable release (.runtime/public-client/current, resolved at start),
+# so dev.py public-client-activate/deploy/delivery-* keep working: they stop and start the unit.
+Type=notify
+NotifyAccess=main
+User=root
+WorkingDirectory=@ROOT@
+Environment=PATH=@PATH@
+Environment=PYTHONUNBUFFERED=1
+Environment=SIDEREAL_SUPERVISOR_UNIT=%n
+ExecStart=@PYTHON@ @ROOT@/scripts/dev.py public-client-serve
+KillMode=mixed
+TimeoutStartSec=120
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=5
+RestartPreventExitStatus=3
+SyslogIdentifier=sidereal-public-client
+LimitNOFILE=524288
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=full
+
+[Install]
+WantedBy=multi-user.target
