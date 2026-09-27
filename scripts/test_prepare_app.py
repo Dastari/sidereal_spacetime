@@ -118,7 +118,7 @@ class PrepareAppTests(unittest.TestCase):
     def test_shared_celestials_are_exact_and_do_not_require_the_sibling_app(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
-            (root / "assets/runtime").mkdir(parents=True)
+            seed_runtime(root)
             for name in ("reviewed-planets", "reviewed-stars"):
                 source = root / "assets/reviewed-celestials" / name / "revision/asset.bin"
                 source.parent.mkdir(parents=True)

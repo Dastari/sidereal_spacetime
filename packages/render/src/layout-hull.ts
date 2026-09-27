@@ -176,8 +176,15 @@ export function createHullViewport(
   pointerInput.buttons = [1, 2];
   let space = false;
   const navigation = () => {
+    // A top-locked preview owns the camera; external measuring keeps the
+    // primary button for measurement picks instead of orbiting.
+    const lockTop = state?.lockTop || state?.preview?.lockTop;
     const pan = space || state?.tool === "pan";
-    pointerInput.buttons = pan || state?.tool === "orbit" ? [0, 1, 2] : [1, 2];
+    pointerInput.buttons = lockTop
+      ? []
+      : pan || (state?.tool === "orbit" && !externalMeasuring)
+        ? [0, 1, 2]
+        : [1, 2];
     camera.movement.input.setInteraction(
       "pointer",
       { button: 0 },
@@ -763,7 +770,12 @@ export function createHullViewport(
     if (next.tool !== "place") hideGhost();
     loadNeeded(next.parts);
     navigation();
-    const orientation = layoutViewOrientation(projection, next.projection);
+    const lockTop = next.lockTop || next.preview?.lockTop;
+    camera.mode = next.projection === "3D" && !lockTop ? 0 : 1;
+    const orientation = lockTop
+      ? { alpha: Math.PI / 2, beta: 0.000001 }
+      : layoutViewOrientation(projection, next.projection);
+    camera.lowerBetaLimit = lockTop ? 0.000001 : 0.03;
     projection = next.projection;
     if (orientation) {
       camera.alpha = orientation.alpha;
@@ -1067,13 +1079,7 @@ export function createHullViewport(
     setMeasuring(active: boolean) {
       externalMeasuring = active;
       measurement.setActive(active || state?.tool === "measure");
-      if (state)
-        pointerInput.buttons =
-          state.lockTop || state.preview?.lockTop
-            ? []
-            : state.tool === "orbit" && !active
-              ? [0, 1, 2]
-              : [1, 2];
+      if (state) navigation();
     },
     measureAt: measurement.measureAt,
     clearMeasurements: measurement.clear,
