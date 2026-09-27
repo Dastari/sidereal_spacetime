@@ -70,6 +70,8 @@ def args():
     p.add_argument("--runtime", action="store_true",
                    help="compact runtime export: merged cuboids, hidden boxes dropped, flat <out>/<id>.glb")
     p.add_argument("--ids-file", default="", help="JSON list of component ids to export")
+    p.add_argument("--save-blend", default="",
+                   help="save the editable Blender source (.blend, compressed) with every exported component")
     p.add_argument("--runtime-bevel", type=float, default=0.0,
                    help="runtime brick bevel in metres (0: none; per-row bevels striate round parts in Babylon)")
     p.add_argument("--sheets", default="")
@@ -1004,19 +1006,22 @@ def export_all(catalog, a):
     sc.collection.children.link(coll)
     mats = slot_materials()
     rows = []
+    layout = []
     for c in catalog["components"]:
         if not c["art"]["kitKey"] or (only and c["id"] not in only):
             continue
+        cc = bpy.data.collections.new(c["id"])                     # one collection per component
+        coll.children.link(cc)
         root = bpy.data.objects.new(f"component.{c['id']}", None)
-        coll.objects.link(root)
+        cc.objects.link(root)
         for k, v in (("componentId", c["id"]), ("sizeClass", c["sizeClass"]), ("schema", catalog["schema"]),
                      ("catalogRevision", catalog["revision"]), ("frame", c["mount"]["frame"]), ("status", "proposed")):
             root[k] = v
-        ob, boxes, conv = component_object(c, mats, coll, bevel=not a.runtime or a.runtime_bevel > 0)
+        ob, boxes, conv = component_object(c, mats, cc, bevel=not a.runtime or a.runtime_bevel > 0)
         if a.runtime and a.runtime_bevel > 0:
             ob.modifiers["brick"].width = a.runtime_bevel
         ob.parent = root
-        empties = port_empties(c, root, coll)
+        empties = port_empties(c, root, cc)
         tris, verts, lo, hi, used = measure(ob)
         glb = gdir / f"{c['id']}.glb"
         if not a.no_glb:
@@ -1041,8 +1046,22 @@ def export_all(catalog, a):
             "envelopeOverhangM": round(max(0.0, over), 4),
             "ports": [p["id"] for p in c["ports"]],
         })
-        clear_collection(coll)
+        if a.save_blend:
+            # keep the editable source; exclude it from evaluation while the rest export
+            bpy.context.view_layer.layer_collection.children["export"].children[cc.name].exclude = True
+            layout.append((root, c))
+        else:
+            clear_collection(cc)
+            bpy.data.collections.remove(cc)
         print(f"[export] {c['id']:32s} tris={tris:6d} over={max(0.0, over):.3f} m")
+    if a.save_blend:
+        for n, (root, c) in enumerate(layout):                      # browsable 12-column grid, 6 m pitch
+            root.location = ((n % 12) * 6.0, -(n // 12) * 6.0, 0.0)
+            bpy.context.view_layer.layer_collection.children["export"].children[c["id"]].exclude = False
+        path = Path(a.save_blend)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        bpy.ops.wm.save_as_mainfile(filepath=str(path), compress=True, check_existing=False)
+        print(f"[export] saved source {path}")
     return rows
 
 
@@ -1072,8 +1091,15 @@ def main():
                     if a.runtime else None),
         "components": rows,
     }
+    if a.save_blend:
+        blend = Path(a.save_blend).resolve()
+        manifest["source"] = {"blend": str(blend.relative_to(ROOT)) if blend.is_relative_to(ROOT) else str(blend),
+                              "sha256": sha256(blend),
+                              "note": "editable Blender source saved by this export; GLBs are exported from it"}
     if a.runtime:
         manifest["status"] = "proposed art published to the runtime for review; not owner-approved"
+        if a.ids_file:
+            manifest["requiredComponentIds"] = sorted(json.loads(Path(a.ids_file).read_text()))
     if not a.only:
         (out / "manifest.json").write_text(json.dumps(manifest, indent=1) + "\n")
     print(f"[export] {len(rows)} components")
