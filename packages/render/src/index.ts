@@ -60,6 +60,8 @@ export {
 } from "./crew/pose-review-config";
 import { createCombatAim } from "./combat-aim";
 import { posePlacementHeading } from "./crew/pose-integration-motion";
+import type { VoxelCrewEva } from "./crew/voxel-crew-clips";
+import { createEvaBodyPresentation } from "./eva/eva-body";
 import { createDebugFeatures, type DebugFeature } from "./debug-features";
 import { createDebugCollisionSource } from "./debug-collision-source";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -187,7 +189,20 @@ export type SceneState = {
   crewAppearance?: CrewAppearance;
   /** Other characters on this deck (server views only; never inventory or health). */
   crewmates?: readonly RemoteCrewState[];
+  /** Own character outside the ship (EVA): accepted pose in the own ship's frame (wiki `Systems/EVA`). */
+  eva?: EvaSceneState | null;
+  /** Other EVA bodies in view (`visible_eva_bodies`), in the own ship's frame. */
+  evaBodies?: readonly RemoteCrewState[];
 };
+export type EvaSceneState = VoxelCrewEva & {
+  /** Own-ship-local heading (ship convention: counter-clockwise, forward = (−sin h, cos h)). */
+  localHeading: number;
+  /** Presentation height above the ship datum (m): the roof when maglocked, above it when free. */
+  elevation: number;
+};
+/** Top-down EVA camera: half view extent (m) on leaving the ship, and the slight tilt. */
+const EVA_FLIGHT_ZOOM = 10;
+const EVA_CAMERA_BETA = 0.22;
 export interface WorldOptions {
   /** Opt-in accepted shared projections, separate from the private local ship. */
   sharedWorld?: {
@@ -676,9 +691,15 @@ async function buildWorld(
   const localGlowOcclusion = createShipGlowOccluders(scene, shipRoot, glow);
   // Other characters on this deck: created once the local crew exists (voxel bundle only).
   let remoteCrew: ReturnType<typeof createRemoteCrew> | undefined;
+  /** Other characters outside ships (EVA), drawn in every view. */
+  let evaCrew: ReturnType<typeof createRemoteCrew> | undefined;
+  let ownEva: ReturnType<typeof createEvaBodyPresentation> | undefined;
+  let evaShown = false;
+  let flightZoomBeforeEva: number | undefined;
   const actorMeshes = () => [
     ...(crew?.root.getChildMeshes() ?? []),
     ...(remoteCrew?.meshes() ?? []),
+    ...(evaCrew?.meshes() ?? []),
   ];
   const refreshLocalGlow = () =>
     localGlowOcclusion.set([
@@ -779,6 +800,21 @@ async function buildWorld(
             glow.addIncludedOnlyMesh(mesh as Mesh);
       },
     });
+  if (crewOutfit && crew && !assetFailure) {
+    const voxel = crew as Awaited<ReturnType<typeof createVoxelCrewVisual>>;
+    ownEva = createEvaBodyPresentation(scene, voxel, {
+      onMeshes: (meshes) => meshes.forEach((m) => glow.addIncludedOnlyMesh(m)),
+    });
+    evaCrew = createRemoteCrew(scene, shipRoot, {
+      onMeshesChanged: () => refreshCrewPresentation(),
+      onEffectMesh: (mesh) => glow.addIncludedOnlyMesh(mesh),
+      onShot: (impact) => {
+        if (impact.struck)
+          for (const mesh of impactFlash.play(impact.x, impact.y, 1.3))
+            glow.addIncludedOnlyMesh(mesh as Mesh);
+      },
+    });
+  }
   // The laser sight stops at structure (prefab ships) and at crewmates, as the server shot does.
   if (prefabBeamClip || remoteCrew)
     combatAim.setClip((origin, direction, range) => {
@@ -1005,6 +1041,18 @@ async function buildWorld(
       Number.isFinite(state.constructionSupportElevation)
     )
       walkingElevation = state.constructionSupportElevation!;
+    const eva = state.eva ?? undefined;
+    if (eva) walkingElevation = eva.elevation;
+    if (!!eva !== evaShown) {
+      // Leaving the ship: close top-down EVA view; coming back: the previous flight zoom.
+      if (eva) {
+        flightZoomBeforeEva = flightZoom;
+        flightZoom = EVA_FLIGHT_ZOOM;
+      } else if (flightZoomBeforeEva !== undefined) {
+        flightZoom = flightZoomBeforeEva;
+        flightZoomBeforeEva = undefined;
+      }
+    }
     const acceptedStair =
       state.constructionTraversal &&
       "kind" in state.constructionTraversal &&
@@ -1033,10 +1081,11 @@ async function buildWorld(
     }
     const dx = state.localX - displayed.localX,
       dy = state.localY - displayed.localY;
-    const walking =
-      !state.seated &&
-      (stairMoving ||
-        (Math.hypot(dx, dy) > 0.015 && !traversalFrame?.inTransit));
+    const walking = eva
+      ? eva.phase === "maglocked" && eva.walking
+      : !state.seated &&
+        (stairMoving ||
+          (Math.hypot(dx, dy) > 0.015 && !traversalFrame?.inTransit));
     const movementHeading = stairMoving
       ? stairTravelHeading
       : walking
@@ -1052,13 +1101,24 @@ async function buildWorld(
     if (!equipmentPose?.isBound && state.combat?.active && !state.seated)
       avatar.rotation.y = -state.combat.angle;
     if (state.seated) avatar.rotation.y = state.seatFacing ?? 0;
+    // EVA: the accepted body heading turns the body unless it aims (then it faces the aim).
+    if (eva && !state.combat?.active) avatar.rotation.y = eva.localHeading;
     const cabinVisible = cabinIsVisible(state.interior, blend, !!focusedBodyId);
     updateConstructionDoors?.(state.constructionDoors ?? []);
     cabinVisibility.update(cabinVisible, state.objectLights ?? []);
     lighting.setCabinVisible(cabinVisible);
     groundItems.update(state.groundItems ?? [], cabinVisible);
-    if (cabinVisible && debugFeatures.snapshot().characters)
+    // The own body outside the ship is drawn in the (top-down) space view too.
+    if (eva) avatar.setEnabled(debugFeatures.snapshot().characters);
+    else if (evaShown && !cabinVisible) avatar.setEnabled(false);
+    evaShown = !!eva;
+    ownEva?.update(eva, dt, {
+      reducedMotion: state.reducedMotion,
+      dead: state.dead,
+    });
+    if ((cabinVisible || eva) && debugFeatures.snapshot().characters)
       crew?.update({
+        eva,
         moving: walking,
         combat: state.combat?.active ?? false,
         seated: state.seated ?? false,
@@ -1068,6 +1128,9 @@ async function buildWorld(
         shotSequence: state.combat?.shotSequence,
       });
     remoteCrew?.frame(cabinVisible && debugFeatures.snapshot().characters, {
+      reducedMotion: state.reducedMotion,
+    });
+    evaCrew?.frame(debugFeatures.snapshot().characters, {
       reducedMotion: state.reducedMotion,
     });
     const poseItem = selectedAsset
@@ -1131,13 +1194,21 @@ async function buildWorld(
         cameraAlpha(displayed.heading, state.interior, orbit),
       ) * transition;
     camera.beta +=
-      ((state.interior ? RPG_BETA : state.inspect ? 0.6 : 0.015) -
+      ((state.interior
+        ? RPG_BETA
+        : state.inspect
+          ? 0.6
+          : eva
+            ? EVA_CAMERA_BETA
+            : 0.015) -
         camera.beta) *
       transition;
     const c = Math.cos(displayed.heading),
       s = Math.sin(displayed.heading);
-    const actorBlend =
-      blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
+    // EVA: the top-down camera follows the body, not the ship centre.
+    const actorBlend = eva
+      ? 1
+      : blend * deckCameraActorWeight(displayedZoom, initialDeckZoom);
     const targetLocalX =
       (constructionFrame?.centerX ?? 0) * (1 - actorBlend) +
       avatar.position.x * actorBlend;
@@ -1356,6 +1427,21 @@ async function buildWorld(
     getRemoteCrew() {
       return remoteCrew?.diagnostics() ?? [];
     },
+    /** EVA presentation (review diagnostics): own pose, clips, prone fallback, other bodies. */
+    getEva() {
+      return {
+        active: !!state.eva,
+        phase: state.eva?.phase,
+        pitch: ownEva?.pitch ?? 0,
+        clips: crew && "activeClips" in crew ? crew.activeClips : [],
+        position: [avatar.position.x, avatar.position.y, avatar.position.z],
+        yaw: avatar.rotation.y,
+        enabled: avatar.isEnabled(),
+        cameraBeta: camera.beta,
+        cameraRadius: camera.radius,
+        bodies: evaCrew?.diagnostics() ?? [],
+      };
+    },
     getAntialiasing() {
       return antialiasing.snapshot();
     },
@@ -1471,6 +1557,7 @@ async function buildWorld(
         x: next.localX,
         y: next.localY,
       });
+      evaCrew?.sync(next.evaBodies ?? [], { x: next.localX, y: next.localY });
       objects.select(next.selectedObject);
       prefabPicker?.select(next.selectedObject);
       const impact = next.combat?.impact;
@@ -1547,6 +1634,10 @@ async function buildWorld(
       equipment?.dispose();
       remoteCrew?.dispose();
       remoteCrew = undefined;
+      evaCrew?.dispose();
+      evaCrew = undefined;
+      ownEva?.dispose();
+      ownEva = undefined;
       crewOutfit?.dispose();
       crew?.dispose();
       localGlowOcclusion.dispose();

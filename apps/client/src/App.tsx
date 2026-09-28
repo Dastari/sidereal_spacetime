@@ -74,7 +74,22 @@ import {
 } from "./objects";
 import type { CrewAppearance } from "../../../packages/render/src/crew/appearance";
 import type { SceneState } from "../../../packages/render/src";
-import { crewmatesFromViews } from "./crewmates";
+import { crewmatesFromViews, presentationLook } from "./crewmates";
+import {
+  EVA_HELP,
+  EVA_MAGLOCK_HELP,
+  evaAirlockAction,
+  evaBodiesForScene,
+  evaCanMaglock,
+  evaHomeVisit,
+  evaModelOfDocument,
+  evaScene,
+  evaStatusLabel,
+  evaIntent,
+  localAimAngle,
+  screenToShipTopDown,
+  worldAimAngle,
+} from "./eva";
 import { resolveCrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import {
   createGameUI,
@@ -295,6 +310,28 @@ export default function App({
           : undefined))
       : undefined;
   localShipId.current = ship?.id;
+  // EVA (wiki Systems/EVA): the own body outside the hull and any running airlock cycle.
+  const evaBody =
+    c && actor
+      ? [...c.db.ownEvaBody.iter()].find((r) => r.characterId === actor.id)
+      : undefined;
+  const evaCycle =
+    c && actor
+      ? [...c.db.ownEvaAirlockCycle.iter()].find(
+          (r) => r.characterId === actor.id,
+        )
+      : undefined;
+  const evaShipPose = ship
+    ? {
+        id: ship.id,
+        x: ship.x,
+        y: ship.y,
+        vx: ship.vx,
+        vy: ship.vy,
+        heading: ship.heading,
+        omega: "omega" in ship ? Number(ship.omega) || 0 : 0,
+      }
+    : undefined;
   /** Authoritative awaiting-ship state: wiped, or created while starter ships
    * are disabled. The character exists with its personal kit but no frame. */
   const awaitingShip = !!actor && actor.shipId === "";
@@ -318,9 +355,14 @@ export default function App({
           (row) => row.characterId === actor.id && row.shipId === actor.shipId,
         )
       : undefined;
+  const ownLocations = c ? [...c.db.ownConstructionLocation.iter()] : [];
+  // Outside the hull the owner keeps the ship scene: the server's read-only home location.
+  const evaHome = ownLocations.some((l) => l.characterId === actor?.id)
+    ? undefined
+    : evaHomeVisit(evaBody, actor);
   const constructionScene = constructionPresentation(
     actor?.id,
-    c ? [...c.db.ownConstructionLocation.iter()] : [],
+    evaHome ? [...ownLocations, evaHome] : ownLocations,
     c ? [...c.db.ownConstructionInstances.iter()] : [],
     c ? [...c.db.ownConstructionStairWalks.iter()] : [],
     c ? [...c.db.ownConstructionStairEgressGeometry.iter()] : [],
@@ -424,6 +466,43 @@ export default function App({
       : outputs;
   }
 
+  const evaModel = evaModelOfDocument(constructionInstance?.documentJson);
+  const evaView =
+    evaBody && evaShipPose
+      ? evaScene(evaBody, evaShipPose, evaModel, !!evaCycle)
+      : undefined;
+  const evaAction = evaAirlockAction({
+    shipId: actor?.shipId,
+    model: evaModel,
+    aboard:
+      actor && constructionVisit && !evaBody
+        ? { localX: actor.localX, localY: actor.localY }
+        : undefined,
+    eva: evaView,
+    cycle: evaCycle,
+  });
+  const evaNowMicros = BigInt(Math.round(Date.now() * 1000));
+  const evaHud = evaBody
+    ? {
+        label: evaStatusLabel(evaBody, evaCycle, evaShipPose, evaNowMicros),
+        help: evaBody.phase === "maglocked" ? EVA_MAGLOCK_HELP : EVA_HELP,
+        maglock: evaCanMaglock(evaBody, evaShipPose, evaModel),
+        stranded: evaBody.stranded,
+        beacon: evaBody.returnEndsMicros > 0n,
+      }
+    : evaCycle
+      ? {
+          label: `Airlock cycling out · ${Math.max(0, Math.ceil(Number(evaCycle.endsMicros - evaNowMicros) / 1e6))} s`,
+          help: "E cancel the cycle",
+          maglock: false,
+          stranded: false,
+          beacon: false,
+        }
+      : undefined;
+  useEffect(() => {
+    // The EVA camera is the top-down space view; coming back aboard returns to the deck.
+    setInterior(!evaBody);
+  }, [!!evaBody]);
   const inspectionCatalog = useMemo(
     () =>
       constructionScene.active
@@ -529,15 +608,18 @@ export default function App({
             !row.parentItemId && row.kind === "grid" && row.placedObjectId,
         )
       : undefined;
-  const interactionPrompt = contextObject
-    ? interactionLabel(contextObject)
-    : seated
-      ? "Leave control seat"
-      : nearStation
-        ? "Control seat"
-        : reachableStorage
-          ? `Open ${reachableStorage.name.toLowerCase()}`
-          : undefined;
+  const interactionPrompt =
+    evaAction && (evaBody || evaCycle || !contextObject)
+      ? evaAction.label
+      : contextObject
+        ? interactionLabel(contextObject)
+        : seated
+          ? "Leave control seat"
+          : nearStation
+            ? "Control seat"
+            : reachableStorage
+              ? `Open ${reachableStorage.name.toLowerCase()}`
+              : undefined;
   // The legacy stock-ship inspection catalog (hull/cargo/equipment manifests,
   // wayfarer.json) belongs to the retired Wayfarer assets that the game client
   // no longer delivers, so it is never fetched.
@@ -618,12 +700,29 @@ export default function App({
         actor,
       )
     : undefined;
-  const combatImpact =
+  const combatImpactRow =
     c && ready && actor?.connected
       ? [...c.db.ownCombatImpact.iter()].find(
-          (row) => row.characterId === actor.id && row.shipId === actor.shipId,
+          (row) =>
+            row.characterId === actor.id &&
+            row.shipId === (evaBody ? "" : actor.shipId),
         )
       : undefined;
+  // EVA shots end in the world frame; the renderer draws in the own ship's frame.
+  const combatImpact =
+    combatImpactRow && evaBody && evaShipPose
+      ? (() => {
+          const c0 = Math.cos(-evaShipPose.heading),
+            s0 = Math.sin(-evaShipPose.heading),
+            wx = combatImpactRow.x - evaShipPose.x,
+            wy = combatImpactRow.y - evaShipPose.y;
+          return {
+            ...combatImpactRow,
+            x: c0 * wx - s0 * wy,
+            y: s0 * wx + c0 * wy,
+          };
+        })()
+      : combatImpactRow;
   const ownVitals =
     c && ready && actor?.connected
       ? [...c.db.ownCharacterVitals.iter()].find(
@@ -687,6 +786,7 @@ export default function App({
             : [],
         ),
     interactionPrompt,
+    eva: evaHud,
     inventory,
     status,
     error,
@@ -734,6 +834,10 @@ export default function App({
     combatEnabled,
     constructionInstance,
     storageId: reachableStorage?.id,
+    evaAction,
+    evaPhase: evaView?.phase,
+    evaBeaconAvailable: false,
+    shipHeading: 0,
   });
   live.current = {
     actor,
@@ -747,6 +851,11 @@ export default function App({
     combatEnabled,
     constructionInstance,
     storageId: reachableStorage?.id,
+    evaAction,
+    evaPhase: evaView?.phase,
+    evaBeaconAvailable:
+      !!evaBody && (evaBody.stranded || evaBody.returnEndsMicros > 0n),
+    shipHeading: evaShipPose?.heading ?? 0,
   };
   const actionPending = useRef(false);
   const perform = async (action: () => Promise<unknown>) => {
@@ -862,7 +971,21 @@ export default function App({
   };
   const interact = () => {
     const row = live.current.contextObject;
-    if (row) objectCommand(interactionAction(row), row.placementId);
+    const eva = live.current.evaAction;
+    const current = connection.current;
+    if (
+      eva &&
+      current &&
+      live.current.actor?.connected &&
+      (live.current.evaPhase || !row)
+    )
+      void perform(() =>
+        current.reducers.evaCycleAirlock({
+          shipId: eva.shipId,
+          airlockId: eva.airlockId,
+        }),
+      );
+    else if (row) objectCommand(interactionAction(row), row.placementId);
     else if (
       live.current.actor?.connected &&
       (live.current.uiState.seated || live.current.uiState.nearStation)
@@ -1312,7 +1435,10 @@ export default function App({
           : [],
       combat: {
         active: combatEnabled && !!combat?.aimActive,
-        angle: combat?.aimAngle ?? 0,
+        angle:
+          evaView && evaShipPose
+            ? localAimAngle(combat?.aimAngle ?? 0, evaShipPose.heading)
+            : (combat?.aimAngle ?? 0),
         range: combat?.rangeMeters ?? 60,
         itemId: combat?.weaponItemId,
         shotSequence: combat?.shotSequence,
@@ -1397,9 +1523,20 @@ export default function App({
       heading: staticConstruction ? 0 : (ship?.heading ?? 0),
       x: staticConstruction ? 0 : (ship?.x ?? 0),
       y: staticConstruction ? 0 : (ship?.y ?? 0),
-      localX: actor?.localX ?? 0,
-      localY: actor?.localY ?? PILOT_LAYOUT.station.y,
-      interior,
+      localX: evaView?.localX ?? actor?.localX ?? 0,
+      localY: evaView?.localY ?? actor?.localY ?? PILOT_LAYOUT.station.y,
+      interior: interior && !evaView,
+      eva: evaView ?? null,
+      evaBodies:
+        ready && c && actor?.connected && evaShipPose
+          ? evaBodiesForScene(
+              c.db.visibleEvaBodies.iter(),
+              actor.id,
+              evaShipPose,
+              evaModel,
+              presentationLook,
+            )
+          : [],
       inspect: false,
       grid: false,
       seated: seated || !!couch || !!constructionSeat,
@@ -1473,6 +1610,18 @@ export default function App({
         document.hidden ||
         !!live.current.couch;
       if (blocked) keys.clear();
+      const evaPhase = live.current.evaPhase;
+      if (evaPhase) {
+        // Outside the hull: jetpack (throttle/turn/strafe) or maglocked walking (ship-local).
+        transmitter.offer(
+          c,
+          evaIntent(keys, evaPhase, blocked, (h, v) =>
+            screenToShipTopDown(h, v, live.current.shipHeading),
+          ),
+          evaPhase === "free",
+        );
+        return;
+      }
       const intent = gameplayIntent(keys, seated, interior, blocked);
       const walk = view.current?.screenToDeck(
         intent.horizontal,
@@ -1502,9 +1651,27 @@ export default function App({
         e.preventDefault();
         keys.clear();
         send();
-        // No ship: there is no exterior/flight view to switch to.
-        if (!e.repeat && live.current.actor?.shipId !== "")
+        // No ship: there is no exterior/flight view to switch to. Outside the hull
+        // (EVA) the top-down space view is the only view.
+        if (
+          !e.repeat &&
+          live.current.actor?.shipId !== "" &&
+          !live.current.evaPhase
+        )
           setInterior((v) => !v);
+        return;
+      }
+      if (e.code === "KeyM" && !e.repeat && live.current.evaPhase) {
+        e.preventDefault();
+        const current = connection.current;
+        if (current) void perform(() => current.reducers.evaToggleMaglock({}));
+        return;
+      }
+      if (e.code === "KeyB" && !e.repeat && live.current.evaBeaconAvailable) {
+        e.preventDefault();
+        const current = connection.current;
+        if (current)
+          void perform(() => current.reducers.evaEmergencyReturn({}));
         return;
       }
       if (e.code === "KeyV" && !e.repeat) {
@@ -1572,7 +1739,7 @@ export default function App({
             !!liveState.actor?.connected &&
             !liveState.uiState.seated &&
             !liveState.couch &&
-            liveState.uiState.interior,
+            (liveState.uiState.interior || !!liveState.evaPhase),
           blocked:
             loadingRef.current ||
             !focused ||
@@ -1592,7 +1759,13 @@ export default function App({
       },
       aim: () => view.current?.aimDirection(),
       sendAim: (active, angle) =>
-        connection.current!.reducers.setCombatAim({ active, angle }),
+        connection.current!.reducers.setCombatAim({
+          active,
+          // EVA aims in the world frame; on deck the aim is ship-local.
+          angle: live.current.evaPhase
+            ? worldAimAngle(angle, live.current.shipHeading)
+            : angle,
+        }),
       fire: (itemId, expectedRevision) =>
         connection.current!.reducers.fireWeapon({
           itemId,

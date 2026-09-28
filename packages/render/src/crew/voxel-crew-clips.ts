@@ -25,7 +25,33 @@ export type VoxelCrewMotion = {
   shotSequence?: number | bigint;
   /** One-shot actions (emotes, reload, interact...); a new sequence plays the action once. */
   action?: { name: VoxelCrewAction; sequence: number };
+  /** Outside a ship (EVA): jetpack flight or maglocked on a hull (wiki `Systems/EVA`). */
+  eva?: VoxelCrewEva;
 };
+
+export interface VoxelCrewEva {
+  phase: "free" | "maglocked";
+  /** Last applied jetpack input (-1..1): thrust along the heading, strafe, yaw. */
+  forward: number;
+  strafe: number;
+  turn: number;
+  /** Maglocked and walking on the hull. */
+  walking: boolean;
+  /** Held at an airlock hatch while it cycles. */
+  cycling: boolean;
+}
+
+/** The EVA loop for a state (owner-named clips; the runtime falls back while one is missing). */
+export function voxelCrewEvaClip(eva: VoxelCrewEva): VoxelCrewAction {
+  if (eva.cycling) return "Maglock_Idle";
+  if (eva.phase === "maglocked")
+    return eva.walking ? "Maglock_Walk" : "Maglock_Idle";
+  if (eva.forward > 0.3) return "ZeroG_Flight";
+  if (Math.abs(eva.strafe) > 0.1 || eva.forward < -0.1)
+    return "ZeroG_Locomotion_Prone";
+  if (Math.abs(eva.turn) > 0.1) return "ZeroG_Swim";
+  return "ZeroG_Prone";
+}
 
 export type VoxelCrewWeapon = "none" | "pistol" | "rifle";
 
@@ -71,6 +97,7 @@ export function selectVoxelCrewLayers(
     speedRatio: voxelCrewSpeedRatio(clip, motion),
   });
   if (motion.dead) return full("death");
+  if (motion.eva) return full(voxelCrewEvaClip(motion.eva));
   if (motion.downed) return full("knocked_out");
   if (motion.seated) return full("sit_idle");
   if (motion.climbing) return full("climb_ladder");
@@ -133,6 +160,8 @@ export const voxelCrewLoops = (clip: VoxelCrewAction) =>
 
 export function voxelCrewBlendDuration(previous: string, next: string) {
   if (previous === next) return 0;
+  // EVA contract: 0.25 s between zero-g and maglock states.
+  if (/ZeroG|Maglock|jetpack/.test(previous + next)) return 0.25;
   if (/sit|death|knocked|revive/.test(previous + next)) return 0.3;
   if (/shoot/.test(next)) return 0.04;
   if (/aim|armed|pistol/.test(previous + next)) return 0.16;

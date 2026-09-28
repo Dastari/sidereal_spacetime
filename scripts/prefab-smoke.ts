@@ -30,6 +30,7 @@ import {
   prefabBeamModel,
 } from "../packages/sim/src/prefab-beam";
 import { canOccupyDeck } from "../packages/sim/src/construction-collision";
+import { evaSmoke } from "./eva-smoke-steps";
 
 const host = process.env.SIDEREAL_SMOKE_URL,
   database = process.env.SIDEREAL_SMOKE_DATABASE,
@@ -73,6 +74,9 @@ const subscribed = () => [
   tables.ownCombatImpact,
   tables.ownCharacterVitals,
   tables.ownShipComponentDamage,
+  tables.ownEvaBody,
+  tables.ownEvaAirlockCycle,
+  tables.visibleEvaBodies,
 ];
 const c = DbConnection.builder()
   .withUri(host)
@@ -744,6 +748,13 @@ try {
           inventoryItems: JSON.parse(inventoryBefore).length,
         },
       }),
+    );
+    // EVA milestone 1: out through the airlock, jetpack, maglock, hull walk, back in.
+    console.log(
+      JSON.stringify(
+        { eva: await evaSmoke(again, shipId, prefab, catalog) },
+        (_, v) => (typeof v === "bigint" ? v.toString() : v),
+      ),
     );
   } finally {
     again.disconnect();
