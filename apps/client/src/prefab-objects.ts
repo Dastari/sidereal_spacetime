@@ -52,6 +52,14 @@ export interface PrefabLiveState {
   /** Actuator throttles of the actor's ship by placed object id (`<shipId>:mount-<id>`). */
   throttles?: readonly { actuatorId: string; throttle: number }[];
   shipId?: string;
+  /** own_ship_component_damage rows of the actor's ship (owner only; absent = pristine). */
+  damage?: readonly {
+    objectId: string;
+    hp: number;
+    maxHp: number;
+    state: string;
+    performance: number;
+  }[];
 }
 
 const kw = (v: number) =>
@@ -255,13 +263,28 @@ export function prefabObjectDetails(
       label: "Life support",
       value: `${def.fluids.crewSupported} crew`,
     });
+  const damage = live.damage?.find((d) => d.objectId === object.id);
+  const hp = damage ? Math.ceil(damage.hp) : def.integrity.hp;
   stats.push({
     label: "Integrity",
-    value: `${def.integrity.hp} hp${def.integrity.armor ? ` · armour ${def.integrity.armor}` : ""}`,
+    value: `${hp} / ${def.integrity.hp} hp${def.integrity.armor ? ` · armour ${def.integrity.armor}` : ""}`,
+  });
+  stats.push({
+    label: "Condition",
+    value: damage
+      ? `${title(damage.state)}${damage.performance < 1 ? ` · ${Math.round(damage.performance * 100)}% function` : ""}`
+      : "Pristine",
   });
   stats.push({
     label: "State",
-    value: power ? (power.powered ? "Powered" : "Unpowered") : "Installed",
+    value:
+      damage?.state === "destroyed"
+        ? "Destroyed"
+        : power
+          ? power.powered
+            ? "Powered"
+            : "Unpowered"
+          : "Installed",
   });
   if (throttle)
     stats.push({
@@ -282,4 +305,24 @@ export function prefabObjectDetails(
           : "Stats are proposals, not approved balance",
     actions: [],
   };
+}
+
+/** Display name of a placed prefab object (impact feedback). */
+export function prefabObjectName(
+  doc: ShipPrefabDocumentV1 | undefined,
+  catalog: PrefabComponentCatalog | undefined,
+  objectId: string,
+): string | undefined {
+  if (!doc || !catalog) return;
+  const object = prefabShipObjects(doc, catalog).find((o) => o.id === objectId);
+  if (!object) return;
+  if (object.kind === "furniture")
+    return furnitureName(object.designId ?? "furniture");
+  if (object.kind === "door") return "Door";
+  return (
+    prefabComponentDefinition(object.componentId ?? "", catalog.revision)
+      ?.name ??
+    catalog.get(object.componentId ?? "")?.label ??
+    title(object.componentId ?? "Component")
+  );
 }

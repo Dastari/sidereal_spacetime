@@ -14,6 +14,7 @@ import {
   validateShot,
 } from "../../sim/src/combat";
 import { resolveShotImpact } from "./combat-impact";
+import { applyShotDamage, isDowned } from "./combat-damage";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 function actorFor(ctx: ReadContext) {
@@ -25,6 +26,7 @@ function available(
 ) {
   return (
     actor.connected &&
+    !isDowned(ctx, actor.id) &&
     !ctx.db.couchSeat.characterId.find(actor.id) &&
     ctx.db.station.shipId.find(actor.shipId)?.occupantId !== actor.id
   );
@@ -43,6 +45,8 @@ export function setAim(ctx: Context, args: { active: boolean; angle: number }) {
   } catch {
     throw new SenderError("Invalid aim angle");
   }
+  if (args.active && isDowned(ctx, actor.id))
+    throw new SenderError("You are down");
   if (args.active && !available(ctx, actor))
     throw new SenderError("Stand up before aiming");
   const row = {
@@ -102,6 +106,7 @@ export function fire(
   args: { itemId: string; expectedRevision: bigint; operationId: string },
 ) {
   const actor = actorFor(ctx);
+  if (actor && isDowned(ctx, actor.id)) throw new SenderError("You are down");
   if (!actor || !available(ctx, actor))
     throw new SenderError("Stand on deck before firing");
   const item = ctx.db.inventoryItem.id.find(args.itemId),
@@ -165,9 +170,10 @@ export function fire(
   };
   if (old) ctx.db.weaponEnergy.itemId.update(row);
   else ctx.db.weaponEnergy.insert(row);
-  // Where the accepted shot ends: walls, hull, tall furniture or another ship stop the beam.
-  // Recorded for the shooter's impact effect; no damage is applied (combat policy is pending).
+  // Where the accepted shot ends: a character, walls, hull, tall furniture or another ship stop
+  // the beam. Damage is applied to characters and placed components (friendly fire is on).
   const hit = resolveShotImpact(ctx, actor, aim.angle, definition.rangeMeters);
+  const applied = applyShotDamage(ctx, actor, hit, definition.damage);
   const impact = {
     characterId: actor.id,
     itemId: item.id,
@@ -178,8 +184,11 @@ export function fire(
     distanceM: hit.distanceM,
     kind: hit.kind,
     // The other ship's identity is not disclosed through the shooter's impact row.
-    targetId: hit.kind === "ship" ? "" : hit.targetId,
+    // Nor another character's id: a crewmate hit reports only the damage dealt.
+    targetId:
+      hit.kind === "ship" || hit.kind === "character" ? "" : hit.targetId,
     createdMicros: now,
+    ...applied,
   };
   if (ctx.db.combatImpact.characterId.find(actor.id))
     ctx.db.combatImpact.characterId.update(impact);
@@ -206,6 +215,10 @@ export const impactProjection = t.row("CombatImpactStatus", {
   distanceM: t.f64(),
   kind: t.string(),
   targetId: t.string(),
+  damage: t.f64(),
+  targetState: t.string(),
+  targetHp: t.f64(),
+  targetMaxHp: t.f64(),
 });
 /** The actor's own latest shot end point, only while still aboard the ship it was fired on. */
 export function impactView(ctx: ReadContext) {
@@ -224,6 +237,10 @@ export function impactView(ctx: ReadContext) {
       distanceM: row.distanceM,
       kind: row.kind,
       targetId: row.targetId,
+      damage: row.damage,
+      targetState: row.targetState,
+      targetHp: row.targetHp,
+      targetMaxHp: row.targetMaxHp,
     },
   ];
 }

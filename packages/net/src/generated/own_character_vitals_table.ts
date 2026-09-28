@@ -12,16 +12,10 @@ import {
 
 export default __t.row({
   characterId: __t.string().primaryKey().name("character_id"),
-  itemId: __t.string().name("item_id"),
-  shotSequence: __t.u64().name("shot_sequence"),
-  shipId: __t.string().name("ship_id"),
-  x: __t.f64(),
-  y: __t.f64(),
-  distanceM: __t.f64().name("distance_m"),
-  kind: __t.string(),
-  targetId: __t.string().name("target_id"),
-  damage: __t.f64(),
-  targetState: __t.string().name("target_state"),
-  targetHp: __t.f64().name("target_hp"),
-  targetMaxHp: __t.f64().name("target_max_hp"),
+  health: __t.f64(),
+  maxHealth: __t.f64().name("max_health"),
+  state: __t.string(),
+  downedUntilMicros: __t.u64().name("downed_until_micros"),
+  hitSequence: __t.u64().name("hit_sequence"),
+  lastHitDamage: __t.f64().name("last_hit_damage"),
 });

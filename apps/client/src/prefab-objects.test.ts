@@ -5,6 +5,7 @@ import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
 import {
   PREFAB_OBJECT_PREFIX,
   prefabObjectDetails,
+  prefabObjectName,
   prefabShipOf,
 } from "./prefab-objects";
 
@@ -52,6 +53,38 @@ describe("prefab object details", () => {
     expect(stat(drive, "State")).toBe("Powered");
     expect(stat(drive, "Throttle")).toBe("50%");
     expect(stat(drive, "Location")).toBe("Hull face");
+  });
+
+  it("shows the owner a hit component's live hp and damage state", () => {
+    const core = (
+      damage: {
+        hp: number;
+        state: string;
+        performance: number;
+      }[],
+    ) =>
+      prefabObjectDetails(
+        PREFAB_OBJECT_PREFIX + "mount:core",
+        FED_WREN,
+        catalog,
+        "owner",
+        {
+          shipId: "ship-1",
+          damage: damage.map((d) => ({
+            ...d,
+            objectId: "mount:core",
+            maxHp: 80,
+          })),
+        },
+      )!;
+    expect(stat(core([]), "Condition")).toBe("Pristine");
+    expect(stat(core([]), "Integrity")).toBe("80 / 80 hp · armour 3");
+    const hit = core([{ hp: 31.5, state: "damaged", performance: 0.5 }]);
+    expect(stat(hit, "Integrity")).toBe("32 / 80 hp · armour 3");
+    expect(stat(hit, "Condition")).toBe("Damaged · 50% function");
+    const gone = core([{ hp: 0, state: "destroyed", performance: 0 }]);
+    expect(stat(gone, "State")).toBe("Destroyed");
+    expect(prefabObjectName(FED_WREN, catalog, "mount:core")).toMatch(/core/i);
   });
 
   it("describes bunks, furniture and doors", () => {

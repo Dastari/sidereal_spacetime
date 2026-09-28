@@ -26,6 +26,7 @@ import { constructionInspectionCatalog } from "./construction-inspection";
 import {
   PREFAB_OBJECT_PREFIX,
   prefabObjectDetails,
+  prefabObjectName,
   prefabShipOf,
 } from "./prefab-objects";
 import { constructionPresentation } from "./construction-presentation";
@@ -79,6 +80,15 @@ import {
   gameplayIntent,
   type GameUIState,
 } from "../../../packages/canvas-ui/src";
+/** Shooter feedback labels for structure hits (components use their catalogue name). */
+const IMPACT_LABELS: Record<string, string> = {
+  character: "Crewmate",
+  wall: "Wall",
+  glass: "Glass",
+  hull: "Hull",
+  hatch: "Hatch",
+  ship: "Ship hull",
+};
 export default function App({
   auth,
   accountName = "Development character",
@@ -599,6 +609,9 @@ export default function App({
                 ...c.db.ownAuthoredFlightPowerFittings.iter(),
               ].filter((f) => f.shipId === ship.id),
               throttles: ready ? displayedOutputs : [],
+              damage: [...c.db.ownShipComponentDamage.iter()].filter(
+                (d) => d.shipId === ship.id,
+              ),
             }
           : {},
         actor,
@@ -610,6 +623,30 @@ export default function App({
           (row) => row.characterId === actor.id && row.shipId === actor.shipId,
         )
       : undefined;
+  const ownVitals =
+    c && ready && actor?.connected
+      ? [...c.db.ownCharacterVitals.iter()].find(
+          (row) => row.characterId === actor.id,
+        )
+      : undefined;
+  const lastHit = combatImpact
+    ? {
+        shotSequence: combatImpact.shotSequence,
+        damage: combatImpact.damage,
+        kind: combatImpact.kind,
+        label:
+          (combatImpact.kind === "object"
+            ? prefabObjectName(
+                prefabShip?.doc,
+                prefabShip?.catalog,
+                combatImpact.targetId,
+              )
+            : IMPACT_LABELS[combatImpact.kind]) ?? "Target",
+        targetState: combatImpact.targetState,
+        targetHp: combatImpact.targetHp,
+        targetMaxHp: combatImpact.targetMaxHp,
+      }
+    : undefined;
   const uiState: GameUIState = {
     accountKind: auth?.kind === "oidc" ? "oidc" : "development",
     sharedEntry: sharedEnabled && !awaitingShip ? sharedEntry.state : undefined,
@@ -626,7 +663,9 @@ export default function App({
       energy: combat?.energy ?? 0,
       capacity: combat?.capacity ?? 0,
       shotCost: combat?.shotCost ?? 0,
+      lastHit,
     },
+    vitals: ownVitals,
     resting: !!couch || !!constructionSeat,
     objectDetails: selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
       ? prefabDetails

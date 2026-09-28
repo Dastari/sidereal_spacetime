@@ -198,7 +198,7 @@ export function consumeFlightDamage(ctx: Context) {
       event.lossFraction <= 1 &&
       binding &&
       fitting?.shipId === event.shipId &&
-      fitting.kind === "actuator" &&
+      (fitting.kind === "actuator" || fitting.kind === "computer") &&
       fitting.installed &&
       Number.isFinite(fitting.availability) &&
       fitting.availability >= 0 &&
