@@ -85,6 +85,49 @@ async function baselinePrefabPin(): Promise<{
 }
 const prefabPin = await baselinePrefabPin();
 
+const operatorCall = (reducer: string, ...args: string[]) =>
+  execFileSync(
+    ".tools/spacetime/spacetime",
+    [
+      "--root-dir=.tools/spacetime",
+      "call",
+      "--server",
+      host,
+      "--yes",
+      "--no-config",
+      database,
+      reducer,
+      ...args,
+    ],
+    { stdio: "inherit" },
+  );
+let mapGenesis: string | null = null;
+if (prefabPin) {
+  // A fresh database has no shared system yet, and prefab assignment refuses to create map
+  // rows (live already has its map). The isolated-only legacy starter creates the canonical
+  // system as a side effect: one throwaway "Map Genesis" account, then the policy returns to
+  // none. The wipe later removes its Wayfarer like any other ship.
+  operatorCall(
+    "operator_set_starter_prefab",
+    JSON.stringify("seed-map-genesis-legacy"),
+    JSON.stringify("legacy-wayfarer-r002"),
+    JSON.stringify("legacy-wayfarer"),
+    "true",
+  );
+  const { connection: g } = await client();
+  await g.reducers.enterLab({ name: "Map Genesis" });
+  await wait(() => g.db.ownShips.count() === 1n, "map genesis ship");
+  mapGenesis = [...g.db.ownCharacters.iter()][0]!.id;
+  g.disconnect();
+  operatorCall(
+    "operator_set_starter_prefab",
+    JSON.stringify("seed-map-genesis-none"),
+    JSON.stringify(""),
+    JSON.stringify(""),
+    "false",
+  );
+}
+
 const seeded: Record<string, unknown>[] = [];
 for (const [index, name] of accounts.entries()) {
   const { connection: c, token } = await client();
@@ -220,7 +263,12 @@ const out = join(evidenceDirectory, "ship-wipe-seed.json");
 writeFileSync(
   out,
   JSON.stringify(
-    { database, baseline: prefabPin ? "prefab" : "wayfarer", accounts: seeded },
+    {
+      database,
+      baseline: prefabPin ? "prefab" : "wayfarer",
+      mapGenesis,
+      accounts: seeded,
+    },
     null,
     1,
   ),

@@ -145,6 +145,8 @@ try {
   if (seed.baseline === "prefab") {
     // The upgrade must not break the ship live already has: same pinned blueprint,
     // flight still compiles and is admitted under the catalogue revision it was spawned with.
+    // Flight views only serve a connected character: rejoin as the owner would on sign-in.
+    await x.reducers.enterLab({ name: "ignored" });
     const legacyAccess = [...x.db.ownGameShipAccess.iter()].find(
       (r) => r.shipId === owner.shipId,
     );
