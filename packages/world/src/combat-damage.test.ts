@@ -10,22 +10,46 @@ vi.mock("spacetimedb/server", () => {
   };
 });
 vi.mock("./auth", () => ({ requireGame: () => {} }));
+// Deck occupancy for respawn placement: every spot is free unless a test blocks it.
+const occupancy = vi.hoisted(() => ({
+  blocked: (_x: number, _y: number): boolean => false,
+}));
+vi.mock("./construction-doors", () => ({
+  constructionCollision: () => ({ stub: true }),
+}));
+vi.mock("@sidereal/sim/construction-collision", () => ({
+  canOccupyDeck: (_frame: unknown, at: { position: [number, number] }) =>
+    !occupancy.blocked(at.position[0], at.position[1]),
+}));
 import {
   applyShotDamage,
   characterTargets,
   componentDamageView,
   damageComponent,
-  isDowned,
+  isDead,
+  requireAlive,
   stepDamage,
   vitalsView,
 } from "./combat-damage";
+import {
+  releaseForDeath,
+  respawnCharacter,
+  stepRespawns,
+} from "./character-death";
 import { consumeFlightDamage } from "./construction-flight-availability";
 // Frozen Wren r2 document (catalogue @1), so later Wren layout revisions do not move these ids.
 import WREN_R2 from "./fixtures/fed-s-wren-r2.prefab.json";
-import { DOWNED_MICROS, RECOVER_HEALTH } from "@sidereal/sim/combat-damage";
+import {
+  CHARACTER_MAX_HEALTH,
+  RESPAWN_MICROS,
+} from "@sidereal/sim/combat-damage";
 
 /** Minimal in-memory table: primary key accessor, optional btree indexes by column. */
-function table(primary: string, indexes: Record<string, string> = {}) {
+function table(
+  primary: string,
+  indexes: Record<string, string> = {},
+  unique: string[] = [],
+) {
   const rows = new Map<string, any>();
   const t: any = {
     rows,
@@ -51,6 +75,10 @@ function table(primary: string, indexes: Record<string, string> = {}) {
         ),
     },
   };
+  for (const column of unique)
+    t[column] = {
+      find: (v: any) => [...rows.values()].find((r) => r[column] === v),
+    };
   for (const [name, column] of Object.entries(indexes))
     t[name] = {
       filter: (v: any) =>
@@ -74,7 +102,16 @@ function fixture() {
     characterVitals: table("characterId"),
     shipComponentDamage: table("id", { by_ship: "shipId" }),
     constructionInstance: table("id"),
-    constructionLocation: table("characterId"),
+    constructionLocation: table("characterId", { by_instance: "instanceId" }),
+    constructionPilotSeat: table("characterId"),
+    constructionPassengerVisit: table("characterId"),
+    couchSeat: table("characterId"),
+    station: table("id", {}, ["shipId"]),
+    gameShipAccess: table("shipId"),
+    constructionDeck: table("id"),
+    worldAdmission: table("characterId"),
+    shipWorldMotion: table("shipId"),
+    inventoryItem: table("id", { by_character: "characterId" }),
     constructionTraversal: table("characterId"),
     constructionStairWalk: table("characterId"),
     combatAim: table("characterId"),
@@ -85,14 +122,22 @@ function fixture() {
     constructionFlightBinding: table("shipId"),
     constructionFlightDirty: table("shipId"),
   };
-  db.ship.insert({ id: "wren", owner });
+  db.ship.insert({ id: "wren", owner, name: "Wren" });
   db.constructionInstance.insert({
     id: "wren",
+    owner,
     revision: 1n,
+    blueprintId: "trusted-prefab:fed.s.wren@3",
+    blueprintSha256: "wren-sha",
+    spawnDeckId: "deck",
+    spawnX: 5,
+    spawnY: -2,
     documentJson: JSON.stringify({
       prefab: { document: WREN_R2, catalog: "ship-components-v1@1" },
     }),
   });
+  db.constructionDeck.insert({ id: "deck", instanceId: "wren", elevation: 0 });
+  db.shipWorldMotion.insert({ shipId: "wren", systemId: "sol" });
   db.constructionFlightBinding.insert({
     shipId: "wren",
     instanceId: "wren",
@@ -131,6 +176,21 @@ function fixture() {
       characterId: id,
       instanceId: "wren",
       deckId: "deck",
+      visitId: "visit-" + id,
+      revision: 1n,
+    });
+    db.worldAdmission.insert({
+      characterId: id,
+      owner: who,
+      shipId: "wren",
+      systemId: "sol",
+      revision: 1n,
+    });
+    db.inventoryItem.insert({
+      id: "pistol-" + id,
+      characterId: id,
+      containerId: "hands-" + id,
+      revision: 3n,
     });
     db.input.insert({
       characterId: id,
@@ -143,6 +203,17 @@ function fixture() {
     db.combatAim.insert({ characterId: id, active: true, angle: 0 });
   };
   person("pilot", owner, 0, 0);
+  // The pilot owns Wren: the owned game-ship access relation on its spawn deck.
+  db.gameShipAccess.insert({
+    shipId: "wren",
+    instanceId: "wren",
+    owner,
+    characterId: "pilot",
+    deckId: "deck",
+    templateSha256: "wren-sha",
+    instanceRevision: 1n,
+    lifecycle: "active",
+  });
   person("mate", crew, 0, 3);
   const ctx: any = {
     db,
@@ -155,7 +226,7 @@ function fixture() {
   return { db, ctx, at };
 }
 
-test("friendly fire: a crewmate on the same deck takes damage and goes down", () => {
+test("friendly fire: a crewmate on the same deck takes damage and dies at zero health", () => {
   const { db, ctx } = fixture();
   expect(characterTargets(ctx, { id: "pilot", shipId: "wren" })).toEqual([
     { id: "mate", x: 0, y: 3 },
@@ -177,9 +248,14 @@ test("friendly fire: a crewmate on the same deck takes damage and goes down", ()
     { kind: "character", targetId: "mate" },
     15,
   );
-  expect(last).toMatchObject({ damage: 10, targetState: "downed" });
-  expect(isDowned(ctx, "mate")).toBe(true);
-  // Downed: aim cleared, stale input zeroed, not a target any more.
+  expect(last).toMatchObject({ damage: 10, targetState: "dead" });
+  expect(isDead(ctx, "mate")).toBe(true);
+  expect(db.characterVitals.characterId.find("mate")).toMatchObject({
+    state: "dead",
+    health: 0,
+    downedUntilMicros: 1_000_000n + RESPAWN_MICROS,
+  });
+  // Dead: aim cleared, stale input zeroed, not a target any more, no further damage.
   expect(db.combatAim.characterId.find("mate").active).toBe(false);
   expect(db.input.characterId.find("mate")).toMatchObject({
     throttle: 0,
@@ -188,11 +264,16 @@ test("friendly fire: a crewmate on the same deck takes damage and goes down", ()
   });
   expect(db.character.id.find("mate").sprinting).toBe(false);
   expect(characterTargets(ctx, shooter)).toEqual([]);
+  expect(
+    applyShotDamage(ctx, shooter, { kind: "character", targetId: "mate" }, 15)
+      .damage,
+  ).toBe(0);
   // The victim sees their own health; the shooter's own row is untouched.
   expect(vitalsView({ db, sender: crew } as any)[0]).toMatchObject({
     characterId: "mate",
     health: 0,
-    state: "downed",
+    state: "dead",
+    downedUntilMicros: 1_000_000n + RESPAWN_MICROS,
   });
   expect(vitalsView({ db, sender: owner } as any)[0]).toMatchObject({
     characterId: "pilot",
@@ -230,28 +311,235 @@ test("only characters on the same ship and deck, standing, connected, are target
   ).toEqual(["mate"]);
 });
 
-test("downed characters stand up on their own and then regenerate", () => {
+test("dead characters are refused every world action and release their seat", async () => {
+  const { db, ctx } = fixture();
+  const { setAim } = await import("./combat");
+  db.station.insert({ id: "legacy-seat", shipId: "wren", occupantId: "mate" });
+  const shooter = db.character.id.find("pilot");
+  applyShotDamage(ctx, shooter, { kind: "character", targetId: "mate" }, 500);
+  // Control released like a disconnect, but the session stays connected (death screen).
+  expect(db.station.id.find("legacy-seat").occupantId).toBeUndefined();
+  expect(db.character.id.find("mate")).toMatchObject({
+    connected: true,
+    sprinting: false,
+  });
+  expect(() => requireAlive({ db, sender: crew } as any)).toThrow(
+    "You are dead",
+  );
+  expect(() =>
+    setAim({ ...ctx, sender: crew } as any, { active: true, angle: 0 }),
+  ).toThrow("You are dead");
+  // The living shooter is unaffected.
+  expect(() => requireAlive({ db, sender: owner } as any)).not.toThrow();
+  // Idempotent: releasing again changes nothing.
+  const before = JSON.stringify([...db.input.iter()], (_, v) =>
+    typeof v === "bigint" ? v.toString() : v,
+  );
+  releaseForDeath(ctx, "mate");
+  expect(
+    JSON.stringify([...db.input.iter()], (_, v) =>
+      typeof v === "bigint" ? v.toString() : v,
+    ),
+  ).toBe(before);
+});
+
+test("the owner respawns aboard their own ship at its spawn point with full health and every item", () => {
   const { db, ctx, at } = fixture();
+  const items = structuredClone([...db.inventoryItem.iter()]);
+  applyShotDamage(
+    ctx,
+    db.character.id.find("mate"),
+    { kind: "character", targetId: "pilot" },
+    500,
+  );
+  expect(isDead(ctx, "pilot")).toBe(true);
+  at(1_000_000n + RESPAWN_MICROS - 1n);
+  stepRespawns(ctx);
+  stepDamage(ctx);
+  expect(db.characterVitals.characterId.find("pilot")).toMatchObject({
+    state: "dead",
+    health: 0,
+  });
+  at(1_000_000n + RESPAWN_MICROS);
+  stepRespawns(ctx);
+  expect(isDead(ctx, "pilot")).toBe(false);
+  expect(db.characterVitals.characterId.find("pilot")).toMatchObject({
+    state: "active",
+    health: CHARACTER_MAX_HEALTH,
+    downedUntilMicros: 0n,
+  });
+  expect(db.character.id.find("pilot")).toMatchObject({
+    shipId: "wren",
+    localX: 5,
+    localY: -2,
+    connected: true,
+  });
+  expect(db.constructionLocation.characterId.find("pilot")).toMatchObject({
+    instanceId: "wren",
+    deckId: "deck",
+    visitId: "visit-pilot",
+    revision: 2n,
+  });
+  // Nothing dropped or rewritten.
+  expect([...db.inventoryItem.iter()]).toEqual(items);
+  // Idempotent: a second tick or a repeated respawn does nothing.
+  const vitals = { ...db.characterVitals.characterId.find("pilot") };
+  stepRespawns(ctx);
+  expect(respawnCharacter(ctx, "pilot")).toBe(false);
+  expect(db.characterVitals.characterId.find("pilot")).toEqual(vitals);
+  expect(db.constructionLocation.characterId.find("pilot").revision).toBe(2n);
+  expect(() => requireAlive({ db, sender: owner } as any)).not.toThrow();
+});
+
+test("respawn searches rings around a blocked or occupied spawn point", () => {
+  const { db, ctx, at } = fixture();
+  occupancy.blocked = (x, y) => x === 5 && y === -2;
+  try {
+    applyShotDamage(
+      ctx,
+      db.character.id.find("mate"),
+      { kind: "character", targetId: "pilot" },
+      500,
+    );
+    at(1_000_000n + RESPAWN_MICROS);
+    stepRespawns(ctx);
+    expect(db.character.id.find("pilot")).toMatchObject({
+      localX: 5.75,
+      localY: -2,
+    });
+  } finally {
+    occupancy.blocked = () => false;
+  }
+  // A crewmate standing on the spawn point also moves the respawn along the ring.
+  const second = fixture();
+  second.db.character.id.update({
+    ...second.db.character.id.find("mate"),
+    localX: 5,
+    localY: -2,
+  });
+  applyShotDamage(
+    second.ctx,
+    second.db.character.id.find("mate"),
+    { kind: "character", targetId: "pilot" },
+    500,
+  );
+  second.at(1_000_000n + RESPAWN_MICROS);
+  stepRespawns(second.ctx);
+  expect(second.db.character.id.find("pilot")).toMatchObject({
+    localX: 5.75,
+    localY: -2,
+  });
+});
+
+test("without owned access to the ship a character respawns in place, alive and whole", () => {
+  const { db, ctx, at } = fixture();
+  // The crewmate has no owned game-ship relation to Wren (it is the pilot's ship).
   applyShotDamage(
     ctx,
     db.character.id.find("pilot"),
     { kind: "character", targetId: "mate" },
     500,
   );
-  at(1_000_000n + DOWNED_MICROS - 1n);
-  stepDamage(ctx);
-  expect(isDowned(ctx, "mate")).toBe(true);
-  at(1_000_000n + DOWNED_MICROS);
-  stepDamage(ctx);
+  at(1_000_000n + RESPAWN_MICROS);
+  stepRespawns(ctx);
+  expect(db.character.id.find("mate")).toMatchObject({
+    shipId: "wren",
+    localX: 0,
+    localY: 3,
+  });
   expect(db.characterVitals.characterId.find("mate")).toMatchObject({
     state: "active",
-    health: RECOVER_HEALTH,
+    health: CHARACTER_MAX_HEALTH,
   });
-  at(1_000_000n + DOWNED_MICROS + 15_000_000n);
-  stepDamage(ctx);
-  expect(db.characterVitals.characterId.find("mate").health).toBe(
-    RECOVER_HEALTH + 20,
+  expect(db.constructionLocation.characterId.find("mate").revision).toBe(1n);
+  // A passenger visit and a character with no ship also respawn in place.
+  const second = fixture();
+  second.db.constructionPassengerVisit.insert({ characterId: "pilot" });
+  second.db.character.insert({
+    id: "shipless",
+    owner: Identity.fromString("4".repeat(64)),
+    shipId: "",
+    localX: 1,
+    localY: 1,
+    connected: true,
+  });
+  for (const id of ["pilot", "shipless"])
+    second.db.characterVitals.insert({
+      characterId: id,
+      health: 0,
+      maxHealth: 100,
+      state: "dead",
+      lastDamageMicros: 0n,
+      downedUntilMicros: 0n,
+      checkpointMicros: 0n,
+      hitSequence: 1n,
+      lastHitDamage: 100,
+    });
+  stepRespawns(second.ctx);
+  expect(second.db.character.id.find("pilot")).toMatchObject({
+    localX: 0,
+    localY: 0,
+  });
+  expect(second.db.character.id.find("shipless")).toMatchObject({
+    shipId: "",
+    localX: 1,
+    localY: 1,
+  });
+  for (const id of ["pilot", "shipless"])
+    expect(isDead(second.ctx, id)).toBe(false);
+});
+
+test("a disconnect while dead still respawns the retained body aboard the own ship", () => {
+  const { db, ctx, at } = fixture();
+  applyShotDamage(
+    ctx,
+    db.character.id.find("mate"),
+    { kind: "character", targetId: "pilot" },
+    500,
   );
+  // Disconnect: the session ends while the body is dead.
+  db.character.id.update({
+    ...db.character.id.find("pilot"),
+    connected: false,
+  });
+  at(1_000_000n + RESPAWN_MICROS + 30_000_000n);
+  stepRespawns(ctx);
+  expect(db.character.id.find("pilot")).toMatchObject({
+    connected: false,
+    localX: 5,
+    localY: -2,
+  });
+  expect(db.characterVitals.characterId.find("pilot")).toMatchObject({
+    state: "active",
+    health: CHARACTER_MAX_HEALTH,
+  });
+  // The own view shows the living character on reconnect.
+  expect(vitalsView({ db, sender: owner } as any)[0]).toMatchObject({
+    state: "active",
+    health: CHARACTER_MAX_HEALTH,
+  });
+});
+
+test("rows stored by the earlier downed rule are dead and respawn", () => {
+  const { db, ctx } = fixture();
+  db.characterVitals.insert({
+    characterId: "pilot",
+    health: 0,
+    maxHealth: 100,
+    state: "downed",
+    lastDamageMicros: 0n,
+    downedUntilMicros: 500_000n,
+    checkpointMicros: 0n,
+    hitSequence: 1n,
+    lastHitDamage: 30,
+  });
+  expect(isDead(ctx, "pilot")).toBe(true);
+  expect(vitalsView({ db, sender: owner } as any)[0].state).toBe("dead");
+  stepRespawns(ctx);
+  expect(db.characterVitals.characterId.find("pilot")).toMatchObject({
+    state: "active",
+    health: 100,
+  });
 });
 
 test("own-ship components take catalogue hp minus armour and report catalogue damage states", () => {

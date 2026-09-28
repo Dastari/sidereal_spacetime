@@ -3,9 +3,10 @@
  *
  * The accepted shot's authoritative end point (`resolveShotImpact`) decides what takes damage:
  * - a character body: health from `character_vitals` (friendly fire is on, owner decision
- *   2026-09-28, so crewmates are hit like anyone else). At zero health the character is downed:
- *   aim is cleared, stale input is zeroed and walking, aiming, firing and piloting are refused
- *   until they stand up again on their own (`DOWNED_MICROS`). Nobody dies yet.
+ *   2026-09-28, so crewmates are hit like anyone else). At zero health the character dies: control
+ *   is released like a disconnect and walking, aiming, firing, piloting and interacting are
+ *   refused until the tick respawns them (`./character-death`, `RESPAWN_MICROS`). Inventory is
+ *   never dropped.
  * - a placed prefab component (`mount:<id>`) on the shooter's ship, including the shooter's own:
  *   catalogue hp minus the flat per-hit armour. The catalogue damage state sets its performance;
  *   components with flight fittings (engines, RCS nozzles, the flight computer) lose availability
@@ -16,7 +17,7 @@
  * have no pressure/breach model, and per-tile hull hp is deferred.
  */
 import type { InferSchema, ReducerCtx, ViewCtx } from "spacetimedb/server";
-import { t } from "spacetimedb/server";
+import { SenderError, t } from "spacetimedb/server";
 import type world from "./index";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentDefinition } from "@sidereal/sim/prefab-deck-objects";
@@ -29,31 +30,25 @@ import {
   freshVitals,
   hitCharacter,
   settledVitals,
-  type CharacterVitals,
+  conditionOf,
   type CharacterTarget,
 } from "@sidereal/sim/combat-damage";
 import { queueFlightDamage } from "./construction-flight-availability";
+import { releaseForDeath, vitalsOf } from "./character-death";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
-type VitalsRow = NonNullable<
-  ReturnType<Context["db"]["characterVitals"]["characterId"]["find"]>
->;
+/** Stored condition (a hit or respawn commits it in the same transaction); enforcement reads this.
+ * Rows stored as "downed" before death existed count as dead. */
+export function isDead(ctx: Pick<ReadContext, "db">, characterId: string) {
+  const state = ctx.db.characterVitals.characterId.find(characterId)?.state;
+  return !!state && conditionOf(state) === "dead";
+}
 
-const toVitals = (row: VitalsRow): CharacterVitals => ({
-  health: row.health,
-  maxHealth: row.maxHealth,
-  state: row.state === "downed" ? "downed" : "active",
-  lastDamageMicros: row.lastDamageMicros,
-  downedUntilMicros: row.downedUntilMicros,
-  checkpointMicros: row.checkpointMicros,
-});
-
-/** Stored (at most one tick stale) condition; enforcement reads this. */
-export function isDowned(ctx: Pick<ReadContext, "db">, characterId: string) {
-  return (
-    ctx.db.characterVitals.characterId.find(characterId)?.state === "downed"
-  );
+/** Reducer guard: the sender's character must be alive to act in the world. */
+export function requireAlive(ctx: Pick<ReadContext, "db" | "sender">) {
+  for (const actor of ctx.db.character.by_owner.filter(ctx.sender))
+    if (isDead(ctx, actor.id)) throw new SenderError("You are dead");
 }
 
 /** Characters a beam fired by `actor` can hit: same ship, same deck, standing on it. */
@@ -68,7 +63,7 @@ export function characterTargets(
   for (const other of ctx.db.character.by_ship.filter(actor.shipId)) {
     if (++count > 256) break;
     if (other.id === actor.id || !other.connected) continue;
-    if (isDowned(ctx, other.id)) continue; // a downed body lies below the beam
+    if (isDead(ctx, other.id)) continue; // a dead body lies below the beam
     if (
       ctx.db.constructionTraversal.characterId.find(other.id) ||
       ctx.db.constructionStairWalk.characterId.find(other.id)
@@ -86,26 +81,6 @@ export function characterTargets(
     targets.push({ id: other.id, x: other.localX, y: other.localY });
   }
   return targets;
-}
-
-/** Downed: clear aim and every stale movement/helm input (AGENTS: clear inputs on death). */
-function incapacitate(ctx: Context, characterId: string) {
-  const aim = ctx.db.combatAim.characterId.find(characterId);
-  if (aim?.active)
-    ctx.db.combatAim.characterId.update({ ...aim, active: false });
-  const command = ctx.db.input.characterId.find(characterId);
-  if (command)
-    ctx.db.input.characterId.update({
-      ...command,
-      throttle: 0,
-      turn: 0,
-      dx: 0,
-      dy: 0,
-      sprint: false,
-    });
-  const actor = ctx.db.character.id.find(characterId);
-  if (actor?.sprinting)
-    ctx.db.character.id.update({ ...actor, sprinting: false });
 }
 
 export interface AppliedDamage {
@@ -129,7 +104,7 @@ export function damageCharacter(
   const now = ctx.timestamp.microsSinceUnixEpoch;
   const row = ctx.db.characterVitals.characterId.find(characterId);
   const result = hitCharacter(
-    row ? toVitals(row) : freshVitals(now),
+    row ? vitalsOf(row) : freshVitals(now),
     damage,
     now,
   );
@@ -142,10 +117,10 @@ export function damageCharacter(
   };
   if (row) ctx.db.characterVitals.characterId.update(next);
   else ctx.db.characterVitals.insert(next);
-  if (result.downed) incapacitate(ctx, characterId);
+  if (result.killed) releaseForDeath(ctx, characterId);
   return {
     damage: result.applied,
-    targetState: result.downed ? "downed" : "",
+    targetState: result.killed ? "dead" : "",
     targetHp: 0,
     targetMaxHp: 0,
   };
@@ -271,20 +246,19 @@ export function applyShotDamage(
 }
 
 /**
- * Scheduled step: settle health (downed recovery, regeneration) at most 4 Hz per character and
- * push component performance to flight fittings through the server damage producer.
+ * Scheduled step: settle regeneration at most 4 Hz per character and push component performance
+ * to flight fittings through the server damage producer. Respawn is `stepRespawns`.
  */
 export function stepDamage(ctx: Context) {
   const now = ctx.timestamp.microsSinceUnixEpoch;
   let count = 0;
   for (const row of ctx.db.characterVitals.iter()) {
     if (++count > 4096) break;
-    if (row.state !== "downed" && row.health >= row.maxHealth) continue;
-    if (row.state !== "downed" && now - row.checkpointMicros < 250_000n)
+    if (conditionOf(row.state) === "dead" || row.health >= row.maxHealth)
       continue;
-    const settled = settledVitals(toVitals(row), now);
+    if (now - row.checkpointMicros < 250_000n) continue;
+    const settled = settledVitals(vitalsOf(row), now);
     if (
-      settled.state !== row.state ||
       settled.health !== row.health ||
       settled.checkpointMicros !== row.checkpointMicros
     )
@@ -368,7 +342,9 @@ export const vitalsProjection = t.row("CharacterVitalsStatus", {
   characterId: t.string().primaryKey(),
   health: t.f64(),
   maxHealth: t.f64(),
+  /** active | dead */
   state: t.string(),
+  /** While dead: server time (µs since the epoch) of the automatic respawn. */
   downedUntilMicros: t.u64(),
   hitSequence: t.u64(),
   lastHitDamage: t.f64(),
@@ -384,7 +360,7 @@ export function vitalsView(ctx: ReadContext) {
       characterId: actor.id,
       health: row?.health ?? fresh.health,
       maxHealth: row?.maxHealth ?? fresh.maxHealth,
-      state: row?.state ?? "active",
+      state: row ? conditionOf(row.state) : "active",
       downedUntilMicros: row?.downedUntilMicros ?? 0n,
       hitSequence: row?.hitSequence ?? 0n,
       lastHitDamage: row?.lastHitDamage ?? 0,

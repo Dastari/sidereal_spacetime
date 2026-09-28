@@ -199,6 +199,7 @@ import {
 } from "./combat-tables";
 import * as combat from "./combat";
 import * as combatDamage from "./combat-damage";
+import * as characterDeath from "./character-death";
 import { characterVitals, shipComponentDamage } from "./combat-damage-tables";
 import { alignPilotLayout } from "./pilot-layout";
 import { pilotLayoutReceipt } from "./pilot-layout-tables";
@@ -423,6 +424,15 @@ const db = schema({
   shipWipeArchive,
 });
 export default db;
+/** Wrap a world action a dead character may not take (move, interact, pilot, use inventory). */
+const alive =
+  <C extends Parameters<typeof combatDamage.requireAlive>[0], A>(
+    action: (ctx: C, args: A) => void,
+  ) =>
+  (ctx: C, args: A) => {
+    combatDamage.requireAlive(ctx);
+    action(ctx, args);
+  };
 export const ownAppearance = db.view(
   { name: "own_appearance", public: true },
   t.array(appearance.appearanceProjection),
@@ -634,8 +644,8 @@ export const setIntent = db.reducer(
         canRecordConstructionPilot(ctx, actor.id));
     if ((args.throttle !== 0 || args.turn !== 0) && !controlled)
       throw new SenderError("Occupy the control station to pilot");
-    // Downed characters' movement and helm intents are ignored (their input was zeroed).
-    if (combatDamage.isDowned(ctx, actor.id)) return;
+    // Dead characters' movement and helm intents are ignored (their input was zeroed).
+    if (combatDamage.isDead(ctx, actor.id)) return;
     if (!inputControl.recordInput(ctx, actor.id, args.sequence)) return;
     ctx.db.input.characterId.update({
       ...command,
@@ -653,6 +663,7 @@ export const useStation = db.reducer((ctx) => {
   auth.requireGame(ctx);
   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
   if (!actor?.connected) throw new SenderError("Character unavailable");
+  combatDamage.requireAlive(ctx);
   traversal.requireStandingConstructionActor(ctx, actor.id);
   stairs.requireNoConstructionStair(ctx, actor.id);
   if (ctx.db.constructionFlightBinding.shipId.find(actor.shipId))
@@ -766,6 +777,7 @@ export const stepWorld = db.reducer(
     stairs.stepConstructionStairs(ctx, createConstructionStairWorldHooks(ctx));
     combat.stepCombat(ctx);
     combatDamage.stepDamage(ctx);
+    characterDeath.stepRespawns(ctx);
     consumeFlightDamage(ctx);
     // The canonical contact island advances once for all admitted ships/bodies,
     // never inside the legacy per-owner loop below.
@@ -810,7 +822,7 @@ export const stepWorld = db.reducer(
         const actor = ctx.db.character.id.find(characterId);
         return (
           !!actor &&
-          !combatDamage.isDowned(ctx, characterId) &&
+          !combatDamage.isDead(ctx, characterId) &&
           (!ctx.db.constructionFlightBinding.shipId.find(actor.shipId) ||
             canConsumeConstructionPilot(ctx, characterId))
         );
@@ -836,7 +848,7 @@ export const stepWorld = db.reducer(
         inputControl.consumeInputControl(ctx, actor.id) &&
         seat?.occupantId !== actor.id &&
         !ctx.db.couchSeat.characterId.find(actor.id) &&
-        !combatDamage.isDowned(ctx, actor.id) &&
+        !combatDamage.isDead(ctx, actor.id) &&
         command &&
         ctx.timestamp.microsSinceUnixEpoch - command.updatedMicros < 300000n &&
         (command.dx !== 0 || command.dy !== 0);
@@ -919,7 +931,7 @@ export const transferInventoryItem = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(inventoryOperations.transferItem, true),
+  auth.gameAction(alive(inventoryOperations.transferItem), true),
 );
 export const takeAllInventoryItems = db.reducer(
   {
@@ -927,11 +939,11 @@ export const takeAllInventoryItems = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(inventoryOperations.takeAll, true),
+  auth.gameAction(alive(inventoryOperations.takeAll), true),
 );
 export const dropInventoryItem = db.reducer(
   { itemId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(inventoryOperations.dropItem, true),
+  auth.gameAction(alive(inventoryOperations.dropItem), true),
 );
 export const storeAllInventoryItems = db.reducer(
   {
@@ -940,7 +952,7 @@ export const storeAllInventoryItems = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(inventoryOperations.storeAll, true),
+  auth.gameAction(alive(inventoryOperations.storeAll), true),
 );
 export const claimStarterKit = db.reducer(
   auth.gameAction((ctx) => {
@@ -953,7 +965,7 @@ export const claimStarterKit = db.reducer(
 );
 export const claimCharacterArmory = db.reducer(
   { expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(inventory.claimCharacterArmory, true),
+  auth.gameAction(alive(inventory.claimCharacterArmory), true),
 );
 export const moveInventoryItem = db.reducer(
   {
@@ -965,11 +977,11 @@ export const moveInventoryItem = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(inventory.moveItem, true),
+  auth.gameAction(alive(inventory.moveItem), true),
 );
 export const equipInventoryItem = db.reducer(
   { itemId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(inventory.equipItem, true),
+  auth.gameAction(alive(inventory.equipItem), true),
 );
 export const assignInventoryHotbar = db.reducer(
   {
@@ -978,11 +990,11 @@ export const assignInventoryHotbar = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(inventory.assignHotbar, true),
+  auth.gameAction(alive(inventory.assignHotbar), true),
 );
 export const activateInventoryHotbar = db.reducer(
   { slot: t.u8(), expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(inventory.activateHotbar, true),
+  auth.gameAction(alive(inventory.activateHotbar), true),
 );
 
 export const ownInteractions = db.view(
@@ -997,7 +1009,7 @@ export const interactObject = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(interactions.interact, true),
+  auth.gameAction(alive(interactions.interact), true),
 );
 
 export const ownCombat = db.view(
@@ -1159,7 +1171,7 @@ export const setConstructionDoor = db.reducer(
     open: t.bool(),
     operationId: t.string(),
   },
-  auth.gameAction(constructionDoors.requestDoor, true),
+  auth.gameAction(alive(constructionDoors.requestDoor), true),
 );
 
 export const ownConstructionNativePressure = db.view(
@@ -1190,6 +1202,7 @@ export const beginConstructionTraversal = db.reducer(
   auth.gameAction((ctx, args) => {
     const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
     if (!actor) throw new SenderError("Connected character required");
+    combatDamage.requireAlive(ctx);
     stairs.requireNoConstructionStair(ctx, actor.id);
     traversal.beginConstructionTraversal(
       ctx,
@@ -1299,7 +1312,7 @@ export const transferScopedCargoItem = db.reducer(
     y: t.i32(),
     rotated: t.bool(),
   },
-  auth.gameAction(scopedCargo.moveScopedCargo, true),
+  auth.gameAction(alive(scopedCargo.moveScopedCargo), true),
 );
 
 export const ownConstructionSeat = db.view(
@@ -1357,7 +1370,7 @@ export const enterAuthoredPilot = db.reducer(
     expectedStationRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(enterConstructionPilotAuthority, true),
+  auth.gameAction(alive(enterConstructionPilotAuthority), true),
 );
 export const leaveAuthoredPilot = db.reducer(
   auth.gameAction((ctx) => {
@@ -1440,7 +1453,7 @@ export const transferWayfarerLiquid = db.reducer(
     expectedInventoryRevision: t.u64(),
     operationId: t.string(),
   },
-  auth.gameAction(applyWayfarerLiquid, true),
+  auth.gameAction(alive(applyWayfarerLiquid), true),
 );
 
 export const ownCargoCarriers = db.view(
@@ -1460,6 +1473,7 @@ export const installCargoHandlingFixture = db.reducer(
     operationId: t.string(),
   },
   auth.gameAction((ctx, args) => {
+    combatDamage.requireAlive(ctx);
     installCarrierFixture(ctx, args);
   }, true),
 );
@@ -1477,6 +1491,7 @@ export const moveCargoCarrier = db.reducer(
     quarterTurns: t.u8(),
   },
   auth.gameAction((ctx, args) => {
+    combatDamage.requireAlive(ctx);
     moveCargoCarriers(ctx, {
       gridId: args.gridId,
       expectedGridRevision: args.expectedGridRevision,
@@ -1575,7 +1590,7 @@ export const setConstructionEnginePower = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  setEnginePower,
+  alive(setEnginePower),
 );
 export const setConstructionComputerPower = db.reducer(
   {
@@ -1585,7 +1600,7 @@ export const setConstructionComputerPower = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  setComputerPower,
+  alive(setComputerPower),
 );
 
 export const changeShipFlightFitting = db.reducer(
@@ -1597,7 +1612,7 @@ export const changeShipFlightFitting = db.reducer(
     expectedFittingRevision: t.u64(),
     operationId: t.string(),
   },
-  (ctx, args) => changeFlightFittingDisposition(ctx, args),
+  alive((ctx, args) => changeFlightFittingDisposition(ctx, args)),
 );
 
 export const ownAuthoredFlightPhysics = db.view(
@@ -1631,7 +1646,7 @@ export const boardShipPassenger = db.reducer(
     expectedAdmissionRevision: t.u64(),
     operationId: t.string(),
   },
-  passengers.boardShipPassenger,
+  alive(passengers.boardShipPassenger),
 );
 export const revokeShipPassenger = db.reducer(
   { grantId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
@@ -1643,7 +1658,7 @@ export const returnShipPassenger = db.reducer(
     expectedRevision: t.u64(),
     operationId: t.string(),
   },
-  passengers.returnShipPassenger,
+  alive(passengers.returnShipPassenger),
 );
 
 export const ownPassengerGrants = db.view(
