@@ -64,6 +64,7 @@ export function characterTargets(
     if (++count > 256) break;
     if (other.id === actor.id || !other.connected) continue;
     if (isDead(ctx, other.id)) continue; // a dead body lies below the beam
+    if (ctx.db.evaBody.characterId.find(other.id)) continue; // outside the hull
     if (
       ctx.db.constructionTraversal.characterId.find(other.id) ||
       ctx.db.constructionStairWalk.characterId.find(other.id)

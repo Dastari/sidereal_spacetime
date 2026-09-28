@@ -201,6 +201,8 @@ import {
 import * as combat from "./combat";
 import * as combatDamage from "./combat-damage";
 import * as characterDeath from "./character-death";
+import * as eva from "./eva";
+import { evaBody, evaAirlockCycle } from "./eva-tables";
 import { characterVitals, shipComponentDamage } from "./combat-damage-tables";
 import { alignPilotLayout } from "./pilot-layout";
 import { pilotLayoutReceipt } from "./pilot-layout-tables";
@@ -324,6 +326,8 @@ const movementTimer = table(
   { scheduledId: t.u64().primaryKey().autoInc(), scheduledAt: t.scheduleAt() },
 );
 const db = schema({
+  evaBody,
+  evaAirlockCycle,
   systemZone,
   shipZoneState,
   constructionCargoAssembly,
@@ -573,7 +577,10 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
       ctx.db.character.id.update({ ...existing, connected: true });
       return;
     }
-    if (ctx.db.constructionLocation.characterId.find(existing.id)) {
+    if (
+      ctx.db.constructionLocation.characterId.find(existing.id) ||
+      eva.isInEva(ctx.db, existing.id)
+    ) {
       ctx.db.character.id.update({ ...existing, connected: true });
       return;
     }
@@ -637,13 +644,17 @@ export const setIntent = db.reducer(
       return;
     const seat = ctx.db.station.shipId.find(actor.shipId);
     const onStair = !!ctx.db.constructionStairWalk.characterId.find(actor.id);
+    // EVA (free): throttle is jetpack thrust and turn is yaw; the tick consumes them (eva.ts).
+    const evaBody = ctx.db.evaBody.characterId.find(actor.id);
+    const jetpack = evaBody?.phase === "free";
     const controlled =
       !onStair &&
+      !evaBody &&
       seat?.operational &&
       seat.occupantId === actor.id &&
       (!ctx.db.constructionFlightBinding.shipId.find(actor.shipId) ||
         canRecordConstructionPilot(ctx, actor.id));
-    if ((args.throttle !== 0 || args.turn !== 0) && !controlled)
+    if ((args.throttle !== 0 || args.turn !== 0) && !controlled && !jetpack)
       throw new SenderError("Occupy the control station to pilot");
     // Dead characters' movement and helm intents are ignored (their input was zeroed).
     if (combatDamage.isDead(ctx, actor.id)) return;
@@ -655,6 +666,7 @@ export const setIntent = db.reducer(
         args.sprint &&
         !controlled &&
         !onStair &&
+        !evaBody &&
         (args.dx !== 0 || args.dy !== 0),
       updatedMicros: ctx.timestamp.microsSinceUnixEpoch,
     });
@@ -829,6 +841,8 @@ export const stepWorld = db.reducer(
         );
       },
     });
+    // EVA after the ships moved: cycles, jetpack flight and maglocked walking (eva.ts).
+    eva.stepEva(ctx);
     // Legacy rows remain preserved for explicit validated migration. A missing
     // shared admission/compiled definition may never invoke fixture flight.
     // Clear old telemetry without inventing inertia or rewriting saved motion.
@@ -850,6 +864,9 @@ export const stepWorld = db.reducer(
         seat?.occupantId !== actor.id &&
         !ctx.db.couchSeat.characterId.find(actor.id) &&
         !combatDamage.isDead(ctx, actor.id) &&
+        // EVA bodies move in eva.stepEva; a character cycling an airlock holds still.
+        !eva.isInEva(ctx.db, actor.id) &&
+        !eva.isCyclingAirlock(ctx.db, actor.id) &&
         command &&
         ctx.timestamp.microsSinceUnixEpoch - command.updatedMicros < 300000n &&
         (command.dx !== 0 || command.dy !== 0);
@@ -1040,6 +1057,35 @@ export const setCombatAim = db.reducer(
 export const fireWeapon = db.reducer(
   { itemId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
   auth.gameAction(combat.fire, true),
+);
+
+/** EVA milestone 1 (additive, 2026-09-29): airlock cycle, maglock, emergency return; see eva.ts. */
+export const evaCycleAirlock = db.reducer(
+  { shipId: t.string(), airlockId: t.string() },
+  auth.gameAction(eva.cycleAirlock, true),
+);
+export const evaToggleMaglock = db.reducer((ctx) => {
+  auth.requireGame(ctx);
+  eva.toggleMaglock(ctx);
+});
+export const evaEmergencyReturn = db.reducer((ctx) => {
+  auth.requireGame(ctx);
+  eva.emergencyReturn(ctx);
+});
+export const ownEvaBody = db.view(
+  { name: "own_eva_body", public: true },
+  t.array(eva.ownEvaBodyProjection),
+  auth.gameView(eva.ownEvaBody),
+);
+export const ownEvaAirlockCycle = db.view(
+  { name: "own_eva_airlock_cycle", public: true },
+  t.array(eva.ownEvaCycleProjection),
+  auth.gameView(eva.ownEvaAirlockCycle),
+);
+export const visibleEvaBodies = db.view(
+  { name: "visible_eva_bodies", public: true },
+  t.array(eva.visibleEvaBodyProjection),
+  auth.gameView(eva.visibleEvaBodies),
 );
 
 export const ownIdentityLinks = db.view(

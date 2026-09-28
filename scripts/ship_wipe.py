@@ -37,7 +37,7 @@ WIPED_SHIP_TABLES = [
     'construction_passenger_grant', 'construction_passenger_visit', 'construction_flight_review',
     'construction_review_origin', 'wayfarer_refit_attachment', 'construction_cargo_assembly',
     'construction_cargo_grid', 'construction_cargo_placement', 'instance_inventory_binding',
-    'construction_location', 'world_admission', 'input',
+    'construction_location', 'eva_body', 'eva_airlock_cycle', 'world_admission', 'input',
 ]
 # Rows the wipe partially deletes (ship-held) or rewrites (characters, personal kit).
 CHARACTER_AND_INVENTORY_TABLES = [

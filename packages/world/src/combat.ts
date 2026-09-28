@@ -15,6 +15,7 @@ import {
 } from "../../sim/src/combat";
 import { resolveShotImpact } from "./combat-impact";
 import { applyShotDamage, isDead } from "./combat-damage";
+import { resolveEvaShot } from "./eva";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 function actorFor(ctx: ReadContext) {
@@ -27,6 +28,8 @@ function available(
   return (
     actor.connected &&
     !isDead(ctx, actor.id) &&
+    // Cycling an airlock (either way) is not a firing position.
+    !ctx.db.evaAirlockCycle.characterId.find(actor.id) &&
     !ctx.db.couchSeat.characterId.find(actor.id) &&
     ctx.db.station.shipId.find(actor.shipId)?.occupantId !== actor.id
   );
@@ -172,13 +175,18 @@ export function fire(
   else ctx.db.weaponEnergy.insert(row);
   // Where the accepted shot ends: a character, walls, hull, tall furniture or another ship stop
   // the beam. Damage is applied to characters and placed components (friendly fire is on).
-  const hit = resolveShotImpact(ctx, actor, aim.angle, definition.rangeMeters);
+  // EVA shooters fire in the world frame (aim angle in world convention): the beam stops at the
+  // first other EVA body; the impact row reports a world end point with an empty ship id.
+  const evaBody = ctx.db.evaBody.characterId.find(actor.id);
+  const hit = evaBody
+    ? resolveEvaShot(ctx, evaBody, aim.angle, definition.rangeMeters)
+    : resolveShotImpact(ctx, actor, aim.angle, definition.rangeMeters);
   const applied = applyShotDamage(ctx, actor, hit, definition.damage);
   const impact = {
     characterId: actor.id,
     itemId: item.id,
     shotSequence: row.shotSequence,
-    shipId: actor.shipId,
+    shipId: evaBody ? "" : actor.shipId,
     x: hit.point[0],
     y: hit.point[1],
     distanceM: hit.distanceM,
@@ -225,7 +233,9 @@ export function impactView(ctx: ReadContext) {
   const actor = actorFor(ctx);
   if (!actor?.connected) return [];
   const row = ctx.db.combatImpact.characterId.find(actor.id);
-  if (!row || row.shipId !== actor.shipId) return [];
+  // Aboard: only shots fired on this ship. In EVA: only shots fired in space (world frame).
+  const inEva = !!ctx.db.evaBody.characterId.find(actor.id);
+  if (!row || row.shipId !== (inEva ? "" : actor.shipId)) return [];
   return [
     {
       characterId: row.characterId,

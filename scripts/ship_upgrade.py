@@ -34,6 +34,11 @@ from ship_wipe import (  # noqa: E402
 
 # Columns the world step keeps changing on ships that are not being upgraded.
 MOTION_COLUMNS = {'x', 'y', 'vx', 'vy', 'heading', 'omega', 'tick', 'server_tick', 'cell_x', 'cell_y'}
+EVA_MOVING_COLUMNS = MOTION_COLUMNS | {
+    'local_x', 'local_y', 'local_heading', 'ref_ship_id', 'ref_vx', 'ref_vy', 'forward', 'strafe',
+    'turn', 'walking', 'revision', 'phase', 'anchor_ship_id', 'return_ends_micros', 'ends_micros',
+    'started_micros', 'lock_key', 'ship_id', 'airlock_id', 'direction',
+}
 
 
 def quote(value):
@@ -168,6 +173,9 @@ def verify(args):
     for name in WIPED_SHIP_TABLES:
         if name in ('construction_location', 'world_admission', 'input'):
             same(name, keep=lambda r: r.get('character_id') != character_id)
+        elif name in ('eva_body', 'eva_airlock_cycle'):
+            # EVA rows keep simulating (bodies drift and follow hulls); compare identity and state only.
+            same(name, keep=lambda r: r.get('character_id') != character_id, drop=EVA_MOVING_COLUMNS)
         else:
             same(name, keep=lambda r: not _owned(r, ship_id), drop=MOTION_COLUMNS)
     # The upgraded ship now carries the target pins at the next instance revision.

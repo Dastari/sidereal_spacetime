@@ -31,6 +31,7 @@ import { recoverConstructionPilotAuthority } from "./construction-pilot-authorit
 import { constructionCollision } from "./construction-doors";
 import { commitFlightCharacter } from "./construction-flight-dirty";
 import { createConstructionStandingSupport } from "./construction-standing-support";
+import { evaReturnAboard } from "./eva";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type CharacterRow = NonNullable<
@@ -70,6 +71,9 @@ export function releaseForDeath(ctx: Context, characterId: string) {
   )
     ctx.db.station.id.update({ ...station, occupantId: undefined });
   clearAim(ctx, characterId);
+  // EVA: a death cancels a running airlock cycle (either direction); the body stays where it is.
+  if (ctx.db.evaAirlockCycle.characterId.find(characterId))
+    ctx.db.evaAirlockCycle.characterId.delete(characterId);
   const input = ctx.db.input.characterId.find(characterId);
   if (
     input &&
@@ -167,11 +171,40 @@ export function respawnPlacement(
     }).walkDeck
   )
     return;
+  return freeDeckSpot(ctx, actor, instance, deck, target, [
+    instance.spawnX,
+    instance.spawnY,
+  ]);
+}
+
+type InstanceRow = NonNullable<
+  ReturnType<Context["db"]["constructionInstance"]["id"]["find"]>
+>;
+type DeckRow = NonNullable<
+  ReturnType<Context["db"]["constructionDeck"]["id"]["find"]>
+>;
+type LocationRow = NonNullable<
+  ReturnType<Context["db"]["constructionLocation"]["characterId"]["find"]>
+>;
+
+/**
+ * A free, supported standing spot for `actor` within three 0.75 m rings of `center` on a deck
+ * (deck collision, other bodies, standing support), or `undefined`. Read-only. Shared by respawn
+ * and EVA re-entry.
+ */
+export function freeDeckSpot(
+  ctx: Context,
+  actor: CharacterRow,
+  instance: InstanceRow,
+  deck: DeckRow,
+  location: LocationRow,
+  center: readonly [number, number],
+): RespawnPlacement | undefined {
   const frame = constructionCollision(ctx, instance, deck.id);
   for (let ring = 0; ring <= 3; ring++)
     for (let n = 0; n < (ring ? 8 : 1); n++) {
-      const x = instance.spawnX + ring * 0.75 * Math.cos((n * Math.PI) / 4),
-        y = instance.spawnY + ring * 0.75 * Math.sin((n * Math.PI) / 4);
+      const x = center[0] + ring * 0.75 * Math.cos((n * Math.PI) / 4),
+        y = center[1] + ring * 0.75 * Math.sin((n * Math.PI) / 4);
       if (
         !canOccupyDeck(
           frame,
@@ -184,7 +217,7 @@ export function respawnPlacement(
       try {
         standingSupport({
           actor: { ...actor, localX: x, localY: y },
-          location: target,
+          location: { ...location, instanceId: instance.id, deckId: deck.id },
           instance,
           deck,
         });
@@ -204,6 +237,11 @@ export function respawnCharacter(ctx: Context, characterId: string) {
   const actor = ctx.db.character.id.find(characterId);
   if (actor) {
     releaseForDeath(ctx, characterId);
+    // EVA: bring the character back aboard the own ship's bound deck first (a fresh
+    // `construction_location`), so the ordinary placement below applies. Without owned access the
+    // body stays in EVA and respawns in place.
+    if (ctx.db.evaBody.characterId.find(characterId))
+      evaReturnAboard(ctx, characterId);
     let place: RespawnPlacement | undefined;
     try {
       place = respawnPlacement(ctx, ctx.db.character.id.find(characterId)!);

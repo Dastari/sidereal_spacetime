@@ -121,6 +121,8 @@ function fixture() {
     constructionFlightReceipt: table("id"),
     constructionFlightBinding: table("shipId"),
     constructionFlightDirty: table("shipId"),
+    evaBody: table("characterId"),
+    evaAirlockCycle: table("characterId"),
   };
   db.ship.insert({ id: "wren", owner, name: "Wren" });
   db.constructionInstance.insert({

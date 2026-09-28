@@ -1,4 +1,5 @@
 import {
+  evaHomeLocation,
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
   type GameShipAccessDatabase,
@@ -119,7 +120,10 @@ export function hasAcceptedAuthoredFlight(
   ctx: AcceptedFlightContext,
   a: { id: string; shipId: string },
 ) {
-  const visit = ctx.db.constructionLocation.characterId.find(a.id),
+  // EVA: the own ship's flight views stay readable from outside (read-only home location).
+  const visit =
+      ctx.db.constructionLocation.characterId.find(a.id) ??
+      evaHomeLocation(ctx.db, a),
     review = ctx.db.constructionFlightReview.characterId.find(a.id),
     admission = ctx.db.worldAdmission.characterId.find(a.id),
     binding = ctx.db.constructionFlightBinding.shipId.find(a.shipId),
@@ -181,7 +185,9 @@ export function ownAuthoredFlights(ctx: FlightViewContext) {
     64,
   );
   if (!bindings) return [];
-  const visit = ctx.db.constructionLocation.characterId.find(a.id),
+  const visit =
+      ctx.db.constructionLocation.characterId.find(a.id) ??
+      evaHomeLocation(ctx.db, a),
     admission = ctx.db.worldAdmission.characterId.find(a.id),
     seat = ctx.db.constructionPilotSeat.characterId.find(a.id),
     admitted = hasAcceptedAuthoredFlight(ctx, a);
