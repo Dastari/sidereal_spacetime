@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { FED_WREN } from "../../../packages/content/src/prefabs/federation";
-import { defaultPrefabComponentCatalog } from "../../../packages/content/src/ship-prefab-catalog";
-import { prefabConstructionDocument } from "../../../packages/sim/src/prefab-construction";
+import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
 import {
   PREFAB_OBJECT_PREFIX,
   prefabObjectDetails,
@@ -9,6 +9,7 @@ import {
 } from "./prefab-objects";
 
 const catalog = defaultPrefabComponentCatalog();
+const FED_WREN = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
 const stat = (s: ReturnType<typeof prefabObjectDetails>, label: string) =>
   s?.stats.find((row) => row.label === label)?.value;
 

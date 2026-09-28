@@ -8,19 +8,19 @@
  * sees what is visibly there (name, size class, category) and nothing about the owner's systems.
  * Remote ships expose no document, so nothing of theirs can be inspected.
  */
-import type { ObjectDetailsState } from "../../../packages/canvas-ui/src";
+import type { ObjectDetailsState } from "@sidereal/canvas-ui";
 import {
   prefabOrigin,
   readShipPrefab,
   type PrefabComponentCatalog,
   type ShipPrefabDocumentV1,
-} from "../../../packages/content/src/ship-prefab";
-import { prefabComponentCatalogFor } from "../../../packages/sim/src/prefab-catalog";
+} from "@sidereal/content/ship-prefab";
+import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import {
   prefabComponentDefinition,
   prefabShipObjects,
   type PrefabShipObject,
-} from "../../../packages/sim/src/prefab-deck-objects";
+} from "@sidereal/sim/prefab-deck-objects";
 
 export const PREFAB_OBJECT_PREFIX = "prefab:";
 
