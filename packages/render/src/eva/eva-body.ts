@@ -22,7 +22,8 @@ import {
 } from "@sidereal/content/crew-voxel-bundle";
 import { voxelCrewEvaClip, type VoxelCrewEva } from "../crew/voxel-crew-clips";
 
-/** Model pitch for the prone fallback (radians about the body's right axis; head forward). */
+/** Model pitch for the prone fallback (radians about the model's X axis): head toward the facing
+ * direction, belly down (eva-prone.test.ts checks it on the real crew body). */
 export const EVA_PRONE_PITCH = -Math.PI / 2;
 /** Upright ↔ prone blend when no transition clip exists (s). */
 export const PITCH_BLEND_S = 0.4;
@@ -152,7 +153,8 @@ export function createEvaBodyPresentation(
           ? Math.sin(time * 1.7) * 0.04
           : 0;
       crew.model.position.y = BODY_CENTRE_M * pitch * 0.35 + bob;
-      crew.model.position.z = BODY_CENTRE_M * pitch;
+      crew.model.position.z =
+        -Math.sign(EVA_PRONE_PITCH) * BODY_CENTRE_M * pitch;
       const thrust = options.dead ? 0 : evaThrustLevel(eva);
       for (const { root, steps } of exhaust) {
         root.setEnabled(thrust > 0.02);

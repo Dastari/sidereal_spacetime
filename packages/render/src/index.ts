@@ -201,7 +201,7 @@ export type EvaSceneState = VoxelCrewEva & {
   elevation: number;
 };
 /** Top-down EVA camera: half view extent (m) on leaving the ship, and the slight tilt. */
-const EVA_FLIGHT_ZOOM = 10;
+const EVA_FLIGHT_ZOOM = 7;
 const EVA_CAMERA_BETA = 0.22;
 export interface WorldOptions {
   /** Opt-in accepted shared projections, separate from the private local ship. */
@@ -1482,7 +1482,8 @@ async function buildWorld(
       combatAim.pointer(x, y);
     },
     aimDirection() {
-      return !focusedBodyId && state.interior
+      // On deck, or outside the hull (EVA aims in the same own-ship frame the body is drawn in).
+      return !focusedBodyId && (state.interior || !!state.eva)
         ? combatAim.aim(
             displayed.localX,
             displayed.localY,
