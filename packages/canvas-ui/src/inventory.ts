@@ -117,6 +117,29 @@ export function inventoryPlacement(
   }
   return undefined;
 }
+/**
+ * Rotation of an inventory icon inside its rect. r001 grid icons are rendered at the item's
+ * footprint in its natural (unrotated) view, so they turn a quarter (muzzle up) exactly when the
+ * rect's long side is the other axis: a rotated placement, or a legacy portrait footprint. Legacy
+ * square catalogue icons keep their diagonal rifle presentation.
+ */
+export function iconAngle(
+  d: Pick<InventoryDefinition, "crewItemId" | "pose">,
+  r: { w: number; h: number },
+  imageW: number,
+  imageH: number,
+) {
+  if (d.crewItemId) {
+    const rectPortrait = r.h > r.w * 1.05,
+      rectLandscape = r.w > r.h * 1.05;
+    const imagePortrait = imageH > imageW * 1.05,
+      imageLandscape = imageW > imageH * 1.05;
+    return (rectPortrait && imageLandscape) || (rectLandscape && imagePortrait)
+      ? -Math.PI / 2
+      : 0;
+  }
+  return d.pose === "rifle" ? (r.h > r.w * 1.15 ? -1.35 : -1.05) : 0;
+}
 const iconBounds = new Map<string, number[]>();
 let boundsRequested = false;
 const inventoryIcons = new Map<string, HTMLImageElement>();
@@ -135,7 +158,10 @@ function icon(ui: CanvasUI, d: InventoryDefinition, r: Rect) {
       })
       .catch(() => {});
   }
-  let bitmap = inventoryIcons.get(d.assetId);
+  // Keyed by the image actually drawn: r001 grid icons replace legacy catalogue icons (and
+  // their manifest bounds) for the same asset ids.
+  const key = d.iconUrl ?? d.assetId;
+  let bitmap = inventoryIcons.get(key);
   if (!bitmap) {
     bitmap = new Image();
     bitmap.decoding = "async";
@@ -143,7 +169,7 @@ function icon(ui: CanvasUI, d: InventoryDefinition, r: Rect) {
       // Component exports retain transparent margins from their authoring cameras.
       // Fit their visible pixels, not the full source canvas, without editing PNGs.
       if (
-        !iconBounds.has(d.assetId) &&
+        !iconBounds.has(key) &&
         bitmap!.naturalWidth &&
         typeof document !== "undefined"
       ) {
@@ -174,7 +200,7 @@ function icon(ui: CanvasUI, d: InventoryDefinition, r: Rect) {
                 maxY = Math.max(maxY, y + 1);
               }
           if (maxX > minX && maxY > minY)
-            iconBounds.set(d.assetId, [minX, minY, maxX, maxY]);
+            iconBounds.set(key, [minX, minY, maxX, maxY]);
         } catch {
           /* Keep the complete image if pixel inspection is unavailable. */
         }
@@ -184,10 +210,10 @@ function icon(ui: CanvasUI, d: InventoryDefinition, r: Rect) {
     bitmap.src =
       d.iconUrl ??
       "/assets/equipment/icons/" + encodeURIComponent(d.assetId) + ".png";
-    inventoryIcons.set(d.assetId, bitmap);
+    inventoryIcons.set(key, bitmap);
   }
   if (bitmap.complete && bitmap.naturalWidth) {
-    const [sx, sy, ex, ey] = iconBounds.get(d.assetId) ?? [
+    const [sx, sy, ex, ey] = iconBounds.get(key) ?? [
       0,
       0,
       bitmap.naturalWidth,
@@ -195,7 +221,7 @@ function icon(ui: CanvasUI, d: InventoryDefinition, r: Rect) {
     ];
     const sw = ex - sx,
       sh = ey - sy;
-    const angle = d.pose === "rifle" ? (r.h > r.w * 1.15 ? -1.35 : -1.05) : 0;
+    const angle = iconAngle(d, r, sw, sh);
     const cosine = Math.abs(Math.cos(angle)),
       sine = Math.abs(Math.sin(angle));
     const scale =
@@ -210,6 +236,8 @@ function icon(ui: CanvasUI, d: InventoryDefinition, r: Rect) {
     ui.ctx.clip();
     ui.ctx.translate(r.x + r.w / 2, r.y + r.h / 2);
     if (angle) ui.ctx.rotate(angle);
+    ui.ctx.imageSmoothingEnabled = true;
+    ui.ctx.imageSmoothingQuality = "high";
     ui.ctx.drawImage(
       bitmap,
       sx,

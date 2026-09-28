@@ -79,6 +79,8 @@ export type GameUIState = {
     energy: number;
     capacity: number;
     shotCost: number;
+    /** Second line: reloading, the weapon's mode, or "not yet usable" for held tools. */
+    note?: string;
     /** The latest accepted shot's authoritative result (damage number feedback). */
     lastHit?: CombatHitFeedback;
   };
@@ -445,7 +447,7 @@ export function createGameUI(
               : state.seated
                 ? "W / S thrust · A / D turn · Release to brake"
                 : state.combat?.enabled
-                  ? "Mouse aim · Left click fire · Right-drag orbit · V leave combat"
+                  ? "Mouse aim · Left click fire · R reload · Right-drag orbit · V leave combat"
                   : "WASD walk · Shift sprint · C character · I inventory · Z loot labels",
           270,
           h - 116,
@@ -471,11 +473,16 @@ export function createGameUI(
         r.w - 24,
       );
       ui.text(
-        `Energy ${Math.floor(state.combat.energy)} / ${state.combat.capacity} · ${state.combat.shotCost} / shot`,
+        state.combat.capacity
+          ? `Energy ${Math.floor(state.combat.energy)} / ${state.combat.capacity} · ${state.combat.shotCost} / shot` +
+              (state.combat.note ? ` · ${state.combat.note}` : "")
+          : (state.combat.note ?? "Nothing to fire"),
         r.x + 12,
         r.y + 32,
         12,
-        palette.muted,
+        state.combat.note?.startsWith("Reloading")
+          ? palette.gold
+          : palette.muted,
         r.w - 24,
       );
       ui.ctx.fillStyle = "#173450";

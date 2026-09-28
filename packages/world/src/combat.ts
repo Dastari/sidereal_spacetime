@@ -282,7 +282,7 @@ function resolveRays(
   definition: WeaponDefinition,
   angle: number,
   now: bigint,
-  evaBody: EvaBodyRow | undefined,
+  evaBody: EvaBodyRow | null | undefined,
 ) {
   const angles =
     weaponMode(definition) === "pellets"

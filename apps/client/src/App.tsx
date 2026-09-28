@@ -65,7 +65,9 @@ import { LAB_INTERACTIONS } from "../../../packages/content/src/interactions";
 import { inventoryView, inventoryAppearance } from "./inventory";
 import { createCombatInput } from "./combat-input";
 import { createOperationId } from "./operation-id";
-import { INVENTORY_DEFINITIONS } from "../../../packages/content/src/inventory";
+import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+import { LAB_WEAPONS } from "@sidereal/content/weapons";
+import { combatNote, trackReload } from "./combat-status";
 import {
   objectDetails,
   interactionAction,
@@ -74,7 +76,11 @@ import {
 } from "./objects";
 import type { CrewAppearance } from "../../../packages/render/src/crew/appearance";
 import type { SceneState } from "../../../packages/render/src";
-import { crewmatesFromViews, presentationLook } from "./crewmates";
+import {
+  combatActionsFromView,
+  crewmatesFromViews,
+  presentationLook,
+} from "./crewmates";
 import {
   EVA_HELP,
   EVA_MAGLOCK_HELP,
@@ -144,6 +150,9 @@ export default function App({
   const [loadStage, setLoadStage] = useState("connecting");
   const [loadFailure, setLoadFailure] = useState<string>();
   const loadingRef = useRef(true);
+  // HUD-only reload label timing (see combat-status.ts).
+  const reloadingUntil = useRef(0);
+  const reloadSeen = useRef<bigint | undefined>(undefined);
   const [modelStatus, setModelStatus] = useState("Loading vessel"),
     [pending, setPending] = useState(false);
   const connection = useRef<DbConnection | null>(null);
@@ -723,6 +732,20 @@ export default function App({
           };
         })()
       : combatImpactRow;
+  // The held item (own inventory projection) and this body's latest combat action (reload timing).
+  const heldHandheld = INVENTORY_DEFINITIONS.find(
+    (d) =>
+      d.id ===
+      inventory.items.find((item) => item.equipmentSlot === "hand")
+        ?.definitionId,
+  );
+  const ownCombatAction =
+    c && ready && actor?.connected
+      ? [...c.db.visibleCombatActions.iter()].find(
+          (row) => row.characterId === actor.id,
+        )
+      : undefined;
+  trackReload(ownCombatAction, reloadingUntil, reloadSeen);
   const ownVitals =
     c && ready && actor?.connected
       ? [...c.db.ownCharacterVitals.iter()].find(
@@ -759,7 +782,15 @@ export default function App({
       active: !!combat?.aimActive,
       weaponName:
         INVENTORY_DEFINITIONS.find((d) => d.id === combat?.weaponDefinitionId)
-          ?.name ?? "Equip a weapon",
+          ?.name ??
+        heldHandheld?.name ??
+        "Equip a weapon",
+      note: combatNote(
+        combat?.weaponDefinitionId,
+        heldHandheld,
+        ownCombatAction,
+        reloadingUntil.current,
+      ),
       energy: combat?.energy ?? 0,
       capacity: combat?.capacity ?? 0,
       shotCost: combat?.shotCost ?? 0,
@@ -1559,6 +1590,12 @@ export default function App({
               actor.id,
             )
           : [],
+      // Accepted combat actions on this deck (own included) drive the r001 weapon effects.
+      selfCharacterId: actor?.id,
+      combatActions:
+        ready && c && actor?.connected
+          ? combatActionsFromView(c.db.visibleCombatActions.iter())
+          : [],
       vistaId: systemScape ? DEFAULT_SPACE_VISTA : vistaId,
       spaceRegion: activeSpaceRegion,
       reducedMotion,
@@ -1757,6 +1794,8 @@ export default function App({
                 energy: row.energy,
                 shotCost: row.shotCost,
                 cooldownMs: row.cooldownMs,
+                capacity: row.capacity,
+                canReload: !!LAB_WEAPONS[row.weaponDefinitionId]?.reloadMs,
               }
             : undefined,
         };
@@ -1772,6 +1811,12 @@ export default function App({
         }),
       fire: (itemId, expectedRevision) =>
         connection.current!.reducers.fireWeapon({
+          itemId,
+          expectedRevision,
+          operationId: createOperationId(),
+        }),
+      reload: (itemId, expectedRevision) =>
+        connection.current!.reducers.reloadWeapon({
           itemId,
           expectedRevision,
           operationId: createOperationId(),
@@ -1793,6 +1838,17 @@ export default function App({
       if (event.button === 0) input.trigger(false);
     };
     const cancel = () => input.cancel();
+    // R reloads the equipped weapon while in combat (the inventory keeps R for rotation).
+    const key = (event: KeyboardEvent) => {
+      if (
+        event.code === "KeyR" &&
+        !event.repeat &&
+        live.current.combatEnabled &&
+        !gui.current?.blocked()
+      )
+        void input.reload();
+    };
+    window.addEventListener("keydown", key);
     const blur = () => {
       focused = false;
       input.cancel();
@@ -1816,6 +1872,7 @@ export default function App({
     return () => {
       clearInterval(timer);
       input.dispose();
+      window.removeEventListener("keydown", key);
       element.removeEventListener("pointermove", move);
       element.removeEventListener("pointerdown", down);
       window.removeEventListener("pointerup", up);
