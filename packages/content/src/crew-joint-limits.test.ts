@@ -59,8 +59,8 @@ describe("crew_rig joint angle convention", () => {
 });
 
 describe("crew animation joint limits (every frame of every clip)", () => {
-  it("samples all 40 body clips and 78 armed clips", () => {
-    expect(load(GLBS.body).clips).toHaveLength(40);
+  it("samples all 48 body clips (including EVA) and 78 armed clips", () => {
+    expect(load(GLBS.body).clips).toHaveLength(48);
     expect(load(GLBS.armed).clips).toHaveLength(78);
   });
   it("body r005 clips: knees/elbows in range, no flips, feet on the floor, stance legs straight", () => {

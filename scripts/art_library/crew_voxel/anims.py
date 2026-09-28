@@ -367,11 +367,16 @@ class Poser:
     def remember(self):
         """Continuity state from the current (keyed or warm-up) pose."""
         if self.temporal:
+            # EVA attitude is applied after the solve. Continuity vectors must stay
+            # in the same pre-attitude frame used by the next anatomical solve.
+            unfloat = (self.M("root") @ self.rest["root"].inverted()).inverted()
             # continuity state from the pose actually keyed (IK or FK limbs alike)
             for s in ("R", "L"):
                 for up, lo, en in (("upper_arm", "forearm", "hand"), ("thigh", "shin", "foot")):
                     up, lo, en = f"{up}.{s}", f"{lo}.{s}", f"{en}.{s}"
                     S, E, W = self.M(up).translation, self.M(lo).translation, self.M(en).translation
+                    if self.floating:
+                        S, E, W = unfloat @ S, unfloat @ E, unfloat @ W
                     u, f = (E - S).normalized(), (W - E).normalized()
                     dv = (W - S).normalized()
                     perp = (E - S) - (E - S).dot(dv) * dv
@@ -380,11 +385,12 @@ class Poser:
                     self.lastup[up] = u
                     self.lastflex[up] = math.degrees(u.angle(f, 0.0))
                     if en.startswith("hand."):
-                        self.lasthand[en] = self.M(en).to_quaternion()
+                        self.lasthand[en] = (unfloat @ self.M(en) if self.floating else self.M(en)).to_quaternion()
 
     # ------------------------------------------------------------------ solve one pose
     def apply(self, P):
         P = retarget(P)
+        self.floating = "float_rotation" in P
         self.reset()
         for k, v in P.items():
             if k.startswith("fk:"):
@@ -393,6 +399,8 @@ class Poser:
         self.update()
         for side in ("R", "L"):
             ft = P.get(f"foot.{side}")
+            if self.floating and P.get(f"foot.{side}#w", 1.0) <= 1e-6:
+                ft = None
             if ft:
                 x, y, z, yaw, pitch = ft
                 R = (Matrix.Rotation(math.radians(yaw), 3, "Z") @ Matrix.Rotation(math.radians(pitch), 3, "X")
@@ -409,7 +417,8 @@ class Poser:
                     self.update()
             else:
                 self.hinge_pass(f"thigh.{side}", f"shin.{side}", f"foot.{side}", True)
-            self.ground_leg(P, side)
+            if not P.get("airborne", False):
+                self.ground_leg(P, side)
         fks = {s: self.M(f"hand.{s}") @ self.rest[f"hand.{s}"].inverted() @ self.sock[f"socket.hand.{s}"] for s in "RL"}
         targets, weights = {}, {}
         wp = P.get("weapon")
@@ -451,6 +460,15 @@ class Poser:
         for p in self.pb:
             if p.name not in ("pelvis",):
                 p.location = (0, 0, 0)
+        if "float_rotation" in P:
+            # Whole-body attitude is not spinal flexion. Solve anatomy in its upright
+            # frame, then turn about the hip. These channels exist only in EVA clips;
+            # the original 40 actions retain their exact solve/key path.
+            R = D(*P["float_rotation"])
+            pivot = Vector((0, 0, LM["hip"])) * VOX
+            M = R.to_4x4() @ self.rest["root"]
+            M.translation += pivot - R @ pivot + Vector(P.get("float_offset", (0, 0, 0))) * VOX
+            self.set_M("root", M)
 
 
 # ====================================================================== pose helpers
@@ -636,6 +654,105 @@ def gait(phase, step, lift, bob, lean, arm_swing, elbow, pelvis_z=0.0, width=4.5
 
 def cycle(fn, frames, **kw):
     return [(f, fn(f / frames, **kw)) for f in range(frames + 1)]
+
+
+def eva_actions():
+    """In-place EVA: attitude is on root, no accumulated travel or simulation motion.
+
+    24 fps, periodic functions include a duplicate endpoint. The magnetic stance
+    and prone rest at phase zero are also the exact transition endpoints.
+    """
+    tau = 2 * math.pi
+
+    def mag_idle(ph):
+        breath = math.sin(tau * ph)
+        P = {"pelvis": (0, 0, -0.035), "fk:chest": (1 + breath, 0, 0),
+             "fk:head": (-1 - 0.6 * breath, 0, 0),
+             "foot.R": (4.4, 0, 3, -5, 0), "foot.L": (-4.4, 0, 3, 5, 0)}
+        sym(P, "upper_arm", 2 + 0.5 * breath, -10)
+        sym(P, "forearm", 16 + breath)
+        return P
+
+    def floating(ph, kind="prone"):
+        s, c = math.sin(tau * ph), math.cos(tau * ph)
+        lag = math.sin(tau * ph - 0.55)
+        P = {"airborne": True, "pelvis": (0, 0, 0),
+             "float_rotation": (-90 + 1.2 * s, 1.5 * s, 1.0 * s),
+             "float_offset": (0.25 * s, 0.18 * s, 10 + 0.45 * s),
+             "fk:spine": (-3 + 0.6 * s, 0, 0), "fk:chest": (-4 + 0.8 * lag, 0, 0),
+             "fk:neck": (-30 - 0.6 * lag, 0, 0), "fk:head": (-40, 1.2 * lag, -1.5 * lag)}
+        for side, sign in (("R", 1), ("L", -1)):
+            wave = math.sin(tau * ph + (0 if sign == 1 else math.pi))
+            P[f"fk:upper_arm.{side}"] = (24 + 4 * lag, -sign * (19 + 2 * wave), sign * 3)
+            P[f"fk:forearm.{side}"] = (30 + 4 * wave, 0, 0)
+            P[f"fk:hand.{side}"] = (4 + 2 * lag, 0, sign * 6)
+            P[f"fk:thigh.{side}"] = (8 + 3 * wave, -sign * 6, 0)
+            P[f"fk:shin.{side}"] = (-20 - 4 * wave, 0, 0)
+            P[f"fk:foot.{side}"] = (-8, 0, 0)
+        if kind == "flight":
+            P["float_rotation"] = (-90 + 0.5 * s, 0.7 * s, 0.5 * s)
+            P["float_offset"] = (0.12 * s, 0, 10 + 0.2 * s)
+            sym(P, "upper_arm", -18 + 1.5 * lag, -12, -2)
+            sym(P, "forearm", 12 + 1.5 * s)
+            sym(P, "thigh", 1 + s, -3)
+            sym(P, "shin", -7 - s)
+        elif kind == "swim":
+            # Slow asymmetric sculling: broad arm catch, bent-elbow recovery;
+            # opposite legs flutter a smaller, delayed stroke (never a running gait).
+            for side, sign in (("R", 1), ("L", -1)):
+                w = math.sin(tau * ph + (0 if sign == 1 else math.pi))
+                trailing = math.sin(tau * ph - 0.6 + (0 if sign == 1 else math.pi))
+                P[f"fk:upper_arm.{side}"] = (48 + 36 * w, -sign * (30 + 12 * c), 0)
+                P[f"fk:forearm.{side}"] = (45 - 24 * trailing, 0, 0)
+                P[f"fk:thigh.{side}"] = (12 - 9 * trailing, -sign * 8, 0)
+                P[f"fk:shin.{side}"] = (-28 + 16 * trailing, 0, 0)
+            P["float_rotation"] = (-90 + 2 * s, 4 * s, 2 * s)
+        elif kind == "locomotion":
+            P["float_rotation"] = (-90 + 2 * s, 5 * s, -3 * s)
+            P["float_offset"] = (0.8 * s, 0.35 * (c - 1), 10 + 0.35 * s)
+            for side, sign in (("R", 1), ("L", -1)):
+                P[f"fk:upper_arm.{side}"] = (15 + sign * 9 * lag, -sign * (24 + sign * 6 * s), 0)
+        return P
+
+    def mag_walk(ph):
+        # 72% stance gives a long double-support interval. Flat soles hold until
+        # late stance; a brief heel peel leads into the compact recovery arc.
+        P = gait(ph, 10, 3.5, 0.12, 3, 12, 20, pelvis_z=-0.45,
+                 width=4.7, stance=0.72, sway=0.55, drop=1.3, twist=3, bounce_head=0.5)
+        impact = 0.0
+        for side, off in (("R", 0), ("L", 0.5)):
+            t = (ph + off) % 1
+            sx = 1 if side == "R" else -1
+            if t < 0.72:
+                u = t / 0.72
+                pitch = -18 * max(0, (u - 0.84) / 0.16) ** 2
+                P[f"foot.{side}"] = (sx * 4.7, 10 * (0.5 - u), 3, -5 * sx, pitch)
+                P[f"fk:toe.{side}"] = (0, 0, 0)
+            # One sharp compression after each contact, damped before recovery.
+            impact += math.sin(math.pi * t / 0.14) ** 2 if t < 0.14 else 0
+        x, y, z = P["pelvis"]
+        P["pelvis"] = (x, y, z - 0.35 * impact)
+        P["fk:chest"] = (1.5 + 1.5 * impact, 0, -2 * math.cos(tau * ph))
+        return P
+
+    upright, prone = mag_idle(0), floating(0)
+    upright.update(airborne=True, float_rotation=(0, 0, 0), float_offset=(0, 0, 0))
+    transition_keys = fill([(0, upright, "lin"), (18, prone, "io")])
+    enter = [(f, sample(transition_keys, f)) for f in range(19)]
+    # Reverse the exact parameter path: identical resting endpoints, no pose snap.
+    exit_frames = [(f, dict(enter[18 - f][1])) for f in range(19)]
+    A = {}
+    for name, frames, fn in (("ZeroG_Prone", 96, floating),
+                            ("ZeroG_Flight", 72, lambda p: floating(p, "flight")),
+                            ("ZeroG_Swim", 72, lambda p: floating(p, "swim")),
+                            ("ZeroG_Locomotion_Prone", 96, lambda p: floating(p, "locomotion")),
+                            ("Maglock_Idle", 72, mag_idle), ("Maglock_Walk", 48, mag_walk)):
+        A[name] = {"frames": cycle(fn, frames), "loop": True,
+                   "meta": {"nominalSpeed": round(10 * LEG / (32 * 0.72 * 2), 3) if name == "Maglock_Walk" else 0,
+                            "motionSpace": "in-place"}}
+    for name, frames in (("ZeroG_Enter", enter), ("ZeroG_Exit", exit_frames)):
+        A[name] = {"frames": frames, "loop": False, "meta": {"motionSpace": "in-place"}}
+    return A
 
 
 # ====================================================================== the library
@@ -1197,6 +1314,7 @@ def lib():
         (19, dict(B(), **{"hand.R": SIDE, "pole.R": (1, 0, 0)}), "io"),
         (26, B(), "io"),
     ], {"grip": "rifle", "detachFrame": 15, "holster": "socket.back", "extra": True})
+    A.update(eva_actions())
     return A
 
 
@@ -1257,7 +1375,7 @@ def build_actions(arm, sc, only=None):
                 poser.remember()
         for f, P in frames:
             poser.apply(P)
-            poser.key(f)
+            poser.key(f, ("pelvis", "root") if name.startswith("ZeroG_") else ("pelvis",))
         for fc in act.fcurves:
             for kp in fc.keyframe_points:
                 kp.interpolation = "LINEAR"

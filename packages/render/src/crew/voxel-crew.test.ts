@@ -11,6 +11,7 @@ import {
   VOXEL_CREW_ACTIONS,
   VOXEL_CREW_EXPRESSION_TRACKS,
   VOXEL_CREW_EXTRA_ACTIONS,
+  VOXEL_CREW_LOOPING,
   VOXEL_CREW_NOMINAL_SPEED,
   VOXEL_CREW_REVISION,
   VOXEL_CREW_SOCKETS,
@@ -129,6 +130,64 @@ describe("voxel crew clip mapping", () => {
 });
 
 describe("voxel crew runtime", () => {
+  it("EVA loops close, transitions meet the resting poses, and exhaust follows the chest", async () => {
+    const { engine, scene, crew } = await load();
+    const group = (name: string) =>
+      scene.animationGroups.find((g) => g.name === name)!;
+    const values = (name: string, end = false) => {
+      const g = group(name);
+      return new Map(
+        g.targetedAnimations.map((t) => [
+          `${t.target.name}/${t.animation.targetProperty}`,
+          (
+            t.animation.evaluate(end ? g.to : g.from) as Quaternion | Vector3
+          ).asArray(),
+        ]),
+      );
+    };
+    const close = (a: Map<string, number[]>, b: Map<string, number[]>) => {
+      for (const key of new Set([...a.keys(), ...b.keys()])) {
+        const fallback = key.endsWith("rotationQuaternion")
+          ? [0, 0, 0, 1]
+          : [0, 0, 0];
+        const av = a.get(key) ?? fallback,
+          bv = b.get(key) ?? fallback;
+        // Quaternions q and -q describe the same pose.
+        const sign =
+          av.length === 4 && av.reduce((n, x, i) => n + x * bv[i], 0) < 0
+            ? -1
+            : 1;
+        av.forEach((x, i) =>
+          expect(Math.abs(x - sign * bv[i]), key).toBeLessThan(0.001),
+        );
+      }
+    };
+    for (const name of VOXEL_CREW_EXTRA_ACTIONS.filter((n) =>
+      /^(ZeroG_|Maglock_)/.test(n),
+    )) {
+      if (VOXEL_CREW_LOOPING.has(name)) close(values(name), values(name, true));
+      else expect((group(name).to - group(name).from) / 60).toBeCloseTo(0.75);
+    }
+    close(values("ZeroG_Enter"), values("Maglock_Idle"));
+    close(values("ZeroG_Enter", true), values("ZeroG_Prone"));
+    close(values("ZeroG_Exit"), values("ZeroG_Prone"));
+    close(values("ZeroG_Exit", true), values("Maglock_Idle"));
+    for (const side of ["L", "R"] as const) {
+      const socket = crew.socketNodes[`socket.jetpack.exhaust.${side}`];
+      expect(socket.parent?.name).toBe("chest");
+      socket.computeWorldMatrix(true);
+      const exhaust = Vector3.TransformNormal(
+        new Vector3(0, -1, 0),
+        socket.getWorldMatrix(),
+      ).normalize();
+      expect(exhaust.y).toBeLessThan(-0.999);
+      expect(socket.getAbsolutePosition().y).toBeCloseTo(28 / 32);
+    }
+    crew.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
   it("loads one rig with every authored action, sockets and three body variants", async () => {
     const { engine, scene, crew } = await load();
     expect(scene.skeletons).toHaveLength(1);

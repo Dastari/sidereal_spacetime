@@ -214,6 +214,9 @@ def spec_json(arm, socks, seg, stats, actions):
         # glTF: C = (x, z, -y)
         C = Matrix(((1, 0, 0), (0, 0, 1), (0, -1, 0)))
         rg = C @ mw.to_3x3() @ C.transposed()
+        if name.startswith("socket.jetpack.exhaust."):
+            # export.py preserves these VFX sockets' local Blender axes in glTF.
+            rg = C @ mw.to_3x3()
         qg = rg.to_quaternion()
         sk.append({
             "name": name, "bone": bone,

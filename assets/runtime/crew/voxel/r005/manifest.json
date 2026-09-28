@@ -19,6 +19,8 @@
   "socket.head",
   "socket.hip.L",
   "socket.hip.R",
+  "socket.jetpack.exhaust.L",
+  "socket.jetpack.exhaust.R",
   "socket.shoulder.L",
   "socket.shoulder.R"
  ],
@@ -979,27 +981,153 @@
    "grip": "rifle",
    "detachFrame": 15,
    "holster": "socket.back"
+  },
+  {
+   "name": "ZeroG_Prone",
+   "frames": 96,
+   "fps": 24,
+   "loop": true,
+   "expressionTrack": [
+    [
+     0,
+     "neutral"
+    ]
+   ],
+   "seconds": 4.0,
+   "extra": true,
+   "nominalSpeed": 0,
+   "motionSpace": "in-place"
+  },
+  {
+   "name": "ZeroG_Flight",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "expressionTrack": [
+    [
+     0,
+     "neutral"
+    ]
+   ],
+   "seconds": 3.0,
+   "extra": true,
+   "nominalSpeed": 0,
+   "motionSpace": "in-place"
+  },
+  {
+   "name": "ZeroG_Swim",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "expressionTrack": [
+    [
+     0,
+     "neutral"
+    ]
+   ],
+   "seconds": 3.0,
+   "extra": true,
+   "nominalSpeed": 0,
+   "motionSpace": "in-place"
+  },
+  {
+   "name": "ZeroG_Locomotion_Prone",
+   "frames": 96,
+   "fps": 24,
+   "loop": true,
+   "expressionTrack": [
+    [
+     0,
+     "neutral"
+    ]
+   ],
+   "seconds": 4.0,
+   "extra": true,
+   "nominalSpeed": 0,
+   "motionSpace": "in-place"
+  },
+  {
+   "name": "Maglock_Idle",
+   "frames": 72,
+   "fps": 24,
+   "loop": true,
+   "expressionTrack": [
+    [
+     0,
+     "neutral"
+    ]
+   ],
+   "seconds": 3.0,
+   "extra": true,
+   "nominalSpeed": 0,
+   "motionSpace": "in-place"
+  },
+  {
+   "name": "Maglock_Walk",
+   "frames": 48,
+   "fps": 24,
+   "loop": true,
+   "expressionTrack": [
+    [
+     0,
+     "neutral"
+    ]
+   ],
+   "seconds": 2.0,
+   "extra": true,
+   "nominalSpeed": 0.168,
+   "motionSpace": "in-place"
+  },
+  {
+   "name": "ZeroG_Enter",
+   "frames": 18,
+   "fps": 24,
+   "loop": false,
+   "expressionTrack": [
+    [
+     0,
+     "neutral"
+    ]
+   ],
+   "seconds": 0.75,
+   "extra": true,
+   "motionSpace": "in-place"
+  },
+  {
+   "name": "ZeroG_Exit",
+   "frames": 18,
+   "fps": 24,
+   "loop": false,
+   "expressionTrack": [
+    [
+     0,
+     "neutral"
+    ]
+   ],
+   "seconds": 0.75,
+   "extra": true,
+   "motionSpace": "in-place"
   }
  ],
  "files": {
   "crew-body-male.glb": {
-   "sha256": "0cb7524f5a4c28939f0597937bf564faf01b6dc21cb33dfa3022c6a79e090ab2",
-   "bytes": 1608092,
+   "sha256": "160ae0d210c39a2f38d085b056a424e1fa6d7194eb8ea724555dc5c1063f2747",
+   "bytes": 1854432,
    "variant": "male"
   },
   "crew-body-female.glb": {
-   "sha256": "d45ecfddfe5cc2fbbc38c9f606df011bc9072953e408acef9bc46fc58bf80ffc",
-   "bytes": 1668600,
+   "sha256": "3465c0e59ec4ce0ff541e55720b6c4a946f83c460f0fb0840c8ae71c27b25d8e",
+   "bytes": 1914956,
    "variant": "female"
   },
   "crew-body-neutral.glb": {
-   "sha256": "46593c7d5fab9a6c520755900e0857d3597094ec5b5eb62c756d7f37a48e4350",
-   "bytes": 1608144,
+   "sha256": "75f5da3f67fdcf30953e91f8d1d6cd2bbfe7ce9b8d3112902692286133494890",
+   "bytes": 1854484,
    "variant": "neutral"
   },
   "crew-body.glb": {
-   "sha256": "2e12d9a045b3c750fa1707f77d794b9b79a8b9ba4b100288450556b5f9c078fd",
-   "bytes": 2307624,
+   "sha256": "6487d9cc13ef651d31518b7ee5630db828ea6d51d57eb1a813465e853a36d207",
+   "bytes": 2553880,
    "variant": "male+female",
    "note": "runtime bundle; bodyType neutral renders the masculine meshes"
   }

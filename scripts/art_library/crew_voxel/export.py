@@ -1,8 +1,11 @@
 """GLB export for the voxel crew body."""
 import hashlib
+import json
 import os
+import struct
 
 import bpy
+from mathutils import Quaternion
 
 import rig
 import voxkit
@@ -30,6 +33,28 @@ def _export(path, objs, animations):
                   export_optimize_animation_size=True, export_anim_single_armature=True, export_reset_pose_bones=True,
                   export_anim_slide_to_zero=True, export_negative_frame="SLIDE")
     bpy.ops.export_scene.gltf(**kw)
+    # glTF Y-up export rebases an empty's LOCAL axes as well as world axes. VFX
+    # consumers require the new nozzle's literal local -Y, matching the Blender
+    # source contract. Undo only that local rebase on these two new sockets.
+    # Existing sockets, mesh/accessor bytes and animation channels stay intact.
+    with open(path, "rb") as f:
+        raw = f.read()
+    size = struct.unpack_from("<I", raw, 12)[0]
+    doc = json.loads(raw[20:20 + size])
+    correction = Quaternion((1, 0, 0), -1.5707963267948966)
+    for node in doc["nodes"]:
+        if node.get("name", "").startswith("socket.jetpack.exhaust."):
+            x, y, z, w = node.get("rotation", [0, 0, 0, 1])
+            q = Quaternion((w, x, y, z)) @ correction
+            node["rotation"] = [q.x, q.y, q.z, q.w]
+    data = json.dumps(doc, separators=(",", ":")).encode()
+    data += b" " * (-len(data) % 4)
+    tail = raw[20 + size:]
+    with open(path, "wb") as f:
+        f.write(struct.pack("<III", 0x46546C67, 2, 20 + len(data) + len(tail)))
+        f.write(struct.pack("<II", len(data), 0x4E4F534A))
+        f.write(data)
+        f.write(tail)
 
 
 def export_all(out, arm, bodies, socks, actions, stats):

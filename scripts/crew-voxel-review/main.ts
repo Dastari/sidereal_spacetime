@@ -8,8 +8,7 @@ import { createWorld, type SceneState } from "../../packages/render/src/index";
 import type { Scene } from "@babylonjs/core/scene";
 import { Ray } from "@babylonjs/core/Culling/ray";
 import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
-import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
-import type { Camera } from "@babylonjs/core/Cameras/camera";
+import type { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import {
@@ -140,7 +139,7 @@ const crew = () =>
 
 // ------------------------------------------------------------------ rig review (CREW-RIG)
 // Review-only camera, skeleton overlay and clip freeze for the joint-limit visual pass. The
-// review camera replaces the game camera only while set; the game camera views stay authentic.
+// review view overrides the game camera only while set; the game camera views stay authentic.
 const RIG_BONES: [string, string][] = [
   ["pelvis", "spine"],
   ["spine", "chest"],
@@ -180,7 +179,8 @@ let posing = false;
 let posedGroup: unknown = null;
 let mutedUpdate: unknown = null;
 let reviewCam: ArcRotateCamera | undefined;
-let gameCam: Camera | null = null;
+let reviewView:
+  { alpha: number; beta: number; radius: number; lift: number } | undefined;
 const drawSkeleton = () => {
   const g = overlay.getContext("2d")!;
   g.clearRect(0, 0, overlay.width, overlay.height);
@@ -377,7 +377,9 @@ async function loadShip(scene: Scene) {
 createWorld(canvas, (text) => (status.textContent = text), {
   crewBundle: "voxel",
   signal: controller.signal,
-  ...(shipId ? { vessel: "none" as const } : {}),
+  ...(shipId || params.get("ship") === "none"
+    ? { vessel: "none" as const }
+    : {}),
   onScene: (scene) => {
     sceneRef = scene;
     scene.onBeforeRenderObservable.add(tick);
@@ -473,7 +475,7 @@ Object.assign(window, {
       skeletonOn = on;
     },
     /**
-     * Review camera orbiting the pelvis (alpha/beta radians, radius metres); null restores the
+     * Review view orbiting the pelvis (alpha/beta radians, radius metres); null restores the
      * game camera. azimuth is relative to the crew facing: 0 = right side, PI/2 = front.
      */
     reviewCamera(
@@ -488,28 +490,22 @@ Object.assign(window, {
       if (!sceneRef) return;
       if (!view) {
         isolate(null);
-        if (gameCam) sceneRef.activeCamera = gameCam;
+        reviewView = undefined;
         return;
       }
       if (!reviewCam) {
-        gameCam = sceneRef.activeCamera;
-        reviewCam = new ArcRotateCamera(
-          "crew-rig-review",
-          0,
-          1,
-          3,
-          Vector3.Zero(),
-          sceneRef,
-        );
-        reviewCam.fov = 0.5;
-        reviewCam.minZ = 0.05;
+        // Reuse the game camera: its prepass/antialiasing pipeline owns the PBR
+        // render targets. A second unattached camera can silently omit crew meshes.
+        reviewCam = sceneRef.activeCamera as ArcRotateCamera;
         sceneRef.onBeforeRenderObservable.add(() => {
+          if (!reviewView) return;
+          for (const mesh of hidden.keys()) mesh.setEnabled(false);
           const t = reviewTarget();
-          reviewCam!.target.set(
-            t.x,
-            t.y + ((reviewCam as unknown as { lift?: number }).lift ?? 0),
-            t.z,
-          );
+          reviewCam!.alpha = reviewView.alpha;
+          reviewCam!.beta = reviewView.beta;
+          reviewCam!.radius = reviewView.radius;
+          reviewCam!.minZ = 0.05;
+          reviewCam!.target.set(t.x, t.y + reviewView.lift, t.z);
         });
       }
       const c = crew() as { root?: TransformNode } | undefined;
@@ -518,11 +514,12 @@ Object.assign(window, {
         view.isolate ? new Set(c?.root?.getChildMeshes(false) ?? []) : null,
       );
       const facing = c?.root?.rotation.y ?? 0;
-      reviewCam.alpha = -facing + view.azimuth;
-      reviewCam.beta = view.beta;
-      reviewCam.radius = view.radius;
-      (reviewCam as unknown as { lift?: number }).lift = view.lift ?? 0;
-      sceneRef.activeCamera = reviewCam;
+      reviewView = {
+        alpha: -facing + view.azimuth,
+        beta: view.beta,
+        radius: view.radius,
+        lift: view.lift ?? 0,
+      };
     },
     /** Freeze every playing crew clip at `frame` (24 fps frames from each clip start); null resumes. */
     freeze(frame: number | null) {
