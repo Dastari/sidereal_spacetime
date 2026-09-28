@@ -665,7 +665,11 @@ export default function App({
       shotCost: combat?.shotCost ?? 0,
       lastHit,
     },
-    vitals: ownVitals,
+    // The server respawns the dead aboard their own ship (owned access), else in place.
+    vitals: ownVitals && {
+      ...ownVitals,
+      respawnAboard: gameShipAccess ? ship?.name : undefined,
+    },
     resting: !!couch || !!constructionSeat,
     objectDetails: selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
       ? prefabDetails
@@ -1401,6 +1405,7 @@ export default function App({
           ? (Math.sign((couch ?? constructionSeat)!.localX) * Math.PI) / 2
           : 0,
       sprinting: actor?.sprinting ?? false,
+      dead: ownVitals?.state === "dead",
       vistaId: systemScape ? DEFAULT_SPACE_VISTA : vistaId,
       spaceRegion: activeSpaceRegion,
       reducedMotion,
