@@ -7,7 +7,10 @@
 import { createWorld, type SceneState } from "../../packages/render/src/index";
 import type { Scene } from "@babylonjs/core/scene";
 import { Ray } from "@babylonjs/core/Culling/ray";
-import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
+import type { Camera } from "@babylonjs/core/Cameras/camera";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { prefabById } from "../../packages/content/src/prefabs/index";
 import { defaultPrefabComponentCatalog } from "../../packages/content/src/ship-prefab-catalog";
@@ -117,6 +120,131 @@ const crew = () =>
       })
     | undefined;
 
+// ------------------------------------------------------------------ rig review (CREW-RIG)
+// Review-only camera, skeleton overlay and clip freeze for the joint-limit visual pass. The
+// review camera replaces the game camera only while set; the game camera views stay authentic.
+const RIG_BONES: [string, string][] = [
+  ["pelvis", "spine"],
+  ["spine", "chest"],
+  ["chest", "neck"],
+  ["neck", "head"],
+  ["chest", "shoulder.L"],
+  ["shoulder.L", "upper_arm.L"],
+  ["upper_arm.L", "forearm.L"],
+  ["forearm.L", "hand.L"],
+  ["chest", "shoulder.R"],
+  ["shoulder.R", "upper_arm.R"],
+  ["upper_arm.R", "forearm.R"],
+  ["forearm.R", "hand.R"],
+  ["pelvis", "thigh.L"],
+  ["thigh.L", "shin.L"],
+  ["shin.L", "foot.L"],
+  ["foot.L", "toe.L"],
+  ["pelvis", "thigh.R"],
+  ["thigh.R", "shin.R"],
+  ["shin.R", "foot.R"],
+  ["foot.R", "toe.R"],
+];
+const overlay = document.createElement("canvas");
+overlay.width = 1280;
+overlay.height = 800;
+Object.assign(overlay.style, {
+  position: "absolute",
+  left: "0",
+  top: "0",
+  pointerEvents: "none",
+  width: "1280px",
+  height: "800px",
+});
+document.body.append(overlay);
+let skeletonOn = params.get("skeleton") === "1";
+let posing = false;
+let posedGroup: unknown = null;
+let mutedUpdate: unknown = null;
+let reviewCam: ArcRotateCamera | undefined;
+let gameCam: Camera | null = null;
+const drawSkeleton = () => {
+  const g = overlay.getContext("2d")!;
+  g.clearRect(0, 0, overlay.width, overlay.height);
+  const c = crew() as { joints?: Map<string, TransformNode> } | undefined;
+  if (!skeletonOn || !sceneRef?.activeCamera || !c?.joints) return;
+  const vp = sceneRef.activeCamera.viewport.toGlobal(
+    overlay.width,
+    overlay.height,
+  );
+  const tm = sceneRef.getTransformMatrix();
+  const at = (n: string) => {
+    const node = c.joints!.get(n);
+    return node
+      ? Vector3.Project(
+          node.getAbsolutePosition(),
+          Matrix.IdentityReadOnly,
+          tm,
+          vp,
+        )
+      : undefined;
+  };
+  g.lineWidth = 3;
+  for (const [a, b] of RIG_BONES) {
+    const p = at(a),
+      q = at(b);
+    if (!p || !q) continue;
+    g.strokeStyle = /\.L$/.test(b)
+      ? "#ffcf3f"
+      : /\.R$/.test(b)
+        ? "#3fffd2"
+        : "#ff5fd2";
+    g.beginPath();
+    g.moveTo(p.x, p.y);
+    g.lineTo(q.x, q.y);
+    g.stroke();
+  }
+  // floor reference: a square on the deck plane under the rig root (feet should sit on it)
+  const root = c.joints.get("root")?.getAbsolutePosition();
+  if (root) {
+    const r = 0.45;
+    const corners = [
+      [-r, -r],
+      [r, -r],
+      [r, r],
+      [-r, r],
+      [-r, -r],
+    ].map(([x, z]) =>
+      Vector3.Project(
+        new Vector3(root.x + x, root.y, root.z + z),
+        Matrix.IdentityReadOnly,
+        tm,
+        vp,
+      ),
+    );
+    g.strokeStyle = "#ffffff88";
+    g.lineWidth = 1.5;
+    g.beginPath();
+    corners.forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)));
+    g.stroke();
+  }
+  g.fillStyle = "#ffffff";
+  for (const n of c.joints.keys()) {
+    const p = at(n);
+    if (p) g.fillRect(p.x - 2.5, p.y - 2.5, 5, 5);
+  }
+};
+const hidden = new Map<AbstractMesh, boolean>();
+const isolate = (keep: Set<AbstractMesh> | null) => {
+  for (const [mesh, enabled] of hidden) mesh.setEnabled(enabled);
+  hidden.clear();
+  if (!keep || !sceneRef) return;
+  for (const mesh of sceneRef.meshes)
+    if (!keep.has(mesh)) {
+      hidden.set(mesh, mesh.isEnabled(false));
+      mesh.setEnabled(false);
+    }
+};
+const reviewTarget = () => {
+  const c = crew() as { joints?: Map<string, TransformNode> } | undefined;
+  return c?.joints?.get("pelvis")?.getAbsolutePosition() ?? Vector3.Zero();
+};
+
 const applyMode = () => {
   const m = MODES[mode];
   state = {
@@ -143,7 +271,7 @@ const applyMode = () => {
 };
 
 const tick = () => {
-  if (!world) return;
+  if (!world || posing) return;
   const m = MODES[mode];
   if (m.moving) {
     const speed = m.sprint
@@ -234,6 +362,14 @@ createWorld(canvas, (text) => (status.textContent = text), {
   onScene: (scene) => {
     sceneRef = scene;
     scene.onBeforeRenderObservable.add(tick);
+    scene.onAfterRenderObservable.add(drawSkeleton);
+    // while posing, the world's per-frame crew update may restart its state clips: keep only the
+    // posed clip running
+    scene.onBeforeAnimationsObservable.add(() => {
+      if (!posing) return;
+      for (const g of scene.animationGroups)
+        if (g !== posedGroup && g.isStarted) g.stop();
+    });
   },
 })
   .then(async (result) => {
@@ -307,6 +443,115 @@ Object.assign(window, {
     shoot() {
       shots += 1n;
       applyMode();
+    },
+    /** Skeleton overlay (joint heads joined parent -> child; L yellow, R cyan, spine magenta). */
+    skeleton(on: boolean) {
+      skeletonOn = on;
+    },
+    /**
+     * Review camera orbiting the pelvis (alpha/beta radians, radius metres); null restores the
+     * game camera. azimuth is relative to the crew facing: 0 = right side, PI/2 = front.
+     */
+    reviewCamera(
+      view: {
+        azimuth: number;
+        beta: number;
+        radius: number;
+        lift?: number;
+        isolate?: boolean;
+      } | null,
+    ) {
+      if (!sceneRef) return;
+      if (!view) {
+        isolate(null);
+        if (gameCam) sceneRef.activeCamera = gameCam;
+        return;
+      }
+      if (!reviewCam) {
+        gameCam = sceneRef.activeCamera;
+        reviewCam = new ArcRotateCamera(
+          "crew-rig-review",
+          0,
+          1,
+          3,
+          Vector3.Zero(),
+          sceneRef,
+        );
+        reviewCam.fov = 0.5;
+        reviewCam.minZ = 0.05;
+        sceneRef.onBeforeRenderObservable.add(() => {
+          const t = reviewTarget();
+          reviewCam!.target.set(
+            t.x,
+            t.y + ((reviewCam as unknown as { lift?: number }).lift ?? 0),
+            t.z,
+          );
+        });
+      }
+      const c = crew() as { root?: TransformNode } | undefined;
+      // isolate: hide the deck (walls occlude close rig views); the game-camera views keep it
+      isolate(
+        view.isolate ? new Set(c?.root?.getChildMeshes(false) ?? []) : null,
+      );
+      const facing = c?.root?.rotation.y ?? 0;
+      reviewCam.alpha = -facing + view.azimuth;
+      reviewCam.beta = view.beta;
+      reviewCam.radius = view.radius;
+      (reviewCam as unknown as { lift?: number }).lift = view.lift ?? 0;
+      sceneRef.activeCamera = reviewCam;
+    },
+    /** Freeze every playing crew clip at `frame` (24 fps frames from each clip start); null resumes. */
+    freeze(frame: number | null) {
+      for (const g of sceneRef?.animationGroups ?? []) {
+        if (frame === null) {
+          if (g.isStarted && !g.isPlaying) g.play(g.loopAnimation);
+          continue;
+        }
+        if (!g.isStarted) continue;
+        g.pause();
+        g.goToFrame(Math.min(g.to, g.from + frame));
+      }
+    },
+    /**
+     * Hold one clip at a 24 fps frame (body or loaded armed clip, e.g. "death", "rifle.aim"):
+     * every other animation group stops and the gameplay state stops driving the crew until
+     * unpose(). Returns false when the clip is not loaded.
+     */
+    pose(clip: string, frame: number) {
+      if (!sceneRef) return false;
+      const g = sceneRef.animationGroups.find((a) => a.name === clip);
+      if (!g) return false;
+      posing = true;
+      posedGroup = g;
+      // the world drives crew.update() every frame; mute it while a clip is held
+      const c = crew() as { update: (m: unknown) => void } | undefined;
+      if (c && !mutedUpdate) {
+        mutedUpdate = c.update;
+        c.update = () => {};
+      }
+      for (const other of sceneRef.animationGroups) other.stop();
+      const at = Math.min(g.to, g.from + (frame * 60) / 24);
+      g.start(false, 1e-6, at, g.to);
+      g.setWeightForAllAnimatables(1);
+      return true;
+    },
+    unpose() {
+      const c = crew() as { update: (m: unknown) => void } | undefined;
+      if (c && mutedUpdate) c.update = mutedUpdate as (m: unknown) => void;
+      mutedUpdate = null;
+      posing = false;
+      applyMode();
+    },
+    /** Names and lengths (frames) of the crew clips currently started. */
+    startedClips() {
+      return (sceneRef?.animationGroups ?? [])
+        .filter((g) => g.isStarted)
+        .map((g) => ({
+          name: g.name,
+          from: g.from,
+          to: g.to,
+          weight: g.animatables[0]?.weight,
+        }));
     },
     get world() {
       return world;

@@ -983,23 +983,23 @@
  ],
  "files": {
   "crew-body-male.glb": {
-   "sha256": "e0494e79b2ac2d5cc5b6296bf3343cce4be83d09b55d5e7f09a83c11235b4587",
-   "bytes": 1611844,
+   "sha256": "0cb7524f5a4c28939f0597937bf564faf01b6dc21cb33dfa3022c6a79e090ab2",
+   "bytes": 1608092,
    "variant": "male"
   },
   "crew-body-female.glb": {
-   "sha256": "01310701d6ddaa46424ae36e6cbaf1219f71ee0e46dcf7ea2b0aea2bafcd5724",
-   "bytes": 1672396,
+   "sha256": "d45ecfddfe5cc2fbbc38c9f606df011bc9072953e408acef9bc46fc58bf80ffc",
+   "bytes": 1668600,
    "variant": "female"
   },
   "crew-body-neutral.glb": {
-   "sha256": "3068457a986c96ce2055293ff51068432f3193f3e4c430138752c6d354eef28a",
-   "bytes": 1611896,
+   "sha256": "46593c7d5fab9a6c520755900e0857d3597094ec5b5eb62c756d7f37a48e4350",
+   "bytes": 1608144,
    "variant": "neutral"
   },
   "crew-body.glb": {
-   "sha256": "f88d4144e6b2d06139bde55fa2a4d42d0329026620947d5491dbd9b693b1ce60",
-   "bytes": 2311376,
+   "sha256": "2e12d9a045b3c750fa1707f77d794b9b79a8b9ba4b100288450556b5f9c078fd",
+   "bytes": 2307624,
    "variant": "male+female",
    "note": "runtime bundle; bodyType neutral renders the masculine meshes"
   }

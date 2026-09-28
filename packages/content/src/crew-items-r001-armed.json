@@ -306,7 +306,7 @@
    "holsterFrames": [],
    "itemClip": null,
    "fxFrames": [],
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0025,
    "bodyPenetrationMaxVoxels": 1
   },
   {
@@ -394,7 +394,7 @@
    "itemClip": null,
    "fxFrames": [],
    "supportErrorMaxM": null,
-   "bodyPenetrationMaxVoxels": 39
+   "bodyPenetrationMaxVoxels": 38
   },
   {
    "animation": "carbine.holster",
@@ -427,7 +427,7 @@
    "itemClip": null,
    "fxFrames": [],
    "supportErrorMaxM": 0.0,
-   "bodyPenetrationMaxVoxels": 0
+   "bodyPenetrationMaxVoxels": 1
   },
   {
    "animation": "rifle.walk_armed",
@@ -514,7 +514,7 @@
    "itemClip": null,
    "fxFrames": [],
    "supportErrorMaxM": null,
-   "bodyPenetrationMaxVoxels": 37
+   "bodyPenetrationMaxVoxels": 36
   },
   {
    "animation": "rifle.holster",
@@ -534,7 +534,7 @@
    "itemClip": null,
    "fxFrames": [],
    "supportErrorMaxM": null,
-   "bodyPenetrationMaxVoxels": 37
+   "bodyPenetrationMaxVoxels": 36
   },
   {
    "animation": "shotgun.idle_armed",
@@ -720,7 +720,7 @@
    "fxFrames": [
     1
    ],
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.004,
    "bodyPenetrationMaxVoxels": 20
   },
   {
@@ -733,7 +733,7 @@
    "holsterFrames": [],
    "itemClip": "reload",
    "fxFrames": [],
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0029,
    "bodyPenetrationMaxVoxels": 9
   },
   {
@@ -754,7 +754,7 @@
    "itemClip": null,
    "fxFrames": [],
    "supportErrorMaxM": null,
-   "bodyPenetrationMaxVoxels": 58
+   "bodyPenetrationMaxVoxels": 98
   },
   {
    "animation": "heavy.holster",
@@ -907,7 +907,7 @@
    "itemClip": null,
    "fxFrames": [],
    "supportErrorMaxM": 0.0,
-   "bodyPenetrationMaxVoxels": 0
+   "bodyPenetrationMaxVoxels": 2
   },
   {
    "animation": "rail.walk_armed",
@@ -974,7 +974,7 @@
    "itemClip": "reload",
    "fxFrames": [],
    "supportErrorMaxM": 0.004,
-   "bodyPenetrationMaxVoxels": 7
+   "bodyPenetrationMaxVoxels": 20
   },
   {
    "animation": "rail.draw",
@@ -1079,7 +1079,7 @@
    "itemClip": "fire",
    "fxFrames": [],
    "supportErrorMaxM": null,
-   "bodyPenetrationMaxVoxels": 36
+   "bodyPenetrationMaxVoxels": 31
   },
   {
    "animation": "melee.draw",
