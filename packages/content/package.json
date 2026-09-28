@@ -93,7 +93,9 @@
     "./crew-voxel-bundle": "./src/crew-voxel-bundle.ts",
     "./crew-voxel-face": "./src/crew-voxel-face.ts",
     "./prefabs/builders": "./src/prefabs/builders.ts",
-    "./crew-items": "./src/crew-items.ts"
+    "./crew-items": "./src/crew-items.ts",
+    "./crew-wardrobe": "./src/crew-wardrobe.ts",
+    "./crew-voxel-appearance": "./src/crew-voxel-appearance.ts"
   },
   "dependencies": {}
 }

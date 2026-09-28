@@ -3,6 +3,11 @@ import {
   characterComponentImageUrl,
   type EquipmentSlot,
 } from "./character-components";
+import {
+  CREW_WARDROBE,
+  WARDROBE_DEFINITION_PREFIX,
+  crewWardrobeIconUrl,
+} from "./crew-wardrobe";
 /** Versioned laboratory item definitions. Grid dimensions are storage footprints,
  * distinct from physical mesh/collision dimensions. Every item is a stable instance. */
 export interface InventoryDefinition {
@@ -15,6 +20,8 @@ export interface InventoryDefinition {
   equipSlot?: EquipmentSlot;
   /** Native shared-rig component, authoritative only when an owned item is equipped. */
   characterComponentId?: string;
+  /** Voxel-crew wardrobe item (crew-wardrobe.ts); visual only, like characterComponentId. */
+  wardrobeId?: string;
   iconUrl?: string;
   pose?: "pistol" | "rifle";
   storage?: { width: number; height: number; maxMassKg: number };
@@ -32,6 +39,22 @@ export const CHARACTER_ARMOR_DEFINITIONS: readonly InventoryDefinition[] =
     characterComponentId: c.id,
     iconUrl: characterComponentImageUrl(c.id),
     ...(c.slot === "back"
+      ? { storage: { width: 8, height: 6, maxMassKg: 24 } }
+      : {}),
+  }));
+/** Wearable r006 wardrobe items (uniforms, tier 1-2 armour). Stable ids: `wardrobe-<id>`. */
+export const CREW_WARDROBE_DEFINITIONS: readonly InventoryDefinition[] =
+  CREW_WARDROBE.map((w) => ({
+    id: WARDROBE_DEFINITION_PREFIX + w.id,
+    name: w.name,
+    width: w.grid[0],
+    height: w.grid[1],
+    massKg: w.massKg,
+    assetId: WARDROBE_DEFINITION_PREFIX + w.id,
+    equipSlot: w.slot,
+    wardrobeId: w.id,
+    iconUrl: crewWardrobeIconUrl(w.id),
+    ...(w.slot === "back"
       ? { storage: { width: 8, height: 6, maxMassKg: 24 } }
       : {}),
   }));
@@ -132,6 +155,7 @@ export const INVENTORY_DEFINITIONS: readonly InventoryDefinition[] = [
     reservoir: { capacityLitres: 5, liquidType: "fuel" },
   },
   ...CHARACTER_ARMOR_DEFINITIONS,
+  ...CREW_WARDROBE_DEFINITIONS,
 ];
 export function inventoryDefinition(id: string): InventoryDefinition {
   const found = INVENTORY_DEFINITIONS.find(
@@ -159,6 +183,9 @@ export function characterEquipmentFromInventory(
       continue;
     const id =
       definition.characterComponentId ??
+      (definition.wardrobeId
+        ? WARDROBE_DEFINITION_PREFIX + definition.wardrobeId
+        : undefined) ??
       (definition.id === "field-pack" ? "engineer-back" : undefined);
     if (id && item.equipmentSlot !== "hand")
       result[

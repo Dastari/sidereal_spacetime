@@ -9,6 +9,8 @@ export const CHARACTER_EQUIPMENT_SLOTS = [
   "legs",
   "boots",
   "back",
+  /** Voxel-crew wardrobe: the full-body suit layer (department uniform); no r008 component. */
+  "uniform",
 ] as const;
 export type CharacterEquipmentSlot = (typeof CHARACTER_EQUIPMENT_SLOTS)[number];
 export type EquipmentSlot = CharacterEquipmentSlot | "hand";

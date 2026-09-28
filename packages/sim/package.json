@@ -8,6 +8,7 @@
     "./prefab-flight": "./src/prefab-flight.ts",
     "./prefab-construction": "./src/prefab-construction.ts",
     "./prefab-catalog": "./src/prefab-catalog.ts",
+    "./prefab-cargo-sockets": "./src/prefab-cargo-sockets.ts",
     "./construction-transactions": "./src/construction-transactions.ts",
     "./construction-boundaries": "./src/construction-boundaries.ts",
     "./construction-roofs": "./src/construction-roofs.ts",
