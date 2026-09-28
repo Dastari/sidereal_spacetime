@@ -65,6 +65,9 @@ _SOCKETS = {
     "socket.eyes": ("head", (0, 7, 45.5), L, U),        # eye line (canvas rows 7..10)
     "socket.chest": ("chest", (0, 5, 32), L, U),        # chest front face y=5; -Y = forward
     "socket.back": ("chest", (0, -5, 32), R, U),         # back face y=-5; -Y = backward
+    # Paired backpack nozzles. Local -Y points towards the boots (exhaust); after the
+    # prone root turn it points aft. Reaction thrust is opposite. .L mirrors position.
+    "socket.jetpack.exhaust.R": ("chest", (5, -9, 28), R, B),
     "socket.belt": ("pelvis", (0, 0, 24), L, U),         # belt centre line, -Y forward
     "socket.shoulder.R": ("upper_arm.R", (9.5, 0, 37), F, U),   # top of deltoid, -Y = +X (outward)
     "socket.hip.R": ("pelvis", (7, 0, 21), F, U),        # -Y = +X (outward, right side)

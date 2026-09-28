@@ -59,6 +59,14 @@ export const VOXEL_CREW_EXTRA_ACTIONS = [
   "holster_pistol",
   "draw_rifle",
   "holster_rifle",
+  "ZeroG_Prone",
+  "ZeroG_Flight",
+  "ZeroG_Swim",
+  "ZeroG_Locomotion_Prone",
+  "ZeroG_Enter",
+  "ZeroG_Exit",
+  "Maglock_Walk",
+  "Maglock_Idle",
 ] as const;
 export type VoxelCrewAction =
   | (typeof VOXEL_CREW_ACTIONS)[number]
@@ -83,6 +91,12 @@ export const VOXEL_CREW_LOOPING: ReadonlySet<VoxelCrewAction> =
     "knocked_out",
     "jetpack_hover",
     "climb_ladder",
+    "ZeroG_Prone",
+    "ZeroG_Flight",
+    "ZeroG_Swim",
+    "ZeroG_Locomotion_Prone",
+    "Maglock_Walk",
+    "Maglock_Idle",
   ]);
 
 /** Authored in-place locomotion speeds (m/s) used to scale playback to gameplay speed. */
@@ -93,6 +107,7 @@ export const VOXEL_CREW_NOMINAL_SPEED: Partial<
   run: 3.864,
   crouch_walk: 0.483,
   carry_walk: 0.773,
+  Maglock_Walk: 0.9,
 };
 
 /** Body mesh regions (GEO-crew-<region>-<variant>); outfit layers hide the regions they replace. */
@@ -222,6 +237,8 @@ export const VOXEL_CREW_SOCKETS = [
   "socket.eyes",
   "socket.chest",
   "socket.back",
+  "socket.jetpack.exhaust.L",
+  "socket.jetpack.exhaust.R",
   "socket.belt",
   "socket.shoulder.L",
   "socket.shoulder.R",
