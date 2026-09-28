@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Isolated end-to-end ship-wipe rehearsal (npm run smoke:ship-wipe).
+"""Isolated end-to-end ship-wipe rehearsal (npm run smoke:ship-wipe) and in-place prefab
+upgrade rehearsal (npm run smoke:ship-upgrade, i.e. --smoke upgrade).
 
 Stage "seed" (live baseline module):
   1. Export the live-baseline authority source (a git ref) into a temporary copy.
@@ -13,6 +14,9 @@ Stage "wipe" (this checkout's module):
      publication mode).
   5. Run scripts/ship-wipe-smoke.ts: the runbook tooling (export, policy,
      dry-run, apply, verify) plus player-view and assignment-refusal invariants.
+     With --smoke upgrade, run scripts/ship-upgrade-smoke.ts instead: stock the
+     owner's prefab Wren (hold crate and wall locker), export, dry-run, apply and
+     verify operator_upgrade_prefab_ship, then walk to both containers and fly.
 Stage "all" runs both; stopping between them allows "before" screenshots.
 
 Refuses the live server port and database name. Never resets another database.
@@ -42,7 +46,10 @@ def main():
                         help='ref of the module live runs (default origin/main, fetched first); '
                              'a prefab-era baseline seeds the owner with its pinned prefab')
     parser.add_argument('--label', required=True, help='new lowercase smoke label, e.g. wipe-r003')
-    parser.add_argument('--stage', choices=['all', 'seed', 'wipe'], default='all')
+    parser.add_argument('--stage', choices=['all', 'seed', 'wipe'], default='all',
+                        help='"wipe" is the post-publication stage (it runs the --smoke script)')
+    parser.add_argument('--smoke', choices=['wipe', 'upgrade'], default='wipe',
+                        help='post-publication rehearsal: ship wipe (default) or in-place prefab upgrade')
     parser.add_argument('--full-seed', action='store_true', help='also run the full standard smoke before seeding')
     parser.add_argument('--keep-baseline', action='store_true', help='keep the scratch baseline copy after the wipe stage')
     parser.add_argument('--accounts', default='Owner Main,Crew Two,Crew Three',
@@ -55,7 +62,7 @@ def main():
         raise SystemExit('Refusing: dev.toml points at the live server/database. Use an isolated server port and database name.')
     url = f"http://{server['host']}:{server['port']}"
     database = f"{CFG['project']['database']}-{args.label}-smoke"
-    evidence = ROOT / '.runtime' / f'ship-wipe-{args.label}'
+    evidence = ROOT / '.runtime' / f'ship-{args.smoke}-{args.label}'
     env = os.environ.copy()
     env.update(SIDEREAL_SMOKE_URL=url, SIDEREAL_SMOKE_DATABASE=database,
                SIDEREAL_SMOKE_EVIDENCE_DIR=str(evidence), SIDEREAL_SEED_ACCOUNTS=args.accounts)
@@ -98,8 +105,8 @@ def main():
         if not (evidence / 'ship-wipe-seed.json').exists():
             raise SystemExit('Run --stage seed first')
         run([sys.executable, 'scripts/dev.py', 'smoke-update', '--smoke-name', args.label], ROOT)
-        run([str(ROOT / 'node_modules/.bin/tsx'), 'scripts/ship-wipe-smoke.ts'], ROOT, env)
-        print(f'Ship wipe rehearsal passed: {database} on {url}; evidence {evidence}/ship-wipe-smoke.json')
+        run([str(ROOT / 'node_modules/.bin/tsx'), f'scripts/ship-{args.smoke}-smoke.ts'], ROOT, env)
+        print(f'Ship {args.smoke} rehearsal passed: {database} on {url}; evidence {evidence}/ship-{args.smoke}-smoke.json')
         scratch = Path(os.environ.get('SIDEREAL_SCRATCH', Path.home() / 'sidereal-scratch/ships-removal'))
         baseline = scratch / f'ship-wipe-baseline-{args.label}'
         if baseline.exists() and not args.keep_baseline:

@@ -15,6 +15,7 @@ import {
 import { wipePlayerShips } from "./ship-wipe";
 import { assignPrefabShip } from "./ship-assign";
 import { stockShipCargo } from "./ship-cargo-operator";
+import { upgradePrefabShip } from "./ship-upgrade";
 import {
   isAwaitingShip,
   onboardNewCharacter,
@@ -1521,6 +1522,20 @@ export const operatorStockShipCargo = db.reducer(
     definitionIdsJson: t.string(),
   },
   stockShipCargo,
+);
+/** Operator-only: replaces one game-owned prefab ship's revision in place (e.g. Wren r2/r3 -> r4),
+ * keeping the ship/deck ids, pose, owner, containers and items. See ship-upgrade.ts. */
+export const operatorUpgradePrefabShip = db.reducer(
+  {
+    operationId: t.string(),
+    dryRun: t.bool(),
+    shipId: t.string(),
+    expectedSourceBlueprintSha256: t.string(),
+    expectedInstanceRevision: t.u64(),
+    targetPrefabId: t.string(),
+    expectedTargetBlueprintSha256: t.string(),
+  },
+  upgradePrefabShip,
 );
 
 /** Explicit deployment maintenance; ordinary game identities cannot invoke it. */
