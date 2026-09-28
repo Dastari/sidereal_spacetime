@@ -24,48 +24,52 @@ const AFT = Math.PI;
 describe("prefab beam", () => {
   it("never leaves the ship from any deck position: every 60 m shot stops inside the hull", () => {
     for (const plan of [
-      [7.625, 3],
-      [5, 3],
-      [6.5, 4.4],
+      [8.625, 3.5],
+      [6, 3],
+      [6.5, 5],
       [4.5, 1],
-      [2.65, 3],
+      [1.5, 3],
     ] as const) {
       const o = toShip([plan[0], plan[1]]);
       for (let k = 0; k < 64; k++) {
         const hit = castPrefabBeam(model, o, (k / 64) * Math.PI * 2, 60);
         expect(hit.kind, `${plan} ${k}`).not.toBe("none");
-        expect(hit.distanceM).toBeLessThan(12);
+        expect(hit.distanceM).toBeLessThan(14);
       }
     }
   });
 
   it("stops at the exterior shell's inner face, not the outline", () => {
-    // Hall centre (plan 5,3) aiming starboard through the open hold door: the hull at plan y 0.
-    const hall = toShip([5, 3]);
+    // Hall centre (plan 6,3) aiming starboard through the open hold door: the hull at plan y 0.
+    const hall = toShip([6, 3]);
     const through = castPrefabBeam(model, hall, STARBOARD, 60);
     expect(["hull", "hatch"]).toContain(through.kind);
     expect(through.distanceM).toBeCloseTo(3 - SHELL_INSET_M, 6);
-    // From the same spot a little aft (plan x 3.75), the hold partition at y 2 stops it.
-    const wall = castPrefabBeam(model, toShip([3.75, 3]), STARBOARD, 60);
+    // From the same spot a little aft (plan x 4), the hold partition at y 2 stops it.
+    const wall = castPrefabBeam(model, toShip([4, 3]), STARBOARD, 60);
     expect(wall.kind).toBe("wall");
     expect(wall.distanceM).toBeCloseTo(1 - 0.0625, 6);
-    // Bridge approach, aiming port: glass-free exterior wall of the bridge at plan y 6.
-    const bridge = toShip([7.625, 3]);
+    // Bridge approach, aiming port: glass-free exterior wall of the bridge at plan y 7.
+    const bridge = toShip([8.625, 3.5]);
     const hull = castPrefabBeam(model, bridge, PORT, 60);
     expect(hull.kind).toBe("hull");
-    expect(hull.distanceM).toBeCloseTo(3 - SHELL_INSET_M, 6);
+    expect(hull.distanceM).toBeCloseTo(3.5 - SHELL_INSET_M, 6);
   });
 
   it("passes open interior doorways and stops at glazed partitions", () => {
-    // From the hall centre, aim aft through d-engine: the beam crosses the door and hits the reactor.
-    const hall = toShip([5, 3]);
+    // From the hall centre, aim aft through d-engine: the beam crosses the door and the engine
+    // room's clear walkway and stops at the aft hull.
+    const hall = toShip([6, 3]);
     const aft = castPrefabBeam(model, hall, AFT, 60);
-    expect(aft.kind).toBe("object");
-    expect(aft.targetId).toBe("mount:reactor");
-    // The reactor front is at plan x 2.9 (envelope, not the trimmed walking footprint).
-    expect(aft.distanceM).toBeCloseTo(5 - 2.9, 6);
-    // From the bunk room, aiming fore: the glazed bridge partition (plan x 7) stops the beam.
-    const bunks = toShip([6.5, 4.4]);
+    expect(aft.kind).toBe("hull");
+    expect(aft.distanceM).toBeCloseTo(6 - SHELL_INSET_M, 6);
+    // In the engine room, aiming port: the reactor front at plan y 4.1 (its catalog envelope).
+    const reactor = castPrefabBeam(model, toShip([1.5, 3]), PORT, 60);
+    expect(reactor.kind).toBe("object");
+    expect(reactor.targetId).toBe("mount:reactor");
+    expect(reactor.distanceM).toBeCloseTo(4.1 - 3, 6);
+    // From the bunk room, aiming fore: the glazed bridge partition (plan x 8) stops the beam.
+    const bunks = toShip([6.5, 5]);
     const fore = castPrefabBeam(model, bunks, FORE, 60);
     expect(fore.kind).toBe("glass");
   });
@@ -84,7 +88,7 @@ describe("prefab beam", () => {
 
   it("bow profiles stop a beam where the sloped roof comes down", () => {
     // Just inside the nose, a beam at head height meets the roof slope before the outline.
-    const nose = toShip([9.9, 3]);
+    const nose = toShip([10.9, 3.5]);
     const high = castPrefabBeam(model, nose, FORE, 60, 1.9);
     expect(high.kind).toBe("hull");
     expect(high.targetId.startsWith("bow-")).toBe(true);
@@ -106,8 +110,8 @@ describe("prefab beam", () => {
     );
     expect(hit.kind).toBe("ship");
     expect(hit.targetId).toBe("other");
-    // The other ship's nose (plan x 11 -> 5.5 m fore of its origin) faces us at y -25 + 5.5.
-    expect(origin[1] - hit.distanceM).toBeCloseTo(-25 + 5.5, 6);
+    // The other ship's nose (plan x 12 -> 6 m fore of its origin) faces us at y -25 + 6.
+    expect(origin[1] - hit.distanceM).toBeCloseTo(-25 + 6, 6);
     // Out of range: nothing.
     const far = castBeamWithShips(
       { model, x: 0, y: 0, heading: 0 },

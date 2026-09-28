@@ -115,7 +115,7 @@ describe("prefab flight balance (proposed, catalog revision 2)", () => {
     }
     // At least 30 minutes of continuous full main burn.
     expect(capacityL / mainBurnLps).toBeGreaterThanOrEqual(30 * 60);
-    // Four small drives, no medium nacelles on the 11 m hull.
+    // Four small drives (r4: thrust blocks), no medium nacelles on the 12 m hull.
     expect(
       prefab.mounts
         .filter((m) => components.get(m.component)?.propulsion?.role === "main")

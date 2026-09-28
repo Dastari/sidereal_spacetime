@@ -219,9 +219,30 @@ test("Wren exposes its hold crate and bunk locker as storage sockets with approa
     "hold/cargo.standard.medium",
   ]);
   const crate = sockets[1];
-  expect(crate.centreM).toEqual([2.15, -1.7]);
+  // Wren r4 (12 x 7 m): the crate stands against the hold's aft wall, starboard corner.
+  expect(crate.centreM).toEqual([2.65, -2.2]);
   // Front (fore) first: ship-local +y from the crate face.
-  expect(crate.approachesM[0]).toEqual([2.15, -0.75]);
+  expect(crate.approachesM[0]).toEqual([2.65, -1.25]);
+});
+
+test("live r3 Wren instances expose the same storage socket keys (in-place upgrade mapping)", () => {
+  const r3 = readShipPrefab(
+    JSON.parse(
+      readFileSync(
+        new URL("./fixtures/fed-s-wren-r3.prefab.json", import.meta.url),
+        "utf8",
+      ),
+    ),
+  );
+  const sockets = prefabCargoSockets(
+    r3,
+    0,
+    prefabComponentCatalogFor("ship-components-v1@2"),
+  );
+  expect(sockets.map((s) => s.key)).toEqual(
+    prefabCargoSockets(prefabById("fed.s.wren")!, 0).map((s) => s.key),
+  );
+  expect(sockets[1].centreM).toEqual([2.15, -1.7]);
 });
 
 test("live r2 Wren instances (catalog revision 1) expose the same hold crate socket", () => {

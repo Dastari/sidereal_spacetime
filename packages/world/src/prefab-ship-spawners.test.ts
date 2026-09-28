@@ -24,7 +24,7 @@ import { prefabFlightModel } from "@sidereal/sim/prefab-flight";
 import { flightDefinitionCatalogHash } from "@sidereal/sim/flight-definition";
 import { prefabShipSpawner, prefabShipSpawners } from "./ship-assign";
 import { FED_WREN_PIN, REGISTERED_PREFAB_PINS } from "./prefab-ship-spawners";
-import { FED_WREN_R2_PIN } from "./prefab-ship-pins";
+import { FED_WREN_R2_PIN, FED_WREN_R3_PIN } from "./prefab-ship-pins";
 import { readFileSync } from "node:fs";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
@@ -131,5 +131,40 @@ test(
       FED_WREN_PIN.blueprintSha256,
     );
     expect(() => prefabComponentCatalogFor("ship-components-v1@0")).toThrow();
+  },
+);
+
+test(
+  "live Wren r3 instances keep their pins until an operator upgrades them to r4",
+  HEAVY,
+  () => {
+    // Wren r3 (2026-09-28) was assigned against ship-components-v1@2, the same catalog as r4, so
+    // only the grammar document differs. Its frozen document must still derive the r3 pins.
+    const legacy = readShipPrefab(
+      JSON.parse(
+        readFileSync(
+          new URL("./fixtures/fed-s-wren-r3.prefab.json", import.meta.url),
+          "utf8",
+        ),
+      ),
+    );
+    expect(legacy.revision).toBe(3);
+    const catalog = prefabComponentCatalogFor(FED_WREN_R3_PIN.catalogRevision);
+    expect(catalog.revision).toBe(FED_WREN_PIN.catalogRevision);
+    const snapshot = compileConstruction(
+      JSON.stringify(prefabConstructionDocument(legacy, catalog)),
+    );
+    expect(snapshot.sha256).toBe(FED_WREN_R3_PIN.blueprintSha256);
+    expect(
+      flightDefinitionCatalogHash(prefabFlightModel(legacy, catalog).catalog),
+    ).toBe(FED_WREN_R3_PIN.flightDefinitionSha256);
+    // The registered spawner is r4; r3 is only an upgrade source.
+    expect(FED_WREN_PIN.blueprintSha256).not.toBe(
+      FED_WREN_R3_PIN.blueprintSha256,
+    );
+    expect(prefabById("fed.s.wren")!.revision).toBe(4);
+    expect(prefabShipSpawner("fed.s.wren")?.blueprintSha256).toBe(
+      FED_WREN_PIN.blueprintSha256,
+    );
   },
 );
