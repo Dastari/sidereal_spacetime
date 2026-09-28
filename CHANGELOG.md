@@ -1,3 +1,13 @@
+## Unreleased — Slimmer tracked tree, 2026-09-28
+
+The tracked tree drops from 16,626 files (8.76 GB) to 9,710 files (2.28 GB). T3 re-hashes every tracked file on each turn, and the checkpoint had grown past its 30 s timeout. The PR removes 6,916 files (6.48 GB) of review evidence and generated intermediates from the tree:
+- all of `output/`;
+- the generated planet/star kits, meshes, textures, renders and superseded Blender files in the art library;
+- the 42 reference boards in `reference/art/`;
+- docs screenshots.
+
+Git history keeps every file, and the exact originals are in `/root/sidereal-art-archive` with SHA-256 manifests. `assets/art-library/ARCHIVED.json` and the new `docs/archived-media.json` list them, and `scripts/art_catalog.py` hash-accepts archived reference boards the way it already accepts archived art-library media. New ignore rules keep this material out. Runtime assets, `assets/reviewed-celestials`, native sources, ledgers and generator sources are unchanged.
+
 ## Unreleased — Boot services for the live stack, 2026-09-28
 
 `scripts/dev.py` gains a supervised foreground mode (`database-serve`, `public-client-serve`, `dashboard-serve`) that records its child in `.runtime/processes.json` like a detached launch, forwards SIGTERM/SIGINT/SIGHUP for a clean stop and signals systemd readiness. `ops/systemd/` adds system units for the database, the public client and Studio plus an idempotent, dry-runnable `install.sh`. Once a unit is installed and enabled for a checkout, `dev.py` start/stop/backup/activation commands drive it through `systemctl`; otherwise the detached flow is unchanged (`SIDEREAL_SYSTEMD=off` forces it). Nothing is installed on the live host by this change; the cutover runbook is on the wiki page Operations/Boot Services.

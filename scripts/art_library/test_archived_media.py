@@ -57,5 +57,50 @@ class ArchivedMediaTest(unittest.TestCase):
         self.assertFalse(art_catalog.present(path, self.sha))
 
 
+class ArchivedReferenceBoardTest(unittest.TestCase):
+    """Owner reference boards (reference/art) listed in docs/archived-media.json."""
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        base = Path(self.tmp.name)
+        self.root = base / "repo"
+        self.archive = base / "archive"
+        self.rel = "reference/art/board.png"
+        self.data = b"board pixels"
+        self.sha = hashlib.sha256(self.data).hexdigest()
+        (self.root / "docs").mkdir(parents=True)
+        (self.root / "docs/archived-media.json").write_text(json.dumps({
+            "archive_root": str(self.archive), "files": {self.rel: {"sha256": self.sha, "bytes": len(self.data)}}}))
+        self.saved = art_catalog.ROOT
+        art_catalog.ROOT = self.root
+
+    def tearDown(self):
+        art_catalog.ROOT = self.saved
+        self.tmp.cleanup()
+
+    def test_archived_board_absent_from_tree_counts_as_present_source(self):
+        self.assertEqual(art_catalog.archived_sources(), {self.rel})
+        self.assertTrue(art_catalog.source_present(self.rel, self.sha))
+        self.assertFalse(art_catalog.source_present(self.rel, "0" * 64))
+        self.assertFalse(art_catalog.source_present("reference/art/other.png", self.sha))
+
+    def test_boards_resolve_to_the_archive_and_are_verified_there(self):
+        copy = self.archive / "sidereal_spacetime" / self.rel
+        copy.parent.mkdir(parents=True)
+        copy.write_bytes(self.data)
+        self.assertEqual(art_catalog.reference_art_dir(), copy.parent)
+        self.assertTrue(art_catalog.source_present(self.rel, self.sha))
+        copy.write_bytes(b"tampered")
+        self.assertFalse(art_catalog.source_present(self.rel, self.sha))
+
+    def test_local_board_is_preferred_and_hashed_directly(self):
+        local = self.root / self.rel
+        local.parent.mkdir(parents=True)
+        local.write_bytes(b"local")
+        self.assertEqual(art_catalog.reference_art_dir(), self.root / "reference/art")
+        self.assertEqual(art_catalog.archived_sources(), set())
+        self.assertFalse(art_catalog.source_present(self.rel, self.sha))
+
+
 if __name__ == "__main__":
     unittest.main()

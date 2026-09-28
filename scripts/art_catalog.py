@@ -61,6 +61,51 @@ def present(path, sha256):
     return digest(copy) == sha256 if copy.is_file() else True
 
 
+_ARCHIVED_MEDIA = {}
+
+
+def reference_art():
+    return ROOT / "reference/art"
+
+
+def archived_media():
+    """Reference boards and review media outside the art library moved out of git (docs/archived-media.json)."""
+    path = ROOT / "docs/archived-media.json"
+    if path not in _ARCHIVED_MEDIA:
+        _ARCHIVED_MEDIA[path] = json.loads(path.read_text()) if path.exists() else {"files": {}}
+    return _ARCHIVED_MEDIA[path]
+
+
+def archived_copy(rel):
+    """Exact archived original of a repository-relative path (may not be mounted on this host)."""
+    return Path(os.environ.get("SIDEREAL_ART_ARCHIVE", archived_media().get("archive_root", ""))) / "sidereal_spacetime" / rel
+
+
+def reference_art_dir():
+    """The owner reference boards: a local reference/art copy when present, else the archived originals."""
+    local = reference_art()
+    if not archived_sources() or (local.is_dir() and any(p.is_file() for p in local.rglob("*"))):
+        return local
+    return archived_copy("reference/art")
+
+
+def archived_sources():
+    """Repository-relative reference/art paths archived out of git and absent from this checkout."""
+    return {rel for rel in archived_media()["files"] if rel.startswith("reference/art/") and not (ROOT / rel).exists()}
+
+
+def source_present(rel, sha256):
+    """Like present(), for reference boards: in the tree with `sha256`, or archived with that exact hash."""
+    path = ROOT / rel
+    if path.exists():
+        return digest(path) == sha256
+    record = archived_media()["files"].get(rel)
+    if not record or record["sha256"] != sha256:
+        return False
+    copy = archived_copy(rel)
+    return digest(copy) == sha256 if copy.is_file() else True
+
+
 def valid_revision_history(design):
     """Reference extraction starts at r000; new native companions may begin at r001.
 
@@ -118,7 +163,7 @@ def design_path(key):
 
 def initial_sources():
     from PIL import Image
-    files=sorted(p for p in (ROOT/"reference/art").rglob("*") if p.is_file())
+    boards=reference_art_dir();files=sorted(p for p in boards.rglob("*") if p.is_file())
     registered={s['filename']:s for s in read(LIB/'sources.json')} if (LIB/'sources.json').exists() else {}
     reserved={s['id'] for name,s in registered.items() if name not in SOURCE_NOTES and 'id' in s}
     used=set();next_id=max([int(s['id'][1:]) for s in registered.values() if re.fullmatch(r'S\d+',s.get('id',''))]+[0])+1
@@ -145,7 +190,7 @@ def initial_sources():
             while f'S{next_id:02}' in used or f'S{next_id:02}' in reserved:next_id+=1
             source_id=f'S{next_id:02}';next_id+=1
         used.add(source_id)
-        sources.append(dict(id=source_id,path=str(p.relative_to(ROOT)),filename=p.name,
+        sources.append(dict(id=source_id,path="reference/art/"+p.relative_to(boards).as_posix(),filename=p.name,
                             sha256=sha,width=width,height=height,duplicate_of=same,
                             inspected=True,inspection_method="Opened individually with view_image; manual visual annotation",
                             inspected_at=INITIAL_DATE,notes=SOURCE_NOTES[canonical],
@@ -433,7 +478,7 @@ def revise_crop(args):
     if not match:raise ValueError("Unknown reference")
     directory=within(LIB/"assets"/args.reference);path=directory/"reference.json";meta=read(path)
     if args.expected_revision!=meta["crop_revision"]:raise ValueError("Stale crop revision")
-    source=ROOT/"reference/art"/meta["source"]
+    source=reference_art_dir()/meta["source"]
     if digest(source)!=meta["source_sha256"]:raise ValueError("Source pixels changed")
     x1,y1,x2,y2=args.box;w,h=meta["source_dimensions_px"]
     if not (0<=x1<x2<=w and 0<=y1<y2<=h):raise ValueError("Invalid crop rectangle")
@@ -510,10 +555,11 @@ def approval_readiness(d,r,approval):
 
 def check(deep=False):
     errors=[];catalog=read(LIB/"catalog.json");sources=read(LIB/"sources.json");original_images={}
-    expected={s["path"] for s in sources};actual={str(p.relative_to(ROOT)) for p in (ROOT/"reference/art").rglob("*") if p.is_file()}
+    # Boards archived out of the tree (docs/archived-media.json) count when their recorded hash matches.
+    expected={s["path"] for s in sources};actual={str(p.relative_to(ROOT)) for p in reference_art().rglob("*") if p.is_file()}|archived_sources()
     if expected!=actual:errors.append("Source inventory changed; inspect new/removed files")
     for s in sources:
-        if not (ROOT/s["path"]).exists() or digest(ROOT/s["path"])!=s["sha256"]:errors.append("Source changed: "+s["path"])
+        if not source_present(s["path"],s["sha256"]):errors.append("Source changed: "+s["path"])
     ids=set()
     for ref in catalog["references"]:
         if ref["id"] in ids:errors.append("Duplicate reference ID: "+ref["id"])
@@ -528,7 +574,9 @@ def check(deep=False):
         if deep:
             from PIL import Image
             if meta["source"] not in original_images:
-                with Image.open(ROOT/"reference/art"/meta["source"]) as im:original_images[meta["source"]]=im.copy()
+                board=reference_art_dir()/meta["source"]
+                if not board.is_file():errors.append("Reference board unavailable for the deep check (mount the art archive): "+meta["source"]);continue
+                with Image.open(board) as im:original_images[meta["source"]]=im.copy()
             original=original_images[meta["source"]]
             for version in [*history,meta]:
                 if not (LIB/version["crop_path"]).exists():continue  # archived out of git; hash verified above

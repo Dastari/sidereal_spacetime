@@ -11,8 +11,9 @@ in the [publication receipt](https://wiki.sidereal.dastari.net/Art/Library/Docs/
 
 ## Read the design before constructing it
 
-Open both `reference/art/characters-weapons-items.png` and
-`reference/art/characters-weapons-items-female.png`, then the relevant exact crops
+Open both `characters-weapons-items.png` and `characters-weapons-items-female.png`
+([web copies](https://wiki.sidereal.dastari.net/Art/References/Source%20Boards); exact originals in
+`/root/sidereal-art-archive/references/source-boards/`), then the relevant exact crops
 in the art library. The female sheet is a separate variant source: its medics have
 exposed faces, swept hair, a substantial ponytail and small white/red comms. A
 closed male-sheet helmet is not the whole design. Neither body type automatically
@@ -106,7 +107,7 @@ permission follows from these models.
 
 ## Facial reference pass r009 — 2026-09-10
 
-For head/face/hair work, also open [characters-facial-assets.png](../reference/art/characters-facial-assets.png)
+For head/face/hair work, also open [characters-facial-assets.png](https://wiki.sidereal.dastari.net/Art/References/Source%20Boards) (exact original in `/root/sidereal-art-archive/references/source-boards/`)
 and its [complete exact-crop index](https://github.com/Dastari/sidereal_spacetime/blob/9c58c07774d7d3c4a58a40c49e90f2a2c647249c/assets/art-library/FACIAL_REFERENCE_INDEX.md).
 The [independent A–E review](https://wiki.sidereal.dastari.net/History/Handoffs/Character%20faces%20r009%20%E2%80%94%20independent%20reference%20review)
 records measured baseline proportions, rejected attempts, corrected native joins,

@@ -23,3 +23,15 @@ apps/*/public/help/
 # Each app stages these from the shared reviewed celestial asset source.
 apps/*/public/reviewed-planets/
 apps/*/public/reviewed-stars/
+
+# Review evidence, reference boards and screenshots live in the Sidereal wiki and, as exact
+# originals, in /root/sidereal-art-archive (docs/archived-media.json). T3 re-hashes every
+# tracked file on each turn, so keep this media out of git. output/ above is scratch too.
+reference/art/
+docs/**/*.png
+docs/**/*.jpg
+docs/**/*.jpeg
+docs/**/*.webp
+docs/**/*.gif
+docs/**/*.webm
+docs/**/*.mp4
