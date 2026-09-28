@@ -20,6 +20,7 @@ import {
 } from "@sidereal/sim/construction-pressure-document";
 import { pinnedFamilyCollision } from "@sidereal/sim/construction-boundary-family";
 import { nativeTraversalRoomCollision } from "@sidereal/sim/construction-traversal-document";
+import { prefabConstructionObstacles } from "@sidereal/sim/prefab-deck-objects";
 import {
   SenderError,
   t,
@@ -103,6 +104,13 @@ export function installDoors(
       });
   }
 }
+function safePrefabObstacles(document: { prefab?: unknown }) {
+  try {
+    return prefabConstructionObstacles(document) ?? [];
+  } catch {
+    return [];
+  }
+}
 export function constructionCollision(
   ctx: Pick<ReadContext, "db">,
   instance: { id: string; revision: bigint; documentJson: string },
@@ -137,17 +145,22 @@ export function constructionCollision(
       partitionHalfWidthM: document.pressureRoom ? 0.0625 : width,
       obstacles: wayfarer
         ? qualifiedWayfarerInstanceObstacles(wayfarer, deckId)
-        : document.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id
-          ? planPinnedInsetBoundaries(document, deckId).obstacles
-          : document.stairRoom
-            ? nativeStairRoomCollision(document, deckId)
-            : document.traversalRoom
-              ? nativeTraversalRoomCollision(document, deckId)
-              : document.pressureRoom
-                ? nativePressureRoomCollision(document, deckId)
-                : document.boundaryKit?.revision === "r004"
-                  ? pinnedFamilyCollision(document.layout, deckId)
-                  : [],
+        : "prefab" in document && document.prefab
+          ? // Trusted prefab ships: furniture and modules from the embedded grammar + catalog.
+            // An unreadable binding (e.g. a retired catalog revision) must never abort the
+            // world tick; walls, floors and doors still apply.
+            safePrefabObstacles(document)
+          : document.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id
+            ? planPinnedInsetBoundaries(document, deckId).obstacles
+            : document.stairRoom
+              ? nativeStairRoomCollision(document, deckId)
+              : document.traversalRoom
+                ? nativeTraversalRoomCollision(document, deckId)
+                : document.pressureRoom
+                  ? nativePressureRoomCollision(document, deckId)
+                  : document.boundaryKit?.revision === "r004"
+                    ? pinnedFamilyCollision(document.layout, deckId)
+                    : [],
     });
     baseCache.set(key, base);
   }

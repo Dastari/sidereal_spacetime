@@ -60,6 +60,14 @@ export function createCombatAim(
 ) {
   let pointer: { x: number; y: number } | undefined;
   const blockers = new Set(occluders);
+  /** Extra geometry-free clip (prefab ships: the compiled structure the server also tests). */
+  let clip:
+    | ((
+        origin: Vector3,
+        direction: Vector3,
+        range: number,
+      ) => number | undefined)
+    | undefined;
   const beam = CreateBox("rifle-laser-beam", { size: 1 }, scene);
   setMeshRole(beam, "effect");
   const dot = CreateBox("rifle-laser-target", { size: 0.08 }, scene);
@@ -138,6 +146,9 @@ export function createCombatAim(
 
   return {
     meshes: [beam, dot],
+    setClip(next: typeof clip) {
+      clip = next;
+    },
     pointer(x: number, y: number) {
       pointer = Number.isFinite(x) && Number.isFinite(y) ? { x, y } : undefined;
     },
@@ -157,6 +168,9 @@ export function createCombatAim(
       beam.setEnabled(!!ray);
       dot.setEnabled(!!ray);
       if (!ray || !muzzle) return;
+      const limit = clip?.(ray.origin, ray.direction, range);
+      if (limit !== undefined && limit < Vector3.Distance(ray.origin, ray.end))
+        ray.end = ray.origin.add(ray.direction.scale(limit));
       beam.position.copyFrom(muzzle.position.add(ray.end).scale(0.5));
       beam.scaling.set(
         0.012,

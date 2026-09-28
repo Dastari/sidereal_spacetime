@@ -16,7 +16,20 @@ import { prefabStats } from "../packages/content/src/ship-prefab";
 import { defaultPrefabComponentCatalog } from "../packages/content/src/ship-prefab-catalog";
 import { prefabFlightModel } from "../packages/sim/src/prefab-flight";
 import { prefabPilotPose } from "../packages/sim/src/construction-pilot";
-import { prefabWalkRoute } from "../packages/sim/src/prefab-construction";
+import {
+  prefabToShipMetres,
+  prefabWalkFrame,
+  prefabWalkRoute,
+} from "../packages/sim/src/prefab-construction";
+import {
+  prefabDeckBlockers,
+  shipToPlanMetres,
+} from "../packages/sim/src/prefab-deck-objects";
+import {
+  castPrefabBeam,
+  prefabBeamModel,
+} from "../packages/sim/src/prefab-beam";
+import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 
 const host = process.env.SIDEREAL_SMOKE_URL,
   database = process.env.SIDEREAL_SMOKE_DATABASE,
@@ -62,6 +75,10 @@ const c = DbConnection.builder()
         tables.ownAuthoredFlightPhysics,
         tables.ownAuthoredFlightActuators,
         tables.ownActuatorOutputs,
+        tables.ownInventoryState,
+        tables.ownInventoryItems,
+        tables.ownCombat,
+        tables.ownCombatImpact,
       ]),
   )
   .build();
@@ -149,7 +166,135 @@ try {
     "prefab flight active and admitted",
   );
 
-  // Walk from the spawn to the derived pilot approach (through door passages), then sit.
+  // Furniture collision (SHIP-INTERACTION): walk up to a blocking module and push into it.
+  const blocker =
+    prefabDeckBlockers(prefab, catalog).find((b) =>
+      b.objectId.includes("bunk"),
+    ) ?? prefabDeckBlockers(prefab, catalog)[0];
+  const frame = prefabWalkFrame(prefab, catalog);
+  const toShip = prefabToShipMetres(prefab);
+  const toPlan = shipToPlanMetres(prefab);
+  const standing = (p: [number, number]) =>
+    canOccupyDeck(
+      frame,
+      { shipId: frame.shipId, deckId: frame.deckId, position: p },
+      0.3,
+    );
+  const [bx0, by0, bx1, by1] = blocker.rect;
+  const faces: { at: [number, number]; into: [number, number] }[] = [
+    { at: [(bx0 + bx1) / 2, by0 - 0.35], into: [0, 1] },
+    { at: [(bx0 + bx1) / 2, by1 + 0.35], into: [0, -1] },
+    { at: [bx0 - 0.35, (by0 + by1) / 2], into: [1, 0] },
+    { at: [bx1 + 0.35, (by0 + by1) / 2], into: [-1, 0] },
+  ];
+  const face = faces.find((f) => standing(toShip(f.at)));
+  assert(face, `a standing spot beside ${blocker.objectId}`);
+  for (const [x, y] of prefabWalkRoute(
+    prefab,
+    catalog,
+    [actor().localX, actor().localY],
+    toShip(face.at),
+  ))
+    await walkNative(c, x, y);
+  // Push straight into the module for 1.5 s: the server must stop the body at its face.
+  const push = toShip([face.at[0] + face.into[0], face.at[1] + face.into[1]]);
+  const from = toShip(face.at);
+  let deepest = Infinity;
+  for (let n = 0; n < 25; n++) {
+    await c.reducers.setIntent({
+      sequence: nextSequence(c),
+      throttle: 0,
+      turn: 0,
+      dx: push[0] - from[0],
+      dy: push[1] - from[1],
+      sprint: false,
+    });
+    await pause(60);
+    const p = toPlan([actor().localX, actor().localY]);
+    const gap = face.into[1]
+      ? face.into[1] > 0
+        ? by0 - p[1]
+        : p[1] - by1
+      : face.into[0] > 0
+        ? bx0 - p[0]
+        : p[0] - bx1;
+    deepest = Math.min(deepest, gap);
+  }
+  await c.reducers.setIntent({
+    sequence: nextSequence(c),
+    throttle: 0,
+    turn: 0,
+    dx: 0,
+    dy: 0,
+    sprint: false,
+  });
+  assert(
+    deepest >= 0.3 - 1e-3,
+    `walking into ${blocker.objectId} stopped at its face (closest body-centre gap ${deepest.toFixed(3)} m)`,
+  );
+  console.log(
+    JSON.stringify({
+      furniture: blocker.objectId,
+      closestBodyCentreGapM: deepest,
+    }),
+  );
+
+  // Laser vs ship (SHIP-INTERACTION): accepted shots end where the prefab structure stops them.
+  await c.reducers.claimStarterKit({});
+  const item = () =>
+    [...c.db.ownInventoryItems.iter()].find(
+      (i: any) => i.definitionId === "compact-pistol",
+    ) as any;
+  await wait(() => !!item(), "starter pistol");
+  await c.reducers.equipInventoryItem({
+    itemId: item().id,
+    expectedRevision: ([...c.db.ownInventoryState.iter()][0] as any).revision,
+    operationId: crypto.randomUUID(),
+  });
+  await wait(
+    () => [...c.db.ownCombat.iter()][0]?.weaponItemId === item().id,
+    "pistol equipped",
+  );
+  const beam = prefabBeamModel(prefab, catalog);
+  const impacts: unknown[] = [];
+  for (const angle of [0, Math.PI / 2, Math.PI, -Math.PI / 2]) {
+    await c.reducers.setCombatAim({ active: true, angle });
+    await wait(() => [...c.db.ownCombat.iter()][0]?.aimActive, "aim active");
+    const combat = [...c.db.ownCombat.iter()][0] as any;
+    await c.reducers.fireWeapon({
+      itemId: item().id,
+      expectedRevision: combat.revision,
+      operationId: crypto.randomUUID(),
+    });
+    await wait(
+      () =>
+        ([...c.db.ownCombatImpact.iter()][0] as any)?.shotSequence ===
+        combat.shotSequence + 1n,
+      "authoritative impact row",
+    );
+    const impact = [...c.db.ownCombatImpact.iter()][0] as any;
+    const expected = castPrefabBeam(
+      beam,
+      [actor().localX, actor().localY],
+      angle,
+      combat.rangeMeters,
+    );
+    assert.notEqual(impact.kind, "none", "the beam stopped on the ship");
+    assert(impact.distanceM < 15, "the beam did not pass through the ship");
+    assert.equal(impact.kind, expected.kind);
+    assert(Math.abs(impact.distanceM - expected.distanceM) < 1e-6);
+    impacts.push({
+      angle,
+      kind: impact.kind,
+      targetId: impact.targetId,
+      distanceM: impact.distanceM,
+    });
+    await pause(300); // pistol cooldown
+  }
+  await c.reducers.setCombatAim({ active: false, angle: 0 });
+  console.log(JSON.stringify({ impacts }));
+
+  // Walk from here to the derived pilot approach (around furniture), then sit.
   const pose = prefabPilotPose(model.station!);
   const spawn = { x: actor().localX, y: actor().localY };
   for (const [x, y] of prefabWalkRoute(

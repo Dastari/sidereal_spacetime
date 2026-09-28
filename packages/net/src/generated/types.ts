@@ -211,6 +211,33 @@ export const CombatAim = __t.object("CombatAim", {
 });
 export type CombatAim = __Infer<typeof CombatAim>;
 
+export const CombatImpact = __t.object("CombatImpact", {
+  characterId: __t.string(),
+  itemId: __t.string(),
+  shotSequence: __t.u64(),
+  shipId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  distanceM: __t.f64(),
+  kind: __t.string(),
+  targetId: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type CombatImpact = __Infer<typeof CombatImpact>;
+
+export const CombatImpactStatus = __t.object("CombatImpactStatus", {
+  characterId: __t.string(),
+  itemId: __t.string(),
+  shotSequence: __t.u64(),
+  shipId: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  distanceM: __t.f64(),
+  kind: __t.string(),
+  targetId: __t.string(),
+});
+export type CombatImpactStatus = __Infer<typeof CombatImpactStatus>;
+
 export const CombatReceipt = __t.object("CombatReceipt", {
   id: __t.string(),
   characterId: __t.string(),
@@ -1281,6 +1308,9 @@ export type OwnCharacters = __Infer<typeof OwnCharacters>;
 
 export const OwnCombat = __t.object("OwnCombat", {});
 export type OwnCombat = __Infer<typeof OwnCombat>;
+
+export const OwnCombatImpact = __t.object("OwnCombatImpact", {});
+export type OwnCombatImpact = __Infer<typeof OwnCombatImpact>;
 
 export const OwnConstructionBlueprints = __t.object("OwnConstructionBlueprints", {});
 export type OwnConstructionBlueprints = __Infer<typeof OwnConstructionBlueprints>;

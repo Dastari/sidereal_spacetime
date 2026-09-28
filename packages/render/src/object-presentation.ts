@@ -23,6 +23,8 @@ export function createObjectPresentation(
   installed: Installed,
   blocked: () => boolean,
   onSelect?: (placementId?: string) => void,
+  /** Objects without meshes of their own (batched prefab ships): a geometric pick. */
+  fallbackPick?: (event: PointerEvent) => string | undefined,
 ) {
   for (const mesh of meshes)
     if (!mesh.metadata?.partId) {
@@ -71,7 +73,7 @@ export function createObjectPresentation(
       ["floor", "roof", "wall", "superstructure", "decoration"].includes(
         picked?.metadata?.category,
       ) || /^(floor|roof|superstructure|bulkhead)-/.test(candidate ?? "");
-    const id = structural ? undefined : candidate;
+    const id = structural ? undefined : (candidate ?? fallbackPick?.(event));
     select(id);
     onSelect?.(id);
   };

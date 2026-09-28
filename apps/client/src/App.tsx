@@ -23,6 +23,11 @@ import {
   bodyDestinations,
 } from "./shared-body-presentation";
 import { constructionInspectionCatalog } from "./construction-inspection";
+import {
+  PREFAB_OBJECT_PREFIX,
+  prefabObjectDetails,
+  prefabShipOf,
+} from "./prefab-objects";
 import { constructionPresentation } from "./construction-presentation";
 import { groundItemsForScene } from "./ground-items";
 import { createMovementControl } from "./movement-control";
@@ -567,6 +572,44 @@ export default function App({
         .enterLab({ name: actor.name })
         .catch((e) => setError(String(e)));
   }, [actor?.connected, actor?.id, ready, c]);
+  // Prefab ships: inspect placed objects from the visited document (owner: full stats and live
+  // power/throttle; accepted passenger: what is visibly installed only).
+  const prefabShip = useMemo(
+    () => prefabShipOf(constructionInstance?.documentJson),
+    [constructionInstance?.documentJson],
+  );
+  const ownsCurrentShip =
+    !!c &&
+    !!actor &&
+    [...c.db.ownShips.iter()].some((row) => row.id === actor.shipId);
+  const prefabDetails = selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
+    ? prefabObjectDetails(
+        selectedObject,
+        prefabShip?.doc,
+        prefabShip?.catalog,
+        ownsCurrentShip
+          ? "owner"
+          : constructionInstance
+            ? "passenger"
+            : undefined,
+        ownsCurrentShip && c && ship
+          ? {
+              shipId: ship.id,
+              powerFittings: [
+                ...c.db.ownAuthoredFlightPowerFittings.iter(),
+              ].filter((f) => f.shipId === ship.id),
+              throttles: ready ? displayedOutputs : [],
+            }
+          : {},
+        actor,
+      )
+    : undefined;
+  const combatImpact =
+    c && ready && actor?.connected
+      ? [...c.db.ownCombatImpact.iter()].find(
+          (row) => row.characterId === actor.id && row.shipId === actor.shipId,
+        )
+      : undefined;
   const uiState: GameUIState = {
     accountKind: auth?.kind === "oidc" ? "oidc" : "development",
     sharedEntry: sharedEnabled && !awaitingShip ? sharedEntry.state : undefined,
@@ -585,18 +628,20 @@ export default function App({
       shotCost: combat?.shotCost ?? 0,
     },
     resting: !!couch || !!constructionSeat,
-    objectDetails: objectDetails(
-      selectedObject,
-      inspectionCatalog,
-      interactions,
-      actor,
-      { seated, near: nearStation, occupied: !!station?.occupantId },
-      ready ? displayedOutputs : [],
-      inventory.containers,
-      c && constructionScene.active
-        ? [...c.db.ownAuthoredFlightFittings.iter()]
-        : [],
-    ),
+    objectDetails: selectedObject?.startsWith(PREFAB_OBJECT_PREFIX)
+      ? prefabDetails
+      : objectDetails(
+          selectedObject,
+          inspectionCatalog,
+          interactions,
+          actor,
+          { seated, near: nearStation, occupied: !!station?.occupantId },
+          ready ? displayedOutputs : [],
+          inventory.containers,
+          c && constructionScene.active
+            ? [...c.db.ownAuthoredFlightFittings.iter()]
+            : [],
+        ),
     interactionPrompt,
     inventory,
     status,
@@ -1225,6 +1270,14 @@ export default function App({
         range: combat?.rangeMeters ?? 60,
         itemId: combat?.weaponItemId,
         shotSequence: combat?.shotSequence,
+        impact: combatImpact
+          ? {
+              shotSequence: combatImpact.shotSequence,
+              x: combatImpact.x,
+              y: combatImpact.y,
+              kind: combatImpact.kind,
+            }
+          : undefined,
       },
       constructionDeckId: constructionVisit?.deckId,
       constructionSupportElevation: constructionInstance

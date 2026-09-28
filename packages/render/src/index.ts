@@ -103,6 +103,13 @@ import {
   loadPrefabShipPresentation,
   type PrefabShipViewHandle,
 } from "./prefab-ship-presentation";
+import {
+  createImpactFlash,
+  createPrefabBeamClip,
+  createPrefabObjectPicker,
+  prefabBindingOf,
+  type PrefabObjectPicker,
+} from "./prefab-ship-interaction";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { CreateTorus } from "@babylonjs/core/Meshes/Builders/torusBuilder";
 import { Material } from "@babylonjs/core/Materials/material";
@@ -128,6 +135,8 @@ export type SceneState = {
     range: number;
     itemId?: string;
     shotSequence?: bigint;
+    /** Server-resolved end of the latest accepted shot (ship-local metres). */
+    impact?: { shotSequence: bigint; x: number; y: number; kind: string };
   };
   selectedObject?: string;
   /** Accepted occupied deck; changing UI selection cannot supply this value. */
@@ -674,6 +683,22 @@ async function buildWorld(
     setGlowOccludingActors(scene, meshes);
   };
   setGlowOccludingActors(scene, crew?.root.getChildMeshes() ?? []);
+  // Prefab ships (SHIP-INTERACTION): geometric object picking over the batched dressed view,
+  // beam clipping against the compiled structure, and the authoritative impact flash.
+  const prefabBinding = prefabView
+    ? prefabBindingOf(options.construction?.documentJson)
+    : undefined;
+  const prefabPicker: PrefabObjectPicker | undefined = prefabBinding
+    ? createPrefabObjectPicker(
+        scene,
+        canvas,
+        shipRoot,
+        prefabBinding,
+        () => state.interior,
+      )
+    : undefined;
+  const impactFlash = createImpactFlash(scene, shipRoot);
+  let lastImpactSequence: bigint | undefined;
   const objects = createObjectPresentation(
     canvas,
     scene,
@@ -683,6 +708,7 @@ async function buildWorld(
       (options.blocksCameraInput?.() ?? false) ||
       (options.blocksObjectSelection?.() ?? false),
     options.onObjectSelected,
+    prefabPicker ? (event) => prefabPicker.pick(event) : undefined,
   );
   const groundItems = createGroundItems(scene, shipRoot, options.equipmentPose);
   const graphics = createGraphicsSettings(scene);
@@ -705,6 +731,8 @@ async function buildWorld(
   const localLights = createLocalLightBudget();
   const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
   for (const mesh of combatAim.meshes) glow.addIncludedOnlyMesh(mesh);
+  if (prefabBinding)
+    combatAim.setClip(createPrefabBeamClip(shipRoot, prefabBinding));
   let state: SceneState = {
     heading: 0,
     x: 0,
@@ -1365,6 +1393,16 @@ async function buildWorld(
       }
       state = next;
       objects.select(next.selectedObject);
+      prefabPicker?.select(next.selectedObject);
+      const impact = next.combat?.impact;
+      if (impact && lastImpactSequence === undefined)
+        lastImpactSequence = impact.shotSequence;
+      else if (impact && impact.shotSequence !== lastImpactSequence) {
+        lastImpactSequence = impact.shotSequence;
+        if (impact.kind !== "none")
+          for (const mesh of impactFlash.play(impact.x, impact.y, 1.3))
+            glow.addIncludedOnlyMesh(mesh as Mesh);
+      }
       objects.lights(next.objectLights ?? []);
       if (next.crewAppearance) customizeCrew(next.crewAppearance);
       if (!state.interior && !focusedBodyId) up();
@@ -1412,6 +1450,8 @@ async function buildWorld(
       graphics.dispose();
       transmissionLifecycle.dispose();
       objects.dispose();
+      prefabPicker?.dispose();
+      impactFlash.dispose();
       up();
       observer.disconnect();
       window.removeEventListener("blur", up);

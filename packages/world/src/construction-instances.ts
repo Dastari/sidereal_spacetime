@@ -237,7 +237,11 @@ export function ownDecks(ctx: ReadContext) {
   ]);
 }
 
-import { sweepDeckCircle } from "../../sim/src/construction-collision";
+import {
+  canOccupyDeck,
+  sweepDeckCircle,
+  withoutPenetratedObstacles,
+} from "../../sim/src/construction-collision";
 import type { ConstructionDocument } from "../../content/src/construction";
 import { WALK_SPEED_MPS, SPRINT_SPEED_MPS } from "../../sim/src/index";
 import { clearAim } from "./combat";
@@ -576,16 +580,24 @@ export function stepActor(
   if (!mayWalk) return true;
   if (!passenger && tryEnterConstructionStair(ctx, stairHooks, actor.id))
     return true;
-  const frame = constructionCollision(ctx, instance, location.deckId);
+  const start = {
+    shipId: instance.id,
+    deckId: location.deckId,
+    position: [actor.localX, actor.localY] as [number, number],
+  };
+  // A body already inside furniture (collision added after it stood there) may walk out of it.
+  const frame = withoutPenetratedObstacles(
+    constructionCollision(ctx, instance, location.deckId),
+    start.position,
+    0.3,
+  );
+  // Never abort the world tick on an unsupported start: the actor simply does not move.
+  if (!canOccupyDeck(frame, start, 0.3)) return true;
   const norm = Math.max(1, Math.hypot(command.dx, command.dy)),
     distance = (command.sprint ? SPRINT_SPEED_MPS : WALK_SPEED_MPS) * 0.05;
   const next = sweepDeckCircle(
     frame,
-    {
-      shipId: instance.id,
-      deckId: location.deckId,
-      position: [actor.localX, actor.localY],
-    },
+    start,
     [(command.dx / norm) * distance, (command.dy / norm) * distance],
     0.3,
   );

@@ -39,6 +39,14 @@ import {
   type Point,
 } from "@sidereal/content/ship-layout";
 import { bindConstructionLayout } from "./construction-layout";
+import {
+  canOccupyDeck,
+  compileDeckCollision,
+  resolveDeckCollision,
+  sweepDeckCircle,
+  type DeckCollisionFrame,
+} from "./construction-collision";
+import { prefabDeckObstacles } from "./prefab-deck-objects";
 import { stableStringify } from "./layout-geometry";
 
 export const PREFAB_CONSTRUCTION_REVISION = "prefab-construction-1" as const;
@@ -500,10 +508,26 @@ export function restorePrefabSourceIdentities(
   return restored;
 }
 
+/** Walking frame of a prefab's playable deck with its furniture/module obstacles (ship-local metres). */
+export function prefabWalkFrame(
+  doc: ShipPrefabDocumentV1,
+  catalog: PrefabComponentCatalog,
+): DeckCollisionFrame {
+  return resolveDeckCollision(
+    compileDeckCollision(prefabLayout(doc, catalog), PREFAB_DECK_ID, {
+      shipId: `prefab.${doc.id}`,
+      perimeterHalfWidthM: 0,
+      partitionHalfWidthM: 0,
+      obstacles: prefabDeckObstacles(doc, catalog),
+    }),
+    [],
+  );
+}
+
 /**
- * Walking waypoints (ship-local game metres) from `from` to `to` through interior door
- * passages: a breadth-first search over rooms, stepping 0.6 m either side of each door
- * midpoint. Rooms are convex cell rectangles, so straight legs inside a room stay clear.
+ * Walking waypoints (ship-local game metres) from `from` to `to` around walls and furniture:
+ * A* over a 0.025 m lattice of positions a slightly padded body can occupy, each step checked by
+ * the authoritative swept-circle test, then string-pulled so every leg is a clear straight walk.
  * Used by smoke tests and future NPC/crew routing; presentation and authority unaffected.
  */
 export function prefabWalkRoute(
@@ -511,62 +535,164 @@ export function prefabWalkRoute(
   catalog: PrefabComponentCatalog,
   from: readonly [number, number],
   to: readonly [number, number],
+  radiusM = 0.3,
 ): [number, number][] {
-  const toShip = prefabToShipMetres(doc);
-  const [ox, oy] = prefabOrigin(doc);
-  const toPrefab = ([gx, gy]: readonly [number, number]): Pt => [
-    gy + ox,
-    -gx + oy,
+  const frame = prefabWalkFrame(doc, catalog);
+  const pad = radiusM + 0.002;
+  const step = 0.025;
+  const loc = (p: readonly [number, number]) => ({
+    shipId: frame.shipId,
+    deckId: frame.deckId,
+    position: [p[0], p[1]] as [number, number],
+  });
+  const clear = (
+    a: readonly [number, number],
+    b: readonly [number, number],
+  ) => {
+    if (!canOccupyDeck(frame, loc(a), radiusM)) return false;
+    const r = sweepDeckCircle(
+      frame,
+      loc(a),
+      [b[0] - a[0], b[1] - a[1]],
+      radiusM,
+    );
+    return Math.hypot(r.position[0] - b[0], r.position[1] - b[1]) < 1e-6;
+  };
+  if (!canOccupyDeck(frame, loc(from), radiusM))
+    throw Error("Route start is not a standing position");
+  if (!canOccupyDeck(frame, loc(to), radiusM))
+    throw Error("Route goal is not a standing position");
+  if (clear(from, to)) return [[to[0], to[1]]];
+  const xs = frame.floors.flat().map((p) => p[0]);
+  const ys = frame.floors.flat().map((p) => p[1]);
+  const x0 = Math.floor(Math.min(...xs) / step) * step;
+  const y0 = Math.floor(Math.min(...ys) / step) * step;
+  const nx = Math.ceil((Math.max(...xs) - x0) / step) + 1;
+  const ny = Math.ceil((Math.max(...ys) - y0) / step) + 1;
+  const at = (i: number): [number, number] => [
+    x0 + (i % nx) * step,
+    y0 + Math.floor(i / nx) * step,
   ];
-  const interior = deriveInterior(doc, 0, catalog);
-  const cellRoom = new Map(
-    interior.floors.map((f) => [`${f.cell[0]},${f.cell[1]}`, f.room]),
-  );
-  const roomAt = (p: Pt) =>
-    cellRoom.get(`${Math.floor(p[0])},${Math.floor(p[1])}`) ?? null;
-  const start = roomAt(toPrefab(from));
-  const goal = roomAt(toPrefab(to));
-  if (!start || !goal) throw Error("Route endpoints must stand inside rooms");
-  type Hop = { door: (typeof interior.doors)[number]; next: string };
-  const hops = new Map<string, Hop[]>();
-  for (const door of interior.doors) {
-    if (door.exterior || !door.rooms[0] || !door.rooms[1]) continue;
-    const [a, b] = door.rooms as [string, string];
-    for (const [x, y] of [
-      [a, b],
-      [b, a],
-    ] as const) {
-      if (!hops.has(x)) hops.set(x, []);
-      hops.get(x)!.push({ door, next: y });
+  const free = new Map<number, boolean>();
+  const isFree = (i: number) => {
+    let f = free.get(i);
+    if (f === undefined) {
+      f = canOccupyDeck(frame, loc(at(i)), pad);
+      free.set(i, f);
+    }
+    return f;
+  };
+  const nearest = (p: readonly [number, number]) => {
+    const cx = Math.round((p[0] - x0) / step);
+    const cy = Math.round((p[1] - y0) / step);
+    let best: number | undefined;
+    let bestD = Infinity;
+    for (let dy = -16; dy <= 16; dy++)
+      for (let dx = -16; dx <= 16; dx++) {
+        const gx = cx + dx;
+        const gy = cy + dy;
+        if (gx < 0 || gy < 0 || gx >= nx || gy >= ny) continue;
+        const i = gy * nx + gx;
+        const d = Math.hypot(at(i)[0] - p[0], at(i)[1] - p[1]);
+        if (d < bestD && isFree(i) && clear(p, at(i))) {
+          best = i;
+          bestD = d;
+        }
+      }
+    if (best === undefined)
+      throw Error("Route endpoint has no clear lattice node");
+    return best;
+  };
+  const start = nearest(from);
+  const goal = nearest(to);
+  const g = new Map<number, number>([[start, 0]]);
+  const prev = new Map<number, number>();
+  // Binary min-heap on f = g + h.
+  const heap: { i: number; f: number }[] = [];
+  const push = (e: { i: number; f: number }) => {
+    heap.push(e);
+    for (let c = heap.length - 1; c > 0;) {
+      const p = (c - 1) >> 1;
+      if (heap[p].f <= heap[c].f) break;
+      [heap[p], heap[c]] = [heap[c], heap[p]];
+      c = p;
+    }
+  };
+  const pop = () => {
+    const top = heap[0];
+    const last = heap.pop()!;
+    if (heap.length) {
+      heap[0] = last;
+      for (let p = 0; ;) {
+        const l = 2 * p + 1;
+        const r = l + 1;
+        let m = p;
+        if (l < heap.length && heap[l].f < heap[m].f) m = l;
+        if (r < heap.length && heap[r].f < heap[m].f) m = r;
+        if (m === p) break;
+        [heap[p], heap[m]] = [heap[m], heap[p]];
+        p = m;
+      }
+    }
+    return top;
+  };
+  push({ i: start, f: 0 });
+  const done = new Set<number>();
+  const h = (i: number) =>
+    Math.hypot(at(i)[0] - at(goal)[0], at(i)[1] - at(goal)[1]);
+  while (heap.length) {
+    const { i } = pop();
+    if (i === goal) break;
+    if (done.has(i)) continue;
+    done.add(i);
+    const gx = i % nx;
+    const gy = Math.floor(i / nx);
+    for (const [dx, dy] of [
+      [1, 0],
+      [-1, 0],
+      [0, 1],
+      [0, -1],
+      [1, 1],
+      [1, -1],
+      [-1, 1],
+      [-1, -1],
+    ]) {
+      const ax = gx + dx;
+      const ay = gy + dy;
+      if (ax < 0 || ay < 0 || ax >= nx || ay >= ny) continue;
+      const j = ay * nx + ax;
+      if (done.has(j) || !isFree(j)) continue;
+      if (dx && dy && (!isFree(gy * nx + ax) || !isFree(ay * nx + gx)))
+        continue;
+      const cost = (g.get(i) ?? 0) + Math.hypot(dx, dy) * step;
+      if (cost >= (g.get(j) ?? Infinity)) continue;
+      g.set(j, cost);
+      prev.set(j, i);
+      push({ i: j, f: cost + h(j) });
     }
   }
-  const prev = new Map<string, { room: string; door: Hop["door"] } | null>([
-    [start, null],
+  if (!g.has(goal)) throw Error("No walkable route between the points");
+  const path: [number, number][] = [];
+  for (let i: number | undefined = goal; i !== undefined; i = prev.get(i))
+    path.unshift(at(i));
+  path.push([to[0], to[1]]);
+  // String-pull: from each anchor, jump to the furthest point still reachable in a straight line.
+  const out: [number, number][] = [];
+  let cur: readonly [number, number] = from;
+  let k = 0;
+  while (k < path.length) {
+    let far = k;
+    for (let j = path.length - 1; j > k; j--)
+      if (clear(cur, path[j])) {
+        far = j;
+        break;
+      }
+    out.push(path[far]);
+    cur = path[far];
+    k = far + 1;
+  }
+  return out.map(([x, y]) => [
+    Math.round(x * 1e6) / 1e6 + 0,
+    Math.round(y * 1e6) / 1e6 + 0,
   ]);
-  const queue = [start];
-  while (queue.length && !prev.has(goal)) {
-    const room = queue.shift()!;
-    for (const hop of hops.get(room) ?? []) {
-      if (prev.has(hop.next)) continue;
-      prev.set(hop.next, { room, door: hop.door });
-      queue.push(hop.next);
-    }
-  }
-  if (!prev.has(goal)) throw Error("No door route between rooms");
-  const steps: { room: string; door: Hop["door"] }[] = [];
-  for (let r = goal; prev.get(r); r = prev.get(r)!.room)
-    steps.unshift({ room: prev.get(r)!.room, door: prev.get(r)!.door });
-  const points: Pt[] = [];
-  for (const { room, door } of steps) {
-    const mid: Pt = [(door.a[0] + door.b[0]) / 2, (door.a[1] + door.b[1]) / 2];
-    const n: Pt = door.a[1] === door.b[1] ? [0, 1] : [1, 0];
-    const side = (s: number): Pt => [
-      mid[0] + n[0] * 0.6 * s,
-      mid[1] + n[1] * 0.6 * s,
-    ];
-    const near =
-      roomAt([mid[0] + n[0] * 0.5, mid[1] + n[1] * 0.5]) === room ? 1 : -1;
-    points.push(side(near), side(-near));
-  }
-  return [...points.map(toShip), [to[0], to[1]]];
 }
