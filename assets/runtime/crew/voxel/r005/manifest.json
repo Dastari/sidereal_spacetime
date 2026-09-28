@@ -1064,7 +1064,7 @@
   },
   {
    "name": "Maglock_Walk",
-   "frames": 48,
+   "frames": 28,
    "fps": 24,
    "loop": true,
    "expressionTrack": [
@@ -1073,9 +1073,9 @@
      "neutral"
     ]
    ],
-   "seconds": 2.0,
+   "seconds": 1.167,
    "extra": true,
-   "nominalSpeed": 0.168,
+   "nominalSpeed": 0.9,
    "motionSpace": "in-place"
   },
   {
@@ -1111,23 +1111,23 @@
  ],
  "files": {
   "crew-body-male.glb": {
-   "sha256": "160ae0d210c39a2f38d085b056a424e1fa6d7194eb8ea724555dc5c1063f2747",
-   "bytes": 1854432,
+   "sha256": "95b250758a1d70491a9f35c1aa57a4fe6a770e08aa1f50bc8d13219b4f5cabde",
+   "bytes": 1848740,
    "variant": "male"
   },
   "crew-body-female.glb": {
-   "sha256": "3465c0e59ec4ce0ff541e55720b6c4a946f83c460f0fb0840c8ae71c27b25d8e",
-   "bytes": 1914956,
+   "sha256": "366176275afba77bf898672ce8ea0f95561f0ad9a3d0210c8ee064824a22db97",
+   "bytes": 1909284,
    "variant": "female"
   },
   "crew-body-neutral.glb": {
-   "sha256": "75f5da3f67fdcf30953e91f8d1d6cd2bbfe7ce9b8d3112902692286133494890",
-   "bytes": 1854484,
+   "sha256": "53bb57740a3490d409585d44ae9e2018936704926b70c71b23ac4064e4635189",
+   "bytes": 1848796,
    "variant": "neutral"
   },
   "crew-body.glb": {
-   "sha256": "6487d9cc13ef651d31518b7ee5630db828ea6d51d57eb1a813465e853a36d207",
-   "bytes": 2553880,
+   "sha256": "63f7a2164a41b0d3eb2932364a58bf0c062e54bd85acab5dc8b2504ae60a3619",
+   "bytes": 2548264,
    "variant": "male+female",
    "note": "runtime bundle; bodyType neutral renders the masculine meshes"
   }

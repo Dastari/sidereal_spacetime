@@ -714,24 +714,38 @@ def eva_actions():
                 P[f"fk:upper_arm.{side}"] = (15 + sign * 9 * lag, -sign * (24 + sign * 6 * s), 0)
         return P
 
+    # One full left/right cycle: 1.1667 s, 0.525 m per step at nominal speed.
+    # Stance travel is speed * contact duration, converted to authoring voxels;
+    # retarget() applies LEG again when baking the r005 skeleton.
+    mag_frames, mag_stance, mag_speed = 28, 0.64, 0.9
+    mag_step = mag_speed * (mag_frames / FPS) * mag_stance / (VOX * LEG)
+
     def mag_walk(ph):
-        # 72% stance gives a long double-support interval. Flat soles hold until
-        # late stance; a brief heel peel leads into the compact recovery arc.
-        P = gait(ph, 10, 3.5, 0.12, 3, 12, 20, pelvis_z=-0.45,
-                 width=4.7, stance=0.72, sway=0.55, drop=1.3, twist=3, bounce_head=0.5)
+        # 64% stance retains double support with no flight. Flat soles clunk down,
+        # hold through most of stance, then peel heel-first before recovery.
+        P = gait(ph, mag_step, 4.5, 0.12, 3, 16, 20, pelvis_z=-4.0,
+                 width=4.7, stance=mag_stance, sway=0.55, drop=1.3, twist=3, bounce_head=0.5)
         impact = 0.0
         for side, off in (("R", 0), ("L", 0.5)):
             t = (ph + off) % 1
             sx = 1 if side == "R" else -1
-            if t < 0.72:
-                u = t / 0.72
-                pitch = -18 * max(0, (u - 0.84) / 0.16) ** 2
-                P[f"foot.{side}"] = (sx * 4.7, 10 * (0.5 - u), 3, -5 * sx, pitch)
-                P[f"fk:toe.{side}"] = (0, 0, 0)
+            if t < mag_stance:
+                u = t / mag_stance
+                pitch = -36 * max(0, (u - 0.55) / 0.45) ** 2
+                P[f"foot.{side}"] = (sx * 4.7, mag_step * (0.5 - u), 3, -5 * sx, pitch)
+            else:
+                u = (t - mag_stance) / (1 - mag_stance)
+                travel = u * u * (3 - 2 * u)
+                P[f"foot.{side}"] = (sx * 4.7, mag_step * (travel - 0.5),
+                                     3 + 4.5 * math.sin(math.pi * u) ** 0.8,
+                                     -5 * sx, -36 * (1 - u) ** 2)
+            P[f"fk:toe.{side}"] = (0, 0, 0)
             # One sharp compression after each contact, damped before recovery.
-            impact += math.sin(math.pi * t / 0.14) ** 2 if t < 0.14 else 0
+            impact += math.sin(math.pi * t / 0.11) ** 2 if t < 0.11 else 0
         x, y, z = P["pelvis"]
-        P["pelvis"] = (x, y, z - 0.35 * impact)
+        # Settle into the long step so the short r005 legs reach the full
+        # stance path; bounded vertical motion preserves the planted clunk.
+        P["pelvis"] = (x, y, z - 1.5 * math.cos(tau * ph) ** 2 - 0.35 * impact)
         P["fk:chest"] = (1.5 + 1.5 * impact, 0, -2 * math.cos(tau * ph))
         return P
 
@@ -746,9 +760,9 @@ def eva_actions():
                             ("ZeroG_Flight", 72, lambda p: floating(p, "flight")),
                             ("ZeroG_Swim", 72, lambda p: floating(p, "swim")),
                             ("ZeroG_Locomotion_Prone", 96, lambda p: floating(p, "locomotion")),
-                            ("Maglock_Idle", 72, mag_idle), ("Maglock_Walk", 48, mag_walk)):
+                            ("Maglock_Idle", 72, mag_idle), ("Maglock_Walk", mag_frames, mag_walk)):
         A[name] = {"frames": cycle(fn, frames), "loop": True,
-                   "meta": {"nominalSpeed": round(10 * LEG / (32 * 0.72 * 2), 3) if name == "Maglock_Walk" else 0,
+                   "meta": {"nominalSpeed": mag_speed if name == "Maglock_Walk" else 0,
                             "motionSpace": "in-place"}}
     for name, frames in (("ZeroG_Enter", enter), ("ZeroG_Exit", exit_frames)):
         A[name] = {"frames": frames, "loop": False, "meta": {"motionSpace": "in-place"}}

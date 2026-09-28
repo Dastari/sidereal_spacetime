@@ -107,7 +107,7 @@ export const VOXEL_CREW_NOMINAL_SPEED: Partial<
   run: 3.864,
   crouch_walk: 0.483,
   carry_walk: 0.773,
-  Maglock_Walk: 0.168,
+  Maglock_Walk: 0.9,
 };
 
 /** Body mesh regions (GEO-crew-<region>-<variant>); outfit layers hide the regions they replace. */
