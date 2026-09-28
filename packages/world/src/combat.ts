@@ -14,7 +14,7 @@ import {
   validateShot,
 } from "../../sim/src/combat";
 import { resolveShotImpact } from "./combat-impact";
-import { applyShotDamage, isDowned } from "./combat-damage";
+import { applyShotDamage, isDead } from "./combat-damage";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 function actorFor(ctx: ReadContext) {
@@ -26,7 +26,7 @@ function available(
 ) {
   return (
     actor.connected &&
-    !isDowned(ctx, actor.id) &&
+    !isDead(ctx, actor.id) &&
     !ctx.db.couchSeat.characterId.find(actor.id) &&
     ctx.db.station.shipId.find(actor.shipId)?.occupantId !== actor.id
   );
@@ -45,8 +45,8 @@ export function setAim(ctx: Context, args: { active: boolean; angle: number }) {
   } catch {
     throw new SenderError("Invalid aim angle");
   }
-  if (args.active && isDowned(ctx, actor.id))
-    throw new SenderError("You are down");
+  if (args.active && isDead(ctx, actor.id))
+    throw new SenderError("You are dead");
   if (args.active && !available(ctx, actor))
     throw new SenderError("Stand up before aiming");
   const row = {
@@ -106,7 +106,7 @@ export function fire(
   args: { itemId: string; expectedRevision: bigint; operationId: string },
 ) {
   const actor = actorFor(ctx);
-  if (actor && isDowned(ctx, actor.id)) throw new SenderError("You are down");
+  if (actor && isDead(ctx, actor.id)) throw new SenderError("You are dead");
   if (!actor || !available(ctx, actor))
     throw new SenderError("Stand on deck before firing");
   const item = ctx.db.inventoryItem.id.find(args.itemId),

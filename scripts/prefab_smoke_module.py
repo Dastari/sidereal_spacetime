@@ -28,6 +28,15 @@ export const damagePrefabSmokeComponent = db.reducer({objectId:t.string(),damage
   if(!(args.damage>0&&args.damage<=100000))throw new SenderError("Bounded damage required");
   damageSmokeComponent(ctx,ship.id,args.objectId,args.damage,true);
 },true));
+// Smoke-only lethal hit on the caller's own character through the real character damage adapter
+// (a handheld beam never hits its own shooter, and a lone smoke identity has no crewmate).
+import { damageCharacter as damageSmokeCharacter } from "./combat-damage";
+export const damagePrefabSmokeCharacter = db.reducer({damage:t.f64()},auth.gameAction((ctx,args)=>{
+  const actors=[...ctx.db.character.by_owner.filter(ctx.sender)];
+  if(actors.length!==1)throw new SenderError("One owned smoke character required");
+  if(!(args.damage>0&&args.damage<=100000))throw new SenderError("Bounded damage required");
+  damageSmokeCharacter(ctx,actors[0].id,args.damage);
+}));
 '''
 
 

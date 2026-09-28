@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { hitText } from "./combat-feedback";
+import { deathText, hitText } from "./combat-feedback";
 
 const hit = {
   shotSequence: 3n,
@@ -20,7 +20,7 @@ describe("combat hit feedback", () => {
       hitText({ ...hit, targetState: "", targetHp: 0, targetMaxHp: 0 }),
     ).toBe("-12  Computer core");
   });
-  it("reports armour that absorbed the shot and a downed crewmate", () => {
+  it("reports armour that absorbed the shot and a killed crewmate", () => {
     expect(
       hitText({
         ...hit,
@@ -36,10 +36,24 @@ describe("combat hit feedback", () => {
         ...hit,
         kind: "character",
         label: "Crewmate",
-        targetState: "downed",
+        targetState: "dead",
         targetMaxHp: 0,
         damage: 10,
       }),
-    ).toBe("-10  Crewmate down");
+    ).toBe("-10  Crewmate killed");
+  });
+  it("counts the death screen down to the automatic respawn aboard the own ship", () => {
+    const vitals = { downedUntilMicros: 20_000_000n, respawnAboard: "Wren" };
+    expect(deathText(vitals, 12_500_000)).toEqual({
+      title: "You died",
+      countdown: "Respawning aboard Wren in 8 s",
+      note: "Your inventory is safe. Nothing was dropped.",
+    });
+    expect(deathText(vitals, 20_000_001).countdown).toBe(
+      "Respawning aboard Wren…",
+    );
+    expect(
+      deathText({ downedUntilMicros: 20_000_000n }, 19_000_000).countdown,
+    ).toBe("Respawning in 1 s");
   });
 });

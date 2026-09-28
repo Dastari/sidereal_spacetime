@@ -1,7 +1,8 @@
 /**
  * Hit feedback from authoritative rows only: the damage number of the actor's latest accepted
- * shot (`own_combat_impact`), a red edge flash when the actor's own health drops and a downed
- * banner (`own_character_vitals`). Nothing here predicts or decides damage.
+ * shot (`own_combat_impact`), a red edge flash when the actor's own health drops and the death
+ * screen with its respawn countdown (`own_character_vitals`). Nothing here predicts or decides
+ * damage, death or respawn: the server respawns the character automatically.
  */
 import { CanvasUI, palette } from "./toolkit";
 
@@ -12,7 +13,7 @@ export interface CombatHitFeedback {
   kind: string;
   /** Display name of the struck object ("Crewmate" for characters). */
   label: string;
-  /** Component damage state, or "downed" for a character this shot took down. */
+  /** Component damage state, or "dead" for a character this shot killed. */
   targetState: string;
   targetHp: number;
   targetMaxHp: number;
@@ -21,10 +22,30 @@ export interface VitalsFeedback {
   health: number;
   maxHealth: number;
   state: string;
-  /** Server time (µs since the epoch) a downed character stands up. */
+  /** While dead: server time (µs since the epoch) of the automatic respawn. */
   downedUntilMicros: bigint;
   hitSequence: bigint;
   lastHitDamage: number;
+  /** Name of the ship the character respawns aboard, when known (presentation only). */
+  respawnAboard?: string;
+}
+
+/** Death screen lines for the countdown (exported for tests). */
+export function deathText(
+  vitals: Pick<VitalsFeedback, "downedUntilMicros" | "respawnAboard">,
+  wallMicros: number,
+) {
+  const left = Math.max(
+    0,
+    Math.ceil((Number(vitals.downedUntilMicros) - wallMicros) / 1e6),
+  );
+  const where = vitals.respawnAboard ? ` aboard ${vitals.respawnAboard}` : "";
+  return {
+    title: "You died",
+    countdown:
+      left > 0 ? `Respawning${where} in ${left} s` : `Respawning${where}…`,
+    note: "Your inventory is safe. Nothing was dropped.",
+  };
 }
 
 const NUMBER_MS = 1300;
@@ -36,8 +57,8 @@ export function hitText(hit: CombatHitFeedback): string {
   const amount = Math.round(hit.damage);
   const head = amount > 0 ? `-${amount}` : "No damage";
   const detail =
-    hit.targetState === "downed"
-      ? `${hit.label} down`
+    hit.targetState === "dead"
+      ? `${hit.label} killed`
       : hit.targetMaxHp > 0
         ? `${hit.label} · ${title(hit.targetState)} ${Math.ceil(hit.targetHp)}/${hit.targetMaxHp}`
         : hit.label;
@@ -136,25 +157,30 @@ export function createCombatFeedback(
       );
       c.restore();
     }
-    if (vitals?.state === "downed") {
-      const left = Math.max(
-        0,
-        Math.ceil((Number(vitals.downedUntilMicros) - wallMicros()) / 1e6),
+    if (vitals?.state === "dead") {
+      // Death screen: darken the view, keep the body (death animation) visible in the middle.
+      c.save();
+      const shade = c.createRadialGradient(
+        w / 2,
+        h / 2,
+        Math.min(w, h) * 0.15,
+        w / 2,
+        h / 2,
+        Math.max(w, h) * 0.7,
       );
-      const r = { x: Math.max(16, (w - 360) / 2), y: h * 0.32, w: 360, h: 62 };
+      shade.addColorStop(0, "rgba(20,0,8,0.25)");
+      shade.addColorStop(1, "rgba(40,0,12,0.72)");
+      c.fillStyle = shade;
+      c.fillRect(0, 0, w, h);
+      c.restore();
+      const text = deathText(vitals, wallMicros());
+      const width = Math.min(420, w - 32);
+      const r = { x: (w - width) / 2, y: h * 0.18, w: width, h: 96 };
       ui.panel(r, true);
-      ui.text("You are down", r.x + 16, r.y + 8, 22, palette.red, r.w - 32);
-      ui.text(
-        left > 0
-          ? `Standing up in ${left} s · no moving, aiming or piloting`
-          : "Standing up…",
-        r.x + 16,
-        r.y + 38,
-        12,
-        palette.muted,
-        r.w - 32,
-      );
-      // Keep the countdown ticking until the server stands the character up.
+      ui.text(text.title, r.x + 18, r.y + 10, 30, palette.red, r.w - 36);
+      ui.text(text.countdown, r.x + 18, r.y + 48, 15, palette.text, r.w - 36);
+      ui.text(text.note, r.x + 18, r.y + 70, 12, palette.muted, r.w - 36);
+      // Keep the countdown ticking until the server respawns the character.
       animating = true;
     }
     if (animating) requestAnimationFrame(redraw);

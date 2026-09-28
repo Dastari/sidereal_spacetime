@@ -1,9 +1,10 @@
 /**
  * Pure rules for handheld weapon damage (authority helpers; the world adapter commits rows).
  *
- * - Characters have health. At zero they are downed (cannot walk, aim, fire or pilot) and stand
- *   up again on their own after a fixed time with part of their health. Nobody dies: death, loot
- *   and respawn are still open owner decisions.
+ * - Characters have health. At zero they die (owner decision 2026-09-28: "Death, die and respawn,
+ *   no loss of inventory yet."). A dead character cannot walk, aim, fire, pilot or interact; after
+ *   `RESPAWN_MICROS` the server respawns them with full health (the world adapter picks the place).
+ *   Dying never drops or removes inventory; loot is not in scope.
  * - Ship components take `max(0, damage - armor)` per hit against their catalogue hp (armor is
  *   the catalogue's flat per-hit reduction). Their damage state and performance come from the
  *   catalogue's `damageStates` table (pristine / scuffed / damaged / destroyed).
@@ -19,24 +20,26 @@ import {
 import { beamDirection } from "./prefab-beam";
 
 export const CHARACTER_MAX_HEALTH = 100;
-/** Downed characters stand up on their own after this long. */
-export const DOWNED_MICROS = 10_000_000n;
-/** Health restored when a downed character stands up. */
-export const RECOVER_HEALTH = 25;
+/** A dead character respawns automatically this long after dying. */
+export const RESPAWN_MICROS = 8_000_000n;
 /** Health regenerates only after this long without taking damage. */
 export const REGEN_DELAY_MICROS = 5_000_000n;
 export const REGEN_PER_SECOND = 2;
 /** Planar body radius of a character for beam hits (the walking capsule radius). */
 export const CHARACTER_HIT_RADIUS_M = 0.3;
 
-export type CharacterCondition = "active" | "downed";
+/** Stored `character_vitals.state`. Rows written before 2026-09-28 death may still say
+ * "downed"; readers treat that as dead (see `conditionOf`). */
+export type CharacterCondition = "active" | "dead";
+export const conditionOf = (state: string): CharacterCondition =>
+  state === "dead" || state === "downed" ? "dead" : "active";
 export interface CharacterVitals {
   health: number;
   maxHealth: number;
   state: CharacterCondition;
   /** Last time damage was taken (regen delay start). */
   lastDamageMicros: bigint;
-  /** Downed characters recover at this time; 0 while active. */
+  /** Dead characters respawn at this time; 0 while active. (Stored column name predates death.) */
   downedUntilMicros: bigint;
   /** Health was last settled at this time. */
   checkpointMicros: bigint;
@@ -53,24 +56,14 @@ export const freshVitals = (now: bigint): CharacterVitals => ({
 
 const finite = (v: number) => Number.isFinite(v) && v >= 0;
 
-/** Settle regeneration and downed recovery up to `now`. Pure; never lowers health. */
+/** Settle regeneration up to `now`. Pure; never lowers health. The dead stay dead here: respawn
+ * moves the body, so the world adapter commits it (`respawnedVitals`). */
 export function settledVitals(
   v: CharacterVitals,
   now: bigint,
 ): CharacterVitals {
   if (!finite(v.health) || !(v.maxHealth > 0)) throw Error("Invalid vitals");
-  if (v.state === "downed") {
-    if (now < v.downedUntilMicros) return v;
-    return {
-      ...v,
-      state: "active",
-      health: Math.min(v.maxHealth, Math.max(v.health, RECOVER_HEALTH)),
-      downedUntilMicros: 0n,
-      // Regeneration waits the normal delay after standing up.
-      lastDamageMicros: now,
-      checkpointMicros: now,
-    };
-  }
+  if (v.state === "dead") return v;
   if (v.health >= v.maxHealth) return { ...v, checkpointMicros: now };
   const regenFrom =
     v.checkpointMicros > v.lastDamageMicros + REGEN_DELAY_MICROS
@@ -91,11 +84,11 @@ export interface CharacterHitResult {
   vitals: CharacterVitals;
   /** Health actually removed. */
   applied: number;
-  /** This hit took the character down. */
-  downed: boolean;
+  /** This hit killed the character. */
+  killed: boolean;
 }
 
-/** Apply a hit at `now`. A downed character takes no further damage (nobody dies yet). */
+/** Apply a hit at `now`. A dead character takes no further damage. */
 export function hitCharacter(
   before: CharacterVitals,
   damage: number,
@@ -103,24 +96,41 @@ export function hitCharacter(
 ): CharacterHitResult {
   if (!finite(damage)) throw Error("Invalid damage");
   const v = settledVitals(before, now);
-  if (v.state === "downed" || damage === 0)
-    return { vitals: v, applied: 0, downed: false };
+  if (v.state === "dead" || damage === 0)
+    return { vitals: v, applied: 0, killed: false };
   const health = Math.max(0, v.health - damage);
   const applied = v.health - health;
-  const downed = health <= 0;
+  const killed = health <= 0;
   return {
     vitals: {
       ...v,
       health,
-      state: downed ? "downed" : "active",
+      state: killed ? "dead" : "active",
       lastDamageMicros: now,
-      downedUntilMicros: downed ? now + DOWNED_MICROS : 0n,
+      downedUntilMicros: killed ? now + RESPAWN_MICROS : 0n,
       checkpointMicros: now,
     },
     applied,
-    downed,
+    killed,
   };
 }
+
+/** A dead character is due to respawn at `now`. */
+export const respawnDue = (v: CharacterVitals, now: bigint) =>
+  v.state === "dead" && now >= v.downedUntilMicros;
+
+/** Vitals after a respawn at `now`: alive at full health, no pending regeneration. */
+export const respawnedVitals = (
+  v: CharacterVitals,
+  now: bigint,
+): CharacterVitals => ({
+  ...v,
+  health: v.maxHealth,
+  state: "active",
+  downedUntilMicros: 0n,
+  lastDamageMicros: 0n,
+  checkpointMicros: now,
+});
 
 export interface DamageStateRule {
   state: string;

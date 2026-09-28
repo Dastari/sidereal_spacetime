@@ -171,6 +171,8 @@ export type SceneState = {
   seated?: boolean;
   seatFacing?: number;
   sprinting?: boolean;
+  /** Own character is dead (authoritative vitals): the crew rig plays and holds `death`. */
+  dead?: boolean;
   vistaId?: string;
   spaceRegion?: SpaceRegion;
   reducedMotion?: boolean;
@@ -916,6 +918,16 @@ async function buildWorld(
     }
     // All ship, actor and camera transforms share this render-only time line.
     displayed.heading += angleDelta(displayed.heading, state.heading) * motion;
+    // A server relocation (respawn) is a jump, not a walk: snap instead of gliding through walls.
+    if (
+      Math.hypot(
+        state.localX - displayed.localX,
+        state.localY - displayed.localY,
+      ) > 2
+    ) {
+      displayed.localX = state.localX;
+      displayed.localY = state.localY;
+    }
     for (const key of ["x", "y", "localX", "localY"] as const)
       displayed[key] += (state[key] - displayed[key]) * motion;
     blend += ((state.interior ? 1 : 0) - blend) * transition;
@@ -996,6 +1008,7 @@ async function buildWorld(
         combat: state.combat?.active ?? false,
         seated: state.seated ?? false,
         sprinting: state.sprinting ?? false,
+        dead: state.dead ?? false,
         reducedMotion: state.reducedMotion,
         shotSequence: state.combat?.shotSequence,
       });

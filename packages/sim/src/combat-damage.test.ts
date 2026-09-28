@@ -7,11 +7,13 @@ import {
   CHARACTER_MAX_HEALTH,
   componentDamageState,
   componentHitDamage,
-  DOWNED_MICROS,
+  conditionOf,
   freshVitals,
   hitCharacter,
-  RECOVER_HEALTH,
   REGEN_DELAY_MICROS,
+  RESPAWN_MICROS,
+  respawnDue,
+  respawnedVitals,
   settledVitals,
 } from "./combat-damage";
 import { LAB_WEAPONS } from "@sidereal/content/weapons";
@@ -19,37 +21,55 @@ import { LAB_WEAPONS } from "@sidereal/content/weapons";
 const S = 1_000_000n;
 
 describe("character health", () => {
-  it("takes damage, goes down at zero and takes no more while down", () => {
+  it("takes damage, dies at zero and takes no more while dead", () => {
     let v = freshVitals(0n);
     const first = hitCharacter(v, 40, S);
-    expect(first).toMatchObject({ applied: 40, downed: false });
+    expect(first).toMatchObject({ applied: 40, killed: false });
     expect(first.vitals.health).toBe(60);
     v = first.vitals;
     const last = hitCharacter(v, 90, 2n * S);
-    expect(last).toMatchObject({ applied: 60, downed: true });
+    expect(last).toMatchObject({ applied: 60, killed: true });
     expect(last.vitals).toMatchObject({
       health: 0,
-      state: "downed",
-      downedUntilMicros: 2n * S + DOWNED_MICROS,
+      state: "dead",
+      downedUntilMicros: 2n * S + RESPAWN_MICROS,
     });
     const again = hitCharacter(last.vitals, 50, 3n * S);
-    expect(again).toMatchObject({ applied: 0, downed: false });
+    expect(again).toMatchObject({ applied: 0, killed: false });
     expect(again.vitals.health).toBe(0);
   });
-  it("stands up after the downed time with recovery health, then regenerates after the delay", () => {
-    const down = hitCharacter(freshVitals(0n), 500, S).vitals;
-    expect(settledVitals(down, S + DOWNED_MICROS - 1n).state).toBe("downed");
-    const up = settledVitals(down, S + DOWNED_MICROS);
-    expect(up).toMatchObject({ state: "active", health: RECOVER_HEALTH });
-    // No regeneration inside the delay; 2/s after it; capped at max.
-    const t0 = S + DOWNED_MICROS;
-    expect(settledVitals(up, t0 + REGEN_DELAY_MICROS).health).toBe(
-      RECOVER_HEALTH,
+  it("stays dead (no regeneration or recovery) until the respawn time, then respawns at full health", () => {
+    const dead = hitCharacter(freshVitals(0n), 500, S).vitals;
+    const late = settledVitals(dead, S + 1000n * S);
+    expect(late).toMatchObject({ state: "dead", health: 0 });
+    expect(respawnDue(dead, S + RESPAWN_MICROS - 1n)).toBe(false);
+    expect(respawnDue(dead, S + RESPAWN_MICROS)).toBe(true);
+    expect(respawnDue(freshVitals(0n), S + RESPAWN_MICROS)).toBe(false);
+    const back = respawnedVitals(dead, S + RESPAWN_MICROS);
+    expect(back).toMatchObject({
+      state: "active",
+      health: CHARACTER_MAX_HEALTH,
+      downedUntilMicros: 0n,
+      checkpointMicros: S + RESPAWN_MICROS,
+    });
+    // Respawning is idempotent and alive characters take hits normally again.
+    expect(respawnedVitals(back, S + RESPAWN_MICROS)).toEqual(back);
+    expect(hitCharacter(back, 10, S + RESPAWN_MICROS).applied).toBe(10);
+  });
+  it("reads rows stored by the earlier downed rule as dead", () => {
+    expect(conditionOf("downed")).toBe("dead");
+    expect(conditionOf("dead")).toBe("dead");
+    expect(conditionOf("active")).toBe("active");
+  });
+  it("regenerates 2/s only after the damage delay", () => {
+    const hurt = hitCharacter(freshVitals(0n), 60, S).vitals;
+    expect(settledVitals(hurt, S + REGEN_DELAY_MICROS).health).toBe(40);
+    expect(settledVitals(hurt, S + REGEN_DELAY_MICROS + 2n * S).health).toBe(
+      44,
     );
-    expect(settledVitals(up, t0 + REGEN_DELAY_MICROS + 2n * S).health).toBe(
-      RECOVER_HEALTH + 4,
+    expect(settledVitals(hurt, S + 1000n * S).health).toBe(
+      CHARACTER_MAX_HEALTH,
     );
-    expect(settledVitals(up, t0 + 1000n * S).health).toBe(CHARACTER_MAX_HEALTH);
   });
   it("never double counts regeneration across checkpoints", () => {
     const hit = hitCharacter(freshVitals(0n), 50, 0n).vitals;

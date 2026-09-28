@@ -8,9 +8,10 @@ export const characterVitals = table(
     characterId: t.string().primaryKey(),
     health: t.f64(),
     maxHealth: t.f64(),
-    /** active | downed */
+    /** active | dead ("downed" in rows written before death, read as dead) */
     state: t.string(),
     lastDamageMicros: t.u64(),
+    /** While dead: when the automatic respawn is due. (Name predates death.) */
     downedUntilMicros: t.u64(),
     checkpointMicros: t.u64(),
     /** Increments on every hit that removed health (client hit flash). */

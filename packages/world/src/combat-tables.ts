@@ -58,7 +58,7 @@ export const combatImpact = table(
     // Appended with defaults so existing impact rows migrate additively (2026-09-28).
     /** Health or component hp actually removed by this shot. */
     damage: t.f64().default(0),
-    /** Struck component's damage state, or "downed" for a character this shot took down. */
+    /** Struck component's damage state, or "dead" for a character this shot killed. */
     targetState: t.string().default(""),
     /** Struck component hp after the shot (only when the shooter owns the ship; else 0). */
     targetHp: t.f64().default(0),
