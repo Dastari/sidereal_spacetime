@@ -19,11 +19,8 @@ import {
   resolveHeadLoadout,
   type HeadLoadout,
 } from "@sidereal/content/crew-heads";
-import {
-  CREW_ITEM_CATALOG,
-  crewArmedClass,
-  crewItem,
-} from "@sidereal/content/crew-items";
+import { crewArmedClass, crewItem } from "@sidereal/content/crew-items";
+import { loadArmedClips } from "./voxel-held-item";
 import {
   createVoxelItemVisual,
   crewItemHandSocketRotation,
@@ -244,52 +241,26 @@ export async function attachVoxelCrewHead(
   };
 }
 
-/** Legacy equipment ids -> CHAR-WEAPONS voxel items (presentation only). */
-export const LEGACY_TO_VOXEL_ITEM: Readonly<Record<string, string>> = {
-  carbine: "compact-carbine",
-  "long-rifle": "rifle",
-  "compact-pistol": "pistol",
-  "heavy-handgun": "pistol",
-  flashlight: "flashlight",
-  "plasma-cutter": "utility-cutter",
-  "sample-scanner": "sample-scanner",
-};
-
-const armedClipsLoaded = new WeakMap<object, Promise<void>>();
-
 /**
- * Hold a CHAR-WEAPONS item in the right hand (socket.hand.R + item rotation) and switch the crew
- * to that class's baked armed clips (idle/walk/run/aim/shoot, support hand already solved on the
- * item). Returns the item visual (same surface as createEquipmentVisual).
+ * Hold a CHAR-WEAPONS item (r001 id: an inventory definition's `crewItemId`, the only legacy-to-r001
+ * mapping) in the right hand at once (socket.hand.R + item rotation) and switch the crew to that
+ * class's baked armed clips. Previews use this; the game draws and holsters through
+ * createVoxelHeldItem. Returns the item visual (same surface as createEquipmentVisual).
  */
 export async function equipVoxelCrewItem(
   scene: Scene,
   crew: VoxelCrew,
-  itemOrLegacyId: string,
+  itemId: string,
 ) {
-  const itemId = LEGACY_TO_VOXEL_ITEM[itemOrLegacyId] ?? itemOrLegacyId;
   const item = crewItem(itemId);
-  if (!armedClipsLoaded.has(crew))
-    armedClipsLoaded.set(
-      crew,
-      SceneLoader.LoadAssetContainerAsync(
-        CREW_ITEM_CATALOG.assetBase,
-        "armed-actions.glb",
-        scene,
-        undefined,
-        ".glb",
-      ).then((armed) => {
-        crew.addClips(armed);
-        armed.dispose();
-      }),
-    );
+  const cls = crewArmedClass(item);
   const [visual] = await Promise.all([
     createVoxelItemVisual(scene, crew.socketNodes["socket.hand.R"], itemId, {
       localRotation: crewItemHandSocketRotation(),
     }),
-    armedClipsLoaded.get(crew),
+    cls ? loadArmedClips(scene, crew) : undefined,
   ]);
-  crew.setArmedClass(crewArmedClass(item));
+  crew.setArmedClass(cls);
   const dispose = visual.dispose;
   return {
     ...visual,

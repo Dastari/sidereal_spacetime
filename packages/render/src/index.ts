@@ -86,9 +86,15 @@ import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
 import { createVoxelCrewVisual } from "./crew/voxel-crew";
-import { equipVoxelCrewItem } from "./crew/voxel-crew-kit";
 import { createRemoteCrew, type RemoteCrewState } from "./crew/remote-crew";
+import {
+  createVoxelHeldItem,
+  type VoxelHeldItem,
+} from "./crew/voxel-held-item";
+import { createVoxelFxPlayer } from "./equipment/voxel-item-fx";
+import { createCombatFx, type CombatActionState } from "./combat-fx";
 export type { RemoteCrewState } from "./crew/remote-crew";
+export type { CombatActionState } from "./combat-fx";
 import { moldedLightRig, setMoldedClearCoat } from "./molded-plastic";
 import {
   contactShadingRequested,
@@ -172,6 +178,13 @@ export type SceneState = {
   flightActuators?: readonly FlightEffectActuator[];
   /** Omitted for authoring previews; null explicitly means empty authoritative hand. */
   equippedAsset?: EquipmentAsset | null;
+  /** Voxel crew: the r001 item in the authoritative hand (its inventory definition's crewItemId);
+   * null = empty hand, omitted = follow the cosmetic weapon (previews). */
+  heldItem?: string | null;
+  /** The local character's id (combat actions of this body drive the local crew). */
+  selfCharacterId?: string;
+  /** Accepted combat actions of bodies on this deck, own included (visible_combat_actions). */
+  combatActions?: readonly CombatActionState[];
   heading: number;
   x: number;
   y: number;
@@ -348,6 +361,8 @@ async function buildWorld(
       >
     | undefined;
   let crewOutfit: ReturnType<typeof createVoxelCrewOutfit> | undefined;
+  /** Voxel crew: the held r001 item with draw/holster transitions. */
+  let heldItem: VoxelHeldItem | undefined;
   // Set once lighting and glow exist; outfit parts that load later re-register through it.
   let refreshCrewPresentation = () => {};
   let avatar = new TransformNode("crew-unloaded", scene);
@@ -513,6 +528,15 @@ async function buildWorld(
         crew = voxel;
         crewOutfit = createVoxelCrewOutfit(scene, voxel, {
           onChange: () => refreshCrewPresentation(),
+        });
+        heldItem = createVoxelHeldItem(scene, voxel, {
+          onChange: () => {
+            antialiasing.resetHistory();
+            refreshCrewPresentation();
+          },
+          reducedMotion: () => !!state.reducedMotion,
+          // The first item of a session is already in hand; later changes draw and holster.
+          instant: () => firstFrame,
         });
       } else {
         const legacy = await createCrewVisual(
@@ -796,12 +820,8 @@ async function buildWorld(
     remoteCrew = createRemoteCrew(scene, shipRoot, {
       onMeshesChanged: () => refreshCrewPresentation(),
       onEffectMesh: (mesh) => glow.addIncludedOnlyMesh(mesh),
-      // Another body's accepted shot: the same authoritative flash as the local shooter sees.
-      onShot: (impact) => {
-        if (impact.struck)
-          for (const mesh of impactFlash.play(impact.x, impact.y, 1.3))
-            glow.addIncludedOnlyMesh(mesh as Mesh);
-      },
+      // Shots of other bodies play the r001 weapon FX from visible_combat_actions.
+      tracers: false,
     });
   if (crewOutfit && crew && !assetFailure) {
     const voxel = crew as Awaited<ReturnType<typeof createVoxelCrewVisual>>;
@@ -818,6 +838,30 @@ async function buildWorld(
       },
     });
   }
+  // r001 weapon effects for every accepted combat action on this deck (local and remote).
+  const fxPlayer = heldItem
+    ? createVoxelFxPlayer(scene, shipRoot, {
+        onMesh: (mesh) => glow.addIncludedOnlyMesh(mesh as Mesh),
+      })
+    : undefined;
+  const combatFx = fxPlayer
+    ? createCombatFx(scene, shipRoot, fxPlayer, (id) => {
+        if (id === state.selfCharacterId && crew && "bundle" in crew)
+          return {
+            root: avatar,
+            held: heldItem,
+            play: (clip) => crew && "play" in crew && crew.play(clip as never),
+          };
+        const body = remoteCrew?.body(id);
+        return body
+          ? {
+              root: body.crew.root,
+              held: body.held,
+              play: (clip) => body.crew.play(clip as never),
+            }
+          : undefined;
+      })
+    : undefined;
   // The laser sight stops at structure (prefab ships) and at crewmates, as the server shot does.
   if (prefabBeamClip || remoteCrew)
     combatAim.setClip((origin, direction, range) => {
@@ -1153,7 +1197,7 @@ async function buildWorld(
     const desiredAim = state.combat?.active
       ? combatAim.aim(displayed.localX, displayed.localY, state.combat.range, {
           deckHeight: avatar.position.y,
-          origin: equipment?.getMuzzleWorld()?.position,
+          origin: (heldItem?.muzzle() ?? equipment?.getMuzzleWorld())?.position,
         })
       : undefined;
     if (equipmentPose && poseItem)
@@ -1345,6 +1389,19 @@ async function buildWorld(
     crew.customize({ ...next, weaponFixture: !equipment });
     // Voxel crew: head kit from the persisted look, armour/uniform from equipped inventory.
     crewOutfit?.apply(next);
+    if (heldItem) {
+      // r001 item in hand (the inventory definition's crewItemId), drawn and holstered.
+      heldItem.set(
+        state.heldItem !== undefined
+          ? state.heldItem
+          : next.weapon === "pistol"
+            ? "pistol"
+            : next.weapon === "rifle"
+              ? "compact-carbine"
+              : null,
+      );
+      return;
+    }
     const asset =
       state.equippedAsset !== undefined
         ? state.equippedAsset
@@ -1364,23 +1421,14 @@ async function buildWorld(
     equipment = undefined;
     crew.customize({ weaponFixture: true });
     if (!selectedAsset) return;
-    const voxelCrew =
-      "bundle" in crew && crew.bundle === "voxel" ? crew : undefined;
-    (voxelCrew
-      ? // CHAR-WEAPONS item on socket.hand.R + baked armed clips (support hand solved per frame)
-        (equipVoxelCrewItem(
-          scene,
-          voxelCrew,
-          selectedAsset,
-        ) as unknown as ReturnType<typeof createEquipmentVisual>)
-      : createEquipmentVisual(
-          scene,
-          crew.sockets.handR,
-          selectedAsset,
-          selectedAsset && options.equipmentPose?.items[selectedAsset]
-            ? options.equipmentPose.equipmentUrl
-            : undefined,
-        )
+    // Legacy r008 crew only (the voxel crew holds r001 items through heldItem above).
+    createEquipmentVisual(
+      scene,
+      crew.sockets.handR,
+      selectedAsset,
+      selectedAsset && options.equipmentPose?.items[selectedAsset]
+        ? options.equipmentPose.equipmentUrl
+        : undefined,
     )
       .then((visual) => {
         if (disposed || revision !== equipmentRevision) {
@@ -1417,10 +1465,15 @@ async function buildWorld(
         !state.sprinting &&
         state.interior &&
         !focusedBodyId &&
-        ["carbine", "long-rifle"].includes(selectedAsset ?? ""),
-      equipmentPose?.isBound
-        ? equipmentPose.diagnostics.muzzle
-        : equipment?.getMuzzleWorld(),
+        (heldItem
+          ? heldItem.visual?.item.animationSet === "rifle" &&
+            heldItem.phase === "held"
+          : ["carbine", "long-rifle"].includes(selectedAsset ?? "")),
+      heldItem
+        ? heldItem.muzzle()
+        : equipmentPose?.isBound
+          ? equipmentPose.diagnostics.muzzle
+          : equipment?.getMuzzleWorld(),
       displayed.localX,
       displayed.localY,
       Math.min(engine.getDeltaTime() / 1000, 0.1),
@@ -1499,7 +1552,8 @@ async function buildWorld(
             state.combat?.range ?? 60,
             {
               deckHeight: avatar.position.y,
-              origin: equipment?.getMuzzleWorld()?.position,
+              origin: (heldItem?.muzzle() ?? equipment?.getMuzzleWorld())
+                ?.position,
             },
           )?.angle
         : undefined;
@@ -1570,7 +1624,8 @@ async function buildWorld(
       evaCrew?.sync(next.evaBodies ?? [], { x: next.localX, y: next.localY });
       objects.select(next.selectedObject);
       prefabPicker?.select(next.selectedObject);
-      const impact = next.combat?.impact;
+      combatFx?.sync(next.combatActions ?? []);
+      const impact = combatFx ? undefined : next.combat?.impact;
       if (impact && lastImpactSequence === undefined)
         lastImpactSequence = impact.shotSequence;
       else if (impact && impact.shotSequence !== lastImpactSequence) {
@@ -1629,6 +1684,9 @@ async function buildWorld(
       objects.dispose();
       prefabPicker?.dispose();
       impactFlash.dispose();
+      combatFx?.dispose();
+      fxPlayer?.dispose();
+      heldItem?.dispose();
       up();
       observer.disconnect();
       window.removeEventListener("blur", up);
