@@ -86,12 +86,12 @@ export function createGlowOccluders(layer: GlowLayer) {
     if (disposed) return;
     const next = new Set(
       [...own, ...actors.meshes].filter(
-          (mesh): mesh is Mesh =>
-            mesh instanceof Mesh &&
-            !mesh.isDisposed() &&
-            mesh.getTotalVertices() > 0 &&
-            !!mesh.material &&
-            !mesh.material.needAlphaBlending(),
+        (mesh): mesh is Mesh =>
+          mesh instanceof Mesh &&
+          !mesh.isDisposed() &&
+          mesh.getTotalVertices() > 0 &&
+          !!mesh.material &&
+          !mesh.material.needAlphaBlending(),
       ),
     );
     for (const mesh of tracked.keys()) if (!next.has(mesh)) remove(mesh);

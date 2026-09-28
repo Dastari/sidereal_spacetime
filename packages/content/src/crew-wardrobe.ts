@@ -132,7 +132,9 @@ export const CREW_WARDROBE_KITS: Readonly<Record<string, readonly string[]>> = {
     (item) => `${WARDROBE_DEFINITION_PREFIX}${item.id}`,
   ),
   "role-sets": ["medic", "engineer", "pilot"].flatMap((set) =>
-    Object.values(CHARACTER_COMPONENT_SETS[set] ?? {}).map((id) => `crew-${id}`),
+    Object.values(CHARACTER_COMPONENT_SETS[set] ?? {}).map(
+      (id) => `crew-${id}`,
+    ),
   ),
 };
 /** Everything the starter delivery grants (both kits). */

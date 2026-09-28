@@ -245,9 +245,17 @@ test("live r2 Wren instances (catalog revision 1) expose the same hold crate soc
 });
 
 test("starter wardrobe delivery is uniforms, three role sets and the tier 1-2 pieces", () => {
-  expect(CREW_WARDROBE_STARTER_DELIVERY.filter((id) => id.startsWith("wardrobe-uniform-"))).toHaveLength(4);
-  expect(CREW_WARDROBE_STARTER_DELIVERY.filter((id) => /^wardrobe-t[12]-/.test(id))).toHaveLength(14);
-  expect(CREW_WARDROBE_STARTER_DELIVERY.filter((id) => id.startsWith("crew-medic-"))).toHaveLength(9);
+  expect(
+    CREW_WARDROBE_STARTER_DELIVERY.filter((id) =>
+      id.startsWith("wardrobe-uniform-"),
+    ),
+  ).toHaveLength(4);
+  expect(
+    CREW_WARDROBE_STARTER_DELIVERY.filter((id) => /^wardrobe-t[12]-/.test(id)),
+  ).toHaveLength(14);
+  expect(
+    CREW_WARDROBE_STARTER_DELIVERY.filter((id) => id.startsWith("crew-medic-")),
+  ).toHaveLength(9);
   expect(new Set(CREW_WARDROBE_STARTER_DELIVERY).size).toBe(
     CREW_WARDROBE_STARTER_DELIVERY.length,
   );
@@ -258,7 +266,10 @@ test("only the deployment operator can stock ship cargo; game identities are ref
   for (const hex of [OWNER, STRANGER]) {
     f.as(hex);
     expect(() =>
-      stockShipCargo(f.ctx, stockArgs(characterId, shipId, ["wardrobe-uniform-command"])),
+      stockShipCargo(
+        f.ctx,
+        stockArgs(characterId, shipId, ["wardrobe-uniform-command"]),
+      ),
     ).toThrow("Deployment operator required");
   }
   expect(f.db.instanceInventoryBinding.rows).toHaveLength(0);
@@ -270,12 +281,19 @@ test("dry run plans the crate and placements and writes only its ledger row", as
   const before = f.snapshot();
   stockShipCargo(
     f.ctx,
-    stockArgs(characterId, shipId, ["wardrobe-uniform-command", "wardrobe-t1-chest"], {
-      operationId: "stock-wren-dry-0001",
-      dryRun: true,
-    }),
+    stockArgs(
+      characterId,
+      shipId,
+      ["wardrobe-uniform-command", "wardrobe-t1-chest"],
+      {
+        operationId: "stock-wren-dry-0001",
+        dryRun: true,
+      },
+    ),
   );
-  const ledger = f.db.shipOperatorOperation.operationId.find("stock-wren-dry-0001");
+  const ledger = f.db.shipOperatorOperation.operationId.find(
+    "stock-wren-dry-0001",
+  );
   const summary = JSON.parse(ledger.summaryJson);
   expect(ledger.kind).toBe("stock-ship-cargo-dry-run");
   expect(summary).toMatchObject({
@@ -297,13 +315,21 @@ test("rejects unknown sockets, unknown items, another character's ship and overf
   const { f, characterId, shipId } = await wrenOwner();
   f.as(SHIP_OPERATOR);
   expect(() =>
-    stockShipCargo(f.ctx, stockArgs(characterId, shipId, ["wardrobe-t1-chest"], { socketKey: "bridge/none" })),
+    stockShipCargo(
+      f.ctx,
+      stockArgs(characterId, shipId, ["wardrobe-t1-chest"], {
+        socketKey: "bridge/none",
+      }),
+    ),
   ).toThrow("Unknown storage socket");
   expect(() =>
     stockShipCargo(f.ctx, stockArgs(characterId, shipId, ["no-such-item"])),
   ).toThrow("Unknown item definition");
   expect(() =>
-    stockShipCargo(f.ctx, stockArgs("someone-else", shipId, ["wardrobe-t1-chest"])),
+    stockShipCargo(
+      f.ctx,
+      stockArgs("someone-else", shipId, ["wardrobe-t1-chest"]),
+    ),
   ).toThrow("Character not found");
   expect(() =>
     stockShipCargo(
@@ -311,7 +337,11 @@ test("rejects unknown sockets, unknown items, another character's ship and overf
       stockArgs(characterId, shipId, Array(60).fill("wardrobe-t2-chest")),
     ),
   ).toThrow("No room");
-  expect(f.db.inventoryItem.rows.filter((i: Row) => i.definitionId.startsWith("wardrobe-"))).toHaveLength(0);
+  expect(
+    f.db.inventoryItem.rows.filter((i: Row) =>
+      i.definitionId.startsWith("wardrobe-"),
+    ),
+  ).toHaveLength(0);
 });
 
 test("stocks Wren's crate additively; the owner takes a uniform and equips it (visual follows)", async () => {
@@ -320,8 +350,8 @@ test("stocks Wren's crate additively; the owner takes a uniform and equips it (v
     .filter((i: Row) => i.characterId === characterId)
     .map((i: Row) => JSON.stringify(i));
   f.as(SHIP_OPERATOR);
-  const first = CREW_WARDROBE_STARTER_DELIVERY.filter(
-    (id) => id.startsWith("wardrobe-"),
+  const first = CREW_WARDROBE_STARTER_DELIVERY.filter((id) =>
+    id.startsWith("wardrobe-"),
   );
   stockShipCargo(f.ctx, stockArgs(characterId, shipId, first));
   // Replaying the same operation is a no-op; a second batch reuses the bound crate.
@@ -432,7 +462,8 @@ test("stocks Wren's crate additively; the owner takes a uniform and equips it (v
   });
   equipItem(f.ctx, {
     itemId: uniform.id,
-    expectedRevision: f.db.inventoryState.characterId.find(characterId).revision,
+    expectedRevision:
+      f.db.inventoryState.characterId.find(characterId).revision,
     operationId: "equip-uniform-01",
   });
   const items = inventoryItemsView(f.ctx);

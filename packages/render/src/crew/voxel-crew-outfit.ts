@@ -151,10 +151,15 @@ export function createVoxelCrewOutfit(
       armour.set(slot, { key: wantKey, revision });
       const part = crewArmorPart(want.part)!;
       void track(
-        attachCrewArmor(scene, { root: crew.model, joints: crew.joints }, part, {
-          variant,
-          colourway: want.colourway,
-        }),
+        attachCrewArmor(
+          scene,
+          { root: crew.model, joints: crew.joints },
+          part,
+          {
+            variant,
+            colourway: want.colourway,
+          },
+        ),
       )
         .then((attachment) => {
           const entry = armour.get(slot);

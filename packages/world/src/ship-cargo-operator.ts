@@ -8,7 +8,11 @@
  * normal scoped-cargo authority: the owner stands at the qualified approach point and transfers
  * items into carried inventory, then equips them with `equip_inventory_item`.
  */
-import { SenderError, type InferSchema, type ReducerCtx } from "spacetimedb/server";
+import {
+  SenderError,
+  type InferSchema,
+  type ReducerCtx,
+} from "spacetimedb/server";
 import type world from "./index";
 import {
   INVENTORY_DEFINITIONS,
@@ -24,7 +28,11 @@ import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
 import { packArmorIssue } from "@sidereal/sim/armor-issue";
 import { SCOPED_INVENTORY_LIMITS } from "@sidereal/sim/scoped-inventory";
-import { archiveJson, priorOperation, requireShipOperator } from "./ship-operator";
+import {
+  archiveJson,
+  priorOperation,
+  requireShipOperator,
+} from "./ship-operator";
 import { GAME_OWNED_TEMPLATE_NAMESPACE } from "./game-ship-access-authority";
 import { constructionCollision } from "./construction-doors";
 import { qualifyCargoAccessPoint } from "./scoped-inventory";
@@ -95,8 +103,7 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   if (priorOperation(ctx.db, ctx.sender, args.operationId, kind, request))
     return;
   const name = args.containerName.trim();
-  if (!name || name.length > 40)
-    fail("Container name must be 1-40 characters");
+  if (!name || name.length > 40) fail("Container name must be 1-40 characters");
   const definitionIds = parseDefinitionIds(args.definitionIdsJson);
 
   // The ship must be the character's active game-owned prefab ship.
@@ -118,9 +125,9 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
     fail("Storage sockets are only defined for trusted prefab ships");
   const prefab = readShipPrefab(document.prefab.document);
   const catalog = prefabComponentCatalogFor(document.prefab.catalog);
-  const deck = [...ctx.db.constructionDeck.by_instance.filter(instance.id)].find(
-    (d) => d.sourceDeckId === PREFAB_DECK_ID,
-  );
+  const deck = [
+    ...ctx.db.constructionDeck.by_instance.filter(instance.id),
+  ].find((d) => d.sourceDeckId === PREFAB_DECK_ID);
   if (!deck) fail("Prefab deck not found");
   const socket = prefabCargoSockets(prefab, 0, catalog).find(
     (s) => s.key === args.socketKey,
@@ -133,7 +140,8 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
     ctx.db.instanceInventoryBinding.placedObjectId.find(placedObjectId);
   let root = binding && ctx.db.inventoryContainer.id.find(binding.containerId);
   const rootScope =
-    binding && ctx.db.inventoryContainerScope.containerId.find(binding.containerId);
+    binding &&
+    ctx.db.inventoryContainerScope.containerId.find(binding.containerId);
   if (
     binding &&
     (!root ||
@@ -144,7 +152,8 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   )
     fail("Bound storage container is incomplete");
   let accessPoint: [number, number, number];
-  if (rootScope) accessPoint = [rootScope.accessX, rootScope.accessY, rootScope.accessZ];
+  if (rootScope)
+    accessPoint = [rootScope.accessX, rootScope.accessY, rootScope.accessZ];
   else {
     const z = deck.elevation + PREFAB_STANDING_OFFSET_M;
     const geometry = {
@@ -189,8 +198,10 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   if (nestedContainers + newStorage > SCOPED_INVENTORY_LIMITS.containers)
     fail("Container budget exceeded");
   const massKg =
-    existing.reduce((sum, i) => sum + inventoryDefinition(i.definitionId).massKg, 0) +
-    newDefinitions.reduce((sum, d) => sum + d.massKg, 0);
+    existing.reduce(
+      (sum, i) => sum + inventoryDefinition(i.definitionId).massKg,
+      0,
+    ) + newDefinitions.reduce((sum, d) => sum + d.massKg, 0);
   if (massKg > maxMassKg + 1e-8) fail("Container mass limit exceeded");
   const occupied = existing
     .filter((i) => root && i.containerId === root.id)
@@ -207,7 +218,9 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   // Largest first for a dense deterministic packing; ties keep the request order.
   const ordered = newDefinitions
     .map((d, index) => ({ ...d, index }))
-    .sort((a, b) => b.width * b.height - a.width * a.height || a.index - b.index);
+    .sort(
+      (a, b) => b.width * b.height - a.width * a.height || a.index - b.index,
+    );
   let placements: ReturnType<typeof packArmorIssue>["placements"];
   try {
     placements = packArmorIssue(ordered, width, height, 1, occupied).placements;
@@ -229,7 +242,12 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
     createdContainer: !root,
     accessPointM: accessPoint,
     massKg,
-    items: planned as { definitionId: string; x: number; y: number; id?: string }[],
+    items: planned as {
+      definitionId: string;
+      x: number;
+      y: number;
+      id?: string;
+    }[],
   };
   if (args.dryRun) {
     ctx.db.shipOperatorOperation.insert({
@@ -259,7 +277,8 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   };
   if (!root) {
     const id = ctx.newUuidV4().toString();
-    if (ctx.db.inventoryContainer.id.find(id)) fail("Container identity exists");
+    if (ctx.db.inventoryContainer.id.find(id))
+      fail("Container identity exists");
     root = {
       id,
       characterId: "",
@@ -299,7 +318,10 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   const container = root;
   for (const item of summary.items) {
     const id = ctx.newUuidV4().toString();
-    if (ctx.db.inventoryItem.id.find(id) || ctx.db.inventoryContainer.id.find(id))
+    if (
+      ctx.db.inventoryItem.id.find(id) ||
+      ctx.db.inventoryContainer.id.find(id)
+    )
       fail("Item identity exists");
     item.id = id;
     ctx.db.inventoryItem.insert({

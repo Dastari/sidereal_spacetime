@@ -73,11 +73,10 @@ export function prefabCargoSockets(
     const approachesM: [number, number][] = [];
     for (const side of sides) {
       const [nx, ny] = PLAN_NORMAL[side];
-      const half = Math.abs(nx) * (s.size[0] / 2) + Math.abs(ny) * (s.size[1] / 2);
+      const half =
+        Math.abs(nx) * (s.size[0] / 2) + Math.abs(ny) * (s.size[1] / 2);
       for (const gap of APPROACH_GAPS_M)
-        approachesM.push(
-          local(cx + nx * (half + gap), cy + ny * (half + gap)),
-        );
+        approachesM.push(local(cx + nx * (half + gap), cy + ny * (half + gap)));
     }
     out.push({
       key: n ? `${base}#${n}` : base,

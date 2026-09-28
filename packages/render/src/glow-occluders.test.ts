@@ -5,10 +5,7 @@ import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
-import {
-  createGlowOccluders,
-  setGlowOccludingActors,
-} from "./glow-occluders";
+import { createGlowOccluders, setGlowOccludingActors } from "./glow-occluders";
 test("foreground ship contributes depth while its bright material cannot join planetary bloom", () => {
   const engine = new NullEngine(),
     scene = new Scene(engine),

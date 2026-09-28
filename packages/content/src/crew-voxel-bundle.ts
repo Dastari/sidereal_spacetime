@@ -271,6 +271,8 @@ export const VOXEL_CREW_UPPER_BONES = [
  * Pure crew bundle selection: the voxel crew is the default; only an explicit `?crew=legacy`
  * query selects the installed r008 modular bundle (fallback while the first revision settles).
  */
-export function resolveCrewBundle(input: { query?: string | null }): CrewBundle {
+export function resolveCrewBundle(input: {
+  query?: string | null;
+}): CrewBundle {
   return input.query === "legacy" ? "legacy" : "voxel";
 }

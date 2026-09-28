@@ -509,7 +509,8 @@ export default function App({
   const reachableStorage =
     ready && actor?.connected && c && !seated
       ? [...c.db.ownReachableCargoContainers.iter()].find(
-          (row) => !row.parentItemId && row.kind === "grid" && row.placedObjectId,
+          (row) =>
+            !row.parentItemId && row.kind === "grid" && row.placedObjectId,
         )
       : undefined;
   const interactionPrompt = contextObject

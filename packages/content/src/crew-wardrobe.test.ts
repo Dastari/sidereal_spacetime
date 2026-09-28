@@ -13,7 +13,10 @@ import {
 } from "./inventory";
 import { INVENTORY_PHYSICAL_DEFINITIONS } from "./inventory-physical-definitions";
 import { CHARACTER_APPEARANCE_ENUMS } from "./appearance";
-import { VOXEL_CREW_DEFAULT_OUTFIT, voxelCrewHiddenRegions } from "./crew-voxel-bundle";
+import {
+  VOXEL_CREW_DEFAULT_OUTFIT,
+  voxelCrewHiddenRegions,
+} from "./crew-voxel-bundle";
 
 test("wardrobe: 4 uniforms and 14 tier 1-2 pieces with unique, stable definition ids", () => {
   expect(CREW_WARDROBE.filter((w) => w.slot === "uniform")).toHaveLength(4);
@@ -70,7 +73,11 @@ test("every persisted look maps to a valid head-kit loadout; helmets and visors 
     bodyType: "female",
     equippedComponents: { helmet: "medic-helmet", visor: "medic-visor" },
   });
-  expect(medic).toMatchObject({ helmet: "hazmat", visor: "tinted", head: "female" });
+  expect(medic).toMatchObject({
+    helmet: "hazmat",
+    visor: "tinted",
+    head: "female",
+  });
   const captain = voxelHeadLoadoutFromAppearance({
     equippedComponents: { helmet: "captain-helmet", visor: "pilot-visor" },
   });

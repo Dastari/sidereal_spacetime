@@ -44,14 +44,17 @@ canvas.style.height = `${height}px`;
 function appearanceFor(ids: string[], hand?: string) {
   const items = ids.flatMap((id) => {
     const d = INVENTORY_DEFINITIONS.find((x) => x.id === id);
-    return d?.equipSlot ? [{ definitionId: id, equipmentSlot: d.equipSlot }] : [];
+    return d?.equipSlot
+      ? [{ definitionId: id, equipmentSlot: d.equipSlot }]
+      : [];
   });
-  const held = hand ? INVENTORY_DEFINITIONS.find((d) => d.id === hand) : undefined;
+  const held = hand
+    ? INVENTORY_DEFINITIONS.find((d) => d.id === hand)
+    : undefined;
   return {
     crewAppearance: {
       bodyType: (q.get("body") === "female" ? "female" : "male") as
-        | "male"
-        | "female",
+        "male" | "female",
       hairStyle: (q.get("hair") ?? undefined) as never,
       equippedComponents: characterEquipmentFromInventory(items),
       weapon: held?.pose ?? "none",
@@ -122,18 +125,25 @@ async function main() {
     },
     metrics() {
       const crewRoot = scene!.getTransformNodeByName("crew-placement");
-      const meshes = crewRoot?.getChildMeshes().filter((m) => m.isEnabled() && m.isVisible) ?? [];
+      const meshes =
+        crewRoot
+          ?.getChildMeshes()
+          .filter((m) => m.isEnabled() && m.isVisible) ?? [];
       return {
         crewMeshes: meshes.length,
         crewMaterials: new Set(meshes.map((m) => m.material?.uniqueId)).size,
         crewTriangles: meshes.reduce((n, m) => n + m.getTotalIndices() / 3, 0),
         names: meshes.map((m) => m.name),
-        drawCalls: (scene!.getEngine() as unknown as { _drawCalls?: { current: number } })._drawCalls?.current,
+        drawCalls: (
+          scene!.getEngine() as unknown as { _drawCalls?: { current: number } }
+        )._drawCalls?.current,
       };
     },
   };
   for (let i = 0; i < 40; i++)
-    await new Promise((r) => scene!.getEngine().onEndFrameObservable.addOnce(r));
+    await new Promise((r) =>
+      scene!.getEngine().onEndFrameObservable.addOnce(r),
+    );
   window.__crewReady = true;
 }
 
