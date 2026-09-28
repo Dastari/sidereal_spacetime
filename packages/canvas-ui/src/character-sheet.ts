@@ -227,20 +227,24 @@ export function createCharacterSheet(
       ["Primary weapon", "legendary", "hand"],
       ["Gloves", "rare", "gloves"],
       ["Legs", "rare", "legs"],
+      ["Uniform", "uncommon", "uniform"],
       ["Visor", "rare", "visor"],
       ["Chest armor", "uncommon", "chest"],
       ["Backpack", "rare", "back"],
       ["Belt", "common", "belt"],
       ["Boots", "uncommon", "boots"],
     ];
+    // Two columns of cards in the same 395 px band (six rows since the uniform slot).
+    const rows = Math.ceil(slots.length / 2),
+      step = Math.min(79, Math.floor(395 / rows));
     slots.forEach(([label, rarity, slot], i) => {
-      const col = i < 5 ? 0 : 1,
-        row = i % 5;
+      const col = i < rows ? 0 : 1,
+        row = i % rows;
       const box = {
         x: col ? r.x + r.w - cardW - 8 : r.x + 8,
-        y: r.y + 36 + row * 79,
+        y: r.y + 36 + row * step,
         w: cardW,
-        h: 73,
+        h: step - 6,
       };
       const item = slot
         ? state.items.find((it) => it.equipmentSlot === slot)

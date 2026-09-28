@@ -40,7 +40,7 @@ const descriptions: Record<string, string> = {
 export function itemDetails(d: InventoryDefinition) {
   const category: ItemCategory = d.storage
     ? "Storage"
-    : d.characterComponentId
+    : d.characterComponentId || d.wardrobeId
       ? "Armor"
       : ["scanner", "plasma-cutter"].includes(d.id)
         ? "Tools"
@@ -51,6 +51,12 @@ export function itemDetails(d: InventoryDefinition) {
   const archetype = d.characterComponentId?.split("-")[0] ?? "crew";
   const description =
     descriptions[d.id] ??
+    (d.equipSlot === "uniform"
+      ? `A department crew jumpsuit (${d.name.toLowerCase()}). Worn under armour; the department colours show at the cuffs, collar and trim. Compatible with either body type.`
+      : undefined) ??
+    (d.wardrobeId
+      ? `${d.name}. Standard-issue modular kit, independently fitted ${d.equipSlot === "back" ? "storage with secured compartments" : "protection with articulated fittings"}. Compatible with either body type.`
+      : undefined) ??
     `${d.name} from the ${archetype} uniform. Independently fitted ${d.equipSlot === "back" ? "storage with secured compartments" : "protection with articulated fittings"} for a modular crew loadout. Compatible with either body type.`;
   const values = d.reservoir
     ? [

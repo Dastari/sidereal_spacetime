@@ -4,6 +4,8 @@ import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { Vector3, Matrix } from "@babylonjs/core/Maths/math.vector";
 import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+import { crewArmorAssetUrl, crewArmorPart } from "@sidereal/content/crew-armor";
+import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
 import type { EquipmentPoseConfiguration } from "./crew/pose-review-config";
 export type GroundItem = {
   id: string;
@@ -52,20 +54,32 @@ export function createGroundItems(
         root.parent = ship;
         entry = { row, root };
         entries.set(row.id, entry);
-        const url = d.characterComponentId
-          ? d.iconUrl!.replace(".png", ".glb")
-          : (paired?.items[d.assetId]
-              ? paired.equipmentUrl
-              : "/assets/equipment/") +
-            d.assetId +
-            ".glb";
+        // Wardrobe armour shows its armour-v1 part; a folded uniform has no ground mesh (label only).
+        const wardrobePart = d.wardrobeId
+          ? crewArmorPart(crewWardrobeItem(d.wardrobeId)?.part ?? "")
+          : undefined;
+        const url = wardrobePart
+          ? crewArmorAssetUrl(wardrobePart)
+          : d.wardrobeId
+            ? undefined
+            : d.characterComponentId
+              ? d.iconUrl!.replace(".png", ".glb")
+              : (paired?.items[d.assetId]
+                  ? paired.equipmentUrl
+                  : "/assets/equipment/") +
+                d.assetId +
+                ".glb";
         const owned = entry;
-        void SceneLoader.LoadAssetContainerAsync(
-          "",
-          url,
-          scene,
-          undefined,
-          ".glb",
+        void (
+          url
+            ? SceneLoader.LoadAssetContainerAsync(
+                "",
+                url,
+                scene,
+                undefined,
+                ".glb",
+              )
+            : Promise.reject(new Error("no ground mesh"))
         )
           .then((asset) => {
             if (disposed || entries.get(row.id) !== owned) {

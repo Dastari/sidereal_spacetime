@@ -14,6 +14,7 @@ import {
 } from "./ship-operator-tables";
 import { wipePlayerShips } from "./ship-wipe";
 import { assignPrefabShip } from "./ship-assign";
+import { stockShipCargo } from "./ship-cargo-operator";
 import {
   isAwaitingShip,
   onboardNewCharacter,
@@ -1495,6 +1496,20 @@ export const operatorAssignPrefabShip = db.reducer(
     allowLegacy: t.bool(),
   },
   assignPrefabShip,
+);
+/** Operator-only, additive: binds a prefab storage socket (e.g. Wren's hold crate) to a
+ * ship-owned container if needed and inserts new item instances. See ship-cargo-operator.ts. */
+export const operatorStockShipCargo = db.reducer(
+  {
+    operationId: t.string(),
+    dryRun: t.bool(),
+    characterId: t.string(),
+    shipId: t.string(),
+    socketKey: t.string(),
+    containerName: t.string(),
+    definitionIdsJson: t.string(),
+  },
+  stockShipCargo,
 );
 
 /** Explicit deployment maintenance; ordinary game identities cannot invoke it. */

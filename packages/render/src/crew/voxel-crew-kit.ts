@@ -5,8 +5,12 @@ import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Matrix, Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
 import "@babylonjs/loaders/glTF";
 import {
+  CREW_HEAD_CATALOG,
   DEFAULT_HEAD_LOADOUT,
   composeFace as composeHeadFace,
   crewFaceAtlasUrl,
@@ -54,6 +58,72 @@ function headSpaceNode(scene: Scene, crew: VoxelCrew) {
   node.rotationQuaternion = q;
   node.position.copyFrom(t);
   return node;
+}
+
+/**
+ * CHAR-HEADS face canvas UVs (FACE_ATLAS_SPEC): u = (8 - x) / 16, v = z / 16 in head-space voxels
+ * (x = character right, z = up; glTF head space: x right, y up). Only fills missing UVs.
+ */
+export function ensureFaceCanvasUVs(mesh: AbstractMesh, space: TransformNode) {
+  if (mesh.isVerticesDataPresent(VertexBuffer.UVKind)) return false;
+  const positions = mesh.getVerticesData(VertexBuffer.PositionKind);
+  if (!positions || !(mesh instanceof Mesh)) return false;
+  const [cols, rows] = CREW_HEAD_CATALOG.space.faceCanvas.px;
+  const voxel = CREW_HEAD_CATALOG.voxelMeters;
+  const toSpace = mesh
+    .computeWorldMatrix(true)
+    .multiply(Matrix.Invert(space.computeWorldMatrix(true)));
+  const uvs = new Float32Array((positions.length / 3) * 2);
+  const p = new Vector3();
+  for (let i = 0, j = 0; i < positions.length; i += 3, j += 2) {
+    Vector3.TransformCoordinatesFromFloatsToRef(
+      positions[i],
+      positions[i + 1],
+      positions[i + 2],
+      toSpace,
+      p,
+    );
+    uvs[j] = (cols / 2 - p.x / voxel) / cols;
+    uvs[j + 1] = p.y / voxel / rows;
+  }
+  mesh.setVerticesData(VertexBuffer.UVKind, uvs, false);
+  return true;
+}
+
+/**
+ * Reverse every triangle whose winding disagrees with its authored vertex normals. Double-sided
+ * crew materials light back-facing fragments with the flipped normal, so a reversed triangle is
+ * lit from inside. Returns the number of triangles reversed (0 for a consistent mesh).
+ */
+export function alignWindingToNormals(mesh: AbstractMesh) {
+  if (!(mesh instanceof Mesh)) return 0;
+  const p = mesh.getVerticesData(VertexBuffer.PositionKind);
+  const n = mesh.getVerticesData(VertexBuffer.NormalKind);
+  const source = mesh.getIndices();
+  if (!p || !n || !source) return 0;
+  const indices = Array.from(source);
+  let reversed = 0;
+  for (let t = 0; t + 2 < indices.length; t += 3) {
+    const a = indices[t] * 3,
+      b = indices[t + 1] * 3,
+      c = indices[t + 2] * 3;
+    const ux = p[b] - p[a],
+      uy = p[b + 1] - p[a + 1],
+      uz = p[b + 2] - p[a + 2];
+    const vx = p[c] - p[a],
+      vy = p[c + 1] - p[a + 1],
+      vz = p[c + 2] - p[a + 2];
+    const dot =
+      (uy * vz - uz * vy) * (n[a] + n[b] + n[c]) +
+      (uz * vx - ux * vz) * (n[a + 1] + n[b + 1] + n[c + 1]) +
+      (ux * vy - uy * vx) * (n[a + 2] + n[b + 2] + n[c + 2]);
+    if (dot < 0) {
+      [indices[t + 1], indices[t + 2]] = [indices[t + 2], indices[t + 1]];
+      reversed++;
+    }
+  }
+  if (reversed) mesh.setIndices(indices);
+  return reversed;
 }
 
 /** Map legacy appearance to a CHAR-HEADS loadout (presentation default until loadouts persist). */
@@ -132,6 +202,16 @@ export async function attachVoxelCrewHead(
         m.albedoColor = Color3.FromHexString(person[slot]).toLinearSpace();
     }
   crew.setHiddenRegions(["head", "hair"]);
+  // Two v1 head-kit export defects, repaired at load (see ensureFaceCanvasUVs /
+  // alignWindingToNormals): no TEXCOORD_0, so the pixel face sampled one texel (flat skin); and
+  // triangle winding opposite to the (outward) normals on several parts, so double-sided lighting
+  // flipped them inward and faces rendered near black.
+  for (const c of containers)
+    for (const mesh of c.meshes) {
+      alignWindingToNormals(mesh);
+      if (mesh.material?.name.replace(/\.\d+$/, "") === "crew.face")
+        ensureFaceCanvasUVs(mesh, space);
+    }
   if (faceMaterial) {
     const atlas = await loadRgbaImage(crewFaceAtlasUrl(resolved.face.variant));
     crew.face.setComposer(faceMaterial, (st) =>

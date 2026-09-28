@@ -31,6 +31,7 @@ import { createVoxelFace, loadVoxelFaceAtlas } from "./voxel-face";
 import { solveTwoBone } from "./voxel-ik";
 import { setMeshRole } from "../mesh-roles";
 import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
+import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
 import {
   selectVoxelCrewLayers,
   voxelCrewActionLayer,
@@ -53,6 +54,11 @@ type Track = {
 };
 
 const UPPER = new Set<string>(VOXEL_CREW_UPPER_BONES);
+/**
+ * Authored crew emissive strength (6) suits offline renders; in game the emit slot is a small
+ * saturated accent. Same cap as voxel-crew-outfit's toneCrewEmissive.
+ */
+export const CREW_EMISSIVE_INTENSITY = 0.9;
 
 /** Map legacy appearance roles onto the voxel material slots (colour only, never geometry). */
 export function voxelCrewSlotColors(
@@ -63,12 +69,15 @@ export function voxelCrewSlotColors(
     const c = Color3.FromHexString(hex);
     return new Color3(c.r * k, c.g * k, c.b * k).toHexString();
   };
+  // An equipped department uniform (wardrobe item) tints the suit layer; appearance otherwise.
+  const uniformId = appearance.equippedComponents?.uniform;
+  const uniform = uniformId ? crewWardrobeItem(uniformId)?.suit : undefined;
   return {
     skin: r.skin,
     hair: r.hair,
-    suit_primary: r.suit,
-    suit_secondary: darker(r.suit, 0.6),
-    accent: r.accent,
+    suit_primary: uniform?.primary ?? r.suit,
+    suit_secondary: uniform?.secondary ?? darker(r.suit, 0.6),
+    accent: uniform?.accent ?? r.accent,
     metal: r.trim,
     emit: r.light,
     glass: r.visor,
@@ -315,7 +324,7 @@ export async function createVoxelCrewVisual(
     const colors = voxelCrewSlotColors(appearance);
     for (const material of container.materials) {
       if (!(material instanceof PBRMaterial)) continue;
-      material.maxSimultaneousLights = 8;
+      material.maxSimultaneousLights = 12;
       const slot = material.name.replace(/^crew\./, "").replace(/\.\d+$/, "");
       if (slot === "face") continue;
       const hex = colors[slot];
@@ -324,6 +333,8 @@ export async function createVoxelCrewVisual(
         material.albedoColor = linear;
         if (slot === "emit") material.emissiveColor = linear;
       }
+      if (material.emissiveIntensity > CREW_EMISSIVE_INTENSITY)
+        material.emissiveIntensity = CREW_EMISSIVE_INTENSITY;
     }
     face.setTints({ skin: hexToRgb(colors.skin), hair: hexToRgb(colors.hair) });
     variant = voxelCrewVariant(appearance);
@@ -547,6 +558,8 @@ export async function createVoxelCrewVisual(
   update({ moving: false, seated: false });
   return {
     root,
+    /** Parent of the body's glTF root; armour parts attach beside it. */
+    model: visual,
     bundle: "voxel" as const,
     update,
     customize(next: CrewAppearance) {

@@ -504,13 +504,24 @@ export default function App({
     (!seated
       ? (selectedInteraction ?? (!nearStation ? nearestInteraction : undefined))
       : undefined);
+  // Ship cargo roots are only projected while the server finds the actor within reach of
+  // their qualified approach point, so a visible root is an openable crate (E / Interact).
+  const reachableStorage =
+    ready && actor?.connected && c && !seated
+      ? [...c.db.ownReachableCargoContainers.iter()].find(
+          (row) =>
+            !row.parentItemId && row.kind === "grid" && row.placedObjectId,
+        )
+      : undefined;
   const interactionPrompt = contextObject
     ? interactionLabel(contextObject)
     : seated
       ? "Leave control seat"
       : nearStation
         ? "Control seat"
-        : undefined;
+        : reachableStorage
+          ? `Open ${reachableStorage.name.toLowerCase()}`
+          : undefined;
   // The legacy stock-ship inspection catalog (hull/cargo/equipment manifests,
   // wayfarer.json) belongs to the retired Wayfarer assets that the game client
   // no longer delivers, so it is never fetched.
@@ -633,6 +644,7 @@ export default function App({
     combat,
     combatEnabled,
     constructionInstance,
+    storageId: reachableStorage?.id,
   });
   live.current = {
     actor,
@@ -645,6 +657,7 @@ export default function App({
     combat,
     combatEnabled,
     constructionInstance,
+    storageId: reachableStorage?.id,
   };
   const actionPending = useRef(false);
   const perform = async (action: () => Promise<unknown>) => {
@@ -766,6 +779,8 @@ export default function App({
       (live.current.uiState.seated || live.current.uiState.nearStation)
     )
       useControlStation();
+    else if (live.current.storageId)
+      gui.current?.openContainer(live.current.storageId);
   };
   const issuedKit = useRef("");
   useEffect(() => {
@@ -821,11 +836,8 @@ export default function App({
               if (!disposed) setLoadStage(stage);
             },
             equipmentPose,
+            // Voxel crew (first revision) by default; ?crew=legacy keeps the r008 bundle.
             crewBundle: resolveCrewBundle({
-              // Proposal voxel crew: local dev or an explicit preview build only; never a default.
-              previewEnabled:
-                import.meta.env.DEV ||
-                import.meta.env.VITE_CREW_VOXEL_PREVIEW === "1",
               query: new URLSearchParams(window.location.search).get("crew"),
             }),
             sharedWorld: sharedEnabled
@@ -1035,12 +1047,28 @@ export default function App({
                         }),
                       ),
                     equipItem: (itemId) =>
-                      void perform(() =>
-                        connection.current!.reducers.equipInventoryItem({
+                      void perform(async () => {
+                        const current = connection.current!;
+                        // Equip straight from ship cargo: two separately validated intents,
+                        // a scoped transfer into carried storage, then the normal equip.
+                        if (
+                          readCargo(current).items.some((i) => i.id === itemId)
+                        ) {
+                          await moveScopedCargo(current, itemId, "");
+                          await current.reducers.equipInventoryItem({
+                            itemId,
+                            ...inventoryCommand(),
+                            expectedRevision:
+                              [...current.db.ownInventoryState.iter()][0]
+                                ?.revision ?? 0n,
+                          });
+                          return;
+                        }
+                        await current.reducers.equipInventoryItem({
                           itemId,
                           ...inventoryCommand(),
-                        }),
-                      ),
+                        });
+                      }),
                     assignHotbar: (slot, itemId) =>
                       void perform(() =>
                         connection.current!.reducers.assignInventoryHotbar({
