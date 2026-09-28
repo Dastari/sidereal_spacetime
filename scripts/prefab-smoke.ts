@@ -54,35 +54,37 @@ async function wait(fn: () => boolean, label: string, ms = 15000) {
 }
 const pause = (ms: number) => new Promise((r) => setTimeout(r, ms));
 let ready = false;
+let smokeToken = "";
+const subscribed = () => [
+  tables.ownCharacters,
+  tables.ownShips,
+  tables.ownStations,
+  tables.ownGameShipAccess,
+  tables.ownConstructionLocation,
+  tables.ownWorldAdmission,
+  tables.ownAuthoredFlights,
+  tables.ownAuthoredFlightFittings,
+  tables.ownAuthoredFlightPhysics,
+  tables.ownAuthoredFlightActuators,
+  tables.ownActuatorOutputs,
+  tables.ownInventoryState,
+  tables.ownInventoryItems,
+  tables.ownCombat,
+  tables.ownCombatImpact,
+  tables.ownCharacterVitals,
+  tables.ownShipComponentDamage,
+];
 const c = DbConnection.builder()
   .withUri(host)
   .withDatabaseName(database)
-  .onConnect((c: any) =>
-    c
-      .subscriptionBuilder()
+  .onConnect((c: any, _identity: unknown, token: string) => {
+    smokeToken = token;
+    c.subscriptionBuilder()
       .onApplied(() => {
         ready = true;
       })
-      .subscribe([
-        tables.ownCharacters,
-        tables.ownShips,
-        tables.ownStations,
-        tables.ownGameShipAccess,
-        tables.ownConstructionLocation,
-        tables.ownWorldAdmission,
-        tables.ownAuthoredFlights,
-        tables.ownAuthoredFlightFittings,
-        tables.ownAuthoredFlightPhysics,
-        tables.ownAuthoredFlightActuators,
-        tables.ownActuatorOutputs,
-        tables.ownInventoryState,
-        tables.ownInventoryItems,
-        tables.ownCombat,
-        tables.ownCombatImpact,
-        tables.ownCharacterVitals,
-        tables.ownShipComponentDamage,
-      ]),
-  )
+      .subscribe(subscribed());
+  })
   .build();
 const actor = () => [...c.db.ownCharacters.iter()][0] as any;
 const flightOf = (shipId: string) =>
@@ -108,6 +110,8 @@ try {
     "boarded prefab ship",
   );
   const shipId = actor().shipId as string;
+  // Prefab assignment boards the character at the ship's trusted spawn point: the respawn target.
+  const spawnPoint: [number, number] = [actor().localX, actor().localY];
   await wait(
     () =>
       [...c.db.ownGameShipAccess.iter()].some((a: any) => a.shipId === shipId),
@@ -370,13 +374,45 @@ try {
     }),
   );
 
+  // Death at the helm (2026-09-28): a lethal hit on the seated pilot (real character damage
+  // adapter) releases the pilot seat like a disconnect, refuses helm input, and the pilot
+  // respawns aboard the ship about 8 s later.
+  const vitals = () => [...c.db.ownCharacterVitals.iter()][0] as any;
+  await wait(() => !!vitals(), "own vitals projected");
+  assert.equal(flightOf(shipId)?.seatState, "seated", "seated before death");
+  await c.reducers.damagePrefabSmokeCharacter({ damage: 1000 });
+  await wait(() => vitals()?.state === "dead", "pilot killed at the helm");
+  await wait(
+    () => flightOf(shipId)?.seatState !== "seated",
+    "death released the pilot seat",
+  );
+  const helmWhileDead = await c.reducers
+    .setIntent({
+      sequence: nextSequence(c),
+      throttle: 1,
+      turn: 0,
+      dx: 0,
+      dy: 0,
+      sprint: false,
+    })
+    .then(
+      () => "accepted",
+      (e: Error) => String(e.message ?? e),
+    );
+  assert.notEqual(helmWhileDead, "accepted", "no helm input while dead");
+  await wait(
+    () => vitals()?.state === "active",
+    "respawned after helm death",
+    15000,
+  );
+  assert.equal(vitals().health, vitals().maxHealth);
+  console.log(JSON.stringify({ helmDeath: { helmWhileDead } }));
+
   // Damage (2026-09-28): stand up and shoot the own ship's life support with the pistol until it
   // is destroyed (friendly fire on the own ship), then destroy the reactor through the real
   // damage adapter and check that the ship loses thrust on the flight-dirty path.
-  await c.reducers.leaveAuthoredPilot({});
+  await c.reducers.leaveAuthoredPilot({}).catch(() => {});
   await wait(() => flightOf(shipId)?.seatState !== "seated", "left the seat");
-  const vitals = () => [...c.db.ownCharacterVitals.iter()][0] as any;
-  await wait(() => !!vitals(), "own vitals projected");
   assert.equal(vitals().health, vitals().maxHealth, "full health before");
   const TARGET = "mount:life";
   const targetObject = beam.objects.find((o) => o.id === TARGET);
@@ -546,6 +582,172 @@ try {
       },
     }),
   );
+
+  // Death and respawn (2026-09-28, owner: "Death, die and respawn, no loss of inventory yet."):
+  // a lethal hit through the real character damage adapter while seated at the helm kills the
+  // pilot, releases the seat, refuses every action and respawns them aboard Wren at its spawn
+  // point with full health after RESPAWN_MICROS; inventory is unchanged. Then the same again
+  // with a disconnect while dead.
+  const inventorySnapshot = (conn: any) =>
+    JSON.stringify(
+      [...conn.db.ownInventoryItems.iter()]
+        .map((i: any) => [i.id, i.definitionId, i.containerId, i.revision])
+        .sort(),
+      (_, v) => (typeof v === "bigint" ? v.toString() : v),
+    );
+  // Die away from the spawn point so the respawn relocation is observable.
+  if (seated) {
+    await c.reducers.leaveAuthoredPilot({});
+    await wait(() => flightOf(shipId)?.seatState !== "seated", "stood up");
+  }
+  for (const [x, y] of prefabWalkRoute(
+    prefab,
+    catalog,
+    [actor().localX, actor().localY],
+    firing,
+  ))
+    await walkNative(c, x, y);
+  const corpseGap = Math.hypot(
+    actor().localX - spawnPoint[0],
+    actor().localY - spawnPoint[1],
+  );
+  assert(corpseGap > 1, `died away from the spawn point (${corpseGap} m)`);
+  const inventoryBefore = inventorySnapshot(c);
+  const locationOf = (conn: any) =>
+    [...conn.db.ownConstructionLocation.iter()][0] as any;
+  const spawnDeck = locationOf(c)?.deckId;
+  const killedAt = Date.now();
+  await c.reducers.damagePrefabSmokeCharacter({ damage: 1000 });
+  await wait(() => vitals()?.state === "dead", "character dead");
+  assert.equal(vitals().health, 0);
+  const refusals: string[] = [];
+  const refused = async (label: string, call: () => Promise<unknown>) => {
+    const error = await call().then(
+      () => undefined,
+      (e: Error) => e,
+    );
+    assert(error, `${label} refused while dead`);
+    assert.match(String(error.message ?? error), /dead/, label);
+    refusals.push(label);
+  };
+  await refused("aim", () =>
+    c.reducers.setCombatAim({ active: true, angle: 0 }),
+  );
+  await refused("fire", () =>
+    c.reducers.fireWeapon({
+      itemId: item().id,
+      expectedRevision: ([...c.db.ownCombat.iter()][0] as any).revision,
+      operationId: crypto.randomUUID(),
+    }),
+  );
+  const station = flightOf(shipId);
+  await refused("pilot", () =>
+    c.reducers.enterAuthoredPilot({
+      stationId: station.stationId,
+      expectedStationRevision: station.stationRevision,
+      operationId: crypto.randomUUID(),
+    }),
+  );
+  await refused("inventory", () =>
+    c.reducers.equipInventoryItem({
+      itemId: item().id,
+      expectedRevision: ([...c.db.ownInventoryState.iter()][0] as any).revision,
+      operationId: crypto.randomUUID(),
+    }),
+  );
+  const corpse = [actor().localX, actor().localY];
+  for (let n = 0; n < 8; n++) {
+    await c.reducers.setIntent({
+      sequence: nextSequence(c),
+      throttle: 0,
+      turn: 0,
+      dx: 1,
+      dy: 0,
+      sprint: true,
+    });
+    await pause(60);
+  }
+  assert.deepEqual(
+    [actor().localX, actor().localY],
+    corpse,
+    "a dead body does not walk",
+  );
+  await wait(() => vitals()?.state === "active", "respawned", 15000);
+  const deadForMs = Date.now() - killedAt;
+  assert(
+    deadForMs > 7000 && deadForMs < 11000,
+    `respawn after about 8 s (${deadForMs} ms)`,
+  );
+  assert.equal(vitals().health, vitals().maxHealth, "full health on respawn");
+  const respawnGap = Math.hypot(
+    actor().localX - spawnPoint[0],
+    actor().localY - spawnPoint[1],
+  );
+  assert(respawnGap <= 2.3, `respawned at the spawn point (${respawnGap} m)`);
+  assert.equal(actor().shipId, shipId, "respawned aboard the own ship");
+  assert.equal(locationOf(c)?.deckId, spawnDeck, "respawned on the spawn deck");
+  assert.equal(inventorySnapshot(c), inventoryBefore, "inventory unchanged");
+  // Alive again: aiming is accepted.
+  await c.reducers.setCombatAim({ active: true, angle: 0 });
+  await c.reducers.setCombatAim({ active: false, angle: 0 });
+
+  // Disconnect while dead: the retained body respawns on the server; the reconnected session
+  // finds the character alive aboard Wren with the same inventory.
+  await c.reducers.damagePrefabSmokeCharacter({ damage: 1000 });
+  await wait(() => vitals()?.state === "dead", "character dead again");
+  c.disconnect();
+  await pause(9500);
+  let readyAgain = false;
+  const again = DbConnection.builder()
+    .withUri(host)
+    .withDatabaseName(database)
+    .withToken(smokeToken)
+    .onConnect((conn: any) =>
+      conn
+        .subscriptionBuilder()
+        .onApplied(() => {
+          readyAgain = true;
+        })
+        .subscribe(subscribed()),
+    )
+    .build();
+  try {
+    await wait(() => readyAgain, "reconnected subscription");
+    await again.reducers.enterLab({ name: "Prefab Smoke" });
+    const vitalsAgain = () => [...again.db.ownCharacterVitals.iter()][0] as any;
+    const actorAgain = () => [...again.db.ownCharacters.iter()][0] as any;
+    await wait(() => actorAgain()?.connected && !!vitalsAgain(), "rejoined");
+    assert.equal(vitalsAgain().state, "active", "respawned while offline");
+    assert.equal(vitalsAgain().health, vitalsAgain().maxHealth);
+    assert.equal(actorAgain().shipId, shipId);
+    const offlineGap = Math.hypot(
+      actorAgain().localX - spawnPoint[0],
+      actorAgain().localY - spawnPoint[1],
+    );
+    assert(
+      offlineGap <= 2.3,
+      `offline respawn at the spawn point (${offlineGap} m)`,
+    );
+    await wait(
+      () => inventorySnapshot(again) === inventoryBefore,
+      "inventory unchanged after offline respawn",
+      5000,
+    );
+    console.log(
+      JSON.stringify({
+        death: {
+          refusals,
+          deadForMs,
+          corpseGapM: corpseGap,
+          respawnGapM: respawnGap,
+          offlineRespawnGapM: offlineGap,
+          inventoryItems: JSON.parse(inventoryBefore).length,
+        },
+      }),
+    );
+  } finally {
+    again.disconnect();
+  }
   console.log("prefab smoke passed");
 } finally {
   c.disconnect();
