@@ -20,7 +20,10 @@ import {
   type CompiledFlightHull,
 } from "@sidereal/sim/flight-definition";
 import type { FlightEnvelope } from "@sidereal/sim/ifcs";
-import { PREFAB_FLIGHT_DEFINITION } from "@sidereal/sim/prefab-flight";
+import {
+  PREFAB_FLIGHT_DEFINITION,
+  PREFAB_FLIGHT_PROFILE,
+} from "@sidereal/sim/prefab-flight";
 /** Prefab physical definitions pair `prefab-component:<id>` with `prefab-fitting:<id>`. */
 const prefabFittingFor = (definitionId: string) =>
   definitionId.startsWith("prefab-component:")
@@ -209,7 +212,7 @@ export function resolveShipFlightDefinition(
         inertiaKgM2: compiled.inertiaKgM2,
       },
       hull,
-      profile: WAYFARER_FLIGHT_PROFILE,
+      profile: prefab ? PREFAB_FLIGHT_PROFILE : WAYFARER_FLIGHT_PROFILE,
       speed: WAYFARER_FLIGHT_SPEED,
       envelope: reason
         ? {

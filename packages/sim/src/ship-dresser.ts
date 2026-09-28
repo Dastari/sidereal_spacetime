@@ -264,6 +264,24 @@ function segKey(a: Pt, b: Pt): string {
 }
 
 /** Non-axis edges of a placed tile polygon. */
+/** Outline turn (radians) at `pt` when it is a vertex of `ring`, else 0. */
+function cornerTurn(ring: readonly Pt[], pt: Pt): number {
+  const i = ring.findIndex(
+    (p) => Math.hypot(p[0] - pt[0], p[1] - pt[1]) < 1e-6,
+  );
+  if (i < 0) return 0;
+  const prev = ring[(i - 1 + ring.length) % ring.length];
+  const next = ring[(i + 1) % ring.length];
+  const din: Pt = [pt[0] - prev[0], pt[1] - prev[1]];
+  const dout: Pt = [next[0] - pt[0], next[1] - pt[1]];
+  return Math.abs(
+    Math.atan2(
+      din[0] * dout[1] - din[1] * dout[0],
+      din[0] * dout[0] + din[1] * dout[1],
+    ),
+  );
+}
+
 function angledEdges(poly: readonly Pt[]): [Pt, Pt][] {
   const out: [Pt, Pt][] = [];
   poly.forEach((p, i) => {
@@ -801,6 +819,21 @@ export function dressShip(
         }
       }
       if (turn < (30 * Math.PI) / 180) return;
+      // One post per vertex: where a lower volume's corner meets a taller volume's corner (a wing
+      // root on the hull corner) the taller post already covers it, and a second post over the
+      // same footprint z-fights on every side.
+      if (
+        !isDeck &&
+        geoms.some(
+          (w) =>
+            w !== g &&
+            w.z[0] <= z0 &&
+            w.z[1] >= z1 &&
+            (w.z[0] < z0 || w.z[1] > z1 || w.volume.id < v.id) &&
+            cornerTurn(w.outline?.outer ?? [], pt) >= (30 * Math.PI) / 180,
+        )
+      )
+        return;
       if (!isDeck)
         place(kitId.hullPost(v.height, false), pt[0], pt[1], 0, 0, "both");
       else {
@@ -1422,17 +1455,8 @@ export function dressShip(
       );
       stats.posts++;
     }
-    const interiorRects = mounts
-      .filter((m) => m.mount.attach === "interior")
-      .map((m) => m.rect);
+    // deriveInterior already drops sockets under interior modules (one object per footprint).
     for (const s of interior.sockets) {
-      const r = [s.at[0], s.at[1], s.at[0] + s.size[0], s.at[1] + s.size[1]];
-      if (
-        interiorRects.some(
-          (q) => r[0] < q[2] && q[0] < r[2] && r[1] < q[3] && q[1] < r[3],
-        )
-      )
-        continue;
       objects.push({ ...s, view: "deck" });
       stats.sockets++;
     }

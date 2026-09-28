@@ -24,6 +24,10 @@ import { prefabFlightModel } from "@sidereal/sim/prefab-flight";
 import { flightDefinitionCatalogHash } from "@sidereal/sim/flight-definition";
 import { prefabShipSpawner, prefabShipSpawners } from "./ship-assign";
 import { FED_WREN_PIN, REGISTERED_PREFAB_PINS } from "./prefab-ship-spawners";
+import { FED_WREN_R2_PIN } from "./prefab-ship-pins";
+import { readFileSync } from "node:fs";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { trustedPrefabTemplate } from "./prefab-ship-authority";
 
 const HEAVY = { timeout: 60_000 };
@@ -92,5 +96,40 @@ test(
     const idMapBytes = JSON.stringify(plan.mappings).length;
     expect(documentBytes).toBeLessThan(1_048_576);
     expect(idMapBytes).toBeLessThan(1_048_576);
+  },
+);
+
+test(
+  "live Wren r2 instances keep their pins: catalog revision 1 stays buildable and unchanged",
+  HEAVY,
+  () => {
+    // The first release assigned Wren r2 against ship-components-v1@1. Its stored construction
+    // document names that catalog; admission re-derives the layout and the flight resolver
+    // compares the compiled definition with the stored pin, so both must still derive exactly.
+    const legacy = readShipPrefab(
+      JSON.parse(
+        readFileSync(
+          new URL("./fixtures/fed-s-wren-r2.prefab.json", import.meta.url),
+          "utf8",
+        ),
+      ),
+    );
+    const catalog = prefabComponentCatalogFor(FED_WREN_R2_PIN.catalogRevision);
+    expect(catalog.revision).toBe(FED_WREN_R2_PIN.catalogRevision);
+    const snapshot = compileConstruction(
+      JSON.stringify(prefabConstructionDocument(legacy, catalog)),
+    );
+    expect(snapshot.sha256).toBe(FED_WREN_R2_PIN.blueprintSha256);
+    expect(
+      flightDefinitionCatalogHash(prefabFlightModel(legacy, catalog).catalog),
+    ).toBe(FED_WREN_R2_PIN.flightDefinitionSha256);
+    // New assignments use the current catalog; the legacy pin is not a registered spawner.
+    expect(FED_WREN_PIN.catalogRevision).not.toBe(
+      FED_WREN_R2_PIN.catalogRevision,
+    );
+    expect(prefabShipSpawner("fed.s.wren")?.blueprintSha256).toBe(
+      FED_WREN_PIN.blueprintSha256,
+    );
+    expect(() => prefabComponentCatalogFor("ship-components-v1@0")).toThrow();
   },
 );

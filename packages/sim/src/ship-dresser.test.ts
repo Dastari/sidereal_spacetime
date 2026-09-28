@@ -182,4 +182,43 @@ describe("ship dresser", () => {
     expect(chains[0]).toHaveLength(2);
     expect(axis).toHaveLength(4);
   });
+
+  for (const prefab of PREFAB_SHIPS)
+    it(`${prefab.id}: one placement per piece and pose, one post per corner, one object per footprint`, () => {
+      const dressed = dressShip(prefab, { catalog });
+      // No kit piece is placed twice at the same pose in overlapping views.
+      const seen = new Map<string, string>();
+      for (const k of dressed.kit) {
+        const pose = `${k.piece}@${k.x.toFixed(4)},${k.y.toFixed(4)},${k.z.toFixed(4)},${k.rotDeg},${!!k.mirror}`;
+        for (const view of k.view === "both" ? ["flight", "deck"] : [k.view]) {
+          const key = `${view}|${pose}`;
+          expect(seen.has(key), key).toBe(false);
+          seen.set(key, k.piece);
+        }
+      }
+      // Hull corner posts: a lower volume's corner post never duplicates a taller one's.
+      const posts = new Map<string, string[]>();
+      for (const k of dressed.kit.filter((p) =>
+        p.piece.startsWith("post.hull."),
+      )) {
+        for (const view of k.view === "both" ? ["flight", "deck"] : [k.view]) {
+          const key = `${view}|${k.x.toFixed(4)},${k.y.toFixed(4)}`;
+          posts.set(key, [...(posts.get(key) ?? []), k.piece]);
+        }
+      }
+      for (const [key, pieces] of posts)
+        expect(pieces.length, `${key}: ${pieces.join(", ")}`).toBe(1);
+      // Deck objects never share a footprint with an interior module (one object per socket).
+      const modules = dressed.components
+        .filter((c) => c.placement.mount.attach === "interior")
+        .map((c) => c.placement.rect);
+      for (const o of dressed.objects) {
+        const r = [o.at[0], o.at[1], o.at[0] + o.size[0], o.at[1] + o.size[1]];
+        for (const q of modules)
+          expect(
+            r[0] < q[2] && q[0] < r[2] && r[1] < q[3] && q[1] < r[3],
+            `${o.designId} overlaps a module`,
+          ).toBe(false);
+      }
+    });
 });
