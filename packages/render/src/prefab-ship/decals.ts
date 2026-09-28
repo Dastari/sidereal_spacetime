@@ -16,6 +16,7 @@ import { SHIP_THEMES } from "@sidereal/content/ship-themes";
 import type { ShipThemeId } from "@sidereal/content/ship-prefab";
 import { drawEmblemMask, drawTextMask } from "./decal-art";
 import { setMeshRole } from "../mesh-roles";
+import { applySurfaceFinish } from "../molded-plastic";
 
 /** Extra lift along the normal on top of the dresser's 4 mm, against z-fighting. */
 const LIFT = 0.0015;
@@ -102,8 +103,8 @@ export function buildDecals(
     material.albedoTexture = texture;
     material.useAlphaFromAlbedoTexture = true;
     material.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
-    material.metallic = 0;
-    material.roughness = 0.55;
+    // Pad-printed ink on the moulded panel: same finish and grading as the plate beneath it.
+    applySurfaceFinish(material, "plastic-light");
     material.zOffset = -2;
     const mesh = new Mesh(`prefab-decal-${dressed.id}-${d.kind}-${i}`, scene);
     const n = d.normal;

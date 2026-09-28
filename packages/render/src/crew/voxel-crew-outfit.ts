@@ -20,11 +20,14 @@ import {
   CREW_EMISSIVE_INTENSITY,
   type createVoxelCrewVisual,
 } from "./voxel-crew";
+import { applyMoldedFinishToMeshes } from "../molded-plastic";
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 
 /**
  * Prepare every crew material (body, head kit, armour, held items) for the game lights:
+ * - finish: the shared molded-plastic family of each slot (cloth body suit, moulded armour and
+ *   helmets, rubber grips, real metal only on metal slots; see molded-plastic.ts);
  * - cap emission: authored `crew.emit` strength 6 blooms across the face and chest in game; the cap
  *   keeps it a small accent;
  * - raise the light budget: with Babylon's default of 4, a deck with several room lights drops the
@@ -33,6 +36,7 @@ type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
  */
 export const CREW_MAX_LIGHTS = 12;
 export function toneCrewEmissive(meshes: readonly AbstractMesh[]) {
+  applyMoldedFinishToMeshes(meshes);
   for (const mesh of meshes) {
     const material = mesh.material;
     const list =

@@ -17,6 +17,7 @@ import {
   type CrewMaterialSlot,
 } from "@sidereal/content/crew-armor";
 import { setMeshRole } from "../mesh-roles";
+import { tagCrewPart } from "../molded-plastic";
 
 /**
  * Presentation-only armour attachment for the voxel crew (CHAR-BODY contract): every armour GLB
@@ -119,6 +120,8 @@ export async function attachCrewArmor(
     }
   for (const node of container.rootNodes) node.parent = target.root;
   applyCrewArmorColourway(container.materials, options.colourway);
+  // Armour, helmets and wardrobe gear are moulded parts (their suit slots are plates, not cloth).
+  tagCrewPart(container.materials, "armour");
   let disposed = false;
   return {
     part,

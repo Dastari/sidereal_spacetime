@@ -31,6 +31,7 @@ import {
 import { setMeshRole } from "../mesh-roles";
 import type { createVoxelCrewVisual } from "./voxel-crew";
 import { loadRgbaImage } from "./voxel-face";
+import { tagCrewPart } from "../molded-plastic";
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 
@@ -193,6 +194,7 @@ export async function attachVoxelCrewHead(
     eye: resolved.face.tints.eye,
   };
   let faceMaterial: PBRMaterial | undefined;
+  for (const c of containers) tagCrewPart(c.materials, "head");
   for (const c of containers)
     for (const m of c.materials) {
       if (!(m instanceof PBRMaterial)) continue;
