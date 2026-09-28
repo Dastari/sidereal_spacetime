@@ -20,7 +20,9 @@ import {
 
 test("wardrobe: 4 uniforms and 14 tier 1-2 pieces with unique, stable definition ids", () => {
   expect(CREW_WARDROBE.filter((w) => w.slot === "uniform")).toHaveLength(4);
-  expect(CREW_WARDROBE.filter((w) => w.part)).toHaveLength(14);
+  expect(
+    CREW_WARDROBE.filter((w) => w.part && w.slot !== "uniform"),
+  ).toHaveLength(14);
   const ids = INVENTORY_DEFINITIONS.map((d) => d.id);
   expect(new Set(ids).size).toBe(ids.length);
   for (const d of CREW_WARDROBE_DEFINITIONS) {

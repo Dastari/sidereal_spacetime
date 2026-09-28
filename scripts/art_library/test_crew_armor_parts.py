@@ -50,9 +50,33 @@ class CrewArmorKitTests(unittest.TestCase):
             self.assertEqual("hands" in p.hides, p.slot == "gloves", p.id)
 
     def test_legacy_items_map_to_existing_parts(self):
+        self.assertEqual(K.legacy_visual_map()["scientist-back"]["part"], "armor.back.backpack-t0")
         for key, v in K.legacy_visual_map().items():
             self.assertIn(v["part"], self.by, key)
             self.assertEqual(self.by[v["part"]].slot, key.rsplit("-", 1)[1])
+
+    def test_tiers_increase_shoulder_coverage_without_repeated_shelves(self):
+        parts = [self.by[f"armor.shoulders.{s}"] for s in ("cloth", "light", "standard", "heavy")]
+        # Cloth and light pads stay narrow; upper-tier armour gains coverage and mass.
+        counts = [p.voxels("all") for p in parts]
+        self.assertLess(counts[1], counts[2])
+        self.assertLess(counts[2], counts[3])
+        self.assertLess(parts[0].fits["all"]["upper_arm.R"].bounds()[1][0],
+                        parts[3].fits["all"]["upper_arm.R"].bounds()[1][0])
+
+    def test_role_signatures_and_uniforms_are_real_geometry(self):
+        for suffix in ("research", "engineer-rig", "mechanic-rig"):
+            for fit in self.by[f"armor.chest.{suffix}"].fits.values():
+                self.assertIn("hand.L", fit)
+        patterns = []
+        for dept in ("command", "medical", "engineering", "security"):
+            p = self.by[f"armor.chest.uniform-{dept}"]
+            patterns.append(frozenset(p.fits["wide"]["chest"].c.items()))
+        self.assertEqual(len(set(patterns)), 4)
+        for suffix in ("coat", "labcoat"):
+            for fit in self.by[f"armor.chest.{suffix}"].fits.values():
+                self.assertTrue(all(not (-2 <= x < 2 and y >= 6) for x, y, z in fit["chest"].c))
+                self.assertLessEqual(fit["thigh.R"].bounds()[0][2], 10)
 
     def test_emissive_is_a_handful_of_small_indicator_lights(self):
         for p in self.parts:

@@ -1,6 +1,6 @@
 {
   "schema": "sidereal.crew-heads.v1",
-  "revision": 3,
+  "revision": 4,
   "status": "proposal: unsigned art, not wired into the live game; the owner has not approved it",
   "voxelMeters": 0.03125,
   "slots": [
@@ -22,48 +22,19 @@
     "axes": "Armature axes: x = character right, y = forward (the face looks +Y), z = up. glTF: +Y up, face looks -Z.",
     "units": "metres",
     "skullVoxels": [
-      [
-        -8,
-        -7,
-        0
-      ],
-      [
-        8,
-        7,
-        16
-      ]
+      [-8, -7, 0],
+      [8, 7, 16]
     ],
     "sockets": {
-      "socket.head": [
-        0,
-        0,
-        0.5
-      ],
-      "socket.face": [
-        0,
-        0.21875,
-        0.1875
-      ],
-      "socket.eyes": [
-        0,
-        0.21875,
-        0.234375
-      ]
+      "socket.head": [0, 0, 0.5],
+      "socket.face": [0, 0.21875, 0.1875],
+      "socket.eyes": [0, 0.21875, 0.234375]
     },
     "faceCanvas": {
-      "px": [
-        16,
-        16
-      ],
+      "px": [16, 16],
       "headSpaceVoxels": {
-        "x": [
-          8,
-          -8
-        ],
-        "z": [
-          16,
-          0
-        ]
+        "x": [8, -8],
+        "z": [16, 0]
       },
       "uv": "u = (8 - x)/16, v = z/16 (Blender), material crew.face; see FACE_ATLAS_SPEC"
     }
@@ -81,16 +52,12 @@
     {
       "id": "male",
       "label": "Masculine head",
-      "reference": [
-        "base-male-head-01-violet-swept"
-      ]
+      "reference": ["base-male-head-01-violet-swept"]
     },
     {
       "id": "female",
       "label": "Feminine head",
-      "reference": [
-        "base-female-head-01-charcoal-side-fringe"
-      ]
+      "reference": ["base-female-head-01-charcoal-side-fringe"]
     }
   ],
   "faceVariants": [
@@ -130,19 +97,13 @@
       "id": "young",
       "label": "Young",
       "ageMark": "none",
-      "reference": [
-        "head-age-young-upper-row",
-        "head-age-young-lower-row"
-      ]
+      "reference": ["head-age-young-upper-row", "head-age-young-lower-row"]
     },
     {
       "id": "adult",
       "label": "Adult",
       "ageMark": "none",
-      "reference": [
-        "head-age-adult-upper-row",
-        "head-age-adult-lower-row"
-      ]
+      "reference": ["head-age-adult-upper-row", "head-age-adult-lower-row"]
     },
     {
       "id": "middle",
@@ -157,47 +118,34 @@
       "id": "older",
       "label": "Older",
       "ageMark": "older",
-      "reference": [
-        "head-age-older-upper-row",
-        "head-age-older-lower-row"
-      ]
+      "reference": ["head-age-older-upper-row", "head-age-older-lower-row"]
     }
   ],
   "expressions": [
     {
       "id": "neutral",
       "label": "Neutral",
-      "reference": [
-        "head-expression-neutral"
-      ]
+      "reference": ["head-expression-neutral"]
     },
     {
       "id": "happy",
       "label": "Happy",
-      "reference": [
-        "head-expression-happy"
-      ]
+      "reference": ["head-expression-happy"]
     },
     {
       "id": "sad",
       "label": "Sad",
-      "reference": [
-        "head-expression-sad"
-      ]
+      "reference": ["head-expression-sad"]
     },
     {
       "id": "angry",
       "label": "Angry",
-      "reference": [
-        "head-expression-angry"
-      ]
+      "reference": ["head-expression-angry"]
     },
     {
       "id": "surprised",
       "label": "Surprised",
-      "reference": [
-        "head-expression-surprised"
-      ]
+      "reference": ["head-expression-surprised"]
     },
     {
       "id": "confused",
@@ -212,9 +160,7 @@
     {
       "id": "determined",
       "label": "Determined",
-      "reference": [
-        "head-expression-determined"
-      ]
+      "reference": ["head-expression-determined"]
     },
     {
       "id": "scared",
@@ -239,25 +185,15 @@
     {
       "id": "wink",
       "label": "Wink",
-      "reference": [
-        "head-expression-wink"
-      ]
+      "reference": ["head-expression-wink"]
     },
     {
       "id": "grin",
       "label": "Grin",
-      "reference": [
-        "head-expression-grin"
-      ]
+      "reference": ["head-expression-grin"]
     }
   ],
-  "visemes": [
-    "closed",
-    "A",
-    "E",
-    "O",
-    "MB"
-  ],
+  "visemes": ["closed", "A", "E", "O", "MB"],
   "animationExpressions": {
     "idle": "neutral",
     "idle_armed": "determined",
@@ -296,10 +232,7 @@
     "climb_ladder": "determined"
   },
   "blink": {
-    "intervalSeconds": [
-      2.0,
-      6.0
-    ],
+    "intervalSeconds": [2.0, 6.0],
     "frames": [
       {
         "eyes": "half",
@@ -314,14 +247,7 @@
         "seconds": 0.041666666666666664
       }
     ],
-    "blinkSuppressedEyes": [
-      "happy",
-      "closed",
-      "hurt",
-      "ko",
-      "sleepy",
-      "wink"
-    ]
+    "blinkSuppressedEyes": ["happy", "closed", "hurt", "ko", "sleepy", "wink"]
   },
   "palettes": {
     "skin": [
@@ -329,17 +255,13 @@
         "id": "porcelain",
         "label": "Porcelain",
         "hex": "#f0c8b8",
-        "reference": [
-          "head-skin-tone-sample-01"
-        ]
+        "reference": ["head-skin-tone-sample-01"]
       },
       {
         "id": "rose",
         "label": "Rose",
         "hex": "#e2a898",
-        "reference": [
-          "head-skin-tone-sample-02"
-        ]
+        "reference": ["head-skin-tone-sample-02"]
       },
       {
         "id": "sand",
@@ -351,58 +273,43 @@
         "id": "tan",
         "label": "Tan",
         "hex": "#c08968",
-        "reference": [
-          "head-skin-tone-sample-03"
-        ]
+        "reference": ["head-skin-tone-sample-03"]
       },
       {
         "id": "bronze",
         "label": "Bronze",
         "hex": "#a06a52",
-        "reference": [
-          "head-skin-tone-sample-04"
-        ]
+        "reference": ["head-skin-tone-sample-04"]
       },
       {
         "id": "brown",
         "label": "Brown",
         "hex": "#7e4a3a",
-        "reference": [
-          "head-skin-tone-sample-05",
-          "head-skin-tone-sample-06"
-        ]
+        "reference": ["head-skin-tone-sample-05", "head-skin-tone-sample-06"]
       },
       {
         "id": "deep",
         "label": "Deep",
         "hex": "#633629",
-        "reference": [
-          "head-skin-tone-sample-07"
-        ]
+        "reference": ["head-skin-tone-sample-07"]
       },
       {
         "id": "ebony",
         "label": "Ebony",
         "hex": "#4a2a24",
-        "reference": [
-          "head-skin-tone-sample-08"
-        ]
+        "reference": ["head-skin-tone-sample-08"]
       },
       {
         "id": "alien_blue",
         "label": "Alien blue",
         "hex": "#7f9ee8",
-        "reference": [
-          "head-specialty-alien-hybrid"
-        ]
+        "reference": ["head-specialty-alien-hybrid"]
       },
       {
         "id": "alien_green",
         "label": "Alien green",
         "hex": "#5fcf4a",
-        "reference": [
-          "anim--hair-head-variant-8"
-        ]
+        "reference": ["anim--hair-head-variant-8"]
       }
     ],
     "hair": [
@@ -517,75 +424,54 @@
         "id": "brown",
         "label": "Brown",
         "hex": "#6b3f22",
-        "reference": [
-          "head-eye-color-brown"
-        ]
+        "reference": ["head-eye-color-brown"]
       },
       {
         "id": "blue",
         "label": "Blue",
         "hex": "#3b82c4",
-        "reference": [
-          "head-eye-color-blue"
-        ]
+        "reference": ["head-eye-color-blue"]
       },
       {
         "id": "green",
         "label": "Green",
         "hex": "#3f9150",
-        "reference": [
-          "head-eye-color-green"
-        ]
+        "reference": ["head-eye-color-green"]
       },
       {
         "id": "hazel",
         "label": "Hazel",
         "hex": "#8e7a3a",
-        "reference": [
-          "head-eye-color-hazel"
-        ]
+        "reference": ["head-eye-color-hazel"]
       },
       {
         "id": "grey",
         "label": "Grey",
         "hex": "#8f9ba8",
-        "reference": [
-          "head-eye-color-grey"
-        ]
+        "reference": ["head-eye-color-grey"]
       },
       {
         "id": "amber",
         "label": "Amber",
         "hex": "#d38a22",
-        "reference": [
-          "head-eye-color-amber"
-        ]
+        "reference": ["head-eye-color-amber"]
       },
       {
         "id": "red",
         "label": "Red",
         "hex": "#dc313f",
-        "reference": [
-          "head-eye-color-red"
-        ]
+        "reference": ["head-eye-color-red"]
       },
       {
         "id": "cyber",
         "label": "Cyber",
         "hex": "#29e0ff",
         "emissive": true,
-        "reference": [
-          "head-eye-color-cyber"
-        ]
+        "reference": ["head-eye-color-cyber"]
       }
     ]
   },
-  "hairModes": [
-    "full",
-    "cap",
-    "fringe",
-    "hidden"
-  ],
+  "hairModes": ["full", "cap", "fringe", "hidden"],
   "hairStyles": [
     {
       "id": "spiked_quiff",
@@ -656,18 +542,13 @@
       "id": "tall_crest",
       "label": "Tall crest",
       "group": "short",
-      "reference": [
-        "hair-male-08-tall-charcoal-crest"
-      ]
+      "reference": ["hair-male-08-tall-charcoal-crest"]
     },
     {
       "id": "mohawk",
       "label": "Mohawk",
       "group": "short",
-      "reference": [
-        "hair-male-09-red-mohawk-shaved-sides",
-        "eq--mohawk-hair"
-      ]
+      "reference": ["hair-male-09-red-mohawk-shaved-sides", "eq--mohawk-hair"]
     },
     {
       "id": "side_undercut",
@@ -683,9 +564,7 @@
       "id": "hanging_locks",
       "label": "Hanging locks",
       "group": "long",
-      "reference": [
-        "hair-male-11-dark-hanging-locks"
-      ]
+      "reference": ["hair-male-11-dark-hanging-locks"]
     },
     {
       "id": "flat_top",
@@ -750,9 +629,7 @@
       "id": "straight_bob",
       "label": "Straight bob",
       "group": "medium",
-      "reference": [
-        "hair-female-03-charcoal-side-bob"
-      ]
+      "reference": ["hair-female-03-charcoal-side-bob"]
     },
     {
       "id": "long_side_fringe",
@@ -840,83 +717,59 @@
       "id": "topknot_sweep",
       "label": "Top knot sweep",
       "group": "updo",
-      "reference": [
-        "hair-female-13-brown-cropped-side-sweep"
-      ]
+      "reference": ["hair-female-13-brown-cropped-side-sweep"]
     }
   ],
   "facialHair": [
     {
       "id": "stubble",
       "label": "Stubble",
-      "reference": [
-        "facial-hair-stubble"
-      ]
+      "reference": ["facial-hair-stubble"]
     },
     {
       "id": "short_beard",
       "label": "Short beard",
-      "reference": [
-        "facial-hair-short-beard"
-      ]
+      "reference": ["facial-hair-short-beard"]
     },
     {
       "id": "full_beard",
       "label": "Full beard",
-      "reference": [
-        "facial-hair-full-beard",
-        "facial-hair-grey"
-      ]
+      "reference": ["facial-hair-full-beard", "facial-hair-grey"]
     },
     {
       "id": "goatee",
       "label": "Goatee",
-      "reference": [
-        "facial-hair-goatee"
-      ]
+      "reference": ["facial-hair-goatee"]
     },
     {
       "id": "moustache",
       "label": "Moustache",
-      "reference": [
-        "facial-hair-moustache"
-      ]
+      "reference": ["facial-hair-moustache"]
     },
     {
       "id": "handlebar",
       "label": "Handlebar",
-      "reference": [
-        "facial-hair-handlebar"
-      ]
+      "reference": ["facial-hair-handlebar"]
     },
     {
       "id": "sideburns",
       "label": "Sideburns",
-      "reference": [
-        "facial-hair-side-burns"
-      ]
+      "reference": ["facial-hair-side-burns"]
     },
     {
       "id": "soul_patch",
       "label": "Soul patch",
-      "reference": [
-        "facial-hair-soul-patch"
-      ]
+      "reference": ["facial-hair-soul-patch"]
     },
     {
       "id": "long_beard",
       "label": "Long beard",
-      "reference": [
-        "facial-hair-old-beard",
-        "head-age-older-upper-row"
-      ]
+      "reference": ["facial-hair-old-beard", "head-age-older-upper-row"]
     },
     {
       "id": "braided_beard",
       "label": "Braided beard",
-      "reference": [
-        "facial-hair-braided"
-      ]
+      "reference": ["facial-hair-braided"]
     },
     {
       "id": "chin_strap",
@@ -934,14 +787,8 @@
       "id": "freckles",
       "label": "Freckles",
       "kind": "marking",
-      "zones": [
-        "cheek.R",
-        "cheek.L",
-        "nose"
-      ],
-      "reference": [
-        "head-facial-detail-freckles"
-      ],
+      "zones": ["cheek.R", "cheek.L", "nose"],
+      "reference": ["head-facial-detail-freckles"],
       "atlasMark": "freckles",
       "slotDefaults": {}
     },
@@ -949,12 +796,8 @@
       "id": "scars",
       "label": "Scars",
       "kind": "marking",
-      "zones": [
-        "cheek.L"
-      ],
-      "reference": [
-        "head-facial-detail-scars"
-      ],
+      "zones": ["cheek.L"],
+      "reference": ["head-facial-detail-scars"],
       "atlasMark": "scars",
       "slotDefaults": {}
     },
@@ -962,12 +805,8 @@
       "id": "scratch",
       "label": "Scratch",
       "kind": "marking",
-      "zones": [
-        "cheek.R"
-      ],
-      "reference": [
-        "head-facial-detail-scratch"
-      ],
+      "zones": ["cheek.R"],
+      "reference": ["head-facial-detail-scratch"],
       "atlasMark": "scratch",
       "slotDefaults": {}
     },
@@ -975,12 +814,8 @@
       "id": "tattoo",
       "label": "Tattoo",
       "kind": "marking",
-      "zones": [
-        "temple.R"
-      ],
-      "reference": [
-        "head-facial-detail-tattoo"
-      ],
+      "zones": ["temple.R"],
+      "reference": ["head-facial-detail-tattoo"],
       "atlasMark": "tattoo",
       "slotDefaults": {}
     },
@@ -988,31 +823,19 @@
       "id": "bandage",
       "label": "Bandage",
       "kind": "overlay",
-      "zones": [
-        "cheek.R",
-        "nose"
-      ],
+      "zones": ["cheek.R", "nose"],
       "slotDefaults": {
         "suit_primary": "#ece6d8",
         "accent": "#c8b8a0"
       },
-      "reference": [
-        "head-facial-detail-bandage"
-      ]
+      "reference": ["head-facial-detail-bandage"]
     },
     {
       "id": "dirt",
       "label": "Dirt",
       "kind": "marking",
-      "zones": [
-        "cheek.R",
-        "cheek.L",
-        "chin",
-        "forehead"
-      ],
-      "reference": [
-        "head-facial-detail-dirt"
-      ],
+      "zones": ["cheek.R", "cheek.L", "chin", "forehead"],
+      "reference": ["head-facial-detail-dirt"],
       "atlasMark": "dirt",
       "slotDefaults": {}
     },
@@ -1020,14 +843,8 @@
       "id": "warpaint",
       "label": "Warpaint",
       "kind": "marking",
-      "zones": [
-        "cheek.R",
-        "cheek.L",
-        "forehead"
-      ],
-      "reference": [
-        "head-facial-detail-warpaint"
-      ],
+      "zones": ["cheek.R", "cheek.L", "forehead"],
+      "reference": ["head-facial-detail-warpaint"],
       "atlasMark": "warpaint",
       "slotDefaults": {}
     },
@@ -1035,87 +852,55 @@
       "id": "cyber",
       "label": "Cyber implant",
       "kind": "overlay",
-      "zones": [
-        "eye.R",
-        "temple.R"
-      ],
+      "zones": ["eye.R", "temple.R"],
       "slotDefaults": {
         "metal": "#8f9aab",
         "emit": "#34b8ff"
       },
-      "reference": [
-        "head-facial-detail-cyber",
-        "head-specialty-cybernetic"
-      ]
+      "reference": ["head-facial-detail-cyber", "head-specialty-cybernetic"]
     },
     {
       "id": "eyepatch",
       "label": "Eyepatch",
       "kind": "overlay",
-      "zones": [
-        "eye.R"
-      ],
-      "layers": [
-        "eyes"
-      ],
+      "zones": ["eye.R"],
+      "layers": ["eyes"],
       "slotDefaults": {
         "dark": "#141118"
       },
-      "reference": [
-        "head-facial-detail-eyepatch",
-        "head-specialty-pirate"
-      ]
+      "reference": ["head-facial-detail-eyepatch", "head-specialty-pirate"]
     },
     {
       "id": "monocle",
       "label": "Monocle",
       "kind": "overlay",
-      "zones": [
-        "eye.R"
-      ],
-      "layers": [
-        "eyes"
-      ],
+      "zones": ["eye.R"],
+      "layers": ["eyes"],
       "slotDefaults": {
         "metal": "#d8b25a",
         "glass": "lens"
       },
-      "reference": [
-        "head-facial-detail-monocle"
-      ]
+      "reference": ["head-facial-detail-monocle"]
     },
     {
       "id": "visor_scar",
       "label": "Visor implant",
       "kind": "overlay",
-      "zones": [
-        "eye.R",
-        "eye.L",
-        "cheek.R",
-        "forehead"
-      ],
-      "layers": [
-        "eyes"
-      ],
+      "zones": ["eye.R", "eye.L", "cheek.R", "forehead"],
+      "layers": ["eyes"],
       "slotDefaults": {
         "metal": "#5c6070",
         "emit": "#ff3a8c",
         "accent": "#b04050"
       },
-      "reference": [
-        "head-facial-detail-visor-scar"
-      ]
+      "reference": ["head-facial-detail-visor-scar"]
     },
     {
       "id": "birthmark",
       "label": "Birthmark",
       "kind": "marking",
-      "zones": [
-        "cheek.R"
-      ],
-      "reference": [
-        "head-facial-detail-birthmark"
-      ],
+      "zones": ["cheek.R"],
+      "reference": ["head-facial-detail-birthmark"],
       "atlasMark": "birthmark",
       "slotDefaults": {}
     }
@@ -1125,9 +910,7 @@
     {
       "id": "cap",
       "label": "Crew cap",
-      "layers": [
-        "crown"
-      ],
+      "layers": ["crown"],
       "hairMode": "cap",
       "hides": [],
       "slotDefaults": {
@@ -1135,50 +918,36 @@
         "suit_secondary": "#1d2754",
         "accent": "#e8b73a"
       },
-      "reference": [
-        "head-accessory-cap"
-      ]
+      "reference": ["head-accessory-cap"]
     },
     {
       "id": "beanie",
       "label": "Beanie",
-      "layers": [
-        "crown"
-      ],
+      "layers": ["crown"],
       "hairMode": "cap",
       "hides": [],
       "slotDefaults": {
         "suit_primary": "#c23a3a",
         "suit_secondary": "#9a2a2e"
       },
-      "reference": [
-        "head-accessory-beanie"
-      ]
+      "reference": ["head-accessory-beanie"]
     },
     {
       "id": "headband",
       "label": "Headband",
-      "layers": [
-        "brow"
-      ],
+      "layers": ["brow"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
         "accent": "#3a5ad0",
         "suit_secondary": "#2a3e98"
       },
-      "reference": [
-        "head-accessory-headband"
-      ]
+      "reference": ["head-accessory-headband"]
     },
     {
       "id": "pilot_hat",
       "label": "Pilot hat",
-      "layers": [
-        "crown",
-        "brow",
-        "ears"
-      ],
+      "layers": ["crown", "brow", "ears"],
       "hairMode": "fringe",
       "hides": [],
       "slotDefaults": {
@@ -1187,49 +956,36 @@
         "metal": "#b8923e",
         "glass": "lens"
       },
-      "reference": [
-        "head-accessory-pilot-hat"
-      ]
+      "reference": ["head-accessory-pilot-hat"]
     },
     {
       "id": "beret",
       "label": "Beret",
-      "layers": [
-        "crown"
-      ],
+      "layers": ["crown"],
       "hairMode": "cap",
       "hides": [],
       "slotDefaults": {
         "suit_primary": "#2a2e3a",
         "accent": "#e0b040"
       },
-      "reference": [
-        "head-accessory-beret"
-      ]
+      "reference": ["head-accessory-beret"]
     },
     {
       "id": "cowboy_hat",
       "label": "Cowboy hat",
-      "layers": [
-        "crown"
-      ],
+      "layers": ["crown"],
       "hairMode": "cap",
       "hides": [],
       "slotDefaults": {
         "suit_primary": "#7a4a2a",
         "dark": "#3a2418"
       },
-      "reference": [
-        "head-accessory-cowboy-hat",
-        "head-specialty-outlaw"
-      ]
+      "reference": ["head-accessory-cowboy-hat", "head-specialty-outlaw"]
     },
     {
       "id": "pirate_hat",
       "label": "Pirate hat",
-      "layers": [
-        "crown"
-      ],
+      "layers": ["crown"],
       "hairMode": "cap",
       "hides": [],
       "slotDefaults": {
@@ -1237,34 +993,23 @@
         "accent": "#e0a93a",
         "metal": "#ecebe6"
       },
-      "reference": [
-        "head-accessory-pirate-hat",
-        "head-specialty-pirate"
-      ]
+      "reference": ["head-accessory-pirate-hat", "head-specialty-pirate"]
     },
     {
       "id": "hood",
       "label": "Hood",
-      "layers": [
-        "crown",
-        "ears"
-      ],
+      "layers": ["crown", "ears"],
       "hairMode": "fringe",
       "hides": [],
       "slotDefaults": {
         "suit_secondary": "#4e4668"
       },
-      "reference": [
-        "head-accessory-hood",
-        "head-specialty-scavenger"
-      ]
+      "reference": ["head-accessory-hood", "head-specialty-scavenger"]
     },
     {
       "id": "goggles_up",
       "label": "Goggles (up)",
-      "layers": [
-        "brow"
-      ],
+      "layers": ["brow"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
@@ -1272,16 +1017,12 @@
         "dark": "#1c1e28",
         "glass": "lens"
       },
-      "reference": [
-        "head-accessory-goggles-up"
-      ]
+      "reference": ["head-accessory-goggles-up"]
     },
     {
       "id": "goggles_down",
       "label": "Goggles (down)",
-      "layers": [
-        "eyes"
-      ],
+      "layers": ["eyes"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
@@ -1289,49 +1030,35 @@
         "dark": "#1c1e28",
         "glass": "lens"
       },
-      "reference": [
-        "head-accessory-goggles-down"
-      ]
+      "reference": ["head-accessory-goggles-down"]
     },
     {
       "id": "glasses",
       "label": "Glasses",
-      "layers": [
-        "eyes"
-      ],
+      "layers": ["eyes"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
         "dark": "#15131a"
       },
-      "reference": [
-        "head-accessory-glasses",
-        "head-specialty-corporate"
-      ]
+      "reference": ["head-accessory-glasses", "head-specialty-corporate"]
     },
     {
       "id": "sunglasses",
       "label": "Sunglasses",
-      "layers": [
-        "eyes"
-      ],
+      "layers": ["eyes"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
         "dark": "#111018",
         "glass": "dark"
       },
-      "reference": [
-        "head-accessory-sunglasses",
-        "head-specialty-outlaw"
-      ]
+      "reference": ["head-accessory-sunglasses", "head-specialty-outlaw"]
     },
     {
       "id": "headset",
       "label": "Headset",
-      "layers": [
-        "ears"
-      ],
+      "layers": ["ears"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
@@ -1339,46 +1066,34 @@
         "dark": "#1a1a22",
         "emit": "#3ad0ff"
       },
-      "reference": [
-        "head-accessory-headset"
-      ]
+      "reference": ["head-accessory-headset"]
     },
     {
       "id": "earring",
       "label": "Earring",
-      "layers": [
-        "ear.L"
-      ],
+      "layers": ["ear.L"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
         "metal": "#e2b84a"
       },
-      "reference": [
-        "head-accessory-earring"
-      ]
+      "reference": ["head-accessory-earring"]
     },
     {
       "id": "nose_ring",
       "label": "Nose ring",
-      "layers": [
-        "nose"
-      ],
+      "layers": ["nose"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
         "metal": "#d8d8e0"
       },
-      "reference": [
-        "head-accessory-nose-ring"
-      ]
+      "reference": ["head-accessory-nose-ring"]
     },
     {
       "id": "cigar",
       "label": "Cigar",
-      "layers": [
-        "mouth"
-      ],
+      "layers": ["mouth"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
@@ -1386,75 +1101,49 @@
         "emit": "#ff7a2a",
         "dark": "#3a3030"
       },
-      "reference": [
-        "head-accessory-cigar"
-      ]
+      "reference": ["head-accessory-cigar"]
     },
     {
       "id": "mask",
       "label": "Face mask",
-      "layers": [
-        "mouth",
-        "nose",
-        "jaw"
-      ],
+      "layers": ["mouth", "nose", "jaw"],
       "hairMode": "full",
-      "hides": [
-        "mouth",
-        "facialHair"
-      ],
+      "hides": ["mouth", "facialHair"],
       "slotDefaults": {
         "suit_primary": "#eef0f2",
         "suit_secondary": "#c9ced6"
       },
-      "reference": [
-        "head-accessory-mask"
-      ]
+      "reference": ["head-accessory-mask"]
     },
     {
       "id": "respirator",
       "label": "Respirator",
-      "layers": [
-        "mouth",
-        "nose",
-        "jaw"
-      ],
+      "layers": ["mouth", "nose", "jaw"],
       "hairMode": "full",
-      "hides": [
-        "mouth",
-        "facialHair"
-      ],
+      "hides": ["mouth", "facialHair"],
       "slotDefaults": {
         "dark": "#1c1c24",
         "metal": "#6c7482",
         "suit_secondary": "#3c3e4a"
       },
-      "reference": [
-        "head-accessory-scarf-dark"
-      ]
+      "reference": ["head-accessory-scarf-dark"]
     },
     {
       "id": "scarf",
       "label": "Scarf",
-      "layers": [
-        "neck"
-      ],
+      "layers": ["neck"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
         "accent": "#c42a36",
         "suit_secondary": "#96202c"
       },
-      "reference": [
-        "head-accessory-scarf-red"
-      ]
+      "reference": ["head-accessory-scarf-red"]
     },
     {
       "id": "officer_cap",
       "label": "Officer cap",
-      "layers": [
-        "crown"
-      ],
+      "layers": ["crown"],
       "hairMode": "cap",
       "hides": [],
       "slotDefaults": {
@@ -1462,16 +1151,12 @@
         "dark": "#101218",
         "accent": "#e6b33c"
       },
-      "reference": [
-        "head-specialty-military"
-      ]
+      "reference": ["head-specialty-military"]
     },
     {
       "id": "hard_hat",
       "label": "Hard hat with lamp",
-      "layers": [
-        "crown"
-      ],
+      "layers": ["crown"],
       "hairMode": "cap",
       "hides": [],
       "slotDefaults": {
@@ -1479,42 +1164,30 @@
         "metal": "#606878",
         "emit": "#fff2c0"
       },
-      "reference": [
-        "head-specialty-engineer",
-        "head-specialty-mechanic"
-      ]
+      "reference": ["head-specialty-engineer", "head-specialty-mechanic"]
     },
     {
       "id": "medic_cap",
       "label": "Medic cap",
-      "layers": [
-        "crown"
-      ],
+      "layers": ["crown"],
       "hairMode": "cap",
       "hides": [],
       "slotDefaults": {
         "suit_primary": "#eef0f4",
         "accent": "#d8283a"
       },
-      "reference": [
-        "head-specialty-medic"
-      ]
+      "reference": ["head-specialty-medic"]
     },
     {
       "id": "round_glasses",
       "label": "Round glasses",
-      "layers": [
-        "eyes"
-      ],
+      "layers": ["eyes"],
       "hairMode": "full",
       "hides": [],
       "slotDefaults": {
         "metal": "#c8ccd6"
       },
-      "reference": [
-        "head-specialty-scientist",
-        "head-facial-detail-monocle"
-      ]
+      "reference": ["head-specialty-scientist", "head-facial-detail-monocle"]
     },
     {
       "id": "antennae",
@@ -1526,9 +1199,7 @@
         "suit_secondary": "#5a6ab8",
         "emit": "#6af0ff"
       },
-      "reference": [
-        "head-specialty-alien-hybrid"
-      ]
+      "reference": ["head-specialty-alien-hybrid"]
     }
   ],
   "helmets": [
@@ -1537,11 +1208,7 @@
       "label": "Open helmet",
       "hairMode": "fringe",
       "openFace": true,
-      "layers": [
-        "crown",
-        "brow",
-        "ears"
-      ],
+      "layers": ["crown", "brow", "ears"],
       "visors": [],
       "hides": [],
       "slotDefaults": {
@@ -1549,34 +1216,16 @@
         "suit_secondary": "#3a4466",
         "accent": "#3a8cff"
       },
-      "reference": [
-        "eq--open-helmet"
-      ]
+      "reference": ["eq--open-helmet"]
     },
     {
       "id": "closed",
       "label": "Closed helmet",
       "hairMode": "hidden",
       "openFace": false,
-      "layers": [
-        "crown",
-        "brow",
-        "ears",
-        "eyes",
-        "nose",
-        "mouth",
-        "jaw"
-      ],
-      "visors": [
-        "clear",
-        "tinted",
-        "hud",
-        "mirrored",
-        "ar"
-      ],
-      "hides": [
-        "facialHair"
-      ],
+      "layers": ["crown", "brow", "ears", "eyes", "nose", "mouth", "jaw"],
+      "visors": ["clear", "tinted", "hud", "mirrored", "ar"],
+      "hides": ["facialHair"],
       "slotDefaults": {
         "suit_primary": "#e8e6ef",
         "suit_secondary": "#3a4466",
@@ -1593,193 +1242,86 @@
       "label": "Tactical helmet",
       "hairMode": "hidden",
       "openFace": false,
-      "layers": [
-        "crown",
-        "brow",
-        "ears",
-        "eyes",
-        "nose",
-        "mouth",
-        "jaw"
-      ],
-      "visors": [
-        "clear",
-        "tinted",
-        "hud",
-        "mirrored",
-        "ar"
-      ],
-      "hides": [
-        "facialHair"
-      ],
+      "layers": ["crown", "brow", "ears", "eyes", "nose", "mouth", "jaw"],
+      "visors": ["clear", "tinted", "hud", "mirrored", "ar"],
+      "hides": ["facialHair"],
       "slotDefaults": {
-        "suit_primary": "#2c2e3a",
-        "suit_secondary": "#1a1b24",
-        "accent": "#f0b12a"
+        "suit_primary": "#bd253c",
+        "suit_secondary": "#2c2732",
+        "accent": "#e8e4ea"
       },
-      "reference": [
-        "eq--tactical-helmet"
-      ]
+      "reference": ["eq--tactical-helmet"]
     },
     {
       "id": "hazmat",
       "label": "Hazmat helmet",
       "hairMode": "hidden",
       "openFace": false,
-      "layers": [
-        "crown",
-        "brow",
-        "ears",
-        "eyes",
-        "nose",
-        "mouth",
-        "jaw"
-      ],
-      "visors": [
-        "clear",
-        "tinted",
-        "hud",
-        "mirrored",
-        "ar"
-      ],
-      "hides": [
-        "facialHair"
-      ],
+      "layers": ["crown", "brow", "ears", "eyes", "nose", "mouth", "jaw"],
+      "visors": ["clear", "tinted", "hud", "mirrored", "ar"],
+      "hides": ["facialHair"],
       "slotDefaults": {
         "suit_primary": "#ecebf0",
         "suit_secondary": "#c8c8d4",
         "accent": "#f0a020"
       },
-      "reference": [
-        "eq--hazmat-helmet"
-      ]
+      "reference": ["eq--hazmat-helmet"]
     },
     {
       "id": "pilot",
       "label": "Pilot helmet",
       "hairMode": "hidden",
       "openFace": false,
-      "layers": [
-        "crown",
-        "brow",
-        "ears",
-        "eyes",
-        "nose",
-        "mouth",
-        "jaw"
-      ],
-      "visors": [
-        "clear",
-        "tinted",
-        "hud",
-        "mirrored",
-        "ar"
-      ],
-      "hides": [
-        "facialHair"
-      ],
+      "layers": ["crown", "brow", "ears", "eyes", "nose", "mouth", "jaw"],
+      "visors": ["clear", "tinted", "hud", "mirrored", "ar"],
+      "hides": ["facialHair"],
       "slotDefaults": {
         "suit_primary": "#eeeef4",
         "suit_secondary": "#2a3a78",
         "accent": "#e02a44"
       },
-      "reference": [
-        "eq--pilot-helmet"
-      ]
+      "reference": ["eq--pilot-helmet"]
     },
     {
       "id": "mining",
       "label": "Mining helmet",
       "hairMode": "hidden",
       "openFace": false,
-      "layers": [
-        "crown",
-        "brow",
-        "ears",
-        "eyes",
-        "nose",
-        "mouth",
-        "jaw"
-      ],
-      "visors": [
-        "clear",
-        "tinted",
-        "hud",
-        "mirrored",
-        "ar"
-      ],
-      "hides": [
-        "facialHair"
-      ],
+      "layers": ["crown", "brow", "ears", "eyes", "nose", "mouth", "jaw"],
+      "visors": ["clear", "tinted", "hud", "mirrored", "ar"],
+      "hides": ["facialHair"],
       "slotDefaults": {
         "suit_primary": "#f0b020",
         "suit_secondary": "#2a2c38",
         "accent": "#e8e8ee",
         "emit": "#fff0c0"
       },
-      "reference": [
-        "eq--mining-helmet"
-      ]
+      "reference": ["eq--mining-helmet"]
     },
     {
       "id": "security",
       "label": "Security helmet",
       "hairMode": "hidden",
       "openFace": false,
-      "layers": [
-        "crown",
-        "brow",
-        "ears",
-        "eyes",
-        "nose",
-        "mouth",
-        "jaw"
-      ],
-      "visors": [
-        "clear",
-        "tinted",
-        "hud",
-        "mirrored",
-        "ar"
-      ],
-      "hides": [
-        "facialHair"
-      ],
+      "layers": ["crown", "brow", "ears", "eyes", "nose", "mouth", "jaw"],
+      "visors": ["clear", "tinted", "hud", "mirrored", "ar"],
+      "hides": ["facialHair"],
       "slotDefaults": {
         "suit_primary": "#2e3040",
         "suit_secondary": "#1c1d26",
         "accent": "#e0283c",
         "emit": "#3a9cff"
       },
-      "reference": [
-        "eq--security-helmet",
-        "eq--security-loadout-helmet"
-      ]
+      "reference": ["eq--security-helmet", "eq--security-loadout-helmet"]
     },
     {
       "id": "explorer",
       "label": "Explorer dome",
       "hairMode": "hidden",
       "openFace": false,
-      "layers": [
-        "crown",
-        "brow",
-        "ears",
-        "eyes",
-        "nose",
-        "mouth",
-        "jaw"
-      ],
-      "visors": [
-        "clear",
-        "tinted",
-        "hud",
-        "mirrored",
-        "ar"
-      ],
-      "hides": [
-        "facialHair"
-      ],
+      "layers": ["crown", "brow", "ears", "eyes", "nose", "mouth", "jaw"],
+      "visors": ["clear", "tinted", "hud", "mirrored", "ar"],
+      "hides": ["facialHair"],
       "slotDefaults": {
         "suit_primary": "#e86a2a",
         "suit_secondary": "#2a2e3c",
@@ -1796,35 +1338,16 @@
       "label": "Engineer helmet",
       "hairMode": "hidden",
       "openFace": false,
-      "layers": [
-        "crown",
-        "brow",
-        "ears",
-        "eyes",
-        "nose",
-        "mouth",
-        "jaw"
-      ],
-      "visors": [
-        "clear",
-        "tinted",
-        "hud",
-        "mirrored",
-        "ar"
-      ],
-      "hides": [
-        "facialHair"
-      ],
+      "layers": ["crown", "brow", "ears", "eyes", "nose", "mouth", "jaw"],
+      "visors": ["clear", "tinted", "hud", "mirrored", "ar"],
+      "hides": ["facialHair"],
       "slotDefaults": {
         "suit_primary": "#f08a24",
         "suit_secondary": "#2a2e3c",
         "accent": "#36a0ff",
         "emit": "#5ad8ff"
       },
-      "reference": [
-        "eq--engineer-loadout-helmet",
-        "anim--helmet-variant-7"
-      ]
+      "reference": ["eq--engineer-loadout-helmet", "anim--helmet-variant-7"]
     }
   ],
   "visors": [
@@ -1833,111 +1356,77 @@
       "label": "Clear visor",
       "glass": "clear",
       "overlay": null,
-      "reference": [
-        "eq--clear-visor"
-      ]
+      "reference": ["eq--clear-visor"]
     },
     {
       "id": "tinted",
       "label": "Tinted visor",
       "glass": "tinted",
       "overlay": null,
-      "reference": [
-        "eq--tinted-visor"
-      ]
+      "reference": ["eq--tinted-visor"]
     },
     {
       "id": "hud",
       "label": "HUD visor",
       "glass": "hud",
       "overlay": "hud",
-      "reference": [
-        "eq--hud-visor"
-      ]
+      "reference": ["eq--hud-visor"]
     },
     {
       "id": "mirrored",
       "label": "Mirrored visor",
       "glass": "mirrored",
       "overlay": null,
-      "reference": [
-        "eq--mirrored-visor"
-      ]
+      "reference": ["eq--mirrored-visor"]
     },
     {
       "id": "ar",
       "label": "AR visor",
       "glass": "ar",
       "overlay": "ar",
-      "reference": [
-        "eq--ar-visor"
-      ]
+      "reference": ["eq--ar-visor"]
     }
   ],
   "masks": [
     {
       "id": "oxygen_mask",
       "label": "Oxygen mask",
-      "layers": [
-        "mouth",
-        "nose",
-        "jaw"
-      ],
-      "hides": [
-        "mouth",
-        "facialHair"
-      ],
+      "layers": ["mouth", "nose", "jaw"],
+      "hides": ["mouth", "facialHair"],
       "slotDefaults": {
         "suit_primary": "#eceef2",
         "accent": "#d82a3a",
         "dark": "#26262e",
         "metal": "#8c94a2"
       },
-      "reference": [
-        "eq--oxygen-mask"
-      ]
+      "reference": ["eq--oxygen-mask"]
     },
     {
       "id": "rebreather",
       "label": "Rebreather",
-      "layers": [
-        "mouth",
-        "nose",
-        "jaw"
-      ],
-      "hides": [
-        "mouth",
-        "facialHair"
-      ],
+      "layers": ["mouth", "nose", "jaw"],
+      "hides": ["mouth", "facialHair"],
       "slotDefaults": {
         "suit_primary": "#3a3c48",
         "dark": "#1a1a22",
         "metal": "#9aa0ac",
         "emit": "#4ab0ff"
       },
-      "reference": [
-        "eq--rebreather"
-      ]
+      "reference": ["eq--rebreather"]
     }
   ],
   "presets": [
     {
       "id": "pirate",
       "label": "Pirate",
-      "reference": [
-        "head-specialty-pirate"
-      ],
+      "reference": ["head-specialty-pirate"],
       "look": {
         "skin": "tan",
         "hair": "long_straight",
         "hairColor": "black",
         "eyes": "brown",
-        "details": [
-          "eyepatch"
-        ],
-        "accessories": [
-          "pirate_hat"
-        ],
+        "details": ["eyepatch"],
+        "accessories": ["pirate_hat"],
         "facialHair": "stubble",
         "head": "male",
         "age": "adult",
@@ -1947,17 +1436,13 @@
     {
       "id": "military",
       "label": "Military",
-      "reference": [
-        "head-specialty-military"
-      ],
+      "reference": ["head-specialty-military"],
       "look": {
         "skin": "porcelain",
         "hair": "close_crop",
         "hairColor": "dark_brown",
         "eyes": "green",
-        "accessories": [
-          "officer_cap"
-        ],
+        "accessories": ["officer_cap"],
         "head": "male",
         "age": "adult",
         "faceVariant": "m_classic"
@@ -1966,17 +1451,13 @@
     {
       "id": "corporate",
       "label": "Corporate",
-      "reference": [
-        "head-specialty-corporate"
-      ],
+      "reference": ["head-specialty-corporate"],
       "look": {
         "skin": "sand",
         "hair": "short_waves",
         "hairColor": "black",
         "eyes": "brown",
-        "accessories": [
-          "glasses"
-        ],
+        "accessories": ["glasses"],
         "head": "male",
         "age": "adult",
         "faceVariant": "m_classic"
@@ -1985,17 +1466,13 @@
     {
       "id": "scientist",
       "label": "Scientist",
-      "reference": [
-        "head-specialty-scientist"
-      ],
+      "reference": ["head-specialty-scientist"],
       "look": {
         "skin": "porcelain",
         "hair": "swept_quiff",
         "hairColor": "silver",
         "eyes": "grey",
-        "accessories": [
-          "round_glasses"
-        ],
+        "accessories": ["round_glasses"],
         "head": "male",
         "age": "older",
         "faceVariant": "m_classic"
@@ -2004,19 +1481,14 @@
     {
       "id": "engineer",
       "label": "Engineer",
-      "reference": [
-        "head-specialty-engineer"
-      ],
+      "reference": ["head-specialty-engineer"],
       "look": {
         "skin": "tan",
         "hair": "short_spikes",
         "hairColor": "chestnut",
         "eyes": "hazel",
         "facialHair": "goatee",
-        "accessories": [
-          "hard_hat",
-          "earring"
-        ],
+        "accessories": ["hard_hat", "earring"],
         "head": "male",
         "age": "adult",
         "faceVariant": "m_classic"
@@ -2025,20 +1497,14 @@
     {
       "id": "medic",
       "label": "Medic",
-      "reference": [
-        "head-specialty-medic"
-      ],
+      "reference": ["head-specialty-medic"],
       "look": {
         "skin": "rose",
         "hair": "long_gathered",
         "hairColor": "auburn",
         "eyes": "brown",
-        "accessories": [
-          "medic_cap"
-        ],
-        "details": [
-          "scars"
-        ],
+        "accessories": ["medic_cap"],
+        "details": ["scars"],
         "head": "female",
         "age": "adult",
         "faceVariant": "f_classic"
@@ -2047,20 +1513,14 @@
     {
       "id": "mechanic",
       "label": "Mechanic",
-      "reference": [
-        "head-specialty-mechanic"
-      ],
+      "reference": ["head-specialty-mechanic"],
       "look": {
         "skin": "sand",
         "hair": "short_waves",
         "hairColor": "dark_brown",
         "eyes": "blue",
-        "accessories": [
-          "hard_hat"
-        ],
-        "details": [
-          "dirt"
-        ],
+        "accessories": ["hard_hat"],
+        "details": ["dirt"],
         "head": "male",
         "age": "young",
         "faceVariant": "m_classic"
@@ -2069,22 +1529,15 @@
     {
       "id": "scavenger",
       "label": "Scavenger",
-      "reference": [
-        "head-specialty-scavenger"
-      ],
+      "reference": ["head-specialty-scavenger"],
       "look": {
         "skin": "deep",
         "hair": "close_crop",
         "hairColor": "black",
         "eyes": "brown",
         "facialHair": "full_beard",
-        "accessories": [
-          "hood",
-          "scarf"
-        ],
-        "details": [
-          "dirt"
-        ],
+        "accessories": ["hood", "scarf"],
+        "details": ["dirt"],
         "head": "male",
         "age": "adult",
         "faceVariant": "m_classic"
@@ -2093,9 +1546,7 @@
     {
       "id": "civilian",
       "label": "Civilian",
-      "reference": [
-        "head-specialty-civilian"
-      ],
+      "reference": ["head-specialty-civilian"],
       "look": {
         "skin": "tan",
         "hair": "curly_top",
@@ -2109,19 +1560,14 @@
     {
       "id": "outlaw",
       "label": "Outlaw",
-      "reference": [
-        "head-specialty-outlaw"
-      ],
+      "reference": ["head-specialty-outlaw"],
       "look": {
         "skin": "rose",
         "hair": "short_waves",
         "hairColor": "espresso",
         "eyes": "brown",
         "facialHair": "moustache",
-        "accessories": [
-          "cowboy_hat",
-          "sunglasses"
-        ],
+        "accessories": ["cowboy_hat", "sunglasses"],
         "head": "male",
         "age": "middle",
         "faceVariant": "m_classic"
@@ -2130,18 +1576,13 @@
     {
       "id": "explorer",
       "label": "Explorer",
-      "reference": [
-        "head-specialty-explorer"
-      ],
+      "reference": ["head-specialty-explorer"],
       "look": {
         "skin": "porcelain",
         "hair": "close_crop",
         "hairColor": "chestnut",
         "eyes": "blue",
-        "accessories": [
-          "pilot_hat",
-          "goggles_down"
-        ],
+        "accessories": ["pilot_hat", "goggles_down"],
         "head": "male",
         "age": "adult",
         "faceVariant": "m_classic"
@@ -2150,20 +1591,14 @@
     {
       "id": "cybernetic",
       "label": "Cybernetic",
-      "reference": [
-        "head-specialty-cybernetic"
-      ],
+      "reference": ["head-specialty-cybernetic"],
       "look": {
         "skin": "brown",
         "hair": "afro",
         "hairColor": "black",
         "eyes": "cyber",
-        "accessories": [
-          "glasses"
-        ],
-        "details": [
-          "tattoo"
-        ],
+        "accessories": ["glasses"],
+        "details": ["tattoo"],
         "head": "female",
         "age": "adult",
         "faceVariant": "f_classic"
@@ -2172,17 +1607,13 @@
     {
       "id": "alien_hybrid",
       "label": "Alien hybrid",
-      "reference": [
-        "head-specialty-alien-hybrid"
-      ],
+      "reference": ["head-specialty-alien-hybrid"],
       "look": {
         "skin": "alien_blue",
         "hair": null,
         "hairColor": "navy",
         "eyes": "cyber",
-        "accessories": [
-          "antennae"
-        ],
+        "accessories": ["antennae"],
         "head": "female",
         "age": "young",
         "faceVariant": "f_classic"

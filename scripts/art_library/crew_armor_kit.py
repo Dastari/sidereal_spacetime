@@ -1,9 +1,9 @@
-"""Crew voxel armour kit (armor-v1 r002, spec v2): Blender build, fit checks, GLB export, review sheets.
+"""Crew voxel armour kit (armor-v1 r007, spec v2): Blender build, fit checks, GLB export, review sheets.
 
   blender -b --factory-startup -P scripts/art_library/crew_armor_kit.py -- \
       --out /tmp/armor [--export assets/runtime/crew/armor-v1 --content-json packages/content/src/crew-armor.json] \
-      [--sheets progress,tiers,colourways,back,roles,roles-female,extras,loadouts,poses] [--check] \
-      [--rig-blend CHAR-BODY.blend] [--refs DIR] [--samples 32]
+      [--sheets progress,tiers,colourways,back,roles,roles-female,roles-back,uniforms,extras,loadouts,poses] [--check] \
+      [--body-blend CHAR-BODY.blend] [--refs DIR] [--samples 32]
 
 Geometry comes from crew_armor_parts.py (voxel volumes per bone, rest-pose armature voxels, spec v2).
 Each bone volume is meshed as its exposed surface with coplanar same-slot faces merged, then given a
@@ -12,9 +12,8 @@ edges; no per-voxel grid lines or cell noise). The voxel read comes from stepped
 chunky detail. Materials are one per slot (`crew.<slot>`, flat baseColorFactor + emissive), so
 colourways and player colours are slot tables applied at runtime.
 
-The rig and the mannequin body are CHAR-ARMOR's spec-v2 placeholder (crew_armor_parts.BODY) until
-CHAR-BODY republishes CHARACTER_SPEC_BODY.json with spec_version 2; --rig-blend imports CHAR-BODY
-actions for the clip check when they exist on a matching rig.
+The rig and actions come from the approved r005 body via --body-blend. The checked-in r005 occupancy
+snapshot supports pure-Python fit tests. A missing body blend uses the explicit mannequin fallback.
 
 --check / --export write fit_report.json:
   zFight   visible same-normal coplanar faces (armour vs body, and between the parts of every preset);
@@ -244,7 +243,7 @@ def soften(ob):
 
 
 def part_object(name, vol, bone, coll, bevel):
-    ob = bpy.data.objects.new(name, mesh_islands(vol, name, bevel, seed=hash(name) & 0xFFFF))
+    ob = bpy.data.objects.new(name, mesh_islands(vol, name, bevel, seed=int.from_bytes(hashlib.sha256(name.encode()).digest()[:2], "little")))
     coll.objects.link(ob)
     vg = ob.vertex_groups.new(name=bone)
     vg.add(list(range(len(ob.data.vertices))), 1.0, "REPLACE")
@@ -735,7 +734,7 @@ def export_kit(kit, outdir, fit_report):
         "schema": "sidereal.crew.armor-manifest/1", "kit": K.KIT_ID, "revision": K.REVISION, "specVersion": K.SPEC_VERSION,
         "status": "proposal; not published; not owner-approved",
         "voxelMeters": V, "rig": "crew_rig",
-        "body": "CHAR-ARMOR spec-v2 placeholder rig/body (crew_armor_parts.BODY) pending CHAR-BODY spec_version 2",
+        "body": kit.body_source,
         "frame": "Blender Z up, character faces +Y, .R at +X; glTF = (x, z, -y)",
         "attach": ("Each GLB holds crew_rig plus one rigid-skinned mesh per fit (GEO-armor-<id>-<fit>). Parent the "
                    "meshes to the crew visual root and link each armour skeleton bone to the body's joint node of the "
@@ -798,14 +797,14 @@ def setup(sc, samples, res):
     gl = ct.nodes.new("CompositorNodeGlare")
     gl.glare_type, gl.threshold, gl.size, gl.mix = "FOG_GLOW", 0.9, 7, -0.25
     hs = ct.nodes.new("CompositorNodeHueSat")
-    hs.inputs["Saturation"].default_value = 1.3
+    hs.inputs["Saturation"].default_value = 1.05
     bc = ct.nodes.new("CompositorNodeBrightContrast")
     bc.inputs["Contrast"].default_value = -4.0
     comp = ct.nodes.new("CompositorNodeComposite")
     for a, b in ((rl, gl), (gl, hs), (hs, bc), (bc, comp)):
         ct.links.new(a.outputs["Image"], b.inputs["Image"])
-    for name, energy, col, rot, ang in (("Key", 3.0, (1.0, 0.95, 0.9), (50, 0, 150), 20), ("Fill", 1.3, (0.6, 0.65, 1.0), (60, 0, -120), 30),
-                                        ("Rim", 2.6, (0.65, 0.5, 1.0), (-55, 0, 165), 10), ("Top", 0.8, (1, 1, 1), (0, 0, 0), 40)):
+    for name, energy, col, rot, ang in (("Key", 3.0, (1.0, 0.95, 0.9), (50, 0, 150), 20), ("Fill", 1.3, (0.8, 0.86, 1.0), (60, 0, -120), 30),
+                                        ("Rim", 2.6, (0.85, 0.88, 1.0), (-55, 0, 165), 10), ("Top", 0.8, (1, 1, 1), (0, 0, 0), 40)):
         L = bpy.data.lights.new(name, "SUN")
         L.energy, L.color, L.angle = energy, col, math.radians(ang)
         ob = bpy.data.objects.new(name, L)
@@ -986,7 +985,7 @@ def sheet_tiers(args, kit, out):
     y0 = -len(TIER_ROWS) * dz - 1.35
     for c in range(4):
         Figure(kit, [row[1][c] for row in TIER_ROWS], TIER_CW[c], (c * dx, 0, y0), coll, yaw=-20, scale=0.55)
-    text("CREW ARMOUR TIERS (armor-v1 r006 proposal)", (0.93, 0, 0.45), 0.075, coll)
+    text("CREW ARMOUR TIERS (armor-v1 r007 proposal)", (0.93, 0, 0.45), 0.075, coll)
     aim_front(cam, (0.75, 0, -2.3), 6.0, elev=12)
     render(sc, out / "armor_tier_chart.png")
     compare(out / "armor_tier_chart.png", [Path(args.refs) / "roster-male-armor-tiers.png"], out / "armor_tier_chart_vs_reference.png")
@@ -1036,8 +1035,8 @@ def sheet_back(args, kit, out):
 
 
 def sheet_roles(args, kit, out, presets, name, variant="male", pose="relaxed", yaw=-28, ref=None):
-    dx = 0.95
-    width = max(3.4, len(presets) * dx)
+    dx = 1.12
+    width = max(3.4, len(presets) * dx + 0.4)
     sc, cam, coll = fresh_scene(args, (2000, int(2000 * 2.9 / width)))
     for i, pr in enumerate(presets):
         x = i * dx
@@ -1095,8 +1094,9 @@ VIEWS = [("FRONT", 0.0), ("3/4", -35.0), ("SIDE", -90.0), ("BACK", 180.0)]
 def wardrobe_outfits():
     """(label, part ids, colourway, preset-for-undersuit) in review order: base -> uniforms -> tiers -> roles."""
     by = {p["id"]: p for p in K.PRESETS}
-    out = [("Base body: underwear (CHAR-BODY r004)", [], "arctic", "BASE")]
-    out += [(label, [], "arctic", by[rid]) for label, rid in UNIFORMS]
+    out = [("Base body: underwear (CHAR-BODY r005)", [], "arctic", "BASE")]
+    out += [(label, ["armor.chest.uniform-" + dept], by[rid]["colourway"], by[rid])
+            for (label, rid), dept in zip(UNIFORMS, ("command", "medical", "engineering", "security"))]
     out += [(label, ids, cwid, None) for label, ids, cwid in TIER_SETS]
     out += [(f"Set: {pr['name']}", list(pr["parts"].values()), pr["colourway"], pr) for pr in K.PRESETS]
     return out
@@ -1174,6 +1174,13 @@ def main():
             sheet_colourways(args, kit, out)
         elif s == "back":
             sheet_back(args, kit, out)
+        elif s == "uniforms":
+            uniforms = [{**pr, "name": label, "parts": {"chest": ids[0]}}
+                        for label, ids, cwid, pr in wardrobe_outfits()[1:5]]
+            for variant in ("male", "female"):
+                sheet_roles(args, kit, out, uniforms, f"uniforms_{variant}.png", variant=variant)
+        elif s == "roles-back":
+            sheet_roles(args, kit, out, K.PRESETS[:10], "role_signatures_back.png", yaw=145)
         elif s == "roles":
             sheet_roles(args, kit, out, K.PRESETS[:10], "role_archetypes_male.png", ref="roster-male-10-archetypes.png")
         elif s == "roles-female":
@@ -1201,7 +1208,8 @@ def main():
         summary["exported"] = len(m["parts"])
         summary["tris"] = {p["id"]: {f: v["tris"] for f, v in p["fits"].items()} for p in m["parts"]}
     if args.save_blend:
-        bpy.ops.wm.save_as_mainfile(filepath=str(out / "crew_armor_kit.blend"))
+        bpy.ops.file.pack_all()
+        bpy.ops.wm.save_as_mainfile(filepath=str(out / "crew_armor_kit.blend"), compress=True)
     (out / "summary.json").write_text(json.dumps(summary, indent=1))
     print("SUMMARY", json.dumps({k: v for k, v in summary.items() if k not in ("tris", "clip")}))
 

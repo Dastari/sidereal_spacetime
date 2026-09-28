@@ -65,6 +65,13 @@ export function voxelArmorLoadout(
     if (item && part && item.slot === slot && part.slot === slot)
       out[part.slot] = { part: part.id, colourway: item.colourway };
   }
+  // Department applique occupies the visual chest only when no chest item covers it.
+  const uniform = equipped.uniform
+    ? crewWardrobeItem(equipped.uniform)
+    : undefined;
+  const insignia = uniform?.part ? crewArmorPart(uniform.part) : undefined;
+  if (!out.chest && uniform && insignia?.slot === "chest")
+    out.chest = { part: insignia.id, colourway: uniform.colourway };
   return out;
 }
 

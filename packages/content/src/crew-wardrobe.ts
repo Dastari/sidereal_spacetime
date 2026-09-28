@@ -20,7 +20,7 @@ export interface CrewWardrobeItem {
   slot: WardrobeSlot;
   massKg: number;
   grid: [number, number];
-  /** armour-v1 part id (not set for uniforms). */
+  /** Armour part id; a uniform uses a chest applique beneath equipped chest armour. */
   part?: string;
   colourway: string;
   /** Suit-layer tint of a uniform (undersuit) plus its department accent. */
@@ -75,6 +75,7 @@ function uniform([id, name, preset, colourway]: (typeof UNIFORMS)[number]) {
     massKg: 0.9,
     grid: [2, 3] as [number, number],
     colourway,
+    part: `armor.chest.uniform-${id}`,
     suit: {
       primary: p.undersuit.suit_primary,
       secondary: p.undersuit.suit_secondary,

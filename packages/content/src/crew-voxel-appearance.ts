@@ -79,7 +79,7 @@ export const VOXEL_HELMET_VISUALS: Readonly<
   "pilot-helmet": { helmet: "pilot" },
   "marine-helmet": { helmet: "tactical" },
   "salvage-helmet": { helmet: "mining" },
-  "recon-helmet": { helmet: "explorer" },
+  "recon-helmet": { accessory: "hood" },
 };
 /** r008 visor items -> visor glass on an enclosed helmet (or goggles without one). */
 export const VOXEL_VISOR_VISUALS: Readonly<Record<string, string>> = {

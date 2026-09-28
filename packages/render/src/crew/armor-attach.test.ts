@@ -90,3 +90,26 @@ describe("voxel crew armour attach", () => {
     engine.dispose();
   });
 });
+
+// Uniform insignia is visual only: an owned chest piece always takes precedence.
+import { voxelArmorLoadout } from "./voxel-crew-outfit";
+it("shows department insignia only on an uncovered uniform", () => {
+  expect(
+    voxelArmorLoadout({ uniform: "wardrobe-uniform-medical" }).chest,
+  ).toEqual({
+    part: "armor.chest.uniform-medical",
+    colourway: "medic",
+  });
+  expect(
+    voxelArmorLoadout({
+      uniform: "wardrobe-uniform-medical",
+      chest: "wardrobe-t2-chest",
+    }).chest?.part,
+  ).toBe("armor.chest.plate");
+  expect(
+    voxelArmorLoadout({
+      uniform: "wardrobe-uniform-command",
+      chest: "captain-chest",
+    }).chest?.part,
+  ).toBe("armor.chest.coat");
+});

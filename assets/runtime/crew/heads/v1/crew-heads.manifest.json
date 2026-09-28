@@ -1,6 +1,6 @@
 {
  "schema": "sidereal.crew-heads.manifest.v1",
- "catalogRevision": 3,
+ "catalogRevision": 4,
  "voxelMeters": 0.03125,
  "space": {
   "anchorBone": "head",
@@ -4607,7 +4607,7 @@
      0.67578
     ]
    ],
-   "triangles": 7108
+   "triangles": 7112
   },
   "helmet.explorer": {
    "node": "helmet.explorer",
@@ -4631,7 +4631,7 @@
      0.85156
     ]
    ],
-   "triangles": 6598
+   "triangles": 6592
   },
   "helmet.hazmat": {
    "node": "helmet.hazmat",
@@ -4654,7 +4654,7 @@
      0.6875
     ]
    ],
-   "triangles": 6910
+   "triangles": 6916
   },
   "helmet.mining": {
    "node": "helmet.mining",
@@ -4679,7 +4679,7 @@
      0.66406
     ]
    ],
-   "triangles": 9310
+   "triangles": 9312
   },
   "helmet.open": {
    "node": "helmet.open",
@@ -4727,7 +4727,7 @@
      0.6875
     ]
    ],
-   "triangles": 7140
+   "triangles": 7134
   },
   "helmet.security": {
    "node": "helmet.security",
@@ -4773,10 +4773,10 @@
     [
      0.39062,
      0.30469,
-     0.625
+     0.62891
     ]
    ],
-   "triangles": 6548
+   "triangles": 6542
   },
   "mask.oxygen_mask": {
    "node": "mask.oxygen_mask",
@@ -4846,7 +4846,7 @@
      0.38281
     ]
    ],
-   "triangles": 700
+   "triangles": 704
   },
   "visor.closed.clear": {
    "node": "visor.closed.clear",
@@ -5060,7 +5060,7 @@
      0.42188
     ]
    ],
-   "triangles": 698
+   "triangles": 692
   },
   "visor.explorer.clear": {
    "node": "visor.explorer.clear",
@@ -5167,7 +5167,7 @@
      0.40234
     ]
    ],
-   "triangles": 700
+   "triangles": 704
   },
   "visor.hazmat.clear": {
    "node": "visor.hazmat.clear",
@@ -5488,7 +5488,7 @@
      0.34766
     ]
    ],
-   "triangles": 700
+   "triangles": 704
   },
   "visor.security.clear": {
    "node": "visor.security.clear",
@@ -5585,17 +5585,17 @@
    ],
    "boundsM": [
     [
-     -0.20703,
+     -0.27344,
      0.26172,
-     0.13281
+     0.19141
     ],
     [
-     0.20703,
+     0.27344,
      0.27734,
-     0.38281
+     0.40234
     ]
    ],
-   "triangles": 806
+   "triangles": 704
   },
   "visor.tactical.clear": {
    "node": "visor.tactical.clear",
@@ -5606,17 +5606,17 @@
    ],
    "boundsM": [
     [
-     -0.20703,
+     -0.27344,
      0.26172,
-     0.13281
+     0.19141
     ],
     [
-     0.20703,
      0.27344,
-     0.36719
+     0.27344,
+     0.40234
     ]
    ],
-   "triangles": 220
+   "triangles": 108
   },
   "visor.tactical.hud": {
    "node": "visor.tactical.hud",
@@ -5628,17 +5628,17 @@
    ],
    "boundsM": [
     [
-     -0.20703,
+     -0.27344,
      0.26172,
-     0.13281
+     0.19141
     ],
     [
-     0.20703,
+     0.27344,
      0.27734,
-     0.375
+     0.40234
     ]
    ],
-   "triangles": 764
+   "triangles": 652
   },
   "visor.tactical.mirrored": {
    "node": "visor.tactical.mirrored",
@@ -5649,17 +5649,17 @@
    ],
    "boundsM": [
     [
-     -0.20703,
+     -0.27344,
      0.26172,
-     0.13281
+     0.19141
     ],
     [
-     0.20703,
      0.27344,
-     0.36719
+     0.27344,
+     0.40234
     ]
    ],
-   "triangles": 220
+   "triangles": 108
   },
   "visor.tactical.tinted": {
    "node": "visor.tactical.tinted",
@@ -5670,17 +5670,17 @@
    ],
    "boundsM": [
     [
-     -0.20703,
+     -0.27344,
      0.26172,
-     0.13281
+     0.19141
     ],
     [
-     0.20703,
      0.27344,
-     0.36719
+     0.27344,
+     0.40234
     ]
    ],
-   "triangles": 220
+   "triangles": 108
   }
  }
 }
