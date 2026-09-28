@@ -84,10 +84,12 @@ export function gameShipAccess(f: GameShipAccessFacts) {
     ((b.templateSha256 === WAYFARER_STARTER.sha256 && i.revision === 1n) ||
       (b.templateSha256 === WAYFARER_REBUILD_SHA256 &&
         (i.revision === 1n || i.revision === 2n)) ||
-      // Unrefitted trusted prefab ship. The workspace check in the world adapter is the trust
-      // anchor; the prefab document itself is re-derived on every admission.
+      // Trusted prefab ship: revision 1 at assignment, later revisions only from an operator
+      // in-place prefab upgrade (players cannot refit game-owned instances). The workspace check
+      // in the world adapter is the trust anchor; the prefab document itself is re-derived on
+      // every admission.
       (!!i.blueprintId?.startsWith(TRUSTED_PREFAB_BLUEPRINT_PREFIX) &&
-        i.revision === 1n))
+        i.revision >= 1n))
   );
   return {
     readInterior: allowed,

@@ -84,21 +84,23 @@ describe("prefab ship interaction presentation", () => {
     const { ship } = fixture();
     const clip = createPrefabBeamClip(ship, binding);
     const world = ship.computeWorldMatrix(true);
-    // Hall centre (plan 5,3 -> ship-local (0, -0.5)), muzzle 1.3 m above the floor top, aiming aft.
-    const local = new Vector3(0, 0.1875 + 1.3, 0.5);
+    // Engine room walkway (plan 1.5,3 -> ship-local (0.5, -4.5)), muzzle 1.3 m above the floor
+    // top, aiming port at the reactor.
+    const local = new Vector3(0.5, 0.1875 + 1.3, 4.5);
     const origin = Vector3.TransformCoordinates(local, world);
-    const direction = Vector3.TransformNormal(new Vector3(0, 0, 1), world);
+    const direction = Vector3.TransformNormal(new Vector3(-1, 0, 0), world);
     const expected = castPrefabBeam(
       prefabBeamModel(binding.doc, binding.catalog),
-      [0, -0.5],
-      Math.PI,
+      [0.5, -4.5],
+      -Math.PI / 2,
       60,
     );
     expect(expected.kind).toBe("object");
+    expect(expected.targetId).toBe("mount:reactor");
     expect(clip(origin, direction, 60)).toBeCloseTo(expected.distanceM, 5);
-    // Pitched down, the floor stops it first.
+    // Pitched down towards the open engine-room door, the floor stops it first.
     const down = Vector3.TransformNormal(
-      new Vector3(0, -1, 1).normalize(),
+      new Vector3(0, -1, -1).normalize(),
       world,
     );
     expect(clip(origin, down, 60)).toBeCloseTo(1.3 * Math.SQRT2, 5);
@@ -116,18 +118,19 @@ describe("prefab ship interaction presentation", () => {
     );
     cleanup.push(() => picker.dispose());
     const world = ship.computeWorldMatrix(true);
-    // Reactor centre: plan (1.5, 3, top 2.79) -> ship-root local (0, 2.79, 4).
+    // Reactor centre: plan (1.5, 5.5, top 2.79) -> ship-root local (-2, 2.79, 4.5).
     const reactorTop = Vector3.TransformCoordinates(
-      new Vector3(0, 2.7, 4),
+      new Vector3(-2, 2.7, 4.5),
       world,
     );
     expect(picker.pick(screen(reactorTop))).toBe(
       PREFAB_OBJECT_PREFIX + "mount:reactor",
     );
     deck = false;
-    // A roof radiator (flight view only): plan (4, 4, top 3.59) -> ship-root local (-1, 3.5, 1.5).
+    // A roof radiator (flight view only) above the reactor: plan (1.5, 5, top 3.59) -> ship-root
+    // local (-1.5, 3.5, 4.5).
     const radiatorTop = Vector3.TransformCoordinates(
-      new Vector3(-1, 3.5, 1.5),
+      new Vector3(-1.5, 3.5, 4.5),
       world,
     );
     expect(picker.pick(screen(radiatorTop))).toBe(

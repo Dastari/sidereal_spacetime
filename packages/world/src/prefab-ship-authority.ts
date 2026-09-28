@@ -12,7 +12,11 @@ import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
 import { prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
-import { prefabStats } from "@sidereal/content/ship-prefab";
+import {
+  prefabStats,
+  type PrefabComponentCatalog,
+  type ShipPrefabDocumentV1,
+} from "@sidereal/content/ship-prefab";
 import { compileConstruction } from "@sidereal/sim/construction-transactions";
 import { planConstructionInstance } from "@sidereal/sim/construction-instance";
 import {
@@ -60,11 +64,11 @@ export interface PrefabShipRequest {
 /** Walking support on prefab decks: native floor top (6/32 m above the deck datum). */
 const PREFAB_STANDING_HEIGHT = 0.1875;
 
-/** Canonical construction document and blueprint identity for a developer prefab. */
-export function trustedPrefabTemplate(prefabId: string) {
-  const prefab = prefabById(prefabId);
-  if (!prefab) throw Error("Unknown prefab ship " + prefabId);
-  const catalog = defaultPrefabComponentCatalog();
+/** Canonical construction document and blueprint identity for a prefab document. */
+export function trustedPrefabTemplateFor(
+  prefab: ShipPrefabDocumentV1,
+  catalog: PrefabComponentCatalog,
+) {
   const snapshot = compileConstruction(
     JSON.stringify(prefabConstructionDocument(prefab, catalog)),
   );
@@ -76,13 +80,40 @@ export function trustedPrefabTemplate(prefabId: string) {
   };
 }
 
+/** Canonical construction document and blueprint identity for a developer prefab. */
+export function trustedPrefabTemplate(prefabId: string) {
+  const prefab = prefabById(prefabId);
+  if (!prefab) throw Error("Unknown prefab ship " + prefabId);
+  return trustedPrefabTemplateFor(prefab, defaultPrefabComponentCatalog());
+}
+
+export type TrustedPrefabTemplate = ReturnType<typeof trustedPrefabTemplateFor>;
+
+/**
+ * Trusted-caller options. `operator_upgrade_prefab_ship` reinstalls a ship in place: it reuses
+ * the ship/instance and deck ids (`reuseIds`, allocated first, in that order) and installs the
+ * new source at the next instance revision, so revision-keyed caches never see the old layout.
+ * Tests and legacy rehearsals pass an explicit `template` (an earlier pinned revision).
+ */
+export interface PrefabInstallOptions {
+  template?: TrustedPrefabTemplate;
+  reuseIds?: readonly string[];
+  instanceRevision?: bigint;
+}
+
 /** Install and board. Throws (rolling back the transaction) on any failed precondition. */
 export function installPrefabShip(
   ctx: Context,
   actor: PrefabCharacterRow,
   request: PrefabShipRequest,
+  options: PrefabInstallOptions = {},
 ): { shipId: string; deckId: string } {
-  const template = trustedPrefabTemplate(request.prefabId);
+  const template = options.template ?? trustedPrefabTemplate(request.prefabId);
+  if (template.prefab.id !== request.prefabId)
+    throw Error("Prefab template does not match the request");
+  const revision = options.instanceRevision ?? 1n;
+  if (revision < 1n) throw Error("Positive instance revision required");
+  const seeds = [...(options.reuseIds ?? [])];
   const owner = actor.owner;
   // Every writer below acts for the character's account, not the operator.
   const ownerCtx = new Proxy(ctx, {
@@ -105,6 +136,11 @@ export function installPrefabShip(
       ctx.db.constructionFlightFitting.id.find(id)
     );
   const allocate = () => {
+    const seed = seeds.shift();
+    if (seed !== undefined) {
+      if (taken(seed)) throw Error("Reused prefab identity still allocated");
+      return seed;
+    }
     for (let i = 0; i < 8; i++) {
       const id = ctx.newUuidV4().toString();
       if (!taken(id)) return id;
@@ -137,7 +173,7 @@ export function installPrefabShip(
     blueprintId: plan.blueprintRevisionId,
     blueprintSha256: plan.blueprintSha256,
     name,
-    revision: 1n,
+    revision,
     documentJson,
     idMapJson: JSON.stringify(plan.mappings),
     spawnDeckId: plan.spawn.deckId,
@@ -186,7 +222,7 @@ export function installPrefabShip(
   const flight = planPrefabConstructionFlight(
     {
       id: shipId,
-      revision: 1n,
+      revision,
       blueprintSha256: plan.blueprintSha256,
       documentJson,
       spawnDeckId: plan.spawn.deckId,
@@ -301,7 +337,7 @@ export function installPrefabShip(
     characterId: actor.id,
     deckId: plan.spawn.deckId,
     templateSha256: plan.blueprintSha256,
-    instanceRevision: 1n,
+    instanceRevision: revision,
     lifecycle: "active",
   });
   return { shipId, deckId: plan.spawn.deckId };

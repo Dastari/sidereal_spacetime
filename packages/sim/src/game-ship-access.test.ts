@@ -104,3 +104,23 @@ test("foreign identity, stale deck/revision, disconnected admission and suspende
     expect(gameShipAccess(f).useObjects).toBe(false);
   }
 });
+test("a trusted prefab keeps access at a later instance revision only when binding and instance agree", () => {
+  const prefab = (revision: bigint, bound: bigint) => {
+    const f = facts();
+    f.instance!.blueprintSha256 = "prefab-r4";
+    f.instance!.blueprintId = "trusted-prefab:fed.s.wren:r4";
+    f.instance!.revision = revision;
+    f.binding!.templateSha256 = "prefab-r4";
+    f.binding!.instanceRevision = bound;
+    return gameShipAccess(f).walkDeck;
+  };
+  // Operator in-place upgrades install the next revision (r3 at revision 1 -> r4 at revision 2).
+  expect(prefab(1n, 1n)).toBe(true);
+  expect(prefab(2n, 2n)).toBe(true);
+  expect(prefab(2n, 1n)).toBe(false);
+  // Without the trusted prefab blueprint id, only the pinned starters' revisions are admitted.
+  const f = facts();
+  f.instance!.blueprintSha256 = "prefab-r4";
+  f.binding!.templateSha256 = "prefab-r4";
+  expect(gameShipAccess(f).walkDeck).toBe(false);
+});

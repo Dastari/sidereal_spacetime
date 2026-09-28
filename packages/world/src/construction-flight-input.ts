@@ -22,6 +22,13 @@ import {
   type FlightCrewMass,
 } from "@sidereal/sim/flight-definition";
 import { legacyInventorySnapshot } from "./scoped-inventory-authority";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import {
+  PREFAB_DECK_ID,
+  isPrefabConstruction,
+} from "@sidereal/sim/prefab-construction";
+import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
+import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
 import {
   PREFAB_FLIGHT_DEFINITION,
   prefabFlightInput,
@@ -30,6 +37,31 @@ import {
 } from "@sidereal/sim/prefab-flight";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
+
+/** Storage socket centres of a prefab source (ship-local m) by socket key, memoised per source. */
+const PREFAB_SOCKET_MEMO = new Map<
+  string,
+  ReadonlyMap<string, [number, number]>
+>();
+function prefabStorageSocketCentres(
+  key: string,
+  document: unknown,
+): ReadonlyMap<string, [number, number]> {
+  const hit = PREFAB_SOCKET_MEMO.get(key);
+  if (hit) return hit;
+  if (!isPrefabConstruction(document)) throw Error("prefab-flight-source");
+  const centres = new Map(
+    prefabCargoSockets(
+      readShipPrefab(document.prefab.document),
+      0,
+      prefabComponentCatalogFor(document.prefab.catalog),
+    ).map((s) => [s.key, s.centreM] as const),
+  );
+  if (PREFAB_SOCKET_MEMO.size >= 64) PREFAB_SOCKET_MEMO.clear();
+  PREFAB_SOCKET_MEMO.set(key, centres);
+  return centres;
+}
+
 function bounded<T>(rows: Iterable<T>, limit: number): T[] {
   const out: T[] = [];
   for (const row of rows) {
@@ -199,7 +231,8 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
       throw Error("invalid-flight-cargo-root-binding");
     roots.add(root.id);
     const assembly = ctx.db.constructionCargoAssembly.containerId.find(root.id);
-    let shell: FlightPlacedPart;
+    let shell: FlightPlacedPart | undefined;
+    let position: readonly [number, number] | undefined;
     if (assembly) {
       const p = ctx.db.constructionCargoPlacement.containerId.find(root.id);
       if (
@@ -229,15 +262,32 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
       const part = document.layout.assembly?.parts.find(
         (p) => p.id === binding.placedObjectId,
       );
-      if (!attached && !part) throw Error("missing-flight-cargo-shell");
-      shell = attached ?? {
-        id: part!.id,
-        definitionId: "physical:" + part!.assetId,
-        revision: 1,
-        position: part!.position,
-        rotation: part!.rotation,
-        flipped: part!.flipped,
-      };
+      if (attached || part)
+        shell = attached ?? {
+          id: part!.id,
+          definitionId: "physical:" + part!.assetId,
+          revision: 1,
+          position: part!.position,
+          rotation: part!.rotation,
+          flipped: part!.flipped,
+        };
+      else if (prefab) {
+        // Prefab storage socket (operator-bound crate or locker): furniture carries no flight
+        // shell of its own, so the payload mass sits at the socket centre on the prefab deck.
+        const deck = ctx.db.constructionDeck.id.find(binding.deckId);
+        const prefix = `${shipId}:${binding.deckId}:`;
+        const centre =
+          deck?.instanceId === shipId &&
+          deck.sourceDeckId === PREFAB_DECK_ID &&
+          binding.placedObjectId.startsWith(prefix)
+            ? prefabStorageSocketCentres(
+                `${instance.id}:${instance.blueprintSha256}`,
+                document,
+              ).get(binding.placedObjectId.slice(prefix.length))
+            : undefined;
+        if (!centre) throw Error("missing-flight-cargo-shell");
+        position = centre;
+      } else throw Error("missing-flight-cargo-shell");
     }
     const containers = bounded(
       ctx.db.inventoryContainerScope.by_root.filter(root.id),
@@ -260,7 +310,7 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
     cargo.push({
       containerId: root.id,
       massKg: payloadMass({ containers, items }).containerMass(root.id),
-      position: shellPoint(shell),
+      position: position ?? shellPoint(shell!),
     });
   }
   const body = catalog.get(WAYFARER_CREW_BODY_DEFINITION);

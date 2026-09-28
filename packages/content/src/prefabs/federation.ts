@@ -24,6 +24,10 @@ export const FED_WREN = prefab({
   role: "Courier",
   theme: "federation",
   sizeClass: "S",
+  // Revision 4 (2026-09-28): the hull grows 1 m in length and 1 m in beam (12 x 7) so every module
+  // and furniture piece fits at catalog scale outside the door and pilot approaches. The engine
+  // room keeps its 3 m depth with the reactor in its port half, the hold is 5 m long (crate clear
+  // of both doors) and the quarters are 3 m deep (bunk clear of its door).
   volumes: [
     volume(
       "hull",
@@ -31,12 +35,12 @@ export const FED_WREN = prefab({
       "deck",
       polygonTiles([
         [0, 0],
-        [9, 0],
-        [11, 2],
-        [11, 4],
-        [9, 6],
-        [0, 6],
-      ]).map((t) => (t.x >= 8 ? withBow(t, (t.x - 7) as 1 | 2 | 3) : t)),
+        [10, 0],
+        [12, 2],
+        [12, 5],
+        [10, 7],
+        [0, 7],
+      ]).map((t) => (t.x >= 9 ? withBow(t, (t.x - 8) as 1 | 2 | 3) : t)),
       { spine: true, logo: true },
     ),
     volume(
@@ -55,58 +59,58 @@ export const FED_WREN = prefab({
       "plate",
       "wing",
       polygonTiles([
-        [0, 6],
-        [5, 6],
-        [3, 8],
-        [0, 8],
+        [0, 7],
+        [5, 7],
+        [3, 9],
+        [0, 9],
       ]),
     ),
   ],
   rooms: [
-    room("engine", "ENGINE", "engineering", [0, 0, 3, 6]),
-    room("hall", "HALL", "corridor", [3, 2, 7, 4]),
-    room("bunks", "BUNKS", "quarters", [3, 4, 7, 6]),
-    room("hold", "HOLD", "cargo", [3, 0, 7, 2]),
-    room("bridge", "BRIDGE", "bridge", [7, 0, 11, 6]),
+    room("engine", "ENGINE", "engineering", [0, 0, 3, 7]),
+    room("hall", "HALL", "corridor", [3, 2, 8, 4]),
+    room("bunks", "BUNKS", "quarters", [3, 4, 8, 7]),
+    room("hold", "HOLD", "cargo", [3, 0, 8, 2]),
+    room("bridge", "BRIDGE", "bridge", [8, 0, 12, 7]),
   ],
   edges: [
     door("d-engine", [3, 2], [3, 4], "door.sliding"),
-    door("d-bunks", [4, 4], [6, 4]),
-    door("d-hold", [4, 2], [6, 2]),
-    door("d-bridge", [7, 2], [7, 4], "door.sliding"),
-    edge("g-bridge-s", [7, 0], [7, 2], "wall.glazed"),
-    edge("g-bridge-p", [7, 4], [7, 6], "wall.glazed"),
+    door("d-bunks", [5, 4], [7, 4]),
+    door("d-hold", [5, 2], [7, 2]),
+    door("d-bridge", [8, 2], [8, 4], "door.sliding"),
+    edge("g-bridge-s", [8, 0], [8, 2], "wall.glazed"),
+    edge("g-bridge-p", [8, 4], [8, 7], "wall.glazed"),
     // Pressure glass is the inset roof face of the bow tiles; the outer shoulder edges are armour.
   ],
-  // Revision 3 (2026-09-28): four small ion drives instead of two medium nacelles (proportionate
-  // to an 11 m hull; catalog revision 2 small-drive thrust), medium RCS for turn authority, a
-  // fuel tank so the propellant budget closes. The sensor dish gave its hardpoint to the drives
-  // (size S allows 12). Proposed balance, not owner-approved.
+  // Revision 4 (2026-09-28): the bigger hull (21.6 t) keeps r3's acceleration with four small
+  // thrust blocks (24 kN each, as on the Federation heavy's pods) fed by a medium fuel tank, and the
+  // RCS clusters move to the wing-tip faces for yaw authority. Revision 3 flew four small ion
+  // drives on the 11 x 6 m hull. Proposed balance, not owner-approved.
   mounts: [
-    face("main-s1", "ion-drive.sm", "aft", [0, 1.5]),
-    face("main-s2", "ion-drive.sm", "aft", [0, 2.5]),
-    face("main-p2", "ion-drive.sm", "aft", [0, 3.5]),
-    face("main-p1", "ion-drive.sm", "aft", [0, 4.5]),
-    face("rcs-s", "rcs.md", "aft", [0, -1]),
-    face("rcs-p", "rcs.md", "aft", [0, 7]),
-    face("gun-p", "side-cannon.sm", "port", [6.5, 6]),
-    face("gun-s", "side-cannon.sm", "starboard", [8.5, 0]),
+    face("main-s1", "thrust-block.sm", "aft", [0, 2]),
+    face("main-s2", "thrust-block.sm", "aft", [0, 3]),
+    face("main-p2", "thrust-block.sm", "aft", [0, 4]),
+    face("main-p1", "thrust-block.sm", "aft", [0, 5]),
+    face("rcs-s", "rcs.md", "starboard", [0.5, -2]),
+    face("rcs-p", "rcs.md", "port", [0.5, 9]),
+    face("gun-p", "side-cannon.sm", "port", [6.5, 7]),
+    face("gun-s", "side-cannon.sm", "starboard", [9.5, 0]),
     opening("airlock", "airlock.exterior.md", "starboard", [6, 0]),
-    top("turret", "autocannon.sm", [5, 2.5]),
-    top("rad-a", "radiator.md", [1, 1]),
-    top("rad-b", "radiator.md", [3, 3]),
-    module("helm", "console.navigation.sm", [8, 2.5], "fore"),
-    module("core", "computer-core.sm", [7, 0.5], "port"),
-    module("reactor", "reactor.md", [0, 1.5], "fore"),
+    top("turret", "autocannon.sm", [5, 3]),
+    top("rad-a", "radiator.md", [0.5, 1]),
+    top("rad-b", "radiator.md", [0.5, 4]),
+    module("helm", "console.navigation.sm", [9, 3], "fore"),
+    module("core", "computer-core.sm", [8, 0.5], "port"),
+    module("reactor", "reactor.md", [0, 4], "starboard"),
     module("life", "life-support.sm", [2, 0], "port"),
-    module("fuel", "fuel-tank.sm", [0.5, 4.5], "fore"),
-    module("bunk", "crew-bunk.sm", [3.5, 4.5], "starboard"),
+    module("fuel", "fuel-tank.md", [0, 0], "port"),
+    module("bunk", "crew-bunk.sm", [3.5, 5.5], "starboard"),
   ],
   skylights: [],
   markings: { name: "WREN", number: "OC-11", emblem: "planet" },
 });
 
-FED_WREN.revision = 3;
+FED_WREN.revision = 4;
 
 /** Medium: the prototype Wayfarer-class corvette, re-cut on the 1 m grammar. */
 export const FED_CREST = prefab({

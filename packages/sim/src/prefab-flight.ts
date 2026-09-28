@@ -425,8 +425,10 @@ export function planPrefabConstructionFlight(
   allocate: () => string,
   reservedIds: readonly string[] = [],
 ) {
-  if (instance.revision !== 1n)
-    throw Error("Unrefitted prefab instance required");
+  // Game-owned prefab instances are never refitted: every revision holds a trusted prefab source
+  // (revision 1 at assignment; an operator in-place prefab upgrade installs the next one).
+  if (instance.revision < 1n)
+    throw Error("Positive prefab instance revision required");
   if (instance.documentJson.length > 1_048_576)
     throw Error("Bounded construction source required");
   const model = prefabFlightModelFor(

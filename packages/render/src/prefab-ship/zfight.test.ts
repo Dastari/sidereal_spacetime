@@ -35,15 +35,23 @@ const published = (() => {
     readFileSync(probe).subarray(0, 4).toString("latin1") === "glTF"
   );
 })();
-/** Wren revision 2, the ship the first release assigned (legacy live instances). */
-const LEGACY_WREN = readShipPrefab(
-  JSON.parse(
-    readFileSync(
-      join(repo, "packages/world/src/fixtures/fed-s-wren-r2.prefab.json"),
-      "utf8",
+/** Frozen Wren revisions still flown by live instances until an operator upgrades them. */
+const legacyWren = (revision: 2 | 3) =>
+  readShipPrefab(
+    JSON.parse(
+      readFileSync(
+        join(
+          repo,
+          `packages/world/src/fixtures/fed-s-wren-r${revision}.prefab.json`,
+        ),
+        "utf8",
+      ),
     ),
-  ),
-);
+  );
+/** Wren revision 2, the ship the first release assigned (legacy live instances). */
+const LEGACY_WREN = legacyWren(2);
+/** Wren revision 3 (11 x 6 m, four small ion drives), live until the r4 in-place upgrade. */
+const LEGACY_WREN_R3 = legacyWren(3);
 
 const engines: NullEngine[] = [];
 afterEach(() => {
@@ -146,7 +154,8 @@ const describeGlb = published ? describe : describe.skip;
 
 describeGlb("prefab ship presentation (published GLBs)", () => {
   for (const [label, doc, catalog] of [
-    ["Wren r3", prefabById("fed.s.wren")!, defaultPrefabComponentCatalog()],
+    ["Wren r4", prefabById("fed.s.wren")!, defaultPrefabComponentCatalog()],
+    ["Wren r3 (live legacy)", LEGACY_WREN_R3, prefabComponentCatalogAt(2)],
     ["Wren r2 (live legacy)", LEGACY_WREN, prefabComponentCatalogAt(1)],
   ] as const)
     it(

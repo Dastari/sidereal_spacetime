@@ -184,7 +184,7 @@ describe("grid-true bow contract", () => {
       ),
     );
     expect(snap.prefabStructure).toEqual(structure);
-    expect(structure.length).toBe(16);
+    expect(structure.length).toBe(19);
     expect(structure.flatMap((s) => s.pressure).every((e) => e.seals)).toBe(
       true,
     );
@@ -197,7 +197,7 @@ describe("grid-true bow contract", () => {
     expect(prefabStructureMaterial(glass, [...xy, 1])).toBe(null);
     expect(
       Math.max(...structure.flatMap((s) => s.footprint.map((p) => p[0]))),
-    ).toBe(11);
+    ).toBe(12);
   });
 });
 

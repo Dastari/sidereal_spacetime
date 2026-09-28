@@ -71,7 +71,7 @@ describe("ship dresser", () => {
       PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!,
     );
     old.volumes[0].tiles = old.volumes[0].tiles.map(({ bow, ...t }) => t);
-    old.edges.push(edge("canopy-bow", [9, 0], [9, 6], "canopy"));
+    old.edges.push(edge("canopy-bow", [10, 0], [10, 7], "canopy"));
     const ship = dressShip(old, { catalog });
     const joins = ship.kit.filter((k) => k.piece === "canopy.corner45.deck");
     expect(joins).toHaveLength(2); // one authored wraparound pane at each 45 degree corner
@@ -79,14 +79,14 @@ describe("ship dresser", () => {
       2,
     );
     expect(new Set(joins.map((k) => `${k.x},${k.y}`))).toEqual(
-      new Set(["11,2", "11,4"]),
+      new Set(["12,2", "12,5"]),
     );
     expect(
-      ship.kit.some((k) => k.piece === "post.hull.deck" && k.x === 11),
+      ship.kit.some((k) => k.piece === "post.hull.deck" && k.x === 12),
     ).toBe(false);
     expect(
       ship.kit.filter((k) => k.piece === "canopy.straight.w1.deck"),
-    ).toHaveLength(2);
+    ).toHaveLength(3); // the r4 nose is 3 m wide
     expect(
       ship.kit.filter((k) => k.piece === "canopy.corner45.deck.cut"),
     ).toHaveLength(2);
