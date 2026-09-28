@@ -61,7 +61,10 @@ export {
 import { createCombatAim } from "./combat-aim";
 import { posePlacementHeading } from "./crew/pose-integration-motion";
 import type { VoxelCrewEva } from "./crew/voxel-crew-clips";
-import { createEvaBodyPresentation } from "./eva/eva-body";
+import {
+  createEvaBodyPresentation,
+  evaHipLiftCorrection,
+} from "./eva/eva-body";
 import { createDebugFeatures, type DebugFeature } from "./debug-features";
 import { createDebugCollisionSource } from "./debug-collision-source";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -1042,7 +1045,13 @@ async function buildWorld(
     )
       walkingElevation = state.constructionSupportElevation!;
     const eva = state.eva ?? undefined;
-    if (eva) walkingElevation = eva.elevation;
+    if (eva)
+      walkingElevation =
+        eva.elevation -
+        evaHipLiftCorrection(
+          eva,
+          (clip) => !!crew && "hasClip" in crew && crew.hasClip(clip),
+        );
     if (!!eva !== evaShown) {
       // Leaving the ship: close top-down EVA view; coming back: the previous flight zoom.
       if (eva) {

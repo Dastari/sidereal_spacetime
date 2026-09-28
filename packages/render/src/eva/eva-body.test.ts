@@ -10,7 +10,13 @@ import {
   VOXEL_CREW_EVA_ACTIONS,
   VOXEL_CREW_LOOPING,
 } from "@sidereal/content/crew-voxel-bundle";
-import { evaNeedsPronePitch, evaThrustLevel, evaTransition } from "./eva-body";
+import {
+  EVA_ZEROG_HIP_LIFT_M,
+  evaHipLiftCorrection,
+  evaNeedsPronePitch,
+  evaThrustLevel,
+  evaTransition,
+} from "./eva-body";
 
 const free = (over: Partial<VoxelCrewEva> = {}): VoxelCrewEva => ({
   phase: "free",
@@ -87,6 +93,14 @@ describe("EVA body presentation rules", () => {
       false,
     );
     expect(evaNeedsPronePitch(undefined, () => false)).toBe(false);
+  });
+
+  it("lowers the body by the authored hip lift only while a prone clip plays", () => {
+    expect(evaHipLiftCorrection(free(), () => true)).toBe(EVA_ZEROG_HIP_LIFT_M);
+    expect(evaHipLiftCorrection(free(), () => false)).toBe(0);
+    expect(evaHipLiftCorrection(free({ phase: "maglocked" }), () => true)).toBe(
+      0,
+    );
   });
 
   it("scales the jetpack plume with thrust in free flight only", () => {

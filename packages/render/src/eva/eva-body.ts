@@ -48,6 +48,23 @@ export function evaNeedsPronePitch(
   return VOXEL_CREW_PRONE_ACTIONS.has(clip) && !hasClip(clip);
 }
 
+/**
+ * The authored zero-g clips lift the hip pivot 10 voxels (0.3125 m) above standing (Astra, PR #62);
+ * the runtime lowers the body by the same amount so the accepted float height is kept.
+ */
+export const EVA_ZEROG_HIP_LIFT_M = 0.3125;
+/** Pure: presentation height correction while an authored prone clip plays. */
+export function evaHipLiftCorrection(
+  eva: VoxelCrewEva | undefined,
+  hasClip: (clip: string) => boolean,
+) {
+  if (!eva || eva.phase !== "free" || eva.cycling) return 0;
+  const clip = voxelCrewEvaClip(eva);
+  return VOXEL_CREW_PRONE_ACTIONS.has(clip) && hasClip(clip)
+    ? EVA_ZEROG_HIP_LIFT_M
+    : 0;
+}
+
 /** Pure: jetpack plume strength 0..1 from the applied input (free flight only). */
 export function evaThrustLevel(eva: VoxelCrewEva | undefined) {
   if (!eva || eva.phase !== "free" || eva.cycling) return 0;

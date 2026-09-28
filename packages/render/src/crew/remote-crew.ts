@@ -17,7 +17,10 @@ import { createVoxelCrewOutfit } from "./voxel-crew-outfit";
 import { equipVoxelCrewItem } from "./voxel-crew-kit";
 import { createRemoteCrewMotion } from "./remote-crew-motion";
 import type { VoxelCrewEva } from "./voxel-crew-clips";
-import { createEvaBodyPresentation } from "../eva/eva-body";
+import {
+  createEvaBodyPresentation,
+  evaHipLiftCorrection,
+} from "../eva/eva-body";
 
 /** Server-projected presentation of another character (current_interior_crew + visible_crew_presentation). */
 export interface RemoteCrewState {
@@ -335,6 +338,9 @@ export function createRemoteCrew(
         crew.root.position.set(d.x, d.z, -d.y);
         crew.root.rotation.y = d.yaw;
         if (state.eva) {
+          crew.root.position.y -= evaHipLiftCorrection(state.eva, (clip) =>
+            crew.hasClip(clip),
+          );
           // Outside a ship: the accepted heading (or the aim) turns the body; zero-g clips play.
           crew.root.rotation.y = state.aimActive
             ? -state.aimAngle
