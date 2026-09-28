@@ -45,8 +45,8 @@ export const EVA = {
   maglockMarginM: 0.6,
   /** Maximum speed relative to the hull point for a maglock attach (m/s). */
   maglockMaxRelSpeed: 3,
-  /** Walking speed on the hull (m/s). */
-  walkSpeed: 1.4,
+  /** Walking speed on the hull (m/s): a heavy magnetic-boot gait (the Maglock_Walk contract). */
+  walkSpeed: 0.9,
   /** Hull walking keeps the feet this far inside the footprint edge (m). */
   walkInsetM: 0.2,
   /** Reach from the deck to an airlock hatch's inside point (m). */

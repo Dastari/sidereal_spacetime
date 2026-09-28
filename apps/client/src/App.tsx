@@ -1355,6 +1355,10 @@ export default function App({
         else {
           view.current = result;
           result.update(sceneState.current);
+          // Development review only: EVA presentation diagnostics (never simulation state).
+          if (import.meta.env.DEV)
+            (globalThis as { __siderealEva?: () => unknown }).__siderealEva =
+              () => result.getEva();
         }
       })
       .catch((e) => {

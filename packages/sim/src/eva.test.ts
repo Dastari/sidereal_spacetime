@@ -311,8 +311,8 @@ describe("maglock", () => {
   it("walks on the hull and stops at the edge", () => {
     let p = toShip([4, 3.5]);
     for (let i = 0; i < 20; i++) p = stepMaglockWalk(model, p, [0, 1]);
-    // 20 ticks at 1.4 m/s = 1.4 m
-    expect(p[1] - toShip([4, 3.5])[1]).toBeCloseTo(1.4, 6);
+    // 20 ticks at the hull walk speed
+    expect(p[1] - toShip([4, 3.5])[1]).toBeCloseTo(EVA.walkSpeed, 6);
     for (let i = 0; i < 400; i++) p = stepMaglockWalk(model, p, [1, 0]);
     expect(hullWalkable(model, p)).toBe(true);
     const stuck = stepMaglockWalk(model, p, [1, 0]);

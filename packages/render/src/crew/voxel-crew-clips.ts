@@ -97,7 +97,8 @@ export function selectVoxelCrewLayers(
     speedRatio: voxelCrewSpeedRatio(clip, motion),
   });
   if (motion.dead) return full("death");
-  if (motion.eva) return full(voxelCrewEvaClip(motion.eva));
+  // EVA: the hull walk runs at the clip's nominal 0.9 m/s, so playback stays at 1x.
+  if (motion.eva) return { full: voxelCrewEvaClip(motion.eva), speedRatio: 1 };
   if (motion.downed) return full("knocked_out");
   if (motion.seated) return full("sit_idle");
   if (motion.climbing) return full("climb_ladder");

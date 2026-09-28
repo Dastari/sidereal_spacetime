@@ -7,6 +7,9 @@ import { nextSequence, walkNative } from "./native-starter-smoke";
 import { prefabWalkRoute } from "../packages/sim/src/prefab-construction";
 import {
   EVA,
+  headingOf,
+  pointVelocity,
+  wrapAngle,
   prefabEvaModel,
   shipToWorld,
   worldToShip,
@@ -80,6 +83,11 @@ export async function evaSmoke(
     await intent({});
   };
   const local = () => worldToShip(motion(), [body().x, body().y]);
+  /** Speed relative to the hull point under the body (the ship may be turning). */
+  const relative = () => {
+    const v = pointVelocity(motion(), [body().x, body().y]);
+    return Math.hypot(body().vx - v[0], body().vy - v[1]);
+  };
 
   await s.reducers.claimInputControl({});
   const massAboard = [...s.db.ownAuthoredFlightPhysics.iter()].find(
@@ -137,51 +145,56 @@ export async function evaSmoke(
     (out1[0] - out0[0]) * lock.normal[0] + (out1[1] - out0[1]) * lock.normal[1];
   assert(outward > 1, `thrust moved the body outward (${outward} m)`);
   await pause(3000);
-  const rest = body();
-  const restSpeed = Math.hypot(rest.vx - motion().vx, rest.vy - motion().vy);
-  assert(restSpeed < 0.3, `stabilised relative to the ship (${restSpeed} m/s)`);
+  const restSpeed = relative();
+  // The smoke ship may still be turning (~0.3 rad/s after the flight test); allow the lag.
+  assert(restSpeed < 0.5, `stabilised relative to the ship (${restSpeed} m/s)`);
   const heading0 = body().heading;
   await hold(400, { turn: 1 });
   await hold(400, { turn: -1 });
   assert(Math.abs(body().heading - heading0) < 0.3, "turned and turned back");
 
-  // 3. Reverse thrust back over the hull (closed loop on the server position), then maglock.
-  const target = [
+  // 3. Fly back over the hull (closed loop on the server pose: turn toward the target, thrust
+  // when facing it; the ship may still be turning from the flight test), then maglock.
+  const target: [number, number] = [
     lock.hatch[0] - lock.normal[0] * 1.2,
     lock.hatch[1] - lock.normal[1] * 1.2,
   ];
-  const along = () =>
-    (local()[0] - target[0]) * lock.normal[0] +
-    (local()[1] - target[1]) * lock.normal[1];
-  const backEnd = Date.now() + 15000;
-  while (along() > 0.3 && Date.now() < backEnd) {
-    await intent({ throttle: along() > 2 ? -1 : -0.4 });
+  const flyEnd = Date.now() + 30000;
+  let flyTicks = 0;
+  while (Date.now() < flyEnd) {
+    const goal = shipToWorld(motion(), target);
+    const d: [number, number] = [goal[0] - body().x, goal[1] - body().y];
+    const distance = Math.hypot(d[0], d[1]);
+    if (distance < 0.4 && relative() < 0.5) break;
+    const error = wrapAngle(headingOf(d) - body().heading);
+    await intent({
+      turn: Math.max(-1, Math.min(1, error * 2)),
+      throttle: Math.abs(error) < 0.6 ? Math.min(1, distance * 0.35) : 0,
+    });
+    flyTicks++;
     await pause(50);
   }
   await intent({});
-  await wait(
-    () => Math.hypot(body().vx - motion().vx, body().vy - motion().vy) < 0.5,
-    "slow over the hull",
-    8000,
-  );
+  await wait(() => relative() < 0.5, "slow over the hull", 8000);
   await s.reducers.evaToggleMaglock({});
   await wait(() => body()?.phase === "maglocked", "maglocked", 5000);
   assert.equal(body().anchorShipId, shipId);
 
   // 4. Walk on the hull (ship-local fore), then back toward the hatch.
   const hull0 = [body().localX, body().localY];
-  await hold(1000, { dx: 0, dy: 1 });
+  await hold(1500, { dx: 0, dy: 1 });
   const walked = Math.hypot(body().localX - hull0[0], body().localY - hull0[1]);
   assert(
-    walked > 0.8 && walked < EVA.walkSpeed * 1.6,
+    walked > EVA.walkSpeed && walked < EVA.walkSpeed * 2.2,
     `walked on the hull (${walked} m)`,
   );
   const backEnd2 = Date.now() + 8000;
   while (Date.now() < backEnd2) {
     const dx = hull0[0] - body().localX,
       dy = hull0[1] - body().localY;
-    if (Math.hypot(dx, dy) < 0.1) break;
-    await intent({ dx, dy });
+    const len = Math.hypot(dx, dy);
+    if (len < 0.1) break;
+    await intent({ dx: dx / Math.max(1, len), dy: dy / Math.max(1, len) });
     await pause(50);
   }
   await intent({});
@@ -201,6 +214,8 @@ export async function evaSmoke(
   await s.reducers.releaseInputControl({});
   return {
     airlock: lock.id,
+    shipSpeed: Math.hypot(motion().vx, motion().vy),
+    shipOmega: motion().omega,
     cycleOutMs,
     exitGapM: exitGap,
     massDropKg: massDrop,

@@ -107,7 +107,7 @@ export function evaModelOfDocument(
 }
 
 /** Presentation height of a body over the hull (m): maglocked on the roof, else floating above. */
-const FLOAT_ABOVE_ROOF_M = 0.45;
+const FLOAT_ABOVE_ROOF_M = 0.2;
 const OPEN_SPACE_HEIGHT_M = 2.2;
 
 export interface EvaScene {
