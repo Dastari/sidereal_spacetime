@@ -42,6 +42,7 @@ import {
 } from "./prefab-ship-pins";
 import {
   UPGRADE_KEPT_SHIP_TABLES,
+  UPGRADE_PRESENCE_TABLES,
   UPGRADE_REBUILT_SHIP_TABLES,
   UPGRADE_REFUSED_SHIP_TABLES,
   upgradePrefabShip,
@@ -244,19 +245,18 @@ const upgradeArgs = (
   ...over,
 });
 
-test("upgrade table lists cover every wiped per-ship table exactly once", () => {
+test("upgrade table lists classify wiped per-ship tables once; the rest refuse", () => {
   const listed = [
     ...UPGRADE_REBUILT_SHIP_TABLES.map(([t]) => t),
     ...UPGRADE_REFUSED_SHIP_TABLES.map(([t]) => t),
     ...UPGRADE_KEPT_SHIP_TABLES,
-    // Character presence rows are updated in place by the reinstall; couch seats are refused.
-    "constructionLocation",
-    "worldAdmission",
-    "input",
-    "couchSeat",
+    ...UPGRADE_PRESENCE_TABLES,
   ];
   expect(new Set(listed).size).toBe(listed.length);
-  expect([...listed].sort()).toEqual([...WIPED_SHIP_TABLES].sort());
+  // Every classified table is a wiped per-ship table. A wiped table added later without a
+  // classification refuses the upgrade when it holds rows for the ship (planPrefabUpgrade).
+  for (const t of listed) expect(WIPED_SHIP_TABLES, t).toContain(t);
+
   expect(PREFAB_UPGRADE_SOURCES).toEqual([FED_WREN_R2_PIN, FED_WREN_R3_PIN]);
   expect(trustedPrefabTemplate("fed.s.wren").snapshot.sha256).toBe(
     FED_WREN_PIN.blueprintSha256,

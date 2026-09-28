@@ -65,6 +65,7 @@ import {
 import { constructionCollision } from "./construction-doors";
 import { qualifyCargoAccessPoint } from "./scoped-inventory";
 import { markShipFlightDirty } from "./construction-flight-dirty";
+import { WIPED_SHIP_TABLES } from "./ship-wipe";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type Db = Context["db"];
@@ -135,6 +136,24 @@ export const UPGRADE_KEPT_SHIP_TABLES = [
   "legacyBodyAlias",
   "instanceInventoryBinding",
 ] as const satisfies readonly (keyof Db)[];
+
+/**
+ * Presence rows of the character aboard: updated in place (new visit, spawn position, zero input)
+ * by the trusted reinstall, not deleted. Couch seats are refused through their interaction objects.
+ */
+export const UPGRADE_PRESENCE_TABLES = [
+  "constructionLocation",
+  "worldAdmission",
+  "input",
+  "couchSeat",
+] as const satisfies readonly (keyof Db)[];
+
+const UPGRADE_CLASSIFIED_TABLES = new Set<string>([
+  ...UPGRADE_REBUILT_SHIP_TABLES.map(([t]) => t),
+  ...UPGRADE_REFUSED_SHIP_TABLES.map(([t]) => t),
+  ...UPGRADE_KEPT_SHIP_TABLES,
+  ...UPGRADE_PRESENCE_TABLES,
+]);
 
 export interface UpgradePrefabShipArgs {
   operationId: string;
@@ -268,6 +287,17 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
       column === "deck" ? deckIds.has(r.deckId as string) : r[column] === S,
     ).length;
     if (n) refuse(`${table} has ${n} row(s) for this ship`);
+  }
+  // A per-ship table added to the wipe list later (e.g. component damage) but not yet classified
+  // here is never silently kept or dropped: rows for this ship refuse the upgrade.
+  for (const table of WIPED_SHIP_TABLES) {
+    if (UPGRADE_CLASSIFIED_TABLES.has(table)) continue;
+    const n = rowsWhere(
+      ctx.db,
+      table,
+      (r) => r.shipId === S || r.instanceId === S,
+    ).length;
+    if (n) refuse(`unclassified per-ship table ${table} has ${n} row(s)`);
   }
 
   // Target geometry (pure prefab walk frame; the apply step re-qualifies on the installed one).
