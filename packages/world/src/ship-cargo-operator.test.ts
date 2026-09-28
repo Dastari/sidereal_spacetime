@@ -36,6 +36,9 @@ import {
 } from "@sidereal/content/inventory";
 import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
 import { prefabById } from "@sidereal/content/prefabs";
+import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
+import { readFileSync } from "node:fs";
 
 type Row = Record<string, any>;
 let fixtureSequence = 0;
@@ -219,6 +222,26 @@ test("Wren exposes its hold crate and bunk locker as storage sockets with approa
   expect(crate.centreM).toEqual([2.15, -1.7]);
   // Front (fore) first: ship-local +y from the crate face.
   expect(crate.approachesM[0]).toEqual([2.15, -0.75]);
+});
+
+test("live r2 Wren instances (catalog revision 1) expose the same hold crate socket", () => {
+  const r2 = readShipPrefab(
+    JSON.parse(
+      readFileSync(
+        new URL("./fixtures/fed-s-wren-r2.prefab.json", import.meta.url),
+        "utf8",
+      ),
+    ),
+  );
+  const sockets = prefabCargoSockets(
+    r2,
+    0,
+    prefabComponentCatalogFor("ship-components-v1@1"),
+  );
+  expect(sockets.map((s) => s.key)).toContain("hold/cargo.standard.medium");
+  expect(sockets.map((s) => s.key)).toContain(
+    "bunks/shipyard.equipment.wall-locker",
+  );
 });
 
 test("starter wardrobe delivery is uniforms, three role sets and the tier 1-2 pieces", () => {
