@@ -43,6 +43,10 @@ import {
   type VoxelCrewMotion,
 } from "./voxel-crew-clips";
 import { blendProgress } from "./animation";
+import {
+  instantiateSharedCrewBody,
+  type CrewBodyAssets,
+} from "./crew-asset-cache";
 
 type Mask = "full" | "upper" | "lower";
 export type VoxelCrewBodyRegion = VoxelCrewRegion;
@@ -84,6 +88,30 @@ export function voxelCrewSlotColors(
   };
 }
 
+/** A body parsed for one crew only (previews, tests, in-memory assets). */
+async function loadOwnedCrewBody(
+  scene: Scene,
+  assetUrl: string | ArrayBufferView,
+): Promise<CrewBodyAssets> {
+  const container: AssetContainer = await SceneLoader.LoadAssetContainerAsync(
+    "",
+    assetUrl,
+    scene,
+    undefined,
+    ".glb",
+  );
+  container.addAllToScene();
+  return {
+    meshes: container.meshes,
+    materials: container.materials,
+    transformNodes: container.transformNodes,
+    rootNodes: container.rootNodes as TransformNode[],
+    animationGroups: container.animationGroups,
+    skeletons: container.skeletons,
+    dispose: () => container.dispose(),
+  };
+}
+
 export function voxelCrewVariant(appearance: CrewAppearance): VoxelCrewVariant {
   const body = resolveCrewAppearance(appearance).bodyType as string;
   return body === "female" || body === "neutral" ? body : "male";
@@ -102,21 +130,23 @@ export async function createVoxelCrewVisual(
     /** Face atlas; omitted = fetch the default atlas (browser); false = keep the GLB's baked face. */
     faceAtlas?: { atlas: FaceAtlas; image: FaceAtlasImage } | false;
     random?: () => number;
+    /**
+     * Clone the body from one per-scene parsed GLB (shared vertex/index buffers; per-body skeleton,
+     * clips and tinted materials). Used by the game for the local character and every crewmate.
+     * Requires a URL; an in-memory asset always loads its own copy.
+     */
+    shared?: boolean;
   } = {},
 ) {
-  const container: AssetContainer = await SceneLoader.LoadAssetContainerAsync(
-    "",
-    assetUrl,
-    scene,
-    undefined,
-    ".glb",
-  );
+  const container: CrewBodyAssets =
+    options.shared && typeof assetUrl === "string"
+      ? await instantiateSharedCrewBody(scene, assetUrl)
+      : await loadOwnedCrewBody(scene, assetUrl);
   const root = new TransformNode("crew-placement", scene);
   root.parent = parent;
   const visual = new TransformNode("crew-model", scene);
   visual.parent = root;
   // crew_rig faces Blender +Y, exported as glTF -Z, which is already gameplay forward.
-  container.addAllToScene();
   for (const mesh of container.meshes) setMeshRole(mesh, "crew");
   for (const node of container.rootNodes) node.parent = visual;
   const nodes = new Map(container.transformNodes.map((n) => [n.name, n]));

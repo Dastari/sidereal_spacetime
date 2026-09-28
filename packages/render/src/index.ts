@@ -82,6 +82,8 @@ import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
 import { createVoxelCrewVisual } from "./crew/voxel-crew";
 import { equipVoxelCrewItem } from "./crew/voxel-crew-kit";
+import { createRemoteCrew, type RemoteCrewState } from "./crew/remote-crew";
+export type { RemoteCrewState } from "./crew/remote-crew";
 import { moldedLightRig, setMoldedClearCoat } from "./molded-plastic";
 import {
   contactShadingRequested,
@@ -183,6 +185,8 @@ export type SceneState = {
   reducedMotion?: boolean;
   bodies?: readonly SpaceBodyState[];
   crewAppearance?: CrewAppearance;
+  /** Other characters on this deck (server views only; never inventory or health). */
+  crewmates?: readonly RemoteCrewState[];
 };
 export interface WorldOptions {
   /** Opt-in accepted shared projections, separate from the private local ship. */
@@ -485,7 +489,9 @@ async function buildWorld(
         // Voxel crew (first revision): authored actions drive the arms; the legacy aim-space
         // controller targets the r008 rig and stays unbound. The head kit and armour follow the
         // character's appearance and equipped inventory (see customizeCrew).
-        const voxel = await createVoxelCrewVisual(scene, shipRoot);
+        const voxel = await createVoxelCrewVisual(scene, shipRoot, undefined, {
+          shared: true,
+        });
         crew = voxel;
         crewOutfit = createVoxelCrewOutfit(scene, voxel, {
           onChange: () => refreshCrewPresentation(),
@@ -668,12 +674,18 @@ async function buildWorld(
         }
       : createFlightEffects(scene, shipRoot);
   const localGlowOcclusion = createShipGlowOccluders(scene, shipRoot, glow);
+  // Other characters on this deck: created once the local crew exists (voxel bundle only).
+  let remoteCrew: ReturnType<typeof createRemoteCrew> | undefined;
+  const actorMeshes = () => [
+    ...(crew?.root.getChildMeshes() ?? []),
+    ...(remoteCrew?.meshes() ?? []),
+  ];
   const refreshLocalGlow = () =>
     localGlowOcclusion.set([
       ...flightEffects.meshes,
       ...emitters,
       ...imported.meshes,
-      ...(crew?.root.getChildMeshes() ?? []),
+      ...actorMeshes(),
     ]);
   refreshLocalGlow();
   environment.setOccluders([
@@ -684,7 +696,7 @@ async function buildWorld(
   // layer, receive the actor lighting and stay capped to a small emissive accent.
   refreshCrewPresentation = () => {
     if (!crew) return;
-    const meshes = crew.root.getChildMeshes();
+    const meshes = actorMeshes();
     if (crewOutfit) {
       // Molded-plastic finish (inside toneCrewEmissive) plus the shared cool fill and rim.
       toneCrewEmissive(meshes);
@@ -753,8 +765,31 @@ async function buildWorld(
   const localLights = createLocalLightBudget();
   const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
   for (const mesh of combatAim.meshes) glow.addIncludedOnlyMesh(mesh);
-  if (prefabBinding)
-    combatAim.setClip(createPrefabBeamClip(shipRoot, prefabBinding));
+  const prefabBeamClip = prefabBinding
+    ? createPrefabBeamClip(shipRoot, prefabBinding)
+    : undefined;
+  if (crewOutfit && !assetFailure)
+    remoteCrew = createRemoteCrew(scene, shipRoot, {
+      onMeshesChanged: () => refreshCrewPresentation(),
+      onEffectMesh: (mesh) => glow.addIncludedOnlyMesh(mesh),
+      // Another body's accepted shot: the same authoritative flash as the local shooter sees.
+      onShot: (impact) => {
+        if (impact.struck)
+          for (const mesh of impactFlash.play(impact.x, impact.y, 1.3))
+            glow.addIncludedOnlyMesh(mesh as Mesh);
+      },
+    });
+  // The laser sight stops at structure (prefab ships) and at crewmates, as the server shot does.
+  if (prefabBeamClip || remoteCrew)
+    combatAim.setClip((origin, direction, range) => {
+      const structure = prefabBeamClip?.(origin, direction, range),
+        body = remoteCrew?.beamClip(origin, direction, range);
+      return structure === undefined
+        ? body
+        : body === undefined
+          ? structure
+          : Math.min(structure, body);
+    });
   let state: SceneState = {
     heading: 0,
     x: 0,
@@ -1032,6 +1067,9 @@ async function buildWorld(
         reducedMotion: state.reducedMotion,
         shotSequence: state.combat?.shotSequence,
       });
+    remoteCrew?.frame(cabinVisible && debugFeatures.snapshot().characters, {
+      reducedMotion: state.reducedMotion,
+    });
     const poseItem = selectedAsset
       ? options.equipmentPose?.items[selectedAsset]
       : undefined;
@@ -1314,6 +1352,10 @@ async function buildWorld(
     getCrewVisual() {
       return crew;
     },
+    /** Other characters currently drawn (review diagnostics; presentation only). */
+    getRemoteCrew() {
+      return remoteCrew?.diagnostics() ?? [];
+    },
     getAntialiasing() {
       return antialiasing.snapshot();
     },
@@ -1425,6 +1467,10 @@ async function buildWorld(
         options.onLoadStage?.("finishing");
       }
       state = next;
+      remoteCrew?.sync(next.crewmates ?? [], {
+        x: next.localX,
+        y: next.localY,
+      });
       objects.select(next.selectedObject);
       prefabPicker?.select(next.selectedObject);
       const impact = next.combat?.impact;
@@ -1499,6 +1545,8 @@ async function buildWorld(
       equipmentRevision++;
       equipmentPose?.bind(undefined);
       equipment?.dispose();
+      remoteCrew?.dispose();
+      remoteCrew = undefined;
       crewOutfit?.dispose();
       crew?.dispose();
       localGlowOcclusion.dispose();

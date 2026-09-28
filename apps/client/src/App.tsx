@@ -74,6 +74,7 @@ import {
 } from "./objects";
 import type { CrewAppearance } from "../../../packages/render/src/crew/appearance";
 import type { SceneState } from "../../../packages/render/src";
+import { crewmatesFromViews } from "./crewmates";
 import { resolveCrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import {
   createGameUI,
@@ -1216,6 +1217,8 @@ export default function App({
             },
             onLoadError: (text) => {
               if (!disposed) {
+                // The loading screen shows a generic retry; keep the cause diagnosable.
+                console.error("Game load failed:", text);
                 setLoadFailure(text);
                 setModelStatus("Vessel unavailable");
               }
@@ -1406,6 +1409,15 @@ export default function App({
           : 0,
       sprinting: actor?.sprinting ?? false,
       dead: ownVitals?.state === "dead",
+      // Other characters on this deck: two server views, never their inventory or health.
+      crewmates:
+        ready && c && actor?.connected
+          ? crewmatesFromViews(
+              c.db.currentInteriorCrew.iter(),
+              c.db.visibleCrewPresentation.iter(),
+              actor.id,
+            )
+          : [],
       vistaId: systemScape ? DEFAULT_SPACE_VISTA : vistaId,
       spaceRegion: activeSpaceRegion,
       reducedMotion,
@@ -1667,7 +1679,6 @@ export default function App({
             {zoneNames.length ? zoneNames.join(" / ") : "Deep space"}
           </div>
         )}
-        <ConstructionReview connection={c} onError={setError} />
         {!passengerVisit && (
           <ConstructionReview connection={c} onError={setError} />
         )}
