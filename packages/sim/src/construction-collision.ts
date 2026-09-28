@@ -172,6 +172,17 @@ export function deckLineOfSight(frame: DeckCollisionFrame, from: DeckLocation, t
   }
   return true;
 }
+/** Recovery for a body already overlapping approved obstacles (for example furniture collision
+ * added after it stood there): those obstacles are ignored until it has walked clear, so it can
+ * leave them but not enter any other. Walls, doors and floor support are unchanged. */
+export function withoutPenetratedObstacles(frame: DeckCollisionFrame, position: Point, radiusM: number): DeckCollisionFrame {
+  const touching = (o: DeckObstacle) => inside(position, o.vertices) || o.vertices.some((a, i) =>
+    distanceToSegment(position, { id: '', a, b: o.vertices[(i + 1) % o.vertices.length], halfWidthM: 0 }) < radiusM - EPS);
+  const stuck = new Set(frame.obstacles.filter(touching).map(o => o.id));
+  if (!stuck.size) return frame;
+  const edgeOfStuck = (id: string) => id.startsWith('obstacle:') && stuck.has((JSON.parse(id.slice(9)) as [string, number])[0]);
+  return { ...frame, obstacles: frame.obstacles.filter(o => !stuck.has(o.id)), segments: frame.segments.filter(s => !edgeOfStuck(s.id)) };
+}
 export function canReachOnDeck(frame: DeckCollisionFrame, from: DeckLocation, to: DeckLocation, maximumDistanceM: number): boolean {
   return Number.isFinite(maximumDistanceM) && maximumDistanceM >= 0 && maximumDistanceM <= DECK_COLLISION_LIMITS.coordinateM
     && Math.hypot(...sub(to.position, from.position)) <= maximumDistanceM && deckLineOfSight(frame, from, to);

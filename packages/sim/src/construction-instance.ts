@@ -18,6 +18,10 @@ import { nativeTraversalRoomCollision } from "./construction-traversal-document"
 import { nativePressureRoomCollision } from "./construction-pressure-document";
 import { pinnedFamilyCollision } from "./construction-boundary-family";
 import {
+  prefabConstructionObstacles,
+  prefabConstructionSpawnPreference,
+} from "./prefab-deck-objects";
+import {
   CONSTRUCTION_COMPILER,
   CONSTRUCTION_SCHEMA,
   CONSTRUCTION_LIMITS,
@@ -260,22 +264,25 @@ export function planConstructionInstance(
   );
   const coverage = new Set<string>(),
     obstacles: DeckObstacle[] =
-      source.wayfarerRebuild || source.wayfarerExterior
-        ? (source.wayfarerExterior
-            ? planWayfarerExteriorGame(source as WayfarerExteriorDocument)
-            : planWayfarerRebuildGame(source)
-          ).sourceObstacles.filter((o) => o.id.startsWith("rebuild-"))
-        : source.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id
-          ? planPinnedInsetBoundaries(source, request.sourceDeckId).obstacles
-          : source.stairRoom
-            ? nativeStairRoomCollision(source, request.sourceDeckId)
-            : source.traversalRoom
-              ? nativeTraversalRoomCollision(source, request.sourceDeckId)
-              : source.pressureRoom
-                ? nativePressureRoomCollision(source, request.sourceDeckId)
-                : source.boundaryKit?.revision === "r004"
-                  ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
-                  : [];
+      "prefab" in source && source.prefab
+        ? // Trusted prefab ships spawn clear of their modules and furniture.
+          prefabConstructionObstacles(source)!
+        : source.wayfarerRebuild || source.wayfarerExterior
+          ? (source.wayfarerExterior
+              ? planWayfarerExteriorGame(source as WayfarerExteriorDocument)
+              : planWayfarerRebuildGame(source)
+            ).sourceObstacles.filter((o) => o.id.startsWith("rebuild-"))
+          : source.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id
+            ? planPinnedInsetBoundaries(source, request.sourceDeckId).obstacles
+            : source.stairRoom
+              ? nativeStairRoomCollision(source, request.sourceDeckId)
+              : source.traversalRoom
+                ? nativeTraversalRoomCollision(source, request.sourceDeckId)
+                : source.pressureRoom
+                  ? nativePressureRoomCollision(source, request.sourceDeckId)
+                  : source.boundaryKit?.revision === "r004"
+                    ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
+                    : [];
   for (const [i, binding] of [...request.objectCollisionBindings]
     .sort((a, b) => compareText(a.sourceObjectId, b.sourceObjectId))
     .entries()) {
@@ -331,7 +338,16 @@ export function planConstructionInstance(
   let positionM: Point | undefined,
     candidatesChecked = 0;
   const seenCandidates = new Set<string>();
-  for (const candidate of candidates(collision.floors)) {
+  // Prefab ships prefer the pilot approach (kept clear of furniture) so a spawn never lands in a
+  // pocket that modules cut off from the doors; floor candidates follow unchanged.
+  const preferred: Point[] =
+    "prefab" in source && source.prefab
+      ? prefabConstructionSpawnPreference(source)
+      : [];
+  for (const candidate of (function* () {
+    yield* preferred;
+    yield* candidates(collision.floors);
+  })()) {
     const key = candidate.join(",");
     if (seenCandidates.has(key)) continue;
     seenCandidates.add(key);

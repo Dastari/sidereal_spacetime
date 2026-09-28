@@ -38,3 +38,22 @@ export const combatReceipt = table(
     createdMicros: t.u64(),
   },
 );
+/** Private: the authoritative end point of each character's latest accepted shot, in the
+ * shooter's ship-local frame. Projected only to the shooter through `own_combat_impact`. */
+export const combatImpact = table(
+  { name: "combat_impact" },
+  {
+    characterId: t.string().primaryKey(),
+    itemId: t.string(),
+    shotSequence: t.u64(),
+    shipId: t.string(),
+    x: t.f64(),
+    y: t.f64(),
+    distanceM: t.f64(),
+    /** wall | glass | hull | hatch | object | ship | none */
+    kind: t.string(),
+    /** Own-ship object/structure id, or the other ship's id for kind "ship". */
+    targetId: t.string(),
+    createdMicros: t.u64(),
+  },
+);

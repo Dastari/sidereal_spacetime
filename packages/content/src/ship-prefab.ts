@@ -744,6 +744,82 @@ export function placeMount(
   };
 }
 
+// ---------------------------------------------------------------- approach zones
+/** Door jamb kept inside each end of a 2 m door module (1.5 m clear opening). */
+export const DOOR_JAMB_M = 0.25;
+/** Keep-clear depth in front of a door's clear opening on each walkable side: one 0.6 m body plus margin. */
+export const DOOR_APPROACH_DEPTH_M = 0.7;
+/** Pilot approach: 0.875 m aft of the station (sim `prefabPilotPose`), kept clear as a square. */
+export const PILOT_APPROACH_OFFSET_M = 0.875;
+export const PILOT_APPROACH_HALF_M = 0.4;
+type Rect4 = [number, number, number, number];
+export interface ApproachZone {
+  /** Door id, or "pilot-approach". */
+  id: string;
+  /** Plan rectangle [x0, y0, x1, y1] (m). */
+  rect: [number, number, number, number];
+}
+/** True when two plan rectangles share positive area (touching edges do not overlap). */
+export function planRectsOverlap(
+  a: readonly [number, number, number, number],
+  b: readonly [number, number, number, number],
+  eps = 1e-6,
+): boolean {
+  return (
+    a[0] < b[2] - eps &&
+    b[0] < a[2] - eps &&
+    a[1] < b[3] - eps &&
+    b[1] < a[3] - eps
+  );
+}
+/**
+ * Plan rectangles that must stay walkable so furniture can never seal a door or the pilot seat:
+ * the clear opening of every axis-aligned door extended DOOR_APPROACH_DEPTH_M into each side that
+ * has floor (exterior hatches: the inside only), plus the pilot approach square.
+ */
+export function deckApproachZones(
+  doors: readonly DerivedDoor[],
+  station: readonly [number, number] | null,
+  walkable: (x: number, y: number) => boolean,
+): ApproachZone[] {
+  const zones: ApproachZone[] = [];
+  for (const d of doors) {
+    const horizontal = Math.abs(d.a[1] - d.b[1]) < 1e-9;
+    const vertical = Math.abs(d.a[0] - d.b[0]) < 1e-9;
+    if (horizontal === vertical) continue;
+    const along = horizontal ? 0 : 1;
+    const lo = Math.min(d.a[along], d.b[along]) + DOOR_JAMB_M;
+    const hi = Math.max(d.a[along], d.b[along]) - DOOR_JAMB_M;
+    if (hi <= lo) continue;
+    const line = horizontal ? d.a[1] : d.a[0];
+    const mid = (lo + hi) / 2;
+    for (const side of [-1, 1]) {
+      const probe = line + side * 0.5;
+      if (!(horizontal ? walkable(mid, probe) : walkable(probe, mid))) continue;
+      const n0 = Math.min(line, line + side * DOOR_APPROACH_DEPTH_M);
+      const n1 = Math.max(line, line + side * DOOR_APPROACH_DEPTH_M);
+      zones.push({
+        id: d.id,
+        rect: horizontal ? [lo, n0, hi, n1] : [n0, lo, n1, hi],
+      });
+    }
+  }
+  if (station) {
+    const x = station[0] - PILOT_APPROACH_OFFSET_M;
+    const y = station[1];
+    zones.push({
+      id: "pilot-approach",
+      rect: [
+        x - PILOT_APPROACH_HALF_M,
+        y - PILOT_APPROACH_HALF_M,
+        x + PILOT_APPROACH_HALF_M,
+        y + PILOT_APPROACH_HALF_M,
+      ],
+    });
+  }
+  return zones;
+}
+
 // ---------------------------------------------------------------- interior derivation
 export interface DerivedFloor {
   cell: [number, number];
@@ -1348,6 +1424,64 @@ export function deriveInterior(
     );
   });
 
+  // Room furniture never stands in a door or pilot approach: those sockets are skipped so the
+  // dressed deck and the authoritative walking obstacles (sim/prefab-deck-objects) agree.
+  const approaches = deckApproachZones(
+    doors,
+    station?.at ?? null,
+    (x, y) => roomAt(x, y) !== null,
+  );
+  const socketRect = (s: DerivedSocket, dx = 0, dy = 0): Rect4 => [
+    s.at[0] + dx,
+    s.at[1] + dy,
+    s.at[0] + s.size[0] + dx,
+    s.at[1] + s.size[1] + dy,
+  ];
+  const clearSockets: DerivedSocket[] = [];
+  for (const s of freeSockets) {
+    const blocked = (r: Rect4) =>
+      approaches.some((z) => planRectsOverlap(z.rect, r)) ||
+      clearSockets.some((o) => planRectsOverlap(socketRect(o), r));
+    if (
+      s.control ||
+      !approaches.some((z) => planRectsOverlap(z.rect, socketRect(s)))
+    ) {
+      clearSockets.push(s);
+      continue;
+    }
+    // Nudge the smallest distance out of the approach zones, staying 0.2 m inside the room.
+    const own = floors.filter((f) => f.room === s.room).map((f) => f.cell);
+    const bounds: Rect4 = [
+      Math.min(...own.map((c) => c[0])) + 0.2,
+      Math.min(...own.map((c) => c[1])) + 0.2,
+      Math.max(...own.map((c) => c[0])) + 0.8,
+      Math.max(...own.map((c) => c[1])) + 0.8,
+    ];
+    const r = socketRect(s);
+    const shifts = approaches
+      .filter((z) => planRectsOverlap(z.rect, r))
+      .flatMap((z) => [
+        [z.rect[0] - r[2], 0],
+        [z.rect[2] - r[0], 0],
+        [0, z.rect[1] - r[3]],
+        [0, z.rect[3] - r[1]],
+      ])
+      .sort((a, b) => Math.hypot(a[0], a[1]) - Math.hypot(b[0], b[1]));
+    for (const [dx, dy] of shifts) {
+      const q = socketRect(s, dx, dy);
+      if (
+        q[0] < bounds[0] - 1e-9 ||
+        q[1] < bounds[1] - 1e-9 ||
+        q[2] > bounds[2] + 1e-9 ||
+        q[3] > bounds[3] + 1e-9 ||
+        blocked(q)
+      )
+        continue;
+      clearSockets.push({ ...s, at: [q[0] + 0, q[1] + 0] });
+      break;
+    }
+  }
+
   return {
     deck,
     volume: vg.volume.id,
@@ -1357,7 +1491,7 @@ export function deriveInterior(
     partitions,
     doors,
     posts,
-    sockets: freeSockets,
+    sockets: clearSockets,
     lights,
     labels,
     compartments,

@@ -190,7 +190,12 @@ import { connectionPresence, connected, lastDisconnected } from "./presence";
 import { characterAppearance, appearanceReceipt } from "./appearance-tables";
 import * as appearance from "./appearance";
 import { storageBinding } from "./storage-tables";
-import { combatAim, weaponEnergy, combatReceipt } from "./combat-tables";
+import {
+  combatAim,
+  weaponEnergy,
+  combatReceipt,
+  combatImpact,
+} from "./combat-tables";
 import * as combat from "./combat";
 import { alignPilotLayout } from "./pilot-layout";
 import { pilotLayoutReceipt } from "./pilot-layout-tables";
@@ -381,6 +386,7 @@ const db = schema({
   combatAim,
   weaponEnergy,
   combatReceipt,
+  combatImpact,
   pilotLayoutReceipt,
   interactionObject,
   couchSeat,
@@ -988,6 +994,11 @@ export const ownCombat = db.view(
   { name: "own_combat", public: true },
   t.array(combat.combatProjection),
   auth.gameView(combat.combatView),
+);
+export const ownCombatImpact = db.view(
+  { name: "own_combat_impact", public: true },
+  t.array(combat.impactProjection),
+  auth.gameView(combat.impactView),
 );
 export const setCombatAim = db.reducer(
   { active: t.bool(), angle: t.f64() },

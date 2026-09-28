@@ -113,6 +113,7 @@ import OwnCargoGridsRow from "./own_cargo_grids_table";
 import OwnCarriedInventoryRevisionsRow from "./own_carried_inventory_revisions_table";
 import OwnCharactersRow from "./own_characters_table";
 import OwnCombatRow from "./own_combat_table";
+import OwnCombatImpactRow from "./own_combat_impact_table";
 import OwnConstructionBlueprintsRow from "./own_construction_blueprints_table";
 import OwnConstructionDecksRow from "./own_construction_decks_table";
 import OwnConstructionDoorsRow from "./own_construction_doors_table";
@@ -271,6 +272,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnCombatRow),
+  ownCombatImpact: __table({
+    name: 'own_combat_impact',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnCombatImpactRow),
   ownConstructionBlueprints: __table({
     name: 'own_construction_blueprints',
     indexes: [

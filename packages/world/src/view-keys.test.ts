@@ -11,7 +11,7 @@ vi.mock("spacetimedb/server", async () => {
 });
 import { appearanceProjection } from "./appearance";
 import { identityLinkProjection } from "./auth";
-import { combatProjection } from "./combat";
+import { combatProjection, impactProjection } from "./combat";
 import {
   grantProjection,
   draftProjection,
@@ -49,6 +49,7 @@ const projections = [
   [appearanceProjection, "characterId"],
   [identityLinkProjection, "id"],
   [combatProjection, "characterId"],
+  [impactProjection, "characterId"],
   [grantProjection, "id"],
   [draftProjection, "id"],
   [blueprintProjection, "id"],

@@ -13,6 +13,7 @@ import {
   recoveredEnergy,
   validateShot,
 } from "../../sim/src/combat";
+import { resolveShotImpact } from "./combat-impact";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 function actorFor(ctx: ReadContext) {
@@ -164,6 +165,25 @@ export function fire(
   };
   if (old) ctx.db.weaponEnergy.itemId.update(row);
   else ctx.db.weaponEnergy.insert(row);
+  // Where the accepted shot ends: walls, hull, tall furniture or another ship stop the beam.
+  // Recorded for the shooter's impact effect; no damage is applied (combat policy is pending).
+  const hit = resolveShotImpact(ctx, actor, aim.angle, definition.rangeMeters);
+  const impact = {
+    characterId: actor.id,
+    itemId: item.id,
+    shotSequence: row.shotSequence,
+    shipId: actor.shipId,
+    x: hit.point[0],
+    y: hit.point[1],
+    distanceM: hit.distanceM,
+    kind: hit.kind,
+    // The other ship's identity is not disclosed through the shooter's impact row.
+    targetId: hit.kind === "ship" ? "" : hit.targetId,
+    createdMicros: now,
+  };
+  if (ctx.db.combatImpact.characterId.find(actor.id))
+    ctx.db.combatImpact.characterId.update(impact);
+  else ctx.db.combatImpact.insert(impact);
   const receipts = [...ctx.db.combatReceipt.by_character.filter(actor.id)].sort(
     (a, b) => (a.createdMicros < b.createdMicros ? -1 : 1),
   );
@@ -175,6 +195,37 @@ export function fire(
     request,
     createdMicros: now,
   });
+}
+export const impactProjection = t.row("CombatImpactStatus", {
+  characterId: t.string().primaryKey(),
+  itemId: t.string(),
+  shotSequence: t.u64(),
+  shipId: t.string(),
+  x: t.f64(),
+  y: t.f64(),
+  distanceM: t.f64(),
+  kind: t.string(),
+  targetId: t.string(),
+});
+/** The actor's own latest shot end point, only while still aboard the ship it was fired on. */
+export function impactView(ctx: ReadContext) {
+  const actor = actorFor(ctx);
+  if (!actor?.connected) return [];
+  const row = ctx.db.combatImpact.characterId.find(actor.id);
+  if (!row || row.shipId !== actor.shipId) return [];
+  return [
+    {
+      characterId: row.characterId,
+      itemId: row.itemId,
+      shotSequence: row.shotSequence,
+      shipId: row.shipId,
+      x: row.x,
+      y: row.y,
+      distanceM: row.distanceM,
+      kind: row.kind,
+      targetId: row.targetId,
+    },
+  ];
 }
 /** Effective energy is projected at <=4Hz. Passive recovery never changes action CAS revision. */
 export function stepCombat(ctx: Context) {

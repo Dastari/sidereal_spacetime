@@ -28,6 +28,7 @@ import { nativePressureRoomCollision } from "@sidereal/sim/construction-pressure
 import { nativeStairRoomCollision } from "@sidereal/sim/construction-stairs-document";
 import { compileConstruction } from "@sidereal/sim/construction-transactions";
 import { nativeTraversalRoomCollision } from "@sidereal/sim/construction-traversal-document";
+import { prefabConstructionObstacles } from "@sidereal/sim/prefab-deck-objects";
 import { stableStringify } from "@sidereal/sim/layout-geometry";
 import { PRESERVED_FUEL_MOUNT } from "@sidereal/sim/wayfarer-refit-mount";
 import { REFIT_FUEL_ATTACHMENT } from "@sidereal/sim/wayfarer-refit-audit";
@@ -322,17 +323,20 @@ export function createDebugCollisionSource(
       d.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256 ||
       compileConstruction(input!.documentJson).sha256 ===
         QUALIFIED_WAYFARER_SHA256;
+    const prefab = prefabConstructionObstacles(d as { prefab?: unknown });
     const obstacles = wayfarer
       ? wayfarerSourceObstacles(d, deckId)
-      : d.stairRoom
-        ? nativeStairRoomCollision(d, deckId)
-        : d.traversalRoom
-          ? nativeTraversalRoomCollision(d, deckId)
-          : d.pressureRoom
-            ? nativePressureRoomCollision(d, deckId)
-            : d.boundaryKit?.revision === "r004"
-              ? pinnedFamilyCollision(d.layout, deckId)
-              : [];
+      : prefab
+        ? prefab
+        : d.stairRoom
+          ? nativeStairRoomCollision(d, deckId)
+          : d.traversalRoom
+            ? nativeTraversalRoomCollision(d, deckId)
+            : d.pressureRoom
+              ? nativePressureRoomCollision(d, deckId)
+              : d.boundaryKit?.revision === "r004"
+                ? pinnedFamilyCollision(d.layout, deckId)
+                : [];
     requireSource(
       wayfarer || !input!.attachments?.length,
       "Unqualified refit collision source",
