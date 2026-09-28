@@ -1,4 +1,5 @@
 import * as passengerViews from "./construction-passenger-views";
+import * as crewPresentation from "./crew-presentation";
 import * as passengers from "./construction-passenger-authority";
 import { commitFlightCharacter } from "./construction-flight-dirty";
 import {
@@ -1683,6 +1684,14 @@ export const currentInteriorCrew = db.view(
   { name: "current_interior_crew", public: true },
   t.array(passengerViews.interiorCrewProjection),
   auth.gameView(passengerViews.currentInteriorCrew),
+);
+
+/** Additive (2026-09-29): looks, visible equipment and pose state for the other bodies that
+ * `current_interior_crew` already shows the viewer; see crew-presentation.ts. */
+export const visibleCrewPresentation = db.view(
+  { name: "visible_crew_presentation", public: true },
+  t.array(crewPresentation.crewPresentationProjection),
+  auth.gameView(crewPresentation.visibleCrewPresentation),
 );
 
 export const ownSystemMaps = db.view(

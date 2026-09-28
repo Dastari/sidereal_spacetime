@@ -1,6 +1,7 @@
 /** Real websocket clients and production reducers against an already published,
  * isolated smoke database. No client-authored flight transforms or damage. */
 import assert from "node:assert/strict";
+import { execFileSync } from "node:child_process";
 import { DbConnection, tables } from "../packages/net/src/generated";
 import {
   enterNativePilot,
@@ -50,6 +51,7 @@ async function client(name: string) {
           tables.ownPassengerVisit,
           tables.currentPassengerInterior,
           tables.currentInteriorCrew,
+          tables.visibleCrewPresentation,
           tables.ownInventoryItems,
           tables.ownInventoryContainers,
           tables.ownInventoryState,
@@ -96,6 +98,27 @@ async function intent(
     sprint: false,
   });
 }
+// New characters wait for a ship unless an operator configures a starter. Passenger admission
+// needs the qualified rebuilt Wayfarer, so this isolated -smoke database opts into that starter
+// (as scripts/smoke.ts does; never done on live).
+execFileSync(
+  ".tools/spacetime/spacetime",
+  [
+    "--root-dir=.tools/spacetime",
+    "call",
+    "--server",
+    host,
+    "--yes",
+    "--no-config",
+    database,
+    "operator_set_starter_prefab",
+    JSON.stringify(`ifcs-passenger-starter-${Date.now()}`),
+    JSON.stringify("legacy-wayfarer-r002"),
+    JSON.stringify("legacy-wayfarer"),
+    "true",
+  ],
+  { stdio: "inherit" },
+);
 const a = await client("IFCS captain"),
   b = await client("IFCS passenger");
 try {
@@ -164,6 +187,9 @@ try {
   await wait(() => physics(a, shipId).status === "ready", "cargo test settled");
   const initialMass = physics(a, shipId).massKg;
   assert.equal(b.db.currentPassengerInterior.count(), 0n);
+  // Remote crew: separate ships show no other body.
+  assert.equal(a.db.visibleCrewPresentation.count(), 0n);
+  assert.equal(b.db.visibleCrewPresentation.count(), 0n);
   const access = [...a.db.ownGameShipAccess.iter()][0]!;
   await a.reducers.grantShipPassenger({
     shipId,
@@ -212,6 +238,42 @@ try {
   );
   assert.equal(a.db.currentInteriorCrew.count(), 2n);
   assert.equal(b.db.currentInteriorCrew.count(), 2n);
+  // Remote crew (2026-09-29): on one deck each sees the other's looks and pose, never itself,
+  // never an item UUID or health.
+  await wait(
+    () =>
+      a.db.visibleCrewPresentation.count() === 1n &&
+      b.db.visibleCrewPresentation.count() === 1n,
+    "crew presentation both ways",
+  );
+  const seenByCaptain = [...a.db.visibleCrewPresentation.iter()][0]!,
+    seenByPassenger = [...b.db.visibleCrewPresentation.iter()][0]!;
+  assert.equal(seenByCaptain.characterId, passengerId);
+  assert.equal(seenByPassenger.characterId, actor(a).id);
+  assert.equal(seenByCaptain.shipId, shipId);
+  assert.deepEqual(Object.keys(seenByCaptain).sort(), [
+    "aimActive",
+    "aimAngle",
+    "appearanceJson",
+    "characterId",
+    "dead",
+    "deckId",
+    "equipmentJson",
+    "seated",
+    "shipId",
+    "shotSequence",
+    "shotStruck",
+    "shotX",
+    "shotY",
+  ]);
+  assert.equal(seenByCaptain.dead, false);
+  for (const item of b.db.ownInventoryItems.iter())
+    assert(
+      !JSON.stringify(seenByCaptain, (_k, v) =>
+        typeof v === "bigint" ? String(v) : v,
+      ).includes(item.id),
+      "no item UUID in the crew presentation",
+    );
   await assert.rejects(
     b.reducers.enterAuthoredPilot({
       stationId: flight(a).stationId,
@@ -382,6 +444,12 @@ try {
     "revocation and supported return",
   );
   assert.deepEqual(ids(b), inventory);
+  await wait(
+    () =>
+      a.db.visibleCrewPresentation.count() === 0n &&
+      b.db.visibleCrewPresentation.count() === 0n,
+    "crew presentation ends with the visit",
+  );
   console.log(
     JSON.stringify(
       {
@@ -393,6 +461,7 @@ try {
         removedMass,
         cargoMovesCOMWithoutFrameTranslation: true,
         passengerWalkingDuringAsymmetricTurn: true,
+        crewPresentationSameDeckOnly: true,
         ownerOnlyPilotChecks: true,
         boundedPowerAfterRemoval: true,
         noPoweredEngineCoasts: true,

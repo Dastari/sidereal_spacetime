@@ -156,6 +156,7 @@ import OwnWayfarerRefitOfferRow from "./own_wayfarer_refit_offer_table";
 import OwnWorldAdmissionRow from "./own_world_admission_table";
 import VisibleBodyDescriptionsRow from "./visible_body_descriptions_table";
 import VisibleBodyMotionRow from "./visible_body_motion_table";
+import VisibleCrewPresentationRow from "./visible_crew_presentation_table";
 import VisibleShipDescriptionsRow from "./visible_ship_descriptions_table";
 import VisibleShipMotionRow from "./visible_ship_motion_table";
 
@@ -569,6 +570,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, VisibleBodyMotionRow),
+  visibleCrewPresentation: __table({
+    name: 'visible_crew_presentation',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleCrewPresentationRow),
   visibleShipDescriptions: __table({
     name: 'visible_ship_descriptions',
     indexes: [

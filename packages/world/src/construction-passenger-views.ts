@@ -136,9 +136,14 @@ export const interiorCrewProjection = t.row("InteriorCrew", {
   sprinting: t.bool(),
 });
 const support = createConstructionStandingSupport();
-/** Current same-deck bodies only; never account identities or inventory. Retained
- * disconnected/recovering bodies remain physically present and visible to crew. */
-export function currentInteriorCrew(ctx: Context) {
+/**
+ * The bodies the current actor may see: characters standing on the actor's own current deck of the
+ * ship the actor is aboard, when the actor holds owned or accepted-passenger interior access there.
+ * Stair/traversal bodies are excluded (their projections own moving vertical poses). Returns
+ * undefined when nothing is visible, including when the bounded scan (256 bodies) is exceeded.
+ * Shared by every crew projection so they can never disagree about who is visible.
+ */
+export function visibleInteriorBodies(ctx: Context) {
   const a = currentActor(ctx),
     l = a && ctx.db.constructionLocation.characterId.find(a.id);
   if (
@@ -147,16 +152,20 @@ export function currentInteriorCrew(ctx: Context) {
     (!ownedGameShipAccess(ctx, a.shipId, l.deckId).readInterior &&
       !acceptedPassengerAccess(ctx, a.id).readInterior)
   )
-    return [];
-  const i = ctx.db.constructionInstance.id.find(a.shipId),
-    d = ctx.db.constructionDeck.id.find(l.deckId);
-  if (!i || !d) return [];
-  const out = [];
+    return undefined;
+  const instance = ctx.db.constructionInstance.id.find(a.shipId),
+    deck = ctx.db.constructionDeck.id.find(l.deckId);
+  if (!instance || !deck) return undefined;
+  const bodies = [];
   let count = 0;
   for (const body of ctx.db.character.by_ship.filter(a.shipId)) {
-    if (++count > 256) return [];
+    if (++count > 256) return undefined;
     const location = ctx.db.constructionLocation.characterId.find(body.id);
-    if (!location || location.instanceId !== i.id || location.deckId !== d.id)
+    if (
+      !location ||
+      location.instanceId !== instance.id ||
+      location.deckId !== deck.id
+    )
       continue;
     // Stair/traversal projections own moving vertical poses; do not expose stale
     // standing coordinates as an alternate accepted transform.
@@ -165,6 +174,18 @@ export function currentInteriorCrew(ctx: Context) {
       ctx.db.constructionTraversal.characterId.find(body.id)
     )
       continue;
+    bodies.push({ body, location });
+  }
+  return { actor: a, instance, deck, bodies };
+}
+/** Current same-deck bodies only; never account identities or inventory. Retained
+ * disconnected/recovering bodies remain physically present and visible to crew. */
+export function currentInteriorCrew(ctx: Context) {
+  const visible = visibleInteriorBodies(ctx);
+  if (!visible) return [];
+  const { instance: i, deck: d } = visible;
+  const out = [];
+  for (const { body, location } of visible.bodies) {
     try {
       out.push({
         characterId: body.id,

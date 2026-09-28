@@ -46,6 +46,7 @@ import {
   currentPassengerInterior,
   currentInteriorCrew,
 } from "./construction-passenger-views";
+import { visibleCrewPresentation } from "./crew-presentation";
 import { acceptedPassengerAccess } from "./construction-passenger-access";
 import {
   ownedGameShipAccess,
@@ -77,6 +78,7 @@ function table(key = "id") {
     by_grantee: "granteeOwner",
     by_ship: "shipId",
     by_instance: "instanceId",
+    by_character: "characterId",
   }))
     t[index] = {
       filter: (v: any) => [...rows.values()].filter((r) => equal(r[field], v)),
@@ -113,6 +115,11 @@ function fixture() {
     constructionReviewOrigin: "characterId",
     station: "shipId",
     input: "characterId",
+    inventoryItem: "id",
+    characterAppearance: "characterId",
+    characterVitals: "characterId",
+    combatAim: "characterId",
+    combatImpact: "characterId",
   }))
     db[name] = table(key);
   for (const [id, owner, x] of [
@@ -447,6 +454,209 @@ test("passenger projections reveal current admitted interior and crew without ow
   });
   expect(currentPassengerInterior(f.pctx)).toEqual([]);
   expect(currentInteriorCrew(f.pctx).map((r) => r.characterId)).toEqual([
+    "passenger",
+  ]);
+});
+
+// ------------------------------------------------------------ crew presentation (remote crew)
+function crewOnOneDeck() {
+  const f = fixture();
+  grantShipPassenger(f.ctx, f.grant);
+  boardShipPassenger(f.pctx, f.board);
+  f.db.characterAppearance.insert({
+    characterId: "passenger",
+    revision: 3n,
+    appearanceJson: '{"bodyType":"female","hairStyle":"swept"}',
+  });
+  for (const [id, definitionId, equipmentSlot, containerId] of [
+    ["item-uuid-carbine", "carbine", "hand", ""],
+    ["item-uuid-helmet", "crew-medic-helmet", "helmet", ""],
+    // Worn in the wrong slot: not a visual.
+    ["item-uuid-misfit", "carbine", "back", ""],
+    // Carried, not worn: never projected.
+    ["item-uuid-cargo", "compact-pistol", "", "pockets"],
+  ] as const)
+    f.db.inventoryItem.insert({
+      id,
+      characterId: "passenger",
+      definitionId,
+      equipmentSlot,
+      containerId,
+      x: 0,
+      y: 0,
+      rotated: false,
+    });
+  return f;
+}
+test("crew presentation shows only other bodies on the viewer's own admitted deck", () => {
+  const f = fixture();
+  // Separate ships: neither sees the other, and a viewer never receives its own row.
+  expect(visibleCrewPresentation(f.ctx)).toEqual([]);
+  expect(visibleCrewPresentation(f.pctx)).toEqual([]);
+  // A connection without a character sees nothing.
+  expect(visibleCrewPresentation(f.sctx)).toEqual([]);
+  grantShipPassenger(f.ctx, f.grant);
+  // An invitation alone admits nobody.
+  expect(visibleCrewPresentation(f.ctx)).toEqual([]);
+  boardShipPassenger(f.pctx, f.board);
+  expect(visibleCrewPresentation(f.ctx).map((r) => r.characterId)).toEqual([
+    "passenger",
+  ]);
+  expect(visibleCrewPresentation(f.pctx).map((r) => r.characterId)).toEqual([
+    "captain",
+  ]);
+  // Exactly the bodies current_interior_crew shows, minus the viewer.
+  for (const [viewer, self] of [
+    [f.ctx, "captain"],
+    [f.pctx, "passenger"],
+  ] as const)
+    expect(visibleCrewPresentation(viewer).map((r) => r.characterId)).toEqual(
+      currentInteriorCrew(viewer)
+        .map((r) => r.characterId)
+        .filter((id) => id !== self),
+    );
+  // Another deck of the same ship hides the body both ways.
+  f.db.constructionDeck.insert({
+    id: "captain-deck-2",
+    instanceId: "captain-ship",
+    elevation: 3,
+  });
+  const location = f.db.constructionLocation.characterId.find("passenger");
+  f.db.constructionLocation.characterId.update({
+    ...location,
+    deckId: "captain-deck-2",
+  });
+  expect(visibleCrewPresentation(f.ctx)).toEqual([]);
+  f.db.constructionLocation.characterId.update(location);
+  // A body on a stair or ladder is owned by those projections, not this one.
+  f.db.constructionStairWalk.insert({ characterId: "passenger" });
+  expect(visibleCrewPresentation(f.ctx)).toEqual([]);
+  f.db.constructionStairWalk.characterId.delete("passenger");
+  expect(visibleCrewPresentation(f.ctx)).toHaveLength(1);
+  // Revoking the passenger returns them home: visibility ends for both.
+  revokeShipPassenger(f.ctx, {
+    grantId: "uuid-1",
+    expectedRevision: 1n,
+    operationId: "revoke",
+  });
+  expect(visibleCrewPresentation(f.ctx)).toEqual([]);
+  expect(visibleCrewPresentation(f.pctx)).toEqual([]);
+});
+test("crew presentation columns carry looks and pose only: no identity, item UUIDs, inventory or health", () => {
+  const f = crewOnOneDeck();
+  f.db.characterVitals.insert({
+    characterId: "passenger",
+    health: 42,
+    maxHealth: 100,
+    state: "active",
+    hitSequence: 7n,
+  });
+  const [row] = visibleCrewPresentation(f.ctx);
+  expect(Object.keys(row).sort()).toEqual([
+    "aimActive",
+    "aimAngle",
+    "appearanceJson",
+    "characterId",
+    "dead",
+    "deckId",
+    "equipmentJson",
+    "seated",
+    "shipId",
+    "shotSequence",
+    "shotStruck",
+    "shotX",
+    "shotY",
+  ]);
+  expect(row).toMatchObject({
+    shipId: "captain-ship",
+    deckId: "captain-deck",
+    appearanceJson: '{"bodyType":"female","hairStyle":"swept"}',
+    dead: false,
+    seated: false,
+    aimActive: false,
+    shotSequence: 0n,
+  });
+  expect(JSON.parse(row.equipmentJson)).toEqual({
+    hand: "carbine",
+    helmet: "crew-medic-helmet",
+  });
+  const text = JSON.stringify(row, (_k, v) =>
+    typeof v === "bigint" ? v.toString() : v,
+  );
+  for (const secret of ["item-uuid", "pockets", "compact-pistol", "42", "1111"])
+    expect(text).not.toContain(secret);
+  // A character with no appearance row projects an empty look.
+  expect(visibleCrewPresentation(f.pctx)[0].appearanceJson).toBe("{}");
+});
+test("crew presentation pose: aim, seat, death and the latest shot on this ship", () => {
+  const f = crewOnOneDeck();
+  f.db.combatAim.insert({
+    characterId: "passenger",
+    active: true,
+    angle: 1.25,
+    updatedMicros: 1n,
+  });
+  f.db.combatImpact.insert({
+    characterId: "passenger",
+    itemId: "item-uuid-carbine",
+    shotSequence: 4n,
+    shipId: "captain-ship",
+    x: 2.5,
+    y: -1,
+    distanceM: 3,
+    kind: "character",
+    targetId: "",
+    damage: 7,
+    targetState: "dead",
+    targetHp: 0,
+    targetMaxHp: 0,
+    createdMicros: 1n,
+  });
+  let [row] = visibleCrewPresentation(f.ctx);
+  expect(row).toMatchObject({
+    aimActive: true,
+    aimAngle: 1.25,
+    shotSequence: 4n,
+    shotX: 2.5,
+    shotY: -1,
+    shotStruck: true,
+  });
+  // Damage, target and the shooter's item never leave the private impact row.
+  expect(JSON.stringify(Object.keys(row))).not.toMatch(/damage|target|item/i);
+  // A miss (range ran out) is still a shot, but nothing was struck.
+  f.db.combatImpact.characterId.update({
+    ...f.db.combatImpact.characterId.find("passenger"),
+    kind: "none",
+  });
+  expect(visibleCrewPresentation(f.ctx)[0].shotStruck).toBe(false);
+  // An impact recorded aboard another ship is not in this deck's frame.
+  f.db.combatImpact.characterId.update({
+    ...f.db.combatImpact.characterId.find("passenger"),
+    shipId: "passenger-ship",
+  });
+  [row] = visibleCrewPresentation(f.ctx);
+  expect(row).toMatchObject({ shotSequence: 0n, shotX: 0, shotY: 0 });
+  // Seated bodies do not aim.
+  f.db.couchSeat.insert({ characterId: "passenger", objectId: "couch" });
+  [row] = visibleCrewPresentation(f.ctx);
+  expect(row).toMatchObject({ seated: true, aimActive: false, aimAngle: 0 });
+  f.db.couchSeat.characterId.delete("passenger");
+  f.db.constructionPilotSeat.insert({ characterId: "passenger" });
+  expect(visibleCrewPresentation(f.ctx)[0].seated).toBe(true);
+  f.db.constructionPilotSeat.characterId.delete("passenger");
+  // Dead (and legacy "downed") bodies stay visible, marked dead, and never aim.
+  for (const state of ["dead", "downed"]) {
+    f.db.characterVitals.characterId.delete("passenger");
+    f.db.characterVitals.insert({ characterId: "passenger", state });
+    [row] = visibleCrewPresentation(f.ctx);
+    expect(row).toMatchObject({ dead: true, aimActive: false, aimAngle: 0 });
+  }
+  // Disconnected bodies remain physically present, like current_interior_crew.
+  f.db.character.id.update({
+    ...f.db.character.id.find("passenger"),
+    connected: false,
+  });
+  expect(visibleCrewPresentation(f.ctx).map((r) => r.characterId)).toEqual([
     "passenger",
   ]);
 });
