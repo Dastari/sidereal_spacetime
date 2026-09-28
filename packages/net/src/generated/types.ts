@@ -1018,6 +1018,23 @@ export const CouchSeat = __t.object("CouchSeat", {
 });
 export type CouchSeat = __Infer<typeof CouchSeat>;
 
+export const CrewPresentation = __t.object("CrewPresentation", {
+  characterId: __t.string(),
+  shipId: __t.string(),
+  deckId: __t.string(),
+  appearanceJson: __t.string(),
+  equipmentJson: __t.string(),
+  dead: __t.bool(),
+  seated: __t.bool(),
+  aimActive: __t.bool(),
+  aimAngle: __t.f64(),
+  shotSequence: __t.u64(),
+  shotX: __t.f64(),
+  shotY: __t.f64(),
+  shotStruck: __t.bool(),
+});
+export type CrewPresentation = __Infer<typeof CrewPresentation>;
+
 export const CurrentInteriorCrew = __t.object("CurrentInteriorCrew", {});
 export type CurrentInteriorCrew = __Infer<typeof CurrentInteriorCrew>;
 
@@ -1865,6 +1882,9 @@ export type VisibleBodyDescriptions = __Infer<typeof VisibleBodyDescriptions>;
 
 export const VisibleBodyMotion = __t.object("VisibleBodyMotion", {});
 export type VisibleBodyMotion = __Infer<typeof VisibleBodyMotion>;
+
+export const VisibleCrewPresentation = __t.object("VisibleCrewPresentation", {});
+export type VisibleCrewPresentation = __Infer<typeof VisibleCrewPresentation>;
 
 export const VisibleGroundItem = __t.object("VisibleGroundItem", {
   id: __t.string(),

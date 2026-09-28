@@ -42,6 +42,7 @@ import {
   scopedCarriedRevisionProjection,
 } from "./scoped-inventory-tables";
 import { interactionProjection } from "./interactions";
+import { crewPresentationProjection } from "./crew-presentation";
 
 // Use the real pinned SDK row metadata: a plain t.object erases these keys.
 // Keys here are unique within an admitted sender's projected row set.
@@ -70,6 +71,7 @@ const projections = [
   [scopedCargoContainerProjection, "id"],
   [scopedCargoItemProjection, "id"],
   [scopedCarriedRevisionProjection, "id"],
+  [crewPresentationProjection, "characterId"],
 ] as const;
 
 test("every handcrafted client view retains exactly one stable SDK row key", () => {

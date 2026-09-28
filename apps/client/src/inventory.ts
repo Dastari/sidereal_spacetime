@@ -53,14 +53,19 @@ export function inventoryAppearance(
   inventory: InventoryState,
   cosmetics: CrewAppearance,
 ): { crewAppearance: CrewAppearance; equippedAsset: EquipmentAsset | null } {
-  const held = inventory.items.find((item) => item.equipmentSlot === "hand");
+  return equipmentAppearance(inventory.items, cosmetics);
+}
+/** Crew look from worn items (definition id + slot): the local character and crewmates alike. */
+export function equipmentAppearance(
+  items: readonly { definitionId: string; equipmentSlot: string }[],
+  cosmetics: CrewAppearance,
+): { crewAppearance: CrewAppearance; equippedAsset: EquipmentAsset | null } {
+  const held = items.find((item) => item.equipmentSlot === "hand");
   const definition = INVENTORY_DEFINITIONS.find(
     (d) => d.id === held?.definitionId,
   );
-  const equippedComponents = characterEquipmentFromInventory(inventory.items);
-  const backpack = inventory.items.some(
-    (item) => item.equipmentSlot === "back",
-  );
+  const equippedComponents = characterEquipmentFromInventory(items);
+  const backpack = items.some((item) => item.equipmentSlot === "back");
   return {
     crewAppearance: {
       ...cosmetics,
