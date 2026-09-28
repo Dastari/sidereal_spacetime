@@ -203,6 +203,30 @@ export const CharacterUniformIssue = __t.object("CharacterUniformIssue", {
 });
 export type CharacterUniformIssue = __Infer<typeof CharacterUniformIssue>;
 
+export const CharacterVitals = __t.object("CharacterVitals", {
+  characterId: __t.string(),
+  health: __t.f64(),
+  maxHealth: __t.f64(),
+  state: __t.string(),
+  lastDamageMicros: __t.u64(),
+  downedUntilMicros: __t.u64(),
+  checkpointMicros: __t.u64(),
+  hitSequence: __t.u64(),
+  lastHitDamage: __t.f64(),
+});
+export type CharacterVitals = __Infer<typeof CharacterVitals>;
+
+export const CharacterVitalsStatus = __t.object("CharacterVitalsStatus", {
+  characterId: __t.string(),
+  health: __t.f64(),
+  maxHealth: __t.f64(),
+  state: __t.string(),
+  downedUntilMicros: __t.u64(),
+  hitSequence: __t.u64(),
+  lastHitDamage: __t.f64(),
+});
+export type CharacterVitalsStatus = __Infer<typeof CharacterVitalsStatus>;
+
 export const CombatAim = __t.object("CombatAim", {
   characterId: __t.string(),
   active: __t.bool(),
@@ -222,6 +246,10 @@ export const CombatImpact = __t.object("CombatImpact", {
   kind: __t.string(),
   targetId: __t.string(),
   createdMicros: __t.u64(),
+  damage: __t.f64(),
+  targetState: __t.string(),
+  targetHp: __t.f64(),
+  targetMaxHp: __t.f64(),
 });
 export type CombatImpact = __Infer<typeof CombatImpact>;
 
@@ -235,6 +263,10 @@ export const CombatImpactStatus = __t.object("CombatImpactStatus", {
   distanceM: __t.f64(),
   kind: __t.string(),
   targetId: __t.string(),
+  damage: __t.f64(),
+  targetState: __t.string(),
+  targetHp: __t.f64(),
+  targetMaxHp: __t.f64(),
 });
 export type CombatImpactStatus = __Infer<typeof CombatImpactStatus>;
 
@@ -1303,6 +1335,9 @@ export type OwnCargoGrids = __Infer<typeof OwnCargoGrids>;
 export const OwnCarriedInventoryRevisions = __t.object("OwnCarriedInventoryRevisions", {});
 export type OwnCarriedInventoryRevisions = __Infer<typeof OwnCarriedInventoryRevisions>;
 
+export const OwnCharacterVitals = __t.object("OwnCharacterVitals", {});
+export type OwnCharacterVitals = __Infer<typeof OwnCharacterVitals>;
+
 export const OwnCharacters = __t.object("OwnCharacters", {});
 export type OwnCharacters = __Infer<typeof OwnCharacters>;
 
@@ -1407,6 +1442,9 @@ export type OwnReachableCargoContainers = __Infer<typeof OwnReachableCargoContai
 
 export const OwnReachableCargoItems = __t.object("OwnReachableCargoItems", {});
 export type OwnReachableCargoItems = __Infer<typeof OwnReachableCargoItems>;
+
+export const OwnShipComponentDamage = __t.object("OwnShipComponentDamage", {});
+export type OwnShipComponentDamage = __Infer<typeof OwnShipComponentDamage>;
 
 export const OwnShipZones = __t.object("OwnShipZones", {});
 export type OwnShipZones = __Infer<typeof OwnShipZones>;
@@ -1632,6 +1670,34 @@ export const Ship = __t.object("Ship", {
   tick: __t.u64(),
 });
 export type Ship = __Infer<typeof Ship>;
+
+export const ShipComponentDamage = __t.object("ShipComponentDamage", {
+  id: __t.string(),
+  shipId: __t.string(),
+  objectId: __t.string(),
+  componentId: __t.string(),
+  catalog: __t.string(),
+  hp: __t.f64(),
+  maxHp: __t.f64(),
+  state: __t.string(),
+  performance: __t.f64(),
+  revision: __t.u64(),
+  updatedMicros: __t.u64(),
+});
+export type ShipComponentDamage = __Infer<typeof ShipComponentDamage>;
+
+export const ShipComponentDamageStatus = __t.object("ShipComponentDamageStatus", {
+  id: __t.string(),
+  shipId: __t.string(),
+  objectId: __t.string(),
+  componentId: __t.string(),
+  hp: __t.f64(),
+  maxHp: __t.f64(),
+  state: __t.string(),
+  performance: __t.f64(),
+  revision: __t.u64(),
+});
+export type ShipComponentDamageStatus = __Infer<typeof ShipComponentDamageStatus>;
 
 export const ShipOperatorOperation = __t.object("ShipOperatorOperation", {
   operationId: __t.string(),

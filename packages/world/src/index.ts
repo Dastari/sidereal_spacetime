@@ -198,6 +198,8 @@ import {
   combatImpact,
 } from "./combat-tables";
 import * as combat from "./combat";
+import * as combatDamage from "./combat-damage";
+import { characterVitals, shipComponentDamage } from "./combat-damage-tables";
 import { alignPilotLayout } from "./pilot-layout";
 import { pilotLayoutReceipt } from "./pilot-layout-tables";
 import { PILOT_LAYOUT, constrainLabDeck } from "../../content/src/pilot-layout";
@@ -388,6 +390,8 @@ const db = schema({
   weaponEnergy,
   combatReceipt,
   combatImpact,
+  characterVitals,
+  shipComponentDamage,
   pilotLayoutReceipt,
   interactionObject,
   couchSeat,
@@ -630,6 +634,8 @@ export const setIntent = db.reducer(
         canRecordConstructionPilot(ctx, actor.id));
     if ((args.throttle !== 0 || args.turn !== 0) && !controlled)
       throw new SenderError("Occupy the control station to pilot");
+    // Downed characters' movement and helm intents are ignored (their input was zeroed).
+    if (combatDamage.isDowned(ctx, actor.id)) return;
     if (!inputControl.recordInput(ctx, actor.id, args.sequence)) return;
     ctx.db.input.characterId.update({
       ...command,
@@ -759,6 +765,7 @@ export const stepWorld = db.reducer(
     traversal.stepConstructionTraversals(ctx, nativeTraversalRegistry);
     stairs.stepConstructionStairs(ctx, createConstructionStairWorldHooks(ctx));
     combat.stepCombat(ctx);
+    combatDamage.stepDamage(ctx);
     consumeFlightDamage(ctx);
     // The canonical contact island advances once for all admitted ships/bodies,
     // never inside the legacy per-owner loop below.
@@ -803,6 +810,7 @@ export const stepWorld = db.reducer(
         const actor = ctx.db.character.id.find(characterId);
         return (
           !!actor &&
+          !combatDamage.isDowned(ctx, characterId) &&
           (!ctx.db.constructionFlightBinding.shipId.find(actor.shipId) ||
             canConsumeConstructionPilot(ctx, characterId))
         );
@@ -828,6 +836,7 @@ export const stepWorld = db.reducer(
         inputControl.consumeInputControl(ctx, actor.id) &&
         seat?.occupantId !== actor.id &&
         !ctx.db.couchSeat.characterId.find(actor.id) &&
+        !combatDamage.isDowned(ctx, actor.id) &&
         command &&
         ctx.timestamp.microsSinceUnixEpoch - command.updatedMicros < 300000n &&
         (command.dx !== 0 || command.dy !== 0);
@@ -1000,6 +1009,16 @@ export const ownCombatImpact = db.view(
   { name: "own_combat_impact", public: true },
   t.array(combat.impactProjection),
   auth.gameView(combat.impactView),
+);
+export const ownCharacterVitals = db.view(
+  { name: "own_character_vitals", public: true },
+  t.array(combatDamage.vitalsProjection),
+  auth.gameView(combatDamage.vitalsView),
+);
+export const ownShipComponentDamage = db.view(
+  { name: "own_ship_component_damage", public: true },
+  t.array(combatDamage.componentDamageProjection),
+  auth.gameView(combatDamage.componentDamageView),
 );
 export const setCombatAim = db.reducer(
   { active: t.bool(), angle: t.f64() },

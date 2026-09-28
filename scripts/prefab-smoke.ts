@@ -79,6 +79,8 @@ const c = DbConnection.builder()
         tables.ownInventoryItems,
         tables.ownCombat,
         tables.ownCombatImpact,
+        tables.ownCharacterVitals,
+        tables.ownShipComponentDamage,
       ]),
   )
   .build();
@@ -365,6 +367,183 @@ try {
       actuators: actuators.length,
       speed,
       heading: shipOf(shipId).heading,
+    }),
+  );
+
+  // Damage (2026-09-28): stand up and shoot the own ship's life support with the pistol until it
+  // is destroyed (friendly fire on the own ship), then destroy the reactor through the real
+  // damage adapter and check that the ship loses thrust on the flight-dirty path.
+  await c.reducers.leaveAuthoredPilot({});
+  await wait(() => flightOf(shipId)?.seatState !== "seated", "left the seat");
+  const vitals = () => [...c.db.ownCharacterVitals.iter()][0] as any;
+  await wait(() => !!vitals(), "own vitals projected");
+  assert.equal(vitals().health, vitals().maxHealth, "full health before");
+  const TARGET = "mount:life";
+  const targetObject = beam.objects.find((o) => o.id === TARGET);
+  assert(targetObject, "life support blocks beams");
+  const cx =
+    targetObject.polygon.reduce((a, p) => a + p[0], 0) /
+    targetObject.polygon.length;
+  const cy =
+    targetObject.polygon.reduce((a, p) => a + p[1], 0) /
+    targetObject.polygon.length;
+  let firing: [number, number] | undefined;
+  for (let r = 0.75; r <= 3 && !firing; r += 0.25)
+    for (let k = 0; k < 32 && !firing; k++) {
+      const a = (k / 32) * Math.PI * 2;
+      const at: [number, number] = [cx + Math.sin(a) * r, cy + Math.cos(a) * r];
+      if (
+        standing(at) &&
+        castPrefabBeam(beam, at, Math.atan2(cx - at[0], cy - at[1]), 60)
+          .targetId === TARGET
+      )
+        firing = at;
+    }
+  assert(firing, "a standing spot with line of fire to life support");
+  for (const [x, y] of prefabWalkRoute(
+    prefab,
+    catalog,
+    [actor().localX, actor().localY],
+    firing,
+  ))
+    await walkNative(c, x, y);
+  const componentRow = (objectId: string) =>
+    [...c.db.ownShipComponentDamage.iter()].find(
+      (d: any) => d.shipId === shipId && d.objectId === objectId,
+    ) as any;
+  const hits: { damage: number; state: string; hp: number }[] = [];
+  for (let n = 0; n < 12 && componentRow(TARGET)?.state !== "destroyed"; n++) {
+    const angle = Math.atan2(cx - actor().localX, cy - actor().localY);
+    await c.reducers.setCombatAim({ active: true, angle });
+    await wait(() => [...c.db.ownCombat.iter()][0]?.aimActive, "aim active");
+    const combat = [...c.db.ownCombat.iter()][0] as any;
+    await c.reducers.fireWeapon({
+      itemId: item().id,
+      expectedRevision: combat.revision,
+      operationId: crypto.randomUUID(),
+    });
+    await wait(
+      () =>
+        ([...c.db.ownCombatImpact.iter()][0] as any)?.shotSequence ===
+        combat.shotSequence + 1n,
+      "damage impact row",
+    );
+    const impact = [...c.db.ownCombatImpact.iter()][0] as any;
+    assert.equal(impact.targetId, TARGET, "the shot hit life support");
+    hits.push({
+      damage: impact.damage,
+      state: impact.targetState,
+      hp: impact.targetHp,
+    });
+    await pause(300);
+  }
+  await c.reducers.setCombatAim({ active: false, angle: 0 });
+  await wait(
+    () => componentRow(TARGET)?.state === "destroyed",
+    "life support destroyed",
+    5000,
+  );
+  // life-support.sm: 120 hp, armour 2; the pistol deals 15, so 13 per hit.
+  assert.deepEqual(
+    hits.map((h) => h.damage),
+    [13, 13, 13, 13, 13, 13, 13, 13, 13, 3],
+  );
+  assert.deepEqual(
+    hits.map((h) => h.state),
+    [
+      "pristine",
+      "pristine",
+      "scuffed",
+      "scuffed",
+      "damaged",
+      "damaged",
+      "damaged",
+      "damaged",
+      "damaged",
+      "destroyed",
+    ],
+  );
+  assert.equal(componentRow(TARGET).hp, 0);
+  assert.equal(
+    vitals().health,
+    vitals().maxHealth,
+    "shooting a module does not hurt the shooter",
+  );
+  // Reactor destroyed: the server damage producer drops every drive, RCS nozzle and the flight
+  // computer to zero availability and the flight recompiles.
+  const physicsBefore = physicsOf(shipId);
+  await c.reducers.damagePrefabSmokeComponent({
+    objectId: "mount:reactor",
+    damage: 5000,
+  });
+  await wait(
+    () => componentRow("mount:reactor")?.state === "destroyed",
+    "reactor destroyed",
+  );
+  await wait(
+    () =>
+      physicsOf(shipId)?.status !== "pending" &&
+      physicsOf(shipId)?.revision > physicsBefore.revision &&
+      JSON.parse(physicsOf(shipId).envelopeJson).forward === 0,
+    "flight recompiled after damage",
+    10000,
+  );
+  const envelope = JSON.parse(physicsOf(shipId).envelopeJson);
+  assert.equal(envelope.forward, 0, "no forward thrust without a reactor");
+  const reseat = flightOf(shipId);
+  let seated = true;
+  for (const [x, y] of prefabWalkRoute(
+    prefab,
+    catalog,
+    [actor().localX, actor().localY],
+    pose.approach,
+  ))
+    await walkNative(c, x, y);
+  await c.reducers
+    .enterAuthoredPilot({
+      stationId: reseat.stationId,
+      expectedStationRevision: reseat.stationRevision,
+      operationId: crypto.randomUUID(),
+    })
+    .catch(() => {
+      seated = false;
+    });
+  let burnDelta = 0;
+  if (seated) {
+    await wait(() => flightOf(shipId)?.seatState === "seated", "reseated");
+    const v0 = shipOf(shipId);
+    for (let n = 0; n < 20; n++) {
+      await c.reducers.setIntent({
+        sequence: nextSequence(c),
+        throttle: 1,
+        turn: 0,
+        dx: 0,
+        dy: 0,
+        sprint: false,
+      });
+      await pause(60);
+    }
+    const v1 = shipOf(shipId);
+    burnDelta = Math.hypot(v1.vx - v0.vx, v1.vy - v0.vy);
+    assert(
+      burnDelta < 0.05,
+      `no thrust with the reactor destroyed (velocity change ${burnDelta.toFixed(3)} m/s)`,
+    );
+  }
+  console.log(
+    JSON.stringify({
+      damage: {
+        weaponTarget: TARGET,
+        hits,
+        reactor: componentRow("mount:reactor").state,
+        forwardEnvelope: [
+          JSON.parse(physicsBefore.envelopeJson).forward,
+          envelope.forward,
+        ],
+        envelope,
+        reseated: seated,
+        burnDeltaMps: burnDelta,
+      },
     }),
   );
   console.log("prefab smoke passed");

@@ -27,8 +27,23 @@ export type CharacterCosmetics = {
   appearance?: () => CrewAppearance;
   change?: (patch: CrewAppearance) => void;
 };
-export function drawVitalBars(ui: CanvasUI, r: Rect, compact = false) {
-  const rows = CHARACTER_PREVIEW.vitals,
+/** Live authoritative health (own_character_vitals); other rows stay visual-study preview. */
+export type LiveHealth = { health: number; maxHealth: number };
+export function drawVitalBars(
+  ui: CanvasUI,
+  r: Rect,
+  compact = false,
+  live?: LiveHealth,
+) {
+  const rows = CHARACTER_PREVIEW.vitals.map((v) =>
+      live && v.label === "Health"
+        ? {
+            ...v,
+            current: Math.max(0, Math.ceil(live.health)),
+            max: live.maxHealth,
+          }
+        : v,
+    ),
     row = compact ? 25 : 40;
   rows.forEach((v, i) => {
     const y = r.y + i * row;

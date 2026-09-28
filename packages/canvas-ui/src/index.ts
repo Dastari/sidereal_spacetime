@@ -48,6 +48,12 @@ import {
 import type { Scene } from "@babylonjs/core/scene";
 import { CanvasUI, palette } from "./toolkit";
 import { drawVitalBars } from "./character-sheet";
+import {
+  createCombatFeedback,
+  type CombatHitFeedback,
+  type VitalsFeedback,
+} from "./combat-feedback";
+export type { CombatHitFeedback, VitalsFeedback } from "./combat-feedback";
 import { actionBarRect } from "./action-bar";
 import { createDiagnosticsUI } from "./diagnostics";
 import type { RenderDiagnostics } from "../../render/src/diagnostics";
@@ -73,7 +79,11 @@ export type GameUIState = {
     energy: number;
     capacity: number;
     shotCost: number;
+    /** The latest accepted shot's authoritative result (damage number feedback). */
+    lastHit?: CombatHitFeedback;
   };
+  /** Own authoritative health (own_character_vitals). */
+  vitals?: VitalsFeedback;
   inventory?: InventoryState;
   objectDetails?: ObjectDetailsState;
   interactionPrompt?: string;
@@ -244,6 +254,7 @@ export function createGameUI(
     ui.invalidate();
   };
   const change = () => ui.invalidate();
+  const drawFeedback = createCombatFeedback();
   ui.escape = () => {
     if (menu) menu = false;
     else if (inventory?.isOpen()) inventory.close();
@@ -386,8 +397,19 @@ export function createGameUI(
           actions.interact ?? actions.station,
           { accent: true, disabled: !state.connected },
         );
-      drawVitalBars(ui, { x: r.x + 12, y: r.y + 45, w: r.w - 24, h: 90 }, true);
-      ui.text("Vitals preview", r.x + 12, r.y + 148, 9, palette.muted);
+      drawVitalBars(
+        ui,
+        { x: r.x + 12, y: r.y + 45, w: r.w - 24, h: 90 },
+        true,
+        state.vitals,
+      );
+      ui.text(
+        state.vitals ? "Health live · others preview" : "Vitals preview",
+        r.x + 12,
+        r.y + 148,
+        9,
+        palette.muted,
+      );
       if (help && w > 1180)
         ui.text(
           state.resting
@@ -445,6 +467,7 @@ export function createGameUI(
         5,
       );
     }
+    if (state.hasActor && !menu) drawFeedback(ui, w, h, state, change);
     if (state.status !== "ready" || !state.connected)
       ui.text("● " + state.status, 24, topHud.bottom + 8, 12, palette.gold);
     let navigationTop = Math.max(narrow ? 106 : 140, topHud.bottom + 14);

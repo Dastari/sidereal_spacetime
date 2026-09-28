@@ -55,5 +55,13 @@ export const combatImpact = table(
     /** Own-ship object/structure id, or the other ship's id for kind "ship". */
     targetId: t.string(),
     createdMicros: t.u64(),
+    // Appended with defaults so existing impact rows migrate additively (2026-09-28).
+    /** Health or component hp actually removed by this shot. */
+    damage: t.f64().default(0),
+    /** Struck component's damage state, or "downed" for a character this shot took down. */
+    targetState: t.string().default(""),
+    /** Struck component hp after the shot (only when the shooter owns the ship; else 0). */
+    targetHp: t.f64().default(0),
+    targetMaxHp: t.f64().default(0),
   },
 );
