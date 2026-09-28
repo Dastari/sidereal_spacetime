@@ -32,6 +32,7 @@ import {
 } from "@sidereal/content/crew-wardrobe";
 import {
   INVENTORY_DEFINITIONS,
+  OPERATOR_ITEM_KITS,
   characterEquipmentFromInventory,
 } from "@sidereal/content/inventory";
 import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
@@ -524,4 +525,48 @@ test("the two delivery kits fit Wren's hold crate and bunk locker", async () => 
     expect([scope.accessX, scope.accessY].every(Number.isFinite)).toBe(true);
     expect(scope.accessZ).toBeCloseTo(0.1875, 6);
   }
+});
+
+test("the weapons-and-tools kit fits an empty Wren locker, or splits beside both wardrobe deliveries", async () => {
+  const locker = {
+    socketKey: "bunks/shipyard.equipment.wall-locker",
+    containerName: "Wall locker",
+  };
+  const held = (f: Awaited<ReturnType<typeof wrenOwner>>["f"]) =>
+    [...f.db.inventoryItem.iter()].map((i: Row) => i.definitionId as string);
+  {
+    const { f, characterId, shipId } = await wrenOwner();
+    f.as(SHIP_OPERATOR);
+    stockShipCargo(
+      f.ctx,
+      stockArgs(characterId, shipId, OPERATOR_ITEM_KITS["weapons-and-tools"], {
+        operationId: "stock-wren-locker-01",
+        ...locker,
+      }),
+    );
+    for (const id of OPERATOR_ITEM_KITS["weapons-and-tools"])
+      expect(held(f), id).toContain(id);
+  }
+  // Beside the uniforms (hold crate) and role sets (locker): weapons in the crate, the rest in the locker.
+  const { f, characterId, shipId } = await wrenOwner();
+  f.as(SHIP_OPERATOR);
+  let n = 0;
+  const stock = (kit: string, where = {}) =>
+    stockShipCargo(
+      f.ctx,
+      stockArgs(characterId, shipId, OPERATOR_ITEM_KITS[kit], {
+        operationId: "stock-wren-split-0" + ++n,
+        ...where,
+      }),
+    );
+  stock("uniforms-and-tiers");
+  stock("role-sets", locker);
+  expect(() => stock("weapons-and-tools", locker)).toThrow("No room");
+  stock("weapons");
+  stock("tools-and-utility", locker);
+  for (const id of OPERATOR_ITEM_KITS["weapons-and-tools"])
+    expect(held(f), id).toContain(id);
+  expect(INVENTORY_DEFINITIONS.find((d) => d.id === "shotgun")?.equipSlot).toBe(
+    "hand",
+  );
 });

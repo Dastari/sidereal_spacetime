@@ -28,8 +28,8 @@ from ship_wipe import ROOT, call, ledger, require_operation_id, sql  # noqa: E40
 
 
 def kit_ids(names):
-    source = ("import { CREW_WARDROBE_KITS } from './packages/content/src/crew-wardrobe.ts';"
-              "console.log(JSON.stringify(CREW_WARDROBE_KITS));")
+    source = ("import { OPERATOR_ITEM_KITS } from './packages/content/src/inventory.ts';"
+              "console.log(JSON.stringify(OPERATOR_ITEM_KITS));")
     out = subprocess.run([str(ROOT / 'node_modules/.bin/tsx'), '-e', source], cwd=ROOT,
                          capture_output=True, text=True, check=True).stdout
     kits = json.loads(out)
@@ -99,7 +99,7 @@ def main():
         p.add_argument('--ship-id', required=True)
         p.add_argument('--socket', default='hold/cargo.standard.medium')
         p.add_argument('--container-name', default='Storage crate')
-        p.add_argument('--kit', action='append', help='uniforms-and-tiers | role-sets (repeatable)')
+        p.add_argument('--kit', action='append', help='uniforms-and-tiers | role-sets | weapons-and-tools | weapons | tools-and-utility (repeatable)')
         p.add_argument('--definition-ids', help='extra comma-separated inventory definition ids')
         if not dry:
             p.add_argument('--confirm-database', required=True)
