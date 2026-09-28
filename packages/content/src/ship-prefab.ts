@@ -750,6 +750,8 @@ export const DOOR_JAMB_M = 0.25;
 /** Keep-clear depth in front of a door's clear opening on each walkable side: one 0.6 m body plus margin. */
 export const DOOR_APPROACH_DEPTH_M = 0.7;
 /** Pilot approach: 0.875 m aft of the station (sim `prefabPilotPose`), kept clear as a square. */
+/** Furniture may clip an approach zone corner by this much before it is moved. */
+export const SOCKET_APPROACH_TOLERANCE_M = 0.1;
 export const PILOT_APPROACH_OFFSET_M = 0.875;
 export const PILOT_APPROACH_HALF_M = 0.4;
 type Rect4 = [number, number, number, number];
@@ -1446,7 +1448,11 @@ export function deriveInterior(
       moduleRects.some((q) => planRectsOverlap(q, r));
     if (
       s.control ||
-      !approaches.some((z) => planRectsOverlap(z.rect, socketRect(s)))
+      // A corner intruding by at most SOCKET_APPROACH_TOLERANCE_M still leaves the doorway
+      // walkable; placed sockets (and their bound containers) stay where they were.
+      !approaches.some((z) =>
+        planRectsOverlap(z.rect, socketRect(s), SOCKET_APPROACH_TOLERANCE_M),
+      )
     ) {
       clearSockets.push(s);
       continue;

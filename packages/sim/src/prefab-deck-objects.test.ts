@@ -5,6 +5,7 @@ import {
   deckApproachZones,
   deriveInterior,
   planRectsOverlap,
+  SOCKET_APPROACH_TOLERANCE_M,
 } from "@sidereal/content/ship-prefab";
 import {
   planRectToShip,
@@ -157,12 +158,11 @@ describe("prefab deck objects", () => {
         if (!s.control)
           for (const z of zones)
             expect(
-              planRectsOverlap(z.rect, [
-                s.at[0],
-                s.at[1],
-                s.at[0] + s.size[0],
-                s.at[1] + s.size[1],
-              ]),
+              planRectsOverlap(
+                z.rect,
+                [s.at[0], s.at[1], s.at[0] + s.size[0], s.at[1] + s.size[1]],
+                SOCKET_APPROACH_TOLERANCE_M,
+              ),
             ).toBe(false);
       const model = prefabFlightModel(prefab, catalog);
       if (!model.station) return;
