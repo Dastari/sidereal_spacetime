@@ -137,6 +137,8 @@ Object.assign(overlay.style, { position: "absolute", left: "0", top: "0", pointe
 document.body.append(overlay);
 let skeletonOn = params.get("skeleton") === "1";
 let posing = false;
+let posedGroup: unknown = null;
+let mutedUpdate: unknown = null;
 let reviewCam: ArcRotateCamera | undefined;
 let gameCam: Camera | null = null;
 const drawSkeleton = () => {
@@ -158,6 +160,19 @@ const drawSkeleton = () => {
     g.beginPath();
     g.moveTo(p.x, p.y);
     g.lineTo(q.x, q.y);
+    g.stroke();
+  }
+  // floor reference: a square on the deck plane under the rig root (feet should sit on it)
+  const root = c.joints.get("root")?.getAbsolutePosition();
+  if (root) {
+    const r = 0.45;
+    const corners = [
+      [-r, -r], [r, -r], [r, r], [-r, r], [-r, -r],
+    ].map(([x, z]) => Vector3.Project(new Vector3(root.x + x, root.y, root.z + z), Matrix.IdentityReadOnly, tm, vp));
+    g.strokeStyle = "#ffffff88";
+    g.lineWidth = 1.5;
+    g.beginPath();
+    corners.forEach((p, i) => (i ? g.lineTo(p.x, p.y) : g.moveTo(p.x, p.y)));
     g.stroke();
   }
   g.fillStyle = "#ffffff";
@@ -300,6 +315,13 @@ createWorld(canvas, (text) => (status.textContent = text), {
     sceneRef = scene;
     scene.onBeforeRenderObservable.add(tick);
     scene.onAfterRenderObservable.add(drawSkeleton);
+    // while posing, the world's per-frame crew update may restart its state clips: keep only the
+    // posed clip running
+    scene.onBeforeAnimationsObservable.add(() => {
+      if (!posing) return;
+      for (const g of scene.animationGroups)
+        if (g !== posedGroup && g.isStarted) g.stop();
+    });
   },
 })
   .then(async (result) => {
@@ -431,14 +453,23 @@ Object.assign(window, {
       const g = sceneRef.animationGroups.find((a) => a.name === clip);
       if (!g) return false;
       posing = true;
+      posedGroup = g;
+      // the world drives crew.update() every frame; mute it while a clip is held
+      const c = crew() as { update: (m: unknown) => void } | undefined;
+      if (c && !mutedUpdate) {
+        mutedUpdate = c.update;
+        c.update = () => {};
+      }
       for (const other of sceneRef.animationGroups) other.stop();
-      g.start(false, 1, g.from, g.to);
+      const at = Math.min(g.to, g.from + (frame * 60) / 24);
+      g.start(false, 1e-6, at, g.to);
       g.setWeightForAllAnimatables(1);
-      g.goToFrame(Math.min(g.to, g.from + (frame * 60) / 24));
-      g.pause();
       return true;
     },
     unpose() {
+      const c = crew() as { update: (m: unknown) => void } | undefined;
+      if (c && mutedUpdate) c.update = mutedUpdate as (m: unknown) => void;
+      mutedUpdate = null;
       posing = false;
       applyMode();
     },
