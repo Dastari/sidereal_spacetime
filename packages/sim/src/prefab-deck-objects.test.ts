@@ -41,7 +41,7 @@ describe("prefab deck objects", () => {
       "mount:life",
       "mount:core",
       "mount:helm",
-      "mount:main-s",
+      "mount:main-s1",
       "mount:turret",
       "door:d-bridge",
     ])
@@ -53,12 +53,14 @@ describe("prefab deck objects", () => {
     expect(byId.get("mount:bunk")!.blocks).toBe(true);
     expect(byId.get("mount:helm")!.blocks).toBe(false);
     expect(byId.get("mount:helm")!.station).toBe("pilot");
-    expect(byId.get("mount:main-s")!.blocks).toBe(false);
+    expect(byId.get("mount:main-s1")!.blocks).toBe(false);
     expect(byId.get("door:d-bridge")!.blocks).toBe(false);
-    // Room furniture from the grammar sockets (locker in the bunk room, a crate in the hold).
+    // Room furniture from the grammar sockets (locker in the bunk room, a crate in the hold, the
+    // bridge bank moved clear of the bridge door and the helm).
     const furniture = objects.filter((o) => o.kind === "furniture");
     expect(furniture.map((o) => o.designId).sort()).toEqual([
       "cargo.standard.medium",
+      "shipyard.equipment.bridge-bank",
       "shipyard.equipment.wall-locker",
     ]);
     expect(furniture.every((o) => o.blocks)).toBe(true);
@@ -76,9 +78,9 @@ describe("prefab deck objects", () => {
       2, 1,
     ]);
     // A main drive on the aft face extends aft of the hull (plan x < 0).
-    const drive = o.find((x) => x.id === "mount:main-s")!;
+    const drive = o.find((x) => x.id === "mount:main-s1")!;
     expect(drive.max[0]).toBeCloseTo(0, 6);
-    expect(drive.min[0]).toBeLessThan(-4);
+    expect(drive.min[0]).toBeLessThan(-2);
   });
 
   it("converts plan rectangles to counter-clockwise ship-local polygons and back", () => {

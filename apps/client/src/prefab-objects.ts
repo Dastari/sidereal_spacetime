@@ -162,7 +162,10 @@ export function prefabObjectDetails(
       actions: [],
     };
   }
-  const def = prefabComponentDefinition(object.componentId ?? "");
+  const def = prefabComponentDefinition(
+    object.componentId ?? "",
+    catalog.revision,
+  );
   const spec = catalog.get(object.componentId ?? "");
   const name =
     def?.name ?? spec?.label ?? title(object.componentId ?? "Component");

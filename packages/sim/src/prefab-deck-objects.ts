@@ -35,7 +35,11 @@ import {
   type ShipMountSocket,
   type ShipVec3,
 } from "@sidereal/content/ship-components";
-import { buildShipComponentCatalog } from "@sidereal/content/ship-components-source";
+import {
+  SHIP_COMPONENT_CATALOG_REVISION,
+  SHIP_COMPONENT_CATALOG_REVISIONS,
+  buildShipComponentCatalog,
+} from "@sidereal/content/ship-components-source";
 import type { DeckObstacle } from "./construction-collision";
 import { prefabComponentCatalogFor } from "./prefab-catalog";
 
@@ -68,13 +72,31 @@ export interface PrefabShipObject {
   station: string | null;
 }
 
-let componentIndex: ReadonlyMap<string, ShipComponentDefinition> | null = null;
-/** Full catalog definitions by id (the prefab catalog adapter drops envelopes and most stats). */
+const componentIndexes = new Map<
+  string,
+  ReadonlyMap<string, ShipComponentDefinition>
+>();
+/**
+ * Full catalog definition of a component at the prefab's catalog revision (default: current).
+ * The prefab catalog adapter drops envelopes and most stats; instances spawned against an older
+ * revision keep reading that revision.
+ */
 export function prefabComponentDefinition(
   id: string,
+  catalogRevision?: string,
 ): ShipComponentDefinition | undefined {
-  componentIndex ??= shipComponentIndex(buildShipComponentCatalog());
-  return componentIndex.get(id);
+  const at = catalogRevision?.match(/@(\d+)$/);
+  const revision = (
+    at ? Number(at[1]) : SHIP_COMPONENT_CATALOG_REVISION
+  ) as (typeof SHIP_COMPONENT_CATALOG_REVISIONS)[number];
+  const key = String(revision);
+  let index = componentIndexes.get(key);
+  if (!index) {
+    if (!SHIP_COMPONENT_CATALOG_REVISIONS.includes(revision)) return undefined;
+    index = shipComponentIndex(buildShipComponentCatalog(revision));
+    componentIndexes.set(key, index);
+  }
+  return index.get(id);
 }
 
 const mul = (m: readonly (readonly number[])[], v: ShipVec3): ShipVec3 => [
@@ -169,13 +191,11 @@ export function prefabShipObjects(
   const roomAt = (x: number, y: number) =>
     cellRoom.get(`${Math.floor(x)},${Math.floor(y)}`) ?? null;
   const out: PrefabShipObject[] = [];
-  const interiorRects: Rect[] = [];
   for (const m of doc.mounts) {
     const spec = catalog.get(m.component);
     const p = placeMount(m, spec, geoms);
-    const def = prefabComponentDefinition(m.component);
+    const def = prefabComponentDefinition(m.component, catalog.revision);
     const box = mountBox(p, def);
-    if (m.attach === "interior") interiorRects.push(p.rect);
     const isStation =
       m.attach === "interior" &&
       !!station &&
@@ -215,8 +235,6 @@ export function prefabShipObjects(
       s.at[0] + s.size[0],
       s.at[1] + s.size[1],
     ];
-    // dressShip drops sockets under an interior module; so does authority.
-    if (interiorRects.some((q) => planRectsOverlap(q, r))) continue;
     const n = perRoom.get(s.room) ?? 0;
     perRoom.set(s.room, n + 1);
     out.push({

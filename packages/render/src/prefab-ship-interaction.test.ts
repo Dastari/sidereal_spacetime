@@ -125,13 +125,13 @@ describe("prefab ship interaction presentation", () => {
       PREFAB_OBJECT_PREFIX + "mount:reactor",
     );
     deck = false;
-    // The dish is a flight-view roof part above the engine room: in flight view it wins.
-    const dishTop = Vector3.TransformCoordinates(
-      new Vector3(-1.5, 4.0, 4),
+    // A roof radiator (flight view only): plan (4, 4, top 3.59) -> ship-root local (-1, 3.5, 1.5).
+    const radiatorTop = Vector3.TransformCoordinates(
+      new Vector3(-1, 3.5, 1.5),
       world,
     );
-    expect(picker.pick(screen(dishTop))).toBe(
-      PREFAB_OBJECT_PREFIX + "mount:dish",
+    expect(picker.pick(screen(radiatorTop))).toBe(
+      PREFAB_OBJECT_PREFIX + "mount:rad-b",
     );
     expect(picker.pick(screen(reactorTop))).not.toBe(
       PREFAB_OBJECT_PREFIX + "mount:reactor",

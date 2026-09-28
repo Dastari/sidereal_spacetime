@@ -1441,7 +1441,9 @@ export function deriveInterior(
   for (const s of freeSockets) {
     const blocked = (r: Rect4) =>
       approaches.some((z) => planRectsOverlap(z.rect, r)) ||
-      clearSockets.some((o) => planRectsOverlap(socketRect(o), r));
+      clearSockets.some((o) => planRectsOverlap(socketRect(o), r)) ||
+      // Never nudged onto an interior module (e.g. the helm console the pilot sits at).
+      moduleRects.some((q) => planRectsOverlap(q, r));
     if (
       s.control ||
       !approaches.some((z) => planRectsOverlap(z.rect, socketRect(s)))
