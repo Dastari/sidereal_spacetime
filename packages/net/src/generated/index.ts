@@ -75,6 +75,7 @@ import PublishConstructionBlueprintReducer from "./publish_construction_blueprin
 import RefitExistingWayfarerReducer from "./refit_existing_wayfarer_reducer";
 import RefitRebuiltWayfarerReducer from "./refit_rebuilt_wayfarer_reducer";
 import ReleaseInputControlReducer from "./release_input_control_reducer";
+import ReloadWeaponReducer from "./reload_weapon_reducer";
 import RenameShipReducer from "./rename_ship_reducer";
 import ReplaceLegacyPlayerWayfarerReducer from "./replace_legacy_player_wayfarer_reducer";
 import RequestIdentityLinkReducer from "./request_identity_link_reducer";
@@ -161,6 +162,7 @@ import OwnWayfarerRefitOfferRow from "./own_wayfarer_refit_offer_table";
 import OwnWorldAdmissionRow from "./own_world_admission_table";
 import VisibleBodyDescriptionsRow from "./visible_body_descriptions_table";
 import VisibleBodyMotionRow from "./visible_body_motion_table";
+import VisibleCombatActionsRow from "./visible_combat_actions_table";
 import VisibleCrewPresentationRow from "./visible_crew_presentation_table";
 import VisibleEvaBodiesRow from "./visible_eva_bodies_table";
 import VisibleShipDescriptionsRow from "./visible_ship_descriptions_table";
@@ -590,6 +592,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, VisibleBodyMotionRow),
+  visibleCombatActions: __table({
+    name: 'visible_combat_actions',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleCombatActionsRow),
   visibleCrewPresentation: __table({
     name: 'visible_crew_presentation',
     indexes: [
@@ -663,6 +672,7 @@ const reducersSchema = __reducers(
   __reducerSchema("refit_existing_wayfarer", RefitExistingWayfarerReducer),
   __reducerSchema("refit_rebuilt_wayfarer", RefitRebuiltWayfarerReducer),
   __reducerSchema("release_input_control", ReleaseInputControlReducer),
+  __reducerSchema("reload_weapon", ReloadWeaponReducer),
   __reducerSchema("rename_ship", RenameShipReducer),
   __reducerSchema("replace_legacy_player_wayfarer", ReplaceLegacyPlayerWayfarerReducer),
   __reducerSchema("request_identity_link", RequestIdentityLinkReducer),

@@ -6,15 +6,28 @@ import {
   type InferSchema,
 } from "spacetimedb/server";
 import type world from "./index";
-import { LAB_WEAPONS } from "../../content/src/weapons";
+import {
+  LAB_WEAPONS,
+  weaponMode,
+  type WeaponDefinition,
+} from "../../content/src/weapons";
 import {
   normalizedAim,
   aimIsFresh,
   recoveredEnergy,
   validateShot,
+  pelletAngles,
+  throwLanding,
+  reloadUntil,
+  blastDamage,
 } from "../../sim/src/combat";
-import { resolveShotImpact } from "./combat-impact";
-import { applyShotDamage, isDead } from "./combat-damage";
+import { resolveShotImpact, type ShotHit } from "./combat-impact";
+import {
+  applyShotDamage,
+  damageCharacter,
+  isDead,
+  type AppliedDamage,
+} from "./combat-damage";
 import { resolveEvaShot } from "./eva";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
@@ -34,6 +47,15 @@ function available(
     ctx.db.station.shipId.find(actor.shipId)?.occupantId !== actor.id
   );
 }
+/** Stunned characters cannot aim or fire (stun gun, baton). Views have no clock: reducers only. */
+export function isStunned(
+  ctx: Pick<ReadContext, "db">,
+  characterId: string,
+  now: bigint,
+) {
+  const row = ctx.db.combatAction.characterId.find(characterId);
+  return !!row && row.stunnedUntilMicros > now;
+}
 export function clearAim(ctx: Context, characterId: string) {
   const aim = ctx.db.combatAim.characterId.find(characterId);
   if (aim?.active)
@@ -52,6 +74,11 @@ export function setAim(ctx: Context, args: { active: boolean; angle: number }) {
     throw new SenderError("You are dead");
   if (args.active && !available(ctx, actor))
     throw new SenderError("Stand up before aiming");
+  if (
+    args.active &&
+    isStunned(ctx, actor.id, ctx.timestamp.microsSinceUnixEpoch)
+  )
+    throw new SenderError("You are stunned");
   const row = {
     characterId: actor.id,
     active: args.active,
@@ -104,10 +131,17 @@ export function combatView(ctx: ReadContext) {
     },
   ];
 }
-export function fire(
-  ctx: Context,
-  args: { itemId: string; expectedRevision: bigint; operationId: string },
-) {
+
+type Actor = NonNullable<ReturnType<typeof actorFor>>;
+type WeaponArgs = {
+  itemId: string;
+  expectedRevision: bigint;
+  operationId: string;
+};
+
+/** Shared intent checks of fire/reload: alive, standing, the item in hand is a weapon, a fresh
+ * operation id (a replay of the same request is a no-op, returning undefined). */
+function weaponIntent(ctx: Context, args: WeaponArgs, kind: string) {
   const actor = actorFor(ctx);
   if (actor && isDead(ctx, actor.id)) throw new SenderError("You are dead");
   if (!actor || !available(ctx, actor))
@@ -124,6 +158,7 @@ export function fire(
   if (!/^[A-Za-z0-9_-]{1,96}$/.test(args.operationId))
     throw new SenderError("Invalid operation ID");
   const request = JSON.stringify({
+      ...(kind === "fire" ? {} : { kind }),
       ...args,
       expectedRevision: args.expectedRevision.toString(),
     }),
@@ -132,15 +167,14 @@ export function fire(
   if (previous) {
     if (previous.request !== request)
       throw new SenderError("Operation ID already used");
-    return;
+    return undefined;
   }
-  const now = ctx.timestamp.microsSinceUnixEpoch,
-    aim = ctx.db.combatAim.characterId.find(actor.id);
-  if (!aim || !aimIsFresh(aim.active, aim.updatedMicros, now))
-    throw new SenderError("Aim intent expired");
+  const now = ctx.timestamp.microsSinceUnixEpoch;
+  if (isStunned(ctx, actor.id, now)) throw new SenderError("You are stunned");
   const old = ctx.db.weaponEnergy.itemId.find(item.id);
   if ((old?.revision ?? 0n) !== args.expectedRevision)
     throw new SenderError("Weapon revision conflict");
+  if (old && old.reloadUntilMicros > now) throw new SenderError("Reloading");
   const energy = old
     ? recoveredEnergy(
         old.energy,
@@ -150,6 +184,141 @@ export function fire(
         now,
       )
     : definition.capacity;
+  return { actor, item, definition, old, energy, now, id, request };
+}
+
+function receipt(
+  ctx: Context,
+  actor: Actor,
+  id: string,
+  request: string,
+  now: bigint,
+) {
+  const receipts = [...ctx.db.combatReceipt.by_character.filter(actor.id)].sort(
+    (a, b) => (a.createdMicros < b.createdMicros ? -1 : 1),
+  );
+  while (receipts.length >= 128)
+    ctx.db.combatReceipt.id.delete(receipts.shift()!.id);
+  ctx.db.combatReceipt.insert({
+    id,
+    characterId: actor.id,
+    request,
+    createdMicros: now,
+  });
+}
+
+type EvaBodyRow = NonNullable<
+  ReturnType<Context["db"]["evaBody"]["characterId"]["find"]>
+>;
+type CombatActionRow = NonNullable<
+  ReturnType<Context["db"]["combatAction"]["characterId"]["find"]>
+>;
+function emptyAction(characterId: string): CombatActionRow {
+  return {
+    characterId,
+    shipId: "",
+    deckId: "",
+    definitionId: "",
+    mode: "",
+    shotSequence: 0n,
+    shotMicros: 0n,
+    originX: 0,
+    originY: 0,
+    pointsJson: "[]",
+    landX: 0,
+    landY: 0,
+    detonateMicros: 0n,
+    detonated: false,
+    blastRadiusM: 0,
+    reloadSequence: 0n,
+    reloadUntilMicros: 0n,
+    stunnedUntilMicros: 0n,
+    stunSequence: 0n,
+  };
+}
+function writeAction(
+  ctx: Context,
+  characterId: string,
+  patch: (row: CombatActionRow) => CombatActionRow,
+) {
+  const old = ctx.db.combatAction.characterId.find(characterId);
+  const next = patch(old ?? emptyAction(characterId));
+  if (old) ctx.db.combatAction.characterId.update(next);
+  else ctx.db.combatAction.insert(next);
+}
+
+/** Stun a struck character: no aiming or firing until the stun ends; their aim drops now. */
+function stun(ctx: Context, characterId: string, stunMs: number, now: bigint) {
+  if (!(stunMs > 0) || isDead(ctx, characterId)) return;
+  const until = now + BigInt(Math.round(stunMs)) * 1000n;
+  writeAction(ctx, characterId, (row) => ({
+    ...row,
+    stunnedUntilMicros:
+      row.stunnedUntilMicros > until ? row.stunnedUntilMicros : until,
+    stunSequence: row.stunSequence + 1n,
+  }));
+  clearAim(ctx, characterId);
+}
+
+const merge = (a: AppliedDamage, b: AppliedDamage): AppliedDamage => ({
+  damage: a.damage + b.damage,
+  targetState: b.targetState || a.targetState,
+  targetHp: b.targetMaxHp ? b.targetHp : a.targetHp,
+  targetMaxHp: b.targetMaxHp || a.targetMaxHp,
+});
+const NO_DAMAGE: AppliedDamage = {
+  damage: 0,
+  targetState: "",
+  targetHp: 0,
+  targetMaxHp: 0,
+};
+const round6 = (n: number) => Math.round(n * 1e6) / 1e6 + 0;
+
+/** Resolve the rays of an accepted shot (beam, melee reach or pellets) with the same authoritative
+ * hit resolution as every handheld shot, apply damage (friendly fire on) and any stun. */
+function resolveRays(
+  ctx: Context,
+  actor: Actor,
+  definition: WeaponDefinition,
+  angle: number,
+  now: bigint,
+  evaBody: EvaBodyRow | undefined,
+) {
+  const angles =
+    weaponMode(definition) === "pellets"
+      ? pelletAngles(angle, definition.pellets ?? 1, definition.spreadRad ?? 0)
+      : [angle];
+  const hits: ShotHit[] = [];
+  let applied = NO_DAMAGE;
+  for (const a of angles) {
+    // EVA shooters fire in the world frame: the ray stops at the first other EVA body.
+    const hit: ShotHit = evaBody
+      ? resolveEvaShot(ctx, evaBody, a, definition.rangeMeters)
+      : resolveShotImpact(ctx, actor, a, definition.rangeMeters);
+    hits.push(hit);
+    applied = merge(
+      applied,
+      applyShotDamage(ctx, actor, hit, definition.damage),
+    );
+    if (hit.kind === "character" && definition.stunMs)
+      stun(ctx, hit.targetId, definition.stunMs, now);
+  }
+  // The impact row reports the ray nearest the aim (the middle pellet).
+  const main = hits[Math.floor((hits.length - 1) / 2)];
+  return { hits, main, applied };
+}
+
+export function fire(ctx: Context, args: WeaponArgs) {
+  const intent = weaponIntent(ctx, args, "fire");
+  if (!intent) return;
+  const { actor, item, definition, old, energy, now, id, request } = intent;
+  const aim = ctx.db.combatAim.characterId.find(actor.id);
+  if (!aim || !aimIsFresh(aim.active, aim.updatedMicros, now))
+    throw new SenderError("Aim intent expired");
+  const evaBody = ctx.db.evaBody.characterId.find(actor.id);
+  // A thrown charge lands and detonates on a deck; space has no deck to land on yet.
+  if (evaBody && weaponMode(definition) === "thrown")
+    throw new SenderError("Nothing to throw at in EVA");
   try {
     validateShot(
       energy,
@@ -170,49 +339,195 @@ export function fire(
     revision: (old?.revision ?? 0n) + 1n,
     shotSequence: (old?.shotSequence ?? 0n) + 1n,
     lastShotAngle: aim.angle,
+    reloadUntilMicros: 0n,
+    reloadSequence: old?.reloadSequence ?? 0n,
   };
   if (old) ctx.db.weaponEnergy.itemId.update(row);
   else ctx.db.weaponEnergy.insert(row);
-  // Where the accepted shot ends: a character, walls, hull, tall furniture or another ship stop
-  // the beam. Damage is applied to characters and placed components (friendly fire is on).
-  // EVA shooters fire in the world frame (aim angle in world convention): the beam stops at the
-  // first other EVA body; the impact row reports a world end point with an empty ship id.
-  const evaBody = ctx.db.evaBody.characterId.find(actor.id);
-  const hit = evaBody
-    ? resolveEvaShot(ctx, evaBody, aim.angle, definition.rangeMeters)
-    : resolveShotImpact(ctx, actor, aim.angle, definition.rangeMeters);
-  const applied = applyShotDamage(ctx, actor, hit, definition.damage);
+  const mode = weaponMode(definition);
+  const deckId =
+    ctx.db.constructionLocation.characterId.find(actor.id)?.deckId ?? "";
+  let point: [number, number],
+    kind: string,
+    distanceM: number,
+    targetId: string;
+  let applied = NO_DAMAGE;
+  let points: [number, number, number][];
+  let landing: { x: number; y: number } | undefined;
+  if (mode === "thrown") {
+    // Lands at the first obstacle (body or structure) along the aim, detonates after the fuse.
+    const hit = resolveShotImpact(
+      ctx,
+      actor,
+      aim.angle,
+      definition.rangeMeters,
+    );
+    const land = throwLanding(
+      [actor.localX, actor.localY],
+      aim.angle,
+      hit.distanceM,
+      hit.kind !== "none",
+    );
+    landing = { x: round6(land.x), y: round6(land.y) };
+    point = [landing.x, landing.y];
+    kind = "thrown";
+    distanceM = round6(land.distanceM);
+    targetId = "";
+    points = [[landing.x, landing.y, 0]];
+  } else {
+    const rays = resolveRays(ctx, actor, definition, aim.angle, now, evaBody);
+    applied = rays.applied;
+    point = rays.main.point;
+    kind = rays.main.kind;
+    distanceM = rays.main.distanceM;
+    // The other ship's identity is not disclosed through the shooter's impact row.
+    // Nor another character's id: a crewmate hit reports only the damage dealt.
+    targetId =
+      rays.main.kind === "ship" || rays.main.kind === "character"
+        ? ""
+        : rays.main.targetId;
+    points = rays.hits.map((h) => [
+      h.point[0],
+      h.point[1],
+      h.kind === "none" ? 0 : 1,
+    ]);
+  }
   const impact = {
     characterId: actor.id,
     itemId: item.id,
     shotSequence: row.shotSequence,
     shipId: evaBody ? "" : actor.shipId,
-    x: hit.point[0],
-    y: hit.point[1],
-    distanceM: hit.distanceM,
-    kind: hit.kind,
-    // The other ship's identity is not disclosed through the shooter's impact row.
-    // Nor another character's id: a crewmate hit reports only the damage dealt.
-    targetId:
-      hit.kind === "ship" || hit.kind === "character" ? "" : hit.targetId,
+    x: point[0],
+    y: point[1],
+    distanceM,
+    kind,
+    targetId,
     createdMicros: now,
     ...applied,
   };
   if (ctx.db.combatImpact.characterId.find(actor.id))
     ctx.db.combatImpact.characterId.update(impact);
   else ctx.db.combatImpact.insert(impact);
-  const receipts = [...ctx.db.combatReceipt.by_character.filter(actor.id)].sort(
-    (a, b) => (a.createdMicros < b.createdMicros ? -1 : 1),
-  );
-  while (receipts.length >= 128)
-    ctx.db.combatReceipt.id.delete(receipts.shift()!.id);
-  ctx.db.combatReceipt.insert({
-    id,
-    characterId: actor.id,
-    request,
-    createdMicros: now,
-  });
+  writeAction(ctx, actor.id, (action) => ({
+    ...action,
+    // EVA shots are in the world frame; decks never draw them.
+    shipId: evaBody ? "" : actor.shipId,
+    deckId,
+    definitionId: item.definitionId,
+    mode,
+    shotSequence: row.shotSequence,
+    shotMicros: now,
+    originX: actor.localX,
+    originY: actor.localY,
+    pointsJson: JSON.stringify(points),
+    landX: landing?.x ?? 0,
+    landY: landing?.y ?? 0,
+    detonateMicros: landing
+      ? now + BigInt(Math.round(definition.fuseMs ?? 0)) * 1000n
+      : 0n,
+    detonated: false,
+    blastRadiusM: landing ? (definition.blastRadiusM ?? 0) : 0,
+  }));
+  receipt(ctx, actor, id, request, now);
 }
+
+/** Manual reload: refills the equipped weapon to capacity after its reload time (a cell or
+ * magazine swap); firing is refused meanwhile. Weapons without `reloadMs` cannot reload. */
+export function reload(ctx: Context, args: WeaponArgs) {
+  const intent = weaponIntent(ctx, args, "reload");
+  if (!intent) return;
+  const { actor, item, definition, old, energy, now, id, request } = intent;
+  if (!definition.reloadMs) throw new SenderError("This weapon has no reload");
+  if (energy >= definition.capacity) throw new SenderError("Weapon is full");
+  const until = reloadUntil(now, definition.reloadMs);
+  const row = {
+    itemId: item.id,
+    // Full once the reload completes; passive recovery restarts from `until`.
+    energy: definition.capacity,
+    checkpointMicros: until,
+    lastShotMicros: old?.lastShotMicros ?? 0n,
+    revision: (old?.revision ?? 0n) + 1n,
+    shotSequence: old?.shotSequence ?? 0n,
+    lastShotAngle: old?.lastShotAngle ?? 0,
+    reloadUntilMicros: until,
+    reloadSequence: (old?.reloadSequence ?? 0n) + 1n,
+  };
+  if (old) ctx.db.weaponEnergy.itemId.update(row);
+  else ctx.db.weaponEnergy.insert(row);
+  writeAction(ctx, actor.id, (action) => ({
+    ...action,
+    shipId: actor.shipId,
+    definitionId: item.definitionId,
+    reloadSequence: action.reloadSequence + 1n,
+    reloadUntilMicros: until,
+  }));
+  receipt(ctx, actor, id, request, now);
+}
+
+/** Resolve a thrown charge whose fuse has run out: every standing body on its deck within the blast
+ * radius, not shielded by structure, takes falloff damage (friendly fire on, the thrower included). */
+function detonate(ctx: Context, action: CombatActionRow) {
+  const definition = LAB_WEAPONS[action.definitionId];
+  const thrower = ctx.db.character.id.find(action.characterId);
+  writeAction(ctx, action.characterId, (row) => ({ ...row, detonated: true }));
+  if (!definition || !(action.blastRadiusM > 0)) return;
+  let total = NO_DAMAGE;
+  let count = 0;
+  for (const body of ctx.db.character.by_ship.filter(action.shipId)) {
+    if (++count > 256) break;
+    if (!body.connected || isDead(ctx, body.id)) continue;
+    if (
+      ctx.db.constructionTraversal.characterId.find(body.id) ||
+      ctx.db.constructionStairWalk.characterId.find(body.id)
+    )
+      continue;
+    const location = ctx.db.constructionLocation.characterId.find(body.id);
+    if ((location?.deckId ?? "") !== action.deckId) continue;
+    const dx = body.localX - action.landX,
+      dy = body.localY - action.landY,
+      d = Math.hypot(dx, dy);
+    const damage = blastDamage(
+      definition.damage,
+      d,
+      action.blastRadiusM,
+      definition.blastEdgeFraction ?? 1,
+    );
+    if (!(damage > 0)) continue;
+    // Structure between the blast and the body shields it (the same beam model as a shot).
+    if (thrower && d > 0.05) {
+      const toward = Math.atan2(dx, dy);
+      const hit = resolveShotImpact(
+        ctx,
+        {
+          id: thrower.id,
+          shipId: action.shipId,
+          localX: action.landX,
+          localY: action.landY,
+        },
+        toward,
+        d,
+      );
+      if (
+        hit.kind !== "none" &&
+        hit.kind !== "character" &&
+        hit.distanceM < d - 0.35
+      )
+        continue;
+    }
+    total = merge(total, damageCharacter(ctx, body.id, damage));
+  }
+  const impact = ctx.db.combatImpact.characterId.find(action.characterId);
+  if (impact && impact.shotSequence === action.shotSequence)
+    ctx.db.combatImpact.characterId.update({
+      ...impact,
+      kind: "blast",
+      damage: total.damage,
+      targetState: total.targetState,
+      targetHp: 0,
+      targetMaxHp: 0,
+    });
+}
+
 export const impactProjection = t.row("CombatImpactStatus", {
   characterId: t.string().primaryKey(),
   itemId: t.string(),
@@ -254,7 +569,8 @@ export function impactView(ctx: ReadContext) {
     },
   ];
 }
-/** Effective energy is projected at <=4Hz. Passive recovery never changes action CAS revision. */
+/** Effective energy is projected at <=4Hz. Passive recovery never changes action CAS revision.
+ * Thrown charges detonate here once their fuse has run out. */
 export function stepCombat(ctx: Context) {
   const now = ctx.timestamp.microsSinceUnixEpoch;
   for (const aim of ctx.db.combatAim.iter()) {
@@ -263,6 +579,7 @@ export function stepCombat(ctx: Context) {
       aim.active &&
       (!actor ||
         !available(ctx, actor) ||
+        isStunned(ctx, aim.characterId, now) ||
         !aimIsFresh(true, aim.updatedMicros, now))
     )
       clearAim(ctx, aim.characterId);
@@ -286,4 +603,71 @@ export function stepCombat(ctx: Context) {
         checkpointMicros: now,
       });
   }
+  // Collect first: detonation writes combat_action rows.
+  const due: CombatActionRow[] = [];
+  let scanned = 0;
+  for (const action of ctx.db.combatAction.iter()) {
+    if (++scanned > 4096) break;
+    if (
+      action.detonateMicros > 0n &&
+      !action.detonated &&
+      now >= action.detonateMicros
+    )
+      due.push(action);
+  }
+  for (const action of due) detonate(ctx, action);
+}
+
+export const combatActionProjection = t.row("CombatActionStatus", {
+  characterId: t.string().primaryKey(),
+  shipId: t.string(),
+  deckId: t.string(),
+  definitionId: t.string(),
+  mode: t.string(),
+  shotSequence: t.u64(),
+  shotMicros: t.u64(),
+  originX: t.f64(),
+  originY: t.f64(),
+  pointsJson: t.string(),
+  landX: t.f64(),
+  landY: t.f64(),
+  detonateMicros: t.u64(),
+  detonated: t.bool(),
+  blastRadiusM: t.f64(),
+  reloadSequence: t.u64(),
+  reloadUntilMicros: t.u64(),
+  stunnedUntilMicros: t.u64(),
+  stunSequence: t.u64(),
+});
+/**
+ * Latest combat action of every body on the viewer's own current deck, the viewer included (the
+ * same relation as `current_interior_crew`): weapon catalogue id and mode, ray end points, a thrown
+ * charge's landing and detonation, reload and stun timing. It carries no item UUIDs, energy, damage
+ * or target identities, and only actions taken aboard the viewer's ship.
+ */
+export function visibleCombatActions(
+  ctx: ReadContext,
+  visible:
+    | {
+        actor: { id: string };
+        bodies: readonly { body: { id: string; shipId: string } }[];
+      }
+    | undefined,
+) {
+  if (!visible) return [];
+  const out = [];
+  for (const { body } of visible.bodies) {
+    const row = ctx.db.combatAction.characterId.find(body.id);
+    if (!row) continue;
+    const here = row.shipId === body.shipId;
+    out.push({
+      ...row,
+      shipId: body.shipId,
+      // Shots taken aboard another ship are not in this deck's frame.
+      shotSequence: here ? row.shotSequence : 0n,
+      pointsJson: here ? row.pointsJson : "[]",
+      detonateMicros: here ? row.detonateMicros : 0n,
+    });
+  }
+  return out;
 }

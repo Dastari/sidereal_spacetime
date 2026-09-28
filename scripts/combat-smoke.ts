@@ -124,6 +124,34 @@ export async function combatSmoke(
     revision,
     "passive energy must not churn action CAS",
   );
+  // Manual reload (items batch A): refills to capacity after the reload time; fire is refused
+  // meanwhile; a replay is a no-op; a full weapon refuses another reload.
+  const reloadOp = {
+    itemId: pistol.id,
+    expectedRevision: state().revision,
+    operationId: crypto.randomUUID(),
+  };
+  await a.reducers.reloadWeapon(reloadOp);
+  await a.reducers.reloadWeapon(reloadOp);
+  await wait(() => state().energy === 100, "reload refills to capacity");
+  assert.equal(state().revision, reloadOp.expectedRevision + 1n);
+  await a.reducers.setCombatAim({ active: true, angle: 0.25 });
+  await assert.rejects(
+    a.reducers.fireWeapon({
+      itemId: pistol.id,
+      expectedRevision: state().revision,
+      operationId: crypto.randomUUID(),
+    }),
+    /Reloading/,
+  );
+  await new Promise((r) => setTimeout(r, 1300));
+  await a.reducers.setCombatAim({ active: true, angle: 0.25 });
+  await a.reducers.fireWeapon({
+    itemId: pistol.id,
+    expectedRevision: state().revision,
+    operationId: crypto.randomUUID(),
+  });
+  await wait(() => state().energy === 92, "fires again after the reload");
   await a.reducers.setCombatAim({ active: true, angle: 0 });
   await enterNativePilot(a);
   assert.equal(state().aimActive, false, "helm clears aim");

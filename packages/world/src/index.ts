@@ -197,6 +197,7 @@ import {
   weaponEnergy,
   combatReceipt,
   combatImpact,
+  combatAction,
 } from "./combat-tables";
 import * as combat from "./combat";
 import * as combatDamage from "./combat-damage";
@@ -396,6 +397,7 @@ const db = schema({
   weaponEnergy,
   combatReceipt,
   combatImpact,
+  combatAction,
   characterVitals,
   shipComponentDamage,
   pilotLayoutReceipt,
@@ -1057,6 +1059,20 @@ export const setCombatAim = db.reducer(
 export const fireWeapon = db.reducer(
   { itemId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
   auth.gameAction(combat.fire, true),
+);
+/** Additive (items batch A, 2026-09-29): manual reload of the equipped weapon. */
+export const reloadWeapon = db.reducer(
+  { itemId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
+  auth.gameAction(combat.reload, true),
+);
+/** Additive (items batch A): latest combat action (weapon mode, ray end points, thrown charge,
+ * reload, stun) of every body on the viewer's deck, the viewer included; see combat.ts. */
+export const visibleCombatActions = db.view(
+  { name: "visible_combat_actions", public: true },
+  t.array(combat.combatActionProjection),
+  auth.gameView((ctx) =>
+    combat.visibleCombatActions(ctx, passengerViews.visibleInteriorBodies(ctx)),
+  ),
 );
 
 /** EVA milestone 1 (additive, 2026-09-29): airlock cycle, maglock, emergency return; see eva.ts. */
