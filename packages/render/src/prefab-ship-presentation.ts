@@ -1,15 +1,14 @@
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
-import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { createGlowOccluders } from "./glow-occluders";
+import { moldedLightRig } from "./molded-plastic";
 
 /** Game-side handle over the SHIPS-PREFABS dressed ship view. */
 export interface PrefabShipViewHandle {
@@ -21,19 +20,17 @@ export interface PrefabShipViewHandle {
   >;
 }
 
-/** The game's space scene has no image-based environment, so metallic PBR slots
- * tuned against Blender world lighting render near-black. The game presentation
- * therefore caps metalness and adds a ship-scoped sky/ground fill light. Theme
- * colours, geometry and the shared material pool semantics are unchanged. */
-const GAME_MAX_METALLIC = 0.2;
-/** Scene IBL is 0.28 (open space); materials multiply it. Retuned after the inside-out fix (bd3e4d6e): hull at ~0.3 of full IBL and
- * interior floors/walls ~0.45, with a light fill; light grey reads grey, not white. */
-const GAME_SHIP_ENVIRONMENT = 1.0;
-const GAME_INTERIOR_ENVIRONMENT = 1.6;
-/** The space scene key light is strong (2.1); ship PBR takes 60 % of it so light greys stay grey. */
+/** Molded-plastic presentation (molded-plastic.ts): slot materials carry the shared family finish,
+ * studio reflection environment and grading; the game adds only the direct-light share. The space
+ * key light is strong (2.1): hull plastic takes 60 % of it so light shells stay light grey rather
+ * than clipping, and cut-away interiors (lit mostly by room lights) take 90 %. */
 const GAME_SHIP_DIRECT = 0.6;
-/** Bloom strength of ship emissives (emit slots keep saturated colour; the glow carries the halo). */
-const GAME_SHIP_GLOW = 0.7;
+const GAME_INTERIOR_DIRECT = 0.9;
+/** Bloom strength of ship emissives: a bright core with a small halo (emit slots keep their
+ * saturated colour; the glow carries the halo). Reduced for the plastic pass before any
+ * saturation lift. */
+const GAME_SHIP_GLOW = 0.5;
+const GAME_SHIP_GLOW_KERNEL = 32;
 
 /** A trusted prefab construction document carries its canonical grammar source
  * under `prefab` (admitted by readConstructionDraft). Returns undefined for any
@@ -74,7 +71,7 @@ export async function loadPrefabShipPresentation(
   // edges, exhaust). The game's instrument glow layer stays untouched; one grading path.
   const glow = new GlowLayer("prefab-ship-glow", scene, {
     mainTextureFixedSize: 512,
-    blurKernelSize: 40,
+    blurKernelSize: GAME_SHIP_GLOW_KERNEL,
   });
   glow.intensity = GAME_SHIP_GLOW;
   // Per-slot bloom: amber (emit_b) covers large areas (radiator fins, roof vents) and would wash
@@ -94,34 +91,19 @@ export async function loadPrefabShipPresentation(
   // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind
   // housings, walls and hull plates do not bloom through them.
   const occluders = createGlowOccluders(glow);
-  const fill = new HemisphericLight(
-    "prefab-ship-fill",
-    new Vector3(0.2, 1, -0.3),
-    scene,
-  );
-  fill.intensity = 0.25;
-  fill.diffuse = new Color3(0.92, 0.94, 1);
-  fill.groundColor = new Color3(0.32, 0.34, 0.42);
-  fill.specular = new Color3(0.15, 0.15, 0.15);
+  // Shared molded light rig (cool fill + camera-relative rim), also lighting the crew.
+  const rig = moldedLightRig(scene);
   const glowing = new Set<AbstractMesh>();
   const adapt = () => {
     const meshes = view.root.getChildMeshes();
-    fill.includedOnlyMeshes = meshes;
+    rig.include(meshes);
     for (const mesh of meshes) {
       const m = mesh.material;
-      if (m instanceof PBRMaterial) {
-        if ((m.metallic ?? 0) > GAME_MAX_METALLIC)
-          m.metallic = GAME_MAX_METALLIC;
-        // The space scene's image environment is dim (tuned for the open sky); ship panels
-        // take a fuller share of it so light greys read as light grey, not flat lavender.
-        // Interior-palette clones (materials.ts roleSlotMaterial) are named prefab-<theme>-<role>-<slot>.
-        m.environmentIntensity = /-(floor|wall)-/.test(m.name)
-          ? GAME_INTERIOR_ENVIRONMENT
-          : GAME_SHIP_ENVIRONMENT;
+      // Interior-palette clones (materials.ts roleSlotMaterial) are named prefab-<theme>-<role>-<slot>.
+      if (m instanceof PBRMaterial)
         m.directIntensity = /-(floor|wall)-/.test(m.name)
-          ? 0.9
+          ? GAME_INTERIOR_DIRECT
           : GAME_SHIP_DIRECT;
-      }
     }
     const emissive = new Set<AbstractMesh>(view.emissiveMeshes());
     for (const mesh of emissive)
@@ -151,7 +133,6 @@ export async function loadPrefabShipPresentation(
     dispose() {
       occluders.dispose();
       glow.dispose();
-      fill.dispose();
       view.dispose();
     },
   };

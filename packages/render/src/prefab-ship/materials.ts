@@ -14,6 +14,7 @@ import { Constants } from "@babylonjs/core/Engines/constants";
 import { SHIP_KIT_SLOTS, type ShipKitSlot } from "@sidereal/content/ship-kit";
 import { SHIP_THEMES } from "@sidereal/content/ship-themes";
 import type { ShipThemeId } from "@sidereal/content/ship-prefab";
+import { applySurfaceFinish, shipSlotFamily } from "../molded-plastic";
 
 const pools = new WeakMap<Scene, Map<string, PBRMaterial | StandardMaterial>>();
 
@@ -64,17 +65,18 @@ const INTERIOR: Partial<
     Partial<Record<ShipKitSlot, [number, number, number]>>
   >
 > = {
+  // Neutral (not violet) greys: the molded-plastic pass removes the purple cast from whites.
   floor: {
-    trim: [0.27, 0.27, 0.31],
-    dark: [0.06, 0.062, 0.08],
-    secondary: [0.13, 0.135, 0.175],
-    metal: [0.34, 0.34, 0.38],
-    primary: [0.36, 0.35, 0.4],
+    trim: [0.27, 0.27, 0.285],
+    dark: [0.06, 0.063, 0.075],
+    secondary: [0.13, 0.138, 0.16],
+    metal: [0.34, 0.345, 0.36],
+    primary: [0.37, 0.365, 0.37],
   },
   wall: {
-    primary: [0.4, 0.39, 0.43],
-    secondary: [0.07, 0.072, 0.11],
-    trim: [0.18, 0.18, 0.22],
+    primary: [0.43, 0.43, 0.445],
+    secondary: [0.07, 0.075, 0.105],
+    trim: [0.18, 0.185, 0.2],
   },
 };
 
@@ -98,6 +100,7 @@ export function roleSlotMaterial(
     m.albedoColor = new Color3(0.35, 0.002, 0.006);
     m.emissiveColor = new Color3(1, 0.008, 0.025);
     m.emissiveIntensity = 1.3;
+    applySurfaceFinish(m, "emissive");
     p.set(key, m);
     return m;
   }
@@ -115,8 +118,9 @@ export function roleSlotMaterial(
   const base = slotMaterial(scene, theme, slot);
   const m = base.clone(`prefab-${theme}-${role}-${slot}`) as PBRMaterial;
   m.albedoColor = new Color3(...colour);
-  m.roughness = role === "floor" ? 0.62 : 0.55;
-  m.metallic = role === "floor" ? 0.12 : 0.05;
+  // Interior finishes are the same moulded plastic as the hull (one material language); only
+  // the colour differs. Re-applied because a clone does not share the grading configuration.
+  applySurfaceFinish(m, shipSlotFamily(slot) ?? "plastic-light");
   p.set(key, m);
   return m;
 }
@@ -135,8 +139,9 @@ export function slotMaterial(
   const m = new PBRMaterial(`prefab-${theme}-${slot}`, scene);
   m.maxSimultaneousLights = 12; // up to 8 room lights plus scene key/fill lights
   m.albedoColor = new Color3(...t.colour);
-  m.metallic = t.metallic;
-  m.roughness = t.roughness;
+  // Response (metallic, roughness, coat, IOR, reflection environment, grading) comes from the
+  // shared molded-plastic family of the slot; the theme table supplies colour and emission.
+  applySurfaceFinish(m, shipSlotFamily(slot) ?? "plastic-light");
   if (t.emissive) {
     m.emissiveColor = new Color3(...t.colour);
     m.emissiveIntensity =

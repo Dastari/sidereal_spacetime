@@ -119,13 +119,16 @@ export const SHIP_THEMES: Record<ShipThemeId, ShipTheme> = {
     "federation",
     "Federation (Orion Crest)",
     {
-      // Reference palette (VERIFY rubric, measured from 3d-rpg-after): lavender-tinted warm grey
-      // #c8bcd8/#a78db6, charcoal navy #343652/#16182a, crimson #95233c, cyan #3fb8ff, amber #ffb14c.
-      primary: [0.55, 0.49, 0.64],
+      // Reference palette (VERIFY rubric, measured from 3d-rpg-after): charcoal navy
+      // #343652/#16182a, crimson #95233c, cyan #3fb8ff, amber #ffb14c. The measured lavender
+      // shell (#c8bcd8) was the reference's purple lighting, not pigment: the molded-plastic pass
+      // (owner follow-up 2026-09-27) paints the shell a clean cool white-grey #cccccf and keeps
+      // trim and metal navy/neutral instead of violet.
+      primary: [0.6, 0.6, 0.63],
       secondary: [0.034, 0.037, 0.085],
       accent: [0.3, 0.017, 0.045],
-      trim: [0.1, 0.075, 0.16],
-      metal: [0.38, 0.36, 0.46],
+      trim: [0.075, 0.085, 0.15],
+      metal: [0.4, 0.41, 0.45],
       dark: [0.008, 0.009, 0.024],
       emitA: [0.05, 0.48, 1.0],
       emitAStrength: 8,

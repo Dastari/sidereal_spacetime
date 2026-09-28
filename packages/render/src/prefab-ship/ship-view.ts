@@ -55,6 +55,7 @@ import {
   type DressedShip,
 } from "@sidereal/sim/ship-dresser";
 import { setMeshRole, type MeshRole } from "../mesh-roles";
+import { CONTACT_STRIP_OPACITY } from "../molded-plastic";
 import { meshBoxes, newBuilder, type GeometryBuilder } from "./box-mesher";
 import {
   appendTransformed,
@@ -926,7 +927,7 @@ export async function createPrefabShipView(
         ] as const) {
           g.positions.push(p[0] + o[0] * far, p[1] + o[1] * far, z);
           g.normals.push(0, 0, 1);
-          colours.push(0, 0, 0, far ? 0 : 0.55);
+          colours.push(0, 0, 0, far ? 0 : CONTACT_STRIP_OPACITY);
         }
         if (side > 0)
           g.indices.push(base, base + 1, base + 2, base, base + 2, base + 3);

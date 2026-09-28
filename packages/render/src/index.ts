@@ -82,6 +82,11 @@ import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
 import { createVoxelCrewVisual } from "./crew/voxel-crew";
 import { equipVoxelCrewItem } from "./crew/voxel-crew-kit";
+import { moldedLightRig, setMoldedClearCoat } from "./molded-plastic";
+import {
+  contactShadingRequested,
+  createContactShading,
+} from "./contact-shading";
 import {
   createVoxelCrewOutfit,
   toneCrewEmissive,
@@ -251,6 +256,8 @@ async function buildWorld(
   const requestedBackend = readRenderBackend(backendStorage);
   const pageUrl =
     typeof window === "undefined" ? undefined : new URL(window.location.href);
+  // Molded-plastic clear-coat lobe: off by default for cost (molded-plastic.ts); ?coat=1 reviews it.
+  setMoldedClearCoat(pageUrl?.searchParams.get("coat") === "1");
   const recoveringWebGL =
     pageUrl?.searchParams.get("rendererFallback") === "webgl";
   const createdEngine = await createRenderEngine(
@@ -678,13 +685,19 @@ async function buildWorld(
   refreshCrewPresentation = () => {
     if (!crew) return;
     const meshes = crew.root.getChildMeshes();
-    if (crewOutfit) toneCrewEmissive(meshes);
+    if (crewOutfit) {
+      // Molded-plastic finish (inside toneCrewEmissive) plus the shared cool fill and rim.
+      toneCrewEmissive(meshes);
+      moldedLightRig(scene).include(meshes);
+    }
     refreshLocalGlow();
     environment.setOccluders([...imported.meshes, ...meshes]);
     lighting.addActor(meshes);
     setGlowOccludingActors(scene, meshes);
   };
   setGlowOccludingActors(scene, crew?.root.getChildMeshes() ?? []);
+  // Voxel crew parts that loaded before this point get the shared finish and light rig now.
+  if (crewOutfit) refreshCrewPresentation();
   // Prefab ships (SHIP-INTERACTION): geometric object picking over the batched dressed view,
   // beam clipping against the compiled structure, and the authoritative impact flash.
   const prefabBinding = prefabView
@@ -717,6 +730,13 @@ async function buildWorld(
   const antialiasing = createAntialiasing(scene, camera, {
     temporalResetIntegrated: true,
   });
+  // Molded-plastic contact shading (optional SSAO over the pre-pass targets; see contact-shading.ts).
+  const contactShading = createContactShading(
+    scene,
+    camera,
+    antialiasing,
+    contactShadingRequested(backendStorage, pageUrl?.search),
+  );
   // A reconstructed scene starts with fresh history. Newly loaded geometry also
   // invalidates samples; this covers remote exteriors and async equipment.
   let temporalGeometryDirty = false;
@@ -1459,6 +1479,7 @@ async function buildWorld(
       localLights.dispose();
       scene.onNewMeshAddedObservable.remove(temporalMeshObserver);
       scene.onBeforeRenderObservable.remove(temporalGeometryObserver);
+      contactShading.dispose();
       antialiasing.dispose();
       graphics.dispose();
       transmissionLifecycle.dispose();
