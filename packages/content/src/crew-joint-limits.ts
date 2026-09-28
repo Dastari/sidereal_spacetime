@@ -37,7 +37,12 @@ export const CREW_JOINT_LIMITS: Readonly<Record<string, JointRange>> = {
   // shoulder ball joint (hanging arm: +Z forward, + flex = raise forward). Backward extension and
   // cross-body adduction are limited only while the arm is below shoulder height (overhead reach
   // wraps the flex angle); the elbow limits carry the arm's twist.
-  upper_arm: { flex: [-90, 185], side: [-75, 185], twist: [-180, 180], flexSign: 1 },
+  upper_arm: {
+    flex: [-90, 185],
+    side: [-75, 185],
+    twist: [-180, 180],
+    flexSign: 1,
+  },
   // elbow hinge: forearm folds toward the front of the upper arm
   forearm: { flex: [-4, 155], side: [-15, 15], twist: [-25, 25], flexSign: 1 },
   // wrist: not range-limited. The CHARACTER_SPEC grip socket keeps the barrel along socket +X,
@@ -73,7 +78,12 @@ export const CREW_STANCE = {
 /**
  * Reviewed exceptions (clip, bone, kind), each with the reason. Keep this list short and specific.
  */
-export const CREW_JOINT_EXCEPTIONS: readonly { clip: string; bone: RegExp; kind: string; reason: string }[] = [
+export const CREW_JOINT_EXCEPTIONS: readonly {
+  clip: string;
+  bone: RegExp;
+  kind: string;
+  reason: string;
+}[] = [
   {
     clip: "heavy.reload",
     bone: /^hand\.[LR]$/,
@@ -112,7 +122,10 @@ export type JointClipSummary = {
   clip: string;
   frames: number;
   /** per bone: [min, max] of flex, side, twist (degrees) */
-  ranges: Record<string, { flex: [number, number]; side: [number, number]; twist: [number, number] }>;
+  ranges: Record<
+    string,
+    { flex: [number, number]; side: [number, number]; twist: [number, number] }
+  >;
   maxStepDeg: number;
   maxStepBone: string;
   minSoleM: number;
@@ -192,7 +205,8 @@ function mmul(a: Mat4, b: Mat4): Mat4 {
 function minvRigid(m: Mat4): Mat4 {
   // inverse of rotation (+ uniform/unit scale) + translation
   const o = new Float64Array(16);
-  for (let r = 0; r < 3; r++) for (let c = 0; c < 3; c++) o[c * 4 + r] = m[r * 4 + c];
+  for (let r = 0; r < 3; r++)
+    for (let c = 0; c < 3; c++) o[c * 4 + r] = m[r * 4 + c];
   for (let r = 0; r < 3; r++)
     o[12 + r] = -(o[r] * m[12] + o[4 + r] * m[13] + o[8 + r] * m[14]);
   o[15] = 1;
@@ -214,7 +228,13 @@ type GltfNode = {
 };
 type Gltf = {
   nodes: GltfNode[];
-  accessors: { bufferView: number; byteOffset?: number; componentType: number; count: number; type: string }[];
+  accessors: {
+    bufferView: number;
+    byteOffset?: number;
+    componentType: number;
+    count: number;
+    type: string;
+  }[];
   bufferViews: { byteOffset?: number }[];
   animations?: {
     name: string;
@@ -240,20 +260,36 @@ function accessor(g: Gltf, bin: Uint8Array, index: number): number[][] {
   const a = g.accessors[index];
   if (a.componentType !== 5126) throw new Error("expected float accessor");
   const n = COMPONENTS[a.type];
-  const offset = (g.bufferViews[a.bufferView].byteOffset ?? 0) + (a.byteOffset ?? 0);
-  const view = new DataView(bin.buffer, bin.byteOffset + offset, a.count * n * 4);
+  const offset =
+    (g.bufferViews[a.bufferView].byteOffset ?? 0) + (a.byteOffset ?? 0);
+  const view = new DataView(
+    bin.buffer,
+    bin.byteOffset + offset,
+    a.count * n * 4,
+  );
   const out: number[][] = [];
   for (let i = 0; i < a.count; i++) {
     const row: number[] = [];
-    for (let k = 0; k < n; k++) row.push(view.getFloat32((i * n + k) * 4, true));
+    for (let k = 0; k < n; k++)
+      row.push(view.getFloat32((i * n + k) * 4, true));
     out.push(row);
   }
   return out;
 }
 
-type Channel = { node: number; path: string; times: number[]; values: number[][]; step: boolean };
+type Channel = {
+  node: number;
+  path: string;
+  times: number[];
+  values: number[][];
+  step: boolean;
+};
 
-function channels(g: Gltf, bin: Uint8Array, clip: NonNullable<Gltf["animations"]>[number]): Channel[] {
+function channels(
+  g: Gltf,
+  bin: Uint8Array,
+  clip: NonNullable<Gltf["animations"]>[number],
+): Channel[] {
   return clip.channels.map((c) => {
     const s = clip.samplers[c.sampler];
     return {
@@ -274,7 +310,8 @@ function sampleChannel(c: Channel, t: number): number[] {
   while (times[k + 1] < t) k++;
   const u = (t - times[k]) / (times[k + 1] - times[k]);
   if (c.step) return values[k];
-  if (c.path === "rotation") return slerp(values[k] as Quat, values[k + 1] as Quat, u);
+  if (c.path === "rotation")
+    return slerp(values[k] as Quat, values[k + 1] as Quat, u);
   return values[k].map((v, i) => v + (values[k + 1][i] - v) * u);
 }
 
@@ -327,7 +364,8 @@ export function validateCrewJointLimits(
       if (hit) return hit;
       const own = trs(locals[i].t, locals[i].r, locals[i].s);
       const p = parent.get(i);
-      const m = p === undefined || i === armatureParent ? own : mmul(get(p), own);
+      const m =
+        p === undefined || i === armatureParent ? own : mmul(get(p), own);
       W.set(i, m);
       return m;
     };
@@ -335,7 +373,9 @@ export function validateCrewJointLimits(
   };
   const armatureParent = parent.get(armature);
   const restWorld = worldOf(rest);
-  const soleBones = [...index.keys()].filter((n) => /^(foot|toe)\.[LR]$/.test(n));
+  const soleBones = [...index.keys()].filter((n) =>
+    /^(foot|toe)\.[LR]$/.test(n),
+  );
   const restInv = new Map(
     soleBones.map((n) => [n, minvRigid(restWorld(index.get(n)!))]),
   );
@@ -381,7 +421,14 @@ export function validateCrewJointLimits(
           r[kind][1] = Math.max(r[kind][1], a[kind]);
           if (overhead && kind !== "twist") continue;
           if (a[kind] < lim[kind][0] || a[kind] > lim[kind][1])
-            violations.push({ clip: clip.name, frame: f, bone, kind, value: round(a[kind]), limit: lim[kind] });
+            violations.push({
+              clip: clip.name,
+              frame: f,
+              bone,
+              kind,
+              value: round(a[kind]),
+              limit: lim[kind],
+            });
         }
         const prev = previous?.get(bone);
         const series = (steps[bone] ??= [0]);
@@ -393,7 +440,8 @@ export function validateCrewJointLimits(
             maxStepBone = bone;
           }
         }
-        if (baseName(bone) === "shin") knees[bone === "shin.R" ? 0 : 1].push(a.flex);
+        if (baseName(bone) === "shin")
+          knees[bone === "shin.R" ? 0 : 1].push(a.flex);
       }
       previous = current;
       first ??= current;
@@ -409,7 +457,14 @@ export function validateCrewJointLimits(
         }
         minSole = Math.min(minSole, low);
         if (low < -CREW_FLOOR_TOLERANCE_M)
-          violations.push({ clip: clip.name, frame: f, bone, kind: "floor", value: round(low * 32), limit: -CREW_FLOOR_TOLERANCE_M * 32 });
+          violations.push({
+            clip: clip.name,
+            frame: f,
+            bone,
+            kind: "floor",
+            value: round(low * 32),
+            limit: -CREW_FLOOR_TOLERANCE_M * 32,
+          });
       }
     }
     // looping clips (last frame == first frame) wrap their neighbouring steps
@@ -421,27 +476,61 @@ export function validateCrewJointLimits(
         const before = f > 1 ? s[f - 1] : loop ? s[s.length - 1] : 0;
         const after = f < s.length - 1 ? s[f + 1] : loop ? s[1] : 0;
         const around = Math.max(before ?? 0, after ?? 0);
-        if (s[f] > CREW_MAX_STEP_DEG || (s[f] > CREW_SPIKE_MIN_DEG && s[f] > CREW_SPIKE_RATIO * around))
-          violations.push({ clip: clip.name, frame: f, bone, kind: "flip", value: round(s[f]), limit: CREW_MAX_STEP_DEG });
+        if (
+          s[f] > CREW_MAX_STEP_DEG ||
+          (s[f] > CREW_SPIKE_MIN_DEG && s[f] > CREW_SPIKE_RATIO * around)
+        )
+          violations.push({
+            clip: clip.name,
+            frame: f,
+            bone,
+            kind: "flip",
+            value: round(s[f]),
+            limit: CREW_MAX_STEP_DEG,
+          });
       }
     if (CREW_STANCE.clips.test(clip.name)) {
       knees[0].forEach((r, f) => {
         const support = Math.min(r, knees[1][f]);
         if (support > CREW_STANCE.supportKneeMaxDeg)
-          violations.push({ clip: clip.name, frame: f, bone: "shin", kind: "stance", value: round(support), limit: CREW_STANCE.supportKneeMaxDeg });
+          violations.push({
+            clip: clip.name,
+            frame: f,
+            bone: "shin",
+            kind: "stance",
+            value: round(support),
+            limit: CREW_STANCE.supportKneeMaxDeg,
+          });
       });
       knees.forEach((k, i) => {
         const swing = Math.max(...k) - Math.min(...k);
         if (swing > CREW_STANCE.kneeSwingMaxDeg)
-          violations.push({ clip: clip.name, frame: 0, bone: i ? "shin.L" : "shin.R", kind: "stance", value: round(swing), limit: CREW_STANCE.kneeSwingMaxDeg });
+          violations.push({
+            clip: clip.name,
+            frame: 0,
+            bone: i ? "shin.L" : "shin.R",
+            kind: "stance",
+            value: round(swing),
+            limit: CREW_STANCE.kneeSwingMaxDeg,
+          });
       });
     }
     for (const r of Object.values(ranges))
-      for (const k of ["flex", "side", "twist"] as const) r[k] = [round(r[k][0]), round(r[k][1])];
-    clips.push({ clip: clip.name, frames, ranges, maxStepDeg: round(maxStep), maxStepBone, minSoleM: round(minSole, 4) });
+      for (const k of ["flex", "side", "twist"] as const)
+        r[k] = [round(r[k][0]), round(r[k][1])];
+    clips.push({
+      clip: clip.name,
+      frames,
+      ranges,
+      maxStepDeg: round(maxStep),
+      maxStepBone,
+      minSoleM: round(minSole, 4),
+    });
   }
   const excepted = (v: JointViolation) =>
-    CREW_JOINT_EXCEPTIONS.some((e) => e.clip === v.clip && e.kind === v.kind && e.bone.test(v.bone));
+    CREW_JOINT_EXCEPTIONS.some(
+      (e) => e.clip === v.clip && e.kind === v.kind && e.bone.test(v.bone),
+    );
   return {
     file,
     clips,
@@ -450,7 +539,8 @@ export function validateCrewJointLimits(
   };
 }
 
-const round = (v: number, digits = 1) => Math.round(v * 10 ** digits) / 10 ** digits;
+const round = (v: number, digits = 1) =>
+  Math.round(v * 10 ** digits) / 10 ** digits;
 
 /** Violations grouped per clip/bone/kind with the worst frame (compact report rows). */
 export function summarizeViolations(violations: readonly JointViolation[]) {
@@ -468,7 +558,8 @@ export function summarizeViolations(violations: readonly JointViolation[]) {
     if (!hit) worst.set(key, { ...v, limit: lim, count: 1 });
     else {
       hit.count++;
-      if (excess(v) > excess(hit)) Object.assign(hit, { frame: v.frame, value: v.value });
+      if (excess(v) > excess(hit))
+        Object.assign(hit, { frame: v.frame, value: v.value });
     }
   }
   return [...worst.values()];

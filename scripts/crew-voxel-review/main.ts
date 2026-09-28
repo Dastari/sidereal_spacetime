@@ -124,16 +124,38 @@ const crew = () =>
 // Review-only camera, skeleton overlay and clip freeze for the joint-limit visual pass. The
 // review camera replaces the game camera only while set; the game camera views stay authentic.
 const RIG_BONES: [string, string][] = [
-  ["pelvis", "spine"], ["spine", "chest"], ["chest", "neck"], ["neck", "head"],
-  ["chest", "shoulder.L"], ["shoulder.L", "upper_arm.L"], ["upper_arm.L", "forearm.L"], ["forearm.L", "hand.L"],
-  ["chest", "shoulder.R"], ["shoulder.R", "upper_arm.R"], ["upper_arm.R", "forearm.R"], ["forearm.R", "hand.R"],
-  ["pelvis", "thigh.L"], ["thigh.L", "shin.L"], ["shin.L", "foot.L"], ["foot.L", "toe.L"],
-  ["pelvis", "thigh.R"], ["thigh.R", "shin.R"], ["shin.R", "foot.R"], ["foot.R", "toe.R"],
+  ["pelvis", "spine"],
+  ["spine", "chest"],
+  ["chest", "neck"],
+  ["neck", "head"],
+  ["chest", "shoulder.L"],
+  ["shoulder.L", "upper_arm.L"],
+  ["upper_arm.L", "forearm.L"],
+  ["forearm.L", "hand.L"],
+  ["chest", "shoulder.R"],
+  ["shoulder.R", "upper_arm.R"],
+  ["upper_arm.R", "forearm.R"],
+  ["forearm.R", "hand.R"],
+  ["pelvis", "thigh.L"],
+  ["thigh.L", "shin.L"],
+  ["shin.L", "foot.L"],
+  ["foot.L", "toe.L"],
+  ["pelvis", "thigh.R"],
+  ["thigh.R", "shin.R"],
+  ["shin.R", "foot.R"],
+  ["foot.R", "toe.R"],
 ];
 const overlay = document.createElement("canvas");
 overlay.width = 1280;
 overlay.height = 800;
-Object.assign(overlay.style, { position: "absolute", left: "0", top: "0", pointerEvents: "none", width: "1280px", height: "800px" });
+Object.assign(overlay.style, {
+  position: "absolute",
+  left: "0",
+  top: "0",
+  pointerEvents: "none",
+  width: "1280px",
+  height: "800px",
+});
 document.body.append(overlay);
 let skeletonOn = params.get("skeleton") === "1";
 let posing = false;
@@ -146,17 +168,32 @@ const drawSkeleton = () => {
   g.clearRect(0, 0, overlay.width, overlay.height);
   const c = crew() as { joints?: Map<string, TransformNode> } | undefined;
   if (!skeletonOn || !sceneRef?.activeCamera || !c?.joints) return;
-  const vp = sceneRef.activeCamera.viewport.toGlobal(overlay.width, overlay.height);
+  const vp = sceneRef.activeCamera.viewport.toGlobal(
+    overlay.width,
+    overlay.height,
+  );
   const tm = sceneRef.getTransformMatrix();
   const at = (n: string) => {
     const node = c.joints!.get(n);
-    return node ? Vector3.Project(node.getAbsolutePosition(), Matrix.IdentityReadOnly, tm, vp) : undefined;
+    return node
+      ? Vector3.Project(
+          node.getAbsolutePosition(),
+          Matrix.IdentityReadOnly,
+          tm,
+          vp,
+        )
+      : undefined;
   };
   g.lineWidth = 3;
   for (const [a, b] of RIG_BONES) {
-    const p = at(a), q = at(b);
+    const p = at(a),
+      q = at(b);
     if (!p || !q) continue;
-    g.strokeStyle = /\.L$/.test(b) ? "#ffcf3f" : /\.R$/.test(b) ? "#3fffd2" : "#ff5fd2";
+    g.strokeStyle = /\.L$/.test(b)
+      ? "#ffcf3f"
+      : /\.R$/.test(b)
+        ? "#3fffd2"
+        : "#ff5fd2";
     g.beginPath();
     g.moveTo(p.x, p.y);
     g.lineTo(q.x, q.y);
@@ -167,8 +204,19 @@ const drawSkeleton = () => {
   if (root) {
     const r = 0.45;
     const corners = [
-      [-r, -r], [r, -r], [r, r], [-r, r], [-r, -r],
-    ].map(([x, z]) => Vector3.Project(new Vector3(root.x + x, root.y, root.z + z), Matrix.IdentityReadOnly, tm, vp));
+      [-r, -r],
+      [r, -r],
+      [r, r],
+      [-r, r],
+      [-r, -r],
+    ].map(([x, z]) =>
+      Vector3.Project(
+        new Vector3(root.x + x, root.y, root.z + z),
+        Matrix.IdentityReadOnly,
+        tm,
+        vp,
+      ),
+    );
     g.strokeStyle = "#ffffff88";
     g.lineWidth = 1.5;
     g.beginPath();
@@ -404,7 +452,15 @@ Object.assign(window, {
      * Review camera orbiting the pelvis (alpha/beta radians, radius metres); null restores the
      * game camera. azimuth is relative to the crew facing: 0 = right side, PI/2 = front.
      */
-    reviewCamera(view: { azimuth: number; beta: number; radius: number; lift?: number; isolate?: boolean } | null) {
+    reviewCamera(
+      view: {
+        azimuth: number;
+        beta: number;
+        radius: number;
+        lift?: number;
+        isolate?: boolean;
+      } | null,
+    ) {
       if (!sceneRef) return;
       if (!view) {
         isolate(null);
@@ -413,17 +469,30 @@ Object.assign(window, {
       }
       if (!reviewCam) {
         gameCam = sceneRef.activeCamera;
-        reviewCam = new ArcRotateCamera("crew-rig-review", 0, 1, 3, Vector3.Zero(), sceneRef);
+        reviewCam = new ArcRotateCamera(
+          "crew-rig-review",
+          0,
+          1,
+          3,
+          Vector3.Zero(),
+          sceneRef,
+        );
         reviewCam.fov = 0.5;
         reviewCam.minZ = 0.05;
         sceneRef.onBeforeRenderObservable.add(() => {
           const t = reviewTarget();
-          reviewCam!.target.set(t.x, t.y + ((reviewCam as unknown as { lift?: number }).lift ?? 0), t.z);
+          reviewCam!.target.set(
+            t.x,
+            t.y + ((reviewCam as unknown as { lift?: number }).lift ?? 0),
+            t.z,
+          );
         });
       }
       const c = crew() as { root?: TransformNode } | undefined;
       // isolate: hide the deck (walls occlude close rig views); the game-camera views keep it
-      isolate(view.isolate ? new Set(c?.root?.getChildMeshes(false) ?? []) : null);
+      isolate(
+        view.isolate ? new Set(c?.root?.getChildMeshes(false) ?? []) : null,
+      );
       const facing = c?.root?.rotation.y ?? 0;
       reviewCam.alpha = -facing + view.azimuth;
       reviewCam.beta = view.beta;
@@ -475,7 +544,14 @@ Object.assign(window, {
     },
     /** Names and lengths (frames) of the crew clips currently started. */
     startedClips() {
-      return (sceneRef?.animationGroups ?? []).filter((g) => g.isStarted).map((g) => ({ name: g.name, from: g.from, to: g.to, weight: g.animatables[0]?.weight }));
+      return (sceneRef?.animationGroups ?? [])
+        .filter((g) => g.isStarted)
+        .map((g) => ({
+          name: g.name,
+          from: g.from,
+          to: g.to,
+          weight: g.animatables[0]?.weight,
+        }));
     },
     get world() {
       return world;
