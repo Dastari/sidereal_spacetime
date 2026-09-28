@@ -53,7 +53,8 @@ MAP_TABLES = [
 ]
 MAP_VOLATILE_COLUMNS = {
     'world_system': {'last_simulation_tick'},
-    'body_world_motion': {'x', 'y', 'vx', 'vy', 'heading', 'omega', 'server_tick'},
+    # Every column the world step derives from motion (cell_x/cell_y follow the position).
+    'body_world_motion': {'x', 'y', 'vx', 'vy', 'heading', 'omega', 'server_tick', 'cell_x', 'cell_y'},
 }
 OPERATOR_TABLES = ['ship_policy', 'ship_operator_operation']
 

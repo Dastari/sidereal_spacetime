@@ -1,8 +1,13 @@
 /** Isolated ship-wipe rehearsal, post-upgrade half. Run through
  * scripts/ship_wipe_rehearsal.py (npm run smoke:ship-wipe), never against a
- * live database. The database was seeded under the live baseline module
- * (scripts/ship-wipe-seed.ts: starter Wayfarers, ship cargo, a ground drop,
- * optionally the full standard smoke) and upgraded in place to this module.
+ * live database. The database was seeded under the baseline module
+ * (scripts/ship-wipe-seed.ts: by default `main`, where the owner holds the
+ * operator-assigned prefab and others await a ship; or a legacy Wayfarer
+ * baseline with ship cargo; plus a ground drop and optionally the full standard
+ * smoke) and upgraded in place to this module. With a prefab baseline this is
+ * the rehearsal of migrating a live ship to the current registered prefab
+ * revision: the old ship must keep flying after the upgrade, the wipe archives
+ * only ship-held and deck items, and the owner keeps every personal item.
  * This script executes the operator runbook tooling exactly as documented and
  * checks invariants through operator SQL and ordinary player views. It never
  * assigns the legacy Wayfarer: the only way back aboard is a registered
@@ -34,7 +39,11 @@ const seed = JSON.parse(
   readFileSync(join(evidenceDirectory, "ship-wipe-seed.json"), "utf8"),
 ) as {
   database: string;
+  baseline?: "prefab" | "wayfarer";
   accounts: {
+    prefabId?: string;
+    catalogRevision?: string;
+    blueprintSha256?: string;
     name: string;
     token: string;
     characterId: string;
@@ -133,6 +142,35 @@ try {
   );
   const actorX = [...x.db.ownCharacters.iter()][0]!;
   assert.equal(actorX.id, owner.characterId);
+  if (seed.baseline === "prefab") {
+    // The upgrade must not break the ship live already has: same pinned blueprint,
+    // flight still compiles and is admitted under the catalogue revision it was spawned with.
+    // Flight views only serve a connected character: rejoin as the owner would on sign-in.
+    await x.reducers.enterLab({ name: "ignored" });
+    const legacyAccess = [...x.db.ownGameShipAccess.iter()].find(
+      (r) => r.shipId === owner.shipId,
+    );
+    assert.equal(legacyAccess?.templateSha256, owner.blueprintSha256);
+    await wait(
+      () =>
+        [...x.db.ownAuthoredFlightPhysics.iter()].some(
+          (p) => p.shipId === owner.shipId && p.status === "ready",
+        ),
+      "legacy prefab flight still ready after the upgrade",
+      15000,
+    );
+    const legacyFlight = [...x.db.ownAuthoredFlights.iter()].find(
+      (f) => f.shipId === owner.shipId,
+    );
+    assert(legacyFlight?.flightAdmitted, "legacy prefab flight admitted");
+    evidence.legacyShipAfterUpgrade = {
+      prefabId: owner.prefabId,
+      catalogRevision: owner.catalogRevision,
+      blueprintSha256: owner.blueprintSha256,
+      flightReady: true,
+      flightAdmitted: true,
+    };
+  }
 
   // Default policy after the upgrade: new accounts never get a legacy Wayfarer.
   const early = await client();
@@ -209,7 +247,8 @@ try {
       (r: { itemId: string; reason: string }) => [r.itemId, r.reason],
     ),
   );
-  assert.equal(reasons[owner.cargoItemId!], "ship-cargo-container");
+  if (owner.cargoItemId)
+    assert.equal(reasons[owner.cargoItemId], "ship-cargo-container");
   assert.equal(reasons[owner.groundItemId!], "ground-drop-on-ship-deck");
   for (const account of seed.accounts)
     for (const id of account.personalKit)
@@ -268,7 +307,7 @@ try {
     .filter((r) => r[0] === "inventoryItem" && r[1] === "deleted")
     .map((r) => JSON.parse(r[2] as string).id);
   assert(
-    archivedIds.includes(owner.cargoItemId) &&
+    (!owner.cargoItemId || archivedIds.includes(owner.cargoItemId)) &&
       archivedIds.includes(owner.groundItemId),
   );
   evidence.archivedItemIds = archivedIds;
@@ -383,6 +422,20 @@ try {
       ),
     ),
   );
+  if (
+    owner.catalogRevision &&
+    owner.catalogRevision !== FED_WREN_PIN.catalogRevision
+  )
+    // New ships use the current catalogue; the baseline's revision only admits old instances.
+    assert.throws(() =>
+      tool(
+        ...assignArgs(
+          "rehearsal-assign-old-revision",
+          "fed.s.wren",
+          owner.catalogRevision!,
+        ),
+      ),
+    );
   assert.throws(() =>
     tool(
       ...assignArgs(
@@ -554,8 +607,44 @@ try {
     speed,
     headingChange: turned,
   };
+  if (owner.blueprintSha256)
+    evidence.migration = {
+      from: {
+        catalogRevision: owner.catalogRevision,
+        blueprintSha256: owner.blueprintSha256,
+      },
+      to: {
+        catalogRevision: FED_WREN_PIN.catalogRevision,
+        blueprintSha256: FED_WREN_PIN.blueprintSha256,
+      },
+      personalKitPreserved: owner.personalKit.length,
+    };
+  // Runbook: the starter policy moves to the current revision in the same window.
+  const starter = tool(
+    "policy",
+    "--operation-id",
+    "rehearsal-policy-wren-current",
+    "--starter-prefab-id",
+    "fed.s.wren",
+    "--catalog-revision",
+    FED_WREN_PIN.catalogRevision,
+  );
+  assert.equal(starter.summary.starterPrefabId, "fed.s.wren");
+  const fresh = await client();
+  await fresh.reducers.enterLab({ name: "Starter Newcomer" });
+  await wait(
+    () => fresh.db.ownShips.count() === 1n,
+    "new account receives the current starter Wren",
+    15000,
+  );
+  evidence.starterPolicy = {
+    prefabId: "fed.s.wren",
+    catalogRevision: FED_WREN_PIN.catalogRevision,
+    newAccountShips: 1,
+  };
+  fresh.disconnect();
   console.log(JSON.stringify(evidence, null, 1));
-  // Other accounts stay shipless; only the owner was assigned a ship.
+  // Other seeded accounts stay shipless; only the owner was assigned a ship.
   const others = await Promise.all(
     seed.accounts.slice(1).map((a) => client(a.token)),
   );
