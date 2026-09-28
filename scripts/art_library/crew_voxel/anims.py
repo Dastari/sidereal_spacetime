@@ -53,7 +53,7 @@ def retarget(P):
             Q[k] = (x, y * LEG, 3 + (z - 3) * LEG, yaw, pitch)
         elif k == "pelvis":
             Q[k] = tuple(c * LEG for c in v)
-        elif k in ("hand.R", "hand.L"):
+        elif k in ("hand.R", "hand.L", "hand.R@to", "hand.L@to"):
             sp, x, y, z, *rest = v
             Q[k] = (sp, x, y, zmap(z), *rest)
         elif k == "weapon":
@@ -128,12 +128,12 @@ class Poser:
     def begin_clip(self):
         """Start keyed baking: forget cross-frame continuity (quaternion hemisphere, limb planes)."""
         self.lastq = {}
-        self.lastperp, self.lastup, self.lastflex = {}, {}, {}
+        self.lastperp, self.lastup, self.lastflex, self.lasthand = {}, {}, {}, {}
         self.temporal = True
 
     def end_clip(self):
         """Stateless solving (pose searches, stills): no continuity with any previous frame."""
-        self.lastperp, self.lastup, self.lastflex = {}, {}, {}
+        self.lastperp, self.lastup, self.lastflex, self.lasthand = {}, {}, {}, {}
         self.temporal = False
 
     def reset(self):
@@ -235,6 +235,14 @@ class Poser:
         self.set_M(upper, frame(u, hinge, S))
         self.set_M(lower, frame(W2 - E, hinge, E))
         Me = end_M.copy()
+        lh = self.lasthand.get(end) if self.temporal and end.startswith("hand.") else None
+        if lh is not None:
+            # wrist speed: a grip frame swapping (support grip <-> authored hand key) may turn the
+            # hand at most MAX_TURN per frame instead of snapping 60-90 deg
+            q = Me.to_quaternion()
+            ang = math.degrees(lh.rotation_difference(q).angle)
+            if ang > self.MAX_TURN:
+                Me = lh.slerp(q, self.MAX_TURN / ang).to_matrix().to_4x4()
         Me.translation = W2
         self.set_M(end, Me)
 
@@ -371,6 +379,8 @@ class Poser:
                         self.lastperp[up] = perp.normalized()
                     self.lastup[up] = u
                     self.lastflex[up] = math.degrees(u.angle(f, 0.0))
+                    if en.startswith("hand."):
+                        self.lasthand[en] = self.M(en).to_quaternion()
 
     # ------------------------------------------------------------------ solve one pose
     def apply(self, P):
@@ -421,7 +431,10 @@ class Poser:
             if h:
                 hw = P.get(f"hand.{side}#w", 1.0)
                 weights[side] = max(weights.get(side, 0.0), hw)
-                targets[side] = blend(targets.get(side, fks[side]), self.hand_target(side, *h), hw)
+                Mh = self.hand_target(side, *h)
+                if f"hand.{side}@to" in P:
+                    Mh = blend(Mh, self.hand_target(side, *P[f"hand.{side}@to"]), P[f"hand.{side}@s"])
+                targets[side] = blend(targets.get(side, fks[side]), Mh, hw)
         for side, Ms in targets.items():
             sx = 1 if side == "R" else -1
             pole = P.get(f"pole.{side}", (0.55 * sx, -1.0, -0.25))
@@ -532,7 +545,12 @@ def sample(keys, f):
             for k in set(P0) | set(P1):
                 if k.endswith("#w"):
                     continue
-                if k in P0 and k in P1:
+                if k in P0 and k in P1 and k.startswith("hand.") and P0[k][0] != P1[k][0]:
+                    # rig pass: targets in different spaces (armature "w" vs chest "c") used to swap
+                    # space at s = 0.5 and jump; resolve both and blend the frames instead
+                    P[k], P[k + "@to"], P[k + "@s"] = P0[k], P1[k], s
+                    P[k + "#w"] = lerp(P0.get(k + "#w", 1.0), P1.get(k + "#w", 1.0), s)
+                elif k in P0 and k in P1:
                     P[k] = lerp(P0[k], P1[k], s)
                     if k.startswith(TARGETS):
                         P[k + "#w"] = lerp(P0.get(k + "#w", 1.0), P1.get(k + "#w", 1.0), s)

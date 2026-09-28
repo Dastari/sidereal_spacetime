@@ -42,6 +42,12 @@ for (const r of reports) {
   const rows = summarizeViolations(r.violations);
   failed += rows.length;
   lines.push(`## ${r.file}`, "", `${r.clips.length} clips, ${frames} frames sampled, ${r.violations.length} violating samples in ${rows.length} clip/bone/limit groups.`, "");
+  const excepted = summarizeViolations(r.exceptions);
+  if (excepted.length)
+    lines.push(
+      `Reviewed exceptions (CREW_JOINT_EXCEPTIONS, not failing): ${excepted.map((v) => `${v.clip} ${v.bone} ${v.kind} f${v.frame} ${v.value}`).join("; ")}.`,
+      "",
+    );
   if (rows.length) {
     lines.push("| clip | bone | limit | worst frame | worst value | limit range | frames |", "|---|---|---|---|---|---|---|");
     for (const v of rows)

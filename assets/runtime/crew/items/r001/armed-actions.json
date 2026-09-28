@@ -676,7 +676,7 @@
    "frames": 72,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0025,
    "stance": {
     "aim": {
      "blade": -15,
@@ -986,7 +986,7 @@
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 39,
+   "bodyPenetrationMaxVoxels": 38,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -1092,7 +1092,7 @@
     }
    },
    "supportFramesSolved": 73,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 1,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -1368,7 +1368,7 @@
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 37,
+   "bodyPenetrationMaxVoxels": 36,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -1421,7 +1421,7 @@
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 37,
+   "bodyPenetrationMaxVoxels": 36,
    "grabFrame": 8,
    "attachHolsterFrames": [
     9,
@@ -1946,7 +1946,7 @@
    "frames": 6,
    "fps": 24,
    "loop": true,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.004,
    "stance": {
     "hip_aim": {
      "blade": -45,
@@ -1977,7 +1977,7 @@
    "frames": 38,
    "fps": 24,
    "loop": false,
-   "supportErrorMaxM": 0.0,
+   "supportErrorMaxM": 0.0029,
    "stance": {
     "hip_aim": {
      "blade": -45,
@@ -2027,7 +2027,7 @@
     }
    },
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 58,
+   "bodyPenetrationMaxVoxels": 98,
    "grabFrame": 6,
    "attachHolsterFrames": [
     0,
@@ -2500,7 +2500,7 @@
     }
    },
    "supportFramesSolved": 73,
-   "bodyPenetrationMaxVoxels": 0,
+   "bodyPenetrationMaxVoxels": 2,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -2730,7 +2730,7 @@
     }
    },
    "supportFramesSolved": 14,
-   "bodyPenetrationMaxVoxels": 7,
+   "bodyPenetrationMaxVoxels": 20,
    "grabFrame": null,
    "attachHolsterFrames": []
   },
@@ -2911,7 +2911,7 @@
    "supportErrorMaxM": null,
    "stance": {},
    "supportFramesSolved": 0,
-   "bodyPenetrationMaxVoxels": 36,
+   "bodyPenetrationMaxVoxels": 31,
    "grabFrame": null,
    "attachHolsterFrames": []
   },

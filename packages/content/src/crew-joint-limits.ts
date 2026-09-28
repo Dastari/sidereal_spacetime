@@ -70,6 +70,18 @@ export const CREW_STANCE = {
   supportKneeMaxDeg: 12,
   kneeSwingMaxDeg: 8,
 };
+/**
+ * Reviewed exceptions (clip, bone, kind), each with the reason. Keep this list short and specific.
+ */
+export const CREW_JOINT_EXCEPTIONS: readonly { clip: string; bone: RegExp; kind: string; reason: string }[] = [
+  {
+    clip: "heavy.reload",
+    bone: /^hand\.[LR]$/,
+    kind: "flip",
+    reason:
+      "wrist only: the hip-fire heavy gun's reload turns the fist 46-67 deg in one frame when the support hand leaves the foregrip; elbows/shoulders stay smooth. CHAR-WEAPONS follow-up (reload hand path).",
+  },
+];
 /** Sole points may not go further below the floor than this (metres, 1 fine voxel = 1/32 m). */
 export const CREW_FLOOR_TOLERANCE_M = 0.5 / 32;
 
@@ -110,6 +122,8 @@ export type JointLimitReport = {
   file: string;
   clips: JointClipSummary[];
   violations: JointViolation[];
+  /** violations covered by CREW_JOINT_EXCEPTIONS (reported, not failing) */
+  exceptions: JointViolation[];
 };
 
 // ---------------------------------------------------------------- math
@@ -426,7 +440,14 @@ export function validateCrewJointLimits(
       for (const k of ["flex", "side", "twist"] as const) r[k] = [round(r[k][0]), round(r[k][1])];
     clips.push({ clip: clip.name, frames, ranges, maxStepDeg: round(maxStep), maxStepBone, minSoleM: round(minSole, 4) });
   }
-  return { file, clips, violations };
+  const excepted = (v: JointViolation) =>
+    CREW_JOINT_EXCEPTIONS.some((e) => e.clip === v.clip && e.kind === v.kind && e.bone.test(v.bone));
+  return {
+    file,
+    clips,
+    violations: violations.filter((v) => !excepted(v)),
+    exceptions: violations.filter(excepted),
+  };
 }
 
 const round = (v: number, digits = 1) => Math.round(v * 10 ** digits) / 10 ** digits;

@@ -415,6 +415,11 @@ class ArmedBaker:
         self.rig.animation_data_create()
         self.rig.animation_data.action = act
         p.begin_clip()
+        # draw / holster / swing carry a long item along an authored path past the head: the
+        # default continuity limits make the arm lag and the item sweep through the torso, so
+        # these clips use looser (still sub-flip) per-frame limits
+        fast = clip in ("draw", "holster") or (clip == "shoot" and fam == "melee")
+        p.MAX_TURN, p.MAX_FLEX_STEP = (70.0, 70.0) if fast else (type(p).MAX_TURN, type(p).MAX_FLEX_STEP)
         attach, support_err, pen = [], [], []
         ready_Mr = None
         if clip in ("draw", "holster"):
