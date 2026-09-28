@@ -318,7 +318,14 @@ export async function createVoxelCrewVisual(
   };
   const blendObserver = scene.onBeforeRenderObservable.add(() => {
     if (blendElapsed >= blendDuration) return;
-    blendElapsed += Math.min(0.1, scene.getEngine().getDeltaTime() / 1000);
+    // Keep pace with the clips, which advance by wall time: with the old 0.1 s cap, a slow frame
+    // let a short hold clip (death) finish while still fading in and freeze the body in a partial
+    // blend instead of the held final pose.
+    const frameMs = Math.max(
+      scene.getEngine().getDeltaTime(),
+      (scene.deltaTime ?? 0) * (scene.animationTimeScale ?? 1),
+    );
+    blendElapsed += Math.min(Scene.MaxDeltaTime, frameMs) / 1000;
     applyBlend(blendProgress(blendElapsed, blendDuration));
   });
 

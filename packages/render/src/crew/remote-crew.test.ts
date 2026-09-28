@@ -6,6 +6,7 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { createVoxelCrewVisual } from "./voxel-crew";
 import { sharedCrewContainer } from "./crew-asset-cache";
 import { createRemoteCrew, type RemoteCrewState } from "./remote-crew";
@@ -84,6 +85,37 @@ describe("shared crew body", () => {
     b.update({ moving: true, seated: false });
     expect(b.layers).toMatchObject({ full: "walk" });
   });
+});
+
+describe("held one-shot clips", () => {
+  it.each([4, 60])(
+    "lies down and holds the death pose when clips run %ix faster than frames",
+    async (scale) => {
+      const s = scene();
+      new FreeCamera("camera", new Vector3(0, 2, -5), s);
+      const engine = s.getEngine() as unknown as { getDeltaTime: () => number };
+      engine.getDeltaTime = () => 17;
+      const crew = await createVoxelCrewVisual(
+        s,
+        new TransformNode("ship", s),
+        bodyUrl,
+        { shared: true, faceAtlas: false },
+      );
+      const head = () => crew.joints.get("head")!.getAbsolutePosition().y;
+      const frame = async (dead: boolean) => {
+        await new Promise((r) => setTimeout(r, 17));
+        crew.update({ moving: false, seated: false, dead });
+        s.render();
+      };
+      for (let i = 0; i < 3; i++) await frame(false);
+      expect(head()).toBeGreaterThan(1);
+      // Wall-clock clips on a slow client: at scale 60 one frame is about a second of animation and
+      // the 1.7 s death clip ends within two frames; the fade-in must not lag behind it.
+      s.animationTimeScale = scale;
+      for (let i = 0; i < 40; i++) await frame(true);
+      expect(head()).toBeLessThan(0.4);
+    },
+  );
 });
 
 const mate = (over: Partial<RemoteCrewState> = {}): RemoteCrewState => ({
