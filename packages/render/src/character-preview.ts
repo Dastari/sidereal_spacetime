@@ -12,6 +12,13 @@ import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTextur
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { createCrewVisual, CREW_OUTFITS, type CrewAppearance } from "./crew";
+import { createVoxelCrewVisual } from "./crew/voxel-crew";
+import { equipVoxelCrewItem } from "./crew/voxel-crew-kit";
+import {
+  createVoxelCrewOutfit,
+  toneCrewEmissive,
+} from "./crew/voxel-crew-outfit";
+import { resolveCrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import {
   createEquipmentVisual,
   EQUIPMENT_ASSETS,
@@ -124,7 +131,20 @@ function buildCharacterPreview(
   const disc = createHolographicDisc(scene, { radius: 0.64 });
   const placement = new TransformNode("portrait-display-pivot", scene);
   placement.rotation.y = 0.38;
-  let crew: Awaited<ReturnType<typeof createCrewVisual>> | undefined;
+  let crew:
+    | Awaited<ReturnType<typeof createCrewVisual>>
+    | Awaited<ReturnType<typeof createVoxelCrewVisual>>
+    | undefined;
+  let outfit: ReturnType<typeof createVoxelCrewOutfit> | undefined;
+  // Same bundle as the game view: the voxel crew unless ?crew=legacy.
+  const voxelBundle =
+    !options.assetUrl &&
+    resolveCrewBundle({
+      query:
+        typeof location === "undefined"
+          ? null
+          : new URLSearchParams(location.search).get("crew"),
+    }) === "voxel";
   let gear: Awaited<ReturnType<typeof createEquipmentVisual>> | undefined;
   let pose:
     | ReturnType<
@@ -151,6 +171,7 @@ function buildCharacterPreview(
     released = true;
     pose?.bind(undefined);
     gear?.dispose();
+    outfit?.dispose();
     crew?.dispose();
     disc.dispose();
     withSceneCoordinateContext(scene, () => {
@@ -160,6 +181,9 @@ function buildCharacterPreview(
   }
   function subjects() {
     disc.setSubjects(placement.getChildMeshes());
+  }
+  function applyVoxelOutfit(next: CrewAppearance) {
+    outfit?.apply(next);
   }
   function applyAppearance() {
     if (!crew || disposed) return;
@@ -171,6 +195,7 @@ function buildCharacterPreview(
     ) as CrewAppearance["outfit"];
     const { equipmentAsset: _asset, ...customization } = appearance;
     crew.customize({ outfit, ...customization, weaponFixture: !gear });
+    applyVoxelOutfit({ outfit, ...customization });
     dirty = true;
     subjects();
     const asset = EQUIPMENT_ASSETS.includes(
@@ -192,13 +217,20 @@ function buildCharacterPreview(
       return;
     }
     pending++;
-    createEquipmentVisual(
-      scene,
-      crew.sockets.handR,
-      asset,
-      poseConfiguration?.items[asset]
-        ? poseConfiguration.equipmentUrl
-        : undefined,
+    const voxelCrew =
+      "bundle" in crew && crew.bundle === "voxel" ? crew : undefined;
+    (voxelCrew
+      ? (equipVoxelCrewItem(scene, voxelCrew, asset) as unknown as ReturnType<
+          typeof createEquipmentVisual
+        >)
+      : createEquipmentVisual(
+          scene,
+          crew.sockets.handR,
+          asset,
+          poseConfiguration?.items[asset]
+            ? poseConfiguration.equipmentUrl
+            : undefined,
+        )
     )
       .then((loaded) => {
         if (disposed || revision !== gearRevision) {
@@ -211,6 +243,7 @@ function buildCharacterPreview(
           pose.bind(gear.createPoseBinding(crew.root, item));
         else crew?.bindHeldEquipment(gear);
         crew?.customize({ weaponFixture: false });
+        if (voxelCrew) toneCrewEmissive(placement.getChildMeshes());
         subjects();
         invalidate();
       })
@@ -272,6 +305,25 @@ function buildCharacterPreview(
     try {
       // Fetch can be cancelled while a closed panel is still loading. Babylon
       // parsing is allowed to settle before the owned WebGL context is released.
+      if (voxelBundle) {
+        const loaded = await createVoxelCrewVisual(scene, placement);
+        if (disposed) {
+          loaded.dispose();
+          return;
+        }
+        crew = loaded;
+        outfit = createVoxelCrewOutfit(scene, loaded, {
+          onChange: () => {
+            dirty = true;
+            subjects();
+            invalidate();
+          },
+        });
+        applyAppearance();
+        status = "ready";
+        invalidate();
+        return;
+      }
       const [response, configuration] = await Promise.all([
         fetch(options.assetUrl ?? MODULAR_CREW_ASSET_URL, {
           signal: abort.signal,
@@ -289,7 +341,7 @@ function buildCharacterPreview(
       }
       crew = loaded;
       poseConfiguration = configuration;
-      pose = crew.createPoseController();
+      pose = loaded.createPoseController();
       pose.setAimSpace(configuration.aimSpace);
       applyAppearance();
       status = "ready";

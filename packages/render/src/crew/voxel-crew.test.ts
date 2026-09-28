@@ -44,19 +44,11 @@ const load = async () => {
 };
 
 describe("voxel crew bundle selection", () => {
-  it("never selects the proposal bundle unless a local preview is enabled", () => {
-    expect(resolveCrewBundle({ previewEnabled: false, query: "voxel" })).toBe(
-      "legacy",
-    );
-    expect(resolveCrewBundle({ previewEnabled: true, query: null })).toBe(
-      "legacy",
-    );
-    expect(resolveCrewBundle({ previewEnabled: true, query: "anything" })).toBe(
-      "legacy",
-    );
-    expect(resolveCrewBundle({ previewEnabled: true, query: "voxel" })).toBe(
-      "voxel",
-    );
+  it("defaults to the voxel crew; only ?crew=legacy selects the r008 fallback", () => {
+    expect(resolveCrewBundle({ query: null })).toBe("voxel");
+    expect(resolveCrewBundle({ query: "voxel" })).toBe("voxel");
+    expect(resolveCrewBundle({ query: "anything" })).toBe("voxel");
+    expect(resolveCrewBundle({ query: "legacy" })).toBe("legacy");
   });
 });
 

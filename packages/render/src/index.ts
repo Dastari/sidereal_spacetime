@@ -81,11 +81,12 @@ import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
 import { createVoxelCrewVisual } from "./crew/voxel-crew";
+import { equipVoxelCrewItem } from "./crew/voxel-crew-kit";
 import {
-  attachVoxelCrewHead,
-  equipVoxelCrewItem,
-  voxelHeadLoadoutFor,
-} from "./crew/voxel-crew-kit";
+  createVoxelCrewOutfit,
+  toneCrewEmissive,
+} from "./crew/voxel-crew-outfit";
+import { setGlowOccludingActors } from "./glow-occluders";
 import type { CrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
@@ -306,6 +307,9 @@ async function buildWorld(
         Awaited<ReturnType<typeof createCrewVisual>>["createPoseController"]
       >
     | undefined;
+  let crewOutfit: ReturnType<typeof createVoxelCrewOutfit> | undefined;
+  // Set once lighting and glow exist; outfit parts that load later re-register through it.
+  let refreshCrewPresentation = () => {};
   let avatar = new TransformNode("crew-unloaded", scene);
   avatar.parent = shipRoot;
   const marker = CreateTorus(
@@ -460,15 +464,14 @@ async function buildWorld(
     options.onLoadStage?.("crew");
     if (!options.source || options.source === "voxel") {
       if (options.crewBundle === "voxel") {
-        // Proposal voxel crew: authored actions drive the arms; the legacy aim-space
-        // controller targets the r008 rig and stays unbound.
+        // Voxel crew (first revision): authored actions drive the arms; the legacy aim-space
+        // controller targets the r008 rig and stays unbound. The head kit and armour follow the
+        // character's appearance and equipped inventory (see customizeCrew).
         const voxel = await createVoxelCrewVisual(scene, shipRoot);
         crew = voxel;
-        // CHAR-HEADS head (face atlas + hair) on the approved r005 body; the body's own head blank
-        // stays visible if the head kit cannot load.
-        attachVoxelCrewHead(scene, voxel, voxelHeadLoadoutFor("male")).catch(
-          (error) => console.warn("voxel crew head kit unavailable", error),
-        );
+        crewOutfit = createVoxelCrewOutfit(scene, voxel, {
+          onChange: () => refreshCrewPresentation(),
+        });
       } else {
         const legacy = await createCrewVisual(
           scene,
@@ -659,6 +662,18 @@ async function buildWorld(
     ...imported.meshes,
     ...(crew?.root.getChildMeshes() ?? []),
   ]);
+  // Crew meshes (body, head kit, armour, held item) hide ship bloom behind them in every glow
+  // layer, receive the actor lighting and stay capped to a small emissive accent.
+  refreshCrewPresentation = () => {
+    if (!crew) return;
+    const meshes = crew.root.getChildMeshes();
+    if (crewOutfit) toneCrewEmissive(meshes);
+    refreshLocalGlow();
+    environment.setOccluders([...imported.meshes, ...meshes]);
+    lighting.addActor(meshes);
+    setGlowOccludingActors(scene, meshes);
+  };
+  setGlowOccludingActors(scene, crew?.root.getChildMeshes() ?? []);
   const objects = createObjectPresentation(
     canvas,
     scene,
@@ -1119,6 +1134,7 @@ async function buildWorld(
       firstFrame &&
       initialStateApplied &&
       !equipmentPending &&
+      !crewOutfit?.pending &&
       (!remoteShips || sharedExteriorReady) &&
       scene.isReady() &&
       !assetFailure
@@ -1148,6 +1164,8 @@ async function buildWorld(
       antialiasing.resetHistory();
     }
     crew.customize({ ...next, weaponFixture: !equipment });
+    // Voxel crew: head kit from the persisted look, armour/uniform from equipped inventory.
+    crewOutfit?.apply(next);
     const asset =
       state.equippedAsset !== undefined
         ? state.equippedAsset
@@ -1198,12 +1216,7 @@ async function buildWorld(
         if (equipmentPose && crew && poseItem)
           equipmentPose.bind(visual.createPoseBinding(crew.root, poseItem));
         else crew?.bindHeldEquipment(visual);
-        refreshLocalGlow();
-        environment.setOccluders([
-          ...imported.meshes,
-          ...(crew?.root.getChildMeshes() ?? []),
-        ]);
-        lighting.addActor(crew?.root.getChildMeshes() ?? []);
+        refreshCrewPresentation();
         crew?.customize({ weaponFixture: false });
       })
       .catch((error) => {
@@ -1412,6 +1425,7 @@ async function buildWorld(
       equipmentRevision++;
       equipmentPose?.bind(undefined);
       equipment?.dispose();
+      crewOutfit?.dispose();
       crew?.dispose();
       localGlowOcclusion.dispose();
       flightEffects.dispose();
