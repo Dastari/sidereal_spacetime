@@ -81,6 +81,17 @@ def ypr(yaw, pitch, roll):
             @ Matrix.Rotation(math.radians(roll), 3, "Y"))
 
 
+def rotate_toward(a, b, max_deg, fallback_axis):
+    """Unit vector a turned toward unit vector b by at most max_deg (b itself when within range)."""
+    ang = a.angle(b, 0.0)
+    if ang <= math.radians(max_deg):
+        return b.copy()
+    axis = a.cross(b)
+    if axis.length < 1e-9:
+        axis = Vector(fallback_axis)
+    return Quaternion(axis.normalized(), math.radians(max_deg)) @ a
+
+
 def frame(Y, Xref, pos):
     Y = Y.normalized()
     X = (Xref - Xref.dot(Y) * Y)
@@ -109,6 +120,21 @@ class Poser:
         for p in self.pb:
             p.rotation_mode = "QUATERNION"
         self.lastq = {}
+        self.end_clip()
+
+    MAX_TURN = 35.0       # deg per 24 fps frame for a limb's bend plane / near-fold upper bone swing
+    MAX_FLEX_STEP = 32.0  # deg per 24 fps frame for an elbow / knee fold
+
+    def begin_clip(self):
+        """Start keyed baking: forget cross-frame continuity (quaternion hemisphere, limb planes)."""
+        self.lastq = {}
+        self.lastperp, self.lastup, self.lastflex = {}, {}, {}
+        self.temporal = True
+
+    def end_clip(self):
+        """Stateless solving (pose searches, stills): no continuity with any previous frame."""
+        self.lastperp, self.lastup, self.lastflex = {}, {}, {}
+        self.temporal = False
 
     def reset(self):
         for p in self.pb:
@@ -140,34 +166,170 @@ class Poser:
     def chest_delta(self):
         return self.M("chest") @ self.rest["chest"].inverted()
 
+    MAX_FOLD = 148.0   # deg: elbows / knees never fold tighter (CREW_JOINT_LIMITS hinge max 150/155)
+
     def limb(self, upper, lower, end, end_M, pole):
         S = self.M(upper).translation
         l1, l2 = self.length[upper], self.length[lower]
         W = end_M.translation
         d = W - S
-        dist = max(1e-4, min(d.length, (l1 + l2) * 0.9995))
+        # a target closer than the tightest anatomical fold stops short instead of crushing the joint
+        fold = math.radians(180.0 - self.MAX_FOLD)
+        near = math.sqrt(l1 * l1 + l2 * l2 - 2 * l1 * l2 * math.cos(fold))
+        dist = max(near, min(d.length, (l1 + l2) * 0.9995))
         dv = d.normalized()
         a = (l1 * l1 - l2 * l2 + dist * dist) / (2 * dist)
         h = math.sqrt(max(0.0, l1 * l1 - a * a))
-        pole = Vector(pole)
+        pole = Vector(pole).normalized()
         perp = pole - pole.dot(dv) * dv
+        # Temporal continuity while baking (previous KEYED frame): the bend plane may rotate at most
+        # MAX_TURN per frame. When a target passes the pole direction the plane is ill defined and
+        # used to spin 90-180 deg in one frame.
+        lp = self.lastperp.get(upper) if self.temporal else None
+        if lp is not None:
+            lp = lp - lp.dot(dv) * dv
+            if lp.length > 1e-6:
+                lp.normalize()
+                if perp.length < 1e-6:
+                    perp = lp
+                else:
+                    perp = rotate_toward(lp, perp.normalized(), self.MAX_TURN, dv)
         if perp.length < 1e-6:
             perp = Vector((0, -1, 0)) - dv.y * dv
         perp.normalize()
         E = S + dv * a + perp * h
         W2 = S + dv * dist
-        hinge = perp.cross(dv).normalized()
-        # keep the part's rest twist: hinge sign follows the rest X axis carried by the parent
-        parent = self.pb[upper].parent
-        pdelta = (self.M(parent.name) @ self.rest[parent.name].inverted()).to_3x3()
-        refX = pdelta @ self.rest[upper].to_3x3().col[0]
-        if hinge.dot(refX) < 0:
-            hinge = -hinge
-        self.set_M(upper, frame(E - S, hinge, S))
+        u = (E - S).normalized()
+        # Near the fold limit the target direction swings fast as a hand path passes the shoulder:
+        # the upper bone may swing at most MAX_TURN per frame there, the lower bone still aims at
+        # the target (the fist lands a little short for that frame instead of popping).
+        lu = self.lastup.get(upper) if self.temporal else None
+        if lu is not None and d.length < 1.6 * near and lu.angle(u, 0.0) > math.radians(self.MAX_TURN):
+            u = rotate_toward(lu, u, self.MAX_TURN, perp)
+            E = S + u * l1
+            fd = W - E
+            fd = fd.normalized() if fd.length > 1e-6 else dv
+            W2 = E + rotate_toward(u, fd, self.MAX_FOLD, perp) * l2
+        # hinge speed: the fold may change at most MAX_FLEX_STEP per frame (a knee used to snap from
+        # 58 deg to straight in one frame when a stride target left the leg's reach)
+        lf = self.lastflex.get(upper) if self.temporal else None
+        if lf is not None:
+            f = (W2 - E).normalized()
+            flex = math.degrees(u.angle(f, 0.0))
+            if abs(flex - lf) > self.MAX_FLEX_STEP:
+                want = lf + math.copysign(self.MAX_FLEX_STEP, flex - lf)
+                side = f - f.dot(u) * u
+                side = side.normalized() if side.length > 1e-6 else -perp
+                W2 = E + (u * math.cos(math.radians(want)) + side * math.sin(math.radians(want))) * l2
+        # Anatomical hinge (crew-rig visual pass): the lower bone folds toward the side opposite the
+        # joint point (elbow/knee point = pole), and only ever about its +X the flexion way:
+        #   elbow: forearm on the upper arm's +Z (front)  |  knee: shin on the thigh's -Z (back)
+        # The old rule (hinge sign follows the rest X carried by the parent) twisted the whole limb
+        # 180 deg whenever an arm was raised, reached back or the body lay down: inverted elbows,
+        # hyperextended knees and single-frame 180 deg flips wherever the sign test changed.
+        f = W2 - E
+        s = f - f.dot(u) * u
+        s = s.normalized() if s.length > 1e-6 else -perp
+        z = -s if upper.startswith("thigh") else s
+        hinge = u.cross(z).normalized()
+        self.set_M(upper, frame(u, hinge, S))
         self.set_M(lower, frame(W2 - E, hinge, E))
         Me = end_M.copy()
         Me.translation = W2
         self.set_M(end, Me)
+
+    # ------------------------------------------------------------------ anatomical post-passes
+    LIMBS = (("upper_arm", "forearm", "hand"), ("thigh", "shin", "foot"))
+    # CREW_JOINT_LIMITS (packages/content/src/crew-joint-limits.ts) mirrors these ranges
+    ANKLE = (-50.0, 55.0)          # foot flex relative to the shin (+ = dorsiflexion)
+    SOLE = {"foot": [(1, -4, 0), (7, -4, 0), (1, 4, 0), (7, 4, 0)], "toe": [(1, 6, 0), (7, 6, 0)]}
+
+    def local_angles(self, bone):
+        """(flex about +X toward +Z, side, twist) in degrees of a bone relative to its rest pose."""
+        q = self.pb[bone].rotation_quaternion.normalized()
+        d = q @ Vector((0, 1, 0))
+        flex = math.degrees(math.atan2(d.z, d.y))
+        side = math.degrees(math.asin(max(-1.0, min(1.0, d.x))))
+        tw = Quaternion((q.w, 0, q.y, 0))
+        tw.normalize()
+        twist = math.degrees(2 * math.atan2(tw.y, tw.w))
+        twist = (twist + 180) % 360 - 180
+        return flex, side, twist
+
+    def fade_pole(self, upper, lower, end, pole, w):
+        """While an IK target fades in over an FK limb, fade the pole from the FK limb's own joint
+        direction too, so the hand-off does not swing the elbow / knee plane in one frame."""
+        if w >= 0.999:
+            return pole
+        S, E, W = self.M(upper).translation, self.M(lower).translation, self.M(end).translation
+        dv = (W - S).normalized()
+        cur = (E - S) - (E - S).dot(dv) * dv
+        if cur.length < 1e-3 * VOX:
+            return pole
+        v = cur.normalized() * (1 - w) + Vector(pole).normalized() * w
+        return v if v.length > 1e-6 else pole
+
+    def knee_pole(self, P, side):
+        """Knee pole in the PELVIS frame: knees face where the hips face (lying, kneeling, twisting)."""
+        sx = 1 if side == "R" else -1
+        pdelta = (self.M("pelvis") @ self.rest["pelvis"].inverted()).to_3x3()
+        return pdelta @ Vector(P.get(f"kpole.{side}", (0.15 * sx, 1, 0)))
+
+    def hinge_pass(self, upper, lower, end, leg):
+        """Re-frame an FK-posed limb whose hinge carries side bend / twist or folds the wrong way:
+        joint positions and the end bone's world matrix are kept; only bone twist changes."""
+        flex, side, twist = self.local_angles(lower)
+        if leg:
+            flex = -flex
+        if flex >= -1.0 and abs(side) <= 2.0 and abs(twist) <= 2.0:
+            return
+        Mu0, Ml0, Me = self.M(upper), self.M(lower), self.M(end)
+        S, E = Mu0.translation, Ml0.translation
+        dv = (Me.translation - S).normalized()
+        perp = (E - S) - (E - S).dot(dv) * dv
+        if perp.length < 1e-4:
+            z = Mu0.to_3x3().col[2]
+            perp = z if leg else -z
+        self.limb(upper, lower, end, Me, perp)
+        # a nearly straight limb has no defined bend plane: ease the re-frame in with the bend so
+        # the upper bone's twist follows the fold gradually instead of snapping on the first frame
+        bend = math.degrees(Mu0.to_3x3().col[1].angle(Ml0.to_3x3().col[1], 0.0))
+        w = max(0.0, min(1.0, (bend - 5.0) / 30.0))
+        if w < 1.0:
+            for bone, M0 in ((upper, Mu0), (lower, Ml0)):
+                M1 = self.M(bone)
+                q = M0.to_quaternion().slerp(M1.to_quaternion(), w)
+                M = q.to_matrix().to_4x4()
+                M.translation = M1.translation
+                self.set_M(bone, M)
+            self.set_M(end, Me)
+
+    def sole_low(self, side):
+        low = 1e9
+        for part, pts in self.SOLE.items():
+            bone = f"{part}.{side}"
+            skin = self.M(bone) @ self.rest[bone].inverted()
+            sx = 1 if side == "R" else -1
+            for x, y, z in pts:
+                low = min(low, (skin @ (Vector((sx * x, y, z)) * VOX)).z)
+        return low
+
+    def ground_leg(self, P, side):
+        """Ankle range, then keep the sole on or above the floor (z = 0) by lifting the ankle and
+        re-solving the leg: toe-off pivots on the toe instead of pushing it through the deck."""
+        foot = f"foot.{side}"
+        flex = self.local_angles(foot)[0]
+        lo, hi = self.ANKLE
+        if flex < lo or flex > hi:
+            Mf = self.M(foot) @ Matrix.Rotation(math.radians(min(hi, max(lo, flex)) - flex), 4, "X")
+            self.set_M(foot, Mf)
+        for _ in range(3):
+            low = self.sole_low(side)
+            if low >= -0.05 * VOX:
+                break
+            Mf = self.M(foot)
+            Mf.translation.z += -low
+            self.limb(f"thigh.{side}", f"shin.{side}", foot, Mf, self.knee_pole(P, side))
 
     def hand_target(self, side, space, x, y, z, yaw, pitch, roll):
         sname = f"socket.hand.{side}"
@@ -192,6 +354,23 @@ class Poser:
             p.keyframe_insert("rotation_quaternion", frame=frame_no, group=p.name)
             if p.name in keyed_loc:
                 p.keyframe_insert("location", frame=frame_no, group=p.name)
+        self.remember()
+
+    def remember(self):
+        """Continuity state from the current (keyed or warm-up) pose."""
+        if self.temporal:
+            # continuity state from the pose actually keyed (IK or FK limbs alike)
+            for s in ("R", "L"):
+                for up, lo, en in (("upper_arm", "forearm", "hand"), ("thigh", "shin", "foot")):
+                    up, lo, en = f"{up}.{s}", f"{lo}.{s}", f"{en}.{s}"
+                    S, E, W = self.M(up).translation, self.M(lo).translation, self.M(en).translation
+                    u, f = (E - S).normalized(), (W - E).normalized()
+                    dv = (W - S).normalized()
+                    perp = (E - S) - (E - S).dot(dv) * dv
+                    if perp.length > 1e-4:
+                        self.lastperp[up] = perp.normalized()
+                    self.lastup[up] = u
+                    self.lastflex[up] = math.degrees(u.angle(f, 0.0))
 
     # ------------------------------------------------------------------ solve one pose
     def apply(self, P):
@@ -210,18 +389,23 @@ class Poser:
                      @ self.rest[f"foot.{side}"].to_3x3())
                 Mf = R.to_4x4()
                 Mf.translation = Vector((x, y, z)) * VOX
-                Mf = blend(self.M(f"foot.{side}"), Mf, P.get(f"foot.{side}#w", 1.0))
-                sx = 1 if side == "R" else -1
-                self.limb(f"thigh.{side}", f"shin.{side}", f"foot.{side}", Mf, P.get(f"kpole.{side}", (0.15 * sx, 1, 0)))
+                fw = P.get(f"foot.{side}#w", 1.0)
+                Mf = blend(self.M(f"foot.{side}"), Mf, fw)
+                pole = self.fade_pole(f"thigh.{side}", f"shin.{side}", f"foot.{side}", self.knee_pole(P, side), fw)
+                self.limb(f"thigh.{side}", f"shin.{side}", f"foot.{side}", Mf, pole)
                 toe = P.get(f"fk:toe.{side}")
                 if toe:
                     self.fk(f"toe.{side}", toe)
                     self.update()
+            else:
+                self.hinge_pass(f"thigh.{side}", f"shin.{side}", f"foot.{side}", True)
+            self.ground_leg(P, side)
         fks = {s: self.M(f"hand.{s}") @ self.rest[f"hand.{s}"].inverted() @ self.sock[f"socket.hand.{s}"] for s in "RL"}
-        targets = {}
+        targets, weights = {}, {}
         wp = P.get("weapon")
         if wp:
             ww = P.get("weapon#w", 1.0)
+            weights["R"] = weights["L"] = ww
             space, x, y, z, yaw, pitch, roll, prof = wp
             Mr = self.hand_target("R", space, x, y, z, yaw, pitch, roll)
             targets["R"] = blend(fks["R"], Mr, ww)
@@ -235,15 +419,21 @@ class Poser:
         for side in ("R", "L"):
             h = P.get(f"hand.{side}")
             if h:
-                targets[side] = blend(targets.get(side, fks[side]), self.hand_target(side, *h), P.get(f"hand.{side}#w", 1.0))
+                hw = P.get(f"hand.{side}#w", 1.0)
+                weights[side] = max(weights.get(side, 0.0), hw)
+                targets[side] = blend(targets.get(side, fks[side]), self.hand_target(side, *h), hw)
         for side, Ms in targets.items():
             sx = 1 if side == "R" else -1
             pole = P.get(f"pole.{side}", (0.55 * sx, -1.0, -0.25))
+            pole = self.fade_pole(f"upper_arm.{side}", f"forearm.{side}", f"hand.{side}", pole, weights.get(side, 1.0))
             self.limb(f"upper_arm.{side}", f"forearm.{side}", f"hand.{side}", self.hand_from_socket(side, Ms), pole)
             hk = P.get(f"fkpost:hand.{side}")
             if hk:
                 self.fk(f"hand.{side}", hk)
                 self.update()
+        for side in ("R", "L"):
+            if side not in targets:
+                self.hinge_pass(f"upper_arm.{side}", f"forearm.{side}", f"hand.{side}", False)
         # small location drift from matrix assignment is not keyed except on pelvis
         for p in self.pb:
             if p.name not in ("pelvis",):
@@ -285,7 +475,11 @@ def base_pose():
     shifted over the foot, left knee soft with the foot turned out and a touch forward, chest
     counter-tilted, head tilted, arms slightly away from the body, elbows soft, hands turned in."""
     P = {}
-    P["pelvis"] = (0.8, 0, -0.5)
+    # crew-rig visual pass: thigh + shin (9 + 8 vox) exactly span hip-to-ankle (20 - 3), so the
+    # standing leg sits on the IK straight-leg singularity and every 0.1 vox of pelvis drop bends
+    # the knee by several degrees. r005 dropped 0.5 (+0.4 breathing): the weight leg bent 13-23 deg
+    # and the free leg 35-42 deg, pumping with each breath. Keep the weight leg near-straight.
+    P["pelvis"] = (0.8, 0, -0.08)
     P["fk:pelvis"] = (0, -4, 3)
     P["fk:spine"] = (2, 3, -2)
     P["fk:chest"] = (1, 2.5, -2)
@@ -444,7 +638,8 @@ def lib():
         br = math.sin(2 * math.pi * 2 * ph)                  # breath
         ws = 0.5 - 0.5 * math.cos(2 * math.pi * ph)          # weight shift 0..1..0
         px, py, pz = P["pelvis"]
-        P["pelvis"] = (px + 0.5 * amp * ws, py, pz - 0.3 * amp * (0.5 + 0.5 * br) - 0.2 * ws)
+        # breathing lives in the chest; the pelvis barely moves so the knees do not pump
+        P["pelvis"] = (px + 0.5 * amp * ws, py, pz - 0.06 * amp * (0.5 + 0.5 * br) - 0.04 * ws)
         P["fk:pelvis"] = (0, -4 - 1.5 * amp * ws, 3 + 2 * ws)
         P["fk:chest"] = (1 + 1.6 * amp * br, 2.5 + 1.2 * ws, -2 - 1.5 * ws)
         P["fk:head"] = (-3 - 1.2 * amp * br, -4 - 2 * ws, 5 - 4 * ws)
@@ -600,6 +795,10 @@ def lib():
     M0["pelvis"] = (0, 0, -1)
     keys("melee_swing", False, [
         (0, dict(M0), "io"),
+        # rig pass: the wind-up hand path ran straight up through the shoulder joint (fold limit,
+        # upper arm flipping 130 deg in a frame); route it out to the side first
+        (4, dict(M0, **{"fk:pelvis": (0, 0, -12), "fk:chest": (-3, 0, -10), "fk:head": (0, 0, 15),
+                        "hand.R": ("w", 16, 1, 36, -20, 35, -15), "pole.R": (1, -0.2, -0.3)}), "io"),
         (7, dict(M0, **{"fk:pelvis": (0, 0, -25), "fk:chest": (-6, 0, -20), "fk:head": (0, 0, 30),
                         "hand.R": ("w", 9, -1, 52, -40, 70, -30), "pole.R": (1, 0, -0.2),
                         "fk:upper_arm.L": (40, 20, 0), "fk:forearm.L": (60, 0, 0)}), "io"),
@@ -608,7 +807,7 @@ def lib():
                          "fk:upper_arm.L": (-20, 30, 0), "fk:forearm.L": (40, 0, 0)}), "snap"),
         (14, dict(M0, **{"fk:pelvis": (0, 0, 28), "fk:chest": (14, 0, 30), "fk:head": (0, 0, -24), "pelvis": (0, 2.5, -3),
                          "hand.R": ("w", -8, 8, 24, 70, -70, 40), "pole.R": (1, -0.5, -0.4),
-                         "fk:upper_arm.L": (-25, 35, 0), "fk:forearm.L": (30, 0, 0)}), "out"),
+                         "fk:upper_arm.L": (-25, 35, 0), "fk:forearm.L": (30, 0, 0)}), "io"),   # rig pass: "out" after a "snap" key restarted at full speed (elbow pop)
         (24, dict(M0), "io"),
     ], {"grip": "one_hand"})
 
@@ -616,6 +815,10 @@ def lib():
     T0 = B()
     keys("throw", False, [
         (0, dict(T0), "io"),
+        # rig pass: route the wind-up out beside the body instead of through the shoulder joint
+        (4, dict(T0, **{"foot.R": (5, -4, 3, -30, 0), "foot.L": (-4.5, 5, 3.6, 0, 0), "pelvis": (0, -0.8, -1),
+                        "fk:pelvis": (0, 0, -12), "fk:chest": (-5, 0, -12), "fk:head": (0, 0, 15),
+                        "hand.R": ("w", 17, -3, 34, 0, 30, 0), "pole.R": (1, -0.2, -0.3)}), "io"),
         (8, dict(T0, **{"foot.R": (5, -4, 3, -30, 0), "foot.L": (-4.5, 5, 3.6, 0, 0), "pelvis": (0, -1.5, -1.5),
                         "fk:pelvis": (0, 0, -25), "fk:chest": (-10, 0, -25), "fk:head": (0, 0, 30),
                         "hand.R": ("w", 12, -8, 46, 0, 60, 0), "pole.R": (1, 0, -0.3),
@@ -627,7 +830,7 @@ def lib():
         (16, dict(T0, **{"foot.R": (5, -3, 4, -30, -30), "foot.L": (-4.5, 5, 3, 0, 0), "pelvis": (0, 3, -2.5),
                          "fk:pelvis": (0, 0, 18), "fk:chest": (20, 0, 18), "fk:head": (-8, 0, -10),
                          "hand.R": ("w", -2, 12, 26, 20, -70, 0), "pole.R": (1, -0.3, -0.2),
-                         "fk:upper_arm.L": (-25, 25, 0), "fk:forearm.L": (30, 0, 0)}), "out"),
+                         "fk:upper_arm.L": (-25, 25, 0), "fk:forearm.L": (30, 0, 0)}), "io"),   # rig pass: no velocity jump after the "snap" release
         (28, dict(T0), "io"),
     ], {"releaseFrame": 12})
 
@@ -792,8 +995,11 @@ def lib():
                       "pole.R": (1, 0, 0)})
     CON2 = dict(CON, **{"hand.R": ("c", 9, 3, 58, 0, 90, -60), "fk:head": (0, 20, 2)})
     sym(CON, "forearm", 12, 0, 0)
-    keys("emote_confused", False, [(0, E0, "io"), (8, CON, "io"), (12, CON2, "io"), (16, CON, "io"), (20, CON2, "io"),
-                                   (24, CON, "io"), (34, E0, "io")])
+    # rig pass: the hand used to travel straight up through the shoulder joint to the head (upper
+    # arm spinning 160 deg in a frame); lift it out to the side on the way up and down
+    CON_OUT = dict(E0, **{"fk:head": (0, 9, 3), "hand.R": ("c", 15, 3, 40, 0, 45, -30), "pole.R": (1, -0.3, -0.2)})
+    keys("emote_confused", False, [(0, E0, "io"), (4, CON_OUT, "io"), (8, CON, "io"), (12, CON2, "io"), (16, CON, "io"),
+                                   (20, CON2, "io"), (24, CON, "io"), (29, CON_OUT, "io"), (34, E0, "io")])
 
     def celebrate_frames():
         out = []
@@ -814,11 +1020,19 @@ def lib():
             P = dict(E0)
             air = j > 0
             P["pelvis"] = (0, 0, -0.3 - 4.5 * crouch + j)
-            if air:
-                P["foot.R"] = (4.5, 0.5, 3 + j - 0.6 * j, -6, -20)
-                P["foot.L"] = (-4.5, 0.5, 3 + j - 0.6 * j, 6, -20)
-            P["fk:upper_arm.R"] = (30 * env, -115 * env if u > 0.18 else -20 * env, 0)
-            P["fk:forearm.R"] = (10 * env, -45 * env if u > 0.18 else 0, 0)
+            # rig pass: feet ease from the planted stance into the tucked jump pose (they used to
+            # switch position, yaw and pitch on the take-off frame: 46 deg hip pop)
+            k = min(1.0, j / 2.5)
+            k = k * k * (3 - 2 * k)
+            if k > 0:
+                for side, air_ft in (("R", (4.5, 0.5, 3.0, -6, -20)), ("L", (-4.5, 0.5, 3.0, 6, -20))):
+                    x, y, z, yaw, pitch = lerp(E0[f"foot.{side}"], air_ft, k)
+                    P[f"foot.{side}"] = (x, y, z + 0.4 * j, yaw, pitch)
+            # rig pass: the fist pump used to switch from -20 to -115 deg between two frames
+            k = max(0.0, min(1.0, (u - 0.1) / 0.16))
+            k = k * k * (3 - 2 * k)
+            P["fk:upper_arm.R"] = (30 * env, (-20 - 95 * k) * env, 0)
+            P["fk:forearm.R"] = (10 * env, -45 * k * env, 0)
             P["fk:upper_arm.L"] = (20 * env, 40 * env, 0)
             P["fk:forearm.L"] = (70 * env, 0, 0)
             P["fk:head"] = (-15 * env if air else 0, 0, 0)
@@ -955,7 +1169,7 @@ def lib():
         (9, dict(B(), **{"hand.R": BACK, "fk:chest": (-4, 0, 10), "fk:head": (0, 0, -6), **OUTP}), "in"),
         (12, dict(B(), **{"hand.R": LIFT, "fk:chest": (-4, 0, 10), **OUTP}), "snap"),
         (16, dict(B(), **{"hand.R": UP, "pole.R": (1, 0, 0)}), "io"),
-        (24, ARMED, "back"),
+        (24, ARMED, "io"),   # rig pass: "back" snapped the support hand and arm in one frame
     ], {"grip": "rifle", "attachFrame": 11, "holster": "socket.back", "extra": True})
     keys("holster_rifle", False, [
         (0, ARMED, "io"),
@@ -1011,12 +1225,18 @@ def build_actions(arm, sc, only=None):
         act = bpy.data.actions.new(name)
         act.use_fake_user = True
         arm.animation_data.action = act
-        poser.lastq = {}
+        poser.begin_clip()
         if "frames" in spec:
             frames = spec["frames"]
         else:
             ks = spec["keys"]
             frames = [(f, sample(ks, f)) for f in range(ks[0][0], ks[-1][0] + 1)]
+        if spec["loop"] and len(frames) > 5:
+            # warm-up over the cycle's tail so frame 0 carries the same continuity state as the
+            # final frame (otherwise the rate limits make the loop seam pop)
+            for _, P in frames[-5:-1]:
+                poser.apply(P)
+                poser.remember()
         for f, P in frames:
             poser.apply(P)
             poser.key(f)

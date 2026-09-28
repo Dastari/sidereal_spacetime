@@ -414,7 +414,7 @@ class ArmedBaker:
         act.use_fake_user = True
         self.rig.animation_data_create()
         self.rig.animation_data.action = act
-        p.lastq = {}
+        p.begin_clip()
         attach, support_err, pen = [], [], []
         ready_Mr = None
         if clip in ("draw", "holster"):
@@ -433,7 +433,11 @@ class ArmedBaker:
         if st:
             ref = {"aim": "aim", "shoot": "aim", "reload": "aim"}.get(clip, "idle_armed")
             w_base = self.strip_weapon(self.clip_frames(fam, ref)[0][1])[1]
-        for f, P in frames:
+        loop = clip in ("idle_armed", "walk_armed", "run_armed", "aim") or (clip == "shoot" and fam in ("rifle", "heavy", "tool"))
+        # looping clips warm up over the cycle tail first (rig pass: continuity limits must not
+        # make the loop seam pop)
+        seq = ([(f, P, False) for f, P in frames[-5:-1]] if loop and len(frames) > 5 else []) + [(f, P, True) for f, P in frames]
+        for f, P, keyed in seq:
             P = self.two_hand_low(dict(P), cls, clip)
             if st:
                 P_body, w = self.strip_weapon(P)
@@ -498,6 +502,9 @@ class ArmedBaker:
                 self.solve_hand("L", target, P.get("pole.L", (-0.6, -0.4, -1)), girdle=True)
                 if w_auth < 0.01:
                     err = (self.socket_L().translation - Ml.translation).length
+            if not keyed:
+                p.remember()
+                continue
             support_err.append(err)
             pen.append(self.penetration(item, self.socket_R()) if held else 0)
             attach.append("hand" if held else "holster")
@@ -507,7 +514,6 @@ class ArmedBaker:
                 kp.interpolation = "LINEAR"
         act.use_frame_range = True
         act.frame_start, act.frame_end = frames[0][0], frames[-1][0]
-        loop = clip in ("idle_armed", "walk_armed", "run_armed", "aim") or (clip == "shoot" and fam in ("rifle", "heavy", "tool"))
         act.use_cyclic = loop
         self.rig.animation_data.action = None
         errs = [e for e in support_err if e is not None]
@@ -527,6 +533,7 @@ def bake_all(o, by_id, rig_src):
     baker = ArmedBaker(anims, rig)
     meta = []
     for cls, iid, fam in CLASSES:
+        baker.poser.end_clip()   # stance search is stateless; keyed clips re-enable continuity
         baker.stances[cls] = baker.tune(cls, by_id[iid], fam)
         for clip in CLIPS:
             m = baker.bake(cls, by_id[iid], fam, clip)
