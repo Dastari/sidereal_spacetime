@@ -380,7 +380,11 @@ export function createGameUI(
         palette.muted,
         r.w - 24,
       );
-      if (state.interactionPrompt || state.nearStation || state.seated)
+      // The dead cannot interact (the server refuses it); offer no prompt.
+      if (
+        state.vitals?.state !== "dead" &&
+        (state.interactionPrompt || state.nearStation || state.seated)
+      )
         ui.button(
           "station",
           state.interactionPrompt
