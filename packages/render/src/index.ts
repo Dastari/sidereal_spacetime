@@ -82,7 +82,7 @@ import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createCrewVisual, type CrewAppearance } from "./crew";
 import { createVoxelCrewVisual } from "./crew/voxel-crew";
 import { equipVoxelCrewItem } from "./crew/voxel-crew-kit";
-import { moldedLightRig } from "./molded-plastic";
+import { moldedLightRig, setMoldedClearCoat } from "./molded-plastic";
 import {
   contactShadingRequested,
   createContactShading,
@@ -256,6 +256,8 @@ async function buildWorld(
   const requestedBackend = readRenderBackend(backendStorage);
   const pageUrl =
     typeof window === "undefined" ? undefined : new URL(window.location.href);
+  // Molded-plastic clear-coat lobe: off by default for cost (molded-plastic.ts); ?coat=1 reviews it.
+  setMoldedClearCoat(pageUrl?.searchParams.get("coat") === "1");
   const recoveringWebGL =
     pageUrl?.searchParams.get("rendererFallback") === "webgl";
   const createdEngine = await createRenderEngine(

@@ -14,6 +14,7 @@ import {
   applyMoldedFinishToMeshes,
   applySurfaceFinish,
   crewSlotFamily,
+  moldedClearCoatEnabled,
   moldedImageProcessing,
   moldedLightRig,
   shipSlotFamily,
@@ -138,7 +139,11 @@ describe("applying the finish", () => {
     const scene = new Scene(engine);
     const m = new PBRMaterial("prefab-federation-primary", scene);
     m.albedoColor.set(0.6, 0.6, 0.62);
+    // The coat lobe is a quality switch, off by default (cost); the family keeps the value.
     applySurfaceFinish(m, "plastic-light", { studio: false });
+    expect(moldedClearCoatEnabled()).toBe(false);
+    expect(m.clearCoat.isEnabled).toBe(false);
+    applySurfaceFinish(m, "plastic-light", { studio: false, clearCoat: true });
     expect(m.metallic).toBe(0);
     expect(m.roughness).toBeCloseTo(0.32, 5);
     expect(m.indexOfRefraction).toBeCloseTo(1.46, 5);

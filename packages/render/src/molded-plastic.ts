@@ -408,6 +408,23 @@ export function moldedStudioEnvironment(scene: Scene) {
 export interface MoldedFinishOptions {
   /** Skip the studio environment (tests / NullEngine); grading still applies. */
   studio?: boolean;
+  /** Override the clear-coat quality switch for this call. */
+  clearCoat?: boolean;
+}
+
+/**
+ * Clear-coat lobe quality switch. The families keep the specified coat (0.08 @ 0.20), but the
+ * coat lobe is OFF by default: measured in the game renderer it cost about 30 % frame time on the
+ * Wren (an extra specular lobe and environment lookup on every plastic pixel) for well under 1 %
+ * extra reflectance at weight 0.08. The plastic families' key-light specular (x1.5) carries the
+ * glint instead. `?coat=1` (see index.ts) turns the real coat on for side-by-side review.
+ */
+let clearCoatEnabled = false;
+export function setMoldedClearCoat(enabled: boolean) {
+  clearCoatEnabled = enabled;
+}
+export function moldedClearCoatEnabled() {
+  return clearCoatEnabled;
 }
 
 /**
@@ -425,7 +442,7 @@ export function applySurfaceFinish(
   material.roughness = f.roughness;
   material.indexOfRefraction = f.ior;
   material.specularIntensity = f.specular;
-  if (f.coat > 0) {
+  if (f.coat > 0 && (options.clearCoat ?? clearCoatEnabled)) {
     material.clearCoat.isEnabled = true;
     material.clearCoat.intensity = f.coat;
     material.clearCoat.roughness = f.coatRoughness;
