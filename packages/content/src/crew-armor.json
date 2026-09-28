@@ -1,2883 +1,2350 @@
 {
- "schema": 1,
- "kit": "crew.armor-v1",
- "revision": "r006",
- "specVersion": 2,
- "status": "proposal; not published; not owner-approved",
- "assetBase": "/assets/crew/armor-v1",
- "rig": "crew_rig",
- "fits": {
-  "wide": [
-   "male",
-   "neutral"
+  "schema": 1,
+  "kit": "crew.armor-v1",
+  "revision": "r007",
+  "specVersion": 2,
+  "status": "proposal; not published; not owner-approved",
+  "assetBase": "/assets/crew/armor-v1",
+  "rig": "crew_rig",
+  "fits": {
+    "wide": ["male", "neutral"],
+    "narrow": ["female"]
+  },
+  "materialSlots": [
+    "skin",
+    "hair",
+    "eye",
+    "suit_primary",
+    "suit_secondary",
+    "accent",
+    "metal",
+    "dark",
+    "emit",
+    "glass"
   ],
-  "narrow": [
-   "female"
+  "equipmentSlots": [
+    "chest",
+    "shoulders",
+    "gloves",
+    "belt",
+    "legs",
+    "boots",
+    "back"
+  ],
+  "tiers": {
+    "0": "civilian",
+    "1": "light",
+    "2": "standard",
+    "3": "heavy"
+  },
+  "colourways": {
+    "arctic": {
+      "suit_primary": "#e4e0f2",
+      "suit_secondary": "#343a6a",
+      "accent": "#4f7cff",
+      "metal": "#a3abc0",
+      "dark": "#2a2b40",
+      "emit": "#56c8ff",
+      "glass": "#7fd8ff",
+      "label": "Arctic"
+    },
+    "crimson": {
+      "suit_primary": "#c8263d",
+      "suit_secondary": "#2e2735",
+      "accent": "#f08a2a",
+      "metal": "#a0a6b3",
+      "dark": "#1b1820",
+      "emit": "#ff5a4a",
+      "glass": "#7fd8ff",
+      "label": "Crimson"
+    },
+    "cobalt": {
+      "suit_primary": "#2f63e6",
+      "suit_secondary": "#1c2548",
+      "accent": "#e8ecf6",
+      "metal": "#a8b2c6",
+      "dark": "#161c33",
+      "emit": "#5fd2ff",
+      "glass": "#7fd8ff",
+      "label": "Cobalt"
+    },
+    "amber": {
+      "suit_primary": "#f7a414",
+      "suit_secondary": "#24222e",
+      "accent": "#4c83ff",
+      "metal": "#aeafb6",
+      "dark": "#1c1b24",
+      "emit": "#6fd6ff",
+      "glass": "#7fd8ff",
+      "label": "Amber"
+    },
+    "moss": {
+      "suit_primary": "#86b43c",
+      "suit_secondary": "#2e3528",
+      "accent": "#d4e05c",
+      "metal": "#929c90",
+      "dark": "#161a14",
+      "emit": "#8dff5a",
+      "glass": "#7fd8ff",
+      "label": "Moss"
+    },
+    "shadow": {
+      "suit_primary": "#4d4864",
+      "suit_secondary": "#2b283a",
+      "accent": "#f08a2a",
+      "metal": "#827f96",
+      "dark": "#131219",
+      "emit": "#ff9a3a",
+      "glass": "#7fd8ff",
+      "label": "Shadow"
+    },
+    "captain": {
+      "suit_primary": "#1f2d55",
+      "suit_secondary": "#e3e8f1",
+      "accent": "#f3bb3c",
+      "metal": "#d0a84c",
+      "dark": "#12182a",
+      "emit": "#63c9ff",
+      "glass": "#7fd8ff",
+      "label": "Command navy"
+    },
+    "engineer": {
+      "suit_primary": "#f08c1e",
+      "suit_secondary": "#2f2e3e",
+      "accent": "#3f78ff",
+      "metal": "#aeb2bd",
+      "dark": "#1c1b25",
+      "emit": "#46d6ff",
+      "glass": "#7fd8ff",
+      "label": "Engineering orange"
+    },
+    "medic": {
+      "suit_primary": "#f2f3f8",
+      "suit_secondary": "#d8243a",
+      "accent": "#e0253e",
+      "metal": "#b7bfd2",
+      "dark": "#23222e",
+      "emit": "#35d6ff",
+      "glass": "#7fd8ff",
+      "label": "Medical white"
+    },
+    "pilot": {
+      "suit_primary": "#e6eaf2",
+      "suit_secondary": "#2b4cb0",
+      "accent": "#f08a24",
+      "metal": "#a2abbe",
+      "dark": "#1a1f33",
+      "emit": "#58d0ff",
+      "glass": "#7fd8ff",
+      "label": "Flight white"
+    },
+    "security": {
+      "suit_primary": "#2e4394",
+      "suit_secondary": "#1a2138",
+      "accent": "#f2c14a",
+      "metal": "#a0aabf",
+      "dark": "#121626",
+      "emit": "#4fb6ff",
+      "glass": "#7fd8ff",
+      "label": "Security blue"
+    },
+    "marine": {
+      "suit_primary": "#bd253c",
+      "suit_secondary": "#2c2732",
+      "accent": "#e8e4ea",
+      "metal": "#949aa8",
+      "dark": "#16131a",
+      "emit": "#ff4d5e",
+      "glass": "#7fd8ff",
+      "label": "Marine red"
+    },
+    "salvage": {
+      "suit_primary": "#ec9c22",
+      "suit_secondary": "#302e35",
+      "accent": "#f5d24a",
+      "metal": "#a3a7af",
+      "dark": "#1a1a1e",
+      "emit": "#ffc24a",
+      "glass": "#7fd8ff",
+      "label": "Salvage hazard"
+    },
+    "recon": {
+      "suit_primary": "#5a6e3e",
+      "suit_secondary": "#2b3125",
+      "accent": "#93a462",
+      "metal": "#838c7d",
+      "dark": "#141812",
+      "emit": "#6cff5a",
+      "glass": "#7fd8ff",
+      "label": "Recon green"
+    },
+    "scientist": {
+      "suit_primary": "#f0f2f7",
+      "suit_secondary": "#5e4c9e",
+      "accent": "#9a6cff",
+      "metal": "#adb2c0",
+      "dark": "#2c2842",
+      "emit": "#b58cff",
+      "glass": "#7fd8ff",
+      "label": "Laboratory white"
+    },
+    "mechanic": {
+      "suit_primary": "#2b3663",
+      "suit_secondary": "#1c2035",
+      "accent": "#f08a24",
+      "metal": "#a7acb8",
+      "dark": "#12141f",
+      "emit": "#ffa04a",
+      "glass": "#7fd8ff",
+      "label": "Mechanic navy"
+    },
+    "civilian": {
+      "suit_primary": "#8e7159",
+      "suit_secondary": "#3f4c5f",
+      "accent": "#d8b36a",
+      "metal": "#9fa5ad",
+      "dark": "#1e2027",
+      "emit": "#7fd0ff",
+      "glass": "#7fd8ff",
+      "label": "Civilian"
+    }
+  },
+  "sheetColourways": ["arctic", "crimson", "cobalt", "amber", "moss", "shadow"],
+  "presets": [
+    {
+      "id": "role.captain",
+      "heads": {
+        "male": ["acc.officer_cap", "hair.swept_quiff.cap"],
+        "female": ["acc.officer_cap", "hair.long_gathered.cap"],
+        "skin": "#e7a98a",
+        "hair": "#7a4526",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#1d2748",
+        "suit_secondary": "#10152a"
+      },
+      "name": "Captain",
+      "colourway": "captain",
+      "headPreset": "head.captain-cap",
+      "parts": {
+        "chest": "armor.chest.coat",
+        "shoulders": "armor.shoulders.epaulette",
+        "gloves": "armor.gloves.fabric",
+        "belt": "armor.belt.sash",
+        "boots": "armor.boots.dress"
+      }
+    },
+    {
+      "id": "role.engineer",
+      "heads": {
+        "male": ["acc.goggles_up", "hair.curly_top.full"],
+        "female": ["acc.goggles_up", "hair.messy_bun.full"],
+        "skin": "#c98a62",
+        "hair": "#4a2f6e",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#2d2b3f",
+        "suit_secondary": "#1a1926"
+      },
+      "name": "Engineer",
+      "colourway": "engineer",
+      "headPreset": "head.engineer-helmet",
+      "parts": {
+        "chest": "armor.chest.engineer-rig",
+        "shoulders": "armor.shoulders.cloth",
+        "gloves": "armor.gloves.work",
+        "belt": "armor.belt.tool",
+        "legs": "armor.legs.light",
+        "boots": "armor.boots.light",
+        "back": "armor.back.toolpack"
+      }
+    },
+    {
+      "id": "role.medic",
+      "heads": {
+        "male": ["acc.medic_cap", "hair.close_crop.cap"],
+        "female": ["acc.medic_cap", "hair.blunt_bob.cap"],
+        "skin": "#f3c2a2",
+        "hair": "#2a2438",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#2c2a3a",
+        "suit_secondary": "#1b1a26"
+      },
+      "name": "Medic",
+      "colourway": "medic",
+      "headPreset": "head.medic-helmet",
+      "parts": {
+        "chest": "armor.chest.medic",
+        "shoulders": "armor.shoulders.standard",
+        "gloves": "armor.gloves.light",
+        "belt": "armor.belt.medical-satchel",
+        "legs": "armor.legs.light",
+        "boots": "armor.boots.standard",
+        "back": "armor.back.medpack"
+      }
+    },
+    {
+      "id": "role.pilot",
+      "heads": {
+        "male": ["acc.headset", "hair.short_waves.full"],
+        "female": ["acc.headset", "hair.high_bun.full"],
+        "skin": "#e0a47f",
+        "hair": "#6b3b1f",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#233a8a",
+        "suit_secondary": "#152255"
+      },
+      "name": "Pilot",
+      "colourway": "pilot",
+      "headPreset": "head.pilot-helmet",
+      "parts": {
+        "chest": "armor.chest.flight",
+        "shoulders": "armor.shoulders.flight",
+        "gloves": "armor.gloves.light",
+        "belt": "armor.belt.plain",
+        "legs": "armor.legs.light",
+        "boots": "armor.boots.flight",
+        "back": "armor.back.oxygen-single"
+      }
+    },
+    {
+      "id": "role.security",
+      "heads": {
+        "male": ["acc.cap", "hair.close_crop.cap"],
+        "female": ["acc.cap", "hair.straight_bob.cap"],
+        "skin": "#8a5a3c",
+        "hair": "#3a2a22",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#1f2c63",
+        "suit_secondary": "#121934"
+      },
+      "name": "Security officer",
+      "colourway": "security",
+      "headPreset": "head.security-cap",
+      "parts": {
+        "chest": "armor.chest.vest",
+        "shoulders": "armor.shoulders.standard",
+        "gloves": "armor.gloves.standard",
+        "belt": "armor.belt.holster",
+        "legs": "armor.legs.standard",
+        "boots": "armor.boots.standard",
+        "back": "armor.back.backpack-t1"
+      }
+    },
+    {
+      "id": "role.marine",
+      "heads": {
+        "male": ["helmet.tactical", "visor.tactical.tinted"],
+        "female": ["helmet.tactical", "visor.tactical.tinted"],
+        "skin": "#b87955",
+        "hair": "#241a14",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#2e2934",
+        "suit_secondary": "#1a171f"
+      },
+      "name": "Heavy marine",
+      "colourway": "marine",
+      "headPreset": "head.marine-helmet",
+      "parts": {
+        "chest": "armor.chest.heavy",
+        "shoulders": "armor.shoulders.heavy",
+        "gloves": "armor.gloves.heavy",
+        "belt": "armor.belt.heavy",
+        "legs": "armor.legs.heavy",
+        "boots": "armor.boots.heavy",
+        "back": "armor.back.backpack-t3"
+      }
+    },
+    {
+      "id": "role.salvage",
+      "heads": {
+        "male": ["acc.goggles_down", "hair.flat_top.full"],
+        "female": ["acc.goggles_down", "hair.side_undercut.full"],
+        "skin": "#d99b78",
+        "hair": "#7a4a1e",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#3a3440",
+        "suit_secondary": "#221f28"
+      },
+      "name": "Salvage tech",
+      "colourway": "salvage",
+      "headPreset": "head.salvage-helmet",
+      "parts": {
+        "chest": "armor.chest.hazard",
+        "shoulders": "armor.shoulders.standard",
+        "gloves": "armor.gloves.work",
+        "belt": "armor.belt.tool",
+        "legs": "armor.legs.standard",
+        "boots": "armor.boots.standard",
+        "back": "armor.back.backpack-t3"
+      }
+    },
+    {
+      "id": "role.recon",
+      "heads": {
+        "male": ["acc.hood", "acc.scarf", "acc.goggles_down"],
+        "female": ["acc.hood", "acc.scarf", "acc.goggles_down"],
+        "skin": "#a8704e",
+        "hair": "#2b3a1e",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#34402c",
+        "suit_secondary": "#1f261a"
+      },
+      "name": "Recon scout",
+      "colourway": "recon",
+      "headPreset": "head.recon-goggles",
+      "parts": {
+        "chest": "armor.chest.tactical",
+        "shoulders": "armor.shoulders.light",
+        "gloves": "armor.gloves.light",
+        "belt": "armor.belt.utility",
+        "legs": "armor.legs.light",
+        "boots": "armor.boots.light",
+        "back": "armor.back.recon-cloak"
+      }
+    },
+    {
+      "id": "role.scientist",
+      "heads": {
+        "male": ["acc.round_glasses", "hair.afro.full"],
+        "female": ["acc.round_glasses", "hair.silver_bob.full"],
+        "skin": "#6e4630",
+        "hair": "#c9c3d6",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#5b3fa8",
+        "suit_secondary": "#34245f"
+      },
+      "name": "Scientist",
+      "colourway": "scientist",
+      "headPreset": "head.scientist-hair",
+      "parts": {
+        "chest": "armor.chest.research",
+        "gloves": "armor.gloves.fabric",
+        "belt": "armor.belt.plain",
+        "boots": "armor.boots.sneaker"
+      }
+    },
+    {
+      "id": "role.mechanic",
+      "heads": {
+        "male": ["acc.cap", "hair.short_spikes.cap"],
+        "female": ["acc.cap", "hair.long_straight.cap"],
+        "skin": "#f1b894",
+        "hair": "#b8452a",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#27305a",
+        "suit_secondary": "#161b33"
+      },
+      "name": "Mechanic",
+      "colourway": "mechanic",
+      "headPreset": "head.mechanic-cap",
+      "parts": {
+        "chest": "armor.chest.mechanic-rig",
+        "shoulders": "armor.shoulders.cloth",
+        "gloves": "armor.gloves.work",
+        "belt": "armor.belt.tool",
+        "legs": "armor.legs.cargo",
+        "boots": "armor.boots.light",
+        "back": "armor.back.toolpack"
+      }
+    },
+    {
+      "id": "role.civilian",
+      "heads": {
+        "male": ["hair.pompadour.full"],
+        "female": ["hair.long_side_fringe.full"],
+        "skin": "#e8b08e",
+        "hair": "#5a3222",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#3e5a86",
+        "suit_secondary": "#26344f"
+      },
+      "name": "Civilian",
+      "colourway": "civilian",
+      "headPreset": "head.civilian-hair",
+      "parts": {
+        "chest": "armor.chest.jacket",
+        "belt": "armor.belt.plain",
+        "legs": "armor.legs.cargo",
+        "boots": "armor.boots.sneaker"
+      }
+    },
+    {
+      "id": "role.jet-trooper",
+      "heads": {
+        "male": ["helmet.closed", "visor.closed.hud"],
+        "female": ["helmet.closed", "visor.closed.hud"],
+        "skin": "#c4876a",
+        "hair": "#2a2020",
+        "source": "CHAR-HEADS v1 (PR #37)"
+      },
+      "undersuit": {
+        "suit_primary": "#232d4a",
+        "suit_secondary": "#141a2c"
+      },
+      "name": "Jet trooper",
+      "colourway": "cobalt",
+      "headPreset": "head.closed-helmet",
+      "parts": {
+        "chest": "armor.chest.plate",
+        "shoulders": "armor.shoulders.standard",
+        "gloves": "armor.gloves.standard",
+        "belt": "armor.belt.standard",
+        "legs": "armor.legs.standard",
+        "boots": "armor.boots.heavy",
+        "back": "armor.back.jetpack-heavy"
+      }
+    }
+  ],
+  "legacyVisuals": {
+    "captain-chest": {
+      "part": "armor.chest.coat",
+      "colourway": "captain"
+    },
+    "captain-shoulders": {
+      "part": "armor.shoulders.epaulette",
+      "colourway": "captain"
+    },
+    "captain-gloves": {
+      "part": "armor.gloves.fabric",
+      "colourway": "captain"
+    },
+    "captain-belt": {
+      "part": "armor.belt.sash",
+      "colourway": "captain"
+    },
+    "captain-boots": {
+      "part": "armor.boots.dress",
+      "colourway": "captain"
+    },
+    "engineer-chest": {
+      "part": "armor.chest.engineer-rig",
+      "colourway": "engineer"
+    },
+    "engineer-shoulders": {
+      "part": "armor.shoulders.cloth",
+      "colourway": "engineer"
+    },
+    "engineer-gloves": {
+      "part": "armor.gloves.work",
+      "colourway": "engineer"
+    },
+    "engineer-belt": {
+      "part": "armor.belt.tool",
+      "colourway": "engineer"
+    },
+    "engineer-legs": {
+      "part": "armor.legs.light",
+      "colourway": "engineer"
+    },
+    "engineer-boots": {
+      "part": "armor.boots.light",
+      "colourway": "engineer"
+    },
+    "engineer-back": {
+      "part": "armor.back.toolpack",
+      "colourway": "engineer"
+    },
+    "medic-chest": {
+      "part": "armor.chest.medic",
+      "colourway": "medic"
+    },
+    "medic-shoulders": {
+      "part": "armor.shoulders.standard",
+      "colourway": "medic"
+    },
+    "medic-gloves": {
+      "part": "armor.gloves.light",
+      "colourway": "medic"
+    },
+    "medic-belt": {
+      "part": "armor.belt.medical-satchel",
+      "colourway": "medic"
+    },
+    "medic-legs": {
+      "part": "armor.legs.light",
+      "colourway": "medic"
+    },
+    "medic-boots": {
+      "part": "armor.boots.standard",
+      "colourway": "medic"
+    },
+    "medic-back": {
+      "part": "armor.back.medpack",
+      "colourway": "medic"
+    },
+    "pilot-chest": {
+      "part": "armor.chest.flight",
+      "colourway": "pilot"
+    },
+    "pilot-shoulders": {
+      "part": "armor.shoulders.flight",
+      "colourway": "pilot"
+    },
+    "pilot-gloves": {
+      "part": "armor.gloves.light",
+      "colourway": "pilot"
+    },
+    "pilot-belt": {
+      "part": "armor.belt.plain",
+      "colourway": "pilot"
+    },
+    "pilot-legs": {
+      "part": "armor.legs.light",
+      "colourway": "pilot"
+    },
+    "pilot-boots": {
+      "part": "armor.boots.flight",
+      "colourway": "pilot"
+    },
+    "pilot-back": {
+      "part": "armor.back.oxygen-single",
+      "colourway": "pilot"
+    },
+    "security-chest": {
+      "part": "armor.chest.vest",
+      "colourway": "security"
+    },
+    "security-shoulders": {
+      "part": "armor.shoulders.standard",
+      "colourway": "security"
+    },
+    "security-gloves": {
+      "part": "armor.gloves.standard",
+      "colourway": "security"
+    },
+    "security-belt": {
+      "part": "armor.belt.holster",
+      "colourway": "security"
+    },
+    "security-legs": {
+      "part": "armor.legs.standard",
+      "colourway": "security"
+    },
+    "security-boots": {
+      "part": "armor.boots.standard",
+      "colourway": "security"
+    },
+    "security-back": {
+      "part": "armor.back.backpack-t1",
+      "colourway": "security"
+    },
+    "marine-chest": {
+      "part": "armor.chest.heavy",
+      "colourway": "marine"
+    },
+    "marine-shoulders": {
+      "part": "armor.shoulders.heavy",
+      "colourway": "marine"
+    },
+    "marine-gloves": {
+      "part": "armor.gloves.heavy",
+      "colourway": "marine"
+    },
+    "marine-belt": {
+      "part": "armor.belt.heavy",
+      "colourway": "marine"
+    },
+    "marine-legs": {
+      "part": "armor.legs.heavy",
+      "colourway": "marine"
+    },
+    "marine-boots": {
+      "part": "armor.boots.heavy",
+      "colourway": "marine"
+    },
+    "marine-back": {
+      "part": "armor.back.backpack-t3",
+      "colourway": "marine"
+    },
+    "salvage-chest": {
+      "part": "armor.chest.hazard",
+      "colourway": "salvage"
+    },
+    "salvage-shoulders": {
+      "part": "armor.shoulders.standard",
+      "colourway": "salvage"
+    },
+    "salvage-gloves": {
+      "part": "armor.gloves.work",
+      "colourway": "salvage"
+    },
+    "salvage-belt": {
+      "part": "armor.belt.tool",
+      "colourway": "salvage"
+    },
+    "salvage-legs": {
+      "part": "armor.legs.standard",
+      "colourway": "salvage"
+    },
+    "salvage-boots": {
+      "part": "armor.boots.standard",
+      "colourway": "salvage"
+    },
+    "salvage-back": {
+      "part": "armor.back.backpack-t3",
+      "colourway": "salvage"
+    },
+    "recon-chest": {
+      "part": "armor.chest.tactical",
+      "colourway": "recon"
+    },
+    "recon-shoulders": {
+      "part": "armor.shoulders.light",
+      "colourway": "recon"
+    },
+    "recon-gloves": {
+      "part": "armor.gloves.light",
+      "colourway": "recon"
+    },
+    "recon-belt": {
+      "part": "armor.belt.utility",
+      "colourway": "recon"
+    },
+    "recon-legs": {
+      "part": "armor.legs.light",
+      "colourway": "recon"
+    },
+    "recon-boots": {
+      "part": "armor.boots.light",
+      "colourway": "recon"
+    },
+    "recon-back": {
+      "part": "armor.back.recon-cloak",
+      "colourway": "recon"
+    },
+    "scientist-chest": {
+      "part": "armor.chest.research",
+      "colourway": "scientist"
+    },
+    "scientist-gloves": {
+      "part": "armor.gloves.fabric",
+      "colourway": "scientist"
+    },
+    "scientist-belt": {
+      "part": "armor.belt.plain",
+      "colourway": "scientist"
+    },
+    "scientist-boots": {
+      "part": "armor.boots.sneaker",
+      "colourway": "scientist"
+    },
+    "mechanic-chest": {
+      "part": "armor.chest.mechanic-rig",
+      "colourway": "mechanic"
+    },
+    "mechanic-shoulders": {
+      "part": "armor.shoulders.cloth",
+      "colourway": "mechanic"
+    },
+    "mechanic-gloves": {
+      "part": "armor.gloves.work",
+      "colourway": "mechanic"
+    },
+    "mechanic-belt": {
+      "part": "armor.belt.tool",
+      "colourway": "mechanic"
+    },
+    "mechanic-legs": {
+      "part": "armor.legs.cargo",
+      "colourway": "mechanic"
+    },
+    "mechanic-boots": {
+      "part": "armor.boots.light",
+      "colourway": "mechanic"
+    },
+    "mechanic-back": {
+      "part": "armor.back.toolpack",
+      "colourway": "mechanic"
+    },
+    "scientist-back": {
+      "part": "armor.back.backpack-t0",
+      "colourway": "scientist"
+    }
+  },
+  "parts": [
+    {
+      "id": "armor.chest.jacket",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "jacket",
+      "name": "Crew jacket",
+      "glb": "parts/armor.chest.jacket.glb",
+      "sha256": "719d19ea0c7f0169083151f249c372337cd6e8cb37ad5df0db627d1afbc24eb7",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "dark", "emit"],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.jacket-wide",
+          "tris": 2660
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.jacket-narrow",
+          "tris": 2660
+        }
+      }
+    },
+    {
+      "id": "armor.chest.harness",
+      "slot": "chest",
+      "tier": 1,
+      "tierName": "light",
+      "style": "harness",
+      "name": "Light harness vest",
+      "glb": "parts/armor.chest.harness.glb",
+      "sha256": "d42ae3dc3effc81c0ae94be3d4887ef237b819c7cb1d4e452153db4805a05316",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 3.0,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.harness-wide",
+          "tris": 1304
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.harness-narrow",
+          "tris": 1304
+        }
+      }
+    },
+    {
+      "id": "armor.chest.plate",
+      "slot": "chest",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "plate",
+      "name": "Standard plate carrier",
+      "glb": "parts/armor.chest.plate.glb",
+      "sha256": "8a7e03b5300fcd8b91ecc2686b310d9cda27571cce01baa827a10c6be55dcee4",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark", "emit"],
+      "massKg": 6.5,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.plate-wide",
+          "tris": 2884
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.plate-narrow",
+          "tris": 2884
+        }
+      }
+    },
+    {
+      "id": "armor.chest.heavy",
+      "slot": "chest",
+      "tier": 3,
+      "tierName": "heavy",
+      "style": "plate",
+      "name": "Heavy assault cuirass",
+      "glb": "parts/armor.chest.heavy.glb",
+      "sha256": "b087e87d46237cd2cb10a55fc4ccc07ceca5e3f9bea049a3dc1bce5ec74b469c",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 11.0,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.heavy-wide",
+          "tris": 3484
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.heavy-narrow",
+          "tris": 3484
+        }
+      }
+    },
+    {
+      "id": "armor.chest.coat",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "coat",
+      "name": "Officer's coat",
+      "glb": "parts/armor.chest.coat.glb",
+      "sha256": "6f5fc4d4daeaa44f3066d8ce9665b7c146988bc2f75ce456f26a26d0006aebc1",
+      "bones": ["pelvis", "spine", "chest", "thigh.R", "thigh.L"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal"],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.coat-wide",
+          "tris": 2932
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.coat-narrow",
+          "tris": 2932
+        }
+      }
+    },
+    {
+      "id": "armor.chest.labcoat",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "labcoat",
+      "name": "Lab coat",
+      "glb": "parts/armor.chest.labcoat.glb",
+      "sha256": "c1994b2420513f6e17ffceef29169d0a348ed59265fc45988fa421ac30536a27",
+      "bones": ["pelvis", "spine", "chest", "thigh.R", "thigh.L"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal"],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.labcoat-wide",
+          "tris": 2720
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.labcoat-narrow",
+          "tris": 2720
+        }
+      }
+    },
+    {
+      "id": "armor.chest.overalls",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "overalls",
+      "name": "Work overalls",
+      "glb": "parts/armor.chest.overalls.glb",
+      "sha256": "b00f0d4f4834c1f47412d19b6d3aacd8a8e3f926ad3022f90c95574407ed5530",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.overalls-wide",
+          "tris": 1884
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.overalls-narrow",
+          "tris": 1884
+        }
+      }
+    },
+    {
+      "id": "armor.chest.flight",
+      "slot": "chest",
+      "tier": 1,
+      "tierName": "light",
+      "style": "flight",
+      "name": "Flight suit harness",
+      "glb": "parts/armor.chest.flight.glb",
+      "sha256": "e8b59de8b8fccd15a5f9f91199f4c9bbe76991fc43b5c44be4a0b3e8ea697356",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 3.0,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.flight-wide",
+          "tris": 2288
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.flight-narrow",
+          "tris": 2288
+        }
+      }
+    },
+    {
+      "id": "armor.chest.tactical",
+      "slot": "chest",
+      "tier": 1,
+      "tierName": "light",
+      "style": "tactical",
+      "name": "Tactical chest rig",
+      "glb": "parts/armor.chest.tactical.glb",
+      "sha256": "4056e9124e09aa9514f826038acfc8c96bd6243ea910e57916b7aa1cd609201e",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal", "dark"],
+      "massKg": 3.0,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.tactical-wide",
+          "tris": 3640
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.tactical-narrow",
+          "tris": 3640
+        }
+      }
+    },
+    {
+      "id": "armor.chest.vest",
+      "slot": "chest",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "vest",
+      "name": "Security vest",
+      "glb": "parts/armor.chest.vest.glb",
+      "sha256": "264fadbdb0be70f2bac52f6388ca5b54b744a94be5d826e0e9e05e6637e27dcb",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 6.5,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.vest-wide",
+          "tris": 3156
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.vest-narrow",
+          "tris": 3156
+        }
+      }
+    },
+    {
+      "id": "armor.chest.medic",
+      "slot": "chest",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "medic",
+      "name": "Medical plate",
+      "glb": "parts/armor.chest.medic.glb",
+      "sha256": "845d0548edac4e4156cf2636c672a3199bf40a3fc66d6e8425ed7bc60b343039",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 6.5,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.medic-wide",
+          "tris": 3324
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.medic-narrow",
+          "tris": 3324
+        }
+      }
+    },
+    {
+      "id": "armor.chest.hazard",
+      "slot": "chest",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "hazard",
+      "name": "Hazard-rated plate",
+      "glb": "parts/armor.chest.hazard.glb",
+      "sha256": "e26a893e65d1bca9d83ef66c3364a3fe27664447a9e1a099e769de6b3f63e472",
+      "bones": ["spine", "chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 6.5,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.hazard-wide",
+          "tris": 3968
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.hazard-narrow",
+          "tris": 3860
+        }
+      }
+    },
+    {
+      "id": "armor.shoulders.cloth",
+      "slot": "shoulders",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "cloth",
+      "name": "Shoulder pads",
+      "glb": "parts/armor.shoulders.cloth.glb",
+      "sha256": "1fb966a12f941ae22dd2ce12778bf79aa8ea5b82629f17ba4d430d2b9a66d866",
+      "bones": ["upper_arm.R", "upper_arm.L"],
+      "socket": "socket.shoulder",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_secondary"],
+      "massKg": 0.2,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.shoulders.cloth-all",
+          "tris": 216
+        }
+      }
+    },
+    {
+      "id": "armor.shoulders.light",
+      "slot": "shoulders",
+      "tier": 1,
+      "tierName": "light",
+      "style": "plain",
+      "name": "Light pauldrons",
+      "glb": "parts/armor.shoulders.light.glb",
+      "sha256": "337f2d9d6e20bafc7c81ba01971a30dd01eece55e9e1f55599e5ed6c397efc7b",
+      "bones": ["upper_arm.R", "upper_arm.L"],
+      "socket": "socket.shoulder",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary"],
+      "massKg": 1.0,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.shoulders.light-all",
+          "tris": 552
+        }
+      }
+    },
+    {
+      "id": "armor.shoulders.standard",
+      "slot": "shoulders",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "plain",
+      "name": "Standard pauldrons",
+      "glb": "parts/armor.shoulders.standard.glb",
+      "sha256": "c0de15b0f9b06142f6367165133628e0e6b239b608f7449a7b07f93724f7f869",
+      "bones": ["upper_arm.R", "upper_arm.L"],
+      "socket": "socket.shoulder",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary"],
+      "massKg": 2.2,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.shoulders.standard-all",
+          "tris": 872
+        }
+      }
+    },
+    {
+      "id": "armor.shoulders.heavy",
+      "slot": "shoulders",
+      "tier": 3,
+      "tierName": "heavy",
+      "style": "plain",
+      "name": "Heavy pauldrons",
+      "glb": "parts/armor.shoulders.heavy.glb",
+      "sha256": "8ee94c068f9bd857a61178055c5efd4be78e96378483c861c3b81b57ed8a4952",
+      "bones": ["upper_arm.R", "upper_arm.L"],
+      "socket": "socket.shoulder",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary"],
+      "massKg": 4.0,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.shoulders.heavy-all",
+          "tris": 1496
+        }
+      }
+    },
+    {
+      "id": "armor.shoulders.epaulette",
+      "slot": "shoulders",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "epaulette",
+      "name": "Officer epaulettes",
+      "glb": "parts/armor.shoulders.epaulette.glb",
+      "sha256": "fca850d24f7e6d1ebe74d63a4c9712c58ec6987bc9ec9e24f4631794d4a9395c",
+      "bones": ["upper_arm.R", "upper_arm.L"],
+      "socket": "socket.shoulder",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_secondary", "accent"],
+      "massKg": 0.2,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.shoulders.epaulette-all",
+          "tris": 656
+        }
+      }
+    },
+    {
+      "id": "armor.shoulders.flight",
+      "slot": "shoulders",
+      "tier": 1,
+      "tierName": "light",
+      "style": "flight",
+      "name": "Flight pauldrons",
+      "glb": "parts/armor.shoulders.flight.glb",
+      "sha256": "6f10f7386cff30984d4028ed8c38020fcf90e79b57d5c2c2e94e82f5a54ff41b",
+      "bones": ["upper_arm.R", "upper_arm.L"],
+      "socket": "socket.shoulder",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "accent"],
+      "massKg": 1.0,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.shoulders.flight-all",
+          "tris": 432
+        }
+      }
+    },
+    {
+      "id": "armor.gloves.fabric",
+      "slot": "gloves",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "plain",
+      "name": "Fabric gloves",
+      "glb": "parts/armor.gloves.fabric.glb",
+      "sha256": "af9c8da040b48b7bce347cd8a3876c88f849d63ee8b316953ccee371b9f1b16a",
+      "bones": ["hand.R", "hand.L"],
+      "socket": "socket.glove",
+      "hidesBodyRegions": ["gear", "hands"],
+      "slots": ["suit_primary", "suit_secondary"],
+      "massKg": 0.1,
+      "grid": [2, 1],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.gloves.fabric-all",
+          "tris": 1952
+        }
+      }
+    },
+    {
+      "id": "armor.gloves.light",
+      "slot": "gloves",
+      "tier": 1,
+      "tierName": "light",
+      "style": "plain",
+      "name": "Light gloves",
+      "glb": "parts/armor.gloves.light.glb",
+      "sha256": "6695aa54c26276331ffade494f44d03bb048b2e8d78815c0d917c8c8b8be5649",
+      "bones": ["forearm.R", "forearm.L", "hand.R", "hand.L"],
+      "socket": "socket.glove",
+      "hidesBodyRegions": ["gear", "hands"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal"],
+      "massKg": 0.3,
+      "grid": [2, 1],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.gloves.light-all",
+          "tris": 3048
+        }
+      }
+    },
+    {
+      "id": "armor.gloves.standard",
+      "slot": "gloves",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "plain",
+      "name": "Armoured gauntlets",
+      "glb": "parts/armor.gloves.standard.glb",
+      "sha256": "125e9715f279c91fe62643f70b31dab108e59c89c0d91c476c3e68c41c819d4a",
+      "bones": ["forearm.R", "forearm.L", "hand.R", "hand.L"],
+      "socket": "socket.glove",
+      "hidesBodyRegions": ["gear", "hands"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 0.8,
+      "grid": [2, 1],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.gloves.standard-all",
+          "tris": 3920
+        }
+      }
+    },
+    {
+      "id": "armor.gloves.heavy",
+      "slot": "gloves",
+      "tier": 3,
+      "tierName": "heavy",
+      "style": "plain",
+      "name": "Heavy gauntlets",
+      "glb": "parts/armor.gloves.heavy.glb",
+      "sha256": "96a867b6850101af7eb6825f254c510ffb09445a136b057d17ee01a339a3e99c",
+      "bones": ["forearm.R", "forearm.L", "hand.R", "hand.L"],
+      "socket": "socket.glove",
+      "hidesBodyRegions": ["gear", "hands"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 1.4,
+      "grid": [2, 1],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.gloves.heavy-all",
+          "tris": 4408
+        }
+      }
+    },
+    {
+      "id": "armor.gloves.work",
+      "slot": "gloves",
+      "tier": 1,
+      "tierName": "light",
+      "style": "work",
+      "name": "Work gloves",
+      "glb": "parts/armor.gloves.work.glb",
+      "sha256": "8afd26a2f991a7fad2e8c5db4553d1433d6fe79a66fc9b430e474caf1e9f9e84",
+      "bones": ["forearm.R", "forearm.L", "hand.R", "hand.L"],
+      "socket": "socket.glove",
+      "hidesBodyRegions": ["gear", "hands"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal", "dark"],
+      "massKg": 0.3,
+      "grid": [2, 1],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.gloves.work-all",
+          "tris": 3264
+        }
+      }
+    },
+    {
+      "id": "armor.boots.sneaker",
+      "slot": "boots",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "sneaker",
+      "name": "Deck shoes",
+      "glb": "parts/armor.boots.sneaker.glb",
+      "sha256": "aaed039774aa742ed214cf1c308310e5474dfadd4bd2578971ae4184e24609a7",
+      "bones": ["shin.R", "shin.L", "foot.R", "foot.L", "toe.R", "toe.L"],
+      "socket": "socket.foot",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "dark"],
+      "massKg": 0.8,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.boots.sneaker-all",
+          "tris": 2592
+        }
+      }
+    },
+    {
+      "id": "armor.boots.light",
+      "slot": "boots",
+      "tier": 1,
+      "tierName": "light",
+      "style": "plain",
+      "name": "Work boots",
+      "glb": "parts/armor.boots.light.glb",
+      "sha256": "4ab5acb71c6aaf2af5d7dcc0771b7b509e77382bd974fbc21b751ce87fba7064",
+      "bones": ["shin.R", "shin.L", "foot.R", "foot.L", "toe.R", "toe.L"],
+      "socket": "socket.foot",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "dark"],
+      "massKg": 1.2,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.boots.light-all",
+          "tris": 2400
+        }
+      }
+    },
+    {
+      "id": "armor.boots.standard",
+      "slot": "boots",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "plain",
+      "name": "Armoured boots",
+      "glb": "parts/armor.boots.standard.glb",
+      "sha256": "a4394ccba453d18799876a6a882a834fdc9c0eb805078a22498a1e84c3510bf9",
+      "bones": ["shin.R", "shin.L", "foot.R", "foot.L", "toe.R", "toe.L"],
+      "socket": "socket.foot",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 2.0,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.boots.standard-all",
+          "tris": 2608
+        }
+      }
+    },
+    {
+      "id": "armor.boots.heavy",
+      "slot": "boots",
+      "tier": 3,
+      "tierName": "heavy",
+      "style": "plain",
+      "name": "Heavy mag boots",
+      "glb": "parts/armor.boots.heavy.glb",
+      "sha256": "ff26fb6516e798432514c1305e9105ebacde3ba633418a08cace614de15cda30",
+      "bones": ["shin.R", "shin.L", "foot.R", "foot.L", "toe.R", "toe.L"],
+      "socket": "socket.foot",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 3.4,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.boots.heavy-all",
+          "tris": 3256
+        }
+      }
+    },
+    {
+      "id": "armor.boots.dress",
+      "slot": "boots",
+      "tier": 1,
+      "tierName": "light",
+      "style": "dress",
+      "name": "Dress boots",
+      "glb": "parts/armor.boots.dress.glb",
+      "sha256": "9e9c90bb30212804157c60ca392e1cdb0c4b3790e2a26aa9f82952cc00d27ee7",
+      "bones": ["shin.R", "shin.L", "foot.R", "foot.L", "toe.R", "toe.L"],
+      "socket": "socket.foot",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 1.2,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.boots.dress-all",
+          "tris": 2176
+        }
+      }
+    },
+    {
+      "id": "armor.boots.flight",
+      "slot": "boots",
+      "tier": 1,
+      "tierName": "light",
+      "style": "flight",
+      "name": "Flight boots",
+      "glb": "parts/armor.boots.flight.glb",
+      "sha256": "f085ece9f28bd5cf33626997170bf12c9f26268c6d3697fb57ad2f830e69114c",
+      "bones": ["shin.R", "shin.L", "foot.R", "foot.L", "toe.R", "toe.L"],
+      "socket": "socket.foot",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "dark"],
+      "massKg": 1.2,
+      "grid": [2, 2],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.boots.flight-all",
+          "tris": 2400
+        }
+      }
+    },
+    {
+      "id": "armor.legs.cargo",
+      "slot": "legs",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "cargo",
+      "name": "Cargo trousers",
+      "glb": "parts/armor.legs.cargo.glb",
+      "sha256": "8e3e95c1bca653f6e32ecd723d86ec9e0091ad88d9ff6b7c6fa78f0dfbd47747",
+      "bones": ["thigh.R", "thigh.L"],
+      "socket": null,
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_secondary", "accent"],
+      "massKg": 0.3,
+      "grid": [2, 3],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.legs.cargo-all",
+          "tris": 648
+        }
+      }
+    },
+    {
+      "id": "armor.legs.light",
+      "slot": "legs",
+      "tier": 1,
+      "tierName": "light",
+      "style": "plain",
+      "name": "Knee pads and straps",
+      "glb": "parts/armor.legs.light.glb",
+      "sha256": "edaed52bbd297983ee44b0fc1a0407a4b640f9f8e57d32dad717f55f26675fdc",
+      "bones": ["thigh.R", "thigh.L", "shin.R", "shin.L"],
+      "socket": null,
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "dark"],
+      "massKg": 1.0,
+      "grid": [2, 3],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.legs.light-all",
+          "tris": 1080
+        }
+      }
+    },
+    {
+      "id": "armor.legs.standard",
+      "slot": "legs",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "plain",
+      "name": "Thigh and knee plates",
+      "glb": "parts/armor.legs.standard.glb",
+      "sha256": "bd7c6c2d65b01ceb8e55c9a948aa568e9b60d0d03d6d9ffe41e7bff9ecbe180d",
+      "bones": ["thigh.R", "thigh.L", "shin.R", "shin.L"],
+      "socket": null,
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal"],
+      "massKg": 3.0,
+      "grid": [2, 3],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.legs.standard-all",
+          "tris": 1728
+        }
+      }
+    },
+    {
+      "id": "armor.legs.heavy",
+      "slot": "legs",
+      "tier": 3,
+      "tierName": "heavy",
+      "style": "plain",
+      "name": "Heavy greaves and tassets",
+      "glb": "parts/armor.legs.heavy.glb",
+      "sha256": "25b5bee138703952786bd6fb29d7a75b5d47bc4f2cc3a286046b159864d28e99",
+      "bones": ["pelvis", "thigh.R", "thigh.L", "shin.R", "shin.L"],
+      "socket": null,
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal"],
+      "massKg": 5.5,
+      "grid": [2, 3],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.legs.heavy-all",
+          "tris": 2376
+        }
+      }
+    },
+    {
+      "id": "armor.belt.plain",
+      "slot": "belt",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "plain",
+      "name": "Belt",
+      "glb": "parts/armor.belt.plain.glb",
+      "sha256": "6eb54cfc54d5f7d163cd0c3ef037f67c8d4abc6a6074a29cabeff030d31eb4e7",
+      "bones": ["pelvis"],
+      "socket": "socket.belt",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_secondary", "metal", "dark"],
+      "massKg": 0.2,
+      "grid": [2, 1],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.belt.plain-wide",
+          "tris": 876
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.belt.plain-narrow",
+          "tris": 988
+        }
+      }
+    },
+    {
+      "id": "armor.belt.utility",
+      "slot": "belt",
+      "tier": 1,
+      "tierName": "light",
+      "style": "utility",
+      "name": "Utility belt",
+      "glb": "parts/armor.belt.utility.glb",
+      "sha256": "acc0938e69dda1f932878fa5adf38c4fb8e5396e46b2a11f54c50fae2d1185ea",
+      "bones": ["pelvis"],
+      "socket": "socket.belt",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 0.5,
+      "grid": [2, 1],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.belt.utility-wide",
+          "tris": 1464
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.belt.utility-narrow",
+          "tris": 1576
+        }
+      }
+    },
+    {
+      "id": "armor.belt.standard",
+      "slot": "belt",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "utility",
+      "name": "Load-bearing belt",
+      "glb": "parts/armor.belt.standard.glb",
+      "sha256": "86908e234c805795f11cc9af51d84386fc00443bec152c171b24029807af5d42",
+      "bones": ["pelvis"],
+      "socket": "socket.belt",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 0.9,
+      "grid": [2, 1],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.belt.standard-wide",
+          "tris": 2312
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.belt.standard-narrow",
+          "tris": 2424
+        }
+      }
+    },
+    {
+      "id": "armor.belt.heavy",
+      "slot": "belt",
+      "tier": 3,
+      "tierName": "heavy",
+      "style": "utility",
+      "name": "Heavy armoured belt",
+      "glb": "parts/armor.belt.heavy.glb",
+      "sha256": "dfa438cf80efc990c48935eba2205bf7745d69ed399574cb1f399e64f6a506fd",
+      "bones": ["pelvis"],
+      "socket": "socket.belt",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 1.6,
+      "grid": [2, 1],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.belt.heavy-wide",
+          "tris": 2396
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.belt.heavy-narrow",
+          "tris": 2508
+        }
+      }
+    },
+    {
+      "id": "armor.belt.tool",
+      "slot": "belt",
+      "tier": 1,
+      "tierName": "light",
+      "style": "tool",
+      "name": "Tool belt",
+      "glb": "parts/armor.belt.tool.glb",
+      "sha256": "2af5eb564dfa070b02b63bceec6132c7a9d82ac0c9a09b9e73d37fa40e77b0fa",
+      "bones": ["pelvis"],
+      "socket": "socket.belt",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal", "dark"],
+      "massKg": 0.5,
+      "grid": [2, 1],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.belt.tool-wide",
+          "tris": 2166
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.belt.tool-narrow",
+          "tris": 2278
+        }
+      }
+    },
+    {
+      "id": "armor.belt.medic",
+      "slot": "belt",
+      "tier": 1,
+      "tierName": "light",
+      "style": "medic",
+      "name": "Medic belt",
+      "glb": "parts/armor.belt.medic.glb",
+      "sha256": "bf02b83cd99aed75d9e29d8ab2cbfb4afb7c742364910f8b9174920b46f02845",
+      "bones": ["pelvis"],
+      "socket": "socket.belt",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal", "dark"],
+      "massKg": 0.5,
+      "grid": [2, 1],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.belt.medic-wide",
+          "tris": 1788
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.belt.medic-narrow",
+          "tris": 1900
+        }
+      }
+    },
+    {
+      "id": "armor.belt.sash",
+      "slot": "belt",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "sash",
+      "name": "Officer's belt",
+      "glb": "parts/armor.belt.sash.glb",
+      "sha256": "e89227ea9bbef64debadd062cd56285975733f7250a07dc524281e9bff094081",
+      "bones": ["pelvis"],
+      "socket": "socket.belt",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["accent", "metal"],
+      "massKg": 0.2,
+      "grid": [2, 1],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.belt.sash-wide",
+          "tris": 984
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.belt.sash-narrow",
+          "tris": 1096
+        }
+      }
+    },
+    {
+      "id": "armor.belt.holster",
+      "slot": "belt",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "holster",
+      "name": "Holster belt",
+      "glb": "parts/armor.belt.holster.glb",
+      "sha256": "85d55d4b1b0fa90611e79dceb741147df6092fa47690f670c5afc5cedeac37de",
+      "bones": ["pelvis"],
+      "socket": "socket.belt",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "metal", "dark"],
+      "massKg": 0.9,
+      "grid": [2, 1],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.belt.holster-wide",
+          "tris": 2312
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.belt.holster-narrow",
+          "tris": 2424
+        }
+      }
+    },
+    {
+      "id": "armor.back.backpack-t0",
+      "slot": "back",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "backpack",
+      "name": "Day pack",
+      "glb": "parts/armor.back.backpack-t0.glb",
+      "sha256": "9e97b3dba6e81c8766a4f2e6a80f01ce3411c7609aaaee4f4afb9e084395cdf2",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal", "dark"],
+      "massKg": 0.8,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.backpack-t0-all",
+          "tris": 1336
+        }
+      }
+    },
+    {
+      "id": "armor.back.backpack-t1",
+      "slot": "back",
+      "tier": 1,
+      "tierName": "light",
+      "style": "backpack",
+      "name": "Field pack",
+      "glb": "parts/armor.back.backpack-t1.glb",
+      "sha256": "3bfe66689e39f15dd102c3af4d89257969b02b1810a7d0d85782a725ba3d20d2",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 1.2,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.backpack-t1-all",
+          "tris": 1768
+        }
+      }
+    },
+    {
+      "id": "armor.back.backpack-t2",
+      "slot": "back",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "backpack",
+      "name": "Expedition pack",
+      "glb": "parts/armor.back.backpack-t2.glb",
+      "sha256": "c3edf8d6cceab799b40eca6f78e320990f00f1c827b584b1762290e2e5c7ffa1",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 2.4,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.backpack-t2-all",
+          "tris": 1984
+        }
+      }
+    },
+    {
+      "id": "armor.back.backpack-t3",
+      "slot": "back",
+      "tier": 3,
+      "tierName": "heavy",
+      "style": "backpack",
+      "name": "Heavy combat rig",
+      "glb": "parts/armor.back.backpack-t3.glb",
+      "sha256": "4580790c62b5d924fc0d94574b86d4786f8f216da1330e46d4c74b3ebd7a6959",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 4.0,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.backpack-t3-all",
+          "tris": 2416
+        }
+      }
+    },
+    {
+      "id": "armor.back.oxygen-single",
+      "slot": "back",
+      "tier": 1,
+      "tierName": "light",
+      "style": "oxygen",
+      "name": "Oxygen pack",
+      "glb": "parts/armor.back.oxygen-single.glb",
+      "sha256": "f2c62e3d0d602e5b06d4f5e8317cb3d08cb209ea303e0a635f67465a87c9e371",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_secondary", "accent", "metal", "dark"],
+      "massKg": 1.2,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.oxygen-single-all",
+          "tris": 1004
+        }
+      }
+    },
+    {
+      "id": "armor.back.oxygen-twin",
+      "slot": "back",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "oxygen",
+      "name": "Twin-tank oxygen pack",
+      "glb": "parts/armor.back.oxygen-twin.glb",
+      "sha256": "a197b0245a0e0de7e8d5e31b8e44157866007b8bb4d61609e30724784d2a1289",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_secondary", "metal", "dark"],
+      "massKg": 2.4,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.oxygen-twin-all",
+          "tris": 1768
+        }
+      }
+    },
+    {
+      "id": "armor.back.jetpack-light",
+      "slot": "back",
+      "tier": 2,
+      "tierName": "standard",
+      "style": "jetpack",
+      "name": "Light jetpack",
+      "glb": "parts/armor.back.jetpack-light.glb",
+      "sha256": "d1904e11b23f94787ab5b460b105edf72987008e0c0901bc89e0c3261c4ae179",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 2.4,
+      "grid": [3, 4],
+      "exhaust": [
+        {
+          "node": "EXHAUST-armor.back.jetpack-light-0",
+          "bone": "chest",
+          "restVox": [-4.5, -10.5, 17],
+          "radiusM": 0.046875,
+          "direction": [0, 0, -1]
+        },
+        {
+          "node": "EXHAUST-armor.back.jetpack-light-1",
+          "bone": "chest",
+          "restVox": [4.5, -10.5, 17],
+          "radiusM": 0.046875,
+          "direction": [0, 0, -1]
+        }
+      ],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.jetpack-light-all",
+          "tris": 2208
+        }
+      }
+    },
+    {
+      "id": "armor.back.jetpack-heavy",
+      "slot": "back",
+      "tier": 3,
+      "tierName": "heavy",
+      "style": "jetpack",
+      "name": "Heavy jetpack",
+      "glb": "parts/armor.back.jetpack-heavy.glb",
+      "sha256": "805d49eb335d1c65160b0372bb174c156f3c7ead35052e57eb5420d10751ac67",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "massKg": 4.0,
+      "grid": [3, 4],
+      "exhaust": [
+        {
+          "node": "EXHAUST-armor.back.jetpack-heavy-0",
+          "bone": "chest",
+          "restVox": [-5.5, -11.0, 17],
+          "radiusM": 0.046875,
+          "direction": [0, 0, -1]
+        },
+        {
+          "node": "EXHAUST-armor.back.jetpack-heavy-1",
+          "bone": "chest",
+          "restVox": [5.5, -11.0, 17],
+          "radiusM": 0.046875,
+          "direction": [0, 0, -1]
+        }
+      ],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.jetpack-heavy-all",
+          "tris": 2424
+        }
+      }
+    },
+    {
+      "id": "armor.back.medpack",
+      "slot": "back",
+      "tier": 1,
+      "tierName": "light",
+      "style": "medpack",
+      "name": "Medical pack",
+      "glb": "parts/armor.back.medpack.glb",
+      "sha256": "dc82545a85b3d7d59e5afe698bdd54621e34627963fbb3bd766ffe99000e9d43",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_secondary", "accent", "metal", "dark"],
+      "massKg": 1.2,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.medpack-all",
+          "tris": 1132
+        }
+      }
+    },
+    {
+      "id": "armor.back.radio",
+      "slot": "back",
+      "tier": 1,
+      "tierName": "light",
+      "style": "radio",
+      "name": "Recon radio pack",
+      "glb": "parts/armor.back.radio.glb",
+      "sha256": "c112371a5b99a8d0f36205c0d46e30bac7e2480ae2b5dca48617e161a87fe2ae",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "accent", "metal", "dark", "emit"],
+      "massKg": 1.2,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.radio-all",
+          "tris": 1112
+        }
+      }
+    },
+    {
+      "id": "armor.back.toolpack",
+      "slot": "back",
+      "tier": 1,
+      "tierName": "light",
+      "style": "toolpack",
+      "name": "Engineer tool pack",
+      "glb": "parts/armor.back.toolpack.glb",
+      "sha256": "409e441b8ed538f9a8aa0ac4bd8e11a0f552fbae30c176a145016e5627cd09b7",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal", "dark"],
+      "massKg": 1.2,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.toolpack-all",
+          "tris": 1400
+        }
+      }
+    },
+    {
+      "id": "armor.chest.uniform-command",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "uniform-command",
+      "name": "Command department insignia",
+      "glb": "parts/armor.chest.uniform-command.glb",
+      "sha256": "f49d2628e8e65b5509358ef3881b80468b4cb453bc974e6b410d2052f492ba3b",
+      "bones": ["chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["accent", "metal"],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.uniform-command-wide",
+          "tris": 324
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.uniform-command-narrow",
+          "tris": 324
+        }
+      }
+    },
+    {
+      "id": "armor.chest.uniform-medical",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "uniform-medical",
+      "name": "Medical department insignia",
+      "glb": "parts/armor.chest.uniform-medical.glb",
+      "sha256": "2a54e9182073624513e8930f7e0192053521bf2ceba31cc2c1c9b13ab1c8c515",
+      "bones": ["chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "accent"],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.uniform-medical-wide",
+          "tris": 440
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.uniform-medical-narrow",
+          "tris": 440
+        }
+      }
+    },
+    {
+      "id": "armor.chest.uniform-engineering",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "uniform-engineering",
+      "name": "Engineering department insignia",
+      "glb": "parts/armor.chest.uniform-engineering.glb",
+      "sha256": "95885b19c58292461e85cd9a7f93b18478fc73a48b21e76846e0dc579b785e9e",
+      "bones": ["chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "metal"],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.uniform-engineering-wide",
+          "tris": 544
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.uniform-engineering-narrow",
+          "tris": 544
+        }
+      }
+    },
+    {
+      "id": "armor.chest.uniform-security",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "uniform-security",
+      "name": "Security department insignia",
+      "glb": "parts/armor.chest.uniform-security.glb",
+      "sha256": "21c307fd9f85db5ccfb83c72efed2635f75294b44a0e4cbfa9665c7cd726275d",
+      "bones": ["chest"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "accent"],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.uniform-security-wide",
+          "tris": 324
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.uniform-security-narrow",
+          "tris": 324
+        }
+      }
+    },
+    {
+      "id": "armor.chest.research",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "research",
+      "name": "Research coat and datapad",
+      "glb": "parts/armor.chest.research.glb",
+      "sha256": "6c53fa3603a4708420765bbf33c493d58e9f4394a8d4de7488eb5901cd57af91",
+      "bones": ["pelvis", "spine", "chest", "hand.L", "thigh.R", "thigh.L"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "glass"
+      ],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.research-wide",
+          "tris": 3152
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.research-narrow",
+          "tris": 3152
+        }
+      }
+    },
+    {
+      "id": "armor.chest.engineer-rig",
+      "slot": "chest",
+      "tier": 1,
+      "tierName": "light",
+      "style": "engineer-rig",
+      "name": "Engineer rig and wrench",
+      "glb": "parts/armor.chest.engineer-rig.glb",
+      "sha256": "a9c5e2b4c71efc0116697d05045f446b43b28d95cb7d411546b492e2c669dc8d",
+      "bones": ["spine", "chest", "hand.L"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal", "dark"],
+      "massKg": 3.0,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.engineer-rig-wide",
+          "tris": 1848
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.engineer-rig-narrow",
+          "tris": 1848
+        }
+      }
+    },
+    {
+      "id": "armor.chest.mechanic-rig",
+      "slot": "chest",
+      "tier": 0,
+      "tierName": "civilian",
+      "style": "mechanic-rig",
+      "name": "Mechanic rig and wrench",
+      "glb": "parts/armor.chest.mechanic-rig.glb",
+      "sha256": "6c4bf7759a98edde01d083119633eba458a013b09e5b1f7a2b888e74ea791304",
+      "bones": ["spine", "chest", "hand.L"],
+      "socket": "socket.chest",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal", "dark"],
+      "massKg": 1.2,
+      "grid": [3, 3],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.chest.mechanic-rig-wide",
+          "tris": 2428
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.chest.mechanic-rig-narrow",
+          "tris": 2428
+        }
+      }
+    },
+    {
+      "id": "armor.belt.medical-satchel",
+      "slot": "belt",
+      "tier": 1,
+      "tierName": "light",
+      "style": "satchel",
+      "name": "Medical satchel",
+      "glb": "parts/armor.belt.medical-satchel.glb",
+      "sha256": "c278b2cb369cf1f5b9804397f77d5a313681a8f90488f5f99df2559b840a1c1a",
+      "bones": ["pelvis"],
+      "socket": "socket.belt",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary", "accent", "metal", "dark"],
+      "massKg": 0.5,
+      "grid": [2, 1],
+      "fits": {
+        "wide": {
+          "mesh": "GEO-armor-armor.belt.medical-satchel-wide",
+          "tris": 1532
+        },
+        "narrow": {
+          "mesh": "GEO-armor-armor.belt.medical-satchel-narrow",
+          "tris": 1644
+        }
+      }
+    },
+    {
+      "id": "armor.back.recon-cloak",
+      "slot": "back",
+      "tier": 1,
+      "tierName": "light",
+      "style": "cloak",
+      "name": "Recon split cape",
+      "glb": "parts/armor.back.recon-cloak.glb",
+      "sha256": "501ce5d5c5b73a32b70dfde0a31287ea1e803bf66b3a820e7e6ddd9eb0933ead",
+      "bones": ["chest"],
+      "socket": "socket.back",
+      "hidesBodyRegions": ["gear"],
+      "slots": ["suit_primary", "suit_secondary"],
+      "massKg": 1.2,
+      "grid": [3, 4],
+      "fits": {
+        "all": {
+          "mesh": "GEO-armor-armor.back.recon-cloak-all",
+          "tris": 324
+        }
+      }
+    }
   ]
- },
- "materialSlots": [
-  "skin",
-  "hair",
-  "eye",
-  "suit_primary",
-  "suit_secondary",
-  "accent",
-  "metal",
-  "dark",
-  "emit",
-  "glass"
- ],
- "equipmentSlots": [
-  "chest",
-  "shoulders",
-  "gloves",
-  "belt",
-  "legs",
-  "boots",
-  "back"
- ],
- "tiers": {
-  "0": "civilian",
-  "1": "light",
-  "2": "standard",
-  "3": "heavy"
- },
- "colourways": {
-  "arctic": {
-   "suit_primary": "#e4e0f2",
-   "suit_secondary": "#343a6a",
-   "accent": "#4f7cff",
-   "metal": "#a3abc0",
-   "dark": "#2a2b40",
-   "emit": "#56c8ff",
-   "glass": "#7fd8ff",
-   "label": "Arctic"
-  },
-  "crimson": {
-   "suit_primary": "#c8263d",
-   "suit_secondary": "#2e2735",
-   "accent": "#f08a2a",
-   "metal": "#a0a6b3",
-   "dark": "#1b1820",
-   "emit": "#ff5a4a",
-   "glass": "#7fd8ff",
-   "label": "Crimson"
-  },
-  "cobalt": {
-   "suit_primary": "#2f63e6",
-   "suit_secondary": "#1c2548",
-   "accent": "#e8ecf6",
-   "metal": "#a8b2c6",
-   "dark": "#161c33",
-   "emit": "#5fd2ff",
-   "glass": "#7fd8ff",
-   "label": "Cobalt"
-  },
-  "amber": {
-   "suit_primary": "#f7a414",
-   "suit_secondary": "#24222e",
-   "accent": "#4c83ff",
-   "metal": "#aeafb6",
-   "dark": "#1c1b24",
-   "emit": "#6fd6ff",
-   "glass": "#7fd8ff",
-   "label": "Amber"
-  },
-  "moss": {
-   "suit_primary": "#86b43c",
-   "suit_secondary": "#2e3528",
-   "accent": "#d4e05c",
-   "metal": "#929c90",
-   "dark": "#161a14",
-   "emit": "#8dff5a",
-   "glass": "#7fd8ff",
-   "label": "Moss"
-  },
-  "shadow": {
-   "suit_primary": "#4d4864",
-   "suit_secondary": "#2b283a",
-   "accent": "#f08a2a",
-   "metal": "#827f96",
-   "dark": "#131219",
-   "emit": "#ff9a3a",
-   "glass": "#7fd8ff",
-   "label": "Shadow"
-  },
-  "captain": {
-   "suit_primary": "#1f2d55",
-   "suit_secondary": "#e3e8f1",
-   "accent": "#f3bb3c",
-   "metal": "#d0a84c",
-   "dark": "#12182a",
-   "emit": "#63c9ff",
-   "glass": "#7fd8ff",
-   "label": "Command navy"
-  },
-  "engineer": {
-   "suit_primary": "#f08c1e",
-   "suit_secondary": "#2f2e3e",
-   "accent": "#3f78ff",
-   "metal": "#aeb2bd",
-   "dark": "#1c1b25",
-   "emit": "#46d6ff",
-   "glass": "#7fd8ff",
-   "label": "Engineering orange"
-  },
-  "medic": {
-   "suit_primary": "#f2f3f8",
-   "suit_secondary": "#d8243a",
-   "accent": "#e0253e",
-   "metal": "#b7bfd2",
-   "dark": "#23222e",
-   "emit": "#35d6ff",
-   "glass": "#7fd8ff",
-   "label": "Medical white"
-  },
-  "pilot": {
-   "suit_primary": "#e6eaf2",
-   "suit_secondary": "#2b4cb0",
-   "accent": "#f08a24",
-   "metal": "#a2abbe",
-   "dark": "#1a1f33",
-   "emit": "#58d0ff",
-   "glass": "#7fd8ff",
-   "label": "Flight white"
-  },
-  "security": {
-   "suit_primary": "#2e4394",
-   "suit_secondary": "#1a2138",
-   "accent": "#f2c14a",
-   "metal": "#a0aabf",
-   "dark": "#121626",
-   "emit": "#4fb6ff",
-   "glass": "#7fd8ff",
-   "label": "Security blue"
-  },
-  "marine": {
-   "suit_primary": "#bd253c",
-   "suit_secondary": "#2c2732",
-   "accent": "#e8e4ea",
-   "metal": "#949aa8",
-   "dark": "#16131a",
-   "emit": "#ff4d5e",
-   "glass": "#7fd8ff",
-   "label": "Marine red"
-  },
-  "salvage": {
-   "suit_primary": "#ec9c22",
-   "suit_secondary": "#302e35",
-   "accent": "#f5d24a",
-   "metal": "#a3a7af",
-   "dark": "#1a1a1e",
-   "emit": "#ffc24a",
-   "glass": "#7fd8ff",
-   "label": "Salvage hazard"
-  },
-  "recon": {
-   "suit_primary": "#5a6e3e",
-   "suit_secondary": "#2b3125",
-   "accent": "#93a462",
-   "metal": "#838c7d",
-   "dark": "#141812",
-   "emit": "#6cff5a",
-   "glass": "#7fd8ff",
-   "label": "Recon green"
-  },
-  "scientist": {
-   "suit_primary": "#f0f2f7",
-   "suit_secondary": "#5e4c9e",
-   "accent": "#9a6cff",
-   "metal": "#adb2c0",
-   "dark": "#2c2842",
-   "emit": "#b58cff",
-   "glass": "#7fd8ff",
-   "label": "Laboratory white"
-  },
-  "mechanic": {
-   "suit_primary": "#2b3663",
-   "suit_secondary": "#1c2035",
-   "accent": "#f08a24",
-   "metal": "#a7acb8",
-   "dark": "#12141f",
-   "emit": "#ffa04a",
-   "glass": "#7fd8ff",
-   "label": "Mechanic navy"
-  },
-  "civilian": {
-   "suit_primary": "#8e7159",
-   "suit_secondary": "#3f4c5f",
-   "accent": "#d8b36a",
-   "metal": "#9fa5ad",
-   "dark": "#1e2027",
-   "emit": "#7fd0ff",
-   "glass": "#7fd8ff",
-   "label": "Civilian"
-  }
- },
- "sheetColourways": [
-  "arctic",
-  "crimson",
-  "cobalt",
-  "amber",
-  "moss",
-  "shadow"
- ],
- "presets": [
-  {
-   "id": "role.captain",
-   "heads": {
-    "male": [
-     "acc.officer_cap",
-     "hair.swept_quiff.cap"
-    ],
-    "female": [
-     "acc.officer_cap",
-     "hair.long_gathered.cap"
-    ],
-    "skin": "#e7a98a",
-    "hair": "#7a4526",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#1d2748",
-    "suit_secondary": "#10152a"
-   },
-   "name": "Captain",
-   "colourway": "captain",
-   "headPreset": "head.captain-cap",
-   "parts": {
-    "chest": "armor.chest.coat",
-    "shoulders": "armor.shoulders.epaulette",
-    "gloves": "armor.gloves.fabric",
-    "belt": "armor.belt.sash",
-    "boots": "armor.boots.dress"
-   }
-  },
-  {
-   "id": "role.engineer",
-   "heads": {
-    "male": [
-     "acc.goggles_up",
-     "hair.curly_top.full"
-    ],
-    "female": [
-     "acc.goggles_up",
-     "hair.messy_bun.full"
-    ],
-    "skin": "#c98a62",
-    "hair": "#4a2f6e",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#2d2b3f",
-    "suit_secondary": "#1a1926"
-   },
-   "name": "Engineer",
-   "colourway": "engineer",
-   "headPreset": "head.engineer-helmet",
-   "parts": {
-    "chest": "armor.chest.harness",
-    "shoulders": "armor.shoulders.light",
-    "gloves": "armor.gloves.work",
-    "belt": "armor.belt.tool",
-    "legs": "armor.legs.light",
-    "boots": "armor.boots.light",
-    "back": "armor.back.toolpack"
-   }
-  },
-  {
-   "id": "role.medic",
-   "heads": {
-    "male": [
-     "acc.medic_cap",
-     "hair.close_crop.cap"
-    ],
-    "female": [
-     "acc.medic_cap",
-     "hair.blunt_bob.cap"
-    ],
-    "skin": "#f3c2a2",
-    "hair": "#2a2438",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#2c2a3a",
-    "suit_secondary": "#1b1a26"
-   },
-   "name": "Medic",
-   "colourway": "medic",
-   "headPreset": "head.medic-helmet",
-   "parts": {
-    "chest": "armor.chest.medic",
-    "shoulders": "armor.shoulders.standard",
-    "gloves": "armor.gloves.light",
-    "belt": "armor.belt.medic",
-    "legs": "armor.legs.light",
-    "boots": "armor.boots.standard",
-    "back": "armor.back.medpack"
-   }
-  },
-  {
-   "id": "role.pilot",
-   "heads": {
-    "male": [
-     "acc.headset",
-     "hair.short_waves.full"
-    ],
-    "female": [
-     "acc.headset",
-     "hair.high_bun.full"
-    ],
-    "skin": "#e0a47f",
-    "hair": "#6b3b1f",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#233a8a",
-    "suit_secondary": "#152255"
-   },
-   "name": "Pilot",
-   "colourway": "pilot",
-   "headPreset": "head.pilot-helmet",
-   "parts": {
-    "chest": "armor.chest.flight",
-    "shoulders": "armor.shoulders.flight",
-    "gloves": "armor.gloves.light",
-    "belt": "armor.belt.utility",
-    "legs": "armor.legs.light",
-    "boots": "armor.boots.flight",
-    "back": "armor.back.oxygen-single"
-   }
-  },
-  {
-   "id": "role.security",
-   "heads": {
-    "male": [
-     "acc.cap",
-     "hair.close_crop.cap"
-    ],
-    "female": [
-     "acc.cap",
-     "hair.straight_bob.cap"
-    ],
-    "skin": "#8a5a3c",
-    "hair": "#3a2a22",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#1f2c63",
-    "suit_secondary": "#121934"
-   },
-   "name": "Security officer",
-   "colourway": "security",
-   "headPreset": "head.security-cap",
-   "parts": {
-    "chest": "armor.chest.vest",
-    "shoulders": "armor.shoulders.standard",
-    "gloves": "armor.gloves.standard",
-    "belt": "armor.belt.holster",
-    "legs": "armor.legs.standard",
-    "boots": "armor.boots.standard",
-    "back": "armor.back.backpack-t1"
-   }
-  },
-  {
-   "id": "role.marine",
-   "heads": {
-    "male": [
-     "helmet.tactical",
-     "visor.tactical.tinted"
-    ],
-    "female": [
-     "helmet.tactical",
-     "visor.tactical.tinted"
-    ],
-    "skin": "#b87955",
-    "hair": "#241a14",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#2e2934",
-    "suit_secondary": "#1a171f"
-   },
-   "name": "Heavy marine",
-   "colourway": "marine",
-   "headPreset": "head.marine-helmet",
-   "parts": {
-    "chest": "armor.chest.heavy",
-    "shoulders": "armor.shoulders.heavy",
-    "gloves": "armor.gloves.heavy",
-    "belt": "armor.belt.heavy",
-    "legs": "armor.legs.heavy",
-    "boots": "armor.boots.heavy",
-    "back": "armor.back.backpack-t3"
-   }
-  },
-  {
-   "id": "role.salvage",
-   "heads": {
-    "male": [
-     "acc.goggles_down",
-     "hair.flat_top.full"
-    ],
-    "female": [
-     "acc.goggles_down",
-     "hair.side_undercut.full"
-    ],
-    "skin": "#d99b78",
-    "hair": "#7a4a1e",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#3a3440",
-    "suit_secondary": "#221f28"
-   },
-   "name": "Salvage tech",
-   "colourway": "salvage",
-   "headPreset": "head.salvage-helmet",
-   "parts": {
-    "chest": "armor.chest.hazard",
-    "shoulders": "armor.shoulders.standard",
-    "gloves": "armor.gloves.work",
-    "belt": "armor.belt.tool",
-    "legs": "armor.legs.standard",
-    "boots": "armor.boots.standard",
-    "back": "armor.back.backpack-t3"
-   }
-  },
-  {
-   "id": "role.recon",
-   "heads": {
-    "male": [
-     "acc.hood",
-     "acc.scarf"
-    ],
-    "female": [
-     "acc.hood",
-     "acc.scarf"
-    ],
-    "skin": "#a8704e",
-    "hair": "#2b3a1e",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#34402c",
-    "suit_secondary": "#1f261a"
-   },
-   "name": "Recon scout",
-   "colourway": "recon",
-   "headPreset": "head.recon-goggles",
-   "parts": {
-    "chest": "armor.chest.tactical",
-    "shoulders": "armor.shoulders.light",
-    "gloves": "armor.gloves.light",
-    "belt": "armor.belt.utility",
-    "legs": "armor.legs.light",
-    "boots": "armor.boots.light",
-    "back": "armor.back.radio"
-   }
-  },
-  {
-   "id": "role.scientist",
-   "heads": {
-    "male": [
-     "acc.round_glasses",
-     "hair.afro.full"
-    ],
-    "female": [
-     "acc.round_glasses",
-     "hair.silver_bob.full"
-    ],
-    "skin": "#6e4630",
-    "hair": "#c9c3d6",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#5b3fa8",
-    "suit_secondary": "#34245f"
-   },
-   "name": "Scientist",
-   "colourway": "scientist",
-   "headPreset": "head.scientist-hair",
-   "parts": {
-    "chest": "armor.chest.labcoat",
-    "gloves": "armor.gloves.fabric",
-    "belt": "armor.belt.plain",
-    "boots": "armor.boots.sneaker",
-    "back": "armor.back.backpack-t0"
-   }
-  },
-  {
-   "id": "role.mechanic",
-   "heads": {
-    "male": [
-     "acc.cap",
-     "hair.short_spikes.cap"
-    ],
-    "female": [
-     "acc.cap",
-     "hair.long_straight.cap"
-    ],
-    "skin": "#f1b894",
-    "hair": "#b8452a",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#27305a",
-    "suit_secondary": "#161b33"
-   },
-   "name": "Mechanic",
-   "colourway": "mechanic",
-   "headPreset": "head.mechanic-cap",
-   "parts": {
-    "chest": "armor.chest.overalls",
-    "shoulders": "armor.shoulders.cloth",
-    "gloves": "armor.gloves.work",
-    "belt": "armor.belt.tool",
-    "legs": "armor.legs.cargo",
-    "boots": "armor.boots.light",
-    "back": "armor.back.toolpack"
-   }
-  },
-  {
-   "id": "role.civilian",
-   "heads": {
-    "male": [
-     "hair.pompadour.full"
-    ],
-    "female": [
-     "hair.long_side_fringe.full"
-    ],
-    "skin": "#e8b08e",
-    "hair": "#5a3222",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#3e5a86",
-    "suit_secondary": "#26344f"
-   },
-   "name": "Civilian",
-   "colourway": "civilian",
-   "headPreset": "head.civilian-hair",
-   "parts": {
-    "chest": "armor.chest.jacket",
-    "belt": "armor.belt.plain",
-    "legs": "armor.legs.cargo",
-    "boots": "armor.boots.sneaker"
-   }
-  },
-  {
-   "id": "role.jet-trooper",
-   "heads": {
-    "male": [
-     "helmet.closed",
-     "visor.closed.hud"
-    ],
-    "female": [
-     "helmet.closed",
-     "visor.closed.hud"
-    ],
-    "skin": "#c4876a",
-    "hair": "#2a2020",
-    "source": "CHAR-HEADS v1 (PR #37)"
-   },
-   "undersuit": {
-    "suit_primary": "#232d4a",
-    "suit_secondary": "#141a2c"
-   },
-   "name": "Jet trooper",
-   "colourway": "cobalt",
-   "headPreset": "head.closed-helmet",
-   "parts": {
-    "chest": "armor.chest.plate",
-    "shoulders": "armor.shoulders.standard",
-    "gloves": "armor.gloves.standard",
-    "belt": "armor.belt.standard",
-    "legs": "armor.legs.standard",
-    "boots": "armor.boots.heavy",
-    "back": "armor.back.jetpack-heavy"
-   }
-  }
- ],
- "legacyVisuals": {
-  "captain-chest": {
-   "part": "armor.chest.coat",
-   "colourway": "captain"
-  },
-  "captain-shoulders": {
-   "part": "armor.shoulders.epaulette",
-   "colourway": "captain"
-  },
-  "captain-gloves": {
-   "part": "armor.gloves.fabric",
-   "colourway": "captain"
-  },
-  "captain-belt": {
-   "part": "armor.belt.sash",
-   "colourway": "captain"
-  },
-  "captain-boots": {
-   "part": "armor.boots.dress",
-   "colourway": "captain"
-  },
-  "engineer-chest": {
-   "part": "armor.chest.harness",
-   "colourway": "engineer"
-  },
-  "engineer-shoulders": {
-   "part": "armor.shoulders.light",
-   "colourway": "engineer"
-  },
-  "engineer-gloves": {
-   "part": "armor.gloves.work",
-   "colourway": "engineer"
-  },
-  "engineer-belt": {
-   "part": "armor.belt.tool",
-   "colourway": "engineer"
-  },
-  "engineer-legs": {
-   "part": "armor.legs.light",
-   "colourway": "engineer"
-  },
-  "engineer-boots": {
-   "part": "armor.boots.light",
-   "colourway": "engineer"
-  },
-  "engineer-back": {
-   "part": "armor.back.toolpack",
-   "colourway": "engineer"
-  },
-  "medic-chest": {
-   "part": "armor.chest.medic",
-   "colourway": "medic"
-  },
-  "medic-shoulders": {
-   "part": "armor.shoulders.standard",
-   "colourway": "medic"
-  },
-  "medic-gloves": {
-   "part": "armor.gloves.light",
-   "colourway": "medic"
-  },
-  "medic-belt": {
-   "part": "armor.belt.medic",
-   "colourway": "medic"
-  },
-  "medic-legs": {
-   "part": "armor.legs.light",
-   "colourway": "medic"
-  },
-  "medic-boots": {
-   "part": "armor.boots.standard",
-   "colourway": "medic"
-  },
-  "medic-back": {
-   "part": "armor.back.medpack",
-   "colourway": "medic"
-  },
-  "pilot-chest": {
-   "part": "armor.chest.flight",
-   "colourway": "pilot"
-  },
-  "pilot-shoulders": {
-   "part": "armor.shoulders.flight",
-   "colourway": "pilot"
-  },
-  "pilot-gloves": {
-   "part": "armor.gloves.light",
-   "colourway": "pilot"
-  },
-  "pilot-belt": {
-   "part": "armor.belt.utility",
-   "colourway": "pilot"
-  },
-  "pilot-legs": {
-   "part": "armor.legs.light",
-   "colourway": "pilot"
-  },
-  "pilot-boots": {
-   "part": "armor.boots.flight",
-   "colourway": "pilot"
-  },
-  "pilot-back": {
-   "part": "armor.back.oxygen-single",
-   "colourway": "pilot"
-  },
-  "security-chest": {
-   "part": "armor.chest.vest",
-   "colourway": "security"
-  },
-  "security-shoulders": {
-   "part": "armor.shoulders.standard",
-   "colourway": "security"
-  },
-  "security-gloves": {
-   "part": "armor.gloves.standard",
-   "colourway": "security"
-  },
-  "security-belt": {
-   "part": "armor.belt.holster",
-   "colourway": "security"
-  },
-  "security-legs": {
-   "part": "armor.legs.standard",
-   "colourway": "security"
-  },
-  "security-boots": {
-   "part": "armor.boots.standard",
-   "colourway": "security"
-  },
-  "security-back": {
-   "part": "armor.back.backpack-t1",
-   "colourway": "security"
-  },
-  "marine-chest": {
-   "part": "armor.chest.heavy",
-   "colourway": "marine"
-  },
-  "marine-shoulders": {
-   "part": "armor.shoulders.heavy",
-   "colourway": "marine"
-  },
-  "marine-gloves": {
-   "part": "armor.gloves.heavy",
-   "colourway": "marine"
-  },
-  "marine-belt": {
-   "part": "armor.belt.heavy",
-   "colourway": "marine"
-  },
-  "marine-legs": {
-   "part": "armor.legs.heavy",
-   "colourway": "marine"
-  },
-  "marine-boots": {
-   "part": "armor.boots.heavy",
-   "colourway": "marine"
-  },
-  "marine-back": {
-   "part": "armor.back.backpack-t3",
-   "colourway": "marine"
-  },
-  "salvage-chest": {
-   "part": "armor.chest.hazard",
-   "colourway": "salvage"
-  },
-  "salvage-shoulders": {
-   "part": "armor.shoulders.standard",
-   "colourway": "salvage"
-  },
-  "salvage-gloves": {
-   "part": "armor.gloves.work",
-   "colourway": "salvage"
-  },
-  "salvage-belt": {
-   "part": "armor.belt.tool",
-   "colourway": "salvage"
-  },
-  "salvage-legs": {
-   "part": "armor.legs.standard",
-   "colourway": "salvage"
-  },
-  "salvage-boots": {
-   "part": "armor.boots.standard",
-   "colourway": "salvage"
-  },
-  "salvage-back": {
-   "part": "armor.back.backpack-t3",
-   "colourway": "salvage"
-  },
-  "recon-chest": {
-   "part": "armor.chest.tactical",
-   "colourway": "recon"
-  },
-  "recon-shoulders": {
-   "part": "armor.shoulders.light",
-   "colourway": "recon"
-  },
-  "recon-gloves": {
-   "part": "armor.gloves.light",
-   "colourway": "recon"
-  },
-  "recon-belt": {
-   "part": "armor.belt.utility",
-   "colourway": "recon"
-  },
-  "recon-legs": {
-   "part": "armor.legs.light",
-   "colourway": "recon"
-  },
-  "recon-boots": {
-   "part": "armor.boots.light",
-   "colourway": "recon"
-  },
-  "recon-back": {
-   "part": "armor.back.radio",
-   "colourway": "recon"
-  },
-  "scientist-chest": {
-   "part": "armor.chest.labcoat",
-   "colourway": "scientist"
-  },
-  "scientist-gloves": {
-   "part": "armor.gloves.fabric",
-   "colourway": "scientist"
-  },
-  "scientist-belt": {
-   "part": "armor.belt.plain",
-   "colourway": "scientist"
-  },
-  "scientist-boots": {
-   "part": "armor.boots.sneaker",
-   "colourway": "scientist"
-  },
-  "scientist-back": {
-   "part": "armor.back.backpack-t0",
-   "colourway": "scientist"
-  },
-  "mechanic-chest": {
-   "part": "armor.chest.overalls",
-   "colourway": "mechanic"
-  },
-  "mechanic-shoulders": {
-   "part": "armor.shoulders.cloth",
-   "colourway": "mechanic"
-  },
-  "mechanic-gloves": {
-   "part": "armor.gloves.work",
-   "colourway": "mechanic"
-  },
-  "mechanic-belt": {
-   "part": "armor.belt.tool",
-   "colourway": "mechanic"
-  },
-  "mechanic-legs": {
-   "part": "armor.legs.cargo",
-   "colourway": "mechanic"
-  },
-  "mechanic-boots": {
-   "part": "armor.boots.light",
-   "colourway": "mechanic"
-  },
-  "mechanic-back": {
-   "part": "armor.back.toolpack",
-   "colourway": "mechanic"
-  }
- },
- "parts": [
-  {
-   "id": "armor.chest.jacket",
-   "slot": "chest",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "jacket",
-   "name": "Crew jacket",
-   "glb": "parts/armor.chest.jacket.glb",
-   "sha256": "61c34dc7f0047b449256ee82e611b459661d55a02998c3440ef9924b582b44e4",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "dark",
-    "emit"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.jacket-wide",
-     "tris": 2660
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.jacket-narrow",
-     "tris": 2660
-    }
-   }
-  },
-  {
-   "id": "armor.chest.harness",
-   "slot": "chest",
-   "tier": 1,
-   "tierName": "light",
-   "style": "harness",
-   "name": "Light harness vest",
-   "glb": "parts/armor.chest.harness.glb",
-   "sha256": "93f76c8fd1da8638659b3e0d0911aec1a4f2273d9186b43123a694b936d382b6",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 3.0,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.harness-wide",
-     "tris": 2608
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.harness-narrow",
-     "tris": 2608
-    }
-   }
-  },
-  {
-   "id": "armor.chest.plate",
-   "slot": "chest",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "plate",
-   "name": "Standard plate carrier",
-   "glb": "parts/armor.chest.plate.glb",
-   "sha256": "47a541d85e122931c757bae6c874dacf7d0e715f6524478ab064e23c6011c2ed",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 6.5,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.plate-wide",
-     "tris": 3208
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.plate-narrow",
-     "tris": 3208
-    }
-   }
-  },
-  {
-   "id": "armor.chest.heavy",
-   "slot": "chest",
-   "tier": 3,
-   "tierName": "heavy",
-   "style": "plate",
-   "name": "Heavy assault cuirass",
-   "glb": "parts/armor.chest.heavy.glb",
-   "sha256": "5c2b182b2fbaabebd245b7ca6900d05bf5c36548c56bf7e1a095b8be62574cc5",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 11.0,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.heavy-wide",
-     "tris": 3916
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.heavy-narrow",
-     "tris": 3916
-    }
-   }
-  },
-  {
-   "id": "armor.chest.coat",
-   "slot": "chest",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "coat",
-   "name": "Officer's coat",
-   "glb": "parts/armor.chest.coat.glb",
-   "sha256": "8a617270b8a3cf4a07f95433e4bdbdc692161c905f9f3d5cece54689d30936c9",
-   "bones": [
-    "pelvis",
-    "spine",
-    "chest",
-    "thigh.R",
-    "thigh.L"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.coat-wide",
-     "tris": 4492
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.coat-narrow",
-     "tris": 4492
-    }
-   }
-  },
-  {
-   "id": "armor.chest.labcoat",
-   "slot": "chest",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "labcoat",
-   "name": "Lab coat",
-   "glb": "parts/armor.chest.labcoat.glb",
-   "sha256": "737065a1f8d62c54311d9a61ee9c7b14dbeae0470910bee06d4108122277d6bd",
-   "bones": [
-    "pelvis",
-    "spine",
-    "chest",
-    "thigh.R",
-    "thigh.L"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.labcoat-wide",
-     "tris": 3520
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.labcoat-narrow",
-     "tris": 3520
-    }
-   }
-  },
-  {
-   "id": "armor.chest.overalls",
-   "slot": "chest",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "overalls",
-   "name": "Work overalls",
-   "glb": "parts/armor.chest.overalls.glb",
-   "sha256": "b5cbc7eb818e89bc82632d998349b6f48e3cac4ec948ab49c49af011cdb8a91e",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.overalls-wide",
-     "tris": 1884
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.overalls-narrow",
-     "tris": 1884
-    }
-   }
-  },
-  {
-   "id": "armor.chest.flight",
-   "slot": "chest",
-   "tier": 1,
-   "tierName": "light",
-   "style": "flight",
-   "name": "Flight suit harness",
-   "glb": "parts/armor.chest.flight.glb",
-   "sha256": "f09b3f09d7ae1c70ae9e7b92b1224dbf52ff81bc5e773595a3f1cbf0467f74aa",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 3.0,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.flight-wide",
-     "tris": 2748
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.flight-narrow",
-     "tris": 2748
-    }
-   }
-  },
-  {
-   "id": "armor.chest.tactical",
-   "slot": "chest",
-   "tier": 1,
-   "tierName": "light",
-   "style": "tactical",
-   "name": "Tactical chest rig",
-   "glb": "parts/armor.chest.tactical.glb",
-   "sha256": "871aea30ce5aa9af1bf5ac66a7c922c875f671575a9f8bb8aab1e14a3baab2f3",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 3.0,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.tactical-wide",
-     "tris": 3640
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.tactical-narrow",
-     "tris": 3640
-    }
-   }
-  },
-  {
-   "id": "armor.chest.vest",
-   "slot": "chest",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "vest",
-   "name": "Security vest",
-   "glb": "parts/armor.chest.vest.glb",
-   "sha256": "000f5635eaa248ce4737681c37bc30446be1c7b23f15325fbd7bc2318e5bd8ab",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 6.5,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.vest-wide",
-     "tris": 3480
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.vest-narrow",
-     "tris": 3480
-    }
-   }
-  },
-  {
-   "id": "armor.chest.medic",
-   "slot": "chest",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "medic",
-   "name": "Medical plate",
-   "glb": "parts/armor.chest.medic.glb",
-   "sha256": "3dcff591e7c7627e767624736f600de7067ee994740975efb099711653e1d3d1",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 6.5,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.medic-wide",
-     "tris": 3648
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.medic-narrow",
-     "tris": 3648
-    }
-   }
-  },
-  {
-   "id": "armor.chest.hazard",
-   "slot": "chest",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "hazard",
-   "name": "Hazard-rated plate",
-   "glb": "parts/armor.chest.hazard.glb",
-   "sha256": "6b85ea4dc0d706368841f1e83592c7ce34856fbf36568b0743a1b0f1ec4342a0",
-   "bones": [
-    "spine",
-    "chest"
-   ],
-   "socket": "socket.chest",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 6.5,
-   "grid": [
-    3,
-    3
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.chest.hazard-wide",
-     "tris": 4292
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.chest.hazard-narrow",
-     "tris": 4184
-    }
-   }
-  },
-  {
-   "id": "armor.shoulders.cloth",
-   "slot": "shoulders",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "cloth",
-   "name": "Shoulder pads",
-   "glb": "parts/armor.shoulders.cloth.glb",
-   "sha256": "fd88ba3eb6b84d27e98732e2c20a38268e15df0b9be1e750f2f15c38dc3e3936",
-   "bones": [
-    "upper_arm.R",
-    "upper_arm.L"
-   ],
-   "socket": "socket.shoulder",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_secondary",
-    "dark"
-   ],
-   "massKg": 0.2,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.shoulders.cloth-all",
-     "tris": 872
-    }
-   }
-  },
-  {
-   "id": "armor.shoulders.light",
-   "slot": "shoulders",
-   "tier": 1,
-   "tierName": "light",
-   "style": "plain",
-   "name": "Light pauldrons",
-   "glb": "parts/armor.shoulders.light.glb",
-   "sha256": "5dc006d4ad58f1ca87ec7f8e3275c2331e9c545a99b1e77d23af962e1e1243c2",
-   "bones": [
-    "upper_arm.R",
-    "upper_arm.L"
-   ],
-   "socket": "socket.shoulder",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal"
-   ],
-   "massKg": 1.0,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.shoulders.light-all",
-     "tris": 1304
-    }
-   }
-  },
-  {
-   "id": "armor.shoulders.standard",
-   "slot": "shoulders",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "plain",
-   "name": "Standard pauldrons",
-   "glb": "parts/armor.shoulders.standard.glb",
-   "sha256": "10ec2f5ba9f8f2753d1892a73fc2027197974088249a5036c73aa63eb0fa3433",
-   "bones": [
-    "upper_arm.R",
-    "upper_arm.L"
-   ],
-   "socket": "socket.shoulder",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal"
-   ],
-   "massKg": 2.2,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.shoulders.standard-all",
-     "tris": 2384
-    }
-   }
-  },
-  {
-   "id": "armor.shoulders.heavy",
-   "slot": "shoulders",
-   "tier": 3,
-   "tierName": "heavy",
-   "style": "plain",
-   "name": "Heavy pauldrons",
-   "glb": "parts/armor.shoulders.heavy.glb",
-   "sha256": "1dd84a29f7a1b7a3580d81825c0c6e659bc2b90744cecd0fef600f2926d2c86d",
-   "bones": [
-    "upper_arm.R",
-    "upper_arm.L"
-   ],
-   "socket": "socket.shoulder",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal"
-   ],
-   "massKg": 4.0,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.shoulders.heavy-all",
-     "tris": 3032
-    }
-   }
-  },
-  {
-   "id": "armor.shoulders.epaulette",
-   "slot": "shoulders",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "epaulette",
-   "name": "Officer epaulettes",
-   "glb": "parts/armor.shoulders.epaulette.glb",
-   "sha256": "afa8f0fb06f78c60ac0163d5ab87e9769139d2eae83db97aeb415f1b2b4addf3",
-   "bones": [
-    "upper_arm.R",
-    "upper_arm.L"
-   ],
-   "socket": "socket.shoulder",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "accent",
-    "metal"
-   ],
-   "massKg": 0.2,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.shoulders.epaulette-all",
-     "tris": 1736
-    }
-   }
-  },
-  {
-   "id": "armor.shoulders.flight",
-   "slot": "shoulders",
-   "tier": 1,
-   "tierName": "light",
-   "style": "flight",
-   "name": "Flight pauldrons",
-   "glb": "parts/armor.shoulders.flight.glb",
-   "sha256": "d460fe2a03128057d99bca1622c326a9cee86b1b7446792de2f919d43a905c9b",
-   "bones": [
-    "upper_arm.R",
-    "upper_arm.L"
-   ],
-   "socket": "socket.shoulder",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal"
-   ],
-   "massKg": 1.0,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.shoulders.flight-all",
-     "tris": 1520
-    }
-   }
-  },
-  {
-   "id": "armor.gloves.fabric",
-   "slot": "gloves",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "plain",
-   "name": "Fabric gloves",
-   "glb": "parts/armor.gloves.fabric.glb",
-   "sha256": "8d234a7b7c53da4f66fcb607fd0a5b9bc6e6d29ddbf21cc0e66e6bbfbee5b768",
-   "bones": [
-    "hand.R",
-    "hand.L"
-   ],
-   "socket": "socket.glove",
-   "hidesBodyRegions": [
-    "gear",
-    "hands"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary"
-   ],
-   "massKg": 0.1,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.gloves.fabric-all",
-     "tris": 1952
-    }
-   }
-  },
-  {
-   "id": "armor.gloves.light",
-   "slot": "gloves",
-   "tier": 1,
-   "tierName": "light",
-   "style": "plain",
-   "name": "Light gloves",
-   "glb": "parts/armor.gloves.light.glb",
-   "sha256": "74f6e1aab1b1c1747ae91675dc02a5a9631662bcef4201aa97f1d038d2b7db78",
-   "bones": [
-    "forearm.R",
-    "forearm.L",
-    "hand.R",
-    "hand.L"
-   ],
-   "socket": "socket.glove",
-   "hidesBodyRegions": [
-    "gear",
-    "hands"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal"
-   ],
-   "massKg": 0.3,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.gloves.light-all",
-     "tris": 3336
-    }
-   }
-  },
-  {
-   "id": "armor.gloves.standard",
-   "slot": "gloves",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "plain",
-   "name": "Armoured gauntlets",
-   "glb": "parts/armor.gloves.standard.glb",
-   "sha256": "e1335cd17ccb6061f7e8e728b945ae9d7fe18d687c9599fc90eadf38f4480da7",
-   "bones": [
-    "forearm.R",
-    "forearm.L",
-    "hand.R",
-    "hand.L"
-   ],
-   "socket": "socket.glove",
-   "hidesBodyRegions": [
-    "gear",
-    "hands"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 0.8,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.gloves.standard-all",
-     "tris": 4424
-    }
-   }
-  },
-  {
-   "id": "armor.gloves.heavy",
-   "slot": "gloves",
-   "tier": 3,
-   "tierName": "heavy",
-   "style": "plain",
-   "name": "Heavy gauntlets",
-   "glb": "parts/armor.gloves.heavy.glb",
-   "sha256": "b93adaa626f0f23d8001afb9293b2f20a8ec5603db7ba218484492426ad7cc48",
-   "bones": [
-    "forearm.R",
-    "forearm.L",
-    "hand.R",
-    "hand.L"
-   ],
-   "socket": "socket.glove",
-   "hidesBodyRegions": [
-    "gear",
-    "hands"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 1.4,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.gloves.heavy-all",
-     "tris": 4912
-    }
-   }
-  },
-  {
-   "id": "armor.gloves.work",
-   "slot": "gloves",
-   "tier": 1,
-   "tierName": "light",
-   "style": "work",
-   "name": "Work gloves",
-   "glb": "parts/armor.gloves.work.glb",
-   "sha256": "118783134fcc6aaae78e7cdefffe837b14017f8bd7f3ef135d52f9619d4cdb68",
-   "bones": [
-    "forearm.R",
-    "forearm.L",
-    "hand.R",
-    "hand.L"
-   ],
-   "socket": "socket.glove",
-   "hidesBodyRegions": [
-    "gear",
-    "hands"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 0.3,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.gloves.work-all",
-     "tris": 3552
-    }
-   }
-  },
-  {
-   "id": "armor.boots.sneaker",
-   "slot": "boots",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "sneaker",
-   "name": "Deck shoes",
-   "glb": "parts/armor.boots.sneaker.glb",
-   "sha256": "69627a940fb012f3d0587aa2347f1fa3b9dccdfd0fc6f286c1dcd1bdd8f00417",
-   "bones": [
-    "shin.R",
-    "shin.L",
-    "foot.R",
-    "foot.L",
-    "toe.R",
-    "toe.L"
-   ],
-   "socket": "socket.foot",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "dark"
-   ],
-   "massKg": 0.8,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.boots.sneaker-all",
-     "tris": 2592
-    }
-   }
-  },
-  {
-   "id": "armor.boots.light",
-   "slot": "boots",
-   "tier": 1,
-   "tierName": "light",
-   "style": "plain",
-   "name": "Work boots",
-   "glb": "parts/armor.boots.light.glb",
-   "sha256": "9a8ce7be30dcec59a6cf380b49be8c05d83f60e15c9b052a5afffc92574f236e",
-   "bones": [
-    "shin.R",
-    "shin.L",
-    "foot.R",
-    "foot.L",
-    "toe.R",
-    "toe.L"
-   ],
-   "socket": "socket.foot",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "dark"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.boots.light-all",
-     "tris": 2400
-    }
-   }
-  },
-  {
-   "id": "armor.boots.standard",
-   "slot": "boots",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "plain",
-   "name": "Armoured boots",
-   "glb": "parts/armor.boots.standard.glb",
-   "sha256": "2aeadd329d5147b950e2af90e32c74e1d0a78fd30a537635b2a6be5dfa2aa18f",
-   "bones": [
-    "shin.R",
-    "shin.L",
-    "foot.R",
-    "foot.L",
-    "toe.R",
-    "toe.L"
-   ],
-   "socket": "socket.foot",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 2.0,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.boots.standard-all",
-     "tris": 2872
-    }
-   }
-  },
-  {
-   "id": "armor.boots.heavy",
-   "slot": "boots",
-   "tier": 3,
-   "tierName": "heavy",
-   "style": "plain",
-   "name": "Heavy mag boots",
-   "glb": "parts/armor.boots.heavy.glb",
-   "sha256": "edc295b10781aa0680becce14c71df4a8c4b5d62f45836309dd9d95e4f993f99",
-   "bones": [
-    "shin.R",
-    "shin.L",
-    "foot.R",
-    "foot.L",
-    "toe.R",
-    "toe.L"
-   ],
-   "socket": "socket.foot",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 3.4,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.boots.heavy-all",
-     "tris": 3520
-    }
-   }
-  },
-  {
-   "id": "armor.boots.dress",
-   "slot": "boots",
-   "tier": 1,
-   "tierName": "light",
-   "style": "dress",
-   "name": "Dress boots",
-   "glb": "parts/armor.boots.dress.glb",
-   "sha256": "66ac285429a6e25ad63fb1f5a9de2e7328a46b66e75245b031dad6a0fdec2283",
-   "bones": [
-    "shin.R",
-    "shin.L",
-    "foot.R",
-    "foot.L",
-    "toe.R",
-    "toe.L"
-   ],
-   "socket": "socket.foot",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.boots.dress-all",
-     "tris": 2176
-    }
-   }
-  },
-  {
-   "id": "armor.boots.flight",
-   "slot": "boots",
-   "tier": 1,
-   "tierName": "light",
-   "style": "flight",
-   "name": "Flight boots",
-   "glb": "parts/armor.boots.flight.glb",
-   "sha256": "7ea467d6c37db9ee0a1c388927d974e85abb27a6c5ea2c4a5bd1c0ab9bf8bf76",
-   "bones": [
-    "shin.R",
-    "shin.L",
-    "foot.R",
-    "foot.L",
-    "toe.R",
-    "toe.L"
-   ],
-   "socket": "socket.foot",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "dark"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    2,
-    2
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.boots.flight-all",
-     "tris": 2400
-    }
-   }
-  },
-  {
-   "id": "armor.legs.cargo",
-   "slot": "legs",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "cargo",
-   "name": "Cargo trousers",
-   "glb": "parts/armor.legs.cargo.glb",
-   "sha256": "ef0c21a72d55fd49710b34a13b310b42f3aaf08598b0c8f2c9ea51f7dec4b77b",
-   "bones": [
-    "thigh.R",
-    "thigh.L"
-   ],
-   "socket": null,
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_secondary",
-    "accent"
-   ],
-   "massKg": 0.3,
-   "grid": [
-    2,
-    3
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.legs.cargo-all",
-     "tris": 648
-    }
-   }
-  },
-  {
-   "id": "armor.legs.light",
-   "slot": "legs",
-   "tier": 1,
-   "tierName": "light",
-   "style": "plain",
-   "name": "Knee pads and straps",
-   "glb": "parts/armor.legs.light.glb",
-   "sha256": "5a358075958403fb05ac4e2fe220eef31f15f386864ef0a72e01ec36f9406aac",
-   "bones": [
-    "thigh.R",
-    "thigh.L",
-    "shin.R",
-    "shin.L"
-   ],
-   "socket": null,
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "dark"
-   ],
-   "massKg": 1.0,
-   "grid": [
-    2,
-    3
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.legs.light-all",
-     "tris": 1080
-    }
-   }
-  },
-  {
-   "id": "armor.legs.standard",
-   "slot": "legs",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "plain",
-   "name": "Thigh and knee plates",
-   "glb": "parts/armor.legs.standard.glb",
-   "sha256": "15517f88f75c75026bb00149ce34e28f8000dd69566dc2bf519dbe9485903b26",
-   "bones": [
-    "thigh.R",
-    "thigh.L",
-    "shin.R",
-    "shin.L"
-   ],
-   "socket": null,
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal"
-   ],
-   "massKg": 3.0,
-   "grid": [
-    2,
-    3
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.legs.standard-all",
-     "tris": 1728
-    }
-   }
-  },
-  {
-   "id": "armor.legs.heavy",
-   "slot": "legs",
-   "tier": 3,
-   "tierName": "heavy",
-   "style": "plain",
-   "name": "Heavy greaves and tassets",
-   "glb": "parts/armor.legs.heavy.glb",
-   "sha256": "668cf7088e5f84f8dc6bdd35c82e1b97b3deffa3649fe48a7605b98aad11f4b4",
-   "bones": [
-    "pelvis",
-    "thigh.R",
-    "thigh.L",
-    "shin.R",
-    "shin.L"
-   ],
-   "socket": null,
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal"
-   ],
-   "massKg": 5.5,
-   "grid": [
-    2,
-    3
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.legs.heavy-all",
-     "tris": 2376
-    }
-   }
-  },
-  {
-   "id": "armor.belt.plain",
-   "slot": "belt",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "plain",
-   "name": "Belt",
-   "glb": "parts/armor.belt.plain.glb",
-   "sha256": "f0fbfb2a3722b364ee610c721f8fc636e3f5c58cd0839aee90e2d091f66bde97",
-   "bones": [
-    "pelvis"
-   ],
-   "socket": "socket.belt",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 0.2,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.belt.plain-wide",
-     "tris": 876
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.belt.plain-narrow",
-     "tris": 988
-    }
-   }
-  },
-  {
-   "id": "armor.belt.utility",
-   "slot": "belt",
-   "tier": 1,
-   "tierName": "light",
-   "style": "utility",
-   "name": "Utility belt",
-   "glb": "parts/armor.belt.utility.glb",
-   "sha256": "a7aabf2dbac5864a367c97aba91d6c51d3e9b59a5915dcdb1b971e4995b9639f",
-   "bones": [
-    "pelvis"
-   ],
-   "socket": "socket.belt",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 0.5,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.belt.utility-wide",
-     "tris": 1464
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.belt.utility-narrow",
-     "tris": 1576
-    }
-   }
-  },
-  {
-   "id": "armor.belt.standard",
-   "slot": "belt",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "utility",
-   "name": "Load-bearing belt",
-   "glb": "parts/armor.belt.standard.glb",
-   "sha256": "106a95a475534672c2a4c6beb6f95cb4fd8f4d7ffe0e37a00f16a4e3436902db",
-   "bones": [
-    "pelvis"
-   ],
-   "socket": "socket.belt",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 0.9,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.belt.standard-wide",
-     "tris": 2312
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.belt.standard-narrow",
-     "tris": 2424
-    }
-   }
-  },
-  {
-   "id": "armor.belt.heavy",
-   "slot": "belt",
-   "tier": 3,
-   "tierName": "heavy",
-   "style": "utility",
-   "name": "Heavy armoured belt",
-   "glb": "parts/armor.belt.heavy.glb",
-   "sha256": "e862e5734f47ee5291f60832326b4a1567a622fba9b10d9bb41ace05cb455d65",
-   "bones": [
-    "pelvis"
-   ],
-   "socket": "socket.belt",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 1.6,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.belt.heavy-wide",
-     "tris": 2396
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.belt.heavy-narrow",
-     "tris": 2508
-    }
-   }
-  },
-  {
-   "id": "armor.belt.tool",
-   "slot": "belt",
-   "tier": 1,
-   "tierName": "light",
-   "style": "tool",
-   "name": "Tool belt",
-   "glb": "parts/armor.belt.tool.glb",
-   "sha256": "7380a5bfe7e034df0376c069fa1858be80ea83d108bda26d107afacb8ec6480b",
-   "bones": [
-    "pelvis"
-   ],
-   "socket": "socket.belt",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 0.5,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.belt.tool-wide",
-     "tris": 2166
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.belt.tool-narrow",
-     "tris": 2278
-    }
-   }
-  },
-  {
-   "id": "armor.belt.medic",
-   "slot": "belt",
-   "tier": 1,
-   "tierName": "light",
-   "style": "medic",
-   "name": "Medic belt",
-   "glb": "parts/armor.belt.medic.glb",
-   "sha256": "1b7461ee4e2b69e2c62334b2ea2ffd64099c16f8dd7c48eec04bae83d1b17f5f",
-   "bones": [
-    "pelvis"
-   ],
-   "socket": "socket.belt",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 0.5,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.belt.medic-wide",
-     "tris": 1788
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.belt.medic-narrow",
-     "tris": 1900
-    }
-   }
-  },
-  {
-   "id": "armor.belt.sash",
-   "slot": "belt",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "sash",
-   "name": "Officer's belt",
-   "glb": "parts/armor.belt.sash.glb",
-   "sha256": "9d88f5ae0a212bc499df2ba2969a70c23ab2c0d294206f475328f7596c1a6d6e",
-   "bones": [
-    "pelvis"
-   ],
-   "socket": "socket.belt",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "accent",
-    "metal"
-   ],
-   "massKg": 0.2,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.belt.sash-wide",
-     "tris": 984
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.belt.sash-narrow",
-     "tris": 1096
-    }
-   }
-  },
-  {
-   "id": "armor.belt.holster",
-   "slot": "belt",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "holster",
-   "name": "Holster belt",
-   "glb": "parts/armor.belt.holster.glb",
-   "sha256": "9b78e4f04a372504ba3a51cdcf36174e1f0730d6906af983c668548be04b8032",
-   "bones": [
-    "pelvis"
-   ],
-   "socket": "socket.belt",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 0.9,
-   "grid": [
-    2,
-    1
-   ],
-   "fits": {
-    "wide": {
-     "mesh": "GEO-armor-armor.belt.holster-wide",
-     "tris": 2312
-    },
-    "narrow": {
-     "mesh": "GEO-armor-armor.belt.holster-narrow",
-     "tris": 2424
-    }
-   }
-  },
-  {
-   "id": "armor.back.backpack-t0",
-   "slot": "back",
-   "tier": 0,
-   "tierName": "civilian",
-   "style": "backpack",
-   "name": "Day pack",
-   "glb": "parts/armor.back.backpack-t0.glb",
-   "sha256": "eb4960d8257bf4eb9495b1b605db8ebc79be8e3159332caf73fea2affe9c9dbb",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 0.8,
-   "grid": [
-    3,
-    4
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.backpack-t0-all",
-     "tris": 1336
-    }
-   }
-  },
-  {
-   "id": "armor.back.backpack-t1",
-   "slot": "back",
-   "tier": 1,
-   "tierName": "light",
-   "style": "backpack",
-   "name": "Field pack",
-   "glb": "parts/armor.back.backpack-t1.glb",
-   "sha256": "d172a674d688367a945910f651834044cc05a5899b28f27e3a39bb5125a16e83",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    3,
-    4
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.backpack-t1-all",
-     "tris": 1768
-    }
-   }
-  },
-  {
-   "id": "armor.back.backpack-t2",
-   "slot": "back",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "backpack",
-   "name": "Expedition pack",
-   "glb": "parts/armor.back.backpack-t2.glb",
-   "sha256": "85740845de87223d59b86536d1c518bde4d9bd30ac7dab122f306144c731554d",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 2.4,
-   "grid": [
-    3,
-    4
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.backpack-t2-all",
-     "tris": 1984
-    }
-   }
-  },
-  {
-   "id": "armor.back.backpack-t3",
-   "slot": "back",
-   "tier": 3,
-   "tierName": "heavy",
-   "style": "backpack",
-   "name": "Heavy combat rig",
-   "glb": "parts/armor.back.backpack-t3.glb",
-   "sha256": "f8e780a452f9b094542d43325068f6912314ecb218e99297ba8f2978fa211104",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 4.0,
-   "grid": [
-    3,
-    4
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.backpack-t3-all",
-     "tris": 2416
-    }
-   }
-  },
-  {
-   "id": "armor.back.oxygen-single",
-   "slot": "back",
-   "tier": 1,
-   "tierName": "light",
-   "style": "oxygen",
-   "name": "Oxygen pack",
-   "glb": "parts/armor.back.oxygen-single.glb",
-   "sha256": "431a0926ea94e22085fde697e7300d4566801b200ade6c9f1d29c9f7a73c8510",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    3,
-    4
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.oxygen-single-all",
-     "tris": 1004
-    }
-   }
-  },
-  {
-   "id": "armor.back.oxygen-twin",
-   "slot": "back",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "oxygen",
-   "name": "Twin-tank oxygen pack",
-   "glb": "parts/armor.back.oxygen-twin.glb",
-   "sha256": "11718775e1507656d5616207ed3761776469ab7daa064cfd4452535488501a9e",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_secondary",
-    "metal",
-    "dark"
-   ],
-   "massKg": 2.4,
-   "grid": [
-    3,
-    4
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.oxygen-twin-all",
-     "tris": 1768
-    }
-   }
-  },
-  {
-   "id": "armor.back.jetpack-light",
-   "slot": "back",
-   "tier": 2,
-   "tierName": "standard",
-   "style": "jetpack",
-   "name": "Light jetpack",
-   "glb": "parts/armor.back.jetpack-light.glb",
-   "sha256": "6a13830094fc43205a7bc69c246647f6dfe066a65abd3f68d74e3a1c0715ff36",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 2.4,
-   "grid": [
-    3,
-    4
-   ],
-   "exhaust": [
-    {
-     "node": "EXHAUST-armor.back.jetpack-light-0",
-     "bone": "chest",
-     "restVox": [
-      -4.5,
-      -10.5,
-      17
-     ],
-     "radiusM": 0.046875,
-     "direction": [
-      0,
-      0,
-      -1
-     ]
-    },
-    {
-     "node": "EXHAUST-armor.back.jetpack-light-1",
-     "bone": "chest",
-     "restVox": [
-      4.5,
-      -10.5,
-      17
-     ],
-     "radiusM": 0.046875,
-     "direction": [
-      0,
-      0,
-      -1
-     ]
-    }
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.jetpack-light-all",
-     "tris": 2208
-    }
-   }
-  },
-  {
-   "id": "armor.back.jetpack-heavy",
-   "slot": "back",
-   "tier": 3,
-   "tierName": "heavy",
-   "style": "jetpack",
-   "name": "Heavy jetpack",
-   "glb": "parts/armor.back.jetpack-heavy.glb",
-   "sha256": "0fb814e4288f49e703a85f89aa2d323bec855517deabf4f22c2192f03e29dcda",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 4.0,
-   "grid": [
-    3,
-    4
-   ],
-   "exhaust": [
-    {
-     "node": "EXHAUST-armor.back.jetpack-heavy-0",
-     "bone": "chest",
-     "restVox": [
-      -5.5,
-      -11.0,
-      17
-     ],
-     "radiusM": 0.046875,
-     "direction": [
-      0,
-      0,
-      -1
-     ]
-    },
-    {
-     "node": "EXHAUST-armor.back.jetpack-heavy-1",
-     "bone": "chest",
-     "restVox": [
-      5.5,
-      -11.0,
-      17
-     ],
-     "radiusM": 0.046875,
-     "direction": [
-      0,
-      0,
-      -1
-     ]
-    }
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.jetpack-heavy-all",
-     "tris": 2424
-    }
-   }
-  },
-  {
-   "id": "armor.back.medpack",
-   "slot": "back",
-   "tier": 1,
-   "tierName": "light",
-   "style": "medpack",
-   "name": "Medical pack",
-   "glb": "parts/armor.back.medpack.glb",
-   "sha256": "33efd2bd7d9ec461e3bd9e665211532e999038de7277e161e832dfcc150377e9",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    3,
-    4
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.medpack-all",
-     "tris": 1132
-    }
-   }
-  },
-  {
-   "id": "armor.back.radio",
-   "slot": "back",
-   "tier": 1,
-   "tierName": "light",
-   "style": "radio",
-   "name": "Recon radio pack",
-   "glb": "parts/armor.back.radio.glb",
-   "sha256": "dc3afe94ab7d6faf7d7f5422965b2b7481286a5467715606a27d4e1aef1b7c95",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "accent",
-    "metal",
-    "dark",
-    "emit"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    3,
-    4
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.radio-all",
-     "tris": 1112
-    }
-   }
-  },
-  {
-   "id": "armor.back.toolpack",
-   "slot": "back",
-   "tier": 1,
-   "tierName": "light",
-   "style": "toolpack",
-   "name": "Engineer tool pack",
-   "glb": "parts/armor.back.toolpack.glb",
-   "sha256": "8c79f7088b10fa7e6673428ae251917688655cb754d6bfdbbd62b01359aafeb0",
-   "bones": [
-    "chest"
-   ],
-   "socket": "socket.back",
-   "hidesBodyRegions": [
-    "gear"
-   ],
-   "slots": [
-    "suit_primary",
-    "suit_secondary",
-    "accent",
-    "metal",
-    "dark"
-   ],
-   "massKg": 1.2,
-   "grid": [
-    3,
-    4
-   ],
-   "fits": {
-    "all": {
-     "mesh": "GEO-armor-armor.back.toolpack-all",
-     "tris": 1400
-    }
-   }
-  }
- ]
 }

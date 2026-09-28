@@ -1,4 +1,4 @@
-"""Crew voxel armour kit (armor-v1 r003): pure part definitions, no bpy, unit-testable.
+"""Crew voxel armour kit (armor-v1 r007): pure part definitions, no bpy, unit-testable.
 
 Fitted to the owner-approved CHAR-BODY r005 (CHARACTER_SPEC_BODY.json spec_version 2, ~3 heads). Every part is
 a set of voxel volumes on the 1/32 m grid, one volume per crew_rig bone, rigidly skinned to that bone.
@@ -10,10 +10,10 @@ Surface style (owner feedback 2026-09-25/26, CHAR-BODY styleRules): every box() 
 BRICK ISLAND. The Blender kit meshes each island separately, bevels it softly and gives it smooth
 face-area normals, so seams appear only between authored plates, straps and pouches (the layered,
 chunky detail read) and never between fine voxels. Silhouette steps use 2-voxel main blocks; single
-voxels are reserved for trims, rivets, badges and lights. T2/T3 carry ~10-20 % emissive surface.
+voxels are reserved for trims, rivets, badges and lights. Emission is restricted to a few indicator cells; no glowing trim.
 Colour lives only in the ten shared material slots, so colourways/roles/player colours are tables.
 
-Fit rules (checked by crew_armor_fit.py against mannequin(), a port of CHAR-BODY r002 body.py):
+Fit rules (checked by crew_armor_fit.py against mannequin(), the CHAR-BODY r005 occupancy snapshot):
 - no same-normal coplanar visible face between armour and the body or between the parts of a
   preset (no z-fighting): armour encloses what it covers >= 1 voxel proud, or sits clear of it.
   Gloves/boots replace the hands/feet regions (hidesBodyRegions);
@@ -28,7 +28,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 KIT_ID = "crew.armor-v1"
-REVISION = "r006"
+REVISION = "r007"
 SPEC_VERSION = 2
 BODY_REVISION = "r005"
 V = 1.0 / 32.0
@@ -236,6 +236,8 @@ def torso_shell(c, w, tier, base_slot):
 
 
 def chest_vols(c, w, tier, style):
+    if style in ("coat", "labcoat", "flight", "harness") or style.startswith("uniform-"):
+        return tailored_torso(w, style)
     base_slot = S2 if style == "overalls" else P
     ch, sp, fy, by = torso_shell(c, w, tier, base_slot)
     vols = {"chest": ch, "spine": sp}
@@ -296,19 +298,15 @@ def chest_vols(c, w, tier, style):
     if tier >= 1:
         ch.box(3, fy + ft + (1 if plated else 0), 33, 5, fy + ft + 1 + (1 if plated else 0), 34, EM if tier >= 2 else AC)
     if tier >= 2:
-        ch.box(-4, fy + ft, 29, 4, fy + ft + 1, 30, EM)                                       # light bar
-        ch.box(-5, fy, 35, 5, fy + 1, 36, EM)                                                 # collar light bar
         for x0, x1 in ((-6, -1), (1, 6)):
             ch.paint(x0 + 1, fy + ft, 30, x1 - 1, fy + ft + 1, 31, EM)                        # plate glow seams
         ch.box(-5, fy + ft, 33, -3, fy + ft + 1, 34, M)                                       # bolts
         ch.paint(-1, by - 1, 30, 1, by, 34, EM)                                               # back mount glow
-        sp.box(-3, 8, 25, 3, 9, 26, EM)                                                       # belly light strip
         for x in (-7, 6):
             ch.box(x, 5, 30, x + 1, fy, 32, EM)                                               # side glow ribs
     if tier >= 3:
         ch.box(-7, fy + ft - 1, 30, -5, fy + ft + 1, 36, S2).box(5, fy + ft - 1, 30, 7, fy + ft + 1, 36, S2)   # flanks
         ch.box(-2, fy + ft + 1, 31, 2, fy + ft + 2, 33, AC).box(-1, fy + ft + 2, 31, 1, fy + ft + 3, 33, EM)  # core
-        ch.box(-4, fy + ft, 34, 4, fy + ft + 1, 35, EM)                                       # upper light bar
         ch.paint(-5, by - 1, 29, 5, by, 34, S2)                                               # back armour layer (flush)
     if style in ("harness", "tactical"):
         for x0 in (-4, 3):                                                                     # webbing
@@ -338,21 +336,76 @@ def chest_vols(c, w, tier, style):
     return vols
 
 
-def coat_tails(c, w, style):
-    """Coat skirts on the hips (front/back panels) and on each thigh (swing with the legs). The outer
-    thigh stays open above z 12 (pocket and the hanging hand)."""
-    trim = AC if style == "coat" else S2
-    hub = Vol().box(-8, 5, 18, 8, 6, 22, P).box(-8, -5, 18, 8, -4, 22, P)
-    hub.box(-8, 6, 18, 8, 7, 19, trim)
-    drop = 11
-    tail = Vol()
-    tail.box(0, 4, drop, 7, 5, 18, P).box(0, -4, drop, 7, -3, 18, P).box(0, -4, drop, 1, 5, 18, P)
-    tail.box(7, -4, drop, 9, 5, 12, P)                                          # outer wrap below the pocket
-    tail.box(0, -5, drop, 9, 6, drop + 1, trim)                                 # hem (flared, its own island)
-    if style == "labcoat":
-        tail.box(9, -2, 10, 10, 2, 12, S2)
+def tailored_torso(w, style):
+    """r007: broad clean surfaces, open coats and readable department appliques."""
+    ch, sp, fy, by = torso_shell(7, w, 0, P)
+    if style in ("coat", "labcoat"):
+        # Open front: two continuous lapels, no centre plate or horizontal hem trim.
+        ch.cut(-3, 5, 28, 3, 9, 36)
+        ch.cut(-7, 5, 28, 7, 6, 36)
+        sp.cut(-2, 4, 25, 2, 7, 28)
+        for x0 in (-4, 2):
+            ch.box(x0, 8, 31, x0 + 2, 9, 36, AC if style == "coat" else P)
+        ch.box(-6, 8, 28, -3, 9, 31, P)
+        if style == "coat":
+            for z in (30, 33):
+                ch.box(4, 8, z, 5, 9, z+1, M)
+            ch.box(-6, 9, 33, -3, 10, 35, AC)
+        else:
+            ch.box(-5, 9, 30, -4, 10, 33, AC)
+            ch.box(3, 8, 32, 6, 9, 34, M)
+        return {"chest": ch, "spine": sp}
+    if style == "harness":
+        # Light tier exposes the undersuit between vertical straps and a small sternum plate.
+        ch.cut(-3, 5, 28, 3, 8, 36)
+        ch.cut(-7, 5, 28, 7, 6, 36)
+        for x0 in (-6, 4):
+            ch.box(x0, 8, 28, x0+2, 9, 36, D)
+        ch.box(-3, 8, 30, 3, 10, 34, P)
+        ch.box(-1, 10, 31, 1, 11, 33, M)
+        sp.cut(-w-1, -5, 25, w+1, 6, 28)
+        sp.box(-3, 6, 26, 3, 8, 28, S2)
+        return {"chest": ch, "spine": sp}
+    if style == "flight":
+        ch.box(-6, 5, 36, -3, 9, 37, S2).box(3, 5, 36, 6, 9, 37, S2)
+        ch.box(-7, -7, 36, 7, -5, 37, S2)
+        for x0 in (-5, 3):
+            ch.box(x0, 8, 28, x0+2, 10, 36, D)
+            ch.box(x0, 10, 32, x0+2, 11, 34, M)
+        ch.box(-2, 8, 29, 2, 11, 32, S2).box(-1, 11, 30, 1, 12, 31, EM)
+        sp.box(-1, 6, 25, 1, 8, 28, D)
+        ch.box(-2, 8, 34, 2, 9, 35, AC)
+        return {"chest": ch, "spine": sp}
+    # Uniforms are appliques on the approved suit, not an armoured shell.
+    ch = Vol()
+    dept = style.removeprefix("uniform-")
+    if dept == "command":
+        ch.box(-7, 7, 32, 7, 8, 35, AC)
+        ch.box(-2, 8, 31, 2, 9, 36, M)
+        ch.box(-1, 9, 33, 1, 10, 35, AC)
+    elif dept == "medical":
+        ch.box(-5, 7, 28, 5, 8, 36, P)
+        ch.box(-1, 8, 29, 1, 9, 35, AC).box(-3, 8, 31, 3, 9, 33, AC, into=ch.last)
+    elif dept == "engineering":
+        ch.box(-7, 7, 28, -3, 8, 36, P).box(3, 7, 28, 7, 8, 36, P)
+        ch.box(-2, 7, 29, 2, 8, 32, M)
+        ch.box(-3, 7, 32, 3, 8, 35, M).cut(-1, 7, 33, 1, 8, 35)
     else:
-        tail.box(0, 5, drop + 1, 1, 6, 17, trim)                                # front braid
+        ch.box(-5, 7, 30, 5, 8, 36, P).box(-3, 7, 28, 3, 8, 30, P)
+        ch.box(-1, 8, 30, 1, 9, 35, AC)
+    return {"chest": ch}
+
+
+def coat_tails(c, w, style):
+    """Split knee-length skirts follow thighs; front opening and hand clearance stay explicit."""
+    hub = Vol()
+    for x0, x1 in ((-6, -2), (2, 6)):
+        hub.box(x0, 7, 18, x1, 8, 21, P)
+    hub.box(-6, -7, 18, 6, -6, 21, P)
+    tail = Vol().box(2, 6, 9, 7, 7, 15, P).box(1, -6, 9, 7, -5, 18, P)
+    tail.box(5, 6, 15, 7, 7, 18, P)
+    if style == "coat":
+        tail.box(2, 7, 10, 3, 8, 15, AC)
     return {"pelvis": hub, **sided({"thigh.R": tail})}
 
 
@@ -361,35 +414,23 @@ def coat_tails(c, w, style):
 # x 7..12 below. Chest shoulder straps occupy x <= 6 at z 36; the head overhangs x -9..9 from z 37.
 def shoulder_vols(tier, style):
     ua = Vol()
-    if style in ("cloth", "epaulette") or tier == 0:
-        top = AC if style == "epaulette" else S2
-        ua.box(8, -4, 30, 14, 4, 36, P if style == "epaulette" else S2).chamfer_outer(14, -4, 4, 30, 36)
-        ua.box(7, -4, 36, 14, 4, 37, top).cut(13, -4, 36, 14, 4, 37)
+    if style in ("cloth", "flight", "epaulette") or tier == 0:
+        ua.box(8, -4, 32, 13, 4, 37, P if style == "flight" else S2)
         if style == "epaulette":
-            for y in range(-4, 4, 2):
-                ua.box(14, y, 29, 15, y + 1, 35, AC)                                   # fringe
-            ua.box(10, -1, 37, 12, 1, 38, M)
-        else:
-            ua.box(14, -1, 31, 15, 1, 33, D)
-        return sided({"upper_arm.R": ua})
-    g = {1: 0, 2: 1, 3: 2}[tier]
-    x1, y0, y1 = 14 + g, -4 - g, 4 + g
-    low = 30
-    ua.box(8, y0, low, x1, y1, 36, P).chamfer_outer(x1, y0, y1, low, 36)                 # cap
-    ua.box(7, y0 + 1, 36, x1 - 1, y1 - 1, 37, P)                                          # top plate
-    ua.box(11, y0 + 2, 37, x1 - 2, y1 - 2, 38 + (tier >= 2), S2)                          # stepped dome crown (clear of long hair)
-    ua.box(8, y0 - (tier >= 3), low - 1, x1 + 1, y1 + (tier >= 3), low, S2)               # rim (own island)
-    ua.box(x1, -2, low + 1, x1 + 1, 2, low + 2, EM)                                       # side light
-    if tier >= 2:
-        ua.box(x1, y0 + 1, 33, x1 + 1, y1 - 1, 34, EM)                                    # light strip
-        ua.box(9, y1, 32, x1 - 1, y1 + 1, 33, EM).box(9, y0 - 1, 32, x1 - 1, y0, 33, EM)  # front/back glow
-        ua.box(x1, y0 + 1, 35, x1 + 1, y0 + 2, 36, M).box(x1, y1 - 2, 35, x1 + 1, y1 - 1, 36, M)
-    if tier >= 3:
-        ua.box(x1, y0 + 1, low, x1 + 1, y1 - 1, 32, P)                                    # outer lame
-        ua.box(x1 - 3, y0 + 1, 39, x1 - 1, y1 - 1, 40, S2)                                # ridge
-        ua.box(x1 + 1, y0 + 1, low + 1, x1 + 2, y0 + 2, low + 2, M).box(x1 + 1, y1 - 2, low + 1, x1 + 2, y1 - 1, low + 2, M)
-    if style == "flight":
-        ua.box(x1, -2, 31, x1 + 1, 2, 33, AC).box(x1 + 1, -1, 31, x1 + 2, 1, 32, EM)       # mission patch
+            ua.box(8, -3, 36, 13, 3, 37, AC)
+        elif style == "flight":
+            ua.box(13, -1, 33, 14, 2, 35, AC)
+    elif tier == 1:
+        ua.box(9, -4, 32, 14, 4, 37, P).chamfer_outer(14, -4, 4, 32, 36)
+    elif tier == 2:
+        ua.box(8, -5, 30, 15, 5, 36, P).chamfer_outer(15, -5, 5, 30, 36)
+        ua.box(8, -4, 36, 14, 4, 38, P)
+        ua.box(15, -2, 31, 16, 2, 34, S2)
+    else:
+        ua.box(8, -6, 29, 16, 6, 36, S2).chamfer_outer(16, -6, 6, 29, 36)
+        ua.box(8, -5, 33, 17, 5, 38, P).chamfer_outer(17, -5, 5, 33, 38)
+        ua.box(11, -4, 38, 15, 4, 40, P)
+        ua.box(16, -3, 29, 18, 3, 33, P)
     return sided({"upper_arm.R": ua})
 
 
@@ -413,12 +454,10 @@ def glove_vols(tier, style):
     if tier >= 1 or style == "work":
         # bracer over the cuff line; its top stays below the belt top (z 24) beside the hips
         fa.box(6, -3, 21, 13, 4, 23, P if tier >= 2 else S2).chamfer_z(6, -3, 13, 4, 21, 23)
-        fa.box(7, -4, 22, 13, 5, 23, AC)                                             # trim ring (island)
         if tier >= 2:
             ot = 25 + (tier >= 3)
             fa.box(12, -3, 23, 14, 4, ot, P)                                         # outer forearm plate
             fa.box(14, -2, 21, 15, 2, ot - 1, S2).box(14, -1, 22, 15, 1, 24, EM)     # wrist display
-            fa.box(12, -3, ot, 14, 4, ot + 1, EM)
         if style == "work":
             fa.box(7, -5, 23, 14, 6, 24, D)                                          # flared gauntlet lip
     return sided({"hand.R": hd, **({"forearm.R": fa} if fa.c else {})})
@@ -449,10 +488,7 @@ def boot_vols(tier, style):
         sh.box(1, 6, 4, 8, 7, 5, M)                                                  # buckle strap
     if tier >= 2:
         sh.box(9, -2, 4, 10, 2, 5, EM)                                               # ankle light
-        to.box(1, 10, 0, 8, 11, sole, M)                                             # toe guard
-        to.paint(1, 9, 0, 8, 10, sole + 1, EM)                                       # glowing bumper
         ft.box(9, -3, sole, 10, 2, sole + 2, M)                                      # ankle bolt
-        to.paint(1, 8, sole, 8, 9, sole + 1, EM)
     if tier >= 3:
         ft.box(0, -7, 0, 9, -6, 2, M)                                                # heel spur plate
         sh.box(2, 6, 3, 7, 7, 8, P).box(3, 7, 5, 6, 8, 7, EM)                        # shin guard in front of the hem
@@ -761,6 +797,43 @@ def build_catalog():
     for sfx, kind, t, name in BACK_STYLES:
         vols, ex = back_vols(kind, t)
         add(f"armor.back.{sfx}", "back", t, kind, name, {"all": vols}, ex)
+    for dept in ("command", "medical", "engineering", "security"):
+        add(f"armor.chest.uniform-{dept}", "chest", 0, f"uniform-{dept}", f"{dept.title()} department insignia",
+            {fn: tailored_torso(f["waist"], f"uniform-{dept}") for fn, f in FITS.items()})
+    for kind, base, tier, name in (("research", "labcoat", 0, "Research coat and datapad"),
+                                    ("engineer-rig", "harness", 1, "Engineer rig and wrench"),
+                                    ("mechanic-rig", "overalls", 0, "Mechanic rig and wrench")):
+        fits = {}
+        for fn, f in FITS.items():
+            vols = chest_vols(7, f["waist"], tier, base)
+            if base == "labcoat":
+                vols.update(coat_tails(7, f["waist"], base))
+                # Hand-held tablet outside the arm sweep, screen faces forward.
+                pad = Vol().box(-21, 0, 15, -15, 3, 27, D)
+                pad.box(-20, 3, 17, -15, 4, 25, GL)
+                pad.box(-18, 4, 19, -16, 5, 20, M).box(-18, 4, 22, -16, 5, 23, M)
+                vols["hand.L"] = pad
+            else:
+                wrench = Vol().box(-18, 0, 13, -16, 2, 26, M)
+                wrench.box(-20, 0, 24, -14, 2, 29, M).cut(-18, 0, 27, -16, 2, 29)
+                wrench.box(-18, 0, 15, -16, 3, 20, AC)
+                vols["hand.L"] = wrench
+            fits[fn] = vols
+        add(f"armor.chest.{kind}", "chest", tier, kind, name, fits)
+    # A front-corner medical satchel is visible from the same angle as the chest cross.
+    fits = {}
+    for fn, f in FITS.items():
+        vols = belt_vols(7, f["waist"], 1, "plain")
+        bag = vols["pelvis"]
+        bag.box(-9, -15, 17, -3, -11, 25, P).box(-9, -15, 25, -3, -11, 26, D)
+        bag.box(-8, -11, 23, -5, -6, 24, D)
+        bag.box(-9, -16, 20, -3, -15, 22, AC).box(-7, -16, 18, -5, -15, 24, AC, into=bag.last)
+        fits[fn] = vols
+    add("armor.belt.medical-satchel", "belt", 1, "satchel", "Medical satchel", fits)
+    cloak = Vol().box(-8, -12, 22, 8, -10, 36, S2)
+    cloak.box(-7, -13, 12, 7, -11, 22, P)
+    cloak.box(-5, -14, 10, 5, -12, 12, P)
+    add("armor.back.recon-cloak", "back", 1, "cloak", "Recon split cape", {"all": {"chest": cloak}})
     return parts
 
 
@@ -801,16 +874,16 @@ PRESETS = [
      "parts": {"chest": "armor.chest.coat", "shoulders": "armor.shoulders.epaulette", "gloves": "armor.gloves.fabric",
                "belt": "armor.belt.sash", "boots": "armor.boots.dress"}},
     {"id": "role.engineer", "heads": {"male": ["acc.goggles_up", "hair.curly_top.full"], "female": ["acc.goggles_up", "hair.messy_bun.full"], "skin": "#c98a62", "hair": "#4a2f6e", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#2d2b3f", "suit_secondary": "#1a1926"}, "name": "Engineer", "colourway": "engineer", "headPreset": "head.engineer-helmet",
-     "parts": {"chest": "armor.chest.harness", "shoulders": "armor.shoulders.light", "gloves": "armor.gloves.work",
+     "parts": {"chest": "armor.chest.engineer-rig", "shoulders": "armor.shoulders.cloth", "gloves": "armor.gloves.work",
                "belt": "armor.belt.tool", "legs": "armor.legs.light", "boots": "armor.boots.light",
                "back": "armor.back.toolpack"}},
     {"id": "role.medic", "heads": {"male": ["acc.medic_cap", "hair.close_crop.cap"], "female": ["acc.medic_cap", "hair.blunt_bob.cap"], "skin": "#f3c2a2", "hair": "#2a2438", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#2c2a3a", "suit_secondary": "#1b1a26"}, "name": "Medic", "colourway": "medic", "headPreset": "head.medic-helmet",
      "parts": {"chest": "armor.chest.medic", "shoulders": "armor.shoulders.standard", "gloves": "armor.gloves.light",
-               "belt": "armor.belt.medic", "legs": "armor.legs.light", "boots": "armor.boots.standard",
+               "belt": "armor.belt.medical-satchel", "legs": "armor.legs.light", "boots": "armor.boots.standard",
                "back": "armor.back.medpack"}},
     {"id": "role.pilot", "heads": {"male": ["acc.headset", "hair.short_waves.full"], "female": ["acc.headset", "hair.high_bun.full"], "skin": "#e0a47f", "hair": "#6b3b1f", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#233a8a", "suit_secondary": "#152255"}, "name": "Pilot", "colourway": "pilot", "headPreset": "head.pilot-helmet",
      "parts": {"chest": "armor.chest.flight", "shoulders": "armor.shoulders.flight", "gloves": "armor.gloves.light",
-               "belt": "armor.belt.utility", "legs": "armor.legs.light", "boots": "armor.boots.flight",
+               "belt": "armor.belt.plain", "legs": "armor.legs.light", "boots": "armor.boots.flight",
                "back": "armor.back.oxygen-single"}},
     {"id": "role.security", "heads": {"male": ["acc.cap", "hair.close_crop.cap"], "female": ["acc.cap", "hair.straight_bob.cap"], "skin": "#8a5a3c", "hair": "#3a2a22", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#1f2c63", "suit_secondary": "#121934"}, "name": "Security officer", "colourway": "security", "headPreset": "head.security-cap",
      "parts": {"chest": "armor.chest.vest", "shoulders": "armor.shoulders.standard", "gloves": "armor.gloves.standard",
@@ -824,15 +897,15 @@ PRESETS = [
      "parts": {"chest": "armor.chest.hazard", "shoulders": "armor.shoulders.standard", "gloves": "armor.gloves.work",
                "belt": "armor.belt.tool", "legs": "armor.legs.standard", "boots": "armor.boots.standard",
                "back": "armor.back.backpack-t3"}},
-    {"id": "role.recon", "heads": {"male": ["acc.hood", "acc.scarf"], "female": ["acc.hood", "acc.scarf"], "skin": "#a8704e", "hair": "#2b3a1e", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#34402c", "suit_secondary": "#1f261a"}, "name": "Recon scout", "colourway": "recon", "headPreset": "head.recon-goggles",
+    {"id": "role.recon", "heads": {"male": ["acc.hood", "acc.scarf", "acc.goggles_down"], "female": ["acc.hood", "acc.scarf", "acc.goggles_down"], "skin": "#a8704e", "hair": "#2b3a1e", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#34402c", "suit_secondary": "#1f261a"}, "name": "Recon scout", "colourway": "recon", "headPreset": "head.recon-goggles",
      "parts": {"chest": "armor.chest.tactical", "shoulders": "armor.shoulders.light", "gloves": "armor.gloves.light",
                "belt": "armor.belt.utility", "legs": "armor.legs.light", "boots": "armor.boots.light",
-               "back": "armor.back.radio"}},
+               "back": "armor.back.recon-cloak"}},
     {"id": "role.scientist", "heads": {"male": ["acc.round_glasses", "hair.afro.full"], "female": ["acc.round_glasses", "hair.silver_bob.full"], "skin": "#6e4630", "hair": "#c9c3d6", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#5b3fa8", "suit_secondary": "#34245f"}, "name": "Scientist", "colourway": "scientist", "headPreset": "head.scientist-hair",
-     "parts": {"chest": "armor.chest.labcoat", "gloves": "armor.gloves.fabric", "belt": "armor.belt.plain",
-               "boots": "armor.boots.sneaker", "back": "armor.back.backpack-t0"}},
+     "parts": {"chest": "armor.chest.research", "gloves": "armor.gloves.fabric", "belt": "armor.belt.plain",
+               "boots": "armor.boots.sneaker"}},
     {"id": "role.mechanic", "heads": {"male": ["acc.cap", "hair.short_spikes.cap"], "female": ["acc.cap", "hair.long_straight.cap"], "skin": "#f1b894", "hair": "#b8452a", "source": "CHAR-HEADS v1 (PR #37)"}, "undersuit": {"suit_primary": "#27305a", "suit_secondary": "#161b33"}, "name": "Mechanic", "colourway": "mechanic", "headPreset": "head.mechanic-cap",
-     "parts": {"chest": "armor.chest.overalls", "shoulders": "armor.shoulders.cloth", "gloves": "armor.gloves.work",
+     "parts": {"chest": "armor.chest.mechanic-rig", "shoulders": "armor.shoulders.cloth", "gloves": "armor.gloves.work",
                "belt": "armor.belt.tool", "legs": "armor.legs.cargo", "boots": "armor.boots.light",
                "back": "armor.back.toolpack"}},
     # stretch archetypes
@@ -861,6 +934,8 @@ def legacy_visual_map():
         for slot in EQUIPMENT_SLOTS:
             if slot in pr["parts"]:
                 out[f"{legacy}-{slot}"] = {"part": pr["parts"][slot], "colourway": pr["colourway"]}
+    # The slimmer scientist preset omits a pack; an already-owned pack still renders.
+    out.setdefault("scientist-back", {"part": "armor.back.backpack-t0", "colourway": "scientist"})
     return out
 
 

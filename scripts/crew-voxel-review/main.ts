@@ -1,5 +1,5 @@
 /**
- * Local review harness for the proposal voxel crew (CHAR-BODY r001) inside the ACTUAL game renderer
+ * Local review harness for the proposal equipped voxel crew (CHAR-BODY r005) inside the ACTUAL game renderer
  * (createWorld, stock ship, deck view). Presentation only: static SceneState, no database, no
  * authority writes. Serve through the client Vite dev server:
  *   /@fs/<repo>/scripts/crew-voxel-review/index.html
@@ -12,6 +12,10 @@ import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import type { Camera } from "@babylonjs/core/Cameras/camera";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import {
+  CHARACTER_COMPONENT_SETS,
+  type EquippedCharacterComponents,
+} from "../../packages/content/src/character-components";
 import { prefabById } from "../../packages/content/src/prefabs/index";
 import { defaultPrefabComponentCatalog } from "../../packages/content/src/ship-prefab-catalog";
 import { equipVoxelCrewItem } from "../../packages/render/src/crew/voxel-crew-kit";
@@ -80,6 +84,16 @@ for (const a of [...VOXEL_CREW_ACTIONS, ...VOXEL_CREW_EXTRA_ACTIONS])
 const params = new URLSearchParams(location.search);
 let mode = (params.get("mode") as Mode) ?? "idle";
 let body = params.get("body") ?? "male";
+let role = params.get("role") ?? "engineer";
+const roleEquipment = (): EquippedCharacterComponents => {
+  const uniform = params.get("uniform");
+  if (uniform) return { uniform: `wardrobe-uniform-${uniform}` };
+  return {
+    ...(CHARACTER_COMPONENT_SETS[
+      role as keyof typeof CHARACTER_COMPONENT_SETS
+    ] ?? {}),
+  };
+};
 let t = 0;
 let shots = 0n;
 const origin = {
@@ -100,7 +114,11 @@ let state: SceneState = {
   interior: true,
   inspect: false,
   grid: false,
-  crewAppearance: { outfit: "engineer", bodyType: body as "male" },
+  crewAppearance: {
+    outfit: role as "engineer",
+    bodyType: body as "male",
+    equippedComponents: roleEquipment(),
+  },
 };
 let world: Awaited<ReturnType<typeof createWorld>> | undefined;
 const controller = new AbortController();
@@ -261,7 +279,8 @@ const applyMode = () => {
       ? { active: true, angle: 0, range: 40, shotSequence: shots }
       : undefined,
     crewAppearance: {
-      outfit: "engineer",
+      outfit: role as "engineer",
+      equippedComponents: roleEquipment(),
       bodyType: body as "male",
       weapon: m.weapon ?? "none",
     },
@@ -429,8 +448,13 @@ Object.assign(window, {
       modeSelect.value = next;
       applyMode();
     },
+    setRole(next: string) {
+      role = next;
+      applyMode();
+    },
     setBody(next: string) {
       body = next;
+      bodySelect.value = next;
       applyMode();
     },
     play(action: VoxelCrewAction) {

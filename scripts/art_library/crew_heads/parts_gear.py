@@ -360,7 +360,7 @@ HELMETS = {
     #            W     front back  top   bottom r    rt   window rects (x0, z0, x1, z1)
     "open":     (7.75, 7.75, 7.75, 16.0, 1.0, 2.5, 3.0, [(-5.5, 0.0, 5.5, 10.5)]),
     "closed":   (8.0, 8.0, 8.0, 16.5, -0.5, 3.0, 3.5, [(-5.0, 2.5, 5.0, 10.0)]),
-    "tactical": (7.75, 8.0, 8.0, 16.0, -0.5, 1.5, 2.0, [(-5.0, 7.0, 5.0, 9.5), (-1.25, 3.5, 1.25, 7.0)]),
+    "tactical": (7.75, 8.0, 8.0, 15.5, -0.5, 2.0, 3.0, [(-6.5, 5.0, 6.5, 10.5)]),
     "hazmat":   (8.5, 8.5, 8.0, 17.0, -0.5, 3.5, 4.0, [(-5.5, 1.5, 5.5, 10.5)]),
     "pilot":    (8.0, 8.25, 8.0, 16.75, -0.5, 2.5, 3.5, [(-5.5, 3.0, 5.5, 10.0)]),
     "mining":   (8.0, 8.0, 8.0, 16.5, -0.5, 2.5, 3.0, [(-5.0, 2.5, 5.0, 9.5)]),
@@ -385,7 +385,7 @@ def helmet(hid, visor_ids):
         g.new().box(-1.25, -front + 1.5, top - 1.0, 1.25, back - 1.5, top + 0.25, "accent")   # crown stripe
         return g, {}
     window(g, rects, front)
-    frame(g, rects, front, "accent" if hid in ("hazmat", "explorer", "tactical") else "suit_secondary",
+    frame(g, rects, front, "accent" if hid in ("hazmat", "explorer") else "suit_secondary",
           t=0.75 if hid == "hazmat" else 0.5, proud=0.5 if hid == "hazmat" else 0.25)
     if hid == "closed":
         g.new().box(-1.5, -6.0, top - 0.5, 1.5, 6.0, top + 0.25, "suit_secondary")
@@ -402,7 +402,8 @@ def helmet(hid, visor_ids):
             g.new().box(a, -2.0, 7.5, b, -0.5, 8.5, "accent")
             a, b = sorted((s * 1.75, s * 6.5))
             g.new().box(a, -front - 0.75, 0.5, b, -front + 0.5, 3.5, "suit_secondary")  # cheek guards
-        g.new().box(-2.0, -front - 0.5, 10.25, 2.0, 2.0, top - 0.5, "suit_secondary")
+        g.new().box(-6.5, -front - 0.5, 10.5, 6.5, -front + 0.5, 12.0, "suit_primary")
+        g.new().box(-1.0, -5.0, top - 0.5, 1.0, 5.0, top + 0.25, "accent")
         g.new().box(-0.75, -front - 0.75, 11.0, 0.75, -front - 0.5, 12.0, "accent")
     elif hid == "hazmat":
         for s in (-1, 1):
