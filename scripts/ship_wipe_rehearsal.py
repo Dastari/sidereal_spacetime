@@ -38,7 +38,9 @@ def run(command, cwd, env=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    parser.add_argument('--baseline-ref', default='release/live-authority-20260921')
+    parser.add_argument('--baseline-ref', default='origin/main',
+                        help='ref of the module live runs (default origin/main, fetched first); '
+                             'a prefab-era baseline seeds the owner with its pinned prefab')
     parser.add_argument('--label', required=True, help='new lowercase smoke label, e.g. wipe-r003')
     parser.add_argument('--stage', choices=['all', 'seed', 'wipe'], default='all')
     parser.add_argument('--full-seed', action='store_true', help='also run the full standard smoke before seeding')
@@ -70,7 +72,13 @@ def main():
         if baseline.exists():
             raise SystemExit(f'{baseline} exists; choose a new label')
         baseline.mkdir()
-        archive = subprocess.run(['git', 'archive', args.baseline_ref], cwd=ROOT, check=True,
+        if args.baseline_ref.startswith('origin/'):
+            subprocess.run(['git', 'fetch', '--quiet', 'origin', args.baseline_ref.removeprefix('origin/')],
+                           cwd=ROOT, check=True)
+        commit = subprocess.run(['git', 'rev-parse', '--verify', args.baseline_ref + '^{commit}'], cwd=ROOT,
+                                check=True, capture_output=True, text=True).stdout.strip()
+        print(json.dumps({'baselineRef': args.baseline_ref, 'baselineCommit': commit}), flush=True)
+        archive = subprocess.run(['git', 'archive', commit], cwd=ROOT, check=True,
                                  capture_output=True).stdout
         subprocess.run(['tar', '-x', '-C', str(baseline)], input=archive, check=True)
         shutil.copy(ROOT / 'dev.toml', baseline / 'dev.toml')
