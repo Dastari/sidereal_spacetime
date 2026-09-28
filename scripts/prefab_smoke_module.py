@@ -2,8 +2,9 @@
 
 The production world has no player-callable prefab assignment: SHIPS-REMOVAL owns the
 operator reducer. This copies packages/world into the reserved fresh smoke fixture and
-appends one smoke-only reducer that calls the real `installPrefabShip` for the caller's
-own character. Never edits packages/world or publishes to a shared database.
+appends smoke-only reducers that call the real `installPrefabShip` for the caller's
+own character and the real component damage adapter on the caller's own ship. Never edits
+packages/world or publishes to a shared database.
 """
 from pathlib import Path
 import shutil
@@ -15,6 +16,17 @@ export const assignPrefabSmokeShip = db.reducer({prefabId:t.string()},auth.gameA
   if(actors.length!==1)throw new SenderError("One owned smoke character required");
   if(!/^[a-z0-9][a-z0-9.-]{2,63}$/.test(args.prefabId))throw new SenderError("Invalid prefab id");
   installPrefabShip(ctx,actors[0],{prefabId:args.prefabId,pose:{kind:"berth"}});
+},true));
+// Smoke-only trigger for large component damage (a handheld needs ~90 shots to kill a reactor):
+// the real damage adapter on the caller's own ship, so the smoke can check the flight effect.
+import { damageComponent as damageSmokeComponent } from "./combat-damage";
+export const damagePrefabSmokeComponent = db.reducer({objectId:t.string(),damage:t.f64()},auth.gameAction((ctx,args)=>{
+  const actors=[...ctx.db.character.by_owner.filter(ctx.sender)];
+  if(actors.length!==1)throw new SenderError("One owned smoke character required");
+  const ship=ctx.db.ship.id.find(actors[0].shipId);
+  if(!ship||!ship.owner.isEqual(ctx.sender))throw new SenderError("Own prefab ship required");
+  if(!(args.damage>0&&args.damage<=100000))throw new SenderError("Bounded damage required");
+  damageSmokeComponent(ctx,ship.id,args.objectId,args.damage,true);
 },true));
 '''
 

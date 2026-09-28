@@ -84,6 +84,7 @@
     "./ship-themes": "./src/ship-themes.ts",
     "./prefabs": "./src/prefabs/index.ts",
     "./ship-components": "./src/ship-components.ts",
+    "./weapons": "./src/weapons.ts",
     "./ship-components-source": "./src/ship-components-source.ts",
     "./ship-components.v1.json": "./src/ship-components.v1.json",
     "./ship-components-reference-fits": "./src/ship-components-reference-fits.ts",

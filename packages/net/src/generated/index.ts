@@ -111,6 +111,7 @@ import OwnAuthoredFlightsRow from "./own_authored_flights_table";
 import OwnCargoCarriersRow from "./own_cargo_carriers_table";
 import OwnCargoGridsRow from "./own_cargo_grids_table";
 import OwnCarriedInventoryRevisionsRow from "./own_carried_inventory_revisions_table";
+import OwnCharacterVitalsRow from "./own_character_vitals_table";
 import OwnCharactersRow from "./own_characters_table";
 import OwnCombatRow from "./own_combat_table";
 import OwnCombatImpactRow from "./own_combat_impact_table";
@@ -142,6 +143,7 @@ import OwnPassengerGrantsRow from "./own_passenger_grants_table";
 import OwnPassengerVisitRow from "./own_passenger_visit_table";
 import OwnReachableCargoContainersRow from "./own_reachable_cargo_containers_table";
 import OwnReachableCargoItemsRow from "./own_reachable_cargo_items_table";
+import OwnShipComponentDamageRow from "./own_ship_component_damage_table";
 import OwnShipZonesRow from "./own_ship_zones_table";
 import OwnShipsRow from "./own_ships_table";
 import OwnSpaceBodiesRow from "./own_space_bodies_table";
@@ -258,6 +260,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnCarriedInventoryRevisionsRow),
+  ownCharacterVitals: __table({
+    name: 'own_character_vitals',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnCharacterVitalsRow),
   ownCharacters: __table({
     name: 'own_characters',
     indexes: [
@@ -475,6 +484,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnReachableCargoItemsRow),
+  ownShipComponentDamage: __table({
+    name: 'own_ship_component_damage',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnShipComponentDamageRow),
   ownShipZones: __table({
     name: 'own_ship_zones',
     indexes: [

@@ -28,7 +28,7 @@ WIPED_SHIP_TABLES = [
     'ship', 'station', 'ship_world_motion', 'construction_instance', 'construction_deck',
     'game_ship_access', 'construction_flight_binding', 'construction_flight_station',
     'construction_flight_fitting', 'construction_flight_compiled', 'construction_flight_dirty',
-    'construction_flight_damage_event', 'construction_pilot_seat', 'actuator_output', 'space_body',
+    'construction_flight_damage_event', 'ship_component_damage', 'construction_pilot_seat', 'actuator_output', 'space_body',
     'legacy_body_alias', 'ship_zone_state', 'pilot_layout_receipt', 'construction_door',
     'construction_airlock', 'construction_native_pressure', 'construction_atmosphere',
     'construction_stair_link', 'construction_stair_walk', 'construction_stair_reservation',

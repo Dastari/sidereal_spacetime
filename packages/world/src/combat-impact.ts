@@ -4,7 +4,8 @@
  *
  * Prefab ships use the compiled prefab structure (walls, hull shell, bow profiles, tall furniture)
  * and other prefab ships' hulls; native construction ships use their walking-collision segments.
- * The impact is recorded only; no hull, module or character damage is applied yet.
+ * Character bodies on the same ship and deck stop the beam before the structure does (friendly
+ * fire is on); `combat-damage.ts` applies the damage.
  */
 import type { ReducerCtx, InferSchema } from "spacetimedb/server";
 import type world from "./index";
@@ -20,6 +21,8 @@ import {
   type PrefabBeamModel,
 } from "@sidereal/sim/prefab-beam";
 import { constructionCollision } from "./construction-doors";
+import { castCharacterBeam } from "@sidereal/sim/combat-damage";
+import { characterTargets } from "./combat-damage";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type Instance = { id: string; revision: bigint; documentJson: string };
@@ -51,7 +54,36 @@ function beamModelFor(instance: Instance): PrefabBeamModel | null {
 /** Other ships further than this from the shooter's ship are never tested. */
 const OTHER_SHIP_REACH_M = 200;
 
+/** A beam hit, or a character body (`kind: "character"`, `targetId` = character id). */
+export type ShotHit = Omit<BeamHit, "kind"> & {
+  kind: BeamHit["kind"] | "character";
+};
+
+/** The structure hit, unless a character body on the same ship and deck is reached first. */
 export function resolveShotImpact(
+  ctx: Context,
+  actor: { id: string; shipId: string; localX: number; localY: number },
+  angle: number,
+  rangeM: number,
+): ShotHit {
+  const structure = resolveStructureImpact(ctx, actor, angle, rangeM);
+  const body = castCharacterBeam(
+    [actor.localX, actor.localY],
+    angle,
+    structure.distanceM,
+    characterTargets(ctx, actor),
+  );
+  return body
+    ? {
+        kind: "character",
+        targetId: body.id,
+        distanceM: body.distanceM,
+        point: body.point,
+      }
+    : structure;
+}
+
+function resolveStructureImpact(
   ctx: Context,
   actor: { id: string; shipId: string; localX: number; localY: number },
   angle: number,
