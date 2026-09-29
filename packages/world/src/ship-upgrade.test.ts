@@ -79,6 +79,10 @@ const PRIMARY: Record<string, string> = {
   pilotLayoutReceipt: "shipId",
   couchSeat: "characterId",
   weaponEnergy: "itemId",
+  inventoryItemPin: "itemId",
+  combatActionPin: "characterId",
+  contentDefinition: "definitionRef",
+  contentDefinitionHead: "definitionKey",
   shipOperatorOperation: "operationId",
   characterUniformIssue: "characterId",
 };

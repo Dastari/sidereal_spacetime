@@ -1,5 +1,5 @@
 import type { InventoryDefinition } from "@sidereal/content/inventory";
-import { LAB_WEAPONS } from "@sidereal/content/weapons";
+import { weaponDefinitionOf } from "@sidereal/content/item-presentation";
 
 /** The own `visible_combat_actions` fields the HUD reads. */
 export interface OwnCombatAction {
@@ -20,7 +20,10 @@ export function trackReload(
 ) {
   if (!action) return;
   if (seen.current !== undefined && action.reloadSequence !== seen.current)
-    until.current = now + (LAB_WEAPONS[action.definitionId]?.reloadMs ?? 0);
+    until.current =
+      now +
+      (weaponDefinitionOf({ definitionId: action.definitionId })?.reloadMs ??
+        0);
   seen.current = action.reloadSequence;
 }
 
@@ -34,9 +37,14 @@ export function combatNote(
   action: OwnCombatAction | undefined,
   reloadingUntil: number,
   now = performance.now(),
+  /** The weapon instance, so its pinned revision (X-2) names mode and reach. */
+  weaponItemId?: string,
 ): string | undefined {
   if (weaponDefinitionId) {
-    const weapon = LAB_WEAPONS[weaponDefinitionId];
+    const weapon = weaponDefinitionOf({
+      id: weaponItemId,
+      definitionId: weaponDefinitionId,
+    });
     if (reloadingUntil > now && action?.definitionId === weaponDefinitionId)
       return "Reloading…";
     if (weapon?.mode === "thrown")

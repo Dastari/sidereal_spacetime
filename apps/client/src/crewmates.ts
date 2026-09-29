@@ -1,5 +1,5 @@
+import { itemDefinitionOf } from "@sidereal/content/item-presentation";
 import type { CombatActionState, RemoteCrewState } from "@sidereal/render";
-import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
 import type { CrewAppearance } from "@sidereal/render/crew/appearance";
 import { equipmentAppearance } from "./inventory";
 
@@ -149,8 +149,8 @@ export function combatActionsFromView(
     out.push({
       characterId: row.characterId,
       crewItemId:
-        INVENTORY_DEFINITIONS.find((d) => d.id === row.definitionId)
-          ?.crewItemId ?? null,
+        itemDefinitionOf({ definitionId: row.definitionId })?.crewItemId ??
+        null,
       mode: row.mode,
       shotSequence: row.shotSequence,
       points: parsePoints(row.pointsJson),

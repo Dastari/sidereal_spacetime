@@ -30,7 +30,11 @@ import {
   LIQUID_DENSITY_KG_PER_LITRE,
   CHARACTER_CARRY_LIMIT_KG,
 } from "@sidereal/content/inventory";
-import { lifecycleEvents, lifecycleTestTables } from "./lifecycle-test-tables";
+import {
+  lifecycleEvents,
+  lifecycleTestTables,
+  itemDefinitionTestTables,
+} from "./lifecycle-test-tables";
 function fixture() {
   const actor = {
     id: "actor",
@@ -140,6 +144,7 @@ function fixture() {
     newUuidV4: () => `uuid-${++n}`,
     db: {
       ...lifecycleTestTables(),
+      ...itemDefinitionTestTables(),
       constructionFlightBinding: { shipId: { find: () => undefined } },
       character: {
         id: { find: (id: string) => (id === actor.id ? actor : undefined) },

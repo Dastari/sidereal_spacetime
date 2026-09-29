@@ -15,10 +15,10 @@ import {
 } from "spacetimedb/server";
 import type world from "./index";
 import {
-  INVENTORY_DEFINITIONS,
-  inventoryDefinition,
-} from "@sidereal/content/inventory";
-import { PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
+  itemDefinitions,
+  commitPin,
+  type PinnedItemDefinitions,
+} from "./item-definitions";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import {
   PREFAB_DECK_ID,
@@ -61,7 +61,7 @@ function fail(message: string): never {
   throw new SenderError(message);
 }
 
-function parseDefinitionIds(json: string) {
+function parseDefinitionIds(json: string, defs: PinnedItemDefinitions) {
   let ids: unknown;
   try {
     ids = JSON.parse(json);
@@ -75,17 +75,17 @@ function parseDefinitionIds(json: string) {
     !ids.every((id) => typeof id === "string")
   )
     fail(`definitionIdsJson must list 1-${MAX_STOCK_ITEMS} definition ids`);
-  for (const id of ids as string[]) {
-    if (!INVENTORY_DEFINITIONS.some((d) => d.id === id))
-      fail("Unknown item definition: " + id);
-    // Ship flight mass needs an explicit physical definition for every item on board.
-    if (
-      !PHYSICAL_CATALOG.definitions.some(
-        (d) => d.id === "inventory:" + id && d.kind === "inventory",
-      )
-    )
-      fail("Item has no physical definition: " + id);
-  }
+  // Existence and instantiability come from the registry (current revision) or the seed.
+  for (const id of ids as string[])
+    try {
+      defs.preview(id);
+    } catch (e) {
+      fail(
+        "Unknown or retired item definition: " +
+          id +
+          (e instanceof Error ? ` (${e.message})` : ""),
+      );
+    }
   return ids as string[];
 }
 
@@ -104,7 +104,8 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
     return;
   const name = args.containerName.trim();
   if (!name || name.length > 40) fail("Container name must be 1-40 characters");
-  const definitionIds = parseDefinitionIds(args.definitionIdsJson);
+  const defs = itemDefinitions(ctx);
+  const definitionIds = parseDefinitionIds(args.definitionIdsJson, defs);
 
   // The ship must be the character's active game-owned prefab ship.
   const actor = ctx.db.character.id.find(args.characterId);
@@ -191,22 +192,20 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   const nestedContainers = root
     ? [...ctx.db.inventoryContainerScope.by_root.filter(root.id)].length
     : 1;
-  const newDefinitions = definitionIds.map((id) => inventoryDefinition(id));
+  const newDefinitions = definitionIds.map((id) => defs.preview(id));
   const newStorage = newDefinitions.filter((d) => d.storage).length;
   if (existing.length + definitionIds.length > SCOPED_INVENTORY_LIMITS.items)
     fail("Container item budget exceeded");
   if (nestedContainers + newStorage > SCOPED_INVENTORY_LIMITS.containers)
     fail("Container budget exceeded");
   const massKg =
-    existing.reduce(
-      (sum, i) => sum + inventoryDefinition(i.definitionId).massKg,
-      0,
-    ) + newDefinitions.reduce((sum, d) => sum + d.massKg, 0);
+    existing.reduce((sum, i) => sum + defs.item(i).massKg, 0) +
+    newDefinitions.reduce((sum, d) => sum + d.massKg, 0);
   if (massKg > maxMassKg + 1e-8) fail("Container mass limit exceeded");
   const occupied = existing
     .filter((i) => root && i.containerId === root.id)
     .map((i) => {
-      const d = inventoryDefinition(i.definitionId);
+      const d = defs.item(i);
       return {
         locker: 0,
         x: i.x,
@@ -324,6 +323,7 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
     )
       fail("Item identity exists");
     item.id = id;
+    const definition = defs.stage(id, item.definitionId);
     ctx.db.inventoryItem.insert({
       id,
       characterId: "",
@@ -334,6 +334,7 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
       y: item.y,
       rotated: false,
     });
+    commitPin(ctx, defs, id);
     ctx.db.inventoryItemMembership.insert({
       itemId: id,
       revision: 1n,
@@ -341,14 +342,14 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
       rootContainerId: container.id,
       rootCharacterId: "",
     });
-    const storage = inventoryDefinition(item.definitionId).storage;
+    const storage = definition.storage;
     if (storage) {
       const child = ctx.newUuidV4().toString();
       ctx.db.inventoryContainer.insert({
         ...container,
         id: child,
         parentItemId: id,
-        name: inventoryDefinition(item.definitionId).name + " storage",
+        name: definition.name + " storage",
         width: storage.width,
         height: storage.height,
         maxMassKg: storage.maxMassKg,

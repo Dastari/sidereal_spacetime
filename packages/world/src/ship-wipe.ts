@@ -364,6 +364,11 @@ export function wipePlayerShips(ctx: Context, args: ShipWipeArgs) {
     inventory.shipHeldContainers.has(s.containerId),
   ))
     archiveDelete(ctx, op, sequence, "inventoryContainerScope", row);
+  // Definition pins (X-2) go with their items, so an archive restore keeps each item's revision.
+  for (const row of [...ctx.db.inventoryItemPin.iter()].filter((p) =>
+    inventory.shipHeldItems.has(p.itemId),
+  ))
+    archiveDelete(ctx, op, sequence, "inventoryItemPin", row);
   for (const row of [...ctx.db.inventoryItem.iter()].filter((i) =>
     inventory.shipHeldItems.has(i.id),
   ))

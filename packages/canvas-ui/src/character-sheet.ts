@@ -1,8 +1,8 @@
+import { itemDefinitionOf } from "@sidereal/content/item-presentation";
 import type { EquipmentSlot } from "@sidereal/content/character-components";
 import type { CrewAppearance } from "@sidereal/render/crew/appearance";
 import type { InventoryState } from "./inventory";
 import {
-  INVENTORY_DEFINITIONS,
   type InventoryDefinition,
   characterEquipmentFromInventory,
 } from "../../content/src/inventory";
@@ -215,9 +215,7 @@ export function createCharacterSheet(
     if (visible) ensurePreview();
     const preset = options.cosmetics?.selected() ?? "crew";
     const held = state.items.find((i) => i.equipmentSlot === "hand");
-    const heldDef = INVENTORY_DEFINITIONS.find(
-      (d) => d.id === held?.definitionId,
-    );
+    const heldDef = itemDefinitionOf(held);
     if (preview && visible) {
       preview.resize(Math.round(view.w * 1.5), Math.round(view.h * 1.5));
       preview.setAppearance(preset, {
@@ -275,8 +273,7 @@ export function createCharacterSheet(
       const item = slot
         ? state.items.find((it) => it.equipmentSlot === slot)
         : undefined;
-      const d =
-        item && INVENTORY_DEFINITIONS.find((d) => d.id === item.definitionId);
+      const d = itemDefinitionOf(item);
       const id = slot ? "equip-slot-" + slot : "appearance-slot-" + i;
       drawItemFrame(ui, box, {
         rarity: d ? itemRarity(d.id) : rarity,

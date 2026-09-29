@@ -68,6 +68,7 @@ import MoveCargoCarrierReducer from "./move_cargo_carrier_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
 import OperatorAssignPrefabShipReducer from "./operator_assign_prefab_ship_reducer";
 import OperatorImportContentSeedReducer from "./operator_import_content_seed_reducer";
+import OperatorResyncItemDefinitionsReducer from "./operator_resync_item_definitions_reducer";
 import OperatorSetDefinitionGrantReducer from "./operator_set_definition_grant_reducer";
 import OperatorSetStarterPrefabReducer from "./operator_set_starter_prefab_reducer";
 import OperatorStockShipCargoReducer from "./operator_stock_ship_cargo_reducer";
@@ -151,6 +152,7 @@ import OwnInventoryContainersRow from "./own_inventory_containers_table";
 import OwnInventoryHotbarRow from "./own_inventory_hotbar_table";
 import OwnInventoryItemsRow from "./own_inventory_items_table";
 import OwnInventoryStateRow from "./own_inventory_state_table";
+import OwnItemDefinitionPinsRow from "./own_item_definition_pins_table";
 import OwnMapShipsRow from "./own_map_ships_table";
 import OwnNativeAirlocksRow from "./own_native_airlocks_table";
 import OwnPassengerGrantsRow from "./own_passenger_grants_table";
@@ -166,6 +168,7 @@ import OwnSpaceBodiesRow from "./own_space_bodies_table";
 import OwnStationsRow from "./own_stations_table";
 import OwnSystemMapsRow from "./own_system_maps_table";
 import OwnWorldAdmissionRow from "./own_world_admission_table";
+import PublishedItemDefinitionsRow from "./published_item_definitions_table";
 import VisibleBodyDescriptionsRow from "./visible_body_descriptions_table";
 import VisibleBodyMotionRow from "./visible_body_motion_table";
 import VisibleCombatActionsRow from "./visible_combat_actions_table";
@@ -502,6 +505,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnInventoryStateRow),
+  ownItemDefinitionPins: __table({
+    name: 'own_item_definition_pins',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnItemDefinitionPinsRow),
   ownMapShips: __table({
     name: 'own_map_ships',
     indexes: [
@@ -607,6 +617,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnWorldAdmissionRow),
+  publishedItemDefinitions: __table({
+    name: 'published_item_definitions',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, PublishedItemDefinitionsRow),
   visibleBodyDescriptions: __table({
     name: 'visible_body_descriptions',
     indexes: [
@@ -708,6 +725,7 @@ const reducersSchema = __reducers(
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
   __reducerSchema("operator_assign_prefab_ship", OperatorAssignPrefabShipReducer),
   __reducerSchema("operator_import_content_seed", OperatorImportContentSeedReducer),
+  __reducerSchema("operator_resync_item_definitions", OperatorResyncItemDefinitionsReducer),
   __reducerSchema("operator_set_definition_grant", OperatorSetDefinitionGrantReducer),
   __reducerSchema("operator_set_starter_prefab", OperatorSetStarterPrefabReducer),
   __reducerSchema("operator_stock_ship_cargo", OperatorStockShipCargoReducer),

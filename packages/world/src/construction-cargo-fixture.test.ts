@@ -1,4 +1,5 @@
 import { expect, test, vi } from "vitest";
+import { itemDefinitionTestTables } from "./lifecycle-test-tables";
 import { Identity } from "spacetimedb";
 import { CARGO_HANDLING_FIXTURE as FIXTURE } from "@sidereal/content/cargo-handling-fixture";
 import { compileConstruction } from "@sidereal/sim/construction-transactions";
@@ -100,6 +101,7 @@ function fixture() {
       uuid,
     );
   const db = {
+    ...itemDefinitionTestTables(),
     constructionFlightBinding: table("shipId"),
     constructionInstance: table(),
     constructionGrant: table("id", { by_principal: "principal" }),

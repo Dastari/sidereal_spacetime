@@ -14,6 +14,7 @@ const sharedBindings = new WeakMap<
 export const getSharedWorldBinding = (connection: DbConnection | null) =>
   connection ? sharedBindings.get(connection) : undefined;
 import { bindGameSessionProof } from "./game-session-proof";
+import { installItemPresentation } from "./item-definitions";
 import {
   createConnectionResources,
   subscriptionErrorMessage,
@@ -97,6 +98,7 @@ export function connect(
         .subscriptionBuilder()
         .onApplied(() => {
           if (!resources.applied(subscription)) return;
+          installItemPresentation(connection);
           onStatus("ready");
           onChange();
         })
@@ -160,6 +162,9 @@ export function connect(
           tables.ownReachableCargoContainers,
           tables.ownReachableCargoItems,
           tables.ownCarriedInventoryRevisions,
+          // X-2: published item/weapon revisions and the pins of the viewer's items.
+          tables.publishedItemDefinitions,
+          tables.ownItemDefinitionPins,
         ]);
       resources.retain("game", subscription);
     })
@@ -231,6 +236,23 @@ export function connect(
       table.removeOnInsert(onChange);
       table.removeOnUpdate(onChange);
       table.removeOnDelete(onChange);
+    });
+  }
+  const presentationChanged = () => {
+    installItemPresentation(connection);
+    onChange();
+  };
+  for (const table of [
+    connection.db.publishedItemDefinitions,
+    connection.db.ownItemDefinitionPins,
+  ]) {
+    table.onInsert(presentationChanged);
+    table.onUpdate(presentationChanged);
+    table.onDelete(presentationChanged);
+    resources.listen(() => {
+      table.removeOnInsert(presentationChanged);
+      table.removeOnUpdate(presentationChanged);
+      table.removeOnDelete(presentationChanged);
     });
   }
   const disconnect = connection.disconnect.bind(connection);

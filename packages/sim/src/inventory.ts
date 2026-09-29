@@ -43,12 +43,24 @@ export function itemSize(item: GridItem, definition: GridDefinition) {
     ? { width: definition.height, height: definition.width }
     : { width: definition.width, height: definition.height };
 }
-function definitionsById(definitions: readonly GridDefinition[]) {
-  return new Map(definitions.map((d) => [d.id, d]));
+/**
+ * Definitions are either a catalogue (looked up by `definitionId`) or a resolver of each
+ * instance's pinned definition (X-2: two instances of one item may pin different revisions).
+ */
+export type DefinitionResolver = (
+  item: Pick<GridItem, "id" | "definitionId">,
+) => GridDefinition | undefined;
+export type GridDefinitions = readonly GridDefinition[] | DefinitionResolver;
+export function definitionResolver(
+  definitions: GridDefinitions,
+): DefinitionResolver {
+  if (typeof definitions === "function") return definitions;
+  const byId = new Map(definitions.map((d) => [d.id, d]));
+  return (item) => byId.get(item.definitionId);
 }
 export function inventoryMass(
   snapshot: InventorySnapshot,
-  definitions: readonly GridDefinition[],
+  definitions: GridDefinitions,
   liquidDensity: Readonly<Record<string, number>>,
 ) {
   if (
@@ -56,7 +68,7 @@ export function inventoryMass(
     snapshot.containers.length > MAX_CONTAINERS
   )
     throw new Error("Inventory budget exceeded");
-  const defs = definitionsById(definitions),
+  const defs = definitionResolver(definitions),
     items = new Map(snapshot.items.map((item) => [item.id, item]));
   const memo = new Map<string, number>();
   const itemMass = (id: string, path: string[] = []): number => {
@@ -64,7 +76,7 @@ export function inventoryMass(
       throw new Error("Container cycle or nesting limit");
     if (memo.has(id)) return memo.get(id)!;
     const item = items.get(id),
-      definition = item && defs.get(item.definitionId);
+      definition = item && defs(item);
     if (!item || !definition)
       throw new Error("Unknown item definition or instance");
     let mass = definition.massKg;
@@ -96,12 +108,12 @@ export function inventoryMass(
 }
 export function validateInventory(
   snapshot: InventorySnapshot,
-  definitions: readonly GridDefinition[],
+  definitions: GridDefinitions,
   liquidDensity: Readonly<Record<string, number>>,
   pocketsId: string,
   carryLimitKg: number,
 ) {
-  const defs = definitionsById(definitions),
+  const defs = definitionResolver(definitions),
     containers = new Map(snapshot.containers.map((c) => [c.id, c]));
   if (
     new Set(snapshot.items.map((i) => i.id)).size !== snapshot.items.length ||
@@ -138,7 +150,7 @@ export function validateInventory(
       throw new Error("Invalid reservoir contents");
   }
   for (const item of snapshot.items) {
-    const definition = defs.get(item.definitionId);
+    const definition = defs(item);
     if (!definition) throw new Error("Unknown item definition");
     if (Boolean(item.containerId) === Boolean(item.equipmentSlot))
       throw new Error("Item must have exactly one location");
@@ -166,7 +178,7 @@ export function validateInventory(
     for (const other of snapshot.items) {
       if (other.id === item.id || other.containerId !== item.containerId)
         continue;
-      const otherDef = defs.get(other.definitionId);
+      const otherDef = defs(other);
       if (!otherDef) throw new Error("Unknown item definition");
       const otherSize = itemSize(other, otherDef);
       if (
@@ -193,7 +205,7 @@ export function validateInventory(
 }
 export function placeInventoryItem(
   snapshot: InventorySnapshot,
-  definitions: readonly GridDefinition[],
+  definitions: GridDefinitions,
   liquidDensity: Readonly<Record<string, number>>,
   pocketsId: string,
   carryLimitKg: number,
@@ -220,7 +232,7 @@ export function placeInventoryItem(
 /** Finds a legal complete move, including payload/nesting/carry checks. */
 export function firstInventoryPlacement(
   snapshot: InventorySnapshot,
-  definitions: readonly GridDefinition[],
+  definitions: GridDefinitions,
   liquidDensity: Readonly<Record<string, number>>,
   pocketsId: string,
   carryLimitKg: number,
@@ -229,17 +241,15 @@ export function firstInventoryPlacement(
 ): InventoryLocation | undefined {
   const container = snapshot.containers.find((c) => c.id === containerId);
   if (!container || container.kind !== "grid") return;
+  const defs = definitionResolver(definitions);
   const item = snapshot.items.find((i) => i.id === itemId),
-    definition = item && definitions.find((d) => d.id === item.definitionId);
+    definition = item && defs(item);
   if (!item || !definition) return;
   const occupied = snapshot.items
     .filter((i) => i.containerId === containerId && i.id !== itemId)
     .map((i) => ({
       item: i,
-      size: itemSize(
-        i,
-        definitions.find((d) => d.id === i.definitionId)!,
-      ),
+      size: itemSize(i, defs(i)!),
     }));
   for (const rotated of [item.rotated, !item.rotated])
     for (let y = 0; y < container.height; y++)

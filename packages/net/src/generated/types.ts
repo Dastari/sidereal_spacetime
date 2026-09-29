@@ -260,6 +260,13 @@ export const CombatAction = __t.object("CombatAction", {
 });
 export type CombatAction = __Infer<typeof CombatAction>;
 
+export const CombatActionPin = __t.object("CombatActionPin", {
+  characterId: __t.string(),
+  definitionId: __t.string(),
+  weaponRevision: __t.u64(),
+});
+export type CombatActionPin = __Infer<typeof CombatActionPin>;
+
 export const CombatActionStatus = __t.object("CombatActionStatus", {
   characterId: __t.string(),
   shipId: __t.string(),
@@ -1453,6 +1460,16 @@ export const InventoryItemMembership = __t.object("InventoryItemMembership", {
 });
 export type InventoryItemMembership = __Infer<typeof InventoryItemMembership>;
 
+export const InventoryItemPin = __t.object("InventoryItemPin", {
+  itemId: __t.string(),
+  definitionId: __t.string(),
+  itemRevision: __t.u64(),
+  weaponRevision: __t.u64(),
+  source: __t.string(),
+  pinnedMicros: __t.u64(),
+});
+export type InventoryItemPin = __Infer<typeof InventoryItemPin>;
+
 export const InventoryReceipt = __t.object("InventoryReceipt", {
   id: __t.string(),
   characterId: __t.string(),
@@ -1714,6 +1731,9 @@ export type OwnInventoryItems = __Infer<typeof OwnInventoryItems>;
 export const OwnInventoryState = __t.object("OwnInventoryState", {});
 export type OwnInventoryState = __Infer<typeof OwnInventoryState>;
 
+export const OwnItemDefinitionPins = __t.object("OwnItemDefinitionPins", {});
+export type OwnItemDefinitionPins = __Infer<typeof OwnItemDefinitionPins>;
+
 export const OwnMapShips = __t.object("OwnMapShips", {});
 export type OwnMapShips = __Infer<typeof OwnMapShips>;
 
@@ -1828,6 +1848,20 @@ export const PilotLayoutReceipt = __t.object("PilotLayoutReceipt", {
   appliedMicros: __t.u64(),
 });
 export type PilotLayoutReceipt = __Infer<typeof PilotLayoutReceipt>;
+
+export const PublishedItemDefinition = __t.object("PublishedItemDefinition", {
+  definitionRef: __t.string(),
+  kind: __t.string(),
+  definitionId: __t.string(),
+  revision: __t.u64(),
+  status: __t.string(),
+  payloadJson: __t.string(),
+  sha256: __t.string(),
+});
+export type PublishedItemDefinition = __Infer<typeof PublishedItemDefinition>;
+
+export const PublishedItemDefinitions = __t.object("PublishedItemDefinitions", {});
+export type PublishedItemDefinitions = __Infer<typeof PublishedItemDefinitions>;
 
 export const RetiredIdentity = __t.object("RetiredIdentity", {
   source: __t.identity(),
@@ -2421,6 +2455,14 @@ export const VisibleInventoryItem = __t.object("VisibleInventoryItem", {
   rotated: __t.bool(),
 });
 export type VisibleInventoryItem = __Infer<typeof VisibleInventoryItem>;
+
+export const VisibleItemDefinitionPin = __t.object("VisibleItemDefinitionPin", {
+  itemId: __t.string(),
+  definitionId: __t.string(),
+  itemRevision: __t.u64(),
+  weaponRevision: __t.u64(),
+});
+export type VisibleItemDefinitionPin = __Infer<typeof VisibleItemDefinitionPin>;
 
 export const VisibleShipDescriptions = __t.object("VisibleShipDescriptions", {});
 export type VisibleShipDescriptions = __Infer<typeof VisibleShipDescriptions>;

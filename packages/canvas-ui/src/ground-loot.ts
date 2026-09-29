@@ -1,5 +1,6 @@
 import type { GroundItemLabel } from "@sidereal/render/ground-items";
-import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+import type { InventoryDefinition } from "@sidereal/content/inventory";
+import { itemDefinitionOf } from "@sidereal/content/item-presentation";
 import { itemRarity } from "./character-data";
 import { ITEM_RARITY_PALETTES } from "./item-frame";
 import type { CanvasUI } from "./toolkit";
@@ -31,13 +32,13 @@ export function drawGroundLoot(
   const used: { x: number; y: number; w: number; h: number }[] = [];
   let hover:
     | {
-        d: (typeof INVENTORY_DEFINITIONS)[number];
+        d: InventoryDefinition;
         r: { x: number; y: number; w: number; h: number };
       }
     | undefined;
   let overflow = 0;
   for (const row of rows) {
-    const d = INVENTORY_DEFINITIONS.find((d) => d.id === row.definitionId);
+    const d = itemDefinitionOf(row);
     if (!d) continue;
     const point = { x: row.x / ui.scale, y: row.y / ui.scale };
     if (point.x < 0 || point.x > ui.width || point.y < 0 || point.y > ui.height)

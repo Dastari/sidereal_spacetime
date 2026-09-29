@@ -1,6 +1,7 @@
 import { t, type InferSchema, type ViewCtx } from "spacetimedb/server";
 import type world from "./index";
-import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+import type { InventoryDefinition } from "@sidereal/content/inventory";
+import { itemDefinitions } from "./item-definitions";
 import { visibleInteriorBodies } from "./construction-passenger-views";
 type Context = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 
@@ -35,14 +36,17 @@ export const crewPresentationProjection = t.row("CrewPresentation", {
 
 /** Equipped slot -> catalogue id for items whose definition belongs in that slot. */
 export function visibleEquipment(
-  items: Iterable<{ definitionId: string; equipmentSlot: string }>,
+  items: Iterable<{ id: string; definitionId: string; equipmentSlot: string }>,
+  /** Each instance's pinned definition (X-2). */
+  definitionOf: (item: {
+    id: string;
+    definitionId: string;
+  }) => InventoryDefinition | undefined,
 ) {
   const out: Record<string, string> = {};
   for (const item of items) {
     if (!item.equipmentSlot) continue;
-    const definition = INVENTORY_DEFINITIONS.find(
-      (d) => d.id === item.definitionId,
-    );
+    const definition = definitionOf(item);
     if (definition?.equipSlot === item.equipmentSlot)
       out[item.equipmentSlot] = definition.id;
   }
@@ -57,6 +61,7 @@ export function visibleEquipment(
 export function visibleCrewPresentation(ctx: Context) {
   const visible = visibleInteriorBodies(ctx);
   if (!visible) return [];
+  const defs = itemDefinitions(ctx);
   const out = [];
   for (const { body } of visible.bodies) {
     if (body.id === visible.actor.id) continue;
@@ -78,7 +83,10 @@ export function visibleCrewPresentation(ctx: Context) {
       deckId: visible.deck.id,
       appearanceJson: appearance?.appearanceJson ?? "{}",
       equipmentJson: JSON.stringify(
-        visibleEquipment(ctx.db.inventoryItem.by_character.filter(body.id)),
+        visibleEquipment(
+          ctx.db.inventoryItem.by_character.filter(body.id),
+          defs.find,
+        ),
       ),
       dead,
       seated,

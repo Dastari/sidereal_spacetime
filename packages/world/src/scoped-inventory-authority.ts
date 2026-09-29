@@ -31,7 +31,6 @@ import type {
   ScopedTransferRequest,
 } from "@sidereal/sim/scoped-inventory";
 import {
-  INVENTORY_DEFINITIONS,
   CHARACTER_CARRY_LIMIT_KG,
   LIQUID_DENSITY_KG_PER_LITRE,
 } from "@sidereal/content/inventory";
@@ -39,6 +38,7 @@ import { constructionCollision } from "./construction-doors";
 import { createConstructionStandingSupport } from "./construction-standing-support";
 import { clearAim } from "./combat";
 import { recordItemMove } from "./lifecycle";
+import { itemDefinitions } from "./item-definitions";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "sender" | "db">;
@@ -298,7 +298,7 @@ export function readCargoBase(
       ctx.db.scopedInventoryReceipt.id.find(
         JSON.stringify([actorId, operationId]),
       ) ?? undefined,
-    definitions: INVENTORY_DEFINITIONS,
+    definitions: itemDefinitions(ctx).grid,
     liquidDensity: LIQUID_DENSITY_KG_PER_LITRE,
   };
 }

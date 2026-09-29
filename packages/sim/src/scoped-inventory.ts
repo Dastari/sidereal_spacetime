@@ -2,6 +2,7 @@ import {
   validateInventory,
   type GridContainer,
   type GridDefinition,
+  type GridDefinitions,
   type GridItem,
 } from "./inventory";
 import {
@@ -338,14 +339,19 @@ export function planScopedInventoryTransfer(
   state: ScopedInventoryState,
   request: ScopedTransferRequest,
   access: InventoryActorAccess,
-  definitions: readonly GridDefinition[],
+  definitions: GridDefinitions,
   liquidDensity: Readonly<Record<string, number>>,
 ): ScopedTransferPlan | ScopedInventoryRejection {
   try {
+    // A pinned-definition resolver (X-2) is checked on the definitions the working set uses.
+    const catalogue: readonly (GridDefinition | undefined)[] =
+      typeof definitions === "function"
+        ? state.items.map((i) => definitions(i))
+        : definitions;
     demand(
       state.items.length <= SCOPED_INVENTORY_LIMITS.items &&
         state.containers.length <= SCOPED_INVENTORY_LIMITS.containers &&
-        definitions.length <= SCOPED_INVENTORY_LIMITS.definitions &&
+        catalogue.length <= SCOPED_INVENTORY_LIMITS.definitions &&
         state.receipts.length <= SCOPED_INVENTORY_LIMITS.receipts &&
         access.grants.length <= SCOPED_INVENTORY_LIMITS.grants,
       "budget",
@@ -392,7 +398,8 @@ export function planScopedInventoryTransfer(
     demand(
       items.size === state.items.length &&
         containers.size === state.containers.length &&
-        definitions.length === new Set(definitions.map((d) => d.id)).size,
+        (typeof definitions === "function" ||
+          catalogue.length === new Set(catalogue.map((d) => d?.id)).size),
       "invalid-state",
       "Duplicate inventory identity or definition",
     );
@@ -408,8 +415,9 @@ export function planScopedInventoryTransfer(
         validRevision(state.character.revision) &&
         Number.isFinite(state.character.carryLimitKg) &&
         state.character.carryLimitKg >= 0 &&
-        definitions.every(
+        catalogue.every(
           (d) =>
+            !!d &&
             validId(d.id) &&
             Number.isInteger(d.width) &&
             d.width > 0 &&

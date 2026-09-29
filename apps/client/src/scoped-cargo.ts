@@ -1,8 +1,6 @@
+import { itemDefinitionOf } from "@sidereal/content/item-presentation";
 import type { DbConnection } from "@sidereal/net";
-import {
-  INVENTORY_DEFINITIONS,
-  LIQUID_DENSITY_KG_PER_LITRE,
-} from "@sidereal/content/inventory";
+import { LIQUID_DENSITY_KG_PER_LITRE } from "@sidereal/content/inventory";
 import { firstInventoryPlacement } from "@sidereal/sim/inventory";
 import type { InventoryState } from "@sidereal/canvas-ui";
 import { inventoryView } from "./inventory";
@@ -107,7 +105,7 @@ export function planCargoMove(
         .map((id) =>
           firstInventoryPlacement(
             snapshot,
-            INVENTORY_DEFINITIONS,
+            (i) => itemDefinitionOf(i),
             LIQUID_DENSITY_KG_PER_LITRE,
             s.pocketsId,
             s.inventory.carryLimitKg,

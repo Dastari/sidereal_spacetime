@@ -97,6 +97,7 @@ test("uniform migration fills the original four containers once, retaining cargo
   const ctx = {
     db,
     newUuidV4: () => `new-${++sequence}`,
+    timestamp: { microsSinceUnixEpoch: 1n },
   } as unknown as Parameters<typeof seedCharacterUniforms>[0];
   containers.find((c) => c.id === "crate-0")!.maxMassKg = 3;
   expect(seedCharacterUniforms(ctx, "actor")).toBe(false);

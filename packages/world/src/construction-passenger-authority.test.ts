@@ -32,6 +32,7 @@ vi.mock("./construction-flight-compilation", () => ({
       db.constructionFlightDirty.insert({ shipId });
   },
 }));
+import { itemDefinitionTestTables } from "./lifecycle-test-tables";
 import { Identity } from "spacetimedb";
 import {
   grantShipPassenger,
@@ -91,7 +92,7 @@ function fixture() {
   const captain = Identity.fromString("1".repeat(64)),
     passenger = Identity.fromString("2".repeat(64)),
     server = Identity.fromString("3".repeat(64));
-  const db: any = {};
+  const db: any = { ...itemDefinitionTestTables() };
   for (const [name, key] of Object.entries({
     character: "id",
     ship: "id",

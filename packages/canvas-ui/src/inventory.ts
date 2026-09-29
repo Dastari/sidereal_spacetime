@@ -1,10 +1,13 @@
 import { drawHudIcon, type HudIcon } from "./hud-icons";
 import type { EquipmentSlot } from "@sidereal/content/character-components";
 import {
-  INVENTORY_DEFINITIONS,
   LIQUID_DENSITY_KG_PER_LITRE,
   type InventoryDefinition,
 } from "../../content/src/inventory";
+import {
+  itemDefinitionOf,
+  weaponDefinitionOf,
+} from "@sidereal/content/item-presentation";
 import { inventoryMass } from "@sidereal/sim/inventory";
 import { CanvasUI, palette } from "./toolkit";
 import { contains, type Rect } from "./layout";
@@ -71,8 +74,8 @@ export interface InventoryActions {
   assignHotbar(slot: number, itemId: string): void;
   activateHotbar(slot: number): void;
 }
-const definition = (item: InventoryItem) =>
-  INVENTORY_DEFINITIONS.find((d) => d.id === item.definitionId);
+/** The instance's pinned definition (X-2): two copies of one item may differ by revision. */
+const definition = (item: InventoryItem) => itemDefinitionOf(item);
 /** Shared logical cell size; overflow scrolls instead of shrinking footprints. */
 export const INVENTORY_CELL_SIZE = 48;
 export function inventoryPlacement(
@@ -687,7 +690,7 @@ export function createInventoryUI(
   function matches(item: InventoryItem, f: Filters) {
     const d = definition(item);
     if (!d) return false;
-    const detail = itemDetails(d);
+    const detail = itemDetails(d, weaponDefinitionOf(item));
     return (
       (f.category === "All" || f.category === detail.category) &&
       (f.rarity === "All" || f.rarity === detail.rarity) &&
@@ -1068,7 +1071,7 @@ export function createInventoryUI(
       ? state.carriedMassKg
       : inventoryMass(
           state,
-          INVENTORY_DEFINITIONS,
+          (i) => itemDefinitionOf(i),
           LIQUID_DENSITY_KG_PER_LITRE,
         ).containerMass(container.id);
     const capacity = personalHeader ? state.carryLimitKg : container.maxMassKg;
@@ -1184,7 +1187,8 @@ export function createInventoryUI(
         ),
         item = hit && itemHits.get(hit.id)?.item,
         d = item && definition(item);
-      if (hit && d) drawItemTooltip(ui, d, hit.rect, icon);
+      if (hit && d)
+        drawItemTooltip(ui, d, hit.rect, icon, weaponDefinitionOf(item));
     }
   }
   function drawContext(state: InventoryState, pending: boolean) {
@@ -1471,7 +1475,8 @@ export function createInventoryUI(
         ),
         entry = hit && itemHits.get(hit.id),
         d = entry && definition(entry.item);
-      if (d && entry && hit) drawItemTooltip(ui, d, hit.rect, icon);
+      if (d && entry && hit)
+        drawItemTooltip(ui, d, hit.rect, icon, weaponDefinitionOf(entry.item));
     }
     drawContext(state, pending);
     if (message || error) {

@@ -355,7 +355,7 @@ export default function DefinitionsWorkspace() {
     <main className="defs" aria-label="Content definitions">
       <header className="defs-header">
         <div>
-          <span className="muted">Definitions · roadmap X-1</span>
+          <span className="muted">Definitions · roadmap X-1, X-2</span>
           <h1>Content definitions</h1>
         </div>
         <div className="defs-connection" role="status">
@@ -370,9 +370,9 @@ export default function DefinitionsWorkspace() {
       </header>
       <p className="defs-runtime-note">
         <AlertTriangle size={16} />
-        Publishing records an immutable revision. The game still reads the code
-        catalogue until X-2; existing items keep revision 1 until an explicit
-        migration.
+        Publishing records an immutable revision. Items and weapons created
+        after it use the new revision in game; existing instances keep the
+        revision they pin until an operator resync.
       </p>
       <div className="defs-body">
         <nav className="defs-kinds" aria-label="Definition kinds">
@@ -814,8 +814,8 @@ export default function DefinitionsWorkspace() {
                         {usage
                           ? `Counted ${when(usage.computedMicros)} UTC.`
                           : "Not counted yet."}{" "}
-                        Instances without an explicit pin use revision 1 (the
-                        seeded code catalogue) until X-2.
+                        Instances created before X-2 have no explicit pin and
+                        use revision 1 (the seed).
                       </p>
                       <button
                         onClick={refreshUsage}

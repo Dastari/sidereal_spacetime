@@ -23,7 +23,10 @@ import {
 } from "./combat";
 import { LAB_WEAPONS } from "@sidereal/content/weapons";
 import { blastDamage } from "@sidereal/sim/combat";
-import { lifecycleTestTables } from "./lifecycle-test-tables";
+import {
+  lifecycleTestTables,
+  itemDefinitionTestTables,
+} from "./lifecycle-test-tables";
 
 function table(primary: string, indexes: Record<string, string> = {}) {
   const rows = new Map<string, any>();
@@ -62,6 +65,7 @@ const mateId = Identity.fromString("3".repeat(64));
 function fixture(weapon: string, mateAt: [number, number] = [0, 3]) {
   const db: any = {
     ...lifecycleTestTables(),
+    ...itemDefinitionTestTables(),
     character: table("id", { by_ship: "shipId", by_owner: "owner" }),
     ship: table("id", { by_owner: "owner" }),
     characterVitals: table("characterId"),
@@ -339,4 +343,71 @@ test("a grenade cannot be thrown in EVA (no deck to land on); nothing is spent",
   db.evaBody.insert({ characterId: "shooter", systemId: "sol", x: 0, y: 0 });
   expect(() => shoot()).toThrow("Nothing to throw at in EVA");
   expect(db.weaponEnergy.itemId.find("item-shooter")).toBeUndefined();
+});
+
+/** Registry row for a published revision (what publish_definition writes). */
+function publishRevision(
+  db: any,
+  kind: "item" | "weapon",
+  definitionId: string,
+  revision: bigint,
+  payload: object,
+) {
+  db.contentDefinition.insert({
+    definitionRef: `${kind}:${definitionId}@${revision}`,
+    definitionKey: `${kind}:${definitionId}`,
+    kind,
+    definitionId,
+    revision,
+    status: "published",
+    payloadJson: JSON.stringify(payload),
+    sha256: JSON.stringify(payload),
+  });
+}
+const pin = (db: any, weapon: string, weaponRevision: bigint) => {
+  const row = {
+    itemId: "item-shooter",
+    definitionId: weapon,
+    itemRevision: 1n,
+    weaponRevision,
+  };
+  if (db.inventoryItemPin.itemId.find(row.itemId))
+    db.inventoryItemPin.itemId.update(row);
+  else db.inventoryItemPin.insert(row);
+};
+
+test("X-2: fire uses the weapon revision the item pins, not the newest publication", () => {
+  const { db, at, shoot, health } = fixture("pistol");
+  publishRevision(db, "weapon", "pistol", 2n, {
+    ...LAB_WEAPONS.pistol,
+    damage: 40,
+  });
+  // The shooter's pistol predates the publication: implicit pin, revision 1.
+  shoot();
+  expect(100 - health("mate")).toBe(LAB_WEAPONS.pistol.damage);
+  // Pinned to revision 2 (a new instance, or an operator resync): the published damage.
+  pin(db, "pistol", 2n);
+  at(11_000_000n);
+  const before = health("mate");
+  shoot();
+  expect(before - health("mate")).toBe(40);
+  expect(db.combatActionPin.characterId.find("shooter")).toMatchObject({
+    definitionId: "pistol",
+    weaponRevision: 2n,
+  });
+});
+
+test("X-2: a thrown charge detonates with the revision it was thrown with", () => {
+  const { db, at, shoot, health } = fixture("grenade");
+  publishRevision(db, "weapon", "grenade", 2n, {
+    ...LAB_WEAPONS.grenade,
+    damage: 10,
+  });
+  pin(db, "grenade", 2n);
+  shoot();
+  // Resynced back while the charge is in flight: the charge keeps revision 2.
+  pin(db, "grenade", 1n);
+  at(11_300_000n);
+  stepCombat({ db, timestamp: { microsSinceUnixEpoch: 11_300_000n } } as any);
+  expect(100 - health("mate")).toBeCloseTo(blastDamage(10, 0.6, 3.5, 0.35), 5);
 });

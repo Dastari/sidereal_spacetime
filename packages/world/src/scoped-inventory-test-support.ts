@@ -1,3 +1,4 @@
+import { itemDefinitionTestTables } from "./lifecycle-test-tables";
 /** Minimal in-memory sidecars for legacy authority fixtures. Production always
  * uses registered private tables; there is no missing-table fallback there. */
 export function inventoryMetadataTestTables() {
@@ -20,5 +21,6 @@ export function inventoryMetadataTestTables() {
   return {
     inventoryContainerScope: table("containerId"),
     inventoryItemMembership: table("itemId"),
+    ...itemDefinitionTestTables(),
   };
 }

@@ -11,6 +11,7 @@ import { prepareGroundDrop } from "./inventory-ground";
 import { createGroundAccess } from "./inventory-ground-access";
 import { retargetGroundPlacement } from "@sidereal/sim/ground-placement";
 import { recordItemMove } from "./lifecycle";
+import { itemDefinitions, commitPin } from "./item-definitions";
 import {
   SenderError,
   t,
@@ -20,9 +21,7 @@ import {
 } from "spacetimedb/server";
 import type world from "./index";
 import {
-  INVENTORY_DEFINITIONS,
   CREW_WARDROBE_DEFINITIONS,
-  inventoryDefinition,
   CHARACTER_CARRY_LIMIT_KG,
   LIQUID_DENSITY_KG_PER_LITRE,
 } from "../../content/src/inventory";
@@ -48,6 +47,7 @@ export function access(ctx: ReadContext, nowMicros = 0n) {
   const actor = actorFor(ctx);
   if (!actor?.connected) return;
   const data = snapshot(ctx, actor.id);
+  const defs = itemDefinitions(ctx);
   const bindings = [...ctx.db.storageBinding.by_character.filter(actor.id)];
   const groundAccess = createGroundAccess(ctx, actor, nowMicros);
   const carriedContainer = (id: string, path: string[] = []): boolean => {
@@ -111,6 +111,7 @@ export function access(ctx: ReadContext, nowMicros = 0n) {
     carriedContainer,
     bindings,
     groundAccess,
+    defs,
   };
 }
 export const stateProjection = t.row("InventoryStatus", {
@@ -159,7 +160,7 @@ export function inventoryStateView(ctx: ReadContext) {
       pocketsId: a.pockets.id,
       carriedMassKg: validateInventory(
         a.data,
-        INVENTORY_DEFINITIONS,
+        a.defs.grid,
         LIQUID_DENSITY_KG_PER_LITRE,
         a.pockets.id,
         CHARACTER_CARRY_LIMIT_KG,
@@ -250,7 +251,8 @@ function claimKitInternal(ctx: Context) {
     return;
   }
   const characterId = actor.id,
-    uuid = () => ctx.newUuidV4().toString();
+    uuid = () => ctx.newUuidV4().toString(),
+    defs = itemDefinitions(ctx);
   const grid = (
     name: string,
     width: number,
@@ -298,7 +300,9 @@ function claimKitInternal(ctx: Context) {
       y,
       rotated: false,
     };
+    defs.stage(row.id, definitionId);
     ctx.db.inventoryItem.insert(row);
+    commitPin(ctx, defs, row.id);
     return row.id;
   };
   grid("Pockets", 4, 2, 6, true);
@@ -346,7 +350,7 @@ function claimKitInternal(ctx: Context) {
     pockets = data.containers.find((c) => c.carried)!;
   validateInventory(
     data,
-    INVENTORY_DEFINITIONS,
+    defs.grid,
     LIQUID_DENSITY_KG_PER_LITRE,
     pockets.id,
     CHARACTER_CARRY_LIMIT_KG,
@@ -420,7 +424,7 @@ export function commitItems(
 ) {
   validateInventory(
     { ...a.data, items },
-    INVENTORY_DEFINITIONS,
+    a.defs.grid,
     LIQUID_DENSITY_KG_PER_LITRE,
     a.pockets!.id,
     CHARACTER_CARRY_LIMIT_KG,
@@ -452,7 +456,7 @@ export function equip(
 ) {
   if (!a.canItem(itemId)) fail("Item is out of reach");
   const item = a.data.items.find((i) => i.id === itemId)!,
-    slot = inventoryDefinition(item.definitionId).equipSlot;
+    slot = a.defs.item(item).equipSlot;
   if (!slot) fail("Item cannot be equipped");
   if (item.equipmentSlot === slot) return;
   const previous = a.data.items.find((i) => i.equipmentSlot === slot);
@@ -460,7 +464,7 @@ export function equip(
     const plan = (data: typeof a.data, destination?: string) =>
       planBackpackEquip(
         data,
-        INVENTORY_DEFINITIONS,
+        a.defs.grid,
         LIQUID_DENSITY_KG_PER_LITRE,
         a.pockets!.id,
         CHARACTER_CARRY_LIMIT_KG,
@@ -547,7 +551,7 @@ export function equip(
       .map((containerId) =>
         firstInventoryPlacement(
           staged,
-          INVENTORY_DEFINITIONS,
+          a.defs.grid,
           LIQUID_DENSITY_KG_PER_LITRE,
           a.pockets!.id,
           CHARACTER_CARRY_LIMIT_KG,
@@ -625,9 +629,7 @@ export function assignHotbar(
     if (
       args.itemId &&
       (!a.canItem(args.itemId) ||
-        !inventoryDefinition(
-          a.data.items.find((i) => i.id === args.itemId)!.definitionId,
-        ).equipSlot)
+        !a.defs.item(a.data.items.find((i) => i.id === args.itemId)!).equipSlot)
     )
       fail("Hotbar requires an accessible equippable item");
     ctx.db.inventoryHotbar.id.update({
@@ -710,6 +712,7 @@ function seedCharacterUniformsInternal(
 ): boolean {
   const issued = ctx.db.characterUniformIssue.characterId.find(characterId);
   const a = ctx.db.character.id.find(characterId);
+  const defs = itemDefinitions(ctx);
   if (!a) return false;
   const data = snapshot(ctx, characterId),
     bindings = [...ctx.db.storageBinding.by_character.filter(characterId)];
@@ -754,7 +757,7 @@ function seedCharacterUniformsInternal(
   const old = data.items
     .filter((i) => ids.includes(i.containerId))
     .map((i) => {
-      const d = inventoryDefinition(i.definitionId);
+      const d = defs.item(i);
       return {
         locker: ids.indexOf(i.containerId),
         x: i.x,
@@ -765,7 +768,9 @@ function seedCharacterUniformsInternal(
     });
   // The r006 wardrobe (4 uniforms, tier 1 and tier 2 armour). The retired r008 armour
   // is no longer issued; items characters already own stay valid (definitions and art kept).
-  const definitions = CREW_WARDROBE_DEFINITIONS.map((d) => ({
+  const definitions = CREW_WARDROBE_DEFINITIONS.map((code) =>
+    defs.preview(code.id),
+  ).map((d) => ({
     ...d,
     preferredLocker: d.wardrobeId!.startsWith("uniform-")
       ? 0
@@ -784,7 +789,7 @@ function seedCharacterUniformsInternal(
   const items = [...data.items];
   for (const p of plan.placements) {
     const id = ctx.newUuidV4().toString(),
-      d = inventoryDefinition(p.definitionId),
+      d = defs.stage(id, p.definitionId),
       source = supplies[p.locker]!;
     items.push({
       id,
@@ -812,7 +817,7 @@ function seedCharacterUniformsInternal(
   try {
     validateInventory(
       { items, containers },
-      INVENTORY_DEFINITIONS,
+      defs.grid,
       LIQUID_DENSITY_KG_PER_LITRE,
       pockets.id,
       CHARACTER_CARRY_LIMIT_KG,
@@ -827,8 +832,10 @@ function seedCharacterUniformsInternal(
       ctx.db.inventoryContainer.id.update(c);
   }
   for (const item of items)
-    if (!data.items.some((old) => old.id === item.id))
+    if (!data.items.some((old) => old.id === item.id)) {
       ctx.db.inventoryItem.insert(item);
+      commitPin(ctx, defs, item.id);
+    }
   ctx.db.characterUniformIssue.insert({ characterId, version: 1 });
   const state = ctx.db.inventoryState.characterId.find(characterId);
   if (state)

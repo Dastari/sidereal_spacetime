@@ -3,8 +3,6 @@ import { access, transaction, commitItems, equip } from "./inventory";
 import { prepareGroundDrop } from "./inventory-ground";
 import { firstInventoryPlacement } from "@sidereal/sim/inventory";
 import {
-  INVENTORY_DEFINITIONS,
-  inventoryDefinition,
   LIQUID_DENSITY_KG_PER_LITRE,
   CHARACTER_CARRY_LIMIT_KG,
 } from "@sidereal/content/inventory";
@@ -47,7 +45,7 @@ function transfer(
     if (!item || item.containerId === containerId) continue;
     const location = firstInventoryPlacement(
       { ...a.data, items },
-      INVENTORY_DEFINITIONS,
+      a.defs.grid,
       LIQUID_DENSITY_KG_PER_LITRE,
       a.pockets!.id,
       CHARACTER_CARRY_LIMIT_KG,
@@ -74,7 +72,7 @@ export function transferItem(
       if (
         !args.containerId &&
         ground(a, item.containerId) &&
-        inventoryDefinition(item.definitionId).equipSlot === "back" &&
+        a.defs.item(item).equipSlot === "back" &&
         !a.data.items.some((i) => i.equipmentSlot === "back")
       ) {
         equip(ctx, a, item.id);
