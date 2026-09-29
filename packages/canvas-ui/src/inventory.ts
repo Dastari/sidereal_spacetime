@@ -78,6 +78,9 @@ export interface InventoryActions {
 const definition = (item: InventoryItem) => itemDefinitionOf(item);
 /** Shared logical cell size; overflow scrolls instead of shrinking footprints. */
 export const INVENTORY_CELL_SIZE = 48;
+/** Release glide into the landing spot (or back to the origin). */
+const SETTLE_MS = 100;
+const DROP_INVALID = "#ff5a7a";
 export function inventoryPlacement(
   state: InventoryState,
   item: InventoryItem,
@@ -332,8 +335,23 @@ export function createInventoryUI(
     rotated = false,
     message = "",
     activeContainer = "";
-  let dragging:
-    { id: string; x: number; y: number; source: string } | undefined;
+  let dragging: { id: string; source: string } | undefined;
+  // Where the pointer holds the item, as a fraction of its footprint. The held item keeps this
+  // point under the pointer (no pickup jump) and follows it 1:1; it never snaps to slots.
+  let grab = { fx: 0, fy: 0 };
+  // A short release glide (landing or return) and the item whose move awaits the server.
+  let settle:
+    | {
+        d: InventoryDefinition;
+        from: Rect;
+        to: Rect;
+        start: number;
+        fade: boolean;
+      }
+    | undefined;
+  let inFlight:
+    | { itemId: string; revision: string; rect?: Rect; until: number }
+    | undefined;
   let context: { itemId: string; x: number; y: number } | undefined;
   let current: { state: InventoryState; pending: boolean } | undefined;
   let targets: {
@@ -355,14 +373,53 @@ export function createInventoryUI(
   const cancelHeld = () => {
     selected = "";
     dragging = undefined;
+    ui.holding = false;
     invalidate();
   };
-  function select(item: InventoryItem) {
+  /** Pick up an item held at (px, py) inside its drawn box; no point holds it by the corner. */
+  function select(item: InventoryItem, box?: Rect, px?: number, py?: number) {
     selected = item.id;
     rotated = item.rotated;
     context = undefined;
     message = "";
+    const fraction = (p: number | undefined, start: number, size: number) =>
+      p === undefined || size <= 0
+        ? 0
+        : Math.max(0, Math.min(1, (p - start) / size));
+    grab = box
+      ? { fx: fraction(px, box.x, box.w), fy: fraction(py, box.y, box.h) }
+      : { fx: 0, fy: 0 };
+    ui.holding = true;
     invalidate();
+  }
+  /** Drawn footprint of a held item at a logical cell size. */
+  function footprint(d: InventoryDefinition, turned: boolean, cell: number) {
+    return {
+      w: (turned ? d.height : d.width) * cell - 4,
+      h: (turned ? d.width : d.height) * cell - 4,
+    };
+  }
+  /** The held item's box: the grabbed point stays exactly under the pointer. */
+  function heldBox(d: InventoryDefinition, px: number, py: number): Rect {
+    const size = footprint(d, rotated, INVENTORY_CELL_SIZE);
+    return {
+      x: px - grab.fx * size.w,
+      y: py - grab.fy * size.h,
+      ...size,
+    };
+  }
+  const reducedMotion = () => cosmetics?.reducedMotion?.() ?? false;
+  /** Release glide, about 100 ms, from where the item was let go to where it lands. */
+  function glide(d: InventoryDefinition, from: Rect, to: Rect, fade = false) {
+    settle = reducedMotion()
+      ? undefined
+      : {
+          d,
+          from,
+          to,
+          start: performance.now(),
+          fade,
+        };
   }
   function transfer(item: InventoryItem, containerId = "") {
     if (!current || current.pending) return;
@@ -421,6 +478,9 @@ export function createInventoryUI(
     if (!selected || !current) return false;
     if (!current.pending) {
       rotated = !rotated;
+      // A quarter turn transposes the footprint; transposing the grab point keeps the
+      // pointer on the same part of the item.
+      grab = { fx: grab.fy, fy: grab.fx };
       invalidate();
     }
     return true;
@@ -505,87 +565,217 @@ export function createInventoryUI(
     }
     invalidate();
   }
-  function dropAt(item: InventoryItem, px: number, py: number) {
-    if (!current || current.pending) return;
+  /**
+   * Where the held item would land if released at (px, py), and the intent that release sends.
+   * The same answer draws the drop outline and performs the drop, so the outline never lies
+   * about which target is chosen. It is only a prediction: the server validates every intent.
+   */
+  type Landing = {
+    /** Outline target: the landing footprint in a grid, or the slot/tab/icon under the pointer. */
+    rect?: Rect;
+    valid: boolean;
+    /** Why an invalid release is refused, shown beside the item. */
+    reason?: string;
+    /** Local-only binding (quick slot): the item does not leave its place. */
+    bind?: boolean;
+    /** The item keeps its footprint here (grid placement or equipment slot). */
+    holds?: boolean;
+    /** Releasing puts a click-held item back where it came from. */
+    cancel?: boolean;
+    label?: string;
+    commit?: () => void;
+  };
+  function landing(item: InventoryItem, px: number, py: number): Landing {
+    const state = current!.state;
     const overlay = [...ui.hits]
       .reverse()
       .find((h) => contains(h.rect, px, py));
-    if (overlay?.id.startsWith("quick-slot-")) {
-      quickBindings[Number(overlay.id.slice(11))] = item.id;
-      cancelHeld();
-      return;
-    }
+    const d = definition(item);
+    if (overlay?.id.startsWith("quick-slot-"))
+      return {
+        rect: overlay.rect,
+        valid: true,
+        bind: true,
+        commit: () => {
+          quickBindings[Number(overlay.id.slice(11))] = item.id;
+          cancelHeld();
+        },
+      };
     if (overlay?.id.startsWith("tool-")) {
       const n = Number(overlay.id.slice(5));
-      if (n < 5) actions.assignHotbar(n, item.id);
-      cancelHeld();
-      return;
+      return n < 5
+        ? {
+            rect: overlay.rect,
+            valid: true,
+            bind: true,
+            commit: () => {
+              actions.assignHotbar(n, item.id);
+              cancelHeld();
+            },
+          }
+        : {
+            rect: overlay.rect,
+            valid: false,
+            reason: "Action slots 6 to 8 cannot hold items",
+          };
     }
-    const top = stack.at(px, py),
-      d = definition(item);
+    const top = stack.at(px, py);
     if (overlay?.id.startsWith("storage-tab-")) {
-      const target = current.state.containers.find(
+      const target = state.containers.find(
         (c) => c.id === overlay.id.slice(12),
       );
-      if (target) transfer(item, target.id);
-      return;
+      if (target)
+        return {
+          rect: overlay.rect,
+          valid: true,
+          commit: () => transfer(item, target.id),
+        };
     }
     const onto = overlay && itemHits.get(overlay.id)?.item;
     const child =
       onto &&
       onto.id !== item.id &&
       (top?.id !== "character" || d?.equipSlot !== "back") &&
-      current.state.containers.find(
+      state.containers.find(
         (c) => c.parentItemId === onto.id && c.kind === "grid",
       );
-    if (child) {
-      transfer(item, child.id);
-      dragging = undefined;
-      return;
-    }
-    if (onto?.id === item.id && !dragging) {
-      cancelHeld();
-      return;
-    }
+    if (child)
+      return {
+        rect: overlay!.rect,
+        valid: true,
+        commit: () => transfer(item, child.id),
+      };
+    if (onto?.id === item.id && !dragging)
+      return { valid: true, cancel: true, commit: cancelHeld };
     if (top?.id === "character" && overlay?.id.startsWith("equip-slot-")) {
       const slot = overlay.id.slice(11);
       if (slot === "back" && d?.equipSlot !== "back") {
-        const pack = current.state.items.find(
-            (i) => i.equipmentSlot === "back",
-          ),
-          bag = current.state.containers.find(
-            (c) => c.parentItemId === pack?.id,
-          );
-        if (bag) transfer(item, bag.id);
-        else message = "Equip a backpack first";
-      } else if (slot === d?.equipSlot) {
-        actions.equipItem(item.id);
-        cancelHeld();
-      } else message = "This item does not fit that equipment slot";
-    } else {
-      const grid = targets.find(
-        (t) => t.window === top?.id && contains(t.visible ?? t.rect, px, py),
-      );
-      const pane = panes.find(
-        (p) => p.window === top?.id && contains(p.rect, px, py),
-      );
-      if (grid)
-        place(
-          item,
-          grid,
-          Math.floor((px - grid.rect.x) / grid.cell),
-          Math.floor((py - grid.rect.y) / grid.cell),
+        const pack = state.items.find((i) => i.equipmentSlot === "back"),
+          bag = state.containers.find((c) => c.parentItemId === pack?.id);
+        return bag
+          ? {
+              rect: overlay.rect,
+              valid: true,
+              commit: () => transfer(item, bag.id),
+            }
+          : {
+              rect: overlay.rect,
+              valid: false,
+              reason: "Equip a backpack first",
+            };
+      }
+      if (slot === d?.equipSlot)
+        return {
+          rect: overlay.rect,
+          valid: true,
+          holds: true,
+          commit: () => {
+            actions.equipItem(item.id);
+            cancelHeld();
+          },
+        };
+      return {
+        rect: overlay.rect,
+        valid: false,
+        reason: "This item does not fit that equipment slot",
+      };
+    }
+    const grid = targets.find(
+      (t) => t.window === top?.id && contains(t.visible ?? t.rect, px, py),
+    );
+    if (grid && d) {
+      // The landing cell is the one nearest the held item's top-left corner, kept inside the
+      // grid; which grid is chosen still follows the pointer.
+      const box = heldBox(d, px, py),
+        w = rotated ? d.height : d.width,
+        h = rotated ? d.width : d.height;
+      const clamp = (v: number, max: number) =>
+        Math.max(0, Math.min(Math.max(0, max), v));
+      const x = clamp(
+          Math.round((box.x - 2 - grid.rect.x) / grid.cell),
+          grid.container.width - w,
+        ),
+        y = clamp(
+          Math.round((box.y - 2 - grid.rect.y) / grid.cell),
+          grid.container.height - h,
         );
-      else if (pane) transfer(item, pane.container.id);
-      else if (
-        !top &&
-        !ui.panels.some((r) => contains(r, px, py)) &&
-        actions.dropItem
-      ) {
-        actions.dropItem(item.id);
+      const reason = inventoryPlacement(
+        state,
+        item,
+        grid.container,
+        x,
+        y,
+        rotated,
+      );
+      return {
+        rect: {
+          x: grid.rect.x + x * grid.cell + 2,
+          y: grid.rect.y + y * grid.cell + 2,
+          ...footprint(d, rotated, grid.cell),
+        },
+        valid: !reason,
+        reason,
+        holds: true,
+        commit: () => place(item, grid, x, y),
+      };
+    }
+    const pane = panes.find(
+      (p) => p.window === top?.id && contains(p.rect, px, py),
+    );
+    if (pane)
+      return {
+        valid: true,
+        label: "Store in " + pane.container.name,
+        commit: () => transfer(item, pane.container.id),
+      };
+    if (!top && !ui.panels.some((r) => contains(r, px, py)) && actions.dropItem)
+      return {
+        valid: true,
+        label: "Release to drop on the ground",
+        commit: () => {
+          actions.dropItem!(item.id);
+          cancelHeld();
+        },
+      };
+    return {
+      valid: false,
+      reason: "Choose an item grid, backpack, equipment slot or the ground",
+    };
+  }
+  function dropAt(item: InventoryItem, px: number, py: number) {
+    if (!current || current.pending) return;
+    const d = definition(item),
+      origin = [...itemHits.values()].find((e) => e.item.id === item.id)?.rect,
+      from = d && heldBox(d, px, py),
+      revision = current.state.revision,
+      result = landing(item, px, py);
+    if (!result.valid) {
+      message = result.reason ?? "";
+      // An invalid release glides back to where the item came from; a click-held item
+      // simply stays held so the player can choose another spot.
+      if (dragging) {
+        if (d && from && origin) glide(d, from, origin);
         cancelHeld();
-      } else
-        message = "Choose an item grid, backpack, equipment slot or the ground";
+      }
+    } else {
+      message = "";
+      if (d && from) {
+        if (result.cancel) {
+          if (origin) glide(d, from, origin);
+        } else if (result.rect) glide(d, from, result.rect, !result.holds);
+        else glide(d, from, from, true);
+      }
+      result.commit?.();
+      // Until the next authoritative revision the origin draws as a ghost and a grid or
+      // equipment landing draws where it was predicted; a rejection restores the server's
+      // layout and its error.
+      if (!result.bind && !result.cancel)
+        inFlight = {
+          itemId: item.id,
+          revision,
+          rect: result.holds ? result.rect : undefined,
+          until: performance.now() + 1500,
+        };
     }
     dragging = undefined;
     invalidate();
@@ -639,7 +829,7 @@ export function createInventoryUI(
     hit.action = (event) => {
       if (current?.pending) return;
       if (event?.shiftKey) quickTransfer(item);
-      else select(item);
+      else select(item, box, event?.x, event?.y);
     };
     hit.context = (event) => {
       cancelHeld();
@@ -650,11 +840,11 @@ export function createInventoryUI(
       dragging = undefined;
     };
     hit.drag = (dx, dy) => {
-      if (current?.pending) return;
-      if (selected !== item.id) select(item);
-      dragging ??= { id: item.id, x: box.x, y: box.y, source: window };
-      dragging.x += dx;
-      dragging.y += dy;
+      if (current?.pending || dragging) return;
+      // The first drag step is measured from the press, so the press point is the grab point.
+      const p = ui.pointerPosition();
+      select(item, box, p.x - dx, p.y - dy);
+      dragging = { id: item.id, source: window };
     };
     hit.drop = (px, py) => dropAt(item, px, py);
   }
@@ -671,6 +861,9 @@ export function createInventoryUI(
     const id = "item-" + window + "-" + item.id;
     ui.ctx.save();
     if (dim) ui.ctx.globalAlpha = 0.3;
+    // The held (or just released, awaiting the server) item leaves a ghost at its origin.
+    else if (item.id === selected || item.id === inFlight?.itemId)
+      ui.ctx.globalAlpha = 0.34;
     drawItemFrame(ui, box, {
       rarity: itemRarity(d.id),
       hovered: ui.hover === id,
@@ -686,6 +879,43 @@ export function createInventoryUI(
       disabled: pending || dim,
     });
     if (!dim) wireItem(ui.hits[ui.hits.length - 1], item, box, window);
+  }
+  function drawHeld(d: InventoryDefinition, box: Rect, alpha: number) {
+    ui.ctx.save();
+    ui.ctx.globalAlpha *= Math.max(0, Math.min(1, alpha));
+    drawItemFrame(ui, box, { rarity: itemRarity(d.id), selected: true });
+    icon(ui, d, { x: box.x + 4, y: box.y + 4, w: box.w - 8, h: box.h - 8 });
+    ui.ctx.restore();
+  }
+  /** Drop-target outline: the footprint (or slot) a release would land in. */
+  function drawLandingOutline(r: Rect, valid: boolean) {
+    const c = ui.ctx,
+      color = valid ? palette.blue : DROP_INVALID;
+    c.save();
+    c.fillStyle = valid ? "rgba(71,223,255,0.13)" : "rgba(255,90,122,0.15)";
+    c.fillRect(r.x, r.y, r.w, r.h);
+    // Corner brackets read as "lands here" even under the held item.
+    c.strokeStyle = valid ? "#e9fdff" : "#ffd3dc";
+    c.lineWidth = 2;
+    const t = Math.min(12, r.w / 3, r.h / 3);
+    c.beginPath();
+    for (const [x, y, sx, sy] of [
+      [r.x, r.y, 1, 1],
+      [r.x + r.w, r.y, -1, 1],
+      [r.x + r.w, r.y + r.h, -1, -1],
+      [r.x, r.y + r.h, 1, -1],
+    ]) {
+      c.moveTo(x + sx * t, y);
+      c.lineTo(x, y);
+      c.lineTo(x, y + sy * t);
+    }
+    c.stroke();
+    c.shadowColor = color;
+    c.shadowBlur = 10;
+    c.strokeStyle = color;
+    c.lineWidth = 2;
+    c.strokeRect(r.x, r.y, r.w, r.h);
+    c.restore();
   }
   function matches(item: InventoryItem, f: Filters) {
     const d = definition(item);
@@ -1306,6 +1536,16 @@ export function createInventoryUI(
     panes = [];
     itemHits = new Map();
     if (selected && !state.items.some((i) => i.id === selected)) cancelHeld();
+    if (
+      inFlight &&
+      (state.revision !== inFlight.revision ||
+        performance.now() > inFlight.until)
+    )
+      inFlight = undefined;
+    if (inFlight) {
+      // Keep repainting until the authoritative revision arrives or the prediction lapses.
+      invalidate();
+    }
     for (const window of [...stack.windows])
       if (
         !["inventory", "character"].includes(window.id) &&
@@ -1413,61 +1653,52 @@ export function createInventoryUI(
     // action bar returns as soon as the windows close.
     if (stack.windows.length && ui.height >= 500)
       hotbar(state, actionBarRect(ui.width, ui.height), true, pending);
+    // Predicted landing awaiting the server, then the release glide, then the held item.
+    if (inFlight?.rect && !settle) {
+      const item = state.items.find((i) => i.id === inFlight!.itemId),
+        d = item && definition(item);
+      if (d) drawHeld(d, inFlight.rect, 1);
+    }
+    if (settle) {
+      const t = Math.min(1, (performance.now() - settle.start) / SETTLE_MS),
+        k = 1 - (1 - t) ** 3,
+        mix = (a: number, b: number) => a + (b - a) * k;
+      const box = {
+        x: mix(settle.from.x, settle.to.x),
+        y: mix(settle.from.y, settle.to.y),
+        w: mix(settle.from.w, settle.to.w),
+        h: mix(settle.from.h, settle.to.h),
+      };
+      drawHeld(settle.d, box, settle.fade ? 0.92 * (1 - k) : 0.92 + 0.08 * k);
+      if (t >= 1) settle = undefined;
+      invalidate();
+      ui.fluid = true;
+    }
     if (selected) {
       const item = state.items.find((i) => i.id === selected),
         d = item && definition(item),
         p = ui.pointerPosition();
       if (d && item) {
-        const top = stack.at(p.x, p.y);
-        const destination = targets.find(
-          (t) =>
-            t.window === top?.id && contains(t.visible ?? t.rect, p.x, p.y),
-        );
-        const source = targets.find((t) => t.container.id === item.containerId);
-        const cell = destination?.cell ?? source?.cell ?? INVENTORY_CELL_SIZE;
-        const column = destination
-          ? Math.floor((p.x - destination.rect.x) / cell)
-          : 0;
-        const row = destination
-          ? Math.floor((p.y - destination.rect.y) / cell)
-          : 0;
-        const box = {
-          x: destination
-            ? destination.rect.x + column * cell + 2
-            : Math.max(8, p.x + 12),
-          y: destination
-            ? destination.rect.y + row * cell + 2
-            : Math.max(8, p.y + 12),
-          w: (rotated ? d.height : d.width) * cell - 4,
-          h: (rotated ? d.width : d.height) * cell - 4,
-        };
-        ui.ctx.save();
-        ui.ctx.globalAlpha = 0.96;
-        drawItemFrame(ui, box, { rarity: itemRarity(d.id), selected: true });
-        icon(ui, d, { x: box.x + 4, y: box.y + 4, w: box.w - 8, h: box.h - 8 });
-        if (destination) {
-          ui.ctx.strokeStyle = inventoryPlacement(
-            state,
-            item,
-            destination.container,
-            column,
-            row,
-            rotated,
-          )
-            ? palette.red
-            : palette.green;
-          ui.ctx.lineWidth = 2;
-          ui.ctx.strokeRect(box.x, box.y, box.w, box.h);
-        }
-        ui.ctx.restore();
+        // The item rides the pointer exactly where it was grabbed and never snaps; a separate
+        // outline shows where a release would put it (cyan valid, red refused).
+        const box = heldBox(d, p.x, p.y),
+          target = landing(item, p.x, p.y);
+        if (target.rect) drawLandingOutline(target.rect, target.valid);
+        drawHeld(d, box, 0.9);
+        const note = target.valid
+          ? target.label
+          : target.rect
+            ? target.reason
+            : undefined;
         ui.text(
-          "R rotate · Right-click cancel",
-          Math.min(box.x, ui.width - 180),
-          Math.min(box.y + box.h + 8, ui.height - 18),
-          10,
-          palette.blue,
-          180,
+          note ?? "R rotate · Right-click cancel",
+          Math.max(4, Math.min(box.x, ui.width - 240)),
+          Math.max(4, Math.min(box.y + box.h + 8, ui.height - 18)),
+          11,
+          note && !target.valid ? palette.red : palette.blue,
+          240,
         );
+        ui.fluid = true;
       }
     } else if (!context) {
       const hit = ui.hits.find(

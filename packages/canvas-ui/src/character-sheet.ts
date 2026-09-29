@@ -108,6 +108,30 @@ function section(ui: CanvasUI, r: Rect, title: string) {
   ui.ctx.fillStyle = "#2676a877";
   ui.ctx.fillRect(r.x + 10, r.y + 29, r.w - 20, 1);
 }
+type PreviewModule = typeof import("../../render/src/character-preview");
+let previewModule: Promise<PreviewModule> | undefined;
+/**
+ * The portrait renderer is a separate lazily loaded chunk. Fetch it as soon as the HUD exists,
+ * not when the sheet first opens: a client deploy replaces every hashed chunk, and a tab that
+ * outlived one gets the host's HTML page for the old chunk URL, so a late import always failed
+ * ("Character preview unavailable") until the page was reloaded. A failed attempt is forgotten
+ * so a later open can retry.
+ */
+export function loadCharacterPreviewModule() {
+  previewModule ??= import("../../render/src/character-preview").catch(
+    (reason: unknown) => {
+      previewModule = undefined;
+      throw reason;
+    },
+  );
+  return previewModule;
+}
+/** A module fetch failure means this tab is older than the deployed client. */
+export function previewNeedsReload(reason: unknown) {
+  return /dynamically imported module|module script|MIME type|Importing a module|error loading dynamically/i.test(
+    String((reason as Error)?.message ?? reason),
+  );
+}
 export function createCharacterSheet(
   ui: CanvasUI,
   options: {
@@ -118,7 +142,7 @@ export function createCharacterSheet(
   },
 ) {
   // An outfit proof PNG cannot represent this actor's body, cosmetics or gear.
-  const placeholder = (r: Rect, failed = false) =>
+  const placeholder = (r: Rect, failed = false) => {
     ui.text(
       failed ? "Character preview unavailable" : "Loading character…",
       r.x + 8,
@@ -127,20 +151,37 @@ export function createCharacterSheet(
       palette.muted,
       r.w - 16,
     );
+    if (failed && staleClient)
+      ui.text(
+        "The game was updated. Reload to restore it.",
+        r.x + 8,
+        r.y + r.h / 2 + 18,
+        11,
+        palette.gold,
+        r.w - 16,
+      );
+  };
   let preview: ReturnType<typeof createCharacterPreview> | undefined;
   let loading = false,
     disposed = false,
     previewFailed = false,
+    staleClient = false,
+    retryAt = 0,
+    reportedError = "",
     rotation = -0.3,
     statsTab = "Overview",
     page = "Equipment";
   let viewport: Rect | undefined;
+  if (typeof document !== "undefined")
+    void loadCharacterPreviewModule().catch(() => {});
   const ensurePreview = () => {
     if (loading || disposed || typeof document === "undefined") return;
+    if (previewFailed && performance.now() < retryAt) return;
     loading = true;
-    void import("../../render/src/character-preview")
+    void loadCharacterPreviewModule()
       .then(({ createCharacterPreview }) => {
         if (disposed) return;
+        previewFailed = staleClient = false;
         preview = createCharacterPreview({
           width: 360,
           height: 540,
@@ -152,8 +193,12 @@ export function createCharacterSheet(
           .catch(() => ui.invalidate());
         ui.invalidate();
       })
-      .catch(() => {
+      .catch((reason: unknown) => {
+        console.warn("Character preview could not load:", reason);
+        loading = false;
         previewFailed = true;
+        staleClient = previewNeedsReload(reason);
+        retryAt = performance.now() + 5000;
         ui.invalidate();
       });
   };
@@ -234,6 +279,14 @@ export function createCharacterSheet(
       if (preview.presentationStatus === "ready")
         ui.ctx.drawImage(preview.canvas, view.x, view.y, view.w, view.h);
       else placeholder(view, preview.presentationStatus === "error");
+      if (
+        preview.presentationStatus === "error" &&
+        preview.error &&
+        preview.error !== reportedError
+      ) {
+        reportedError = preview.error;
+        console.warn("Character preview failed:", preview.error);
+      }
       if (
         preview.presentationStatus !== "error" &&
         (!options.cosmetics?.reducedMotion?.() || preview.needsRender)

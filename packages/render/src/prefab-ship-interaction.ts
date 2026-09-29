@@ -487,8 +487,8 @@ export function createPrefabObjectPicker(
     if (id === hoverId) return;
     hoverId = id;
     hovered.show(id && id !== selectedId ? id : undefined);
-    canvas.style.cursor = id ? "pointer" : "";
-    // Hovered object id for assistive tooling and browser reviews (presentation only).
+    // Hovered object id for assistive tooling and browser reviews (presentation only). The
+    // HUD owns the canvas cursor and shows its themed "interact" pointer while this is set.
     if (canvas.dataset) canvas.dataset.prefabObject = id ?? "";
   };
   const move = (event: PointerEvent) =>

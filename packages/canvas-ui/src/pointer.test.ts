@@ -13,13 +13,15 @@ vi.mock("@babylonjs/core/Layers/layer", () => ({
 }));
 import { CanvasUI } from "./toolkit";
 import { COMBAT_CURSOR } from "./combat-cursor";
+import { cursorValue, gameCursors } from "./cursors";
 afterEach(() => vi.unstubAllGlobals());
 function setup() {
   const handlers = new Map<string, Function>();
   vi.stubGlobal("window", {
     innerWidth: 900,
+    // The window-level pointermove only re-reads the cursor after scene listeners ran.
     addEventListener: (name: string, handler: Function) =>
-      handlers.set(name, handler),
+      name === "pointermove" || handlers.set(name, handler),
     removeEventListener() {},
   });
   vi.stubGlobal("document", { fonts: { ready: Promise.resolve() } });
@@ -116,19 +118,59 @@ test("trackpad and Shift-wheel preserve the horizontal scroll axis", () => {
 });
 
 test("combat reticle yields to controls and menus and resets without mouse movement", () => {
-  const f = setup();
+  const f = setup(),
+    cursors = gameCursors();
   f.pointer("pointermove", 400);
   f.ui.setWorldCursor(COMBAT_CURSOR);
   expect(f.ui.canvas.style.cursor).toBe(COMBAT_CURSOR);
   f.pointer("pointermove", 30);
-  expect(f.ui.canvas.style.cursor).toBe("move");
+  expect(f.ui.canvas.style.cursor).toBe(cursors.interact);
   f.pointer("pointermove", 400);
   f.ui.modal = true;
   f.ui.setWorldCursor(COMBAT_CURSOR);
-  expect(f.ui.canvas.style.cursor).toBe("default");
+  expect(f.ui.canvas.style.cursor).toBe(cursors.default);
   f.ui.modal = false;
   f.ui.setWorldCursor("default");
-  expect(f.ui.canvas.style.cursor).toBe("default");
+  expect(f.ui.canvas.style.cursor).toBe(cursors.default);
+});
+test("themed cursors: interact, grab while dragging or holding, not-allowed and text", () => {
+  const f = setup(),
+    cursors = gameCursors();
+  f.pointer("pointermove", 30);
+  expect(f.ui.canvas.style.cursor).toBe(cursors.interact);
+  f.pointer("pointerdown", 30);
+  f.pointer("pointermove", 60);
+  expect(f.ui.canvas.style.cursor).toBe(cursors.grab);
+  f.pointer("pointerup", 60);
+  expect(f.ui.canvas.style.cursor).toBe(cursors.interact);
+  f.ui.holding = true;
+  f.pointer("pointermove", 400);
+  expect(f.ui.canvas.style.cursor).toBe(cursors.grab);
+  f.ui.holding = false;
+  f.ui.hits[0].disabled = true;
+  f.pointer("pointermove", 30);
+  expect(f.ui.canvas.style.cursor).toBe(cursors["not-allowed"]);
+  f.ui.hits[0] = {
+    id: "search",
+    label: "Search",
+    rect: { x: 10, y: 10, w: 100, h: 100 },
+    edit: { value: "", max: 10, change() {} },
+  };
+  f.pointer("pointermove", 30);
+  expect(f.ui.canvas.style.cursor).toBe(cursors.text);
+  // Every themed cursor is an OS-drawn image with a keyword fallback: nothing trails the pointer.
+  for (const value of Object.values(cursors))
+    expect(value).toMatch(
+      /^url\("data:image\/svg\+xml,.+"\) \d+ \d+, [a-z-]+$/,
+    );
+});
+test("hi-DPI cursors prefer image-set with a 2x image when the browser supports it", () => {
+  const value = cursorValue("grab", (v) => v.startsWith("image-set("));
+  expect(value.startsWith("image-set(")).toBe(true);
+  expect(value).toContain(" 1x, ");
+  expect(value).toContain(" 2x) 16 16, grabbing");
+  expect(decodeURIComponent(value)).toContain('width="64" height="64"');
+  expect(cursorValue("text", () => false)).toMatch(/\) 16 16, text$/);
 });
 test("search typing accumulates before repaint and select-all clears or replaces the query", () => {
   const f = setup(),

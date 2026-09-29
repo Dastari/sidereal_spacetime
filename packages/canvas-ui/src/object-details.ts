@@ -6,6 +6,8 @@ export interface ObjectDetailsState {
   placementId: string;
   name: string;
   image?: string;
+  /** Measured bounds (metres) drawn as a schematic when there is no rendered image. */
+  schematic?: { widthM: number; depthM: number; heightM: number };
   category: string;
   stats: readonly { label: string; value: string }[];
   distance?: number;
@@ -171,11 +173,24 @@ export function createObjectDetailsUI(
           w,
           h,
         );
-      } else
+      } else if (state.image && !failedImages.has(state.image))
         ui.text(
-          state.image && !failedImages.has(state.image)
-            ? "Loading preview"
-            : "Preview unavailable",
+          "Loading preview",
+          v.x + 12,
+          y + layout.imageHeight / 2 - 8,
+          13,
+          palette.muted,
+          v.w - 24,
+        );
+      else if (state.schematic)
+        drawSchematic(
+          ui,
+          { x: v.x, y, w: v.w, h: layout.imageHeight },
+          state.schematic,
+        );
+      else
+        ui.text(
+          "Preview unavailable",
           v.x + 12,
           y + layout.imageHeight / 2 - 8,
           13,
@@ -291,4 +306,104 @@ export function createObjectDetailsUI(
       stack.close("object-details");
     },
   };
+}
+
+/**
+ * Isometric wireframe of an object's measured bounds, for objects that have no rendered image
+ * (prefab ship components, furniture and doors). Proportions come from the real bounds.
+ */
+export function drawSchematic(
+  ui: CanvasUI,
+  r: Rect,
+  size: { widthM: number; depthM: number; heightM: number },
+) {
+  const c = ui.ctx;
+  const w = Math.max(0.05, size.widthM),
+    d = Math.max(0.05, size.depthM),
+    h = Math.max(0.05, size.heightM);
+  const cos = Math.cos(Math.PI / 6),
+    sin = Math.sin(Math.PI / 6);
+  // World (x across, y deep, z up) to an isometric plane, then fit and centre the box in the
+  // frame above the caption.
+  const iso = (x: number, y: number, z: number) => ({
+    x: (x - y) * cos,
+    y: (x + y) * sin - z,
+  });
+  const corners = [
+    iso(0, 0, 0),
+    iso(w, 0, 0),
+    iso(w, d, 0),
+    iso(0, d, 0),
+    iso(0, 0, h),
+    iso(w, 0, h),
+    iso(w, d, h),
+    iso(0, d, h),
+  ];
+  const minX = Math.min(...corners.map((q) => q.x)),
+    maxX = Math.max(...corners.map((q) => q.x)),
+    minY = Math.min(...corners.map((q) => q.y)),
+    maxY = Math.max(...corners.map((q) => q.y));
+  const frame = { x: r.x + 24, y: r.y + 24, w: r.w - 48, h: r.h - 52 };
+  const scale = Math.min(frame.w / (maxX - minX), frame.h / (maxY - minY));
+  const ox = frame.x + (frame.w - (maxX - minX) * scale) / 2 - minX * scale,
+    oy = frame.y + (frame.h - (maxY - minY) * scale) / 2 - minY * scale;
+  const v = corners.map((q) => ({ x: ox + q.x * scale, y: oy + q.y * scale }));
+  const face = (ids: number[], fill: string) => {
+    c.beginPath();
+    ids.forEach((i, n) =>
+      n ? c.lineTo(v[i].x, v[i].y) : c.moveTo(v[i].x, v[i].y),
+    );
+    c.closePath();
+    c.fillStyle = fill;
+    c.fill();
+  };
+  c.save();
+  // Hidden edges first, dashed and dim.
+  c.setLineDash?.([3, 3]);
+  c.strokeStyle = "#47dfff55";
+  c.lineWidth = 1;
+  c.beginPath();
+  for (const [a, b] of [
+    [0, 1],
+    [0, 3],
+    [0, 4],
+  ]) {
+    c.moveTo(v[a].x, v[a].y);
+    c.lineTo(v[b].x, v[b].y);
+  }
+  c.stroke();
+  c.setLineDash?.([]);
+  face([3, 2, 6, 7], "rgba(71,223,255,0.10)");
+  face([1, 2, 6, 5], "rgba(71,223,255,0.16)");
+  face([4, 5, 6, 7], "rgba(71,223,255,0.26)");
+  c.strokeStyle = palette.blue;
+  c.lineWidth = 1.5;
+  c.shadowColor = "#169bff";
+  c.shadowBlur = 6;
+  c.beginPath();
+  for (const [a, b] of [
+    [1, 2],
+    [2, 3],
+    [1, 5],
+    [2, 6],
+    [3, 7],
+    [4, 5],
+    [5, 6],
+    [6, 7],
+    [7, 4],
+  ]) {
+    c.moveTo(v[a].x, v[a].y);
+    c.lineTo(v[b].x, v[b].y);
+  }
+  c.stroke();
+  c.restore();
+  ui.text("SCHEMATIC", r.x + 10, r.y + 8, 10, palette.blue, r.w - 20);
+  ui.text(
+    `${w.toFixed(2)} × ${d.toFixed(2)} × ${h.toFixed(2)} m`,
+    r.x + 10,
+    r.y + r.h - 20,
+    11,
+    palette.muted,
+    r.w - 20,
+  );
 }
