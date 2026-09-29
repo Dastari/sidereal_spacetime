@@ -14,6 +14,11 @@ import {
   spatialCell,
   withinSpaceDiscovery,
 } from "@sidereal/sim/spatial-cells";
+import { TRUSTED_PREFAB_BLUEPRINT_PREFIX } from "@sidereal/sim/game-ship-access";
+import {
+  prefabExteriorAssetId,
+  UNPUBLISHED_EXTERIOR_ID,
+} from "@sidereal/sim/ship-exterior";
 import type {
   SharedWorldReadDatabase,
   ShipMotionRow,
@@ -55,6 +60,62 @@ export type PublishedExteriorResolver = (
   shipId: string,
 ) =>
   { publishedExteriorAssetId: string; appearanceRevision: bigint } | undefined;
+
+/** Private rows that name a ship's hull (read inside views only; never delivered). */
+export interface ExteriorReadDatabase {
+  gameShipAccess: {
+    shipId: {
+      find(id: string): { instanceId: string } | null | undefined;
+    };
+  };
+  constructionInstance: {
+    id: {
+      find(id: string): { blueprintId: string } | null | undefined;
+    };
+  };
+}
+/** `trusted-prefab:<prefabId>:r<revision>` (prefab-ship-authority.ts `blueprintRevisionId`). */
+const TRUSTED_PREFAB_BLUEPRINT = new RegExp(
+  "^" +
+    TRUSTED_PREFAB_BLUEPRINT_PREFIX.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
+    "([a-z0-9][a-z0-9.-]{2,63}):r([0-9]{1,9})$",
+);
+/**
+ * The public exterior of a perceived ship (wiki `Architecture/Visibility and Interest
+ * Management`, hard rule 6). A game-owned ship built from a trusted developer prefab is named by
+ * its blueprint pin only: `prefab:<prefabId>` plus the prefab document revision. Nothing from the
+ * instance (layout document, rooms, modules, containers, items, crew, damage) is disclosed; the
+ * client draws the exterior of the published developer prefab. Any other ship is "unpublished"
+ * and is drawn as a marker.
+ */
+export function publishedShipExterior(
+  db: ExteriorReadDatabase,
+  shipId: string,
+): { publishedExteriorAssetId: string; appearanceRevision: bigint } {
+  const access = db.gameShipAccess.shipId.find(shipId);
+  const instance = access
+    ? db.constructionInstance.id.find(access.instanceId)
+    : undefined;
+  const match = instance
+    ? TRUSTED_PREFAB_BLUEPRINT.exec(instance.blueprintId)
+    : null;
+  return match
+    ? {
+        publishedExteriorAssetId: prefabExteriorAssetId(match[1]),
+        appearanceRevision: BigInt(match[2]),
+      }
+    : {
+        publishedExteriorAssetId: UNPUBLISHED_EXTERIOR_ID,
+        appearanceRevision: 0n,
+      };
+}
+/**
+ * Server work bound of one ship-contact evaluation: motion rows examined in the observer's nine
+ * cells. It is far above any physical density (hulls cannot overlap) and it only bounds work: past
+ * it the evaluation keeps what it has found (centre cell first) and always the observer's own
+ * ship. It never returns nothing, and it is not a visibility cap (hard rule 5).
+ */
+export const SHIP_CONTACT_CANDIDATE_BUDGET = 4096;
 const motionFields = {
   systemId: t.string(),
   cellX: t.i64(),
@@ -173,19 +234,28 @@ function shipContacts(ctx: SharedViewContext): ShipMotionRow[] {
   if (!origin) return [];
   const found = new Map<string, ShipMotionRow>();
   let examined = 0;
-  for (const cell of origin.cells)
+  // Centre cell first, so a work-bound overflow keeps the nearest contacts (never nothing).
+  const [cx, cy] = [origin.cells[4].cellX, origin.cells[4].cellY];
+  const cells = [...origin.cells].sort(
+    (a, b) =>
+      Math.abs(a.cellX - cx) +
+      Math.abs(a.cellY - cy) -
+      (Math.abs(b.cellX - cx) + Math.abs(b.cellY - cy)),
+  );
+  scan: for (const cell of cells)
     for (const motion of ctx.db.shipWorldMotion.by_cell.filter([
       origin.admitted.systemId,
       BigInt(cell.cellX),
       BigInt(cell.cellY),
     ])) {
-      if (++examined > 64) return [];
+      if (++examined > SHIP_CONTACT_CANDIDATE_BUDGET) break scan;
       if (motion.systemId !== origin.admitted.systemId) continue;
       try {
         if (withinSpaceDiscovery(origin.point, motion))
           found.set(motion.shipId, motion);
       } catch {
-        return [];
+        // An invalid row is skipped; it never blinds the observer to every other contact.
+        continue;
       }
     }
   found.set(origin.center.shipId, origin.center);

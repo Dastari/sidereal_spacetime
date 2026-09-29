@@ -124,7 +124,6 @@ import {
 import * as sharedWorld from "./shared-world";
 import * as sharedViews from "./shared-world-views";
 import { stepSharedWorld } from "./shared-world-physics";
-import { SHARED_STOCK_EXTERIOR_ID } from "@sidereal/content/shared-system";
 import * as stairs from "./construction-stairs-authority";
 import {
   createConstructionStairWorldHooks,
@@ -1535,14 +1534,10 @@ export const visibleShipMotion = db.view(
 export const visibleShipDescriptions = db.view(
   { name: "visible_ship_descriptions", public: true },
   t.array(sharedViews.visibleShipDescriptionProjection),
+  // Exterior only: a trusted prefab hull is named by its blueprint pin, never by instance data.
   auth.gameView((ctx) =>
     sharedViews.visibleShipDescriptions(ctx, (shipId) =>
-      ctx.db.shipWorldMotion.shipId.find(shipId)
-        ? {
-            publishedExteriorAssetId: SHARED_STOCK_EXTERIOR_ID,
-            appearanceRevision: 1n,
-          }
-        : undefined,
+      sharedViews.publishedShipExterior(ctx.db, shipId),
     ),
   ),
 );
