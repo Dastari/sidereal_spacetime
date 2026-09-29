@@ -424,7 +424,11 @@ try {
   evidence.targetMassKg = physics.massKg;
   evidence.prefabStatsMassKg = stats.massKg;
 
-  const sockets = prefabCargoSockets(prefab, 0, catalog);
+  // The r8 suit locker is checked from the inside airlock button (below), after the ground drop,
+  // which needs line of sight from the other containers.
+  const sockets = prefabCargoSockets(prefab, 0, catalog).filter(
+    (s) => s.key !== WREN_SUIT_LOCKER_SOCKET,
+  );
   const reached: Record<string, unknown> = {};
   for (const socket of sockets) {
     const from: [number, number] = [actor().localX, actor().localY];
@@ -504,18 +508,33 @@ try {
       );
     assert.match(refusal, /EVA needs a pressure suit/);
     assert.equal(device("lock")?.state, "pressurised");
-    // r8: the suit locker is within reach where the inside button is pressed.
-    const suitLocker = stocked[WREN_SUIT_LOCKER_SOCKET]
-      ? [...x.db.ownReachableCargoContainers.iter()].find((c) =>
-          c.placedObjectId.endsWith(":" + WREN_SUIT_LOCKER_SOCKET),
-        )
-      : undefined;
-    if (stocked[WREN_SUIT_LOCKER_SOCKET])
-      assert(suitLocker, "suit locker reachable from the inside button");
+    // r8: the suit locker and the stocked suit are within reach where the inside button is pressed.
+    const expected = stocked[WREN_SUIT_LOCKER_SOCKET];
+    const suitLocker = () =>
+      [...x.db.ownReachableCargoContainers.iter()].find((c) =>
+        c.placedObjectId.endsWith(":" + WREN_SUIT_LOCKER_SOCKET),
+      );
+    const suitItems = () =>
+      [...x.db.ownReachableCargoItems.iter()]
+        .filter((i) => i.containerId === suitLocker()?.id)
+        .map((i) => i.id)
+        .sort();
+    if (expected) {
+      await wait(
+        () => suitItems().length === expected.length,
+        "suit locker and suit reachable from the inside button",
+      );
+      assert.deepEqual(suitItems(), [...expected].sort());
+      reached[WREN_SUIT_LOCKER_SOCKET] = {
+        containerId: suitLocker()!.id,
+        standingAt: [actor().localX, actor().localY],
+        items: expected.length,
+      };
+    }
     evidence.airlockAfterUpgrade = {
       pressurised: true,
       unsuitedRefused: true,
-      suitLockerReachableAtButton: !!suitLocker,
+      suitLockerReachableAtButton: !!expected && !!suitLocker(),
     };
   }
 
