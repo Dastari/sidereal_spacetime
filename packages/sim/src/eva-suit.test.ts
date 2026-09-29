@@ -88,6 +88,13 @@ describe("suit rigid body", () => {
     expect(free.vx).toBe(2);
   });
 
+  it("free mode: A/D yaw torque spins the body up; released, the spin carries on", () => {
+    const spun = run(at(), intent({ mode: "free", turn: 1 }), 10);
+    expect(spun.omega).toBeCloseTo(EVA_SUIT.freeYawAcceleration * 0.5, 6);
+    const coast = run(spun, intent({ mode: "free" }), 50);
+    expect(coast.omega).toBe(spun.omega);
+  });
+
   it("thrust directions are continuous: any angle is reachable, not eight", () => {
     for (const a of [0.1, 0.7, 1.9, -2.6]) {
       const s = run(at(), intent({ dx: Math.cos(a), dy: Math.sin(a) }), 60);

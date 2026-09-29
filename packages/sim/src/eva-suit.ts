@@ -11,8 +11,8 @@
  *   IFCS turns intent into a desired wrench and allocates it to the nozzles with the ship IFCS
  *   allocator (`allocateThrust`, shared with ship flight); nozzle limits bound what happens.
  * - Modes: `hold` (stabiliser: holds the facing and kills velocity relative to the frame's reference,
- *   so a released stick means "stop here") and `free` (no stabiliser: thrust only while commanded,
- *   momentum carries you; the facing is still steered while one is commanded).
+ *   so a released stick means "stop here") and `free` (no stabiliser: thrust and yaw torque only while
+ *   commanded; linear and angular momentum carry you otherwise).
  * Propellant is unlimited (owner, 2026-09-29).
  *
  * Frames: body frame x right (starboard), y forward; heading uses the ship convention
@@ -61,6 +61,8 @@ export const EVA_SUIT = {
   angularGain: 7,
   maxAngularSpeed: 3,
   maxAngularAcceleration: 12,
+  /** Free mode: yaw torque command at full input (rad/s²); momentum keeps the spin afterwards. */
+  freeYawAcceleration: 3,
   /** Hold mode: below these the body is held exactly at rest / on its facing. */
   restSpeed: 0.02,
   restAngularSpeed: 0.02,
@@ -119,6 +121,8 @@ export interface EvaSuitIntent {
   /** Desired facing (heading in the frame), or null for none. */
   facing: number | null;
   mode: EvaSuitMode;
+  /** Free mode without a facing: yaw torque command, -1..1 (counter-clockwise positive). */
+  turn?: number;
 }
 export interface EvaRigidState {
   x: number;
@@ -183,6 +187,10 @@ export function evaSuitDemand(
     );
     alpha = (wantOmega - state.omega) * EVA_SUIT.angularGain;
   } else if (intent.mode === "hold") alpha = -state.omega * EVA_SUIT.angularGain;
+  else
+    alpha =
+      Math.max(-1, Math.min(1, finiteOr(intent.turn ?? 0))) *
+      EVA_SUIT.freeYawAcceleration;
   alpha = Math.max(
     -EVA_SUIT.maxAngularAcceleration,
     Math.min(EVA_SUIT.maxAngularAcceleration, alpha),

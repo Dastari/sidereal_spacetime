@@ -1717,13 +1717,16 @@ export default function App({
       if (evaPhase) {
         // Outside the hull (suit IFCS, wiki Systems/EVA): the pointer is the facing the suit
         // turns to through torque; W/S thrust toward/away from it, A/D strafe. Intent only.
-        const aim = view.current?.aimDirection();
+        const mode = suitMode.current ?? live.current.evaSuitMode;
+        const free = mode === "free";
+        // Free (Newtonian) mode: no pointer facing; thrust along the body and A/D spin it.
+        const aimed = free ? undefined : view.current?.aimDirection();
+        const aim = aimed;
         const facing =
           aim !== undefined
             ? evaFacingFromAim(aim, live.current.evaLocal, live.current.shipHeading)
             : live.current.evaFrameHeading;
-        transmitter.offer(c, evaThrustFromKeys(keys, facing, blocked), false);
-        const mode = suitMode.current ?? live.current.evaSuitMode;
+        transmitter.offer(c, evaThrustFromKeys(keys, facing, blocked, free), false);
         const now = performance.now();
         const last = suitSent.current;
         const turned =

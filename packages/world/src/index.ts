@@ -651,9 +651,9 @@ export const setIntent = db.reducer(
       return;
     const seat = ctx.db.station.shipId.find(actor.shipId);
     const onStair = !!ctx.db.constructionStairWalk.characterId.find(actor.id);
-    // EVA (free): throttle is jetpack thrust and turn is yaw; the tick consumes them (eva.ts).
+    // EVA: dx/dy are the jetpack direction and turn is the free-mode yaw torque (eva.ts).
     const evaBody = ctx.db.evaBody.characterId.find(actor.id);
-    const jetpack = evaBody?.phase === "free";
+    const jetpack = !!evaBody;
     const controlled =
       !onStair &&
       !evaBody &&

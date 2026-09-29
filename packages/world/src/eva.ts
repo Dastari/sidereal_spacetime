@@ -689,13 +689,14 @@ function toFree(
 /** The suit's intent this tick: thrust direction from the input row, facing and mode from the suit. */
 function intentOf(
   suit: SuitRow,
-  input: { dx: number; dy: number },
+  input: { dx: number; dy: number; turn: number },
 ): EvaSuitIntent {
   return {
     dx: input.dx,
     dy: input.dy,
     facing: suit.facingActive ? suit.facing : null,
     mode: (suit.mode === "free" ? "free" : "hold") as EvaSuitMode,
+    turn: input.turn,
   };
 }
 
@@ -716,7 +717,7 @@ function stepLocal(
   actor: CharacterRow,
   body: EvaRow,
   suit: SuitRow,
-  input: { dx: number; dy: number },
+  input: { dx: number; dy: number; turn: number },
   tick: bigint,
 ) {
   const shipId = body.anchorShipId;
@@ -823,7 +824,7 @@ function stepFree(
   actor: CharacterRow,
   body: EvaRow,
   suit: SuitRow,
-  input: { dx: number; dy: number },
+  input: { dx: number; dy: number; turn: number },
   tick: bigint,
 ) {
   const ships = nearbyShips(ctx.db, body.systemId, body.x, body.y);
@@ -947,7 +948,11 @@ function stepBody(ctx: Context, body: EvaRow, tick: bigint) {
   // The carried mass is refreshed about once a second (inventory changes are rare outside).
   if (tick % 20n === 0n) suit = { ...suit, massKg: suitedMassKg(ctx, actor.id) };
   const command = freshInput(ctx, actor);
-  const input = { dx: command?.dx ?? 0, dy: command?.dy ?? 0 };
+  const input = {
+    dx: command?.dx ?? 0,
+    dy: command?.dy ?? 0,
+    turn: command?.turn ?? 0,
+  };
   if (inShipFrame(body)) stepLocal(ctx, actor, body, suit, input, tick);
   else stepFree(ctx, actor, body, suit, input, tick);
 }

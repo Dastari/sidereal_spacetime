@@ -155,6 +155,11 @@ describe("suit IFCS controls (pointer facing, thrust relative to it)", () => {
     expect(evaThrustFromKeys(keys(), 1, false)).toMatchObject({ dx: 0, dy: 0 });
     expect(evaThrustFromKeys(keys("KeyW"), 1, true)).toMatchObject({ dx: 0, dy: 0 });
   });
+  it("free mode: W/S along the body heading, A/D spin, Shift+A/D strafe", () => {
+    expect(evaThrustFromKeys(keys("KeyA"), 0, false, true)).toMatchObject({ turn: 1, dx: 0, dy: 0 });
+    expect(evaThrustFromKeys(keys("KeyD", "ShiftLeft"), 0, false, true)).toMatchObject({ turn: 0, dx: 1, dy: 0 });
+    expect(evaThrustFromKeys(keys("KeyW"), Math.PI / 2, false, true).dx).toBeCloseTo(-1, 9);
+  });
   it("maps the pointer aim (combat convention) to a heading in the body's frame", () => {
     expect(evaFacingFromAim(0.5, true, 1.2)).toBeCloseTo(-0.5, 9);
     expect(evaFacingFromAim(0.5, false, 1.2)).toBeCloseTo(0.7, 9);

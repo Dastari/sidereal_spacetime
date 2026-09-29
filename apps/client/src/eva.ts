@@ -313,24 +313,31 @@ export function evaFacingFromAim(
 }
 
 /**
- * Jetpack intent from WASD relative to the facing (W toward the pointer, S away, A/D strafe):
- * any direction is reachable by pointing, not only eight. Returns the frame direction.
+ * Jetpack intent from the keys, relative to a facing (any direction is reachable by pointing, not
+ * only eight). Stabilised: `facing` is the pointer; W/S toward/away from it, A/D strafe. Free
+ * (Newtonian): `facing` is the body's current heading; W/S along it, A/D yaw torque, Shift+A/D
+ * strafe. Returns the frame direction and the yaw command.
  */
 export function evaThrustFromKeys(
   keys: ReadonlySet<string>,
   facing: number,
   blocked: boolean,
+  free = false,
 ) {
   const none = { throttle: 0, turn: 0, dx: 0, dy: 0, sprint: false };
   if (blocked) return none;
   const forward = pressed(keys, "KeyW") - pressed(keys, "KeyS");
-  const strafe = pressed(keys, "KeyD") - pressed(keys, "KeyA");
-  if (!forward && !strafe) return none;
+  const side = pressed(keys, "KeyD") - pressed(keys, "KeyA");
+  const shift = keys.has("ShiftLeft") || keys.has("ShiftRight");
+  const turn = free && !shift ? -side : 0;
+  const strafe = free && !shift ? 0 : side;
+  if (!forward && !strafe) return { ...none, turn };
   const len = Math.hypot(forward, strafe);
   const f = [-Math.sin(facing), Math.cos(facing)],
     r = [Math.cos(facing), Math.sin(facing)];
   return {
     ...none,
+    turn,
     dx: (f[0] * forward + r[0] * strafe) / len,
     dy: (f[1] * forward + r[1] * strafe) / len,
   };
@@ -430,7 +437,7 @@ export function evaStatusLabel(
 }
 
 export const EVA_HELP =
-  "W/S thrust toward/away from the pointer · A/D strafe · mouse: facing · X stabiliser · E button · V combat";
+  "Stabilised: mouse faces, W/S toward/away, A/D strafe · X free (Newtonian): W/S thrust, A/D spin, Shift+A/D strafe · E button · V combat";
 
 /** Other EVA bodies as own-ship-local remote crew states (the renderer draws them like crewmates). */
 export function evaBodiesForScene(
