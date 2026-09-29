@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { TILESET_WALL_CONVENTION as c } from "../packages/content/src/tileset-interfaces";
 type XY = [number, number];
 const floorPath = "packages/content/src/construction-floor-interfaces.json";
@@ -160,8 +160,19 @@ Produce editable Blender source, material-preserving GLBs, hashes, separate unqu
 `;
 for (const [path, body] of [
   ["packages/content/src/ship-tileset-corner-spec.v1.json", json],
-  ["docs/ship_tileset_corner_authoring_requirements.md", guide],
+  [
+    "output/ship-tileset-specs/ship_tileset_corner_authoring_requirements.md",
+    guide,
+  ],
 ]) {
+  // The request text lives on the wiki; the local copy is regenerated under output/.
+  if (path.startsWith("output/")) {
+    if (!process.argv.includes("--check")) {
+      mkdirSync("output/ship-tileset-specs", { recursive: true });
+      writeFileSync(path, body);
+    }
+    continue;
+  }
   if (process.argv.includes("--check")) {
     if (readFileSync(path, "utf8") !== body)
       throw Error(`Stale corner request: ${path}`);

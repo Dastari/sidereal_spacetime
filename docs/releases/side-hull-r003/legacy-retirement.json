@@ -1,7 +1,0 @@
-{
-  "status": "passed",
-  "retiredSideArmorCells": 270096,
-  "retainedOtherArmorCells": 12232,
-  "originalVoxelDataUnmodified": true,
-  "scope": "Presentation filtering only; separate native GLB retains approved surfaces."
-}

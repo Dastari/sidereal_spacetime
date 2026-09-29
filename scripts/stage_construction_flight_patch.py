@@ -108,7 +108,7 @@ edit('packages/world/src/shared-world.ts',lambda s:once(s,'function reserveBerth
 edit('packages/world/src/auth.ts',auth)
 edit('packages/world/src/construction.ts',grants)
 edit('packages/world/src/construction-instances.ts',instances)
-prefix=ROOT/'docs/handoffs/construction_flight_integration'
+prefix=ROOT/'output/handoffs/construction_flight_integration';prefix.parent.mkdir(parents=True,exist_ok=True)
 prefix.with_suffix('.patch').write_text(''.join(''.join(difflib.unified_diff(a.splitlines(True),b.splitlines(True),fromfile='a/'+p,tofile='b/'+p)) for p,(a,b) in changes.items()))
 Path(str(prefix)+'_inputs.json').write_text(json.dumps({p:hashlib.sha256(a.encode()).hexdigest() for p,(a,b) in changes.items()},indent=2)+'\n')
 (ROOT/'.runtime/construction-flight-shared-preview.json').write_text(json.dumps({str(ROOT/p):b for p,(a,b) in changes.items()}))
