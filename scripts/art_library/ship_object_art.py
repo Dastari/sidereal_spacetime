@@ -60,6 +60,36 @@ def fluid_tank(K, w, d, h):
     return p
 
 
+def logic_button_wall(K):
+    """Return housing and one separate lens Piece in the wall frame, in kit texels.
+
+    Origin: back-face centre; +Y faces the crew, +Z up. Small equipment uses
+    a 5 mm detail grid; this is authored mesh, not voxel ship structure.
+    The exporter replaces the lens's carrier slot with ``status_light``.
+    """
+    size = tuple(v / K.T for v in (0.28, 0.06, 0.36))
+    body = K.Piece("logic.button.wall", "logic", "wall", size)
+    lens = K.Piece("status_light", "logic", "wall", size)
+
+    def box(piece, x0, y0, z0, x1, y1, z1, slot):
+        piece.b(*(v / K.T for v in (x0, y0, z0, x1, y1, z1)), slot)
+
+    box(body, -.14, 0, -.18, .14, .015, .18, "dark")  # backplate/gasket
+    # Four frame rails leave a real recess, without coplanar overlay faces.
+    box(body, -.14, .015, -.18, -.105, .05, .18, "primary")
+    box(body, .105, .015, -.18, .14, .05, .18, "primary")
+    box(body, -.105, .015, .07, .105, .05, .18, "primary")
+    box(body, -.105, .015, -.18, .105, .05, -.125, "primary")
+    box(body, -.105, .015, -.125, .105, .035, .07, "dark")  # recessed bezel
+    box(body, -.08, .035, -.105, .08, .06, .055, "accent")  # 160 mm square button
+    box(body, -.035, .05, .10, .035, .055, .14, "dark")    # lens socket
+    box(lens, -.025, .055, .11, .025, .06, .13, "primary")  # one 50 mm lens bar
+    box(body, -.085, .05, -.16, .085, .055, -.145, "dark")
+    for x in (-.075, -.035, .005, .045):
+        box(body, x, .055, -.16, x + .025, .06, -.145, "trim")
+    return body, lens
+
+
 def wall_locker(K, w, d, h):
     p = K.Piece("o.wall-locker", "object", "interior", (w, d, h))
     half = w // 2

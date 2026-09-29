@@ -9,6 +9,12 @@ Run (headless only):
   blender -b --factory-startup --python-exit-code 1 -P scripts/art_library/ship_component_export.py -- \
       --out assets/art-library/ship-components/r004 [--only id,id] [--sheets DIR] [--samples 32]
 
+Wall logic proposal (independent of --objects and the component catalog):
+  TMPDIR=/root/sidereal-scratch/eva-2-art nice -n 15 blender -b --factory-startup -t 2 \\
+      --python-exit-code 1 -P scripts/art_library/ship_component_export.py -- \\
+      --only logic.button.wall --out assets/runtime/ship-logic/r001 \\
+      --save-blend assets/source/ship-logic/r001/logic_button_wall.blend
+
 Conventions (see packages/content/src/ship-components.ts):
 - Every GLB is authored in its catalog frame (top / face / interior) with the
   origin on the hardpoint centre or floor, metres, Blender Z up; the glTF
@@ -1295,6 +1301,11 @@ def export_objects(a):
 
 def main():
     a = args()
+    if a.only == "logic.button.wall":
+        import logic_device_art
+        if a.out == str(ROOT / "assets/art-library/ship-components" / EXPORT_REVISION):
+            a.out = str(ROOT / "assets/runtime/ship-logic/r001")
+        return logic_device_art.export(a, sys.modules[__name__])
     if a.objects:
         return export_objects(a)
     catalog = json.loads(Path(a.catalog).read_text())
