@@ -20,7 +20,7 @@ import {
 import type world from "./index";
 import {
   INVENTORY_DEFINITIONS,
-  CHARACTER_ARMOR_DEFINITIONS,
+  CREW_WARDROBE_DEFINITIONS,
   inventoryDefinition,
   CHARACTER_CARRY_LIMIT_KG,
   LIQUID_DENSITY_KG_PER_LITRE,
@@ -734,7 +734,7 @@ function seedCharacterUniformsInternal(
     return true;
   }
   if (
-    data.items.length + CHARACTER_ARMOR_DEFINITIONS.length > 128 ||
+    data.items.length + CREW_WARDROBE_DEFINITIONS.length > 128 ||
     data.containers.length + 10 > 24
   )
     return false;
@@ -756,22 +756,17 @@ function seedCharacterUniformsInternal(
         height: i.rotated ? d.width : d.height,
       };
     });
-  const groups: Record<string, number> = {
-    captain: 0,
-    engineer: 0,
-    medic: 0,
-    pilot: 1,
-    security: 1,
-    marine: 1,
-    salvage: 2,
-    recon: 2,
-    scientist: 3,
-    mechanic: 3,
-    legacy: 3,
-  };
-  const definitions = CHARACTER_ARMOR_DEFINITIONS.map((d) => ({
+  // The r006 wardrobe (4 uniforms, tier 1 and tier 2 armour). The retired r008 armour
+  // is no longer issued; items characters already own stay valid (definitions and art kept).
+  const definitions = CREW_WARDROBE_DEFINITIONS.map((d) => ({
     ...d,
-    preferredLocker: groups[d.characterComponentId!.split("-")[0]] ?? 3,
+    preferredLocker: d.wardrobeId!.startsWith("uniform-")
+      ? 0
+      : d.equipSlot === "back"
+        ? 3
+        : d.wardrobeId!.startsWith("t1-")
+          ? 1
+          : 2,
   }));
   let plan: ReturnType<typeof packArmorIssue>;
   try {

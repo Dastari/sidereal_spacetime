@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import type { DbConnection } from "../packages/net/src/generated";
-import { CHARACTER_COMPONENT_SETS } from "../packages/content/src/character-components";
+import { CREW_WARDROBE_DEFINITIONS } from "../packages/content/src/inventory";
 type Client = (
   token?: string,
 ) => Promise<{ connection: DbConnection; token: string }>;
@@ -29,8 +29,8 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
       operationId: crypto.randomUUID(),
     });
     if (a.db.ownGameShipAccess.count() === 1n) {
-      // Native personal ships start with empty scoped cargo, not the historical
-      // 90-piece lab armory. Keep that legacy journey below; never call it passed
+      // Native personal ships start with empty scoped cargo, not the lab
+      // wardrobe issue. Keep that legacy journey below; never call it passed
       // for a fixture that has no authoritative component issuance path.
       const beforeItems = JSON.stringify(items());
       const beforeRevision = state().revision;
@@ -87,11 +87,11 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
         nativeArmoryIssued: false,
         components: 0,
         limitation:
-          "Native scoped armory issuance is not implemented; legacy 90-component equipment journey remains separate.",
+          "Native scoped armory issuance is not implemented; the lab wardrobe journey remains separate.",
       };
     }
     assert(
-      !items().some((i) => i.definitionId.startsWith("crew-")),
+      !items().some((i) => i.definitionId.startsWith("wardrobe-")),
       "stored uniforms are hidden while out of reach",
     );
     await a.reducers.useStation({});
@@ -137,7 +137,8 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
       assert.equal(c.width, 14);
       assert(
         items().some(
-          (i) => i.containerId === c.id && i.definitionId.startsWith("crew-"),
+          (i) =>
+            i.containerId === c.id && i.definitionId.startsWith("wardrobe-"),
         ),
       );
     }
@@ -145,7 +146,8 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
     await a.reducers.claimCharacterArmory(issue);
     await wait(
       () =>
-        items().filter((i) => i.definitionId.startsWith("crew-")).length === 90,
+        items().filter((i) => i.definitionId.startsWith("wardrobe-")).length ===
+        CREW_WARDROBE_DEFINITIONS.length,
       "all equipment issued",
     );
     const ids = items()
@@ -184,20 +186,24 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
         expectedRevision: appearance.revision,
         operationId: crypto.randomUUID(),
       });
-      for (const set of Object.values(CHARACTER_COMPONENT_SETS))
-        for (const [slot, id] of Object.entries(set)) {
-          const item = items().find((i) => i.definitionId === "crew-" + id)!;
-          await a.reducers.equipInventoryItem({
-            ...command(),
-            itemId: item.id,
-          });
-          assert.equal(
-            items().find((i) => i.id === item.id)!.equipmentSlot,
-            slot,
-          );
-        }
+      // Every worn wardrobe piece (tier 1, then tier 2 replacing it, then uniforms).
+      for (const d of CREW_WARDROBE_DEFINITIONS.filter(
+        (d) => d.equipSlot && d.equipSlot !== "back",
+      )) {
+        const item = items().find((i) => i.definitionId === d.id)!;
+        await a.reducers.equipInventoryItem({
+          ...command(),
+          itemId: item.id,
+        });
+        assert.equal(
+          items().find((i) => i.id === item.id)!.equipmentSlot,
+          d.equipSlot,
+        );
+      }
     }
-    const foreign = items().find((i) => i.definitionId === "crew-medic-chest")!;
+    const foreign = items().find(
+      (i) => i.definitionId === "wardrobe-t1-chest",
+    )!;
     assert(
       ![...other.connection.db.ownInventoryItems.iter()].some(
         (i) => i.id === foreign.id,
@@ -213,23 +219,21 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
       }),
     );
     for (const id of [
-      "medic-chest",
-      "engineer-helmet",
-      "recon-visor",
-      "marine-shoulders",
-      "security-gloves",
-      "mechanic-belt",
-      "pilot-legs",
-      "salvage-boots",
-      "scientist-back",
+      "uniform-medical",
+      "t2-chest",
+      "t1-shoulders",
+      "t2-gloves",
+      "t1-belt",
+      "t2-legs",
+      "t1-boots",
     ]) {
-      const item = items().find((i) => i.definitionId === "crew-" + id)!;
+      const item = items().find((i) => i.definitionId === "wardrobe-" + id)!;
       await a.reducers.equipInventoryItem({ ...command(), itemId: item.id });
     }
     // Unequip a glove into its original newly emptied location, then restore it.
     const gloves = items().find((i) => i.equipmentSlot === "gloves")!,
       replacement = items().find(
-        (i) => i.definitionId === "crew-medic-gloves",
+        (i) => i.definitionId === "wardrobe-t1-gloves",
       )!;
     await a.reducers.equipInventoryItem({
       ...command(),
@@ -274,10 +278,9 @@ export async function characterComponentsSmoke(client: Client, wait: Wait) {
     );
     return {
       passed: true,
-      components: 90,
+      wardrobeItems: CREW_WARDROBE_DEFINITIONS.length,
       bodyTypes: 2,
-      setsPerBody: 10,
-      mixedSlots: 9,
+      mixedSlots: 7,
       privateOwnership: true,
       reachRevisionReplayChecked: true,
       oldUUIDsPreserved: true,
