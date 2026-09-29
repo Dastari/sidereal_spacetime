@@ -3,10 +3,13 @@ import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { Vector3, Matrix } from "@babylonjs/core/Maths/math.vector";
-import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+import {
+  INVENTORY_DEFINITIONS,
+  type InventoryDefinition,
+} from "@sidereal/content/inventory";
 import { crewArmorAssetUrl, crewArmorPart } from "@sidereal/content/crew-armor";
 import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
-import type { EquipmentPoseConfiguration } from "./crew/pose-review-config";
+import { CREW_ITEMS, CREW_ITEM_CATALOG } from "@sidereal/content/crew-items";
 export type GroundItem = {
   id: string;
   definitionId: string;
@@ -21,12 +24,24 @@ export type GroundItem = {
   elevationM?: number;
 };
 export type GroundItemLabel = GroundItem & { x: number; y: number };
+/** Runtime GLB drawn for a dropped item, or undefined for a label-only item. */
+export function groundItemMeshUrl(d: InventoryDefinition): string | undefined {
+  // Wardrobe armour shows its armour-v1 part; a folded uniform has no ground mesh (label only).
+  if (d.wardrobeId) {
+    const part = crewArmorPart(crewWardrobeItem(d.wardrobeId)?.part ?? "");
+    return part ? crewArmorAssetUrl(part) : undefined;
+  }
+  // Owned r008 armour items keep their published component mesh.
+  if (d.characterComponentId) return d.iconUrl!.replace(".png", ".glb");
+  // r001 handhelds (and the legacy definitions upgraded to them) show the same art as in hand.
+  const handheld = d.crewItemId
+    ? CREW_ITEMS.find((item) => item.id === d.crewItemId)
+    : undefined;
+  if (handheld) return CREW_ITEM_CATALOG.assetBase + handheld.files.lod1;
+  return "/assets/equipment/" + d.assetId + ".glb";
+}
 /** Presentation only. Ground positions and item discovery are supplied by authority. */
-export function createGroundItems(
-  scene: Scene,
-  ship: TransformNode,
-  paired?: EquipmentPoseConfiguration,
-) {
+export function createGroundItems(scene: Scene, ship: TransformNode) {
   const entries = new Map<
     string,
     { row: GroundItem; root: TransformNode; asset?: AssetContainer }
@@ -54,21 +69,7 @@ export function createGroundItems(
         root.parent = ship;
         entry = { row, root };
         entries.set(row.id, entry);
-        // Wardrobe armour shows its armour-v1 part; a folded uniform has no ground mesh (label only).
-        const wardrobePart = d.wardrobeId
-          ? crewArmorPart(crewWardrobeItem(d.wardrobeId)?.part ?? "")
-          : undefined;
-        const url = wardrobePart
-          ? crewArmorAssetUrl(wardrobePart)
-          : d.wardrobeId
-            ? undefined
-            : d.characterComponentId
-              ? d.iconUrl!.replace(".png", ".glb")
-              : (paired?.items[d.assetId]
-                  ? paired.equipmentUrl
-                  : "/assets/equipment/") +
-                d.assetId +
-                ".glb";
+        const url = groundItemMeshUrl(d);
         const owned = entry;
         void (
           url

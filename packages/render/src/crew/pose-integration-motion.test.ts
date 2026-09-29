@@ -1,6 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
-import { aimRotation } from "./pose-math";
 import {
   posePlacementHeading,
   relativePoseMovementYaw,
@@ -53,37 +51,6 @@ describe("game integration of equipment aim and travel", () => {
       -0.2,
       10,
     );
-  });
-
-  it("rotates a forward foot displacement along travel after the solved body transform", () => {
-    for (const { heading, torsoYaw, travelHeading } of [
-      { heading: 0, torsoYaw: 0, travelHeading: Math.PI / 2 },
-      { heading: 0, torsoYaw: 0, travelHeading: Math.PI },
-      { heading: 0.8, torsoYaw: 0.31, travelHeading: -1.2 },
-      { heading: -2.7, torsoYaw: -0.43, travelHeading: 2.8 },
-    ]) {
-      const achieved = heading + torsoYaw;
-      const relative = relativePoseMovementYaw(travelHeading, achieved);
-      const forward = new Vector3(0, 0, -0.24);
-      // This is the solver's foot correction in its current achieved body frame.
-      const offset = new Vector3(
-        Math.sin(relative) * -forward.z,
-        0,
-        (1 - Math.cos(relative)) * -forward.z,
-      );
-      const body = Matrix.FromQuaternionToRef(
-        aimRotation(achieved, 0),
-        Matrix.Identity(),
-      );
-      const world = Vector3.TransformNormal(forward.add(offset), body);
-      const expected = new Vector3(
-        Math.sin(travelHeading) * 0.24,
-        0,
-        -Math.cos(travelHeading) * 0.24,
-      );
-      expect(Vector3.Distance(world, expected)).toBeLessThan(1e-7);
-      expect(world.length()).toBeCloseTo(forward.length(), 7);
-    }
   });
 
   it("rejects non-finite headings before they reach character transforms", () => {

@@ -1,11 +1,9 @@
 /**
  * Voxel crew bundle (CHAR-BODY r005): 1/32 m voxel body, `crew_rig`, sockets and the baked
  * animation library. Accepted as a first revision (wiki: Decisions/2026-09-27 First Revision Art
- * Acceptance) together with the head kit, weapons and armour r006; it is the game's default crew.
- * The installed r008 modular bundle remains available as an explicit `?crew=legacy` fallback.
+ * Acceptance) together with the head kit, weapons and armour r006; it is the game's only crew
+ * (the r008 modular bundle and its `?crew=legacy` fallback were retired on 2026-09-29).
  */
-export const CREW_BUNDLES = ["legacy", "voxel"] as const;
-export type CrewBundle = (typeof CREW_BUNDLES)[number];
 
 export const VOXEL_CREW_REVISION = "r005";
 export const VOXEL_CREW_FACE_ATLAS_URL = `/assets/crew/voxel/${VOXEL_CREW_REVISION}/face/face-atlas.json?revision=${VOXEL_CREW_REVISION}`;
@@ -333,13 +331,3 @@ export const VOXEL_CREW_UPPER_BONES = [
   "hand.L",
   "hand.R",
 ] as const;
-
-/**
- * Pure crew bundle selection: the voxel crew is the default; only an explicit `?crew=legacy`
- * query selects the installed r008 modular bundle (fallback while the first revision settles).
- */
-export function resolveCrewBundle(input: {
-  query?: string | null;
-}): CrewBundle {
-  return input.query === "legacy" ? "legacy" : "voxel";
-}

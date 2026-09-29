@@ -1,9 +1,5 @@
 import { createCharacterPreview } from "../../packages/render/src/character-preview";
-import {
-  createWorld,
-  loadEquipmentPoseConfiguration,
-  type SceneState,
-} from "../../packages/render/src/index";
+import { createWorld, type SceneState } from "../../packages/render/src/index";
 import { SOLAR_SYSTEM } from "../../packages/content/src/shared-system";
 const canvas = document.querySelector("canvas")!;
 const bodies = SOLAR_SYSTEM.bodies.map((body) => ({
@@ -59,48 +55,44 @@ Object.assign(window, {
     },
   },
 });
-loadEquipmentPoseConfiguration()
-  .then((equipmentPose) =>
-    createWorld(canvas, (text) => (status.textContent = text), {
-      equipmentPose,
-      signal: controller.signal,
-      onScene: (scene) => {
-        Object.assign((window as any).solarReview, { scene });
-        // Match the production HUD: portrait rendering nests inside onBeforeRender.
-        scene.onBeforeRenderObservable.add(() => {
-          if (portraitOpen) portrait?.render(performance.now() / 1000);
-        });
-        scene.onAfterRenderObservable.add(() => {
-          frames++;
-          if (frames % 10 === 0 && world) {
-            const snapshot = world.getDiagnostics(true);
-            if (snapshot) {
-              latestDiagnostics = snapshot;
-              diagnosticsUpdatedFrame = frames;
-            }
-            const data = {
-              frames,
-              portrait: {
-                open: portraitOpen,
-                status: portrait?.presentationStatus,
-              },
-              floatingOrigin: scene.floatingOriginMode,
-              diagnostics: latestDiagnostics,
-              diagnosticsUpdatedFrame,
-              camera: scene.activeCamera?.position.asArray(),
-              target: (scene.activeCamera as any)?.target?.asArray(),
-            };
-            canvas.dataset.review = JSON.stringify(data);
-            document.querySelector("#stats")!.textContent = JSON.stringify(
-              data,
-              null,
-              2,
-            );
-          }
-        });
-      },
-    }),
-  )
+createWorld(canvas, (text) => (status.textContent = text), {
+  signal: controller.signal,
+  onScene: (scene) => {
+    Object.assign((window as any).solarReview, { scene });
+    // Match the production HUD: portrait rendering nests inside onBeforeRender.
+    scene.onBeforeRenderObservable.add(() => {
+      if (portraitOpen) portrait?.render(performance.now() / 1000);
+    });
+    scene.onAfterRenderObservable.add(() => {
+      frames++;
+      if (frames % 10 === 0 && world) {
+        const snapshot = world.getDiagnostics(true);
+        if (snapshot) {
+          latestDiagnostics = snapshot;
+          diagnosticsUpdatedFrame = frames;
+        }
+        const data = {
+          frames,
+          portrait: {
+            open: portraitOpen,
+            status: portrait?.presentationStatus,
+          },
+          floatingOrigin: scene.floatingOriginMode,
+          diagnostics: latestDiagnostics,
+          diagnosticsUpdatedFrame,
+          camera: scene.activeCamera?.position.asArray(),
+          target: (scene.activeCamera as any)?.target?.asArray(),
+        };
+        canvas.dataset.review = JSON.stringify(data);
+        document.querySelector("#stats")!.textContent = JSON.stringify(
+          data,
+          null,
+          2,
+        );
+      }
+    });
+  },
+})
   .then((result) => {
     world = result;
     world.update(state);

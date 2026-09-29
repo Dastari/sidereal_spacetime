@@ -3,7 +3,7 @@
  * the voxel crew, dressed from inventory definition ids exactly as the client derives them from
  * equipped items. Evidence and iteration only; nothing here is authority.
  *
- * Query: ?prefab=<id>&crew=voxel|legacy&body=male|female&equip=<definition ids, comma separated>
+ * Query: ?prefab=<id>&body=male|female&equip=<definition ids, comma separated>
  *        &hand=<definition id>&x=&y=&heading=&cam=alpha,beta,radius[,tx,ty]&moving=1
  * window.__crew.dress(ids[], hand?) re-dresses live; window.__crewReady / __crewError as game.html.
  */
@@ -79,7 +79,6 @@ async function main() {
         documentJson: JSON.stringify(construction),
         deckId: "deck-0",
       },
-      crewBundle: q.get("crew") === "legacy" ? "legacy" : "voxel",
       onScene: (s) => {
         scene = s;
         (window as unknown as { __crewScene?: Scene }).__crewScene = s;

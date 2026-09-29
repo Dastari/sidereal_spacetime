@@ -375,7 +375,6 @@ async function loadShip(scene: Scene) {
 }
 
 createWorld(canvas, (text) => (status.textContent = text), {
-  crewBundle: "voxel",
   signal: controller.signal,
   ...(shipId || params.get("ship") === "none"
     ? { vessel: "none" as const }
