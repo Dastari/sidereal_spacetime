@@ -85,6 +85,15 @@ function furnitureName(designId: string) {
   return title(tail === "standard" ? (designId.split(".")[1] ?? tail) : tail);
 }
 
+/** Measured bounds for the inspector schematic (plan X is fore-aft). */
+function schematic(o: PrefabShipObject) {
+  return {
+    widthM: o.max[1] - o.min[1],
+    depthM: o.max[0] - o.min[0],
+    heightM: o.max[2] - o.min[2],
+  };
+}
+
 function objectSize(o: PrefabShipObject) {
   const [w, d, h] = [0, 1, 2].map((i) => o.max[i] - o.min[i]);
   // Plan X is fore-aft: report width (across) x depth (fore-aft) x height.
@@ -131,6 +140,7 @@ export function prefabObjectDetails(
     const sealed = !!mount || type === "door.airlock";
     return {
       placementId: selectedId,
+      schematic: schematic(object),
       name: DOOR_NAMES[type] ?? "Door",
       category: sealed ? "Exterior hatch" : "Interior door",
       stats: [
@@ -153,6 +163,7 @@ export function prefabObjectDetails(
   if (object.kind === "furniture") {
     return {
       placementId: selectedId,
+      schematic: schematic(object),
       name: furnitureName(object.designId ?? "furniture"),
       category: "Furniture",
       stats: [
@@ -190,6 +201,7 @@ export function prefabObjectDetails(
   if (!owner || !def)
     return {
       placementId: selectedId,
+      schematic: schematic(object),
       name,
       category,
       stats: [
@@ -293,6 +305,7 @@ export function prefabObjectDetails(
     });
   return {
     placementId: selectedId,
+    schematic: schematic(object),
     name,
     category,
     stats,

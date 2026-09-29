@@ -430,7 +430,7 @@ test("backpacks and crates show different item footprints at their saved positio
     expect(hit(`sort-${window}`).disabled).toBe(true);
   }
 });
-test("held preview snaps to the full footprint and rotation changes fit without changing inventory", () => {
+test("held item outlines its full landing footprint and rotation changes fit without changing inventory", () => {
   const { board, draw, hit, state, ui, actions } = fixture();
   board.open("inventory");
   draw();
@@ -443,6 +443,15 @@ test("held preview snaps to the full footprint and rotation changes fit without 
   ui.ctx.strokeRect = (...rect) => {
     strokes.push({ rect, color: String(ui.ctx.strokeStyle) });
   };
+  state.items.push({
+    id: "cell",
+    definitionId: "power-cell",
+    containerId: "bag",
+    equipmentSlot: "",
+    x: 7,
+    y: 2,
+    rotated: false,
+  });
   const before = JSON.stringify(state);
   hit("item-inventory-gun").action?.();
   draw();
@@ -452,19 +461,102 @@ test("held preview snaps to the full footprint and rotation changes fit without 
     slot.w * 2 - 4,
     slot.h * 4 - 4,
   ]);
-  expect(strokes.at(-1)?.color).toBe("#74dcbb");
+  expect(strokes.at(-1)?.color).toBe("#47dfff");
   board.rotate();
   draw();
+  // The turned 4x2 footprint no longer fits at column 5; the outline stays inside the grid
+  // (column 4) and turns red because the power cell occupies part of it.
   expect(strokes.at(-1)?.rect).toEqual([
-    slot.x + 2,
+    slot.x - slot.w + 2,
     slot.y + 2,
     slot.w * 4 - 4,
     slot.h * 2 - 4,
   ]);
-  expect(strokes.at(-1)?.color).toBe("#ff8eaa");
+  expect(strokes.at(-1)?.color).toBe("#ff5a7a");
   hit("slot-bag-5-1").action?.();
   expect(actions.moveItem).not.toHaveBeenCalled();
   expect(JSON.stringify(state)).toBe(before);
+});
+test("a dragged item keeps its grab point: it lands where it is drawn, not at the pointer cell", () => {
+  const { board, draw, hit, ui, actions } = fixture();
+  board.open("inventory");
+  board.open("crate");
+  draw();
+  const source = hit("item-inventory-gun"),
+    box = source.rect;
+  // Pressed 1.2 cells right and 3.1 cells down inside the 2x4 carbine.
+  const grab = { x: 58, y: 150 };
+  const pointer = vi.spyOn(ui, "pointerPosition");
+  pointer.mockReturnValue({ x: box.x + grab.x + 6, y: box.y + grab.y });
+  source.drag?.(6, 0);
+  const target = hit("slot-crate-2-1").rect;
+  // The held item follows the pointer 1:1 with the same offset (no pickup jump).
+  const release = {
+    x: target.x + 2 + grab.x + 3,
+    y: target.y + 2 + grab.y + 4,
+  };
+  pointer.mockReturnValue(release);
+  const frames: number[][] = [];
+  ui.ctx.strokeRect = (...rect) => {
+    frames.push(rect);
+  };
+  draw();
+  // The outline covers the cells under the item's body, not the cell under the pointer.
+  expect(frames.at(-1)).toEqual([target.x + 2, target.y + 2, 92, 188]);
+  source.drop?.(release.x, release.y);
+  expect(actions.moveItem).toHaveBeenCalledWith({
+    itemId: "gun",
+    containerId: "crate",
+    x: 2,
+    y: 1,
+    rotated: false,
+  });
+});
+test("an invalid drag release returns the item to its origin without sending intent", () => {
+  const { board, draw, hit, ui, actions, state } = fixture();
+  board.open("inventory");
+  board.open("character");
+  draw();
+  const source = hit("item-inventory-gun");
+  source.drag?.(8, 0);
+  const helmet = hit("equip-slot-helmet").rect;
+  source.drop?.(helmet.x + 10, helmet.y + 10);
+  expect(actions.equipItem).not.toHaveBeenCalled();
+  expect(actions.moveItem).not.toHaveBeenCalled();
+  expect(ui.holding).toBe(false);
+  draw();
+  expect(hit("item-inventory-gun").rect).toEqual(source.rect);
+  expect(state.items[1].containerId).toBe("bag");
+});
+test("a valid equipment target outlines the slot in cyan and equips through authority", () => {
+  const { board, draw, hit, ui, actions } = fixture();
+  board.open("inventory");
+  board.open("character");
+  draw();
+  const hand = hit("equip-slot-hand").rect;
+  vi.spyOn(ui, "pointerPosition").mockReturnValue({
+    x: hand.x + 10,
+    y: hand.y + 10,
+  });
+  const strokes: { rect: number[]; color: string }[] = [];
+  ui.ctx.strokeRect = (...rect) => {
+    strokes.push({ rect, color: String(ui.ctx.strokeStyle) });
+  };
+  hit("item-inventory-gun").action?.();
+  draw();
+  expect(strokes.at(-1)).toEqual({
+    rect: [hand.x, hand.y, hand.w, hand.h],
+    color: "#47dfff",
+  });
+  expect(
+    ui.pointerAction({
+      x: hand.x + 10,
+      y: hand.y + 10,
+      button: 0,
+      shiftKey: false,
+    }),
+  ).toBe(true);
+  expect(actions.equipItem).toHaveBeenCalledWith("gun");
 });
 test("Icons remains optional and returning to Slots restores the physical layout", () => {
   const { board, draw, hit, state, ui } = fixture();
@@ -641,4 +733,37 @@ test("hotbar quick slots bind locally without mutating inventory", () => {
   expect(board.isOpen("inventory")).toBe(true);
   expect(actions.equipItem).not.toHaveBeenCalled();
   expect(actions.assignHotbar).not.toHaveBeenCalled();
+});
+test("no item tooltip while dragging, nor after the drop until the pointer moves", () => {
+  const { board, draw, hit, ui, state } = fixture();
+  let now = 1000;
+  vi.spyOn(performance, "now").mockImplementation(() => now);
+  board.open("inventory");
+  draw();
+  const texts = vi.spyOn(ui, "text");
+  const tooltip = () =>
+    texts.mock.calls.some(([t]) => String(t).includes("FRONTIER"));
+  const source = hit("item-inventory-gun"),
+    target = hit("slot-bag-4-1").rect,
+    release = { x: target.x + 5, y: target.y + 5 };
+  const pointer = vi.spyOn(ui, "pointerPosition");
+  pointer.mockReturnValue({ x: source.rect.x + 8, y: source.rect.y });
+  source.drag?.(8, 0);
+  ui.hover = "item-inventory-gun";
+  pointer.mockReturnValue(release);
+  draw();
+  expect(tooltip()).toBe(false);
+  source.drop?.(release.x, release.y);
+  // The server confirms: the carbine now sits under the resting pointer.
+  Object.assign(state.items[1], { x: 4, y: 1 });
+  state.revision = "2";
+  now += 500;
+  texts.mockClear();
+  draw();
+  ui.hover = "item-inventory-gun";
+  draw();
+  expect(tooltip()).toBe(false);
+  pointer.mockReturnValue({ x: release.x + 12, y: release.y + 9 });
+  draw();
+  expect(tooltip()).toBe(true);
 });

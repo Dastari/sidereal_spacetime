@@ -5,7 +5,8 @@
   "type": "module",
   "exports": {
     ".": "./src/index.ts",
-    "./shared-entry": "./src/shared-entry.ts"
+    "./shared-entry": "./src/shared-entry.ts",
+    "./cursors": "./src/cursors.ts"
   },
   "dependencies": {
     "@babylonjs/core": "9.25.0",

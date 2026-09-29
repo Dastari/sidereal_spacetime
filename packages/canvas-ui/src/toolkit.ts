@@ -2,6 +2,7 @@ import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTextur
 import { Layer } from "@babylonjs/core/Layers/layer";
 import type { Scene } from "@babylonjs/core/scene";
 import { contains, type Rect } from "./layout";
+import { gameCursors } from "./cursors";
 export const palette = {
   text: "#eff6ff",
   muted: "#a7c5e8",
@@ -69,25 +70,46 @@ export class CanvasUI {
   };
   private pointer = { x: -1, y: -1 };
   private worldCursor = "default";
+  /** An item rides the pointer (click-held or dragged): show the grab cursor. */
+  holding = false;
+  /** Set during draw when the next frame must not wait for the 30 Hz HUD cadence
+   * (a held item following the pointer, a release glide). Cleared before each draw. */
+  fluid = false;
+  /** World cursor from the scene: a CSS value, or "default" for the themed arrow. */
   setWorldCursor(cursor: string) {
     this.worldCursor = cursor;
     this.updateCursor();
   }
   private updateCursor() {
+    const cursors = gameCursors();
+    // A locked pointer has no cursor; camera modes that lock it never show one.
+    if (
+      typeof document !== "undefined" &&
+      document.pointerLockElement === this.canvas
+    ) {
+      this.canvas.style.cursor = "none";
+      return;
+    }
     const hit = [...this.hits]
       .reverse()
       .find((h) => contains(h.rect, this.pointer.x, this.pointer.y));
-    this.canvas.style.cursor = hit?.disabled
-      ? "not-allowed"
-      : hit?.edit
-        ? "text"
-        : hit?.drag
-          ? "move"
-          : hit
-            ? "pointer"
-            : this.pointerBlocked()
-              ? "default"
-              : this.worldCursor;
+    const worldHover = !!this.canvas.dataset?.prefabObject;
+    this.canvas.style.cursor =
+      this.holding || (this.active?.moved && this.active.hit.drag)
+        ? cursors.grab
+        : hit?.disabled
+          ? cursors["not-allowed"]
+          : hit?.edit
+            ? cursors.text
+            : hit
+              ? cursors.interact
+              : this.pointerBlocked()
+                ? cursors.default
+                : this.worldCursor !== "default"
+                  ? this.worldCursor
+                  : worldHover
+                    ? cursors.interact
+                    : cursors.default;
   }
   pointerPosition() {
     return this.pointer ?? { x: -1, y: -1 };
@@ -127,6 +149,8 @@ export class CanvasUI {
     // Use Babylon's existing foreground stage after camera postprocessing.
     this.layer.applyPostProcess = false;
     this.observer = scene.onBeforeRenderObservable.add(() => this.paint());
+    // The HUD owns the canvas cursor; Babylon would reset it on every scene pointer move.
+    scene.doNotHandleCursors = true;
     canvas.addEventListener("pointerdown", this.down, true);
     canvas.addEventListener("pointermove", this.move, true);
     canvas.addEventListener("pointerup", this.up, true);
@@ -138,6 +162,10 @@ export class CanvasUI {
     });
     window.addEventListener("keydown", this.key, true);
     window.addEventListener("blur", this.blur);
+    // Scene hover (prefab object under the pointer) is decided by later canvas listeners;
+    // re-evaluate once the move has finished propagating.
+    window.addEventListener("pointermove", this.afterMove);
+    document.addEventListener?.("pointerlockchange", this.afterMove);
     document.fonts.ready.then(() => this.invalidate());
     scene.onDisposeObservable.add(() => this.dispose());
   }
@@ -213,7 +241,6 @@ export class CanvasUI {
       .reverse()
       .find((h) => contains(h.rect, this.pointer.x, this.pointer.y));
     this.hover = hit?.id ?? "";
-    this.updateCursor();
     if (this.active) {
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -235,8 +262,10 @@ export class CanvasUI {
       this.active.x = this.pointer.x;
       this.active.y = this.pointer.y;
     }
+    this.updateCursor();
     this.invalidate();
   };
+  private afterMove = () => this.updateCursor();
   private up = (e: PointerEvent) => {
     if (!this.active) return;
     e.preventDefault();
@@ -253,6 +282,7 @@ export class CanvasUI {
       if (contains(hit.rect, p.x, p.y))
         hit.action?.({ ...p, button: e.button, shiftKey: e.shiftKey });
     }
+    this.updateCursor();
     this.invalidate();
   };
   private contextMenu = (e: MouseEvent) => {
@@ -438,7 +468,13 @@ export class CanvasUI {
     }
     // scaleTo clears/reallocates the texture. Repaint and upload in this same
     // render frame; throttling after a resize exposes a blank HUD texture.
-    if (!this.dirty || (!resized && performance.now() - this.lastPaint < 33))
+    // Pointer-following content (a dragged or held item, a release glide) paints every
+    // frame so it tracks the pointer 1:1; everything else keeps the 30 Hz HUD cadence.
+    const fluid = this.fluid || !!this.active?.moved;
+    if (
+      !this.dirty ||
+      (!resized && !fluid && performance.now() - this.lastPaint < 33)
+    )
       return;
     this.lastPaint = performance.now();
     this.dirty = false;
@@ -456,6 +492,7 @@ export class CanvasUI {
     );
     this.hits = [];
     this.panels = [];
+    this.fluid = false;
     this.draw();
     const focused = this.hits.find((h) => h.id === this.focus);
     if (!focused)
@@ -785,6 +822,8 @@ export class CanvasUI {
     this.canvas.removeEventListener("wheel", this.wheel, true);
     window.removeEventListener("keydown", this.key, true);
     window.removeEventListener("blur", this.blur);
+    window.removeEventListener("pointermove", this.afterMove);
+    document.removeEventListener?.("pointerlockchange", this.afterMove);
     this.layer.dispose();
   }
 }

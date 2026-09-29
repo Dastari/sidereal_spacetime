@@ -121,3 +121,24 @@ it("scrolls long stats while retaining reachable action controls within compact 
   expect(layout.contentHeight).toBeGreaterThan(layout.viewport.h);
   panel.dispose();
 });
+it("objects without a rendered image show a measured schematic, not 'Preview unavailable'", () => {
+  const f = fixture();
+  const texts: string[] = [];
+  (f.ui as unknown as { text: (t: string) => void }).text = (t) =>
+    texts.push(t);
+  const details = createObjectDetailsUI(f.ui, {
+    action: vi.fn(),
+    close: vi.fn(),
+  });
+  details.draw({
+    ...state,
+    name: "Airlock hatch",
+    schematic: { widthM: 1.5, depthM: 0.25, heightM: 2.2 },
+  });
+  expect(texts).toContain("SCHEMATIC");
+  expect(texts).toContain("1.50 × 0.25 × 2.20 m");
+  expect(texts).not.toContain("Preview unavailable");
+  texts.length = 0;
+  details.draw({ ...state, placementId: "other" });
+  expect(texts).toContain("Preview unavailable");
+});

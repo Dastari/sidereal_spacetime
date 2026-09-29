@@ -14,6 +14,39 @@ body,
   margin: 0;
   overflow: hidden;
 }
+/* Themed game cursors (packages/canvas-ui/src/cursors.ts); the canvas cursor is set by the HUD. */
+#root {
+  cursor: var(--sr-cursor-default, default);
+}
+#root
+  :is(
+    button,
+    a[href],
+    summary,
+    select,
+    label[for],
+    [role="button"],
+    input[type="checkbox"],
+    input[type="radio"],
+    input[type="range"]
+  ):not(:disabled) {
+  cursor: var(--sr-cursor-interact, pointer);
+}
+#root :disabled {
+  cursor: var(--sr-cursor-not-allowed, not-allowed);
+}
+#root
+  :is(
+    input:not([type]),
+    input[type="text"],
+    input[type="search"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"],
+    textarea
+  ):not(:disabled) {
+  cursor: var(--sr-cursor-text, text);
+}
 .game-canvas {
   display: block;
   width: 100%;
