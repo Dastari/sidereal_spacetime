@@ -30,6 +30,7 @@ import {
   LIQUID_DENSITY_KG_PER_LITRE,
   CHARACTER_CARRY_LIMIT_KG,
 } from "@sidereal/content/inventory";
+import { lifecycleEvents, lifecycleTestTables } from "./lifecycle-test-tables";
 function fixture() {
   const actor = {
     id: "actor",
@@ -138,6 +139,7 @@ function fixture() {
     timestamp: { microsSinceUnixEpoch: 1n },
     newUuidV4: () => `uuid-${++n}`,
     db: {
+      ...lifecycleTestTables(),
       constructionFlightBinding: { shipId: { find: () => undefined } },
       character: {
         id: { find: (id: string) => (id === actor.id ? actor : undefined) },
@@ -292,6 +294,36 @@ test("quick transfer and take all require a contiguous footprint, not just enoug
   takeAll(f.ctx, { ...f.mutation(), containerId: "crate" });
   expect(f.items.find((i) => i.id === "gun")?.containerId).toBe("crate");
   expect(f.items.find((i) => i.id === "scanner")?.containerId).toBe("bag");
+});
+test("lifecycle: one event per moved item, none for a replay or a rejected move", () => {
+  const f = fixture();
+  f.containers[2].width = f.containers[2].height = 2;
+  f.items[2].containerId = "bag";
+  f.items[2].x = 2;
+  const command = {
+    ...f.mutation(),
+    containerId: "bag",
+    destinationId: "crate",
+  };
+  storeAll(f.ctx, command);
+  storeAll(f.ctx, command); // replay of the same operation
+  expect(() =>
+    transferItem(f.ctx, {
+      ...f.mutation(),
+      itemId: "pack",
+      containerId: "bag",
+    }),
+  ).toThrow("No room");
+  const events = lifecycleEvents(f.raw.db as any);
+  expect(events.map((e) => [e.objectId, e.kind, e.sequence])).toEqual([
+    ["medical", "inventory.transferred", 1n],
+  ]);
+  expect(events[0]).toMatchObject({
+    actorId: f.actor.id,
+    causationId: `${f.actor.id}:${command.operationId}`,
+    frameId: "crate",
+    payload: { from: { containerId: "bag" }, to: { containerId: "crate" } },
+  });
 });
 test("store all moves only fitting carried contents, retains equipment, and retries exactly once", () => {
   const f = fixture();

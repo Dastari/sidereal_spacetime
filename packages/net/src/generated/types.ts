@@ -1401,6 +1401,39 @@ export const LegacyBodyAlias = __t.object("LegacyBodyAlias", {
 });
 export type LegacyBodyAlias = __Infer<typeof LegacyBodyAlias>;
 
+export const LifecycleCursor = __t.object("LifecycleCursor", {
+  consumerId: __t.string(),
+  lastEventId: __t.u64(),
+  missedEvents: __t.u64(),
+  updatedMicros: __t.u64(),
+});
+export type LifecycleCursor = __Infer<typeof LifecycleCursor>;
+
+export const LifecycleEvent = __t.object("LifecycleEvent", {
+  eventId: __t.u64(),
+  objectId: __t.string(),
+  objectKind: __t.string(),
+  kind: __t.string(),
+  sequence: __t.u64(),
+  authorityTick: __t.u64(),
+  causationId: __t.string(),
+  actorId: __t.string(),
+  frameId: __t.string(),
+  payloadJson: __t.string(),
+  atMicros: __t.u64(),
+});
+export type LifecycleEvent = __Infer<typeof LifecycleEvent>;
+
+export const LifecycleOutbox = __t.object("LifecycleOutbox", {
+  id: __t.u32(),
+  nextEventId: __t.u64(),
+  oldestEventId: __t.u64(),
+  prunedEvents: __t.u64(),
+  rejectedEvents: __t.u64(),
+  updatedMicros: __t.u64(),
+});
+export type LifecycleOutbox = __Infer<typeof LifecycleOutbox>;
+
 export const MapShipProjection = __t.object("MapShipProjection", {
   shipId: __t.string(),
   systemId: __t.string(),
@@ -1450,6 +1483,20 @@ export type NearbyFieldAsteroid = __Infer<typeof NearbyFieldAsteroid>;
 
 export const NearbyFieldAsteroids = __t.object("NearbyFieldAsteroids", {});
 export type NearbyFieldAsteroids = __Infer<typeof NearbyFieldAsteroids>;
+
+export const ObjectLifecycle = __t.object("ObjectLifecycle", {
+  objectId: __t.string(),
+  objectKind: __t.string(),
+  definitionRef: __t.string(),
+  state: __t.string(),
+  frameId: __t.string(),
+  ownerId: __t.string(),
+  sequence: __t.u64(),
+  origin: __t.string(),
+  createdMicros: __t.u64(),
+  updatedMicros: __t.u64(),
+});
+export type ObjectLifecycle = __Infer<typeof ObjectLifecycle>;
 
 export const OwnActuatorOutputs = __t.object("OwnActuatorOutputs", {});
 export type OwnActuatorOutputs = __Infer<typeof OwnActuatorOutputs>;

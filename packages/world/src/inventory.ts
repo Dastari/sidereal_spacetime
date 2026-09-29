@@ -10,6 +10,7 @@ import { planBackpackEquip } from "@sidereal/sim/backpack-swap";
 import { prepareGroundDrop } from "./inventory-ground";
 import { createGroundAccess } from "./inventory-ground-access";
 import { retargetGroundPlacement } from "@sidereal/sim/ground-placement";
+import { recordItemMove } from "./lifecycle";
 import {
   SenderError,
   t,
@@ -388,7 +389,8 @@ export function transaction(
   if (state.revision !== args.expectedRevision)
     fail("Inventory revision conflict");
   try {
-    apply(a);
+    // Lifecycle events for the items this operation moves carry its receipt as causation.
+    apply(Object.assign(a, { causationId: receiptId }));
   } catch (error) {
     if (error instanceof SenderError) throw error;
     fail(
@@ -413,7 +415,7 @@ export function transaction(
 }
 export function commitItems(
   ctx: Context,
-  a: NonNullable<ReturnType<typeof access>>,
+  a: NonNullable<ReturnType<typeof access>> & { causationId?: string },
   items: GridItem[],
 ) {
   validateInventory(
@@ -425,8 +427,13 @@ export function commitItems(
   );
   for (const item of items) {
     const old = a.data.items.find((i) => i.id === item.id)!;
-    if (JSON.stringify(old) !== JSON.stringify(item))
+    if (JSON.stringify(old) !== JSON.stringify(item)) {
       ctx.db.inventoryItem.id.update({ ...old, ...item });
+      recordItemMove(ctx, old, item, {
+        causationId: a.causationId ?? `inventory:${a.actor.id}`,
+        actorId: a.actor.id,
+      });
+    }
   }
   // Ground wrappers have no identity of their own once their item is retrieved.
   for (const binding of a.bindings.filter((b) =>

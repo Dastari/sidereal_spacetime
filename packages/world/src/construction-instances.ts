@@ -1,4 +1,5 @@
 import { acceptedPassengerAccess } from "./construction-passenger-access";
+import { recordSpawn } from "./lifecycle";
 import { commitFlightCharacter } from "./construction-flight-dirty";
 import { qualifiedConstructionReviewEntry } from "./construction-review-entry";
 import {
@@ -128,6 +129,27 @@ export function spawnBlueprint(
     spawnY: plan.spawn.positionM[1],
     createdMicros: ctx.timestamp.microsSinceUnixEpoch,
   });
+  const spawner = ctx.db.character.by_owner
+    .filter(ctx.sender)
+    [Symbol.iterator]()
+    .next().value?.id;
+  recordSpawn(
+    ctx,
+    {
+      objectId: plan.instanceId,
+      objectKind: "ship",
+      definitionRef: blueprint.id,
+      frameId: plan.instanceId,
+    },
+    {
+      causationId: `spawn:${plan.instanceId}:${args.operationId}`,
+      actorId: spawner,
+    },
+    {
+      blueprintSha256: blueprint.sha256,
+      decks: plan.document.layout.decks.length,
+    },
+  );
   for (const deck of plan.document.layout.decks) {
     const source = plan.mappings.decks.find((m) => m.instanceId === deck.id)!;
     ctx.db.constructionDeck.insert({

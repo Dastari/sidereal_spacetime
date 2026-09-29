@@ -32,6 +32,7 @@ import { constructionCollision } from "./construction-doors";
 import { commitFlightCharacter } from "./construction-flight-dirty";
 import { createConstructionStandingSupport } from "./construction-standing-support";
 import { evaReturnAboard } from "./eva";
+import { recordLifecycleEvent } from "./lifecycle";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type CharacterRow = NonNullable<
@@ -274,6 +275,19 @@ export function respawnCharacter(ctx: Context, characterId: string) {
     ...respawnedVitals(vitalsOf(row), now),
     state: "active",
   });
+  // System-origin: the respawn timer, not a player, brings the character back.
+  recordLifecycleEvent(
+    ctx,
+    {
+      objectId: characterId,
+      objectKind: "character",
+      frameId: ctx.db.character.id.find(characterId)?.shipId,
+      adoptAs: "disabled",
+    },
+    "object.activated",
+    { causationId: `respawn:${characterId}@${now}` },
+    { respawn: true },
+  );
   return true;
 }
 

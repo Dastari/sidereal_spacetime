@@ -35,6 +35,7 @@ import {
 } from "@sidereal/sim/combat-damage";
 import { queueFlightDamage } from "./construction-flight-availability";
 import { releaseForDeath, vitalsOf } from "./character-death";
+import { recordLifecycleEvent, type LifecycleCause } from "./lifecycle";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
@@ -101,6 +102,7 @@ export function damageCharacter(
   ctx: Context,
   characterId: string,
   damage: number,
+  cause: LifecycleCause = { causationId: "damage:" + characterId },
 ): AppliedDamage {
   const now = ctx.timestamp.microsSinceUnixEpoch;
   const row = ctx.db.characterVitals.characterId.find(characterId);
@@ -118,6 +120,19 @@ export function damageCharacter(
   };
   if (row) ctx.db.characterVitals.characterId.update(next);
   else ctx.db.characterVitals.insert(next);
+  // One lifecycle event per applied hit: the killing hit is the death.
+  if (result.applied > 0)
+    recordLifecycleEvent(
+      ctx,
+      {
+        objectId: characterId,
+        objectKind: "character",
+        frameId: ctx.db.character.id.find(characterId)?.shipId,
+      },
+      result.killed ? "combat.death" : "combat.after_damage",
+      cause,
+      { damage: result.applied, health: result.vitals.health },
+    );
   if (result.killed) releaseForDeath(ctx, characterId);
   return {
     damage: result.applied,
@@ -169,6 +184,7 @@ export function damageComponent(
   objectId: string,
   damage: number,
   disclose: boolean,
+  cause: LifecycleCause = { causationId: "damage:" + shipId },
 ): AppliedDamage {
   if (!objectId.startsWith("mount:")) return NO_DAMAGE;
   const instance = ctx.db.constructionInstance.id.find(shipId);
@@ -209,6 +225,25 @@ export function damageComponent(
     };
     if (row) ctx.db.shipComponentDamage.id.update(next);
     else ctx.db.shipComponentDamage.insert(next);
+    recordLifecycleEvent(
+      ctx,
+      {
+        objectId: id,
+        objectKind: "component",
+        definitionRef: binding.catalog + "/" + mount.component,
+        frameId: shipId,
+        ownerId: shipId,
+      },
+      "combat.after_damage",
+      cause,
+      {
+        damage: applied,
+        hp,
+        maxHp,
+        state: state.state,
+        previousState: row?.state ?? "pristine",
+      },
+    );
   }
   return {
     damage: applied,
@@ -229,10 +264,14 @@ export function applyShotDamage(
   },
   hit: { kind: string; targetId: string },
   damage: number,
+  cause: LifecycleCause = {
+    causationId: "shot:" + actor.id,
+    actorId: actor.id,
+  },
 ): AppliedDamage {
   if (!(damage > 0)) return NO_DAMAGE;
   if (hit.kind === "character")
-    return damageCharacter(ctx, hit.targetId, damage);
+    return damageCharacter(ctx, hit.targetId, damage, cause);
   if (hit.kind === "object") {
     const ship = ctx.db.ship.id.find(actor.shipId);
     return damageComponent(
@@ -241,6 +280,7 @@ export function applyShotDamage(
       hit.targetId,
       damage,
       !!ship && actor.owner.isEqual(ship.owner),
+      cause,
     );
   }
   return NO_DAMAGE;
