@@ -19,6 +19,7 @@ vi.mock("spacetimedb/server", () => ({
 }));
 import { seedCharacterUniforms } from "./inventory";
 import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
+import { CREW_WARDROBE_DEFINITIONS } from "@sidereal/content/inventory";
 test("uniform migration fills the original four containers once, retaining cargo, IDs and placements", () => {
   const grid = (id: string, carried = false) => ({
     id,
@@ -97,7 +98,7 @@ test("uniform migration fills the original four containers once, retaining cargo
     db,
     newUuidV4: () => `new-${++sequence}`,
   } as unknown as Parameters<typeof seedCharacterUniforms>[0];
-  containers.find((c) => c.id === "crate-0")!.maxMassKg = 6;
+  containers.find((c) => c.id === "crate-0")!.maxMassKg = 3;
   expect(seedCharacterUniforms(ctx, "actor")).toBe(false);
   expect(items).toEqual([original]);
   expect(containers).toHaveLength(5);
@@ -106,7 +107,9 @@ test("uniform migration fills the original four containers once, retaining cargo
   expect(state.revision).toBe(12n);
   containers.find((c) => c.id === "crate-0")!.maxMassKg = 500;
   expect(seedCharacterUniforms(ctx, "actor")).toBe(true);
-  expect(items).toHaveLength(91);
+  expect(items).toHaveLength(1 + CREW_WARDROBE_DEFINITIONS.length);
+  // The retired r008 armour is no longer issued; the r006 wardrobe is.
+  expect(items.some((i) => i.definitionId.startsWith("crew-"))).toBe(false);
   expect(items.find((i) => i.id === original.id)).toEqual(original);
   expect(containers.filter((c) => !c.parentItemId).map((c) => c.id)).toEqual([
     "pockets",
@@ -119,7 +122,7 @@ test("uniform migration fills the original four containers once, retaining cargo
     expect(containers.find((c) => c.id === id)?.width).toBe(14);
     expect(
       items.some(
-        (i) => i.containerId === id && i.definitionId.startsWith("crew-"),
+        (i) => i.containerId === id && i.definitionId.startsWith("wardrobe-"),
       ),
     ).toBe(true);
   }
