@@ -85,12 +85,18 @@ export const RJ_JACKAL = prefab({
     top("clamp", "docking-clamp.md", [1, -2]),
     top("rad-a", "radiator.md", [1, 3]),
     top("rad-b", "radiator.md", [1, 1]),
+    // Keep the starter thermal/handling acceptance after the added utility loads.
+    top("rad-aux", "radiator.sm", [0, -2]),
     module("helm", "console.navigation.sm", [9, 2.5], "fore"),
     module("core", "computer-core.sm", [8, 1], "port"),
     module("reactor", "reactor.md", [0, 0], "fore"),
     module("life", "life-support.sm", [0.5, 4.5], "fore"),
     module("bunk", "crew-bunk.sm", [3.5, 4.5], "starboard"),
     module("ammo", "magazine.ballistic.sm", [5.5, 0.5], "port"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.sm", [0, 3], "fore"),
+    module("coolant", "coolant-pump.md", [1, 3], "fore"),
+    module("battery", "battery.sm", [1.5, 4], "fore"),
   ],
   armed: [
     armed("guns", "fixed", "MD", [4, 1], "fore", "autocannon.md"),
@@ -101,7 +107,7 @@ export const RJ_JACKAL = prefab({
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-RJ_JACKAL.revision = 2;
+RJ_JACKAL.revision = 3;
 
 /** Medium: the prototype Marauder raider, asymmetric port pod and nose ram. */
 export const RJ_MARAUDER = prefab({
@@ -204,6 +210,11 @@ export const RJ_MARAUDER = prefab({
     module("mag", "magazine.ballistic.md", [5, 0.5], "fore"),
     module("bunk-1", "crew-bunk.sm", [4.5, 6.5], "starboard"),
     module("bunk-2", "crew-bunk.sm", [6.5, 6.5], "starboard"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.md", [0, 5.5], "fore"),
+    module("coolant", "coolant-pump.md", [0, 1.5], "fore"),
+    module("ammo", "magazine.missile.md", [1, 1.5], "port"),
+    module("battery", "battery.md", [1.5, 0], "fore"),
   ],
   armed: [
     armed("guns", "fixed", "LG", [5, 1], "fore", "autocannon.lg"),
@@ -218,7 +229,7 @@ export const RJ_MARAUDER = prefab({
 // Revision 3 (2026-09-29, FLIGHT-IFCS; owner: "The side cannons on the ships need to go"): the
 // port/starboard-boresight fixed roof guns (broadside side cannons) are removed, and two bow quad RCS
 // blocks join the single stern cluster, which alone gave the IFCS no pure yaw couple.
-RJ_MARAUDER.revision = 3;
+RJ_MARAUDER.revision = 4;
 
 /** Large: jawed pirate carrier with twin salvage pods. */
 export const RJ_MAW = prefab({
@@ -355,6 +366,15 @@ export const RJ_MAW = prefab({
     module("bunk-3", "crew-bunk.sm", [10.5, 12.5], "starboard"),
     module("bunk-4", "crew-bunk.sm", [10.5, 10.5], "starboard"),
     top("salvage-arm", "salvage-arm.md", [26, 9]),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.lg", [0, 5], "fore"),
+    module("coolant", "coolant-pump.lg", [0, 0], "fore"),
+    module("coolant-aux", "coolant-pump.md", [0, 2], "fore"),
+    module("capacitor", "capacitor.md", [0, 3], "fore"),
+    module("ammo", "magazine.ballistic.lg", [0, 12], "fore"),
+    module("battery", "battery.lg", [2, 12], "fore"),
+    module("engineer", "console.engineering.sm", [0, 4], "fore"),
+    top("shield-emitter", "shield-emitter.md", [0, 4]),
   ],
   armed: [
     armed("guns", "turret", "XL", [7, 1], "fore", "autocannon.lg"),
@@ -371,4 +391,4 @@ export const RJ_MAW = prefab({
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
 // Revision 3 (2026-09-29, FLIGHT-IFCS; owner: "The side cannons on the ships need to go"): the
 // port/starboard-boresight fixed roof guns (broadside side cannons) are removed.
-RJ_MAW.revision = 3;
+RJ_MAW.revision = 4;

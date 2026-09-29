@@ -31,6 +31,7 @@ import {
   FED_WREN_R5_PIN,
   FED_WREN_R6_PIN,
   FED_WREN_R7_PIN,
+  FED_WREN_R8_PIN,
 } from "./prefab-ship-pins";
 import { readFileSync } from "node:fs";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
@@ -169,7 +170,7 @@ test(
     expect(FED_WREN_PIN.blueprintSha256).not.toBe(
       FED_WREN_R3_PIN.blueprintSha256,
     );
-    expect(prefabById("fed.s.wren")!.revision).toBe(8);
+    expect(prefabById("fed.s.wren")!.revision).toBe(9);
     expect(prefabShipSpawner("fed.s.wren")?.blueprintSha256).toBe(
       FED_WREN_PIN.blueprintSha256,
     );
@@ -204,7 +205,7 @@ test(
     expect(FED_WREN_PIN.blueprintSha256).not.toBe(
       FED_WREN_R4_PIN.blueprintSha256,
     );
-    expect(prefabById("fed.s.wren")!.revision).toBe(8);
+    expect(prefabById("fed.s.wren")!.revision).toBe(9);
     expect(prefabShipSpawner("fed.s.wren")?.blueprintSha256).toBe(
       FED_WREN_PIN.blueprintSha256,
     );
@@ -266,13 +267,13 @@ test(
         JSON.stringify(prefabConstructionDocument(legacy, catalog)),
       ).sha256,
     ).toBe(FED_WREN_R6_PIN.blueprintSha256);
-    expect(FED_WREN_PIN.flightDefinitionSha256).toBe(
+    expect(FED_WREN_PIN.flightDefinitionSha256).not.toBe(
       FED_WREN_R6_PIN.flightDefinitionSha256,
     );
     expect(FED_WREN_PIN.blueprintSha256).not.toBe(
       FED_WREN_R6_PIN.blueprintSha256,
     );
-    expect(prefabById("fed.s.wren")!.revision).toBe(8);
+    expect(prefabById("fed.s.wren")!.revision).toBe(9);
   },
 );
 
@@ -303,15 +304,49 @@ test(
     expect(
       flightDefinitionCatalogHash(prefabFlightModel(legacy, catalog).catalog),
     ).toBe(FED_WREN_R7_PIN.flightDefinitionSha256);
-    expect(FED_WREN_PIN.flightDefinitionSha256).toBe(
+    expect(FED_WREN_PIN.flightDefinitionSha256).not.toBe(
       FED_WREN_R7_PIN.flightDefinitionSha256,
     );
     expect(FED_WREN_PIN.blueprintSha256).not.toBe(
       FED_WREN_R7_PIN.blueprintSha256,
     );
-    // r7 is r8 without the suit locker.
+    // r7 is r9 without the suit locker or black-start battery.
     const { fixtures, ...rest } = prefabById("fed.s.wren")!;
     expect(fixtures?.map((f) => f.id)).toEqual(["suit-locker"]);
-    expect({ ...rest, revision: 7 }).toEqual(legacy);
+    expect({
+      ...rest,
+      mounts: rest.mounts.filter((m) => m.id !== "battery"),
+      revision: 7,
+    }).toEqual(legacy);
+  },
+);
+
+test(
+  "live Wren r8 retains its frozen pins and can upgrade to r9",
+  HEAVY,
+  () => {
+    const legacy = readShipPrefab(
+      JSON.parse(
+        readFileSync(
+          new URL("./fixtures/fed-s-wren-r8.prefab.json", import.meta.url),
+          "utf8",
+        ),
+      ),
+    );
+    const catalog = prefabComponentCatalogFor(FED_WREN_R8_PIN.catalogRevision);
+    expect(
+      compileConstruction(
+        JSON.stringify(prefabConstructionDocument(legacy, catalog)),
+      ).sha256,
+    ).toBe(FED_WREN_R8_PIN.blueprintSha256);
+    expect(
+      flightDefinitionCatalogHash(prefabFlightModel(legacy, catalog).catalog),
+    ).toBe(FED_WREN_R8_PIN.flightDefinitionSha256);
+    const current = prefabById("fed.s.wren")!;
+    expect({
+      ...current,
+      revision: 8,
+      mounts: current.mounts.filter((m) => m.id !== "battery"),
+    }).toEqual(legacy);
   },
 );

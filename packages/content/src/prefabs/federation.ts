@@ -126,6 +126,8 @@ export const FED_WREN = prefab({
     // ballistic magazine feeding the roof autocannons. Interior modules; no hardpoints.
     module("coolant", "coolant-pump.md", [2, 1], "port"),
     module("ammo", "magazine.ballistic.sm", [7, 6], "port"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("battery", "battery.sm", [0, 2], "fore"),
   ],
   armed: [
     armed("turret", "turret", "MD", [4.5, 2.5], "fore", "autocannon.sm"),
@@ -176,7 +178,7 @@ export const FED_WREN = prefab({
   ],
 });
 
-FED_WREN.revision = 8;
+FED_WREN.revision = 9;
 
 /** Medium: the prototype Wayfarer-class corvette, re-cut on the 1 m grammar. */
 export const FED_CREST = prefab({
@@ -278,6 +280,12 @@ export const FED_CREST = prefab({
     module("life", "life-support.md", [2, 0.5], "fore"),
     module("bunk-1", "crew-bunk.sm", [4.5, 8.5], "starboard"),
     module("bunk-2", "crew-bunk.sm", [8.5, 8.5], "starboard"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.md", [0, 0], "fore"),
+    module("coolant", "coolant-pump.md", [0, 2], "fore"),
+    module("coolant-aux", "coolant-pump.sm", [0, 7], "fore"),
+    module("ammo", "magazine.ballistic.md", [0, 8], "fore"),
+    module("battery", "battery.md", [1, 7], "fore"),
   ],
   skylights: [skylight("sky", [20, 4], [3, 2])],
   armed: [
@@ -293,7 +301,7 @@ export const FED_CREST = prefab({
 // Revision 3 (2026-09-29, FLIGHT-IFCS; owner: "The side cannons on the ships need to go"): the
 // port/starboard-boresight fixed roof guns (broadside side cannons) are removed, and two bow quad RCS
 // blocks join the stern pair: with RCS only at the stern the IFCS had no pure yaw couple.
-FED_CREST.revision = 3;
+FED_CREST.revision = 4;
 
 /** Large: side-pod frigate with a long spine, XL drives and heavy turrets. */
 export const FED_BASTION = prefab({
@@ -434,6 +442,13 @@ export const FED_BASTION = prefab({
     module("bunk-1", "crew-bunk.sm", [6.5, 10.5], "starboard"),
     module("bunk-2", "crew-bunk.sm", [10.5, 10.5], "starboard"),
     module("bunk-3", "crew-bunk.sm", [14.5, 10.5], "starboard"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.lg", [6, 7], "fore"),
+    module("coolant", "coolant-pump.lg", [0, 0], "port"),
+    module("coolant-aux", "coolant-pump.md", [0, 5], "fore"),
+    module("capacitor", "capacitor.lg", [0, 6], "port"),
+    module("ammo", "magazine.ballistic.lg", [2, 5], "fore"),
+    module("battery", "battery.lg", [3.5, 10], "fore"),
   ],
   skylights: [skylight("sky", [31, 5], [3, 2])],
   armed: [
@@ -452,7 +467,7 @@ export const FED_BASTION = prefab({
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
 // Revision 3 (2026-09-29, FLIGHT-IFCS; owner: "The side cannons on the ships need to go"): the
 // port/starboard-boresight fixed roof guns (broadside side cannons) are removed.
-FED_BASTION.revision = 3;
+FED_BASTION.revision = 4;
 
 /**
  * Art-calibration ship: the approved reference silhouette (3d-rpg-after / top-down-after) as a
@@ -535,6 +550,11 @@ export const FED_MERIDIAN = prefab({
     module("life", "life-support.md", [1, 0], "fore"),
     module("bunk-1", "crew-bunk.sm", [4.5, 10.5], "starboard"),
     module("bunk-2", "crew-bunk.sm", [8.5, 10.5], "starboard"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.md", [0, 2], "fore"),
+    module("coolant", "coolant-pump.lg", [0, 0], "fore"),
+    module("ammo", "magazine.ballistic.md", [0, 8], "fore"),
+    module("battery", "battery.md", [0, 10], "fore"),
   ],
   skylights: [skylight("sky", [23, 4], [3, 3])],
   armed: [
@@ -547,4 +567,4 @@ export const FED_MERIDIAN = prefab({
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-FED_MERIDIAN.revision = 2;
+FED_MERIDIAN.revision = 3;

@@ -32,13 +32,37 @@ export interface PrefabIssueStock {
 export const WREN_SUIT_LOCKER_SOCKET = "hold/shipyard.equipment.wall-locker";
 
 /**
+ * Wren revision 9 (2026-09-30, S4-2 prerequisite): r8 plus a small black-start battery in the
+ * engine room. The catalogue stays at @4; battery mass changes the flight definition hash.
+ * New ships retain r8's EVA suit issue-stock; operator upgrades preserve inventory and add the
+ * battery mount. Battery contents and runtime startup/debit land in the subsequent S4-2 PR.
+ */
+export const FED_WREN_PIN: PinnedPrefabShip = {
+  prefabId: "fed.s.wren",
+  catalogRevision: "ship-components-v1@4",
+  blueprintSha256:
+    "d7edc7f62636b1d2a780bdd30eac67bff16cf8527db7d66c426a8cc42be0c3d2",
+  flightDefinitionSha256:
+    "b61f8dc0937e33254aea67f9f7db1debed2112c17eff4b5d5f24aa20b52761e8",
+  description: "Wren (Federation courier, size S, prefab r9)",
+  issueStock: [
+    {
+      socketKey: WREN_SUIT_LOCKER_SOCKET,
+      containerName: "EVA suit locker",
+      kit: "eva-suit",
+    },
+  ],
+};
+
+/**
  * Wren revision 8 (2026-09-29, SUIT-LOCKER): r7 plus a dedicated EVA suit locker (a wall locker
  * storage socket, `WREN_SUIT_LOCKER_SOCKET`) in the airlock chamber beside the inside airlock
  * button. Flight and catalogue unchanged from r7. New Wrens are issued with the `eva-suit` kit in
  * the locker (EVA still needs the suit on: no suit, no vacuum). New assignments and in-place
  * upgrades (the upgrade adds the empty socket; `scripts/ship_cargo.py` stocks it).
+ * Frozen in fixtures/fed-s-wren-r8.prefab.json; upgrades now target r9.
  */
-export const FED_WREN_PIN: PinnedPrefabShip = {
+export const FED_WREN_R8_PIN: PinnedPrefabShip = {
   prefabId: "fed.s.wren",
   catalogRevision: "ship-components-v1@4",
   blueprintSha256:
@@ -178,4 +202,5 @@ export const PREFAB_UPGRADE_SOURCES: readonly PinnedPrefabShip[] = [
   FED_WREN_R5_PIN,
   FED_WREN_R6_PIN,
   FED_WREN_R7_PIN,
+  FED_WREN_R8_PIN,
 ];

@@ -129,13 +129,14 @@ test("availability: per-placement power, fuel and performance from the compile",
       fuel: 1,
       performance: 1,
     });
-  // No tank: burners are unfed. No reactor: powered parts are unsupplied.
+  // No tank: burners are unfed. No reactor or battery: powered parts are unsupplied.
   const tank = wren.mounts.find((m) => m.component.startsWith("fuel-tank"))!;
   const reactor = wren.mounts.find((m) => m.component.startsWith("reactor."))!;
   const dry = shipSystemsAvailability(
     compilePrefabShipSystems(wren, catalog.revision, [
       { objectId: `mount:${tank.id}`, performance: 0 },
       { objectId: `mount:${reactor.id}`, performance: 0 },
+      { objectId: "mount:battery", performance: 0 },
     ]),
   );
   for (const m of drives) {
@@ -149,4 +150,16 @@ test("availability: per-placement power, fuel and performance from the compile",
     "some drive burns fuel",
   ).toBe(true);
   expect(dry[`mount:${reactor.id}`].performance).toBe(0);
+});
+
+test("S4-2: all twelve prefabs close their catalogue budgets and carry black-start storage", () => {
+  for (const doc of PREFAB_SHIPS) {
+    const { report } = compilePrefabShipSystems(doc, catalog.revision);
+    expect(
+      report.issues.filter((i) => i.severity === "error"),
+      doc.id,
+    ).toEqual([]);
+    expect(report.status, doc.id).not.toBe("invalid");
+    expect(report.power.storageKwh, doc.id).toBeGreaterThan(0);
+  }
 });
