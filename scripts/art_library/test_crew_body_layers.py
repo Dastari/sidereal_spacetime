@@ -89,14 +89,16 @@ class CrewBodyLayerTests(unittest.TestCase):
                 hits = z_fights(layers, regions)
                 self.assertEqual(hits, [], f"{variant} {name}: {hits[:6]}")
 
-    def test_waistband_sits_on_the_privacy_shorts(self):
+    def test_underwear_waistband_is_flush_navy_not_a_pale_ledge(self):
         for variant in ("male", "female"):
             layers, _hair = self.body.build(variant)
-            shorts, band = layers["base"]["pelvis"].islands[:2]
-            self.assertEqual({s for s in band.c.values()}, {"metal"})
-            self.assertFalse(set(shorts.c) & set(band.c), variant)
-            self.assertEqual(max(z for _, _, z in shorts.c) + 1, min(z for _, _, z in band.c))
-
+            pelvis = layers["base"]["pelvis"]
+            self.assertEqual(len(pelvis.islands), 1, variant)             # no separate band island
+            cells = pelvis.islands[0].c
+            self.assertEqual({s.split(":")[0] for s in cells.values()}, {"dark"}, variant)
+            top = max(z for _, _, z in cells)
+            band = {c for c, s in cells.items() if s == "dark:band"}
+            self.assertEqual(band, {c for c in cells if c[2] == top}, variant)
 
 if __name__ == "__main__":
     unittest.main()

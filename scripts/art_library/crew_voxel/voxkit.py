@@ -311,7 +311,10 @@ class Part:
         return sum(len(v.c) for v in self.islands)
 
 
-MODS = {"blush": BLUSH}
+# "dark:band": the underwear waistband, a slightly darker navy than the shorts (still the tintable
+# dark slot; the vertex colour darkens it).
+BAND = tuple(0.7 * c for c in DEFAULT_THEME["dark"])
+MODS = {"blush": BLUSH, "band": BAND}
 
 
 def mesh_part(part, name, mats=None, bevel=0.011, segments=2, seed=0, jitter=0.025):

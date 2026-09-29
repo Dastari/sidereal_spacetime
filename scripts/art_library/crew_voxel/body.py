@@ -57,10 +57,10 @@ def base_body(v):
     b["upper_arm.R"].brick(7, -3, 32, 12, 3, 37, K).cut(11, -3, 36, 12, 3, 37)   # deltoid
     b["forearm.R"].brick(7, -2, 21, 12, 3, 27, K)
     pe = b["pelvis"]
-    # Islands never share an exposed face: coincident faces of different slots z-fight in game
-    # (owner 2026-09-29: "white plane ... z-fighting"). The waistband sits on the shorts, not in them.
-    pe.brick(-7, -4, 19, 7, 5, 24, U).cut(-1, -4, 19, 1, 5, 20)         # privacy shorts
-    pe.brick(-7, -5, 24, 7, 6, 25, M)                                   # waistband
+    # Owner 2026-09-29 ("white plane cutting through the middle"): no protruding pale waistband. The
+    # shorts end in a flush band one voxel tall, a slightly darker navy (same tintable slot).
+    pe.brick(-7, -4, 19, 7, 5, 25, U).cut(-1, -4, 19, 1, 5, 20)         # privacy shorts
+    pe.paint(-7, -4, 24, 7, 5, 25, U + ":band")                         # flush waistband
     b["spine"].brick(-w, -4, 25, w, 5, 30, K)
     ch = b["chest"]
     ch.brick(-7, -5, 29, 7, 5, 37, K).cut(-7, -5, 36, -6, 5, 37).cut(6, -5, 36, 7, 5, 37)

@@ -49,7 +49,7 @@
    },
    "trisDefaultLook": 14702,
    "trisByRegion": {
-    "base": 3036,
+    "base": 2952,
     "hands": 544,
     "head": 756,
     "suit": 6310,
@@ -57,7 +57,6 @@
    },
    "slots": [
     "skin",
-    "metal",
     "dark",
     "face"
    ],
@@ -130,7 +129,7 @@
    },
    "trisDefaultLook": 16122,
    "trisByRegion": {
-    "base": 3152,
+    "base": 3068,
     "hands": 544,
     "head": 756,
     "suit": 6146,
@@ -138,7 +137,6 @@
    },
    "slots": [
     "skin",
-    "metal",
     "dark",
     "face"
    ],
@@ -212,7 +210,7 @@
    },
    "trisDefaultLook": 14702,
    "trisByRegion": {
-    "base": 3036,
+    "base": 2952,
     "hands": 544,
     "head": 756,
     "suit": 6310,
@@ -220,7 +218,6 @@
    },
    "slots": [
     "skin",
-    "metal",
     "dark",
     "face"
    ],
@@ -1111,23 +1108,23 @@
  ],
  "files": {
   "crew-body-male.glb": {
-   "sha256": "8af9ecba9938a24875a55922689c3f05ec38b3f1b742c4aa8897d19ec9fb5392",
-   "bytes": 1847368,
+   "sha256": "bcf1969b57aa9307bd8161cb0e87edefc1051fcd0f8f4fc2a24d5b2382030bf1",
+   "bytes": 1844076,
    "variant": "male"
   },
   "crew-body-female.glb": {
-   "sha256": "bbbbb2c3bc274a27ff002e90830e2b1bd4fe4e632265c73113af0723558d544d",
-   "bytes": 1907896,
+   "sha256": "899fd0a635fecf3b24adbff0a54241ce797b9edee4d69a713a37f0707b4d1608",
+   "bytes": 1904584,
    "variant": "female"
   },
   "crew-body-neutral.glb": {
-   "sha256": "4c53b7b671d0c405748b0b26b3eb015d0d130c031c7f221d564e5dcee78618c4",
-   "bytes": 1847424,
+   "sha256": "9ca1b9bd2dfd0870641f242831edbb6318a74ee8ce0ae02cfb0ef2c559f2105e",
+   "bytes": 1844132,
    "variant": "neutral"
   },
   "crew-body.glb": {
-   "sha256": "78a355b297b899ed4ec0036bcc8a1991b1db1570be2128559aa27db1031e311e",
-   "bytes": 2546840,
+   "sha256": "0d407c7fee07fbbd46974e422ae9d6c6469dfef3d8e32edeb968cfa570c32b57",
+   "bytes": 2541092,
    "variant": "male+female",
    "note": "runtime bundle; bodyType neutral renders the masculine meshes"
   }

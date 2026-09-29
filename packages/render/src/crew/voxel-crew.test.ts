@@ -267,15 +267,12 @@ describe("voxel crew runtime", () => {
           `GEO-crew-head-${bodyType}`,
         ].sort(),
       );
-      // The base body is skin, the underwear (dark) and its waistband (metal): nothing else.
+      // The base body is skin and navy underwear (its flush waistband is a darker vertex tone of
+      // the same slot): no pale metal waistband ledge (owner 2026-09-29).
       const slots = scene.meshes
         .filter((m) => m.name.startsWith(`GEO-crew-base-${bodyType}`))
         .map((m) => m.material?.name.replace(/\.\d+$/, ""));
-      expect([...new Set(slots)].sort()).toEqual([
-        "crew.dark",
-        "crew.metal",
-        "crew.skin",
-      ]);
+      expect([...new Set(slots)].sort()).toEqual(["crew.dark", "crew.skin"]);
     }
     crew.dispose();
     scene.dispose();
