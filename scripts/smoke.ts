@@ -1,5 +1,5 @@
 import { toCenterOfMassMotion } from "../packages/sim/src/flight-frame";
-import { WAYFARER_FLIGHT_SPEED } from "../packages/content/src/physical-definitions";
+import { WAYFARER_FLIGHT_PROFILE } from "../packages/content/src/physical-definitions";
 import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
 import { systemMapDenialSmoke } from "./system-map-smoke";
 import {
@@ -457,16 +457,26 @@ if (restore) {
         "live physical compilation is ready",
       );
       const envelope = JSON.parse(physics.envelopeJson);
-      const turnLimit =
-        Math.min(envelope.left, envelope.right) / WAYFARER_FLIGHT_SPEED.forward;
+      // Fly-by-wire (2026-09-29): facing and speed are separate intents. The nose turns by allocated
+      // torque (the envelope has yaw authority) up to the computer's rate limit, never faster.
       assert(
-        Math.hypot(moving.vx, moving.vy) > 0.5 &&
-          moving.omega > turnLimit * 0.5 &&
-          moving.omega <= turnLimit + 1e-6,
-        "available engines accelerate and turn within the derived envelope",
+        // Attitude has priority in the allocator, so a full-stick turn from rest trades some of
+        // the first half second's forward acceleration for yaw.
+        Math.hypot(moving.vx, moving.vy) > 0.25 &&
+          envelope.angularPositive > 0 &&
+          moving.omega > 0.01 &&
+          moving.omega <= WAYFARER_FLIGHT_PROFILE.maxAngularSpeed + 1e-6,
+        `available engines accelerate and turn by allocated torque within the rate limit: ${JSON.stringify(
+          {
+            speed: Math.hypot(moving.vx, moving.vy),
+            omega: moving.omega,
+            angularPositive: envelope.angularPositive,
+          },
+        )}`,
       );
-      for (let i = 0; i < 45; i++) await commandFlight(0, 0);
-      assert(
+      // Released keys brake: the retro drive's achieved output is visible while it burns (sampled
+      // through the braking; the burn ends once the ship is at rest).
+      const retroFiring = () =>
         [...flight.db.ownActuatorOutputs.iter()].some(
           (o) =>
             [...flight.db.ownAuthoredFlightFittings.iter()].some(
@@ -474,9 +484,13 @@ if (restore) {
                 f.id === o.actuatorId &&
                 f.sourceDeviceId.startsWith("drives-retro"),
             ) && o.throttle > 0,
-        ),
-        "achieved retro output is subscribed",
-      );
+        );
+      let retroSeen = false;
+      for (let i = 0; i < 45; i++) {
+        await commandFlight(0, 0);
+        retroSeen ||= retroFiring();
+      }
+      assert(retroSeen, "achieved retro output is subscribed");
       const stopped = [...flight.db.ownShips.iter()][0];
       assert(
         Math.hypot(stopped.vx, stopped.vy) < 0.03,

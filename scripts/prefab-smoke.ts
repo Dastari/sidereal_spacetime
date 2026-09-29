@@ -559,6 +559,26 @@ try {
     Math.abs(shipOf(shipId).heading - s0.heading) > 1e-3,
     "prefab ship turned",
   );
+  const turning = shipOf(shipId);
+  // Released keys ask the IFCS for rest: counter-torque from the RCS stops the spin (fly-by-wire,
+  // 2026-09-29; the later steps measure in the ship frame and need a ship that is not spinning).
+  for (let n = 0; n < 50; n++) {
+    await c.reducers.setIntent({
+      sequence: nextSequence(c),
+      throttle: 0,
+      turn: 0,
+      dx: 0,
+      dy: 0,
+      sprint: false,
+    });
+    await pause(60);
+  }
+  const braked = shipOf(shipId);
+  assert(
+    Math.abs(braked.omega) < 0.05 &&
+      Math.abs(braked.omega) < Math.abs(turning.omega),
+    `released keys stop the rotation by counter-torque (${turning.omega} -> ${braked.omega} rad/s)`,
+  );
   console.log(
     JSON.stringify({
       prefab: PREFAB,
@@ -567,6 +587,9 @@ try {
       actuators: actuators.length,
       speed,
       heading: shipOf(shipId).heading,
+      turningOmega: turning.omega,
+      brakedOmega: braked.omega,
+      brakedSpeed: Math.hypot(braked.vx, braked.vy),
     }),
   );
 
