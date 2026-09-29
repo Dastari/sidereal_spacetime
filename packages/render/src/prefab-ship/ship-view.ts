@@ -417,7 +417,13 @@ export async function createPrefabShipView(
     // Every appended placement primitive, per presentation, for the coplanar pass below.
     const chunks: Record<
       "flight" | "deck",
-      { group: Group; first: number; count: number; priority: number }[]
+      {
+        group: Group;
+        first: number;
+        count: number;
+        priority: number;
+        role: MeshRole;
+      }[]
     > = { flight: [], deck: [] };
     const views = (tag: DressView): ("flight" | "deck")[] =>
       tag === "both" ? ["flight", "deck"] : [tag];
@@ -455,6 +461,7 @@ export async function createPrefabShipView(
           first,
           count: geo.indices.length,
           priority: coplanarPriority(role, slot),
+          role,
         });
         const tris = geo.indices.length / 3;
         g.roles.set(role, (g.roles.get(role) ?? 0) + tris);
@@ -513,6 +520,13 @@ export async function createPrefabShipView(
       );
       mesh.material = roleSlotMaterial(scene, theme, g.slot, role);
       setMeshRole(mesh, role);
+      // Index ranges per source role (a batch merges every role of one material), so an
+      // outline can cut one placed object's triangles out of the batch (prefab-ship-interaction).
+      mesh.metadata.roleRanges = (["flight", "deck"] as const).flatMap((v) =>
+        chunks[v]
+          .filter((c) => c.group === g)
+          .map((c) => ({ role: c.role, first: c.first, count: c.count })),
+      );
       // No freezeWorldMatrix: the ship root moves in game, and a frozen world matrix would
       // leave the hull at its spawn pose. Geometry is baked relative to the parent frame.
       kept.push({

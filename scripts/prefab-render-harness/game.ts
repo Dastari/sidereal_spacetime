@@ -56,7 +56,10 @@ async function main() {
         documentJson: JSON.stringify(construction),
         deckId: "deck-0",
       },
-      onScene: (s) => (scene = s),
+      onScene: (s) => {
+        scene = s;
+        (window as unknown as { __prefabScene?: Scene }).__prefabScene = s;
+      },
       onLoadError: (m) => (window.__prefabError = m),
     },
   );
@@ -74,6 +77,8 @@ async function main() {
   };
   world.update(state);
   window.__prefabWorld = world;
+  // Review hook: shots can re-issue the state with extra fields (e.g. airlockCycle).
+  (window as unknown as { __prefabState?: SceneState }).__prefabState = state;
   // Review-only camera override (&cam=alpha,beta,radius): the game eases its RPG camera toward the
   // crew every frame; this re-applies fixed matching angles after it, never touching game state.
   const cam = q.get("cam")?.split(",").map(Number);
