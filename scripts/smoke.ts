@@ -32,6 +32,7 @@ import {
 import { operatorCall } from "./smoke-operator";
 import { contentDefinitionsSmoke } from "./content-definitions-smoke";
 import { itemDefinitionsSmoke } from "./item-definitions-smoke";
+import { visibilityLeakSmoke } from "./visibility-leak-smoke";
 import { prefabWalkFrame } from "../packages/sim/src/prefab-construction";
 import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
@@ -316,6 +317,15 @@ if (restore) {
       .subscribe("SELECT * FROM ship");
     await wait(() => privateRejected, "private table rejection");
     summary.private_table_rejected = true;
+    // Exterior only: Beta sees Alpha's hull and pose, and no view carries Alpha's interior.
+    summary.visibility_leak = await visibilityLeakSmoke({
+      host,
+      database,
+      owner: a,
+      observer: b,
+      observerToken: second.token,
+      wait,
+    });
     await wait(
       () =>
         sharedBodies(a).length === SHARED_SYSTEM_SEED.bodies.length &&
