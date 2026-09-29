@@ -60,18 +60,22 @@ const RCS_DIRECTIONS: [string, number][] = [
 ];
 export const PREFAB_FLIGHT_REVISION = 1;
 /**
- * IFCS profile for prefab ships (owner 2026-09-29: starter-size ships must feel snappy).
+ * IFCS profile for prefab ships (owner 2026-09-29: starter-size ships must feel snappy, and the
+ * snappiness must be earned by real thruster placement: "the player's controls is a 'this is my
+ * intention to get the ship facing here and going at this speed' and the IFCS computer ... works
+ * out what percentage of what engines to fire").
  *
- * The profile is a ceiling; each ship's compiled thrust envelope (its engines, reversers and RCS
- * against its mass and inertia) decides how hard it actually accelerates, turns and stops, so
- * M/L hulls with proportionally smaller drives stay heavy while S hulls reach the caps.
- * - maxAcceleration 8 m/s^2 and maxAngularAcceleration 1.5 rad/s^2 do not clip any prefab's
- *   envelope; maxAngularSpeed 1.1 rad/s (63 deg/s) is the pilot's full-stick yaw rate.
+ * The profile holds only flight-computer limits and loop gains; it never moves the ship. Every
+ * change of heading and velocity comes from the allocated actuator wrench (`solveFlight`), so each
+ * ship's compiled thrust envelope (its drives, reversers and RCS nozzles at their real positions
+ * against its mass and inertia, cargo and crew included) decides how hard it actually accelerates,
+ * turns and stops. M/L hulls with proportionally smaller drives stay heavy while S hulls reach the
+ * caps.
+ * - maxAcceleration 8 m/s^2 and maxAngularAcceleration 1.5 rad/s^2 are computer ceilings above
+ *   every prefab's envelope; maxAngularSpeed 1.1 rad/s (63 deg/s) is the full-stick yaw-rate
+ *   setpoint, reached only when the ship's torque authority can spin it up and stop it.
  * - velocityGain 2 and angularGain 6 tighten the hold/stop response (time constants 0.5 s and
  *   heading capture 1.5 /s) without overshoot (critical-damping rule in `desiredWrench`).
- * - rawTurnBehavior: the nose turns at the pilot's rate at any speed and the drives swing the
- *   velocity after it, instead of limiting yaw to lateral acceleration / speed (1-2 deg/s at
- *   cruise for every prefab under the coordinated rule).
  * Speed limits stay the Wayfarer values (30 m/s forward, 12 m/s reverse). Proposed, not approved.
  */
 export const PREFAB_FLIGHT_PROFILE: FlightProfile = Object.freeze({
@@ -82,9 +86,41 @@ export const PREFAB_FLIGHT_PROFILE: FlightProfile = Object.freeze({
   maxAcceleration: 8,
   maxAngularAcceleration: 1.5,
   maxAngularSpeed: 1.1,
-  rawTurnBehavior: true,
 });
+/**
+ * Component catalogue revision from which RCS clusters compile as quads (FLIGHT-IFCS, catalogue
+ * revision 4): a face-mounted cluster fires only nozzles whose exhaust clears the hull (outward
+ * and both ways along the face; the nozzle that would exhaust into the hull does not exist), and
+ * every nozzle acts at its exit point. Main-drive reversers act at the drive's nozzle exit.
+ * Earlier catalogue revisions keep their pinned model so live instances derive the same flight
+ * definition hash.
+ */
+export const PREFAB_QUAD_RCS_CATALOG_REVISION = 4;
+/** Quad nozzle exits in the cluster frame (m): outward depth of the outward nozzle, outward
+ * depth and half-span of the along-face nozzles. Matches the rcs.sm/rcs.md art contract. */
+const RCS_QUAD_GEOMETRY: Record<
+  string,
+  { depth: number; side: number; half: number }
+> = {
+  SM: { depth: 0.5, side: 0.35, half: 0.375 },
+  MD: { depth: 1.0, side: 0.7, half: 0.625 },
+};
+export const catalogRevisionNumber = (revision: string) => {
+  const at = revision.match(/@(\d+)$/);
+  return at ? Number(at[1]) : 0;
+};
 const FLOOR_KG_PER_M2 = 40;
+/** Ship-frame unit push direction of game quarter turn `q` (0 fore, 1 port, 2 aft, 3 starboard). */
+const quarterVector = (q: number): [number, number] =>
+  (
+    [
+      [0, 1],
+      [-1, 0],
+      [0, -1],
+      [1, 0],
+    ] as const
+  )[q % 4].slice() as [number, number];
+const r6 = (v: number) => Math.round(v * 1e6) / 1e6 + 0;
 const WALL_KG_PER_M = 60;
 
 export const prefabStructureDefinitionId = (docId: string, volumeId: string) =>
@@ -184,6 +220,9 @@ export function prefabFlightModel(
   components: PrefabComponentCatalog,
 ): PrefabFlightModel {
   const toShip = prefabToShipMetres(doc);
+  const quadRcs =
+    catalogRevisionNumber(components.revision) >=
+    PREFAB_QUAD_RCS_CATALOG_REVISION;
   const geoms = doc.volumes.map(volumeGeometry);
   const defs = new Map<string, FlightPhysicalDefinition>();
   const parts: PrefabFlightModel["parts"] = [];
@@ -306,7 +345,11 @@ export function prefabFlightModel(
         maxThrustN: spec.reverseThrustN!,
         forceAxis: [0, 1],
         mountOffset: [0, 0],
-        nozzleOffset: [0, -0.3],
+        // From catalogue revision 4 the reverser acts at the drive's nozzle exit (its local +Y
+        // is the drive's aft); earlier revisions keep their pinned offset.
+        nozzleOffset: quadRcs
+          ? [0, Math.max(1, spec.heightTexels / 16) * 1.6]
+          : [0, -0.3],
         nozzleHeight: 0,
       };
       defs.set(reverser.id, reverser);
@@ -327,9 +370,65 @@ export function prefabFlightModel(
         role: "actuator",
       });
     }
-    if (role === "rcs") {
-      // Four massless nozzles (fore, port, aft, starboard) on the cluster; the cluster part
-      // above carries the mass. Each nozzle is its own placed part and fitting row.
+    if (role === "rcs" && quadRcs && m.attach === "face") {
+      // Quad cluster (catalogue revision 4+): three nozzles whose exhaust clears the hull, each a
+      // massless placed part at its exit point (the cluster part above carries the mass).
+      const g = RCS_QUAD_GEOMETRY[spec.sizeClass] ?? RCS_QUAD_GEOMETRY.MD;
+      const nozzle: ActuatorDefinition = {
+        id: `${prefabComponentDefinitionId(spec.id)}#quad-nozzle`,
+        revision: PREFAB_FLIGHT_REVISION,
+        kind: "actuator",
+        massKg: 0,
+        centroid: [0, 0],
+        inertiaKgM2: 0,
+        fittingDefinitionId: `${prefabFittingDefinitionId(spec.id)}#quad-nozzle`,
+        maxThrustN: spec.maneuverThrustN!,
+        forceAxis: [0, 1],
+        mountOffset: [0, 0],
+        nozzleOffset: [0, 0],
+        nozzleHeight: 0,
+      };
+      defs.set(nozzle.id, nozzle);
+      const q = mp.quarterTurns;
+      // Ship-frame unit vectors: `inward` is the cluster's +Y (into the hull), `along` its +X.
+      const inward = quarterVector(q);
+      const along = quarterVector(q + 3);
+      const exits: [number, number, number][] = [
+        // Pushes inward: exhausts straight out of the face.
+        [q, sx - inward[0] * g.depth, sy - inward[1] * g.depth],
+        // Pushes along +X: exhausts along -X from the -X side of the head.
+        [
+          (q + 3) % 4,
+          sx - inward[0] * g.side - along[0] * g.half,
+          sy - inward[1] * g.side - along[1] * g.half,
+        ],
+        [
+          (q + 1) % 4,
+          sx - inward[0] * g.side + along[0] * g.half,
+          sy - inward[1] * g.side + along[1] * g.half,
+        ],
+      ];
+      for (const [quarter, nx, ny] of exits) {
+        const id = `${sourceId}#${RCS_DIRECTIONS[quarter][0]}`;
+        parts.push({
+          sourceId: id,
+          id,
+          definitionId: nozzle.id,
+          revision: PREFAB_FLIGHT_REVISION,
+          position: [r6(nx), r6(ny), mp.anchorZ / 16],
+          rotation: (quarter * Math.PI) / 2,
+          flipped: false,
+        });
+        fittings.push({
+          sourceId: id,
+          definitionId: nozzle.fittingDefinitionId,
+          definitionRevision: PREFAB_FLIGHT_REVISION,
+          role: "actuator",
+        });
+      }
+    } else if (role === "rcs") {
+      // Legacy (catalogue revisions 1-3): four massless nozzles (fore, port, aft, starboard) at
+      // the cluster anchor. Kept unchanged so pinned instances derive the same definition hash.
       const nozzle: ActuatorDefinition = {
         id: `${prefabComponentDefinitionId(spec.id)}#nozzle`,
         revision: PREFAB_FLIGHT_REVISION,

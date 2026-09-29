@@ -13,6 +13,7 @@ import {
   requireSpawner,
 } from "./ship-assign";
 import { createWayfarerStarterAuthority } from "./wayfarer-starter-authority";
+import { recordLifecycleEvent } from "./lifecycle";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadDb = {
@@ -127,6 +128,13 @@ export function createShiplessCharacter(ctx: Context, name: string) {
     connected: true,
     sprinting: false,
   });
+  recordLifecycleEvent(
+    ctx,
+    { objectId: id, objectKind: "character" },
+    "object.created",
+    { causationId: `create:${id}`, actorId: id },
+    { name: clean },
+  );
   issueWayfarerPersonalKit(ctx, id);
   return id;
 }

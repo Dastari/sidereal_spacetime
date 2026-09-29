@@ -2,6 +2,7 @@ import {
   commitFlightCharacter,
   markShipFlightDirty,
 } from "./construction-flight-dirty";
+import { recordLifecycleEvent } from "./lifecycle";
 import { compileShipFlight } from "./construction-flight-compilation";
 import { readConstructionFlightInput } from "./construction-flight-input";
 import {
@@ -246,7 +247,23 @@ function installStarter(
           commitFlightCharacter(ctx, characterRow, (row) =>
             ctx.db.character.id.update(row),
           );
-        else ctx.db.character.insert(characterRow);
+        else {
+          ctx.db.character.insert(characterRow);
+          recordLifecycleEvent(
+            ctx,
+            {
+              objectId: characterRow.id,
+              objectKind: "character",
+              frameId: characterRow.shipId,
+            },
+            "object.created",
+            {
+              causationId: `create:${characterRow.id}`,
+              actorId: characterRow.id,
+            },
+            { name: clean, starter: "legacy-wayfarer" },
+          );
+        }
         markShipFlightDirty(ctx, characterRow.shipId);
         // Permanent owned location has no review-return destination. Ownership
         // policy identifies it; a future transfer must supply real departure rules.

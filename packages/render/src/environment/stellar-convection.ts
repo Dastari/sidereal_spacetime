@@ -1,6 +1,7 @@
 import { MaterialPluginBase } from "@babylonjs/core/Materials/materialPluginBase";
 import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import type { UniformBuffer } from "@babylonjs/core/Materials/uniformBuffer";
+import { glslPluginHost } from "../glsl-plugin-host";
 // Shared in the vertex and fragment stages: independently drifting complexes
 // deform the relief and cool the same tiles. No texture uploads or CPU remeshing.
 const evolvingSurface = `
@@ -31,7 +32,7 @@ export class StellarConvection extends MaterialPluginBase {
     material: PBRMaterial,
     readonly tiled = false,
   ) {
-    super(material, "StellarConvection", 185, {}, true, true);
+    super(glslPluginHost(material), "StellarConvection", 185, {}, true, true);
   }
   override getClassName() {
     return "StellarConvection";
@@ -123,7 +124,14 @@ export function stellarEjectaState(time: number, phase: number, period = 4.8) {
 /** Shared material, per-draw parcel temperature; anchored flares retain native emission. */
 export class StellarEjectaRadiance extends MaterialPluginBase {
   constructor(material: PBRMaterial) {
-    super(material, "StellarEjectaRadiance", 186, {}, true, true);
+    super(
+      glslPluginHost(material),
+      "StellarEjectaRadiance",
+      186,
+      {},
+      true,
+      true,
+    );
   }
   override getClassName() {
     return "StellarEjectaRadiance";

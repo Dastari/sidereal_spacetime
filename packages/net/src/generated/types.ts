@@ -1424,6 +1424,39 @@ export const LegacyBodyAlias = __t.object("LegacyBodyAlias", {
 });
 export type LegacyBodyAlias = __Infer<typeof LegacyBodyAlias>;
 
+export const LifecycleCursor = __t.object("LifecycleCursor", {
+  consumerId: __t.string(),
+  lastEventId: __t.u64(),
+  missedEvents: __t.u64(),
+  updatedMicros: __t.u64(),
+});
+export type LifecycleCursor = __Infer<typeof LifecycleCursor>;
+
+export const LifecycleEvent = __t.object("LifecycleEvent", {
+  eventId: __t.u64(),
+  objectId: __t.string(),
+  objectKind: __t.string(),
+  kind: __t.string(),
+  sequence: __t.u64(),
+  authorityTick: __t.u64(),
+  causationId: __t.string(),
+  actorId: __t.string(),
+  frameId: __t.string(),
+  payloadJson: __t.string(),
+  atMicros: __t.u64(),
+});
+export type LifecycleEvent = __Infer<typeof LifecycleEvent>;
+
+export const LifecycleOutbox = __t.object("LifecycleOutbox", {
+  id: __t.u32(),
+  nextEventId: __t.u64(),
+  oldestEventId: __t.u64(),
+  prunedEvents: __t.u64(),
+  rejectedEvents: __t.u64(),
+  updatedMicros: __t.u64(),
+});
+export type LifecycleOutbox = __Infer<typeof LifecycleOutbox>;
+
 export const MapShipProjection = __t.object("MapShipProjection", {
   shipId: __t.string(),
   systemId: __t.string(),
@@ -1473,6 +1506,20 @@ export type NearbyFieldAsteroid = __Infer<typeof NearbyFieldAsteroid>;
 
 export const NearbyFieldAsteroids = __t.object("NearbyFieldAsteroids", {});
 export type NearbyFieldAsteroids = __Infer<typeof NearbyFieldAsteroids>;
+
+export const ObjectLifecycle = __t.object("ObjectLifecycle", {
+  objectId: __t.string(),
+  objectKind: __t.string(),
+  definitionRef: __t.string(),
+  state: __t.string(),
+  frameId: __t.string(),
+  ownerId: __t.string(),
+  sequence: __t.u64(),
+  origin: __t.string(),
+  createdMicros: __t.u64(),
+  updatedMicros: __t.u64(),
+});
+export type ObjectLifecycle = __Infer<typeof ObjectLifecycle>;
 
 export const OwnActuatorOutputs = __t.object("OwnActuatorOutputs", {});
 export type OwnActuatorOutputs = __Infer<typeof OwnActuatorOutputs>;
@@ -1623,6 +1670,12 @@ export type OwnReachableCargoItems = __Infer<typeof OwnReachableCargoItems>;
 
 export const OwnShipComponentDamage = __t.object("OwnShipComponentDamage", {});
 export type OwnShipComponentDamage = __Infer<typeof OwnShipComponentDamage>;
+
+export const OwnShipNetworks = __t.object("OwnShipNetworks", {});
+export type OwnShipNetworks = __Infer<typeof OwnShipNetworks>;
+
+export const OwnShipSystemsReport = __t.object("OwnShipSystemsReport", {});
+export type OwnShipSystemsReport = __Infer<typeof OwnShipSystemsReport>;
 
 export const OwnShipZones = __t.object("OwnShipZones", {});
 export type OwnShipZones = __Infer<typeof OwnShipZones>;
@@ -1910,6 +1963,47 @@ export const ShipLogicTimer = __t.object("ShipLogicTimer", {
 });
 export type ShipLogicTimer = __Infer<typeof ShipLogicTimer>;
 
+export const ShipNetworkSummary = __t.object("ShipNetworkSummary", {
+  shipId: __t.string(),
+  access: __t.string(),
+  compileRevision: __t.u64(),
+  instanceRevision: __t.u64(),
+  status: __t.string(),
+  errors: __t.u32(),
+  warnings: __t.u32(),
+  massKg: __t.f64(),
+  generationKw: __t.f64(),
+  storageKwh: __t.f64(),
+  cruiseDemandKw: __t.f64(),
+  cruiseBalanceKw: __t.f64(),
+  cruiseBrownout: __t.bool(),
+  combatDemandKw: __t.f64(),
+  combatBalanceKw: __t.f64(),
+  combatBrownout: __t.bool(),
+  combatBatteryEnduranceS: __t.option(__t.f64()),
+  cruiseHeatBalanceKw: __t.f64(),
+  combatHeatBalanceKw: __t.f64(),
+  combatOverheatS: __t.option(__t.f64()),
+  coolantSupplyLps: __t.f64(),
+  coolantDemandLps: __t.f64(),
+  fuelCapacityL: __t.f64(),
+  fuelLoadedL: __t.f64(),
+  cruiseFuelEnduranceS: __t.option(__t.f64()),
+  dataSupplyKbps: __t.f64(),
+  dataDemandKbps: __t.f64(),
+  controlSlots: __t.u32(),
+  controlSlotsUsed: __t.u32(),
+  minimumCrew: __t.u32(),
+  lifeSupportCrew: __t.f64(),
+  oxygenReserveHours: __t.option(__t.f64()),
+  forwardKn: __t.f64(),
+  forwardAccel: __t.f64(),
+  damagedComponents: __t.u32(),
+  destroyedComponents: __t.u32(),
+  compiledMicros: __t.u64(),
+});
+export type ShipNetworkSummary = __Infer<typeof ShipNetworkSummary>;
+
 export const ShipOperatorOperation = __t.object("ShipOperatorOperation", {
   operationId: __t.string(),
   principal: __t.identity(),
@@ -1928,6 +2022,87 @@ export const ShipPolicy = __t.object("ShipPolicy", {
   updatedMicros: __t.u64(),
 });
 export type ShipPolicy = __Infer<typeof ShipPolicy>;
+
+export const ShipSystemEffects = __t.object("ShipSystemEffects", {
+  shipId: __t.string(),
+  power: __t.string(),
+});
+export type ShipSystemEffects = __Infer<typeof ShipSystemEffects>;
+
+export const ShipSystemsClock = __t.object("ShipSystemsClock", {
+  id: __t.u32(),
+  compiles: __t.u64(),
+  changed: __t.u64(),
+  failed: __t.u64(),
+  deferredTicks: __t.u64(),
+  deferredShips: __t.u64(),
+  lastQueue: __t.u32(),
+  lastSweepMicros: __t.u64(),
+});
+export type ShipSystemsClock = __Infer<typeof ShipSystemsClock>;
+
+export const ShipSystemsDirty = __t.object("ShipSystemsDirty", {
+  shipId: __t.string(),
+  revision: __t.u64(),
+  reason: __t.string(),
+});
+export type ShipSystemsDirty = __Infer<typeof ShipSystemsDirty>;
+
+export const ShipSystemsReportRow = __t.object("ShipSystemsReportRow", {
+  shipId: __t.string(),
+  compileRevision: __t.u64(),
+  instanceRevision: __t.u64(),
+  catalog: __t.string(),
+  prefabId: __t.string(),
+  prefabRevision: __t.u32(),
+  reportJson: __t.string(),
+});
+export type ShipSystemsReportRow = __Infer<typeof ShipSystemsReportRow>;
+
+export const ShipSystemsState = __t.object("ShipSystemsState", {
+  shipId: __t.string(),
+  instanceRevision: __t.u64(),
+  catalog: __t.string(),
+  prefabId: __t.string(),
+  prefabRevision: __t.u32(),
+  inputHash: __t.string(),
+  compileRevision: __t.u64(),
+  status: __t.string(),
+  errors: __t.u32(),
+  warnings: __t.u32(),
+  massKg: __t.f64(),
+  generationKw: __t.f64(),
+  storageKwh: __t.f64(),
+  cruiseDemandKw: __t.f64(),
+  cruiseBalanceKw: __t.f64(),
+  cruiseBrownout: __t.bool(),
+  combatDemandKw: __t.f64(),
+  combatBalanceKw: __t.f64(),
+  combatBrownout: __t.bool(),
+  combatBatteryEnduranceS: __t.option(__t.f64()),
+  cruiseHeatBalanceKw: __t.f64(),
+  combatHeatBalanceKw: __t.f64(),
+  combatOverheatS: __t.option(__t.f64()),
+  coolantSupplyLps: __t.f64(),
+  coolantDemandLps: __t.f64(),
+  fuelCapacityL: __t.f64(),
+  fuelLoadedL: __t.f64(),
+  cruiseFuelEnduranceS: __t.option(__t.f64()),
+  dataSupplyKbps: __t.f64(),
+  dataDemandKbps: __t.f64(),
+  controlSlots: __t.u32(),
+  controlSlotsUsed: __t.u32(),
+  minimumCrew: __t.u32(),
+  lifeSupportCrew: __t.f64(),
+  oxygenReserveHours: __t.option(__t.f64()),
+  forwardKn: __t.f64(),
+  forwardAccel: __t.f64(),
+  damagedComponents: __t.u32(),
+  destroyedComponents: __t.u32(),
+  reportJson: __t.string(),
+  compiledMicros: __t.u64(),
+});
+export type ShipSystemsState = __Infer<typeof ShipSystemsState>;
 
 export const ShipWipeArchive = __t.object("ShipWipeArchive", {
   id: __t.string(),
@@ -2200,6 +2375,9 @@ export type VisibleShipLogic = __Infer<typeof VisibleShipLogic>;
 
 export const VisibleShipMotion = __t.object("VisibleShipMotion", {});
 export type VisibleShipMotion = __Infer<typeof VisibleShipMotion>;
+
+export const VisibleShipSystemEffects = __t.object("VisibleShipSystemEffects", {});
+export type VisibleShipSystemEffects = __Infer<typeof VisibleShipSystemEffects>;
 
 export const WayfarerLiquidReceipt = __t.object("WayfarerLiquidReceipt", {
   id: __t.string(),

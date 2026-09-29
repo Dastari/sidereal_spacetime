@@ -66,6 +66,7 @@ import {
 import { shipLogicModel } from "@sidereal/sim/ship-logic-model";
 import { characterTargets, damageCharacter, isDead } from "./combat-damage";
 import { stepRespawns } from "./character-death";
+import { lifecycleTestTables } from "./lifecycle-test-tables";
 
 const catalog = defaultPrefabComponentCatalog();
 const wren = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
@@ -243,6 +244,7 @@ function addCharacter(
 
 function fixture() {
   const db: any = {
+    ...lifecycleTestTables(),
     character: table("id", { by_ship: "shipId", by_owner: "owner" }),
     ship: table("id", { by_owner: "owner" }),
     characterVitals: table("characterId"),

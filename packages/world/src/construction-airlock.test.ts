@@ -37,6 +37,7 @@ import {
   ownNativeAirlocks,
   scopedAtmosphereTable,
 } from "./construction-airlock";
+import { lifecycleTestTables } from "./lifecycle-test-tables";
 const compile = createPublishedNativeExternalAirlockCompiler(
   readFileSync(
     "assets/art-library/designs/shipyard.structure.external-airlock/revisions/r000/audit-a007.json",
@@ -88,7 +89,7 @@ function fixture() {
       control: true,
       connectionId: { toHexString: () => "connection-a" },
       timestamp: { microsSinceUnixEpoch: 1_000_000n },
-      db: {},
+      db: { ...lifecycleTestTables() },
     };
   const db = ctx.db;
   db.constructionAirlock = store("id", {

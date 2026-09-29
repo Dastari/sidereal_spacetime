@@ -93,8 +93,6 @@ export function prefabHandling(
         speed.forward,
         speed.reverse,
         profile.maxAngularSpeed,
-        envelope,
-        profile,
       ),
       mass,
       actuators,

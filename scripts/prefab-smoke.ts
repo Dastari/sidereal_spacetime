@@ -33,6 +33,7 @@ import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 import { evaSmoke } from "./eva-smoke-steps";
 import { blastDamage, pelletAngles } from "../packages/sim/src/combat";
 import { LAB_WEAPONS } from "../packages/content/src/weapons";
+import { compilePrefabShipSystems } from "../packages/sim/src/prefab-ship-systems";
 
 const host = process.env.SIDEREAL_SMOKE_URL,
   database = process.env.SIDEREAL_SMOKE_DATABASE,
@@ -84,6 +85,9 @@ const subscribed = () => [
   tables.ownEvaSuit,
   tables.ownReachableCargoItems,
   tables.ownReachableCargoContainers,
+  tables.ownShipNetworks,
+  tables.ownShipSystemsReport,
+  tables.visibleShipSystemEffects,
 ];
 const c = DbConnection.builder()
   .withUri(host)
@@ -108,6 +112,46 @@ const physicsOf = (shipId: string) =>
   ) as any;
 const shipOf = (shipId: string) =>
   [...c.db.ownShips.iter()].find((s: any) => s.id === shipId) as any;
+// S4-1: the server-compiled systems budget and the shared client estimate over the same inputs.
+const networkOf = (shipId: string) =>
+  [...c.db.ownShipNetworks.iter()].find((n: any) => n.shipId === shipId) as any;
+const systemsReportOf = (shipId: string) =>
+  [...c.db.ownShipSystemsReport.iter()].find(
+    (n: any) => n.shipId === shipId,
+  ) as any;
+async function expectSystemsMatchEstimate(
+  shipId: string,
+  label: string,
+  after = 0n,
+) {
+  await wait(
+    () =>
+      networkOf(shipId)?.compileRevision > after &&
+      systemsReportOf(shipId)?.compileRevision ===
+        networkOf(shipId).compileRevision,
+    `ship systems compiled (${label})`,
+    10000,
+  );
+  const row = networkOf(shipId);
+  const report = systemsReportOf(shipId);
+  const damage = [...c.db.ownShipComponentDamage.iter()]
+    .filter((d: any) => d.shipId === shipId)
+    .map((d: any) => ({ objectId: d.objectId, performance: d.performance }));
+  const estimate = compilePrefabShipSystems(
+    prefabById(report.prefabId)!,
+    report.catalog,
+    damage,
+  );
+  assert.equal(row.access, "owner");
+  assert.equal(
+    report.reportJson,
+    JSON.stringify(estimate.report),
+    `server ship-systems compile equals the client estimate (${label})`,
+  );
+  assert.equal(row.generationKw, estimate.report.power.generationKw);
+  assert.equal(row.destroyedComponents, estimate.destroyed);
+  return row;
+}
 
 try {
   await wait(() => ready, "subscription");
@@ -181,6 +225,15 @@ try {
   assert(
     flight?.active && flight.flightAdmitted,
     "prefab flight active and admitted",
+  );
+  const systemsInstalled = await expectSystemsMatchEstimate(shipId, "install");
+  assert(systemsInstalled.generationKw > 0, "installed reactor generates");
+  await wait(
+    () =>
+      [...c.db.visibleShipSystemEffects.iter()].some(
+        (e: any) => e.shipId === shipId && e.power === "powered",
+      ),
+    "outward power effect of the own ship",
   );
 
   // Furniture collision (SHIP-INTERACTION): walk up to a blocking module and push into it.
@@ -510,6 +563,26 @@ try {
     Math.abs(shipOf(shipId).heading - s0.heading) > 1e-3,
     "prefab ship turned",
   );
+  const turning = shipOf(shipId);
+  // Released keys ask the IFCS for rest: counter-torque from the RCS stops the spin (fly-by-wire,
+  // 2026-09-29; the later steps measure in the ship frame and need a ship that is not spinning).
+  for (let n = 0; n < 50; n++) {
+    await c.reducers.setIntent({
+      sequence: nextSequence(c),
+      throttle: 0,
+      turn: 0,
+      dx: 0,
+      dy: 0,
+      sprint: false,
+    });
+    await pause(60);
+  }
+  const braked = shipOf(shipId);
+  assert(
+    Math.abs(braked.omega) < 0.05 &&
+      Math.abs(braked.omega) < Math.abs(turning.omega),
+    `released keys stop the rotation by counter-torque (${turning.omega} -> ${braked.omega} rad/s)`,
+  );
   console.log(
     JSON.stringify({
       prefab: PREFAB,
@@ -518,6 +591,9 @@ try {
       actuators: actuators.length,
       speed,
       heading: shipOf(shipId).heading,
+      turningOmega: turning.omega,
+      brakedOmega: braked.omega,
+      brakedSpeed: Math.hypot(braked.vx, braked.vy),
     }),
   );
 
@@ -647,6 +723,12 @@ try {
     ],
   );
   assert.equal(componentRow(TARGET).hp, 0);
+  const systemsDamaged = await expectSystemsMatchEstimate(
+    shipId,
+    "life support destroyed",
+    systemsInstalled.compileRevision,
+  );
+  assert(systemsDamaged.destroyedComponents >= 1, "destroyed part counted");
   assert.equal(
     vitals().health,
     vitals().maxHealth,
@@ -673,6 +755,34 @@ try {
   );
   const envelope = JSON.parse(physicsOf(shipId).envelopeJson);
   assert.equal(envelope.forward, 0, "no forward thrust without a reactor");
+  const systemsDark = await expectSystemsMatchEstimate(
+    shipId,
+    "reactor destroyed",
+    systemsDamaged.compileRevision,
+  );
+  assert.equal(systemsDark.generationKw, 0, "no generation without a reactor");
+  assert.equal(systemsDark.cruiseBrownout, true, "cruise browns out");
+  console.log(
+    JSON.stringify({
+      s41: {
+        install: {
+          compileRevision: String(systemsInstalled.compileRevision),
+          status: systemsInstalled.status,
+          generationKw: systemsInstalled.generationKw,
+          cruiseBalanceKw: systemsInstalled.cruiseBalanceKw,
+        },
+        lifeSupportDestroyed: {
+          compileRevision: String(systemsDamaged.compileRevision),
+          destroyed: systemsDamaged.destroyedComponents,
+        },
+        reactorDestroyed: {
+          compileRevision: String(systemsDark.compileRevision),
+          generationKw: systemsDark.generationKw,
+          cruiseBalanceKw: systemsDark.cruiseBalanceKw,
+        },
+      },
+    }),
+  );
   const reseat = flightOf(shipId);
   let seated = true;
   for (const [x, y] of prefabWalkRoute(

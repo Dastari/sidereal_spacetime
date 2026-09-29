@@ -21,6 +21,7 @@ import {
   NATIVE_PRESSURE_FLOW_POLICY,
 } from "./construction-native-pressure";
 import { requestDoor, stepDoors } from "./construction-doors";
+import { lifecycleTestTables } from "./lifecycle-test-tables";
 
 const repositoryRoot = fileURLToPath(new URL("../../../", import.meta.url));
 const nativeSourcePath = (path: string) =>
@@ -75,6 +76,7 @@ function table(indexes: Record<string, string> = {}, primary = "id") {
 }
 function fixture() {
   const db: any = {
+    ...lifecycleTestTables(),
     constructionCargoAssembly: table(
       { by_instance: "instanceId" },
       "containerId",

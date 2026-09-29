@@ -6,6 +6,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./prefab-flight": "./src/prefab-flight.ts",
+    "./prefab-flight-supply": "./src/prefab-flight-supply.ts",
     "./prefab-construction": "./src/prefab-construction.ts",
     "./prefab-catalog": "./src/prefab-catalog.ts",
     "./prefab-cargo-sockets": "./src/prefab-cargo-sockets.ts",
@@ -96,10 +97,13 @@
     "./zones": "./src/zones.ts",
     "./zone-path": "./src/zone-path.ts",
     "./ship-dresser": "./src/ship-dresser.ts",
-    "./ship-systems": "./src/ship-systems.ts"
+    "./ship-systems": "./src/ship-systems.ts",
+    "./lifecycle-outbox": "./src/lifecycle-outbox.ts",
+    "./prefab-ship-systems": "./src/prefab-ship-systems.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.6.0"
+    "@sidereal/content": "0.6.0",
+    "@sidereal/scripting": "0.1.0"
   }
 }

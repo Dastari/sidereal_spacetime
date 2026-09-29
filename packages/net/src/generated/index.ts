@@ -154,6 +154,8 @@ import OwnPassengerVisitRow from "./own_passenger_visit_table";
 import OwnReachableCargoContainersRow from "./own_reachable_cargo_containers_table";
 import OwnReachableCargoItemsRow from "./own_reachable_cargo_items_table";
 import OwnShipComponentDamageRow from "./own_ship_component_damage_table";
+import OwnShipNetworksRow from "./own_ship_networks_table";
+import OwnShipSystemsReportRow from "./own_ship_systems_report_table";
 import OwnShipZonesRow from "./own_ship_zones_table";
 import OwnShipsRow from "./own_ships_table";
 import OwnSpaceBodiesRow from "./own_space_bodies_table";
@@ -171,6 +173,7 @@ import VisibleEvaBodiesRow from "./visible_eva_bodies_table";
 import VisibleShipDescriptionsRow from "./visible_ship_descriptions_table";
 import VisibleShipLogicRow from "./visible_ship_logic_table";
 import VisibleShipMotionRow from "./visible_ship_motion_table";
+import VisibleShipSystemEffectsRow from "./visible_ship_system_effects_table";
 
 /** Type-only namespace exports for generated type groups. */
 
@@ -526,6 +529,20 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnShipComponentDamageRow),
+  ownShipNetworks: __table({
+    name: 'own_ship_networks',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnShipNetworksRow),
+  ownShipSystemsReport: __table({
+    name: 'own_ship_systems_report',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnShipSystemsReportRow),
   ownShipZones: __table({
     name: 'own_ship_zones',
     indexes: [
@@ -645,6 +662,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, VisibleShipMotionRow),
+  visibleShipSystemEffects: __table({
+    name: 'visible_ship_system_effects',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleShipSystemEffectsRow),
 });
 
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */

@@ -20,7 +20,7 @@ import type {
 } from "@sidereal/render/antialiasing-settings";
 import type { GraphicsSettings } from "../../render/src/graphics-settings";
 import type {
-  RenderBackend,
+  RenderBackendChoice,
   RenderBackendSnapshot,
 } from "@sidereal/render/render-backend";
 import {
@@ -153,7 +153,7 @@ export type GameUIActions = {
   antialiasing?: (patch: Partial<AntialiasingSettings>) => void;
   readAntialiasing?: () => AntialiasingSnapshot | undefined;
   readRenderBackend?: () => RenderBackendSnapshot | undefined;
-  renderBackend?: (value: RenderBackend) => void;
+  renderBackend?: (value: RenderBackendChoice) => void;
   applyRenderBackend?: () => void;
   localLightLimit?: (limit: LocalLightLimit) => void;
   combat?: () => void;
@@ -212,6 +212,19 @@ export function createGameUI(
           toggle: actions.diagnosticsToggle,
           reset: actions.diagnosticsReset,
           quality: actions.diagnosticsQuality,
+          backend: () => {
+            const state = actions.readRenderBackend?.();
+            return state && actions.renderBackend && actions.applyRenderBackend
+              ? {
+                  state,
+                  set: (value: RenderBackendChoice) => {
+                    actions.renderBackend!(value);
+                    ui.invalidate();
+                  },
+                  apply: actions.applyRenderBackend,
+                }
+              : undefined;
+          },
         }
       : undefined,
   );

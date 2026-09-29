@@ -223,8 +223,6 @@ export function stepSystemSpace(
           control.maxForwardSpeed,
           control.maxReverseSpeed,
           control.profile.maxAngularSpeed,
-          control.envelope,
-          control.profile,
         ),
         control.mass,
         control.actuators,

@@ -23,6 +23,7 @@ import {
 } from "./combat";
 import { LAB_WEAPONS } from "@sidereal/content/weapons";
 import { blastDamage } from "@sidereal/sim/combat";
+import { lifecycleTestTables } from "./lifecycle-test-tables";
 
 function table(primary: string, indexes: Record<string, string> = {}) {
   const rows = new Map<string, any>();
@@ -60,6 +61,7 @@ const mateId = Identity.fromString("3".repeat(64));
 
 function fixture(weapon: string, mateAt: [number, number] = [0, 3]) {
   const db: any = {
+    ...lifecycleTestTables(),
     character: table("id", { by_ship: "shipId", by_owner: "owner" }),
     ship: table("id", { by_owner: "owner" }),
     characterVitals: table("characterId"),

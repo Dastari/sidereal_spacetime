@@ -1,7 +1,7 @@
 {
   "schema": "sidereal.ship-components.v1",
   "id": "ship-components-v1",
-  "revision": 3,
+  "revision": 4,
   "status": "proposed",
   "units": {
     "mass": "kg",
@@ -1657,7 +1657,7 @@
     },
     {
       "id": "rcs.sm",
-      "revision": 3,
+      "revision": 4,
       "status": "proposed",
       "name": "RCS thruster SM",
       "family": "propulsion",
@@ -1756,7 +1756,7 @@
     },
     {
       "id": "rcs.md",
-      "revision": 3,
+      "revision": 4,
       "status": "proposed",
       "name": "RCS thruster MD",
       "family": "propulsion",

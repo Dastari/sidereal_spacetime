@@ -206,7 +206,20 @@ import * as eva from "./eva";
 import { evaBody, evaAirlockCycle, evaSuit } from "./eva-tables";
 import * as shipLogic from "./ship-logic";
 import { shipLogicState, shipLogicTimer } from "./ship-logic-tables";
+import {
+  objectLifecycle,
+  lifecycleEvent,
+  lifecycleOutbox,
+  lifecycleCursor,
+} from "./lifecycle-tables";
+import * as lifecycle from "./lifecycle";
 import { characterVitals, shipComponentDamage } from "./combat-damage-tables";
+import {
+  shipSystemsState,
+  shipSystemsDirty,
+  shipSystemsClock,
+} from "./ship-systems-tables";
+import * as shipSystems from "./ship-systems";
 import { alignPilotLayout } from "./pilot-layout";
 import { pilotLayoutReceipt } from "./pilot-layout-tables";
 import { PILOT_LAYOUT, constrainLabDeck } from "../../content/src/pilot-layout";
@@ -405,6 +418,9 @@ const db = schema({
   combatAction,
   characterVitals,
   shipComponentDamage,
+  shipSystemsState,
+  shipSystemsDirty,
+  shipSystemsClock,
   pilotLayoutReceipt,
   interactionObject,
   couchSeat,
@@ -434,6 +450,10 @@ const db = schema({
   shipPolicy,
   shipOperatorOperation,
   shipWipeArchive,
+  objectLifecycle,
+  lifecycleEvent,
+  lifecycleOutbox,
+  lifecycleCursor,
 });
 export default db;
 /** Wrap a world action a dead character may not take (move, interact, pilot, use inventory). */
@@ -578,6 +598,23 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
         });
   };
   if (existing) {
+    // Re-entry hydrates a persisted character: restored, never created again (after a
+    // server restart this is the first thing a returning session does).
+    lifecycle.recordLifecycleEvent(
+      ctx,
+      {
+        objectId: existing.id,
+        objectKind: "character",
+        frameId: existing.shipId,
+        adoptAs: combatDamage.isDead(ctx, existing.id) ? "disabled" : "active",
+      },
+      "object.restored",
+      {
+        causationId: `enter:${existing.id}@${ctx.timestamp.microsSinceUnixEpoch}`,
+        actorId: existing.id,
+      },
+      { connected: existing.connected },
+    );
     // Awaiting-ship characters (after an operator wipe, or created while starter
     // ships are disabled) have no frame to seed; they only come online.
     if (isAwaitingShip(existing)) {
@@ -797,7 +834,9 @@ export const stepWorld = db.reducer(
     stairs.stepConstructionStairs(ctx, createConstructionStairWorldHooks(ctx));
     combat.stepCombat(ctx);
     combatDamage.stepDamage(ctx);
+    shipSystems.stepShipSystems(ctx);
     characterDeath.stepRespawns(ctx);
+    lifecycle.pruneLifecycleEvents(ctx);
     consumeFlightDamage(ctx);
     // The canonical contact island advances once for all admitted ships/bodies,
     // never inside the legacy per-owner loop below.
@@ -1059,6 +1098,24 @@ export const ownShipComponentDamage = db.view(
   { name: "own_ship_component_damage", public: true },
   t.array(combatDamage.componentDamageProjection),
   auth.gameView(combatDamage.componentDamageView),
+);
+/** S4-1 (additive): compiled ship-systems budgets. Owner and admitted crew: summary. */
+export const ownShipNetworks = db.view(
+  { name: "own_ship_networks", public: true },
+  t.array(shipSystems.shipNetworkSummaryProjection),
+  auth.gameView(shipSystems.ownShipNetworks),
+);
+/** S4-1 (additive): the full compiled report, owner only. */
+export const ownShipSystemsReport = db.view(
+  { name: "own_ship_systems_report", public: true },
+  t.array(shipSystems.shipSystemsReportProjection),
+  auth.gameView(shipSystems.ownShipSystemsReport),
+);
+/** S4-1 (additive): inspect scope, outward power effect of discovered ships only. */
+export const visibleShipSystemEffects = db.view(
+  { name: "visible_ship_system_effects", public: true },
+  t.array(shipSystems.shipSystemEffectsProjection),
+  auth.gameView(shipSystems.visibleShipSystemEffects),
 );
 export const setCombatAim = db.reducer(
   { active: t.bool(), angle: t.f64() },

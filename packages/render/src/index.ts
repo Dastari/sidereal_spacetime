@@ -43,8 +43,11 @@ import { createAntialiasing } from "./antialiasing-pipeline";
 import { createRenderEngine } from "./render-engine";
 import {
   readRenderBackend,
+  readWebGPUFailure,
+  recordWebGPUFailure,
+  resolveRenderBackend,
   createRenderBackendPreference,
-  type RenderBackend,
+  type RenderBackendChoice,
 } from "./render-backend";
 import { invalidatesTemporalHistory } from "./antialiasing-history";
 import type { AntialiasingSettings } from "./antialiasing-settings";
@@ -297,6 +300,8 @@ async function buildWorld(
     /* Device storage can be blocked. */
   }
   const requestedBackend = readRenderBackend(backendStorage);
+  const webgpuFailure = readWebGPUFailure(backendStorage);
+  const resolvedBackend = resolveRenderBackend(requestedBackend, webgpuFailure);
   const pageUrl =
     typeof window === "undefined" ? undefined : new URL(window.location.href);
   // Render-cost switches of the F3 debug window (render-quality.ts): saved preference plus review
@@ -309,24 +314,46 @@ async function buildWorld(
   setMoldedFinishEnabled(renderQuality.plastic);
   const recoveringWebGL =
     pageUrl?.searchParams.get("rendererFallback") === "webgl";
+  const reloadWithWebGL = () => {
+    if (!pageUrl) return;
+    pageUrl.searchParams.set("rendererFallback", "webgl");
+    window.location.replace(pageUrl);
+  };
+  // WebGPU failures after startup (a shader glslang rejects, an invalid pipeline, a lost
+  // device) are remembered on this device; Auto then reloads straight into WebGL2 instead
+  // of leaving a broken scene. An explicit WebGPU choice keeps running and reports it.
+  let backend: ReturnType<typeof createRenderBackendPreference> | undefined;
+  const onWebGPUFailure = (reason: string) => {
+    console.warn(`WebGPU failure: ${reason}`);
+    recordWebGPUFailure(backendStorage, reason);
+    backend?.fail(
+      requestedBackend === "auto"
+        ? `WebGPU failed (${reason}). Reloading with WebGL2.`
+        : `WebGPU failed (${reason}). Choose Auto or WebGL2 and reload.`,
+    );
+    if (requestedBackend === "auto") reloadWithWebGL();
+  };
   const createdEngine = await createRenderEngine(
     canvas,
-    recoveringWebGL ? "webgl" : requestedBackend,
+    recoveringWebGL ? "webgl" : resolvedBackend.target,
+    onWebGPUFailure,
   );
   if (!createdEngine.engine) {
-    if (pageUrl) {
-      pageUrl.searchParams.set("rendererFallback", "webgl");
-      window.location.replace(pageUrl);
-    }
+    reloadWithWebGL();
     throw Error("Reloading with WebGL after WebGPU initialization failed.");
   }
   const engine = createdEngine.engine;
-  const backend = createRenderBackendPreference(
+  backend = createRenderBackendPreference(
     createdEngine.active,
     requestedBackend,
     backendStorage,
-    recoveringWebGL ? "WebGL recovery mode." : createdEngine.reason,
+    recoveringWebGL
+      ? `WebGL2 recovery mode${webgpuFailure ? ` after: ${webgpuFailure}` : ""}.`
+      : (resolvedBackend.reason ?? createdEngine.reason),
+    // Auto on this device: WebGPU unless it is missing or has failed here.
+    webgpuFailure || createdEngine.reason ? "webgl" : "webgpu",
   );
+  const backendPreference = backend;
   const scene = new Scene(engine);
   // Review aid: `?slowmo=0.25` plays crew clips, draw/holster and weapon effects at that fraction
   // of real time (presentation only; the server clock is unaffected).
@@ -1468,8 +1495,9 @@ async function buildWorld(
     getAntialiasing() {
       return antialiasing.snapshot();
     },
-    getRenderBackend: () => backend.snapshot(),
-    setRenderBackend: (value: RenderBackend) => backend.set(value),
+    getRenderBackend: () => backendPreference.snapshot(),
+    setRenderBackend: (value: RenderBackendChoice) =>
+      backendPreference.set(value),
     setAntialiasing(patch: Partial<AntialiasingSettings>) {
       fastSnapshot?.invalidate();
       flightActiveSet.invalidate();
@@ -1490,7 +1518,8 @@ async function buildWorld(
       graphics.reset();
       antialiasing.reset();
       localLights.reset();
-      if (backend.snapshot().requested !== "webgl") backend.set("webgl");
+      if (backendPreference.snapshot().requested !== "auto")
+        backendPreference.set("auto");
     },
     getLocalLightBudget() {
       return localLights.snapshot();

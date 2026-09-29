@@ -181,9 +181,17 @@ export function resolveShipFlightDefinition(
         reason = "stale-compiled-flight-device";
         break;
       }
+      // Compiled availability is the fitting's availability times its resource supply. Wayfarer
+      // supply is always full; a prefab actuator may be supply-limited (no propellant or power,
+      // `prefab-flight-supply.ts`), never above its fitting.
+      const fittingAvailability = fitting.powered ? fitting.availability : 0;
       if (
         "availability" in device &&
-        device.availability !== (fitting.powered ? fitting.availability : 0)
+        (prefab
+          ? !(device.availability <= fittingAvailability) ||
+            (device.availability < fittingAvailability &&
+              device.availability !== 0)
+          : device.availability !== fittingAvailability)
       ) {
         reason = "stale-compiled-flight-availability";
         break;

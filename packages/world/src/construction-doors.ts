@@ -46,6 +46,7 @@ import {
 import { transformPoint } from "@sidereal/content/ship-layout";
 import { operation, receipt, requireGrant } from "./construction";
 import { logicOpeningStates } from "./ship-logic";
+import { recordDoorChange } from "./lifecycle";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 /** Explicit development review interaction constants, not inferred asset ratings. */
@@ -288,7 +289,7 @@ export function requestDoor(
       MAX_MOVING_DOORS
   )
     throw new SenderError("Door motion budget occupied");
-  ctx.db.constructionDoor.id.update({
+  const requested = {
     ...door,
     targetOpen: args.open,
     blocked: false,
@@ -297,6 +298,11 @@ export function requestDoor(
       (nativePressure?.doorId === door.id &&
         nativePressure.sealRetraction !== (args.open ? 1 : 0)),
     revision: door.revision + 1n,
+  };
+  ctx.db.constructionDoor.id.update(requested);
+  recordDoorChange(ctx, door, requested, {
+    causationId: `${actor.id}:${args.operationId}`,
+    actorId: actor.id,
   });
   receipt(ctx, op.key, op.request, door.id, door.revision + 1n);
 }
@@ -337,6 +343,9 @@ export function stepDoors(ctx: Context) {
       ...next,
       moving: next.fraction !== (next.targetOpen ? 1 : 0),
       revision: door.revision + 1n,
+    });
+    recordDoorChange(ctx, door, next, {
+      causationId: `door:${door.id}@${door.revision + 1n}`,
     });
   }
 }

@@ -18,6 +18,17 @@ test("suspension and despawn preserve reactivation; destruction is final", () =>
   expect(nextLifecycle("despawned", "object.activated")).toBe("active");
   expect(() => nextLifecycle("destroyed", "object.activated")).toThrow();
 });
+test("death disables until reactivation; nothing runs before creation", () => {
+  expect(nextLifecycle("active", "combat.death")).toBe("disabled");
+  expect(() => nextLifecycle("disabled", "combat.death")).toThrow();
+  expect(nextLifecycle("disabled", "object.activated")).toBe("active");
+  expect(nextLifecycle("disabled", "object.restored")).toBe("disabled");
+  expect(nextLifecycle("new", "object.created")).toBe("active");
+  expect(() => nextLifecycle("new", "object.restored")).toThrow();
+  expect(() => nextLifecycle("new", "inventory.transferred")).toThrow();
+  expect(nextLifecycle("active", "inventory.transferred")).toBe("active");
+  expect(() => nextLifecycle("destroyed", "object.restored")).toThrow();
+});
 test("script manifests reject unknown hooks and direct authority capabilities", () => {
   expect(validateScriptRevision(revision).id).toBe("door.airlock");
   expect(() =>

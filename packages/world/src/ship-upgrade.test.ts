@@ -42,6 +42,7 @@ import {
   FED_WREN_R3_PIN,
   FED_WREN_R4_PIN,
   FED_WREN_R5_PIN,
+  FED_WREN_R6_PIN,
   PREFAB_UPGRADE_SOURCES,
   type PinnedPrefabShip,
 } from "./prefab-ship-pins";
@@ -52,6 +53,7 @@ import {
   UPGRADE_REFUSED_SHIP_TABLES,
   upgradePrefabShip,
 } from "./ship-upgrade";
+import { stepShipSystems } from "./ship-systems";
 
 const HEAVY = { timeout: 120_000 };
 type Row = Record<string, any>;
@@ -121,6 +123,18 @@ function fixture() {
         {
           get(t, index: string) {
             if (index in t) return (t as any)[index];
+            if (index === "count") return () => BigInt(rows.length);
+            if (index === "by_revision")
+              return {
+                filter: () =>
+                  [...rows].sort((a, b) =>
+                    a.revision < b.revision
+                      ? -1
+                      : a.revision > b.revision
+                        ? 1
+                        : 0,
+                  ),
+              };
             const column = FIELD[index] ?? index;
             return {
               find: (value: unknown) =>
@@ -268,6 +282,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
     FED_WREN_R3_PIN,
     FED_WREN_R4_PIN,
     FED_WREN_R5_PIN,
+    FED_WREN_R6_PIN,
   ]);
   expect(trustedPrefabTemplate("fed.s.wren").snapshot.sha256).toBe(
     FED_WREN_PIN.blueprintSha256,
@@ -278,7 +293,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
 // for different source revisions, so each liveWren starts from an empty cache.
 const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
   test(
-    `a live Wren r${revision} upgrades to r6 in place: same ship, deck, pose, containers and items`,
+    `a live Wren r${revision} upgrades to r7 in place: same ship, deck, pose, containers and items`,
     HEAVY,
     () => {
       const { f, characterId, shipId, deckId } = liveWren(pin, revision);
@@ -326,7 +341,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
       upgradePrefabShip(f.ctx, upgradeArgs(shipId, pin));
       const instance = f.db.constructionInstance.id.find(shipId);
       expect(instance.blueprintSha256).toBe(FED_WREN_PIN.blueprintSha256);
-      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r6");
+      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r7");
       expect(instance.revision).toBe(2n);
       expect(f.db.constructionDeck.rows.map((d: Row) => d.id)).toEqual([
         deckId,
@@ -360,7 +375,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
       expect(
         f.db.instanceInventoryBinding.rows.map((b: Row) => ({ ...b })),
       ).toEqual(bound);
-      // ...and the storage roots now sit at the r6 sockets with a qualified approach.
+      // ...and the storage roots now sit at the r7 sockets with a qualified approach.
       const sockets = new Map(
         prefabCargoSockets(
           readShipPrefab(JSON.parse(instance.documentJson).prefab.document),
@@ -397,7 +412,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
           ).toBe(true);
         }
       }
-      // The owner stands at the r6 spawn with the next-revision game-ship access allowed.
+      // The owner stands at the r7 spawn with the next-revision game-ship access allowed.
       const actor = f.db.character.id.find(characterId);
       expect(actor.shipId).toBe(shipId);
       expect(
@@ -448,6 +463,38 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
 
 upgradeCase(FED_WREN_R3_PIN, 3);
 upgradeCase(FED_WREN_R2_PIN, 2);
+
+test(
+  "S4-1: install queues a systems compile; the in-place upgrade rebuilds it at the new revision",
+  HEAVY,
+  () => {
+    const { f, shipId } = liveWren(FED_WREN_R4_PIN, 4);
+    expect(f.db.shipSystemsDirty.shipId.find(shipId)).toMatchObject({
+      reason: "install",
+    });
+    stepShipSystems(f.ctx);
+    const r4 = { ...f.db.shipSystemsState.shipId.find(shipId) };
+    expect(r4).toMatchObject({
+      prefabRevision: 4,
+      instanceRevision: 1n,
+      catalog: FED_WREN_R4_PIN.catalogRevision,
+    });
+    upgradePrefabShip(f.ctx, upgradeArgs(shipId, FED_WREN_R4_PIN));
+    // The rebuilt row was archived and deleted; the reinstall queued a refit compile.
+    expect(f.db.shipSystemsState.shipId.find(shipId)).toBeUndefined();
+    expect(f.db.shipSystemsDirty.shipId.find(shipId)).toMatchObject({
+      reason: "refit",
+    });
+    stepShipSystems(f.ctx);
+    const r5 = f.db.shipSystemsState.shipId.find(shipId);
+    expect(r5).toMatchObject({
+      prefabRevision: trustedPrefabTemplate("fed.s.wren").prefab.revision,
+      instanceRevision: 2n,
+      catalog: FED_WREN_PIN.catalogRevision,
+    });
+    expect(r5.inputHash).not.toBe(r4.inputHash);
+  },
+);
 
 test(
   "a stocked prefab ship compiles flight with its storage payload at the sockets",
@@ -561,3 +608,4 @@ test("refuses unsafe upgrades and changes nothing", HEAVY, () => {
 
 upgradeCase(FED_WREN_R4_PIN, 4);
 upgradeCase(FED_WREN_R5_PIN, 5);
+upgradeCase(FED_WREN_R6_PIN, 6);

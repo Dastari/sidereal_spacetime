@@ -286,6 +286,7 @@ function resolveRays(
   angle: number,
   now: bigint,
   evaBody: EvaBodyRow | null | undefined,
+  causationId: string,
 ) {
   const angles =
     weaponMode(definition) === "pellets"
@@ -301,7 +302,10 @@ function resolveRays(
     hits.push(hit);
     applied = merge(
       applied,
-      applyShotDamage(ctx, actor, hit, definition.damage),
+      applyShotDamage(ctx, actor, hit, definition.damage, {
+        causationId,
+        actorId: actor.id,
+      }),
     );
     if (hit.kind === "character" && definition.stunMs)
       stun(ctx, hit.targetId, definition.stunMs, now);
@@ -376,7 +380,15 @@ export function fire(ctx: Context, args: WeaponArgs) {
     targetId = "";
     points = [[landing.x, landing.y, 0]];
   } else {
-    const rays = resolveRays(ctx, actor, definition, aim.angle, now, evaBody);
+    const rays = resolveRays(
+      ctx,
+      actor,
+      definition,
+      aim.angle,
+      now,
+      evaBody,
+      id,
+    );
     applied = rays.applied;
     point = rays.main.point;
     kind = rays.main.kind;
@@ -514,7 +526,13 @@ function detonate(ctx: Context, action: CombatActionRow) {
       )
         continue;
     }
-    total = merge(total, damageCharacter(ctx, body.id, damage));
+    total = merge(
+      total,
+      damageCharacter(ctx, body.id, damage, {
+        causationId: `blast:${action.characterId}:${action.shotSequence}`,
+        actorId: action.characterId,
+      }),
+    );
   }
   const impact = ctx.db.combatImpact.characterId.find(action.characterId);
   if (impact && impact.shotSequence === action.shotSequence)

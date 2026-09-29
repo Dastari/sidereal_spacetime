@@ -8,6 +8,7 @@
  * activation) and boards the EXISTING character at the prefab spawn deck. It never creates a
  * character, personal kit or starter receipt and never writes map state.
  */
+import { recordSpawn } from "./lifecycle";
 import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
 import { prefabById } from "@sidereal/content/prefabs";
@@ -43,6 +44,7 @@ import {
   commitFlightCharacter,
   markShipFlightDirty,
 } from "./construction-flight-dirty";
+import { markShipSystemsDirty } from "./ship-systems-dirty";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 export type PrefabCharacterRow = NonNullable<
@@ -194,6 +196,23 @@ export function installPrefabShip(
     });
   }
   installDoors(ctx, shipId, plan.document);
+  // A reused identity (operator upgrade) is an update of the same ship, never a second creation.
+  recordSpawn(
+    ctx,
+    {
+      objectId: shipId,
+      objectKind: "ship",
+      definitionRef: plan.blueprintRevisionId,
+      frameId: shipId,
+    },
+    { causationId: `prefab:${shipId}@${revision}` },
+    {
+      prefabId: request.prefabId,
+      instanceRevision: Number(revision),
+      decks: plan.document.layout.decks.length,
+      characterId: actor.id,
+    },
+  );
 
   // Placement: a berth sized for this hull, or the caller's explicit pose.
   const model = prefabFlightModelFor(
@@ -294,6 +313,8 @@ export function installPrefabShip(
     (row) => ctx.db.character.id.update(row),
   );
   markShipFlightDirty(ctx, shipId);
+  // S4-1: compile the systems budget on the next tick (a reinstall is an upgrade/refit).
+  markShipSystemsDirty(ctx, shipId, revision > 1n ? "refit" : "install");
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
   const locationRow = {
     characterId: actor.id,

@@ -3791,6 +3791,57 @@
    "ports": [
     "power-in"
    ]
+  },
+  {
+   "id": "coolant-pump.md",
+   "kitKey": "x.coolant-pump.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/coolant-pump.md.glb",
+   "sha256": "c4e3f2f2c1972047e6d0adbb4a9b41d71d55c6dac3fc7903022a5f1142cbc521",
+   "bytes": 25244,
+   "boxes": 23,
+   "triangles": 1012,
+   "vertices": 552,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.3125,
+     -0.3125,
+     0.0
+    ],
+    [
+     0.3125,
+     0.3125,
+     1.0625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.2
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "coolant-out"
+   ]
   }
  ],
  "source": {
@@ -3812,6 +3863,7 @@
   "console.fire-control.sm",
   "console.navigation.sm",
   "console.sensor.sm",
+  "coolant-pump.md",
   "crew-bunk.sm",
   "docking-clamp.lg",
   "docking-clamp.md",

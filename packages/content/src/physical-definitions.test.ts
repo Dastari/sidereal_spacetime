@@ -264,7 +264,6 @@ describe("Wayfarer version 1 physical source catalog", () => {
     expect(
       Object.isFrozen(WAYFARER_PHYSICAL_CATALOG.definitions[0].centroid),
     ).toBe(true);
-    expect(WAYFARER_FLIGHT_PROFILE.rawTurnBehavior).toBe(false);
     expect(WAYFARER_FLIGHT_SPEED).toEqual({ forward: 30, reverse: 12 });
     expect(WAYFARER_FLIGHT_HULL.id).toBe("wayfarer-r006-capsule-v1");
   });
