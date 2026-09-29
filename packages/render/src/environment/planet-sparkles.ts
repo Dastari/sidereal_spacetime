@@ -35,8 +35,18 @@ export function createOceanGlints(
     name + "-water-glint-material",
     scene,
     {
-      vertexSource: `precision highp float;attribute vec3 position;attribute vec3 normal;attribute float phase;uniform mat4 world;uniform mat4 worldViewProjection;varying vec3 vWorld;varying vec3 vNormal;varying float vPhase;void main(){vWorld=(world*vec4(position,1.)).xyz;vNormal=normalize(mat3(world)*normal);vPhase=phase;gl_Position=worldViewProjection*vec4(position,1.);gl_PointSize=2.;}`,
-      fragmentSource: `precision highp float;varying vec3 vWorld;varying vec3 vNormal;varying float vPhase;uniform vec3 cameraPosition;uniform vec3 lightDirection;uniform float time;uniform float sunIntensity;void main(){vec3 h=normalize(normalize(cameraPosition-vWorld)+lightDirection);float reflection=pow(max(dot(normalize(vNormal),h),0.),10.);float pulse=pow(.5+.5*sin(time*.6+vPhase),12.);float edge=1.-smoothstep(.25,1.,length(gl_PointCoord-.5)*2.);gl_FragColor=vec4(.65,.92,1.,edge*reflection*(.12+.65*pulse)*clamp(sunIntensity/2.1,0.,2.));}`,
+      vertexSource: `precision highp float;attribute vec3 position;attribute vec3 normal;attribute float phase;uniform mat4 world;uniform mat4 worldViewProjection;varying vec3 vWorld;varying vec3 vNormal;varying float vPhase;void main(){vWorld=(world*vec4(position,1.)).xyz;vNormal=normalize(mat3(world)*normal);vPhase=phase;gl_Position=worldViewProjection*vec4(position,1.);
+#ifndef FIXED_POINT_SIZE
+gl_PointSize=2.;
+#endif
+}`,
+      fragmentSource: `precision highp float;varying vec3 vWorld;varying vec3 vNormal;varying float vPhase;uniform vec3 cameraPosition;uniform vec3 lightDirection;uniform float time;uniform float sunIntensity;void main(){vec3 h=normalize(normalize(cameraPosition-vWorld)+lightDirection);float reflection=pow(max(dot(normalize(vNormal),h),0.),10.);float pulse=pow(.5+.5*sin(time*.6+vPhase),12.);
+#ifdef FIXED_POINT_SIZE
+float edge=1.35;
+#else
+float edge=1.-smoothstep(.25,1.,length(gl_PointCoord-.5)*2.);
+#endif
+gl_FragColor=vec4(.65,.92,1.,edge*reflection*(.12+.65*pulse)*clamp(sunIntensity/2.1,0.,2.));}`,
     },
     {
       attributes: ["position", "normal", "phase"],
@@ -49,6 +59,9 @@ export function createOceanGlints(
         "sunIntensity",
       ],
       needAlphaBlending: true,
+      // WebGPU rasterizes points at exactly 1 px and has no gl_PointSize/gl_PointCoord:
+      // draw one pixel carrying the 2 px sprite's summed brightness instead.
+      defines: scene.getEngine().isWebGPU ? ["FIXED_POINT_SIZE"] : [],
     },
   );
   material.fillMode = Material.PointFillMode;

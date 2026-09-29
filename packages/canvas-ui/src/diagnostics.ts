@@ -7,6 +7,12 @@ import {
 } from "@sidereal/render/render-quality";
 export type { DebugFeature } from "@sidereal/render/debug-features";
 import { CanvasUI, palette } from "./toolkit";
+import {
+  drawRenderBackendMenu,
+  renderBackendReadout,
+  RENDER_BACKEND_COMPACT_HEIGHT,
+  type RenderBackendControls,
+} from "./render-backend-menu";
 import { WindowStack } from "./windows";
 const features: readonly [DebugFeature, string][] = [
   ["lighting", "Lighting"],
@@ -22,8 +28,10 @@ const overlays: readonly [DebugFeature, string][] = [
   ["collision", "Collision"],
 ];
 
-/** Height of the render-cost group at the top of the Visuals tab. */
+/** Height of the render-cost group near the top of the Visuals tab. */
 const QUALITY_HEIGHT = 172;
+/** The renderer (Auto / WebGPU / WebGL2) group opens the Visuals tab. */
+const BACKEND_HEIGHT = RENDER_BACKEND_COMPACT_HEIGHT + 8;
 
 /** Debug instrumentation is requested only while the movable F3 window is open. */
 export function createDiagnosticsUI(
@@ -33,6 +41,7 @@ export function createDiagnosticsUI(
     toggle?: (key: DebugFeature) => void;
     reset?: () => void;
     quality?: (patch: Partial<RenderQuality>) => void;
+    backend?: () => RenderBackendControls | undefined;
   },
 ) {
   const stack = new WindowStack();
@@ -91,6 +100,7 @@ export function createDiagnosticsUI(
       const r = window.rect;
       const data = sample?.(true);
       remember(data);
+      const backendControls = controls?.backend?.();
       ui.windowFrame(
         "diagnostics",
         "PERFORMANCE / F3",
@@ -207,7 +217,14 @@ export function createDiagnosticsUI(
         ],
         ["Camera pass names", data.cameraPostProcesses?.join(", ") || "None"],
         ["Scene capture", data.sceneCapture?.name ?? "None"],
-        ["Renderer", data.renderBackend === "webgpu" ? "WebGPU" : "WebGL"],
+        [
+          "Renderer",
+          backendControls
+            ? renderBackendReadout(backendControls.state)
+            : data.renderBackend === "webgpu"
+              ? "WebGPU"
+              : "WebGL2",
+        ],
         [
           "Snapshot rendering",
           !data.snapshotRendering
@@ -252,6 +269,7 @@ export function createDiagnosticsUI(
       ];
       const visualHeight =
         343 +
+        BACKEND_HEIGHT +
         QUALITY_HEIGHT +
         visualLines.reduce(
           (sum, line) =>
@@ -277,7 +295,20 @@ export function createDiagnosticsUI(
       ui.ctx.clip();
       if (controls && tab === "visuals") {
         const width = (viewport.w - 8) / 2;
-        const top = viewport.y - window.scroll;
+        const inView = (b: { y: number; h: number }) =>
+          b.y >= viewport.y && b.y + b.h <= viewport.y + viewport.h;
+        drawRenderBackendMenu(
+          ui,
+          {
+            x: viewport.x,
+            y: viewport.y - window.scroll,
+            w: viewport.w,
+            h: RENDER_BACKEND_COMPACT_HEIGHT,
+          },
+          backendControls,
+          { compact: true, visible: inView },
+        );
+        const top = viewport.y - window.scroll + BACKEND_HEIGHT;
         const drawGroup = (
           entries: readonly [DebugFeature, string][],
           title: string,
@@ -312,8 +343,6 @@ export function createDiagnosticsUI(
             );
           });
         };
-        const inView = (b: { y: number; h: number }) =>
-          b.y >= viewport.y && b.y + b.h <= viewport.y + viewport.h;
         // Render-cost switches (owner live feedback 2026-09-29): saved on this device, applied live.
         ui.text("RENDER COST", viewport.x, top, 11, palette.muted, viewport.w);
         ui.text(
