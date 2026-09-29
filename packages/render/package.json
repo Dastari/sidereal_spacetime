@@ -9,7 +9,6 @@
     "./equipment": "./src/equipment/index.ts",
     "./crew/appearance": "./src/crew/appearance.ts",
     "./native-stair-scene": "./src/native-stair-scene.ts",
-    "./layout-native-floors": "./src/layout-native-floors.ts",
     "./layout-inset-visual-plan": "./src/layout-inset-visual-plan.ts",
     "./antialiasing-settings": "./src/antialiasing-settings.ts",
     "./graphics-settings": "./src/graphics-settings.ts",
