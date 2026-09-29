@@ -734,3 +734,36 @@ test("hotbar quick slots bind locally without mutating inventory", () => {
   expect(actions.equipItem).not.toHaveBeenCalled();
   expect(actions.assignHotbar).not.toHaveBeenCalled();
 });
+test("no item tooltip while dragging, nor after the drop until the pointer moves", () => {
+  const { board, draw, hit, ui, state } = fixture();
+  let now = 1000;
+  vi.spyOn(performance, "now").mockImplementation(() => now);
+  board.open("inventory");
+  draw();
+  const texts = vi.spyOn(ui, "text");
+  const tooltip = () =>
+    texts.mock.calls.some(([t]) => String(t).includes("FRONTIER"));
+  const source = hit("item-inventory-gun"),
+    target = hit("slot-bag-4-1").rect,
+    release = { x: target.x + 5, y: target.y + 5 };
+  const pointer = vi.spyOn(ui, "pointerPosition");
+  pointer.mockReturnValue({ x: source.rect.x + 8, y: source.rect.y });
+  source.drag?.(8, 0);
+  ui.hover = "item-inventory-gun";
+  pointer.mockReturnValue(release);
+  draw();
+  expect(tooltip()).toBe(false);
+  source.drop?.(release.x, release.y);
+  // The server confirms: the carbine now sits under the resting pointer.
+  Object.assign(state.items[1], { x: 4, y: 1 });
+  state.revision = "2";
+  now += 500;
+  texts.mockClear();
+  draw();
+  ui.hover = "item-inventory-gun";
+  draw();
+  expect(tooltip()).toBe(false);
+  pointer.mockReturnValue({ x: release.x + 12, y: release.y + 9 });
+  draw();
+  expect(tooltip()).toBe(true);
+});

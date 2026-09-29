@@ -16,7 +16,7 @@ import {
   type ItemRarity,
 } from "./item-frame";
 import { drawHudIcon, type HudIconKind } from "./hud-icons";
-import type { createCharacterPreview } from "../../render/src/character-preview";
+import type { createCharacterPreview } from "@sidereal/render/character-preview";
 
 export type CharacterCosmetics = {
   presets: readonly string[];
@@ -108,7 +108,7 @@ function section(ui: CanvasUI, r: Rect, title: string) {
   ui.ctx.fillStyle = "#2676a877";
   ui.ctx.fillRect(r.x + 10, r.y + 29, r.w - 20, 1);
 }
-type PreviewModule = typeof import("../../render/src/character-preview");
+type PreviewModule = typeof import("@sidereal/render/character-preview");
 let previewModule: Promise<PreviewModule> | undefined;
 /**
  * The portrait renderer is a separate lazily loaded chunk. Fetch it as soon as the HUD exists,
@@ -118,7 +118,7 @@ let previewModule: Promise<PreviewModule> | undefined;
  * so a later open can retry.
  */
 export function loadCharacterPreviewModule() {
-  previewModule ??= import("../../render/src/character-preview").catch(
+  previewModule ??= import("@sidereal/render/character-preview").catch(
     (reason: unknown) => {
       previewModule = undefined;
       throw reason;

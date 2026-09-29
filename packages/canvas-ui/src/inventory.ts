@@ -352,6 +352,9 @@ export function createInventoryUI(
   let inFlight:
     | { itemId: string; revision: string; rect?: Rect; until: number }
     | undefined;
+  // Hover tooltips stay hidden after a drop until the pointer moves away from where it was
+  // released, so the item just placed under the pointer does not pop its details over the grid.
+  let tooltipQuiet: { x: number; y: number } | undefined;
   let context: { itemId: string; x: number; y: number } | undefined;
   let current: { state: InventoryState; pending: boolean } | undefined;
   let targets: {
@@ -742,8 +745,22 @@ export function createInventoryUI(
       reason: "Choose an item grid, backpack, equipment slot or the ground",
     };
   }
+  /** No item tooltip while an item is held, gliding or awaiting the server, nor after a drop
+   * until the pointer moves; keyboard focus still shows details. */
+  function tooltipsAllowed() {
+    if (ui.keyboard) return true;
+    if (selected || dragging || settle || inFlight) return false;
+    if (tooltipQuiet) {
+      const p = ui.pointerPosition();
+      if (Math.hypot(p.x - tooltipQuiet.x, p.y - tooltipQuiet.y) <= 3)
+        return false;
+      tooltipQuiet = undefined;
+    }
+    return true;
+  }
   function dropAt(item: InventoryItem, px: number, py: number) {
     if (!current || current.pending) return;
+    tooltipQuiet = { x: px, y: py };
     const d = definition(item),
       origin = [...itemHits.values()].find((e) => e.item.id === item.id)?.rect,
       from = d && heldBox(d, px, py),
@@ -1411,7 +1428,7 @@ export function createInventoryUI(
       if (item)
         itemHits.set(hit.id, { item, rect: hit.rect, window: "hotbar" });
     }
-    if (!assign) {
+    if (!assign && tooltipsAllowed()) {
       const hit = ui.hits.find(
           (h) => h.id === (ui.keyboard ? ui.focus : ui.hover),
         ),
@@ -1700,7 +1717,7 @@ export function createInventoryUI(
         );
         ui.fluid = true;
       }
-    } else if (!context) {
+    } else if (!context && tooltipsAllowed()) {
       const hit = ui.hits.find(
           (h) => h.id === (ui.keyboard ? ui.focus : ui.hover),
         ),
