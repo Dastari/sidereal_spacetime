@@ -25,7 +25,9 @@ export async function loadAuthoringAccount() {
       : null;
     if (
       next?.origin === location.origin &&
-      ["/map", "/planets", "/shipyard/prefabs"].includes(next.pathname)
+      ["/map", "/planets", "/shipyard/prefabs", "/definitions"].includes(
+        next.pathname,
+      )
     )
       location.replace(next.pathname + next.search);
     else history.replaceState(null, "", "/shipyard/prefabs");

@@ -8,7 +8,8 @@
     "./system-map": "./src/system-map.ts",
     "./connection-session": "./src/connection-session.ts",
     "./generated": "./src/generated/index.ts",
-    "./construction": "./src/construction.ts"
+    "./construction": "./src/construction.ts",
+    "./content-definitions": "./src/content-definitions.ts"
   },
   "dependencies": {
     "@sidereal/sim": "0.4.1",

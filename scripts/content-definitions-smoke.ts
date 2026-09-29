@@ -193,12 +193,14 @@ export async function contentDefinitionsSmoke(
       /grant required for definitions:item/,
       "a weapon grantee cannot write items",
     );
+    // The reviewed draft hash; a replay must repeat the exact same request.
+    const reviewed = head().draftSha256;
     const publish = (expectedRevision: bigint, operationId: string) =>
       designer.reducers.publishDefinition({
         kind: "weapon",
         definitionId: "pistol",
         expectedRevision,
-        expectedDraftSha256: head().draftSha256,
+        expectedDraftSha256: reviewed,
         operationId,
       });
     await rejects(
