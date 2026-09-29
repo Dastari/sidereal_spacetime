@@ -376,7 +376,9 @@ function goOutside(who = "cap") {
   expect(doorOpen("door-outer")).toBe(true);
   place(who, plusN(lock.hatch, lock.normal, -0.3));
   const actor = ctx.db.character.id.find(who);
-  expect(tryStepOut(ctx, actor, { dx: lock.normal[0], dy: lock.normal[1] })).toBe(true);
+  expect(
+    tryStepOut(ctx, actor, { dx: lock.normal[0], dy: lock.normal[1] }),
+  ).toBe(true);
   return ctx.db.evaBody.characterId.find(who);
 }
 
@@ -405,8 +407,13 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     expect(doorOpen("door-outer")).toBe(true);
     expect(doorOpen("door-inner")).toBe(false);
     const rows = visibleShipLogic(ctx);
-    expect(rows.find((r) => r.deviceId === "lock")).toMatchObject({ state: "vacuum", light: "red" });
-    expect(rows.find((r) => r.deviceId === "btn-lock-out")).toMatchObject({ light: "red" });
+    expect(rows.find((r) => r.deviceId === "lock")).toMatchObject({
+      state: "vacuum",
+      light: "red",
+    });
+    expect(rows.find((r) => r.deviceId === "btn-lock-out")).toMatchObject({
+      light: "red",
+    });
   });
 
   it("requires proximity on the button's side, standing, and no dead presser", () => {
@@ -441,17 +448,21 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     expect(visibleShipLogic(ctx).length).toBe(6);
     addShip("kite", other, "mate");
     addCharacter("mate", other, "kite", lock.inside);
-    expect(visibleShipLogic(as(other)).every((r) => r.shipId === "kite")).toBe(true);
+    expect(visibleShipLogic(as(other)).every((r) => r.shipId === "kite")).toBe(
+      true,
+    );
     const row = visibleShipLogic(ctx)[0] as Record<string, unknown>;
-    for (const secret of ["owner", "characterId", "stateJson"]) expect(row[secret]).toBeUndefined();
+    for (const secret of ["owner", "characterId", "stateJson"])
+      expect(row[secret]).toBeUndefined();
   });
 });
-
 
 describe("the EVA suit (vacuum needs suit, helmet and jetpack)", () => {
   it("an unsuited walker cannot step out, and cannot cycle the lock toward vacuum", () => {
     place("cap", panel("btn-lock-in").front);
-    expect(() => press("btn-lock-in")).toThrow("EVA needs a pressure suit, helmet and EVA jetpack");
+    expect(() => press("btn-lock-in")).toThrow(
+      "EVA needs a pressure suit, helmet and EVA jetpack",
+    );
     // The hall button only pressurises: fine without a suit.
     addCharacter("mate", third, "wren", panel("btn-hall").front);
     press("btn-hall", third);
@@ -463,16 +474,28 @@ describe("the EVA suit (vacuum needs suit, helmet and jetpack)", () => {
     ticks(62);
     expect(doorOpen("door-outer")).toBe(true);
     place("cap", plusN(lock.hatch, lock.normal, -0.3));
-    expect(tryStepOut(ctx, ctx.db.character.id.find("cap"), { dx: 1, dy: 0 })).toBe(false);
+    expect(
+      tryStepOut(ctx, ctx.db.character.id.find("cap"), { dx: 1, dy: 0 }),
+    ).toBe(false);
     suitUp("cap");
-    expect(tryStepOut(ctx, ctx.db.character.id.find("cap"), { dx: 1, dy: 0 })).toBe(true);
-    expect(ctx.db.evaSuit.characterId.find("cap")).toMatchObject({ mode: "hold", omega: 0 });
+    expect(
+      tryStepOut(ctx, ctx.db.character.id.find("cap"), { dx: 1, dy: 0 }),
+    ).toBe(true);
+    expect(ctx.db.evaSuit.characterId.find("cap")).toMatchObject({
+      mode: "hold",
+      omega: 0,
+    });
   });
 
   it("the lock will not depressurise with an unsuited body in the chamber", () => {
     suitUp("cap");
     place("cap", panel("btn-lock-in").front);
-    addCharacter("mate", third, "wren", plusN(panel("btn-lock-in").front, [0, -1], 1));
+    addCharacter(
+      "mate",
+      third,
+      "wren",
+      plusN(panel("btn-lock-in").front, [0, -1], 1),
+    );
     expect(() => press("btn-lock-in")).toThrow("no EVA suit");
     place("mate", panel("btn-hall").front);
     press("btn-lock-in");
@@ -486,7 +509,12 @@ describe("rigid body and suit IFCS in the world tick", () => {
     ticks(10, () => input("cap", { dx: 1 }));
     ticks(120);
     const suit = ctx.db.evaSuit.characterId.find("cap");
-    ctx.db.evaSuit.characterId.update({ ...suit, mode: "free", omega: 1.2, facingActive: false });
+    ctx.db.evaSuit.characterId.update({
+      ...suit,
+      mode: "free",
+      omega: 1.2,
+      facingActive: false,
+    });
     const h0 = ctx.db.evaBody.characterId.find("cap").localHeading;
     ticks(20);
     expect(ctx.db.evaSuit.characterId.find("cap").omega).toBe(1.2);
@@ -507,14 +535,26 @@ describe("rigid body and suit IFCS in the world tick", () => {
     const early = ctx.db.evaBody.characterId.find("cap").localHeading;
     expect(Math.abs(early - 2)).toBeGreaterThan(0.3);
     ticks(60);
-    expect(ctx.db.evaBody.characterId.find("cap").localHeading).toBeCloseTo(2, 3);
-    expect(() => setSuit(ctx, { mode: "warp", facing: 0, facingActive: false })).toThrow("mode");
+    expect(ctx.db.evaBody.characterId.find("cap").localHeading).toBeCloseTo(
+      2,
+      3,
+    );
+    expect(() =>
+      setSuit(ctx, { mode: "warp", facing: 0, facingActive: false }),
+    ).toThrow("mode");
   });
 });
 
 describe("same-plane EVA: the doorway hand-off", () => {
   it("walks out through the open hatch at the same ship-local point, with the ship's velocity", () => {
-    setShip("wren", { x: 100, y: -50, vx: 20, vy: 5, heading: 0.6, omega: 0.1 });
+    setShip("wren", {
+      x: 100,
+      y: -50,
+      vx: 20,
+      vy: 5,
+      heading: 0.6,
+      omega: 0.1,
+    });
     const exitAt = plusN(lock.hatch, lock.normal, -0.3);
     const body = goOutside();
     expect(body.phase).toBe("local");
@@ -548,8 +588,12 @@ describe("same-plane EVA: the doorway hand-off", () => {
     }
     expect(aboard).toBe(true);
     const c = ctx.db.character.id.find("cap");
-    expect(ctx.db.constructionLocation.characterId.find("cap")?.visitId).toBe("v-cap");
-    expect(lock.hatch[0] - c.localX).toBeGreaterThanOrEqual(EVA.entryDepthM - 1e-9);
+    expect(ctx.db.constructionLocation.characterId.find("cap")?.visitId).toBe(
+      "v-cap",
+    );
+    expect(lock.hatch[0] - c.localX).toBeGreaterThanOrEqual(
+      EVA.entryDepthM - 1e-9,
+    );
     expect(lock.hatch[0] - c.localX).toBeLessThan(EVA.entryDepthM + 0.35);
   });
 
@@ -568,7 +612,9 @@ describe("same-plane EVA: the doorway hand-off", () => {
     ticks(60, () => input("cap", { dx: -1 }));
     const after = ctx.db.evaBody.characterId.find("cap");
     expect(after).toBeDefined();
-    expect(after.localX).toBeGreaterThan(lock.hatch[0] + EVA.bodyRadiusM - 0.05);
+    expect(after.localX).toBeGreaterThan(
+      lock.hatch[0] + EVA.bodyRadiusM - 0.05,
+    );
     expect(body.phase).toBe("local");
   });
 });
@@ -584,7 +630,13 @@ describe("outside panel and entry gate", () => {
     expect(doorOpen("door-outer")).toBe(false);
     const b = ctx.db.evaBody.characterId.find("cap");
     const front = panel("btn-lock-out").front;
-    ctx.db.evaBody.characterId.update({ ...b, localX: front[0], localY: front[1], vx: b.refVx, vy: b.refVy });
+    ctx.db.evaBody.characterId.update({
+      ...b,
+      localX: front[0],
+      localY: front[1],
+      vx: b.refVx,
+      vy: b.refVy,
+    });
     press("btn-lock-out");
     ticks(62);
     expect(doorOpen("door-outer")).toBe(true);
@@ -592,7 +644,11 @@ describe("outside panel and entry gate", () => {
     addShip("kite", other, "x");
     addCharacter("x", other, "kite", [0, 0]);
     ctx.db.constructionLocation.characterId.delete("x");
-    ctx.db.evaBody.insert({ ...ctx.db.evaBody.characterId.find("cap"), characterId: "x", owner: other });
+    ctx.db.evaBody.insert({
+      ...ctx.db.evaBody.characterId.find("cap"),
+      characterId: "x",
+      owner: other,
+    });
     ctx.db.authSession.insert({ connectionId: "c2", owner: other, game: true });
     expect(() => press("btn-lock-out", other)).toThrow("does not respond");
   });
@@ -626,7 +682,14 @@ describe("frames: ride along in the bubble, drop off when left behind", () => {
     const before = ctx.db.evaBody.characterId.find("cap");
     for (let i = 0; i < 40; i++) {
       const m = ctx.db.shipWorldMotion.shipId.find("wren");
-      setShip("wren", { x: m.x + 0.5, y: m.y + 0.2, vx: 10, vy: 4, heading: m.heading + 0.01, omega: 0.2 });
+      setShip("wren", {
+        x: m.x + 0.5,
+        y: m.y + 0.2,
+        vx: 10,
+        vy: 4,
+        heading: m.heading + 0.01,
+        omega: 0.2,
+      });
       tick();
     }
     const after = ctx.db.evaBody.characterId.find("cap");
@@ -655,11 +718,22 @@ describe("frames: ride along in the bubble, drop off when left behind", () => {
   it("drops out beyond the release radius and is captured again when slow inside the bubble", () => {
     goOutside();
     const b = ctx.db.evaBody.characterId.find("cap");
-    ctx.db.evaBody.characterId.update({ ...b, localX: model.radiusM + EVA.releaseM + 2, localY: 0 });
+    ctx.db.evaBody.characterId.update({
+      ...b,
+      localX: model.radiusM + EVA.releaseM + 2,
+      localY: 0,
+    });
     tick();
     const free = ctx.db.evaBody.characterId.find("cap");
     expect(free.phase).toBe("free");
-    ctx.db.evaBody.characterId.update({ ...free, x: model.radiusM + 10, y: 0, vx: 0, vy: 0, ...cell(model.radiusM + 10, 0) });
+    ctx.db.evaBody.characterId.update({
+      ...free,
+      x: model.radiusM + 10,
+      y: 0,
+      vx: 0,
+      vy: 0,
+      ...cell(model.radiusM + 10, 0),
+    });
     tick();
     const again = ctx.db.evaBody.characterId.find("cap");
     expect(again.phase).toBe("local");
@@ -692,7 +766,9 @@ describe("ship impacts with leeway", () => {
   }
   it("a slow ship pushes the body out without damage", () => {
     freeBodyBeside(2);
-    expect(ctx.db.characterVitals.characterId.find("cap")?.health ?? 100).toBe(100);
+    expect(ctx.db.characterVitals.characterId.find("cap")?.health ?? 100).toBe(
+      100,
+    );
     const b = ctx.db.evaBody.characterId.find("cap");
     expect(b.x).toBeGreaterThan(lock.hatch[0] + 0.3 + EVA.bodyRadiusM - 0.01);
   });
@@ -710,18 +786,31 @@ describe("ship impacts with leeway", () => {
 describe("legacy rows and removed milestone-1 actions", () => {
   it("a milestone-1 maglocked body on the roof is pushed off the hull without damage", () => {
     const body = goOutside();
-    ctx.db.evaBody.characterId.update({ ...body, phase: "maglocked", localX: 0, localY: 0 });
+    ctx.db.evaBody.characterId.update({
+      ...body,
+      phase: "maglocked",
+      localX: 0,
+      localY: 0,
+    });
     tick();
     const after = ctx.db.evaBody.characterId.find("cap");
     expect(after.phase).toBe("local");
     expect(Math.hypot(after.localX, after.localY)).toBeGreaterThan(1);
-    expect(ctx.db.characterVitals.characterId.find("cap")?.health ?? 100).toBe(100);
+    expect(ctx.db.characterVitals.characterId.find("cap")?.health ?? 100).toBe(
+      100,
+    );
   });
   it("the teleport cycle and the hull maglock are gone; stale cycle rows are cleared", () => {
-    expect(() => cycleAirlock(ctx, { shipId: "wren", airlockId: lock.id })).toThrow("wall buttons");
+    expect(() =>
+      cycleAirlock(ctx, { shipId: "wren", airlockId: lock.id }),
+    ).toThrow("wall buttons");
     goOutside();
     expect(() => toggleMaglock(ctx)).toThrow("inside a ship");
-    ctx.db.evaAirlockCycle.insert({ characterId: "cap", lockKey: "wren/airlock", shipId: "wren" });
+    ctx.db.evaAirlockCycle.insert({
+      characterId: "cap",
+      lockKey: "wren/airlock",
+      shipId: "wren",
+    });
     tick();
     expect(ctx.db.evaAirlockCycle.rows.size).toBe(0);
   });
@@ -738,14 +827,22 @@ describe("death, respawn and stranding in EVA", () => {
     stepRespawns(ctx);
     expect(isDead(ctx, "cap")).toBe(false);
     expect(ctx.db.evaBody.characterId.find("cap")).toBeUndefined();
-    expect(ctx.db.constructionLocation.characterId.find("cap")?.instanceId).toBe("wren");
+    expect(
+      ctx.db.constructionLocation.characterId.find("cap")?.instanceId,
+    ).toBe("wren");
   });
 
   it("offers an emergency return only when stranded, then returns aboard", () => {
     goOutside();
     expect(() => emergencyReturn(ctx)).toThrow("within reach");
     const body = ctx.db.evaBody.characterId.find("cap");
-    ctx.db.evaBody.characterId.update({ ...body, phase: "free", anchorShipId: "", x: 5000, ...cell(5000, body.y) });
+    ctx.db.evaBody.characterId.update({
+      ...body,
+      phase: "free",
+      anchorShipId: "",
+      x: 5000,
+      ...cell(5000, body.y),
+    });
     expect(ownEvaBody(ctx)[0].stranded).toBe(true);
     emergencyReturn(ctx);
     now += EVA.emergencyReturnMicros;
@@ -761,7 +858,12 @@ describe("death, respawn and stranding in EVA", () => {
     ctx.db.constructionInstance.id.update({
       ...instance,
       revision: 2n,
-      documentJson: JSON.stringify({ prefab: { document: { ...legacy, revision: 5 }, catalog: catalog.revision } }),
+      documentJson: JSON.stringify({
+        prefab: {
+          document: { ...legacy, revision: 5 },
+          catalog: catalog.revision,
+        },
+      }),
     });
     expect(ownEvaBody(ctx)[0].stranded).toBe(true);
   });
@@ -774,7 +876,13 @@ describe("combat and visibility in EVA", () => {
     addShip("kite", other, "mate");
     addCharacter("mate", other, "kite", [0, 0]);
     ctx.db.constructionLocation.characterId.delete("mate");
-    ctx.db.evaBody.insert({ ...a, characterId: "mate", owner: other, x: a.x + 5, ...cell(a.x + 5, a.y) });
+    ctx.db.evaBody.insert({
+      ...a,
+      characterId: "mate",
+      owner: other,
+      x: a.x + 5,
+      ...cell(a.x + 5, a.y),
+    });
     const hit = resolveEvaShot(ctx, a, Math.PI / 2, 60);
     expect(hit).toMatchObject({ kind: "character", targetId: "mate" });
     expect(resolveEvaShot(ctx, a, -Math.PI / 2, 60).kind).toBe("none");
@@ -787,11 +895,19 @@ describe("combat and visibility in EVA", () => {
     expect(rows.map((r) => r.characterId)).toEqual(["cap"]);
     const row = rows[0] as Record<string, unknown>;
     expect(row.phase).toBe("local");
-    for (const secret of ["health", "refVx", "returnEndsMicros", "owner", "endsMicros"])
+    for (const secret of [
+      "health",
+      "refVx",
+      "returnEndsMicros",
+      "owner",
+      "endsMicros",
+    ])
       expect(row[secret]).toBeUndefined();
   });
 
   it("derives the entries from the live instance document", () => {
-    expect(evaModelFor(ctx.db, "wren")?.entries.map((a) => a.id)).toEqual(["airlock"]);
+    expect(evaModelFor(ctx.db, "wren")?.entries.map((a) => a.id)).toEqual([
+      "airlock",
+    ]);
   });
 });

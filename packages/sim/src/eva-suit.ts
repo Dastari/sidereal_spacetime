@@ -104,7 +104,8 @@ export const EVA_SUIT_NOZZLES: readonly Actuator[] = (() => {
 /** Mass properties of a suited body carrying `carriedKg` of equipment and items. */
 export function evaSuitMass(carriedKg: number): MassProperties {
   const massKg =
-    EVA_SUIT.bodyMassKg + (Number.isFinite(carriedKg) ? Math.max(0, carriedKg) : 0);
+    EVA_SUIT.bodyMassKg +
+    (Number.isFinite(carriedKg) ? Math.max(0, carriedKg) : 0);
   return {
     massKg,
     centerX: 0,
@@ -183,10 +184,14 @@ export function evaSuitDemand(
     const error = wrap(facing - state.heading);
     const wantOmega = Math.max(
       -EVA_SUIT.maxAngularSpeed,
-      Math.min(EVA_SUIT.maxAngularSpeed, (error * EVA_SUIT.headingGain) / EVA_SUIT.angularGain),
+      Math.min(
+        EVA_SUIT.maxAngularSpeed,
+        (error * EVA_SUIT.headingGain) / EVA_SUIT.angularGain,
+      ),
     );
     alpha = (wantOmega - state.omega) * EVA_SUIT.angularGain;
-  } else if (intent.mode === "hold") alpha = -state.omega * EVA_SUIT.angularGain;
+  } else if (intent.mode === "hold")
+    alpha = -state.omega * EVA_SUIT.angularGain;
   else
     alpha =
       Math.max(-1, Math.min(1, finiteOr(intent.turn ?? 0))) *
@@ -247,7 +252,10 @@ export function evaSuitTick(
     evaSuitDemand(state, intent, mass, reference),
     mass,
   );
-  const f = rot([allocation.achieved.fx, allocation.achieved.fy], state.heading);
+  const f = rot(
+    [allocation.achieved.fx, allocation.achieved.fy],
+    state.heading,
+  );
   return {
     linear: [f[0] / mass.massKg, f[1] / mass.massKg],
     angular: allocation.achieved.torque / mass.inertiaKgM2,

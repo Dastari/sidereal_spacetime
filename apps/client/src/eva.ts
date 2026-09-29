@@ -233,7 +233,11 @@ export function logicButtonAction(input: {
   if (!shipId || !logic) return;
   const at = input.aboard ?? input.outside;
   if (!at) return;
-  const panel = reachablePanel(logic, at, input.aboard ? "interior" : "exterior");
+  const panel = reachablePanel(
+    logic,
+    at,
+    input.aboard ? "interior" : "exterior",
+  );
   if (!panel) return;
   const port = logic.graph.wires.get(`${panel.deviceId}.pressed`)?.[0]?.port;
   return {

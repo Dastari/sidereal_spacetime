@@ -20,15 +20,19 @@ import {
 } from "./crew-voxel-bundle";
 
 test("wardrobe: 4 uniforms, 14 tier 1-2 pieces and the 4-part EVA suit with unique, stable definition ids", () => {
-  expect(CREW_WARDROBE.filter((w) => w.slot === "uniform" && !w.eva)).toHaveLength(4);
+  expect(
+    CREW_WARDROBE.filter((w) => w.slot === "uniform" && !w.eva),
+  ).toHaveLength(4);
   expect(
     CREW_WARDROBE.filter((w) => w.part && w.slot !== "uniform" && !w.eva),
   ).toHaveLength(14);
   // Maglock is a property of space-suit boots only (owner 2026-09-29), never clothing or armour.
-  expect(CREW_WARDROBE.filter((w) => w.maglock).map((w) => [w.id, w.slot])).toEqual([
-    ["suit-boots", "boots"],
-  ]);
-  expect(CREW_WARDROBE.filter((w) => w.eva).map((w) => [w.eva, w.slot])).toEqual([
+  expect(
+    CREW_WARDROBE.filter((w) => w.maglock).map((w) => [w.id, w.slot]),
+  ).toEqual([["suit-boots", "boots"]]);
+  expect(
+    CREW_WARDROBE.filter((w) => w.eva).map((w) => [w.eva, w.slot]),
+  ).toEqual([
     ["suit", "uniform"],
     ["helmet", "helmet"],
     ["pack", "back"],
@@ -37,7 +41,9 @@ test("wardrobe: 4 uniforms, 14 tier 1-2 pieces and the 4-part EVA suit with uniq
   const ids = INVENTORY_DEFINITIONS.map((d) => d.id);
   expect(new Set(ids).size).toBe(ids.length);
   for (const d of CREW_WARDROBE_DEFINITIONS) {
-    expect(d.id).toMatch(/^wardrobe-(uniform-|t[12]-|suit-(body|helmet|pack|boots)$)/);
+    expect(d.id).toMatch(
+      /^wardrobe-(uniform-|t[12]-|suit-(body|helmet|pack|boots)$)/,
+    );
     expect(d.equipSlot).toBeTruthy();
     // Flight mass needs an explicit physical definition for every item that can be on board.
     expect(

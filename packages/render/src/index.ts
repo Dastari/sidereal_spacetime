@@ -114,7 +114,7 @@ import { setGlowOccludingActors } from "./glow-occluders";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { Camera } from "@babylonjs/core/Cameras/camera";
-import { Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import { CreatePlane } from "@babylonjs/core/Meshes/Builders/planeBuilder";
@@ -839,6 +839,8 @@ async function buildWorld(
   let temporalAppearance = "";
   const localLights = createLocalLightBudget();
   const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
+  /** Last pointer position (client pixels) for the EVA facing. */
+  let pointerClient: { x: number; y: number } | undefined;
   for (const mesh of combatAim.meshes) glow.addIncludedOnlyMesh(mesh);
   const prefabBeamClip = prefabBinding
     ? createPrefabBeamClip(shipRoot, prefabBinding)
@@ -1456,6 +1458,8 @@ async function buildWorld(
         enabled: avatar.isEnabled(),
         cameraBeta: camera.beta,
         cameraRadius: camera.radius,
+        interior: state.interior,
+        pointer: this.pointerDirection(),
         bodies: evaCrew?.diagnostics() ?? [],
       };
     },
@@ -1496,7 +1500,32 @@ async function buildWorld(
       localLights.setLimit(limit);
     },
     setAimPointer(x: number, y: number) {
+      pointerClient =
+        Number.isFinite(x) && Number.isFinite(y) ? { x, y } : undefined;
       combatAim.pointer(x, y);
+    },
+    /**
+     * Ship-local unit direction from the own body's screen position to the pointer (the EVA suit
+     * facing), independent of any deck or hull under the cursor. Presentation input only.
+     */
+    pointerDirection(): [number, number] | undefined {
+      if (!pointerClient) return;
+      const rect = canvas.getBoundingClientRect();
+      const w = engine.getRenderWidth(),
+        h = engine.getRenderHeight();
+      if (rect.width <= 0 || rect.height <= 0) return;
+      const p = Vector3.Project(
+        avatar.getAbsolutePosition(),
+        Matrix.Identity(),
+        scene.getTransformMatrix(),
+        camera.viewport.toGlobal(w, h),
+      );
+      const sx = ((pointerClient.x - rect.left) / rect.width) * w - p.x,
+        sy = ((pointerClient.y - rect.top) / rect.height) * h - p.y;
+      const len = Math.hypot(sx, sy);
+      if (!Number.isFinite(len) || len < 4) return;
+      const d = screenToDeck(sx / len, -sy / len, camera.alpha, state.heading);
+      return [d.dx, d.dy];
     },
     aimDirection() {
       // On deck, or outside the hull (EVA aims in the same own-ship frame the body is drawn in).

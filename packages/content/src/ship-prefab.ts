@@ -2521,7 +2521,8 @@ export function logicWallPlacement(
   device: Pick<PrefabLogicDevice, "at" | "normal">,
   catalog?: PrefabComponentCatalog,
 ): LogicWallPlacement | { error: string } {
-  if (!device.at || !device.normal) return { error: "needs a wall point and a facing" };
+  if (!device.at || !device.normal)
+    return { error: "needs a wall point and a facing" };
   const deck = deckVolume(doc, 0);
   if (!deck?.outline) return { error: "the ship has no walkable deck" };
   const n = NORMAL_VECTOR[device.normal];
@@ -2581,8 +2582,7 @@ export function logicWallPlacement(
   if (behind === room) return { error: "is not on a wall (open floor)" };
   const open = doc.edges.some(
     (e) =>
-      (e.type === "open" || e.type === "window") &&
-      onSegment(at, e.a, e.b),
+      (e.type === "open" || e.type === "window") && onSegment(at, e.a, e.b),
   );
   if (open) return { error: "sits on an open edge" };
   return {
@@ -2599,7 +2599,12 @@ export function logicWallPlacement(
 export function validatePrefabLogic(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
-): { severity: "error" | "warning"; code: string; message: string; id: string }[] {
+): {
+  severity: "error" | "warning";
+  code: string;
+  message: string;
+  id: string;
+}[] {
   const logic = doc.logic;
   if (!logic) return [];
   const out = validateLogicWiring(logic).map((i) => ({
@@ -2626,11 +2631,21 @@ export function validatePrefabLogic(
     if (d.kind === "door") {
       const door = interior.doors.find((x) => x.id === d.door);
       if (!door) {
-        push("error", "logic.door.unknown", `${d.id}: no door ${d.door} on the deck`, d.id);
+        push(
+          "error",
+          "logic.door.unknown",
+          `${d.id}: no door ${d.door} on the deck`,
+          d.id,
+        );
         continue;
       }
       if (door.type === "door.forcefield")
-        push("error", "logic.door.forcefield", `${d.id}: a forcefield has no leaves to actuate`, d.id);
+        push(
+          "error",
+          "logic.door.forcefield",
+          `${d.id}: a forcefield has no leaves to actuate`,
+          d.id,
+        );
       const mount = doc.mounts.find((m) => m.id === d.door);
       if (mount && !catalog.get(mount.component)?.dataPort)
         push(
@@ -2652,9 +2667,19 @@ export function validatePrefabLogic(
       const outerDoor = outer ? doorOf(outer) : undefined;
       const innerDoor = inner ? doorOf(inner) : undefined;
       if (outer && !outerDoor?.exterior)
-        push("error", "logic.airlock.outer", `${d.id}: the outer door must be an exterior door`, d.id);
+        push(
+          "error",
+          "logic.airlock.outer",
+          `${d.id}: the outer door must be an exterior door`,
+          d.id,
+        );
       if (inner && (!innerDoor || innerDoor.exterior))
-        push("error", "logic.airlock.inner", `${d.id}: the inner door must be an interior door`, d.id);
+        push(
+          "error",
+          "logic.airlock.inner",
+          `${d.id}: the inner door must be an interior door`,
+          d.id,
+        );
       if (innerDoor && outerDoor) {
         const chamber = innerDoor.rooms.filter((r) => r !== null);
         if (!outerDoor.rooms.some((r) => r !== null && chamber.includes(r)))

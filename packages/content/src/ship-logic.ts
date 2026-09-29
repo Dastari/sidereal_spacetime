@@ -32,7 +32,10 @@ export const SHIP_LOGIC_VALUES = {
   "door-state": ["open", "closed", "locked"],
   "airlock-state": ["pressurised", "depressurising", "vacuum", "pressurising"],
   light: ["off", "green", "amber", "red"],
-} as const satisfies Record<Exclude<ShipLogicSignal, "pulse">, readonly string[]>;
+} as const satisfies Record<
+  Exclude<ShipLogicSignal, "pulse">,
+  readonly string[]
+>;
 export type DoorCommand = (typeof SHIP_LOGIC_VALUES)["door-command"][number];
 export type DoorStateValue = (typeof SHIP_LOGIC_VALUES)["door-state"][number];
 export type AirlockStateValue =
@@ -227,46 +230,52 @@ function quarter(v: unknown, path: string): number {
  */
 export function readPrefabLogic(value: unknown): PrefabLogic {
   const o = record(value, "logic", ["devices", "links"]);
-  const devices = list(o.devices, "logic.devices", SHIP_LOGIC_LIMITS.devices).map(
-    (v, i) => {
-      const p = `logic.devices[${i}]`;
-      const r = record(v, p, ["id", "kind"], ["at", "normal", "door", "cycleS"]);
-      const kind = r.kind as ShipLogicDeviceKind;
-      if (!SHIP_LOGIC_DEVICE_KINDS.includes(kind))
-        fail(`${p}.kind`, `expected one of ${SHIP_LOGIC_DEVICE_KINDS.join(", ")}`);
-      const d: PrefabLogicDevice = { id: text(r.id, `${p}.id`, LOGIC_ID), kind };
-      const placement = SHIP_LOGIC_DEVICES[kind].placement;
-      if (placement === "wall") {
-        const at = list(r.at, `${p}.at`, 2);
-        if (at.length !== 2) fail(`${p}.at`, "expected [x, y]");
-        d.at = [quarter(at[0], `${p}.at[0]`), quarter(at[1], `${p}.at[1]`)];
-        if (!FACINGS.includes(r.normal as LogicFacing))
-          fail(`${p}.normal`, `expected one of ${FACINGS.join(", ")}`);
-        d.normal = r.normal as LogicFacing;
-      } else if (r.at !== undefined || r.normal !== undefined)
-        fail(p, `${kind} devices take no at or normal`);
-      if (placement === "door") d.door = text(r.door, `${p}.door`, LOGIC_ID);
-      else if (r.door !== undefined) fail(p, `${kind} devices take no door`);
-      if (kind === "airlock-controller") {
-        if (r.cycleS !== undefined) {
-          const s = r.cycleS;
-          if (
-            typeof s !== "number" ||
-            !Number.isFinite(s) ||
-            s < SHIP_LOGIC_LIMITS.cycleMinS ||
-            s > SHIP_LOGIC_LIMITS.cycleMaxS ||
-            !Number.isInteger(s * 10)
-          )
-            fail(
-              `${p}.cycleS`,
-              `expected ${SHIP_LOGIC_LIMITS.cycleMinS}..${SHIP_LOGIC_LIMITS.cycleMaxS} s in 0.1 s steps`,
-            );
-          d.cycleS = s;
-        }
-      } else if (r.cycleS !== undefined) fail(p, `${kind} devices take no cycleS`);
-      return d;
-    },
-  );
+  const devices = list(
+    o.devices,
+    "logic.devices",
+    SHIP_LOGIC_LIMITS.devices,
+  ).map((v, i) => {
+    const p = `logic.devices[${i}]`;
+    const r = record(v, p, ["id", "kind"], ["at", "normal", "door", "cycleS"]);
+    const kind = r.kind as ShipLogicDeviceKind;
+    if (!SHIP_LOGIC_DEVICE_KINDS.includes(kind))
+      fail(
+        `${p}.kind`,
+        `expected one of ${SHIP_LOGIC_DEVICE_KINDS.join(", ")}`,
+      );
+    const d: PrefabLogicDevice = { id: text(r.id, `${p}.id`, LOGIC_ID), kind };
+    const placement = SHIP_LOGIC_DEVICES[kind].placement;
+    if (placement === "wall") {
+      const at = list(r.at, `${p}.at`, 2);
+      if (at.length !== 2) fail(`${p}.at`, "expected [x, y]");
+      d.at = [quarter(at[0], `${p}.at[0]`), quarter(at[1], `${p}.at[1]`)];
+      if (!FACINGS.includes(r.normal as LogicFacing))
+        fail(`${p}.normal`, `expected one of ${FACINGS.join(", ")}`);
+      d.normal = r.normal as LogicFacing;
+    } else if (r.at !== undefined || r.normal !== undefined)
+      fail(p, `${kind} devices take no at or normal`);
+    if (placement === "door") d.door = text(r.door, `${p}.door`, LOGIC_ID);
+    else if (r.door !== undefined) fail(p, `${kind} devices take no door`);
+    if (kind === "airlock-controller") {
+      if (r.cycleS !== undefined) {
+        const s = r.cycleS;
+        if (
+          typeof s !== "number" ||
+          !Number.isFinite(s) ||
+          s < SHIP_LOGIC_LIMITS.cycleMinS ||
+          s > SHIP_LOGIC_LIMITS.cycleMaxS ||
+          !Number.isInteger(s * 10)
+        )
+          fail(
+            `${p}.cycleS`,
+            `expected ${SHIP_LOGIC_LIMITS.cycleMinS}..${SHIP_LOGIC_LIMITS.cycleMaxS} s in 0.1 s steps`,
+          );
+        d.cycleS = s;
+      }
+    } else if (r.cycleS !== undefined)
+      fail(p, `${kind} devices take no cycleS`);
+    return d;
+  });
   const endpoint = (v: unknown, p: string): PrefabLogicEndpoint => {
     const r = record(v, p, ["device", "port"]);
     return {
@@ -342,7 +351,12 @@ export function validateLogicWiring(logic: PrefabLogic): ShipLogicIssue[] {
       continue;
     }
     if (!inp || inp.direction !== "in") {
-      push("error", "logic.link.to", `${to.id} has no input ${link.to.port}`, ref);
+      push(
+        "error",
+        "logic.link.to",
+        `${to.id} has no input ${link.to.port}`,
+        ref,
+      );
       continue;
     }
     if (out.signal !== inp.signal)

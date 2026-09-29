@@ -137,19 +137,16 @@ describe("ship logic (Wren r6 airlock)", () => {
       now += Math.floor(rand() * 900_000);
       const r = rand();
       if (r < 0.3)
-        h.fire(
-          { kind: "press", device: buttons[Math.floor(rand() * 3)] },
-          now,
-        );
+        h.fire({ kind: "press", device: buttons[Math.floor(rand() * 3)] }, now);
       else if (r < 0.4) {
         const d = rand() < 0.5 ? "door-inner" : "door-outer";
         if (h.obstructed.has(d)) h.obstructed.delete(d);
         else h.obstructed.add(d);
       }
       h.runTimers(now);
-      expect(
-        h.door("door-inner").open && h.door("door-outer").open,
-      ).toBe(false);
+      expect(h.door("door-inner").open && h.door("door-outer").open).toBe(
+        false,
+      );
     }
   });
 
@@ -157,12 +154,24 @@ describe("ship logic (Wren r6 airlock)", () => {
     const g = logicGraph(wren.logic!);
     const read = (id: string) => initialLogicStates(g).get(id)!;
     const env = { now: 42, obstructed: () => false };
-    const a = evaluateLogic(g, read, { kind: "press", device: "btn-lock-in" }, env);
-    const b = evaluateLogic(g, read, { kind: "press", device: "btn-lock-in" }, env);
+    const a = evaluateLogic(
+      g,
+      read,
+      { kind: "press", device: "btn-lock-in" },
+      env,
+    );
+    const b = evaluateLogic(
+      g,
+      read,
+      { kind: "press", device: "btn-lock-in" },
+      env,
+    );
     expect([...a.states]).toEqual([...b.states]);
     expect(a.trace).toEqual(b.trace);
     // Evaluation never mutates the initial states it read.
-    expect(initialLogicStates(g).get("door-inner")).toMatchObject({ open: true });
+    expect(initialLogicStates(g).get("door-inner")).toMatchObject({
+      open: true,
+    });
   });
 
   it("bounds a cyclic wiring: propagation stops at the budget", () => {
@@ -176,12 +185,36 @@ describe("ship logic (Wren r6 airlock)", () => {
         { id: "k", kind: "button", at: [0, 0], normal: "fore" },
       ],
       links: [
-        { id: "1", from: { device: "a", port: "inner" }, to: { device: "d1", port: "command" } },
-        { id: "2", from: { device: "d1", port: "state" }, to: { device: "b", port: "inner_state" } },
-        { id: "3", from: { device: "b", port: "inner" }, to: { device: "d2", port: "command" } },
-        { id: "4", from: { device: "d2", port: "state" }, to: { device: "a", port: "inner_state" } },
-        { id: "5", from: { device: "k", port: "pressed" }, to: { device: "a", port: "cycle" } },
-        { id: "6", from: { device: "k", port: "pressed" }, to: { device: "b", port: "cycle" } },
+        {
+          id: "1",
+          from: { device: "a", port: "inner" },
+          to: { device: "d1", port: "command" },
+        },
+        {
+          id: "2",
+          from: { device: "d1", port: "state" },
+          to: { device: "b", port: "inner_state" },
+        },
+        {
+          id: "3",
+          from: { device: "b", port: "inner" },
+          to: { device: "d2", port: "command" },
+        },
+        {
+          id: "4",
+          from: { device: "d2", port: "state" },
+          to: { device: "a", port: "inner_state" },
+        },
+        {
+          id: "5",
+          from: { device: "k", port: "pressed" },
+          to: { device: "a", port: "cycle" },
+        },
+        {
+          id: "6",
+          from: { device: "k", port: "pressed" },
+          to: { device: "b", port: "cycle" },
+        },
       ],
     };
     const g = logicGraph(logic);
@@ -204,7 +237,11 @@ describe("ship logic (Wren r6 airlock)", () => {
       ],
       links: [
         // pulse -> door-command: type mismatch
-        { id: "1", from: { device: "k", port: "pressed" }, to: { device: "d", port: "command" } },
+        {
+          id: "1",
+          from: { device: "k", port: "pressed" },
+          to: { device: "d", port: "command" },
+        },
       ],
     });
     expect(g.wires.size).toBe(0);
@@ -212,9 +249,16 @@ describe("ship logic (Wren r6 airlock)", () => {
 
   it("rejects a stored state of another kind or with bad fields", () => {
     expect(readLogicState("door", '{"kind":"button"}')).toBeUndefined();
-    expect(readLogicState("door", '{"kind":"door","open":"yes"}')).toBeUndefined();
+    expect(
+      readLogicState("door", '{"kind":"door","open":"yes"}'),
+    ).toBeUndefined();
     expect(readLogicState("door", "x".repeat(600))).toBeUndefined();
-    const s = JSON.stringify(initialLogicStates(logicGraph(wren.logic!)).get("door-inner"));
-    expect(readLogicState("door", s)).toMatchObject({ kind: "door", open: true });
+    const s = JSON.stringify(
+      initialLogicStates(logicGraph(wren.logic!)).get("door-inner"),
+    );
+    expect(readLogicState("door", s)).toMatchObject({
+      kind: "door",
+      open: true,
+    });
   });
 });

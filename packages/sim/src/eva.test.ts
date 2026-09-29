@@ -28,7 +28,11 @@ import { prefabToShipMetres } from "./prefab-construction";
 import { evaSuitMass, type EvaSuitIntent } from "./eva-suit";
 
 const MASS = evaSuitMass(35);
-const push = (dx: number, dy: number, mode: "hold" | "free" = "hold"): EvaSuitIntent => ({
+const push = (
+  dx: number,
+  dy: number,
+  mode: "hold" | "free" = "hold",
+): EvaSuitIntent => ({
   dx,
   dy,
   facing: null,
@@ -120,13 +124,24 @@ describe("hull collision from outside (ship frame)", () => {
 
   it("slides along the hull instead of sticking", () => {
     const start = outsideHatch(EVA.bodyRadiusM + 0.02);
-    const { s } = drift({ ...start, y: start.y + 2 }, { dx: -0.7, dy: -0.7 }, 20, SHUT);
+    const { s } = drift(
+      { ...start, y: start.y + 2 },
+      { dx: -0.7, dy: -0.7 },
+      20,
+      SHUT,
+    );
     expect(s.y).toBeLessThan(start.y + 2 - 0.3);
   });
 
   it("pushes a body that starts inside the hull (legacy roof position) out without damage", () => {
     const roof = toShip([6, 3.5]);
-    const r = stepEvaLocal(model, { x: roof[0], y: roof[1], vx: 0, vy: 0, heading: 0, omega: 0 }, push(0, 0), SHUT, MASS);
+    const r = stepEvaLocal(
+      model,
+      { x: roof[0], y: roof[1], vx: 0, vy: 0, heading: 0, omega: 0 },
+      push(0, 0),
+      SHUT,
+      MASS,
+    );
     expect(evaBodyBlocked(model, [r.state.x, r.state.y], SHUT)).toBe(false);
     expect(r.impactSpeed).toBe(0);
   });
@@ -138,7 +153,9 @@ describe("doorway hand-off (deck frame ↔ outside, same point)", () => {
     hatch.hatch[1] - hatch.normal[1] * 0.3,
   ];
   it("a walker at an open hatch pushing out steps outside; shut or walking along: no", () => {
-    expect(evaExitThrough(model, atLine, hatch.normal, OPEN)?.id).toBe("airlock");
+    expect(evaExitThrough(model, atLine, hatch.normal, OPEN)?.id).toBe(
+      "airlock",
+    );
     expect(evaExitThrough(model, atLine, hatch.normal, SHUT)).toBeUndefined();
     expect(evaExitThrough(model, atLine, hatch.along, OPEN)).toBeUndefined();
     const deeper: [number, number] = [atLine[0] - 0.5, atLine[1]];
@@ -152,9 +169,23 @@ describe("doorway hand-off (deck frame ↔ outside, same point)", () => {
 });
 
 describe("frames: ride-along bubble and drop-off", () => {
-  const moving: ShipPose = { x: 100, y: -40, vx: 30, vy: 12, heading: 0.7, omega: 0 };
+  const moving: ShipPose = {
+    x: 100,
+    y: -40,
+    vx: 30,
+    vy: 12,
+    heading: 0.7,
+    omega: 0,
+  };
   it("local ↔ world round trip keeps the relative state", () => {
-    const s: EvaLocalState = { x: 9, y: -2, vx: 0.4, vy: -0.2, heading: 0.3, omega: 0.7 };
+    const s: EvaLocalState = {
+      x: 9,
+      y: -2,
+      vx: 0.4,
+      vy: -0.2,
+      heading: 0.3,
+      omega: 0.7,
+    };
     const w = localToWorld(moving, s);
     const back = worldToLocal(moving, w);
     expect(back.x).toBeCloseTo(s.x, 9);
@@ -167,7 +198,8 @@ describe("frames: ride-along bubble and drop-off", () => {
 
   it("a body at rest in the bubble rides with a moving, turning ship (no input, no drift)", () => {
     let s = outsideHatch(3);
-    for (let i = 0; i < 100; i++) s = stepEvaLocal(model, s, push(0, 0), SHUT, MASS).state;
+    for (let i = 0; i < 100; i++)
+      s = stepEvaLocal(model, s, push(0, 0), SHUT, MASS).state;
     expect(Math.hypot(s.vx, s.vy)).toBe(0);
     const turning: ShipPose = { ...moving, omega: 0.3 };
     const w = localToWorld(turning, s);
@@ -181,10 +213,37 @@ describe("frames: ride-along bubble and drop-off", () => {
     const ship = { id: "s", pose: moving, radiusM: model.radiusM };
     const near = shipToWorld(moving, [model.radiusM + 10, 0]);
     const pv = pointVelocity(moving, near);
-    expect(evaCaptureShip([ship], { x: near[0], y: near[1], vx: pv[0] + 2, vy: pv[1], heading: 0, omega: 0 })).toBe("s");
-    expect(evaCaptureShip([ship], { x: near[0], y: near[1], vx: pv[0] + 20, vy: pv[1], heading: 0, omega: 0 })).toBeUndefined();
+    expect(
+      evaCaptureShip([ship], {
+        x: near[0],
+        y: near[1],
+        vx: pv[0] + 2,
+        vy: pv[1],
+        heading: 0,
+        omega: 0,
+      }),
+    ).toBe("s");
+    expect(
+      evaCaptureShip([ship], {
+        x: near[0],
+        y: near[1],
+        vx: pv[0] + 20,
+        vy: pv[1],
+        heading: 0,
+        omega: 0,
+      }),
+    ).toBeUndefined();
     const far = shipToWorld(moving, [model.radiusM + EVA.bubbleM + 5, 0]);
-    expect(evaCaptureShip([ship], { x: far[0], y: far[1], vx: pv[0], vy: pv[1], heading: 0, omega: 0 })).toBeUndefined();
+    expect(
+      evaCaptureShip([ship], {
+        x: far[0],
+        y: far[1],
+        vx: pv[0],
+        vy: pv[1],
+        heading: 0,
+        omega: 0,
+      }),
+    ).toBeUndefined();
   });
 
   it("releases beyond the release radius or when the ship out-accelerates the suit (8 m/s²)", () => {
@@ -193,23 +252,38 @@ describe("frames: ride-along bubble and drop-off", () => {
     expect(evaReleaseReason(moving, model.radiusM, local, pv)).toBeUndefined();
     // 5 m/s² along x: the suit follows.
     const gentle: [number, number] = [pv[0] - 5 * EVA.tickSeconds, pv[1]];
-    expect(evaReleaseReason(moving, model.radiusM, local, gentle)).toBeUndefined();
+    expect(
+      evaReleaseReason(moving, model.radiusM, local, gentle),
+    ).toBeUndefined();
     // 12 m/s²: left behind.
     const hard: [number, number] = [pv[0] - 12 * EVA.tickSeconds, pv[1]];
-    expect(evaReleaseReason(moving, model.radiusM, local, hard)).toBe("outpaced");
+    expect(evaReleaseReason(moving, model.radiusM, local, hard)).toBe(
+      "outpaced",
+    );
     expect(
-      evaReleaseReason(moving, model.radiusM, [model.radiusM + EVA.releaseM + 1, 0], pv),
+      evaReleaseReason(
+        moving,
+        model.radiusM,
+        [model.radiusM + EVA.releaseM + 1, 0],
+        pv,
+      ),
     ).toBe("far");
     // A fast-spinning ship never flings a rider off: rotation is presentation only.
     const spinning: ShipPose = { ...moving, omega: 2 };
     expect(
-      evaReleaseReason(spinning, model.radiusM, [model.radiusM + 5, 0], [spinning.vx, spinning.vy]),
+      evaReleaseReason(
+        spinning,
+        model.radiusM,
+        [model.radiusM + 5, 0],
+        [spinning.vx, spinning.vy],
+      ),
     ).toBeUndefined();
   });
 
   it("jetpacking clear: hold mode reaches the speed cap relative to the reference", () => {
     let s = { x: 0, y: 0, vx: 3, vy: 0, heading: 0, omega: 0 };
-    for (let i = 0; i < 200; i++) s = stepEvaFree(s, push(0, 1), MASS, [3, 0]).state;
+    for (let i = 0; i < 200; i++)
+      s = stepEvaFree(s, push(0, 1), MASS, [3, 0]).state;
     expect(s.vx).toBeCloseTo(3, 3);
     expect(s.vy).toBeCloseTo(6, 2);
   });
@@ -221,39 +295,93 @@ describe("ship impacts in world space (leeway, then damage)", () => {
   it("a ship moving slowly into a body pushes it out without damage", () => {
     const pose: ShipPose = { ...still, vx: 2 };
     // The hull has moved over the body standing 0.1 m off the starboard wall.
-    const body = { x: wall[0] - 0.1, y: wall[1], vx: 0, vy: 0, heading: 0, omega: 0 };
+    const body = {
+      x: wall[0] - 0.1,
+      y: wall[1],
+      vx: 0,
+      vy: 0,
+      heading: 0,
+      omega: 0,
+    };
     const r = evaWorldContact(model, pose, body, SHUT)!;
     expect(r).toBeDefined();
-    expect(evaBodyBlocked(model, worldToShip(pose, [r.body.x, r.body.y]), SHUT)).toBe(false);
+    expect(
+      evaBodyBlocked(model, worldToShip(pose, [r.body.x, r.body.y]), SHUT),
+    ).toBe(false);
     expect(r.impactSpeed).toBeCloseTo(2, 6);
     expect(evaImpactDamage(r.impactSpeed)).toBe(0);
     // After contact it moves with the hull along the normal.
     expect(r.body.vx).toBeCloseTo(2, 6);
   });
   it("a fast ship hits hard: damage scales with speed", () => {
-    const body = { x: wall[0] - 0.1, y: wall[1], vx: 0, vy: 0, heading: 0, omega: 0 };
+    const body = {
+      x: wall[0] - 0.1,
+      y: wall[1],
+      vx: 0,
+      vy: 0,
+      heading: 0,
+      omega: 0,
+    };
     const hit = (v: number) =>
-      evaImpactDamage(evaWorldContact(model, { ...still, vx: v }, body, SHUT)!.impactSpeed);
+      evaImpactDamage(
+        evaWorldContact(model, { ...still, vx: v }, body, SHUT)!.impactSpeed,
+      );
     expect(hit(8)).toBeGreaterThan(0);
     expect(hit(15)).toBeGreaterThan(hit(8));
-    expect(hit(15)).toBe(Math.round((15 - EVA.impactSafeSpeed) * EVA.impactDamagePerMs));
+    expect(hit(15)).toBe(
+      Math.round((15 - EVA.impactSafeSpeed) * EVA.impactDamagePerMs),
+    );
   });
   it("no contact, no push", () => {
-    expect(evaWorldContact(model, still, { x: 50, y: 50, vx: 0, vy: 0, heading: 0, omega: 0 }, SHUT)).toBeUndefined();
+    expect(
+      evaWorldContact(
+        model,
+        still,
+        { x: 50, y: 50, vx: 0, vy: 0, heading: 0, omega: 0 },
+        SHUT,
+      ),
+    ).toBeUndefined();
     expect(evaPushOut(model, [50, 50], SHUT)).toBeUndefined();
   });
 });
 
 describe("maglock boots (space-suit boots only, inside ships only)", () => {
   it("only suit boots, only aboard, only without gravity", () => {
-    expect(maglockBootsActive({ aboard: true, boots: "wardrobe-suit-boots", gravity: false })).toBe(true);
-    expect(maglockBootsActive({ aboard: true, boots: "suit-boots", gravity: false })).toBe(true);
+    expect(
+      maglockBootsActive({
+        aboard: true,
+        boots: "wardrobe-suit-boots",
+        gravity: false,
+      }),
+    ).toBe(true);
+    expect(
+      maglockBootsActive({ aboard: true, boots: "suit-boots", gravity: false }),
+    ).toBe(true);
     // Outside: never (the jetpack moves you; the roof is unreachable).
-    expect(maglockBootsActive({ aboard: false, boots: "wardrobe-suit-boots", gravity: false })).toBe(false);
+    expect(
+      maglockBootsActive({
+        aboard: false,
+        boots: "wardrobe-suit-boots",
+        gravity: false,
+      }),
+    ).toBe(false);
     // Gravity on (every prefab ship today): walking is ordinary.
-    expect(maglockBootsActive({ aboard: true, boots: "wardrobe-suit-boots", gravity: true })).toBe(false);
+    expect(
+      maglockBootsActive({
+        aboard: true,
+        boots: "wardrobe-suit-boots",
+        gravity: true,
+      }),
+    ).toBe(false);
     // Clothing and armour boots are not mag boots.
-    for (const boots of ["wardrobe-t1-boots", "wardrobe-t2-boots", "armor.boots.heavy", null])
-      expect(maglockBootsActive({ aboard: true, boots, gravity: false })).toBe(false);
+    for (const boots of [
+      "wardrobe-t1-boots",
+      "wardrobe-t2-boots",
+      "armor.boots.heavy",
+      null,
+    ])
+      expect(maglockBootsActive({ aboard: true, boots, gravity: false })).toBe(
+        false,
+      );
   });
 });

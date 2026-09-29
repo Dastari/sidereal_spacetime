@@ -86,7 +86,6 @@ import {
   atOpenHatch,
   buttonDepressurises,
   evaBodiesForScene,
-  evaFacingFromAim,
   evaModelOfDocument,
   evaSuitRefusalOf,
   evaThrustFromKeys,
@@ -626,7 +625,12 @@ export default function App({
   const suitPrompt =
     suitRefusal && !evaBody
       ? (evaAction &&
-          buttonDepressurises(logicModel, logicRows, logicShipId, evaAction.deviceId)) ||
+          buttonDepressurises(
+            logicModel,
+            logicRows,
+            logicShipId,
+            evaAction.deviceId,
+          )) ||
         (actor &&
           constructionVisit &&
           atOpenHatch(
@@ -1720,26 +1724,39 @@ export default function App({
         const mode = suitMode.current ?? live.current.evaSuitMode;
         const free = mode === "free";
         // Free (Newtonian) mode: no pointer facing; thrust along the body and A/D spin it.
-        const aimed = free ? undefined : view.current?.aimDirection();
-        const aim = aimed;
-        const facing =
-          aim !== undefined
-            ? evaFacingFromAim(aim, live.current.evaLocal, live.current.shipHeading)
-            : live.current.evaFrameHeading;
-        transmitter.offer(c, evaThrustFromKeys(keys, facing, blocked, free), false);
+        const pointer = free ? undefined : view.current?.pointerDirection();
+        const aim = pointer
+          ? Math.atan2(-pointer[0], pointer[1]) +
+            (live.current.evaLocal ? 0 : live.current.shipHeading)
+          : undefined;
+        const facing = aim !== undefined ? aim : live.current.evaFrameHeading;
+        transmitter.offer(
+          c,
+          evaThrustFromKeys(keys, facing, blocked, free),
+          false,
+        );
         const now = performance.now();
         const last = suitSent.current;
         const turned =
           !last ||
-          Math.abs(Math.atan2(Math.sin(facing - last.facing), Math.cos(facing - last.facing))) >
-            0.02;
+          Math.abs(
+            Math.atan2(
+              Math.sin(facing - last.facing),
+              Math.cos(facing - last.facing),
+            ),
+          ) > 0.02;
         if (
           !last ||
           last.mode !== mode ||
           last.active !== (aim !== undefined) ||
           (turned && now - last.at > 100)
         ) {
-          suitSent.current = { facing, mode, active: aim !== undefined, at: now };
+          suitSent.current = {
+            facing,
+            mode,
+            active: aim !== undefined,
+            at: now,
+          };
           void c.reducers
             .evaSetSuit({ mode, facing, facingActive: aim !== undefined })
             .catch(() => undefined);

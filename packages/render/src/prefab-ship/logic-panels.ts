@@ -103,7 +103,11 @@ export function createLogicPanels(
   };
   const geometryMesh = (
     name: string,
-    g: { positions: ArrayLike<number>; normals: ArrayLike<number>; indices: ArrayLike<number> },
+    g: {
+      positions: ArrayLike<number>;
+      normals: ArrayLike<number>;
+      indices: ArrayLike<number>;
+    },
   ) => {
     const mesh = new Mesh(name, scene);
     const vd = new VertexData();
@@ -140,8 +144,15 @@ export function createLogicPanels(
           lightPart = p;
           return;
         }
-        const mesh = geometryMesh(`logic-panel:${doc.id}:${p.material || i}`, p);
-        mesh.material = slotMaterial(scene, theme, slotOfMaterialName(p.material) ?? "primary");
+        const mesh = geometryMesh(
+          `logic-panel:${doc.id}:${p.material || i}`,
+          p,
+        );
+        mesh.material = slotMaterial(
+          scene,
+          theme,
+          slotOfMaterialName(p.material) ?? "primary",
+        );
         finish(mesh);
         bodies.push({ mesh, button: /accent/.test(p.material) });
       });
@@ -170,7 +181,9 @@ export function createLogicPanels(
   }
 
   function rebuild(nowMs: number) {
-    const shown = panels.filter((p) => view === "deck" || p.side === "exterior");
+    const shown = panels.filter(
+      (p) => view === "deck" || p.side === "exterior",
+    );
     const body: number[] = [];
     const pressedBody: number[] = [];
     const byLight = new Map<string, number[]>();
@@ -188,12 +201,22 @@ export function createLogicPanels(
     }
     for (const b of bodies) {
       const m = b.button ? pressedBody : body;
-      b.mesh.thinInstanceSetBuffer("matrix", m.length ? new Float32Array(m) : null, 16, false);
+      b.mesh.thinInstanceSetBuffer(
+        "matrix",
+        m.length ? new Float32Array(m) : null,
+        16,
+        false,
+      );
       b.mesh.setEnabled(m.length > 0);
     }
     for (const [key, mesh] of lightMeshes) {
       const m = byLight.get(key) ?? [];
-      mesh.thinInstanceSetBuffer("matrix", m.length ? new Float32Array(m) : null, 16, false);
+      mesh.thinInstanceSetBuffer(
+        "matrix",
+        m.length ? new Float32Array(m) : null,
+        16,
+        false,
+      );
       mesh.setEnabled(m.length > 0);
     }
   }
@@ -214,14 +237,19 @@ export function createLogicPanels(
     },
     /** Light and press state by button device id (from `visible_ship_logic`). */
     update(
-      next: ReadonlyMap<string, { light: string; pressedMicros: number }> | undefined,
+      next:
+        | ReadonlyMap<string, { light: string; pressedMicros: number }>
+        | undefined,
       nowMs: number,
     ) {
       lights = new Map(next ?? []);
       const flashing = [...lights.values()].some(
-        (s) => s.pressedMicros && nowMs - s.pressedMicros / 1000 < PRESS_FLASH_MS + 50,
+        (s) =>
+          s.pressedMicros &&
+          nowMs - s.pressedMicros / 1000 < PRESS_FLASH_MS + 50,
       );
-      const key = JSON.stringify([...lights]) + (flashing ? Math.floor(nowMs / 50) : "");
+      const key =
+        JSON.stringify([...lights]) + (flashing ? Math.floor(nowMs / 50) : "");
       if (key === lastKey) return;
       lastKey = key;
       rebuild(nowMs);
@@ -240,4 +268,3 @@ export function createLogicPanels(
   };
 }
 export type LogicPanels = ReturnType<typeof createLogicPanels>;
-

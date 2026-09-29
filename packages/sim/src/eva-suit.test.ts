@@ -41,10 +41,15 @@ describe("suit rigid body", () => {
   });
 
   it("conserves angular momentum in free mode with no torque (no snapping, no damping)", () => {
-    const s = run(at({ omega: 1.3, heading: 0.2 }), intent({ mode: "free" }), 200);
+    const s = run(
+      at({ omega: 1.3, heading: 0.2 }),
+      intent({ mode: "free" }),
+      200,
+    );
     expect(s.omega).toBe(1.3);
     // 10 s at 1.3 rad/s: the heading advanced continuously (wrapped), never snapped.
-    const expected = (((0.2 + 13) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    const expected =
+      (((0.2 + 13) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
     const got = ((s.heading % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
     expect(got).toBeCloseTo(expected, 9);
   });
@@ -122,7 +127,10 @@ describe("suit IFCS allocation (shared ship allocator)", () => {
       // The throttles really produce the achieved wrench.
       const sum = { fx: 0, fy: 0, torque: 0 };
       for (const t of r.throttles) {
-        const w = actuatorWrench(EVA_SUIT_NOZZLES.find((n) => n.id === t.id)!, mass);
+        const w = actuatorWrench(
+          EVA_SUIT_NOZZLES.find((n) => n.id === t.id)!,
+          mass,
+        );
         sum.fx += w.fx * t.throttle;
         sum.fy += w.fy * t.throttle;
         sum.torque += w.torque * t.throttle;
@@ -151,22 +159,36 @@ describe("suit IFCS allocation (shared ship allocator)", () => {
 });
 
 describe("suit rule (vacuum needs suit, helmet and jetpack)", () => {
-  const eq = (...ids: [string, string][]) => ids.map(([slot, id]) => ({ slot, id }));
+  const eq = (...ids: [string, string][]) =>
+    ids.map(([slot, id]) => ({ slot, id }));
   it("needs all three EVA parts in their slots; boots are optional", () => {
     expect(evaSuitCheck([]).missing).toEqual(["suit", "helmet", "pack"]);
     expect(
       evaSuitCheck(
-        eq(["uniform", "wardrobe-suit-body"], ["helmet", "wardrobe-suit-helmet"], ["back", "wardrobe-suit-pack"]),
+        eq(
+          ["uniform", "wardrobe-suit-body"],
+          ["helmet", "wardrobe-suit-helmet"],
+          ["back", "wardrobe-suit-pack"],
+        ),
       ).ready,
     ).toBe(true);
     expect(
-      evaSuitCheck(eq(["uniform", "wardrobe-suit-body"], ["back", "wardrobe-suit-pack"])).missing,
+      evaSuitCheck(
+        eq(["uniform", "wardrobe-suit-body"], ["back", "wardrobe-suit-pack"]),
+      ).missing,
     ).toEqual(["helmet"]);
     // Ordinary clothing, armour and a jetpack armour part do not count.
     expect(
-      evaSuitCheck(eq(["uniform", "wardrobe-uniform-command"], ["back", "wardrobe-t2-back"])).ready,
+      evaSuitCheck(
+        eq(
+          ["uniform", "wardrobe-uniform-command"],
+          ["back", "wardrobe-t2-back"],
+        ),
+      ).ready,
     ).toBe(false);
     expect(evaSuitMessage(["helmet"])).toContain("helmet");
-    expect(evaSuitMessage(["suit", "helmet", "pack"])).toContain("pressure suit, helmet and EVA jetpack");
+    expect(evaSuitMessage(["suit", "helmet", "pack"])).toContain(
+      "pressure suit, helmet and EVA jetpack",
+    );
   });
 });

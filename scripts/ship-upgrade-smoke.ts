@@ -433,7 +433,10 @@ try {
       [...x.db.visibleShipLogic.iter()].find(
         (r) => r.shipId === owner.shipId && r.deviceId === id,
       );
-    await wait(() => device("lock")?.state === "pressurised", "airlock pressurised");
+    await wait(
+      () => device("lock")?.state === "pressurised",
+      "airlock pressurised",
+    );
     assert.equal(device("door-inner")?.open, true);
     assert.equal(device("door-outer")?.open, false);
     const button = logic.panels.find((p) => p.deviceId === "btn-lock-in")!;
@@ -444,10 +447,24 @@ try {
       button.front,
     ))
       await walkNative(x, px, py);
-    await x.reducers.pressShipButton({ shipId: owner.shipId, deviceId: button.deviceId });
-    await wait(() => !!device("door-outer")?.open, "hatch opened by the button", 10000);
-    await x.reducers.pressShipButton({ shipId: owner.shipId, deviceId: button.deviceId });
-    await wait(() => device("lock")?.state === "pressurised", "cycled back", 10000);
+    await x.reducers.pressShipButton({
+      shipId: owner.shipId,
+      deviceId: button.deviceId,
+    });
+    await wait(
+      () => !!device("door-outer")?.open,
+      "hatch opened by the button",
+      10000,
+    );
+    await x.reducers.pressShipButton({
+      shipId: owner.shipId,
+      deviceId: button.deviceId,
+    });
+    await wait(
+      () => device("lock")?.state === "pressurised",
+      "cycled back",
+      10000,
+    );
     evidence.airlockAfterUpgrade = { cycled: true };
   }
 

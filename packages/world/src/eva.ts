@@ -55,10 +55,7 @@ import {
   type EvaSuitIntent,
   type EvaSuitMode,
 } from "@sidereal/sim/eva-suit";
-import {
-  evaSuitCheck,
-  evaSuitMessage,
-} from "@sidereal/content/crew-wardrobe";
+import { evaSuitCheck, evaSuitMessage } from "@sidereal/content/crew-wardrobe";
 import { characterCarriedMassKg } from "./construction-flight-input";
 import * as auth from "./auth";
 import { consumeInputControl } from "./input-control";
@@ -72,10 +69,7 @@ import { freeDeckSpot } from "./character-death";
 import { visibleEquipment } from "./crew-presentation";
 import { spaceObserver } from "./shared-world-views";
 import { constructionCollision } from "./construction-doors";
-import {
-  openExteriorDoors,
-  shipPrefabBinding,
-} from "./ship-logic";
+import { openExteriorDoors, shipPrefabBinding } from "./ship-logic";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
@@ -291,7 +285,9 @@ export function evaSuitRefusal(
 /** Mass of the suited body (body, suit and everything carried), kg. */
 function suitedMassKg(ctx: Pick<Context, "db">, characterId: string) {
   try {
-    return EVA_SUIT.bodyMassKg + characterCarriedMassKg(ctx as never, characterId);
+    return (
+      EVA_SUIT.bodyMassKg + characterCarriedMassKg(ctx as never, characterId)
+    );
   } catch {
     return EVA_SUIT.bodyMassKg + 30;
   }
@@ -633,7 +629,10 @@ export function evaReturnAboard(ctx: Context, characterId: string) {
     [access.instance.spawnX, access.instance.spawnY],
   );
   if (!spot) return false;
-  commitAboard(ctx, actor, body, actor.shipId, access.deck.id, [spot.x, spot.y]);
+  commitAboard(ctx, actor, body, actor.shipId, access.deck.id, [
+    spot.x,
+    spot.y,
+  ]);
   zeroInput(ctx, actor.id);
   return true;
 }
@@ -707,7 +706,11 @@ function writeSuitSpin(
   omega: number,
   facing: number = suit.facing,
 ) {
-  if (omega === suit.omega && facing === suit.facing && ctx.db.evaSuit.characterId.find(suit.characterId))
+  if (
+    omega === suit.omega &&
+    facing === suit.facing &&
+    ctx.db.evaSuit.characterId.find(suit.characterId)
+  )
     return;
   writeSuit(ctx, { ...suit, omega, facing, revision: suit.revision + 1n });
 }
@@ -726,7 +729,12 @@ function stepLocal(
   if (!motion || !model || motion.systemId !== body.systemId) {
     // The ship went away: float free where the body was, with its last velocity.
     writeBody(ctx, toFree(body, body, tick));
-    writeSuitSpin(ctx, suit, suit.omega, wrapAngle(suit.facing + (body.heading - body.localHeading)));
+    writeSuitSpin(
+      ctx,
+      suit,
+      suit.omega,
+      wrapAngle(suit.facing + (body.heading - body.localHeading)),
+    );
     return;
   }
   const pose = poseOf(motion);
@@ -757,7 +765,11 @@ function stepLocal(
     const w = localToWorld(pose, start);
     writeBody(
       ctx,
-      toFree(body, { x: w.x, y: w.y, vx: body.vx, vy: body.vy, heading: w.heading }, tick),
+      toFree(
+        body,
+        { x: w.x, y: w.y, vx: body.vx, vy: body.vy, heading: w.heading },
+        tick,
+      ),
     );
     writeSuitSpin(ctx, suit, suit.omega, wrapAngle(suit.facing + pose.heading));
     return;
@@ -840,7 +852,14 @@ function stepFree(
   const previous: [number, number] =
     ref && ref.shipId === body.refShipId ? [body.refVx, body.refVy] : vRef;
   const step = stepEvaFree(
-    { x: body.x, y: body.y, vx: body.vx, vy: body.vy, heading: body.heading, omega: suit.omega },
+    {
+      x: body.x,
+      y: body.y,
+      vx: body.vx,
+      vy: body.vy,
+      heading: body.heading,
+      omega: suit.omega,
+    },
     intentOf(suit, input),
     evaSuitMass(suit.massKg - EVA_SUIT.bodyMassKg),
     vRef,
@@ -894,7 +913,12 @@ function stepFree(
       serverTick: tick,
       revision: body.revision + 1n,
     });
-    writeSuitSpin(ctx, suit, state.omega, wrapAngle(suit.facing - pose.heading));
+    writeSuitSpin(
+      ctx,
+      suit,
+      state.omega,
+      wrapAngle(suit.facing - pose.heading),
+    );
     return;
   }
   const next = {
@@ -946,7 +970,8 @@ function stepBody(ctx: Context, body: EvaRow, tick: bigint) {
   }
   let suit = suitOf(ctx, body);
   // The carried mass is refreshed about once a second (inventory changes are rare outside).
-  if (tick % 20n === 0n) suit = { ...suit, massKg: suitedMassKg(ctx, actor.id) };
+  if (tick % 20n === 0n)
+    suit = { ...suit, massKg: suitedMassKg(ctx, actor.id) };
   const command = freshInput(ctx, actor);
   const input = {
     dx: command?.dx ?? 0,

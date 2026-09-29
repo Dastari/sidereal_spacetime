@@ -174,12 +174,17 @@ function doorObstructed(
   for (const l of db.constructionLocation.by_instance.filter(binding.shipId)) {
     if (++count > 256) return true;
     const c = db.character.id.find(l.characterId);
-    if (c && c.shipId === binding.shipId && inDoorway(door, [c.localX, c.localY]))
+    if (
+      c &&
+      c.shipId === binding.shipId &&
+      inDoorway(door, [c.localX, c.localY])
+    )
       return true;
   }
   for (const b of db.evaBody.by_anchor.filter(binding.shipId)) {
     if (++count > 512) return true;
-    if (b.phase === "local" && inDoorway(door, [b.localX, b.localY])) return true;
+    if (b.phase === "local" && inDoorway(door, [b.localX, b.localY]))
+      return true;
   }
   return false;
 }
@@ -274,7 +279,9 @@ export function pressShipButton(
 ) {
   const actor = actorOf(ctx);
   const binding = shipPrefabBinding(ctx.db, args.shipId);
-  const panel = binding?.logic?.panels.find((p) => p.deviceId === args.deviceId);
+  const panel = binding?.logic?.panels.find(
+    (p) => p.deviceId === args.deviceId,
+  );
   if (!binding?.logic || !panel) throw new SenderError("No button there");
   if (!ctx.db.shipWorldMotion.shipId.find(args.shipId))
     throw new SenderError("The ship is not in open space");
@@ -308,7 +315,14 @@ export function pressShipButton(
     if (!exteriorAllowed(actor.id, args.shipId))
       throw new SenderError("The panel does not respond to you");
   } else throw new SenderError("Move closer to the button");
-  refuseUnsuitedDepressurisation(ctx, binding, actor, !body, panel.deviceId, suitRefusal);
+  refuseUnsuitedDepressurisation(
+    ctx,
+    binding,
+    actor,
+    !body,
+    panel.deviceId,
+    suitRefusal,
+  );
   fireShipLogic(ctx, args.shipId, { kind: "press", device: panel.deviceId });
 }
 
@@ -399,7 +413,8 @@ export function stepShipLogic(ctx: Context) {
     fireShipLogic(ctx, t.shipId, { kind: "timer", device: t.deviceId });
     // Defensive: a timer the device did not move forward never spins.
     const after = ctx.db.shipLogicTimer.key.find(t.key);
-    if (after && after.dueMicros <= now) ctx.db.shipLogicTimer.key.delete(t.key);
+    if (after && after.dueMicros <= now)
+      ctx.db.shipLogicTimer.key.delete(t.key);
   }
 }
 
@@ -486,4 +501,3 @@ export function visibleShipLogic(ctx: ReadContext) {
   }
   return out;
 }
-

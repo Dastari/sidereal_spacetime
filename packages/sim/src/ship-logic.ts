@@ -124,7 +124,9 @@ export function logicGraph(logic: PrefabLogic): LogicGraph {
   return graph;
 }
 
-export function defaultDeviceState(kind: ShipLogicDeviceKind): LogicDeviceState {
+export function defaultDeviceState(
+  kind: ShipLogicDeviceKind,
+): LogicDeviceState {
   switch (kind) {
     case "button":
       return { kind, light: "off", pressedMicros: 0 };
@@ -393,7 +395,12 @@ export function evaluateLogic(
   const queue: { device: string; emits: Emit[]; depth: number }[] = [];
   const first = graph.devices.get(event.device);
   if (!first)
-    return { states, deliveries: 0, truncated: false, trace: ["unknown device"] };
+    return {
+      states,
+      deliveries: 0,
+      truncated: false,
+      trace: ["unknown device"],
+    };
   note(`${event.kind} ${event.device}`);
   queue.push({
     device: event.device,
@@ -408,7 +415,9 @@ export function evaluateLogic(
       for (const t of targets) {
         if (depth + 1 > budget.maxDepth || deliveries >= budget.maxDeliveries) {
           truncated = true;
-          note(`budget: dropped ${device}.${emit.port} -> ${t.device}.${t.port}`);
+          note(
+            `budget: dropped ${device}.${emit.port} -> ${t.device}.${t.port}`,
+          );
           continue;
         }
         deliveries++;

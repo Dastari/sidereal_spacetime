@@ -18,8 +18,7 @@ export interface PrefabShipViewHandle {
   /** Wall button lights and press flashes by button device id (ship logic). */
   updatePanels(
     lights:
-      | ReadonlyMap<string, { light: string; pressedMicros: number }>
-      | undefined,
+      ReadonlyMap<string, { light: string; pressedMicros: number }> | undefined,
     nowMs: number,
   ): void;
   /** Door leaf states (review diagnostics). */
@@ -61,12 +60,15 @@ export async function loadPrefabShipPresentation(
   if (!binding || typeof binding.catalog !== "string") return undefined;
   const doc = readShipPrefab(binding.document);
   const catalog = prefabComponentCatalogFor(binding.catalog);
-  const [{ createPrefabShipView }, { createPrefabDoors }, { createLogicPanels }] =
-    await Promise.all([
-      import("./prefab-ship/ship-view"),
-      import("./prefab-ship/doors"),
-      import("./prefab-ship/logic-panels"),
-    ]);
+  const [
+    { createPrefabShipView },
+    { createPrefabDoors },
+    { createLogicPanels },
+  ] = await Promise.all([
+    import("./prefab-ship/ship-view"),
+    import("./prefab-ship/doors"),
+    import("./prefab-ship/logic-panels"),
+  ]);
   let interior = true;
   // Published component (ship-components/r002) and interior object (ship-objects/r001) GLBs;
   // anything unpublished falls back to stand-ins inside the view. One ceiling light per room.

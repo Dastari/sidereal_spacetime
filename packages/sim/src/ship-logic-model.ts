@@ -11,7 +11,10 @@ import {
   type PrefabComponentCatalog,
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
-import { NORMAL_VECTOR, type FaceNormal } from "@sidereal/content/construction-grammar";
+import {
+  NORMAL_VECTOR,
+  type FaceNormal,
+} from "@sidereal/content/construction-grammar";
 import { logicGraph, type LogicGraph } from "./ship-logic";
 
 export type P2 = [number, number];
@@ -77,12 +80,17 @@ export function shipLogicModel(
     return null;
   }
   const [ox, oy] = prefabOrigin(doc);
-  const toShip = (p: readonly number[]): P2 => [zero(-(p[1] - oy)), zero(p[0] - ox)];
+  const toShip = (p: readonly number[]): P2 => [
+    zero(-(p[1] - oy)),
+    zero(p[0] - ox),
+  ];
   const toShipDir = (v: readonly number[]): P2 => [zero(-v[1]), zero(v[0])];
   const interior = deriveInterior(doc, 0, catalog);
   const panels: LogicPanel[] = [];
   const doors: LogicDoor[] = [];
-  for (const d of [...doc.logic.devices].sort((a, b) => (a.id < b.id ? -1 : 1))) {
+  for (const d of [...doc.logic.devices].sort((a, b) =>
+    a.id < b.id ? -1 : 1,
+  )) {
     if (d.kind === "button") {
       const place = logicWallPlacement(doc, d, catalog);
       if ("error" in place) continue;
@@ -107,7 +115,10 @@ export function shipLogicModel(
         b = toShip(door.b);
       const span = Math.hypot(b[0] - a[0], b[1] - a[1]);
       if (span < 0.5) continue;
-      const along: P2 = [zero((b[0] - a[0]) / span), zero((b[1] - a[1]) / span)];
+      const along: P2 = [
+        zero((b[0] - a[0]) / span),
+        zero((b[1] - a[1]) / span),
+      ];
       let normal: P2 = [zero(-along[1]), zero(along[0])];
       if (door.exterior) {
         const mount = doc.mounts.find((m) => m.id === door.id);
@@ -170,7 +181,11 @@ export const inChamber = (c: LogicChamber, p: readonly [number, number]) =>
   p[1] <= c.bounds[3];
 
 /** Whether a body centre at `p` is in a door's doorway zone (blocks a close). */
-export function inDoorway(door: LogicDoor, p: readonly [number, number], radius = 0.3) {
+export function inDoorway(
+  door: LogicDoor,
+  p: readonly [number, number],
+  radius = 0.3,
+) {
   const rx = p[0] - door.center[0],
     ry = p[1] - door.center[1];
   const u = rx * door.along[0] + ry * door.along[1];

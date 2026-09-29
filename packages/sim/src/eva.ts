@@ -235,10 +235,7 @@ export function prefabEvaModel(
         zero(hatch[0] - normal[0] * EVA.entryDepthM),
         zero(hatch[1] - normal[1] * EVA.entryDepthM),
       ],
-      outside: [
-        zero(hatch[0] + normal[0] * 1),
-        zero(hatch[1] + normal[1] * 1),
-      ],
+      outside: [zero(hatch[0] + normal[0] * 1), zero(hatch[1] + normal[1] * 1)],
       room: door.rooms[0] ?? door.rooms[1],
     });
   }
@@ -250,7 +247,11 @@ export function prefabEvaModel(
     const outer = g.outline.outer.map(toShip);
     const holes = g.outline.holes.map((h) => h.map(toShip));
     for (const p of outer) radiusM = Math.max(radiusM, Math.hypot(p[0], p[1]));
-    hull.push({ id: g.volume.id, outline: { outer, holes }, roofM: g.z[1] / 16 });
+    hull.push({
+      id: g.volume.id,
+      outline: { outer, holes },
+      roofM: g.z[1] / 16,
+    });
   }
   const model = { entries, airlocks: entries, hull, radiusM };
   cache.set(doc, model);
@@ -377,7 +378,8 @@ export function evaPushOut(
   const start = inside ? (edge?.distance ?? 0) : 0;
   for (let step = start + 0.02; step <= start + radius + 4; step += 0.02) {
     const q: P2 = [zero(p[0] + dir[0] * step), zero(p[1] + dir[1] * step)];
-    if (!evaBodyBlocked(model, q, open, radius)) return { point: q, normal: dir };
+    if (!evaBodyBlocked(model, q, open, radius))
+      return { point: q, normal: dir };
   }
   // Pathological geometry: search outward from the ship centre.
   const out = Math.hypot(p[0], p[1]) || 1;
@@ -534,7 +536,10 @@ export function stepEvaFree(
   dt: number = EVA.tickSeconds,
   vRefPrevious: readonly [number, number] = vRef,
 ): EvaStep {
-  let aRef: P2 = [(vRef[0] - vRefPrevious[0]) / dt, (vRef[1] - vRefPrevious[1]) / dt];
+  let aRef: P2 = [
+    (vRef[0] - vRefPrevious[0]) / dt,
+    (vRef[1] - vRefPrevious[1]) / dt,
+  ];
   const al = Math.hypot(aRef[0], aRef[1]);
   if (!Number.isFinite(al)) aRef = [0, 0];
   else if (al > EVA.accelLimit)
@@ -593,9 +598,14 @@ export function stepEvaLocal(
   if (out) {
     p = out.point;
     const into = v[0] * out.normal[0] + v[1] * out.normal[1];
-    if (into < 0) v = [v[0] - into * out.normal[0], v[1] - into * out.normal[1]];
+    if (into < 0)
+      v = [v[0] - into * out.normal[0], v[1] - into * out.normal[1]];
   }
-  const tick = evaSuitTick({ ...state, x: p[0], y: p[1], vx: v[0], vy: v[1] }, intent, mass);
+  const tick = evaSuitTick(
+    { ...state, x: p[0], y: p[1], vx: v[0], vy: v[1] },
+    intent,
+    mass,
+  );
   for (let i = 0; i < h; i++) {
     v = [v[0] + tick.linear[0] * step, v[1] + tick.linear[1] * step];
     const moved = evaMove(model, p, [v[0] * step, v[1] * step], v, open);

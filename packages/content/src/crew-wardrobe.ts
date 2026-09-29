@@ -118,7 +118,11 @@ function evaSuit(): CrewWardrobeItem[] {
   const boots = crewArmorPart("armor.boots.heavy");
   const pack = crewArmorPart("armor.back.jetpack-light");
   const harness = crewArmorPart("armor.chest.flight");
-  if (boots?.slot !== "boots" || pack?.slot !== "back" || harness?.slot !== "chest")
+  if (
+    boots?.slot !== "boots" ||
+    pack?.slot !== "back" ||
+    harness?.slot !== "chest"
+  )
     throw new Error("wardrobe: EVA suit armour parts are missing");
   return [
     {

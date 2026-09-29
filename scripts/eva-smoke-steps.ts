@@ -105,7 +105,10 @@ export async function evaSmoke(
       const dist = Math.hypot(d[0], d[1]);
       if (dist < 0.15 && relative() < 0.3) break;
       const gain = Math.min(1, dist * 0.6);
-      await intent({ dx: (d[0] / (dist || 1)) * gain, dy: (d[1] / (dist || 1)) * gain });
+      await intent({
+        dx: (d[0] / (dist || 1)) * gain,
+        dy: (d[1] / (dist || 1)) * gain,
+      });
       await pause(50);
     }
     await intent({});
@@ -185,7 +188,10 @@ export async function evaSmoke(
     body().localX - lastDeck[0],
     body().localY - lastDeck[1],
   );
-  assert(handoffGap < 0.35, `continuous hand-off at the doorway (${handoffGap} m)`);
+  assert(
+    handoffGap < 0.35,
+    `continuous hand-off at the doorway (${handoffGap} m)`,
+  );
   assert.equal(body().phase, "local");
   assert.equal(body().anchorShipId, shipId);
   await wait(() => !location(), "no aboard location while outside", 5000);
@@ -219,16 +225,21 @@ export async function evaSmoke(
   const restSpeed = relative();
   if (drift >= 0.02)
     console.log(
-      JSON.stringify({ rideAlongDebug: { body: body(), ship: motion(), rest0, rest1 } }, (_, v) =>
-        typeof v === "bigint" ? v.toString() : v,
+      JSON.stringify(
+        { rideAlongDebug: { body: body(), ship: motion(), rest0, rest1 } },
+        (_, v) => (typeof v === "bigint" ? v.toString() : v),
       ),
     );
-  assert(drift < 0.02, `rides along at rest in the ship frame (${drift} m in 1 s)`);
+  assert(
+    drift < 0.02,
+    `rides along at rest in the ship frame (${drift} m in 1 s)`,
+  );
   assert(restSpeed < 0.3, `moves with the hull (${restSpeed} m/s relative)`);
 
   // 4. The hull is solid from outside: push into the wall beside the hatch.
   // Toward the bow (ship +y): the straight hull face, clear of the starboard wing.
-  const fore = lock.along[1] >= 0 ? lock.along : [-lock.along[0], -lock.along[1]];
+  const fore =
+    lock.along[1] >= 0 ? lock.along : [-lock.along[0], -lock.along[1]];
   const beside = plus(plus(lock.hatch, fore, 2.5), lock.normal, 1.2);
   await flyTo(beside, "beside the hatch");
   const hpBefore = vitals()?.health ?? 100;
@@ -239,12 +250,19 @@ export async function evaSmoke(
     `stopped at the hull, never inside (depth ${pushed.depth} m)`,
   );
   const hullDamage = hpBefore - (vitals()?.health ?? 100);
-  assert(hullDamage <= 12, `low-speed contact does little or no damage (${hullDamage})`);
+  assert(
+    hullDamage <= 12,
+    `low-speed contact does little or no damage (${hullDamage})`,
+  );
 
   // 5. Seal the lock from outside, then call it back (the outside button cycles).
   await flyTo(panel("btn-lock-out").front, "outside button");
   await press("btn-lock-out");
-  await wait(() => device("lock")?.state === "pressurised", "sealed behind me", 10000);
+  await wait(
+    () => device("lock")?.state === "pressurised",
+    "sealed behind me",
+    10000,
+  );
   assert.equal(device("door-outer").open, false);
   assert.equal(device("door-inner").open, true);
   // A shut hatch is hull: pushing at it keeps the body outside.
@@ -286,7 +304,11 @@ export async function evaSmoke(
   ))
     await walkNative(s, x, y);
   await press("btn-lock-in");
-  await wait(() => device("lock")?.state === "pressurised", "pressurised", 10000);
+  await wait(
+    () => device("lock")?.state === "pressurised",
+    "pressurised",
+    10000,
+  );
   assert.equal(device("door-outer").open, false);
   assert.equal(device("door-inner").open, true);
   await s.reducers.releaseInputControl({});
