@@ -5,7 +5,7 @@ import re
 import tempfile
 import unittest
 
-from prepare_app import EDITOR_NATIVE_ASSETS, PUBLISHED_RUNTIME, ROOT, check_references, prepare, retired_for
+from prepare_app import PUBLISHED_RUNTIME, ROOT, check_references, prepare, retired_for
 
 ASSET_LITERAL = re.compile(r'["\'`](/assets/[^"\'`\s]+)')
 
@@ -18,8 +18,6 @@ def write(root: Path, name: str, text: str | None = None) -> None:
 
 def seed_runtime(root: Path) -> None:
     """Every allowlisted entry must exist; a missing one is a broken build, not a skip."""
-    for source in EDITOR_NATIVE_ASSETS:
-        write(root, source)
     for entry in PUBLISHED_RUNTIME:
         path = root / "assets/runtime" / entry
         if entry.endswith(".glb"):
@@ -33,7 +31,7 @@ class PrepareAppTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             seed_runtime(root)
-            for name in ("assets/runtime/wayfarer.glb", "assets/runtime/assembly/parts.glb",
+            for name in ("assets/runtime/assembly/parts.glb",
                          "docs/public/shipyard.md", "docs/handoffs/private.md",
                          "reference/legacy.md", "PIVOT.md"):
                 write(root, name)
@@ -44,21 +42,15 @@ class PrepareAppTests(unittest.TestCase):
                 prepare(app, root)
                 public = root / "apps" / app / "public"
                 if app == "dashboard":
-                    self.assertEqual((public / "assets/wayfarer.glb").read_text(), "assets/runtime/wayfarer.glb")
                     self.assertEqual((public / "assets/assembly/parts.glb").read_text(), "assets/runtime/assembly/parts.glb")
                 else:
                     # Retired legacy ship assets never reach the game client.
-                    self.assertFalse((public / "assets/wayfarer.glb").exists())
                     self.assertFalse((public / "assets/assembly/parts.glb").exists())
                 for destination in ("public", "dist"):
                     output = root / "apps" / app / destination
                     for name in ("docs", "reference", "PIVOT.md", "help/stale.md"):
                         self.assertFalse((output / name).exists(), str(output / name))
                 self.assertEqual((public / "help/shipyard.md").exists(), app == "dashboard")
-                for source, destination in EDITOR_NATIVE_ASSETS.items():
-                    self.assertEqual((public / destination).exists(), app == "dashboard")
-                    if app == "dashboard":
-                        self.assertEqual((public / destination).read_text(), source)
             self.assertTrue((root / "docs/handoffs/private.md").exists())
             self.assertTrue((root / "reference/legacy.md").exists())
 
@@ -92,8 +84,7 @@ class PrepareAppTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             seed_runtime(root)
-            retired = ("wayfarer.glb", "voxels/wayfarer.glb", "voxels/engine-pod.glb",
-                       "assembly/wayfarer.json", "assembly/wayfarer-exterior-r001.json",
+            retired = ("assembly/wayfarer.json",
                        "assembly/hull-manifest.json", "assembly/catalog.json", "assembly/parts.glb",
                        "assembly/catalog-shipyard-r005.json", "assembly/cargo/crate.glb",
                        "assembly/equipment/bed.glb", "assembly/hull/r006/part.glb",

@@ -9,7 +9,7 @@ import type { PrefabSelection } from "../../apps/dashboard/src/shipyard/prefab/c
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import "../../apps/dashboard/src/shipyard/prefab/prefab.css";
-import "../../apps/dashboard/src/shipyard/layout/layout.css";
+import "../../apps/dashboard/src/shipyard/prefab/layout.css";
 function App() {
   const [doc, setDoc] = useState(
     PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!,

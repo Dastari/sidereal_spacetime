@@ -12,7 +12,13 @@ import time
 from pathlib import Path
 
 from dev import CLI, ROOT
-from replace_player_wayfarers import sql
+
+
+def sql(server, database, query):
+    r = subprocess.run(CLI + ['sql', database, '--server', server, '--format', 'json', query], cwd=ROOT, check=True, capture_output=True, text=True)
+    result = json.loads(r.stdout)[0]
+    fields = [c['name']['some'] for c in result['schema']['elements']]
+    return [dict(zip(fields, row)) for row in result['rows']]
 
 GLOBAL_TABLES = {
     'movement_timer', 'construction_atmosphere_clock', 'construction_traversal_clock',
