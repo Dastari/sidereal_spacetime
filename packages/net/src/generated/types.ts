@@ -244,6 +244,7 @@ export const CombatAction = __t.object("CombatAction", {
   detonated: __t.bool(),
   blastRadiusM: __t.f64(),
   reloadSequence: __t.u64(),
+  reloadItemId: __t.string(),
   reloadUntilMicros: __t.u64(),
   stunnedUntilMicros: __t.u64(),
   stunSequence: __t.u64(),
@@ -2218,8 +2219,6 @@ export const WeaponEnergy = __t.object("WeaponEnergy", {
   revision: __t.u64(),
   shotSequence: __t.u64(),
   lastShotAngle: __t.f64(),
-  reloadUntilMicros: __t.u64(),
-  reloadSequence: __t.u64(),
 });
 export type WeaponEnergy = __Infer<typeof WeaponEnergy>;
 

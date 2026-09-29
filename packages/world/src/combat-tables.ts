@@ -18,10 +18,6 @@ export const weaponEnergy = table(
     revision: t.u64(),
     shotSequence: t.u64(),
     lastShotAngle: t.f64(),
-    // Appended with defaults so existing rows migrate additively (items batch A, 2026-09-29).
-    /** Server time a manual reload completes; firing is refused until then (0 = none). */
-    reloadUntilMicros: t.u64().default(0n),
-    reloadSequence: t.u64().default(0n),
   },
 );
 /**
@@ -55,6 +51,9 @@ export const combatAction = table(
     detonated: t.bool(),
     blastRadiusM: t.f64(),
     reloadSequence: t.u64(),
+    /** The item of the latest manual reload; its fire is refused until reloadUntilMicros. Kept
+     * here (a new table) rather than on weapon_energy so no existing table changes shape. */
+    reloadItemId: t.string(),
     reloadUntilMicros: t.u64(),
     /** This character cannot aim or fire until then (stun gun, baton). */
     stunnedUntilMicros: t.u64(),

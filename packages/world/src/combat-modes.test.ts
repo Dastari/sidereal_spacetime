@@ -248,14 +248,12 @@ test("reload refills after its time, refuses fire meanwhile and is a replay-safe
   reload(ctx, args);
   reload(ctx, args); // replay: no-op
   const row = db.weaponEnergy.itemId.find("item-shooter");
-  expect(row).toMatchObject({
-    energy: 120,
-    reloadSequence: 1n,
-    reloadUntilMicros: 13_000_000n,
-  });
+  expect(row).toMatchObject({ energy: 120, checkpointMicros: 13_000_000n });
   expect(row.revision).toBe(energy.revision + 1n);
   expect(db.combatAction.characterId.find("shooter")).toMatchObject({
     reloadSequence: 1n,
+    reloadItemId: "item-shooter",
+    reloadUntilMicros: 13_000_000n,
   });
   expect(() => shoot()).toThrow("Reloading");
   expect(() =>

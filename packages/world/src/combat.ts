@@ -174,7 +174,9 @@ function weaponIntent(ctx: Context, args: WeaponArgs, kind: string) {
   const old = ctx.db.weaponEnergy.itemId.find(item.id);
   if ((old?.revision ?? 0n) !== args.expectedRevision)
     throw new SenderError("Weapon revision conflict");
-  if (old && old.reloadUntilMicros > now) throw new SenderError("Reloading");
+  const action = ctx.db.combatAction.characterId.find(actor.id);
+  if (action?.reloadItemId === item.id && action.reloadUntilMicros > now)
+    throw new SenderError("Reloading");
   const energy = old
     ? recoveredEnergy(
         old.energy,
@@ -231,6 +233,7 @@ function emptyAction(characterId: string): CombatActionRow {
     detonated: false,
     blastRadiusM: 0,
     reloadSequence: 0n,
+    reloadItemId: "",
     reloadUntilMicros: 0n,
     stunnedUntilMicros: 0n,
     stunSequence: 0n,
@@ -339,8 +342,6 @@ export function fire(ctx: Context, args: WeaponArgs) {
     revision: (old?.revision ?? 0n) + 1n,
     shotSequence: (old?.shotSequence ?? 0n) + 1n,
     lastShotAngle: aim.angle,
-    reloadUntilMicros: 0n,
-    reloadSequence: old?.reloadSequence ?? 0n,
   };
   if (old) ctx.db.weaponEnergy.itemId.update(row);
   else ctx.db.weaponEnergy.insert(row);
@@ -449,8 +450,6 @@ export function reload(ctx: Context, args: WeaponArgs) {
     revision: (old?.revision ?? 0n) + 1n,
     shotSequence: old?.shotSequence ?? 0n,
     lastShotAngle: old?.lastShotAngle ?? 0,
-    reloadUntilMicros: until,
-    reloadSequence: (old?.reloadSequence ?? 0n) + 1n,
   };
   if (old) ctx.db.weaponEnergy.itemId.update(row);
   else ctx.db.weaponEnergy.insert(row);
@@ -459,6 +458,7 @@ export function reload(ctx: Context, args: WeaponArgs) {
     shipId: actor.shipId,
     definitionId: item.definitionId,
     reloadSequence: action.reloadSequence + 1n,
+    reloadItemId: item.id,
     reloadUntilMicros: until,
   }));
   receipt(ctx, actor, id, request, now);
@@ -660,8 +660,10 @@ export function visibleCombatActions(
     const row = ctx.db.combatAction.characterId.find(body.id);
     if (!row) continue;
     const here = row.shipId === body.shipId;
+    // Never the reloaded item's UUID: the view carries catalogue ids only.
+    const { reloadItemId: _reloadItemId, ...visibleRow } = row;
     out.push({
-      ...row,
+      ...visibleRow,
       shipId: body.shipId,
       // Shots taken aboard another ship are not in this deck's frame.
       shotSequence: here ? row.shotSequence : 0n,
