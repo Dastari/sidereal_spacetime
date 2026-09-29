@@ -610,19 +610,25 @@ export default function App({
         ? suitRefusal
         : undefined
       : undefined;
-  const interactionPrompt = suitPrompt
-    ? suitPrompt
-    : evaAction && (evaBody || !contextObject)
-      ? evaAction.label
-      : contextObject
-        ? interactionLabel(contextObject)
-        : seated
-          ? "Leave control seat"
-          : nearStation
-            ? "Control seat"
-            : reachableStorage
-              ? `Open ${reachableStorage.name.toLowerCase()}`
-              : undefined;
+  // Unsuited beside an airlock button with storage in reach (the Wren r8 EVA suit locker): E opens
+  // the storage, since the button would only refuse and the suit is in there. Suited, E cycles.
+  const storageBeforeButton =
+    !evaBody && !!evaAction && !!suitRefusal && !!reachableStorage;
+  const interactionPrompt = storageBeforeButton
+    ? `Open ${reachableStorage.name.toLowerCase()}`
+    : suitPrompt
+      ? suitPrompt
+      : evaAction && (evaBody || !contextObject)
+        ? evaAction.label
+        : contextObject
+          ? interactionLabel(contextObject)
+          : seated
+            ? "Leave control seat"
+            : nearStation
+              ? "Control seat"
+              : reachableStorage
+                ? `Open ${reachableStorage.name.toLowerCase()}`
+                : undefined;
   // The legacy stock-ship inspection catalog (hull/cargo/equipment manifests,
   // wayfarer.json) belongs to the retired Wayfarer assets that the game client
   // no longer delivers, so it is never fetched.
@@ -880,6 +886,7 @@ export default function App({
     combatEnabled,
     constructionInstance,
     storageId: reachableStorage?.id,
+    storageBeforeButton,
     evaAction,
     evaPhase: evaView?.phase,
     evaLocal: false,
@@ -900,6 +907,7 @@ export default function App({
     combatEnabled,
     constructionInstance,
     storageId: reachableStorage?.id,
+    storageBeforeButton,
     evaAction,
     evaPhase: evaView?.phase,
     evaLocal,
@@ -1035,7 +1043,9 @@ export default function App({
     const row = live.current.contextObject;
     const eva = live.current.evaAction;
     const current = connection.current;
-    if (
+    if (live.current.storageBeforeButton && live.current.storageId)
+      gui.current?.openContainer(live.current.storageId);
+    else if (
       eva &&
       current &&
       live.current.actor?.connected &&
