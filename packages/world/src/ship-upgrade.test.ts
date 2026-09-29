@@ -43,7 +43,9 @@ import {
   FED_WREN_R4_PIN,
   FED_WREN_R5_PIN,
   FED_WREN_R6_PIN,
+  FED_WREN_R7_PIN,
   PREFAB_UPGRADE_SOURCES,
+  WREN_SUIT_LOCKER_SOCKET,
   type PinnedPrefabShip,
 } from "./prefab-ship-pins";
 import {
@@ -287,6 +289,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
     FED_WREN_R4_PIN,
     FED_WREN_R5_PIN,
     FED_WREN_R6_PIN,
+    FED_WREN_R7_PIN,
   ]);
   expect(trustedPrefabTemplate("fed.s.wren").snapshot.sha256).toBe(
     FED_WREN_PIN.blueprintSha256,
@@ -297,7 +300,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
 // for different source revisions, so each liveWren starts from an empty cache.
 const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
   test(
-    `a live Wren r${revision} upgrades to r7 in place: same ship, deck, pose, containers and items`,
+    `a live Wren r${revision} upgrades to r8 in place: same ship, deck, pose, containers and items; the suit locker is stocked after`,
     HEAVY,
     () => {
       const { f, characterId, shipId, deckId } = liveWren(pin, revision);
@@ -345,7 +348,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
       upgradePrefabShip(f.ctx, upgradeArgs(shipId, pin));
       const instance = f.db.constructionInstance.id.find(shipId);
       expect(instance.blueprintSha256).toBe(FED_WREN_PIN.blueprintSha256);
-      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r7");
+      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r8");
       expect(instance.revision).toBe(2n);
       expect(f.db.constructionDeck.rows.map((d: Row) => d.id)).toEqual([
         deckId,
@@ -379,7 +382,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
       expect(
         f.db.instanceInventoryBinding.rows.map((b: Row) => ({ ...b })),
       ).toEqual(bound);
-      // ...and the storage roots now sit at the r7 sockets with a qualified approach.
+      // ...and the storage roots now sit at the r8 sockets with a qualified approach.
       const sockets = new Map(
         prefabCargoSockets(
           readShipPrefab(JSON.parse(instance.documentJson).prefab.document),
@@ -416,7 +419,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
           ).toBe(true);
         }
       }
-      // The owner stands at the r7 spawn with the next-revision game-ship access allowed.
+      // The owner stands at the r8 spawn with the next-revision game-ship access allowed.
       const actor = f.db.character.id.find(characterId);
       expect(actor.shipId).toBe(shipId);
       expect(
@@ -462,6 +465,42 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
           }),
         ),
       ).toThrow("already has the target revision");
+
+      // The upgrade adds the suit locker empty (issue stock is for new ships only); the operator
+      // then stocks the EVA suit into it beside the full crate and locker (scripts/ship_cargo.py).
+      expect(
+        f.db.instanceInventoryBinding.rows.some((b: Row) =>
+          b.placedObjectId.endsWith(WREN_SUIT_LOCKER_SOCKET),
+        ),
+      ).toBe(false);
+      stockShipCargo(f.ctx, {
+        operationId: "stock-eva-suit",
+        dryRun: false,
+        characterId,
+        shipId,
+        socketKey: WREN_SUIT_LOCKER_SOCKET,
+        containerName: "EVA suit locker",
+        definitionIdsJson: JSON.stringify(CREW_WARDROBE_KITS["eva-suit"]),
+      });
+      const suitBinding = f.db.instanceInventoryBinding.rows.find((b: Row) =>
+        b.placedObjectId.endsWith(WREN_SUIT_LOCKER_SOCKET),
+      );
+      expect(
+        f.db.inventoryItem.rows
+          .filter((i: Row) => i.containerId === suitBinding.containerId)
+          .map((i: Row) => i.definitionId)
+          .sort(),
+      ).toEqual([...CREW_WARDROBE_KITS["eva-suit"]].sort());
+      const suitScope = f.db.inventoryContainerScope.containerId.find(
+        suitBinding.containerId,
+      );
+      expect(
+        canOccupyDeck(
+          constructionCollision(f.ctx, instance, deckId),
+          { shipId, deckId, position: [suitScope.accessX, suitScope.accessY] },
+          0.3,
+        ),
+      ).toBe(true);
     },
   );
 
@@ -613,3 +652,4 @@ test("refuses unsafe upgrades and changes nothing", HEAVY, () => {
 upgradeCase(FED_WREN_R4_PIN, 4);
 upgradeCase(FED_WREN_R5_PIN, 5);
 upgradeCase(FED_WREN_R6_PIN, 6);
+upgradeCase(FED_WREN_R7_PIN, 7);

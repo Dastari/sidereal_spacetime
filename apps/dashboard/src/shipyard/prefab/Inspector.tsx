@@ -16,6 +16,8 @@ import {
   mountTileSpec,
 } from "@sidereal/content/ship-mount-tiles";
 import {
+  PREFAB_FIXTURE_DESIGNS,
+  fixtureSize,
   mountTileCapacityText,
   prefabMountArcs,
   validateMount,
@@ -34,6 +36,8 @@ import {
   updateMount,
   updateRoom,
   updateSkylight,
+  updateFixture,
+  FIXTURE_DESIGN_LABELS,
   type CommandResult,
   type PrefabSelection,
 } from "./commands";
@@ -86,8 +90,8 @@ export function Inspector({
         <h2>Nothing selected</h2>
         <p className="layout-note">
           Use the Select tool (V) and click a volume, tile, room, edge, mount,
-          skylight or logic device. Clicking a validation issue selects the
-          element it refers to.
+          skylight, storage fixture or logic device. Clicking a validation issue
+          selects the element it refers to.
         </p>
       </section>
     );
@@ -607,6 +611,75 @@ export function Inspector({
           </div>
           {remove}
           <IssuesFor issues={live} />
+        </section>
+      );
+    }
+    case "fixture": {
+      const f = doc.fixtures?.find((x) => x.id === selection.id);
+      if (!f) return null;
+      const [w, h] = fixtureSize(f);
+      return (
+        <section className="layout-section">
+          <h2>Storage {f.id}</h2>
+          <p className="layout-note">
+            A storage socket like the room furniture: collision, dressing and an
+            operator-bound container. {w.toFixed(2)} x {h.toFixed(2)} m.
+          </p>
+          <SelectField
+            label="Design"
+            value={f.design}
+            options={PREFAB_FIXTURE_DESIGNS.map((d) => ({
+              value: d,
+              label: FIXTURE_DESIGN_LABELS[d],
+            }))}
+            onChange={(v) =>
+              commit(
+                "Change storage design",
+                updateFixture(doc, f.id, {
+                  design: v as (typeof PREFAB_FIXTURE_DESIGNS)[number],
+                }),
+              )
+            }
+          />
+          <SelectField
+            label="Opens to"
+            value={f.facing}
+            options={FACE_NORMALS}
+            onChange={(v) =>
+              commit(
+                "Turn storage",
+                updateFixture(doc, f.id, { facing: v as FaceNormal }),
+              )
+            }
+          />
+          <div className="pf-grid2">
+            <NumberField
+              label="X"
+              unit="m"
+              step={0.05}
+              value={f.at[0]}
+              onCommit={(x) =>
+                commit(
+                  "Move storage",
+                  updateFixture(doc, f.id, { at: [x, f.at[1]] }),
+                )
+              }
+            />
+            <NumberField
+              label="Y"
+              unit="m"
+              step={0.05}
+              value={f.at[1]}
+              onCommit={(y) =>
+                commit(
+                  "Move storage",
+                  updateFixture(doc, f.id, { at: [f.at[0], y] }),
+                )
+              }
+            />
+          </div>
+          {remove}
+          <IssuesFor issues={own} />
         </section>
       );
     }

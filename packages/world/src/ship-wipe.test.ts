@@ -19,6 +19,7 @@ import { SHIP_OPERATOR } from "./ship-operator";
 import { ensureCanonicalSystem } from "./shared-world";
 import { stockShipCargo } from "./ship-cargo-operator";
 import "./prefab-ship-spawners";
+import { WREN_SUIT_LOCKER_SOCKET } from "./prefab-ship-pins";
 import {
   PRESERVED_MAP_TABLES,
   WIPED_SHIP_TABLES,
@@ -223,10 +224,24 @@ function seeded() {
     .filter((r: Row) => r.characterId === a.actor.id)
     .map((r: Row) => r.id)
     .sort();
-  const cargoGrid = f.db.inventoryContainer.rows.find(
-    (c: Row) => c.shipId === a.actor.shipId && c.characterId === "",
+  const cargoGrid = f.db.inventoryContainer.id.find(
+    f.db.instanceInventoryBinding.rows.find((b: Row) =>
+      b.placedObjectId.endsWith(":hold/cargo.standard.medium"),
+    )?.containerId,
   );
   expect(cargoGrid).toBeTruthy();
+  // Each Wren r8 was issued with the EVA suit (4 items; the jetpack has nested storage) in its
+  // suit locker: ship cargo the wipe removes with the ship.
+  const lockers = f.db.instanceInventoryBinding.rows
+    .filter((b: Row) =>
+      b.placedObjectId.endsWith(":" + WREN_SUIT_LOCKER_SOCKET),
+    )
+    .map((b: Row) => b.containerId);
+  expect(lockers).toHaveLength(2);
+  const issuedSuits = f.db.inventoryItem.rows
+    .filter((i: Row) => lockers.includes(i.containerId))
+    .map((i: Row) => i.id as string);
+  expect(issuedSuits).toHaveLength(8);
   const stockedItem = f.db.inventoryItem.rows.find(
     (i: Row) => i.containerId === cargoGrid.id,
   ).id as string;
@@ -298,7 +313,7 @@ function seeded() {
   });
   f.db.systemMapDefinition.insert({ id: "map", json: "{}" });
   f.db.fieldAsteroid.insert({ id: "rock" });
-  return { f, a, b, personalA, stockedItem };
+  return { f, a, b, personalA, stockedItem, issuedSuits };
 }
 
 const counts = (f: ReturnType<typeof fixture>) => ({
@@ -471,7 +486,7 @@ test("a configured non-legacy starter prefab boards new players through the spaw
 });
 
 test("dry-run reports counts and a per-item manifest and changes nothing but its ledger row", () => {
-  const { f, stockedItem } = seeded();
+  const { f, stockedItem, issuedSuits } = seeded();
   const args = {
     operationId: "wipe-dry-0001",
     dryRun: true,
@@ -494,9 +509,9 @@ test("dry-run reports counts and a per-item manifest and changes nothing but its
     personalContainersPreserved: 6,
   });
   expect(summary.expectedCountsMatch).toBe(false);
-  expect(summary.deleteRows.inventoryItem).toBe(3);
-  // The stocked hold crate and the dropped deck crate.
-  expect(summary.deleteRows.inventoryContainer).toBe(2);
+  expect(summary.deleteRows.inventoryItem).toBe(3 + issuedSuits.length);
+  // The stocked hold crate, the dropped deck crate, and per Wren the suit locker and jetpack storage.
+  expect(summary.deleteRows.inventoryContainer).toBe(2 + 2 * 2);
   expect(summary.deleteRows.ship).toBe(2);
   expect(
     summary.archivedInventory.map((r: Row) => [r.itemId, r.reason]).sort(),
@@ -505,6 +520,7 @@ test("dry-run reports counts and a per-item manifest and changes nothing but its
       ["cargo-item", "ship-cargo-container"],
       ["crate-item", "ground-drop-on-ship-deck"],
       [stockedItem, "ship-cargo-container"],
+      ...issuedSuits.map((id: string) => [id, "ship-cargo-container"]),
     ].sort(),
   );
   expect(summary.starterPrefabId).toBe("");
@@ -516,7 +532,7 @@ test("dry-run reports counts and a per-item manifest and changes nothing but its
 });
 
 test("apply refuses a legacy starter or stale counts, then wipes all ships and preserves characters, personal kit and map", () => {
-  const { f, a, personalA, stockedItem } = seeded();
+  const { f, a, personalA, stockedItem, issuedSuits } = seeded();
   f.as(SHIP_OPERATOR);
   const expected = {
     expectedShips: 2,
@@ -602,7 +618,7 @@ test("apply refuses a legacy starter or stale counts, then wipes all ships and p
     .map((r: Row) => JSON.parse(r.rowJson).id)
     .sort();
   expect(archivedItems).toEqual(
-    ["cargo-item", "crate-item", stockedItem].sort(),
+    ["cargo-item", "crate-item", stockedItem, ...issuedSuits].sort(),
   );
   expect(archived.filter((r: Row) => r.tableName === "ship")).toHaveLength(2);
   expect(

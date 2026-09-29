@@ -8,6 +8,7 @@ import type {
   RoomTypeId,
   ShapeTileId,
 } from "@sidereal/content/construction-grammar";
+import type { PrefabFixtureDesign } from "@sidereal/content/ship-prefab";
 import type { MountMode } from "./snapping";
 
 export type ToolId =
@@ -19,6 +20,7 @@ export type ToolId =
   | "mount"
   | "tile"
   | "skylight"
+  | "storage"
   | "button";
 
 export const TOOLS: { id: ToolId; label: string; key: string; hint: string }[] =
@@ -72,6 +74,12 @@ export const TOOLS: { id: ToolId; label: string; key: string; hint: string }[] =
       hint: "Click the roof to add a skylight. R swaps 2x3 and 3x2.",
     },
     {
+      id: "storage",
+      label: "Storage",
+      key: "O",
+      hint: "Click the floor to place a wall locker or storage crate (a storage socket). R turns the side it opens to. It stays clear of doors, wall buttons and modules.",
+    },
+    {
       id: "button",
       label: "Button",
       key: "L",
@@ -89,7 +97,7 @@ export const SHORTCUTS: { keys: string; action: string }[] = [
   {
     keys: "R",
     action:
-      "Rotate tile, interior module facing, mount tile boresight or skylight; flip a wall button",
+      "Rotate tile, interior module facing, mount tile boresight, skylight or storage fixture; flip a wall button",
   },
   { keys: "F", action: "Mirror the hull tile" },
   {
@@ -99,7 +107,7 @@ export const SHORTCUTS: { keys: string; action: string }[] = [
   {
     keys: "Arrows",
     action:
-      "Nudge the selection 1 m (mounts 0.5 m, wall buttons 0.25 m along their wall); Shift for 5 m (buttons 1 m)",
+      "Nudge the selection 1 m (mounts 0.5 m, wall buttons 0.25 m along their wall, storage fixtures 0.05 m); Shift for 5 m (buttons 1 m, fixtures 0.25 m)",
   },
   { keys: "Delete", action: "Remove the selection" },
   { keys: "Esc", action: "Deselect, cancel the drag" },
@@ -128,6 +136,8 @@ export interface ToolState {
   tileKind?: MountTileKind;
   tileSize?: MountSizeId;
   skylight: [number, number];
+  /** Storage tool: the deck-object design to place (default: wall locker). */
+  fixtureDesign?: PrefabFixtureDesign;
   symmetry: boolean;
   centreline: number;
 }

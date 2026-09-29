@@ -5,6 +5,7 @@
 import {
   BLUEPRINT_SIZE_CLASS_IDS,
   EDGE_TYPE_IDS,
+  FACE_NORMALS,
   G,
   HEIGHT_CLASS_IDS,
   MOUNT_SIZE_IDS,
@@ -18,10 +19,11 @@ import {
   type HeightClassId,
   type ShapeTileId,
 } from "@sidereal/content/construction-grammar";
-import type {
-  PrefabComponentCatalog,
-  PrefabComponentSpec,
-  ShipPrefabDocumentV1,
+import {
+  PREFAB_FIXTURE_DESIGNS,
+  type PrefabComponentCatalog,
+  type PrefabComponentSpec,
+  type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
 import { SHIP_KIT_REVISION, kitId } from "@sidereal/content/ship-kit";
 import {
@@ -34,6 +36,7 @@ import { FlipHorizontal2, Plus, RotateCcw, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import {
   addVolume,
+  FIXTURE_DESIGN_LABELS,
   removeVolume,
   updateVolume,
   type CommandResult,
@@ -682,6 +685,52 @@ function SkylightPanel({ tools, setTools }: Pick<Props, "tools" | "setTools">) {
   );
 }
 
+/** Storage tool: wall locker or crate, and the side it opens to (R turns it). */
+function StoragePanel({ tools, setTools }: Pick<Props, "tools" | "setTools">) {
+  const design = tools.fixtureDesign ?? "shipyard.equipment.wall-locker";
+  return (
+    <section className="layout-section">
+      <h2>Storage</h2>
+      <div
+        className="pf-segmented"
+        role="radiogroup"
+        aria-label="Storage design"
+      >
+        {PREFAB_FIXTURE_DESIGNS.map((d) => (
+          <button
+            key={d}
+            role="radio"
+            aria-checked={design === d}
+            aria-pressed={design === d}
+            onClick={() => setTools({ fixtureDesign: d })}
+          >
+            {FIXTURE_DESIGN_LABELS[d]}
+          </button>
+        ))}
+      </div>
+      <div className="pf-segmented" role="radiogroup" aria-label="Opens to">
+        {FACE_NORMALS.map((f) => (
+          <button
+            key={f}
+            role="radio"
+            aria-checked={tools.facing === f}
+            aria-pressed={tools.facing === f}
+            onClick={() => setTools({ facing: f })}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
+      <p className="layout-note">
+        A hand-placed storage socket (room types furnish their own). It stands
+        on full floor inside one room, 0.2 m off its walls, clear of door and
+        pilot approaches, wall-button standing zones and interior modules.
+        Operators bind a container to it (socket key room/design).
+      </p>
+    </section>
+  );
+}
+
 const SIZE_NUMBER = { SM: 0, MD: 1, LG: 2, XL: 3 } as const;
 
 /** Mount-tile tool: fixed directional plinths and turret rings, with the size-penalty table. */
@@ -838,6 +887,7 @@ export function ToolPanel(props: Props) {
       {tools.tool === "mount" && <MountPanel {...props} />}
       {tools.tool === "tile" && <MountTilePanel {...props} />}
       {tools.tool === "skylight" && <SkylightPanel {...props} />}
+      {tools.tool === "storage" && <StoragePanel {...props} />}
       {tools.tool === "button" && <LogicToolPanel {...props} />}
     </aside>
   );

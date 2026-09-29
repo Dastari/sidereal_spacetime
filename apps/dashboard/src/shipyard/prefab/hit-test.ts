@@ -1,10 +1,11 @@
 /**
- * Select-tool picking on the plan: logic devices, mounts, then edges, skylights, rooms, tiles and
- * volumes, respecting layer visibility. Pure; the canvas supplies the plan point.
+ * Select-tool picking on the plan: logic devices, mounts, storage fixtures, then edges, skylights,
+ * rooms, tiles and volumes, respecting layer visibility. Pure; the canvas supplies the plan point.
  */
 import { insideOutline, type Pt } from "@sidereal/content/construction-grammar";
 import {
   deriveInterior,
+  fixtureSize,
   placeMount,
   placeMountTile,
   type PrefabComponentCatalog,
@@ -90,6 +91,12 @@ export function hitTest(
       if (inRect(p, placeMountTile(t, geoms).rect))
         return { kind: "mounttile", id: t.id };
   }
+  if (layers.sockets)
+    for (const f of doc.fixtures ?? []) {
+      const [w, h] = fixtureSize(f);
+      if (inRect(p, [f.at[0], f.at[1], f.at[0] + w, f.at[1] + h]))
+        return { kind: "fixture", id: f.id };
+    }
   if (layers.walls) {
     let best: { id: string; d: number } | null = null;
     for (const e of doc.edges) {
@@ -171,6 +178,12 @@ export function selectionCentre(
     case "skylight": {
       const s = doc.skylights.find((x) => x.id === sel.id);
       return s ? [s.at[0] + s.size[0] / 2, s.at[1] + s.size[1] / 2] : null;
+    }
+    case "fixture": {
+      const f = doc.fixtures?.find((x) => x.id === sel.id);
+      if (!f) return null;
+      const [w, h] = fixtureSize(f);
+      return [f.at[0] + w / 2, f.at[1] + h / 2];
     }
   }
 }

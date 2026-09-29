@@ -30,6 +30,7 @@ import {
   FED_WREN_R4_PIN,
   FED_WREN_R5_PIN,
   FED_WREN_R6_PIN,
+  FED_WREN_R7_PIN,
 } from "./prefab-ship-pins";
 import { readFileSync } from "node:fs";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
@@ -168,7 +169,7 @@ test(
     expect(FED_WREN_PIN.blueprintSha256).not.toBe(
       FED_WREN_R3_PIN.blueprintSha256,
     );
-    expect(prefabById("fed.s.wren")!.revision).toBe(7);
+    expect(prefabById("fed.s.wren")!.revision).toBe(8);
     expect(prefabShipSpawner("fed.s.wren")?.blueprintSha256).toBe(
       FED_WREN_PIN.blueprintSha256,
     );
@@ -199,11 +200,11 @@ test(
     expect(
       flightDefinitionCatalogHash(prefabFlightModel(legacy, catalog).catalog),
     ).toBe(FED_WREN_R4_PIN.flightDefinitionSha256);
-    // The registered spawner is r7; r4 is only an upgrade source.
+    // The registered spawner is r8; r4 is only an upgrade source.
     expect(FED_WREN_PIN.blueprintSha256).not.toBe(
       FED_WREN_R4_PIN.blueprintSha256,
     );
-    expect(prefabById("fed.s.wren")!.revision).toBe(7);
+    expect(prefabById("fed.s.wren")!.revision).toBe(8);
     expect(prefabShipSpawner("fed.s.wren")?.blueprintSha256).toBe(
       FED_WREN_PIN.blueprintSha256,
     );
@@ -243,11 +244,11 @@ test(
 );
 
 test(
-  "live Wren r6 instances keep their pins until an operator upgrades them to r7",
+  "live Wren r6 instances keep their pins until an operator upgrades them",
   HEAVY,
   () => {
     // Wren r6 (FLIGHT-IFCS) has no ship logic: its frozen document still derives the r6 pins under
-    // the same catalogue revision as r7 (same flight definition, new blueprint).
+    // the same catalogue revision as r7 and r8 (same flight definition, new blueprint).
     const legacy = readShipPrefab(
       JSON.parse(
         readFileSync(
@@ -271,6 +272,46 @@ test(
     expect(FED_WREN_PIN.blueprintSha256).not.toBe(
       FED_WREN_R6_PIN.blueprintSha256,
     );
-    expect(prefabById("fed.s.wren")!.revision).toBe(7);
+    expect(prefabById("fed.s.wren")!.revision).toBe(8);
+  },
+);
+
+test(
+  "live Wren r7 instances keep their pins until an operator upgrades them to r8",
+  HEAVY,
+  () => {
+    // Wren r7 (EVA-2) has ship logic but no storage fixtures: its frozen document still derives
+    // the r7 pins. r8 only adds the suit locker, so the flight definition is unchanged.
+    const legacy = readShipPrefab(
+      JSON.parse(
+        readFileSync(
+          new URL("./fixtures/fed-s-wren-r7.prefab.json", import.meta.url),
+          "utf8",
+        ),
+      ),
+    );
+    expect(legacy.revision).toBe(7);
+    expect(legacy.logic).toBeDefined();
+    expect(legacy.fixtures).toBeUndefined();
+    const catalog = prefabComponentCatalogFor(FED_WREN_R7_PIN.catalogRevision);
+    expect(catalog.revision).toBe(FED_WREN_PIN.catalogRevision);
+    expect(
+      compileConstruction(
+        JSON.stringify(prefabConstructionDocument(legacy, catalog)),
+      ).sha256,
+    ).toBe(FED_WREN_R7_PIN.blueprintSha256);
+    expect(
+      flightDefinitionCatalogHash(prefabFlightModel(legacy, catalog).catalog),
+    ).toBe(FED_WREN_R7_PIN.flightDefinitionSha256);
+    expect(FED_WREN_PIN.flightDefinitionSha256).toBe(
+      FED_WREN_R7_PIN.flightDefinitionSha256,
+    );
+    expect(FED_WREN_PIN.blueprintSha256).not.toBe(
+      FED_WREN_R7_PIN.blueprintSha256,
+    );
+    // r7 is r8 without the suit locker.
+    const { fixtures, ...rest } = prefabById("fed.s.wren")!;
+    expect(fixtures?.map((f) => f.id)).toEqual(["suit-locker"]);
+    expect({ ...rest, revision: 7 }).toEqual(legacy);
   },
 );

@@ -10,6 +10,8 @@ import {
   walkStarterTo,
 } from "./native-starter-smoke";
 import { prefabCargoSockets } from "../packages/sim/src/prefab-cargo-sockets";
+import { CREW_WARDROBE_KITS } from "../packages/content/src/crew-wardrobe";
+import { WREN_SUIT_LOCKER_SOCKET } from "../packages/world/src/prefab-ship-pins";
 import { INVENTORY_PHYSICAL_DEFINITIONS } from "../packages/content/src/inventory-physical-definitions";
 import { backpackSmoke } from "./backpack-smoke";
 import assert from "node:assert/strict";
@@ -250,6 +252,23 @@ export async function inventorySmoke(
     await walkStarterTo(a, socket.approachesM[0]!);
     await wait(() => !!socketRoot(socket.key), socket.key + " reachable");
     roots.push(socketRoot(socket.key)!);
+    // Wren r8 starters are issued with the EVA suit in the suit locker (next to the smoke item).
+    if (socket.key === WREN_SUIT_LOCKER_SOCKET) {
+      const suit = () =>
+        cargoItems()
+          .filter(
+            (i) =>
+              i.containerId === socketRoot(socket.key)!.id &&
+              i.definitionId.startsWith("wardrobe-suit-"),
+          )
+          .map((i) => i.definitionId)
+          .sort();
+      await wait(
+        () => suit().length === CREW_WARDROBE_KITS["eva-suit"]!.length,
+        "issued EVA suit in the suit locker",
+      );
+      assert.deepEqual(suit(), [...CREW_WARDROBE_KITS["eva-suit"]!].sort());
+    }
   }
   assert.equal(
     new Set(roots.map((c) => c.id)).size,
