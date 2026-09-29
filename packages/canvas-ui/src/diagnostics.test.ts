@@ -215,7 +215,9 @@ it("scrolls every new visual option into reach on compact screens without offscr
   // Glow moved into the render-cost switches with plastic, SSAO, clear coat and render scale.
   for (const key of Object.keys(flags))
     expect(
-      seen.has(key === "glow" ? "diagnostics-quality-glow" : "diagnostics-" + key),
+      seen.has(
+        key === "glow" ? "diagnostics-quality-glow" : "diagnostics-" + key,
+      ),
     ).toBe(true);
   for (const id of [
     "diagnostics-quality-plastic",
@@ -303,7 +305,9 @@ it("switches the render-cost settings live through the quality control", () => {
     "Plastic finish: On",
   );
   expect(
-    text.mock.calls.some(([v]) => String(v).includes("42 fps · 23.8 ms · 212 draws")),
+    text.mock.calls.some(([v]) =>
+      String(v).includes("42 fps · 23.8 ms · 212 draws"),
+    ),
   ).toBe(true);
   hits.get("diagnostics-quality-plastic")!.action();
   expect(set).toHaveBeenLastCalledWith({ plastic: false });

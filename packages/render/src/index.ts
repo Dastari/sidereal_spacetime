@@ -1637,7 +1637,10 @@ async function buildWorld(
       debugFeatures.toggle(key);
       antialiasing.resetHistory();
       if (key === "glow") {
-        renderQuality = { ...renderQuality, glow: debugFeatures.snapshot().glow };
+        renderQuality = {
+          ...renderQuality,
+          glow: debugFeatures.snapshot().glow,
+        };
         writeRenderQuality(backendStorage, renderQuality);
       }
     },

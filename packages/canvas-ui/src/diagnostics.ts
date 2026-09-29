@@ -360,7 +360,8 @@ export function createDiagnosticsUI(
           palette.muted,
           viewport.w,
         );
-        const step = (viewport.w - 4 * (RENDER_SCALES.length - 1)) / RENDER_SCALES.length;
+        const step =
+          (viewport.w - 4 * (RENDER_SCALES.length - 1)) / RENDER_SCALES.length;
         RENDER_SCALES.forEach((scale, i) => {
           const b = {
             x: viewport.x + i * (step + 4),
@@ -411,7 +412,11 @@ export function createDiagnosticsUI(
                 !controls.reset ||
                 (disabled().length === 0 &&
                   !overlays.some(([key]) => enabled[key] === true) &&
-                  (Object.keys(RENDER_QUALITY_DEFAULTS) as (keyof RenderQuality)[]).every(
+                  (
+                    Object.keys(
+                      RENDER_QUALITY_DEFAULTS,
+                    ) as (keyof RenderQuality)[]
+                  ).every(
                     (key) => quality[key] === RENDER_QUALITY_DEFAULTS[key],
                   )),
             },
