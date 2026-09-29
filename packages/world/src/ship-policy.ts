@@ -6,13 +6,12 @@ import {
   priorOperation,
   requireShipOperator,
 } from "./ship-operator";
-import { issueWayfarerPersonalKit } from "./wayfarer-personal-kit";
+import { issuePersonalKit } from "./personal-kit";
 import {
   boardPrefabShip,
   prefabShipSpawner,
   requireSpawner,
 } from "./ship-assign";
-import { createWayfarerStarterAuthority } from "./wayfarer-starter-authority";
 import { recordLifecycleEvent } from "./lifecycle";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
@@ -135,21 +134,15 @@ export function createShiplessCharacter(ctx: Context, name: string) {
     { causationId: `create:${id}`, actorId: id },
     { name: clean },
   );
-  issueWayfarerPersonalKit(ctx, id);
+  issuePersonalKit(ctx, id);
   return id;
 }
 
-/** New-account onboarding. Never creates a legacy Wayfarer unless the operator
- * explicitly configured the legacy regression starter. With no starter prefab
- * (the default) the character waits for an operator-assigned ship. */
+/** New-account onboarding. With no starter prefab (the default) the character
+ * waits for an operator-assigned ship. */
 export function onboardNewCharacter(ctx: Context, name: string) {
   const prefabId = starterPrefabId(ctx);
   const spawner = prefabId ? prefabShipSpawner(prefabId) : undefined;
-  // Isolated legacy regression only: the historical all-in-one starter writer.
-  if (spawner?.legacy) {
-    createWayfarerStarterAuthority(ctx, name.trim());
-    return [...ctx.db.character.by_owner.filter(ctx.sender)][0]!.id;
-  }
   const characterId = createShiplessCharacter(ctx, name);
   if (!spawner) return characterId; // No (or unregistered) starter: wait for a ship.
   const actor = ctx.db.character.id.find(characterId)!;

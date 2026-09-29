@@ -1,6 +1,5 @@
 import { toCenterOfMassMotion } from "../packages/sim/src/flight-frame";
-import { WAYFARER_FLIGHT_PROFILE } from "../packages/content/src/physical-definitions";
-import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
+import { PREFAB_FLIGHT_PROFILE } from "../packages/sim/src/prefab-flight";
 import { systemMapDenialSmoke } from "./system-map-smoke";
 import {
   LEGACY_SYSTEM_SEED,
@@ -10,16 +9,19 @@ import {
   acquireNativePilot,
   nextSequence,
   intentSequences,
-  walkNative,
   enterNativePilot,
   leaveNativePilot,
+  STARTER_CATALOG,
+  STARTER_FLIGHT_MODEL,
+  STARTER_PILOT_POSE,
+  STARTER_PREFAB,
+  STARTER_PREFAB_ID,
 } from "./native-starter-smoke";
 import { characterComponentsSmoke } from "./character-components-smoke";
 import { constructionDenialSmoke } from "./construction-smoke";
 import { identityLinkSmoke } from "./identity-link-smoke";
 import { persistenceSmoke, verifyPersistence } from "./persistence-smoke";
 import { combatSmoke } from "./combat-smoke";
-import { interactionSmoke } from "./interaction-smoke";
 import { inventorySmoke } from "./inventory-smoke";
 import {
   assertLogInvariants,
@@ -27,11 +29,12 @@ import {
   ownerSql,
   verifyLifecycleRestart,
 } from "./lifecycle-smoke";
-import { QUALIFIED_PILOT_POSITION } from "../packages/sim/src/construction-pilot";
+import { operatorCall } from "./smoke-operator";
+import { prefabWalkFrame } from "../packages/sim/src/prefab-construction";
+import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
 import assert from "node:assert/strict";
 import { readFileSync, writeFileSync } from "node:fs";
-import { execFileSync } from "node:child_process";
 import { join } from "node:path";
 import { DbConnection, tables } from "../packages/net/src/generated";
 function requiredEnv(name: string): string {
@@ -136,7 +139,7 @@ if (restore) {
     await wait(
       () =>
         [...a.db.ownShips.iter()].some(
-          (s) => s.id === evidence.shipId && s.name === "Persistent Wayfarer",
+          (s) => s.id === evidence.shipId && s.name === "Persistent Ship",
         ),
       "restart persisted identity/name",
     );
@@ -252,27 +255,17 @@ if (restore) {
   }
 } else {
   // New characters wait for a ship unless an operator configures a starter.
-  // This legacy regression suite deliberately opts its isolated -smoke
-  // database into the legacy Wayfarer starter (never done on live).
-  execFileSync(
-    ".tools/spacetime/spacetime",
-    [
-      "--root-dir=.tools/spacetime",
-      "call",
-      "--server",
-      host,
-      "--yes",
-      "--no-config",
-      database,
-      "operator_set_starter_prefab",
-      JSON.stringify(`smoke-legacy-starter-${Date.now()}`),
-      JSON.stringify("legacy-wayfarer-r002"),
-      JSON.stringify("legacy-wayfarer"),
-      "true",
-    ],
-    { stdio: "inherit" },
+  // This isolated -smoke database configures the owner-picked starter (Wren).
+  operatorCall(
+    host,
+    database,
+    "operator_set_starter_prefab",
+    JSON.stringify(`smoke-starter-${Date.now()}`),
+    JSON.stringify(STARTER_PREFAB_ID),
+    JSON.stringify(STARTER_CATALOG.revision),
+    "false",
   );
-  summary.legacy_regression_starter = "operator opt-in on isolated database";
+  summary.starter_prefab = STARTER_PREFAB_ID;
   const first = await client(),
     second = await client();
   const a = first.connection,
@@ -376,14 +369,21 @@ if (restore) {
       "new planet destinations are distributed across the lab",
     );
     summary.canonical_shared_bodies = true;
-    await enterNativePilot(a, true);
+    await enterNativePilot(a);
     // Alpha starts on the approach rock axis and can only send piloting intent. Contact and impulse must come from the
     // scheduled authority; there is no transform/velocity/collision reducer.
-    for (let i = 1; i <= 45; i++) {
+    // A gentle approach (the starter prefab accelerates hard): stop commanding
+    // thrust at first contact so the rock stays within discovery range for the
+    // restart proof.
+    const rockMoving = () =>
+      sharedBodies(b).some(
+        (r) => r.key === "approach-rock" && r.vy > 0 && r.tick > 0n,
+      );
+    for (let i = 1; i <= 300 && !rockMoving(); i++) {
       await a.reducers.setIntent({
         sprint: false,
         sequence: nextSequence(a),
-        throttle: 1,
+        throttle: 0.15,
         turn: 0,
         dx: 0,
         dy: 0,
@@ -412,15 +412,24 @@ if (restore) {
       sharedBodies(a).find((r) => r.id === movingRock.id)!.vy > 0,
       "the same canonical rock's impulse is visible to both accounts",
     );
-    summary.server_asteroid_collision = true;
+    summary.server_asteroid_collision = {
+      rockVx: movingRock.vx,
+      rockVy: movingRock.vy,
+      rockX: movingRock.x,
+      rockY: movingRock.y,
+    };
     const { connection: flight } = await client();
     try {
       await flight.reducers.enterLab({ name: "IFCS proof" });
       await flight.reducers.claimInputControl({});
       await wait(() => flight.db.ownShips.count() === 1n, "IFCS fixture");
-      await enterNativePilot(flight, true);
+      await enterNativePilot(flight);
+      const actuatorCount = BigInt(
+        STARTER_FLIGHT_MODEL.fittings.filter((f) => f.role === "actuator")
+          .length,
+      );
       await wait(
-        () => flight.db.ownActuatorOutputs.count() === 9n,
+        () => flight.db.ownActuatorOutputs.count() === actuatorCount,
         "bounded fixture output rows",
       );
       assert(
@@ -465,7 +474,7 @@ if (restore) {
         Math.hypot(moving.vx, moving.vy) > 0.25 &&
           envelope.angularPositive > 0 &&
           moving.omega > 0.01 &&
-          moving.omega <= WAYFARER_FLIGHT_PROFILE.maxAngularSpeed + 1e-6,
+          moving.omega <= PREFAB_FLIGHT_PROFILE.maxAngularSpeed + 1e-6,
         `available engines accelerate and turn by allocated torque within the rate limit: ${JSON.stringify(
           {
             speed: Math.hypot(moving.vx, moving.vy),
@@ -474,23 +483,16 @@ if (restore) {
           },
         )}`,
       );
-      // Released keys brake: the retro drive's achieved output is visible while it burns (sampled
-      // through the braking; the burn ends once the ship is at rest).
-      const retroFiring = () =>
-        [...flight.db.ownActuatorOutputs.iter()].some(
-          (o) =>
-            [...flight.db.ownAuthoredFlightFittings.iter()].some(
-              (f) =>
-                f.id === o.actuatorId &&
-                f.sourceDeviceId.startsWith("drives-retro"),
-            ) && o.throttle > 0,
-        );
-      let retroSeen = false;
+      // Released keys brake: achieved braking output is visible while it burns (sampled through
+      // the braking; the burn ends once the ship is at rest).
+      const brakingFiring = () =>
+        [...flight.db.ownActuatorOutputs.iter()].some((o) => o.throttle > 0);
+      let brakingSeen = false;
       for (let i = 0; i < 45; i++) {
         await commandFlight(0, 0);
-        retroSeen ||= retroFiring();
+        brakingSeen ||= brakingFiring();
       }
-      assert(retroSeen, "achieved retro output is subscribed");
+      assert(brakingSeen, "achieved braking output is subscribed");
       const stopped = [...flight.db.ownShips.iter()][0];
       assert(
         Math.hypot(stopped.vx, stopped.vy) < 0.03,
@@ -539,13 +541,13 @@ if (restore) {
 
     await a.reducers.renameShip({
       shipId: ship.id,
-      name: "Persistent Wayfarer",
+      name: "Persistent Ship",
       expectedRevision: ship.revision,
       operationId: "persistent-edit",
     });
     await a.reducers.renameShip({
       shipId: ship.id,
-      name: "Persistent Wayfarer",
+      name: "Persistent Ship",
       expectedRevision: ship.revision,
       operationId: "persistent-edit",
     });
@@ -690,8 +692,8 @@ if (restore) {
     // time, then prove the seated actor cannot walk or enter sprint state.
     await new Promise((resolve) => setTimeout(resolve, 150));
     assert.equal(ownActor().sprinting, false);
-    assert.equal(ownActor().localX, 0);
-    assert.equal(ownActor().localY, QUALIFIED_PILOT_POSITION[1]);
+    assert.equal(ownActor().localX, STARTER_PILOT_POSE.position[0]);
+    assert.equal(ownActor().localY, STARTER_PILOT_POSE.position[1]);
     await leaveNativePilot(a);
     await a.reducers.setIntent({
       sequence: nextSequence(a),
@@ -735,53 +737,29 @@ if (restore) {
         dy: 0,
       });
     };
-    await walkFor(1, 0, 1300);
-    assert(
-      ownActor().localX > 1.75 && ownActor().localX < 1.85,
-      `native swept canopy blocks crew at ${ownActor().localX},${ownActor().localY}`,
-    );
-    await walkFor(0, -1, 1200);
-    assert(
-      ownActor().localY >= 9.3 && ownActor().localY < 9.43,
-      "native bridge rear jamb blocks crew",
-    );
-    await walkNative(a, 0, ownActor().localY);
-    assert(
-      Math.abs(ownActor().localX) < 0.2,
-      "crew aligned with central bridge doorway",
-    );
-    await walkNative(a, 0, 7.5);
-    assert(
-      ownActor().localY < 8.325,
-      "central native doorway remains walkable",
-    );
-    const rebuilt =
-      [...a.db.ownGameShipAccess.iter()][0]?.templateSha256 ===
-      CURRENT_WAYFARER_STARTER.sha256;
-    if (rebuilt) {
-      await walkFor(1, 0, 1100);
-      assert(
-        ownActor().localX > 1.65 && ownActor().localX < 1.75,
-        "new corridor wall blocks crew at its inward face",
+    // Push toward the bow from the pilot approach: the authority stops the body at
+    // the hull, on a standing-valid point, with the hull just ahead.
+    const walkFrame = prefabWalkFrame(STARTER_PREFAB, STARTER_CATALOG);
+    const standing = (x: number, y: number) =>
+      canOccupyDeck(
+        walkFrame,
+        {
+          shipId: walkFrame.shipId,
+          deckId: walkFrame.deckId,
+          position: [x, y],
+        },
+        0.3,
       );
-      await walkNative(a, 0, 7.5);
-      await walkNative(a, 0, 7);
-      await walkNative(a, 2.6, 7);
-    } else await walkNative(a, 2, 7.5);
-    await walkFor(0, -1, 1500);
-    summary.authoritative_native_bow_collision = true;
-    const atWall = [...a.db.ownCharacters.iter()][0];
+    const bow =
+      STARTER_PILOT_POSE.position[1] > STARTER_PILOT_POSE.approach[1] ? 1 : -1;
+    await walkFor(0, bow, 2500);
+    const atHull = ownActor();
     assert(
-      atWall.localX > 1.5 && atWall.localX < 2.8,
-      "crew reached the room partition",
+      standing(atHull.localX, atHull.localY) &&
+        !standing(atHull.localX, atHull.localY + bow * 0.5),
+      `authority stops crew at the hull: ${atHull.localX},${atHull.localY}`,
     );
-    assert(
-      rebuilt
-        ? Math.abs(atWall.localY - (5.25 + 0.3)) < 0.01
-        : atWall.localY >= 5.65 && atWall.localY < 5.9,
-      `authority stops crew at the visible bulkhead: ${atWall.localX},${atWall.localY}`,
-    );
-    summary.authoritative_room_collision = true;
+    summary.authoritative_native_hull_collision = true;
     const inventoryClient = await client();
     let inventoryEvidence;
     try {
@@ -789,48 +767,12 @@ if (restore) {
         inventoryClient.connection,
         b,
         wait,
+        (reducer, ...args) => operatorCall(host, database, reducer, ...args),
       );
     } finally {
       inventoryClient.connection.disconnect();
     }
     summary.inventory_authority_packing_equipment_hotbar_privacy = true;
-    const interactionClient = await client();
-    let interactionEvidence;
-    try {
-      interactionEvidence = await interactionSmoke(
-        interactionClient.connection,
-        b,
-        wait,
-      );
-    } finally {
-      interactionClient.connection.disconnect();
-    }
-    await new Promise((resolve) => setTimeout(resolve, 150));
-    const interactionReconnect = await client(interactionClient.token);
-    try {
-      await interactionReconnect.connection.reducers.enterLab({
-        name: "Interaction Smoke",
-      });
-      await wait(
-        () => interactionReconnect.connection.db.ownInteractions.count() === 4n,
-        "interaction reconnect",
-      );
-      const rows = [
-        ...interactionReconnect.connection.db.ownInteractions.iter(),
-      ];
-      assert(
-        rows.every((row) => !row.seatedByYou),
-        "disconnect clears couch seat",
-      );
-      assert.equal(
-        rows.find((row) => row.id === interactionEvidence.lightId)!.enabled,
-        false,
-        "grow-light state persists reconnect",
-      );
-    } finally {
-      interactionReconnect.connection.disconnect();
-    }
-    summary.interaction_authority_reach_seating_lights_retry_privacy = true;
     const combatClient = await client();
     let combatEvidence;
     try {

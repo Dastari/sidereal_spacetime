@@ -1,6 +1,6 @@
 import type { LayoutDocument, ServiceChannel } from "./ship-layout";
 import type { PartCatalog } from "./assembly";
-import { WAYFARER_ACTUATOR_DEFINITIONS } from "./physical-definitions";
+import { PHYSICAL_ACTUATOR_DEFINITIONS } from "./physical-definitions";
 
 /** Connection semantics only. No electrical/fuel ratings have been approved. */
 export interface DeviceServicePortDefinition {
@@ -17,8 +17,8 @@ export interface PlacedDeviceServices {
   position: [number, number, number];
   ports: DeviceServicePortDefinition[];
 }
-export const WAYFARER_REACTOR_SOURCE_ID = "room-engineering";
-export const WAYFARER_REACTOR_ASSET_ID = "part-77728ecc8ad36b0ff45f";
+export const NATIVE_REACTOR_SOURCE_ID = "room-engineering";
+export const NATIVE_REACTOR_ASSET_ID = "part-77728ecc8ad36b0ff45f";
 const engineAssets = new Set([
   "part-e8b51ac6443c73becfcb",
   "part-4d754a140cc642ded990",
@@ -28,14 +28,14 @@ const engineAssets = new Set([
   "part-393498d8c8af6149ef28",
 ]);
 const engineDefinitions = new Set(
-  WAYFARER_ACTUATOR_DEFINITIONS.map((a) => a.fittingDefinitionId),
+  PHYSICAL_ACTUATOR_DEFINITIONS.map((a) => a.fittingDefinitionId),
 );
 export const deviceServicePortId = (placedObjectId: string, portId: string) =>
   `${placedObjectId}:${portId}`;
 export function deviceServiceDefinitions(
   definitionId: string,
 ): DeviceServicePortDefinition[] {
-  if (definitionId === WAYFARER_REACTOR_ASSET_ID)
+  if (definitionId === NATIVE_REACTOR_ASSET_ID)
     return [
       {
         id: "power-out",
@@ -107,7 +107,7 @@ export function withDefaultDevicePower(
 ): LayoutDocument {
   const devices = placedDeviceServices(layout, catalog);
   const reactor = devices.find(
-    (d) => d.definitionId === WAYFARER_REACTOR_ASSET_ID,
+    (d) => d.definitionId === NATIVE_REACTOR_ASSET_ID,
   );
   if (!reactor) return layout;
   const next = JSON.parse(JSON.stringify(layout)) as LayoutDocument;

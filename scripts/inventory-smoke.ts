@@ -1,10 +1,16 @@
-import { CURRENT_WAYFARER_STARTER } from "../packages/content/src/wayfarer-current-starter";
 import { firstInventoryPlacement } from "../packages/sim/src/inventory";
 import {
   INVENTORY_DEFINITIONS,
   LIQUID_DENSITY_KG_PER_LITRE,
 } from "../packages/content/src/inventory";
-import { walkNative } from "./native-starter-smoke";
+import {
+  STARTER_CATALOG,
+  STARTER_PILOT_POSE,
+  STARTER_PREFAB,
+  walkStarterTo,
+} from "./native-starter-smoke";
+import { prefabCargoSockets } from "../packages/sim/src/prefab-cargo-sockets";
+import { INVENTORY_PHYSICAL_DEFINITIONS } from "../packages/content/src/inventory-physical-definitions";
 import { backpackSmoke } from "./backpack-smoke";
 import assert from "node:assert/strict";
 import type { DbConnection } from "../packages/net/src/generated";
@@ -12,6 +18,8 @@ export async function inventorySmoke(
   a: DbConnection,
   b: DbConnection,
   wait: (fn: () => boolean, message: string) => Promise<void>,
+  /** Operator-only reducer call on the isolated smoke database. */
+  operator: (reducer: string, ...args: string[]) => void,
 ) {
   await assert.rejects(a.reducers.claimStarterKit({}));
   await a.reducers.enterLab({ name: "Inventory Smoke" });
@@ -207,20 +215,27 @@ export async function inventorySmoke(
   await assert.rejects(
     a.reducers.activateInventoryHotbar({ ...mutation(), slot: 1 }),
   );
-  // Native starters own empty instance containers. Personal inventory remains
-  // private; scoped transfers validate both container revisions and item identity.
+  // The operator stocks the starter ship's storage sockets (one item each), as on
+  // live. Personal inventory remains private; scoped transfers validate both
+  // container revisions and item identity.
   await a.reducers.claimInputControl({});
-  const rebuilt =
-    [...a.db.ownGameShipAccess.iter()][0]?.templateSha256 ===
-    CURRENT_WAYFARER_STARTER.sha256;
-  for (const [x, y] of [
-    ...(rebuilt ? [] : [[-2, -1.5]]),
-    [0, -1.5],
-    [0, 3],
-    [-2.4, 3],
-    [-3.5, 2.75],
-  ])
-    await walkNative(a, x!, y!);
+  const sockets = prefabCargoSockets(STARTER_PREFAB, 0, STARTER_CATALOG);
+  assert(sockets.length >= 1, "starter ship has storage sockets");
+  const stockItem = INVENTORY_DEFINITIONS.find((d) =>
+    INVENTORY_PHYSICAL_DEFINITIONS.some((p) => p.id === "inventory:" + d.id),
+  )!.id;
+  const self = [...a.db.ownCharacters.iter()][0]!;
+  for (const [index, socket] of sockets.entries())
+    operator(
+      "operator_stock_ship_cargo",
+      JSON.stringify(`smoke-stock-${index}-${self.id}`),
+      "false",
+      JSON.stringify(self.id),
+      JSON.stringify(self.shipId),
+      JSON.stringify(socket.key),
+      JSON.stringify("Smoke storage"),
+      JSON.stringify(JSON.stringify([stockItem])),
+    );
   const cargo = () => [...a.db.ownReachableCargoContainers.iter()];
   const cargoItems = () => [...a.db.ownReachableCargoItems.iter()];
   const revisions = () => [...a.db.ownCarriedInventoryRevisions.iter()];
@@ -228,22 +243,48 @@ export async function inventorySmoke(
     revisions().find((r) => r.id === id)?.revision ??
     cargo().find((r) => r.id === id)?.revision ??
     cargoItems().find((r) => r.id === id)?.revision;
-  await wait(
-    () => cargo().filter((c) => c.placedObjectId).length === 4,
-    "four native cargo containers reachable",
-  );
-  const roots = cargo().filter((c) => c.placedObjectId);
-  assert.equal(cargoItems().length, 0, "new authored containers start empty");
+  const socketRoot = (key: string) =>
+    cargo().find((c) => c.placedObjectId.endsWith(":" + key));
+  const roots: ReturnType<typeof cargo> = [];
+  for (const socket of sockets) {
+    await walkStarterTo(a, socket.approachesM[0]!);
+    await wait(() => !!socketRoot(socket.key), socket.key + " reachable");
+    roots.push(socketRoot(socket.key)!);
+  }
   assert.equal(
     new Set(roots.map((c) => c.id)).size,
-    4,
-    "four independent container UUIDs",
+    sockets.length,
+    "independent container UUIDs",
   );
   assert(
     roots.every((c) => c.id !== c.placedObjectId),
     "inventory and placed-object identities remain distinct",
   );
   const crate = roots[0]!;
+  const crateSocket = sockets[0]!;
+  const fitInto = (containerId: string, itemId: string) =>
+    firstInventoryPlacement(
+      {
+        items: [
+          ...items(),
+          ...cargoItems().map((i) => ({ ...i, equipmentSlot: "" })),
+        ],
+        containers: [
+          ...containers(),
+          ...cargo().map((c) => ({
+            ...c,
+            carried: false,
+            placementId: c.placedObjectId,
+          })),
+        ],
+      },
+      INVENTORY_DEFINITIONS,
+      LIQUID_DENSITY_KG_PER_LITRE,
+      state().pocketsId,
+      32,
+      itemId,
+      containerId,
+    );
   const originalPistol = { ...find("compact-pistol") };
   const transferCommand = (
     itemId: string,
@@ -286,8 +327,17 @@ export async function inventorySmoke(
     );
     assert.deepEqual(find("compact-pistol"), originalPistol);
   };
-  for (const root of roots) {
-    const command = transferCommand(pistol.id, root.id, 0, 0);
+  for (const [index, root] of roots.entries()) {
+    await walkStarterTo(a, sockets[index]!.approachesM[0]!);
+    const placement = fitInto(root.id, pistol.id);
+    assert(placement, "room for the pistol in " + root.name);
+    const command = transferCommand(
+      pistol.id,
+      root.id,
+      placement.x,
+      placement.y,
+      placement.rotated,
+    );
     await assert.rejects(b.reducers.transferScopedCargoItem(command));
     await a.reducers.transferScopedCargoItem(command);
     await wait(
@@ -322,8 +372,16 @@ export async function inventorySmoke(
   }
   // A stored weapon cannot be equipped through the legacy private reducer. The
   // deliberate take-then-equip sequence must preserve the displaced hand item.
+  await walkStarterTo(a, crateSocket.approachesM[0]!);
+  const crateSlot = () => fitInto(crate.id, pistol.id)!;
   await a.reducers.transferScopedCargoItem(
-    transferCommand(pistol.id, crate.id, 0, 0),
+    transferCommand(
+      pistol.id,
+      crate.id,
+      crateSlot().x,
+      crateSlot().y,
+      crateSlot().rotated,
+    ),
   );
   await assert.rejects(
     a.reducers.equipInventoryItem({ ...mutation(), itemId: pistol.id }),
@@ -340,7 +398,13 @@ export async function inventorySmoke(
   // deny it and remove both container metadata and its contents from this client.
   const beforeRangePistol = { ...find("compact-pistol") };
   await a.reducers.transferScopedCargoItem(
-    transferCommand(pistol.id, crate.id, 0, 0),
+    transferCommand(
+      pistol.id,
+      crate.id,
+      crateSlot().x,
+      crateSlot().y,
+      crateSlot().rotated,
+    ),
   );
   const withdrawal = transferCommand(
     pistol.id,
@@ -349,12 +413,7 @@ export async function inventorySmoke(
     beforeRangePistol.y,
     beforeRangePistol.rotated,
   );
-  for (const [x, y] of [
-    [-2.4, 3],
-    [0, 3],
-    [0, -1.5],
-  ])
-    await walkNative(a, x!, y!);
+  await walkStarterTo(a, STARTER_PILOT_POSE.approach);
   await wait(
     () => !cargo().some((c) => c.id === crate.id),
     "range loss revokes native cargo discovery",
@@ -371,12 +430,7 @@ export async function inventorySmoke(
       itemId: "",
     });
   await assert.rejects(a.reducers.assignInventoryHotbar(oldest));
-  for (const [x, y] of [
-    [0, 3],
-    [-2.4, 3],
-    [-3.5, 2.75],
-  ])
-    await walkNative(a, x!, y!);
+  await walkStarterTo(a, crateSocket.approachesM[0]!);
   await wait(
     () => cargo().some((c) => c.id === crate.id),
     "native cargo rediscovered",

@@ -1,8 +1,3 @@
-import {
-  planWayfarerExteriorGame,
-  type WayfarerExteriorDocument,
-} from "./wayfarer-exterior-qualification";
-import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
 import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
 import { planPinnedInsetBoundaries } from "./construction-inset-boundaries";
 import {
@@ -242,13 +237,7 @@ export function planConstructionInstance(
     "Selected deck has insufficient standing clearance above native floor top",
   );
   assert(
-    !(
-      source.traversalRoom ||
-      source.stairRoom ||
-      source.airlockRoom ||
-      source.wayfarerRebuild ||
-      source.wayfarerExterior
-    ) ||
+    !(source.traversalRoom || source.stairRoom || source.airlockRoom) ||
       (request.bodyRadiusM === 0.3 && request.bodyHeightM === 1.8),
     "Native traversal fixture requires its qualified standing body",
   );
@@ -267,22 +256,17 @@ export function planConstructionInstance(
       "prefab" in source && source.prefab
         ? // Trusted prefab ships spawn clear of their modules and furniture.
           prefabConstructionObstacles(source)!
-        : source.wayfarerRebuild || source.wayfarerExterior
-          ? (source.wayfarerExterior
-              ? planWayfarerExteriorGame(source as WayfarerExteriorDocument)
-              : planWayfarerRebuildGame(source)
-            ).sourceObstacles.filter((o) => o.id.startsWith("rebuild-"))
-          : source.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id
-            ? planPinnedInsetBoundaries(source, request.sourceDeckId).obstacles
-            : source.stairRoom
-              ? nativeStairRoomCollision(source, request.sourceDeckId)
-              : source.traversalRoom
-                ? nativeTraversalRoomCollision(source, request.sourceDeckId)
-                : source.pressureRoom
-                  ? nativePressureRoomCollision(source, request.sourceDeckId)
-                  : source.boundaryKit?.revision === "r004"
-                    ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
-                    : [];
+        : source.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id
+          ? planPinnedInsetBoundaries(source, request.sourceDeckId).obstacles
+          : source.stairRoom
+            ? nativeStairRoomCollision(source, request.sourceDeckId)
+            : source.traversalRoom
+              ? nativeTraversalRoomCollision(source, request.sourceDeckId)
+              : source.pressureRoom
+                ? nativePressureRoomCollision(source, request.sourceDeckId)
+                : source.boundaryKit?.revision === "r004"
+                  ? pinnedFamilyCollision(source.layout, request.sourceDeckId)
+                  : [];
   for (const [i, binding] of [...request.objectCollisionBindings]
     .sort((a, b) => compareText(a.sourceObjectId, b.sourceObjectId))
     .entries()) {
@@ -389,13 +373,6 @@ export function planConstructionInstance(
     layout.structure?.schema === "sidereal.layout-structure.v2"
       ? layout.structure.boundaryTreatments
       : [],
-    ...(source.wayfarerRebuild || source.wayfarerExterior
-      ? [
-          layout.structure?.schema === "sidereal.layout-structure.v2"
-            ? layout.structure.navigationReservations
-            : [],
-        ]
-      : []),
     source.airlockRoom?.parts ?? [],
     source.stairRoom
       ? [
@@ -509,16 +486,6 @@ export function planConstructionInstance(
         ? layout.structure.boundaryTreatments
         : [],
     ),
-    ...(source.wayfarerRebuild || source.wayfarerExterior
-      ? {
-          navigationReservations: map(
-            "navigation-reservation",
-            layout.structure?.schema === "sidereal.layout-structure.v2"
-              ? layout.structure.navigationReservations
-              : [],
-          ),
-        }
-      : {}),
     cargoGrids: [],
   };
   const all = new Map(
@@ -579,9 +546,7 @@ export function planConstructionInstance(
   if (actual.structure?.schema === "sidereal.layout-structure.v2") {
     const structure = actual.structure;
     assert(
-      (!structure.navigationReservations.length ||
-        !!spawned.wayfarerRebuild ||
-        !!spawned.wayfarerExterior) &&
+      !structure.navigationReservations.length &&
         !structure.armor.length &&
         !Object.keys(structure.wallFaces).length,
       "Unsupported structural attachments require explicit identity adapters",
@@ -636,27 +601,10 @@ export function planConstructionInstance(
     for (const part of r.parts) part.id = mapped(part.id);
     for (const aperture of r.apertures) aperture.id = mapped(aperture.id);
   }
-  if (spawned.wayfarerRebuild) {
-    spawned.wayfarerRebuild.identities = Object.fromEntries(
-      Object.keys(spawned.wayfarerRebuild.identities).map((id) => [
-        id,
-        id === layout.id ? instanceId : mapped(id),
-      ]),
-    );
-  }
-  if (spawned.wayfarerExterior) {
-    spawned.wayfarerExterior.identities = Object.fromEntries(
-      Object.keys(spawned.wayfarerExterior.identities).map((id) => [
-        id,
-        id === layout.id ? instanceId : mapped(id),
-      ]),
-    );
-  }
   const prefab = (
     spawned as ConstructionDocument & { prefab?: Record<string, unknown> }
   ).prefab;
   if (prefab) {
-    // Same identity-substitution contract as wayfarerRebuild/wayfarerExterior.
     const identities: Record<string, string> = { [layout.id]: instanceId };
     for (const [sourceId, id] of all) identities[sourceId] = id;
     prefab.identities = identities;

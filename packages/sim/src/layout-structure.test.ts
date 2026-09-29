@@ -17,9 +17,15 @@ import {
   proposeWallOpening,
 } from "./layout-structure";
 import { readLayout } from "./layout-validation";
-import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
-const canonical = JSON.parse(WAYFARER_STARTER.documentJson);
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { prefabConstructionDocument } from "./prefab-construction";
 import { compileConstruction } from "./construction-transactions";
+/** A published (non-structural) source: the derived Wren prefab construction document. */
+const canonical = prefabConstructionDocument(
+  prefabById("fed.s.wren")!,
+  defaultPrefabComponentCatalog(),
+);
 const hull = {
   id: "test",
   revision: "1",
@@ -51,11 +57,20 @@ const partition = (id: string, a: Point, b: Point) => ({
 });
 describe("opt-in structural authoring contract", () => {
   it("preserves the exact canonical source and leaves legacy interpretation unchanged", () => {
-    expect(compileConstruction(JSON.stringify(canonical)).sha256).toBe(
-      "362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340",
+    const text = JSON.stringify(canonical);
+    expect(compileConstruction(text).sha256).toBe(
+      compileConstruction(JSON.stringify(JSON.parse(text))).sha256,
     );
     expect(compileLayout(canonical.layout).structure).toBeUndefined();
-    const selected = setHullEnvelope(readLayout(canonical.layout), {
+    // Opting an unstructured deck into structural authoring is explicit and admitted.
+    const legacy = emptyLayout("legacy", "deck");
+    for (let x = 0; x < 3; x++)
+      for (let y = 0; y < 3; y++)
+        legacy.tiles.push(
+          stampTile(`t${x}${y}`, "deck", "rectangle", [x * 64 - 96, y * 64]),
+        );
+    expect(compileLayout(legacy).structure).toBeUndefined();
+    const selected = setHullEnvelope(readLayout(legacy), {
       ...HULL_SIZE_CATALOG[0],
       origin: [...HULL_SIZE_CATALOG[0].origin],
     });

@@ -17,22 +17,6 @@ import {
   readGroundPlacement,
 } from "@sidereal/sim/ground-placement";
 import type { DeckCollisionFrame } from "@sidereal/sim/construction-collision";
-import { readFileSync } from "node:fs";
-import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
-import {
-  createWayfarerConversionCandidate,
-  type WayfarerPinnedInputs,
-} from "@sidereal/sim/wayfarer-conversion-candidate";
-import { planConstructionInstance } from "@sidereal/sim/construction-instance";
-import {
-  qualifiedWayfarerWalkingBindings,
-  qualifiedWayfarerInstanceObstacles,
-} from "@sidereal/sim/wayfarer-walking-bindings";
-import {
-  compileDeckCollision,
-  resolveDeckCollision,
-} from "@sidereal/sim/construction-collision";
-import { createConstructionStandingSupport } from "./construction-standing-support";
 
 function fixture() {
   mock.now = -1n;
@@ -262,84 +246,6 @@ test("unqualified native drops never infer an arbitrary one-deck or multi-deck s
       ],
     },
   });
-  expect(f.access().position(f.container, binding, 12)).toBeUndefined();
-});
-test("exact qualified historical Wayfarer drop at the reviewed position retains visibility and pickup without rewriting it", () => {
-  const f = fixture();
-  const candidate = createWayfarerConversionCandidate(
-    Object.fromEntries(
-      Object.keys(PIN.sources).map((p) => [p, readFileSync(p, "utf8")]),
-    ) as WayfarerPinnedInputs,
-  );
-  let sequence = 0;
-  const plan = planConstructionInstance(
-    candidate.snapshot,
-    {
-      blueprintRevisionId: "ground-test",
-      expectedBlueprintSha256: candidate.snapshot.sha256,
-      sourceDeckId: PIN.deckId,
-      bodyRadiusM: 0.3,
-      bodyHeightM: 1.8,
-      perimeterHalfWidthM: 0,
-      partitionHalfWidthM: 0,
-      objectCollisionBindings: qualifiedWayfarerWalkingBindings(
-        candidate.snapshot,
-        0.3,
-        1.8,
-      ),
-    },
-    () =>
-      `00000000-0000-4000-8000-${(++sequence).toString(16).padStart(12, "0")}`,
-  );
-  Object.assign(f.instance, {
-    id: plan.instanceId,
-    blueprintSha256: plan.blueprintSha256,
-    documentJson: JSON.stringify(plan.document),
-    idMapJson: JSON.stringify(plan.mappings),
-  });
-  f.actor.shipId =
-    f.container.shipId =
-    f.visit.instanceId =
-    f.deck.instanceId =
-      plan.instanceId;
-  f.visit.deckId = f.deck.id = plan.spawn.deckId;
-  f.actor.localX = f.container.localX = 0.4247476097478585;
-  f.actor.localY = f.container.localY = 5.216286276553653;
-  Object.assign(
-    f.frame,
-    resolveDeckCollision(
-      compileDeckCollision(plan.document.layout, plan.spawn.deckId, {
-        shipId: plan.instanceId,
-        perimeterHalfWidthM: 0,
-        partitionHalfWidthM: 0,
-        obstacles: qualifiedWayfarerInstanceObstacles(
-          f.instance,
-          plan.spawn.deckId,
-        ),
-      }),
-      [],
-    ),
-  );
-  const support = createConstructionStandingSupport();
-  f.geometry.supportHeightAt = (x, y) =>
-    support({
-      actor: { ...f.actor, localX: x, localY: y },
-      location: f.visit,
-      instance: f.instance,
-      deck: f.deck,
-    });
-  const binding = { placementId: "ground:" + f.item.id },
-    before = JSON.stringify(binding);
-  expect(f.access().position(f.container, binding, 1.8)).toEqual({
-    instanceId: plan.instanceId,
-    deckId: plan.spawn.deckId,
-    elevationM: 0.1875,
-  });
-  expect(JSON.stringify(binding)).toBe(before);
-  f.instance.documentJson = f.instance.documentJson.replace(
-    '"ceiling":82',
-    '"ceiling":83',
-  );
   expect(f.access().position(f.container, binding, 12)).toBeUndefined();
 });
 test("legacy drops keep their legacy frame, while malformed native metadata cannot grant legacy access", () => {

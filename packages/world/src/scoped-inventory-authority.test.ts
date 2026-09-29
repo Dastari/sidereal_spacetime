@@ -1,424 +1,390 @@
-import { planQualifiedWayfarerFunctionalSeeds } from "@sidereal/sim/construction-functional-instances";
-import { readFileSync } from "node:fs";
 import { expect, it, vi } from "vitest";
 import { Identity } from "spacetimedb";
-vi.mock("spacetimedb/server", () => ({
-  SenderError: class extends Error {},
-  table: () => ({}),
-  t: new Proxy(
-    {},
-    {
-      get: () => () => ({
-        primaryKey() {
-          return this;
-        },
-        unique() {
-          return this;
-        },
-      }),
-    },
-  ),
+vi.mock("spacetimedb/server", () => {
+  const chain: any = new Proxy({}, { get: () => () => chain });
+  return {
+    SenderError: class extends Error {},
+    Range: class {},
+    table: () => ({}),
+    t: new Proxy({}, { get: () => () => chain }),
+  };
+});
+vi.mock("./auth", () => ({
+  requireGame: (ctx: { live: boolean }) => {
+    if (!ctx.live) throw Error("Live game required");
+  },
+  canReadGame: (ctx: { live: boolean }) => ctx.live,
 }));
 vi.mock("./combat", () => ({ clearAim: vi.fn() }));
-import { installQualifiedInstanceCargo } from "./scoped-inventory-installation";
+import { SHIP_OPERATOR } from "./ship-operator";
+import { onboardNewCharacter } from "./ship-policy";
+import { ensureCanonicalSystem } from "./shared-world";
+import { assignPrefabShip, prefabShipSpawner } from "./ship-assign";
+import { stockShipCargo } from "./ship-cargo-operator";
 import {
-  synchronizeLegacyInventory,
   legacyInventorySnapshot,
   moveScopedCargo,
   reachableCargoContainers,
   reachableCargoItems,
 } from "./scoped-inventory-authority";
-import {
-  createWayfarerConversionCandidate,
-  type WayfarerPinnedInputs,
-} from "@sidereal/sim/wayfarer-conversion-candidate";
-import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
-import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
-import { planConstructionInstance } from "@sidereal/sim/construction-instance";
-import { lifecycleTestTables } from "./lifecycle-test-tables";
-// Ordinary indexed ctx.db emulator. Real transactional behavior is separately
-// required in the isolated authority journey; mocks never claim rollback proof.
-function table(primary = "id", indices: Record<string, string[]> = {}) {
-  const rows = new Map<string, any>();
-  const t: any = {
-    rows,
-    insert: (r: any) => {
-      if (rows.has(r[primary])) throw Error("duplicate");
-      rows.set(r[primary], { ...r });
-      return r;
-    },
-  };
-  t[primary] = {
-    find: (id: string) => rows.get(id),
-    update: (r: any) => {
-      if (!rows.has(r[primary])) throw Error("missing");
-      rows.set(r[primary], { ...r });
-    },
-    delete: (id: string) => rows.delete(id),
-  };
-  for (const [name, fields] of Object.entries(indices))
-    t[name] = {
-      filter: (key: any) =>
-        [...rows.values()].filter((row) =>
-          fields.every(
-            (f, i) =>
-              String(row[f]) === String(fields.length === 1 ? key : key[i]),
-          ),
-        ),
-      find: (key: any) =>
-        [...rows.values()].find((row) =>
-          fields.every(
-            (f, i) =>
-              String(row[f]) === String(fields.length === 1 ? key : key[i]),
-          ),
-        ),
-    };
-  return t;
-}
+import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+
+// Ordinary indexed ctx.db emulator (as ship-cargo-operator.test.ts). Real transactional
+// behaviour is separately required in the isolated authority journey; mocks never claim
+// rollback proof.
+type Row = Record<string, any>;
+const PRIMARY: Record<string, string> = {
+  personalStarterReceipt: "owner",
+  gameShipAccess: "shipId",
+  shipWorldMotion: "shipId",
+  bodyWorldMotion: "bodyId",
+  worldAdmission: "characterId",
+  constructionFlightBinding: "shipId",
+  constructionFlightCompiled: "shipId",
+  constructionFlightDirty: "shipId",
+  constructionFlightStation: "stationId",
+  constructionLocation: "characterId",
+  input: "characterId",
+  inventoryState: "characterId",
+  inventoryContainerScope: "containerId",
+  inventoryItemMembership: "itemId",
+  instanceInventoryBinding: "placedObjectId",
+  constructionInteractionBinding: "objectId",
+  constructionPilotSeat: "characterId",
+  shipZoneState: "shipId",
+  pilotLayoutReceipt: "shipId",
+  legacyBodyAlias: "legacyBodyId",
+  constructionStairWalk: "characterId",
+  constructionStairReservation: "stairId",
+  constructionTraversal: "characterId",
+  constructionTraversalReservation: "linkId",
+  couchSeat: "characterId",
+  constructionPassengerVisit: "characterId",
+  constructionFlightReview: "characterId",
+  constructionReviewOrigin: "characterId",
+  constructionCargoAssembly: "containerId",
+  constructionCargoPlacement: "containerId",
+  weaponEnergy: "itemId",
+  shipOperatorOperation: "operationId",
+  characterUniformIssue: "characterId",
+};
+const FIELD: Record<string, string> = {
+  by_owner: "owner",
+  by_system: "systemId",
+  by_ship: "shipId",
+  by_root: "rootContainerId",
+  by_deck: "deckId",
+  by_instance: "instanceId",
+  by_character: "characterId",
+  by_principal: "principal",
+  by_operation: "operationId",
+  by_container: "containerId",
+};
+let fixtureSequence = 0;
 function fixture() {
-  let n = 0;
-  const uuid = () =>
-    `00000000-0000-4000-8000-${(++n).toString(16).padStart(12, "0")}`;
-  const owner = Identity.fromString("1".repeat(64));
-  const candidate = createWayfarerConversionCandidate(
-    Object.fromEntries(
-      Object.keys(PIN.sources).map((p) => [p, readFileSync(p, "utf8")]),
-    ) as WayfarerPinnedInputs,
-  );
-  const plan = planConstructionInstance(
-    candidate.snapshot,
-    {
-      blueprintRevisionId: "blueprint",
-      expectedBlueprintSha256: candidate.snapshot.sha256,
-      sourceDeckId: PIN.deckId,
-      bodyRadiusM: 0.3,
-      bodyHeightM: 1.8,
-      perimeterHalfWidthM: 0,
-      partitionHalfWidthM: 0,
-      objectCollisionBindings: qualifiedWayfarerWalkingBindings(
-        candidate.snapshot,
-        0.3,
-        1.8,
-      ),
+  const key = (v: unknown) =>
+    v && typeof (v as { toHexString?: unknown }).toHexString === "function"
+      ? (v as { toHexString(): string }).toHexString()
+      : String(v);
+  const db = new Proxy({} as Record<string, any>, {
+    get(target, name: string) {
+      if (target[name]) return target[name];
+      const rows: Row[] = [];
+      const pk = PRIMARY[name] ?? "id";
+      target[name] = new Proxy(
+        {
+          rows,
+          iter: () => rows.values(),
+          insert: (row: Row) => {
+            if (rows.some((r) => key(r[pk]) === key(row[pk])))
+              throw Error("Duplicate row:" + name);
+            rows.push({ ...row });
+            return row;
+          },
+        },
+        {
+          get(t, index: string) {
+            if (index in t) return (t as any)[index];
+            const column = FIELD[index] ?? index;
+            return {
+              find: (value: unknown) =>
+                rows.find((r) => key(r[column]) === key(value)),
+              filter: (value: unknown) =>
+                Array.isArray(value)
+                  ? rows.filter(
+                      (r) =>
+                        key(r.instanceId) === key(value[0]) &&
+                        key(r.deckId) === key(value[1]),
+                    )
+                  : rows.filter((r) => key(r[column]) === key(value)),
+              update: (row: Row) => {
+                const at = rows.findIndex((r) => key(r[pk]) === key(row[pk]));
+                if (at < 0) throw Error("Missing row");
+                rows[at] = { ...row };
+              },
+              delete: (value: unknown) => {
+                const at = rows.findIndex((r) => key(r[column]) === key(value));
+                if (at >= 0) rows.splice(at, 1);
+              },
+            };
+          },
+        },
+      );
+      return target[name];
     },
-    uuid,
-  );
-  const db: any = {
-    ...lifecycleTestTables(),
-    constructionFlightBinding: { shipId: { find: () => undefined } },
-    constructionCargoAssembly: table("containerId", {
-      by_instance: ["instanceId"],
-    }),
-    constructionCargoGrid: table("id", { by_instance: ["instanceId"] }),
-    constructionCargoPlacement: table("containerId", { by_grid: ["gridId"] }),
-    constructionCargoOperation: table("id", { by_principal: ["principal"] }),
-    wayfarerRefitAttachment: table("id", { by_instance: ["instanceId"] }),
-    character: table("id", { by_owner: ["owner"] }),
-    constructionLocation: table("characterId"),
-    constructionInstance: table(),
-    constructionDeck: table(),
-    constructionGrant: table("id", { by_principal: ["principal"] }),
-    constructionDoor: table("id", { by_deck: ["deckId"] }),
-    constructionTraversal: table("characterId"),
-    constructionStairWalk: table("characterId"),
-    couchSeat: table("characterId"),
-    station: table("shipId"),
-    inventoryItem: table("id", { by_character: ["characterId"] }),
-    inventoryContainer: table("id", { by_character: ["characterId"] }),
-    inventoryState: table("characterId"),
-    inventoryItemMembership: table("itemId", {
-      by_root: ["rootContainerId"],
-      by_character: ["rootCharacterId"],
-    }),
-    inventoryContainerScope: table("containerId", {
-      by_root: ["rootContainerId"],
-      by_character: ["rootCharacterId"],
-      by_instance_deck: ["instanceId", "deckId"],
-    }),
-    instanceInventoryBinding: table("placedObjectId"),
-    scopedInventoryReceipt: table(),
-    inventoryHotbar: table("id", { by_character: ["characterId"] }),
-  };
-  db.constructionInstance.insert({
-    id: plan.instanceId,
-    owner,
-    workspaceId: "workspace",
-    revision: 1n,
-    blueprintSha256: plan.blueprintSha256,
-    documentJson: JSON.stringify(plan.document),
-    idMapJson: JSON.stringify(plan.mappings),
   });
-  db.constructionDeck.insert({
-    id: plan.spawn.deckId,
-    instanceId: plan.instanceId,
-    elevation: 0,
-  });
-  db.character.insert({
-    id: "actor",
-    owner,
-    connected: true,
-    shipId: plan.instanceId,
-    localX: -3.5,
-    localY: 2.75,
-  });
-  db.constructionLocation.insert({
-    characterId: "actor",
-    visitId: "accepted-owner-review",
-    instanceId: plan.instanceId,
-    deckId: plan.spawn.deckId,
-  });
-  db.constructionGrant.insert({
-    id: "grant",
-    principal: owner,
-    workspaceId: "workspace",
-    capability: "instance.spawn",
-    expiresMicros: 1000n,
-    revoked: false,
-  });
-  db.inventoryContainer.insert({
-    id: "pockets",
-    characterId: "actor",
-    parentItemId: "",
-    kind: "grid",
-    name: "Pockets",
-    width: 4,
-    height: 2,
-    maxMassKg: 6,
-    capacityLitres: 0,
-    amountLitres: 0,
-    liquidType: "",
-    carried: true,
-    shipId: "legacy-ship",
-    localX: 0,
-    localY: 0,
-  });
-  db.inventoryItem.insert({
-    id: "pistol",
-    characterId: "actor",
-    definitionId: "compact-pistol",
-    containerId: "pockets",
-    equipmentSlot: "",
-    x: 0,
-    y: 0,
-    rotated: false,
-  });
-  db.inventoryState.insert({
-    characterId: "actor",
-    revision: 1n,
-    kitGranted: true,
-  });
-  db.inventoryHotbar.insert({
-    id: "slot-0",
-    characterId: "actor",
-    slot: 0,
-    itemId: "pistol",
-  });
-  const ctx = {
+  let sequence = 1 + ++fixtureSequence * 100000;
+  const raw = {
     db,
-    sender: owner,
-    timestamp: { microsSinceUnixEpoch: 10n },
-    newUuidV4: uuid,
-  } as unknown as Parameters<typeof installQualifiedInstanceCargo>[0];
-  synchronizeLegacyInventory(
-    ctx,
-    "actor",
-    legacyInventorySnapshot(ctx, "actor"),
-  );
-  const request = (containerId: string) => ({
-    operationId: "store",
-    itemId: "pistol",
-    expectedItemRevision: 1n,
-    sourceContainerId: "pockets",
-    expectedSourceRevision: 1n,
-    destinationContainerId: containerId,
-    expectedDestinationRevision: 1n,
-    expectedCharacterRevision: 1n,
-    x: 0,
-    y: 0,
-    rotated: false,
-  });
-  return { ctx, db, plan, request };
+    sender: Identity.fromString("04".repeat(32)),
+    live: true,
+    timestamp: { microsSinceUnixEpoch: 123000000n },
+    newUuidV4: () => ({
+      toString: () =>
+        `77777777-7777-4777-8777-${(sequence++).toString(16).padStart(12, "0")}`,
+    }),
+  };
+  const as = (hex: string) => {
+    raw.sender = Identity.fromString(hex);
+  };
+  return { ctx: raw as any, db, as };
 }
-it("installs four empty UUID-bound native containers without rewriting carried or legacy inventory", () => {
-  const f = fixture(),
-    old = f.db.inventoryItem.id.find("pistol");
-  installQualifiedInstanceCargo(f.ctx, f.plan);
-  expect(f.db.instanceInventoryBinding.rows.size).toBe(4);
-  expect(f.db.inventoryContainer.rows.size).toBe(5);
-  expect(f.db.inventoryItem.rows.size).toBe(1);
-  expect(f.db.inventoryItem.id.find("pistol")).toEqual(old);
-  expect(() => installQualifiedInstanceCargo(f.ctx, f.plan)).toThrow(
-    "already bound",
-  );
-});
-it("actual ctx.db transfer removes old owner lookup, preserves identity, withdraws it and revokes views", () => {
+
+const OWNER = "04".repeat(32);
+
+/** The owner aboard a prefab Wren with its personal kit, standing at the stocked hold
+ * crate's qualified approach point, with a current game session. */
+async function ownerAtCrate() {
+  await import("./prefab-ship-spawners");
   const f = fixture();
-  installQualifiedInstanceCargo(f.ctx, f.plan);
-  const reachable = reachableCargoContainers(f.ctx);
-  expect(reachable.length).toBeGreaterThan(0);
-  const target = reachable[0].id,
-    request = f.request(target);
-  moveScopedCargo(f.ctx, request);
-  expect(f.db.inventoryItem.id.find("pistol").characterId).toBe("");
-  expect(legacyInventorySnapshot(f.ctx, "actor").items).toHaveLength(0);
-  expect(reachableCargoItems(f.ctx).map((i) => i.id)).toEqual(["pistol"]);
-  expect(f.db.inventoryHotbar.id.find("slot-0").itemId).toBe("");
-  moveScopedCargo(f.ctx, request);
-  expect(f.db.inventoryContainerScope.containerId.find(target).revision).toBe(
-    2n,
+  f.as(OWNER);
+  ensureCanonicalSystem(f.db as never);
+  const characterId = onboardNewCharacter(f.ctx, "Dastari");
+  f.as(SHIP_OPERATOR);
+  const wren = prefabShipSpawner("fed.s.wren")!;
+  assignPrefabShip(f.ctx, {
+    operationId: "assign-wren-01",
+    characterId,
+    prefabId: "fed.s.wren",
+    expectedCatalogRevision: wren.catalogRevision,
+    spawnPoseJson: "",
+    expectedCharacterShipId: "",
+    allowLegacy: false,
+  });
+  const shipId = f.db.character.id.find(characterId).shipId as string;
+  stockShipCargo(f.ctx, {
+    operationId: "stock-crate-01",
+    dryRun: false,
+    characterId,
+    shipId,
+    socketKey: "hold/cargo.standard.medium",
+    containerName: "Storage crate",
+    definitionIdsJson: JSON.stringify(["crew-medic-chest"]),
+  });
+  f.as(OWNER);
+  const crate = f.db.inventoryContainer.id.find(
+    f.db.instanceInventoryBinding.rows[0].containerId,
   );
+  const scope = f.db.inventoryContainerScope.containerId.find(crate.id);
+  f.db.character.id.update({
+    ...f.db.character.id.find(characterId),
+    localX: scope.accessX,
+    localY: scope.accessY,
+  });
+  f.db.authSession.insert({
+    id: "session-owner",
+    owner: Identity.fromString(OWNER),
+    game: true,
+    expiresMicros: 10n ** 18n,
+  });
+  const item = (definitionId: string) =>
+    f.db.inventoryItem.rows.find(
+      (i: Row) =>
+        i.characterId === characterId && i.definitionId === definitionId,
+    );
+  const revision = (id: string) =>
+    f.db.inventoryContainerScope.containerId.find(id).revision as bigint;
+  const itemRevision = (id: string) =>
+    f.db.inventoryItemMembership.itemId.find(id).revision as bigint;
+  const characterRevision = () =>
+    f.db.inventoryState.characterId.find(characterId).revision as bigint;
+  /** First free cell block for a definition in a grid container. */
+  const freeSpot = (containerId: string, definitionId: string) => {
+    const c = f.db.inventoryContainer.id.find(containerId);
+    const d = INVENTORY_DEFINITIONS.find((x) => x.id === definitionId)!;
+    const taken = f.db.inventoryItem.rows
+      .filter((i: Row) => i.containerId === containerId)
+      .map((i: Row) => {
+        const t = INVENTORY_DEFINITIONS.find((x) => x.id === i.definitionId)!;
+        return i.rotated
+          ? [i.x, i.y, t.height, t.width]
+          : [i.x, i.y, t.width, t.height];
+      });
+    for (let y = 0; y + d.height <= c.height; y++)
+      for (let x = 0; x + d.width <= c.width; x++)
+        if (
+          taken.every(
+            ([tx, ty, w, h]: number[]) =>
+              x >= tx + w ||
+              x + d.width <= tx ||
+              y >= ty + h ||
+              y + d.height <= ty,
+          )
+        )
+          return [x, y] as const;
+    throw Error("No free cell block");
+  };
+  return {
+    f,
+    characterId,
+    crate,
+    item,
+    revision,
+    itemRevision,
+    characterRevision,
+    freeSpot,
+  };
+}
+
+it("storing into a prefab ship's bound crate removes the owner lookup, preserves identity, withdraws and revokes views", async () => {
+  const s = await ownerAtCrate(),
+    { f } = s;
+  expect(reachableCargoContainers(f.ctx).map((c) => c.id)).toContain(
+    s.crate.id,
+  );
+  const pistol = s.item("compact-pistol"),
+    origin = { containerId: pistol.containerId, x: pistol.x, y: pistol.y };
+  const [x, y] = s.freeSpot(s.crate.id, "compact-pistol");
+  const request = {
+    operationId: "store",
+    itemId: pistol.id,
+    expectedItemRevision: s.itemRevision(pistol.id),
+    sourceContainerId: origin.containerId,
+    expectedSourceRevision: s.revision(origin.containerId),
+    destinationContainerId: s.crate.id,
+    expectedDestinationRevision: s.revision(s.crate.id),
+    expectedCharacterRevision: s.characterRevision(),
+    x,
+    y,
+    rotated: false,
+  };
+  moveScopedCargo(f.ctx, request);
+  expect(f.db.inventoryItem.id.find(pistol.id)).toMatchObject({
+    id: pistol.id,
+    characterId: "",
+    containerId: s.crate.id,
+  });
+  expect(
+    legacyInventorySnapshot(f.ctx, s.characterId).items.map((i) => i.id),
+  ).not.toContain(pistol.id);
+  expect(reachableCargoItems(f.ctx).map((i) => i.id)).toContain(pistol.id);
+  // An exact replay writes nothing.
+  const stored = s.revision(s.crate.id);
+  moveScopedCargo(f.ctx, request);
+  expect(s.revision(s.crate.id)).toBe(stored);
   moveScopedCargo(f.ctx, {
     ...request,
     operationId: "retrieve",
-    expectedItemRevision: 2n,
-    expectedCharacterRevision: 2n,
-    sourceContainerId: target,
-    expectedSourceRevision: 2n,
-    destinationContainerId: "pockets",
-    expectedDestinationRevision: 2n,
+    expectedItemRevision: s.itemRevision(pistol.id),
+    sourceContainerId: s.crate.id,
+    expectedSourceRevision: s.revision(s.crate.id),
+    destinationContainerId: origin.containerId,
+    expectedDestinationRevision: s.revision(origin.containerId),
+    expectedCharacterRevision: s.characterRevision(),
+    x: origin.x,
+    y: origin.y,
   });
-  expect(f.db.inventoryItem.id.find("pistol")).toMatchObject({
-    id: "pistol",
-    characterId: "actor",
-    containerId: "pockets",
+  expect(f.db.inventoryItem.id.find(pistol.id)).toMatchObject({
+    id: pistol.id,
+    characterId: s.characterId,
+    containerId: origin.containerId,
   });
-  expect(legacyInventorySnapshot(f.ctx, "actor").items).toHaveLength(1);
-  f.db.constructionGrant.id.update({
-    ...f.db.constructionGrant.id.find("grant"),
-    revoked: true,
-  });
+  expect(
+    legacyInventorySnapshot(f.ctx, s.characterId).items.map((i) => i.id),
+  ).toContain(pistol.id);
+  // Losing the game session revokes cargo views and moves.
+  f.db.authSession.rows.splice(0);
   expect(reachableCargoContainers(f.ctx)).toEqual([]);
-  expect(() => moveScopedCargo(f.ctx, request)).toThrow("grant-denied");
+  expect(() =>
+    moveScopedCargo(f.ctx, { ...request, operationId: "store-again" }),
+  ).toThrow();
+  expect(f.db.inventoryItem.id.find(pistol.id).containerId).toBe(
+    origin.containerId,
+  );
 });
 
-it("preserves nested liquid payloads, projects their actual contents and rejects solid moves into reservoirs", () => {
-  const f = fixture();
-  installQualifiedInstanceCargo(f.ctx, f.plan);
-  const before = legacyInventorySnapshot(f.ctx, "actor");
-  f.db.inventoryItem.insert({
-    id: "canister",
-    characterId: "actor",
-    definitionId: "resource-canister",
-    containerId: "pockets",
-    equipmentSlot: "",
-    x: 3,
-    y: 0,
+it("preserves nested liquid payloads, projects their actual contents and rejects solid moves into reservoirs", async () => {
+  const s = await ownerAtCrate(),
+    { f } = s;
+  const canister = s.item("resource-canister"),
+    reservoir = f.db.inventoryContainer.rows.find(
+      (c: Row) => c.parentItemId === canister.id,
+    ),
+    origin = {
+      containerId: canister.containerId,
+      x: canister.x,
+      y: canister.y,
+    };
+  const [x, y] = s.freeSpot(s.crate.id, "resource-canister");
+  moveScopedCargo(f.ctx, {
+    operationId: "store-canister",
+    itemId: canister.id,
+    expectedItemRevision: s.itemRevision(canister.id),
+    sourceContainerId: origin.containerId,
+    expectedSourceRevision: s.revision(origin.containerId),
+    destinationContainerId: s.crate.id,
+    expectedDestinationRevision: s.revision(s.crate.id),
+    expectedCharacterRevision: s.characterRevision(),
+    x,
+    y,
     rotated: false,
   });
-  f.db.inventoryContainer.insert({
-    id: "reservoir",
-    characterId: "actor",
-    parentItemId: "canister",
-    kind: "liquid",
-    name: "Canister reservoir",
-    width: 0,
-    height: 0,
-    maxMassKg: 4,
-    capacityLitres: 5,
-    amountLitres: 2,
-    liquidType: "fuel",
-    carried: false,
-    shipId: "legacy-ship",
-    localX: 0,
-    localY: 0,
-  });
-  synchronizeLegacyInventory(f.ctx, "actor", before);
-  const root = reachableCargoContainers(f.ctx)[0];
-  moveScopedCargo(f.ctx, {
-    ...f.request(root.id),
-    itemId: "canister",
-    expectedSourceRevision:
-      f.db.inventoryContainerScope.containerId.find("pockets").revision,
-  });
   expect(
-    reachableCargoContainers(f.ctx).find((c) => c.id === "reservoir"),
+    reachableCargoContainers(f.ctx).find((c) => c.id === reservoir.id),
   ).toMatchObject({
-    parentItemId: "canister",
+    parentItemId: canister.id,
     kind: "liquid",
     capacityLitres: 5,
     amountLitres: 2,
     liquidType: "fuel",
   });
-  const characterRevision =
-    f.db.inventoryState.characterId.find("actor").revision;
+  const pistol = s.item("compact-pistol"),
+    characterRevision = s.characterRevision();
   expect(() =>
     moveScopedCargo(f.ctx, {
-      ...f.request("reservoir"),
       operationId: "invalid-liquid",
+      itemId: pistol.id,
+      expectedItemRevision: s.itemRevision(pistol.id),
+      sourceContainerId: pistol.containerId,
+      expectedSourceRevision: s.revision(pistol.containerId),
+      destinationContainerId: reservoir.id,
+      expectedDestinationRevision: s.revision(reservoir.id),
       expectedCharacterRevision: characterRevision,
-      expectedSourceRevision:
-        f.db.inventoryContainerScope.containerId.find("pockets").revision,
-      expectedDestinationRevision:
-        f.db.inventoryContainerScope.containerId.find("reservoir").revision,
+      x: 0,
+      y: 0,
+      rotated: false,
     }),
   ).toThrow("liquid-container");
-  expect(f.db.inventoryState.characterId.find("actor").revision).toBe(
-    characterRevision,
-  );
+  expect(s.characterRevision()).toBe(characterRevision);
   moveScopedCargo(f.ctx, {
-    ...f.request("pockets"),
     operationId: "retrieve-canister",
-    itemId: "canister",
-    expectedItemRevision: 2n,
-    sourceContainerId: root.id,
-    expectedSourceRevision: f.db.inventoryContainerScope.containerId.find(
-      root.id,
-    ).revision,
-    expectedDestinationRevision:
-      f.db.inventoryContainerScope.containerId.find("pockets").revision,
+    itemId: canister.id,
+    expectedItemRevision: s.itemRevision(canister.id),
+    sourceContainerId: s.crate.id,
+    expectedSourceRevision: s.revision(s.crate.id),
+    destinationContainerId: origin.containerId,
+    expectedDestinationRevision: s.revision(origin.containerId),
     expectedCharacterRevision: characterRevision,
-    x: 3,
+    x: origin.x,
+    y: origin.y,
+    rotated: false,
   });
-  expect(f.db.inventoryContainer.id.find("reservoir")).toMatchObject({
-    id: "reservoir",
-    characterId: "actor",
-    parentItemId: "canister",
+  expect(f.db.inventoryContainer.id.find(reservoir.id)).toMatchObject({
+    id: reservoir.id,
+    characterId: s.characterId,
+    parentItemId: canister.id,
     capacityLitres: 5,
     amountLitres: 2,
     liquidType: "fuel",
   });
-});
-
-it("trusted functional batch preserves all planned cargo UUIDs without allocating again", () => {
-  const f = fixture();
-  let serial = 8000;
-  const seeds = planQualifiedWayfarerFunctionalSeeds(
-    f.plan,
-    () =>
-      `00000000-0000-4000-8000-${(++serial).toString(16).padStart(12, "0")}`,
-  );
-  const ctx = {
-    ...f.ctx,
-    newUuidV4: () => {
-      throw Error("No allocation expected");
-    },
-  };
-  installQualifiedInstanceCargo(ctx, f.plan, seeds);
-  expect(
-    [...f.db.instanceInventoryBinding.rows.values()].map(
-      (r: any) => r.containerId,
-    ),
-  ).toEqual(seeds.containers.map((s) => s.id));
-});
-it("tampered or reused trusted cargo IDs reject before a single batch write", () => {
-  for (const kind of ["capacity", "instance", "identity"]) {
-    const f = fixture();
-    let serial = 9000;
-    const seeds = planQualifiedWayfarerFunctionalSeeds(
-      f.plan,
-      () =>
-        `00000000-0000-4000-8000-${(++serial).toString(16).padStart(12, "0")}`,
-    );
-    if (kind === "capacity") seeds.containers[0].columns++;
-    if (kind === "instance") seeds.containers[0].instanceId = "foreign";
-    if (kind === "identity")
-      f.db.inventoryContainer.insert({
-        ...f.db.inventoryContainer.id.find("pockets"),
-        id: seeds.containers[0].id,
-      });
-    const before = f.db.inventoryContainer.rows.size;
-    expect(() => installQualifiedInstanceCargo(f.ctx, f.plan, seeds)).toThrow();
-    expect(f.db.instanceInventoryBinding.rows.size).toBe(0);
-    expect(f.db.inventoryContainer.rows.size).toBe(before);
-  }
 });

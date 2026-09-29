@@ -102,18 +102,27 @@ const operatorCall = (reducer: string, ...args: string[]) =>
     { stdio: "inherit" },
   );
 let mapGenesis: string | null = null;
+let legacyGenesis = false;
 if (prefabPin) {
-  // A fresh database has no shared system yet, and prefab assignment refuses to create map
-  // rows (live already has its map). The isolated-only legacy starter creates the canonical
-  // system as a side effect: one throwaway "Map Genesis" account, then the policy returns to
-  // none. The wipe later removes its Wayfarer like any other ship.
-  operatorCall(
-    "operator_set_starter_prefab",
-    JSON.stringify("seed-map-genesis-legacy"),
-    JSON.stringify("legacy-wayfarer-r002"),
-    JSON.stringify("legacy-wayfarer"),
-    "true",
-  );
+  // Prefab assignment refuses to create map rows (live already has its map). Modules from
+  // the Wayfarer retirement (2026-09-29) on install the canonical system when the database
+  // is created. Older baselines have no such step; there the isolated-only legacy starter
+  // creates it as a side effect: one throwaway "Map Genesis" account, then the policy
+  // returns to none. The wipe later removes its Wayfarer like any other ship.
+  try {
+    operatorCall(
+      "operator_set_starter_prefab",
+      JSON.stringify("seed-map-genesis-legacy"),
+      JSON.stringify("legacy-wayfarer-r002"),
+      JSON.stringify("legacy-wayfarer"),
+      "true",
+    );
+    legacyGenesis = true;
+  } catch {
+    console.log("Baseline has no legacy starter; its init installed the map.");
+  }
+}
+if (legacyGenesis) {
   const { connection: g } = await client();
   await g.reducers.enterLab({ name: "Map Genesis" });
   await wait(() => g.db.ownShips.count() === 1n, "map genesis ship");

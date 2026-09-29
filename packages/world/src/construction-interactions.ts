@@ -19,12 +19,6 @@ import { clearAim } from "./combat";
 import { consumeInputControl } from "./input-control";
 import { LAB_INTERACTIONS } from "@sidereal/content/interactions";
 import { validateInteraction } from "@sidereal/sim/interactions";
-import { planQualifiedWayfarerFunctionalSeeds } from "@sidereal/sim/construction-functional-instances";
-import type { ConstructionInstancePlan } from "@sidereal/sim/construction-instance";
-import {
-  isQualifiedWayfarerBlueprint,
-  qualifiedWayfarerInstanceObstacles,
-} from "@sidereal/sim/wayfarer-walking-bindings";
 import {
   canOccupyDeck,
   sweepDeckCircle,
@@ -82,14 +76,7 @@ const loc = (b: ConstructionInteractionBinding, x: number, y: number) => ({
 const approach = (
   sourceId: string,
   definition: (typeof LAB_INTERACTIONS)[number],
-) =>
-  sourceId === "room-hydroponics-tray--0.6"
-    ? ([-2.375, -0.875] as const)
-    : ([definition.approachX, definition.approachY] as const);
-const verifiedSources = new Map<
-  string,
-  { documentJson: string; idMapJson: string }
->();
+) => [definition.approachX, definition.approachY] as const;
 function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
   const instance = ctx.db.constructionInstance.id.find(binding.instanceId),
     object = ctx.db.interactionObject.id.find(binding.objectId),
@@ -104,7 +91,6 @@ function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
     !deck ||
     deck.instanceId !== instance.id ||
     deck.elevation !== 0 ||
-    !isQualifiedWayfarerBlueprint(instance.blueprintSha256) ||
     instance.revision !== binding.instanceRevision ||
     object.shipId !== instance.id ||
     object.placementId !== binding.placedObjectId
@@ -121,20 +107,6 @@ function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
     )
   )
     throw new SenderError("Interaction placed identity changed");
-  const key = instance.id + ":" + binding.deckId,
-    prior = verifiedSources.get(key);
-  if (
-    !prior ||
-    prior.documentJson !== instance.documentJson ||
-    prior.idMapJson !== instance.idMapJson
-  ) {
-    qualifiedWayfarerInstanceObstacles(instance, binding.deckId);
-    if (verifiedSources.size >= 32) verifiedSources.clear();
-    verifiedSources.set(key, {
-      documentJson: instance.documentJson,
-      idMapJson: instance.idMapJson,
-    });
-  }
   const frame = constructionCollision(ctx, instance, binding.deckId),
     point = approach(binding.sourceId, definition);
   if (!canOccupyDeck(frame, loc(binding, ...point), 0.3))
@@ -230,92 +202,6 @@ function freeExit(
       return false;
   }
   return true;
-}
-
-export function installQualifiedInstanceInteractions(
-  ctx: ConstructionInteractionContext,
-  plan: ConstructionInstancePlan,
-  /** Trusted server factory output only; never a reducer argument. */
-  suppliedSeeds?: ReturnType<typeof planQualifiedWayfarerFunctionalSeeds>,
-) {
-  if (!isQualifiedWayfarerBlueprint(plan.blueprintSha256)) return;
-  const instance = ctx.db.constructionInstance.id.find(plan.instanceId);
-  if (!instance)
-    throw new SenderError("Interaction installation requires spawned instance");
-  const suppliedIds =
-    suppliedSeeds &&
-    [...suppliedSeeds.containers, ...suppliedSeeds.interactions].map(
-      (s) => s.id,
-    );
-  let suppliedIndex = 0;
-  const seeds = planQualifiedWayfarerFunctionalSeeds(plan, () =>
-    suppliedIds ? suppliedIds[suppliedIndex++] : ctx.newUuidV4().toString(),
-  );
-  if (suppliedSeeds) {
-    const canonical = (value: unknown) =>
-      stableStringify(
-        JSON.parse(
-          JSON.stringify(value, (_key, v) =>
-            typeof v === "bigint" ? { u64: v.toString() } : v,
-          ),
-        ),
-      );
-    if (
-      suppliedIndex !== suppliedIds!.length ||
-      canonical(seeds) !== canonical(suppliedSeeds)
-    )
-      throw new SenderError(
-        "Preallocated interaction seeds differ from exact qualified instance",
-      );
-  }
-  const sources = new Map(
-    plan.mappings.objects.map((m) => [m.instanceId, m.sourceId]),
-  );
-  const frame = constructionCollision(ctx, instance, plan.spawn.deckId);
-  const ready = seeds.interactions.map((seed) => {
-    const sourceId = sources.get(seed.placedObjectId)!,
-      definition = LAB_INTERACTIONS.find((d) => d.placementId === sourceId);
-    if (
-      !definition ||
-      ctx.db.constructionInteractionBinding.placedObjectId.find(
-        seed.placedObjectId,
-      )
-    )
-      throw new SenderError(
-        "Interaction placed identity missing or already installed",
-      );
-    const binding = {
-      objectId: seed.id,
-      placedObjectId: seed.placedObjectId,
-      instanceId: instance.id,
-      deckId: seed.deckId,
-      sourceId,
-      instanceRevision: instance.revision,
-      recoveryRequested: false,
-      recoveryReason: "",
-    };
-    if (
-      !canOccupyDeck(
-        frame,
-        loc(binding, ...approach(sourceId, definition)),
-        0.3,
-      )
-    )
-      throw new SenderError(
-        "Native interaction approach lacks standing clearance: " + sourceId,
-      );
-    return { seed, binding };
-  });
-  for (const { seed, binding } of ready) {
-    ctx.db.interactionObject.insert({
-      id: seed.id,
-      shipId: seed.instanceId,
-      placementId: seed.placedObjectId,
-      revision: 1n,
-      enabled: true,
-    });
-    ctx.db.constructionInteractionBinding.insert(binding);
-  }
 }
 
 /** Controlled seat-to-floor transition. Only the occupied sofa's own obstacle is

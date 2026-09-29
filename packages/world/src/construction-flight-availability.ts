@@ -2,8 +2,8 @@ import { Range, type InferSchema, type ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
 import { requireGame } from "./auth";
 import { markShipFlightDirty } from "./construction-flight-dirty";
-import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
-import { WAYFARER_PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
+import { shipFeatureQualified } from "./ship-feature-qualification";
+import { PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
 import type { ActuatorDefinition } from "@sidereal/sim/flight-definition";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 const encode = (v: unknown) =>
@@ -42,7 +42,7 @@ export function changeFlightFittingDisposition(
     binding.lifecycle !== "active" ||
     binding.instanceRevision !== instance.revision ||
     binding.blueprintSha256 !== instance.blueprintSha256 ||
-    !isQualifiedWayfarerBlueprint(instance.blueprintSha256)
+    !shipFeatureQualified("fitting-disposition", instance.blueprintSha256)
   )
     throw Error("Current active qualified flight fitting required");
   const id = JSON.stringify([ctx.sender.toHexString(), args.operationId]);
@@ -78,7 +78,7 @@ export function changeFlightFittingDisposition(
   );
   const definition =
     part &&
-    (WAYFARER_PHYSICAL_CATALOG.definitions.find(
+    (PHYSICAL_CATALOG.definitions.find(
       (d) =>
         d.id === "physical:" + part.assetId &&
         d.revision === fitting.definitionRevision &&

@@ -95,19 +95,7 @@ export function AuthoredFlightReview({
         <small>Waiting for flight compilation.</small>
       )}
       {!flight.active ? (
-        <button
-          onClick={() =>
-            act(() =>
-              connection.reducers.activateAuthoredShipFlight({
-                shipId: instanceId,
-                expectedRevision: flight.revision,
-                operationId: createOperationId(),
-              }),
-            )
-          }
-        >
-          Activate flight systems
-        </button>
+        <small>Flight systems are not active.</small>
       ) : !flight.flightAdmitted ? (
         <button
           onClick={() =>

@@ -47,7 +47,7 @@ import { readConstructionDraft } from "./construction-transactions";
 import { prefabComponentCatalogFor } from "./prefab-catalog";
 import { spatialCell, validateSpacePoint } from "./spatial-cells";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
-import { WAYFARER_FLIGHT_PROFILE } from "@sidereal/content/physical-definitions";
+import { BASE_FLIGHT_PROFILE } from "@sidereal/content/physical-definitions";
 import type { FlightProfile } from "./ifcs";
 
 export const PREFAB_FLIGHT_CATALOG_ID = "prefab-physical-v1";
@@ -79,7 +79,7 @@ export const PREFAB_FLIGHT_REVISION = 1;
  * Speed limits stay the Wayfarer values (30 m/s forward, 12 m/s reverse). Proposed, not approved.
  */
 export const PREFAB_FLIGHT_PROFILE: FlightProfile = Object.freeze({
-  ...WAYFARER_FLIGHT_PROFILE,
+  ...BASE_FLIGHT_PROFILE,
   velocityGain: 2,
   headingGain: 2,
   angularGain: 6,

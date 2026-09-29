@@ -6,7 +6,6 @@ import {
   setConstructionEnginePower as setEnginePower,
   setConstructionComputerPower as setComputerPower,
 } from "./construction-device-power";
-import { replacePlayerWayfarer } from "./wayfarer-replacement";
 import "./prefab-ship-spawners";
 import {
   shipPolicy,
@@ -22,7 +21,6 @@ import {
   onboardNewCharacter,
   setStarterPrefab,
 } from "./ship-policy";
-import * as rebuiltWayfarer from "./wayfarer-rebuild-installation";
 import { systemZone, shipZoneState, shipZoneProjection } from "./zone-tables";
 import { stepZones, ownShipZones as readOwnShipZones } from "./zones";
 import {
@@ -50,24 +48,13 @@ import {
   wayfarerRefitReceipt,
   wayfarerRefitAttachment,
   wayfarerLiquidReceipt,
-  wayfarerRefitOfferProjection,
-  wayfarerRefitAttachmentProjection,
-} from "./wayfarer-refit-tables";
-import {
-  refitExistingWayfarer as applyWayfarerRefit,
-  ownWayfarerRefitOffer as readWayfarerRefitOffer,
-  ownWayfarerRefitAttachments as readWayfarerRefitAttachments,
-} from "./wayfarer-refit-authority";
-import { transferWayfarerLiquid as applyWayfarerLiquid } from "./wayfarer-liquid-transfer";
+  personalStarterReceipt,
+} from "./retired-tables";
 import { constructionReviewOrigin } from "./construction-review-origin";
 import * as nativeAirlock from "./construction-airlock";
 import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
-import { preserveWayfarerStarterKit } from "./wayfarer-personal-kit";
-import {
-  personalStarterReceipt,
-  gameShipAccess,
-} from "./wayfarer-starter-tables";
-import { createWayfarerStarterAuthority } from "./wayfarer-starter-authority";
+import { preserveShipKit } from "./personal-kit";
+import { gameShipAccess } from "./game-ship-access-tables";
 import {
   gameShipAccessProjection,
   ownGameShipAccess as readGameShipAccess,
@@ -98,8 +85,6 @@ import {
   beginConstructionFlightReview,
   returnConstructionFlightReview,
 } from "./construction-flight-review";
-import { installConstructionFlightAuthority } from "./construction-flight-authority";
-import { activateConstructionFlight } from "./construction-flight-activation";
 import { resolveShipFlightDefinition } from "./construction-flight-resolver";
 import {
   compileDirtyFlights,
@@ -567,6 +552,11 @@ export const init = db.init((ctx) => {
     scheduledId: 0n,
     scheduledAt: ScheduleAt.interval(50000n),
   });
+  // A new database installs the pinned canonical system up front. Prefab
+  // assignment never writes map rows, and the retired legacy Wayfarer starter was
+  // the only other path that created it. Runs only when a database is created,
+  // never on a module update.
+  sharedWorld.ensureCanonicalSystem(ctx.db);
 });
 export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
   auth.requireGame(ctx);
@@ -634,8 +624,8 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
     });
     return;
   }
-  // Never a legacy Wayfarer by default: with no operator-configured starter
-  // prefab the new character keeps its personal kit and waits for a ship.
+  // With no operator-configured starter prefab the new character keeps its
+  // personal kit and waits for a ship.
   onboardNewCharacter(ctx, clean);
 });
 export const connectSession = db.clientConnected(connected);
@@ -1019,7 +1009,7 @@ export const claimStarterKit = db.reducer(
     // Awaiting-ship characters already hold their personal kit; legacy lab
     // storage would otherwise be minted on a ship that does not exist.
     if (actor && isAwaitingShip(actor)) return;
-    if (!preserveWayfarerStarterKit(ctx)) inventory.claimKit(ctx);
+    if (!preserveShipKit(ctx)) inventory.claimKit(ctx);
   }, true),
 );
 export const claimCharacterArmory = db.reducer(
@@ -1460,30 +1450,6 @@ export const returnAuthoredFlightReview = db.reducer(
   },
   auth.gameAction(returnConstructionFlightReview, true),
 );
-// Explicit additive installation/activation. Neither boards nor moves an actor.
-export const installAuthoredShipFlight = db.reducer(
-  {
-    instanceId: t.string(),
-    expectedInstanceRevision: t.u64(),
-    operationId: t.string(),
-  },
-  auth.gameAction((ctx, args) => {
-    installConstructionFlightAuthority(ctx, args, {
-      reserveBerth: (current) => {
-        const system = sharedWorld.ensureCanonicalSystem(current.db);
-        return {
-          systemId: system.id,
-          ...sharedWorld.reserveBerth(current.db, system.id),
-          serverTick: current.timestamp.microsSinceUnixEpoch / 50_000n,
-        };
-      },
-    });
-  }),
-);
-export const activateAuthoredShipFlight = db.reducer(
-  { shipId: t.string(), expectedRevision: t.u64(), operationId: t.string() },
-  auth.gameAction(activateConstructionFlight),
-);
 export const enterAuthoredPilot = db.reducer(
   {
     stationId: t.string(),
@@ -1525,55 +1491,6 @@ export const ownNativeAirlocks = db.view(
   { name: "own_native_airlocks", public: true },
   t.array(nativeAirlock.nativeAirlockProjection),
   auth.gameView(nativeAirlock.ownNativeAirlocks),
-);
-
-export const refitRebuiltWayfarer = db.reducer(
-  {
-    shipId: t.string(),
-    expectedInstanceRevision: t.u64(),
-    expectedShipRevision: t.u64(),
-    fingerprint: t.string(),
-    operationId: t.string(),
-  },
-  auth.gameAction(rebuiltWayfarer.applyWayfarerRebuild, true),
-);
-export const ownWayfarerRebuildOffer = db.view(
-  { name: "own_wayfarer_rebuild_offer", public: true },
-  t.array(rebuiltWayfarer.wayfarerRebuildOfferProjection),
-  auth.gameView(rebuiltWayfarer.ownWayfarerRebuildOffer),
-);
-
-export const refitExistingWayfarer = db.reducer(
-  {
-    shipId: t.string(),
-    expectedShipRevision: t.u64(),
-    expectedInventoryRevision: t.u64(),
-    fingerprint: t.string(),
-    operationId: t.string(),
-  },
-  auth.gameAction(applyWayfarerRefit, true),
-);
-export const ownWayfarerRefitOffer = db.view(
-  { name: "own_wayfarer_refit_offer", public: true },
-  t.array(wayfarerRefitOfferProjection),
-  auth.gameView(readWayfarerRefitOffer),
-);
-export const ownWayfarerRefitAttachments = db.view(
-  { name: "own_wayfarer_refit_attachments", public: true },
-  t.array(wayfarerRefitAttachmentProjection),
-  auth.gameView(readWayfarerRefitAttachments),
-);
-export const transferWayfarerLiquid = db.reducer(
-  {
-    sourceId: t.string(),
-    destinationId: t.string(),
-    litres: t.f64(),
-    expectedSourceRevision: t.u64(),
-    expectedDestinationRevision: t.u64(),
-    expectedInventoryRevision: t.u64(),
-    operationId: t.string(),
-  },
-  auth.gameAction(alive(applyWayfarerLiquid), true),
 );
 
 export const ownCargoCarriers = db.view(
@@ -1690,16 +1607,6 @@ export const operatorUpgradePrefabShip = db.reducer(
     expectedTargetBlueprintSha256: t.string(),
   },
   upgradePrefabShip,
-);
-
-/** Explicit deployment maintenance; ordinary game identities cannot invoke it. */
-export const replaceLegacyPlayerWayfarer = db.reducer(
-  {
-    characterId: t.string(),
-    expectedShipId: t.string(),
-    expectedShipRevision: t.u64(),
-  },
-  replacePlayerWayfarer,
 );
 
 export const setConstructionEnginePower = db.reducer(

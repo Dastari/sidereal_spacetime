@@ -3,7 +3,6 @@ import {
   PilotGeometryError,
   canApproachPilot,
   pilotRecoveryPoint,
-  QUALIFIED_PILOT_POSITION,
   type PilotGeometry,
   type PilotPose,
 } from "@sidereal/sim/construction-pilot";
@@ -26,7 +25,7 @@ export interface PilotStation {
   operational: boolean;
   instanceRevision: bigint;
   revision: bigint;
-  /** Prefab ships: the re-derived seat pose. Absent for the qualified Wayfarer seat. */
+  /** The re-derived seat pose. A station without one cannot be piloted. */
   pose?: PilotPose;
 }
 export interface PilotSeat {
@@ -78,9 +77,10 @@ export interface PilotRepository {
   ): void;
   clearInputAndAim(characterId: string): void;
 }
-/** Prefab stations carry their re-derived pose; the Wayfarer seat keeps its constants. */
-const seatOf = (s: PilotStation) =>
-  s.pose?.position ?? QUALIFIED_PILOT_POSITION;
+const seatOf = (s: PilotStation) => {
+  if (!s.pose) throw new PilotGeometryError("Pilot station pose required");
+  return s.pose.position;
+};
 const inScope = (a: PilotActor, s: PilotStation) =>
   a.shipId === s.shipId && a.deckId === s.deckId;
 export function enterConstructionPilot(db: PilotRepository, args: PilotAction) {

@@ -1,5 +1,4 @@
 import { expect, test } from "vitest";
-import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import {
   NullEngine,
   Scene,
@@ -189,14 +188,16 @@ test("Deck close framing converges to the actor while normal overview remains un
   expect(deckCameraActorWeight(12 - 0.001)).toBeCloseTo(0.6, 7);
 });
 
-test("valid native cockpit approach can leave the close viewport under fixed overview targeting", () => {
-  // Current canonical Wayfarer deck bounds are [-5,-9]..[5,13] m. These two
-  // central approach points pass the actual native collision/threshold tests.
-  // No wall mesh is present: this proves framing, not ordinary depth occlusion.
-  const document = JSON.parse(WAYFARER_STARTER.documentJson) as {
-    layout: { tiles: { vertices: [number, number][] }[] };
-  };
-  const vertices = document.layout.tiles.flatMap((tile) => tile.vertices);
+test("an actor near the far end of a deck can leave the close viewport under fixed overview targeting", () => {
+  // A synthetic deck with bounds [-5,-9]..[5,13] m (centre [0, 2]); the actor stands
+  // 8.8-9.35 m fore of the deck origin. No wall mesh is present: this proves framing,
+  // not ordinary depth occlusion.
+  const vertices: [number, number][] = [
+    [-160, -288],
+    [160, -288],
+    [160, 416],
+    [-160, 416],
+  ];
   const center = [0, 1].map(
     (axis) =>
       (Math.min(...vertices.map((point) => point[axis])) +

@@ -359,8 +359,8 @@ it("real stock flight brakes to exact rest and then emits no motion, actuator or
 import { compileFlightDefinition } from "@sidereal/sim/flight-definition";
 import { toCenterOfMassMotion } from "@sidereal/sim/flight-frame";
 import {
-  WAYFARER_FLIGHT_PROFILE,
-  WAYFARER_FLIGHT_SPEED,
+  BASE_FLIGHT_PROFILE,
+  SHIP_FLIGHT_SPEED,
 } from "@sidereal/content/physical-definitions";
 function asymmetricDefinition(cargoX: number) {
   const compiled = compileFlightDefinition({
@@ -416,8 +416,8 @@ function asymmetricDefinition(cargoX: number) {
       installed: false,
       powered: false,
     },
-    profile: WAYFARER_FLIGHT_PROFILE,
-    speed: WAYFARER_FLIGHT_SPEED,
+    profile: BASE_FLIGHT_PROFILE,
+    speed: SHIP_FLIGHT_SPEED,
   };
 }
 it("compiled asymmetric engine-less ships coast about COM and persist the authored origin", () => {

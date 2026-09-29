@@ -154,49 +154,5 @@ export function equipmentPlacement(
   lighting.setMeshes(meshes);
   return { node, meshes, lighting };
 }
-export async function loadInstalledEquipment(
-  scene: Scene,
-  parent: TransformNode,
-  legacyMeshes: AbstractMesh[],
-) {
-  const response = await fetch("/assets/assembly/equipment-manifest.json");
-  if (!response.ok) throw new Error("Approved equipment manifest unavailable");
-  const manifest = (await response.json()) as {
-    entries: { asset: PartAsset; placements: PartPlacement[] }[];
-  };
-  const prototypes = await loadEquipmentPrototypes(
-    scene,
-    manifest.entries.map((e) => e.asset),
-  );
-  const placements = manifest.entries.flatMap((e) =>
-    e.placements.map((p) =>
-      equipmentPlacement(
-        scene,
-        parent,
-        e.asset,
-        p,
-        prototypes.get(e.asset.id)!,
-      ),
-    ),
-  );
-  const ids = manifest.entries.flatMap((e) =>
-    e.placements.map((p) => "GEO-" + p.id),
-  );
-  // Retained old ship exports may still contain proxy visuals. Never show both.
-  const retired = legacyMeshes.filter((m) =>
-    ids.some(
-      (id) =>
-        m.name === id ||
-        m.name.startsWith(id + "-") ||
-        m.name.startsWith(id + "_"),
-    ),
-  );
-  for (const mesh of retired) mesh.dispose();
-  return {
-    meshes: [
-      ...legacyMeshes.filter((m) => !retired.includes(m)),
-      ...placements.flatMap((p) => p.meshes),
-    ],
-    placements,
-  };
-}
+/** One placed native part: its node, meshes and local light owner. */
+export type InstalledPlacement = ReturnType<typeof equipmentPlacement>;

@@ -15,15 +15,12 @@ vi.mock("./auth", () => ({
   },
   canReadGame: (ctx: { live: boolean }) => ctx.live,
 }));
-import {
-  createWayfarerStarterAuthority,
-  type WayfarerStarterContext,
-} from "./wayfarer-starter-authority";
 import { ownedGameShipAccess } from "./game-ship-access-authority";
-import {
-  issueWayfarerPersonalKit,
-  preserveWayfarerStarterKit,
-} from "./wayfarer-personal-kit";
+import { SHIP_OPERATOR } from "./ship-operator";
+import { onboardNewCharacter } from "./ship-policy";
+import { ensureCanonicalSystem } from "./shared-world";
+import { assignPrefabShip, prefabShipSpawner } from "./ship-assign";
+import "./prefab-ship-spawners";
 
 type Row = Record<string, any>;
 function fixture() {
@@ -50,6 +47,15 @@ function fixture() {
     inventoryItemMembership: "itemId",
     instanceInventoryBinding: "placedObjectId",
     constructionInteractionBinding: "objectId",
+    couchSeat: "characterId",
+    constructionPassengerVisit: "characterId",
+    constructionCargoAssembly: "containerId",
+    constructionCargoPlacement: "containerId",
+    weaponEnergy: "itemId",
+    shipOperatorOperation: "operationId",
+    characterUniformIssue: "characterId",
+    shipZoneState: "shipId",
+    pilotLayoutReceipt: "shipId",
   };
   const field: Record<string, string> = {
     by_root: "rootContainerId",
@@ -60,8 +66,13 @@ function fixture() {
     by_instance: "instanceId",
     by_character: "characterId",
     by_principal: "principal",
+    by_operation: "operationId",
+    by_container: "containerId",
   };
-  const key = (v: unknown) => String(v);
+  const key = (v: unknown) =>
+    v && typeof (v as { toHexString?: unknown }).toHexString === "function"
+      ? (v as { toHexString(): string }).toHexString()
+      : String(v);
   const db = new Proxy({} as Record<string, any>, {
     get(target, name: string) {
       if (target[name]) return target[name];
@@ -122,7 +133,7 @@ function fixture() {
     game: true,
     expiresMicros: 999999999999n,
   });
-  const ctx = raw as unknown as WayfarerStarterContext;
+  const ctx = raw as any;
   const snapshot = () =>
     JSON.stringify(
       [...tables].filter(([, rows]) => rows.length),
@@ -136,9 +147,30 @@ import {
   restoreNativeReviewOrigin,
 } from "./construction-review-origin";
 function review() {
-  const f = fixture(),
-    made = createWayfarerStarterAuthority(f.ctx, "Review origin"),
-    actor = f.db.character.id.find(made.actor.id);
+  const f = fixture();
+  // The owner aboard an operator-assigned prefab Wren (the game-owned home ship).
+  ensureCanonicalSystem(f.db as never);
+  const characterId = onboardNewCharacter(f.ctx, "Review origin");
+  const owner = f.raw.sender;
+  f.raw.sender = Identity.fromString(SHIP_OPERATOR);
+  assignPrefabShip(f.ctx, {
+    operationId: "assign-wren-review",
+    characterId,
+    prefabId: "fed.s.wren",
+    expectedCatalogRevision: prefabShipSpawner("fed.s.wren")!.catalogRevision,
+    spawnPoseJson: "",
+    expectedCharacterShipId: "",
+    allowLegacy: false,
+  });
+  f.raw.sender = owner;
+  const actor = f.db.character.id.find(characterId);
+  expect(
+    ownedGameShipAccess(
+      f.ctx,
+      actor.shipId,
+      f.db.constructionLocation.characterId.find(actor.id).deckId,
+    ).walkDeck,
+  ).toBe(true);
   const original = { ...f.db.constructionLocation.characterId.find(actor.id) };
   const ctx = f.raw as any;
   const depart = () => {
