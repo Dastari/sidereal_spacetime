@@ -150,6 +150,9 @@ export interface PrefabShipViewOptions {
   batch?: boolean;
   /** The caller draws animated airlock leaves (doors.ts); strip the airlock GLB's baked leaves. */
   externalDoorLeaves?: boolean;
+  /** Bake a static idle plume on every main drive (editor previews). Default true; the game passes
+   * false and draws throttle-driven exhaust from the achieved actuator outputs (exhaust.ts). */
+  staticPlumes?: boolean;
 }
 
 export interface PrefabShipMetrics {
@@ -787,6 +790,7 @@ export async function createPrefabShipView(
     radius: number,
     c: ComponentPlacement,
   ) {
+    if (options.staticPlumes === false) return;
     const local = newBuilder();
     const colours: number[] = [];
     const main = !!c.placement.spec?.thrustN;
