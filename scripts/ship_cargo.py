@@ -99,7 +99,7 @@ def main():
         p.add_argument('--ship-id', required=True)
         p.add_argument('--socket', default='hold/cargo.standard.medium')
         p.add_argument('--container-name', default='Storage crate')
-        p.add_argument('--kit', action='append', help='uniforms-and-tiers | role-sets | weapons-and-tools | weapons | tools-and-utility (repeatable)')
+        p.add_argument('--kit', action='append', help='uniforms-and-tiers | eva-suit | role-sets | weapons-and-tools | weapons | tools-and-utility (repeatable)')
         p.add_argument('--definition-ids', help='extra comma-separated inventory definition ids')
         if not dry:
             p.add_argument('--confirm-database', required=True)

@@ -1180,6 +1180,29 @@ export const EvaBodyStatus = __t.object("EvaBodyStatus", {
 });
 export type EvaBodyStatus = __Infer<typeof EvaBodyStatus>;
 
+export const EvaSuit = __t.object("EvaSuit", {
+  characterId: __t.string(),
+  owner: __t.identity(),
+  mode: __t.string(),
+  facing: __t.f64(),
+  facingActive: __t.bool(),
+  omega: __t.f64(),
+  massKg: __t.f64(),
+  revision: __t.u64(),
+});
+export type EvaSuit = __Infer<typeof EvaSuit>;
+
+export const EvaSuitStatus = __t.object("EvaSuitStatus", {
+  characterId: __t.string(),
+  mode: __t.string(),
+  facing: __t.f64(),
+  facingActive: __t.bool(),
+  omega: __t.f64(),
+  massKg: __t.f64(),
+  revision: __t.u64(),
+});
+export type EvaSuitStatus = __Infer<typeof EvaSuitStatus>;
+
 export const FieldAsteroid = __t.object("FieldAsteroid", {
   id: __t.string(),
   systemId: __t.string(),
@@ -1552,6 +1575,9 @@ export type OwnEvaAirlockCycle = __Infer<typeof OwnEvaAirlockCycle>;
 
 export const OwnEvaBody = __t.object("OwnEvaBody", {});
 export type OwnEvaBody = __Infer<typeof OwnEvaBody>;
+
+export const OwnEvaSuit = __t.object("OwnEvaSuit", {});
+export type OwnEvaSuit = __Infer<typeof OwnEvaSuit>;
 
 export const OwnGameShipAccess = __t.object("OwnGameShipAccess", {});
 export type OwnGameShipAccess = __Infer<typeof OwnGameShipAccess>;

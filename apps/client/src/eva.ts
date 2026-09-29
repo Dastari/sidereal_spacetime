@@ -23,6 +23,8 @@ import {
   type ShipLogicModel,
 } from "@sidereal/sim/ship-logic-model";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import { evaSuitCheck, evaSuitMessage } from "@sidereal/content/crew-wardrobe";
+import { evaExitThrough } from "@sidereal/sim/eva";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import type { CrewAppearance } from "@sidereal/render/crew/appearance";
 
@@ -297,6 +299,85 @@ export function evaIntent(
   return { ...none, dx: d.dx, dy: d.dy };
 }
 
+/**
+ * Facing target of the suit IFCS from the pointer's aim angle (combat convention, own-ship frame:
+ * 0 = +Y, clockwise): a heading in the body's frame (ship-local while riding along, world while
+ * free).
+ */
+export function evaFacingFromAim(
+  aimLocal: number,
+  local: boolean,
+  shipHeading: number,
+): number {
+  return wrapAngle(local ? -aimLocal : shipHeading - aimLocal);
+}
+
+/**
+ * Jetpack intent from WASD relative to the facing (W toward the pointer, S away, A/D strafe):
+ * any direction is reachable by pointing, not only eight. Returns the frame direction.
+ */
+export function evaThrustFromKeys(
+  keys: ReadonlySet<string>,
+  facing: number,
+  blocked: boolean,
+) {
+  const none = { throttle: 0, turn: 0, dx: 0, dy: 0, sprint: false };
+  if (blocked) return none;
+  const forward = pressed(keys, "KeyW") - pressed(keys, "KeyS");
+  const strafe = pressed(keys, "KeyD") - pressed(keys, "KeyA");
+  if (!forward && !strafe) return none;
+  const len = Math.hypot(forward, strafe);
+  const f = [-Math.sin(facing), Math.cos(facing)],
+    r = [Math.cos(facing), Math.sin(facing)];
+  return {
+    ...none,
+    dx: (f[0] * forward + r[0] * strafe) / len,
+    dy: (f[1] * forward + r[1] * strafe) / len,
+  };
+}
+
+/** The suit rule on the client (the server checks the same): refusal message, or "". */
+export function evaSuitRefusalOf(
+  items: Iterable<{ equipmentSlot: string; definitionId: string }>,
+): string {
+  const equipped = [];
+  for (const i of items)
+    if (i.equipmentSlot)
+      equipped.push({ slot: i.equipmentSlot, id: i.definitionId });
+  const check = evaSuitCheck(equipped);
+  return check.ready ? "" : evaSuitMessage(check.missing);
+}
+
+/** Whether pressing `deviceId` now would start depressurising an airlock (needs a suit). */
+export function buttonDepressurises(
+  logic: ShipLogicModel | null,
+  rows: Iterable<ShipLogicRow>,
+  shipId: string | undefined,
+  deviceId: string,
+): boolean {
+  if (!logic || !shipId) return false;
+  const target = logic.graph.wires.get(`${deviceId}.pressed`)?.[0];
+  if (!target || (target.port !== "cycle" && target.port !== "open_outer"))
+    return false;
+  for (const r of rows)
+    if (r.shipId === shipId && r.deviceId === target.device)
+      return r.state === "pressurised";
+  return false;
+}
+
+/** A walker stands in an open exterior doorway, at the hull line (where stepping out happens). */
+export function atOpenHatch(
+  model: EvaShipModel | null,
+  doors: ReadonlyMap<string, boolean>,
+  p: readonly [number, number],
+): boolean {
+  if (!model) return false;
+  const open = new Set([...doors].filter(([, v]) => v).map(([k]) => k));
+  return model.entries.some(
+    (e) => open.has(e.id) && !!evaExitThrough(model, p, e.normal, open),
+  );
+}
+
 /** Screen direction to a world direction for the top-down EVA camera (north-up). */
 export function screenToWorldTopDown(
   h: number,
@@ -323,11 +404,12 @@ export const worldAimAngle = (localAngle: number, shipHeading: number) =>
 export const localAimAngle = (worldAngle: number, shipHeading: number) =>
   wrapAngle(worldAngle + shipHeading);
 
-/** HUD line for the own EVA state. */
+/** HUD line for the own EVA state (suit mode and spin when known). */
 export function evaStatusLabel(
   body: EvaBodyRow,
   ship: ShipPose | undefined,
   nowMicros: bigint,
+  suit?: { mode: string; omega: number; massKg: number },
 ) {
   if (body.returnEndsMicros > 0n) {
     const left = Number(body.returnEndsMicros - nowMicros) / 1e6;
@@ -340,12 +422,15 @@ export function evaStatusLabel(
       })()
     : Math.hypot(body.vx, body.vy);
   const distance = ship ? Math.hypot(body.x - ship.x, body.y - ship.y) : 0;
-  const frame =
-    body.phase === "local" ? "riding along" : "free";
-  return `EVA · Jetpack (${frame}) · ${rel.toFixed(1)} m/s · ship ${distance.toFixed(0)} m${body.stranded ? " · STRANDED" : ""}`;
+  const frame = body.phase === "local" ? "riding along" : "free";
+  const mode = suit
+    ? ` · ${suit.mode === "free" ? "FREE" : "STABILISED"} · ${((suit.omega * 180) / Math.PI).toFixed(0)}°/s · ${suit.massKg.toFixed(0)} kg`
+    : "";
+  return `EVA · ${frame}${mode} · ${rel.toFixed(1)} m/s · ship ${distance.toFixed(0)} m${body.stranded ? " · STRANDED" : ""}`;
 }
 
-export const EVA_HELP = "WASD jetpack · E button · V combat";
+export const EVA_HELP =
+  "W/S thrust toward/away from the pointer · A/D strafe · mouse: facing · X stabiliser · E button · V combat";
 
 /** Other EVA bodies as own-ship-local remote crew states (the renderer draws them like crewmates). */
 export function evaBodiesForScene(

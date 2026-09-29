@@ -30,6 +30,7 @@ import {
   type LogicEvent,
 } from "@sidereal/sim/ship-logic";
 import {
+  inChamber,
   inDoorway,
   reachablePanel,
   shipLogicModel,
@@ -265,6 +266,11 @@ export function pressShipButton(
   args: { shipId: string; deviceId: string },
   /** The EVA entry gate (`evaEntryAllowed`), required to press an exterior panel. */
   exteriorAllowed: (actorId: string, shipId: string) => boolean,
+  /**
+   * The suit rule (EVA suit, helmet and jetpack equipped): an empty string when suited, else the
+   * refusal message. Only consulted when the press would depressurise an airlock chamber.
+   */
+  suitRefusal: (characterId: string) => string = () => "",
 ) {
   const actor = actorOf(ctx);
   const binding = shipPrefabBinding(ctx.db, args.shipId);
@@ -302,7 +308,65 @@ export function pressShipButton(
     if (!exteriorAllowed(actor.id, args.shipId))
       throw new SenderError("The panel does not respond to you");
   } else throw new SenderError("Move closer to the button");
+  refuseUnsuitedDepressurisation(ctx, binding, actor, !body, panel.deviceId, suitRefusal);
   fireShipLogic(ctx, args.shipId, { kind: "press", device: panel.deviceId });
+}
+
+/**
+ * Vacuum safety (owner 2026-09-29: a space suit, helmet and EVA jetpack before existing in vacuum):
+ * a press that would start depressurising an airlock chamber is refused when the presser (from
+ * inside the ship) or anyone standing in that chamber is not suited. Exposure damage is later work.
+ */
+function refuseUnsuitedDepressurisation(
+  ctx: Context,
+  binding: ShipPrefabBinding,
+  actor: { id: string },
+  pressedFromAboard: boolean,
+  deviceId: string,
+  suitRefusal: (characterId: string) => string,
+) {
+  const logic = binding.logic!;
+  const preview = evaluateLogic(
+    logic.graph,
+    (id) => logicDeviceState(ctx.db, binding, id)!,
+    { kind: "press", device: deviceId },
+    {
+      now: Number(ctx.timestamp.microsSinceUnixEpoch),
+      obstructed: () => false,
+    },
+  );
+  for (const [id, next] of preview.states) {
+    const before = logicDeviceState(ctx.db, binding, id);
+    if (
+      next.kind !== "airlock-controller" ||
+      before?.kind !== "airlock-controller" ||
+      before.phase !== "pressurised" ||
+      next.phase !== "depressurising"
+    )
+      continue;
+    if (pressedFromAboard) {
+      const refusal = suitRefusal(actor.id);
+      if (refusal) throw new SenderError(refusal);
+    }
+    const chamber = logic.chambers.find((c) => c.controllerId === id);
+    if (!chamber) continue;
+    let count = 0;
+    for (const l of ctx.db.constructionLocation.by_instance.filter(
+      binding.shipId,
+    )) {
+      if (++count > 256) break;
+      const c = ctx.db.character.id.find(l.characterId);
+      if (
+        c &&
+        c.shipId === binding.shipId &&
+        inChamber(chamber, [c.localX, c.localY]) &&
+        suitRefusal(c.id)
+      )
+        throw new SenderError(
+          "Someone in the airlock has no EVA suit: the airlock will not depressurise",
+        );
+    }
+  }
 }
 
 /** Fire due timers (bounded); drop timers of retired revisions or missing ships. */

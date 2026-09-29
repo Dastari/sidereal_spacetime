@@ -1185,8 +1185,11 @@ async function buildWorld(
     if (state.combat?.active && !state.seated)
       avatar.rotation.y = -state.combat.angle;
     if (state.seated) avatar.rotation.y = state.seatFacing ?? 0;
-    // EVA: the accepted body heading turns the body unless it aims (then it faces the aim).
-    if (eva && !state.combat?.active) avatar.rotation.y = eva.localHeading;
+    // EVA: the accepted body heading turns the body unless it aims (then it faces the aim). The
+    // server heading changes continuously at 20 Hz (rigid-body spin); ease between ticks.
+    if (eva && !state.combat?.active)
+      avatar.rotation.y +=
+        angleDelta(avatar.rotation.y, eva.localHeading) * Math.min(1, dt * 18);
     const cabinVisible = cabinIsVisible(state.interior, blend, !!focusedBodyId);
     updateConstructionDoors?.(state.constructionDoors ?? []);
     cabinVisibility.update(cabinVisible, state.objectLights ?? []);

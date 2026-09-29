@@ -81,3 +81,26 @@ export const evaAirlockCycle = table(
     endsMicros: t.u64(),
   },
 );
+
+/**
+ * EVA milestone 2: the suit of a character in EVA (rigid body and suit IFCS state). Private; the
+ * owner reads it through `own_eva_suit`. Created when the character steps outside, removed when it
+ * comes back aboard. Angular velocity lives here because a rigid body keeps its spin.
+ */
+export const evaSuit = table(
+  { name: "eva_suit" },
+  {
+    characterId: t.string().primaryKey(),
+    owner: t.identity(),
+    /** "hold" (stabiliser: hold facing, kill relative velocity) or "free" (no stabiliser). */
+    mode: t.string(),
+    /** Desired facing (heading in the body's current frame) and whether one is commanded. */
+    facing: t.f64(),
+    facingActive: t.bool(),
+    /** Angular velocity (rad/s, counter-clockwise). */
+    omega: t.f64(),
+    /** Mass of body, suit and carried items (kg), refreshed while outside. */
+    massKg: t.f64(),
+    revision: t.u64(),
+  },
+);

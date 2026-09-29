@@ -203,7 +203,7 @@ import * as combat from "./combat";
 import * as combatDamage from "./combat-damage";
 import * as characterDeath from "./character-death";
 import * as eva from "./eva";
-import { evaBody, evaAirlockCycle } from "./eva-tables";
+import { evaBody, evaAirlockCycle, evaSuit } from "./eva-tables";
 import * as shipLogic from "./ship-logic";
 import { shipLogicState, shipLogicTimer } from "./ship-logic-tables";
 import { characterVitals, shipComponentDamage } from "./combat-damage-tables";
@@ -331,6 +331,7 @@ const movementTimer = table(
 const db = schema({
   evaBody,
   evaAirlockCycle,
+  evaSuit,
   shipLogicState,
   shipLogicTimer,
   systemZone,
@@ -1090,8 +1091,11 @@ export const pressShipButton = db.reducer(
   { shipId: t.string(), deviceId: t.string() },
   auth.gameAction(
     (ctx, args) =>
-      shipLogic.pressShipButton(ctx, args, (actorId, shipId) =>
-        eva.exteriorPanelAllowed(ctx, actorId, shipId),
+      shipLogic.pressShipButton(
+        ctx,
+        args,
+        (actorId, shipId) => eva.exteriorPanelAllowed(ctx, actorId, shipId),
+        (characterId) => eva.evaSuitRefusal(ctx, characterId),
       ),
     true,
   ),
@@ -1115,6 +1119,19 @@ export const evaEmergencyReturn = db.reducer((ctx) => {
   auth.requireGame(ctx);
   eva.emergencyReturn(ctx);
 });
+/** EVA suit controls (intent): stabiliser mode and the facing the suit IFCS steers to. */
+export const evaSetSuit = db.reducer(
+  { mode: t.string(), facing: t.f64(), facingActive: t.bool() },
+  (ctx, args) => {
+    auth.requireGame(ctx);
+    eva.setSuit(ctx, args);
+  },
+);
+export const ownEvaSuit = db.view(
+  { name: "own_eva_suit", public: true },
+  t.array(eva.ownEvaSuitProjection),
+  auth.gameView(eva.ownEvaSuit),
+);
 export const ownEvaBody = db.view(
   { name: "own_eva_body", public: true },
   t.array(eva.ownEvaBodyProjection),

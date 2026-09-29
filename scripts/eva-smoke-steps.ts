@@ -125,6 +125,32 @@ export async function evaSmoke(
   assert.equal(device("door-outer").open, false, "hatch starts shut");
   assert.equal(device("door-inner").open, true, "hold door starts open");
 
+  // 0. Vacuum needs the EVA suit: without it the inside button refuses to depressurise.
+  for (const [x, y] of prefabWalkRoute(
+    prefab,
+    catalog,
+    [actor().localX, actor().localY],
+    panel("btn-lock-in").front,
+  ))
+    await walkNative(s, x, y);
+  const refusal = await press("btn-lock-in").then(
+    () => "",
+    (e: unknown) => String(e),
+  );
+  assert.match(refusal, /EVA needs a pressure suit, helmet and EVA jetpack/);
+  assert.equal(device("lock").state, "pressurised", "no cycle without a suit");
+  // Smoke-only: wear the EVA suit (production stocks it with `ship_cargo.py --kit eva-suit` and the
+  // player equips it from the crate).
+  await s.reducers.wearPrefabSmokeEvaSuit({});
+  await wait(
+    () =>
+      [...s.db.ownInventoryItems.iter()].filter(
+        (i: any) => /^wardrobe-suit-/.test(i.definitionId) && i.equipmentSlot,
+      ).length === 4,
+    "EVA suit worn",
+    5000,
+  );
+
   // 1. Walk to the inside button and press it: interlocked 3 s cycle, then the hatch opens.
   for (const [x, y] of prefabWalkRoute(
     prefab,

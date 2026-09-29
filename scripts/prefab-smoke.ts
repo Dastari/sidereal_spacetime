@@ -81,6 +81,9 @@ const subscribed = () => [
   tables.ownEvaAirlockCycle,
   tables.visibleEvaBodies,
   tables.visibleShipLogic,
+  tables.ownEvaSuit,
+  tables.ownReachableCargoItems,
+  tables.ownReachableCargoContainers,
 ];
 const c = DbConnection.builder()
   .withUri(host)

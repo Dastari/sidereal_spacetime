@@ -36,6 +36,7 @@ import {
   stepEvaFree,
   stepEvaLocal,
   worldToLocal,
+  wrapAngle,
   type EvaReferenceCandidate,
   type EvaShipModel,
   type ShipPose,
@@ -47,6 +48,18 @@ import {
 } from "@sidereal/sim/spatial-cells";
 import { castCharacterBeam } from "@sidereal/sim/combat-damage";
 import { canOccupyDeck } from "@sidereal/sim/construction-collision";
+import {
+  evaSuitMass,
+  evaSuitPresentation,
+  EVA_SUIT,
+  type EvaSuitIntent,
+  type EvaSuitMode,
+} from "@sidereal/sim/eva-suit";
+import {
+  evaSuitCheck,
+  evaSuitMessage,
+} from "@sidereal/content/crew-wardrobe";
+import { characterCarriedMassKg } from "./construction-flight-input";
 import * as auth from "./auth";
 import { consumeInputControl } from "./input-control";
 import {
@@ -69,6 +82,7 @@ type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 type Db = Context["db"];
 type CharacterRow = NonNullable<ReturnType<Db["character"]["id"]["find"]>>;
 type EvaRow = NonNullable<ReturnType<Db["evaBody"]["characterId"]["find"]>>;
+type SuitRow = NonNullable<ReturnType<Db["evaSuit"]["characterId"]["find"]>>;
 type MotionRow = NonNullable<
   ReturnType<Db["shipWorldMotion"]["shipId"]["find"]>
 >;
@@ -253,6 +267,87 @@ export const isCyclingAirlock = (
   characterId: string,
 ) => !!db.evaAirlockCycle.characterId.find(characterId);
 
+// ------------------------------------------------------------------ suit
+
+/**
+ * The suit rule for a character: the refusal message when the EVA pressure suit, helmet or
+ * jetpack is not equipped, else "". Uses only equipped items (one per slot).
+ */
+export function evaSuitRefusal(
+  ctx: Pick<Context, "db">,
+  characterId: string,
+): string {
+  const equipped: { slot: string; id: string }[] = [];
+  let count = 0;
+  for (const item of ctx.db.inventoryItem.by_character.filter(characterId)) {
+    if (++count > 512) break;
+    if (item.equipmentSlot)
+      equipped.push({ slot: item.equipmentSlot, id: item.definitionId });
+  }
+  const check = evaSuitCheck(equipped);
+  return check.ready ? "" : evaSuitMessage(check.missing);
+}
+
+/** Mass of the suited body (body, suit and everything carried), kg. */
+function suitedMassKg(ctx: Pick<Context, "db">, characterId: string) {
+  try {
+    return EVA_SUIT.bodyMassKg + characterCarriedMassKg(ctx as never, characterId);
+  } catch {
+    return EVA_SUIT.bodyMassKg + 30;
+  }
+}
+
+function suitOf(ctx: Context, body: EvaRow): SuitRow {
+  return (
+    ctx.db.evaSuit.characterId.find(body.characterId) ?? {
+      characterId: body.characterId,
+      owner: body.owner,
+      mode: "hold",
+      facing: inShipFrame(body) ? body.localHeading : body.heading,
+      facingActive: false,
+      omega: 0,
+      massKg: suitedMassKg(ctx, body.characterId),
+      revision: 0n,
+    }
+  );
+}
+function writeSuit(ctx: Context, row: SuitRow) {
+  if (ctx.db.evaSuit.characterId.find(row.characterId))
+    ctx.db.evaSuit.characterId.update(row);
+  else ctx.db.evaSuit.insert(row);
+}
+
+/**
+ * Suit controls (intent, not motion): the stabiliser mode and the facing the suit IFCS steers to
+ * (a heading in the body's current frame: ship-local in a ship's frame, world while free).
+ */
+export function setSuit(
+  ctx: Context,
+  args: { mode: string; facing: number; facingActive: boolean },
+) {
+  const actor = actorOf(ctx);
+  const body = ctx.db.evaBody.characterId.find(actor.id);
+  if (!body) throw new SenderError("Only outside the ship");
+  if (args.mode !== "hold" && args.mode !== "free")
+    throw new SenderError("Unknown suit mode");
+  if (!Number.isFinite(args.facing) || Math.abs(args.facing) > 64)
+    throw new SenderError("Invalid facing");
+  const suit = suitOf(ctx, body);
+  const next = {
+    ...suit,
+    mode: args.mode,
+    facing: wrapAngle(args.facing),
+    facingActive: args.facingActive,
+  };
+  if (
+    next.mode !== suit.mode ||
+    next.facing !== suit.facing ||
+    next.facingActive !== suit.facingActive ||
+    !ctx.db.evaSuit.characterId.find(actor.id)
+  )
+    writeSuit(ctx, { ...next, revision: suit.revision + 1n });
+}
+
 function writeBody(ctx: Context, row: EvaRow) {
   const cell = cellOf(row.x, row.y);
   const next = { ...row, ...cell };
@@ -364,6 +459,8 @@ export function tryStepOut(
   );
   const motion = ctx.db.shipWorldMotion.shipId.find(actor.shipId);
   if (!entry || !motion) return false;
+  // Vacuum: no suit, no step outside (the hatch line stays a wall for the walker).
+  if (evaSuitRefusal(ctx, actor.id)) return false;
   const pose = poseOf(motion);
   const local = {
     x: actor.localX,
@@ -371,6 +468,7 @@ export function tryStepOut(
     vx: entry.normal[0] * STEP_OUT_SPEED,
     vy: entry.normal[1] * STEP_OUT_SPEED,
     heading: Math.atan2(-entry.normal[0], entry.normal[1]),
+    omega: 0,
   };
   const w = localToWorld(pose, local);
   const before = ctx.db.evaBody.characterId.find(actor.id);
@@ -404,6 +502,16 @@ export function tryStepOut(
     returnEndsMicros: 0n,
     serverTick: ctx.timestamp.microsSinceUnixEpoch / 50_000n,
     revision: (before?.revision ?? 0n) + 1n,
+  });
+  writeSuit(ctx, {
+    characterId: actor.id,
+    owner: actor.owner,
+    mode: "hold",
+    facing: local.heading,
+    facingActive: false,
+    omega: 0,
+    massKg: suitedMassKg(ctx, actor.id),
+    revision: (ctx.db.evaSuit.characterId.find(actor.id)?.revision ?? 0n) + 1n,
   });
   if (actor.sprinting)
     ctx.db.character.id.update({ ...actor, sprinting: false });
@@ -476,6 +584,8 @@ function commitAboard(
     revision: (existing?.revision ?? 0n) + 1n,
   };
   ctx.db.evaBody.characterId.delete(actor.id);
+  if (ctx.db.evaSuit.characterId.find(actor.id))
+    ctx.db.evaSuit.characterId.delete(actor.id);
   if (ctx.db.evaAirlockCycle.characterId.find(actor.id))
     ctx.db.evaAirlockCycle.characterId.delete(actor.id);
   if (existing) ctx.db.constructionLocation.characterId.update(location);
@@ -559,7 +669,11 @@ function toFree(
 ): EvaRow {
   return {
     ...body,
-    ...w,
+    x: w.x,
+    y: w.y,
+    vx: w.vx,
+    vy: w.vy,
+    heading: w.heading,
     phase: "free",
     anchorShipId: "",
     localX: 0,
@@ -572,10 +686,36 @@ function toFree(
   };
 }
 
+/** The suit's intent this tick: thrust direction from the input row, facing and mode from the suit. */
+function intentOf(
+  suit: SuitRow,
+  input: { dx: number; dy: number },
+): EvaSuitIntent {
+  return {
+    dx: input.dx,
+    dy: input.dy,
+    facing: suit.facingActive ? suit.facing : null,
+    mode: (suit.mode === "free" ? "free" : "hold") as EvaSuitMode,
+  };
+}
+
+/** Persist the suit's spin (and frame-converted facing) when they change. */
+function writeSuitSpin(
+  ctx: Context,
+  suit: SuitRow,
+  omega: number,
+  facing: number = suit.facing,
+) {
+  if (omega === suit.omega && facing === suit.facing && ctx.db.evaSuit.characterId.find(suit.characterId))
+    return;
+  writeSuit(ctx, { ...suit, omega, facing, revision: suit.revision + 1n });
+}
+
 function stepLocal(
   ctx: Context,
   actor: CharacterRow,
   body: EvaRow,
+  suit: SuitRow,
   input: { dx: number; dy: number },
   tick: bigint,
 ) {
@@ -585,16 +725,15 @@ function stepLocal(
   if (!motion || !model || motion.systemId !== body.systemId) {
     // The ship went away: float free where the body was, with its last velocity.
     writeBody(ctx, toFree(body, body, tick));
+    writeSuitSpin(ctx, suit, suit.omega, wrapAngle(suit.facing + (body.heading - body.localHeading)));
     return;
   }
   const pose = poseOf(motion);
-  // Local velocity recovered exactly from the stored world velocity and last tick's hull point
-  // velocity (the reference), in last tick's ship frame (heading − localHeading).
+  // Local velocity recovered exactly from the stored world velocity and last tick's ship velocity
+  // (the reference), in last tick's ship frame (heading − localHeading).
   const legacy = body.phase !== "local";
   const lastShipHeading = body.heading - body.localHeading;
-  const rel = legacy
-    ? [0, 0]
-    : [body.vx - body.refVx, body.vy - body.refVy];
+  const rel = legacy ? [0, 0] : [body.vx - body.refVx, body.vy - body.refVy];
   const c = Math.cos(-lastShipHeading),
     s = Math.sin(-lastShipHeading);
   const start = {
@@ -603,6 +742,7 @@ function stepLocal(
     vx: c * rel[0] - s * rel[1],
     vy: s * rel[0] + c * rel[1],
     heading: body.localHeading,
+    omega: suit.omega,
   };
   // Dropped into world space when the ship out-accelerates the suit or the body is far out.
   const release = evaReleaseReason(
@@ -618,10 +758,17 @@ function stepLocal(
       ctx,
       toFree(body, { x: w.x, y: w.y, vx: body.vx, vy: body.vy, heading: w.heading }, tick),
     );
+    writeSuitSpin(ctx, suit, suit.omega, wrapAngle(suit.facing + pose.heading));
     return;
   }
   const open = passableEntries(ctx, actor, shipId);
-  const step = stepEvaLocal(model, start, input, open);
+  const step = stepEvaLocal(
+    model,
+    start,
+    intentOf(suit, input),
+    open,
+    evaSuitMass(suit.massKg - EVA_SUIT.bodyMassKg),
+  );
   applyImpact(ctx, actor.id, step.impactSpeed);
   const next = step.state;
   // Doorway hand-off inward: the same point becomes a deck position.
@@ -633,18 +780,23 @@ function stepLocal(
   )
     return;
   const w = localToWorld(pose, next);
+  const shown = evaSuitPresentation(step.allocation);
   const moved = {
     ...body,
-    ...w,
+    x: w.x,
+    y: w.y,
+    vx: w.vx,
+    vy: w.vy,
+    heading: w.heading,
+    refVx: w.refVx,
+    refVy: w.refVy,
     phase: "local",
     anchorShipId: shipId,
     localX: next.x,
     localY: next.y,
     localHeading: next.heading,
     refShipId: shipId,
-    forward: Math.min(1, Math.hypot(input.dx, input.dy)),
-    strafe: 0,
-    turn: 0,
+    ...shown,
     walking: false,
     serverTick: tick,
   };
@@ -656,17 +808,21 @@ function stepLocal(
     moved.heading !== body.heading ||
     moved.phase !== body.phase ||
     moved.forward !== body.forward ||
+    moved.strafe !== body.strafe ||
+    moved.turn !== body.turn ||
     moved.localX !== body.localX ||
     moved.localY !== body.localY ||
     moved.returnEndsMicros !== body.returnEndsMicros
   )
     writeBody(ctx, moved);
+  writeSuitSpin(ctx, suit, next.omega);
 }
 
 function stepFree(
   ctx: Context,
   actor: CharacterRow,
   body: EvaRow,
+  suit: SuitRow,
   input: { dx: number; dy: number },
   tick: bigint,
 ) {
@@ -682,7 +838,15 @@ function stepFree(
   const vRef: [number, number] = ref ? ref.velocity : [body.refVx, body.refVy];
   const previous: [number, number] =
     ref && ref.shipId === body.refShipId ? [body.refVx, body.refVy] : vRef;
-  let state = stepEvaFree(body, input, vRef, EVA.tickSeconds, previous);
+  const step = stepEvaFree(
+    { x: body.x, y: body.y, vx: body.vx, vy: body.vy, heading: body.heading, omega: suit.omega },
+    intentOf(suit, input),
+    evaSuitMass(suit.massKg - EVA_SUIT.bodyMassKg),
+    vRef,
+    EVA.tickSeconds,
+    previous,
+  );
+  let state = step.state;
   // Hulls are solid: a ship that moved into the body (or the body into it) pushes it out.
   for (const { motion, model } of ships) {
     const pose = poseOf(motion);
@@ -702,6 +866,7 @@ function stepFree(
     applyImpact(ctx, actor.id, contact.impactSpeed);
   }
   if (!ctx.db.evaBody.characterId.find(actor.id)) return;
+  const shown = evaSuitPresentation(step.allocation);
   // Captured into a ship's frame: ride along from now on.
   const captured = evaCaptureShip(candidates, state);
   if (captured) {
@@ -710,31 +875,38 @@ function stepFree(
     const w = localToWorld(pose, local);
     writeBody(ctx, {
       ...body,
-      ...w,
+      x: w.x,
+      y: w.y,
+      vx: w.vx,
+      vy: w.vy,
+      heading: w.heading,
+      refVx: w.refVx,
+      refVy: w.refVy,
       phase: "local",
       anchorShipId: captured,
       localX: local.x,
       localY: local.y,
       localHeading: local.heading,
       refShipId: captured,
-      forward: Math.min(1, Math.hypot(input.dx, input.dy)),
-      strafe: 0,
-      turn: 0,
+      ...shown,
       walking: false,
       serverTick: tick,
       revision: body.revision + 1n,
     });
+    writeSuitSpin(ctx, suit, state.omega, wrapAngle(suit.facing - pose.heading));
     return;
   }
   const next = {
     ...body,
-    ...state,
+    x: state.x,
+    y: state.y,
+    vx: state.vx,
+    vy: state.vy,
+    heading: state.heading,
     refShipId: ref?.shipId ?? "",
     refVx: vRef[0],
     refVy: vRef[1],
-    forward: Math.min(1, Math.hypot(input.dx, input.dy)),
-    strafe: 0,
-    turn: 0,
+    ...shown,
     walking: false,
     serverTick: tick,
   };
@@ -745,16 +917,21 @@ function stepFree(
     next.vy !== body.vy ||
     next.heading !== body.heading ||
     next.forward !== body.forward ||
+    next.strafe !== body.strafe ||
+    next.turn !== body.turn ||
     next.refShipId !== body.refShipId ||
     next.returnEndsMicros !== body.returnEndsMicros
   )
     writeBody(ctx, next);
+  writeSuitSpin(ctx, suit, state.omega);
 }
 
 function stepBody(ctx: Context, body: EvaRow, tick: bigint) {
   const actor = ctx.db.character.id.find(body.characterId);
   if (!actor) {
     ctx.db.evaBody.characterId.delete(body.characterId);
+    if (ctx.db.evaSuit.characterId.find(body.characterId))
+      ctx.db.evaSuit.characterId.delete(body.characterId);
     return;
   }
   const now = ctx.timestamp.microsSinceUnixEpoch;
@@ -766,10 +943,13 @@ function stepBody(ctx: Context, body: EvaRow, tick: bigint) {
     if (evaReturnAboard(ctx, actor.id)) return;
     body = { ...body, returnEndsMicros: 0n };
   }
+  let suit = suitOf(ctx, body);
+  // The carried mass is refreshed about once a second (inventory changes are rare outside).
+  if (tick % 20n === 0n) suit = { ...suit, massKg: suitedMassKg(ctx, actor.id) };
   const command = freshInput(ctx, actor);
   const input = { dx: command?.dx ?? 0, dy: command?.dy ?? 0 };
-  if (inShipFrame(body)) stepLocal(ctx, actor, body, input, tick);
-  else stepFree(ctx, actor, body, input, tick);
+  if (inShipFrame(body)) stepLocal(ctx, actor, body, suit, input, tick);
+  else stepFree(ctx, actor, body, suit, input, tick);
 }
 
 /** Scheduled step (20 Hz, after the shared world stepped ships and ship logic ran). */
@@ -882,6 +1062,15 @@ export const ownEvaBodyProjection = t.row("EvaBodyStatus", {
   serverTick: t.u64(),
   revision: t.u64(),
 });
+export const ownEvaSuitProjection = t.row("EvaSuitStatus", {
+  characterId: t.string().primaryKey(),
+  mode: t.string(),
+  facing: t.f64(),
+  facingActive: t.bool(),
+  omega: t.f64(),
+  massKg: t.f64(),
+  revision: t.u64(),
+});
 export const ownEvaCycleProjection = t.row("EvaAirlockCycleStatus", {
   characterId: t.string().primaryKey(),
   shipId: t.string(),
@@ -961,6 +1150,25 @@ export function ownEvaBody(ctx: ReadContext) {
       revision: body.revision,
     },
   ];
+}
+
+/** The own suit while outside (mode, facing target, spin, mass). */
+export function ownEvaSuit(ctx: ReadContext) {
+  const actor = ownActor(ctx);
+  const suit = actor && ctx.db.evaSuit.characterId.find(actor.id);
+  return suit && ctx.db.evaBody.characterId.find(suit.characterId)
+    ? [
+        {
+          characterId: suit.characterId,
+          mode: suit.mode,
+          facing: suit.facing,
+          facingActive: suit.facingActive,
+          omega: suit.omega,
+          massKg: suit.massKg,
+          revision: suit.revision,
+        },
+      ]
+    : [];
 }
 
 export function ownEvaAirlockCycle(ctx: ReadContext) {

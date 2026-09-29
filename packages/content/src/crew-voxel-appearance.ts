@@ -1,3 +1,4 @@
+import { crewWardrobeItem } from "./crew-wardrobe";
 import {
   DEFAULT_HEAD_LOADOUT,
   validateHeadLoadout,
@@ -93,6 +94,10 @@ export const VOXEL_VISOR_VISUALS: Readonly<Record<string, string>> = {
 
 function helmetVisual(id: string | undefined) {
   if (!id) return undefined;
+  // Wardrobe helmets (EVA suit) name their head-kit helmet directly.
+  const wardrobe = crewWardrobeItem(id);
+  if (wardrobe?.slot === "helmet" && wardrobe.helmet)
+    return { helmet: wardrobe.helmet };
   return VOXEL_HELMET_VISUALS[id.replace(/^crew-/, "")];
 }
 

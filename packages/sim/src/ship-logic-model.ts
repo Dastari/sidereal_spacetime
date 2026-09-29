@@ -49,10 +49,18 @@ export interface LogicDoor {
   /** Walking-layout opening id of an interior door (`opening-<doorId>`), else null. */
   openingId: string | null;
 }
+/** An airlock chamber: the room shared by a controller's inner and outer doors. */
+export interface LogicChamber {
+  controllerId: string;
+  room: string;
+  /** Ship-local axis-aligned bounds [x0, y0, x1, y1] of the room rectangle. */
+  bounds: [number, number, number, number];
+}
 export interface ShipLogicModel {
   graph: LogicGraph;
   panels: LogicPanel[];
   doors: LogicDoor[];
+  chambers: LogicChamber[];
 }
 
 const zero = (n: number) => Math.round(n * 1e9) / 1e9 + 0;
@@ -118,10 +126,48 @@ export function shipLogicModel(
       });
     }
   }
-  const model = { graph: logicGraph(doc.logic), panels, doors };
+  const graph = logicGraph(doc.logic);
+  const chambers: LogicChamber[] = [];
+  for (const node of graph.devices.values()) {
+    if (node.kind !== "airlock-controller") continue;
+    const doorOf = (port: string) => {
+      const target = graph.wires.get(`${node.id}.${port}`)?.[0]?.device;
+      const device = target ? graph.devices.get(target) : undefined;
+      return device?.door
+        ? interior.doors.find((d) => d.id === device.door)
+        : undefined;
+    };
+    const inner = doorOf("inner"),
+      outer = doorOf("outer");
+    const room = inner?.rooms.find(
+      (r) => r !== null && outer?.rooms.includes(r),
+    );
+    const rect = room ? doc.rooms.find((r) => r.id === room)?.rect : undefined;
+    if (!room || !rect) continue;
+    const a = toShip([rect[0], rect[1]]),
+      b = toShip([rect[2], rect[3]]);
+    chambers.push({
+      controllerId: node.id,
+      room,
+      bounds: [
+        Math.min(a[0], b[0]),
+        Math.min(a[1], b[1]),
+        Math.max(a[0], b[0]),
+        Math.max(a[1], b[1]),
+      ],
+    });
+  }
+  const model = { graph, panels, doors, chambers };
   cache.set(doc, model);
   return model;
 }
+
+/** Whether a ship-local point is inside a chamber room's rectangle. */
+export const inChamber = (c: LogicChamber, p: readonly [number, number]) =>
+  p[0] >= c.bounds[0] &&
+  p[0] <= c.bounds[2] &&
+  p[1] >= c.bounds[1] &&
+  p[1] <= c.bounds[3];
 
 /** Whether a body centre at `p` is in a door's doorway zone (blocks a close). */
 export function inDoorway(door: LogicDoor, p: readonly [number, number], radius = 0.3) {

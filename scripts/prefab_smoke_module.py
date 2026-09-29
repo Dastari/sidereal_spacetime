@@ -50,6 +50,19 @@ export const holdPrefabSmokeWeapon = db.reducer({definitionId:t.string()},auth.g
   ctx.db.inventoryItem.id.update({...item,definitionId:args.definitionId});
   if(ctx.db.weaponEnergy.itemId.find(item.id))ctx.db.weaponEnergy.itemId.delete(item.id);
 },true));
+// Smoke-only (EVA milestone 2): wear the EVA suit (pressure suit, helmet, jetpack, mag boots) on
+// the caller's character. Production stocks it (ship_cargo.py --kit eva-suit) and the player equips it.
+export const wearPrefabSmokeEvaSuit = db.reducer({},auth.gameAction((ctx)=>{
+  const actors=[...ctx.db.character.by_owner.filter(ctx.sender)];
+  if(actors.length!==1)throw new SenderError("One owned smoke character required");
+  const worn=[...ctx.db.inventoryItem.by_character.filter(actors[0].id)];
+  for(const [slot,part] of [["uniform","body"],["helmet","helmet"],["back","pack"],["boots","boots"]]){
+    // A worn item in the slot becomes the suit part (same UUID, like holdPrefabSmokeWeapon).
+    const old=worn.find(i=>i.equipmentSlot===slot);
+    if(old){ctx.db.inventoryItem.id.update({...old,definitionId:"wardrobe-suit-"+part});continue;}
+    ctx.db.inventoryItem.insert({id:ctx.newUuidV4().toString(),characterId:actors[0].id,definitionId:"wardrobe-suit-"+part,containerId:"",equipmentSlot:slot,x:0,y:0,rotated:false});
+  }
+},true));
 '''
 
 

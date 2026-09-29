@@ -46,11 +46,13 @@ import {
   cycleAirlock,
   emergencyReturn,
   evaModelFor,
+  evaSuitRefusal,
   exteriorPanelAllowed,
   ownEvaBody,
   resolveEvaShot,
   stepEva,
   toggleMaglock,
+  setSuit,
   tryStepOut,
   visibleEvaBodies,
 } from "./eva";
@@ -270,6 +272,7 @@ function fixture() {
     }),
     evaAirlockCycle: table("characterId", { by_ship: "shipId" }, ["lockKey"]),
     shipLogicState: table("key", { by_ship: "shipId" }),
+    evaSuit: table("characterId"),
     shipLogicTimer: table("key", { by_ship: "shipId" }),
     authSession: table("connectionId", { by_owner: "owner" }),
     retiredIdentity: table("id", {}, ["source"]),
@@ -329,17 +332,44 @@ function place(id: string, at: readonly [number, number]) {
   ctx.db.character.id.update({ ...c, localX: at[0], localY: at[1] });
 }
 function press(deviceId: string, who = owner, shipId = "wren") {
-  pressShipButton(as(who), { shipId, deviceId }, (actorId, ship) =>
-    exteriorPanelAllowed(ctx, actorId, ship),
+  pressShipButton(
+    as(who),
+    { shipId, deviceId },
+    (actorId, ship) => exteriorPanelAllowed(ctx, actorId, ship),
+    (characterId) => evaSuitRefusal(ctx, characterId),
   );
 }
 const binding = () => shipPrefabBinding(ctx.db, "wren")!;
+const device = (deviceId: string) => {
+  const s = logicDeviceState(ctx.db, binding(), deviceId);
+  return s?.kind === "airlock-controller" ? s.phase : s?.kind;
+};
 const doorOpen = (deviceId: string) => {
   const s = logicDeviceState(ctx.db, binding(), deviceId);
   return s?.kind === "door" && s.open;
 };
+/** Equip the EVA suit (pressure suit, helmet, jetpack and mag boots). */
+function suitUp(who: string) {
+  for (const [slot, part] of [
+    ["uniform", "body"],
+    ["helmet", "helmet"],
+    ["back", "pack"],
+    ["boots", "boots"],
+  ])
+    ctx.db.inventoryItem.insert({
+      id: `${who}-suit-${part}`,
+      characterId: who,
+      definitionId: `wardrobe-suit-${part}`,
+      containerId: "",
+      equipmentSlot: slot,
+      x: 0,
+      y: 0,
+      rotated: false,
+    });
+}
 /** Press the inside button, wait out the 3 s cycle, walk out through the open hatch. */
 function goOutside(who = "cap") {
+  if (!ctx.db.inventoryItem.rows.has(`${who}-suit-body`)) suitUp(who);
   place(who, panel("btn-lock-in").front);
   press("btn-lock-in");
   ticks(62);
@@ -364,6 +394,7 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
   });
 
   it("inside button: interlocked 3 s cycle, then the outer door opens", () => {
+    suitUp("cap");
     place("cap", panel("btn-lock-in").front);
     press("btn-lock-in");
     expect(doorOpen("door-inner")).toBe(false);
@@ -392,6 +423,8 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
 
   it("never closes a door on a body: the cycle waits until the doorway is clear", () => {
     addCharacter("mate", owner, "wren", innerDoor.center);
+    suitUp("cap");
+    suitUp("mate");
     place("cap", panel("btn-lock-in").front);
     press("btn-lock-in");
     ticks(80);
@@ -411,6 +444,71 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     expect(visibleShipLogic(as(other)).every((r) => r.shipId === "kite")).toBe(true);
     const row = visibleShipLogic(ctx)[0] as Record<string, unknown>;
     for (const secret of ["owner", "characterId", "stateJson"]) expect(row[secret]).toBeUndefined();
+  });
+});
+
+
+describe("the EVA suit (vacuum needs suit, helmet and jetpack)", () => {
+  it("an unsuited walker cannot step out, and cannot cycle the lock toward vacuum", () => {
+    place("cap", panel("btn-lock-in").front);
+    expect(() => press("btn-lock-in")).toThrow("EVA needs a pressure suit, helmet and EVA jetpack");
+    // The hall button only pressurises: fine without a suit.
+    addCharacter("mate", third, "wren", panel("btn-hall").front);
+    press("btn-hall", third);
+    // A suited crewmate opens the lock; the unsuited one still cannot step out.
+    suitUp("mate");
+    place("mate", panel("btn-lock-in").front);
+    place("cap", [0, 0]);
+    press("btn-lock-in", third);
+    ticks(62);
+    expect(doorOpen("door-outer")).toBe(true);
+    place("cap", plusN(lock.hatch, lock.normal, -0.3));
+    expect(tryStepOut(ctx, ctx.db.character.id.find("cap"), { dx: 1, dy: 0 })).toBe(false);
+    suitUp("cap");
+    expect(tryStepOut(ctx, ctx.db.character.id.find("cap"), { dx: 1, dy: 0 })).toBe(true);
+    expect(ctx.db.evaSuit.characterId.find("cap")).toMatchObject({ mode: "hold", omega: 0 });
+  });
+
+  it("the lock will not depressurise with an unsuited body in the chamber", () => {
+    suitUp("cap");
+    place("cap", panel("btn-lock-in").front);
+    addCharacter("mate", third, "wren", plusN(panel("btn-lock-in").front, [0, -1], 1));
+    expect(() => press("btn-lock-in")).toThrow("no EVA suit");
+    place("mate", panel("btn-hall").front);
+    press("btn-lock-in");
+    expect(device("lock")).toBe("depressurising");
+  });
+});
+
+describe("rigid body and suit IFCS in the world tick", () => {
+  it("a free-mode spin persists across ticks (angular momentum), the stabiliser stops it", () => {
+    goOutside();
+    ticks(10, () => input("cap", { dx: 1 }));
+    ticks(120);
+    const suit = ctx.db.evaSuit.characterId.find("cap");
+    ctx.db.evaSuit.characterId.update({ ...suit, mode: "free", omega: 1.2, facingActive: false });
+    const h0 = ctx.db.evaBody.characterId.find("cap").localHeading;
+    ticks(20);
+    expect(ctx.db.evaSuit.characterId.find("cap").omega).toBe(1.2);
+    const h1 = ctx.db.evaBody.characterId.find("cap").localHeading;
+    const turned = (((h1 - h0) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+    expect(turned).toBeCloseTo(1.2, 6);
+    setSuit(ctx, { mode: "hold", facing: 0, facingActive: false });
+    ticks(60);
+    expect(ctx.db.evaSuit.characterId.find("cap").omega).toBe(0);
+  });
+
+  it("turns to the commanded facing smoothly through torque", () => {
+    goOutside();
+    ticks(10, () => input("cap", { dx: 1 }));
+    ticks(120);
+    setSuit(ctx, { mode: "hold", facing: 2, facingActive: true });
+    tick();
+    const early = ctx.db.evaBody.characterId.find("cap").localHeading;
+    expect(Math.abs(early - 2)).toBeGreaterThan(0.3);
+    ticks(60);
+    expect(ctx.db.evaBody.characterId.find("cap").localHeading).toBeCloseTo(2, 3);
+    expect(() => setSuit(ctx, { mode: "warp", facing: 0, facingActive: false })).toThrow("mode");
   });
 });
 
@@ -478,6 +576,7 @@ describe("same-plane EVA: the doorway hand-off", () => {
 describe("outside panel and entry gate", () => {
   it("the outside button calls the hatch open for the owner, never for a stranger", () => {
     goOutside();
+    ticks(20, () => input("cap", { dx: 1 }));
     // Cycle the lock back to pressurised from inside via the hall button (crew aboard).
     addCharacter("mate", third, "wren", panel("btn-hall").front);
     press("btn-hall", third);

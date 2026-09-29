@@ -949,7 +949,31 @@ export const INVENTORY_PHYSICAL_DEFINITIONS: readonly FlightPhysicalDefinition[]
       centroid: [0, 0],
       inertiaKgM2: 0,
     },
-    // Space-suit mag boots (EVA milestone 2, 2026-09-29): wardrobe `suit-boots`, maglock soles.
+    // EVA space suit (EVA milestone 2, 2026-09-29): wardrobe `suit-*` (suit, helmet, jetpack, mag boots).
+    {
+      id: "inventory:wardrobe-suit-body",
+      revision: 1,
+      kind: "inventory",
+      massKg: 4,
+      centroid: [0, 0],
+      inertiaKgM2: 0,
+    },
+    {
+      id: "inventory:wardrobe-suit-helmet",
+      revision: 1,
+      kind: "inventory",
+      massKg: 1.5,
+      centroid: [0, 0],
+      inertiaKgM2: 0,
+    },
+    {
+      id: "inventory:wardrobe-suit-pack",
+      revision: 1,
+      kind: "inventory",
+      massKg: 4,
+      centroid: [0, 0],
+      inertiaKgM2: 0,
+    },
     {
       id: "inventory:wardrobe-suit-boots",
       revision: 1,

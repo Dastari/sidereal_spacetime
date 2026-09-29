@@ -34,6 +34,14 @@ import {
 } from "@sidereal/content/ship-prefab";
 import { isMaglockBoots } from "@sidereal/content/crew-wardrobe";
 import { prefabComponentDefinition } from "./prefab-deck-objects";
+import type { MassProperties } from "./ifcs";
+import {
+  EVA_SUIT,
+  evaSuitTick,
+  integrateSpin,
+  type EvaSuitAllocation,
+  type EvaSuitIntent,
+} from "./eva-suit";
 
 export type P2 = [number, number];
 
@@ -463,99 +471,85 @@ export function evaEntryThrough(
   return;
 }
 
-// ------------------------------------------------------------------ jetpack
+// ------------------------------------------------------------------ jetpack (rigid body + suit IFCS)
 
+/** A body in the world frame (free phase). */
 export interface EvaFreeState {
   x: number;
   y: number;
   vx: number;
   vy: number;
   heading: number;
+  /** Angular velocity (rad/s, counter-clockwise). */
+  omega: number;
 }
-/**
- * Jetpack input: thrust direction in the body's current frame (ship-local while `local`, world
- * while `free`), |dir| <= 1. The body turns to face the thrust (presentation).
- */
-export interface EvaThrustInput {
-  dx: number;
-  dy: number;
-}
-const clamp1 = (v: number) =>
-  Number.isFinite(v) ? Math.max(-1, Math.min(1, v)) : 0;
+/** A body in a ship's frame: position, velocity relative to the hull, heading relative to the ship. */
+export type EvaLocalState = EvaFreeState;
+export type { EvaSuitIntent };
 
-function thrustDir(input: EvaThrustInput): P2 {
-  let dx = clamp1(input.dx),
-    dy = clamp1(input.dy);
-  const len = Math.hypot(dx, dy);
-  if (len > 1) {
-    dx /= len;
-    dy /= len;
+/** Hold mode with nothing commanded: settle exactly (no creeping drift or spin). */
+function settle(
+  s: EvaFreeState,
+  intent: EvaSuitIntent,
+  ref: readonly [number, number],
+): EvaFreeState {
+  if (intent.mode !== "hold") return s;
+  let { vx, vy, omega, heading } = s;
+  const idle = Math.hypot(intent.dx, intent.dy) < 1e-9;
+  if (idle && Math.hypot(vx - ref[0], vy - ref[1]) < EVA_SUIT.restSpeed) {
+    vx = ref[0];
+    vy = ref[1];
   }
-  return [dx, dy];
-}
-function turnToward(heading: number, dir: P2, dt: number) {
-  if (Math.hypot(dir[0], dir[1]) < 0.05) return heading;
-  const want = headingOf(dir);
-  const diff = wrapAngle(want - heading);
-  const max = EVA.turnRate * dt;
-  return wrapAngle(heading + Math.max(-max, Math.min(max, diff)));
-}
-/** a = A·dir − K (v − vRef) + aRef, |a| ≤ A_MAX, K = A / V_CAP. */
-function jetAccel(
-  v: readonly [number, number],
-  vRef: readonly [number, number],
-  dir: P2,
-  aRef: readonly [number, number] = [0, 0],
-): P2 {
-  const k = EVA.thrust / EVA.speedCap;
-  let ax = EVA.thrust * dir[0] - k * (v[0] - vRef[0]) + aRef[0],
-    ay = EVA.thrust * dir[1] - k * (v[1] - vRef[1]) + aRef[1];
-  const al = Math.hypot(ax, ay);
-  if (al > EVA.accelLimit) {
-    ax *= EVA.accelLimit / al;
-    ay *= EVA.accelLimit / al;
+  if (intent.facing === null) {
+    if (Math.abs(omega) < EVA_SUIT.restAngularSpeed) omega = 0;
+  } else if (
+    Math.abs(omega) < EVA_SUIT.restAngularSpeed &&
+    Math.abs(wrapAngle(intent.facing - heading)) < EVA_SUIT.restHeadingError
+  ) {
+    omega = 0;
+    heading = wrapAngle(intent.facing);
   }
-  return [ax, ay];
+  return { ...s, vx: zero(vx), vy: zero(vy), omega: zero(omega), heading };
+}
+
+export interface EvaStep {
+  state: EvaFreeState;
+  /** Largest approach speed removed by hull contact this tick (m/s); ship frame only. */
+  impactSpeed: number;
+  /** Nozzle allocation this tick (presentation and tests). */
+  allocation: EvaSuitAllocation;
 }
 
 /**
- * One world tick of free (world-frame) jetpack flight: without input the body settles to `vRef`
- * (the captured ship's point velocity, fed forward); with input it thrusts along `dir`, up to
- * `V_CAP` relative to it. Deterministic; positions stay within the shared-world bound. Hull
- * contact is resolved by the caller (`evaWorldContact`).
+ * One world tick of free (world-frame) flight: the suit IFCS references `vRef` (the captured
+ * ship's point velocity, ramped from `vRefPrevious` with its rate fed forward); momentum carries the
+ * body otherwise. Deterministic; positions stay within the shared-world bound. Hull contact is
+ * resolved by the caller (`evaWorldContact`).
  */
 export function stepEvaFree(
   state: EvaFreeState,
-  input: EvaThrustInput,
-  vRef: readonly [number, number],
+  intent: EvaSuitIntent,
+  mass: MassProperties,
+  vRef: readonly [number, number] = [0, 0],
   dt: number = EVA.tickSeconds,
   vRefPrevious: readonly [number, number] = vRef,
-): EvaFreeState {
-  const dir = thrustDir(input);
+): EvaStep {
+  let aRef: P2 = [(vRef[0] - vRefPrevious[0]) / dt, (vRef[1] - vRefPrevious[1]) / dt];
+  const al = Math.hypot(aRef[0], aRef[1]);
+  if (!Number.isFinite(al)) aRef = [0, 0];
+  else if (al > EVA.accelLimit)
+    aRef = [(aRef[0] * EVA.accelLimit) / al, (aRef[1] * EVA.accelLimit) / al];
+  const tick = evaSuitTick(state, intent, mass, { v: vRef, a: aRef });
   const h = EVA.subSteps;
   const step = dt / h;
-  let { x, y, vx, vy, heading } = state;
-  let fx = (vRef[0] - vRefPrevious[0]) / dt,
-    fy = (vRef[1] - vRefPrevious[1]) / dt;
-  const fl = Math.hypot(fx, fy);
-  if (!Number.isFinite(fl)) fx = fy = 0;
-  else if (fl > EVA.accelLimit) {
-    fx *= EVA.accelLimit / fl;
-    fy *= EVA.accelLimit / fl;
-  }
+  let { x, y, vx, vy } = state;
   for (let i = 0; i < h; i++) {
-    const w = (i + 1) / h;
-    const ref: P2 = [
-      vRefPrevious[0] + (vRef[0] - vRefPrevious[0]) * w,
-      vRefPrevious[1] + (vRef[1] - vRefPrevious[1]) * w,
-    ];
-    heading = turnToward(heading, dir, step);
-    const [ax, ay] = jetAccel([vx, vy], ref, dir, [fx, fy]);
-    vx += ax * step;
-    vy += ay * step;
+    vx += tick.linear[0] * step;
+    vy += tick.linear[1] * step;
     x += vx * step;
     y += vy * step;
   }
+  const spin = integrateSpin(state.heading, state.omega, tick.angular, dt, h);
   const limit = EVA.positionLimit;
   if (Math.abs(x) > limit || Math.abs(y) > limit) {
     x = Math.max(-limit, Math.min(limit, x));
@@ -563,41 +557,35 @@ export function stepEvaFree(
     vx = 0;
     vy = 0;
   }
-  return { x: zero(x), y: zero(y), vx: zero(vx), vy: zero(vy), heading };
+  return {
+    state: settle(
+      { x: zero(x), y: zero(y), vx: zero(vx), vy: zero(vy), ...spin },
+      intent,
+      vRef,
+    ),
+    impactSpeed: 0,
+    allocation: tick.allocation,
+  };
 }
 
-export interface EvaLocalState {
-  /** Ship-local position and velocity relative to the hull, body heading relative to the ship. */
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  heading: number;
-}
-export interface EvaLocalStep {
-  state: EvaLocalState;
-  /** Largest approach speed removed by hull contact this tick (m/s). */
-  impactSpeed: number;
-}
 /**
- * One world tick in a ship's frame: the stabiliser settles the body at rest relative to the hull
- * (it rides along), thrust moves it up to `V_CAP` relative to the hull, and the hull is solid
- * except the lanes of `open` doorways. Contact removes the approaching velocity component and
- * reports its speed (impact leeway is applied by `evaImpactDamage`).
+ * One world tick in a ship's frame: the suit IFCS works relative to the hull (hold mode rides
+ * along at rest), and the hull is solid except the lanes of `open` doorways. Contact removes the
+ * approaching velocity component and reports its speed (impact leeway: `evaImpactDamage`).
+ * Contact never changes the angular velocity (frictionless hull).
  */
 export function stepEvaLocal(
   model: EvaShipModel,
   state: EvaLocalState,
-  input: EvaThrustInput,
+  intent: EvaSuitIntent,
   open: OpenEntries,
+  mass: MassProperties,
   dt: number = EVA.tickSeconds,
-): EvaLocalStep {
-  const dir = thrustDir(input);
+): EvaStep {
   const h = EVA.subSteps;
   const step = dt / h;
   let p: P2 = [state.x, state.y];
   let v: P2 = [state.vx, state.vy];
-  let heading = state.heading;
   let impactSpeed = 0;
   // A body that starts inside solid hull (a legacy roof position, a ship grown around it) is
   // pushed out first, without damage.
@@ -607,28 +595,24 @@ export function stepEvaLocal(
     const into = v[0] * out.normal[0] + v[1] * out.normal[1];
     if (into < 0) v = [v[0] - into * out.normal[0], v[1] - into * out.normal[1]];
   }
+  const tick = evaSuitTick({ ...state, x: p[0], y: p[1], vx: v[0], vy: v[1] }, intent, mass);
   for (let i = 0; i < h; i++) {
-    heading = turnToward(heading, dir, step);
-    const [ax, ay] = jetAccel(v, [0, 0], dir);
-    v = [v[0] + ax * step, v[1] + ay * step];
+    v = [v[0] + tick.linear[0] * step, v[1] + tick.linear[1] * step];
     const moved = evaMove(model, p, [v[0] * step, v[1] * step], v, open);
     const hit = Math.hypot(moved.removed[0], moved.removed[1]);
     if (hit > impactSpeed) impactSpeed = hit;
     v = [v[0] - moved.removed[0], v[1] - moved.removed[1]];
     p = moved.point;
   }
-  // At rest relative to the hull: the stabiliser holds station exactly (no creeping drift).
-  if (Math.hypot(dir[0], dir[1]) < 1e-9 && Math.hypot(v[0], v[1]) < EVA.restSpeed)
-    v = [0, 0];
+  const spin = integrateSpin(state.heading, state.omega, tick.angular, dt, h);
   return {
-    state: {
-      x: zero(p[0]),
-      y: zero(p[1]),
-      vx: zero(v[0]),
-      vy: zero(v[1]),
-      heading: wrapAngle(heading),
-    },
+    state: settle(
+      { x: zero(p[0]), y: zero(p[1]), vx: zero(v[0]), vy: zero(v[1]), ...spin },
+      intent,
+      [0, 0],
+    ),
     impactSpeed,
+    allocation: tick.allocation,
   };
 }
 
@@ -649,6 +633,7 @@ export function localToWorld(pose: ShipPose, s: EvaLocalState) {
     vx: zero(pose.vx + rv[0]),
     vy: zero(pose.vy + rv[1]),
     heading: wrapAngle(pose.heading + s.heading),
+    omega: s.omega,
     refVx: pose.vx,
     refVy: pose.vy,
   };
@@ -658,7 +643,15 @@ export function worldToLocal(pose: ShipPose, s: EvaFreeState): EvaLocalState {
   const [x, y] = worldToShip(pose, [s.x, s.y]);
   const pv = pointVelocity(pose, [s.x, s.y]);
   const rv = rotate([s.vx - pv[0], s.vy - pv[1]], -pose.heading);
-  return { x, y, vx: rv[0], vy: rv[1], heading: wrapAngle(s.heading - pose.heading) };
+  // The body's own spin carries over unchanged (ship rotation is presentation only).
+  return {
+    x,
+    y,
+    vx: rv[0],
+    vy: rv[1],
+    heading: wrapAngle(s.heading - pose.heading),
+    omega: s.omega,
+  };
 }
 
 export interface EvaReferenceCandidate {

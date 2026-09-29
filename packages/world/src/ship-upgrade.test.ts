@@ -283,7 +283,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
     () => {
       const { f, characterId, shipId, deckId } = liveWren(pin, revision);
       const before = heldInventory(f, shipId);
-      // 19 + 27 stocked items and the owner's carried kit, in the crate, locker and pockets.
+      // 18 + 27 stocked items and the owner's carried kit, in the crate, locker and pockets.
       const bound = f.db.instanceInventoryBinding.rows.map((b: Row) => ({
         ...b,
       }));
@@ -296,7 +296,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
           (i: Row) => i.containerId === containerId,
         ).length;
       expect(bound.map((b: Row) => stocked(b.containerId)).sort()).toEqual([
-        19, 27,
+        18, 27,
       ]);
       const motion = { ...f.db.shipWorldMotion.shipId.find(shipId) };
       const shipBefore = { ...f.db.ship.id.find(shipId) };

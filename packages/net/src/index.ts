@@ -124,6 +124,7 @@ export function connect(
           tables.visibleEvaBodies,
           // Ship logic (door, button and airlock states of the ships the viewer is at).
           tables.visibleShipLogic,
+          tables.ownEvaSuit,
           tables.visibleCombatActions,
           tables.ownConstructionDoors,
           tables.ownConstructionNativePressure,
@@ -188,6 +189,7 @@ export function connect(
     connection.db.ownEvaAirlockCycle,
     connection.db.visibleEvaBodies,
     connection.db.visibleShipLogic,
+    connection.db.ownEvaSuit,
     connection.db.visibleCombatActions,
     connection.db.ownConstructionDoors,
     connection.db.ownConstructionNativePressure,

@@ -4,6 +4,11 @@ import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-cat
 import { EVA, prefabEvaModel, shipToWorld } from "@sidereal/sim/eva";
 import { shipLogicModel } from "@sidereal/sim/ship-logic-model";
 import {
+  atOpenHatch,
+  buttonDepressurises,
+  evaFacingFromAim,
+  evaSuitRefusalOf,
+  evaThrustFromKeys,
   evaBodiesForScene,
   evaHomeVisit,
   evaIntent,
@@ -135,5 +140,46 @@ describe("remote spacewalkers and aim", () => {
   });
   it("converts aim between the ship frame and the world", () => {
     expect(localAimAngle(worldAimAngle(0.3, 1.1), 1.1)).toBeCloseTo(0.3, 9);
+  });
+});
+
+describe("suit IFCS controls (pointer facing, thrust relative to it)", () => {
+  it("W thrusts toward the facing at any angle; A/D strafe; nothing pressed sends nothing", () => {
+    for (const facing of [0, 0.37, -2.2]) {
+      const w = evaThrustFromKeys(keys("KeyW"), facing, false);
+      expect(w.dx).toBeCloseTo(-Math.sin(facing), 9);
+      expect(w.dy).toBeCloseTo(Math.cos(facing), 9);
+    }
+    const d = evaThrustFromKeys(keys("KeyD"), 0, false);
+    expect([d.dx, d.dy]).toEqual([1, 0]);
+    expect(evaThrustFromKeys(keys(), 1, false)).toMatchObject({ dx: 0, dy: 0 });
+    expect(evaThrustFromKeys(keys("KeyW"), 1, true)).toMatchObject({ dx: 0, dy: 0 });
+  });
+  it("maps the pointer aim (combat convention) to a heading in the body's frame", () => {
+    expect(evaFacingFromAim(0.5, true, 1.2)).toBeCloseTo(-0.5, 9);
+    expect(evaFacingFromAim(0.5, false, 1.2)).toBeCloseTo(0.7, 9);
+  });
+});
+
+describe("suit gate on the client (the server enforces the same rule)", () => {
+  const item = (equipmentSlot: string, definitionId: string) => ({ equipmentSlot, definitionId });
+  it("refuses without the suit, helmet and jetpack", () => {
+    expect(evaSuitRefusalOf([])).toContain("pressure suit, helmet and EVA jetpack");
+    expect(
+      evaSuitRefusalOf([
+        item("uniform", "wardrobe-suit-body"),
+        item("helmet", "wardrobe-suit-helmet"),
+        item("back", "wardrobe-suit-pack"),
+      ]),
+    ).toBe("");
+  });
+  it("knows which presses depressurise and when a walker stands in an open hatch", () => {
+    const row = (state: string): ShipLogicRow => ({ shipId: "wren", deviceId: "lock", kind: "airlock-controller", state, light: "green", open: false, endsMicros: 0n, pressedMicros: 0n });
+    expect(buttonDepressurises(logic, [row("pressurised")], "wren", "btn-lock-in")).toBe(true);
+    expect(buttonDepressurises(logic, [row("vacuum")], "wren", "btn-lock-in")).toBe(false);
+    expect(buttonDepressurises(logic, [row("pressurised")], "wren", "btn-hall")).toBe(false);
+    const inLane: [number, number] = [lock.hatch[0] - lock.normal[0] * 0.3, lock.hatch[1] - lock.normal[1] * 0.3];
+    expect(atOpenHatch(model, new Map([[lock.id, true]]), inLane)).toBe(true);
+    expect(atOpenHatch(model, new Map([[lock.id, false]]), inLane)).toBe(false);
   });
 });
