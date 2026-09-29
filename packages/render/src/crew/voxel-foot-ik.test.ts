@@ -29,6 +29,7 @@ async function stride(
   sprint: boolean,
   movingShip = false,
   armedIdle?: string,
+  stopFrame = 100,
 ) {
   const engine = new NullEngine();
   engine.getDeltaTime = () => 16;
@@ -58,6 +59,14 @@ async function stride(
     crew.setArmedClass(armedIdle);
   }
   crew.setFootIk(footIk);
+  if (armedIdle) {
+    // Reproduce stop from a real armed run: stale stance anchors must release while idle blends.
+    crew.update({ moving: true, seated: false, sprinting: true });
+    for (let i = 0; i < stopFrame; i++) {
+      crew.root.position.z -= SPRINT_SPEED_MPS * 0.016;
+      scene.render();
+    }
+  }
   crew.update({ moving: !armedIdle, seated: false, sprinting: sprint });
   const speed = armedIdle ? 0 : sprint ? SPRINT_SPEED_MPS : WALK_SPEED_MPS;
   const feet = ["foot.L", "foot.R"].map((n) => crew.joints.get(n)!);
@@ -101,12 +110,13 @@ async function stride(
 
 describe("foot planting (presentation-only two-bone foot IK)", () => {
   for (const cls of ["rifle", "heavy"])
-    it(`${cls} ready pose keeps real deck contact with the body rig's idle legs`, async () => {
-      const on = await stride(true, false, false, cls);
-      expect(on.slip).toBeLessThan(0.05);
-      expect(on.lowest).toBeLessThan(VOXEL_CREW_ANKLE_HEIGHT_M + 0.012);
-      expect(on.maxError).toBeLessThan(0.01);
-    });
+    for (const stopFrame of [85, 100, 135])
+      it(`${cls} stop at frame ${stopFrame} from run regains real deck contact with the body rig's idle legs`, async () => {
+        const on = await stride(true, false, false, cls, stopFrame);
+        expect(on.slip).toBeLessThan(0.05);
+        expect(on.lowest).toBeLessThan(VOXEL_CREW_ANKLE_HEIGHT_M + 0.012);
+        expect(on.maxError).toBeLessThan(0.01);
+      });
   for (const sprint of [false, true])
     it(`${sprint ? "run" : "walk"}: planted feet stay put on the deck and never sink into it`, async () => {
       const on = await stride(true, sprint);

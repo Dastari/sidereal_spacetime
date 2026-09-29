@@ -158,7 +158,8 @@ export function createFootPlanting(
       return maxSlip;
     },
     reset,
-    step(dt: number) {
+    step(dt: number, plant = true) {
+      if (!plant) reset();
       maxSlip = 0;
       // animated locals are fresh, cached world matrices may not be: recompute top-down
       for (const leg of legs) {
@@ -189,7 +190,8 @@ export function createFootPlanting(
         const lowest = heights.every(
           (h, j) => j === i || heights[i] <= h + 1e-4,
         );
-        const planted = lowest && animatedModel.y < options.restAnkle + band;
+        const planted =
+          plant && lowest && animatedModel.y < options.restAnkle + band;
         // ground clamp target (model frame) -> world
         const clamped = animatedModel.clone();
         clamped.y = Math.max(clamped.y, options.restAnkle);

@@ -224,6 +224,7 @@ export async function createVoxelCrewVisual(
         })
       : undefined;
   let footIk = true;
+  let footSettleS = 0;
   const ikObserver = scene.onAfterAnimationsObservable.add(() => {
     const m = lastMotion;
     const onDeck =
@@ -236,8 +237,11 @@ export async function createVoxelCrewVisual(
       !m.climbing &&
       !m.hovering;
     if (footPlanting) {
-      if (onDeck) footPlanting.step(scene.getEngine().getDeltaTime() / 1000);
-      else footPlanting.reset();
+      if (onDeck) {
+        const dt = scene.getEngine().getDeltaTime() / 1000;
+        footSettleS = Math.max(0, footSettleS - dt);
+        footPlanting.step(dt, footSettleS === 0);
+      } else footPlanting.reset();
     }
     if (!supportTarget || !joints.get("upper_arm.L")) return;
     supportError = solveTwoBone(
@@ -487,6 +491,15 @@ export async function createVoxelCrewVisual(
   const update = (input: VoxelCrewMotion) => {
     const motion = override ? { ...input, ...override } : input;
     lastInput = input;
+    if (
+      motion.moving !== lastMotion.moving ||
+      !!motion.sprinting !== !!lastMotion.sprinting
+    ) {
+      // An old gait contact can be unreachable once the new idle/run pose settles. Clamp the
+      // deck throughout the 0.2 s gait blend, then acquire fresh stance anchors in the new pose.
+      footSettleS = 0.2;
+      footPlanting?.reset();
+    }
     lastMotion = motion;
     if (disposed) return;
     const fallback = resolveCrewAppearance(appearance).weapon;

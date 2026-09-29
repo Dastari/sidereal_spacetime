@@ -371,7 +371,7 @@ describe("voxel crew runtime", () => {
       lower: "idle",
       upper: "rifle.idle_armed",
     });
-    crew.play("rifle.reload");
+    crew.play("rifle.reload" as VoxelCrewAction);
     expect(crew.activeClips).toEqual(["rifle.reload"]);
     crew.dispose();
     scene.dispose();
