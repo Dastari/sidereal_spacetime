@@ -14,14 +14,21 @@ import {
   type QuarterTurn,
   type ShapeTilePlacement,
 } from "@sidereal/content/construction-grammar";
-import type {
-  PrefabComponentCatalog,
-  PrefabEdge,
-  PrefabMount,
-  PrefabRoom,
-  PrefabSkylight,
-  PrefabVolume,
-  ShipPrefabDocumentV1,
+import {
+  mountTileAccepts,
+  mountTileCapacity,
+  mountTileRequired,
+} from "@sidereal/content/ship-mount-tiles";
+import {
+  mountTileCapacityText,
+  type PrefabComponentCatalog,
+  type PrefabEdge,
+  type PrefabMount,
+  type PrefabMountTile,
+  type PrefabRoom,
+  type PrefabSkylight,
+  type PrefabVolume,
+  type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
 import {
   mirrorEdge,
@@ -43,6 +50,7 @@ export type PrefabSelection =
   | { kind: "room"; id: string }
   | { kind: "edge"; id: string }
   | { kind: "mount"; id: string }
+  | { kind: "mounttile"; id: string }
   | { kind: "skylight"; id: string };
 
 export interface CommandResult {
@@ -474,7 +482,113 @@ export function cleanMount(m: PrefabMount): PrefabMount {
   };
   if (m.normal !== undefined && m.attach !== "top") out.normal = m.normal;
   if (m.z !== undefined && m.attach === "face") out.z = m.z;
+  if (m.tile !== undefined && m.attach === "top") out.tile = m.tile;
   return out;
+}
+
+// ------------------------------------------------------------------ roof mount tiles
+/** Mount ids a tile's linked items use: the tile id for one item, `<id>-a`.. for dual/quad. */
+export const tileItemIds = (tileId: string, count: number) =>
+  Array.from({ length: count }, (_, i) =>
+    count === 1 ? tileId : `${tileId}-${"abcd"[i]}`,
+  );
+
+/** Documents without `mountTiles` are legacy (pre-2026-09-29 mount rules). */
+export function adoptMountRules(doc: Doc): Doc {
+  return doc.mountTiles ? doc : { ...doc, mountTiles: [] };
+}
+
+export function addMountTile(
+  doc: Doc,
+  tile: Omit<PrefabMountTile, "id">,
+): CommandResult {
+  const tiles = doc.mountTiles ?? [];
+  const taken = [
+    ...tiles.map((t) => t.id),
+    ...doc.mounts.flatMap((m) => [m.id, m.id.replace(/-[abcd]$/, "")]),
+  ];
+  let id = uniqueId(taken, tile.kind === "turret" ? "turret" : "mount");
+  // A tile's item ids (<id>, <id>-a..d) must stay free among mounts.
+  while (tileItemIds(id, 4).some((x) => doc.mounts.some((m) => m.id === x)))
+    id = uniqueId([...taken, id], id);
+  const t: PrefabMountTile = {
+    id,
+    kind: tile.kind,
+    size: tile.size,
+    at: [tile.at[0], tile.at[1]],
+    facing: tile.facing,
+  };
+  return {
+    doc: { ...doc, mountTiles: [...tiles, t] },
+    select: { kind: "mounttile", id },
+  };
+}
+
+/** Change a tile; its items move and turn with it. */
+export function updateMountTile(
+  doc: Doc,
+  id: string,
+  patch: Partial<Omit<PrefabMountTile, "id">>,
+): Doc {
+  const t = doc.mountTiles?.find((x) => x.id === id);
+  if (!t) return doc;
+  const next = { ...t, ...patch };
+  return {
+    ...doc,
+    mountTiles: doc.mountTiles!.map((x) => (x.id === id ? next : x)),
+    mounts: doc.mounts.map((m) =>
+      m.tile === id ? { ...m, at: [next.at[0], next.at[1]] } : m,
+    ),
+  };
+}
+
+/**
+ * Mount `count` linked `component`s on a tile (replacing what it carries), or clear it with
+ * `component = null`. Refuses items the tile cannot carry: only weapons and sensors, and the
+ * size table (fixed mounts full size; turret mounts one size smaller).
+ */
+export function setTileItems(
+  doc: Doc,
+  tileId: string,
+  component: string | null,
+  count: 1 | 2 | 4,
+  catalog: PrefabComponentCatalog,
+): CommandResult {
+  const tile = doc.mountTiles?.find((t) => t.id === tileId);
+  if (!tile) return { doc, error: `No mount tile ${tileId}` };
+  const kept = doc.mounts.filter((m) => m.tile !== tileId);
+  if (component === null) return { doc: { ...doc, mounts: kept } };
+  const spec = catalog.get(component);
+  if (!spec) return { doc, error: `Unknown component ${component}` };
+  if (!mountTileRequired(spec.category))
+    return {
+      doc,
+      error: `${spec.label} is not a weapon or sensor; mount tiles carry only weapons and sensors`,
+    };
+  if (!mountTileCapacity(tile.kind, tile.size, count))
+    return {
+      doc,
+      error: `${count} items do not fit: ${mountTileCapacityText(tile.kind, tile.size)}`,
+    };
+  if (!mountTileAccepts(tile.kind, tile.size, count, spec.sizeClass))
+    return {
+      doc,
+      error: `${spec.label} is ${spec.sizeClass}: ${mountTileCapacityText(tile.kind, tile.size)}${tile.kind === "turret" ? " (turret mounts carry one size smaller)" : ""}`,
+    };
+  const ids = tileItemIds(tileId, count);
+  const clash = ids.find((x) => kept.some((m) => m.id === x));
+  if (clash) return { doc, error: `Mount id ${clash} is already used` };
+  const items: PrefabMount[] = ids.map((id) => ({
+    id,
+    component,
+    attach: "top",
+    at: [tile.at[0], tile.at[1]],
+    tile: tileId,
+  }));
+  return {
+    doc: { ...doc, mounts: [...kept, ...items] },
+    select: { kind: "mounttile", id: tileId },
+  };
 }
 
 export function updateMount(
@@ -554,6 +668,8 @@ export function selectionExists(
       return doc.edges.some((e) => e.id === sel.id);
     case "mount":
       return doc.mounts.some((m) => m.id === sel.id);
+    case "mounttile":
+      return !!doc.mountTiles?.some((t) => t.id === sel.id);
     case "skylight":
       return doc.skylights.some((s) => s.id === sel.id);
   }
@@ -578,6 +694,12 @@ export function removeSelection(doc: Doc, sel: PrefabSelection): Doc {
       return { ...doc, edges: doc.edges.filter((e) => e.id !== sel.id) };
     case "mount":
       return { ...doc, mounts: doc.mounts.filter((m) => m.id !== sel.id) };
+    case "mounttile":
+      return {
+        ...doc,
+        mountTiles: doc.mountTiles?.filter((t) => t.id !== sel.id),
+        mounts: doc.mounts.filter((m) => m.tile !== sel.id),
+      };
     case "skylight":
       return {
         ...doc,
@@ -609,9 +731,19 @@ export function nudgeSelection(
       if (clash) return { doc, error: `Would overlap room ${clash.label}` };
       return { doc: updateRoom(doc, r.id, { rect }) };
     }
+    case "mounttile": {
+      const t = doc.mountTiles?.find((x) => x.id === sel.id);
+      if (!t) return { doc };
+      return {
+        doc: updateMountTile(doc, t.id, { at: [t.at[0] + dx, t.at[1] + dy] }),
+      };
+    }
     case "mount": {
       const m = doc.mounts.find((x) => x.id === sel.id);
       if (!m) return { doc };
+      // Tile items move with their tile.
+      if (m.tile !== undefined)
+        return nudgeSelection(doc, { kind: "mounttile", id: m.tile }, dx, dy);
       // Face and edge mounts slide along their face only; the face line stays fixed.
       let [mx, my] = [dx, dy];
       if (m.attach === "face" || m.attach === "edge") {
@@ -721,7 +853,17 @@ export function rotateSelection(doc: Doc, sel: PrefabSelection): CommandResult {
     if (!s) return { doc };
     return { doc: updateSkylight(doc, s.id, { size: [s.size[1], s.size[0]] }) };
   }
-  return { doc, error: "Select a tile, interior module or skylight to rotate" };
+  if (sel.kind === "mounttile") {
+    const t = doc.mountTiles?.find((x) => x.id === sel.id);
+    if (!t) return { doc };
+    return {
+      doc: updateMountTile(doc, t.id, { facing: NEXT_FACING[t.facing] }),
+    };
+  }
+  return {
+    doc,
+    error: "Select a tile, interior module, mount tile or skylight to rotate",
+  };
 }
 
 // ------------------------------------------------------------------ ids
@@ -744,6 +886,29 @@ export function renameElement(
       doc,
       error: "Ids use lower-case letters, digits, dots, dashes and underscores",
     };
+  if (sel.kind === "mounttile") {
+    const tiles = doc.mountTiles ?? [];
+    if (!tiles.some((t) => t.id === sel.id)) return { doc };
+    if (tiles.some((t) => t.id === id))
+      return { doc, error: `${id} is already used by another mount tile` };
+    // Linked items are renamed with their tile so they keep the <id>, <id>-a.. convention.
+    const items = doc.mounts.filter((m) => m.tile === sel.id);
+    const ids = tileItemIds(id, items.length);
+    const clash = ids.find((x) =>
+      doc.mounts.some((m) => m.id === x && m.tile !== sel.id),
+    );
+    if (clash) return { doc, error: `${clash} is already used by a mount` };
+    return {
+      doc: {
+        ...doc,
+        mountTiles: tiles.map((t) => (t.id === sel.id ? { ...t, id } : t)),
+        mounts: doc.mounts.map((m) =>
+          m.tile === sel.id ? { ...m, id: ids[items.indexOf(m)], tile: id } : m,
+        ),
+      },
+      select: { kind: "mounttile", id },
+    };
+  }
   const key = (
     {
       volume: "volumes",

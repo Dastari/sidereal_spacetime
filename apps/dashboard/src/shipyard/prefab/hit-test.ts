@@ -5,6 +5,7 @@
 import { insideOutline, type Pt } from "@sidereal/content/construction-grammar";
 import {
   placeMount,
+  placeMountTile,
   type PrefabComponentCatalog,
   type ShipPrefabDocumentV1,
   type VolumeGeometry,
@@ -61,9 +62,10 @@ export function hitTest(
   if (layers.mounts) {
     // Smaller footprints win so a module inside a bigger one stays pickable.
     const hits = doc.mounts
+      .filter((m) => m.tile === undefined)
       .map((m) => ({
         m,
-        r: placeMount(m, catalog.get(m.component), geoms).rect,
+        r: placeMount(m, catalog.get(m.component), geoms, doc).rect,
       }))
       .filter(({ r }) => inRect(p, r))
       .sort(
@@ -72,6 +74,10 @@ export function hitTest(
           (b.r[2] - b.r[0]) * (b.r[3] - b.r[1]),
       );
     if (hits.length) return { kind: "mount", id: hits[0].m.id };
+    // Roof mount tiles (their weapons and sensors are edited through the tile).
+    for (const t of doc.mountTiles ?? [])
+      if (inRect(p, placeMountTile(t, geoms).rect))
+        return { kind: "mounttile", id: t.id };
   }
   if (layers.walls) {
     let best: { id: string; d: number } | null = null;
@@ -135,8 +141,12 @@ export function selectionCentre(
     case "mount": {
       const m = doc.mounts.find((x) => x.id === sel.id);
       if (!m) return null;
-      const r = placeMount(m, catalog.get(m.component), geoms).rect;
+      const r = placeMount(m, catalog.get(m.component), geoms, doc).rect;
       return [(r[0] + r[2]) / 2, (r[1] + r[3]) / 2];
+    }
+    case "mounttile": {
+      const t = doc.mountTiles?.find((x) => x.id === sel.id);
+      return t ? placeMountTile(t, geoms).centre : null;
     }
     case "skylight": {
       const s = doc.skylights.find((x) => x.id === sel.id);

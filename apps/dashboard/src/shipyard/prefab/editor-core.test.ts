@@ -355,8 +355,9 @@ describe("snapping", () => {
     const drive = catalog.get("ion-drive.md")!;
     const aft = snapMount(doc, geoms, drive, "face", [-0.6, 7.2]);
     expect(aft).toMatchObject({ attach: "face", normal: "aft", at: [0, 7] });
-    const cannon = catalog.get("side-cannon.sm")!;
-    const port = snapMount(doc, geoms, cannon, "face", [15.3, 13.4]);
+    // Only engines mount on faces (2026-09-29); RCS clusters snap like any face mount.
+    const rcs = catalog.get("rcs.sm")!;
+    const port = snapMount(doc, geoms, rcs, "face", [15.3, 13.4]);
     expect(port?.normal).toBe("port");
     expect(port?.at[0]).toBe(15.5);
   });
@@ -387,14 +388,22 @@ describe("snapping", () => {
     const geoms = doc.volumes.map(volumeGeometry);
     const good = checkMount(doc, catalog, geoms, {
       id: "t",
-      component: "sensor-dish.sm",
+      component: "radiator.sm",
       attach: "top",
       at: [10, 5],
     });
     expect(good.ok).toBe(true);
-    const off = checkMount(doc, catalog, geoms, {
+    // Weapons and sensors need a roof mount tile.
+    const bare = checkMount(doc, catalog, geoms, {
       id: "t",
       component: "sensor-dish.sm",
+      attach: "top",
+      at: [10, 5],
+    });
+    expect(bare.reason).toMatch(/roof mount tile/);
+    const off = checkMount(doc, catalog, geoms, {
+      id: "t",
+      component: "radiator.sm",
       attach: "top",
       at: [40, 5],
     });

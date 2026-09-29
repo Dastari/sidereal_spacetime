@@ -11,6 +11,8 @@ import {
   placedTileSize,
   type EdgeTypeId,
   type FaceNormal,
+  type MountSizeId,
+  type MountTileKind,
   type Pt,
   type ShapeTilePlacement,
 } from "@sidereal/content/construction-grammar";
@@ -18,11 +20,14 @@ import {
   deckVolume,
   deriveInterior,
   placeMount,
+  placeMountTile,
   roomCells,
   validateMount,
+  validateMountTile,
   type PrefabComponentCatalog,
   type PrefabComponentSpec,
   type PrefabMount,
+  type PrefabMountTile,
   type PrefabRoom,
   type ShipPrefabDocumentV1,
   type VolumeGeometry,
@@ -162,10 +167,66 @@ export function checkSkylight(
   );
   if (clash) return { ok: false, reason: `Overlaps skylight ${clash.id}` };
   for (const m of doc.mounts) {
-    if (m.attach !== "top") continue;
+    if (m.attach !== "top" || m.tile !== undefined) continue;
     if (
       roomRectsOverlap(
-        placeMount(m, catalog.get(m.component), geoms).rect,
+        placeMount(m, catalog.get(m.component), geoms, doc).rect,
+        rect,
+      )
+    )
+      return { ok: false, reason: `Overlaps top mount ${m.id}` };
+  }
+  for (const t of doc.mountTiles ?? [])
+    if (roomRectsOverlap(placeMountTile(t, geoms).rect, rect))
+      return { ok: false, reason: `Overlaps mount tile ${t.id}` };
+  return { ok: true };
+}
+
+// ------------------------------------------------------------------ roof mount tiles
+/** Tile footprint centred on the cursor, min corner on the 0.5 m roof grid. */
+export function mountTileCandidate(
+  p: Pt,
+  kind: MountTileKind,
+  size: MountSizeId,
+  facing: FaceNormal,
+): Omit<PrefabMountTile, "id"> {
+  const n = G.mountSizes[size].cells;
+  return {
+    kind,
+    size,
+    at: [snapHalf(p[0] - n / 2), snapHalf(p[1] - n / 2)],
+    facing,
+  };
+}
+
+/** Live green/red feedback for a tile: `validateMountTile` plus plain roof mounts under it. */
+export function checkMountTile(
+  doc: Doc,
+  catalog: PrefabComponentCatalog,
+  geoms: readonly VolumeGeometry[],
+  candidate: PrefabMountTile,
+  ignore?: string,
+): PlacementCheck {
+  if (!doc.mountTiles)
+    return {
+      ok: false,
+      reason:
+        "This legacy prefab predates roof mount tiles: adopt the mount rules in the Ship panel first",
+    };
+  const others = doc.mountTiles.filter(
+    (t) => t.id !== ignore && t.id !== candidate.id,
+  );
+  const placed: Doc = { ...doc, mountTiles: [...others, candidate] };
+  const issues = validateMountTile(placed, candidate, catalog, geoms).filter(
+    (i) => i.severity === "error",
+  );
+  if (issues.length) return { ok: false, reason: issues[0].message };
+  const rect = placeMountTile(candidate, geoms).rect;
+  for (const m of doc.mounts) {
+    if (m.attach !== "top" || m.tile !== undefined) continue;
+    if (
+      roomRectsOverlap(
+        placeMount(m, catalog.get(m.component), geoms, doc).rect,
         rect,
       )
     )

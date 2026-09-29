@@ -18,6 +18,7 @@ import {
 } from "@sidereal/content/ship-prefab";
 import {
   addMount,
+  addMountTile,
   addRoom,
   addSkylight,
   eraseTiles,
@@ -30,9 +31,11 @@ import type { ToolState } from "./keymap";
 import {
   checkEdge,
   checkMount,
+  checkMountTile,
   checkRoom,
   checkSkylight,
   edgeCells,
+  mountTileCandidate,
   roomRectFromDrag,
   skylightCandidate,
   snapEdge,
@@ -302,6 +305,43 @@ export function mountPlace(
   const { candidate, check } = mountPreview(doc, catalog, tools, p);
   if (!candidate || !check.ok) return { doc, error: check.reason };
   return addMount(doc, candidate, catalog, mirrorOf(tools));
+}
+
+// ------------------------------------------------------------------ roof mount tiles
+export const toolTileKind = (tools: ToolState) => tools.tileKind ?? "fixed";
+export const toolTileSize = (tools: ToolState) => tools.tileSize ?? "SM";
+
+export function mountTilePreview(
+  doc: Doc,
+  catalog: PrefabComponentCatalog,
+  tools: ToolState,
+  p: Pt,
+) {
+  const candidate = mountTileCandidate(
+    p,
+    toolTileKind(tools),
+    toolTileSize(tools),
+    tools.facing,
+  );
+  return {
+    candidate,
+    check: checkMountTile(doc, catalog, geometriesOf(doc), {
+      id: "ghost",
+      ...candidate,
+    }),
+  };
+}
+
+/** Mount-tile tool: click the roof to place a fixed or turret mount tile (R turns it). */
+export function mountTilePlace(
+  doc: Doc,
+  catalog: PrefabComponentCatalog,
+  tools: ToolState,
+  p: Pt,
+): CommandResult {
+  const { candidate, check } = mountTilePreview(doc, catalog, tools, p);
+  if (!check.ok) return { doc, error: check.reason };
+  return addMountTile(doc, candidate);
 }
 
 // ------------------------------------------------------------------ skylights

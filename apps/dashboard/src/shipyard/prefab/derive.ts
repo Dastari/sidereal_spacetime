@@ -45,6 +45,7 @@ export function issueSelection(issue: PrefabIssue): PrefabSelection | null {
     return r.tile !== undefined
       ? { kind: "tile", volume: r.id, index: r.tile }
       : { kind: "volume", id: r.id };
+  if (r.kind === "tile") return { kind: "mounttile", id: r.id };
   return { kind: r.kind, id: r.id } as PrefabSelection;
 }
 

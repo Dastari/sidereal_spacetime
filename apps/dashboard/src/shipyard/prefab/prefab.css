@@ -1750,3 +1750,51 @@ section.prefab-preview > .prefab-preview-status:only-child {
   stroke-dasharray: 8 3;
   stroke-linecap: butt;
 }
+
+/* Roof mount tiles (2026-09-29): fixed plinths (square) and turret rings; the tick is the boresight. */
+.pf-mount-tile path,
+.pf-mount-tile circle {
+  fill: none;
+  stroke: #ffd166;
+  stroke-width: 1.6;
+}
+.pf-mount-tile > path:first-child {
+  fill: rgba(255, 209, 102, 0.1);
+}
+.pf-mount-tile.turret .ring {
+  stroke-dasharray: 3 2;
+}
+.pf-mount-tile .boresight {
+  stroke-width: 2.4;
+  stroke-linecap: round;
+}
+.pf-tile-hint {
+  border-left: 3px solid #ffd166;
+  padding-left: 8px;
+}
+.pf-tile-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.pf-tile-table th,
+.pf-tile-table td {
+  padding: 3px 6px;
+  text-align: left;
+  border-bottom: 1px solid rgba(136, 188, 214, 0.18);
+}
+.pf-tile-table tbody th {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+.pf-tile-table tr[aria-current="true"] {
+  background: rgba(255, 209, 102, 0.14);
+}
+.pf-tile-inspector h3 {
+  margin: 12px 0 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
+}

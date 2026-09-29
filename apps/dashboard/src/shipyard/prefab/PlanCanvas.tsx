@@ -12,6 +12,7 @@ import {
 import {
   deriveInterior,
   placeMount,
+  placeMountTile,
   type PrefabComponentCatalog,
   type PrefabMount,
   type ShipPrefabDocumentV1,
@@ -28,6 +29,7 @@ import {
 } from "react";
 import {
   addMount,
+  addMountTile,
   addRoom,
   addSkylight,
   eraseTiles,
@@ -45,10 +47,12 @@ import { mountColour, ROOM_COLOURS } from "./palette";
 import {
   checkEdge,
   checkMount,
+  checkMountTile,
   checkRoom,
   checkSkylight,
   checkTile,
   edgeCells,
+  mountTileCandidate,
   roomRectFromDrag,
   skylightCandidate,
   snapEdge,
@@ -152,8 +156,14 @@ function PlanCanvas({
     geoms.find((g) => g.volume.id === interior.volume)?.outline ?? null;
   const mounts = useMemo(
     () =>
-      shown.mounts.map((m) => placeMount(m, catalog.get(m.component), geoms)),
+      shown.mounts.map((m) =>
+        placeMount(m, catalog.get(m.component), geoms, shown),
+      ),
     [shown, catalog, geoms],
+  );
+  const tilePlacements = useMemo(
+    () => (shown.mountTiles ?? []).map((t) => placeMountTile(t, geoms)),
+    [shown, geoms],
   );
 
   // ------------------------------------------------------------ view
@@ -410,6 +420,35 @@ function PlanCanvas({
           label: `${spec.label} on ${where} at ${cand.at.join(", ")}`,
         });
       }
+      case "tile": {
+        const kind = tools.tileKind ?? "fixed";
+        const size = tools.tileSize ?? "SM";
+        const c = mountTileCandidate(hover, kind, size, tools.facing);
+        const check = checkMountTile(shown, catalog, geoms, {
+          id: "ghost",
+          ...c,
+        });
+        const tp = placeMountTile({ id: "ghost", ...c }, geoms);
+        const [cx, cy] = tp.centre;
+        const b = {
+          fore: [1, 0],
+          aft: [-1, 0],
+          port: [0, 1],
+          starboard: [0, -1],
+        }[tools.facing];
+        const r = (tp.rect[2] - tp.rect[0]) / 2;
+        return out({
+          check,
+          paths: [rectPath(tp.rect)],
+          lines: [
+            [
+              [cx, cy],
+              [cx + b[0] * r, cy + b[1] * r],
+            ],
+          ],
+          label: `${size} ${kind} mount at ${c.at.join(", ")}, boresight ${tools.facing}`,
+        });
+      }
       case "skylight": {
         const c = skylightCandidate(hover, tools.skylight);
         const list = [c];
@@ -484,6 +523,7 @@ function PlanCanvas({
           hit &&
           (hit.kind === "room" ||
             hit.kind === "mount" ||
+            hit.kind === "mounttile" ||
             hit.kind === "skylight")
         )
           setStroke({ kind: "move", sel: hit, start: p, delta: [0, 0] });
@@ -549,6 +589,21 @@ function PlanCanvas({
         );
         if (!check.ok) return onStatus({ text: check.reason!, tone: "bad" });
         apply(`Place ${spec.label}`, addMount(doc, cand, catalog, mirror));
+        return;
+      }
+      case "tile": {
+        const c = mountTileCandidate(
+          p,
+          tools.tileKind ?? "fixed",
+          tools.tileSize ?? "SM",
+          tools.facing,
+        );
+        const check = checkMountTile(doc, catalog, geoms, {
+          id: "ghost",
+          ...c,
+        });
+        if (!check.ok) return onStatus({ text: check.reason!, tone: "bad" });
+        apply(`Place ${c.size} ${c.kind} mount`, addMountTile(doc, c));
         return;
       }
       case "skylight": {
@@ -715,6 +770,10 @@ function PlanCanvas({
       case "mount": {
         const m = mounts.find((x) => x.mount.id === sel.id);
         return m ? { d: rectPath(m.rect) } : null;
+      }
+      case "mounttile": {
+        const t = tilePlacements.find((x) => x.tile.id === sel.id);
+        return t ? { d: rectPath(t.rect) } : null;
       }
       case "skylight": {
         const s = shown.skylights.find((x) => x.id === sel.id);
@@ -983,6 +1042,35 @@ function PlanCanvas({
               )}
             </>
           )}
+          {layers.mounts &&
+            tilePlacements.map((t) => {
+              const [x0, y0, x1, y1] = t.rect;
+              const [cx, cy] = t.centre;
+              const r = (x1 - x0) / 2;
+              const b = {
+                fore: [1, 0],
+                aft: [-1, 0],
+                port: [0, 1],
+                starboard: [0, -1],
+              }[t.tile.facing];
+              return (
+                <g
+                  key={`tile-${t.tile.id}`}
+                  className={`pf-mount-tile ${t.tile.kind}`}
+                >
+                  <path
+                    d={rectPath([x0 + 0.04, y0 + 0.04, x1 - 0.04, y1 - 0.04])}
+                  />
+                  {t.tile.kind === "turret" && (
+                    <circle className="ring" cx={cx} cy={cy} r={r * 0.78} />
+                  )}
+                  <path
+                    className="boresight"
+                    d={`M${cx} ${cy}L${cx + b[0] * r * 0.95} ${cy + b[1] * r * 0.95}`}
+                  />
+                </g>
+              );
+            })}
           {layers.mounts &&
             mounts.map((m) => {
               const c = mountColour(m.spec?.category);

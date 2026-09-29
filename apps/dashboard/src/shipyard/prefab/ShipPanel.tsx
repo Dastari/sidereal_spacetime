@@ -10,7 +10,7 @@ import {
 } from "@sidereal/content/ship-prefab";
 import { SHIP_THEMES } from "@sidereal/content/ship-themes";
 import { useEffect, useState } from "react";
-import { updateMarkings, updateMeta } from "./commands";
+import { adoptMountRules, updateMarkings, updateMeta } from "./commands";
 import { labelFilter, markingFilter, SelectField, TextField } from "./fields";
 import { linearToHex } from "./palette";
 
@@ -215,6 +215,32 @@ export function ShipPanel({
             commit("Change emblem", updateMarkings(doc, { emblem }))
           }
         />
+      </section>
+      <section className="layout-section">
+        <h2>Mount rules</h2>
+        {doc.mountTiles ? (
+          <p className="layout-note">
+            Weapons and sensors mount on roof mount tiles (Mount tile tool, T);
+            only engines mount on side and aft faces. {doc.mountTiles.length}{" "}
+            tile{doc.mountTiles.length === 1 ? "" : "s"}; each counts as one
+            hardpoint.
+          </p>
+        ) : (
+          <>
+            <p className="layout-note">
+              Legacy prefab: it predates roof mount tiles and keeps validating
+              under its pinned rules. Adopting the 2026-09-29 rules flags every
+              weapon or sensor off a tile and every non-engine face mount.
+            </p>
+            <button
+              onClick={() =>
+                commit("Adopt roof mount rules", adoptMountRules(doc))
+              }
+            >
+              Adopt roof mount rules
+            </button>
+          </>
+        )}
       </section>
     </>
   );
