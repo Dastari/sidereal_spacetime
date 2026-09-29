@@ -566,7 +566,7 @@ def main():
         manifest = json.loads(mpath.read_text())
     else:
         keep = [] if a.blend and not only else None
-        entries, failures = export_all([s for s in specs if s["family"] != "bow"], out, only, prior, keep)
+        entries, failures = export_all([s for s in specs if s["family"] not in ("bow", "mount-tile")], out, only, prior, keep)
         if keep:
             # Editable Blender source: every piece as a mesh object with its live bevel modifier.
             coll = bpy.data.collections.new(f"ship-kit-{doc['revision']}")
@@ -584,6 +584,13 @@ def main():
             import export_bow_kit
             export_bow_kit.main(out=out, pieces=resolve(a.pieces))
             manifest=json.loads(mpath.read_text())
+        if any(s['family']=='mount-tile' for s in specs) and (out/'mount-tiles.glb').exists():
+            # Roof mount tiles are a hand-maintained Blender bundle (mount_tiles_blender.py): keep it and
+            # re-merge its entries rather than rebuilding it here.
+            import mount_tiles_blender
+            manifest['pieces'].update(mount_tiles_blender.bundle_entries(out/'mount-tiles.glb'))
+            manifest['pieces']={k:manifest['pieces'][k] for k in sorted(manifest['pieces'])}
+            mpath.write_text(json.dumps(manifest,indent=1,sort_keys=True)+'\n')
         if not only:
             live={e['file'] for e in manifest['pieces'].values()}
             for stale in sorted(set(p.name for p in out.glob("*.glb")) - live):

@@ -228605,13 +228605,13 @@
    "node": "mount.fixed.lg",
    "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
    "slots": [
-    "accent",
-    "dark",
-    "emit_a",
-    "metal",
     "primary",
     "secondary",
-    "trim"
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
    ],
    "triangles": 1036,
    "voxelAligned": false
@@ -228630,13 +228630,13 @@
    "node": "mount.fixed.md",
    "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
    "slots": [
-    "accent",
-    "dark",
-    "emit_a",
-    "metal",
     "primary",
     "secondary",
-    "trim"
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
    ],
    "triangles": 728,
    "voxelAligned": false
@@ -228655,13 +228655,13 @@
    "node": "mount.fixed.sm",
    "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
    "slots": [
-    "accent",
-    "dark",
-    "emit_a",
-    "metal",
     "primary",
     "secondary",
-    "trim"
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
    ],
    "triangles": 596,
    "voxelAligned": false
@@ -228680,13 +228680,13 @@
    "node": "mount.fixed.xl",
    "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
    "slots": [
-    "accent",
-    "dark",
-    "emit_a",
-    "metal",
     "primary",
     "secondary",
-    "trim"
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
    ],
    "triangles": 1256,
    "voxelAligned": false
@@ -228705,13 +228705,13 @@
    "node": "mount.turret.lg",
    "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
    "slots": [
-    "accent",
-    "dark",
-    "emit_a",
-    "metal",
     "primary",
     "secondary",
-    "trim"
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
    ],
    "triangles": 1364,
    "voxelAligned": false
@@ -228730,13 +228730,13 @@
    "node": "mount.turret.md",
    "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
    "slots": [
-    "accent",
-    "dark",
-    "emit_a",
-    "metal",
     "primary",
     "secondary",
-    "trim"
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
    ],
    "triangles": 1020,
    "voxelAligned": false
@@ -228755,13 +228755,13 @@
    "node": "mount.turret.xl",
    "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
    "slots": [
-    "accent",
-    "dark",
-    "emit_a",
-    "metal",
     "primary",
     "secondary",
-    "trim"
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
    ],
    "triangles": 1452,
    "voxelAligned": false

@@ -291,7 +291,7 @@
   "scripts/validate_pose_patch.ts": "377d1ee3054b95eaebeef567b5246c6bceecc8be4ab0aff716aa77649b6554da",
   "packages/content/src/construction-grammar.v1.json": "33f5226a142fa4687ee552ef14ed9e977ad13ddd3e1eaaf78a58d6bdccf89ea0",
   "packages/content/src/ship-components.v1.json": "e3d9fb74bb37df0b68a8843297bf95043885a2dd442b77d41a89ddb0d113bd79",
-  "packages/content/src/ship-kit-pieces.v1.json": "cab3cc99ef4c7e57fdbbaff26bdb62637ba60c634aa9d08918b238568b146385",
+  "packages/content/src/ship-kit-pieces.v1.json": "544d5941c201445c0266de01139dafa8ee9385bd1540c913e8a9ee28154dd3a6",
   "packages/content/src/crew-face-atlas.v1.json": "ac1403e04bf3aad5531f915c7ba75c6de27d5e14d06c6ded1223ca1fc80f0ae2",
   "packages/content/src/crew-heads.v1.json": "306c1071aa82c97bbad209f8abc4ce8c05982997927d0054ed27b8cf774ebb42",
   "packages/content/src/crew-items-r001-armed.json": "79b1d205b573871bd66c802d093c5af553cd4886a29f66363cc5107b7d1bec7e",

@@ -11,6 +11,7 @@ The annular bearing is intentionally polygonal; all box boundaries are 1/16 m.
 
 import argparse
 import hashlib
+import os
 import json
 import math
 import struct
@@ -33,7 +34,9 @@ SPECS = {**{f"mount.fixed.{s}": (n, 0.25) for s, n in
 SOURCE = ROOT / "assets/source/ship-kit/r002/mount_tiles.blend"
 BUNDLE = ROOT / "assets/runtime/ship-kit/r002/mount-tiles.glb"
 MANIFEST = BUNDLE.with_name("manifest.json")
-SCRATCH = Path("/root/sidereal-scratch/ship-mounts/codex-scratch")
+SCRATCH = Path(os.environ.get("SIDEREAL_SCRATCH", ROOT / ".runtime")) / "mount-tiles-scratch"
+# Canonical kit slot order (ship-kit.ts SHIP_KIT_SLOTS); manifest slot lists follow it.
+SLOTS = ["primary", "secondary", "accent", "trim", "metal", "dark", "emit_a", "emit_b", "glass"]
 
 
 class Mesh:
@@ -154,8 +157,8 @@ def turret(name, n, materials):
     return p.object()
 
 
-def bundle_entries():
-    data = BUNDLE.read_bytes()
+def bundle_entries(bundle=BUNDLE):
+    data = Path(bundle).read_bytes()
     doc = json.loads(data[20:20+struct.unpack_from("<I", data, 12)[0]])
     sha = hashlib.sha256(data).hexdigest()
     entries = {}
@@ -168,8 +171,8 @@ def bundle_entries():
         hi = [max(a["max"][i] for a in positions) for i in range(3)]
         entries[node["name"]] = dict(
             bounds=[round(v/T, 6) for v in (lo[0], -hi[2], lo[1], hi[0], -lo[2], hi[1])],
-            decals=[], file=BUNDLE.name, node=node["name"], sha256=sha,
-            slots=sorted({doc["materials"][p["material"]]["name"] for p in primitives}),
+            decals=[], file=Path(bundle).name, node=node["name"], sha256=sha,
+            slots=sorted({doc["materials"][p["material"]]["name"] for p in primitives}, key=SLOTS.index),
             triangles=sum(doc["accessors"][p["indices"]]["count"]//3 for p in primitives),
             voxelAligned=False)
     return entries

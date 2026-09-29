@@ -22,7 +22,7 @@ SPECS = {
     "mount.turret.lg": (3, 0.375, 3000),
     "mount.turret.xl": (4, 0.375, 3000),
 }
-SLOTS = {"primary", "secondary", "accent", "trim", "metal", "dark", "emit_a", "emit_b", "glass"}
+SLOTS = ["primary", "secondary", "accent", "trim", "metal", "dark", "emit_a", "emit_b", "glass"]
 EPSILON = 1e-6
 
 
@@ -80,12 +80,12 @@ class MountTileTests(unittest.TestCase):
     def test_material_slots(self):
         names = [m["name"] for m in self.doc["materials"]]
         self.assertEqual(len(names), len(set(names)))
-        self.assertTrue(set(names) <= SLOTS)
+        self.assertTrue(set(names) <= set(SLOTS))
         for name in SPECS:
             used = {names[p["material"]] for p in self.primitives(name)}
             self.assertIn("emit_a", used)
             self.assertIn("accent", used)
-            self.assertEqual(self.entries[name]["slots"], sorted(used))
+            self.assertEqual(self.entries[name]["slots"], sorted(used, key=SLOTS.index))
 
     def test_geometry_bounds_budgets_and_interface(self):
         for name, (size, top, budget) in SPECS.items():
