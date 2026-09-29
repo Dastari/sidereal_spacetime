@@ -1,7 +1,7 @@
 """Owner-facing review renders of the developer prefab ships from the REAL TypeScript dresser output.
 
 Evidence only: reads the JSON written by `scripts/prefab-dress-dump.ts`, the exported kit GLBs
-(assets/runtime/ship-kit/r001) and the SHIPS-COMPONENTS GLBs (assets/art-library/ship-components/r001),
+(assets/runtime/ship-kit/r002) and the SHIPS-COMPONENTS GLBs (assets/art-library/ship-components/r004),
 and writes PNGs. It never exports assets, publishes or touches database state.
 
 Scene build per ship (prefab frame: +X fore, +Y port, +Z up, metres):
@@ -784,7 +784,7 @@ def render_starters(dumps, out, scale):
     y = 0.0
     x0 = 0.0
     sheet_text("STARTER CANDIDATES  -  pick one", x0, y + 0.9, 0.95, coll)
-    sheet_text("Real TypeScript dresser output (dressShip) + ship-kit r001 + ship-components r001 GLBs. Proposed art; not owner-approved. 1 m grid, 1.8 m crew bar.",
+    sheet_text("Real TypeScript dresser output (dressShip) + ship-kit r002 + ship-components r004 GLBs. Proposed art; not owner-approved. 1 m grid, 1.8 m crew bar.",
                x0, y + 0.2, 0.36, coll, (0.6, 0.7, 0.9))
     y -= 1.0
     for k, h in enumerate(heads):

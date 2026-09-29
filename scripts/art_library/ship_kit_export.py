@@ -28,7 +28,7 @@ from the exported GLBs.
 
 Usage:
   blender -b --factory-startup --python-exit-code 1 -P scripts/art_library/ship_kit_export.py -- \
-    --pieces packages/content/src/ship-kit-pieces.v1.json --out assets/runtime/ship-kit/r001 \
+    --pieces packages/content/src/ship-kit-pieces.v1.json --out assets/runtime/ship-kit/r002 \
     [--sheet /path/sheet.png] [--only id,id] [--skip-export]
 """
 import argparse
