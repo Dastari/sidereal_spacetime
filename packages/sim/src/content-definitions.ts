@@ -19,6 +19,22 @@ import {
   LIQUID_DENSITY_KG_PER_LITRE,
 } from "@sidereal/content/inventory";
 import { stableStringify } from "./layout-geometry";
+import { protectedDefinitionUses } from "@sidereal/content/definition-references";
+import {
+  checkFields,
+  flag,
+  num,
+  record,
+  text,
+  type DefinitionIssue,
+  type FieldSpec,
+  type Payload,
+} from "./content-definition-schema";
+import {
+  COMPONENT_KIND,
+  INTERACTION_KIND,
+  LOOT_TABLE_KIND,
+} from "./content-definition-x3";
 
 /** Every Tier D kind from the roadmap. A kind exists when it has a registered validator. */
 export const DEFINITION_KINDS = [
@@ -126,66 +142,18 @@ export function parseDefinitionRef(ref: string): {
 // ---------------------------------------------------------------------------------------------
 // Field schemas: one description drives validation here and form generation in the Studio.
 
-export type FieldSpec =
-  | {
-      key: string;
-      type: "string";
-      label: string;
-      required?: boolean;
-      minLength?: number;
-      maxLength: number;
-      pattern?: RegExp;
-      patternHint?: string;
-      options?: readonly string[];
-      help?: string;
-    }
-  | {
-      key: string;
-      type: "number";
-      label: string;
-      required?: boolean;
-      integer?: boolean;
-      min: number;
-      max: number;
-      /** Strictly greater than `min`. */
-      exclusiveMin?: boolean;
-      unit?: string;
-      help?: string;
-    }
-  | {
-      key: string;
-      type: "boolean";
-      label: string;
-      required?: boolean;
-      help?: string;
-    }
-  | {
-      key: string;
-      type: "object";
-      label: string;
-      required?: boolean;
-      fields: readonly FieldSpec[];
-      help?: string;
-    }
-  | {
-      /** Free JSON object (planned kinds until their batch defines real fields). */
-      key: string;
-      type: "json";
-      label: string;
-      required?: boolean;
-      help?: string;
-    };
-export interface DefinitionIssue {
-  path: string;
-  message: string;
-}
-type Payload = Record<string, unknown>;
+export type { FieldSpec, DefinitionIssue } from "./content-definition-schema";
 export interface DefinitionKindSpec {
   kind: DefinitionKind;
   label: string;
   description: string;
-  /** `seeded`: validator and seed ship in X-1; `planned`: envelope only until `landsIn`. */
-  stage: "seeded" | "planned";
+  /**
+   * `seeded`: validator, seed and a runtime consumer; publishable.
+   * `validated`: real validator (and seed where content exists); drafts only until the runtime
+   * reads the registry in `landsIn`.
+   * `planned`: envelope only until `landsIn`.
+   */
+  stage: "seeded" | "validated" | "planned";
   /** Batch that makes this kind publishable and gives it a runtime consumer. */
   landsIn: string;
   /** Studio batch with the dedicated editor. */
@@ -201,25 +169,6 @@ export interface DefinitionKindSpec {
   template: (definitionId: string) => Payload;
 }
 
-const text = (
-  key: string,
-  label: string,
-  maxLength: number,
-  extra: Partial<Extract<FieldSpec, { type: "string" }>> = {},
-): FieldSpec => ({ key, type: "string", label, maxLength, ...extra });
-const num = (
-  key: string,
-  label: string,
-  min: number,
-  max: number,
-  extra: Partial<Extract<FieldSpec, { type: "number" }>> = {},
-): FieldSpec => ({ key, type: "number", label, min, max, ...extra });
-const flag = (key: string, label: string, help?: string): FieldSpec => ({
-  key,
-  type: "boolean",
-  label,
-  ...(help ? { help } : {}),
-});
 const ASSET_ID = /^[a-z0-9][a-z0-9._-]{0,79}$/;
 const ICON_URL =
   /^\/assets\/[A-Za-z0-9/_.-]{1,240}(\?[A-Za-z0-9=&_.-]{1,40})?$/;
@@ -524,32 +473,9 @@ export const DEFINITION_KIND_SPECS: Readonly<
       reloadMs: 1500,
     }),
   },
-  component: planned(
-    "component",
-    "Ship components",
-    "Size, sockets, mass, hp, damage states, power, heat, coolant, fuel, data, ports, kind stats.",
-    "X-3",
-    "ST-4",
-    "Flight compile, networks, combat",
-    "ship-components-source.ts (revision 4)",
-  ),
-  loot_table: planned(
-    "loot_table",
-    "Loot tables",
-    "Weighted entries, quantity ranges, conditions.",
-    "X-3",
-    "ST-3",
-    "Destruction profiles, wrecks, pirates, quests",
-  ),
-  interaction: planned(
-    "interaction",
-    "Interactions",
-    "Verbs, reach, approach point, required tool, permission.",
-    "X-3",
-    "ST-6",
-    "Interactions, logic (S2)",
-    "LAB_INTERACTIONS",
-  ),
+  component: COMPONENT_KIND,
+  loot_table: LOOT_TABLE_KIND,
+  interaction: INTERACTION_KIND,
   resource: planned(
     "resource",
     "Resources",
@@ -660,94 +586,18 @@ export const DEFINITION_KIND_SPECS: Readonly<
 /** Why a kind cannot publish yet, or null. Planned kinds keep drafts but never publish. */
 export function publishBlocker(kind: DefinitionKind): string | null {
   const spec = DEFINITION_KIND_SPECS[kind];
-  return spec.stage === "seeded"
-    ? null
+  if (spec.stage === "seeded") return null;
+  return spec.stage === "validated"
+    ? `${spec.label} have a validator but the game does not read them from the registry yet; publishing opens in ${spec.landsIn}`
     : `${spec.label} have no runtime validator yet; they become publishable in ${spec.landsIn}`;
 }
 
 // ---------------------------------------------------------------------------------------------
 // Validation
 
-const record = (v: unknown): v is Payload =>
-  v !== null && typeof v === "object" && !Array.isArray(v);
 const bytes = (s: string) => new TextEncoder().encode(s).length;
 export const definitionHash = (canonical: string) =>
   bytesToHex(sha256(new TextEncoder().encode(canonical)));
-
-function jsonDepthOk(v: unknown, depth = 0): boolean {
-  if (depth > 12) return false;
-  if (Array.isArray(v)) return v.every((x) => jsonDepthOk(x, depth + 1));
-  if (record(v))
-    return Object.values(v).every((x) => jsonDepthOk(x, depth + 1));
-  return typeof v !== "number" || Number.isFinite(v);
-}
-function checkFields(
-  value: Payload,
-  fields: readonly FieldSpec[],
-  prefix: string,
-  issues: DefinitionIssue[],
-) {
-  const known = new Set(fields.map((f) => f.key));
-  for (const key of Object.keys(value))
-    if (!known.has(key))
-      issues.push({ path: prefix + key, message: "Unknown field" });
-  for (const f of fields) {
-    const path = prefix + f.key,
-      v = value[f.key];
-    if (v === undefined || v === null) {
-      if (v === null)
-        issues.push({ path, message: "Use absent instead of null" });
-      else if (f.required) issues.push({ path, message: "Required" });
-      continue;
-    }
-    switch (f.type) {
-      case "string":
-        if (typeof v !== "string") {
-          issues.push({ path, message: "Must be text" });
-          break;
-        }
-        if (v.length > f.maxLength || v.length < (f.minLength ?? 0))
-          issues.push({
-            path,
-            message: `Length must be ${f.minLength ?? 0} to ${f.maxLength}`,
-          });
-        else if (f.options && !f.options.includes(v))
-          issues.push({ path, message: "Not one of the allowed values" });
-        else if (f.pattern && !f.pattern.test(v))
-          issues.push({
-            path,
-            message: "Must be " + (f.patternHint ?? "valid"),
-          });
-        break;
-      case "number":
-        if (typeof v !== "number" || !Number.isFinite(v)) {
-          issues.push({ path, message: "Must be a number" });
-          break;
-        }
-        if (f.integer && !Number.isInteger(v))
-          issues.push({ path, message: "Must be a whole number" });
-        if (v > f.max || v < f.min || (f.exclusiveMin && v === f.min))
-          issues.push({
-            path,
-            message: `Must be ${f.exclusiveMin ? "above" : "at least"} ${f.min} and at most ${f.max}`,
-          });
-        break;
-      case "boolean":
-        if (typeof v !== "boolean")
-          issues.push({ path, message: "Must be true or false" });
-        break;
-      case "object":
-        if (!record(v)) issues.push({ path, message: "Must be an object" });
-        else checkFields(v, f.fields, path + ".", issues);
-        break;
-      case "json":
-        if (!record(v)) issues.push({ path, message: "Must be a JSON object" });
-        else if (!jsonDepthOk(v))
-          issues.push({ path, message: "Too deeply nested or not finite" });
-        break;
-    }
-  }
-}
 
 export type DefinitionValidation =
   | {
@@ -903,4 +753,25 @@ export function currentRevisionOf(
   for (const r of revisions)
     if (r.status === "published" && r.revision > current) current = r.revision;
   return current;
+}
+
+/**
+ * Retire guard: the last published revision of a definition that a starter kit, uniform issue or
+ * operator kit creates cannot be retired (creation would fail). Returns the refusal, or null.
+ */
+export function retireBlocker(
+  kind: DefinitionKind,
+  definitionId: string,
+  revisions: readonly { revision: bigint; status: string }[],
+  revision: bigint,
+): string | null {
+  const remaining = currentRevisionOf(
+    revisions.map((r) =>
+      r.revision === revision ? { ...r, status: "retired" } : r,
+    ),
+  );
+  if (remaining > 0n) return null;
+  const uses = protectedDefinitionUses(kind, definitionId);
+  if (!uses.length) return null;
+  return `Cannot retire the last published revision of ${kind}:${definitionId}: it is used by ${uses.join(", ")}. Publish a replacement revision first.`;
 }

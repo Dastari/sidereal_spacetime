@@ -25,6 +25,7 @@ import {
   isDefinitionCapability,
   isDefinitionKind,
   publishBlocker,
+  retireBlocker,
   revisionIssues,
   validateDefinition,
   type DefinitionCapability,
@@ -380,6 +381,13 @@ export function retireDefinition(
   if (!head || !row) throw new SenderError("Published revision not found");
   if (row.status !== "published")
     throw new SenderError("That revision is already retired");
+  const blocked = retireBlocker(
+    kind,
+    args.definitionId,
+    [...ctx.db.contentDefinition.by_key.filter(key)],
+    args.revision,
+  );
+  if (blocked) throw new SenderError(blocked);
   ctx.db.contentDefinition.definitionRef.update({
     ...row,
     status: "retired",

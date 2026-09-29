@@ -288,23 +288,54 @@ describe("draft, publish, retire", () => {
       currentRevision: 1n,
       revision: 4n,
     });
-    retireDefinition(ctx(alice), {
-      kind: "weapon",
-      definitionId: "pistol",
-      revision: 1n,
-      expectedRevision: 4n,
-      operationId: "retire-1",
-    });
-    expect(head("weapon:pistol").currentRevision).toBe(0n);
+    // Guard: the pistol is in operator kits, so its last published revision stays.
     expect(() =>
       retireDefinition(ctx(alice), {
         kind: "weapon",
         definitionId: "pistol",
         revision: 1n,
-        expectedRevision: 5n,
+        expectedRevision: 4n,
+        operationId: "retire-1",
+      }),
+    ).toThrow(
+      /Cannot retire the last published revision of weapon:pistol: it is used by operator kit "weapons-and-tools"/,
+    );
+    expect(head("weapon:pistol")).toMatchObject({
+      currentRevision: 1n,
+      revision: 4n,
+    });
+    expect(() =>
+      retireDefinition(ctx(alice), {
+        kind: "weapon",
+        definitionId: "pistol",
+        revision: 2n,
+        expectedRevision: 4n,
         operationId: "retire-again",
       }),
     ).toThrow(/already retired/);
+    // A definition nothing creates automatically may lose its last revision.
+    saveDefinitionDraft(ctx(alice), {
+      kind: "weapon",
+      definitionId: "prototype-gun",
+      payloadJson: JSON.stringify(pistol()),
+      expectedRevision: 0n,
+      operationId: "save-prototype",
+    });
+    publishDefinition(ctx(alice), {
+      kind: "weapon",
+      definitionId: "prototype-gun",
+      expectedRevision: 1n,
+      expectedDraftSha256: head("weapon:prototype-gun").draftSha256,
+      operationId: "publish-prototype",
+    });
+    retireDefinition(ctx(alice), {
+      kind: "weapon",
+      definitionId: "prototype-gun",
+      revision: 1n,
+      expectedRevision: 2n,
+      operationId: "retire-prototype",
+    });
+    expect(head("weapon:prototype-gun").currentRevision).toBe(0n);
   });
 
   test("discard clears a draft; a never-published definition disappears", () => {

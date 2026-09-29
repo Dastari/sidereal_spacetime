@@ -2,9 +2,11 @@ import { describe, expect, test } from "vitest";
 import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
 import { PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
 import { LAB_WEAPONS } from "@sidereal/content/weapons";
+import { buildShipComponentCatalog } from "@sidereal/content/ship-components-source";
 import {
   CONTENT_DEFINITION_SEED,
   SEEDED_DEFINITION_KINDS,
+  INTERACTION_SEED,
 } from "@sidereal/content/content-definition-seed";
 import {
   DEFINITION_KINDS,
@@ -46,7 +48,16 @@ describe("kind registry", () => {
       DEFINITION_KINDS.filter(
         (k) => DEFINITION_KIND_SPECS[k].stage === "seeded",
       ),
-    ).toEqual([...SEEDED_DEFINITION_KINDS]);
+    ).toEqual(["item", "weapon"]);
+    // X-3 kinds have validators (and seeds where content exists) but keep drafts only.
+    expect(
+      DEFINITION_KINDS.filter(
+        (k) => DEFINITION_KIND_SPECS[k].stage === "validated",
+      ),
+    ).toEqual(["component", "loot_table", "interaction"]);
+    expect(publishBlocker("component")).toMatch(/X-3b/);
+    for (const kind of SEEDED_DEFINITION_KINDS)
+      expect(DEFINITION_KIND_SPECS[kind].stage).not.toBe("planned");
   });
   test("grant scope keeps definition and construction capabilities apart", () => {
     expect(validGrantScope("definitions:item", "definition.publish")).toBe(
@@ -95,7 +106,17 @@ describe("seed reproduces the code catalogues", () => {
       const source =
         entry.kind === "item"
           ? INVENTORY_DEFINITIONS.find((d) => d.id === entry.definitionId)
-          : LAB_WEAPONS[entry.definitionId];
+          : entry.kind === "weapon"
+            ? LAB_WEAPONS[entry.definitionId]
+            : entry.kind === "component"
+              ? JSON.parse(
+                  JSON.stringify(
+                    buildShipComponentCatalog(4).components.find(
+                      (c) => c.id === entry.definitionId,
+                    ),
+                  ),
+                )
+              : INTERACTION_SEED[entry.definitionId];
       expect(JSON.parse(result.canonical)).toEqual(source);
     }
   });

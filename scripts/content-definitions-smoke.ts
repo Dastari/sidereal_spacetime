@@ -255,6 +255,68 @@ export async function contentDefinitionsSmoke(
       )!;
     assert.deepEqual(JSON.parse(usage.referencedByJson), ["item:pistol"]);
     assert.equal(outsider.db.adminContentDefinitionUsage.count(), 0n);
+
+    // Retire guard: the pistol is in operator kits, so its last published revision stays.
+    await rejects(
+      designer.reducers.retireDefinition({
+        kind: "weapon",
+        definitionId: "pistol",
+        revision: 1n,
+        expectedRevision: head().revision,
+        operationId: `x3-retire-last-${stamp}`,
+      }),
+      /Cannot retire the last published revision of weapon:pistol: it is used by operator kit/,
+      "retire guard",
+    );
+    assert.equal(head().currentRevision, 1n);
+
+    // X-3 kinds: seeds import; drafts validate with the shared validator; publishing waits.
+    seed("component", false, "apply");
+    seed("interaction", false, "apply");
+    assert.equal(summary("component", "apply").created, 132);
+    assert.equal(summary("interaction", "apply").created, 2);
+    grant(designer, "component", "definition.write");
+    grant(designer, "component", "definition.publish");
+    const componentHead = () =>
+      designer.db.adminContentDefinitionHeads.definitionKey.find(
+        "component:ion-drive.sm",
+      );
+    await wait(() => !!componentHead(), "component registry visible");
+    const drive = JSON.parse(
+      designer.db.adminContentDefinitions.definitionRef.find(
+        "component:ion-drive.sm@1",
+      )!.payloadJson,
+    );
+    await rejects(
+      designer.reducers.saveDefinitionDraft({
+        kind: "component",
+        definitionId: "ion-drive.sm",
+        payloadJson: JSON.stringify({ ...drive, propulsion: null }),
+        expectedRevision: componentHead()!.revision,
+        operationId: `x3-bad-component-${stamp}`,
+      }),
+      /propulsion without stats/,
+      "component validator reason",
+    );
+    await designer.reducers.saveDefinitionDraft({
+      kind: "component",
+      definitionId: "ion-drive.sm",
+      payloadJson: JSON.stringify({ ...drive, massKg: drive.massKg + 10 }),
+      expectedRevision: componentHead()!.revision,
+      operationId: `x3-save-component-${stamp}`,
+    });
+    await wait(() => !!componentHead()!.draftJson, "component draft");
+    await rejects(
+      designer.reducers.publishDefinition({
+        kind: "component",
+        definitionId: "ion-drive.sm",
+        expectedRevision: componentHead()!.revision,
+        expectedDraftSha256: componentHead()!.draftSha256,
+        operationId: `x3-publish-component-${stamp}`,
+      }),
+      /publishing opens in X-3b/,
+      "components keep drafts until the runtime reads them",
+    );
     return {
       seeded: { items: INVENTORY_DEFINITIONS.length, weapons },
       pistolRevisions: 2,

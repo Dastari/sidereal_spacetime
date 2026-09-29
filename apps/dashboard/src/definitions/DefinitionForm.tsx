@@ -1,9 +1,9 @@
 /**
- * Form generated from the shared field schema (`@sidereal/sim/content-definitions`). The same
+ * Form generated from the shared field schema (`@sidereal/sim/content-definition-schema`). The same
  * schema validates on the server, so a value this form accepts is one the reducer accepts.
  */
 import { useEffect, useState } from "react";
-import { X } from "lucide-react";
+import { Plus, X } from "lucide-react";
 import type {
   DefinitionIssue,
   FieldSpec,
@@ -14,6 +14,34 @@ type Payload = Record<string, unknown>;
 function issueFor(issues: readonly DefinitionIssue[], path: string) {
   return issues.find((i) => i.path === path)?.message;
 }
+/** What "none" is for a field: `null` for nullable keys, absent otherwise. */
+const emptyOf = (spec: FieldSpec) => (spec.nullable ? null : undefined);
+/** A starting value when a designer switches an object or list entry on. */
+function defaultFor(spec: FieldSpec): unknown {
+  switch (spec.type) {
+    case "string":
+      return spec.options?.[0] ?? "";
+    case "number":
+      return spec.exclusiveMin ? spec.min + 1 : spec.min;
+    case "boolean":
+      return false;
+    case "json":
+      return {};
+    case "list":
+      return Array.from({ length: spec.minItems }, () => defaultFor(spec.of));
+    case "object":
+      return Object.fromEntries(
+        spec.fields
+          .filter((f) => f.required || f.nullable)
+          .map((f) => [f.key, f.nullable ? null : defaultFor(f)]),
+      );
+  }
+}
+const isVector = (spec: FieldSpec) =>
+  spec.type === "list" &&
+  spec.of.type === "number" &&
+  spec.minItems === spec.maxItems &&
+  spec.minItems <= 4;
 
 function JsonField({
   value,
@@ -59,6 +87,44 @@ function JsonField({
   );
 }
 
+function NumberInput({
+  spec,
+  value,
+  disabled,
+  onChange,
+  label,
+}: {
+  spec: Extract<FieldSpec, { type: "number" }>;
+  value: unknown;
+  disabled: boolean;
+  onChange: (v: unknown) => void;
+  label?: string;
+}) {
+  return (
+    <span className="df-number">
+      <input
+        type="number"
+        aria-label={label}
+        value={typeof value === "number" ? value : ""}
+        step={spec.integer ? 1 : "any"}
+        min={spec.min}
+        max={spec.max}
+        disabled={disabled}
+        onChange={(e) =>
+          onChange(
+            e.target.value === ""
+              ? emptyOf(spec)
+              : Number.isFinite(e.target.valueAsNumber)
+                ? e.target.valueAsNumber
+                : e.target.value,
+          )
+        }
+      />
+      {spec.unit && <span className="df-unit">{spec.unit}</span>}
+    </span>
+  );
+}
+
 function Field({
   spec,
   value,
@@ -66,6 +132,7 @@ function Field({
   issues,
   disabled,
   onChange,
+  label = spec.label,
 }: {
   spec: FieldSpec;
   value: unknown;
@@ -73,43 +140,49 @@ function Field({
   issues: readonly DefinitionIssue[];
   disabled: boolean;
   onChange: (v: unknown) => void;
+  label?: string;
 }) {
   const issue = issueFor(issues, path);
-  const optional = !spec.required;
+  const removable = !spec.required || spec.nullable;
+  const present = value !== undefined && value !== null;
   const clear =
-    optional && value !== undefined && !disabled ? (
+    removable && present && !disabled && spec.type !== "object" ? (
       <button
         type="button"
         className="df-clear"
-        title={`Remove ${spec.label}`}
-        aria-label={`Remove ${spec.label}`}
-        onClick={() => onChange(undefined)}
+        title={`Remove ${label}`}
+        aria-label={`Remove ${label}`}
+        onClick={() => onChange(emptyOf(spec))}
       >
         <X size={14} />
       </button>
     ) : null;
   if (spec.type === "object") {
-    const included = value !== undefined;
-    const obj = (value && typeof value === "object" ? value : {}) as Payload;
+    const obj = (present ? value : {}) as Payload;
     return (
       <fieldset className={"df-group" + (issue ? " invalid" : "")}>
         <legend>
-          {optional ? (
+          {removable ? (
             <label className="df-include">
               <input
                 type="checkbox"
-                checked={included}
+                checked={present}
                 disabled={disabled}
-                onChange={(e) => onChange(e.target.checked ? {} : undefined)}
+                onChange={(e) =>
+                  onChange(e.target.checked ? defaultFor(spec) : emptyOf(spec))
+                }
               />
-              {spec.label}
+              {label}
+              {spec.nullable && !present && (
+                <span className="df-none">none</span>
+              )}
             </label>
           ) : (
-            spec.label
+            label
           )}
         </legend>
         {spec.help && <p className="df-help">{spec.help}</p>}
-        {included &&
+        {present &&
           spec.fields.map((f) => (
             <Field
               key={f.key}
@@ -130,23 +203,89 @@ function Field({
       </fieldset>
     );
   }
+  if (spec.type === "list" && !isVector(spec)) {
+    const items = Array.isArray(value) ? value : [];
+    const set = (next: unknown[]) => onChange(next);
+    return (
+      <fieldset className={"df-group df-list" + (issue ? " invalid" : "")}>
+        <legend>
+          {label} <span className="df-count">{items.length}</span>
+        </legend>
+        {spec.help && <p className="df-help">{spec.help}</p>}
+        {items.map((item, i) => (
+          <div className="df-list-item" key={i}>
+            <Field
+              spec={{ ...spec.of, required: true }}
+              label={`${spec.of.label || label} ${i + 1}`}
+              value={item}
+              path={`${path}[${i}]`}
+              issues={issues}
+              disabled={disabled}
+              onChange={(v) => set(items.map((x, j) => (j === i ? v : x)))}
+            />
+            {!disabled && (
+              <button
+                type="button"
+                className="df-clear"
+                title={`Remove ${spec.of.label || "entry"} ${i + 1}`}
+                aria-label={`Remove ${spec.of.label || "entry"} ${i + 1}`}
+                onClick={() => set(items.filter((_, j) => j !== i))}
+              >
+                <X size={14} />
+              </button>
+            )}
+          </div>
+        ))}
+        {!disabled && items.length < spec.maxItems && (
+          <button
+            type="button"
+            className="df-add"
+            onClick={() => set([...items, defaultFor(spec.of)])}
+          >
+            <Plus size={14} /> Add {(spec.of.label || "entry").toLowerCase()}
+          </button>
+        )}
+        {issue && <span className="df-field-issue">{issue}</span>}
+      </fieldset>
+    );
+  }
   let control;
-  if (spec.type === "json")
+  if (spec.type === "list") {
+    // Fixed-length number vector.
+    const of = spec.of as Extract<FieldSpec, { type: "number" }>;
+    const items = Array.isArray(value)
+      ? value
+      : Array.from({ length: spec.minItems }, () => undefined);
+    control = (
+      <span className="df-vector">
+        {items.map((v, i) => (
+          <NumberInput
+            key={i}
+            spec={{ ...of, unit: i === items.length - 1 ? of.unit : undefined }}
+            label={`${label} ${"xyzw"[i] ?? i}`}
+            value={v}
+            disabled={disabled}
+            onChange={(n) => onChange(items.map((x, j) => (j === i ? n : x)))}
+          />
+        ))}
+      </span>
+    );
+  } else if (spec.type === "json")
     control = (
       <JsonField value={value} onChange={onChange} disabled={disabled} />
     );
   else if (spec.type === "boolean")
     control = (
       <select
-        value={value === undefined ? "" : String(value)}
+        value={present ? String(value) : ""}
         disabled={disabled}
         onChange={(e) =>
           onChange(
-            e.target.value === "" ? undefined : e.target.value === "true",
+            e.target.value === "" ? emptyOf(spec) : e.target.value === "true",
           )
         }
       >
-        {optional && <option value="">—</option>}
+        {removable && <option value="">—</option>}
         <option value="true">Yes</option>
         <option value="false">No</option>
       </select>
@@ -157,10 +296,10 @@ function Field({
         value={typeof value === "string" ? value : ""}
         disabled={disabled}
         onChange={(e) =>
-          onChange(e.target.value === "" ? undefined : e.target.value)
+          onChange(e.target.value === "" ? emptyOf(spec) : e.target.value)
         }
       >
-        {optional && <option value="">—</option>}
+        {removable && <option value="">—</option>}
         {typeof value === "string" && !spec.options.includes(value) && (
           <option value={value}>{value} (unknown)</option>
         )}
@@ -181,33 +320,19 @@ function Field({
         spellCheck={false}
         onChange={(e) =>
           onChange(
-            e.target.value === "" && optional ? undefined : e.target.value,
+            e.target.value === "" && removable ? emptyOf(spec) : e.target.value,
           )
         }
       />
     );
   else
     control = (
-      <span className="df-number">
-        <input
-          type="number"
-          value={typeof value === "number" ? value : ""}
-          step={spec.integer ? 1 : "any"}
-          min={spec.min}
-          max={spec.max}
-          disabled={disabled}
-          onChange={(e) =>
-            onChange(
-              e.target.value === ""
-                ? undefined
-                : Number.isFinite(e.target.valueAsNumber)
-                  ? e.target.valueAsNumber
-                  : e.target.value,
-            )
-          }
-        />
-        {spec.unit && <span className="df-unit">{spec.unit}</span>}
-      </span>
+      <NumberInput
+        spec={spec}
+        value={value}
+        disabled={disabled}
+        onChange={onChange}
+      />
     );
   return (
     <label
@@ -218,9 +343,9 @@ function Field({
       }
     >
       <span className="df-label">
-        {spec.label}
+        {label}
         {spec.required && <em aria-label="required">*</em>}
-        <code>{spec.key}</code>
+        {spec.key && <code>{spec.key}</code>}
       </span>
       <span className="df-control">
         {control}
