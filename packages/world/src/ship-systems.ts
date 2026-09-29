@@ -37,6 +37,7 @@ import {
   type SharedViewContext,
 } from "./shared-world-views";
 import { markShipSystemsDirty } from "./ship-systems-dirty";
+import { recordLifecycleEvent } from "./lifecycle";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
@@ -157,7 +158,60 @@ export function compileShipSystemsFor(
   );
   if (old) db.shipSystemsState.shipId.update(row);
   else db.shipSystemsState.insert(row);
+  if (old && old.instanceRevision === instance.revision)
+    recordSupplyChanges(ctx, shipId, binding, old.reportJson, compiled, row);
   return "changed";
+}
+
+/** At most this many `component.supply_changed` events per recompile. */
+export const SHIP_SYSTEMS_SUPPLY_EVENTS_MAX = 64;
+/**
+ * S1-1 lifecycle: one `component.supply_changed` per placed component whose compiled combat-mode
+ * power supply changed between two compiles of the same instance revision (damage brownout or
+ * recovery). The first compile, backfill and a reinstall emit nothing (no prior supply to change
+ * from). Object ids match `combat.after_damage` (`${shipId}|mount:<id>`). Never aborts the tick.
+ */
+function recordSupplyChanges(
+  ctx: Pick<Context, "db" | "timestamp">,
+  shipId: string,
+  binding: {
+    catalog: string;
+    doc: { mounts: readonly { id: string; component: string }[] };
+  },
+  previousReportJson: string,
+  compiled: ReturnType<typeof compilePrefabShipSystems>,
+  row: { compileRevision: bigint },
+) {
+  let before: Record<string, number>;
+  try {
+    before = (JSON.parse(previousReportJson) as ShipSystemsReport).power.modes
+      .combat.supply;
+  } catch {
+    return;
+  }
+  const after = compiled.report.power.modes.combat.supply;
+  const component = new Map(binding.doc.mounts.map((m) => [m.id, m.component]));
+  let emitted = 0;
+  for (const objectId of Object.keys(after).sort()) {
+    const was = before[objectId] ?? 1,
+      now = after[objectId] ?? 1;
+    if (was === now) continue;
+    if (++emitted > SHIP_SYSTEMS_SUPPLY_EVENTS_MAX) break;
+    const mountId = objectId.slice("mount:".length);
+    recordLifecycleEvent(
+      ctx,
+      {
+        objectId: `${shipId}|${objectId}`,
+        objectKind: "component",
+        definitionRef: `${binding.catalog}/${component.get(mountId) ?? ""}`,
+        frameId: shipId,
+        ownerId: shipId,
+      },
+      "component.supply_changed",
+      { causationId: `ship-systems:${shipId}@${row.compileRevision}` },
+      { channel: "power", mode: "combat", supply: now, previous: was },
+    );
+  }
 }
 
 const availability = new Map<string, Record<string, PlacementAvailability>>();

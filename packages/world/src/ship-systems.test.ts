@@ -37,6 +37,7 @@ import {
 import { markShipSystemsDirty } from "./ship-systems-dirty";
 import { damageComponent } from "./combat-damage";
 import WREN_R4 from "./fixtures/fed-s-wren-r4.prefab.json";
+import { lifecycleEvents, lifecycleTestTables } from "./lifecycle-test-tables";
 
 function table(primary: string, indexes: Record<string, string> = {}) {
   const rows = new Map<string, any>();
@@ -91,6 +92,7 @@ function fixture() {
     shipSystemsState: table("shipId"),
     shipSystemsDirty: table("shipId"),
     shipSystemsClock: table("id"),
+    ...lifecycleTestTables(),
   };
   const ctx: any = { db, timestamp: { microsSinceUnixEpoch: 10_000_000n } };
   const tick = (micros = 50_000n) => {
@@ -191,6 +193,10 @@ test("the live Wren r4 (pinned catalogue) is backfilled by the stale sweep", () 
   });
   expect(db.shipSystemsState.shipId.find("legacy")).toBeNull();
   expect(db.shipSystemsDirty.count()).toBe(0n);
+  // A first compile (backfill) has no previous supply: no lifecycle events.
+  expect(
+    lifecycleEvents(db).filter((e) => e.kind === "component.supply_changed"),
+  ).toEqual([]);
   // Nothing to do until something changes.
   tick(2_000_000n);
   expect(db.shipSystemsState.shipId.find("wren-r4").compileRevision).toBe(1n);
@@ -217,6 +223,19 @@ test("damage recompiles: a destroyed reactor removes its generation", () => {
   tick();
   const damaged = db.shipSystemsState.shipId.find("wren-dmg");
   expect(damaged.compileRevision).toBe(2n);
+  // S1-1: every component whose compiled power supply changed gets one supply_changed event.
+  const supply = lifecycleEvents(db).filter(
+    (e) => e.kind === "component.supply_changed",
+  );
+  expect(supply.length).toBeGreaterThan(0);
+  for (const e of supply) {
+    expect(e.objectId.startsWith("wren-dmg|mount:")).toBe(true);
+    expect(e.frameId).toBe("wren-dmg");
+    expect(e.causationId).toBe("ship-systems:wren-dmg@2");
+    expect(e.payload).toMatchObject({ channel: "power", mode: "combat" });
+    expect(e.payload.supply).not.toBe(e.payload.previous);
+  }
+  expect(new Set(supply.map((e) => e.objectId)).size).toBe(supply.length);
   expect(damaged.destroyedComponents).toBe(1);
   expect(damaged.generationKw).toBeLessThan(pristine.generationKw);
   expect(damaged.reportJson).toBe(
