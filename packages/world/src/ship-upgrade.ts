@@ -104,6 +104,7 @@ export const UPGRADE_REBUILT_SHIP_TABLES = [
   ["shipComponentDamage", "shipId"],
   ["shipSystemsState", "shipId"],
   ["shipSystemsDirty", "shipId"],
+  ["shipPowerState", "shipId"],
   ["actuatorOutput", "shipId"],
   ["pilotLayoutReceipt", "shipId"],
   ["constructionDoor", "instanceId"],
@@ -142,6 +143,8 @@ export const UPGRADE_REFUSED_SHIP_TABLES = [
 
 /** Per-ship rows the upgrade leaves untouched (the ship id and pose are kept). */
 export const UPGRADE_KEPT_SHIP_TABLES = [
+  "shipPowerDevice",
+  "shipPowerInstallation",
   "shipZoneState",
   "spaceBody",
   "legacyBodyAlias",

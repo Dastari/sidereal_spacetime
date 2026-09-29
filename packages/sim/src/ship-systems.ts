@@ -494,7 +494,7 @@ const pick = (
         ? v.activeKw
         : v.peakKw;
 /** Lower value = supplied first under brownout. */
-function priority(d: ShipComponentDefinition): number {
+export function shipPowerPriority(d: ShipComponentDefinition): number {
   if (d.family === "interior") return 0;
   if (
     d.family === "thermal" ||
@@ -508,6 +508,15 @@ function priority(d: ShipComponentDefinition): number {
   if (d.family === "propulsion") return 4;
   if (d.family === "weapon") return 5;
   return 6;
+}
+
+/** Exact demand shared by the estimator and finite runtime (no report rounding). */
+export function shipPowerDemandKw(
+  d: ShipComponentDefinition,
+  mode: ShipSystemsMode,
+  placement?: ShipComponentPlacement,
+): number {
+  return pick(d.power, loadOf(d, mode, placement));
 }
 
 // ---------------------------------------------------------------- networks
@@ -808,7 +817,8 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
       used += Math.min(need, gen);
       for (const l of loads.sort(
         (a, b) =>
-          priority(a.r.d) - priority(b.r.d) || order(a.r.p.id, b.r.p.id),
+          shipPowerPriority(a.r.d) - shipPowerPriority(b.r.d) ||
+          order(a.r.p.id, b.r.p.id),
       )) {
         const give = Math.min(l.kw, available);
         available -= give;

@@ -1,3 +1,4 @@
+import { prefabPowerReady } from "./ship-power";
 import { compileShipFlight } from "./construction-flight-compilation";
 import { readConstructionFlightInput } from "./construction-flight-input";
 import { commitFlightCharacter } from "./construction-flight-dirty";
@@ -190,6 +191,7 @@ export function constructionPilotRepository(
       return consumeInputControl(ctx, id);
     },
     hasOperationalFlight: (id) => {
+      if (!prefabPowerReady(ctx, id)) return false;
       // Entry/input recording already checked current actor/deck permission. Compile this one
       // pending ship before checking the exact same operational computer gate;
       // the final walking step must not cause a transient false power loss.

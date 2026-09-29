@@ -177,7 +177,15 @@ export function queueFlightDamage(ctx: Context, event: FlightDamageEvent) {
 }
 /** Consumption rechecks the exact fitting revision. A concurrent removal/refit
  * cannot redirect queued damage to a replacement or apply it twice. */
-export function consumeFlightDamage(ctx: Context) {
+export function consumeFlightDamage(
+  ctx: Context,
+  correctLegacyLoss?: (
+    event: FlightDamageEvent & { createdMicros: bigint },
+    fitting: NonNullable<
+      ReturnType<Context["db"]["constructionFlightFitting"]["id"]["find"]>
+    >,
+  ) => number,
+) {
   if (!ctx.sender.isEqual(ctx.databaseIdentity))
     throw Error("Server flight damage consumption only");
   const pending = [];
@@ -192,6 +200,7 @@ export function consumeFlightDamage(ctx: Context) {
     const fitting = ctx.db.constructionFlightFitting.id.find(event.fittingId),
       binding = ctx.db.constructionFlightBinding.shipId.find(event.shipId);
     let result = "stale-fitting";
+    let appliedLossFraction = event.lossFraction;
     if (
       Number.isFinite(event.lossFraction) &&
       event.lossFraction > 0 &&
@@ -205,9 +214,17 @@ export function consumeFlightDamage(ctx: Context) {
       fitting.availability <= 1 &&
       fitting.revision === event.expectedFittingRevision
     ) {
+      appliedLossFraction =
+        correctLegacyLoss?.(row, fitting) ?? event.lossFraction;
+      if (
+        !Number.isFinite(appliedLossFraction) ||
+        appliedLossFraction < 0 ||
+        appliedLossFraction > event.lossFraction
+      )
+        throw Error("Invalid legacy damage correction");
       ctx.db.constructionFlightFitting.id.update({
         ...fitting,
-        availability: fitting.availability * (1 - event.lossFraction),
+        availability: fitting.availability * (1 - appliedLossFraction),
         revision: fitting.revision + 1n,
       });
       ctx.db.constructionFlightBinding.shipId.update({
@@ -220,7 +237,12 @@ export function consumeFlightDamage(ctx: Context) {
     ctx.db.constructionFlightReceipt.insert({
       id: JSON.stringify(["server-flight-damage", event.id]),
       owner: binding?.owner ?? ctx.databaseIdentity,
-      requestJson: encode({ event: damagePayload(event), result }),
+      requestJson: encode({
+        event: damagePayload(event),
+        result,
+        appliedLossFraction,
+        sourceCreatedMicros: row.createdMicros,
+      }),
       instanceId: binding?.instanceId ?? event.shipId,
       shipId: event.shipId,
       stationId: binding?.stationId ?? "",

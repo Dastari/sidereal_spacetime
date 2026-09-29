@@ -55,6 +55,10 @@ function setup() {
   const table = (name: string, key: string) => {
     rows[name] = [];
     return {
+      by_system: {
+        filter: (id: string) =>
+          rows[name].filter((r: any) => r.systemId === id),
+      },
       [key]: {
         find: (id: string) =>
           rows[name].find((r) => (r as Record<string, unknown>)[key] === id),
@@ -142,4 +146,18 @@ test("storage failure propagates instead of claiming independent partial success
     /Storage failure/,
   );
   // This lightweight table double has no rollback. Real SpacetimeDB must own the transaction.
+});
+
+test("trusted explicit-at flight installation cannot bypass the existing60ship admission capacity", () => {
+  const f = setup();
+  for (let i = 0; i < 60; i++)
+    f.rows.shipWorldMotion.push({
+      shipId: `other-${i}`,
+      systemId: f.plan.motion.systemId,
+    });
+  expect(() => insertQualifiedFlightPlan(f.ctx, f.plan)).toThrow(
+    "Shared contact island is full",
+  );
+  expect(f.rows.ship).toHaveLength(0);
+  expect(f.rows.constructionFlightBinding).toHaveLength(0);
 });

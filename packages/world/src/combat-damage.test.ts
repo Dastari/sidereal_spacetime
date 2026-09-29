@@ -649,7 +649,7 @@ test("component damage reaches flight fittings through the server damage produce
   expect(db.constructionFlightFitting.id.find("drive").availability).toBe(1);
 });
 
-test("a destroyed reactor browns out every flight fitting", () => {
+test("reactor damage never permanently lowers unrelated physical fitting availability", () => {
   const { db, ctx } = fixture();
   // reactor.md: 650 hp, armour 8; damaged at under half (performance 0.5).
   damageComponent(ctx, "wren", "mount:reactor", 400, true);
@@ -669,7 +669,7 @@ test("a destroyed reactor browns out every flight fitting", () => {
     consumeFlightDamage(ctx);
   }
   for (const id of ["drive", "rcs-fore", "rcs-aft", "core-fit"])
-    expect(db.constructionFlightFitting.id.find(id).availability).toBe(0);
+    expect(db.constructionFlightFitting.id.find(id).availability).toBe(1);
 });
 
 test("lifecycle: one event per applied hit, the killing hit is the death, respawn reactivates", () => {

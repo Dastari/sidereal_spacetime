@@ -11,8 +11,7 @@
  *   catalogue hp minus the flat per-hit armour. The catalogue damage state sets its performance;
  *   components with flight fittings (engines, RCS nozzles, the flight computer) lose availability
  *   through the server IFCS damage producer, so the ship recompiles on the flight-dirty path.
- *   Generator (reactor) damage browns those fittings out too (`prefabPowerFactor`): a destroyed
- *   reactor leaves no thrust and an unpowered flight computer.
+ *   Generator damage changes the finite S4-2 power solve; it never permanently damages other fittings.
  * Structure hits (walls, hull, glass, hatches) are recorded on the impact row only: prefab ships
  * have no pressure/breach model, and per-tile hull hp is deferred.
  */
@@ -24,7 +23,6 @@ import { prefabComponentDefinition } from "@sidereal/sim/prefab-deck-objects";
 import {
   availabilityLoss,
   catalogDamageStates,
-  prefabPowerFactor,
   componentDamageState,
   componentHitDamage,
   freshVitals,
@@ -148,7 +146,10 @@ type PrefabBinding = {
   doc: ReturnType<typeof readShipPrefab>;
   catalog: string;
 };
-const bindings = new Map<string, PrefabBinding | null>();
+const bindings = new Map<
+  string,
+  { source: string; binding: PrefabBinding | null }
+>();
 /** Parsed prefab binding of a construction instance, cached per instance revision. */
 export function prefabBindingOf(instance: {
   id: string;
@@ -156,11 +157,14 @@ export function prefabBindingOf(instance: {
   documentJson: string;
 }): PrefabBinding | undefined {
   const key = instance.id + ":" + instance.revision;
-  if (!bindings.has(key)) {
+  if (bindings.get(key)?.source !== instance.documentJson) {
     if (bindings.size >= 64) bindings.clear();
-    bindings.set(key, parseBinding(instance.documentJson) ?? null);
+    bindings.set(key, {
+      source: instance.documentJson,
+      binding: parseBinding(instance.documentJson) ?? null,
+    });
   }
-  return bindings.get(key) ?? undefined;
+  return bindings.get(key)?.binding ?? undefined;
 }
 function parseBinding(documentJson: string): PrefabBinding | undefined {
   try {
@@ -324,8 +328,7 @@ export function stepDamage(ctx: Context) {
 
 /**
  * Lower each installed flight fitting of a damaged prefab ship to its target availability: its
- * own mount's damage-state performance times the ship's power factor (generator damage browns
- * out drives, RCS and the flight computer). Damage never raises availability (no repair yet).
+ * own mount's physical damage-state performance. Transient power is supplied separately by S4-2. Damage never raises availability (no repair yet).
  */
 function pushFittingDamage(ctx: Context, shipId: string) {
   const instance = ctx.db.constructionInstance.id.find(shipId);
@@ -343,23 +346,8 @@ function pushFittingDamage(ctx: Context, shipId: string) {
   ].filter((f) => f.installed && f.sourceDeviceId.startsWith("mount-"));
   const mountOf = (sourceDeviceId: string) =>
     sourceDeviceId.slice("mount-".length).split("#")[0];
-  const fitted = new Set(fittings.map((f) => mountOf(f.sourceDeviceId)));
-  const devices = binding.doc.mounts.flatMap((m) => {
-    const d = prefabComponentDefinition(m.component, binding.catalog);
-    return d
-      ? [
-          {
-            mountId: m.id,
-            generationKw: d.power.generationKw,
-            activeKw: d.power.activeKw,
-            fitted: fitted.has(m.id),
-          },
-        ]
-      : [];
-  });
-  const power = prefabPowerFactor(devices, perf);
   for (const fitting of fittings) {
-    const target = perf(mountOf(fitting.sourceDeviceId)) * power;
+    const target = perf(mountOf(fitting.sourceDeviceId));
     const loss = availabilityLoss(fitting.availability, target);
     if (loss === undefined) continue;
     // One event per fitting revision: while it is queued (or once consumed) nothing more is

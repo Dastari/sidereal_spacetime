@@ -40,6 +40,8 @@ import {
 type Row = Record<string, any>;
 let fixtureSequence = 0;
 const PRIMARY: Record<string, string> = {
+  shipPowerInstallation: "shipId",
+  shipPowerState: "shipId",
   personalStarterReceipt: "owner",
   shipSystemsState: "shipId",
   shipSystemsDirty: "shipId",

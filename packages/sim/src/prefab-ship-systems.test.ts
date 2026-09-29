@@ -163,3 +163,18 @@ test("S4-2: all twelve prefabs close their catalogue budgets and carry black-sta
     expect(report.power.storageKwh, doc.id).toBeGreaterThan(0);
   }
 });
+
+test("healthy damage rows are the identity condition and do not change the systems hash", () => {
+  const doc = PREFAB_SHIPS[0];
+  const baseline = compilePrefabShipSystems(
+    doc,
+    defaultPrefabComponentCatalog().revision,
+  );
+  const withIdentity = compilePrefabShipSystems(
+    doc,
+    defaultPrefabComponentCatalog().revision,
+    [{ objectId: `mount:${doc.mounts[0].id}`, performance: 1 }],
+  );
+  expect(withIdentity.inputHash).toBe(baseline.inputHash);
+  expect(withIdentity.report).toEqual(baseline.report);
+});

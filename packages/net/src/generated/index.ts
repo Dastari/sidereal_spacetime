@@ -162,6 +162,8 @@ import OwnReachableCargoContainersRow from "./own_reachable_cargo_containers_tab
 import OwnReachableCargoItemsRow from "./own_reachable_cargo_items_table";
 import OwnShipComponentDamageRow from "./own_ship_component_damage_table";
 import OwnShipNetworksRow from "./own_ship_networks_table";
+import OwnShipPowerRow from "./own_ship_power_table";
+import OwnShipPowerDevicesRow from "./own_ship_power_devices_table";
 import OwnShipSystemsReportRow from "./own_ship_systems_report_table";
 import OwnShipZonesRow from "./own_ship_zones_table";
 import OwnShipsRow from "./own_ships_table";
@@ -577,6 +579,20 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnShipNetworksRow),
+  ownShipPower: __table({
+    name: 'own_ship_power',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnShipPowerRow),
+  ownShipPowerDevices: __table({
+    name: 'own_ship_power_devices',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnShipPowerDevicesRow),
   ownShipSystemsReport: __table({
     name: 'own_ship_systems_report',
     indexes: [

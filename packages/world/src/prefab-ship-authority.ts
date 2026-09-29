@@ -44,6 +44,7 @@ import {
   commitFlightCharacter,
   markShipFlightDirty,
 } from "./construction-flight-dirty";
+import { installPrefabPower } from "./ship-power";
 import { markShipSystemsDirty } from "./ship-systems-dirty";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
@@ -258,6 +259,8 @@ export function installPrefabShip(
     const motion = ctx.db.shipWorldMotion.shipId.find(shipId)!;
     ctx.db.shipWorldMotion.shipId.update({ ...motion, heading });
   }
+
+  installPrefabPower(ctx, shipId);
 
   // Activation: the same compile -> dormant -> pilot geometry -> active sequence as the starter.
   const binding = ctx.db.constructionFlightBinding.shipId.find(shipId);

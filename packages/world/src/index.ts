@@ -222,6 +222,13 @@ import {
   shipSystemsClock,
 } from "./ship-systems-tables";
 import * as shipSystems from "./ship-systems";
+import * as shipPower from "./ship-power";
+import {
+  shipPowerDevice,
+  shipPowerInstallation,
+  shipPowerClock,
+  shipPowerState,
+} from "./ship-power-tables";
 import { alignPilotLayout } from "./pilot-layout";
 import { pilotLayoutReceipt } from "./pilot-layout-tables";
 import { PILOT_LAYOUT, constrainLabDeck } from "../../content/src/pilot-layout";
@@ -423,6 +430,10 @@ const db = schema({
   shipSystemsState,
   shipSystemsDirty,
   shipSystemsClock,
+  shipPowerDevice,
+  shipPowerInstallation,
+  shipPowerClock,
+  shipPowerState,
   pilotLayoutReceipt,
   interactionObject,
   couchSeat,
@@ -857,7 +868,10 @@ export const stepWorld = db.reducer(
     shipSystems.stepShipSystems(ctx);
     characterDeath.stepRespawns(ctx);
     lifecycle.pruneLifecycleEvents(ctx);
-    consumeFlightDamage(ctx);
+    consumeFlightDamage(ctx, (event, fitting) =>
+      shipPower.legacyQueuedPowerDamageLoss(ctx, event, fitting),
+    );
+    shipPower.stepShipPower(ctx);
     // The canonical contact island advances once for all admitted ships/bodies,
     // never inside the legacy per-owner loop below.
     stepSharedWorld(ctx, undefined, {
@@ -1136,6 +1150,17 @@ export const visibleShipSystemEffects = db.view(
   { name: "visible_ship_system_effects", public: true },
   t.array(shipSystems.shipSystemEffectsProjection),
   auth.gameView(shipSystems.visibleShipSystemEffects),
+);
+/** S4-2 private runtime data, owner/current admitted crew only. */
+export const ownShipPower = db.view(
+  { name: "own_ship_power", public: true },
+  t.array(shipPower.powerSummaryProjection),
+  auth.gameView(shipPower.ownShipPower),
+);
+export const ownShipPowerDevices = db.view(
+  { name: "own_ship_power_devices", public: true },
+  t.array(shipPower.powerDeviceProjection),
+  auth.gameView(shipPower.ownShipPowerDevices),
 );
 export const setCombatAim = db.reducer(
   { active: t.bool(), angle: t.f64() },

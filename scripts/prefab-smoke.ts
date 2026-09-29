@@ -85,6 +85,8 @@ const subscribed = () => [
   tables.ownEvaSuit,
   tables.ownReachableCargoItems,
   tables.ownReachableCargoContainers,
+  tables.ownShipPower,
+  tables.ownShipPowerDevices,
   tables.ownShipNetworks,
   tables.ownShipSystemsReport,
   tables.visibleShipSystemEffects,
@@ -115,6 +117,8 @@ const shipOf = (shipId: string) =>
 // S4-1: the server-compiled systems budget and the shared client estimate over the same inputs.
 const networkOf = (shipId: string) =>
   [...c.db.ownShipNetworks.iter()].find((n: any) => n.shipId === shipId) as any;
+const powerOf = (shipId: string) =>
+  [...c.db.ownShipPower.iter()].find((r: any) => r.shipId === shipId) as any;
 const systemsReportOf = (shipId: string) =>
   [...c.db.ownShipSystemsReport.iter()].find(
     (n: any) => n.shipId === shipId,
@@ -734,8 +738,7 @@ try {
     vitals().maxHealth,
     "shooting a module does not hurt the shooter",
   );
-  // Reactor destroyed: the server damage producer drops every drive, RCS nozzle and the flight
-  // computer to zero availability and the flight recompiles.
+  // Generation loss uses finite battery support; it does not damage unrelated flight fittings.
   const physicsBefore = physicsOf(shipId);
   await c.reducers.damagePrefabSmokeComponent({
     objectId: "mount:reactor",
@@ -746,6 +749,29 @@ try {
     "reactor destroyed",
   );
   await wait(
+    () => powerOf(shipId)?.generationW === 0 && powerOf(shipId)?.energyJ > 0,
+    "finite battery supports destroyed reactor",
+  );
+  const batteryBefore = powerOf(shipId).energyJ;
+  await pause(200);
+  assert(
+    powerOf(shipId).energyJ < batteryBefore,
+    "battery joules debited without generation",
+  );
+  assert(powerOf(shipId).corePowered, "battery still powers intact core");
+  assert(
+    JSON.parse(physicsOf(shipId).envelopeJson).forward > 0,
+    "finite battery supports compiled forward thrust",
+  );
+  await c.reducers.damagePrefabSmokeComponent({
+    objectId: "mount:battery",
+    damage: 5000,
+  });
+  await wait(
+    () => powerOf(shipId)?.energyJ === 0 && !powerOf(shipId)?.corePowered,
+    "destroyed battery leaves dark bus",
+  );
+  await wait(
     () =>
       physicsOf(shipId)?.status !== "pending" &&
       physicsOf(shipId)?.revision > physicsBefore.revision &&
@@ -754,7 +780,11 @@ try {
     10000,
   );
   const envelope = JSON.parse(physicsOf(shipId).envelopeJson);
-  assert.equal(envelope.forward, 0, "no forward thrust without a reactor");
+  assert.equal(
+    envelope.forward,
+    0,
+    "no forward thrust after generation and storage are lost",
+  );
   const systemsDark = await expectSystemsMatchEstimate(
     shipId,
     "reactor destroyed",
@@ -801,28 +831,28 @@ try {
     .catch(() => {
       seated = false;
     });
-  let burnDelta = 0;
-  if (seated) {
+  if (seated)
     await wait(() => flightOf(shipId)?.seatState === "seated", "reseated");
-    const v0 = shipOf(shipId);
-    for (let n = 0; n < 20; n++) {
-      await c.reducers.setIntent({
-        sequence: nextSequence(c),
-        throttle: 1,
-        turn: 0,
-        dx: 0,
-        dy: 0,
-        sprint: false,
-      });
-      await pause(60);
-    }
-    const v1 = shipOf(shipId);
-    burnDelta = Math.hypot(v1.vx - v0.vx, v1.vy - v0.vy);
-    assert(
-      burnDelta < 0.05,
-      `no thrust with the reactor destroyed (velocity change ${burnDelta.toFixed(3)} m/s)`,
-    );
-  }
+  const v0 = shipOf(shipId);
+  await assert.rejects(
+    c.reducers.setIntent({
+      sequence: nextSequence(c),
+      throttle: 1,
+      turn: 0,
+      dx: 0,
+      dy: 0,
+      sprint: false,
+    }),
+    /Occupy the control station to pilot/,
+    "dark core refuses flight intent",
+  );
+  await pause(1200);
+  const v1 = shipOf(shipId);
+  const burnDelta = Math.hypot(v1.vx - v0.vx, v1.vy - v0.vy);
+  assert(
+    burnDelta < 0.05,
+    `dark ship coasts without thrust or free braking (velocity change ${burnDelta.toFixed(3)} m/s)`,
+  );
   console.log(
     JSON.stringify({
       damage: {

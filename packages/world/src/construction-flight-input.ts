@@ -20,7 +20,8 @@ import {
   readShipPrefab,
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
-import { prefabActuatorSupply } from "@sidereal/sim/prefab-flight-supply";
+import { powerSupplyOf } from "./ship-power";
+import { prefabSourceMountId } from "@sidereal/sim/prefab-flight-supply";
 import {
   PREFAB_DECK_ID,
   isPrefabConstruction,
@@ -58,22 +59,6 @@ function prefabStorageSocketCentres(
   if (PREFAB_SOCKET_MEMO.size >= 64) PREFAB_SOCKET_MEMO.clear();
   PREFAB_SOCKET_MEMO.set(key, centres);
   return centres;
-}
-
-/** Actuator supply by source id, memoised per source, actuator set and damage state. */
-const PREFAB_SUPPLY_MEMO = new Map<string, Record<string, number>>();
-/** Parsed prefab source of an instance, memoised per source (supply reads its mounts). */
-const PREFAB_DOC_MEMO = new Map<string, ShipPrefabDocumentV1>();
-function prefabSupplyDocument(
-  key: string,
-  document: { prefab: { document: unknown } },
-): ShipPrefabDocumentV1 {
-  const hit = PREFAB_DOC_MEMO.get(key);
-  if (hit) return hit;
-  const doc = readShipPrefab(document.prefab.document);
-  if (PREFAB_DOC_MEMO.size >= 64) PREFAB_DOC_MEMO.clear();
-  PREFAB_DOC_MEMO.set(key, doc);
-  return doc;
 }
 
 function bounded<T>(rows: Iterable<T>, limit: number): T[] {
@@ -370,42 +355,25 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
   if (replacements.length) throw Error("prefab-flight-refit-unsupported");
   const key = `${instance.id}:${instance.blueprintSha256}`;
   const model = prefabFlightModelFor(key, instance.documentJson);
-  // Fuel and power supply per actuator from the pinned document and component damage (the
-  // S4-1 ship-systems rule): a drive that burns propellant needs a fuel network with an intact
-  // tank, one that draws power needs the ship's generation. Memoised per source and damage state.
-  if (!isPrefabConstruction(document)) throw Error("prefab-flight-source");
-  const performance = new Map<string, number>();
-  for (const row of bounded(
-    ctx.db.shipComponentDamage.by_ship.filter(shipId),
-    512,
-  ))
-    if (row.objectId.startsWith("mount:"))
-      performance.set(row.objectId.slice("mount:".length), row.performance);
-  const sources = fittingRows
-    .filter((f) => f.kind === "actuator")
-    .map((f) => f.sourceDeviceId)
-    .sort();
-  const supplyKey = JSON.stringify([
-    key,
-    sources,
-    [...performance].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
-  ]);
-  let bySource = PREFAB_SUPPLY_MEMO.get(supplyKey);
-  if (!bySource) {
-    bySource = prefabActuatorSupply(
-      prefabSupplyDocument(key, document),
-      document.prefab.catalog,
-      sources,
-      (mountId) => performance.get(mountId) ?? 1,
-    );
-    if (PREFAB_SUPPLY_MEMO.size >= 64) PREFAB_SUPPLY_MEMO.clear();
-    PREFAB_SUPPLY_MEMO.set(supplyKey, bySource);
-  }
+  // Runtime supply is transient. Physical mount damage remains in fitting availability;
+  // fractional power multiplies it exactly once in the flight compiler.
+  const runtimeSupply = powerSupplyOf(ctx, shipId);
   const prefabSupply = Object.fromEntries(
     fittingRows
       .filter((f) => f.kind === "actuator")
-      .map((f) => [f.id, bySource[f.sourceDeviceId] ?? 0]),
+      .map((f) => [
+        f.id,
+        runtimeSupply[`mount:${prefabSourceMountId(f.sourceDeviceId) ?? ""}`] ??
+          0,
+      ]),
   );
+  for (let i = 0; i < fittingRows.length; i++)
+    if (fittingRows[i].kind === "computer")
+      fittings[i].powered =
+        fittings[i].powered &&
+        (runtimeSupply[
+          `mount:${prefabSourceMountId(fittingRows[i].sourceDeviceId) ?? ""}`
+        ] ?? 0) >= 1;
   return prefabFlightInput(
     model,
     (sourceId) => prefabPlacedObjectId(shipId, sourceId),

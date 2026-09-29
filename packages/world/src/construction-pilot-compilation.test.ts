@@ -1,5 +1,5 @@
 import { expect, test, vi } from "vitest";
-const state = vi.hoisted(() => ({ dirty: true, compiles: 0 }));
+const state = vi.hoisted(() => ({ dirty: true, compiles: 0, power: true }));
 vi.mock("spacetimedb/server", () => ({
   t: {
     row: () => ({}),
@@ -7,6 +7,7 @@ vi.mock("spacetimedb/server", () => ({
     u64: () => ({}),
   },
 }));
+vi.mock("./ship-power", () => ({ prefabPowerReady: () => state.power }));
 vi.mock("./auth", () => ({ requireGame: () => {} }));
 vi.mock("./input-control", () => ({ consumeInputControl: () => true }));
 vi.mock("./combat", () => ({ clearAim: () => {} }));
@@ -36,6 +37,7 @@ vi.mock("./construction-flight-resolver", () => ({
 import { Identity } from "spacetimedb";
 import { constructionPilotRepository } from "./construction-pilot-authority";
 test("explicit entry resolves pending walking mass; consumption readers never expand the scheduled compilation budget", () => {
+  state.power = true;
   state.dirty = true;
   state.compiles = 0;
   const owner = Identity.fromString("1".repeat(64));
@@ -65,4 +67,23 @@ test("explicit entry resolves pending walking mass; consumption readers never ex
     ),
   ).toBe(true);
   expect(state.compiles).toBe(1);
+});
+
+test("command consumption fails closed on stale power before any pending flight compile", () => {
+  state.power = false;
+  state.dirty = true;
+  state.compiles = 0;
+  const owner = Identity.fromString("1".repeat(64));
+  const ctx: any = {
+    sender: owner,
+    databaseIdentity: Identity.fromString("2".repeat(64)),
+    db: { character: { id: { find: () => ({ owner }) } } },
+  };
+  expect(
+    constructionPilotRepository(ctx, "actor", true).hasOperationalFlight(
+      "ship",
+    ),
+  ).toBe(false);
+  expect(state.compiles).toBe(0);
+  state.power = true;
 });
