@@ -17,14 +17,16 @@ import type { Scene } from "@babylonjs/core/scene";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { prefabById, PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { SPRINT_SPEED_MPS, WALK_SPEED_MPS } from "@sidereal/sim";
+import { VOXEL_CREW_ANKLE_HEIGHT_M } from "@sidereal/content/crew-voxel-bundle";
 import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
 import {
   INVENTORY_DEFINITIONS,
   characterEquipmentFromInventory,
 } from "@sidereal/content/inventory";
-import type { EquipmentAsset } from "../../packages/render/src/equipment";
 
 declare global {
   interface Window {
@@ -58,7 +60,10 @@ canvas.height = height;
 canvas.style.width = `${width}px`;
 canvas.style.height = `${height}px`;
 
-function appearanceFor(ids: string[], hand?: string) {
+function appearanceFor(
+  ids: string[],
+  hand?: string,
+): Pick<SceneState, "crewAppearance" | "heldItem"> {
   const items = ids.flatMap((id) => {
     const d = INVENTORY_DEFINITIONS.find((x) => x.id === id);
     return d?.equipSlot
@@ -77,7 +82,7 @@ function appearanceFor(ids: string[], hand?: string) {
       weapon: held?.pose ?? "none",
       backpack: items.some((i) => i.equipmentSlot === "back"),
     },
-    equippedAsset: (held?.assetId as EquipmentAsset | undefined) ?? null,
+    heldItem: held?.crewItemId ?? null,
   };
 }
 
@@ -133,7 +138,41 @@ async function main() {
     if (cam.length >= 5) c.target = new Vector3(cam[3], cam[5] ?? 1.0, -cam[4]);
     [c.alpha, c.beta, c.radius] = cam as [number, number, number];
   });
-  if (q.get("clear") === "1") {
+  if (q.get("clear") === "stage") {
+    // Presentation review only: retain the original deck's floor index ranges and materials,
+    // while hiding every fixture, label and wall. No simulation or collision state is changed.
+    const prepared = new Set<AbstractMesh>();
+    const floors = new Set<AbstractMesh>();
+    document.getElementById("labels")!.style.display = "none";
+    scene!.onBeforeRenderObservable.add(() => {
+      const body = world.getCrewVisual()?.root;
+      if (!body) return;
+      for (const m of scene!.meshes) {
+        if (m.isDescendantOf(body)) continue;
+        if (!prepared.has(m)) {
+          prepared.add(m);
+          const ranges = (m.metadata?.roleRanges ?? []) as {
+            role: string;
+            first: number;
+            count: number;
+          }[];
+          const floorRanges = ranges.filter((r) => r.role === "floor");
+          if (floorRanges.length && m instanceof Mesh) {
+            const indices = m.getIndices();
+            if (indices) {
+              m.setIndices(
+                floorRanges.flatMap((r) =>
+                  Array.from(indices.slice(r.first, r.first + r.count)),
+                ),
+              );
+              floors.add(m);
+            }
+          } else if (m.metadata?.role === "floor") floors.add(m);
+        }
+        if (!floors.has(m)) m.isVisible = false;
+      }
+    });
+  } else if (q.get("clear") === "1") {
     // World-AABB segment test (ship structure is merged / thin-instanced, so ray picking misses it);
     // meshes that stay below the crew's shins (the deck) are never hidden.
     const hidden = new Set<AbstractMesh>();
@@ -201,7 +240,7 @@ async function main() {
   let walkSpeed = 0;
   const walkStart = state.localY;
   scene!.onBeforeRenderObservable.add(() => {
-    if (!walkSpeed) return;
+    if (!walkSpeed || frozen) return;
     const dt = scene!.getEngine().getDeltaTime() / 1000;
     state.localY += walkSpeed * Math.min(dt, 0.1);
     if (state.localY > walkStart + 3) state.localY = walkStart - 3;
@@ -209,14 +248,16 @@ async function main() {
   });
   let lastMeshes = -1;
   let stableSince = 0;
-  // Frame stepping for evidence strips: stop the game loop, then render with a constant 1/60 s
+  // Frame stepping for evidence strips: stop the game loop, then render with a constant 16 ms
   // animation step so strips sample the clips at even times whatever the SwiftShader frame rate.
   const engine = scene!.getEngine() as unknown as {
     _activeRenderLoops: (() => void)[];
     stopRenderLoop(): void;
     runRenderLoop(f: () => void): void;
+    getDeltaTime(): number;
   };
   let frozen: (() => void)[] | undefined;
+  const deltaTime = engine.getDeltaTime.bind(engine);
   window.__crew = {
     state,
     visual: crew,
@@ -225,13 +266,31 @@ async function main() {
       frozen = [...engine._activeRenderLoops];
       engine.stopRenderLoop();
       scene!.useConstantAnimationDeltaTime = true;
+      engine.getDeltaTime = () => 16;
     },
     advance(ms: number) {
-      for (let i = 0; i < Math.max(1, Math.round(ms / 16)); i++)
+      // While walking, keep the body (and the review camera) moving forward at the walk speed so
+      // planted feet stay planted as in game; the frozen game loop no longer moves it.
+      const body = crew()?.root;
+      const cam = holder.__crewCam;
+      for (let i = 0; i < Math.max(1, Math.round(ms / 16)); i++) {
+        crew()?.update({
+          moving: walkSpeed !== 0,
+          seated: false,
+          sprinting: !!state.sprinting,
+          speed:
+            walkSpeed / (state.sprinting ? SPRINT_SPEED_MPS : WALK_SPEED_MPS),
+        });
+        if (walkSpeed && body) {
+          body.position.z -= walkSpeed * 0.016;
+          if (cam && cam.length >= 5) cam[4] += walkSpeed * 0.016;
+        }
         scene!.render();
+      }
     },
     thaw() {
       scene!.useConstantAnimationDeltaTime = false;
+      engine.getDeltaTime = deltaTime;
       for (const f of frozen ?? []) engine.runRenderLoop(f);
       frozen = undefined;
     },
@@ -253,48 +312,58 @@ async function main() {
       return now - stableSince > 1500;
     },
     footTrace(seconds) {
-      // Per rendered frame after animations: each foot bone's world position (ship frame). A foot
-      // is in stance while it is the lower foot; slip = its horizontal speed over the deck.
+      // Fixed-time rendered frames, measured in the ship frame. Count only consecutive contact
+      // samples of the same foot: flight, contact switches and teleports are not stance slip.
+      if (!frozen) throw Error("Freeze the review before measuring motion");
       const joints = crew()?.joints;
       const feet = ["foot.L", "foot.R"].map((n) => joints?.get(n));
       if (!feet[0] || !feet[1]) return Promise.resolve(null);
-      const samples: { t: number; p: number[][] }[] = [];
-      return new Promise((done) => {
-        const t0 = performance.now();
-        const obs = scene!.onAfterAnimationsObservable.add(() => {
-          const t = (performance.now() - t0) / 1000;
-          samples.push({
-            t,
-            p: feet.map((f) => {
-              const v = f!.getAbsolutePosition();
-              return [v.x, v.y, v.z];
-            }),
-          });
-          if (t < seconds) return;
-          scene!.onAfterAnimationsObservable.remove(obs);
-          const slips: number[] = [];
-          const soles: number[] = [];
-          for (let i = 1; i < samples.length; i++) {
-            const [a, b] = [samples[i - 1], samples[i]];
-            const dt = b.t - a.t;
-            if (dt <= 0) continue;
-            const k = b.p[0][1] <= b.p[1][1] ? 0 : 1;
-            soles.push(b.p[k][1]);
-            slips.push(
-              Math.hypot(b.p[k][0] - a.p[k][0], b.p[k][2] - a.p[k][2]) / dt,
-            );
-          }
-          const sorted = [...slips].sort((x, y) => x - y);
-          const q = (f: number) =>
-            sorted[Math.min(sorted.length - 1, Math.floor(f * sorted.length))];
-          done({
-            frames: samples.length,
-            stanceSlipMedian: q(0.5),
-            stanceSlipP25: q(0.25),
-            lowestFootMin: Math.min(...soles),
-            lowestFootMax: Math.max(...soles),
-          });
-        });
+      const body = crew()!.root;
+      const frameInv = (body.parent as TransformNode)
+        .computeWorldMatrix(true)
+        .clone()
+        .invert();
+      const samples: Vector3[][] = [];
+      let supportErrorMax = 0;
+      let footErrorMax = 0;
+      for (let i = 0; i < Math.ceil(seconds / 0.016); i++) {
+        this.advance(16);
+        supportErrorMax = Math.max(supportErrorMax, crew()!.supportError);
+        footErrorMax = Math.max(footErrorMax, crew()!.footError);
+        samples.push(
+          feet.map((f) =>
+            Vector3.TransformCoordinates(
+              f!.computeWorldMatrix(true).getTranslation(),
+              frameInv,
+            ),
+          ),
+        );
+      }
+      const ground = body.position.y + VOXEL_CREW_ANKLE_HEIGHT_M;
+      const slips: number[] = [];
+      const heights = samples.flatMap((p) => p.map((v) => v.y));
+      for (let i = 1; i < samples.length; i++) {
+        const [a, b] = [samples[i - 1], samples[i]];
+        for (let k = 0; k < 2; k++) {
+          if (Math.max(a[k].y, b[k].y) > ground + 0.012) continue;
+          slips.push(Math.hypot(b[k].x - a[k].x, b[k].z - a[k].z) / 0.016);
+        }
+      }
+      slips.sort((a, b) => a - b);
+      return Promise.resolve({
+        frames: samples.length,
+        stepMs: 16,
+        stanceSamples: slips.length,
+        stanceSlipMedian: slips.length
+          ? slips[Math.floor(slips.length / 2)]
+          : null,
+        lowestFootMin: Math.min(...heights) - body.position.y,
+        lowestFootMax: Math.max(...heights) - body.position.y,
+        supportErrorMax,
+        footErrorMax,
+        heldItem: state.heldItem,
+        supportActive: crew()!.supportActive,
+        layers: crew()!.layers,
       });
     },
     dress(ids, hand) {

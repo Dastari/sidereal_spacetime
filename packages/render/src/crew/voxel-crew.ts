@@ -690,8 +690,8 @@ export async function createVoxelCrewVisual(
      */
     setSupportTarget(target: TransformNode | null) {
       supportTarget = target;
+      if (!target) supportError = 0;
     },
-    /** Remaining support-hand error (m) from the last solve (0 when the grip is reachable). */
     /** Foot planting on the deck (default on; review harnesses compare with it off). */
     setFootIk(enabled: boolean) {
       footIk = enabled;
@@ -700,6 +700,11 @@ export async function createVoxelCrewVisual(
     get footError() {
       return footPlanting?.error ?? 0;
     },
+    /** Whether a held item currently owns the support-hand target (review diagnostics). */
+    get supportActive() {
+      return supportTarget !== null;
+    },
+    /** Remaining support-hand error (m) from the last solve (0 when the grip is reachable). */
     get supportError() {
       return supportError;
     },

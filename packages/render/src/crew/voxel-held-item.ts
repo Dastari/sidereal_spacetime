@@ -24,6 +24,15 @@ export type HeldItemVisual = Awaited<ReturnType<typeof createVoxelItemVisual>>;
 /** Clip frame rate of the baked armed actions (crew-items-r001-armed.json). */
 const ARMED_FPS = CREW_ITEM_CATALOG.animationFps;
 
+/** Ready/aim/fire grips follow the item; authored reload/draw/holster and seated poses release it. */
+export function crewUsesSupportGrip(clips: readonly string[]) {
+  return (
+    clips.some((name) =>
+      /\.(idle_armed|walk_armed|run_armed|aim|shoot)(:|$)/.test(name),
+    ) && !clips.some((name) => /\.(reload|draw|holster)(:|$)/.test(name))
+  );
+}
+
 const armedClipsLoaded = new WeakMap<object, Promise<void>>();
 /** Register CHAR-WEAPONS armed-actions.glb clips (`<class>.<clip>`) on a voxel crew once. */
 export function loadArmedClips(scene: Scene, crew: VoxelCrew) {
@@ -50,9 +59,10 @@ export function loadArmedClips(scene: Scene, crew: VoxelCrew) {
  */
 export function holsterTransform(holster: CrewItemHolster) {
   const [w, x, y, z] = holster.rotationWXYZ;
+  const [ox, oy, oz] = holster.offset;
   return {
-    rotation: new Quaternion(x, y, z, w),
-    position: new Vector3(...holster.offset),
+    rotation: new Quaternion(x, z, -y, w).normalize(),
+    position: new Vector3(ox, oz, -oy),
   };
 }
 
@@ -114,6 +124,7 @@ export function createVoxelHeldItem(
 
   const finishHolster = () => {
     if (!held) return;
+    crew.setSupportTarget(null);
     held.visual.dispose();
     held = undefined;
     crew.setArmedClass(null);
@@ -125,6 +136,7 @@ export function createVoxelHeldItem(
     const info = clip(held, "holster");
     if (!info || reduced() || options.instant?.()) return finishHolster();
     held.phase = "holstering";
+    crew.setSupportTarget(null);
     held.startedMs = now();
     held.grabS = (info.grabFrame ?? 0) / ARMED_FPS;
     held.endS = info.frames / ARMED_FPS;
@@ -166,12 +178,24 @@ export function createVoxelHeldItem(
       toHolster(held);
       crew.play(info.animation as VoxelCrewAction);
     }
+    updateSupport();
     options.onChange?.();
   };
   const observer = scene.onBeforeRenderObservable.add(() => {
-    if (!held || held.phase === "held") return;
     step();
+    updateSupport();
   });
+  function updateSupport() {
+    // Reload/draw/holster author the free hand reaching a magazine or holster. Keep those
+    // choreographed tracks free; solve the foregrip in ready/aim/fire and locomotion poses.
+    crew.setSupportTarget(
+      held?.phase === "held" &&
+        held.item.twoHanded &&
+        crewUsesSupportGrip(crew.activeClips)
+        ? held.visual.supportTarget
+        : null,
+    );
+  }
   /** Advance the draw/holster transition to the current clock (also run once per render). */
   function step() {
     if (!held || held.phase === "held") return;
@@ -225,6 +249,7 @@ export function createVoxelHeldItem(
       if (disposed) return;
       disposed = true;
       scene.onBeforeRenderObservable.remove(observer);
+      crew.setSupportTarget(null);
       held?.visual.dispose();
       held = undefined;
       crew.setArmedClass(null);

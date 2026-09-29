@@ -20,9 +20,12 @@ vi.mock("../equipment/voxel-items", async (original) => {
       loaded.push(id);
       const root = new TransformNode("item:" + id, scene);
       root.parent = parent;
+      const supportTarget = new TransformNode("support:" + id, scene);
+      supportTarget.parent = root;
       return {
         item: crewItem(id),
         root,
+        supportTarget,
         play: (action: string) => played.push(`${id}:${action}`),
         getMuzzleWorld: () => undefined,
         dispose: () => {
@@ -39,6 +42,8 @@ vi.mock("@babylonjs/core/Loading/sceneLoader", () => ({
   },
 }));
 import { createVoxelHeldItem, holsterTransform } from "./voxel-held-item";
+
+import { equipVoxelCrewItem } from "./voxel-crew-kit";
 
 const engines: NullEngine[] = [];
 afterEach(() => {
@@ -60,21 +65,94 @@ function fakeCrew(scene: Scene) {
     socketNodes[name] = socket(name);
   const clips: string[] = [];
   let armed: string | null = null;
+  let supportTarget: TransformNode | null = null;
   return {
     socketNodes,
     clips,
+    activeClips: [] as string[],
+    get supportTarget() {
+      return supportTarget;
+    },
+    setSupportTarget(target: TransformNode | null) {
+      supportTarget = target;
+    },
     get armed() {
       return armed;
     },
     addClips: () => [],
-    setArmedClass: (cls: string | null) => {
+    setArmedClass(cls: string | null) {
       armed = cls;
+      this.activeClips = cls ? [`${cls}.idle_armed`] : [];
     },
     play: (clip: string) => clips.push(clip),
   };
 }
 
 describe("held r001 item with draw and holster", () => {
+  it("dashboard equipment previews use the same ready/aim grip and release reload/seated poses", async () => {
+    const engine = new NullEngine();
+    engines.push(engine);
+    const scene = new Scene(engine);
+    const crew = fakeCrew(scene);
+    const visual = await equipVoxelCrewItem(scene, crew as never, "rifle");
+    expect(crew.supportTarget).toBe(visual.supportTarget);
+    for (const clips of [
+      ["rifle.aim:upper"],
+      ["rifle.run_armed:upper", "run:lower"],
+    ]) {
+      crew.activeClips = clips;
+      scene.onBeforeRenderObservable.notifyObservers(scene);
+      expect(crew.supportTarget).toBe(visual.supportTarget);
+    }
+    for (const clips of [["rifle.reload:upper"], ["sit_idle"]]) {
+      crew.activeClips = clips;
+      scene.onBeforeRenderObservable.notifyObservers(scene);
+      expect(crew.supportTarget).toBeNull();
+    }
+    visual.dispose();
+    expect(crew.supportTarget).toBeNull();
+    crew.activeClips = ["rifle.aim:upper"];
+    scene.onBeforeRenderObservable.notifyObservers(scene);
+    expect(crew.supportTarget).toBeNull();
+  });
+
+  it("converts the authored back-holster offset and rotation from Blender to glTF", () => {
+    const result = holsterTransform(crewItem("rifle").holster!);
+    expect(result.position.asArray()).toEqual([0, -0.04, 0.08]);
+    const [x, y, z, w] = result.rotation.asArray();
+    expect(x).toBeCloseTo(0.683012, 5);
+    expect(y).toBeCloseTo(0.183017, 5);
+    expect(z).toBeCloseTo(0.183017, 5);
+    expect(w).toBeCloseTo(0.683012, 5);
+  });
+
+  it("pins a held two-handed item's support grip and releases it for reload, holster and disposal", async () => {
+    const engine = new NullEngine();
+    engines.push(engine);
+    const scene = new Scene(engine);
+    const crew = fakeCrew(scene);
+    const held = createVoxelHeldItem(scene, crew as never, {
+      instant: () => true,
+    });
+    held.set("rifle");
+    await vi.waitFor(() => expect(held.phase).toBe("held"));
+    expect(crew.supportTarget).toBe(held.visual!.supportTarget);
+    crew.activeClips = ["sit_idle"];
+    scene.onBeforeRenderObservable.notifyObservers(scene);
+    expect(crew.supportTarget).toBeNull();
+    crew.activeClips = ["rifle.reload:upper"];
+    scene.onBeforeRenderObservable.notifyObservers(scene);
+    expect(crew.supportTarget).toBeNull();
+    crew.activeClips = ["rifle.walk_armed:upper", "walk:lower"];
+    scene.onBeforeRenderObservable.notifyObservers(scene);
+    expect(crew.supportTarget).toBe(held.visual!.supportTarget);
+    held.set(null);
+    expect(crew.supportTarget).toBeNull();
+    held.dispose();
+    expect(crew.supportTarget).toBeNull();
+    scene.dispose();
+  });
+
   it("draws from the holster, holsters at the grab frame, then draws the next item", async () => {
     const engine = new NullEngine();
     engines.push(engine);

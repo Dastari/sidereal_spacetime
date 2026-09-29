@@ -4,7 +4,7 @@ import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 /**
  * Analytic two-bone IK for the voxel crew, solved in the rig-root space (free of the glTF
  * handedness flip on the loader's __root__). Presentation only: used after animations to pin the
- * support hand onto a held item's support socket every frame, and by future foot planting.
+ * support hand onto a held item's support socket every frame and to plant feet on the deck.
  */
 export type TwoBoneChain = {
   root: TransformNode; // armature root (any ancestor with unit, non-mirrored scale below it)
@@ -145,6 +145,7 @@ export function createFootPlanting(
   const feet: FootState[] = legs.map(() => ({ weight: 0 }));
   let maxSlip = 0;
   const reset = () => {
+    maxSlip = 0;
     for (const f of feet) {
       f.lock = undefined;
       f.from = undefined;

@@ -60,10 +60,10 @@ export function applyCrewItemTheme(
   return applied;
 }
 
-/** Socket.hand.R (CHAR-BODY r001) local rotation for the item root, in Blender axes (w,x,y,z). */
+/** Socket.hand.R item rotation: convert the catalog's Blender axes to glTF (x, z, -y). */
 export function crewItemHandSocketRotation(): Quaternion {
   const [w, x, y, z] = CREW_ITEM_CATALOG.handSocketRotationWXYZ;
-  return new Quaternion(x, y, z, w);
+  return new Quaternion(x, z, -y, w).normalize();
 }
 
 export interface VoxelItemVisualOptions {
@@ -105,6 +105,19 @@ export async function createVoxelItemVisual(
   for (const mesh of container.meshes) setMeshRole(mesh, "equipment");
   for (const node of container.rootNodes) node.parent = root;
   const imported = container.rootNodes[0];
+  // Position comes from this item's own exported socket metadata. The support target's axes
+  // match socket.hand.L/R, rather than the item's native -Z barrel frame.
+  const supportTarget =
+    item.sockets.support && imported instanceof TransformNode
+      ? new TransformNode(`crew-item-support:${item.id}`, scene)
+      : null;
+  if (supportTarget) {
+    supportTarget.parent = imported;
+    supportTarget.position.copyFromFloats(
+      ...item.sockets.support!.gltfPosition,
+    );
+    supportTarget.rotationQuaternion = crewItemHandSocketRotation().conjugate();
+  }
   for (const group of container.animationGroups) group.stop();
   const poseItem = item.poseProfile ? toEquipmentPoseItem(item) : undefined;
   let disposed = false;
@@ -136,6 +149,7 @@ export async function createVoxelItemVisual(
   return {
     item,
     root,
+    supportTarget,
     poseItem,
     createPoseBinding(poseParent: TransformNode) {
       if (disposed || !(imported instanceof TransformNode) || !poseItem)

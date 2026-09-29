@@ -13,7 +13,7 @@
  *     (stance-foot slip, lowest-foot height) in motion.json.
  *
  * Options: --port 5397 (harness), --prefab fed.s.wren, --pos x,y (open deck spot, ship metres),
- * --bodies male,female, --only name,name (tile names), --tile WxH, --cam alpha,beta,radius,height (overrides every view).
+ * --stage (unobstructed original floor; presentation proof, not collision proof), --gaits idle,walk,run,aim,reload and --frames N / --step MS (motion), --bodies male,female, --only name,name (tile names), --tile WxH, --cam alpha,beta,radius,height (overrides every view).
  */
 import { execFileSync } from "node:child_process";
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
@@ -147,7 +147,7 @@ async function main() {
     return r.result.value;
   };
   const open = async (query) => {
-    const search = `?prefab=${prefab}&interior=1&clear=1&x=${PX}&y=${PY}&w=${TW}&h=${TH}&${query}`;
+    const search = `?prefab=${prefab}&interior=1&clear=${args.includes("--stage") ? "stage" : "1"}&x=${PX}&y=${PY}&w=${TW}&h=${TH}&${query}`;
     await page("Page.navigate", { url: BASE + search });
     const t0 = Date.now();
     while (Date.now() - t0 < 300000) {
@@ -284,6 +284,7 @@ async function main() {
     ];
     const [SA, SB, SR] = view(-Math.PI / 2 + 1.0, 1.42, 4.6, 0.85);
     const FRAMES = Number(opt("--frames", 10));
+    const GAITS = opt("--gaits", "idle,walk,run,aim").split(",");
     const STEP_MS = Number(opt("--step", 1000 / 12));
     for (const body of BODIES)
       for (const [name, hand] of cases) {
@@ -291,42 +292,75 @@ async function main() {
         await open(`body=${body}${hand ? `&hand=${hand}` : ""}`);
         await settle(2500);
         const key = `${body}_${name}`;
+        console.log(key, JSON.stringify(await js("window.__crew.metrics()")));
         results[key] = {};
         const gifFrames = [];
         for (const [gait, speed, sprint, combat] of [
           ["idle", 0, false, false],
           ["walk", 2.5, false, false],
           ["run", 4.5, true, false],
-          ...(hand ? [["aim", 0, false, true]] : []),
-        ]) {
+          ...(hand
+            ? [
+                ["aim", 0, false, true],
+                ["reload", 0, false, false],
+              ]
+            : []),
+        ].filter(([g]) => GAITS.includes(g))) {
           await js(
             `window.__crew.motion(${combat ? "{ combat: true }" : "undefined"})`,
           );
           await js(`window.__crew.walk(${speed}, ${sprint})`);
           await sleep(1500);
-          const trace = await js("window.__crew.footTrace(2.5)", true);
-          const support = await js(
-            "window.__crew.visual().supportError ?? null",
-          );
-          results[key][gait] = { ...trace, supportError: support };
-          // Even-time strip: freeze the loop, frame the body where it stands, step the clips.
           await js("window.__crew.freeze()");
+          await js("window.__crew.advance(500)");
+          const trace =
+            gait === "reload"
+              ? {}
+              : await js("window.__crew.footTrace(2.5)", true);
+          const [support, foot] = await js(
+            "[window.__crew.visual().supportError ?? null, window.__crew.visual().footError ?? null]",
+          );
+          results[key][gait] = {
+            ...trace,
+            supportError: support,
+            footError: foot,
+          };
+          // The trace covers metres of travel. Return to the review spot before the strip so the
+          // crew stays over the visible prefab deck; let old stance locks release after the jump.
+          await js(
+            `(()=>{const p=window.__crew.visual().root.position;p.x=${PX};p.z=${-PY}})()`,
+          );
+          await js("window.__crew.advance(160)");
+          // Even-time strip: frame the body where it stands, step the clips.
           await js(
             `(()=>{const p=window.__crew.visual().root.getAbsolutePosition();window.__crewCam=[${SA},${SB},${SR},p.x,-p.z,${0.85}]})()`,
           );
+          if (gait === "reload")
+            await js(`window.__crew.play(${JSON.stringify(`${name}.reload`)})`);
+          const poseFrames = [];
           const files = [];
           for (let f = 0; f < FRAMES; f++) {
             await js(`window.__crew.advance(${STEP_MS})`);
+            poseFrames.push(
+              await js(
+                "(()=>{const c=window.__crew.visual();return {supportActive:c.supportActive,supportError:c.supportError,activeClips:c.activeClips}})()",
+              ),
+            );
             await tag(`${body} · ${name} · ${gait} ${f + 1}/${FRAMES}`);
             files.push(await shot(`motion_${key}_${gait}_${f}`));
           }
+          results[key][gait].poseFrames = poseFrames;
           await js("window.__crew.thaw()");
           gifFrames.push(...files);
           sheet(files, FRAMES, `motion_${key}_${gait}.png`);
         }
         await js("window.__crew.walk(0)");
         await js("window.__crew.motion(undefined)");
-        loop(gifFrames, `motion_${key}.gif`, 1000 / STEP_MS);
+        loop(
+          gifFrames,
+          `motion_${key}.gif`,
+          1000 / (Math.max(1, Math.round(STEP_MS / 16)) * 16),
+        );
         console.log(key, JSON.stringify(results[key]));
       }
     writeFileSync(join(out, "motion.json"), JSON.stringify(results, null, 1));

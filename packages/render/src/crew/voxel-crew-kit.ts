@@ -20,7 +20,7 @@ import {
   type HeadLoadout,
 } from "@sidereal/content/crew-heads";
 import { crewArmedClass, crewItem } from "@sidereal/content/crew-items";
-import { loadArmedClips } from "./voxel-held-item";
+import { crewUsesSupportGrip, loadArmedClips } from "./voxel-held-item";
 import {
   createVoxelItemVisual,
   crewItemHandSocketRotation,
@@ -280,10 +280,20 @@ export async function equipVoxelCrewItem(
     cls ? loadArmedClips(scene, crew) : undefined,
   ]);
   crew.setArmedClass(cls);
+  const updateSupport = () =>
+    crew.setSupportTarget(
+      item.twoHanded && crewUsesSupportGrip(crew.activeClips)
+        ? visual.supportTarget
+        : null,
+    );
+  updateSupport();
+  const observer = scene.onBeforeRenderObservable.add(updateSupport);
   const dispose = visual.dispose;
   return {
     ...visual,
     dispose() {
+      scene.onBeforeRenderObservable.remove(observer);
+      crew.setSupportTarget(null);
       crew.setArmedClass(null);
       dispose();
     },
