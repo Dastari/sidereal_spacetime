@@ -32,7 +32,13 @@ export interface ShipComponentLike {
   crew: { station: string | null; berths: number };
   power: { activeKw: number; generationKw: number };
   heat: { activeKw: number; rejectionKw: number };
-  propulsion: { role: string; thrustKn: number } | null;
+  propulsion: {
+    role: string;
+    thrustKn: number;
+    reverseThrustKn?: number;
+  } | null;
+  weapon?: { arcDeg: number; trackingDegPerS?: number; rangeM: number } | null;
+  sensor?: { arcDeg: number; rangeM: number } | null;
   control: { grants: string } | null;
   art: { glb: string | null; artLibraryDesignId: string | null };
 }
@@ -86,6 +92,13 @@ export function prefabSpecFromComponent(
       c.propulsion && c.propulsion.role === "main"
         ? c.propulsion.thrustKn * 1000
         : undefined,
+    reverseThrustN:
+      c.propulsion?.role === "main" && c.propulsion.reverseThrustKn
+        ? c.propulsion.reverseThrustKn * 1000
+        : undefined,
+    arcDeg: c.weapon?.arcDeg ?? c.sensor?.arcDeg,
+    trackingDegPerS: c.weapon?.trackingDegPerS,
+    rangeM: c.weapon?.rangeM ?? c.sensor?.rangeM,
     maneuverThrustN:
       c.propulsion && c.propulsion.role === "maneuver"
         ? c.propulsion.thrustKn * 1000

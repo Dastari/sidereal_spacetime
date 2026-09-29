@@ -53,6 +53,18 @@ export interface BlueprintSizeClass {
   maxMounts: number;
 }
 
+/** Roof mount tile kinds (owner 2026-09-29): fixed directional plinths and rotating turret rings. */
+export type MountTileKind = "fixed" | "turret";
+export const MOUNT_TILE_KINDS: readonly MountTileKind[] = ["fixed", "turret"];
+export interface MountTileSpec {
+  massKg: number;
+  /** Traverse drive draw (turrets) while tracking. */
+  powerKw: number;
+  heatKw: number;
+  /** Fixed: full width of the boresight cone. Turret: traverse range. */
+  arcDeg: number;
+  traverseDegPerS: number;
+}
 export const CONSTRUCTION_GRAMMAR = grammarJson as unknown as {
   schema: "sidereal.construction-grammar.v1";
   texelsPerMeter: number;
@@ -104,6 +116,20 @@ export const CONSTRUCTION_GRAMMAR = grammarJson as unknown as {
   >;
   arcSegmentsPerRadius: number;
   mountSizes: Record<MountSizeId, { cells: number; label: string }>;
+  mountTiles: {
+    note: string;
+    /** Component families that must sit on a roof mount tile. */
+    families: string[];
+    heightTexels: Record<MountTileKind, number>;
+    kinds: Record<MountTileKind, Partial<Record<MountSizeId, MountTileSpec>>>;
+    /** capacity[kind][tileSize][count] = largest item size for `count` linked identical items. */
+    capacity: Record<
+      MountTileKind,
+      Partial<
+        Record<MountSizeId, Partial<Record<"1" | "2" | "4", MountSizeId>>>
+      >
+    >;
+  };
   blueprintSizeClasses: Record<BlueprintSizeClassId, BlueprintSizeClass>;
   edgeTypes: Record<EdgeTypeId, EdgeTypeSpec>;
   wallVariants: WallVariantId[];

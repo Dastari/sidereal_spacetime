@@ -27,11 +27,13 @@ import {
   type Outline,
   type Pt,
 } from "@sidereal/content/construction-grammar";
+import { mountTilePiece } from "@sidereal/content/ship-mount-tiles";
 import {
   canopySegments,
   deckVolume,
   deriveInterior,
   placeMount,
+  placeMountTile,
   volumeGeometry,
   type DerivedSocket,
   type MountPlacement,
@@ -586,7 +588,10 @@ export function dressShip(
   const decoKind = G.decorators[doc.theme] ?? "antenna";
 
   const mounts = doc.mounts.map((m) =>
-    placeMount(m, options.catalog.get(m.component), geoms),
+    placeMount(m, options.catalog.get(m.component), geoms, doc),
+  );
+  const tilePlacements = (doc.mountTiles ?? []).map((t) =>
+    placeMountTile(t, geoms),
   );
   const topTaken = new Set<string>();
   for (const mp of mounts)
@@ -596,6 +601,12 @@ export function dressShip(
         for (let cy = Math.floor(y0); cy < Math.ceil(y1); cy++)
           topTaken.add(`${cx},${cy}`);
     }
+  for (const tp of tilePlacements) {
+    const [x0, y0, x1, y1] = tp.rect;
+    for (let cx = Math.floor(x0); cx < Math.ceil(x1); cx++)
+      for (let cy = Math.floor(y0); cy < Math.ceil(y1); cy++)
+        topTaken.add(`${cx},${cy}`);
+  }
   for (const s of doc.skylights)
     for (let cx = s.at[0]; cx < s.at[0] + s.size[0]; cx++)
       for (let cy = s.at[1]; cy < s.at[1] + s.size[1]; cy++)
@@ -1305,6 +1316,18 @@ export function dressShip(
       host.volume.id === deckId ? "flight" : "both",
     );
   }
+
+  // Roof mount tiles (Blender kit bundle `mount-tiles.glb`): the piece origin is the tile centre on
+  // the roof, its +Y the boresight/rest direction. Weapons and sensors stand on the tile's top plane.
+  for (const tp of tilePlacements)
+    place(
+      mountTilePiece(tp.tile.kind, tp.tile.size),
+      tp.centre[0],
+      tp.centre[1],
+      tp.z[0] * TEXEL,
+      tp.rotDeg,
+      tp.host === deckId ? "flight" : "both",
+    );
 
   // Components on hardpoints.
   const components: ComponentPlacement[] = mounts.map((mp) => ({

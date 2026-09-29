@@ -1,7 +1,7 @@
 {
   "schema": "sidereal.ship-components.v1",
   "id": "ship-components-v1",
-  "revision": 2,
+  "revision": 3,
   "status": "proposed",
   "units": {
     "mass": "kg",
@@ -37,7 +37,7 @@
   "components": [
     {
       "id": "ion-drive.sm",
-      "revision": 2,
+      "revision": 3,
       "status": "proposed",
       "name": "Ion drive SM",
       "family": "propulsion",
@@ -53,24 +53,24 @@
         "clearance": {"kind":"plume","lengthM":3.3,"arcDeg":20},
         "rearOnly": false
       },
-      "massKg": 420,
+      "massKg": 430,
       "integrity": {"hp":150,"armor":2,"destroyedEffect":"none","explosionDamage":0},
       "crew": {"operators":0,"station":"pilot","automation":"computer","berths":0},
       "power": {
         "idleKw": 2,
-        "activeKw": 100,
-        "peakKw": 120,
+        "activeKw": 110,
+        "peakKw": 132,
         "generationKw": 0,
         "storageKwh": 0,
         "maxDischargeKw": 0,
         "maxChargeKw": 0
       },
-      "heat": {"idleKw":1,"activeKw":35,"peakKw":42,"rejectionKw":0,"storageMj":0},
+      "heat": {"idleKw":1,"activeKw":38,"peakKw":45.6,"rejectionKw":0,"storageMj":0},
       "fluids": {
-        "coolantDemandLps": 1.4,
+        "coolantDemandLps": 1.52,
         "coolantSupplyLps": 0,
         "fuelIdleLps": 0,
-        "fuelActiveLps": 0.02,
+        "fuelActiveLps": 0.022,
         "fuelCapacityL": 0,
         "airSupplyM3s": 0,
         "crewSupported": 0,
@@ -82,7 +82,7 @@
           "id": "power-in",
           "channel": "power",
           "direction": "in",
-          "capacity": 120,
+          "capacity": 132,
           "medium": "electric-dc",
           "connectorFamily": "pwr-std",
           "position": [-0.4,0,0],
@@ -102,7 +102,7 @@
           "id": "coolant-in",
           "channel": "coolant",
           "direction": "in",
-          "capacity": 1.4,
+          "capacity": 1.52,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
           "position": [0.133,0,0],
@@ -121,7 +121,8 @@
       ],
       "propulsion": {
         "role": "main",
-        "thrustKn": 20,
+        "thrustKn": 22,
+        "reverseThrustKn": 11,
         "gimbalDeg": 5,
         "throttleResponseS": 1.2,
         "specificImpulseS": 127465,
@@ -136,7 +137,7 @@
       "access": null,
       "control": null,
       "gravity": null,
-      "economy": {"costCredits":5200,"buildTimeS":120,"techTier":1},
+      "economy": {"costCredits":5500,"buildTimeS":120,"techTier":1},
       "art": {
         "kitKey": "ion.SM",
         "glb": "assets/art-library/ship-components/r004/glb/ion-drive.sm.glb",
@@ -146,7 +147,7 @@
     },
     {
       "id": "ion-drive.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Ion drive MD",
       "family": "propulsion",
@@ -231,6 +232,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 24,
+        "reverseThrustKn": 6,
         "gimbalDeg": 5,
         "throttleResponseS": 1.2,
         "specificImpulseS": 117660,
@@ -255,7 +257,7 @@
     },
     {
       "id": "ion-drive.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Ion drive LG",
       "family": "propulsion",
@@ -340,6 +342,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 50,
+        "reverseThrustKn": 6,
         "gimbalDeg": 5,
         "throttleResponseS": 1.2,
         "specificImpulseS": 118023,
@@ -364,7 +367,7 @@
     },
     {
       "id": "ion-drive.xl",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Ion drive XL",
       "family": "propulsion",
@@ -449,6 +452,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 95,
+        "reverseThrustKn": 7.6,
         "gimbalDeg": 5,
         "throttleResponseS": 1.2,
         "specificImpulseS": 121091,
@@ -473,7 +477,7 @@
     },
     {
       "id": "thrust-block.sm",
-      "revision": 2,
+      "revision": 3,
       "status": "proposed",
       "name": "Thrust block SM",
       "family": "propulsion",
@@ -489,24 +493,24 @@
         "clearance": {"kind":"plume","lengthM":3,"arcDeg":20},
         "rearOnly": false
       },
-      "massKg": 350,
+      "massKg": 370,
       "integrity": {"hp":160,"armor":3,"destroyedEffect":"fire","explosionDamage":0},
       "crew": {"operators":0,"station":"pilot","automation":"computer","berths":0},
       "power": {
         "idleKw": 1,
-        "activeKw": 14,
-        "peakKw": 16.8,
+        "activeKw": 16,
+        "peakKw": 19.2,
         "generationKw": 0,
         "storageKwh": 0,
         "maxDischargeKw": 0,
         "maxChargeKw": 0
       },
-      "heat": {"idleKw":1,"activeKw":30,"peakKw":38,"rejectionKw":0,"storageMj":0},
+      "heat": {"idleKw":1,"activeKw":32,"peakKw":40,"rejectionKw":0,"storageMj":0},
       "fluids": {
-        "coolantDemandLps": 1.2,
+        "coolantDemandLps": 1.28,
         "coolantSupplyLps": 0,
         "fuelIdleLps": 0,
-        "fuelActiveLps": 0.12,
+        "fuelActiveLps": 0.14,
         "fuelCapacityL": 0,
         "airSupplyM3s": 0,
         "crewSupported": 0,
@@ -518,7 +522,7 @@
           "id": "power-in",
           "channel": "power",
           "direction": "in",
-          "capacity": 16.8,
+          "capacity": 19.2,
           "medium": "electric-dc",
           "connectorFamily": "pwr-std",
           "position": [-0.5,0,0],
@@ -538,7 +542,7 @@
           "id": "coolant-in",
           "channel": "coolant",
           "direction": "in",
-          "capacity": 1.2,
+          "capacity": 1.28,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
           "position": [0.167,0,0],
@@ -557,7 +561,8 @@
       ],
       "propulsion": {
         "role": "main",
-        "thrustKn": 24,
+        "thrustKn": 28,
+        "reverseThrustKn": 14,
         "gimbalDeg": 8,
         "throttleResponseS": 0.3,
         "specificImpulseS": 25493,
@@ -572,7 +577,7 @@
       "access": null,
       "control": null,
       "gravity": null,
-      "economy": {"costCredits":3900,"buildTimeS":100,"techTier":1},
+      "economy": {"costCredits":4300,"buildTimeS":100,"techTier":1},
       "art": {
         "kitKey": "block.SM",
         "glb": "assets/art-library/ship-components/r004/glb/thrust-block.sm.glb",
@@ -582,7 +587,7 @@
     },
     {
       "id": "thrust-block.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Thrust block MD",
       "family": "propulsion",
@@ -667,6 +672,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 34,
+        "reverseThrustKn": 8.5,
         "gimbalDeg": 8,
         "throttleResponseS": 0.3,
         "specificImpulseS": 25493,
@@ -691,7 +697,7 @@
     },
     {
       "id": "thrust-block.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Thrust block LG",
       "family": "propulsion",
@@ -776,6 +782,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 70,
+        "reverseThrustKn": 8.4,
         "gimbalDeg": 8,
         "throttleResponseS": 0.3,
         "specificImpulseS": 25493,
@@ -800,7 +807,7 @@
     },
     {
       "id": "thrust-block.xl",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Thrust block XL",
       "family": "propulsion",
@@ -885,6 +892,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 130,
+        "reverseThrustKn": 10.4,
         "gimbalDeg": 8,
         "throttleResponseS": 0.3,
         "specificImpulseS": 25493,
@@ -909,7 +917,7 @@
     },
     {
       "id": "ion-drive.salvaged.sm",
-      "revision": 2,
+      "revision": 3,
       "status": "proposed",
       "name": "Salvaged ion drive SM",
       "family": "propulsion",
@@ -925,24 +933,24 @@
         "clearance": {"kind":"plume","lengthM":3.3,"arcDeg":20},
         "rearOnly": false
       },
-      "massKg": 470,
+      "massKg": 482,
       "integrity": {"hp":105,"armor":2,"destroyedEffect":"fire","explosionDamage":0},
       "crew": {"operators":0,"station":"pilot","automation":"computer","berths":0},
       "power": {
         "idleKw": 2,
-        "activeKw": 120,
-        "peakKw": 144,
+        "activeKw": 132,
+        "peakKw": 158.4,
         "generationKw": 0,
         "storageKwh": 0,
         "maxDischargeKw": 0,
         "maxChargeKw": 0
       },
-      "heat": {"idleKw":1,"activeKw":53,"peakKw":63.6,"rejectionKw":0,"storageMj":0},
+      "heat": {"idleKw":1,"activeKw":57,"peakKw":68.4,"rejectionKw":0,"storageMj":0},
       "fluids": {
-        "coolantDemandLps": 2.12,
+        "coolantDemandLps": 2.28,
         "coolantSupplyLps": 0,
         "fuelIdleLps": 0,
-        "fuelActiveLps": 0.023,
+        "fuelActiveLps": 0.025,
         "fuelCapacityL": 0,
         "airSupplyM3s": 0,
         "crewSupported": 0,
@@ -954,7 +962,7 @@
           "id": "power-in",
           "channel": "power",
           "direction": "in",
-          "capacity": 144,
+          "capacity": 158.4,
           "medium": "electric-dc",
           "connectorFamily": "pwr-std",
           "position": [-0.45,0,0],
@@ -974,7 +982,7 @@
           "id": "coolant-in",
           "channel": "coolant",
           "direction": "in",
-          "capacity": 2.12,
+          "capacity": 2.28,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
           "position": [0.15,0,0],
@@ -993,10 +1001,11 @@
       ],
       "propulsion": {
         "role": "main",
-        "thrustKn": 17,
+        "thrustKn": 18.7,
+        "reverseThrustKn": 9.35,
         "gimbalDeg": 5,
         "throttleResponseS": 1.2,
-        "specificImpulseS": 94213,
+        "specificImpulseS": 95343,
         "plume": {"lengthM":2.2,"radiusM":0.31}
       },
       "weapon": null,
@@ -1008,7 +1017,7 @@
       "access": null,
       "control": null,
       "gravity": null,
-      "economy": {"costCredits":2080,"buildTimeS":72,"techTier":1},
+      "economy": {"costCredits":2200,"buildTimeS":72,"techTier":1},
       "art": {
         "kitKey": "ion.SM.scrap",
         "glb": "assets/art-library/ship-components/r004/glb/ion-drive.salvaged.sm.glb",
@@ -1018,7 +1027,7 @@
     },
     {
       "id": "ion-drive.salvaged.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Salvaged ion drive MD",
       "family": "propulsion",
@@ -1103,6 +1112,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 20.4,
+        "reverseThrustKn": 5.1,
         "gimbalDeg": 5,
         "throttleResponseS": 1.2,
         "specificImpulseS": 86676,
@@ -1127,7 +1137,7 @@
     },
     {
       "id": "ion-drive.salvaged.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Salvaged ion drive LG",
       "family": "propulsion",
@@ -1212,6 +1222,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 42.5,
+        "reverseThrustKn": 5.1,
         "gimbalDeg": 5,
         "throttleResponseS": 1.2,
         "specificImpulseS": 87375,
@@ -1236,7 +1247,7 @@
     },
     {
       "id": "ion-drive.salvaged.xl",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Salvaged ion drive XL",
       "family": "propulsion",
@@ -1321,6 +1332,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 80.75,
+        "reverseThrustKn": 6.46,
         "gimbalDeg": 5,
         "throttleResponseS": 1.2,
         "specificImpulseS": 89502,
@@ -1345,7 +1357,7 @@
     },
     {
       "id": "resonance-drive.aurelian.sm",
-      "revision": 2,
+      "revision": 3,
       "status": "proposed",
       "name": "Aurelian resonance drive SM",
       "family": "propulsion",
@@ -1361,21 +1373,21 @@
         "clearance": {"kind":"plume","lengthM":2.6,"arcDeg":20},
         "rearOnly": false
       },
-      "massKg": 340,
+      "massKg": 360,
       "integrity": {"hp":120,"armor":2,"destroyedEffect":"explosion","explosionDamage":120},
       "crew": {"operators":0,"station":"pilot","automation":"computer","berths":0},
       "power": {
         "idleKw": 3,
-        "activeKw": 115,
-        "peakKw": 138,
+        "activeKw": 136,
+        "peakKw": 163.2,
         "generationKw": 0,
         "storageKwh": 0,
         "maxDischargeKw": 0,
         "maxChargeKw": 0
       },
-      "heat": {"idleKw":1,"activeKw":21,"peakKw":25.2,"rejectionKw":0,"storageMj":0},
+      "heat": {"idleKw":1,"activeKw":25,"peakKw":30,"rejectionKw":0,"storageMj":0},
       "fluids": {
-        "coolantDemandLps": 0.84,
+        "coolantDemandLps": 1,
         "coolantSupplyLps": 0,
         "fuelIdleLps": 0,
         "fuelActiveLps": 0,
@@ -1390,7 +1402,7 @@
           "id": "power-in",
           "channel": "power",
           "direction": "in",
-          "capacity": 138,
+          "capacity": 163.2,
           "medium": "electric-dc",
           "connectorFamily": "pwr-std",
           "position": [-0.45,0,0],
@@ -1410,7 +1422,7 @@
           "id": "coolant-in",
           "channel": "coolant",
           "direction": "in",
-          "capacity": 0.84,
+          "capacity": 1,
           "medium": "glycol-water",
           "connectorFamily": "cool-std",
           "position": [0.45,0,0],
@@ -1419,7 +1431,8 @@
       ],
       "propulsion": {
         "role": "main",
-        "thrustKn": 22,
+        "thrustKn": 26,
+        "reverseThrustKn": 13,
         "gimbalDeg": 12,
         "throttleResponseS": 0.6,
         "specificImpulseS": 0,
@@ -1434,7 +1447,7 @@
       "access": null,
       "control": null,
       "gravity": null,
-      "economy": {"costCredits":12500,"buildTimeS":300,"techTier":4},
+      "economy": {"costCredits":13500,"buildTimeS":300,"techTier":4},
       "art": {
         "kitKey": "x.resonance.SM",
         "glb": "assets/art-library/ship-components/r004/glb/resonance-drive.aurelian.sm.glb",
@@ -1444,7 +1457,7 @@
     },
     {
       "id": "resonance-drive.aurelian.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Aurelian resonance drive MD",
       "family": "propulsion",
@@ -1519,6 +1532,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 28,
+        "reverseThrustKn": 7,
         "gimbalDeg": 12,
         "throttleResponseS": 0.6,
         "specificImpulseS": 0,
@@ -1543,7 +1557,7 @@
     },
     {
       "id": "resonance-drive.aurelian.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Aurelian resonance drive LG",
       "family": "propulsion",
@@ -1618,6 +1632,7 @@
       "propulsion": {
         "role": "main",
         "thrustKn": 58,
+        "reverseThrustKn": 6.96,
         "gimbalDeg": 12,
         "throttleResponseS": 0.6,
         "specificImpulseS": 0,
@@ -1642,7 +1657,7 @@
     },
     {
       "id": "rcs.sm",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "RCS thruster SM",
       "family": "propulsion",
@@ -1658,24 +1673,24 @@
         "clearance": {"kind":"plume","lengthM":1.5,"arcDeg":20},
         "rearOnly": false
       },
-      "massKg": 45,
+      "massKg": 60,
       "integrity": {"hp":60,"armor":1,"destroyedEffect":"none","explosionDamage":0},
       "crew": {"operators":0,"station":"pilot","automation":"computer","berths":0},
       "power": {
         "idleKw": 0.2,
-        "activeKw": 4,
-        "peakKw": 4.8,
+        "activeKw": 10,
+        "peakKw": 12,
         "generationKw": 0,
         "storageKwh": 0,
         "maxDischargeKw": 0,
         "maxChargeKw": 0
       },
-      "heat": {"idleKw":0,"activeKw":2,"peakKw":2.4,"rejectionKw":0,"storageMj":0},
+      "heat": {"idleKw":0,"activeKw":3,"peakKw":3.6,"rejectionKw":0,"storageMj":0},
       "fluids": {
         "coolantDemandLps": 0,
         "coolantSupplyLps": 0,
         "fuelIdleLps": 0,
-        "fuelActiveLps": 0.015,
+        "fuelActiveLps": 0.04,
         "fuelCapacityL": 0,
         "airSupplyM3s": 0,
         "crewSupported": 0,
@@ -1687,7 +1702,7 @@
           "id": "power-in",
           "channel": "power",
           "direction": "in",
-          "capacity": 4.8,
+          "capacity": 12,
           "medium": "electric-dc",
           "connectorFamily": "pwr-std",
           "position": [-0.3,0,0],
@@ -1716,7 +1731,7 @@
       ],
       "propulsion": {
         "role": "maneuver",
-        "thrustKn": 3,
+        "thrustKn": 8,
         "gimbalDeg": 0,
         "throttleResponseS": 0.1,
         "specificImpulseS": 25493,
@@ -1731,7 +1746,7 @@
       "access": null,
       "control": null,
       "gravity": null,
-      "economy": {"costCredits":600,"buildTimeS":30,"techTier":1},
+      "economy": {"costCredits":900,"buildTimeS":30,"techTier":1},
       "art": {
         "kitKey": "rcs.SM",
         "glb": "assets/art-library/ship-components/r004/glb/rcs.sm.glb",
@@ -1741,7 +1756,7 @@
     },
     {
       "id": "rcs.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "RCS thruster MD",
       "family": "propulsion",
@@ -1757,24 +1772,24 @@
         "clearance": {"kind":"plume","lengthM":2.5,"arcDeg":20},
         "rearOnly": false
       },
-      "massKg": 120,
+      "massKg": 160,
       "integrity": {"hp":120,"armor":2,"destroyedEffect":"none","explosionDamage":0},
       "crew": {"operators":0,"station":"pilot","automation":"computer","berths":0},
       "power": {
         "idleKw": 0.4,
-        "activeKw": 10,
-        "peakKw": 12,
+        "activeKw": 24,
+        "peakKw": 28.8,
         "generationKw": 0,
         "storageKwh": 0,
         "maxDischargeKw": 0,
         "maxChargeKw": 0
       },
-      "heat": {"idleKw":0,"activeKw":4,"peakKw":4.8,"rejectionKw":0,"storageMj":0},
+      "heat": {"idleKw":0,"activeKw":5,"peakKw":6,"rejectionKw":0,"storageMj":0},
       "fluids": {
         "coolantDemandLps": 0,
         "coolantSupplyLps": 0,
         "fuelIdleLps": 0,
-        "fuelActiveLps": 0.04,
+        "fuelActiveLps": 0.1,
         "fuelCapacityL": 0,
         "airSupplyM3s": 0,
         "crewSupported": 0,
@@ -1786,7 +1801,7 @@
           "id": "power-in",
           "channel": "power",
           "direction": "in",
-          "capacity": 12,
+          "capacity": 28.8,
           "medium": "electric-dc",
           "connectorFamily": "pwr-std",
           "position": [-0.5,0,0],
@@ -1806,7 +1821,7 @@
           "id": "fuel-in",
           "channel": "fuel",
           "direction": "in",
-          "capacity": 0.1,
+          "capacity": 0.2,
           "medium": "fuel",
           "connectorFamily": "fuel-std",
           "position": [0.5,0,0],
@@ -1815,10 +1830,10 @@
       ],
       "propulsion": {
         "role": "maneuver",
-        "thrustKn": 9,
+        "thrustKn": 22,
         "gimbalDeg": 0,
         "throttleResponseS": 0.1,
-        "specificImpulseS": 28680,
+        "specificImpulseS": 28042,
         "plume": {"lengthM":1.4,"radiusM":0.22}
       },
       "weapon": null,
@@ -1830,7 +1845,7 @@
       "access": null,
       "control": null,
       "gravity": null,
-      "economy": {"costCredits":1500,"buildTimeS":60,"techTier":1},
+      "economy": {"costCredits":2200,"buildTimeS":60,"techTier":1},
       "art": {
         "kitKey": "rcs.MD",
         "glb": "assets/art-library/ship-components/r004/glb/rcs.md.glb",
@@ -4278,7 +4293,7 @@
     },
     {
       "id": "point-defense.sm",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Point-defense turret SM",
       "family": "weapon",
@@ -4288,7 +4303,7 @@
       "sizeClass": "SM",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.79,1.19]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
@@ -4386,7 +4401,7 @@
     },
     {
       "id": "point-defense.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Point-defense turret MD",
       "family": "weapon",
@@ -4396,7 +4411,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1.58,2.38]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
@@ -4504,7 +4519,7 @@
     },
     {
       "id": "autocannon.sm",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Twin autocannon SM",
       "family": "weapon",
@@ -4514,7 +4529,7 @@
       "sizeClass": "SM",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,1.23,1.32]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
@@ -4612,7 +4627,7 @@
     },
     {
       "id": "autocannon.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Twin autocannon MD",
       "family": "weapon",
@@ -4622,7 +4637,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,2.46,2.64]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
@@ -4730,7 +4745,7 @@
     },
     {
       "id": "autocannon.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Twin autocannon LG",
       "family": "weapon",
@@ -4740,7 +4755,7 @@
       "sizeClass": "LG",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,3.69,3.96]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
@@ -4848,7 +4863,7 @@
     },
     {
       "id": "laser-cannon.sm",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Laser cannon SM",
       "family": "weapon",
@@ -4858,7 +4873,7 @@
       "sizeClass": "SM",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.94,1.13]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
@@ -4956,7 +4971,7 @@
     },
     {
       "id": "laser-cannon.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Laser cannon MD",
       "family": "weapon",
@@ -4966,7 +4981,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1.88,2.26]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
@@ -5064,7 +5079,7 @@
     },
     {
       "id": "laser-cannon.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Laser cannon LG",
       "family": "weapon",
@@ -5074,7 +5089,7 @@
       "sizeClass": "LG",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,2.8200000000000003,3.39]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
@@ -5172,7 +5187,7 @@
     },
     {
       "id": "railgun.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Railgun mount MD",
       "family": "weapon",
@@ -5182,7 +5197,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,2.46,1.88]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":120},
@@ -5290,7 +5305,7 @@
     },
     {
       "id": "railgun.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Railgun mount LG",
       "family": "weapon",
@@ -5300,7 +5315,7 @@
       "sizeClass": "LG",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,3.69,2.82]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":120},
@@ -5408,7 +5423,7 @@
     },
     {
       "id": "missile-pod.sm",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Missile pod SM",
       "family": "weapon",
@@ -5418,7 +5433,7 @@
       "sizeClass": "SM",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.38]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":360},
@@ -5516,7 +5531,7 @@
     },
     {
       "id": "missile-pod.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Missile pod MD",
       "family": "weapon",
@@ -5526,7 +5541,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,2.76]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":360},
@@ -5624,7 +5639,7 @@
     },
     {
       "id": "missile-pod.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Missile pod LG",
       "family": "weapon",
@@ -5634,7 +5649,7 @@
       "sizeClass": "LG",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,4.14]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":360},
@@ -5743,7 +5758,7 @@
     {
       "id": "torpedo-launcher.md",
       "revision": 1,
-      "status": "proposed",
+      "status": "future",
       "name": "Torpedo launcher MD",
       "family": "weapon",
       "kind": "torpedo-launcher",
@@ -5851,7 +5866,7 @@
     {
       "id": "torpedo-launcher.lg",
       "revision": 1,
-      "status": "proposed",
+      "status": "future",
       "name": "Torpedo launcher LG",
       "family": "weapon",
       "kind": "torpedo-launcher",
@@ -5968,7 +5983,7 @@
     },
     {
       "id": "flak-cannon.sm",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Flak cannon SM",
       "family": "weapon",
@@ -5978,7 +5993,7 @@
       "sizeClass": "SM",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.8,1.25]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
@@ -6068,7 +6083,7 @@
     },
     {
       "id": "flak-cannon.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Flak cannon MD",
       "family": "weapon",
@@ -6078,7 +6093,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1.6,2.5]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
@@ -6186,7 +6201,7 @@
     },
     {
       "id": "flak-cannon.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Flak cannon LG",
       "family": "weapon",
@@ -6196,7 +6211,7 @@
       "sizeClass": "LG",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,2.4,3.75]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":300},
@@ -6304,7 +6319,7 @@
     },
     {
       "id": "plasma-turret.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Plasma turret MD",
       "family": "weapon",
@@ -6314,7 +6329,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,2.2]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
@@ -6412,7 +6427,7 @@
     },
     {
       "id": "plasma-turret.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Plasma turret LG",
       "family": "weapon",
@@ -6422,7 +6437,7 @@
       "sizeClass": "LG",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,3.3]],
         "clearance": {"kind":"fire-arc","lengthM":30,"arcDeg":270},
@@ -6521,7 +6536,7 @@
     {
       "id": "side-cannon.sm",
       "revision": 1,
-      "status": "proposed",
+      "status": "future",
       "name": "Side cannon sponson SM",
       "family": "weapon",
       "kind": "side-cannon",
@@ -6629,7 +6644,7 @@
     {
       "id": "side-cannon.md",
       "revision": 1,
-      "status": "proposed",
+      "status": "future",
       "name": "Side cannon sponson MD",
       "family": "weapon",
       "kind": "side-cannon",
@@ -6729,7 +6744,7 @@
     {
       "id": "side-cannon.lg",
       "revision": 1,
-      "status": "proposed",
+      "status": "future",
       "name": "Side cannon sponson LG",
       "family": "weapon",
       "kind": "side-cannon",
@@ -8150,7 +8165,7 @@
     },
     {
       "id": "sensor-dish.sm",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Sensor dish SM",
       "family": "sensor",
@@ -8160,7 +8175,7 @@
       "sizeClass": "SM",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.44]],
         "clearance": {"kind":"sweep","lengthM":0.6,"arcDeg":360},
@@ -8232,7 +8247,7 @@
     },
     {
       "id": "sensor-dish.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Sensor dish MD",
       "family": "sensor",
@@ -8242,7 +8257,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,2.88]],
         "clearance": {"kind":"sweep","lengthM":1.2,"arcDeg":360},
@@ -8324,7 +8339,7 @@
     },
     {
       "id": "sensor-dish.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Sensor dish LG",
       "family": "sensor",
@@ -8334,7 +8349,7 @@
       "sizeClass": "LG",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face","bottom"],
+        "sockets": ["top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,4.32]],
         "clearance": {"kind":"sweep","lengthM":1.7999999999999998,"arcDeg":360},
@@ -8416,7 +8431,7 @@
     },
     {
       "id": "radar-array.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Radar array MD",
       "family": "sensor",
@@ -8426,7 +8441,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","bottom"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,1.8]],
         "clearance": {"kind":"sweep","lengthM":1.2,"arcDeg":360},
@@ -8508,7 +8523,7 @@
     },
     {
       "id": "radar-array.lg",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Radar array LG",
       "family": "sensor",
@@ -8518,7 +8533,7 @@
       "sizeClass": "LG",
       "mount": {
         "frame": "top",
-        "sockets": ["top","bottom"],
+        "sockets": ["top"],
         "cells": [3,3],
         "envelopeM": [[-1.5,-1.5,0],[1.5,1.5,2.7]],
         "clearance": {"kind":"sweep","lengthM":1.7999999999999998,"arcDeg":360},
@@ -8600,7 +8615,7 @@
     },
     {
       "id": "scanner-mast.sm",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Scanner mast SM",
       "family": "sensor",
@@ -8610,7 +8625,7 @@
       "sizeClass": "SM",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face"],
+        "sockets": ["top"],
         "cells": [1,1],
         "envelopeM": [[-0.5,-0.5,0],[0.5,0.5,1.82]],
         "clearance": null,
@@ -8682,7 +8697,7 @@
     },
     {
       "id": "scanner-mast.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Scanner mast MD",
       "family": "sensor",
@@ -8692,7 +8707,7 @@
       "sizeClass": "MD",
       "mount": {
         "frame": "top",
-        "sockets": ["top","face"],
+        "sockets": ["top"],
         "cells": [2,2],
         "envelopeM": [[-1,-1,0],[1,1,3.64]],
         "clearance": null,
@@ -8774,7 +8789,7 @@
     },
     {
       "id": "relay-beacon.sm",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Relay beacon SM",
       "family": "sensor",
@@ -8856,7 +8871,7 @@
     },
     {
       "id": "relay-beacon.md",
-      "revision": 1,
+      "revision": 3,
       "status": "proposed",
       "name": "Relay beacon MD",
       "family": "sensor",

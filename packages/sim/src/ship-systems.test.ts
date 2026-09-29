@@ -26,7 +26,10 @@ import {
 } from "./ship-systems";
 import { compileFlightDefinition } from "./flight-definition";
 
-const catalog = buildShipComponentCatalog();
+// The three reference balance fits predate the 2026-09-29 roof-mount rules (face torpedo tube,
+// catalog-2 RCS budgets); they stay pinned to catalog revision 2. Revision 3 balance is asserted
+// on the prefab ships (prefab-handling.test.ts, prefab-flight.test.ts).
+const catalog = buildShipComponentCatalog(2);
 const def = shipComponentIndex(catalog);
 const input = (
   fit: ShipComponentFit,

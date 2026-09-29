@@ -1,6 +1,7 @@
 import { withBow } from "../bow-profiles";
 /** Federation (Orion Crest line): warm white, navy and crimson; tidy symmetric hulls. */
 import {
+  armed,
   door,
   edge,
   face,
@@ -86,6 +87,11 @@ export const FED_WREN = prefab({
   // thrust blocks (24 kN each, as on the Federation heavy's pods) fed by a medium fuel tank, and the
   // RCS clusters move to the wing-tip faces for yaw authority. Revision 3 flew four small ion
   // drives on the 11 x 6 m hull. Proposed balance, not owner-approved.
+  // Revision 5 (2026-09-29, owner: weapons and sensors on the roof, snappy starters): the side
+  // cannons and the bare roof autocannon move onto roof mount tiles (a turret ring with the
+  // autocannon, a fixed forward mount with two more linked small autocannons) and Wren gains its basic roof sensor
+  // dish on a small fixed mount. Engines stay aft; catalog revision 3 gives the thrust blocks
+  // reversers and the RCS clusters real braking and yaw authority.
   mounts: [
     face("main-s1", "thrust-block.sm", "aft", [0, 2]),
     face("main-s2", "thrust-block.sm", "aft", [0, 3]),
@@ -93,10 +99,7 @@ export const FED_WREN = prefab({
     face("main-p1", "thrust-block.sm", "aft", [0, 5]),
     face("rcs-s", "rcs.md", "starboard", [0.5, -2]),
     face("rcs-p", "rcs.md", "port", [0.5, 9]),
-    face("gun-p", "side-cannon.sm", "port", [6.5, 7]),
-    face("gun-s", "side-cannon.sm", "starboard", [9.5, 0]),
     opening("airlock", "airlock.exterior.md", "starboard", [6, 0]),
-    top("turret", "autocannon.sm", [5, 3]),
     top("rad-a", "radiator.md", [0.5, 1]),
     top("rad-b", "radiator.md", [0.5, 4]),
     module("helm", "console.navigation.sm", [9, 3], "fore"),
@@ -106,11 +109,16 @@ export const FED_WREN = prefab({
     module("fuel", "fuel-tank.md", [0, 0], "port"),
     module("bunk", "crew-bunk.sm", [3.5, 5.5], "starboard"),
   ],
+  armed: [
+    armed("turret", "turret", "MD", [4.5, 2.5], "fore", "autocannon.sm"),
+    armed("guns", "fixed", "MD", [7, 2.5], "fore", "autocannon.sm", 2),
+    armed("sensor", "fixed", "SM", [3, 3], "fore", "sensor-dish.sm"),
+  ],
   skylights: [],
   markings: { name: "WREN", number: "OC-11", emblem: "planet" },
 });
 
-FED_WREN.revision = 4;
+FED_WREN.revision = 5;
 
 /** Medium: the prototype Wayfarer-class corvette, re-cut on the 1 m grammar. */
 export const FED_CREST = prefab({
@@ -197,14 +205,8 @@ export const FED_CREST = prefab({
     face("main-c", "ion-drive.md", "aft", [0, 5]),
     face("rcs-p", "rcs.sm", "aft", [4, 11.5]),
     face("rcs-s", "rcs.sm", "aft", [4, -1.5]),
-    face("gun-p", "side-cannon.sm", "port", [6.5, 13]),
-    face("gun-s", "side-cannon.sm", "starboard", [6.5, -3]),
     opening("lock", "airlock.exterior.md", "starboard", [18, 0]),
     opening("cargo-door", "cargo-door.2m", "starboard", [15, 0]),
-    top("ac", "autocannon.md", [5, 1]),
-    top("laser", "laser-cannon.md", [13, 7]),
-    top("pd", "point-defense.sm", [17, 2]),
-    top("dish", "sensor-dish.md", [1, 7]),
     top("rad-lg", "radiator.lg", [1, 1]),
     top("rad-a", "radiator.md", [9, 7]),
     top("rad-b", "radiator.md", [9, 1]),
@@ -218,8 +220,19 @@ export const FED_CREST = prefab({
     module("bunk-2", "crew-bunk.sm", [8.5, 8.5], "starboard"),
   ],
   skylights: [skylight("sky", [20, 4], [3, 2])],
+  armed: [
+    armed("gun-p", "fixed", "SM", [6, 11], "port", "autocannon.sm"),
+    armed("gun-s", "fixed", "SM", [6, -2], "starboard", "autocannon.sm"),
+    armed("turret", "turret", "LG", [5, 1], "fore", "autocannon.md"),
+    armed("laser", "fixed", "MD", [13, 7], "fore", "laser-cannon.md"),
+    armed("pd", "turret", "MD", [17, 2], "fore", "point-defense.sm"),
+    armed("sensor", "fixed", "MD", [1, 7], "fore", "sensor-dish.md"),
+  ],
   markings: { name: "ORION CREST", number: "OC-01", emblem: "planet" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+FED_CREST.revision = 2;
 
 /** Large: side-pod frigate with a long spine, XL drives and heavy turrets. */
 export const FED_BASTION = prefab({
@@ -338,18 +351,8 @@ export const FED_BASTION = prefab({
     face("md-c", "ion-drive.lg", "aft", [0, 6]),
     face("pod-s-drive", "thrust-block.md", "aft", [6, -2]),
     face("pod-p-drive", "thrust-block.md", "aft", [6, 14]),
-    face("cannon-s", "side-cannon.md", "starboard", [16, -4]),
-    face("cannon-p", "side-cannon.md", "port", [16, 16]),
     opening("lock", "airlock.exterior.md", "starboard", [23, 0]),
-    top("rail-s", "railgun.lg", [4, 1]),
-    top("rail-p", "railgun.lg", [4, 8]),
-    top("missile-s", "missile-pod.md", [31, 2]),
-    top("missile-p", "missile-pod.md", [31, 8]),
-    top("flak", "flak-cannon.md", [12, -3]),
-    top("pd", "point-defense.md", [12, 13]),
-    top("dish", "sensor-dish.md", [18, 13]),
     top("shield", "shield-emitter.md", [16, 1]),
-    top("beacon", "relay-beacon.sm", [21, 2]),
     top("tractor", "tractor-projector.md", [34, 5]),
     top("rad-1", "radiator.lg", [8, 1]),
     top("rad-2", "radiator.lg", [8, 8]),
@@ -372,8 +375,23 @@ export const FED_BASTION = prefab({
     module("bunk-3", "crew-bunk.sm", [14.5, 10.5], "starboard"),
   ],
   skylights: [skylight("sky", [31, 5], [3, 2])],
+  armed: [
+    armed("rail-s", "fixed", "LG", [4, 1], "fore", "railgun.lg"),
+    armed("rail-p", "fixed", "LG", [4, 8], "fore", "railgun.lg"),
+    armed("missiles-s", "fixed", "MD", [31, 2], "fore", "missile-pod.md"),
+    armed("missiles-p", "fixed", "MD", [31, 8], "fore", "missile-pod.md"),
+    armed("flak", "turret", "LG", [12, -3], "fore", "flak-cannon.md"),
+    armed("pd", "turret", "LG", [12, 13], "fore", "point-defense.md"),
+    armed("gun-s", "fixed", "MD", [16, -3], "starboard", "autocannon.md"),
+    armed("gun-p", "fixed", "MD", [16, 13], "port", "autocannon.md"),
+    armed("dish", "fixed", "MD", [18, 13], "fore", "sensor-dish.md"),
+    armed("beacon", "fixed", "SM", [21, 2], "fore", "relay-beacon.sm"),
+  ],
   markings: { name: "BASTION", number: "OC-77", emblem: "planet" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+FED_BASTION.revision = 2;
 
 /**
  * Art-calibration ship: the approved reference silhouette (3d-rpg-after / top-down-after) as a
@@ -445,10 +463,6 @@ export const FED_MERIDIAN = prefab({
     face("main-c", "ion-drive.lg", "aft", [0, 6]),
     opening("lock", "airlock.exterior.md", "starboard", [20, 0]),
     opening("cargo-door", "cargo-door.2m", "starboard", [16, 0]),
-    top("ac", "autocannon.md", [5, 1]),
-    top("laser", "laser-cannon.md", [13, 8]),
-    top("pd", "point-defense.sm", [19, 2]),
-    top("dish", "sensor-dish.md", [1, 8]),
     top("rad-lg", "radiator.lg", [1, 1]),
     top("rad-a", "radiator.md", [9, 8]),
     top("rad-b", "radiator.lg", [9, 1]),
@@ -462,5 +476,14 @@ export const FED_MERIDIAN = prefab({
     module("bunk-2", "crew-bunk.sm", [8.5, 10.5], "starboard"),
   ],
   skylights: [skylight("sky", [23, 4], [3, 3])],
+  armed: [
+    armed("turret", "turret", "LG", [5, 1], "fore", "autocannon.md"),
+    armed("laser", "fixed", "MD", [13, 8], "fore", "laser-cannon.md"),
+    armed("pd", "turret", "MD", [19, 2], "fore", "point-defense.sm"),
+    armed("sensor", "fixed", "MD", [1, 8], "fore", "sensor-dish.md"),
+  ],
   markings: { name: "MERIDIAN", number: "OC-24", emblem: "planet" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+FED_MERIDIAN.revision = 2;

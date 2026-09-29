@@ -30,13 +30,17 @@ import {
   trustedPrefabTemplateFor,
 } from "./prefab-ship-authority";
 import { stockShipCargo } from "./ship-cargo-operator";
-import { constructionCollision } from "./construction-doors";
+import {
+  clearConstructionCollisionCache,
+  constructionCollision,
+} from "./construction-doors";
 import { compileShipFlight } from "./construction-flight-compilation";
 import { readConstructionFlightInput } from "./construction-flight-input";
 import {
   FED_WREN_PIN,
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
+  FED_WREN_R4_PIN,
   PREFAB_UPGRADE_SOURCES,
   type PinnedPrefabShip,
 } from "./prefab-ship-pins";
@@ -184,6 +188,7 @@ const legacy = (n: number) =>
 
 /** An owner aboard a Wren of the given pinned revision, hold crate and wall locker stocked. */
 function liveWren(pin: PinnedPrefabShip, revision: number) {
+  clearConstructionCollisionCache();
   const f = fixture();
   f.as(OWNER);
   const characterId = onboardNewCharacter(f.ctx, "Toby");
@@ -235,7 +240,7 @@ const upgradeArgs = (
   pin: PinnedPrefabShip,
   over: Record<string, unknown> = {},
 ) => ({
-  operationId: "upgrade-wren-r4-0001",
+  operationId: "upgrade-wren-r5-0001",
   dryRun: false,
   shipId,
   expectedSourceBlueprintSha256: pin.blueprintSha256,
@@ -257,18 +262,21 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
   // classification refuses the upgrade when it holds rows for the ship (planPrefabUpgrade).
   for (const t of listed) expect(WIPED_SHIP_TABLES, t).toContain(t);
 
-  expect(PREFAB_UPGRADE_SOURCES).toEqual([FED_WREN_R2_PIN, FED_WREN_R3_PIN]);
+  expect(PREFAB_UPGRADE_SOURCES).toEqual([
+    FED_WREN_R2_PIN,
+    FED_WREN_R3_PIN,
+    FED_WREN_R4_PIN,
+  ]);
   expect(trustedPrefabTemplate("fed.s.wren").snapshot.sha256).toBe(
     FED_WREN_PIN.blueprintSha256,
   );
 });
 
-for (const [pin, revision] of [
-  [FED_WREN_R3_PIN, 3],
-  [FED_WREN_R2_PIN, 2],
-] as const)
+// Construction collision caches by instance id + revision, and every fixture mints the same ids
+// for different source revisions, so each liveWren starts from an empty cache.
+const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
   test(
-    `a live Wren r${revision} upgrades to r4 in place: same ship, deck, pose, containers and items`,
+    `a live Wren r${revision} upgrades to r5 in place: same ship, deck, pose, containers and items`,
     HEAVY,
     () => {
       const { f, characterId, shipId, deckId } = liveWren(pin, revision);
@@ -316,7 +324,7 @@ for (const [pin, revision] of [
       upgradePrefabShip(f.ctx, upgradeArgs(shipId, pin));
       const instance = f.db.constructionInstance.id.find(shipId);
       expect(instance.blueprintSha256).toBe(FED_WREN_PIN.blueprintSha256);
-      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r4");
+      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r5");
       expect(instance.revision).toBe(2n);
       expect(f.db.constructionDeck.rows.map((d: Row) => d.id)).toEqual([
         deckId,
@@ -350,7 +358,7 @@ for (const [pin, revision] of [
       expect(
         f.db.instanceInventoryBinding.rows.map((b: Row) => ({ ...b })),
       ).toEqual(bound);
-      // ...and the storage roots now sit at the r4 sockets with a qualified approach.
+      // ...and the storage roots now sit at the r5 sockets with a qualified approach.
       const sockets = new Map(
         prefabCargoSockets(
           readShipPrefab(JSON.parse(instance.documentJson).prefab.document),
@@ -387,7 +395,7 @@ for (const [pin, revision] of [
           ).toBe(true);
         }
       }
-      // The owner stands at the r4 spawn with the next-revision game-ship access allowed.
+      // The owner stands at the r5 spawn with the next-revision game-ship access allowed.
       const actor = f.db.character.id.find(characterId);
       expect(actor.shipId).toBe(shipId);
       expect(
@@ -402,7 +410,7 @@ for (const [pin, revision] of [
       ).toMatchObject({ instanceId: shipId, deckId });
       // Before-images of everything deleted or updated are archived under the operation.
       const archived = f.db.shipWipeArchive.rows.filter(
-        (r: Row) => r.operationId === "upgrade-wren-r4-0001",
+        (r: Row) => r.operationId === "upgrade-wren-r5-0001",
       );
       expect(archived.map((r: Row) => r.tableName)).toEqual(
         expect.arrayContaining([
@@ -428,13 +436,16 @@ for (const [pin, revision] of [
         upgradePrefabShip(
           f.ctx,
           upgradeArgs(shipId, pin, {
-            operationId: "upgrade-wren-r4-0002",
+            operationId: "upgrade-wren-r5-0002",
             expectedInstanceRevision: 2n,
           }),
         ),
       ).toThrow("already has the target revision");
     },
   );
+
+upgradeCase(FED_WREN_R3_PIN, 3);
+upgradeCase(FED_WREN_R2_PIN, 2);
 
 test(
   "a stocked prefab ship compiles flight with its storage payload at the sockets",
@@ -545,3 +556,5 @@ test("refuses unsafe upgrades and changes nothing", HEAVY, () => {
     upgradePrefabShip(f.ctx, upgradeArgs(shipId, FED_WREN_R3_PIN)),
   ).toThrow("Deployment operator required");
 });
+
+upgradeCase(FED_WREN_R4_PIN, 4);

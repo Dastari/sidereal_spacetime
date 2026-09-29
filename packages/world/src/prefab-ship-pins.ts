@@ -15,18 +15,35 @@ export interface PinnedPrefabShip {
 }
 
 /**
- * Wren revision 4 (2026-09-28): 12 x 7 m hull so every module and furniture piece fits at catalog
- * scale outside the door and pilot approaches; four small thrust blocks, catalog revision 2.
- * New assignments and in-place upgrades.
+ * Wren revision 5 (2026-09-29, SHIP-MOUNTS): weapons and the basic sensor dish on roof mount tiles
+ * (turret MD autocannon, fixed MD twin autocannons, fixed SM sensor dish), engines aft only;
+ * catalog revision 3 (drive reversers, stronger RCS). New assignments and in-place upgrades.
  */
 export const FED_WREN_PIN: PinnedPrefabShip = {
+  prefabId: "fed.s.wren",
+  catalogRevision: "ship-components-v1@3",
+  blueprintSha256:
+    "c080b1397fd61b4609d4b8459239111aaed3bd398f868975ae2702418ad71eaf",
+  flightDefinitionSha256:
+    "c6d252e906de0d8fad479e156a8ca512f0ac58500f4d7a0f3d888c13902a447d",
+  description: "Wren (Federation courier, size S, prefab r5)",
+};
+
+/**
+ * Wren revision 4 (2026-09-28) as assigned on the live authority until r5: 12 x 7 m hull, four
+ * small thrust blocks, side cannons and a bare roof autocannon, catalog revision 2. No longer
+ * registered as a spawner; existing instances keep these pins until `operator_upgrade_prefab_ship`
+ * moves them to FED_WREN_PIN. `fixtures/fed-s-wren-r4.prefab.json` is its canonical document.
+ */
+export const FED_WREN_R4_PIN: PinnedPrefabShip = {
   prefabId: "fed.s.wren",
   catalogRevision: "ship-components-v1@2",
   blueprintSha256:
     "0089333b29356307be44ef7f54157d7827e3e34303cdb8c0f70fca3d26961803",
   flightDefinitionSha256:
     "384559d4e2ac88ee6cc7fcff834b60a3f16bc043b178a80b4d78ca7aa5652100",
-  description: "Wren (Federation courier, size S, prefab r4)",
+  description:
+    "Wren (Federation courier, size S, prefab r4; legacy live instances)",
 };
 
 /**
@@ -74,4 +91,5 @@ export const REGISTERED_PREFAB_PINS: readonly PinnedPrefabShip[] = [
 export const PREFAB_UPGRADE_SOURCES: readonly PinnedPrefabShip[] = [
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
+  FED_WREN_R4_PIN,
 ];

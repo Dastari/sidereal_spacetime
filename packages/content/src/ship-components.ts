@@ -257,6 +257,11 @@ export interface ShipComponentData {
 export interface ShipPropulsionStats {
   role: "main" | "maneuver" | "vertical" | "jump";
   thrustKn: number;
+  /**
+   * Catalog revision 3+: thrust reverser (kN) of a main drive, pushing opposite its forward axis
+   * with the same engine (no extra power). Absent on earlier revisions and on non-main roles.
+   */
+  reverseThrustKn?: number;
   gimbalDeg: number;
   throttleResponseS: number;
   specificImpulseS: number;

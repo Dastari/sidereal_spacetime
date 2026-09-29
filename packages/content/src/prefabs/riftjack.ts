@@ -1,5 +1,6 @@
 /** Riftjack pirates: rusted brown, black, blood red and hazard yellow; asymmetric, mismatched fits. */
 import {
+  armed,
   door,
   edge,
   face,
@@ -75,15 +76,12 @@ export const RJ_JACKAL = prefab({
     edge("canopy-bow", [8, 0], [7, 6], "canopy"),
   ],
   mounts: [
-    face("rcs-bow-p", "rcs.sm", "port", [5.5, 6]),
-    face("rcs-bow-s", "rcs.sm", "starboard", [7.5, 0]),
+    face("rcs-bow-p", "rcs.md", "port", [5.5, 6]),
+    face("rcs-bow-s", "rcs.md", "starboard", [7.5, 0]),
     face("salvage-drive", "ion-drive.salvaged.md", "aft", [0, 1.5]),
     face("block", "thrust-block.md", "aft", [0, 4.5]),
     face("pod-block", "thrust-block.sm", "aft", [0, -1]),
-    face("gun-p", "side-cannon.sm", "port", [6.5, 6]),
     opening("airlock", "airlock.exterior.md", "starboard", [5, 0]),
-    top("turret", "autocannon.md", [4, 1]),
-    top("flak", "flak-cannon.sm", [8, 2]),
     top("clamp", "docking-clamp.md", [1, -2]),
     top("rad-a", "radiator.md", [1, 3]),
     top("rad-b", "radiator.md", [1, 1]),
@@ -94,8 +92,16 @@ export const RJ_JACKAL = prefab({
     module("bunk", "crew-bunk.sm", [3.5, 4.5], "starboard"),
     module("ammo", "magazine.ballistic.sm", [5.5, 0.5], "port"),
   ],
+  armed: [
+    armed("guns", "fixed", "MD", [4, 1], "fore", "autocannon.md"),
+    armed("flak", "turret", "MD", [7, 2], "fore", "flak-cannon.sm"),
+    armed("sensor", "fixed", "SM", [3, 4], "fore", "sensor-dish.sm"),
+  ],
   markings: { name: "JACKAL", number: "RJ-13", emblem: "skull" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+RJ_JACKAL.revision = 2;
 
 /** Medium: the prototype Marauder raider, asymmetric port pod and nose ram. */
 export const RJ_MARAUDER = prefab({
@@ -182,13 +188,8 @@ export const RJ_MARAUDER = prefab({
     face("salvage-md", "ion-drive.salvaged.md", "aft", [0, 5]),
     face("rcs", "rcs.sm", "aft", [0, 7]),
     face("pod-drive", "ion-drive.salvaged.sm", "aft", [4, 9.5]),
-    face("gun-s", "side-cannon.sm", "starboard", [8, -2]),
-    face("gun-p", "side-cannon.md", "port", [7, 11]),
     opening("cargo-door", "cargo-door.2m", "starboard", [13, 0]),
     opening("lock", "airlock.exterior.md", "starboard", [16, 0]),
-    top("ac", "autocannon.lg", [5, 1]),
-    top("missiles", "missile-pod.md", [9, 9]),
-    top("flak", "flak-cannon.sm", [15, 3.5]),
     top("clamp", "docking-clamp.md", [19, 3]),
     top("rad-lg", "radiator.lg", [1, 1]),
     top("rad-md", "radiator.md", [1, 5]),
@@ -202,8 +203,19 @@ export const RJ_MARAUDER = prefab({
     module("bunk-1", "crew-bunk.sm", [4.5, 6.5], "starboard"),
     module("bunk-2", "crew-bunk.sm", [6.5, 6.5], "starboard"),
   ],
+  armed: [
+    armed("guns", "fixed", "LG", [5, 1], "fore", "autocannon.lg"),
+    armed("missiles", "fixed", "MD", [9, 9], "fore", "missile-pod.md"),
+    armed("flak", "turret", "MD", [15, 3], "fore", "flak-cannon.sm"),
+    armed("gun-s", "fixed", "SM", [8, -2], "starboard", "autocannon.sm"),
+    armed("gun-p", "fixed", "MD", [7, 9], "port", "autocannon.md"),
+    armed("sensor", "fixed", "SM", [12, 1], "fore", "sensor-dish.sm"),
+  ],
   markings: { name: "MARAUDER", number: "RJ-66", emblem: "skull" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+RJ_MARAUDER.revision = 2;
 
 /** Large: jawed pirate carrier with twin salvage pods. */
 export const RJ_MAW = prefab({
@@ -319,18 +331,7 @@ export const RJ_MAW = prefab({
     face("xl-block", "thrust-block.xl", "aft", [0, 11]),
     face("pod-s-drive", "thrust-block.md", "aft", [4, -2]),
     face("pod-p-drive", "thrust-block.md", "aft", [6, 16]),
-    face("gun-s-1", "side-cannon.md", "starboard", [10, -4]),
-    face("gun-s-2", "side-cannon.md", "starboard", [14, -4]),
-    face("gun-p", "side-cannon.md", "port", [10, 18]),
-    face("torpedo", "torpedo-launcher.md", "port", [14, 18]),
-    face("salvage-arm", "salvage-arm.md", "fore", [32, 7]),
     opening("lock", "airlock.exterior.md", "starboard", [25, 0]),
-    top("ac", "autocannon.lg", [7, 1]),
-    top("plasma", "plasma-turret.lg", [15, 9]),
-    top("missiles-s", "missile-pod.lg", [8, -4]),
-    top("missiles-p", "missile-pod.md", [12, 15]),
-    top("flak", "flak-cannon.md", [12, 2]),
-    top("pd", "point-defense.md", [20, 2]),
     top("clamp", "docking-clamp.lg", [29, 5]),
     top("rad-1", "radiator.lg", [1, 1]),
     top("rad-2", "radiator.lg", [1, 10]),
@@ -350,6 +351,21 @@ export const RJ_MAW = prefab({
     module("bunk-2", "crew-bunk.sm", [6.5, 10.5], "starboard"),
     module("bunk-3", "crew-bunk.sm", [10.5, 12.5], "starboard"),
     module("bunk-4", "crew-bunk.sm", [10.5, 10.5], "starboard"),
+    top("salvage-arm", "salvage-arm.md", [26, 9]),
+  ],
+  armed: [
+    armed("guns", "turret", "XL", [7, 1], "fore", "autocannon.lg"),
+    armed("plasma", "turret", "XL", [15, 9], "fore", "plasma-turret.lg"),
+    armed("missiles-s", "fixed", "LG", [8, -4], "fore", "missile-pod.lg"),
+    armed("missiles-p", "fixed", "MD", [12, 15], "fore", "missile-pod.md"),
+    armed("flak", "turret", "LG", [12, 1], "fore", "flak-cannon.md"),
+    armed("pd", "turret", "LG", [20, 1], "fore", "point-defense.md"),
+    armed("gun-s", "fixed", "MD", [14, -3], "starboard", "autocannon.md"),
+    armed("gun-p", "fixed", "MD", [15, 15], "port", "autocannon.md"),
+    armed("sensor", "fixed", "MD", [24, 5], "fore", "sensor-dish.md"),
   ],
   markings: { name: "MAW", number: "RJ-01", emblem: "skull" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+RJ_MAW.revision = 2;

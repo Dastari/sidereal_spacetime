@@ -43,7 +43,21 @@ import {
   ROOM_TYPE_IDS,
   BLUEPRINT_SIZE_CLASS_IDS,
   FACE_NORMALS,
+  MOUNT_TILE_KINDS,
+  MOUNT_SIZE_IDS,
+  type MountTileKind,
 } from "./construction-grammar";
+import {
+  FACING_RADIANS,
+  mountArc,
+  mountTileAccepts,
+  mountTileCapacity,
+  mountTileHeightTexels,
+  mountTileRequired,
+  mountTileSlots,
+  mountTileSpec,
+  type MountArc,
+} from "./ship-mount-tiles";
 
 export const SHIP_PREFAB_SCHEMA = "sidereal.ship-prefab.v1" as const;
 export const SHIP_THEME_IDS = [
@@ -71,6 +85,7 @@ export const SHIP_PREFAB_LIMITS = {
   rooms: 96,
   edges: 512,
   mounts: 64,
+  mountTiles: 32,
   skylights: 16,
   coordinate: 128,
 } as const;
@@ -125,6 +140,27 @@ export interface PrefabMount {
   normal?: FaceNormal;
   /** Face mounts: bottom of the footprint in texels; default centres it on the face band. */
   z?: number;
+  /**
+   * Roof mount tile id (top mounts only). Weapons and sensors must sit on a tile in documents
+   * that carry `mountTiles`; `at` then equals the tile's `at`, and several mounts on one tile are
+   * its dual/quad configuration (slot order = document order).
+   */
+  tile?: string;
+}
+
+/**
+ * Roof mount tile (owner 2026-09-29): a special roof tile that weapons and sensors mount on.
+ * `fixed` fires along `facing` within a narrow cone; `turret` rotates (rest direction `facing`)
+ * but carries one size smaller. Footprint: the size's N x N cells from `at` (min corner).
+ */
+export interface PrefabMountTile {
+  id: string;
+  kind: MountTileKind;
+  size: MountSizeId;
+  /** Footprint min corner (0.5 m snap). */
+  at: [number, number];
+  /** Fixed: boresight. Turret: rest direction. */
+  facing: FaceNormal;
 }
 
 export interface PrefabSkylight {
@@ -155,6 +191,12 @@ export interface ShipPrefabDocumentV1 {
   rooms: PrefabRoom[];
   edges: PrefabEdge[];
   mounts: PrefabMount[];
+  /**
+   * Roof mount tiles. Present (even empty) = the 2026-09-29 mount rules apply: weapons and sensors
+   * only on roof tiles, only propulsion on side/aft faces. Absent = a legacy document (Wren r2-r4)
+   * that keeps validating under the rules it was pinned with.
+   */
+  mountTiles?: PrefabMountTile[];
   skylights: PrefabSkylight[];
   markings: PrefabMarkings;
 }
@@ -193,6 +235,12 @@ export interface PrefabComponentSpec {
   berths?: number;
   /** Visual asset reference resolved by the renderer. */
   visual?: { url: string; node?: string };
+  /** Main drives: thrust reverser (N) opposite the forward axis (catalog revision 3+). */
+  reverseThrustN?: number;
+  /** Weapons and sensors: the item's own arc (deg), tracking (deg/s) and range (m). */
+  arcDeg?: number;
+  trackingDegPerS?: number;
+  rangeM?: number;
 }
 
 export interface PrefabComponentCatalog {
@@ -279,24 +327,29 @@ function uniq(ids: string[], path: string) {
 
 /** Parse untrusted JSON into a document. Never normalises; rejects unknown fields. */
 export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
-  const o = obj(value, "document", [
-    "schema",
-    "id",
-    "name",
-    "revision",
-    "description",
-    "faction",
-    "role",
-    "theme",
-    "sizeClass",
-    "decks",
-    "volumes",
-    "rooms",
-    "edges",
-    "mounts",
-    "skylights",
-    "markings",
-  ]);
+  const o = obj(
+    value,
+    "document",
+    [
+      "schema",
+      "id",
+      "name",
+      "revision",
+      "description",
+      "faction",
+      "role",
+      "theme",
+      "sizeClass",
+      "decks",
+      "volumes",
+      "rooms",
+      "edges",
+      "mounts",
+      "skylights",
+      "markings",
+    ],
+    ["mountTiles"],
+  );
   if (o.schema !== SHIP_PREFAB_SCHEMA)
     fail("schema", `expected ${SHIP_PREFAB_SCHEMA}`);
   const text = (v: unknown, p: string, max: number) => {
@@ -436,7 +489,12 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
     }),
     mounts: arr(o.mounts, "mounts", SHIP_PREFAB_LIMITS.mounts).map((v, i) => {
       const p = `mounts[${i}]`;
-      const r = obj(v, p, ["id", "component", "attach", "at"], ["normal", "z"]);
+      const r = obj(
+        v,
+        p,
+        ["id", "component", "attach", "at"],
+        ["normal", "z", "tile"],
+      );
       const at = arr(r.at, `${p}.at`, 2);
       if (at.length !== 2) fail(`${p}.at`, "expected [x, y]");
       const m: PrefabMount = {
@@ -465,8 +523,38 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
         fail(p, "top mounts take no normal or z");
       if (m.attach === "interior" && m.z !== undefined)
         fail(p, "interior mounts take no z");
+      if (r.tile !== undefined) {
+        m.tile = str(r.tile, `${p}.tile`, ID);
+        if (m.attach !== "top") fail(p, "only top mounts sit on a mount tile");
+        if (!Array.isArray(o.mountTiles))
+          fail(p, "tile mounts need the document's mountTiles");
+      }
       return m;
     }),
+    ...(o.mountTiles === undefined
+      ? {}
+      : {
+          mountTiles: arr(
+            o.mountTiles,
+            "mountTiles",
+            SHIP_PREFAB_LIMITS.mountTiles,
+          ).map((v, i) => {
+            const p = `mountTiles[${i}]`;
+            const r = obj(v, p, ["id", "kind", "size", "at", "facing"]);
+            const at = arr(r.at, `${p}.at`, 2);
+            if (at.length !== 2) fail(`${p}.at`, "expected [x, y]");
+            const t: PrefabMountTile = {
+              id: str(r.id, `${p}.id`, ID),
+              kind: oneOf(r.kind, `${p}.kind`, MOUNT_TILE_KINDS),
+              size: oneOf(r.size, `${p}.size`, MOUNT_SIZE_IDS),
+              at: [half(at[0], `${p}.at[0]`), half(at[1], `${p}.at[1]`)],
+              facing: oneOf(r.facing, `${p}.facing`, FACE_NORMALS),
+            };
+            if (!mountTileSpec(t.kind, t.size))
+              fail(p, `there is no ${t.size} ${t.kind} mount tile`);
+            return t;
+          }),
+        }),
     skylights: arr(o.skylights, "skylights", SHIP_PREFAB_LIMITS.skylights).map(
       (v, i) => {
         const p = `skylights[${i}]`;
@@ -514,6 +602,16 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
     doc.skylights.map((v) => v.id),
     "skylights",
   );
+  if (doc.mountTiles) {
+    uniq(
+      doc.mountTiles.map((v) => v.id),
+      "mountTiles",
+    );
+    const tiles = new Set(doc.mountTiles.map((t) => t.id));
+    for (const m of doc.mounts)
+      if (m.tile !== undefined && !tiles.has(m.tile))
+        fail(`mounts.${m.id}`, `unknown mount tile ${m.tile}`);
+  }
   return doc;
 }
 
@@ -647,11 +745,80 @@ function planExtent(cells: [number, number], qt: number): [number, number] {
   return qt % 2 ? [cells[0], cells[1]] : [cells[1], cells[0]];
 }
 
+export interface MountTilePlacement {
+  tile: PrefabMountTile;
+  /** Plan footprint [x0, y0, x1, y1] (m). */
+  rect: [number, number, number, number];
+  /** Tile centre (m); the Blender kit piece origin. */
+  centre: [number, number];
+  /** Roof plane and top interface plane (texels). Items stand on z[1]. */
+  z: [number, number];
+  /** Kit piece rotation (degrees, counter-clockwise): the piece's +Y is its boresight. */
+  rotDeg: number;
+  /** Roof volume the tile stands on (highest volume under its centre). */
+  host: string | null;
+}
+
+/** Kit piece rotation per facing: piece +Y (boresight) -> plan direction. */
+const TILE_ROT_DEG: Record<FaceNormal, number> = {
+  port: 0,
+  aft: 90,
+  starboard: 180,
+  fore: 270,
+};
+
+export function placeMountTile(
+  tile: PrefabMountTile,
+  geoms: readonly VolumeGeometry[],
+): MountTilePlacement {
+  const n = G.mountSizes[tile.size].cells;
+  const [x, y] = tile.at;
+  const centre: [number, number] = [x + n / 2, y + n / 2];
+  let host: VolumeGeometry | null = null;
+  for (const g of geoms)
+    if (
+      g.outline &&
+      insideOutline(g.outline, centre[0], centre[1]) &&
+      (!host || g.z[1] > host.z[1])
+    )
+      host = g;
+  const z0 = host ? host.z[1] : G.deck.roofTexels;
+  return {
+    tile,
+    rect: [x, y, x + n, y + n],
+    centre,
+    z: [z0, z0 + mountTileHeightTexels(tile.kind)],
+    rotDeg: TILE_ROT_DEG[tile.facing],
+    host: host?.volume.id ?? null,
+  };
+}
+
+/** Mounts carried by a tile, in slot order (document order). */
+export function tileMounts(
+  doc: Pick<ShipPrefabDocumentV1, "mounts">,
+  tileId: string,
+): PrefabMount[] {
+  return doc.mounts.filter((m) => m.tile === tileId);
+}
+
+/** Tile context for placing tile mounts: the document's tiles and mounts. */
+export type MountTileContext = Pick<
+  ShipPrefabDocumentV1,
+  "mounts" | "mountTiles"
+>;
+
 export function placeMount(
   mount: PrefabMount,
   spec: PrefabComponentSpec | undefined,
   geoms: readonly VolumeGeometry[],
+  ctx?: MountTileContext,
 ): MountPlacement {
+  const tile =
+    mount.tile !== undefined
+      ? ctx?.mountTiles?.find((t) => t.id === mount.tile)
+      : undefined;
+  if (tile && mount.attach === "top")
+    return placeTileMount(mount, spec, tile, geoms, ctx!);
   const fallback = spec ? G.mountSizes[spec.sizeClass].cells : 1;
   const cells: [number, number] = spec
     ? [Math.max(spec.cells[0], 1), Math.max(spec.cells[1], 1)]
@@ -742,6 +909,95 @@ export function placeMount(
     host: host?.volume.id ?? null,
     rear: normal === "aft",
   };
+}
+
+/**
+ * An item on a roof mount tile: it stands on the tile's top plane at its slot, turned so its
+ * forward (+Y) points along the tile facing (the boresight or turret rest direction).
+ */
+function placeTileMount(
+  mount: PrefabMount,
+  spec: PrefabComponentSpec | undefined,
+  tile: PrefabMountTile,
+  geoms: readonly VolumeGeometry[],
+  ctx: MountTileContext,
+): MountPlacement {
+  const tp = placeMountTile(tile, geoms);
+  const on = tileMounts(ctx, tile.id);
+  const slots = mountTileSlots(tile.size, on.length);
+  const slot = slots[Math.max(0, on.indexOf(mount))] ?? [0, 0];
+  const b = FACING_RADIANS[tile.facing];
+  // Tile frame: along = boresight, across = its left (counter-clockwise).
+  const ax = Math.cos(b),
+    ay = Math.sin(b);
+  const anchor: [number, number] = [
+    tp.centre[0] + slot[1] * ax - slot[0] * ay,
+    tp.centre[1] + slot[1] * ay + slot[0] * ax,
+  ];
+  const qt = FORWARD_QT[tile.facing];
+  const cells: [number, number] = spec
+    ? [Math.max(spec.cells[0], 1), Math.max(spec.cells[1], 1)]
+    : [1, 1];
+  const [ex, ey] = planExtent(cells, qt);
+  const heightT = spec?.heightTexels ?? cells[0] * 16;
+  const z0 = tp.z[1];
+  return {
+    mount,
+    spec,
+    rect: [
+      anchor[0] - ex / 2,
+      anchor[1] - ey / 2,
+      anchor[0] + ex / 2,
+      anchor[1] + ey / 2,
+    ],
+    z: [z0, z0 + heightT],
+    quarterTurns: qt,
+    anchor,
+    anchorZ: z0,
+    host: tp.host,
+    rear: false,
+  };
+}
+
+/** Fire (or sensor) arc of every tile-mounted weapon and sensor. Recorded for ship-weapon fire. */
+export interface PrefabMountArc extends MountArc {
+  mount: string;
+  tile: string;
+  component: string;
+  category: string;
+  /** Plan position of the item (m, prefab frame). */
+  at: [number, number];
+  rangeM: number;
+  /** Linked items fire together; this is the number on the tile. */
+  linked: number;
+}
+
+export function prefabMountArcs(
+  doc: ShipPrefabDocumentV1,
+  catalog: PrefabComponentCatalog,
+): PrefabMountArc[] {
+  if (!doc.mountTiles) return [];
+  const geoms = doc.volumes.map(volumeGeometry);
+  const out: PrefabMountArc[] = [];
+  for (const tile of doc.mountTiles) {
+    const on = tileMounts(doc, tile.id);
+    for (const m of on) {
+      const spec = catalog.get(m.component);
+      if (!spec) continue;
+      const arc = mountArc(tile.kind, tile.size, tile.facing, spec);
+      out.push({
+        ...arc,
+        mount: m.id,
+        tile: tile.id,
+        component: m.component,
+        category: spec.category,
+        at: placeMount(m, spec, geoms, doc).anchor,
+        rangeM: spec.rangeM ?? 0,
+        linked: on.length,
+      });
+    }
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------- approach zones
@@ -1514,6 +1770,7 @@ export type PrefabIssueRef =
   | { kind: "room"; id: string }
   | { kind: "edge"; id: string }
   | { kind: "mount"; id: string }
+  | { kind: "tile"; id: string }
   | { kind: "skylight"; id: string };
 
 export interface PrefabIssue {
@@ -1528,6 +1785,114 @@ const rectsOverlap = (a: readonly number[], b: readonly number[]) =>
   b[0] < a[2] - 1e-9 &&
   a[1] < b[3] - 1e-9 &&
   b[1] < a[3] - 1e-9;
+
+/** A roof footprint must lie on the hull roof at one height (0.25 m sampling). */
+function roofFootprintIssue(
+  rect: readonly number[],
+  geoms: readonly VolumeGeometry[],
+): { code: string; message: string } | null {
+  const [x0, y0, x1, y1] = rect;
+  let hostZ: number | null = null;
+  for (let x = x0 + 0.125; x < x1; x += 0.25)
+    for (let y = y0 + 0.125; y < y1; y += 0.25) {
+      let z: number | null = null;
+      for (const g of geoms)
+        if (g.outline && insideOutline(g.outline, x, y))
+          z = Math.max(z ?? -1, g.z[1]);
+      if (z === null)
+        return { code: "off-hull", message: "footprint leaves the hull roof" };
+      if (hostZ !== null && z !== hostZ)
+        return { code: "uneven", message: "footprint spans two roof heights" };
+      hostZ = z;
+    }
+  return null;
+}
+
+const SIZE_NUMBER: Record<MountSizeId, number> = { SM: 0, MD: 1, LG: 2, XL: 3 };
+/** "a size-2 (LG) turret mount holds 1 x MD or 2 x SM" for validation messages. */
+export function mountTileCapacityText(
+  kind: MountTileKind,
+  size: MountSizeId,
+): string {
+  const configs = [1, 2, 4]
+    .map((n) => [n, mountTileCapacity(kind, size, n)] as const)
+    .filter(([, s]) => s)
+    .map(([n, s]) => `${n} x ${s} (size ${SIZE_NUMBER[s!]})`);
+  return `a size-${SIZE_NUMBER[size]} (${size}) ${kind} mount holds ${configs.join(" or ")}`;
+}
+
+/** Validate one roof mount tile and the items on it. */
+export function validateMountTile(
+  doc: ShipPrefabDocumentV1,
+  tile: PrefabMountTile,
+  catalog: PrefabComponentCatalog,
+  geoms: readonly VolumeGeometry[] = doc.volumes.map(volumeGeometry),
+): PrefabIssue[] {
+  const issues: PrefabIssue[] = [];
+  const ref = { kind: "tile" as const, id: tile.id };
+  const push = (severity: "error" | "warning", code: string, message: string) =>
+    issues.push({ severity, code, message, ref });
+  const label = `${tile.size} ${tile.kind} mount`;
+  const size = G.blueprintSizeClasses[doc.sizeClass];
+  if (mountSizeRank(tile.size) > mountSizeRank(size.maxMount))
+    push(
+      "error",
+      "tile.size-class",
+      `A size-${doc.sizeClass} blueprint allows mounts up to ${size.maxMount}; this is ${tile.size}`,
+    );
+  const tp = placeMountTile(tile, geoms);
+  const roof = roofFootprintIssue(tp.rect, geoms);
+  if (roof) push("error", `tile.${roof.code}`, `${label} ${roof.message}`);
+  for (const s of doc.skylights)
+    if (
+      rectsOverlap(tp.rect, [
+        s.at[0],
+        s.at[1],
+        s.at[0] + s.size[0],
+        s.at[1] + s.size[1],
+      ])
+    )
+      push("error", "tile.skylight", `${label} overlaps skylight ${s.id}`);
+  for (const o of doc.mountTiles ?? [])
+    if (
+      o.id !== tile.id &&
+      rectsOverlap(tp.rect, placeMountTile(o, geoms).rect)
+    )
+      push("error", "tile.overlap", `${label} overlaps mount tile ${o.id}`);
+  const items = tileMounts(doc, tile.id);
+  if (!items.length) {
+    push("warning", "tile.empty", `${label} carries nothing`);
+    return issues;
+  }
+  const specs = items.map((m) => catalog.get(m.component));
+  if (new Set(items.map((m) => m.component)).size > 1)
+    push(
+      "error",
+      "tile.mixed",
+      `Linked items on one mount must be identical (${[...new Set(items.map((m) => m.component))].join(", ")})`,
+    );
+  const max = mountTileCapacity(tile.kind, tile.size, items.length);
+  if (!max)
+    push(
+      "error",
+      "tile.config",
+      `${items.length} items do not fit: ${mountTileCapacityText(tile.kind, tile.size)}`,
+    );
+  else
+    for (const sp of specs)
+      if (
+        sp &&
+        !mountTileAccepts(tile.kind, tile.size, items.length, sp.sizeClass)
+      ) {
+        push(
+          "error",
+          "tile.item-size",
+          `${sp.label} is ${sp.sizeClass}: ${mountTileCapacityText(tile.kind, tile.size)}${tile.kind === "turret" ? " (turret mounts carry one size smaller)" : ""}`,
+        );
+        break;
+      }
+  return issues;
+}
 
 /** Validate one mount against the ship (used for live green/red placement feedback). */
 export function validateMount(
@@ -1552,7 +1917,42 @@ export function validateMount(
       "mount.size-class",
       `${spec.label} is ${spec.sizeClass}; a size-${doc.sizeClass} blueprint allows up to ${size.maxMount}`,
     );
-  const place = placeMount(mount, spec, geoms);
+  const place = placeMount(mount, spec, geoms, doc);
+  // 2026-09-29 mount rules (documents with `mountTiles`): weapons and sensors only on roof mount
+  // tiles; only propulsion on side/aft faces (edge openings are hull doors, not mounts).
+  const strict = doc.mountTiles !== undefined;
+  const onTile = mount.tile !== undefined;
+  if (onTile) {
+    const tile = doc.mountTiles?.find((t) => t.id === mount.tile);
+    if (!tile) {
+      err("mount.tile-unknown", `Mount tile ${mount.tile} does not exist`);
+      return issues;
+    }
+    if (!mountTileRequired(spec.category))
+      err(
+        "mount.tile-category",
+        `${spec.label} is not a weapon or sensor; mount tiles carry only weapons and sensors`,
+      );
+    if (!spec.attach.includes("top"))
+      err("mount.attach", `${spec.label} cannot mount on the roof`);
+    if (mount.at[0] !== tile.at[0] || mount.at[1] !== tile.at[1])
+      err(
+        "mount.tile-at",
+        `${spec.label} must share its tile's position (${tile.at.join(", ")})`,
+      );
+    // The tile validates its own roof footprint, overlaps and size configuration.
+    return issues;
+  }
+  if (strict && mount.attach === "top" && mountTileRequired(spec.category))
+    err(
+      "mount.tile-required",
+      `${spec.label} must sit on a roof mount tile (fixed or turret)`,
+    );
+  if (strict && mount.attach === "face" && spec.category !== "propulsion")
+    err(
+      "mount.side-engines-only",
+      `Only engines mount on side or aft faces; move ${spec.label} to the roof`,
+    );
   if (mount.attach === "interior") {
     if (!spec.attach.includes("interior"))
       err("mount.attach", `${spec.label} is not an interior module`);
@@ -1612,6 +2012,9 @@ export function validateMount(
   } else if (mount.attach === "top") {
     if (!spec.attach.includes("top"))
       err("mount.attach", `${spec.label} cannot mount on a top hardpoint`);
+    for (const t of doc.mountTiles ?? [])
+      if (rectsOverlap(place.rect, placeMountTile(t, geoms).rect))
+        err("mount.overlap", `Overlaps mount tile ${t.id}`);
     const [x0, y0, x1, y1] = place.rect;
     let hostZ: number | null = null;
     for (let x = x0 + 0.125; x < x1; x += 0.25)
@@ -1685,8 +2088,9 @@ export function validateMount(
     }
   }
   for (const o of others) {
+    if (o.tile !== undefined) continue;
     const ospec = catalog.get(o.component);
-    const op = placeMount(o, ospec, geoms);
+    const op = placeMount(o, ospec, geoms, doc);
     const lineKind = (a: string) => (a === "edge" ? "face" : a);
     if (lineKind(o.attach) !== lineKind(mount.attach)) continue;
     const onFace = mount.attach === "face" || mount.attach === "edge";
@@ -1772,7 +2176,10 @@ export function validateShipPrefab(
       `Structure is ${bx1 - bx0} x ${by1 - by0} m; size ${doc.sizeClass} allows ${size.maxCells[0]} x ${size.maxCells[1]} m`,
       docRef,
     );
-  const hardpoints = doc.mounts.filter((m) => m.attach !== "interior").length;
+  // A roof mount tile is one hardpoint however many linked items it carries.
+  const hardpoints =
+    doc.mounts.filter((m) => m.attach !== "interior" && m.tile === undefined)
+      .length + (doc.mountTiles?.length ?? 0);
   if (hardpoints > size.maxMounts)
     push(
       "error",
@@ -1991,6 +2398,8 @@ export function validateShipPrefab(
   // Mounts and skylights.
   for (const m of doc.mounts)
     issues.push(...validateMount(doc, m, catalog, geoms));
+  for (const t of doc.mountTiles ?? [])
+    issues.push(...validateMountTile(doc, t, catalog, geoms));
   for (const s of doc.skylights) {
     const ref = { kind: "skylight" as const, id: s.id };
     const hostOk = geoms.some(
@@ -2072,6 +2481,8 @@ export interface PrefabStats {
   heatBalanceW: number;
   mountsBySize: Record<MountSizeId, number>;
   mountsByCategory: Record<string, number>;
+  /** Roof mount tiles by kind and their own mass (included in componentMassKg). */
+  mountTiles: { fixed: number; turret: number; massKg: number };
   crew: number;
   cargoCells: number;
 }
@@ -2127,6 +2538,17 @@ export function prefabStats(
     hd += spec.heatRejectionW ?? 0;
     berths += spec.berths ?? 0;
   }
+  // Roof mount tiles: plinth/ring mass; turret traverse drives draw power and make heat.
+  const mountTiles = { fixed: 0, turret: 0, massKg: 0 };
+  for (const t of doc.mountTiles ?? []) {
+    const ts = mountTileSpec(t.kind, t.size);
+    if (!ts) continue;
+    mountTiles[t.kind]++;
+    mountTiles.massKg += ts.massKg;
+    componentMassKg += ts.massKg;
+    pd += ts.powerKw * 1000;
+    hg += ts.heatKw * 1000;
+  }
   const massKg = structureMassKg + componentMassKg;
   const bunks = interior.sockets.filter((s) =>
     s.designId.endsWith("crew-bunk"),
@@ -2151,6 +2573,7 @@ export function prefabStats(
     heatBalanceW: hg - hd,
     mountsBySize,
     mountsByCategory,
+    mountTiles,
     crew: Math.max(1, berths + bunks * 2),
     cargoCells: interior.floors.filter(
       (f) => doc.rooms.find((r) => r.id === f.room)?.type === "cargo",
@@ -2201,6 +2624,7 @@ export function blankShipPrefab(
     ],
     edges: [],
     mounts: [],
+    mountTiles: [],
     skylights: [],
     markings: {
       name: name.toUpperCase().slice(0, 16),

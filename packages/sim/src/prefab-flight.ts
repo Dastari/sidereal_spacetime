@@ -17,9 +17,11 @@ import {
   outlineArea,
   type Pt,
 } from "@sidereal/content/construction-grammar";
+import { mountTileSpec } from "@sidereal/content/ship-mount-tiles";
 import {
   deriveInterior,
   placeMount,
+  placeMountTile,
   prefabBounds,
   volumeGeometry,
   type PrefabComponentCatalog,
@@ -58,14 +60,29 @@ const RCS_DIRECTIONS: [string, number][] = [
 ];
 export const PREFAB_FLIGHT_REVISION = 1;
 /**
- * IFCS profile for prefab ships. Gains and turn caps match the Wayfarer profile; the linear
- * acceleration cap is lifted to 6 m/s^2 so each ship's compiled thrust envelope, not a shared
- * 3 m/s^2 ceiling, decides how hard it accelerates (S starters about 4-5, M/L about 2-2.5).
- * Speed limits stay the Wayfarer values.
+ * IFCS profile for prefab ships (owner 2026-09-29: starter-size ships must feel snappy).
+ *
+ * The profile is a ceiling; each ship's compiled thrust envelope (its engines, reversers and RCS
+ * against its mass and inertia) decides how hard it actually accelerates, turns and stops, so
+ * M/L hulls with proportionally smaller drives stay heavy while S hulls reach the caps.
+ * - maxAcceleration 8 m/s^2 and maxAngularAcceleration 1.5 rad/s^2 do not clip any prefab's
+ *   envelope; maxAngularSpeed 1.1 rad/s (63 deg/s) is the pilot's full-stick yaw rate.
+ * - velocityGain 2 and angularGain 6 tighten the hold/stop response (time constants 0.5 s and
+ *   heading capture 1.5 /s) without overshoot (critical-damping rule in `desiredWrench`).
+ * - rawTurnBehavior: the nose turns at the pilot's rate at any speed and the drives swing the
+ *   velocity after it, instead of limiting yaw to lateral acceleration / speed (1-2 deg/s at
+ *   cruise for every prefab under the coordinated rule).
+ * Speed limits stay the Wayfarer values (30 m/s forward, 12 m/s reverse). Proposed, not approved.
  */
 export const PREFAB_FLIGHT_PROFILE: FlightProfile = Object.freeze({
   ...WAYFARER_FLIGHT_PROFILE,
-  maxAcceleration: 6,
+  velocityGain: 2,
+  headingGain: 2,
+  angularGain: 6,
+  maxAcceleration: 8,
+  maxAngularAcceleration: 1.5,
+  maxAngularSpeed: 1.1,
+  rawTurnBehavior: true,
 });
 const FLOOR_KG_PER_M2 = 40;
 const WALL_KG_PER_M = 60;
@@ -84,7 +101,10 @@ export const prefabPartSourceId = {
   structure: (volumeId: string) => `structure-${volumeId}`,
   interior: () => "interior",
   mount: (mountId: string) => `mount-${mountId}`,
+  tile: (tileId: string) => `tile-${tileId}`,
 };
+export const prefabMountTileDefinitionId = (kind: string, size: string) =>
+  `prefab-mount-tile:${kind}.${size}`;
 
 type Role = "actuator" | "computer" | "mass" | "rcs";
 export function componentFlightRole(
@@ -253,7 +273,7 @@ export function prefabFlightModel(
     const role = componentFlightRole(spec, m.attach);
     const def = componentDefinition(spec, role);
     defs.set(def.id, def);
-    const mp = placeMount(m, spec, geoms);
+    const mp = placeMount(m, spec, geoms, doc);
     const [sx, sy] = toShip(mp.anchor);
     const sourceId = prefabPartSourceId.mount(m.id);
     parts.push({
@@ -272,6 +292,41 @@ export function prefabFlightModel(
         definitionRevision: PREFAB_FLIGHT_REVISION,
         role,
       });
+    if (role === "actuator" && (spec.reverseThrustN ?? 0) > 0) {
+      // Thrust reverser (catalog revision 3+): a massless actuator on the same drive pushing
+      // opposite its forward axis, so the drive brakes as well as accelerates.
+      const reverser: ActuatorDefinition = {
+        id: `${prefabComponentDefinitionId(spec.id)}#reverser`,
+        revision: PREFAB_FLIGHT_REVISION,
+        kind: "actuator",
+        massKg: 0,
+        centroid: [0, 0],
+        inertiaKgM2: 0,
+        fittingDefinitionId: `${prefabFittingDefinitionId(spec.id)}#reverser`,
+        maxThrustN: spec.reverseThrustN!,
+        forceAxis: [0, 1],
+        mountOffset: [0, 0],
+        nozzleOffset: [0, -0.3],
+        nozzleHeight: 0,
+      };
+      defs.set(reverser.id, reverser);
+      const id = `${sourceId}#reverser`;
+      parts.push({
+        sourceId: id,
+        id,
+        definitionId: reverser.id,
+        revision: PREFAB_FLIGHT_REVISION,
+        position: [sx, sy, mp.anchorZ / 16],
+        rotation: ((mp.quarterTurns + 2) * Math.PI) / 2,
+        flipped: false,
+      });
+      fittings.push({
+        sourceId: id,
+        definitionId: reverser.fittingDefinitionId,
+        definitionRevision: PREFAB_FLIGHT_REVISION,
+        role: "actuator",
+      });
+    }
     if (role === "rcs") {
       // Four massless nozzles (fore, port, aft, starboard) on the cluster; the cluster part
       // above carries the mass. Each nozzle is its own placed part and fitting row.
@@ -309,6 +364,33 @@ export function prefabFlightModel(
         });
       });
     }
+  }
+  // Roof mount tiles: plinths and turret rings carry mass (their items are mounts above).
+  for (const t of doc.mountTiles ?? []) {
+    const ts = mountTileSpec(t.kind, t.size);
+    if (!ts) throw Error(`Unknown mount tile ${t.kind} ${t.size}`);
+    const tp = placeMountTile(t, geoms);
+    const id = prefabMountTileDefinitionId(t.kind, t.size);
+    const n = tp.rect[2] - tp.rect[0];
+    defs.set(id, {
+      id,
+      revision: PREFAB_FLIGHT_REVISION,
+      kind: "component",
+      massKg: ts.massKg,
+      centroid: [0, 0],
+      inertiaKgM2: (ts.massKg * n * n) / 6,
+    });
+    const [sx, sy] = toShip(tp.centre);
+    const sourceId = prefabPartSourceId.tile(t.id);
+    parts.push({
+      sourceId,
+      id: sourceId,
+      definitionId: id,
+      revision: PREFAB_FLIGHT_REVISION,
+      position: [sx, sy, tp.z[0] / 16],
+      rotation: 0,
+      flipped: false,
+    });
   }
   const [x0, y0, x1, y1] = prefabBounds(geoms);
   const beam = y1 - y0;

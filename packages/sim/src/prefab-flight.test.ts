@@ -54,7 +54,9 @@ describe("prefab flight compile", () => {
       const stats = prefabStats(prefab, catalog);
       expect(compiled.mass.massKg).toBeCloseTo(stats.massKg, -1);
       const main = compiled.actuators.filter(
-        (a) => !a.definitionId.endsWith("#nozzle"),
+        (a) =>
+          !a.definitionId.endsWith("#nozzle") &&
+          !a.definitionId.endsWith("#reverser"),
       );
       expect(main.every((a) => Math.abs(a.rotation) < 1e-9)).toBe(true);
       expect(main.reduce((s, a) => s + a.maxThrustN, 0)).toBeCloseTo(
@@ -78,7 +80,7 @@ describe("prefab flight compile", () => {
   });
 });
 
-describe("prefab flight balance (proposed, catalog revision 2)", () => {
+describe("prefab flight balance (proposed, catalog revision 3)", () => {
   const components = new Map(
     buildShipComponentCatalog().components.map((c) => [c.id, c]),
   );

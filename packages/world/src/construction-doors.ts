@@ -52,6 +52,10 @@ const REVIEW_DURATION_SECONDS = 1,
   REVIEW_REACH_METRES = 2.5,
   MAX_MOVING_DOORS = 256;
 const baseCache = new Map<string, CompiledDeckCollision>();
+/** Drop cached deck collision (tests: fixtures mint the same instance ids for different ships). */
+export function clearConstructionCollisionCache() {
+  baseCache.clear();
+}
 export function installDoors(
   ctx: Context,
   instanceId: string,

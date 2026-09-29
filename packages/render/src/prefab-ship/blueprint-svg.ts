@@ -6,6 +6,7 @@ import { G, type Pt } from "@sidereal/content/construction-grammar";
 import {
   deriveInterior,
   placeMount,
+  placeMountTile,
   prefabStats,
   validateShipPrefab,
   volumeGeometry,
@@ -64,7 +65,7 @@ export function prefabBlueprintSvg(
   const margin = options.margin ?? 2.5;
   const geoms = doc.volumes.map(volumeGeometry);
   const mounts = doc.mounts.map((m) =>
-    placeMount(m, catalog.get(m.component), geoms),
+    placeMount(m, catalog.get(m.component), geoms, doc),
   );
   const xs = [
     ...geoms.flatMap((g) => [g.bounds[0], g.bounds[2]]),
@@ -164,6 +165,24 @@ export function prefabBlueprintSvg(
     out.push(
       `<rect x="${X(sk.at[0])}" y="${Y(sk.at[1] + sk.size[1])}" width="${sk.size[0] * s}" height="${sk.size[1] * s}" fill="#7fd8ff" opacity="0.35" stroke="#7fd8ff" stroke-width="2"/>`,
     );
+  // Roof mount tiles: fixed plinths (square) and turret rings (circle), boresight tick.
+  for (const t of doc.mountTiles ?? []) {
+    const tp = placeMountTile(t, geoms);
+    const [rx0, ry0, rx1, ry1] = tp.rect;
+    const [cx, cy] = tp.centre;
+    const r = ((rx1 - rx0) / 2) * s;
+    out.push(
+      t.kind === "turret"
+        ? `<circle cx="${X(cx)}" cy="${Y(cy)}" r="${(r * 0.85).toFixed(1)}" fill="none" stroke="#ffd166" stroke-width="2"/>`
+        : `<rect x="${X(rx0 + 0.08)}" y="${Y(ry1 - 0.08)}" width="${((rx1 - rx0 - 0.16) * s).toFixed(1)}" height="${((ry1 - ry0 - 0.16) * s).toFixed(1)}" fill="none" stroke="#ffd166" stroke-width="2"/>`,
+    );
+    const b = { fore: [1, 0], aft: [-1, 0], port: [0, 1], starboard: [0, -1] }[
+      t.facing
+    ];
+    out.push(
+      `<line x1="${X(cx)}" y1="${Y(cy)}" x2="${X(cx + (b[0] * (rx1 - rx0)) / 2)}" y2="${Y(cy + (b[1] * (ry1 - ry0)) / 2)}" stroke="#ffd166" stroke-width="2"/>`,
+    );
+  }
   // Mounts.
   for (const m of mounts) {
     const cat = m.spec?.category ?? "unknown";

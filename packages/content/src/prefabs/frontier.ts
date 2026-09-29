@@ -1,5 +1,6 @@
 /** Frontier industrial and Vitreous Choir crystalline designs. */
 import {
+  armed,
   door,
   edge,
   face,
@@ -98,16 +99,12 @@ export const IND_MULE = prefab({
     face("block-s", "thrust-block.lg", "aft", [0, 1.5]),
     face("block-p", "thrust-block.lg", "aft", [0, 8.5]),
     face("block-c", "thrust-block.md", "aft", [0, 5]),
-    face("arm-s", "salvage-arm.md", "fore", [20, 1]),
-    face("arm-p", "salvage-arm.md", "fore", [20, 9]),
     opening("cargo-door", "cargo-door.4m", "starboard", [17, 0]),
     opening("lock", "airlock.exterior.md", "port", [15, 10]),
     top("drill-a", "mining-laser.md", [21, 3]),
     top("drill-b", "mining-laser.md", [21, 5]),
     top("tractor", "tractor-projector.md", [16, 6.5]),
     top("clamp", "docking-clamp.md", [12, 6]),
-    top("pd", "point-defense.sm", [10, 1]),
-    top("dish", "sensor-dish.sm", [23, 4.5]),
     top("rad-s", "radiator.lg", [5, -3]),
     top("rad-p", "radiator.lg", [5, 10]),
     top("rad-c", "radiator.md", [1, 4]),
@@ -118,9 +115,18 @@ export const IND_MULE = prefab({
     module("fuel", "fuel-tank.md", [2, 7], "fore"),
     module("bunk-1", "crew-bunk.sm", [4.5, 8.5], "starboard"),
     module("bunk-2", "crew-bunk.sm", [4.5, 6.5], "starboard"),
+    top("arm-s", "salvage-arm.md", [18, 1]),
+    top("arm-p", "salvage-arm.md", [18, 7]),
+  ],
+  armed: [
+    armed("pd", "turret", "MD", [10, 1], "fore", "point-defense.sm"),
+    armed("sensor", "fixed", "SM", [23, 4.5], "fore", "sensor-dish.sm"),
   ],
   markings: { name: "MULE", number: "FG-208", emblem: "gear" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+IND_MULE.revision = 2;
 
 /** Medium crystalline alien: faceted shard hull with 1:2 crystal spikes. */
 export const CRY_SHARD = prefab({
@@ -200,10 +206,7 @@ export const CRY_SHARD = prefab({
     face("spike-drive-p", "resonance-drive.aurelian.sm", "aft", [4, 9.5]),
     face("spike-drive-s", "resonance-drive.aurelian.sm", "aft", [4, -1.5]),
     opening("lock", "airlock.exterior.md", "starboard", [13, 0]),
-    top("lance", "laser-cannon.md", [5, 1]),
-    top("plasma", "plasma-turret.md", [10, 5]),
     top("ward", "shield-emitter.md", [15, 3]),
-    top("beacon", "relay-beacon.sm", [3, 3]),
     top("drill", "mining-laser.sm", [6, 9]),
     top("rad-a", "radiator.md", [1, 3]),
     top("rad-b", "radiator.md", [6, 5]),
@@ -215,5 +218,13 @@ export const CRY_SHARD = prefab({
     module("bunk-1", "crew-bunk.sm", [4.5, 6.5], "starboard"),
     module("bunk-2", "crew-bunk.sm", [6.5, 6.5], "starboard"),
   ],
+  armed: [
+    armed("lance", "fixed", "MD", [5, 1], "fore", "laser-cannon.md"),
+    armed("plasma", "turret", "LG", [10, 5], "fore", "plasma-turret.md"),
+    armed("beacon", "fixed", "SM", [3, 3], "fore", "relay-beacon.sm"),
+  ],
   markings: { name: "SHARD", number: "VC-12", emblem: "crystal" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+CRY_SHARD.revision = 2;
