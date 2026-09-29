@@ -13,13 +13,16 @@ import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
-import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
-import { CreateLineSystem } from "@babylonjs/core/Meshes/Builders/linesBuilder";
+import { Color3 } from "@babylonjs/core/Maths/math.color";
 import "@babylonjs/core/Culling/ray";
 import { CreateSphere } from "@babylonjs/core/Meshes/Builders/sphereBuilder";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
-import type { LinesMesh } from "@babylonjs/core/Meshes/linesMesh";
+import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
+import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
+import type { IndicesArray } from "@babylonjs/core/types";
+import { createObjectOutline } from "./object-outline";
 import { G } from "@sidereal/content/construction-grammar";
 import {
   prefabOrigin,
@@ -205,6 +208,143 @@ function rayBox(o: Vector3, d: Vector3, b: Box): number | undefined {
   return t0;
 }
 
+/** Source roles of an outlined object: placed parts, or the door frame for doors. */
+const PART_ROLES: ReadonlySet<string> = new Set(["equipment"]);
+const DOOR_ROLES: ReadonlySet<string> = new Set(["wall"]);
+
+/** Ship-root-local triangle soups of the rendered ship meshes, cached per mesh (static). */
+const shipTriangleCache = new WeakMap<
+  Mesh,
+  { positions: Float32Array; indices: IndicesArray }
+>();
+function shipTriangles(mesh: Mesh, shipRoot: TransformNode) {
+  let hit = shipTriangleCache.get(mesh);
+  if (hit) return hit;
+  const source = mesh.getVerticesData(VertexBuffer.PositionKind);
+  const indices = mesh.getIndices();
+  if (!source || !indices) return undefined;
+  const toRoot = mesh
+    .computeWorldMatrix(true)
+    .multiply(Matrix.Invert(shipRoot.computeWorldMatrix(true)));
+  const positions = new Float32Array(source.length);
+  const v = new Vector3();
+  for (let i = 0; i < source.length; i += 3) {
+    Vector3.TransformCoordinatesFromFloatsToRef(
+      source[i],
+      source[i + 1],
+      source[i + 2],
+      toRoot,
+      v,
+    );
+    positions[i] = v.x;
+    positions[i + 1] = v.y;
+    positions[i + 2] = v.z;
+  }
+  hit = { positions, indices };
+  shipTriangleCache.set(mesh, hit);
+  return hit;
+}
+
+/**
+ * Outline proxy for one picked object: the triangles of the currently drawn (batched) ship
+ * meshes whose centroid lies inside the object's box, in ship-root space; the box itself when the
+ * view has no geometry there (stand-ins, tests). Never drawn in the main pass (layerMask 0).
+ */
+export function objectProxyMesh(
+  scene: Scene,
+  shipRoot: TransformNode,
+  viewRoot: TransformNode | undefined,
+  box: { min: Vector3; max: Vector3 },
+  name: string,
+  /** Source roles the object is cut from (batch `roleRanges`); all triangles when omitted. */
+  roles?: ReadonlySet<string>,
+) {
+  // Batches merge every role per material, so the object is cut out by containment: every
+  // vertex within the box (plus a small tolerance) and the centroid strictly inside it. Large
+  // floor, wall and hull faces that merely cross the box are left out.
+  const inset = 0.015;
+  const slack = 0.03;
+  const lo = box.min.add(new Vector3(inset, inset, inset));
+  const hi = box.max.subtract(new Vector3(inset, inset, inset));
+  const outer = (i: number, p: ArrayLike<number>) =>
+    p[i] < box.min.x - slack ||
+    p[i] > box.max.x + slack ||
+    p[i + 1] < box.min.y - slack ||
+    p[i + 1] > box.max.y + slack ||
+    p[i + 2] < box.min.z - slack ||
+    p[i + 2] > box.max.z + slack;
+  const positions: number[] = [];
+  const indices: number[] = [];
+  for (const mesh of viewRoot?.getChildMeshes(false) ?? []) {
+    if (
+      !(mesh instanceof Mesh) ||
+      !mesh.isEnabled() ||
+      !mesh.isVisible ||
+      mesh.layerMask === 0 ||
+      mesh.hasThinInstances
+    )
+      continue;
+    const tris = shipTriangles(mesh, shipRoot);
+    if (!tris) continue;
+    const p = tris.positions;
+    const ind = tris.indices;
+    const ranges = (
+      mesh.metadata?.roleRanges as
+        { role: string; first: number; count: number }[] | undefined
+    )
+      ?.filter((r) => !roles || roles.has(r.role))
+      .map((r) => [r.first, r.first + r.count] as const) ?? [
+      [0, ind.length] as const,
+    ];
+    for (const [from, to] of ranges)
+      for (let t = from; t < to; t += 3) {
+        const a = ind[t] * 3,
+          b = ind[t + 1] * 3,
+          c = ind[t + 2] * 3;
+        const x = (p[a] + p[b] + p[c]) / 3;
+        const y = (p[a + 1] + p[b + 1] + p[c + 1]) / 3;
+        const z = (p[a + 2] + p[b + 2] + p[c + 2]) / 3;
+        if (
+          x < lo.x ||
+          x > hi.x ||
+          y < lo.y ||
+          y > hi.y ||
+          z < lo.z ||
+          z > hi.z
+        )
+          continue;
+        if (outer(a, p) || outer(b, p) || outer(c, p)) continue;
+        const base = positions.length / 3;
+        for (const k of [a, b, c]) positions.push(p[k], p[k + 1], p[k + 2]);
+        indices.push(base, base + 1, base + 2);
+      }
+  }
+  let proxy: Mesh;
+  if (indices.length) {
+    proxy = new Mesh(name, scene);
+    const data = new VertexData();
+    data.positions = positions;
+    data.indices = indices;
+    data.applyToMesh(proxy);
+  } else {
+    proxy = CreateBox(
+      name,
+      {
+        width: box.max.x - box.min.x,
+        height: box.max.y - box.min.y,
+        depth: box.max.z - box.min.z,
+      },
+      scene,
+    );
+    proxy.position.copyFrom(box.min.add(box.max).scale(0.5));
+  }
+  proxy.parent = shipRoot;
+  proxy.layerMask = 0;
+  proxy.isPickable = false;
+  setMeshRole(proxy, "effect");
+  return proxy;
+}
+
 /**
  * Click/hover picking of a prefab ship's placed objects in the current view (deck cut-away:
  * modules, furniture, doors, hull-side parts; flight: exterior parts). Draws a thin outline
@@ -222,61 +362,42 @@ export function createPrefabObjectPicker(
     object: o,
     box: localBox(o, origin),
   }));
-  const outline = (name: string, colour: Color4) => {
-    let mesh: LinesMesh | undefined;
+  // Silhouette outline (object-outline.ts): a thin edge on hover, a strong one on selection,
+  // around the picked object's own geometry only (cut out of the batched ship meshes).
+  const silhouette = createObjectOutline(scene);
+  const viewRootName = `prefab-ship:${binding.doc.id}`;
+  const outline = (name: string, kind: "selected" | "hover") => {
+    let mesh: Mesh | undefined;
     return {
       show(id: string | undefined) {
+        silhouette.set(kind, undefined);
         mesh?.dispose();
         mesh = undefined;
         const hit = objects.find(
           (o) => PREFAB_OBJECT_PREFIX + o.object.id === id,
         );
         if (!hit) return;
-        const pad = 0.04;
-        const [a, b] = [hit.box.min, hit.box.max];
-        const [x0, y0, z0] = [a.x - pad, a.y, a.z - pad];
-        const [x1, y1, z1] = [b.x + pad, b.y + pad, b.z + pad];
-        const p = (x: number, y: number, z: number) => new Vector3(x, y, z);
-        const lines = [
-          [
-            p(x0, y0, z0),
-            p(x1, y0, z0),
-            p(x1, y0, z1),
-            p(x0, y0, z1),
-            p(x0, y0, z0),
-          ],
-          [
-            p(x0, y1, z0),
-            p(x1, y1, z0),
-            p(x1, y1, z1),
-            p(x0, y1, z1),
-            p(x0, y1, z0),
-          ],
-          [p(x0, y0, z0), p(x0, y1, z0)],
-          [p(x1, y0, z0), p(x1, y1, z0)],
-          [p(x1, y0, z1), p(x1, y1, z1)],
-          [p(x0, y0, z1), p(x0, y1, z1)],
-        ];
-        mesh = CreateLineSystem(
-          name,
-          { lines, colors: lines.map((l) => l.map(() => colour)) },
+        const viewRoot = shipRoot
+          .getChildTransformNodes(false)
+          .find((n) => n.name === viewRootName);
+        mesh = objectProxyMesh(
           scene,
+          shipRoot,
+          viewRoot,
+          hit.box,
+          name,
+          hit.object.id.startsWith("door:") ? DOOR_ROLES : PART_ROLES,
         );
-        mesh.parent = shipRoot;
-        mesh.isPickable = false;
-        mesh.renderingGroupId = 1;
-        setMeshRole(mesh, "effect");
+        silhouette.set(kind, mesh);
       },
       dispose() {
+        silhouette.set(kind, undefined);
         mesh?.dispose();
       },
     };
   };
-  const selected = outline(
-    "prefab-object-selected",
-    new Color4(0.35, 0.95, 1, 1),
-  );
-  const hovered = outline("prefab-object-hover", new Color4(0.8, 0.9, 1, 0.55));
+  const selected = outline("prefab-object-selected", "selected");
+  const hovered = outline("prefab-object-hover", "hover");
   let hoverId: string | undefined;
   let selectedId: string | undefined;
   function pickAt(clientX: number, clientY: number): string | undefined {
@@ -330,6 +451,7 @@ export function createPrefabObjectPicker(
       canvas.removeEventListener("pointermove", move);
       selected.dispose();
       hovered.dispose();
+      silhouette.dispose();
     },
   };
 }
