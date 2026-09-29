@@ -18,6 +18,7 @@ import {
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
 import {
+  Archive,
   Box,
   ChevronLeft,
   CircleDot,
@@ -106,6 +107,7 @@ const TOOL_ICONS: Record<ToolId, ReactNode> = {
   mount: <Plug size={17} />,
   tile: <Crosshair size={17} />,
   skylight: <SunDim size={17} />,
+  storage: <Archive size={17} />,
   button: <CircleDot size={17} />,
 };
 
@@ -304,7 +306,11 @@ function Editor({
           return setTools({
             rot: ((tools.rot + (e.shiftKey ? 3 : 1)) % 4) as QuarterTurn,
           });
-        if (tools.tool === "mount" || tools.tool === "tile")
+        if (
+          tools.tool === "mount" ||
+          tools.tool === "tile" ||
+          tools.tool === "storage"
+        )
           return setTools({ facing: NEXT_FACING[tools.facing] });
         if (tools.tool === "skylight")
           return setTools({ skylight: [tools.skylight[1], tools.skylight[0]] });
@@ -355,8 +361,12 @@ function Editor({
             ? e.shiftKey
               ? 1
               : 0.25
-            : (selection.kind === "mount" ? 0.5 : 1) *
-              (e.shiftKey ? (selection.kind === "mount" ? 10 : 5) : 1);
+            : selection.kind === "fixture"
+              ? e.shiftKey
+                ? 0.25
+                : 0.05
+              : (selection.kind === "mount" ? 0.5 : 1) *
+                (e.shiftKey ? (selection.kind === "mount" ? 10 : 5) : 1);
         const d: [number, number] =
           e.key === "ArrowLeft"
             ? [-unit, 0]

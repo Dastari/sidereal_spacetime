@@ -1,16 +1,24 @@
-import { buttonPlace, buttonPreview, strokeTiles } from "./tool-actions";
+import {
+  buttonPlace,
+  buttonPreview,
+  storagePlace,
+  storagePreview,
+  strokeTiles,
+} from "./tool-actions";
 /**
  * SVG plan editor for prefab ships. Plan frame: +X fore points right, +Y port points up,
  * 1 m cells with 5 m major lines. The world group is drawn in metres; strokes do not scale.
  */
 import {
   G,
+  NORMAL_VECTOR,
   placedTilePolygon,
   type Pt,
   type ShapeTilePlacement,
 } from "@sidereal/content/construction-grammar";
 import {
   deriveInterior,
+  fixtureSize,
   placeMount,
   placeMountTile,
   type PrefabComponentCatalog,
@@ -33,6 +41,7 @@ import {
   addRoom,
   addSkylight,
   eraseTiles,
+  FIXTURE_DESIGN_LABELS,
   nudgeSelection,
   paintTiles,
   placeEdge,
@@ -485,6 +494,29 @@ function PlanCanvas({
           label: `Skylight ${c.size.join(" x ")}`,
         });
       }
+      case "storage": {
+        const { candidate: c, check } = storagePreview(
+          shown,
+          catalog,
+          tools,
+          hover,
+        );
+        const [w, h] = fixtureSize(c);
+        const n = NORMAL_VECTOR[c.facing];
+        const [cx, cy] = [c.at[0] + w / 2, c.at[1] + h / 2];
+        const reach = (n[0] ? w : h) / 2 + 0.45;
+        return out({
+          check,
+          paths: [rectPath([c.at[0], c.at[1], c.at[0] + w, c.at[1] + h])],
+          lines: [
+            [
+              [cx, cy],
+              [cx + n[0] * reach, cy + n[1] * reach],
+            ],
+          ],
+          label: `${FIXTURE_DESIGN_LABELS[c.design]} at ${c.at.join(", ")}, opens ${c.facing}`,
+        });
+      }
       case "button": {
         const b = buttonPreview(shown, catalog, hover);
         const n = {
@@ -572,6 +604,7 @@ function PlanCanvas({
             hit.kind === "mount" ||
             hit.kind === "mounttile" ||
             hit.kind === "skylight" ||
+            hit.kind === "fixture" ||
             (hit.kind === "logic" &&
               logic.get(hit.id)?.device.kind === "button"))
         )
@@ -665,6 +698,9 @@ function PlanCanvas({
       case "button":
         apply("Place wall button", buttonPlace(doc, catalog, p));
         return;
+      case "storage":
+        apply("Place storage fixture", storagePlace(doc, catalog, tools, p));
+        return;
     }
   };
   const onPointerMove = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -698,7 +734,9 @@ function PlanCanvas({
           ? snapHalf
           : stroke.sel.kind === "logic"
             ? (v: number) => Math.round(v * 4) / 4
-            : Math.round;
+            : stroke.sel.kind === "fixture"
+              ? (v: number) => Math.round(v * 20) / 20
+              : Math.round;
       const delta: [number, number] = [
         step(p[0] - stroke.start[0]),
         step(p[1] - stroke.start[1]),
@@ -842,6 +880,12 @@ function PlanCanvas({
         return {
           d: rectPath([a.at[0] - hw, a.at[1] - hh, a.at[0] + hw, a.at[1] + hh]),
         };
+      }
+      case "fixture": {
+        const f = shown.fixtures?.find((x) => x.id === sel.id);
+        if (!f) return null;
+        const [w, h] = fixtureSize(f);
+        return { d: rectPath([f.at[0], f.at[1], f.at[0] + w, f.at[1] + h]) };
       }
       case "skylight": {
         const s = shown.skylights.find((x) => x.id === sel.id);

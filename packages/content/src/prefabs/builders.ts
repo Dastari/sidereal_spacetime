@@ -27,6 +27,8 @@ import {
 import {
   SHIP_PREFAB_SCHEMA,
   type PrefabEdge,
+  type PrefabFixture,
+  type PrefabFixtureDesign,
   type PrefabMount,
   type PrefabMountTile,
   type PrefabRoom,
@@ -221,6 +223,14 @@ export const skylight = (
   at: [number, number],
   size: [number, number],
 ): PrefabSkylight => ({ id, at, size });
+
+/** A hand-placed storage deck object (min corner `at`, opening to `facing`). */
+export const fixture = (
+  id: string,
+  design: PrefabFixtureDesign,
+  at: [number, number],
+  facing: FaceNormal,
+): PrefabFixture => ({ id, design, at, facing });
 
 /** A roof mount tile with its linked items (1, 2 or 4 identical weapons or sensors). */
 export interface ArmedTile {

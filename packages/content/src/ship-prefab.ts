@@ -93,6 +93,7 @@ export const SHIP_PREFAB_LIMITS = {
   mounts: 64,
   mountTiles: 32,
   skylights: 16,
+  fixtures: 32,
   coordinate: 128,
 } as const;
 
@@ -175,6 +176,45 @@ export interface PrefabSkylight {
   size: [number, number];
 }
 
+/**
+ * Storage deck objects a prefab places by hand (2026-09-29, Wren r8 EVA suit locker), next to the
+ * ones the room types derive. A fixture is an ordinary derived storage socket (same designs, key
+ * `<room>/<design>`, collision, dressing and operator-bound container); only its place is authored.
+ */
+export const PREFAB_FIXTURE_DESIGNS = [
+  "shipyard.equipment.wall-locker",
+  "cargo.standard.medium",
+] as const;
+export type PrefabFixtureDesign = (typeof PREFAB_FIXTURE_DESIGNS)[number];
+
+export interface PrefabFixture {
+  id: string;
+  design: PrefabFixtureDesign;
+  /** Footprint min corner (m, 0.05 m snap), deck 0. */
+  at: [number, number];
+  /** The side it opens to (faces into the room), as for derived storage sockets. */
+  facing: FaceNormal;
+}
+
+/** Room-grammar dimensions of a fixture design: [width along its wall, depth, height] in texels. */
+export function fixtureDesignTexels(
+  design: PrefabFixtureDesign,
+): [number, number, number] {
+  for (const spec of Object.values(G.roomTypes))
+    for (const [id, w, d, h] of spec.sockets)
+      if (id === design) return [w, d, h];
+  throw Error(`Fixture design ${design} is not a room-grammar socket`);
+}
+
+/** Plan footprint (m) of a fixture: its width runs along the wall it backs onto. */
+export function fixtureSize(
+  f: Pick<PrefabFixture, "design" | "facing">,
+): [number, number] {
+  const [w, d] = fixtureDesignTexels(f.design);
+  const along = f.facing === "port" || f.facing === "starboard";
+  return along ? [w * TEXEL, d * TEXEL] : [d * TEXEL, w * TEXEL];
+}
+
 export interface PrefabMarkings {
   name: string;
   number: string;
@@ -211,6 +251,11 @@ export interface ShipPrefabDocumentV1 {
    * shut (Wren r2-r5 and the other developer prefabs until they are authored).
    */
   logic?: PrefabLogic;
+  /**
+   * Hand-placed storage deck objects (`PrefabFixture`). Absent = only the room-type sockets
+   * (every prefab before Wren r8).
+   */
+  fixtures?: PrefabFixture[];
 }
 
 // ---------------------------------------------------------------- component catalog adapter
@@ -313,6 +358,16 @@ function half(v: unknown, path: string): number {
     fail(path, "expected a coordinate on the 0.5 m grid");
   return v;
 }
+function fine(v: unknown, path: string): number {
+  if (
+    typeof v !== "number" ||
+    !Number.isFinite(v) ||
+    Math.abs(v) > SHIP_PREFAB_LIMITS.coordinate ||
+    Math.round(v * 20) / 20 !== v
+  )
+    fail(path, "expected a coordinate on the 0.05 m grid");
+  return v;
+}
 function str(v: unknown, path: string, re: RegExp): string {
   if (typeof v !== "string" || !re.test(v)) fail(path, "invalid text");
   return v;
@@ -362,7 +417,7 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
       "skylights",
       "markings",
     ],
-    ["mountTiles", "logic"],
+    ["mountTiles", "logic", "fixtures"],
   );
   if (o.schema !== SHIP_PREFAB_SCHEMA)
     fail("schema", `expected ${SHIP_PREFAB_SCHEMA}`);
@@ -596,6 +651,21 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
     })(),
   };
   if (o.logic !== undefined) doc.logic = readPrefabLogic(o.logic);
+  if (o.fixtures !== undefined)
+    doc.fixtures = arr(o.fixtures, "fixtures", SHIP_PREFAB_LIMITS.fixtures).map(
+      (v, i) => {
+        const p = `fixtures[${i}]`;
+        const r = obj(v, p, ["id", "design", "at", "facing"]);
+        const at = arr(r.at, `${p}.at`, 2);
+        if (at.length !== 2) fail(`${p}.at`, "expected [x, y]");
+        return {
+          id: str(r.id, `${p}.id`, ID),
+          design: oneOf(r.design, `${p}.design`, PREFAB_FIXTURE_DESIGNS),
+          at: [fine(at[0], `${p}.at[0]`), fine(at[1], `${p}.at[1]`)],
+          facing: oneOf(r.facing, `${p}.facing`, FACE_NORMALS),
+        };
+      },
+    );
   if (tileCount > SHIP_PREFAB_LIMITS.tiles) fail("volumes", "too many tiles");
   uniq(
     doc.volumes.map((v) => v.id),
@@ -617,6 +687,11 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
     doc.skylights.map((v) => v.id),
     "skylights",
   );
+  if (doc.fixtures)
+    uniq(
+      doc.fixtures.map((v) => v.id),
+      "fixtures",
+    );
   if (doc.mountTiles) {
     uniq(
       doc.mountTiles.map((v) => v.id),
@@ -1130,6 +1205,8 @@ export interface DerivedSocket {
   /** Direction the object's front faces. */
   facing: FaceNormal;
   control: boolean;
+  /** Id of the hand-placed `doc.fixtures` entry; absent for room-type furniture. */
+  fixture?: string;
 }
 export interface DerivedCompartment {
   id: string;
@@ -1690,9 +1767,35 @@ export function deriveInterior(
         .filter((m) => m.attach === "interior" && catalog.get(m.component))
         .map((m) => placeMount(m, catalog.get(m.component), []).rect)
     : [];
+  // Hand-placed storage fixtures stand exactly where authored: never dropped under a module or
+  // nudged (validateShipPrefab reports one that blocks a door, button or module). Room-type
+  // furniture gives way to them.
+  const fixtureSockets: DerivedSocket[] = [];
+  if (deck === 0)
+    for (const f of doc.fixtures ?? []) {
+      const size = fixtureSize(f);
+      const room = roomAt(f.at[0] + size[0] / 2, f.at[1] + size[1] / 2);
+      if (!room) continue;
+      fixtureSockets.push({
+        designId: f.design,
+        room: room.id,
+        at: [f.at[0], f.at[1]],
+        size,
+        heightTexels: fixtureDesignTexels(f.design)[2],
+        facing: f.facing,
+        control: false,
+        fixture: f.id,
+      });
+    }
+  const fixtureRects = fixtureSockets.map((s): Rect4 => [
+    s.at[0],
+    s.at[1],
+    s.at[0] + s.size[0],
+    s.at[1] + s.size[1],
+  ]);
   const freeSockets = sockets.filter((s) => {
     const r = [s.at[0], s.at[1], s.at[0] + s.size[0], s.at[1] + s.size[1]];
-    return !moduleRects.some(
+    return ![...moduleRects, ...fixtureRects].some(
       (q) => r[0] < q[2] && q[0] < r[2] && r[1] < q[3] && q[1] < r[3],
     );
   });
@@ -1715,6 +1818,7 @@ export function deriveInterior(
     const blocked = (r: Rect4) =>
       approaches.some((z) => planRectsOverlap(z.rect, r)) ||
       clearSockets.some((o) => planRectsOverlap(socketRect(o), r)) ||
+      fixtureRects.some((q) => planRectsOverlap(q, r)) ||
       // Never nudged onto an interior module (e.g. the helm console the pilot sits at).
       moduleRects.some((q) => planRectsOverlap(q, r));
     if (
@@ -1770,7 +1874,7 @@ export function deriveInterior(
     partitions,
     doors,
     posts,
-    sockets: clearSockets,
+    sockets: [...clearSockets, ...fixtureSockets],
     lights,
     labels,
     compartments,
@@ -1787,7 +1891,8 @@ export type PrefabIssueRef =
   | { kind: "mount"; id: string }
   | { kind: "tile"; id: string }
   | { kind: "skylight"; id: string }
-  | { kind: "logic"; id: string };
+  | { kind: "logic"; id: string }
+  | { kind: "fixture"; id: string };
 
 export interface PrefabIssue {
   severity: "error" | "warning";
@@ -2479,7 +2584,138 @@ export function validateShipPrefab(
   if (doc.logic)
     for (const i of validatePrefabLogic(doc, catalog))
       push(i.severity, i.code, i.message, { kind: "logic", id: i.id });
+  for (const i of validatePrefabFixtures(doc, catalog))
+    push(i.severity, i.code, i.message, { kind: "fixture", id: i.id });
   return issues;
+}
+
+// ---------------------------------------------------------------- storage fixtures
+/** Fixtures keep this much floor between them and the walls of their room (m). */
+export const FIXTURE_WALL_GAP_M = 0.2;
+/** Keep-clear zone in front of an interior wall button: half width and depth from its surface (m). */
+export const BUTTON_APPROACH_HALF_M = 0.3;
+export const BUTTON_APPROACH_DEPTH_M = 0.7;
+
+/** Plan rectangle in front of an interior wall button where the presser stands. */
+export function buttonApproachRect(
+  place: Pick<LogicWallPlacement, "surface" | "normal">,
+): [number, number, number, number] {
+  const [sx, sy] = place.surface;
+  const [nx, ny] = place.normal;
+  const ex = sx + nx * BUTTON_APPROACH_DEPTH_M,
+    ey = sy + ny * BUTTON_APPROACH_DEPTH_M;
+  const hx = nx === 0 ? BUTTON_APPROACH_HALF_M : 0,
+    hy = ny === 0 ? BUTTON_APPROACH_HALF_M : 0;
+  return [
+    Math.min(sx, ex) - hx,
+    Math.min(sy, ey) - hy,
+    Math.max(sx, ex) + hx,
+    Math.max(sy, ey) + hy,
+  ];
+}
+
+/**
+ * Fixture issues: each hand-placed storage object stands on full floor inside one room, clear of
+ * its walls, and never in a door or pilot approach, a wall button's standing zone, an interior
+ * module or another fixture (so it can never seal a door, the airlock cycle or a button).
+ */
+export function validatePrefabFixtures(
+  doc: ShipPrefabDocumentV1,
+  catalog?: PrefabComponentCatalog,
+): {
+  severity: "error" | "warning";
+  code: string;
+  message: string;
+  id: string;
+}[] {
+  const fixtures = doc.fixtures ?? [];
+  if (!fixtures.length) return [];
+  const out: ReturnType<typeof validatePrefabFixtures> = [];
+  const push = (code: string, message: string, id: string) =>
+    out.push({ severity: "error", code, message, id });
+  const interior = deriveInterior(doc, 0, catalog);
+  const zones = deckApproachZones(
+    interior.doors,
+    interior.station?.at ?? null,
+    (x, y) =>
+      interior.floors.some(
+        (f) => f.cell[0] === Math.floor(x) && f.cell[1] === Math.floor(y),
+      ),
+  );
+  const modules = catalog
+    ? doc.mounts
+        .filter((m) => m.attach === "interior" && catalog.get(m.component))
+        .map((m) => ({
+          id: m.id,
+          rect: placeMount(m, catalog.get(m.component), []).rect as Rect4,
+        }))
+    : [];
+  const buttons = (doc.logic?.devices ?? []).flatMap((d) => {
+    if (d.kind !== "button") return [];
+    const place = logicWallPlacement(doc, d, catalog);
+    return "error" in place || place.side !== "interior"
+      ? []
+      : [{ id: d.id, rect: buttonApproachRect(place) }];
+  });
+  const rects = new Map<string, Rect4>();
+  for (const f of fixtures) {
+    const socket = interior.sockets.find((s) => s.fixture === f.id);
+    const [w, h] = fixtureSize(f);
+    const r: Rect4 = [f.at[0], f.at[1], f.at[0] + w, f.at[1] + h];
+    rects.set(f.id, r);
+    const room = socket && doc.rooms.find((x) => x.id === socket.room);
+    const own = room
+      ? interior.floors.filter((c) => c.room === room.id && !c.partial)
+      : [];
+    const onFloor =
+      !!room &&
+      [...Array(Math.ceil(r[2] - 1e-9) - Math.floor(r[0]))].every((_, i) =>
+        [...Array(Math.ceil(r[3] - 1e-9) - Math.floor(r[1]))].every((_, j) =>
+          own.some(
+            (c) =>
+              c.cell[0] === Math.floor(r[0]) + i &&
+              c.cell[1] === Math.floor(r[1]) + j,
+          ),
+        ),
+      );
+    if (!room || !onFloor) {
+      push(
+        "fixture.room",
+        `${f.id} must stand on full floor inside one room`,
+        f.id,
+      );
+      continue;
+    }
+    const g = FIXTURE_WALL_GAP_M - 1e-9;
+    if (
+      r[0] < room.rect[0] + g ||
+      r[1] < room.rect[1] + g ||
+      r[2] > room.rect[2] - g ||
+      r[3] > room.rect[3] - g
+    )
+      push(
+        "fixture.wall",
+        `${f.id} must keep ${FIXTURE_WALL_GAP_M} m from the walls of ${room.id}`,
+        f.id,
+      );
+    for (const z of zones)
+      if (planRectsOverlap(z.rect, r))
+        push(
+          "fixture.approach",
+          `${f.id} blocks the ${z.id === "pilot-approach" ? "pilot seat" : `door ${z.id}`} approach`,
+          f.id,
+        );
+    for (const b of buttons)
+      if (planRectsOverlap(b.rect, r))
+        push("fixture.button", `${f.id} blocks wall button ${b.id}`, f.id);
+    for (const m of modules)
+      if (planRectsOverlap(m.rect, r))
+        push("fixture.module", `${f.id} overlaps module ${m.id}`, f.id);
+    for (const [other, q] of rects)
+      if (other !== f.id && planRectsOverlap(q, r))
+        push("fixture.overlap", `${f.id} overlaps fixture ${other}`, f.id);
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------- ship logic placement

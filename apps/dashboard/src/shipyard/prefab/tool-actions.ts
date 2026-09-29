@@ -18,6 +18,7 @@ import {
 } from "@sidereal/content/ship-prefab";
 import type { LogicFacing } from "@sidereal/content/ship-logic";
 import {
+  addFixture,
   addLogicButton,
   addMount,
   addMountTile,
@@ -26,7 +27,9 @@ import {
   eraseTiles,
   paintTiles,
   placeEdge,
+  checkFixture,
   checkLogicButton,
+  fixtureCandidate,
   snapLogicWallPoint,
   type CommandResult,
 } from "./commands";
@@ -359,6 +362,37 @@ export function skylightPlace(
   const check = checkSkylight(doc, geometriesOf(doc), c.at, c.size, catalog);
   if (!check.ok) return { doc, error: check.reason };
   return addSkylight(doc, c, mirrorOf(tools));
+}
+
+// ------------------------------------------------------------------ storage fixtures
+/** Storage tool ghost: the footprint centred on the cursor and whether it may stand there. */
+export function storagePreview(
+  doc: Doc,
+  catalog: PrefabComponentCatalog,
+  tools: ToolState,
+  p: Pt,
+) {
+  const candidate = fixtureCandidate(
+    p,
+    tools.fixtureDesign ?? "shipyard.equipment.wall-locker",
+    tools.facing,
+  );
+  return {
+    candidate,
+    check: checkFixture(doc, { id: "ghost", ...candidate }, catalog),
+  };
+}
+
+/** Storage tool: click the floor to place a wall locker or crate (R turns the side it opens to). */
+export function storagePlace(
+  doc: Doc,
+  catalog: PrefabComponentCatalog,
+  tools: ToolState,
+  p: Pt,
+): CommandResult {
+  const { candidate, check } = storagePreview(doc, catalog, tools, p);
+  if (!check.ok) return { doc, error: check.reason };
+  return addFixture(doc, candidate, catalog);
 }
 
 // ------------------------------------------------------------------ ship logic: wall buttons

@@ -33,10 +33,14 @@ import {
 } from "@sidereal/content/ship-mount-tiles";
 import {
   deriveInterior,
+  fixtureSize,
   logicWallPlacement,
   mountTileCapacityText,
+  validatePrefabFixtures,
   type PrefabComponentCatalog,
   type PrefabEdge,
+  type PrefabFixture,
+  type PrefabFixtureDesign,
   type PrefabMount,
   type PrefabMountTile,
   type PrefabRoom,
@@ -66,6 +70,8 @@ export type PrefabSelection =
   | { kind: "mount"; id: string }
   | { kind: "mounttile"; id: string }
   | { kind: "skylight"; id: string }
+  /** A hand-placed storage deck object (`doc.fixtures`). */
+  | { kind: "fixture"; id: string }
   /** A ship logic device (wall button, door actuator, airlock controller). */
   | { kind: "logic"; id: string };
 
@@ -667,6 +673,95 @@ export function updateSkylight(
   };
 }
 
+// ------------------------------------------------------------------ storage fixtures
+const twentieth = (v: number) => Math.round(v * 20) / 20 || 0;
+const fixturesOf = (doc: Doc): readonly PrefabFixture[] => doc.fixtures ?? [];
+/** An empty fixture list is written as no key, so documents without fixtures stay unchanged. */
+const withFixtures = (doc: Doc, fixtures: PrefabFixture[]): Doc => {
+  if (fixtures.length) return { ...doc, fixtures };
+  const { fixtures: _, ...rest } = doc;
+  return rest;
+};
+export const FIXTURE_DESIGN_LABELS: Record<PrefabFixtureDesign, string> = {
+  "shipyard.equipment.wall-locker": "Wall locker",
+  "cargo.standard.medium": "Storage crate",
+};
+
+/** Storage tool: the footprint centred on the cursor, min corner on the 0.05 m grid. */
+export function fixtureCandidate(
+  p: Pt,
+  design: PrefabFixtureDesign,
+  facing: FaceNormal,
+): Omit<PrefabFixture, "id"> {
+  const [w, h] = fixtureSize({ design, facing });
+  return {
+    design,
+    at: [twentieth(p[0] - w / 2), twentieth(p[1] - h / 2)],
+    facing,
+  };
+}
+
+/** Placement gate for one fixture: the `validatePrefabFixtures` rules (doors, buttons, modules). */
+export function checkFixture(
+  doc: Doc,
+  f: PrefabFixture,
+  catalog?: PrefabComponentCatalog,
+): { ok: boolean; reason?: string } {
+  const others = fixturesOf(doc).filter((x) => x.id !== f.id);
+  const issue = validatePrefabFixtures(
+    { ...doc, fixtures: [...others, f] },
+    catalog,
+  ).find((i) => i.id === f.id);
+  return issue
+    ? { ok: false, reason: issue.message.replace(`${f.id} `, "") }
+    : { ok: true };
+}
+
+export function addFixture(
+  doc: Doc,
+  f: Omit<PrefabFixture, "id">,
+  catalog?: PrefabComponentCatalog,
+): CommandResult {
+  const id = uniqueId(
+    fixturesOf(doc).map((x) => x.id),
+    f.design === "cargo.standard.medium" ? "crate" : "locker",
+  );
+  const fixture: PrefabFixture = {
+    id,
+    design: f.design,
+    at: [f.at[0], f.at[1]],
+    facing: f.facing,
+  };
+  const check = checkFixture(doc, fixture, catalog);
+  if (!check.ok) return { doc, error: check.reason };
+  return {
+    doc: withFixtures(doc, [...fixturesOf(doc), fixture]),
+    select: { kind: "fixture", id },
+  };
+}
+
+export function updateFixture(
+  doc: Doc,
+  id: string,
+  patch: Partial<Omit<PrefabFixture, "id">>,
+): Doc {
+  if (!fixturesOf(doc).some((f) => f.id === id)) return doc;
+  return withFixtures(
+    doc,
+    fixturesOf(doc).map((f) =>
+      f.id === id
+        ? {
+            ...f,
+            ...patch,
+            at: patch.at
+              ? [twentieth(patch.at[0]), twentieth(patch.at[1])]
+              : f.at,
+          }
+        : f,
+    ),
+  );
+}
+
 // ------------------------------------------------------------------ ship logic (wiki Systems/Ship Logic)
 const EMPTY_LOGIC: PrefabLogic = { devices: [], links: [] };
 const logicOf = (doc: Doc): PrefabLogic => doc.logic ?? EMPTY_LOGIC;
@@ -979,6 +1074,8 @@ export function selectionExists(
       return !!doc.mountTiles?.some((t) => t.id === sel.id);
     case "skylight":
       return doc.skylights.some((s) => s.id === sel.id);
+    case "fixture":
+      return fixturesOf(doc).some((f) => f.id === sel.id);
     case "logic":
       return !!doc.logic?.devices.some((d) => d.id === sel.id);
   }
@@ -1014,6 +1111,11 @@ export function removeSelection(doc: Doc, sel: PrefabSelection): Doc {
         ...doc,
         skylights: doc.skylights.filter((s) => s.id !== sel.id),
       };
+    case "fixture":
+      return withFixtures(
+        doc,
+        fixturesOf(doc).filter((f) => f.id !== sel.id),
+      );
     case "logic":
       return removeLogicDevice(doc, sel.id);
   }
@@ -1073,6 +1175,14 @@ export function nudgeSelection(
         return { doc, error: "Face mounts slide along their face" };
       return {
         doc: updateMount(doc, m.id, { at: [m.at[0] + mx, m.at[1] + my] }),
+      };
+    }
+    case "fixture": {
+      // Fixtures sit on the 0.05 m grid (arrows: 0.05 m, Shift 0.25 m).
+      const f = fixturesOf(doc).find((x) => x.id === sel.id);
+      if (!f) return { doc };
+      return {
+        doc: updateFixture(doc, f.id, { at: [f.at[0] + dx, f.at[1] + dy] }),
       };
     }
     case "skylight": {
@@ -1200,10 +1310,27 @@ export function rotateSelection(
       doc: updateMountTile(doc, t.id, { facing: NEXT_FACING[t.facing] }),
     };
   }
+  if (sel.kind === "fixture") {
+    // Turn about the footprint centre.
+    const f = fixturesOf(doc).find((x) => x.id === sel.id);
+    if (!f) return { doc };
+    const [w, h] = fixtureSize(f);
+    return {
+      doc: updateFixture(
+        doc,
+        f.id,
+        fixtureCandidate(
+          [f.at[0] + w / 2, f.at[1] + h / 2],
+          f.design,
+          NEXT_FACING[f.facing],
+        ),
+      ),
+    };
+  }
   return {
     doc,
     error:
-      "Select a tile, interior module, mount tile, skylight or wall button to rotate",
+      "Select a tile, interior module, mount tile, skylight, storage fixture or wall button to rotate",
   };
 }
 
@@ -1277,9 +1404,10 @@ export function renameElement(
       edge: "edges",
       mount: "mounts",
       skylight: "skylights",
+      fixture: "fixtures",
     } as const
   )[sel.kind];
-  const list = doc[key] as readonly { id: string }[];
+  const list = (doc[key] ?? []) as readonly { id: string }[];
   if (!list.some((x) => x.id === sel.id)) return { doc };
   if (list.some((x) => x.id === id))
     return { doc, error: `${id} is already used by another ${sel.kind}` };

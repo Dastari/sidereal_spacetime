@@ -28,6 +28,8 @@ import {
   SHIP_THEME_IDS,
   blankShipPrefab,
   canonicalShipPrefabJson,
+  fixtureSize,
+  PREFAB_FIXTURE_DESIGNS,
   readShipPrefab,
   validateShipPrefab,
   type PrefabMount,
@@ -57,6 +59,7 @@ import {
   mountPlace,
   mountTilePlace,
   paintStroke,
+  storagePlace,
   roomDrag,
   roomToolLabel,
   skylightPlace,
@@ -384,6 +387,27 @@ function rebuild(t: Doc): Doc {
     }
   }
 
+  // Storage tool: design and the side it opens to (R), click the footprint centre; Inspector Id.
+  for (const f of t.fixtures ?? []) {
+    const [w, h] = fixtureSize(f);
+    const placed = act(
+      doc,
+      `fixture ${f.id}`,
+      storagePlace(
+        doc,
+        catalog,
+        tools(doc, {
+          tool: "storage",
+          fixtureDesign: f.design,
+          facing: f.facing,
+        }),
+        [f.at[0] + w / 2, f.at[1] + h / 2],
+      ),
+    );
+    doc = rename(placed.doc, placed.select, f.id, `fixture ${f.id}`);
+    expect(doc.fixtures!.at(-1)).toEqual(f);
+  }
+
   // Markings.
   expect(markingFilter(16)(t.markings.name)).toBe(t.markings.name);
   expect(markingFilter(10)(t.markings.number)).toBe(t.markings.number);
@@ -538,6 +562,51 @@ describe("every grammar construct is reachable from the tools", () => {
       expect(doc.edges.length).toBeGreaterThanOrEqual(before - 3);
       expect(doc.edges.at(-1)!.type).toBe(type);
     });
+  });
+
+  it("places every storage fixture design facing every way, and refuses an overlapping one", () => {
+    let doc = deckDoc();
+    doc = removeSelection(doc, { kind: "room", id: "bridge" });
+    doc = act(
+      doc,
+      "hold",
+      roomDrag(
+        doc,
+        tools(doc, { tool: "room", roomType: "cargo" }),
+        [8.5, 0.5],
+        [19.5, 7.5],
+      ),
+    ).doc;
+    let x = 9.5;
+    for (const design of PREFAB_FIXTURE_DESIGNS)
+      for (const facing of FACE_NORMALS) {
+        const placed = act(
+          doc,
+          `${design} ${facing}`,
+          storagePlace(
+            doc,
+            catalog,
+            tools(doc, { tool: "storage", fixtureDesign: design, facing }),
+            [x, 5.5],
+          ),
+        );
+        doc = placed.doc;
+        expect(doc.fixtures!.at(-1)).toMatchObject({ design, facing });
+        x += 1.25;
+      }
+    expect(doc.fixtures).toHaveLength(8);
+    const clash = storagePlace(
+      doc,
+      catalog,
+      tools(doc, { tool: "storage" }),
+      [9.5, 5.5],
+    );
+    expect(clash.doc).toBe(doc);
+    expect(clash.error).toMatch(/overlaps fixture/);
+    // Delete removes the key once the last fixture is gone.
+    for (const f of doc.fixtures!)
+      doc = removeSelection(doc, { kind: "fixture", id: f.id });
+    expect("fixtures" in doc).toBe(false);
   });
 
   it("offers every skylight size, face normal, interior facing, theme, size class and emblem", () => {
