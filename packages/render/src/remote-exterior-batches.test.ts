@@ -7,7 +7,6 @@ import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { batchOpaqueExterior } from "./remote-exterior-batches";
-import { cloneOpaqueRemoteGlass } from "./remote-exterior-glass";
 function triangle(scene: Scene) {
   const mesh = new Mesh("native-triangle", scene),
     data = new VertexData();
@@ -98,45 +97,4 @@ describe("exact native exterior batching", () => {
     scene.dispose();
     engine.dispose();
   });
-});
-it("remote glass is an opaque isolated clone retaining tint/specular while local refraction and alpha remain unchanged", () => {
-  const engine = new NullEngine(),
-    scene = new Scene(engine),
-    local = new PBRMaterial("Blue laminated glazing", scene);
-  local.alpha = 0.25;
-  local.albedoColor = new Color3(0.012, 0.065, 0.14);
-  local.metallic = 0.12;
-  local.roughness = 0.18;
-  local.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
-  local.subSurface.isRefractionEnabled = true;
-  local.subSurface.refractionIntensity = 0.8;
-  const opaque = cloneOpaqueRemoteGlass(local)!;
-  expect(opaque).not.toBe(local);
-  expect(opaque.alpha).toBe(1);
-  expect(opaque.needAlphaBlending()).toBe(false);
-  expect(opaque.albedoColor.asArray()).toEqual(local.albedoColor.asArray());
-  expect(opaque.metallic).toBe(0.12);
-  expect(opaque.roughness).toBe(0.18);
-  expect(opaque.subSurface.isRefractionEnabled).toBe(false);
-  expect(opaque.subSurface.refractionIntensity).toBe(0);
-  expect(local.alpha).toBe(0.25);
-  expect(local.subSurface.isRefractionEnabled).toBe(true);
-  expect(local.subSurface.refractionIntensity).toBe(0.8);
-  expect(
-    cloneOpaqueRemoteGlass(new PBRMaterial("opaque armor", scene)),
-  ).toBeUndefined();
-  const source = triangle(scene);
-  source.material = opaque;
-  expect(
-    batchOpaqueExterior(scene, [
-      { source, matrix: Matrix.Identity(), placementIds: ["window"] },
-    ]).metrics.separatePrimitives,
-  ).toBe(0);
-  opaque.dispose(false, false);
-  expect(scene.materials).not.toContain(opaque);
-  expect(scene.materials).toContain(local);
-  expect(local.alpha).toBe(0.25);
-  expect(local.subSurface.refractionIntensity).toBe(0.8);
-  scene.dispose();
-  engine.dispose();
 });

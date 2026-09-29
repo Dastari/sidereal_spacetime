@@ -1,7 +1,5 @@
 import { createHullPaintBinding } from "./hull-paint";
 import { canInstancePlacement } from "./placement-instance";
-import { framedWayfarerVisual } from "./framed-wayfarer-visuals";
-import { framedEnginePrototype } from "./framed-engine-prototype";
 import { constructionHash } from "@sidereal/sim/construction-transactions";
 import { categoryMeshRole, setMeshRole } from "./mesh-roles";
 import { updateHullDecals } from "./hull-decals";
@@ -21,12 +19,8 @@ export async function loadEquipmentPrototypes(
   assets: readonly PartAsset[],
 ) {
   const result = new Map<string, Mesh[]>();
-  const libraries = new Map<
-    string,
-    { sha256: string; meshes: Mesh[]; framed: boolean }
-  >();
-  for (const original of assets) {
-    const asset = framedWayfarerVisual(original);
+  const libraries = new Map<string, { sha256: string; meshes: Mesh[] }>();
+  for (const asset of assets) {
     if (!asset.visual) continue;
     const url = asset.visual.url;
     let library = libraries.get(url);
@@ -55,13 +49,7 @@ export async function loadEquipmentPrototypes(
         mesh.isVisible = false;
         mesh.isPickable = false;
       }
-      library = {
-        sha256: asset.visual.sha256,
-        meshes,
-        framed:
-          asset.visual.designId?.startsWith("shipyard.wayfarer.framed.") ??
-          false,
-      };
+      library = { sha256: asset.visual.sha256, meshes };
       libraries.set(url, library);
     }
     const prefix = asset.visual.nodePrefix;
@@ -72,8 +60,6 @@ export async function loadEquipmentPrototypes(
       throw new Error(
         "Empty visual mesh group: " + asset.id + (prefix ? " / " + prefix : ""),
       );
-    const enginePrototype = framedEnginePrototype(asset, meshes);
-    if (enginePrototype) meshes = [enginePrototype];
     if (
       asset.category === "cargo" ||
       asset.visual?.designId === "shipyard.hull.pilot-section"
@@ -105,7 +91,6 @@ export function equipmentPlacement(
   placement: PartPlacement,
   sources: Mesh[],
 ) {
-  asset = framedWayfarerVisual(asset);
   const node = new TransformNode("placement-" + placement.id, scene);
   node.parent = parent;
   node.metadata = {

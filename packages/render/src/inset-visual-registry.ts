@@ -1,4 +1,3 @@
-import rebuild from "@sidereal/content/construction-wayfarer-rebuild-visuals.json";
 import { CONSTRUCTION_INSET_VISUALS } from "@sidereal/content/construction-inset-visuals";
 import supplement from "@sidereal/content/construction-complex-visuals.json";
 
@@ -6,5 +5,4 @@ import supplement from "@sidereal/content/construction-complex-visuals.json";
 export const INSET_VISUAL_PARTS = [
   ...CONSTRUCTION_INSET_VISUALS.parts,
   ...supplement.parts,
-  ...rebuild.parts,
 ];

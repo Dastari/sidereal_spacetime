@@ -146,51 +146,6 @@ it("rejects unsupported wall height, floor selection and holes without fallback"
     expect(r.issues.length).toBeGreaterThan(0);
   }
 });
-const runWayfarer = (doc: ReturnType<typeof fixture>) =>
-  planLayoutInsetVisuals({
-    document: doc,
-    compiled: compileLayout(doc),
-    deckId: doc.playableDeckId,
-  });
-it("keeps the exact Wayfarer wall adapters when equipment, hull placement and map labels change", () => {
-  const source = structuredClone(WAYFARER_REBUILD_SOURCE.layout),
-    before = runWayfarer(source),
-    document = structuredClone(source);
-  expect(before.issues).toEqual([]);
-  expect(before.requests.length).toBeGreaterThan(0);
-  document.id = "editable-wayfarer";
-  document.assembly!.parts.push({
-    ...structuredClone(document.assembly!.parts[0]),
-    id: "added-equipment",
-    position: [1, 9, 0.1875],
-  });
-  document.assembly!.parts.find((p) => p.id.includes("hull"))!.position[0] +=
-    0.25;
-  document.rooms[0].name = "Flight control";
-  expect(compileLayout(document).valid).toBe(true);
-  expect(runWayfarer(document)).toEqual(before);
-  delete document.assembly;
-  expect(runWayfarer(document)).toEqual(before);
-});
-it.each(["decks", "tiles", "partitions", "openings", "structure"] as const)(
-  "replans an edited Wayfarer %s instead of reusing its old native walls",
-  (field) => {
-    const document = structuredClone(WAYFARER_REBUILD_SOURCE.layout),
-      before = runWayfarer(document);
-    if (field === "decks") document.decks[0].roof = true;
-    if (field === "tiles") document.tiles[0].material = "new-floor-finish";
-    if (field === "partitions") document.partitions[0].seal = "open-divider";
-    if (field === "openings") document.openings[0].clearance += 32;
-    if (field === "structure") document.structure!.hull.width += 32;
-    expect(compileLayout(document).valid).toBe(true);
-    const after = runWayfarer(document);
-    expect(after.requests).not.toEqual(before.requests);
-    expect(after.issues.some((issue) => issue.key === "assembly")).toBe(false);
-    // Both actual interfaces that the general family cannot fit and unsupported
-    // models remain explicit failures; assembly presence does not hide the cause.
-    expect(after.issues.length).toBeGreaterThan(0);
-  },
-);
 it("plans generic native walls alongside unrelated visual assembly parts", () => {
   const document = fixture(),
     before = run(document);

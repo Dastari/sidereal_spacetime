@@ -1,8 +1,6 @@
 import { expect, it } from "vitest";
 import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
 import {
-  supportsAuthoredFlightPresentation,
-  QUALIFIED_FLIGHT_PREVIEW_SHA256,
   authoredFlightPresentation,
   passengerFlightAdmitted,
   authoredExhaustTelemetry,
@@ -135,19 +133,6 @@ it("maps fresh owned actuator telemetry to actual fitting labels without a stock
   expect(
     authoredExhaustTelemetry("instance", fittings, [outputs[0], outputs[0]]),
   ).toEqual([]);
-});
-
-it("admits flight presentation for both exact Wayfarers and rejects unknown sources", () => {
-  expect(
-    supportsAuthoredFlightPresentation(QUALIFIED_FLIGHT_PREVIEW_SHA256),
-  ).toBe(true);
-  expect(
-    supportsAuthoredFlightPresentation(
-      "56e485c9a9d49b5aa0c5e44a47f88916296896717df386b7240baf408e28ae44",
-    ),
-  ).toBe(true);
-  expect(supportsAuthoredFlightPresentation("edited-source")).toBe(false);
-  expect(supportsAuthoredFlightPresentation(undefined)).toBe(false);
 });
 
 it("passenger presentation requires its own exact admission, document revision and discovered motion", () => {

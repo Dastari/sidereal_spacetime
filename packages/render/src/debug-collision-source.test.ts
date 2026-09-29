@@ -7,7 +7,6 @@ import {
 import { CONSTRUCTION_BOUNDARY_PIN } from "@sidereal/content/construction-boundary";
 import { CONSTRUCTION_BOUNDARY_FAMILY_PIN } from "@sidereal/content/construction-boundary-family";
 import { emptyLayout, stampTile } from "@sidereal/content/ship-layout";
-import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import { CABIN_COLLIDERS } from "@sidereal/content/interior";
 import {
   constrainLabDeck,
@@ -44,11 +43,6 @@ import {
 import { pinnedFamilyCollision } from "@sidereal/sim/construction-boundary-family";
 import { planNativeBoundaries } from "@sidereal/sim/construction-boundaries";
 import { planConstructionInstance } from "@sidereal/sim/construction-instance";
-import {
-  qualifiedWayfarerWalkingBindings,
-  QUALIFIED_WAYFARER_SHA256,
-} from "@sidereal/sim/wayfarer-walking-bindings";
-import { REFIT_FUEL_ATTACHMENT } from "@sidereal/sim/wayfarer-refit-audit";
 import { canonicalPolygon, inside } from "@sidereal/sim/layout-geometry";
 import { createDebugCollisionSource } from "./debug-collision-source";
 import type { ConstructionRenderInput } from "./construction-instance";
@@ -60,100 +54,6 @@ const input = (
   instanceId: document.layout.id,
   documentJson: JSON.stringify(document),
   deckId,
-});
-
-test("qualified Wayfarer source uses all 99 walking obstacles, validates the pin and never fabricates runtime object IDs", () => {
-  const snapshot = compileConstruction(WAYFARER_STARTER.documentJson);
-  expect(snapshot.sha256).toBe(QUALIFIED_WAYFARER_SHA256);
-  const document = JSON.parse(snapshot.canonical) as ConstructionDocument;
-  const source = createDebugCollisionSource(input(document));
-  const result = source.resolve();
-  expect(result.scope).not.toMatch(/unavailable/);
-  expect(result.supported).toBe(true);
-  expect(result.partial).toBe(true);
-  expect(result.frames[0].obstacles).toHaveLength(99);
-  for (const binding of qualifiedWayfarerWalkingBindings(snapshot, 0.3, 1.8))
-    for (const [i, obstacle] of binding.obstacles.entries())
-      expect(
-        result.frames[0].obstacles.find(
-          (o) => o.id === `source:${binding.sourceObjectId}:${i}`,
-        )?.vertices,
-      ).toEqual(canonicalPolygon(obstacle.vertices));
-  expect(
-    result.frames[0].obstacles.every((o) => o.id.startsWith("source:")),
-  ).toBe(true);
-  expect(result.scope).toContain("moving cargo/carriers");
-  expect(source.resolve()).toBe(result);
-});
-
-test("a UUID-remapped admitted starter retains exact source geometry and accepted fuel mount, with no private map input", () => {
-  const snapshot = compileConstruction(WAYFARER_STARTER.documentJson);
-  let n = 1000;
-  const plan = planConstructionInstance(
-    snapshot,
-    {
-      blueprintRevisionId: WAYFARER_STARTER.blueprintId,
-      expectedBlueprintSha256: snapshot.sha256,
-      sourceDeckId: WAYFARER_STARTER.sourceDeckId,
-      bodyRadiusM: 0.3,
-      bodyHeightM: 1.8,
-      perimeterHalfWidthM: 0,
-      partitionHalfWidthM: 0,
-      objectCollisionBindings: qualifiedWayfarerWalkingBindings(
-        snapshot,
-        0.3,
-        1.8,
-      ),
-    },
-    () => `00000000-0000-4000-8000-${(--n).toString(16).padStart(12, "0")}`,
-  );
-  const admitted = input(plan.document, plan.spawn.deckId);
-  admitted.attachments = [
-    {
-      id: "admitted-fuel",
-      instanceId: plan.instanceId,
-      deckId: plan.spawn.deckId,
-      assetId: REFIT_FUEL_ATTACHMENT.assetId,
-      assetSha256: REFIT_FUEL_ATTACHMENT.glbSha256,
-      x: -3,
-      y: 7,
-      z: 0.1875,
-    },
-  ];
-  const result = createDebugCollisionSource(admitted).resolve();
-  expect(result.scope).not.toMatch(/unavailable/);
-  expect(result.frames[0].shipId).toBe(plan.instanceId);
-  expect(result.frames[0].deckId).toBe(plan.spawn.deckId);
-  expect(result.frames[0].obstacles).toHaveLength(100);
-  expect(
-    result.frames[0].obstacles.find((o) => o.id === "admitted-fuel")?.vertices,
-  ).toEqual([
-    [-3.5, 6.5],
-    [-2.5, 6.5],
-    [-2.5, 7.5],
-    [-3.5, 7.5],
-  ]);
-  const before = admitted.documentJson;
-  createDebugCollisionSource(admitted).resolve();
-  expect(admitted.documentJson).toBe(before);
-  for (const field of ["x", "assetSha256", "instanceId"] as const) {
-    const bad = structuredClone(admitted);
-    Object.assign(bad.attachments![0], {
-      [field]: field === "x" ? -2 : "wrong",
-    });
-    expect(createDebugCollisionSource(bad).resolve().supported).toBe(false);
-  }
-  const altered = structuredClone(plan.document);
-  altered.layout.assembly!.parts[0].position[0] += 0.1;
-  expect(createDebugCollisionSource(input(altered)).resolve().supported).toBe(
-    false,
-  );
-  expect(
-    createDebugCollisionSource({
-      ...admitted,
-      deckId: "unrelated-deck",
-    }).resolve().frames,
-  ).toEqual([]);
 });
 
 describe.each([
@@ -390,7 +290,7 @@ test("legacy diagnostics exactly use walk obstruction rectangles and the canopy 
 });
 
 test("malformed/foreign construction is explicitly unavailable instead of falling back to visual or legacy geometry", () => {
-  for (const documentJson of ["{bad", "{}", WAYFARER_STARTER.documentJson]) {
+  for (const documentJson of ["{bad", "{}"]) {
     const result = createDebugCollisionSource({
       instanceId: "not-the-instance",
       deckId: "wrong",

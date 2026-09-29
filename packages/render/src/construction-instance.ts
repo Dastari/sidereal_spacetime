@@ -1,8 +1,3 @@
-import {
-  planWayfarerExteriorGame,
-  type WayfarerExteriorDocument,
-} from "@sidereal/sim/wayfarer-exterior-qualification";
-import { planWayfarerRebuildGame } from "@sidereal/sim/wayfarer-rebuild-game";
 import { INSET_VISUAL_PARTS } from "./inset-visual-registry";
 import { createLayoutFloorSlabs } from "./layout-floor-slabs";
 import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
@@ -11,7 +6,6 @@ import { loadInsetNativeVisuals } from "./inset-native-visuals";
 import { createInsetWallCutaway } from "./inset-wall-cutaway";
 import { createEquipmentLighting } from "./equipment-lighting";
 import { setMeshRole } from "./mesh-roles";
-import type { RefitAttachmentVisual } from "./construction-refit-attachments";
 import {
   bindNativeAirlockPlan,
   type NativeAirlockDocument,
@@ -19,7 +13,6 @@ import {
 import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
 import { NATIVE_EXTERNAL_AIRLOCK_SOURCES } from "@sidereal/content/construction-airlock-room";
 import { loadNativeAirlockScene } from "./native-airlock-scene";
-import { loadConstructionAuthoredAssembly } from "./construction-authored-assembly";
 import { NATIVE_TRAVERSAL_ROOM_SOURCES } from "@sidereal/content/construction-traversal-room";
 import { nativeTraversalRoomInstallation } from "@sidereal/sim/construction-traversal-document";
 import { loadConstructionTraversal } from "./construction-traversal";
@@ -66,10 +59,9 @@ import type { ManagedLocalLight } from "./local-light-budget";
 export interface ConstructionRenderInput {
   instanceId: string;
   documentJson: string;
-  attachments?: readonly RefitAttachmentVisual[];
   deckId: string;
 }
-/** Native authored floors use exact server placement IDs. No Wayfarer fallback. */
+/** Native authored floors use exact server placement IDs. */
 export async function loadConstructionInstance(
   scene: Scene,
   parent: TransformNode,
@@ -223,13 +215,6 @@ export async function loadConstructionInstance(
     lighting.setMeshes([mesh]);
     return { node: mesh, meshes: [mesh], lighting };
   });
-  const authored = await loadConstructionAuthoredAssembly(
-    scene,
-    parent,
-    document,
-    input.deckId,
-    input.attachments,
-  );
   const deck = document.layout.decks.find((d) => d.id === input.deckId)!;
   const vertices = document.layout.tiles
     .filter((t) => t.deckId === input.deckId)
@@ -242,25 +227,13 @@ export async function loadConstructionInstance(
     (w) => w.deckId === input.deckId && w.source === "perimeter",
   );
   const isInset = document.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id;
-  const rebuilt = document.wayfarerExterior
-    ? planWayfarerExteriorGame(document as WayfarerExteriorDocument, {
-        shipId: input.instanceId,
+  const insetPlan = isInset
+    ? planLayoutInsetVisuals({
+        document: document.layout,
+        compiled: compileLayout(document.layout),
+        deckId: input.deckId,
       })
-    : document.wayfarerRebuild
-      ? planWayfarerRebuildGame(document)
-      : undefined;
-  const insetPlan = rebuilt
-    ? {
-        requests: rebuilt.nativeVisualRequests,
-        issues: [] as { message: string }[],
-      }
-    : isInset
-      ? planLayoutInsetVisuals({
-          document: document.layout,
-          compiled: compileLayout(document.layout),
-          deckId: input.deckId,
-        })
-      : undefined;
+    : undefined;
   if (insetPlan?.issues.length)
     throw Error(insetPlan.issues.map((i) => i.message).join("; "));
   const inset = insetPlan
@@ -381,7 +354,7 @@ export async function loadConstructionInstance(
     perimeterHalfWidthM: 0,
     partitionHalfWidthM: 0,
   });
-  for (const wall of boundaries || authored || inset
+  for (const wall of boundaries || inset
     ? []
     : [...collision.walls, ...collision.openings]) {
     const height = deck.elevation / 32 + 0.21;
@@ -410,7 +383,6 @@ export async function loadConstructionInstance(
       ...placements,
       ...slabPlacements,
       ...insetPlacements,
-      ...(authored?.placements ?? []),
       ...(boundaries?.placements ?? []),
       ...(roofs?.placements ?? []),
     ],
@@ -418,7 +390,6 @@ export async function loadConstructionInstance(
       ...placements.flatMap((p) => p.meshes),
       ...(slabs?.meshes ?? []),
       ...(inset?.meshes ?? []),
-      ...(authored?.meshes ?? []),
       ...(boundaries?.meshes ?? []),
       ...(roofs?.meshes ?? []),
     ],
@@ -429,10 +400,8 @@ export async function loadConstructionInstance(
         if (node.metadata.role === "roof") node.setEnabled(!interior);
       insetCutaway?.update(cameraPosition, interior);
       roofs?.setVisible(!interior);
-      authored?.setView(cameraPosition, interior);
     },
     dispose() {
-      authored?.dispose();
       for (const p of slabPlacements) p.lighting.dispose();
       slabs?.dispose();
       for (const p of insetPlacements) p.lighting.dispose();

@@ -5,7 +5,6 @@ import {
   LAB_CREW_CLEARANCE,
 } from "@sidereal/content/pilot-layout";
 import type { Point } from "@sidereal/content/ship-layout";
-import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import {
   bindNativeAirlockPlan,
   nativeAirlockCollision,
@@ -29,13 +28,6 @@ import { nativeStairRoomCollision } from "@sidereal/sim/construction-stairs-docu
 import { compileConstruction } from "@sidereal/sim/construction-transactions";
 import { nativeTraversalRoomCollision } from "@sidereal/sim/construction-traversal-document";
 import { prefabConstructionObstacles } from "@sidereal/sim/prefab-deck-objects";
-import { stableStringify } from "@sidereal/sim/layout-geometry";
-import { PRESERVED_FUEL_MOUNT } from "@sidereal/sim/wayfarer-refit-mount";
-import { REFIT_FUEL_ATTACHMENT } from "@sidereal/sim/wayfarer-refit-audit";
-import {
-  QUALIFIED_WAYFARER_SHA256,
-  qualifiedWayfarerWalkingBindings,
-} from "@sidereal/sim/wayfarer-walking-bindings";
 import type { ConstructionRenderInput } from "./construction-instance";
 
 export interface DebugCollisionAcceptedState {
@@ -67,129 +59,6 @@ const obstacleSegments = (obstacles: readonly DeckObstacle[]) =>
       halfWidthM: 0,
     })),
   );
-
-/** Compare the admitted, UUID-renamed static document to the actual pinned source.
- * This is visual equivalence only: the client's geometric correspondence is NOT
- * the private server UUID map and must never be used to authorize an instance.
- * Returned obstacle identities deliberately retain their source namespace.
- */
-function wayfarerSourceObstacles(
-  document: ConstructionDocument,
-  deckId: string,
-) {
-  const source = compileConstruction(WAYFARER_STARTER.documentJson);
-  requireSource(
-    source.sha256 === WAYFARER_STARTER.sha256 &&
-      source.sha256 === QUALIFIED_WAYFARER_SHA256,
-    "Wayfarer pinned source hash mismatch",
-  );
-  const original = JSON.parse(source.canonical) as ConstructionDocument;
-  requireSource(
-    document.layout.decks.length === 1 &&
-      document.layout.decks[0].id === deckId,
-    "Wayfarer source requires its single admitted deck",
-  );
-  const reverse = new Map<string, string>([
-    [document.layout.id, original.layout.id],
-    [deckId, original.layout.decks[0].id],
-  ]);
-  const pair = <T extends { id: string }>(
-    actual: readonly T[],
-    expected: readonly T[],
-    omit: string[],
-  ) => {
-    requireSource(
-      actual.length === expected.length,
-      "Wayfarer source object count changed",
-    );
-    const signature = (item: T) =>
-      stableStringify(
-        Object.fromEntries(
-          Object.entries(item).filter(([key]) => !omit.includes(key)),
-        ),
-      );
-    const byGeometry = new Map(
-      expected.map((item) => [signature(item), item.id]),
-    );
-    requireSource(
-      byGeometry.size === expected.length,
-      "Ambiguous Wayfarer source geometry",
-    );
-    for (const item of actual) {
-      const key = signature(item),
-        sourceId = byGeometry.get(key);
-      requireSource(
-        sourceId && !reverse.has(item.id),
-        "Changed or duplicate Wayfarer geometry",
-      );
-      reverse.set(item.id, sourceId!);
-      byGeometry.delete(key);
-    }
-  };
-  pair(document.layout.tiles, original.layout.tiles, ["id", "deckId"]);
-  pair(document.layout.assembly?.parts ?? [], original.layout.assembly!.parts, [
-    "id",
-  ]);
-  const restore = (value: unknown): unknown =>
-    typeof value === "string"
-      ? (reverse.get(value) ?? value)
-      : Array.isArray(value)
-        ? value.map(restore)
-        : value && typeof value === "object"
-          ? Object.fromEntries(
-              Object.entries(value).map(([key, v]) => [key, restore(v)]),
-            )
-          : value;
-  const restored = restore(document) as ConstructionDocument;
-  restored.layout.source = original.layout.source;
-  const restoredSource = compileConstruction(JSON.stringify(restored));
-  requireSource(
-    restoredSource.sha256 === source.sha256,
-    "Admitted Wayfarer geometry differs from pinned source",
-  );
-  return qualifiedWayfarerWalkingBindings(restoredSource, 0.3, 1.8).flatMap(
-    (binding) =>
-      binding.obstacles.map((obstacle, i): DeckObstacle => ({
-        id: `source:${binding.sourceObjectId}:${i}`,
-        definitionId: binding.definitionId,
-        vertices: obstacle.vertices.map(([x, y]): Point => [x, y]),
-      })),
-  );
-}
-
-function attachmentObstacles(
-  input: ConstructionRenderInput,
-  deckId: string,
-): DeckObstacle[] {
-  const rows = input.attachments ?? [];
-  if (!rows.length) return [];
-  requireSource(rows.length === 1, "Unsupported refit attachment count");
-  const row = rows[0],
-    pin = REFIT_FUEL_ATTACHMENT;
-  requireSource(
-    row.id &&
-      row.instanceId === input.instanceId &&
-      row.deckId === deckId &&
-      row.assetId === pin.assetId &&
-      row.assetSha256 === pin.glbSha256 &&
-      [row.x, row.y, row.z].every((v, i) => v === pin.positionM[i]),
-    "Refit collision requires the exact admitted fuel attachment",
-  );
-  // The authority's explicit conservative mount, not the visual tank bounds.
-  const [width, depth] = PRESERVED_FUEL_MOUNT.footprintM;
-  return [
-    {
-      id: row.id,
-      definitionId: row.assetId,
-      vertices: [
-        [row.x - width / 2, row.y - depth / 2],
-        [row.x + width / 2, row.y - depth / 2],
-        [row.x + width / 2, row.y + depth / 2],
-        [row.x - width / 2, row.y + depth / 2],
-      ],
-    },
-  ];
-}
 
 function nativeDoorFrames(
   document: ConstructionDocument,
@@ -267,10 +136,7 @@ function legacySource(): DebugCollisionSourceResult {
 export function createDebugCollisionSource(
   construction?: ConstructionRenderInput,
 ) {
-  const input = construction && {
-    ...construction,
-    attachments: construction.attachments?.map((a) => ({ ...a })),
-  };
+  const input = construction && { ...construction };
   const cache = new Map<
     string,
     (state: DebugCollisionAcceptedState) => DebugCollisionSourceResult
@@ -289,10 +155,6 @@ export function createDebugCollisionSource(
       "Admitted construction instance/deck mismatch",
     );
     if (d.airlockRoom) {
-      requireSource(
-        !input!.attachments?.length,
-        "Unsupported airlock attachment",
-      );
       const native = d as NativeAirlockDocument;
       const plan = bindNativeAirlockPlan(
         native,
@@ -319,29 +181,18 @@ export function createDebugCollisionSource(
         ],
       });
     }
-    const wayfarer =
-      d.layout.source?.blueprintRevision === QUALIFIED_WAYFARER_SHA256 ||
-      compileConstruction(input!.documentJson).sha256 ===
-        QUALIFIED_WAYFARER_SHA256;
     const prefab = prefabConstructionObstacles(d as { prefab?: unknown });
-    const obstacles = wayfarer
-      ? wayfarerSourceObstacles(d, deckId)
-      : prefab
-        ? prefab
-        : d.stairRoom
-          ? nativeStairRoomCollision(d, deckId)
-          : d.traversalRoom
-            ? nativeTraversalRoomCollision(d, deckId)
-            : d.pressureRoom
-              ? nativePressureRoomCollision(d, deckId)
-              : d.boundaryKit?.revision === "r004"
-                ? pinnedFamilyCollision(d.layout, deckId)
-                : [];
-    requireSource(
-      wayfarer || !input!.attachments?.length,
-      "Unqualified refit collision source",
-    );
-    const added = wayfarer ? attachmentObstacles(input!, deckId) : [];
+    const obstacles = prefab
+      ? prefab
+      : d.stairRoom
+        ? nativeStairRoomCollision(d, deckId)
+        : d.traversalRoom
+          ? nativeTraversalRoomCollision(d, deckId)
+          : d.pressureRoom
+            ? nativePressureRoomCollision(d, deckId)
+            : d.boundaryKit?.revision === "r004"
+              ? pinnedFamilyCollision(d.layout, deckId)
+              : [];
     const width = d.boundaryKit?.revision === "r001" ? 0.0625 : 0;
     const base = compileDeckCollision(d.layout, deckId, {
       shipId: input!.instanceId,
@@ -366,15 +217,12 @@ export function createDebugCollisionSource(
         requireSource(door, "Door has no qualified physical frame");
         return doorLeafObstacle(door!, state.fraction);
       });
-      const extra = [...added, ...leaves];
+      const extra = leaves;
       return {
         supported: true,
         partial: true,
         scope:
           dynamicScope +
-          (wayfarer
-            ? "; pinned Wayfarer source geometry, admitted fuel mount if installed; source IDs are diagnostic only"
-            : "") +
           (states.length < doors.length
             ? "; missing door pose: closed aperture only"
             : ""),

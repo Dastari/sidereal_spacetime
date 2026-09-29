@@ -70,7 +70,6 @@
     "./construction-inset-boundaries": "./src/construction-inset-boundaries.ts",
     "./wayfarer-walking-bindings": "./src/wayfarer-walking-bindings.ts",
     "./layout-complex-perimeter": "./src/layout-complex-perimeter.ts",
-    "./layout-hull-attachment": "./src/layout-hull-attachment.ts",
     "./wayfarer-exterior-qualification": "./src/wayfarer-exterior-qualification.ts",
     "./layout-opening-treatments": "./src/layout-opening-treatments.ts",
     "./construction-doorway-motion": "./src/construction-doorway-motion.ts",

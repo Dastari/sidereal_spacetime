@@ -180,28 +180,6 @@ test("missing assets, changed revision pins, malformed envelopes and ambiguous c
   ).toBeNull();
 });
 
-test("current native Wayfarer review preserves every source placement and installed pin", () => {
-  const nativeCatalog = JSON.parse(
-    readFileSync("assets/runtime/assembly/catalog.json", "utf8"),
-  ) as PartCatalog;
-  const assembly = JSON.parse(
-    readFileSync("assets/runtime/assembly/wayfarer.json", "utf8"),
-  );
-  const doc = importShipAssembly(assembly, nativeCatalog, "review", "deck");
-  const raw = JSON.stringify(doc);
-  const result = reviewLayoutOrientations(raw, nativeCatalog);
-  expect(result.status).toBe("reviewable");
-  expect(result.entries).toHaveLength(262);
-  expect(result.entries.map((e) => e.id)).toEqual(
-    assembly.parts.map((p: { id: string }) => p.id),
-  );
-  expect(JSON.parse(result.sourceRaw).assembly.parts).toEqual(assembly.parts);
-  expect(result.entries.every((e) => e.qualification === "not-evaluated")).toBe(
-    true,
-  );
-  expect(doc.assembly!.parts).toEqual(assembly.parts);
-});
-
 test("fitting proxy dependencies must retain their own catalog revision", () => {
   const proxyCatalog: PartCatalog = {
     ...catalog,
