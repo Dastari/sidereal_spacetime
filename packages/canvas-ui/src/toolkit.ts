@@ -34,6 +34,15 @@ type Hit = {
   cancel?: () => void;
 };
 /** CPU raster backing texture, composited by Babylon in the sole visible WebGL canvas. */
+/** A DOM text field or editable element owns its key presses. */
+export function isEditableTarget(target: EventTarget | null) {
+  if (!target || typeof (target as Element).tagName !== "string") return false;
+  const element = target as HTMLElement;
+  return (
+    element.isContentEditable ||
+    ["INPUT", "TEXTAREA", "SELECT"].includes(element.tagName)
+  );
+}
 export class CanvasUI {
   readonly texture: DynamicTexture;
   readonly layer: Layer;
@@ -290,6 +299,9 @@ export class CanvasUI {
     // The DOM loading/error layer owns input while the game surface is inert.
     // Window listeners still receive keys even when their canvas is inert.
     if (this.canvas.closest("[inert]")) return;
+    // Typing into a DOM form field (account transfer code, service panels)
+    // is text entry, not a game shortcut.
+    if (isEditableTarget(e.target)) return;
     if (!this.keyboard && !e.repeat && this.shortcut(e.code)) {
       e.preventDefault();
       e.stopImmediatePropagation();
@@ -593,7 +605,7 @@ export class CanvasUI {
       c.stroke();
       c.restore();
     }
-    const keycap = /^(Esc|Tab|E)   (.+)$/.exec(label);
+    const keycap = /^(Esc|Tab|[A-Z])   (.+)$/.exec(label);
     let inset = 12;
     if (keycap) {
       const kw = keycap[1].length > 1 ? 35 : 24;

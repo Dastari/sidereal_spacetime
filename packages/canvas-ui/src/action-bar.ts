@@ -6,9 +6,43 @@ import { drawHudIcon, type HudIconKind } from "./hud-icons";
 import { itemRarity } from "./character-data";
 import type { InventoryDefinition } from "../../content/src/inventory";
 
+const STATUS_EDGE = 16,
+  STATUS_WIDTH = 233,
+  STATUS_GAP = 12,
+  /** Narrowest action bar kept beside the status panel (47 px slots). */
+  MIN_BESIDE_BAR = 560;
+const statusWidth = (width: number) => Math.min(STATUS_WIDTH, width - 32);
+/** The action bar is centred; when the centred bar would run into the
+ * bottom-left player status it starts after it (narrowing to fit), and only
+ * narrow screens keep it centred with the status stacked above. */
 export function actionBarRect(width: number, height: number): Rect {
-  const w = Math.min(710, width - 24);
-  return { x: (width - w) / 2, y: height - 97, w, h: 87 };
+  const full = Math.min(710, width - 24),
+    centred = (width - full) / 2,
+    reserve = STATUS_EDGE + statusWidth(width) + STATUS_GAP,
+    beside = Math.min(710, width - reserve - 12);
+  if (centred >= reserve || beside < MIN_BESIDE_BAR)
+    return { x: centred, y: height - 97, w: full, h: 87 };
+  return { x: reserve, y: height - 97, w: beside, h: 87 };
+}
+export const PLAYER_STATUS_HEIGHT = 150;
+/** Player status (name, vitals) sits bottom-left beside the action bar, sharing
+ * its bottom edge; on narrow screens it stacks above the bar instead. */
+export function playerStatusRect(width: number, height: number): Rect {
+  const bar = actionBarRect(width, height),
+    w = statusWidth(width);
+  return bar.x >= STATUS_EDGE + w + STATUS_GAP
+    ? {
+        x: STATUS_EDGE,
+        y: bar.y + bar.h - PLAYER_STATUS_HEIGHT,
+        w,
+        h: PLAYER_STATUS_HEIGHT,
+      }
+    : {
+        x: STATUS_EDGE,
+        y: Math.max(70, bar.y - STATUS_GAP - PLAYER_STATUS_HEIGHT),
+        w,
+        h: PLAYER_STATUS_HEIGHT,
+      };
 }
 type Entry =
   | { id: string; definition: InventoryDefinition; equipped: boolean }

@@ -3,15 +3,30 @@ import { NativeAirlockPanel } from "./NativeAirlockPanel";
 import { AuthoredFlightReview } from "./AuthoredFlightReview";
 import type { DbConnection } from "@sidereal/net";
 import { createOperationId } from "./operation-id";
+/** Saved Shipyard test ships the menu can list; undefined when none are offered. */
+export function testShipCount(connection: DbConnection | null) {
+  const actor = connection && [...connection.db.ownCharacters.iter()][0];
+  if (!connection || !actor) return undefined;
+  const instances = [...connection.db.ownConstructionInstances.iter()];
+  if (!instances.length) return undefined;
+  return instances.filter(
+    (i) =>
+      i.id !== actor.shipId && i.workspaceId !== "trusted-starter-templates",
+  ).length;
+}
 /** Explicit temporary review transit; this is not physical airlock/docking gameplay. */
 export function ConstructionReview({
   connection,
   onError,
+  open: expanded,
+  onClose,
 }: {
   connection: DbConnection | null;
   onError: (error: string) => void;
+  /** The test-ship list opens from the system menu's Vessel tab. */
+  open: boolean;
+  onClose: () => void;
 }) {
-  const [expanded, setExpanded] = useState(false);
   const [busy, setBusy] = useState(false);
   if (!connection) return null;
   const actor = [...connection.db.ownCharacters.iter()][0],
@@ -103,34 +118,21 @@ export function ConstructionReview({
       .finally(() => setBusy(false));
   };
   if (!expanded && !visit)
-    return (
+    return airlockPanel ? (
       <aside
         className="construction-review-controls"
-        aria-label="Shipyard test ships"
+        aria-label="Native airlock"
       >
-        <button onClick={() => setExpanded(true)}>
-          Test ships (
-          {
-            instances.filter(
-              (i) =>
-                i.id !== actor.shipId &&
-                i.workspaceId !== "trusted-starter-templates",
-            ).length
-          }
-          )
-        </button>
         {airlockPanel}
       </aside>
-    );
+    ) : null;
   return (
     <aside
       className="construction-review-controls"
       aria-label="Shipyard test ships"
     >
       <strong>Shipyard test ships</strong>
-      {!visit && (
-        <button onClick={() => setExpanded(false)}>Close test ships</button>
-      )}
+      {!visit && <button onClick={onClose}>Close test ships</button>}
       <small>
         Your normal ship and inventory stay preserved. Choose an independent
         saved test ship; qualified ships also support flight testing.

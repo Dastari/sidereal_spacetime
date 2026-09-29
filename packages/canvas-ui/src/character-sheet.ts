@@ -35,18 +35,14 @@ export function drawVitalBars(
   compact = false,
   live?: LiveHealth,
 ) {
-  const rows = CHARACTER_PREVIEW.vitals.map((v) =>
-      live && v.label === "Health"
-        ? {
-            ...v,
-            current: Math.max(0, Math.ceil(live.health)),
-            max: live.maxHealth,
-          }
-        : v,
-    ),
+  const rows = vitalRows(live),
     row = compact ? 25 : 40;
   rows.forEach((v, i) => {
     const y = r.y + i * row;
+    // Rows without an authoritative source are drawn dimmed so a placeholder
+    // number never reads as a live value.
+    ui.ctx.save();
+    if (!v.live) ui.ctx.globalAlpha *= 0.42;
     drawHudIcon(
       ui,
       { x: r.x, y, w: compact ? 19 : 23, h: compact ? 19 : 23 },
@@ -87,7 +83,21 @@ export function drawVitalBars(
     c.fillStyle = "#ffffff66";
     c.fillRect(b.x + 1, b.y + 1, ((b.w - 2) * v.current) / v.max, 1);
     c.restore();
+    ui.ctx.restore();
   });
+}
+/** The vitals rows with their source: only health is authoritative today. */
+export function vitalRows(live?: LiveHealth) {
+  return CHARACTER_PREVIEW.vitals.map((v) =>
+    live && v.label === "Health"
+      ? {
+          ...v,
+          current: Math.max(0, Math.ceil(live.health)),
+          max: live.maxHealth,
+          live: true,
+        }
+      : { ...v, live: false },
+  );
 }
 function section(ui: CanvasUI, r: Rect, title: string) {
   const panelCount = ui.panels.length;

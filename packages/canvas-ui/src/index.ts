@@ -54,7 +54,7 @@ import {
   type VitalsFeedback,
 } from "./combat-feedback";
 export type { CombatHitFeedback, VitalsFeedback } from "./combat-feedback";
-import { actionBarRect } from "./action-bar";
+import { actionBarRect, playerStatusRect } from "./action-bar";
 import { createDiagnosticsUI } from "./diagnostics";
 import type { RenderDiagnostics } from "../../render/src/diagnostics";
 import {
@@ -65,8 +65,24 @@ import {
   type Rect,
 } from "./layout";
 export { gameplayIntent } from "./layout";
+export { isEditableTarget } from "./toolkit";
+/** A DOM service panel the system menu can open (account, ship systems…). */
+export type MenuService = { id: string; label: string };
+export const MENU_TABS = [
+  "Controls",
+  "Display",
+  "Graphics",
+  "Vessel",
+  "Crew",
+  "Account",
+] as const;
+export type MenuTab = (typeof MENU_TABS)[number];
 export type GameUIState = {
   accountKind?: "oidc" | "development";
+  /** Account tab: signed-in name, status line and whether a character transfer applies. */
+  account?: { name: string; note: string; transfer: boolean };
+  /** Vessel tab: DOM ship service panels currently available. */
+  vesselServices?: readonly MenuService[];
   sharedEntry?: SharedEntryState;
   characterAppearance?: CrewAppearance;
   graphics?: GraphicsSettings;
@@ -141,6 +157,11 @@ export type GameUIActions = {
   applyRenderBackend?: () => void;
   localLightLimit?: (limit: LocalLightLimit) => void;
   combat?: () => void;
+  /** Open a DOM service panel by id ("account", "ship-systems", …). */
+  openService?: (id: string) => void;
+  /** Close the open DOM service panel; true when one was open. */
+  closeService?: () => boolean;
+  signOut?: () => void;
   inventory?: InventoryActions;
   objectDetails?: ObjectDetailsActions;
   interact?: () => void;
@@ -162,6 +183,19 @@ export type GameUIActions = {
   dismiss: () => void;
   retry: () => void;
 };
+/** Key reference in the Controls tab; window/mode keys are the Open buttons. */
+export const CONTROL_KEYS: readonly (readonly [string, string])[] = [
+  ["WASD", "Walk (camera relative) · Shift sprint"],
+  ["E", "Use · control seat · leave seat"],
+  ["W S · A D", "Helm: thrust · turn"],
+  ["Mouse", "Aim · left click fire · R reload"],
+  ["1–5 · 9 0", "Action bar · quick slots"],
+  ["Right-drag", "Orbit · wheel zooms"],
+  ["M · B", "EVA: maglock · rescue beacon"],
+  ["Esc", "Menu · close windows"],
+  ["F3 · F6", "Diagnostics · interface focus"],
+];
+const CONTROLS_TAB_HEIGHT = 198 + CONTROL_KEYS.length * 26 + 56;
 export function createGameUI(
   canvas: HTMLCanvasElement,
   scene: Scene,
@@ -207,7 +241,7 @@ export function createGameUI(
     : undefined;
   let state = initial,
     menu = false,
-    tab: "Display" | "Graphics" | "Vessel" | "Crew" | "Controls" = "Display",
+    tab: MenuTab = "Controls",
     help = true;
   let inspectingDestination = false;
   let selectedDestination = "",
@@ -224,6 +258,11 @@ export function createGameUI(
     }
     if (code === "F3") {
       diagnostics.toggle();
+      return true;
+    }
+    if (code === "KeyN" && state.hasActor && state.connected && !menu) {
+      navVisible = !navVisible;
+      ui.invalidate();
       return true;
     }
     if (!state.hasActor || !state.connected || !inventory || !state.inventory)
@@ -275,6 +314,7 @@ export function createGameUI(
   const change = () => ui.invalidate();
   const drawFeedback = createCombatFeedback();
   ui.escape = () => {
+    if (!menu && actions.closeService?.()) return change();
     if (menu) menu = false;
     else if (inventory?.isOpen()) inventory.close();
     else if (objectDetails?.isOpen()) objectDetails.close();
@@ -286,6 +326,14 @@ export function createGameUI(
     ui.focus = "";
     change();
   };
+  /** Leave the system menu, then run a window/mode action it offered. */
+  const fromMenu = (run: () => void) => () => {
+    menu = false;
+    ui.focus = "";
+    run();
+    change();
+  };
+  const openService = (id: string) => fromMenu(() => actions.openService?.(id));
   const num = (v: number | undefined, precision = 1) =>
     v === undefined
       ? "—"
@@ -318,49 +366,8 @@ export function createGameUI(
         },
       );
     else dismissGroundLootMenu(ui);
+    // Windows and modes open from their keys (Controls tab lists them) or the menu.
     const nav = [
-      ...(actions.combat
-        ? [
-            {
-              id: "combat-toggle",
-              label: "Combat",
-              width: 90,
-              action: actions.combat,
-              selected: state.combat?.enabled,
-            },
-          ]
-        : []),
-      {
-        id: "navigation",
-        label: "Map",
-        width: 65,
-        action: () => {
-          navVisible = !navVisible;
-          change();
-        },
-        selected: navVisible,
-      },
-      {
-        id: "character-open",
-        label: "Character",
-        width: 96,
-        action: () => inventory?.toggle("character"),
-        selected: inventory?.isOpen("character"),
-      },
-      {
-        id: "inventory-open",
-        label: "Inventory",
-        width: 94,
-        action: () => inventory?.toggle("inventory"),
-        selected: inventory?.isOpen("inventory"),
-      },
-      {
-        id: "view",
-        label: state.interior ? "Flight" : "Deck",
-        width: 65,
-        action: actions.view,
-        selected: false,
-      },
       { id: "menu", label: "Menu", width: 66, action: setMenu, selected: menu },
     ];
     const topHud = topHudLayout(
@@ -383,12 +390,8 @@ export function createGameUI(
       }),
     );
     if (state.hasActor && !inventory?.isOpen() && !menu) {
-      const r = {
-        x: 16,
-        y: w < 1150 ? Math.max(70, h - 268) : h - 173,
-        w: Math.min(233, w - 32),
-        h: 160,
-      };
+      const r = playerStatusRect(w, h);
+      const hintX = r.x + r.w + 20;
       ui.panel(r);
       ui.text(state.actorName, r.x + 12, r.y + 8, 17, palette.text, r.w - 24);
       ui.text(
@@ -428,13 +431,6 @@ export function createGameUI(
         true,
         state.vitals,
       );
-      ui.text(
-        state.vitals ? "Health live · others preview" : "Vitals preview",
-        r.x + 12,
-        r.y + 148,
-        9,
-        palette.muted,
-      );
       if (state.eva && state.vitals?.state !== "dead") {
         const offer = state.eva.beacon
           ? "B   Cancel rescue beacon"
@@ -443,7 +439,8 @@ export function createGameUI(
             : state.eva.maglock
               ? "M   Maglock onto the hull"
               : "";
-        if (offer) ui.text(offer, 270, h - 140, 14, palette.blue, w - 300);
+        if (offer)
+          ui.text(offer, hintX, h - 140, 14, palette.blue, w - hintX - 30);
       }
       if (help && w > 1180)
         ui.text(
@@ -455,12 +452,12 @@ export function createGameUI(
                 ? "W / S thrust · A / D turn · Release to brake"
                 : state.combat?.enabled
                   ? "Mouse aim · Left click fire · R reload · Right-drag orbit · V leave combat"
-                  : "WASD walk · Shift sprint · C character · I inventory · Z loot labels",
-          270,
+                  : "WASD walk · Shift sprint · E use · C character · I inventory · N map · V combat · Esc menu",
+          hintX,
           h - 116,
           12,
           palette.muted,
-          w - 300,
+          w - hintX - 30,
         );
     }
     if (state.combat?.enabled && !inventory?.isOpen() && !menu) {
@@ -684,8 +681,12 @@ export function createGameUI(
     }
     if (!state.hasActor || state.status !== "ready") {
       const onboarding = onboardingCopy(state.accountKind);
+      // A signed-in account without a character may receive a transfer.
+      const transfer =
+        state.status === "ready" && !!state.account?.transfer && !menu;
+      const panelH = transfer ? 404 : 360;
       const r = clampWindow(
-        { x: (w - 420) / 2, y: (h - 360) / 2, w: 420, h: 360 },
+        { x: (w - 420) / 2, y: (h - panelH) / 2, w: 420, h: panelH },
         w,
         h,
       );
@@ -734,6 +735,14 @@ export function createGameUI(
           { x: r.x + 24, y: r.y + 290, w: r.w - 48, h: 44 },
           13,
         );
+        if (transfer)
+          ui.button(
+            "onboarding-transfer",
+            "Bring an existing character   ›",
+            { x: r.x + 24, y: r.y + 344, w: r.w - 48, h: 38 },
+            openService("account"),
+            { disabled: !actions.openService },
+          );
       } else if (state.status === "offline")
         ui.button(
           "reconnect",
@@ -777,20 +786,19 @@ export function createGameUI(
         setMenu,
       );
       const tabWidth = r.w < 440 ? 86 : 112;
-      (["Display", "Graphics", "Vessel", "Crew", "Controls"] as const).forEach(
-        (value, i) =>
-          ui.button(
-            "tab-" + value,
-            value,
-            { x: r.x + 12, y: r.y + 66 + i * 45, w: tabWidth, h: 38 },
-            () => {
-              tab = value;
-              scrollY = 0;
-              ui.focus = "";
-              change();
-            },
-            { selected: tab === value },
-          ),
+      MENU_TABS.forEach((value, i) =>
+        ui.button(
+          "tab-" + value,
+          value,
+          { x: r.x + 12, y: r.y + 66 + i * 45, w: tabWidth, h: 38 },
+          () => {
+            tab = value;
+            scrollY = 0;
+            ui.focus = "";
+            change();
+          },
+          { selected: tab === value },
+        ),
       );
       const viewport = {
         x: r.x + tabWidth + 28,
@@ -804,8 +812,12 @@ export function createGameUI(
           : tab === "Crew"
             ? appearanceControlsHeight(viewport.w)
             : tab === "Controls"
-              ? 330
-              : 300;
+              ? CONTROLS_TAB_HEIGHT
+              : tab === "Vessel"
+                ? 330 + (state.vesselServices?.length ?? 0) * 46
+                : tab === "Account"
+                  ? 260
+                  : 300;
       maxScroll = Math.max(0, contentHeight - viewport.h);
       scrollY = Math.min(scrollY, maxScroll);
       const inner = { ...viewport, y: viewport.y - scrollY };
@@ -934,6 +946,26 @@ export function createGameUI(
             inner.w,
           ),
         );
+        const services = state.vesselServices ?? [];
+        ui.text("Ship services", inner.x, inner.y + 292, 14, palette.muted);
+        if (!services.length)
+          ui.text(
+            "None available on this vessel.",
+            inner.x,
+            inner.y + 318,
+            13,
+            palette.muted,
+            inner.w,
+          );
+        services.forEach((service, i) =>
+          ui.button(
+            "service-" + service.id,
+            service.label + "   ›",
+            { ...inner, y: inner.y + 318 + i * 46, h: 38 },
+            openService(service.id),
+            { disabled: !actions.openService },
+          ),
+        );
       } else if (tab === "Crew") {
         const height = drawAppearanceControls(
           ui,
@@ -945,25 +977,121 @@ export function createGameUI(
           },
         );
         maxScroll = Math.max(0, height - viewport.h);
-      } else {
-        const rows = [
-          "W / S      Thrust forward / reverse",
-          "A / D      Turn left / right",
-          "WASD      Walk relative to camera · Shift sprint",
-          "Tab      Change view only",
-          "E      Enter / leave nearby control seat",
-          "Right-drag      Orbit on deck",
-          "Wheel      Zoom in deck / flight view",
-          "I / C      Inventory / character · F3 diagnostics",
-          "F6      Focus interface, then Tab to navigate",
-        ];
-        rows.forEach((value, i) =>
-          ui.text(value, inner.x, inner.y + i * 30, 15, palette.text, inner.w),
+      } else if (tab === "Account") {
+        const account = state.account;
+        ui.text(
+          account?.name || "Account",
+          inner.x,
+          inner.y,
+          20,
+          palette.text,
+          inner.w,
         );
+        ui.text(
+          state.accountKind === "oidc"
+            ? "Dastari account"
+            : "Development identity (this browser only)",
+          inner.x,
+          inner.y + 30,
+          14,
+          palette.blue,
+          inner.w,
+        );
+        ui.paragraph(
+          account?.note ?? "",
+          { ...inner, y: inner.y + 58, h: 64 },
+          14,
+        );
+        if (account?.transfer)
+          ui.button(
+            "account-transfer",
+            "Character transfer   ›",
+            { ...inner, y: inner.y + 134, h: 38 },
+            openService("account"),
+            { disabled: !actions.openService },
+          );
+        ui.button(
+          "sign-out",
+          "Sign out",
+          { ...inner, y: inner.y + (account?.transfer ? 184 : 134), h: 38 },
+          fromMenu(() => actions.signOut?.()),
+          { disabled: !actions.signOut },
+        );
+      } else {
+        const windows = [
+          {
+            id: "character",
+            label: "C   Character",
+            run: () => inventory?.toggle("character"),
+            ok: !!inventory && !!state.inventory && state.connected,
+          },
+          {
+            id: "inventory",
+            label: "I   Inventory",
+            run: () => inventory?.toggle("inventory"),
+            ok: !!inventory && !!state.inventory && state.connected,
+          },
+          {
+            id: "map",
+            label: "N   Map",
+            run: () => (navVisible = !navVisible),
+            ok: state.connected,
+            selected: navVisible,
+          },
+          {
+            id: "combat",
+            label: "V   Combat mode",
+            run: () => actions.combat?.(),
+            ok: !!actions.combat,
+            selected: state.combat?.enabled,
+          },
+          {
+            id: "view",
+            label: `Tab   ${state.interior ? "Flight" : "Deck"} view`,
+            run: actions.view,
+            ok: !state.eva,
+          },
+          {
+            id: "labels",
+            label: "Z   Loot labels",
+            run: () => (showGroundLabels = !showGroundLabels),
+            ok: true,
+            selected: showGroundLabels,
+          },
+        ];
+        ui.text("Open", inner.x, inner.y, 14, palette.muted);
+        const cells = grid(
+          { ...inner, y: inner.y + 24, h: 3 * 44 - 6 },
+          2,
+          windows.length,
+          6,
+        );
+        windows.forEach((item, i) =>
+          ui.button(
+            "open-" + item.id,
+            item.label,
+            cells[i],
+            fromMenu(item.run),
+            {
+              selected: item.selected,
+              disabled: !state.hasActor || !item.ok,
+            },
+          ),
+        );
+        ui.text("Keys", inner.x, inner.y + 172, 14, palette.muted);
+        CONTROL_KEYS.forEach(([key, value], i) => {
+          const y = inner.y + 198 + i * 26;
+          ui.text(key, inner.x, y, 14, palette.blue, 118);
+          ui.text(value, inner.x + 124, y, 14, palette.text, inner.w - 124);
+        });
         ui.button(
           "camera",
           "Reset camera",
-          { ...inner, y: inner.y + 283, h: 38 },
+          {
+            ...inner,
+            y: inner.y + 198 + CONTROL_KEYS.length * 26 + 10,
+            h: 38,
+          },
           () => {
             inspectingDestination = false;
             actions.camera();

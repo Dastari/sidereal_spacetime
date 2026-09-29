@@ -37,7 +37,8 @@ async (page) => {
     }, id);
     await page.mouse.click(p.x, p.y);
   };
-  await click("character-open");
+  // The HUD has no Character button; C opens the character window.
+  await page.keyboard.press("KeyC");
   for (let i = 0; i < 25; i++) await tick();
   await page.screenshot({ path: "output/playwright/components-male-base.png" });
   await click("character-body");
