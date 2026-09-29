@@ -218,20 +218,26 @@ describe("voxel crew runtime", () => {
       expect(crew.socketNodes[socket]).toBeDefined();
     const enabled = (prefix: string) =>
       scene.meshes.some((m) => m.name.startsWith(prefix) && m.isEnabled());
-    const suits = scene.meshes.filter(
-      (m) => m.name.startsWith("GEO-crew-suit-") && m.isEnabled(),
-    );
-    expect(
-      new Set(suits.map((m) => m.name.replace(/_primitive\d+$/, ""))),
-    ).toEqual(new Set(["GEO-crew-suit-male"]));
-    // default look: suit + gear; the underwear base body and bare hands are replaced
-    expect(enabled("GEO-crew-base-male")).toBe(false);
-    expect(enabled("GEO-crew-hands-male")).toBe(false);
-    expect(enabled("GEO-crew-gear-male")).toBe(true);
+    // Nothing equipped: the base body (privacy shorts; sports bra on the feminine
+    // body) with bare hands. No jumpsuit and never the built-in crew gear layer.
+    expect(enabled("GEO-crew-base-male")).toBe(true);
+    expect(enabled("GEO-crew-hands-male")).toBe(true);
+    expect(enabled("GEO-crew-suit-")).toBe(false);
+    expect(enabled("GEO-crew-gear-")).toBe(false);
     crew.customize({ bodyType: "female" });
+    expect(enabled("GEO-crew-base-female")).toBe(true);
+    expect(enabled("GEO-crew-base-male")).toBe(false);
+    // An equipped uniform draws the (tinted) suit layer over the base body.
+    crew.customize({
+      equippedComponents: { uniform: "wardrobe-uniform-medical" },
+    });
     expect(enabled("GEO-crew-suit-female")).toBe(true);
-    expect(enabled("GEO-crew-suit-male")).toBe(false);
-    // wardrobe base: underwear body + bare hands always available
+    expect(enabled("GEO-crew-base-female")).toBe(false);
+    expect(enabled("GEO-crew-gear-")).toBe(false);
+    crew.customize({ equippedComponents: {} });
+    expect(enabled("GEO-crew-suit-")).toBe(false);
+    expect(enabled("GEO-crew-base-female")).toBe(true);
+    // Review harnesses can still force a layer.
     crew.setOutfit({ suit: false, gear: false });
     expect(enabled("GEO-crew-base-female")).toBe(true);
     expect(enabled("GEO-crew-hands-female")).toBe(true);

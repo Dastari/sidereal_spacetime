@@ -131,7 +131,10 @@ export function createVoxelCrewOutfit(
       void track(attachVoxelCrewHead(scene, crew, loadout))
         .then((next) => {
           if (disposed || revision !== headRevision) {
+            // A stale head kit clears the body's hidden regions when disposed;
+            // restore the current head/armour hides (else gloves/hands flash back).
             next.dispose();
+            changed();
             return;
           }
           head?.dispose();

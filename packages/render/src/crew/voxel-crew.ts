@@ -10,6 +10,7 @@ import "@babylonjs/loaders/glTF";
 import {
   VOXEL_CREW_ASSET_URL,
   VOXEL_CREW_DEFAULT_OUTFIT,
+  voxelCrewOutfitFor,
   VOXEL_CREW_FACE_ATLAS_URL,
   VOXEL_CREW_FACE_IMAGE_URL,
   VOXEL_CREW_SOCKETS,
@@ -351,6 +352,8 @@ export async function createVoxelCrewVisual(
   const loops = (clip: VoxelCrewAction) =>
     clip.includes(".") ? armedLoops(clip) : voxelCrewLoops(clip);
   let outfit: VoxelCrewOutfit = { ...VOXEL_CREW_DEFAULT_OUTFIT };
+  // Review harnesses may force a layer; the game derives the outfit from equipment.
+  let outfitOverride: Partial<VoxelCrewOutfit> = {};
   const face = createVoxelFace(
     scene,
     container.materials.find(
@@ -381,6 +384,10 @@ export async function createVoxelCrewVisual(
     face.setTints({ skin: hexToRgb(colors.skin), hair: hexToRgb(colors.hair) });
     variant = voxelCrewVariant(appearance);
     const r = resolveCrewAppearance(appearance);
+    outfit = {
+      ...voxelCrewOutfitFor(appearance.equippedComponents),
+      ...outfitOverride,
+    };
     const hairHidden = r.hairStyle === "none" || !!r.equippedComponents?.helmet;
     refreshRegions(hairHidden);
   };
@@ -623,6 +630,7 @@ export async function createVoxelCrewVisual(
     },
     /** Wardrobe: a suit replaces the underwear base body; gear gloves replace the bare hands. */
     setOutfit(next: Partial<VoxelCrewOutfit>) {
+      outfitOverride = { ...outfitOverride, ...next };
       outfit = { ...outfit, ...next };
       refreshRegions();
     },
