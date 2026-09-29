@@ -15,9 +15,5 @@ for entry in json.loads((ROOT/'docs/source_inventory.json').read_text()):
  path=ROOT/'reference/sidereal'/entry['path']
  if not path.exists() and accounted('reference/sidereal/'+entry['path'],entry['sha256']):continue
  if not path.exists() or hashlib.sha256(path.read_bytes()).hexdigest()!=entry['sha256']:errors.append(f"Reference changed: {entry['path']}")
-for entry in json.loads((ROOT/'assets/import_manifest.json').read_text())['files']:
- path=ROOT/entry['path']
- if not path.exists() and accounted(entry['path'],entry['sha256']):continue
- if not path.exists() or hashlib.sha256(path.read_bytes()).hexdigest()!=entry['sha256']:errors.append(f"Imported source changed: {entry['path']}")
 if errors:raise SystemExit('\n'.join(errors))
-print(f'Checked {len(files)} project documents, all legacy document hashes and imported asset provenance.')
+print(f'Checked {len(files)} project documents and all legacy document hashes.')

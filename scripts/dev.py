@@ -446,7 +446,7 @@ def status():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'keycloak-development-review-account', 'keycloak-development-review-grant', 'keycloak-development-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-art', 'export-voxels', 'export-engine', 'export-assembly', 'export-bulkheads', 'export-equipment', 'export-crew-items', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup', *(f'{name}-serve' for name in SERVE)])
+    parser.add_argument('command', choices=['database-up', 'restore-review-prepare', 'restore-review-up', 'restore-review-restart', 'restore-review-stop', 'backup-database', 'public-client-delivery-stage', 'public-client-delivery-activate', 'public-client-delivery-rollback', 'public-client-stage', 'public-client-activate', 'public-client-deploy', 'public-client-up', 'public-client-stop', 'public-client-proxy', 'auth-https-setup', 'auth-https-status', 'auth-https-stop', 'keycloak-setup', 'keycloak-start', 'keycloak-stop', 'keycloak-status', 'keycloak-bootstrap', 'keycloak-authoring', 'keycloak-game-origin', 'keycloak-repair-cache', 'keycloak-review-grant', 'keycloak-review-revoke', 'keycloak-rotate-review-password', 'keycloak-shared-review-account', 'keycloak-native-public-review-account', 'keycloak-development-review-account', 'keycloak-development-review-grant', 'keycloak-development-review-revoke', 'setup', 'up', 'up-client', 'up-dashboard', 'down', 'stop-client', 'stop-dashboard', 'status', 'build-world', 'generate', 'publish', 'publish-review', 'export-equipment', 'export-materials', 'export-crew-items', 'export-inventory-icons', 'mcp', 'smoke-prepare', 'smoke-update', 'smoke', 'smoke-restart', 'smoke-auth-admission', 'restart-database', 'backup', *(f'{name}-serve' for name in SERVE)])
     parser.add_argument('--review-name', help='Named additive test database suffix; publish-review only')
     parser.add_argument('--client-artifact', help='Pinned prebuilt client directory; public-client-stage only')
     parser.add_argument('--client-artifact-sha256', help='Required complete tree digest with --client-artifact')
@@ -598,16 +598,11 @@ def main():
             database_up()
         for name in (['client', 'dashboard'] if command == 'up' else [command.removeprefix('up-')]):
             app_up(name)
-    elif command == 'export-art':
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_glb.py'])
-    elif command == 'export-voxels':
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_interior_prop_source.py'])
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_ship_fixture_source.py'])
-        run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/build_voxel.ts'])
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_metal_materials.py'])
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_voxel_blender.py'])
     elif command == 'export-equipment':
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_equipment_source.py'])
+    elif command == 'export-materials':
+        # Brushed-metal maps and the frontier-workshop HDR (assets/runtime/materials); no-op when the recipe is unchanged.
+        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_metal_materials.py'])
     elif command == 'export-crew-items':
         # Proposal art kit (unpublished): GLBs, content JSON, source .blend, icons and review renders.
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python',
@@ -615,19 +610,6 @@ def main():
              '--sheets', 'icons,held'])
     elif command == 'export-inventory-icons':
         run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_inventory_icons.py'])
-    elif command == 'export-bulkheads':
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_bulkhead_source.py'])
-        for slug in ['bulkhead', 'airlock']:
-            run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/mesh_sampled_asset.ts', slug])
-            run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_sampled_asset.py', '--', slug])
-    elif command == 'export-assembly':
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_interior_prop_source.py'])
-        run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/build_assembly.ts'])
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_voxel_blender.py', '--', '--assembly'])
-    elif command == 'export-engine':
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/build_engine_source.py'])
-        run([str(ROOT/'node_modules/.bin/tsx'), 'scripts/mesh_sampled_asset.ts'])
-        run([CFG['art']['blender'], '--background', '--factory-startup', '--python-exit-code', '1', '--python', 'scripts/export_sampled_asset.py'])
     elif command == 'mcp':
         run([sys.executable, 'scripts/blender_mcp.py'])
     elif command == 'backup-database':
