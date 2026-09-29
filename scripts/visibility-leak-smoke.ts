@@ -171,11 +171,29 @@ export async function visibilityLeakSmoke(options: {
         );
       }
     }
-    for (const key of ["currentInteriorCrew", "visibleCrewPresentation"])
+    for (const key of [
+      "currentInteriorCrew",
+      "visibleCrewPresentation",
+      "visibleEvaBodies",
+    ])
       assert(
         ![...(db[key]?.iter() ?? [])].some((r) => json(r).includes(actor.id)),
-        `${key}: no crew body of another player's ship`,
+        `${key}: no crew body from inside another player's ship`,
       );
+    // Ship logic (doors, buttons, airlock phase) and suit state: the observer's own only.
+    const observerShip = [...observer.db.ownShips.iter()][0]!.id;
+    const observerActor = [...observer.db.ownCharacters.iter()][0]!.id;
+    const logic = [...spy.db.visibleShipLogic.iter()];
+    assert(
+      logic.every((r) => r.shipId === observerShip),
+      "visible_ship_logic: only the ship the observer is aboard",
+    );
+    assert(
+      [...spy.db.ownEvaSuit.iter()].every(
+        (r) => r.characterId === observerActor,
+      ),
+      "own_eva_suit: only the observer's own suit",
+    );
     // Private base tables stay unreachable.
     const rejected: string[] = [];
     for (const name of PRIVATE_TABLES) {
@@ -191,6 +209,7 @@ export async function visibilityLeakSmoke(options: {
       views: Object.keys(checked).length,
       rows: Object.values(checked).reduce((a, b) => a + b, 0),
       interiorIdentifiersTracked: secrets.length,
+      ownShipLogicRows: logic.length,
       exterior: {
         publishedExteriorAssetId: description.publishedExteriorAssetId,
         appearanceRevision: description.appearanceRevision.toString(),
