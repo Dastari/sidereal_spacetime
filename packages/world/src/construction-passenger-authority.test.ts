@@ -52,7 +52,9 @@ import {
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
 } from "./game-ship-access-authority";
-import { WAYFARER_REBUILD_SHA256 } from "@sidereal/sim/wayfarer-rebuild-contract";
+import { TRUSTED_PREFAB_BLUEPRINT_PREFIX } from "@sidereal/sim/game-ship-access";
+/** Both characters own an active trusted prefab ship (passengers are not qualified for it). */
+const PREFAB_SHA = "b".repeat(64);
 function table(key = "id") {
   const rows = new Map<any, any>();
   const equal = (a: any, b: any) => (a?.isEqual ? a.isEqual(b) : a === b);
@@ -143,8 +145,9 @@ function fixture() {
       id: shipId,
       owner,
       workspaceId: GAME_OWNED_TEMPLATE_NAMESPACE,
+      blueprintId: TRUSTED_PREFAB_BLUEPRINT_PREFIX + "fed.s.wren:r5",
       revision: 1n,
-      blueprintSha256: WAYFARER_REBUILD_SHA256,
+      blueprintSha256: PREFAB_SHA,
       spawnDeckId: deckId,
       spawnX: 0,
       spawnY: 0,
@@ -162,7 +165,7 @@ function fixture() {
       owner,
       deckId,
       instanceRevision: 1n,
-      blueprintSha256: WAYFARER_REBUILD_SHA256,
+      blueprintSha256: PREFAB_SHA,
       revision: 1n,
       lifecycle: "active",
     });
@@ -174,7 +177,7 @@ function fixture() {
       characterId: id,
       deckId,
       instanceRevision: 1n,
-      templateSha256: WAYFARER_REBUILD_SHA256,
+      templateSha256: PREFAB_SHA,
       lifecycle: "active",
     });
     db.constructionLocation.insert({
@@ -247,196 +250,38 @@ function fixture() {
   };
   return { ctx, pctx, sctx, db, grant, board, passenger, captain };
 }
-test("two identities explicitly grant and consent; boarding changes only membership/body and dirties both ships", () => {
-  const f = fixture();
+test("passenger admission fails closed for unqualified prefab ships; nothing is granted or moved", () => {
+  const f = fixture(),
+    before = JSON.stringify([...f.db.character.rows.values()], (_k, v) =>
+      typeof v === "bigint" ? v.toString() : v,
+    );
+  expect(() => grantShipPassenger(f.pctx, f.grant)).toThrow("Owned ship");
+  expect(() => grantShipPassenger(f.ctx, f.grant)).toThrow(
+    "Current active qualified flight revision required",
+  );
+  expect(f.db.constructionPassengerGrant.rows.size).toBe(0);
+  expect(f.db.constructionPassengerReceipt.rows.size).toBe(0);
+  expect(() => boardShipPassenger(f.pctx, f.board)).toThrow("admission");
+  expect(f.db.constructionPassengerVisit.rows.size).toBe(0);
+  expect(
+    JSON.stringify([...f.db.character.rows.values()], (_k, v) =>
+      typeof v === "bigint" ? v.toString() : v,
+    ),
+  ).toBe(before);
   expect(
     acceptedPassengerAccess(f.pctx, "passenger", 1_000_000n).readInterior,
   ).toBe(false);
-  grantShipPassenger(f.ctx, f.grant);
-  grantShipPassenger(f.ctx, f.grant);
-  expect(f.db.constructionPassengerGrant.rows.size).toBe(1);
-  const motion = JSON.stringify([...f.db.shipWorldMotion.rows.values()]);
-  boardShipPassenger(f.pctx, f.board);
-  boardShipPassenger(f.pctx, f.board);
-  expect(f.db.character.id.find("passenger")).toMatchObject({
-    shipId: "captain-ship",
-    localX: 0.75,
-    localY: 0,
-  });
-  expect(
-    acceptedPassengerAccess(f.pctx, "passenger", 1_000_000n).walkDeck,
-  ).toBe(true);
-  expect(
-    ownedGameShipAccess(f.pctx, "captain-ship", "captain-deck", 1_000_000n)
-      .useObjects,
-  ).toBe(false);
-  expect(f.db.gameShipAccess.shipId.find("captain-ship").characterId).toBe(
-    "captain",
-  );
-  expect(JSON.stringify([...f.db.shipWorldMotion.rows.values()])).toBe(motion);
-  expect(f.db.input.characterId.find("passenger")).toMatchObject({
-    throttle: 0,
-    turn: 0,
-    dx: 0,
-    dy: 0,
-    sprint: false,
-  });
-  expect([...f.db.constructionFlightDirty.rows.keys()].sort()).toEqual([
-    "captain-ship",
-    "passenger-ship",
-  ]);
-});
-test("foreign grants, stale revisions, conflicting replay and unconsented boarding are rejected", () => {
-  const f = fixture();
-  expect(() => grantShipPassenger(f.pctx, f.grant)).toThrow("Owned ship");
-  expect(() =>
-    grantShipPassenger(f.ctx, { ...f.grant, expectedFlightRevision: 2n }),
-  ).toThrow("revision");
-  expect(() =>
-    grantShipPassenger(f.ctx, { ...f.grant, durationSeconds: 3601 }),
-  ).toThrow("duration");
-  grantShipPassenger(f.ctx, f.grant);
-  expect(() =>
-    grantShipPassenger(f.ctx, { ...f.grant, durationSeconds: 30 }),
-  ).toThrow("payload conflict");
-  expect(() => boardShipPassenger(f.ctx, f.board)).toThrow("admission");
-  expect(() =>
-    boardShipPassenger(f.pctx, { ...f.board, expectedLocationRevision: 2n }),
-  ).toThrow("visit");
-  expect(f.db.character.id.find("passenger").shipId).toBe("passenger-ship");
-});
-test("boarding rejects movement, distance, invalid compilation and changed destinations", () => {
-  for (const kind of ["moving", "distant", "invalid", "refit"]) {
-    const f = fixture();
-    grantShipPassenger(f.ctx, f.grant);
-    if (kind === "moving" || kind === "distant")
-      f.db.shipWorldMotion.shipId.update({
-        ...f.db.shipWorldMotion.shipId.find("captain-ship"),
-        [kind === "moving" ? "vx" : "x"]: 100,
-      });
-    if (kind === "invalid")
-      f.db.constructionFlightCompiled.shipId.update({
-        shipId: "captain-ship",
-        status: "rejected",
-      });
-    if (kind === "refit")
-      f.db.constructionInstance.id.update({
-        ...f.db.constructionInstance.id.find("captain-ship"),
-        revision: 2n,
-      });
-    expect(() => boardShipPassenger(f.pctx, f.board), kind).toThrow();
-    expect(f.db.constructionPassengerVisit.rows.size).toBe(0);
-  }
-});
-test("return preserves current ship motion and increments location/admission revisions", () => {
-  const f = fixture();
-  grantShipPassenger(f.ctx, f.grant);
-  boardShipPassenger(f.pctx, f.board);
-  const motion = f.db.shipWorldMotion.shipId.find("passenger-ship");
-  f.db.shipWorldMotion.shipId.update({ ...motion, x: 42 });
-  const args = {
-    expectedVisitId: "uuid-2",
-    expectedRevision: 1n,
-    operationId: "return",
-  };
-  returnShipPassenger(f.pctx, args);
-  returnShipPassenger(f.pctx, args);
-  expect(f.db.character.id.find("passenger")).toMatchObject({
-    shipId: "passenger-ship",
-    localX: 0,
-    localY: 0,
-  });
-  expect(f.db.constructionLocation.characterId.find("passenger")).toMatchObject(
-    { visitId: "passenger-visit", revision: 3n },
-  );
-  expect(f.db.worldAdmission.characterId.find("passenger")).toMatchObject({
-    shipId: "passenger-ship",
-    revision: 3n,
-  });
-  expect(f.db.shipWorldMotion.shipId.find("passenger-ship").x).toBe(42);
-  expect(f.db.constructionPassengerVisit.rows.size).toBe(0);
-});
-test("revocation immediately removes access even when return is blocked; bounded recovery later restores the retained body", () => {
-  const f = fixture();
-  grantShipPassenger(f.ctx, f.grant);
-  boardShipPassenger(f.pctx, f.board);
-  f.db.character.insert({
-    id: "blocker",
-    shipId: "passenger-ship",
-    localX: 0,
-    localY: 0,
-  });
-  f.db.constructionLocation.insert({
-    characterId: "blocker",
-    instanceId: "passenger-ship",
-    deckId: "passenger-deck",
-  });
-  const revoke = {
-    grantId: "uuid-1",
-    expectedRevision: 1n,
-    operationId: "revoke",
-  };
-  revokeShipPassenger(f.ctx, revoke);
-  revokeShipPassenger(f.ctx, revoke);
-  expect(
-    acceptedPassengerAccess(f.pctx, "passenger", 1_000_000n).walkDeck,
-  ).toBe(false);
-  expect(
-    f.db.constructionPassengerVisit.characterId.find("passenger")
-      .recoveryReason,
-  ).toMatch(/obstructed/);
-  expect(f.db.character.id.find("passenger").shipId).toBe("captain-ship");
-  f.db.character.id.delete("blocker");
-  f.db.constructionLocation.characterId.delete("blocker");
-  f.sctx.timestamp = { microsSinceUnixEpoch: 1_500_000n };
-  expireShipPassengers(f.sctx);
-  expect(f.db.character.id.find("passenger").shipId).toBe("passenger-ship");
-});
-test("expiry is server-only, materializes view revocation, and cannot replay an old grant into existence", () => {
-  const f = fixture();
-  grantShipPassenger(f.ctx, { ...f.grant, durationSeconds: 1 });
-  boardShipPassenger(f.pctx, f.board);
-  expect(() => expireShipPassengers(f.pctx)).toThrow("Server");
-  f.sctx.timestamp = { microsSinceUnixEpoch: 2_000_000n };
-  expireShipPassengers(f.sctx);
-  expect(f.db.constructionPassengerGrant.rows.size).toBe(0);
-  expect(f.db.character.id.find("passenger").shipId).toBe("passenger-ship");
-  grantShipPassenger(f.ctx, { ...f.grant, durationSeconds: 1 });
-  expect(f.db.constructionPassengerGrant.rows.size).toBe(0);
 });
 
-test("passenger projections reveal current admitted interior and crew without owner identity or ratings", () => {
+test("passenger projections stay empty without admission; owners still see their own interior crew", () => {
   const f = fixture();
   expect(currentPassengerInterior(f.pctx)).toEqual([]);
+  expect(ownPassengerGrants(f.pctx)).toEqual([]);
+  expect(ownPassengerVisit(f.pctx)).toEqual([]);
   expect(currentInteriorCrew(f.pctx).map((r) => r.characterId)).toEqual([
     "passenger",
   ]);
-  grantShipPassenger(f.ctx, f.grant);
-  expect(ownPassengerGrants(f.pctx)[0]).toMatchObject({
-    granteeId: "passenger",
-    issuedByYou: false,
-  });
-  expect(ownPassengerGrants(f.ctx)[0].issuedByYou).toBe(true);
-  expect(ownPassengerGrants({ ...f.pctx, sender: f.sctx.sender })).toEqual([]);
-  boardShipPassenger(f.pctx, f.board);
-  expect(ownPassengerVisit(f.pctx)[0].admitted).toBe(true);
-  const interior = currentPassengerInterior(f.pctx)[0];
-  expect(Object.keys(interior).sort()).toEqual([
-    "characterId",
-    "deckId",
-    "flightReason",
-    "flightStatus",
-    "instanceId",
-    "instanceRevision",
-    "name",
-    "shipId",
-  ]);
-  expect(
-    currentInteriorCrew(f.pctx)
-      .map((r) => r.characterId)
-      .sort(),
-  ).toEqual(["captain", "passenger"]);
-  expect(Object.keys(currentInteriorCrew(f.pctx)[0]).sort()).toEqual([
+  expect(Object.keys(currentInteriorCrew(f.ctx)[0]).sort()).toEqual([
     "characterId",
     "connected",
     "deckId",
@@ -447,22 +292,31 @@ test("passenger projections reveal current admitted interior and crew without ow
     "sprinting",
     "standingElevationM",
   ]);
-  revokeShipPassenger(f.ctx, {
-    grantId: "uuid-1",
-    expectedRevision: 1n,
-    operationId: "revoke",
-  });
-  expect(currentPassengerInterior(f.pctx)).toEqual([]);
-  expect(currentInteriorCrew(f.pctx).map((r) => r.characterId)).toEqual([
-    "passenger",
-  ]);
+  expect(
+    ownedGameShipAccess(f.ctx, "captain-ship", "captain-deck", 1_000_000n)
+      .walkDeck,
+  ).toBe(true);
 });
 
 // ------------------------------------------------------------ crew presentation (remote crew)
+/** Another character's retained body on the captain's deck (the placement boarding used to
+ * produce). Passenger admission is not qualified for prefab ships, so the rows are written. */
+function placeOnCaptainDeck(f: ReturnType<typeof fixture>) {
+  f.db.character.id.update({
+    ...f.db.character.id.find("passenger"),
+    shipId: "captain-ship",
+    localX: 0.75,
+    localY: 0,
+  });
+  f.db.constructionLocation.characterId.update({
+    ...f.db.constructionLocation.characterId.find("passenger"),
+    instanceId: "captain-ship",
+    deckId: "captain-deck",
+  });
+}
 function crewOnOneDeck() {
   const f = fixture();
-  grantShipPassenger(f.ctx, f.grant);
-  boardShipPassenger(f.pctx, f.board);
+  placeOnCaptainDeck(f);
   f.db.characterAppearance.insert({
     characterId: "passenger",
     revision: 3n,
@@ -495,27 +349,23 @@ test("crew presentation shows only other bodies on the viewer's own admitted dec
   expect(visibleCrewPresentation(f.pctx)).toEqual([]);
   // A connection without a character sees nothing.
   expect(visibleCrewPresentation(f.sctx)).toEqual([]);
-  grantShipPassenger(f.ctx, f.grant);
-  // An invitation alone admits nobody.
-  expect(visibleCrewPresentation(f.ctx)).toEqual([]);
-  boardShipPassenger(f.pctx, f.board);
+  const home = {
+    character: f.db.character.id.find("passenger"),
+    location: f.db.constructionLocation.characterId.find("passenger"),
+  };
+  placeOnCaptainDeck(f);
   expect(visibleCrewPresentation(f.ctx).map((r) => r.characterId)).toEqual([
     "passenger",
   ]);
-  expect(visibleCrewPresentation(f.pctx).map((r) => r.characterId)).toEqual([
-    "captain",
-  ]);
+  // A body aboard a foreign ship without passenger admission sees nothing.
+  expect(visibleCrewPresentation(f.pctx)).toEqual([]);
   // Exactly the bodies current_interior_crew shows, minus the viewer.
-  for (const [viewer, self] of [
-    [f.ctx, "captain"],
-    [f.pctx, "passenger"],
-  ] as const)
-    expect(visibleCrewPresentation(viewer).map((r) => r.characterId)).toEqual(
-      currentInteriorCrew(viewer)
-        .map((r) => r.characterId)
-        .filter((id) => id !== self),
-    );
-  // Another deck of the same ship hides the body both ways.
+  expect(visibleCrewPresentation(f.ctx).map((r) => r.characterId)).toEqual(
+    currentInteriorCrew(f.ctx)
+      .map((r) => r.characterId)
+      .filter((id) => id !== "captain"),
+  );
+  // Another deck of the same ship hides the body.
   f.db.constructionDeck.insert({
     id: "captain-deck-2",
     instanceId: "captain-ship",
@@ -533,12 +383,9 @@ test("crew presentation shows only other bodies on the viewer's own admitted dec
   expect(visibleCrewPresentation(f.ctx)).toEqual([]);
   f.db.constructionStairWalk.characterId.delete("passenger");
   expect(visibleCrewPresentation(f.ctx)).toHaveLength(1);
-  // Revoking the passenger returns them home: visibility ends for both.
-  revokeShipPassenger(f.ctx, {
-    grantId: "uuid-1",
-    expectedRevision: 1n,
-    operationId: "revoke",
-  });
+  // Back home: visibility ends for both.
+  f.db.character.id.update(home.character);
+  f.db.constructionLocation.characterId.update(home.location);
   expect(visibleCrewPresentation(f.ctx)).toEqual([]);
   expect(visibleCrewPresentation(f.pctx)).toEqual([]);
 });
@@ -586,7 +433,8 @@ test("crew presentation columns carry looks and pose only: no identity, item UUI
   for (const secret of ["item-uuid", "pockets", "compact-pistol", "42", "1111"])
     expect(text).not.toContain(secret);
   // A character with no appearance row projects an empty look.
-  expect(visibleCrewPresentation(f.pctx)[0].appearanceJson).toBe("{}");
+  f.db.characterAppearance.characterId.delete("passenger");
+  expect(visibleCrewPresentation(f.ctx)[0].appearanceJson).toBe("{}");
 });
 test("crew presentation pose: aim, seat, death and the latest shot on this ship", () => {
   const f = crewOnOneDeck();

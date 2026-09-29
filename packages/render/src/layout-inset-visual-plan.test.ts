@@ -2,7 +2,6 @@ import { expect, it } from "vitest";
 import { emptyLayout, stampTile } from "@sidereal/content/ship-layout";
 import { compileLayout } from "@sidereal/sim/layout-compiler";
 import { planLayoutInsetVisuals } from "./layout-inset-visual-plan";
-import { WAYFARER_REBUILD_SOURCE } from "@sidereal/sim/wayfarer-rebuild-contract";
 function fixture(clearHeight = 96) {
   const doc = emptyLayout("preview", "main");
   doc.decks[0].ceiling = 6 + clearHeight;
@@ -152,12 +151,16 @@ it("plans generic native walls alongside unrelated visual assembly parts", () =>
   document.assembly = {
     schema: "sidereal.layout-assembly.v1",
     source: null,
-    revisions: { ...WAYFARER_REBUILD_SOURCE.layout.assembly!.revisions },
+    // Structural admission is catalog-independent: any pinned asset revision is accepted.
+    revisions: { "test-control-seat": "e".repeat(64) },
     parts: [
       {
-        ...structuredClone(WAYFARER_REBUILD_SOURCE.layout.assembly!.parts[0]),
+        assetId: "test-control-seat",
+        flipped: false,
         id: "independent-equipment",
         position: [1, 1, 0.1875],
+        removedCells: [],
+        rotation: 0,
       },
     ],
   };

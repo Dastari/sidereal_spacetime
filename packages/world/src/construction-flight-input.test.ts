@@ -11,18 +11,36 @@ vi.mock("spacetimedb/server", () => {
 vi.mock("./auth", () => ({ requireGame: () => {}, canReadGame: () => true }));
 import { readConstructionFlightInput } from "./construction-flight-input";
 import { compileFlightDefinition } from "@sidereal/sim/flight-definition";
-import source from "@sidereal/content/wayfarer-rebuild-r002.json";
-import { WAYFARER_REBUILD_SHA256 } from "@sidereal/sim/wayfarer-rebuild-contract";
 import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import {
+  PREFAB_DECK_ID,
+  prefabConstructionDocument,
+} from "@sidereal/sim/prefab-construction";
+import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
+import {
+  PREFAB_FLIGHT_DEFINITION,
+  prefabFlightModel,
+  prefabPlacedObjectId,
+} from "@sidereal/sim/prefab-flight";
+const WREN = prefabById("fed.s.wren")!;
+const catalog = defaultPrefabComponentCatalog();
+const source = JSON.stringify(prefabConstructionDocument(WREN, catalog));
+const model = prefabFlightModel(WREN, catalog);
 function fixture() {
   const tables: Record<string, any[]> = {
     constructionInstance: [
       {
         id: "ship",
-        blueprintSha256: WAYFARER_REBUILD_SHA256,
-        documentJson: JSON.stringify(source),
+        blueprintSha256: "b".repeat(64),
+        documentJson: source,
         idMapJson: "{}",
       },
+    ],
+    // Trusted prefab installation pins the flight definition path.
+    constructionFlightBinding: [
+      { shipId: "ship", definitionId: PREFAB_FLIGHT_DEFINITION },
     ],
   };
   const db = new Proxy({} as any, {
@@ -131,23 +149,25 @@ test("crew, equipped items and pocket payload count once; disconnected bodies an
     y: -3,
   });
 });
-test("adopted cargo shell and root payload use the carrier placement without duplicate mass", () => {
+test("prefab storage socket payload sits at its socket centre; carrier refits fail closed", () => {
   const f = fixture(),
     empty = f.compile();
-  const shell = source.layout.assembly.parts.find(
-    (p) => p.assetId === "part-c06e4f5f6f6dace38e41",
-  )!;
+  const socket = prefabCargoSockets(WREN, 0, catalog)[0]!;
+  const placedObjectId = `ship:deck:${socket.key}`;
+  f.tables.constructionDeck = [
+    { id: "deck", instanceId: "ship", sourceDeckId: PREFAB_DECK_ID },
+  ];
   f.tables.inventoryContainer = [f.container("root", "", false)];
   f.tables.inventoryItem = [f.item("payload", "", "root")];
   f.tables.instanceInventoryBinding = [
-    { placedObjectId: shell.id, containerId: "root", instanceId: "ship" },
+    { placedObjectId, containerId: "root", instanceId: "ship", deckId: "deck" },
   ];
   f.tables.inventoryContainerScope = [
     {
       containerId: "root",
       rootContainerId: "root",
       instanceId: "ship",
-      placedObjectId: shell.id,
+      placedObjectId,
       lifecycle: "active",
       rootKind: "instance",
     },
@@ -155,10 +175,31 @@ test("adopted cargo shell and root payload use the carrier placement without dup
   f.tables.inventoryItemMembership = [
     { itemId: "payload", containerId: "root", rootContainerId: "root" },
   ];
+  const loaded = f.compile();
+  expect(loaded.mass.massKg - empty.mass.massKg).toBeCloseTo(
+    f.definition.massKg,
+    8,
+  );
+  expect(loaded.contributions.filter((c) => c.source === "cargo")).toEqual([
+    expect.objectContaining({
+      sourceId: "root",
+      massKg: f.definition.massKg,
+      x: socket.centreM[0],
+      y: socket.centreM[1],
+    }),
+  ]);
+  expect(f.tables.constructionInstance[0].documentJson).toBe(source);
+  // A socket key the prefab does not derive has no shell and no centre.
+  f.tables.instanceInventoryBinding[0].placedObjectId = "ship:deck:none/none";
+  f.tables.inventoryContainerScope[0].placedObjectId = "ship:deck:none/none";
+  expect(f.compile).toThrow("missing-flight-cargo-shell");
+  // Carrier assemblies would replace a placed part: refits of prefab ships are unsupported.
+  f.tables.instanceInventoryBinding[0].placedObjectId = placedObjectId;
+  f.tables.inventoryContainerScope[0].placedObjectId = placedObjectId;
   f.tables.constructionCargoAssembly = [
     {
       containerId: "root",
-      placedObjectId: shell.id,
+      placedObjectId,
       instanceId: "ship",
       carrierSize: "oneMetre",
       lifecycle: "active",
@@ -174,27 +215,7 @@ test("adopted cargo shell and root payload use the carrier placement without dup
       quarterTurns: 0,
     },
   ];
-  const loaded = f.compile(),
-    oldShell = empty.contributions.find((c) => c.sourceId === shell.id)!;
-  expect(loaded.mass.massKg - empty.mass.massKg).toBeCloseTo(
-    20 - oldShell.massKg + f.definition.massKg,
-    8,
-  );
-  expect(
-    loaded.contributions.filter((c) => c.sourceId === shell.id),
-  ).toHaveLength(1);
-  expect(loaded.contributions.find((c) => c.source === "cargo")).toMatchObject({
-    x: -1.5,
-    y: -2.5,
-    massKg: f.definition.massKg,
-  });
-  f.tables.constructionCargoPlacement[0].originX = -128;
-  const moved = f.compile();
-  expect(moved.mass.massKg).toBe(loaded.mass.massKg);
-  expect(moved.mass.centerX).not.toBe(loaded.mass.centerX);
-  expect(JSON.parse(f.tables.constructionInstance[0].documentJson)).toEqual(
-    source,
-  );
+  expect(f.compile).toThrow("prefab-flight-refit-unsupported");
 });
 test("missing cargo membership and unrecognized structure fail closed", () => {
   const f = fixture();
@@ -202,23 +223,30 @@ test("missing cargo membership and unrecognized structure fail closed", () => {
     { placedObjectId: "missing", containerId: "missing", instanceId: "ship" },
   ];
   expect(f.compile).toThrow("invalid-flight-cargo-root-binding");
-  f.tables.constructionInstance[0].blueprintSha256 = "unknown";
+  // Only trusted prefab installations compile flight; any other pin fails closed.
+  f.tables.constructionFlightBinding[0].definitionId =
+    "qualified-wayfarer-lab-flight-v1";
+  expect(f.compile).toThrow("unqualified-flight-structure");
+  f.tables.constructionFlightBinding = [];
   expect(f.compile).toThrow("unqualified-flight-structure");
 });
 
 test("database metadata and bigint fitting revisions never enter the pure physical hash", () => {
-  const f = fixture();
-  const part = source.layout.assembly.parts.find(
-    (p) => p.assetId === "part-e8b51ac6443c73becfcb",
-  )!;
+  const f = fixture(),
+    empty = f.compile();
+  const drive = model.fittings.find((x) => x.role === "actuator")!;
+  const part = model.parts.find((p) => p.sourceId === drive.sourceId)!;
+  const definition = model.catalog.definitions.find(
+    (d) => d.id === part.definitionId,
+  ) as { maxThrustN: number };
   f.tables.constructionFlightFitting = [
     {
       id: "fitted-main",
-      placedObjectId: part.id,
-      sourceDeviceId: part.id,
+      placedObjectId: prefabPlacedObjectId("ship", drive.sourceId),
+      sourceDeviceId: drive.sourceId,
       shipId: "ship",
-      definitionId: "main-drive-v1",
-      definitionRevision: 1,
+      definitionId: drive.definitionId,
+      definitionRevision: drive.definitionRevision,
       kind: "actuator",
       installed: true,
       powered: true,
@@ -230,9 +258,11 @@ test("database metadata and bigint fitting revisions never enter the pure physic
   expect(result.actuators).toHaveLength(1);
   expect(result.actuators[0]).toMatchObject({
     id: "fitted-main",
-    maxThrustN: 14000,
+    maxThrustN: definition.maxThrustN,
   });
-  expect(result.mass.massKg).toBeCloseTo(12000, 7);
+  expect(result.mass).toEqual(empty.mass);
+  f.tables.constructionFlightFitting[0].revision = 38n;
+  expect(f.compile().inputHash).toBe(result.inputHash);
 });
 
 test("flight inventory unit mass remains bound to physical v1 when unrelated inventory metadata changes", () => {

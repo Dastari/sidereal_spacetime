@@ -5,7 +5,9 @@ import {
   type LayoutDocument,
 } from "@sidereal/content/ship-layout";
 import type { LayoutStructureV2 } from "@sidereal/content/layout-structure";
-import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { prefabConstructionDocument } from "./prefab-construction";
 import { resolveBoundaryTreatments } from "./layout-boundary-treatments";
 import { compileLayout } from "./layout-compiler";
 import { readLayout } from "./layout-validation";
@@ -205,9 +207,6 @@ describe("explicit structural boundary treatment contract", () => {
   });
 
   it("preserves v1 canonical installations and roundtrips new intent without physical claims", () => {
-    expect(compileConstruction(WAYFARER_STARTER.documentJson).sha256).toBe(
-      "362f37217f63a44a470676f104c8368bd0973ca03f5e29eab190bc4d6df71340",
-    );
     const d = fixture();
     d.structure.boundaryTreatments = [override(d)];
     expect(readLayout(JSON.parse(JSON.stringify(d)))).toEqual(d);
@@ -317,8 +316,14 @@ describe("explicit structural boundary treatment contract", () => {
     expect(errors(e)).toContain("treatment-height");
   });
   it("preserves drafts but blocks publication until native treatment adapters are qualified", () => {
-    const candidate = JSON.parse(WAYFARER_STARTER.documentJson);
-    candidate.layout.structure = fixture().structure;
+    // A published native construction source (the Wren's derived layout and floors,
+    // without the prefab binding) gains unqualified structural intent.
+    const { prefab: _prefab, ...candidate } = prefabConstructionDocument(
+      prefabById("fed.s.wren")!,
+      defaultPrefabComponentCatalog(),
+    );
+    expect(() => compileConstruction(JSON.stringify(candidate))).not.toThrow();
+    (candidate.layout as LayoutDocument).structure = fixture().structure;
     const raw = JSON.stringify(candidate);
     expect(
       JSON.parse(readConstructionDraft(raw).canonical).layout.structure,

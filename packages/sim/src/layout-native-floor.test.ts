@@ -1,7 +1,13 @@
 import { describe, it, expect } from "vitest";
-import { emptyLayout, type FloorTile } from "@sidereal/content/ship-layout";
+import {
+  emptyLayout,
+  stampTile,
+  type FloorTile,
+} from "@sidereal/content/ship-layout";
 import { HULL_SIZE_CATALOG } from "@sidereal/content/hull-size-catalog";
-import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { prefabConstructionDocument } from "./prefab-construction";
 import {
   PINNED_FLOOR_KIT,
   compileConstruction,
@@ -10,9 +16,24 @@ import { floorModelOptions, matchNativeFloorTile } from "./layout-native-floor";
 import { bindConstructionLayout } from "./construction-layout";
 import { readLayout } from "./layout-validation";
 import { setFloorStyle, setHullEnvelope } from "./layout-structure";
-const original = JSON.parse(WAYFARER_STARTER.documentJson);
+/** A published native-floor source: the derived Wren prefab construction document. */
+const original = prefabConstructionDocument(
+  prefabById("fed.s.wren")!,
+  defaultPrefabComponentCatalog(),
+);
+/** A small unstructured (legacy-interpretation) deck that can opt into structural authoring. */
+function legacyDeck() {
+  const d = emptyLayout("legacy-floor", "deck");
+  for (let x = 0; x < 3; x++)
+    for (let y = 0; y < 3; y++)
+      d.tiles.push(
+        stampTile(`t${x}${y}`, "deck", "rectangle", [x * 64 - 96, y * 64]),
+      );
+  return readLayout(d);
+}
 describe("pinned native floor model selection", () => {
-  it("retains all 51 exact original native placements with no override", () => {
+  it("retains every exact original native placement with no override", () => {
+    expect(original.floors.length).toBeGreaterThan(0);
     const d = readLayout(original.layout),
       bound = bindConstructionLayout(d);
     expect(bound.unmatched).toEqual([]);
@@ -47,7 +68,7 @@ describe("pinned native floor model selection", () => {
     }
   });
   it("rejects wrong shape/revision/unknown override without falling back or altering the draft", () => {
-    const d = readLayout(original.layout),
+    const d = legacyDeck(),
       tile = d.tiles[0],
       options = floorModelOptions(tile, 0),
       valid = options[0]!;
@@ -85,7 +106,7 @@ describe("pinned native floor model selection", () => {
     expect(JSON.stringify(next)).toBe(before);
   });
   it("binds and compiles the selected native model and rejects manually forged binding mismatch", () => {
-    const doc = setHullEnvelope(readLayout(original.layout), {
+    const doc = setHullEnvelope(legacyDeck(), {
         ...HULL_SIZE_CATALOG[0],
         origin: [...HULL_SIZE_CATALOG[0].origin],
       }),

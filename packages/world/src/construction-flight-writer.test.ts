@@ -1,19 +1,55 @@
 vi.mock("spacetimedb/server", () => ({ Range: class {} }));
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
-import { planWayfarerStarter } from "@sidereal/sim/wayfarer-starter";
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { compileConstruction } from "@sidereal/sim/construction-transactions";
+import { planConstructionInstance } from "@sidereal/sim/construction-instance";
+import {
+  PREFAB_DECK_ID,
+  prefabConstructionDocument,
+} from "@sidereal/sim/prefab-construction";
+import { planPrefabConstructionFlight } from "@sidereal/sim/prefab-flight";
 import { insertQualifiedFlightPlan } from "./construction-flight-writer";
 import type { ConstructionFlightContext } from "./construction-flight-authority";
+const WREN = prefabById("fed.s.wren")!;
+const snapshot = compileConstruction(
+  JSON.stringify(
+    prefabConstructionDocument(WREN, defaultPrefabComponentCatalog()),
+  ),
+);
 function setup() {
   let n = 1;
   const id = () =>
     `33333333-3333-4333-8333-${(n++).toString(16).padStart(12, "0")}`;
-  const plan = planWayfarerStarter({
-    characterId: id(),
-    berth: { systemId: "shared", x: -50, y: 0, serverTick: 2n },
-    allocateUuid: id,
-    identityExists: () => false,
-  });
+  const spawned = planConstructionInstance(
+    snapshot,
+    {
+      blueprintRevisionId: `trusted-prefab:fed.s.wren:r${WREN.revision}`,
+      expectedBlueprintSha256: snapshot.sha256,
+      sourceDeckId: PREFAB_DECK_ID,
+      bodyRadiusM: 0.3,
+      bodyHeightM: 1.8,
+      perimeterHalfWidthM: 0,
+      partitionHalfWidthM: 0,
+      objectCollisionBindings: [],
+    },
+    id,
+  );
+  const instance = {
+    id: spawned.instanceId,
+    revision: 1n,
+    blueprintSha256: spawned.blueprintSha256,
+    documentJson: JSON.stringify(spawned.document),
+    idMapJson: JSON.stringify(spawned.mappings),
+    spawnDeckId: spawned.spawn.deckId,
+    name: spawned.document.layout.name,
+  };
+  const flight = planPrefabConstructionFlight(
+    instance,
+    { systemId: "shared", x: -50, y: 0, serverTick: 2n },
+    id,
+  );
   const sender = Identity.fromString("01".repeat(32));
   const rows: Record<string, unknown[]> = {};
   const table = (name: string, key: string) => {
@@ -43,23 +79,14 @@ function setup() {
       ["interactionObject", "id"],
     ].map(([name, key]) => [name, table(name, key)]),
   );
-  rows.constructionInstance.push({
-    id: plan.instance.instanceId,
-    owner: sender,
-    revision: 1n,
-    blueprintSha256: plan.instance.blueprintSha256,
-    documentJson: JSON.stringify(plan.instance.document),
-    idMapJson: JSON.stringify(plan.instance.mappings),
-    spawnDeckId: plan.instance.spawn.deckId,
-    name: plan.instance.document.layout.name,
-  });
+  rows.constructionInstance.push({ ...instance, owner: sender });
   return {
     ctx: {
       sender,
       db,
       timestamp: { microsSinceUnixEpoch: 1n },
     } as unknown as ConstructionFlightContext,
-    plan: plan.flight,
+    plan: flight,
     rows,
   };
 }
@@ -68,7 +95,10 @@ test("actual typed writer creates only dormant ship/motion/station/fitting bindi
   insertQualifiedFlightPlan(ctx, plan);
   expect(rows.ship).toHaveLength(1);
   expect(rows.shipWorldMotion).toHaveLength(1);
-  expect(rows.constructionFlightFitting).toHaveLength(10);
+  // One flight computer plus every placed prefab actuator.
+  expect(rows.constructionFlightFitting).toHaveLength(
+    1 + plan.actuators.length,
+  );
   expect(rows.station[0]).toMatchObject({
     occupantId: undefined,
     operational: false,
@@ -94,6 +124,14 @@ test("tampered rating and occupied fitting UUID reject before any writes", () =>
   g.rows.inventoryItem.push({ id: g.plan.station.id });
   expect(() => insertQualifiedFlightPlan(g.ctx, g.plan)).toThrow(/allocated/);
   expect(g.rows.ship).toEqual([]);
+  const h = setup();
+  expect(() =>
+    insertQualifiedFlightPlan(h.ctx, {
+      ...h.plan,
+      definitionId: "qualified-wayfarer-lab-flight-v1",
+    } as never),
+  ).toThrow(/Prefab flight plan required/);
+  expect(h.rows.ship).toEqual([]);
 });
 test("storage failure propagates instead of claiming independent partial success", () => {
   const f = setup();

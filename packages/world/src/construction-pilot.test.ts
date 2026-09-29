@@ -1,38 +1,46 @@
-import { readFileSync } from "node:fs";
 import { expect, test, vi } from "vitest";
 vi.mock("spacetimedb/server", () => ({ SenderError: class extends Error {} }));
-import {
-  createWayfarerConversionCandidate,
-  type WayfarerPinnedInputs,
-} from "@sidereal/sim/wayfarer-conversion-candidate";
-import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import { planConstructionInstance } from "@sidereal/sim/construction-instance";
-import {
-  qualifiedWayfarerWalkingBindings,
-  qualifiedWayfarerInstanceObstacles,
-} from "@sidereal/sim/wayfarer-walking-bindings";
+import { compileConstruction } from "@sidereal/sim/construction-transactions";
 import {
   compileDeckCollision,
   resolveDeckCollision,
   canOccupyDeck,
 } from "@sidereal/sim/construction-collision";
 import {
+  prefabPilotPose,
   qualifyPilotGeometry,
   type PilotGeometry,
 } from "@sidereal/sim/construction-pilot";
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import {
+  PREFAB_DECK_ID,
+  prefabConstructionDocument,
+} from "@sidereal/sim/prefab-construction";
+import { prefabConstructionObstacles } from "@sidereal/sim/prefab-deck-objects";
+import {
+  prefabFlightModel,
+  prefabPlacedObjectId,
+} from "@sidereal/sim/prefab-flight";
 import {
   enterConstructionPilot,
   recoverConstructionPilot,
   constructionPilotCanControl,
   type PilotRepository,
   type PilotSeat,
+  type PilotStation,
   type PilotReceipt,
 } from "./construction-pilot";
-const snapshot = createWayfarerConversionCandidate(
-  Object.fromEntries(
-    Object.keys(PIN.sources).map((p) => [p, readFileSync(p, "utf8")]),
-  ) as WayfarerPinnedInputs,
-).snapshot;
+const WREN = prefabById("fed.s.wren")!;
+const catalog = defaultPrefabComponentCatalog();
+const snapshot = compileConstruction(
+  JSON.stringify(prefabConstructionDocument(WREN, catalog)),
+);
+/** The Wren's derived pilot station pose (seat and approach, ship-local metres). */
+const POSE = prefabPilotPose(prefabFlightModel(WREN, catalog).station!);
+const [AX, AY] = POSE.approach;
+const [, SY] = POSE.position;
 function fixture() {
   let n = 0,
     writes = 0,
@@ -45,18 +53,14 @@ function fixture() {
   const p = planConstructionInstance(
     snapshot,
     {
-      blueprintRevisionId: "b",
+      blueprintRevisionId: `trusted-prefab:fed.s.wren:r${WREN.revision}`,
       expectedBlueprintSha256: snapshot.sha256,
-      sourceDeckId: PIN.deckId,
+      sourceDeckId: PREFAB_DECK_ID,
       bodyRadiusM: 0.3,
       bodyHeightM: 1.8,
       perimeterHalfWidthM: 0,
       partitionHalfWidthM: 0,
-      objectCollisionBindings: qualifiedWayfarerWalkingBindings(
-        snapshot,
-        0.3,
-        1.8,
-      ),
+      objectCollisionBindings: [],
     },
     uuid,
   );
@@ -69,22 +73,23 @@ function fixture() {
     spawnDeckId: p.spawn.deckId,
     name: p.document.layout.name,
   };
+  // The same frame construction-doors builds for prefab ships (walls, floors, furniture).
   const frame = resolveDeckCollision(
     compileDeckCollision(p.document.layout, p.spawn.deckId, {
       shipId: p.instanceId,
       perimeterHalfWidthM: 0,
       partitionHalfWidthM: 0,
-      obstacles: qualifiedWayfarerInstanceObstacles(instance, p.spawn.deckId),
+      obstacles:
+        prefabConstructionObstacles(p.document as { prefab?: unknown }) ?? [],
     }),
     [],
   );
   const geometry: PilotGeometry = {
     instance,
     frame,
-    seatPlacedObjectId: p.mappings.objects.find(
-      (m) => m.sourceId === "equipment-control-seat",
-    )!.instanceId,
+    seatPlacedObjectId: prefabPlacedObjectId(p.instanceId, "station"),
     supportHeightAt: () => 0.1875,
+    pose: POSE,
   };
   const state = {
     actor: {
@@ -93,8 +98,8 @@ function fixture() {
       connected: true,
       shipId: p.instanceId,
       deckId: p.spawn.deckId,
-      x: 0,
-      y: 9.375,
+      x: AX,
+      y: AY,
       height: 0.1875,
       standing: true,
     },
@@ -105,6 +110,7 @@ function fixture() {
       occupantId: undefined as string | undefined,
       operational: true,
       instanceRevision: 1n,
+      ...({ pose: POSE } as Pick<PilotStation, "pose">),
       revision: 1n,
     },
     seat: undefined as PilotSeat | undefined,
@@ -125,8 +131,8 @@ function fixture() {
       blocked
         ? Array.from({ length: 25 }, (_, i) => ({
             id: "other" + i,
-            x: ((i % 5) - 2) * 0.375,
-            y: 9.375 + (Math.floor(i / 5) - 2) * 0.375,
+            x: AX + ((i % 5) - 2) * 0.375,
+            y: AY + (Math.floor(i / 5) - 2) * 0.375,
           }))
         : [],
     receipt: (id) => state.receipts.get(id),
@@ -179,22 +185,17 @@ function fixture() {
     setBlocked: (v: boolean) => (blocked = v),
   };
 }
-test("actual native pilot approach is free; only the exact own seat is excluded during transition", () => {
+test("the derived station approach and seat are free; prefab stations have no seat collider exception", () => {
   const f = fixture(),
     q = qualifyPilotGeometry(f.geometry);
-  const loc = {
+  const at = (position: readonly [number, number]) => ({
     shipId: f.state.actor.shipId,
     deckId: f.state.actor.deckId,
-    position: [0, 10.25] as [number, number],
-  };
-  expect(canOccupyDeck(q.frame, loc, 0.3)).toBe(false);
-  expect(canOccupyDeck(q.transition, loc, 0.3)).toBe(true);
-  expect(q.frame.obstacles.length - q.transition.obstacles.length).toBe(1);
-  expect(
-    q.transition.obstacles.some((o) =>
-      o.definitionId.includes("part-d9f37a5f7ea6e8d13254"),
-    ),
-  ).toBe(true);
+    position: [position[0], position[1]] as [number, number],
+  });
+  expect(canOccupyDeck(q.frame, at(POSE.approach), 0.3)).toBe(true);
+  expect(canOccupyDeck(q.frame, at(POSE.position), 0.3)).toBe(true);
+  expect(q.transition).toBe(q.frame);
   const original = f.geometry.frame.obstacles.length;
   enterConstructionPilot(f.db, f.args);
   expect(f.geometry.frame.obstacles.length).toBe(original);
@@ -203,7 +204,7 @@ test("entry moves through qualified transition, reserves station, clears input, 
   const f = fixture(),
     r = enterConstructionPilot(f.db, f.args),
     n = f.writes();
-  expect(f.state.actor.y).toBe(10.25);
+  expect(f.state.actor.y).toBe(SY);
   expect(f.state.station.occupantId).toBe("actor");
   expect(f.state.throttle).toBe(0);
   expect(enterConstructionPilot(f.db, f.args)).toEqual(r);
@@ -216,7 +217,7 @@ test("entry moves through qualified transition, reserves station, clears input, 
 test("wrong deck, intervening geometry, stale revision, occupied seat and absent lease reject before writes", () => {
   for (const mutate of [
     (f: ReturnType<typeof fixture>) => (f.state.actor.deckId = "wrong"),
-    (f: ReturnType<typeof fixture>) => (f.state.actor.y = 7),
+    (f: ReturnType<typeof fixture>) => (f.state.actor.y = AY - 3),
     (f: ReturnType<typeof fixture>) => (f.args.expectedStationRevision = 2n),
     (f: ReturnType<typeof fixture>) => (f.state.station.occupantId = "other"),
     (f: ReturnType<typeof fixture>) => f.setLease(false),
@@ -240,7 +241,7 @@ test("command consumption rechecks every current grant/lease/power/deck/pose con
     (f: ReturnType<typeof fixture>) => (f.state.actor.connected = false),
     (f: ReturnType<typeof fixture>) => (f.state.actor.deckId = "wrong"),
     (f: ReturnType<typeof fixture>) => (f.state.station.instanceRevision = 2n),
-    (f: ReturnType<typeof fixture>) => (f.state.actor.y = 8),
+    (f: ReturnType<typeof fixture>) => (f.state.actor.y = SY - 1),
   ]) {
     const f = fixture();
     enterConstructionPilot(f.db, f.args);
@@ -259,7 +260,7 @@ test("grant loss/disconnect exits to supported floor without requiring the lost 
   expect(recoverConstructionPilot(f.db, "actor", "disconnect")).toBe(
     "recovered",
   );
-  expect(f.state.actor.y).toBe(9.375);
+  expect(f.state.actor.y).toBe(AY);
   expect(f.state.actor.height).toBe(0.1875);
   expect(f.state.station.occupantId).toBeUndefined();
   expect(f.state.seat).toBeUndefined();
@@ -288,16 +289,17 @@ test("occupied exits hold unique reservation and suppress thrust; repeated pendi
     "recovered",
   );
 });
-test("altered native seat collider cannot grant entry; invalid recovery geometry holds safely before writes", () => {
+test("invalid recovery geometry holds safely; unsupported stations reject entry before writes", () => {
   const f = fixture();
   enterConstructionPilot(f.db, f.args);
-  f.geometry.seatPlacedObjectId = "wrong";
+  f.geometry.supportHeightAt = () => undefined;
   expect(recoverConstructionPilot(f.db, "actor", "disconnect")).toBe("pending");
   expect(f.state.seat?.recoveryReason).toBe("invalid-geometry");
   expect(constructionPilotCanControl(f.db, "actor")).toBe(false);
+  expect(f.state.actor.y).toBe(SY);
   const g = fixture();
-  g.geometry.seatPlacedObjectId = "wrong";
-  expect(() => enterConstructionPilot(g.db, g.args)).toThrow("mapping");
+  g.geometry.pose = { position: [99, 99], approach: [99, 98.125] };
+  expect(() => enterConstructionPilot(g.db, g.args)).toThrow();
   expect(g.writes()).toBe(0);
 });
 
