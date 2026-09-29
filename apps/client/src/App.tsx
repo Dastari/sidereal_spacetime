@@ -96,7 +96,6 @@ import {
   screenToShipTopDown,
   worldAimAngle,
 } from "./eva";
-import { resolveCrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import {
   createGameUI,
   gameplayIntent,
@@ -1089,9 +1088,7 @@ export default function App({
     const abort = new AbortController();
     const element = canvas.current!;
     import("@sidereal/render")
-      .then(async ({ createWorld, loadEquipmentPoseConfiguration }) => {
-        if (disposed) return null;
-        const equipmentPose = await loadEquipmentPoseConfiguration();
+      .then(async ({ createWorld }) => {
         if (disposed) return null;
         return createWorld(
           element,
@@ -1106,11 +1103,6 @@ export default function App({
             onLoadStage: (stage) => {
               if (!disposed) setLoadStage(stage);
             },
-            equipmentPose,
-            // Voxel crew (first revision) by default; ?crew=legacy keeps the r008 bundle.
-            crewBundle: resolveCrewBundle({
-              query: new URLSearchParams(window.location.search).get("crew"),
-            }),
             sharedWorld: sharedEnabled
               ? {
                   store: sharedPresentation.store,

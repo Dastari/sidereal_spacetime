@@ -1,6 +1,5 @@
 import { withSceneCoordinateContext } from "./scene-coordinate-context";
 import { characterPresentationStatus } from "./character-preview-state";
-import { MODULAR_CREW_ASSET_URL } from "@sidereal/content/character-components";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
 import { Camera } from "@babylonjs/core/Cameras/camera";
@@ -11,27 +10,17 @@ import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTexture";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
-import { createCrewVisual, CREW_OUTFITS, type CrewAppearance } from "./crew";
+import { CREW_OUTFITS, type CrewAppearance } from "./crew/appearance";
 import { createVoxelCrewVisual } from "./crew/voxel-crew";
 import { equipVoxelCrewItem } from "./crew/voxel-crew-kit";
 import {
   createVoxelCrewOutfit,
   toneCrewEmissive,
 } from "./crew/voxel-crew-outfit";
-import { resolveCrewBundle } from "@sidereal/content/crew-voxel-bundle";
-import {
-  createEquipmentVisual,
-  EQUIPMENT_ASSETS,
-  type EquipmentAsset,
-} from "./equipment";
 import { createHolographicDisc } from "./holographic-disc";
-import {
-  loadEquipmentPoseConfiguration,
-  type EquipmentPoseConfiguration,
-} from "./crew/pose-review-config";
 
 export type CharacterPreviewAppearance = Partial<CrewAppearance> & {
-  /** Current visual catalog ID; grants no inventory or equipment capability. */
+  /** Retired r008 equipment asset; ignored (the voxel crew shows `equipmentItem`). */
   equipmentAsset?: string;
   /** Voxel crew: the r001 item in hand (the inventory definition's crewItemId). */
   equipmentItem?: string;
@@ -45,7 +34,6 @@ export function createCharacterPreview(
   options: {
     width?: number;
     height?: number;
-    assetUrl?: string;
     /** Wake an otherwise static/reduced-motion HUD after asynchronous work. */
     onInvalidate?: () => void;
   } = {},
@@ -133,27 +121,9 @@ function buildCharacterPreview(
   const disc = createHolographicDisc(scene, { radius: 0.64 });
   const placement = new TransformNode("portrait-display-pivot", scene);
   placement.rotation.y = 0.38;
-  let crew:
-    | Awaited<ReturnType<typeof createCrewVisual>>
-    | Awaited<ReturnType<typeof createVoxelCrewVisual>>
-    | undefined;
+  let crew: Awaited<ReturnType<typeof createVoxelCrewVisual>> | undefined;
   let outfit: ReturnType<typeof createVoxelCrewOutfit> | undefined;
-  // Same bundle as the game view: the voxel crew unless ?crew=legacy.
-  const voxelBundle =
-    !options.assetUrl &&
-    resolveCrewBundle({
-      query:
-        typeof location === "undefined"
-          ? null
-          : new URLSearchParams(location.search).get("crew"),
-    }) === "voxel";
-  let gear: Awaited<ReturnType<typeof createEquipmentVisual>> | undefined;
-  let pose:
-    | ReturnType<
-        Awaited<ReturnType<typeof createCrewVisual>>["createPoseController"]
-      >
-    | undefined;
-  let poseConfiguration: EquipmentPoseConfiguration | undefined;
+  let gear: Awaited<ReturnType<typeof equipVoxelCrewItem>> | undefined;
   let released = false,
     pending = 0,
     gearRevision = 0;
@@ -166,12 +136,10 @@ function buildCharacterPreview(
     previousReducedMotion: boolean | undefined;
   let aspect = 360 / 560,
     baseHalfHeight = 1.4;
-  const abort = new AbortController();
 
   function release() {
     if (!disposed || released || pending) return;
     released = true;
-    pose?.bind(undefined);
     gear?.dispose();
     outfit?.dispose();
     crew?.dispose();
@@ -200,57 +168,30 @@ function buildCharacterPreview(
       equipmentItem,
       ...customization
     } = appearance;
-    crew.customize({ outfit, ...customization, weaponFixture: !gear });
+    crew.customize({ outfit, ...customization });
     applyVoxelOutfit({ outfit, ...customization });
     dirty = true;
     subjects();
-    const voxelPreview = "bundle" in crew && crew.bundle === "voxel";
-    const asset = voxelPreview
-      ? equipmentItem
-      : EQUIPMENT_ASSETS.includes(appearance.equipmentAsset as EquipmentAsset)
-        ? (appearance.equipmentAsset as EquipmentAsset)
-        : undefined;
+    const asset = equipmentItem;
     if (asset === selectedEquipment) return;
     selectedEquipment = asset;
     equipmentFailed = false;
     const revision = ++gearRevision;
-    pose?.bind(undefined);
-    crew.bindHeldEquipment(undefined);
     gear?.dispose();
     gear = undefined;
-    crew.customize({ weaponFixture: true });
     if (!asset) {
       subjects();
       return;
     }
     pending++;
-    const voxelCrew =
-      "bundle" in crew && crew.bundle === "voxel" ? crew : undefined;
-    (voxelCrew
-      ? (equipVoxelCrewItem(scene, voxelCrew, asset) as unknown as ReturnType<
-          typeof createEquipmentVisual
-        >)
-      : createEquipmentVisual(
-          scene,
-          crew.sockets.handR,
-          asset as EquipmentAsset,
-          poseConfiguration?.items[asset as EquipmentAsset]
-            ? poseConfiguration.equipmentUrl
-            : undefined,
-        )
-    )
+    equipVoxelCrewItem(scene, crew, asset)
       .then((loaded) => {
         if (disposed || revision !== gearRevision) {
           loaded.dispose();
           return;
         }
         gear = loaded;
-        const item = poseConfiguration?.items[asset];
-        if (pose && crew && item)
-          pose.bind(gear.createPoseBinding(crew.root, item));
-        else crew?.bindHeldEquipment(gear);
-        crew?.customize({ weaponFixture: false });
-        if (voxelCrew) toneCrewEmissive(placement.getChildMeshes());
+        toneCrewEmissive(placement.getChildMeshes());
         subjects();
         invalidate();
       })
@@ -310,46 +251,20 @@ function buildCharacterPreview(
   pending++;
   const ready = (async () => {
     try {
-      // Fetch can be cancelled while a closed panel is still loading. Babylon
-      // parsing is allowed to settle before the owned WebGL context is released.
-      if (voxelBundle) {
-        const loaded = await createVoxelCrewVisual(scene, placement);
-        if (disposed) {
-          loaded.dispose();
-          return;
-        }
-        crew = loaded;
-        outfit = createVoxelCrewOutfit(scene, loaded, {
-          onChange: () => {
-            dirty = true;
-            subjects();
-            invalidate();
-          },
-        });
-        applyAppearance();
-        status = "ready";
-        invalidate();
-        return;
-      }
-      const [response, configuration] = await Promise.all([
-        fetch(options.assetUrl ?? MODULAR_CREW_ASSET_URL, {
-          signal: abort.signal,
-        }),
-        loadEquipmentPoseConfiguration(),
-      ]);
-      if (!response.ok)
-        throw new Error(`Character asset returned HTTP ${response.status}`);
-      const bytes = new Uint8Array(await response.arrayBuffer());
-      if (disposed) return;
-      const loaded = await createCrewVisual(scene, placement, bytes);
+      // Babylon parsing is allowed to settle before the owned WebGL context is released.
+      const loaded = await createVoxelCrewVisual(scene, placement);
       if (disposed) {
         loaded.dispose();
         return;
       }
       crew = loaded;
-      poseConfiguration = configuration;
-      pose = loaded.createPoseController();
-      pose.setAimSpace(configuration.aimSpace);
+      outfit = createVoxelCrewOutfit(scene, loaded, {
+        onChange: () => {
+          dirty = true;
+          subjects();
+          invalidate();
+        },
+      });
       applyAppearance();
       status = "ready";
       invalidate();
@@ -424,24 +339,6 @@ function buildCharacterPreview(
         reducedMotion,
         combat: !!gear,
       });
-      const poseItem = selectedEquipment
-        ? poseConfiguration?.items[selectedEquipment]
-        : undefined;
-      const poseIntent = poseItem
-        ? {
-            yaw: -(crew?.root.rotation.y ?? 0),
-            facing: -(crew?.root.rotation.y ?? 0),
-            pitch: 0,
-            active: !!gear,
-            moving: false,
-            seated: false,
-            reducedMotion,
-            profile: poseItem.profile,
-            itemId: selectedEquipment,
-          }
-        : undefined;
-      if (poseIntent)
-        pose?.update(poseIntent, Math.min(0.1, Math.max(0, t - previousFrame)));
       withSceneCoordinateContext(scene, () => {
         engine.beginFrame();
         frameEquipment();
@@ -449,10 +346,7 @@ function buildCharacterPreview(
         // A freshly loaded/rotated hand item acquires its final socket transform
         // during animation evaluation. Fit once more so side-on rifles never
         // clip the portrait, including the final static reduced-motion frame.
-        if (frameEquipment()) {
-          if (poseIntent) pose?.update(poseIntent, 0);
-          scene.render();
-        }
+        if (frameEquipment()) scene.render();
         engine.endFrame();
       });
       previousFrame = t;
@@ -470,7 +364,6 @@ function buildCharacterPreview(
       disposed = true;
       status = "disposed";
       gearRevision++;
-      abort.abort();
       release();
     },
   };

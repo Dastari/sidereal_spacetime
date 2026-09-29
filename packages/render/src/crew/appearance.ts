@@ -1,7 +1,5 @@
 import {
   CHARACTER_COMPONENT_SETS,
-  characterComponent,
-  characterCoverage,
   type CharacterBodyType,
   type CharacterHairStyle,
   type EquippedCharacterComponents,
@@ -147,55 +145,4 @@ export function mergeCrewAppearance(
     weapon: previous.weapon ?? "none",
     ...next,
   };
-}
-
-export function crewSlotVisible(
-  slot: string,
-  appearance: ResolvedCrewAppearance,
-  modular = false,
-): boolean {
-  if (slot.startsWith("base-")) {
-    const [, body, region] = slot.split("-");
-    return (
-      body === appearance.bodyType &&
-      !characterCoverage(appearance.equippedComponents).has(region)
-    );
-  }
-  const component = characterComponent(slot);
-  if (component) return appearance.equippedComponents[component.slot] === slot;
-  if (slot === "hair-helmet-liner") {
-    const helmet = appearance.equippedComponents.helmet;
-    return (
-      appearance.hairStyle !== "none" &&
-      !!helmet &&
-      [
-        "captain-helmet",
-        "security-helmet",
-        "mechanic-helmet",
-        "engineer-helmet",
-      ].includes(helmet)
-    );
-  }
-  if (slot === "body") return true;
-  if (slot.startsWith("look-")) return slot === `look-${appearance.outfit}`;
-  if (slot.startsWith("body-")) return slot === `body-${appearance.bodyStyle}`;
-  if (slot.startsWith("armor-")) return slot === `armor-${appearance.armor}`;
-  if (slot.startsWith("hair-"))
-    return (
-      (modular
-        ? !appearance.equippedComponents.helmet
-        : appearance.helmet === "none") &&
-      slot === `hair-${appearance.hairStyle}`
-    );
-  if (slot === "helmet-standard")
-    return appearance.helmet === "open" || appearance.helmet === "closed";
-  if (slot === "visor-standard") return appearance.helmet === "closed";
-  if (slot.startsWith("helmet-")) return slot === `helmet-${appearance.helmet}`;
-  if (slot.startsWith("backpack-"))
-    return (
-      appearance.backpack && slot === `backpack-${appearance.backpackStyle}`
-    );
-  if (slot.startsWith("weapon-"))
-    return appearance.weaponFixture && slot === `weapon-${appearance.weapon}`;
-  return false;
 }

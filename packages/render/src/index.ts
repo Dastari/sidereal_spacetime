@@ -53,11 +53,6 @@ import {
   createGraphicsSettings,
   type GraphicsSettings,
 } from "./graphics-settings";
-import type { EquipmentPoseConfiguration } from "./crew/pose-review-config";
-export {
-  loadPoseReviewConfiguration,
-  loadEquipmentPoseConfiguration,
-} from "./crew/pose-review-config";
 import { createCombatAim } from "./combat-aim";
 import { posePlacementHeading } from "./crew/pose-integration-motion";
 import type { VoxelCrewEva } from "./crew/voxel-crew-clips";
@@ -82,9 +77,9 @@ import {
   type FlightEffectActuator,
 } from "./flight-effects";
 import { createRenderDiagnostics } from "./diagnostics";
-import { createEquipmentVisual, type EquipmentAsset } from "./equipment";
+import type { EquipmentAsset } from "./equipment";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
-import { createCrewVisual, type CrewAppearance } from "./crew";
+import type { CrewAppearance } from "./crew/appearance";
 import { createVoxelCrewVisual } from "./crew/voxel-crew";
 import { createRemoteCrew, type RemoteCrewState } from "./crew/remote-crew";
 import {
@@ -116,7 +111,6 @@ import {
   toneCrewEmissive,
 } from "./crew/voxel-crew-outfit";
 import { setGlowOccludingActors } from "./glow-occluders";
-import type { CrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import { Scene } from "@babylonjs/core/scene";
 import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { Camera } from "@babylonjs/core/Cameras/camera";
@@ -187,7 +181,7 @@ export type SceneState = {
   vx?: number;
   vy?: number;
   flightActuators?: readonly FlightEffectActuator[];
-  /** Omitted for authoring previews; null explicitly means empty authoritative hand. */
+  /** Retired r008 equipment asset in hand; ignored (the voxel crew draws `heldItem`). */
   equippedAsset?: EquipmentAsset | null;
   /** Voxel crew: the r001 item in the authoritative hand (its inventory definition's crewItemId);
    * null = empty hand, omitted = follow the cosmetic weapon (previews). */
@@ -246,9 +240,6 @@ export interface WorldOptions {
   constructionEgress?: NativeStairEgressGeometry;
   /** Allow known authored exhaust geometry; accepted telemetry still drives it. */
   authoredFlightEffects?: boolean;
-  equipmentPose?: EquipmentPoseConfiguration;
-  /** Crew art bundle. "voxel" is the CHAR-BODY proposal behind an explicit local preview flag. */
-  crewBundle?: CrewBundle;
   onObjectSelected?: (placementId?: string) => void;
   source?: "voxel" | "original" | "engine-original" | "engine-voxel";
   /** "none": the character has no ship. Render the environment and crew only;
@@ -294,7 +285,6 @@ async function buildWorld(
 ) {
   options.onLoadStage?.("ship");
   let initialStateApplied = false;
-  let equipmentPending = false;
   let backendStorage: Storage | undefined;
   try {
     backendStorage = globalThis.localStorage;
@@ -376,15 +366,7 @@ async function buildWorld(
   // Start rendering only once the scene's loaders and wiring are assembled.
   const shipRoot = new TransformNode("ship-frame", scene);
   const environment = createSpaceEnvironment(scene);
-  let crew:
-    | Awaited<ReturnType<typeof createCrewVisual>>
-    | Awaited<ReturnType<typeof createVoxelCrewVisual>>
-    | undefined;
-  let equipmentPose:
-    | ReturnType<
-        Awaited<ReturnType<typeof createCrewVisual>>["createPoseController"]
-      >
-    | undefined;
+  let crew: Awaited<ReturnType<typeof createVoxelCrewVisual>> | undefined;
   let crewOutfit: ReturnType<typeof createVoxelCrewOutfit> | undefined;
   /** Voxel crew: the held r001 item with draw/holster transitions. */
   let heldItem: VoxelHeldItem | undefined;
@@ -543,39 +525,25 @@ async function buildWorld(
     await environment.ready;
     options.onLoadStage?.("crew");
     if (!options.source || options.source === "voxel") {
-      if (options.crewBundle === "voxel") {
-        // Voxel crew (first revision): authored actions drive the arms; the legacy aim-space
-        // controller targets the r008 rig and stays unbound. The head kit and armour follow the
-        // character's appearance and equipped inventory (see customizeCrew).
-        const voxel = await createVoxelCrewVisual(scene, shipRoot, undefined, {
-          shared: true,
-        });
-        crew = voxel;
-        crewOutfit = createVoxelCrewOutfit(scene, voxel, {
-          onChange: () => refreshCrewPresentation(),
-        });
-        heldItem = createVoxelHeldItem(scene, voxel, {
-          onChange: () => {
-            antialiasing.resetHistory();
-            refreshCrewPresentation();
-          },
-          reducedMotion: () => !!state.reducedMotion,
-          // The first item of a session is already in hand; later changes draw and holster.
-          instant: () => firstFrame,
-          now: presentationNow,
-        });
-      } else {
-        const legacy = await createCrewVisual(
-          scene,
-          shipRoot,
-          options.equipmentPose?.crewUrl,
-        );
-        crew = legacy;
-        if (options.equipmentPose) {
-          equipmentPose = legacy.createPoseController();
-          equipmentPose.setAimSpace(options.equipmentPose.aimSpace);
-        }
-      }
+      // Voxel crew: authored actions drive the arms. The head kit and armour follow the
+      // character's appearance and equipped inventory (see customizeCrew).
+      const voxel = await createVoxelCrewVisual(scene, shipRoot, undefined, {
+        shared: true,
+      });
+      crew = voxel;
+      crewOutfit = createVoxelCrewOutfit(scene, voxel, {
+        onChange: () => refreshCrewPresentation(),
+      });
+      heldItem = createVoxelHeldItem(scene, voxel, {
+        onChange: () => {
+          antialiasing.resetHistory();
+          refreshCrewPresentation();
+        },
+        reducedMotion: () => !!state.reducedMotion,
+        // The first item of a session is already in hand; later changes draw and holster.
+        instant: () => firstFrame,
+        now: presentationNow,
+      });
       avatar.dispose();
       avatar = crew.root;
     }
@@ -811,7 +779,7 @@ async function buildWorld(
     options.onObjectSelected,
     prefabPicker ? (event) => prefabPicker.pick(event) : undefined,
   );
-  const groundItems = createGroundItems(scene, shipRoot, options.equipmentPose);
+  const groundItems = createGroundItems(scene, shipRoot);
   const graphics = createGraphicsSettings(scene);
   const antialiasing = createAntialiasing(scene, camera, {
     temporalResetIntegrated: true,
@@ -1205,11 +1173,11 @@ async function buildWorld(
     avatar.rotation.y = -posePlacementHeading({
       currentHeading: -avatar.rotation.y,
       travelHeading: movementHeading,
-      bound: !!equipmentPose?.isBound,
+      bound: false,
       active: !!state.combat?.active,
       sprinting: state.sprinting,
     });
-    if (!equipmentPose?.isBound && state.combat?.active && !state.seated)
+    if (state.combat?.active && !state.seated)
       avatar.rotation.y = -state.combat.angle;
     if (state.seated) avatar.rotation.y = state.seatFacing ?? 0;
     // EVA: the accepted body heading turns the body unless it aims (then it faces the aim).
@@ -1244,41 +1212,11 @@ async function buildWorld(
     evaCrew?.frame(debugFeatures.snapshot().characters, {
       reducedMotion: state.reducedMotion,
     });
-    const poseItem = selectedAsset
-      ? options.equipmentPose?.items[selectedAsset]
-      : undefined;
     avatar.position.set(displayed.localX, walkingElevation, -displayed.localY);
     if (traversalFrame?.acceptedPositionM) {
       const [x, y, z] = traversalFrame.acceptedPositionM;
       avatar.position.set(x, z, -y);
     }
-    const desiredAim = state.combat?.active
-      ? combatAim.aim(displayed.localX, displayed.localY, state.combat.range, {
-          deckHeight: avatar.position.y,
-          origin: (heldItem?.muzzle() ?? equipment?.getMuzzleWorld())?.position,
-        })
-      : undefined;
-    if (equipmentPose && poseItem)
-      equipmentPose.update(
-        {
-          // Immediate local presentation; accepted intent/shot authority still
-          // travels through the existing combat reducers and sequence.
-          yaw: desiredAim?.angle ?? state.combat?.angle ?? -avatar.rotation.y,
-          pitch: desiredAim?.pitch ?? 0,
-          facing: -avatar.rotation.y,
-          active: !!state.combat?.active,
-          moving: walking,
-          movementHeading,
-          seated: !!state.seated,
-          sprinting: state.sprinting,
-          hidden: !cabinVisible || !debugFeatures.snapshot().characters,
-          reducedMotion: state.reducedMotion,
-          profile: poseItem.profile,
-          itemId: state.combat?.itemId,
-          shotSequence: state.combat?.shotSequence,
-        },
-        dt,
-      );
     // Native r002 deck datum; this offset is presentation, not simulation height.
     marker.position.copyFrom(avatar.position);
     marker.position.y += 0.02;
@@ -1430,7 +1368,6 @@ async function buildWorld(
     if (
       firstFrame &&
       initialStateApplied &&
-      !equipmentPending &&
       !crewOutfit?.pending &&
       (!remoteShips || sharedExteriorReady) &&
       scene.isReady() &&
@@ -1450,9 +1387,6 @@ async function buildWorld(
   });
   resize();
   let disposed = false;
-  let equipment: Awaited<ReturnType<typeof createEquipmentVisual>> | undefined;
-  let equipmentRevision = 0;
-  let selectedAsset: EquipmentAsset | null = null;
   function customizeCrew(next: CrewAppearance) {
     if (disposed || !crew) return;
     const appearanceKey = JSON.stringify(next);
@@ -1460,76 +1394,19 @@ async function buildWorld(
       temporalAppearance = appearanceKey;
       antialiasing.resetHistory();
     }
-    crew.customize({ ...next, weaponFixture: !equipment });
+    crew.customize(next);
     // Voxel crew: head kit from the persisted look, armour/uniform from equipped inventory.
     crewOutfit?.apply(next);
-    if (heldItem) {
-      // r001 item in hand (the inventory definition's crewItemId), drawn and holstered.
-      heldItem.set(
-        state.heldItem !== undefined
-          ? state.heldItem
-          : next.weapon === "pistol"
-            ? "pistol"
-            : next.weapon === "rifle"
-              ? "compact-carbine"
-              : null,
-      );
-      return;
-    }
-    const asset =
-      state.equippedAsset !== undefined
-        ? state.equippedAsset
+    // r001 item in hand (the inventory definition's crewItemId), drawn and holstered.
+    heldItem?.set(
+      state.heldItem !== undefined
+        ? state.heldItem
         : next.weapon === "pistol"
-          ? "compact-pistol"
+          ? "pistol"
           : next.weapon === "rifle"
-            ? "carbine"
-            : null;
-    if (asset === selectedAsset) return;
-    selectedAsset = asset;
-    equipmentPending = !!asset;
-    if (firstFrame) options.onLoadStage?.(asset ? "equipment" : "finishing");
-    const revision = ++equipmentRevision;
-    equipmentPose?.bind(undefined);
-    crew.bindHeldEquipment(undefined);
-    equipment?.dispose();
-    equipment = undefined;
-    crew.customize({ weaponFixture: true });
-    if (!selectedAsset) return;
-    // Legacy r008 crew only (the voxel crew holds r001 items through heldItem above).
-    createEquipmentVisual(
-      scene,
-      crew.sockets.handR,
-      selectedAsset,
-      selectedAsset && options.equipmentPose?.items[selectedAsset]
-        ? options.equipmentPose.equipmentUrl
-        : undefined,
-    )
-      .then((visual) => {
-        if (disposed || revision !== equipmentRevision) {
-          visual.dispose();
-          return;
-        }
-        equipment = visual;
-        antialiasing.resetHistory();
-        equipmentPending = false;
-        if (firstFrame) options.onLoadStage?.("finishing");
-        const poseItem = options.equipmentPose?.items[selectedAsset!];
-        if (equipmentPose && crew && poseItem)
-          equipmentPose.bind(visual.createPoseBinding(crew.root, poseItem));
-        else crew?.bindHeldEquipment(visual);
-        refreshCrewPresentation();
-        crew?.customize({ weaponFixture: false });
-      })
-      .catch((error) => {
-        if (!disposed && revision === equipmentRevision) {
-          equipmentPending = false;
-          const message = "Equipment preview could not load: " + String(error);
-          if (firstFrame) {
-            assetFailure = true;
-            options.onLoadError?.(message);
-          } else options.onPreviewError?.(message);
-        }
-      });
+            ? "compact-carbine"
+            : null,
+    );
   }
   const combatObserver = scene.onAfterAnimationsObservable.add(() => {
     combatAim.update(
@@ -1539,15 +1416,9 @@ async function buildWorld(
         !state.sprinting &&
         state.interior &&
         !focusedBodyId &&
-        (heldItem
-          ? heldItem.visual?.item.animationSet === "rifle" &&
-            heldItem.phase === "held"
-          : ["carbine", "long-rifle"].includes(selectedAsset ?? "")),
-      heldItem
-        ? heldItem.muzzle()
-        : equipmentPose?.isBound
-          ? equipmentPose.diagnostics.muzzle
-          : equipment?.getMuzzleWorld(),
+        heldItem?.visual?.item.animationSet === "rifle" &&
+        heldItem.phase === "held",
+      heldItem?.muzzle(),
       displayed.localX,
       displayed.localY,
       Math.min(engine.getDeltaTime() / 1000, 0.1),
@@ -1626,8 +1497,7 @@ async function buildWorld(
             state.combat?.range ?? 60,
             {
               deckHeight: avatar.position.y,
-              origin: (heldItem?.muzzle() ?? equipment?.getMuzzleWorld())
-                ?.position,
+              origin: heldItem?.muzzle()?.position,
             },
           )?.angle
         : undefined;
@@ -1784,9 +1654,6 @@ async function buildWorld(
       canvas.removeEventListener("lostpointercapture", up);
       canvas.removeEventListener("wheel", wheel);
       canvas.removeEventListener("contextmenu", context);
-      equipmentRevision++;
-      equipmentPose?.bind(undefined);
-      equipment?.dispose();
       remoteCrew?.dispose();
       remoteCrew = undefined;
       evaCrew?.dispose();

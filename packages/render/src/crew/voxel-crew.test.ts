@@ -15,7 +15,6 @@ import {
   VOXEL_CREW_NOMINAL_SPEED,
   VOXEL_CREW_REVISION,
   VOXEL_CREW_SOCKETS,
-  resolveCrewBundle,
   type VoxelCrewAction,
 } from "@sidereal/content/crew-voxel-bundle";
 import { composeFace, type FaceAtlas } from "@sidereal/content/crew-voxel-face";
@@ -43,15 +42,6 @@ const load = async () => {
   );
   return { engine, scene, crew };
 };
-
-describe("voxel crew bundle selection", () => {
-  it("defaults to the voxel crew; only ?crew=legacy selects the r008 fallback", () => {
-    expect(resolveCrewBundle({ query: null })).toBe("voxel");
-    expect(resolveCrewBundle({ query: "voxel" })).toBe("voxel");
-    expect(resolveCrewBundle({ query: "anything" })).toBe("voxel");
-    expect(resolveCrewBundle({ query: "legacy" })).toBe("legacy");
-  });
-});
 
 describe("voxel crew clip mapping", () => {
   it("maps gameplay states onto full-body or layered clips", () => {

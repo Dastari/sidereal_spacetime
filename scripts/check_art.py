@@ -149,16 +149,5 @@ if (ROOT/'assets/runtime/assembly/hull-manifest.json').exists():
  import subprocess
  subprocess.run(['python3',str(ROOT/'scripts/validate_installed_hull.py')],cwd=ROOT,check=True)
 
-# Authored modular crew publication and its preserved native source.
-runpy.run_path(str(ROOT/"scripts/character_components/check_installed.py"),run_name="__main__")
-
-# Owner-authorized paired pose equipment; canonical equipment remains preserved.
-if (ROOT/'assets/runtime/crew/poses/r002').exists():
- crew_revision=json.loads((ROOT/'assets/runtime/crew/components/manifest.json').read_text())['revision']
- pose_validator='validate_installed_poses_r002_successor.py' if crew_revision==9 else 'validate_installed_poses.py'
- runpy.run_path(str(ROOT/'scripts'/pose_validator),run_name='__main__')
-if (ROOT/'assets/runtime/crew/poses/r003').exists():
- runpy.run_path(str(ROOT/'scripts/validate_installed_poses_r003.py'),run_name='__main__')
-
 # Published SHIPS-COMPONENTS runtime GLBs: prefab coverage, fixed slots and preserved .blend source.
 runpy.run_path(str(ROOT/"scripts/art_library/check_ship_components.py"),run_name="__main__")

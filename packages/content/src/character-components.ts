@@ -60,7 +60,6 @@ export function characterCoverage(
     }),
   );
 }
-export const MODULAR_CREW_ASSET_URL = `/assets/crew/components/modular-crew.glb?revision=r${String(catalog.revision).padStart(3, "0")}`;
 /** Visual revisions invalidate browser caches without changing item identities. */
 export function characterComponentImageUrl(id: string) {
   const revisions = (
