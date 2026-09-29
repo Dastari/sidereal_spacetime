@@ -4,11 +4,11 @@ import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
-import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { createGlowOccluders } from "./glow-occluders";
 import { moldedLightRig } from "./molded-plastic";
+import { applyShipGlowProfile, SHIP_GLOW_PROFILE } from "./ship-glow-profile";
 import {
   createShipExhaust,
   prefabExhaustJets,
@@ -48,11 +48,6 @@ export interface PrefabShipViewHandle {
  * than clipping, and cut-away interiors (lit mostly by room lights) take 90 %. */
 const GAME_SHIP_DIRECT = 0.6;
 const GAME_INTERIOR_DIRECT = 0.9;
-/** Bloom strength of ship emissives: a bright core with a small halo (emit slots keep their
- * saturated colour; the glow carries the halo). Reduced for the plastic pass before any
- * saturation lift. */
-const GAME_SHIP_GLOW = 0.5;
-const GAME_SHIP_GLOW_KERNEL = 32;
 
 /** A trusted prefab construction document carries its canonical grammar source
  * under `prefab` (admitted by readConstructionDraft). Returns undefined for any
@@ -108,24 +103,10 @@ export async function loadPrefabShipPresentation(
   // Bloom: a ship-owned glow layer over the ship's emissive meshes only (light strips, canopy
   // edges, exhaust). The game's instrument glow layer stays untouched; one grading path.
   const glow = new GlowLayer("prefab-ship-glow", scene, {
-    mainTextureFixedSize: 512,
-    blurKernelSize: GAME_SHIP_GLOW_KERNEL,
+    mainTextureFixedSize: SHIP_GLOW_PROFILE.mainTextureFixedSize,
+    blurKernelSize: SHIP_GLOW_PROFILE.blurKernelSize,
   });
-  glow.intensity = GAME_SHIP_GLOW;
-  // Per-slot bloom: amber (emit_b) covers large areas (radiator fins, roof vents) and would wash
-  // out the hull, so it glows at a third; cyan trims and canopy edges keep most of their halo.
-  glow.customEmissiveColorSelector = (mesh, _sub, material, result) => {
-    const src = material as typeof material & {
-      emissiveColor?: Color3;
-      emissiveIntensity?: number;
-    };
-    const c = src.emissiveColor;
-    if (!c) return result.set(0, 0, 0, 0);
-    const k =
-      (src.emissiveIntensity ?? 1) *
-      (/emit_b|radiator/.test(`${material.name} ${mesh.name}`) ? 0.3 : 0.85);
-    result.set(c.r * k, c.g * k, c.b * k, material.alpha);
-  };
+  applyShipGlowProfile(glow);
   // Opaque ship geometry occludes the glow (drawn black into its mask), so emitters behind
   // housings, walls and hull plates do not bloom through them.
   const occluders = createGlowOccluders(glow);
