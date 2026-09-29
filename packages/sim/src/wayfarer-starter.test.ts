@@ -14,19 +14,6 @@ const build = () =>
     identityExists: () => false,
   });
 
-test("server pin matches the independently qualified editable template exactly", () => {
-  expect(compileConstruction(WAYFARER_STARTER.documentJson).sha256).toBe(
-    WAYFARER_STARTER.sha256,
-  );
-  expect(
-    compileConstruction(
-      readFileSync(
-        "apps/dashboard/src/shipyard/layout/templates/wayfarer-r001.json",
-        "utf8",
-      ),
-    ).canonical,
-  ).toBe(compileConstruction(WAYFARER_STARTER.documentJson).canonical);
-});
 test("two first-character plans allocate independent geometry, cargo, interactions and flight devices", () => {
   const a = build(),
     b = build();

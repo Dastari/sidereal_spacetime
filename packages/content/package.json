@@ -51,7 +51,6 @@
     "./upgrade-wayfarer-hull-layout": "./src/upgrade-wayfarer-hull-layout.ts",
     "./construction-doorway-visuals": "./src/construction-doorway-visuals.ts",
     "./wayfarer-exterior-r005.json": "./src/wayfarer-exterior-r005.json",
-    "./ship-hull-interfaces.v1.json": "./src/ship-hull-interfaces.v1.json",
     "./wayfarer-hull-r005-proof.json": "./src/wayfarer-hull-r005-proof.json",
     "./doorway250-review-layout": "./src/doorway250-review-layout.ts",
     "./wayfarer-conversion-candidate": "./src/wayfarer-conversion-candidate.ts",

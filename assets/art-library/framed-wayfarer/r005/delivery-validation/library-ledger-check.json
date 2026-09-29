@@ -1,9 +1,0 @@
-{
-  "currentEvidenceCount": 47,
-  "currentEvidenceHashes": "pass",
-  "extraUnregisteredReferenceFiles": [
-    "reference/art/editor-mockup-5.png"
-  ],
-  "missingReferenceFiles": [],
-  "fullLibraryCheck": "fails existing reference inventory mismatch"
-}

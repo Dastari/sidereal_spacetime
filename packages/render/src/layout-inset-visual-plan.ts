@@ -1,7 +1,5 @@
-import { WAYFARER_REBUILD_SOURCE } from "@sidereal/sim/wayfarer-rebuild-contract";
 import { planLayoutDoorways } from "./layout-doorway-plan";
 import { doorwayWallSpans } from "./layout-doorway-walls";
-import { planWayfarerRebuildGame } from "@sidereal/sim/wayfarer-rebuild-game";
 import { complexVisualPerimeters } from "./layout-complex-visual-plan";
 import type { LayoutDocument } from "@sidereal/content/ship-layout";
 import { INSET_VISUAL_PARTS } from "./inset-visual-registry";
@@ -29,9 +27,6 @@ const structuralShape = (doc: LayoutDocument) => ({
   openings: doc.openings,
   structure: doc.structure,
 });
-const rebuiltStructure = stableStringify(
-  structuralShape(WAYFARER_REBUILD_SOURCE.layout),
-);
 /** Immutable visual request mapping. The base native floor is rendered separately. */
 export function planLayoutInsetVisuals(input: LayoutInsetPreviewInput): {
   requests: InsetNativeVisualRequest[];
@@ -88,16 +83,6 @@ export function planLayoutInsetVisuals(input: LayoutInsetPreviewInput): {
       "Native aperture adapters are required for declared deck holes",
     );
     return result();
-  }
-  if (stableStringify(structuralShape(doc)) === rebuiltStructure) {
-    // The authored transition adapters belong to this exact structure. Moving
-    // equipment, hull panels or room labels does not change those wall solids.
-    // This is visual reuse only; game admission still verifies the whole source.
-    return {
-      requests: planWayfarerRebuildGame(WAYFARER_REBUILD_SOURCE)
-        .nativeVisualRequests,
-      issues: [],
-    };
   }
   const wallSpans = doorwayWallSpans(
     fresh.walls,

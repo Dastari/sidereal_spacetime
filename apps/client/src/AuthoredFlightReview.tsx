@@ -1,4 +1,3 @@
-import { supportsAuthoredFlightPresentation } from "./construction-flight-presentation";
 import type { DbConnection } from "@sidereal/net";
 import { createOperationId } from "./operation-id";
 
@@ -48,11 +47,7 @@ export function AuthoredFlightReview({
   }
   const act = (action: () => Promise<unknown>) =>
     void action().catch((error) => onError(String(error)));
-  // Display pin only. Installation independently reconstructs and validates it.
-  const qualified = supportsAuthoredFlightPresentation(
-    instance?.blueprintSha256,
-  );
-  if (!visit || (!flight && !qualified)) return null;
+  if (!visit || !flight) return null;
   return (
     <section aria-label="Authored ship flight review">
       <strong>Authored ship flight</strong>
@@ -99,21 +94,7 @@ export function AuthoredFlightReview({
       ) : (
         <small>Waiting for flight compilation.</small>
       )}
-      {!flight && instance ? (
-        <button
-          onClick={() =>
-            act(() =>
-              connection.reducers.installAuthoredShipFlight({
-                instanceId,
-                expectedInstanceRevision: instance.revision,
-                operationId: createOperationId(),
-              }),
-            )
-          }
-        >
-          Install qualified flight systems
-        </button>
-      ) : flight && !flight.active ? (
+      {!flight.active ? (
         <button
           onClick={() =>
             act(() =>
@@ -127,7 +108,7 @@ export function AuthoredFlightReview({
         >
           Activate flight systems
         </button>
-      ) : flight && !flight.flightAdmitted ? (
+      ) : !flight.flightAdmitted ? (
         <button
           onClick={() =>
             act(() =>

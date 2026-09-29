@@ -165,9 +165,6 @@ export function PrefabLibrary({
             or start a new hull.
           </p>
         </div>
-        <a className="pf-link" href="/shipyard">
-          Layout planner
-        </a>
       </header>
       {(store.error || message) && (
         <div className="layout-alert" role="alert">

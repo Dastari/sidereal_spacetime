@@ -1,8 +1,3 @@
-export const STARTER = {
-  id: "wayfarer",
-  name: "Wayfarer",
-  model: "/assets/wayfarer.glb",
-} as const;
 export const LAYERS = [
   "Rooms",
   "Interior equipment",

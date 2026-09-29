@@ -4,7 +4,7 @@ import "@fontsource/barlow-condensed/600.css";
 import "@fontsource/barlow/400.css";
 import "@fontsource/barlow/500.css";
 import "@fontsource/barlow/600.css";
-import { LAYERS, THEMES } from "@sidereal/content";
+import { THEMES } from "@sidereal/content";
 import { ItemSlot, Panel, Readout, Status, ToolButton } from "@sidereal/ui";
 import {
   ArrowUpRight,
@@ -22,21 +22,17 @@ import {
   Orbit,
   Palette,
   Redo2,
-  Rocket,
   RotateCw,
   Shield,
   Ship,
   Undo2,
   Users,
 } from "lucide-react";
-import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import { PILOT_LAYOUT } from "@sidereal/content/pilot-layout";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { ThemePicker } from "./editor/ThemePicker";
 import { WorkspaceBoundary } from "./editor/WorkspaceBoundary";
 import "./editor/theme.css";
 import "./style.css";
-const AssemblyEditor = lazy(() => import("./shipyard/AssemblyEditor"));
-const LayoutEditor = lazy(() => import("./shipyard/layout/LayoutEditor"));
 const MapEditor = lazy(() => import("./map-editor/MapEditor"));
 const PlanetStudio = lazy(() => import("./planet-studio/PlanetStudio"));
 const PrefabShipyard = lazy(() => import("./shipyard/prefab/PrefabShipyard"));
@@ -114,36 +110,22 @@ const tools = [
     "M9",
   ],
 ] as const;
-type Route =
-  | "map"
-  | "planets"
-  | "dashboard"
-  | "shipyard"
-  | "prefabs"
-  | "assembly"
-  | "models"
-  | "components";
+type Route = "map" | "planets" | "dashboard" | "prefabs" | "components";
 const ROUTE_PATHS: Partial<Record<Route, string>> = {
   dashboard: "/",
   prefabs: "/shipyard/prefabs",
 };
+/** The prefab Shipyard is the Shipyard: `/shipyard` and its old sub-paths open it. */
 const currentRoute = (): Route =>
   location.pathname === "/map"
     ? "map"
-    : location.pathname.startsWith("/shipyard/prefabs")
+    : location.pathname.includes("shipyard")
       ? "prefabs"
-      : location.pathname.includes("shipyard") &&
-          new URLSearchParams(location.search).has("assembly")
-        ? "assembly"
-        : location.pathname.includes("planets")
-          ? "planets"
-          : location.pathname.includes("models")
-            ? "models"
-            : location.pathname.includes("shipyard")
-              ? "shipyard"
-              : location.pathname.includes("components")
-                ? "components"
-                : "dashboard";
+      : location.pathname.includes("planets")
+        ? "planets"
+        : location.pathname.includes("components")
+          ? "components"
+          : "dashboard";
 export default function App() {
   return (
     <StudioAuthGate>
@@ -156,26 +138,6 @@ function StudioApp() {
   const [toolDetail, setToolDetail] = useState<(typeof tools)[number] | null>(
     null,
   );
-  const [interior, setInterior] = useState(false);
-  const [source, setSource] = useState<
-    "voxel" | "original" | "engine-original" | "engine-voxel"
-  >("voxel");
-  const [inspect, setInspect] = useState(false);
-  const [modelStatus, setModelStatus] = useState("Loading Blender study");
-  const canvas = useRef<HTMLCanvasElement>(null);
-  const view = useRef<Awaited<
-    ReturnType<(typeof import("@sidereal/render"))["createWorld"]>
-  > | null>(null);
-  const state = useRef({
-    heading: 0,
-    x: 0,
-    y: 0,
-    localX: 0,
-    localY: PILOT_LAYOUT.station.y,
-    interior,
-    inspect,
-    grid: true,
-  });
   useEffect(() => {
     const pop = () => setRoute(currentRoute());
     window.addEventListener("popstate", pop);
@@ -185,32 +147,6 @@ function StudioApp() {
     history.pushState({}, "", ROUTE_PATHS[next] ?? `/${next}`);
     setRoute(next);
   };
-  useEffect(() => {
-    const target = canvas.current;
-    if (route !== "models" || !target) return;
-    let disposed = false;
-    import("@sidereal/render")
-      .then(({ createWorld }) =>
-        createWorld(target, setModelStatus, { source }),
-      )
-      .then((v) => {
-        if (disposed) v.dispose();
-        else {
-          view.current = v;
-          v.update(state.current);
-        }
-      })
-      .catch((e) => setModelStatus(String(e)));
-    return () => {
-      disposed = true;
-      view.current?.dispose();
-      view.current = null;
-    };
-  }, [route, source]);
-  useEffect(() => {
-    state.current = { ...state.current, interior, inspect };
-    view.current?.update(state.current);
-  }, [interior, inspect]);
   const clientUrl = new URL(window.location.href);
   clientUrl.port = import.meta.env.VITE_CLIENT_PORT;
   clientUrl.pathname = "/";
@@ -241,17 +177,10 @@ function StudioApp() {
           </ToolButton>
           <ToolButton
             label="Shipyard"
-            active={route === "shipyard" || route === "assembly"}
-            onClick={() => navigate("shipyard")}
-          >
-            <Ship />
-          </ToolButton>
-          <ToolButton
-            label="Prefab ships"
             active={route === "prefabs"}
             onClick={() => navigate("prefabs")}
           >
-            <Rocket />
+            <Ship />
           </ToolButton>
           <ToolButton
             label="Map editor"
@@ -307,117 +236,6 @@ function StudioApp() {
               <PlanetStudio />
             ) : route === "prefabs" ? (
               <PrefabShipyard />
-            ) : route === "shipyard" || route === "assembly" ? (
-              route === "assembly" ? (
-                <AssemblyEditor />
-              ) : (
-                <LayoutEditor />
-              )
-            ) : route === "models" ? (
-              <>
-                <main className="viewport editor">
-                  <canvas
-                    ref={canvas}
-                    tabIndex={0}
-                    aria-label="3D ship assembly preview"
-                  />
-                  <div className="view-heading">
-                    <div>
-                      <span className="muted">Shipyard · assembly study</span>
-                      <h1>Wayfarer</h1>
-                      <span className="ship-class">
-                        Imported Blender geometry
-                      </span>
-                    </div>
-                    <div className="view-actions">
-                      <ToolButton
-                        label="Inspect 3D angle"
-                        active={inspect}
-                        onClick={() => setInspect((v) => !v)}
-                      >
-                        <Orbit />
-                      </ToolButton>
-                    </div>
-                  </div>
-                  <div className="canvas-tools">
-                    <ToolButton label="Inspect assembly" active>
-                      <MousePointer2 />
-                    </ToolButton>
-                    <ToolButton label="Placement tools arrive in M3" disabled>
-                      <Move />
-                    </ToolButton>
-                    <ToolButton label="Rotation tools arrive in M3" disabled>
-                      <RotateCw />
-                    </ToolButton>
-                  </div>
-                  <div className="view-footer">
-                    <span>{modelStatus}</span>
-                    <span>Geometry review · editing arrives in M3</span>
-                  </div>
-                </main>
-                <aside className="inspector">
-                  <Panel title="Review display">
-                    <label>
-                      Source model
-                      <select
-                        aria-label="Source model"
-                        value={source}
-                        onChange={(e) =>
-                          setSource(
-                            e.target.value as
-                              | "voxel"
-                              | "original"
-                              | "engine-original"
-                              | "engine-voxel",
-                          )
-                        }
-                      >
-                        <option value="voxel">Voxel Wayfarer</option>
-                        <option value="original">
-                          Original Blender assembly
-                        </option>
-                        <option value="engine-original">
-                          Engine · Blender source
-                        </option>
-                        <option value="engine-voxel">
-                          Engine · Voxelized result
-                        </option>
-                      </select>
-                    </label>
-                    <button
-                      className="layer"
-                      onClick={() => setInterior(false)}
-                    >
-                      Exterior shell <span>{!interior ? "Visible" : ""}</span>
-                    </button>
-                    <button className="layer" onClick={() => setInterior(true)}>
-                      Interior cutaway <span>{interior ? "Visible" : ""}</span>
-                    </button>
-                  </Panel>
-                  <Panel title="Planned assembly layers">
-                    {LAYERS.map((layer) => (
-                      <button className="layer" disabled key={layer}>
-                        <Layers size={15} />
-                        {layer}
-                        <span>M3</span>
-                      </button>
-                    ))}
-                  </Panel>
-                  <Panel title="Authoring contract">
-                    <p className="fine-print">
-                      Part placement, mounting rules, undo, persistent drafts
-                      and live refits are specified in the implementation plan.
-                    </p>
-                    <a
-                      className="secondary full"
-                      href="/help/shipyard.md"
-                      target="_blank"
-                    >
-                      Read Shipyard help
-                    </a>
-                  </Panel>
-                </aside>
-              </>
             ) : route === "dashboard" ? (
               <main className="dashboard">
                 <div className="page-heading">
@@ -447,7 +265,7 @@ function StudioApp() {
                           title === "Firmament" || title === "World explorer"
                             ? navigate("map")
                             : title === "Shipyard"
-                              ? navigate("shipyard")
+                              ? navigate("prefabs")
                               : title === "Genesis"
                                 ? navigate("planets")
                                 : setToolDetail(tool)
@@ -464,7 +282,7 @@ function StudioApp() {
                           {title === "Firmament" || title === "World explorer"
                             ? "Map editor"
                             : title === "Shipyard"
-                              ? "Layout planner ready"
+                              ? "Prefab Shipyard ready"
                               : title === "Genesis"
                                 ? "Generator ready"
                                 : milestone + " planned"}

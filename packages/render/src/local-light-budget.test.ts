@@ -10,7 +10,6 @@ import { createGraphicsSettings } from "./graphics-settings";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createEquipmentLighting } from "./equipment-lighting";
-import { createShipLighting } from "./ship-lighting";
 import { createCabinVisibility } from "./cabin-visibility";
 import {
   createLocalLightBudget,
@@ -123,54 +122,6 @@ describe("existing light-owner adapters", () => {
     expect(rig.getLocalLightSources(true)[0].eligible).toBe(true);
     rig.dispose();
     expect(rig.getLocalLightSources()).toEqual([]);
-    scene.dispose();
-    engine.dispose();
-  });
-  test("ship descriptors exclude globals, respect cabin gating and refresh a restored shadow", () => {
-    const engine = new NullEngine(),
-      scene = new Scene(engine),
-      root = new TransformNode("ship", scene);
-    root.metadata = { shipId: "ship-uuid" };
-    const deck = CreateBox("GEO-deck", {}, scene);
-    deck.parent = root;
-    const lighting = createShipLighting(scene, root, [deck]),
-      budget = createLocalLightBudget();
-    let sources = lighting.getLocalLightSources();
-    expect(sources).toHaveLength(13);
-    expect(sources.every((s) => s.id.startsWith("ship-uuid:local:"))).toBe(
-      true,
-    );
-    expect(sources.some((s) => s.id.includes("exterior-key"))).toBe(false);
-    const room = scene.lights.find((l) =>
-      l.name.startsWith("room-luminaire-"),
-    )!;
-    const refresh = vi.spyOn(
-      room.getShadowGenerator()!.getShadowMap()!,
-      "resetRefreshCounter",
-    );
-    budget.setLimit(0);
-    budget.update(sources, frame);
-    const setter = vi.spyOn(room, "setEnabled");
-    lighting.update(1, 0, 0);
-    expect(setter).not.toHaveBeenCalled();
-    sources = lighting.getLocalLightSources();
-    budget.update(sources, frame);
-    refresh.mockClear();
-    budget.reset();
-    expect(room.isEnabled() && room.shadowEnabled).toBe(true);
-    expect(refresh).toHaveBeenCalledOnce();
-    expect(lighting.primaryLight.isEnabled()).toBe(true);
-    scene.shadowsEnabled = false;
-    budget.update(lighting.getLocalLightSources(), frame);
-    expect(room.isEnabled()).toBe(true);
-    expect(scene.shadowsEnabled).toBe(false);
-    lighting.setCabinVisible(false);
-    budget.update(lighting.getLocalLightSources(), frame);
-    expect(room.isEnabled()).toBe(false);
-    lighting.setCabinVisible(true);
-    budget.update(lighting.getLocalLightSources(false), frame);
-    expect(room.isEnabled()).toBe(false);
-    budget.dispose();
     scene.dispose();
     engine.dispose();
   });

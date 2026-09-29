@@ -14,13 +14,6 @@ import {
   loadNativeStairEgress,
   type NativeStairEgressGeometry,
 } from "./native-stair-scene";
-import { SHARED_STOCK_EXTERIOR_ID } from "@sidereal/content/shared-system";
-import {
-  createRemoteShips,
-  loadRemoteShipPrototype,
-  type RemoteShipStore,
-  type StockExteriorManifest,
-} from "./remote-ships";
 import {
   loadNativeStairConstruction,
   type NativeStairAcceptedState,
@@ -69,12 +62,9 @@ import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { cabinIsVisible, createCabinVisibility } from "./cabin-visibility";
 import { LAB_INTERACTIONS } from "../../content/src/interactions";
 import { PILOT_LAYOUT } from "../../content/src/pilot-layout";
-import { loadInstalledHull } from "./installed-hull";
-import { loadInstalledModules } from "./installed-modules";
 import { loadInstalledEquipment } from "./installed-equipment";
 import { createObjectPresentation } from "./object-presentation";
 import { applyCutawayVisibility, prepareCutawayMeshes } from "./cutaway";
-import { createShipLighting } from "./ship-lighting";
 import {
   createFlightEffects,
   type FlightEffectActuator,
@@ -124,7 +114,6 @@ import { CreatePlane } from "@babylonjs/core/Meshes/Builders/planeBuilder";
 import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTexture";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
-import { CABIN_ROOMS } from "../../content/src/interior";
 import {
   loadPrefabShipPresentation,
   type PrefabShipViewHandle,
@@ -232,22 +221,13 @@ const EVA_CAMERA_BETA = 0.22;
 export interface WorldOptions {
   /** Opt-in accepted shared projections, separate from the private local ship. */
   sharedWorld?: {
-    store: RemoteShipStore;
-    localShipId: () => string | undefined;
     bodies: (nowMs: number) => readonly SpaceBodyState[] | undefined;
-    /** false: never load or draw the retired stock Wayfarer exterior for other
-     * players' ships (its assets are not delivered to the game client). */
-    stockExterior?: boolean;
   };
   construction?: ConstructionRenderInput & { visitId?: string };
   constructionEgress?: NativeStairEgressGeometry;
   /** Allow known authored exhaust geometry; accepted telemetry still drives it. */
   authoredFlightEffects?: boolean;
   onObjectSelected?: (placementId?: string) => void;
-  source?: "voxel" | "original" | "engine-original" | "engine-voxel";
-  /** "none": the character has no ship. Render the environment and crew only;
-   * never fetch the retired legacy stock-ship assets. */
-  vessel?: "none";
   onScene?: (scene: Scene) => void;
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
@@ -445,12 +425,6 @@ async function buildWorld(
   let prefabView: PrefabShipViewHandle | undefined;
   let lastStairPosition: [number, number] | undefined;
   let stairTravelHeading: number | undefined;
-  const engineStudy = options.source?.startsWith("engine-") ?? false;
-  const sourceFile = engineStudy
-    ? options.source === "engine-original"
-      ? "engine-pod-original.glb"
-      : "engine-pod.glb"
-    : "wayfarer.glb";
   try {
     if (options.construction || options.constructionEgress) {
       const loaded = options.constructionEgress
@@ -499,59 +473,15 @@ async function buildWorld(
         if (prefabView)
           for (const mesh of imported.meshes) mesh.setEnabled(false);
       }
-    } else if (options.vessel === "none") {
+    } else {
+      // No authorized construction scene: the character has no vessel.
       imported = { meshes: [] };
       installed = [];
-    } else {
-      imported = await SceneLoader.ImportMeshAsync(
-        "",
-        options.source === "original" ? "/assets/" : "/assets/voxels/",
-        sourceFile,
-        scene,
-      );
-      if (!options.source || options.source === "voxel") {
-        const native = await loadInstalledEquipment(
-          scene,
-          shipRoot,
-          imported.meshes,
-        );
-        const cargo = await loadInstalledModules(scene, shipRoot, "cargo");
-        const floors = await loadInstalledModules(scene, shipRoot, "floor");
-        const cargoIds = new Set(
-          cargo.placements.map((p) => p.node.metadata.partId as string),
-        );
-        const retained = native.meshes.filter((mesh) => {
-          const replaced = [...cargoIds].some(
-            (id) =>
-              mesh.name === `GEO-${id}` ||
-              mesh.name.startsWith(`GEO-${id}--`) ||
-              mesh.name.startsWith(`GEO-${id}_`),
-          );
-          if (replaced) mesh.dispose();
-          return !replaced;
-        });
-        shipEquipment = [...native.placements, ...cargo.placements];
-        const hull = await loadInstalledHull(scene, shipRoot);
-        installed = [
-          ...shipEquipment,
-          ...hull.placements,
-          ...floors.placements,
-        ];
-        imported = {
-          ...imported,
-          meshes: [
-            ...retained,
-            ...cargo.meshes,
-            ...hull.meshes,
-            ...floors.meshes,
-          ],
-        };
-      }
     }
     options.onLoadStage?.("environment");
     await environment.ready;
     options.onLoadStage?.("crew");
-    if (!options.source || options.source === "voxel") {
+    {
       // Voxel crew: authored actions drive the arms. The head kit and armour follow the
       // character's appearance and equipped inventory (see customizeCrew).
       const voxel = await createVoxelCrewVisual(scene, shipRoot, undefined, {
@@ -589,15 +519,6 @@ async function buildWorld(
   const assembly = new TransformNode("same-ship-assembly", scene);
   assembly.parent = shipRoot;
   for (const mesh of imported.meshes) if (!mesh.parent) mesh.parent = assembly;
-  if (options.source === "original" || engineStudy) {
-    const bound = assembly.getHierarchyBoundingVectors(),
-      center = bound.min.add(bound.max).scale(0.5),
-      scale =
-        24 / Math.max(bound.max.x - bound.min.x, bound.max.z - bound.min.z);
-    assembly.scaling.setAll(scale);
-    assembly.position.copyFrom(center.scale(-scale));
-    avatar.setEnabled(false);
-  }
   for (const mesh of imported.meshes) {
     if (!mesh.metadata?.role) setMeshRole(mesh, legacyMeshRole(mesh));
     if (legacyCutawayFade(mesh)) mesh.metadata.cutawayFade = true;
@@ -609,12 +530,7 @@ async function buildWorld(
       m.metadata?.cutawayFade,
   );
   prepareCutawayMeshes(roof);
-  const lighting =
-    options.construction ||
-    options.constructionEgress ||
-    options.vessel === "none"
-      ? createConstructionLighting(scene, imported.meshes)
-      : createShipLighting(scene, shipRoot, imported.meshes);
+  const lighting = createConstructionLighting(scene, imported.meshes);
   environment.setPrimaryLight(lighting.primaryLight);
   lighting.addActor(avatar.getChildMeshes());
   const cabinVisibility = createCabinVisibility(
@@ -669,65 +585,15 @@ async function buildWorld(
   emissive.emissiveColor = Color3.FromHexString("#31bafa");
   emissive.disableLighting = true;
   const emitters: Mesh[] = [];
-  for (const room of options.construction ||
-  options.constructionEgress ||
-  options.vessel === "none"
-    ? []
-    : CABIN_ROOMS) {
-    const plate = CreatePlane(
-      "room-sign-" + room.id,
-      { width: 1.5, height: 0.25, sideOrientation: Mesh.FRONTSIDE },
-      scene,
-    );
-    setMeshRole(plate, "effect");
-    plate.parent = labels;
-    // Stand in front of the innermost service insert, facing into the room.
-    plate.position.set(Math.sign(room.x) * 4.35, 2.0625, -room.y);
-    plate.rotation.y = (Math.sign(room.x) * Math.PI) / 2;
-    plate.metadata = { side: Math.sign(room.x), role: "equipment" };
-    const texture = new DynamicTexture(
-      "room-sign-" + room.id,
-      { width: 512, height: 96 },
-      scene,
-      false,
-    );
-    texture.hasAlpha = true;
-    texture.drawText(
-      room.name,
-      null,
-      66,
-      "bold 54px sans-serif",
-      "#edf1ff",
-      "#202638",
-      true,
-      true,
-    );
-    const mat = new StandardMaterial("room-sign-material-" + room.id, scene);
-    mat.diffuseTexture = texture;
-    mat.emissiveTexture = texture;
-    mat.disableLighting = true;
-    mat.backFaceCulling = true;
-    plate.material = mat;
-    const strip = CreateBox(
-      "door-strip-" + room.id,
-      { width: 0.15, height: 0.08, depth: 1 },
-      scene,
-    );
-    setMeshRole(strip, "effect");
-    strip.position.set(Math.sign(room.x) * 1.4, 1.46, -room.y);
-    strip.parent = labels;
-    strip.material = emissive;
-    emitters.push(strip);
-  }
   const glow = new GlowLayer("local-instruments", scene, {
     mainTextureFixedSize: 512,
     blurKernelSize: 24,
   });
   glow.intensity = 0.4;
   const flightEffects =
-    (options.construction && !options.authoredFlightEffects) ||
-    options.constructionEgress ||
-    options.vessel === "none"
+    !options.construction ||
+    !options.authoredFlightEffects ||
+    options.constructionEgress
       ? {
           meshes: [] as Mesh[],
           update(_outputs: unknown, _motion?: boolean) {
@@ -1037,45 +903,6 @@ async function buildWorld(
   canvas.addEventListener("wheel", wheel, { passive: false });
   canvas.addEventListener("contextmenu", context);
   window.addEventListener("blur", up);
-  let sharedExteriorReady = false;
-  const remoteShips =
-    options.sharedWorld && options.sharedWorld.stockExterior !== false
-      ? createRemoteShips(scene, options.sharedWorld.store, {
-          assetId: SHARED_STOCK_EXTERIOR_ID,
-          localShipId: options.sharedWorld.localShipId,
-          loadPrototype: async () => {
-            const response = await fetch(
-              "/assets/assembly/wayfarer-exterior-r001.json",
-              { signal: options.signal },
-            );
-            if (!response.ok)
-              throw Error("Shared exterior manifest unavailable");
-            const manifest = (await response.json()) as StockExteriorManifest;
-            const prototype = await loadRemoteShipPrototype(
-              scene,
-              manifest,
-              SHARED_STOCK_EXTERIOR_ID,
-            );
-            sharedExteriorReady = true;
-            return prototype;
-          },
-          onError: (error) => {
-            const message =
-              error instanceof Error
-                ? error.message
-                : "Shared ship exterior unavailable";
-            assetFailure = true;
-            options.onLoadError?.(message);
-          },
-        })
-      : undefined;
-  if (remoteShips) {
-    options.onLoadStage?.("environment");
-    // Import the shared exterior before drawing too: otherwise its sequential
-    // GLB imports contend with full ship shadow/refraction passes during startup.
-    // onError above records the failure and keeps the loading cover in place.
-    await remoteShips.ready.catch(() => undefined);
-  }
   const visibleBodies = (nowMs: number) =>
     options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
   const debugVisibilityRevision = createDebugVisibilityRevision();
@@ -1252,12 +1079,7 @@ async function buildWorld(
       applyCutawayVisibility(mesh, focusedBodyId ? 1 : 1 - blend);
     }
     const cameraLocal = camera.alpha + displayed.heading;
-    labels.setEnabled(
-      cabinVisible &&
-        blend > 0.8 &&
-        options.source !== "original" &&
-        !engineStudy,
-    );
+    labels.setEnabled(cabinVisible && blend > 0.8);
     for (const label of labels.getChildMeshes())
       if (label.metadata?.side)
         label.setEnabled(label.metadata.side * Math.cos(cameraLocal) < 0);
@@ -1360,7 +1182,6 @@ async function buildWorld(
       reducedMotion: state.reducedMotion ?? false,
       bodies,
     });
-    remoteShips?.update({ x: displayed.x, y: displayed.y }, frameStarted);
     debugFeatures.afterFrame();
     const lightingAllowed = scene.lightsEnabled;
     localLights.update(
@@ -1396,20 +1217,11 @@ async function buildWorld(
       firstFrame &&
       initialStateApplied &&
       !crewOutfit?.pending &&
-      (!remoteShips || sharedExteriorReady) &&
       scene.isReady() &&
       !assetFailure
     ) {
       firstFrame = false;
-      onReady(
-        engineStudy
-          ? options.source === "engine-original"
-            ? "Original engine · 39 modeled solids"
-            : "Voxel engine · 7 materials preserved"
-          : options.source === "original"
-            ? "Original Blender study loaded"
-            : "Vessel ready",
-      );
+      onReady("Vessel ready");
     }
   });
   resize();
@@ -1574,11 +1386,6 @@ async function buildWorld(
       applyRenderQuality({ ...renderQuality, ...patch });
     },
     groundItemLabels: () => groundItems.labels(),
-    getSharedWorldDiagnostics: () => ({
-      enabled: !!remoteShips,
-      exteriorReady: sharedExteriorReady,
-      remoteShipIds: remoteShips?.getRootIds() ?? [],
-    }),
     update(next: SceneState) {
       if (
         next.interior !== state.interior ||
@@ -1658,7 +1465,6 @@ async function buildWorld(
       updateConstructionView = undefined;
       scene.onAfterAnimationsObservable.remove(combatObserver);
       groundItems.dispose();
-      remoteShips?.dispose();
       combatAim.dispose();
       localLights.dispose();
       scene.onNewMeshAddedObservable.remove(temporalMeshObserver);
