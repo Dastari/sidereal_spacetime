@@ -16,8 +16,6 @@ class Handler(SimpleHTTPRequestHandler):
 
     def translate_path(self, path):
         requested=unquote(urlsplit(path).path)
-        if requested=="/docs/blender_asset_migration.md":
-            return str(root/"docs/blender_asset_migration.md")
         sources=json.loads((root/"assets/art-library/sources.json").read_text())
         for source in sources:
             if requested=="/"+source["path"]:

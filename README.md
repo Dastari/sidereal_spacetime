@@ -22,7 +22,7 @@ Open http://localhost:5173 (LAN http://10.0.1.200:5173). Create a local test cha
 
 `npm run status` / `npm run stop` manage only this project. `npm run check`, `npm run build`, `npm run smoke` verify the scaffold. See [operations](https://wiki.sidereal.dastari.net/Operations/Documents/Same-box%20setup%2C%20lifecycle%20and%20recovery), [scope](https://wiki.sidereal.dastari.net/Vision/Documents/Complete%20game%20scope%20carried%20into%20the%20pivot), [milestones](https://wiki.sidereal.dastari.net/Architecture/Documents/Implementation%20sequence%20and%20acceptance%20gates) and [validation](https://wiki.sidereal.dastari.net/Architecture/Documents/Verification%20record).
 
-The old `/root/sidereal` source and database volume are preserved and stopped. Full legacy documents are copied into `reference/sidereal/docs`; source/asset hashes are in the manifests. No old account credentials were imported. No production host has been repointed.
+The old `/root/sidereal` source and database volume are preserved and stopped. Its design documents are summarised on the wiki ([Bevy era reference](https://wiki.sidereal.dastari.net/History/Bevy%20Era%20Reference)); exact originals are in `/root/sidereal-art-archive` and git history. No old account credentials were imported. No production host has been repointed.
 
 The repository has no blanket license grant over imported material; original/third-party asset and vendored skill terms remain attached to their sources.
 

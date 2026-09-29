@@ -35,3 +35,24 @@ docs/**/*.webp
 docs/**/*.gif
 docs/**/*.webm
 docs/**/*.mp4
+
+# Agent runtimes: per-session worktrees and local settings (project skills in .claude/skills are tracked).
+.claude/worktrees/
+**/.claude/settings.local.json
+# Isolated review/test servers started from a worktree.
+.spacetime-data*/
+# Generated art-library indexes and design pages (scripts/art_catalog.py); the wiki carries them.
+assets/art-library/INDEX.md
+assets/art-library/SOURCE_AUDIT.md
+assets/art-library/FACIAL_REFERENCE_INDEX.md
+assets/art-library/character-components/INDEX.md
+assets/art-library/designs/*/DESIGN.md
+# Documents and review media never go in git (scripts/check_docs.py enforces it in CI):
+# write a wiki page; put exact originals in /root/sidereal-art-archive and scratch in output/.
+docs/**/*.md
+!docs/public/*.md
+docs/handoffs/
+reference/
+*.mp4
+*.webm
+*.mov

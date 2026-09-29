@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import { readFileSync, writeFileSync } from "node:fs";
+import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { TILESET_WALL_CONVENTION as c } from "../packages/content/src/tileset-interfaces";
 const sourcePath = "packages/content/src/construction-floor-interfaces.json";
 const source = readFileSync(sourcePath, "utf8"),
@@ -63,8 +63,19 @@ Deliver each shape plus square, diagonal and taper seam assemblies; use opaque-b
 `;
 for (const [target, body] of [
   [path, json],
-  ["docs/ship_tileset_roof_authoring_requirements.md", guide],
+  [
+    "output/ship-tileset-specs/ship_tileset_roof_authoring_requirements.md",
+    guide,
+  ],
 ]) {
+  // The request text lives on the wiki; the local copy is regenerated under output/.
+  if (target.startsWith("output/")) {
+    if (!process.argv.includes("--check")) {
+      mkdirSync("output/ship-tileset-specs", { recursive: true });
+      writeFileSync(target, body);
+    }
+    continue;
+  }
   if (process.argv.includes("--check")) {
     if (readFileSync(target, "utf8") !== body)
       throw Error(`Stale roof request: ${target}`);

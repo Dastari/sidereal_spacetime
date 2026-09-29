@@ -16280,6 +16280,826 @@
    "sha256": "215a28bb7f7245798bdcda4a8f751e7367db0a23f29a6b8b14b8b269ddb7d03b",
    "bytes": 678946,
    "batch": "repo-slim-20260928"
+  },
+  "INDEX.md": {
+   "sha256": "69fbcfdd7d819ae2192e20a9e9e7e7d74407ffedd0046ce2be132c4fd41ecd89",
+   "bytes": 542739
+  },
+  "WORKFLOW.md": {
+   "sha256": "0c3e2d7280e7445c7d6234dce8620116dff96269cf129e34e3308d75af78d4b7",
+   "bytes": 20527
+  },
+  "character-components/INDEX.md": {
+   "sha256": "0d8bd9290fcce7fc6263c55c5c1fc624e1feac2c7ca5f33fce7f44305cad2f6b",
+   "bytes": 13872
+  },
+  "character-components/publications/r008/README.md": {
+   "sha256": "695e1627aff88b6a146490e407b74c97f522d93fabc40130201d68ba468fbf64",
+   "bytes": 4831
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a001/author.log": {
+   "sha256": "42b3ef338fbf195d4bf1f41d9471fd5b2b1da30be534b653c2c7f86ec7a026ff",
+   "bytes": 14438
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a002/author.log": {
+   "sha256": "359719d8cc3077727265d4b956dcac7d60b5401f9fc45668ff5b52fd04f2f0c4",
+   "bytes": 330250
+  },
+  "designs/cargo.carrier.grid-support/revisions/r000/a003/author.log": {
+   "sha256": "43e3f03b129e90cfc91cf1fec2ecd6d714024274efdb0586aa37dc714112d86f",
+   "bytes": 329913
+  },
+  "designs/cargo.handling.fixture/revisions/r001/a001/author.log": {
+   "sha256": "db6ef710012d870f46f954ab5f49eb15d6e7495f06fe7391059d41cfe390e352",
+   "bytes": 312571
+  },
+  "designs/cargo.handling.fixture/revisions/r001/a002/author.log": {
+   "sha256": "802cb4b83cf956394c62248cfbbcbced61400550ebff267501361155328ceebd",
+   "bytes": 311302
+  },
+  "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a001/author.log": {
+   "sha256": "3b488106415b4c781cb98e20c5c89ef52ed87c0d80b9fccca48fb2b7af301d4f",
+   "bytes": 36455
+  },
+  "designs/cargo.reinforced.oversized.grid-fit/revisions/r000/a002/author.log": {
+   "sha256": "dad36e58fe8356fcef351945b1af755522b186e2b3555f7509c80983e4b64d78",
+   "bytes": 36460
+  },
+  "designs/cargo.restraint.standard-small/revisions/r000/a001/author.log": {
+   "sha256": "4966ef4d21d2eaed55101d9dfec37f75cb09165e85698ecaacb38483577120e1",
+   "bytes": 28074
+  },
+  "designs/crew.base-and-outfits/DESIGN.md": {
+   "sha256": "47a90c8db8258903d3d47bd8bd69c27761cdd21336ea3d1dabeb0d28552b48c3",
+   "bytes": 37436
+  },
+  "designs/environment.planet.crystal/revisions/r005/artifacts/composition-tests.log": {
+   "sha256": "2eb7e7fa611b46d70e776368712c16645efc4b3c860544f4186dd0ee6f813988",
+   "bytes": 208
+  },
+  "designs/environment.planet.crystal/revisions/r005/artifacts/local-pbr-seed38-capture.log": {
+   "sha256": "6cb61e1bd27c3f225f95c803162de11c89df7ef1635d513d02d13540af1c28ba",
+   "bytes": 2496
+  },
+  "designs/environment.planet.crystal/revisions/r006/artifacts/corrected-seed38-capture.log": {
+   "sha256": "96922bd7ad41ce78ddc7bb2bdbdcdb52dabf84364d36f9a04c000b1e22999468",
+   "bytes": 2496
+  },
+  "designs/environment.planet.crystal/revisions/r007/artifacts/corrected-seed38-capture.log": {
+   "sha256": "7b4c411ca603aaba7afec40b9ad80fa18d8951a8aa3f01880ac924c52d74b941",
+   "bytes": 1299
+  },
+  "designs/environment.planet.crystal/revisions/r009/artifacts/corrected-seed38-capture.log": {
+   "sha256": "e48796e2449541fa10a62056961414b2c14c959967c099a3f8b30b223237bd40",
+   "bytes": 2784
+  },
+  "designs/environment.planet.crystal/revisions/r010/artifacts/corrected-seed38-capture.log": {
+   "sha256": "0f1aa9409850095d3019415f6d250bb5bc9f459b4719230e2b512d29e78018e4",
+   "bytes": 101
+  },
+  "designs/environment.planet.crystal/revisions/r010/artifacts/retry-seed38-capture.log": {
+   "sha256": "1f57853f40a52bf73500fbbd5c4401c5511c4f9f91240ec8d3ac4dcf5dca73c6",
+   "bytes": 2772
+  },
+  "designs/environment.planet.crystal/revisions/r011/artifacts/corrected-seed38-capture.log": {
+   "sha256": "f231170fece3c1248a0b9fb235b6d6230d77fd3a458418daa3c04544a24dc43c",
+   "bytes": 2784
+  },
+  "designs/environment.planet.crystal/revisions/r012/artifacts/corrected-seed38-capture.log": {
+   "sha256": "8e7139d649428e6958af418b6a6af52fc1ac48eaa77297c03b357b67de33cb7a",
+   "bytes": 2784
+  },
+  "designs/environment.planet.crystal/revisions/r013/artifacts/corrected-seed38-capture.log": {
+   "sha256": "15e1b9eb88bca548b0334319438c4f9528d40a2efb2301f1d98b00330bc54918",
+   "bytes": 2784
+  },
+  "designs/environment.planet.crystal/revisions/r014/crystal-moon-1/source-r001/corrected-run.log": {
+   "sha256": "b1f8dc4da1185ec1f9572ae354435fe728d44fc47bfe242b95f92add4f0460cb",
+   "bytes": 553
+  },
+  "designs/environment.planet.crystal/revisions/r014/crystal-moon-1/source-r001/corrected-seed38-capture.log": {
+   "sha256": "e60d966949e7b34f9006c9b5239b40c2b1f38e771a2b13579f18bcdb190b88f3",
+   "bytes": 2801
+  },
+  "designs/environment.planet.crystal/revisions/r014/crystal-moon-1/source-r002/corrected-seed38-capture.log": {
+   "sha256": "dba8e1a555b88432923bfd84f1b16b1908127794def040c033973e8d0df57f59",
+   "bytes": 2917
+  },
+  "designs/environment.planet.crystal/revisions/r014/crystal-moon-2/source-r001/corrected-run.log": {
+   "sha256": "c3c84ba790b1a7883f873e922f3d3774bda2d28803ab4bdbcd51c700c9c7e0e7",
+   "bytes": 553
+  },
+  "designs/environment.planet.crystal/revisions/r014/crystal-moon-2/source-r001/corrected-seed38-capture.log": {
+   "sha256": "0a6625fd29aed5edb990cb2017c15c604e02e0cf7b0a050947f86bd54403df84",
+   "bytes": 2800
+  },
+  "designs/environment.planet.crystal/revisions/r014/crystal-moon-2/source-r002/corrected-seed38-capture.log": {
+   "sha256": "27268ff696ca9eccfa4479a773b28658530b600a114c30c9af5f7ecff1194039",
+   "bytes": 2917
+  },
+  "designs/environment.planet.crystal/revisions/r015/associated-evidence/crystal-moons-r005-parity/render-matched-culling.log": {
+   "sha256": "1e7f71d2d455fb93bd127cbd10cd159bdc99a1e6d42f79173264dbcf9e87eeec",
+   "bytes": 26160
+  },
+  "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/native-body-seed38-capture.log": {
+   "sha256": "5d2e41f7235fa72829661155b603b9dff0484dc49affb8e0cbef5ab14e34e8e8",
+   "bytes": 2923
+  },
+  "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r004/tests.log": {
+   "sha256": "01214a4d0709349fac1a88c2b54c65a1e1d60ae1878bcd233ab3128d1c9288f5",
+   "bytes": 207
+  },
+  "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/outward-native-capture.log": {
+   "sha256": "684ae8c01745316edcefd931190c8ac066fca3667bcf3738ca7b1bf18d480f09",
+   "bytes": 654
+  },
+  "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-1-r005/outward-native-seed38-capture.log": {
+   "sha256": "89c82f4ba6dfb8095cffbd152268c27e394abc109c05f78465c3866d8d9e39e2",
+   "bytes": 3014
+  },
+  "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-capture.log": {
+   "sha256": "b8dc8a1c9f555c9f24f1c49ae25e5a352ac7ebd88a92c6240369f2f38e7a487b",
+   "bytes": 651
+  },
+  "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/native-body-seed38-capture.log": {
+   "sha256": "f666995b77f969f784151e6f0850e84da90318d7858ccc0386e89f3d116405ef",
+   "bytes": 2923
+  },
+  "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r004/tests.log": {
+   "sha256": "01214a4d0709349fac1a88c2b54c65a1e1d60ae1878bcd233ab3128d1c9288f5",
+   "bytes": 207
+  },
+  "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/outward-native-capture.log": {
+   "sha256": "7041f592313ca69ec254682e38ec3f741e81d3c7a1b1086387bddc4cca5e002d",
+   "bytes": 637
+  },
+  "designs/environment.planet.crystal/revisions/r015/sources/crystal-moon-2-r005/outward-native-seed38-capture.log": {
+   "sha256": "08e2161c9c6db633a198e1db41c113789788f4f6e6e4c13653c3b056ffb2787e",
+   "bytes": 2979
+  },
+  "designs/environment.planet.crystal/revisions/r016/associated-evidence/crystal-moons-r006-parity/render.log": {
+   "sha256": "8136eee7a2fac94134c928de137359d352d641c59b25525266fe48cb7f8e8438",
+   "bytes": 100250
+  },
+  "designs/environment.planet.crystal/revisions/r016/associated-evidence/crystal-moons-r007-parity/render.log": {
+   "sha256": "39748bd8feb916282b7146777597a84f4292681f302919a88ee86ecece61f1e6",
+   "bytes": 155290
+  },
+  "designs/environment.planet.crystal/revisions/r016/associated-evidence/crystal-moons-r008-parity/render.log": {
+   "sha256": "dc9caca9ea221945ef4e3a0c2f2fb1512f8276dce1a844d39b8dbfc9e44fafdc",
+   "bytes": 300559
+  },
+  "designs/environment.planet.crystal/revisions/r016/associated-evidence/crystal-moons-r009-parity/render.log": {
+   "sha256": "20bb49a65c3f24775579861b9dbdfbba61ae98661564b59b4740c822edb5430d",
+   "bytes": 326047
+  },
+  "designs/environment.planet.crystal/revisions/r016/associated-evidence/crystal-moons-r010-parity/render.log": {
+   "sha256": "b2d74689b9430eeb8f7e162a948905a3c007958c942d7832a7462fddb2122d20",
+   "bytes": 163845
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-1-r009/terminal-cut-capture.log": {
+   "sha256": "51286c52f56171836210fff0fa12ae87beae571095dc87fce98ebd0c7c356f3e",
+   "bytes": 651
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-1-r009/terminal-cut-seed38-capture.log": {
+   "sha256": "6616502ff6703d6822ac703d738a95aebc4223b41ef8146d6c0242bb77769ad9",
+   "bytes": 2973
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-1-r010/mineral-edges-capture.log": {
+   "sha256": "5df47857fe06239054bf1ad69a32d1d6e5347afb3f0bcfbfed9e8a7687a80748",
+   "bytes": 652
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-1-r010/mineral-edges-seed38-capture.log": {
+   "sha256": "c6480dda06eb977060fab25d9520a03a20c53655e92e07ccb7a73fcad3bf04ea",
+   "bytes": 2976
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-1-r010/staging.log": {
+   "sha256": "7ac5d03c26118c838c63eaa7d8957e106138c057522851bf63b7a7b93652fb8e",
+   "bytes": 2279
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-2-r009/terminal-cut-capture.log": {
+   "sha256": "e454de52e81cd25b8e2d9882476b4e775f16497456a9a652ebf0b7c3e3c56fb8",
+   "bytes": 652
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-2-r009/terminal-cut-seed38-capture.log": {
+   "sha256": "ce5289edc44c7c5e04c4f6f02b651d8b4e9cec398d98541339797da0673479f1",
+   "bytes": 2973
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-2-r010/mineral-edges-capture.log": {
+   "sha256": "da50d949459920afe2a94f750d9deb5518ba9b6fbcc0ec846b5267d806d292ef",
+   "bytes": 653
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-2-r010/mineral-edges-seed38-capture.log": {
+   "sha256": "f56373a712894ea617da76cf84de1445ccc0bb814a22e03a56a8593b862fcb45",
+   "bytes": 2976
+  },
+  "designs/environment.planet.crystal/revisions/r016/sources/crystal-moon-2-r010/staging.log": {
+   "sha256": "7ef8d573b3ce3722ed37bdd11e2cdba3b70a96bb0060e555d351f645dcf7daa2",
+   "bytes": 2279
+  },
+  "designs/environment.planet.desert/revisions/r015/desert-moon-1/source-r001/corrected-seed38-capture.log": {
+   "sha256": "ce5566d606a4dd2b5a3fee126e9a52631f12be0fbaa84ef11d099b9334cfb329",
+   "bytes": 2781
+  },
+  "designs/environment.planet.desert/revisions/r015/desert-moon-2/source-r001/corrected-seed38-capture.log": {
+   "sha256": "42fe4f133e21a94bf2c4ac1ebb8600c73633d7dab7e245912d53da4068c6ccb0",
+   "bytes": 2781
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-1/source-r001/corrected-seed38-capture.log": {
+   "sha256": "0e7e8c6efbf391fa1466af7573bf4771302587adffac0fa42807690bbc6608ca",
+   "bytes": 2796
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-1/source-r001/parent-light-diagnostic-fs-deny.log": {
+   "sha256": "a1e22ecd1d094948cc565736f9a6edd82821da256499773cd0280c0b9b40d3a7",
+   "bytes": 72
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-1/source-r001/parent-light-diagnostic-route-failure.log": {
+   "sha256": "a9151110d76fa2d9d5528f0b0ba2177e7105002a81181105ec34c566a462af83",
+   "bytes": 1277
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-1/source-r001/parent-light-diagnostic.log": {
+   "sha256": "cac0db61b295ef2d22fd87d6cfe11a680b47f6244eb684b32b9c41876c407232",
+   "bytes": 3712
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-1/source-r002/corrected-run.log": {
+   "sha256": "39a91493516507fd8f496fe262086f017203eb988a7238a76ab691f019b26df2",
+   "bytes": 555
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-1/source-r002/corrected-seed38-capture.log": {
+   "sha256": "33734a5d48c947e95e3c21dc0f840b770f535ff78eef453c4d66e6280c91a8c2",
+   "bytes": 2796
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-1/source-r002/reflection-angle-run.log": {
+   "sha256": "9ff61a3c8692b4e729dfaa305fc859949300d346d326a709c42c60e71dde2857",
+   "bytes": 562
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-1/source-r002/reflection-angle-seed38-capture.log": {
+   "sha256": "5fe7a41cc7c219c6d327e7407be25c2b402b61f8b0e9e93dc7b2693e7f5cdc29",
+   "bytes": 2842
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-2/source-r001/corrected-seed38-capture.log": {
+   "sha256": "afda834fa853579d014f2960d2d1bbe9d390d8a883c49bd62648f4cd5b1184f9",
+   "bytes": 2796
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-3/source-r001/corrected-seed38-capture.log": {
+   "sha256": "0ff337dfe5cb4e2246461f8b5cde70b3fe7f26cd590707d05781012b2ee685e7",
+   "bytes": 2796
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-3/source-r001/parent-light-diagnostic.log": {
+   "sha256": "0ec7e4339fb1fdcc0687c7fb5d42ed5e64ba3cc318f74045579036241bcfd936",
+   "bytes": 3712
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-3/source-r002/corrected-run.log": {
+   "sha256": "f36d5a237a396fbdc538e212052b727754edbafbae3039a9a83a62f8e62941d8",
+   "bytes": 556
+  },
+  "designs/environment.planet.gas-giant/revisions/r006/gas-giant-moon-3/source-r002/corrected-seed38-capture.log": {
+   "sha256": "a21102ed3461279099d3f69d8fb5ccc299fefc004ef1c2599593fb3f0e959263",
+   "bytes": 2796
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-1-mineral-build.log": {
+   "sha256": "107ce3d2d0f735bfdf0b9fc0dd63f77515d4970b673ba4a6614cd4c1364e017a",
+   "bytes": 32281
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-1-optical-build.log": {
+   "sha256": "cf55af1932a2c1159922dbc3698ff562d374db96429a93c50ba4d1b69e040a79",
+   "bytes": 33300
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-3-mineral-build.log": {
+   "sha256": "7d1532246c0e526dd7310cbb5392fb5578569b36aa48a4f20f065bfe0a46ef4b",
+   "bytes": 32540
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-3-optical-build.log": {
+   "sha256": "41a0a570e84596324fd670644d4407de6a1a1f3134322bc435ae203b469e36d6",
+   "bytes": 32559
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-mineral-r002-audit.log": {
+   "sha256": "bd3f3a4ad028df400430d6a0f152f5f6cb16e60ce1052a5d8eeebfec3d6ee429",
+   "bytes": 531
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-mineral-r002-tests-retry.log": {
+   "sha256": "8232ea4725e68ede943aeac5f6bea24418f931107564239a830e76bf0c2b5c8c",
+   "bytes": 209
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/associated-evidence/gas-moon-mineral-r002-tests.log": {
+   "sha256": "da1180ba1098f4d364fe165c93f301f8ca902654103ff6e935b63671edd7477c",
+   "bytes": 41
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/corrected-scale-capture.log": {
+   "sha256": "befb8d0b5989a21d1dc3ff91336a23fdba8c25b277fdb08bd5f1fbfcac8d95de",
+   "bytes": 658
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/corrected-scale-seed38-capture.log": {
+   "sha256": "38c73b67964ed2cb6cb49fc6fbd68549ab339ac8c6d7e206934a46e9e2f9946d",
+   "bytes": 2949
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/focused-tests.log": {
+   "sha256": "4a14d050959ab132c6be3901a7558603fba6bb0b7305803d405f78c2b388f63c",
+   "bytes": 208
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/intended-glow-capture.log": {
+   "sha256": "2d7dd50b677e7f33be3f4e85b7fa3ebf33fbacdaf7f92acd59e33d0a7fa41759",
+   "bytes": 655
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-1-r005/intended-glow-seed38-capture.log": {
+   "sha256": "b0e619fa8de7334216c47b2783fb4318f09fc5fa9baab9dfcf3daf26db31da98",
+   "bytes": 2943
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/corrected-scale-capture.log": {
+   "sha256": "6c965a6bfe9bb9f85fad0a5d461a3aa7eaa9dac39c6e4aa1b81cd354aafdd5c8",
+   "bytes": 657
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/corrected-scale-seed38-capture.log": {
+   "sha256": "1a71b04de63d477fd015c5a3b8afdd9cd3957027dbf6a4efd58a5ec6ae26dff8",
+   "bytes": 2949
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/focused-tests.log": {
+   "sha256": "4a14d050959ab132c6be3901a7558603fba6bb0b7305803d405f78c2b388f63c",
+   "bytes": 208
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/intended-glow-capture.log": {
+   "sha256": "a0b885f263f0b01ef4241965c3a4dc517a96a01efceaa489665018179534d4f9",
+   "bytes": 655
+  },
+  "designs/environment.planet.gas-giant/revisions/r007/sources/gas-giant-moon-3-r005/intended-glow-seed38-capture.log": {
+   "sha256": "150c11e16b37a61c214a63ffc25b034d5dd0ef8b8bf33806e610a9d90a7bc2be",
+   "bytes": 2943
+  },
+  "designs/environment.planet.ice/revisions/r018/artifacts/composition-tests.log": {
+   "sha256": "788804af8bbd11f2b1d7bc075cf224c720aa870d66c8ebc0ed253e87df85e02c",
+   "bytes": 209
+  },
+  "designs/environment.planet.ice/revisions/r018/artifacts/native-orientation-tests.log": {
+   "sha256": "71dfb7b219788ed729265baee3e0ccf0712ff90ecedbe444d03857f8467df351",
+   "bytes": 5680
+  },
+  "designs/environment.planet.ice/revisions/r020/artifacts/composition-tests.log": {
+   "sha256": "fcf04794feb755856cadf7e70a5a45bfa376deedf14266cd59db78a6cf3b5604",
+   "bytes": 208
+  },
+  "designs/environment.planet.ice/revisions/r020/artifacts/corrected-seed38-capture.log": {
+   "sha256": "c69839fdf3a7b91c808d1c355a4f1b1814ab748d5fe0ab2ff7964c5aff3f34b5",
+   "bytes": 2428
+  },
+  "designs/environment.planet.ice/revisions/r021/artifacts/corrected-seed38-capture.log": {
+   "sha256": "a620eedc6dc140fd5c66d1e0ae5cd1242d6e3707cc7b2e064c11e835c8a7b3de",
+   "bytes": 2428
+  },
+  "designs/environment.planet.ice/revisions/r022/artifacts/corrected-seed38-capture.log": {
+   "sha256": "180c059ca2ef7ebc8e5dc60541fd8baf69eab450d2b4cf4d13d9f6cf963fe7de",
+   "bytes": 2428
+  },
+  "designs/environment.planet.ice/revisions/r023/artifacts/corrected-seed38-capture.log": {
+   "sha256": "402a3706636299a47e78d5b45ee10f2448c7640ce4989d7c7953bea5568213cb",
+   "bytes": 2716
+  },
+  "designs/environment.planet.ice/revisions/r023/artifacts/picked-surface-seed38-capture.log": {
+   "sha256": "cbb52384393f9d5ff8fa064cab1944abc02f91ce5b6267b2b668e94d2d0a373b",
+   "bytes": 2490
+  },
+  "designs/environment.planet.ice/revisions/r023/artifacts/picked-surface-seed38-surface-samples.log": {
+   "sha256": "fc71f7e099caf982ce18d8386d22771fbea209a77624be99ecb013150e994bd6",
+   "bytes": 1004
+  },
+  "designs/environment.planet.ice/revisions/r023/artifacts/surface-diagnostic-seed38-capture.log": {
+   "sha256": "885e18ce0ba56d4844db4788ece8a9419ea92013c8693984a290edcd71781328",
+   "bytes": 2492
+  },
+  "designs/environment.planet.ice/revisions/r023/artifacts/surface-diagnostic-seed38-surface-samples.log": {
+   "sha256": "5d09ba2c9555cf0ec2cbd6066510c0699bbb0ec5f18aa028cff1d8901bc57a62",
+   "bytes": 1054
+  },
+  "designs/environment.planet.ice/revisions/r024/artifacts/corrected-seed38-capture.log": {
+   "sha256": "73dc8a82c3504107210ba2710cd8f0284b58871bbf434adcef0d00a086973f15",
+   "bytes": 2716
+  },
+  "designs/environment.planet.ice/revisions/r025/artifacts/corrected-seed38-capture.log": {
+   "sha256": "cb4788162d26220997b6b158624b9dda132a813da63bfff1d6cead5d897d47cc",
+   "bytes": 2716
+  },
+  "designs/environment.planet.ice/revisions/r025/artifacts/shadows-off-seed38-capture.log": {
+   "sha256": "056cf11c45ed9af49c7329c6dc44c008763f092f317e40ec04a830bcd7f4e368",
+   "bytes": 2714
+  },
+  "designs/environment.planet.ice/revisions/r026/artifacts/glass-local-oblique-seed38-capture.log": {
+   "sha256": "3f6bceb967356267928f7a9e24339081bdfa8d4a6483c23990d7706e6868fac0",
+   "bytes": 2544
+  },
+  "designs/environment.planet.ice/revisions/r026/artifacts/glass-local-seed38-capture.log": {
+   "sha256": "ba47f0b744024581a474ade641fd13254b18da104d12002d9e5396e0deca16f9",
+   "bytes": 2455
+  },
+  "designs/environment.planet.ice/revisions/r026/artifacts/glass-wired-seed38-capture.log": {
+   "sha256": "5210880ea19e85d27e021559d2df2a85372da406978ffe644b7ddde1becb0f81",
+   "bytes": 2720
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r001/corrected-run.log": {
+   "sha256": "68a3451da5c69f9bc9636445c1979e88b0d450e7d960371d9ddbd6f2b8cefad7",
+   "bytes": 550
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r001/corrected-seed38-capture.log": {
+   "sha256": "761f841f167cdf909cf626edc1e63f656c78c6d6f86a1978c694738916f54b5c",
+   "bytes": 2767
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r002/capture-retry-run.log": {
+   "sha256": "332a8cda8b7f00afa7b4ea1d541d26a571cf9fb04e1efae8287558d8f3e34c85",
+   "bytes": 431
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r002/capture-retry-seed38-capture.log": {
+   "sha256": "bd30c4e8c094cbf88de6ee85875c3b0b312e2801c55a59fcc30f6d4eea3b7f6f",
+   "bytes": 87
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r002/corrected-run.log": {
+   "sha256": "332a8cda8b7f00afa7b4ea1d541d26a571cf9fb04e1efae8287558d8f3e34c85",
+   "bytes": 431
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r002/corrected-seed38-capture.log": {
+   "sha256": "bd30c4e8c094cbf88de6ee85875c3b0b312e2801c55a59fcc30f6d4eea3b7f6f",
+   "bytes": 87
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r002/fresh-session-seed38-capture.log": {
+   "sha256": "bd30c4e8c094cbf88de6ee85875c3b0b312e2801c55a59fcc30f6d4eea3b7f6f",
+   "bytes": 87
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-1/source-r002/projection-stage.log": {
+   "sha256": "18d42634e25b6e8e819648357d4cd46f25cb70641efa89e18bc769799d329a49",
+   "bytes": 3374
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-2/source-r001/corrected-run.log": {
+   "sha256": "700ecc36fcc53f3d9035eb890f8bea156822283639463632642295406fb04b5a",
+   "bytes": 549
+  },
+  "designs/environment.planet.ice/revisions/r027/ice-moon-2/source-r001/corrected-seed38-capture.log": {
+   "sha256": "8dfa7f483c1866f6eda5199d94e2617f63a8a5f90fa43a2685dfbd5d422eb590",
+   "bytes": 2754
+  },
+  "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-applied-tsc.log": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "designs/environment.planet.ice/revisions/r028/associated-evidence/ice-moon-r003-composition/tests.log": {
+   "sha256": "4c5a95e8809fd3494f0bf6420dacf52c60f52aa010dae0155b04c677ad12a317",
+   "bytes": 212
+  },
+  "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/blue-cut-seed38-capture.log": {
+   "sha256": "8bdcac7faa8e3f47e0ae9eaf84df4ce160dde2397631ebf4a8bb0b872360805c",
+   "bytes": 2904
+  },
+  "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/stage.log": {
+   "sha256": "21c4d86c8b124a9bdaccd528447b6570d46d792b6071683cf116ace4f6e3e84c",
+   "bytes": 2190
+  },
+  "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/tests-material-ray.log": {
+   "sha256": "e1c20f59c88e7fadf874fd8d2c1a3518a78eff151d9a21ecfc055f08dd99ae96",
+   "bytes": 209
+  },
+  "designs/environment.planet.ice/revisions/r028/sources/ice-moon-2-r003/tests.log": {
+   "sha256": "5caf2725604e95c580f27c607912ea45926ce2cbb95316b31bb6af01e4b1f0bf",
+   "bytes": 1350
+  },
+  "designs/environment.planet.ocean/revisions/r007/artifacts/current-optics-run.log": {
+   "sha256": "91fd4fdd7e640983eb9d82b6f68467ee46c5d92c68b06abeb75003ba4c4ff965",
+   "bytes": 550
+  },
+  "designs/environment.planet.ocean/revisions/r007/artifacts/current-optics-seed38-capture.log": {
+   "sha256": "db5d1b4d7d9e78d9fd25e7e39fc821d8fd994c3cce9687be3c71065e671edc7f",
+   "bytes": 2745
+  },
+  "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/corrected-run.log": {
+   "sha256": "9427eb89960ec98426042027e34fe116bf826d54bb207f4f347a9c5df05f896c",
+   "bytes": 551
+  },
+  "designs/environment.planet.ocean/revisions/r008/ocean-moon-1/source-r001/corrected-seed38-capture.log": {
+   "sha256": "9de93390919113c052e88862eefcbf90477a885425e42a61c0cd863f9f4ec25c",
+   "bytes": 2776
+  },
+  "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/corrected-run.log": {
+   "sha256": "1fbf99077db091d2a0d62f056f58076652c4720f2f7ed35ab2da113b1f2d2c4c",
+   "bytes": 551
+  },
+  "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r001/corrected-seed38-capture.log": {
+   "sha256": "4232dfa3d597cdf4d668ef3e694c2ff460647a38b860cb4e6b1c45896737fc19",
+   "bytes": 2776
+  },
+  "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/corrected-run.log": {
+   "sha256": "d9abef681c35d20ddb82f9f5b7782e00977a7117d6b18ec9f3aad78ec3af11a2",
+   "bytes": 551
+  },
+  "designs/environment.planet.ocean/revisions/r008/ocean-moon-2/source-r002/corrected-seed38-capture.log": {
+   "sha256": "f796ca7e54361b43c8b2b40c099df5ea63bb1c1c327e15a0bddf8236e5f11103",
+   "bytes": 2790
+  },
+  "designs/environment.planet.rocky/revisions/r008/artifacts/composition-tests.log": {
+   "sha256": "8d4ed8431e3995553f9467a4357b3b08117cc06a0bbff21456e643d3f180c237",
+   "bytes": 209
+  },
+  "designs/environment.planet.rocky/revisions/r008/artifacts/corrected-seed38-capture.log": {
+   "sha256": "2d08cc71aa7ab98713cdfc04124c35632692a083aa954110cc3ea57f57bdd2b4",
+   "bytes": 2440
+  },
+  "designs/environment.planet.rocky/revisions/r009/artifacts/corrected-seed38-capture.log": {
+   "sha256": "15148e2c03058ef2724875f1106ef9ad1a91d8584bf91e8dac613376c94c837d",
+   "bytes": 2454
+  },
+  "designs/environment.planet.rocky/revisions/r010/artifacts/corrected-seed38-capture.log": {
+   "sha256": "7db0ef9cfe923e1dadeeb7c49130c3a0e9acd891d82392583d1383d8cae2d9b4",
+   "bytes": 2440
+  },
+  "designs/environment.planet.rocky/revisions/r011/rocky-moon-1/source-r001/corrected-seed38-capture.log": {
+   "sha256": "d801300b7f748cd4742523a603d4708d604e13643b30ce000faf3fa5b8188cd5",
+   "bytes": 2753
+  },
+  "designs/environment.planet.rocky/revisions/r011/rocky-moon-1/source-r001/exact-scale-seed38-capture.log": {
+   "sha256": "ea43aad6a014f47004621cbd27a4c0a99b03380cba983050530d0dd86fbbb483",
+   "bytes": 2759
+  },
+  "designs/environment.planet.rocky/revisions/r011/rocky-moon-1/source-r002/corrected-seed38-capture.log": {
+   "sha256": "8b9ffd3e963604689aabaf867f3e79119bfc8e3b23bbe8c2bf83de56091be6c0",
+   "bytes": 2753
+  },
+  "designs/environment.planet.rocky/revisions/r011/rocky-moon-2/source-r001/corrected-seed38-capture.log": {
+   "sha256": "d346e4d4476ab10afdf0a8088087cc5073585d65c302b4558f7f6c935d28d9f9",
+   "bytes": 2776
+  },
+  "designs/environment.planet.temperate/revisions/r001/artifacts/composition-tests.log": {
+   "sha256": "78a1a3a3e0738fc700696cfcd696c9e403532ccb69672474d08ceb67f3d85c62",
+   "bytes": 208
+  },
+  "designs/environment.planet.temperate/revisions/r001/artifacts/corrected-seed38-capture.log": {
+   "sha256": "08650ad6ded11438943ec177b1d9d9ae58395f3f406905706284fc4e7d851ac5",
+   "bytes": 2470
+  },
+  "designs/environment.planet.temperate/revisions/r002/artifacts/corrected-seed38-capture.log": {
+   "sha256": "c6bb061264098ceeeeefa3e16ee99af01346cdbae817c7a7d3bea7dd09204ba4",
+   "bytes": 2470
+  },
+  "designs/environment.planet.temperate/revisions/r004/temperate-moon-1/source-r001/corrected-run.log": {
+   "sha256": "93ad92ef0506fb3072da736fd186751b3bf178312a4e714a48aefd2f56852205",
+   "bytes": 556
+  },
+  "designs/environment.planet.temperate/revisions/r004/temperate-moon-1/source-r001/corrected-seed38-capture.log": {
+   "sha256": "18effe49079116f474d9297feb37f5739dbaa215dba882f2249a53b4eece48cc",
+   "bytes": 2796
+  },
+  "designs/environment.planet.temperate/revisions/r004/temperate-moon-1/source-r002/corrected-run.log": {
+   "sha256": "5e24b40458d490709fbe5f95d61ba48c9c416e8a0046e2dbbacd423bacc4be23",
+   "bytes": 544
+  },
+  "designs/environment.planet.temperate/revisions/r004/temperate-moon-1/source-r002/corrected-seed38-capture.log": {
+   "sha256": "93965e4119660180251a767e207b51e0e54b2fa8552d5c4c5305ff8e3b7ecf8a",
+   "bytes": 2810
+  },
+  "designs/environment.planet.temperate/revisions/r004/temperate-moon-2/source-r001/corrected-run.log": {
+   "sha256": "888ae36199335f531bc887b64834e0b3ad5f3dd0a2ece78de73bd3d273e1f97b",
+   "bytes": 555
+  },
+  "designs/environment.planet.temperate/revisions/r004/temperate-moon-2/source-r001/corrected-seed38-capture.log": {
+   "sha256": "2f47ae270ab8fee8c08f0be6f0dadb975093a939c50c1e8f18309a0ad1049ce4",
+   "bytes": 2796
+  },
+  "designs/environment.planet.temperate/revisions/r004/temperate-moon-2/source-r002/corrected-run.log": {
+   "sha256": "08ade21f1990fe52a8432ea80fac0ce4273e30f1aada2ffea5765c0f92d3a7f1",
+   "bytes": 556
+  },
+  "designs/environment.planet.temperate/revisions/r004/temperate-moon-2/source-r002/corrected-seed38-capture.log": {
+   "sha256": "910ae81c031443d697e689b85cbfba72581af6ad6b66a25e0d5cb4e84ec19221",
+   "bytes": 2810
+  },
+  "designs/environment.planet.toxic/revisions/r004/artifacts/corrected-seed38-capture.log": {
+   "sha256": "811c1a1d329fc2ef3b4ab7e8753a5de3ac6cf5f47dcef9ff27ec99e3174f5e91",
+   "bytes": 2456
+  },
+  "designs/environment.planet.toxic/revisions/r004/artifacts/fog5-seed38-capture.log": {
+   "sha256": "a57106793b33ae353099ce7ce6517893d5aaa13c7b1d6f35708e0abce37ff948",
+   "bytes": 2743
+  },
+  "designs/environment.planet.toxic/revisions/r005/artifacts/cleared-fog-seed38-capture.log": {
+   "sha256": "eed291f342735f8dce96fb885af456651fb00ef55b6a10090c2eb869798109ed",
+   "bytes": 2758
+  },
+  "designs/environment.planet.toxic/revisions/r006/artifacts/cleared-fog-seed38-capture.log": {
+   "sha256": "c6f32a2c39882cf16e71f09fbbb4c42225a269819cea63f5e5ca612ecfb7f92f",
+   "bytes": 2758
+  },
+  "designs/environment.planet.toxic/revisions/r007/artifacts/corrected-run.log": {
+   "sha256": "086d26e1e4684a4814aeaab5958986ea1028578e6ee38c0e361b41f297242de3",
+   "bytes": 545
+  },
+  "designs/environment.planet.toxic/revisions/r007/artifacts/corrected-seed38-capture.log": {
+   "sha256": "f022998bbbbb9b6ca072792c7636f67f6fa51e0e85e9448ef32e14da2317ff44",
+   "bytes": 2738
+  },
+  "designs/environment.planet.toxic/revisions/r008/toxic-moon-1/source-r001/corrected-run.log": {
+   "sha256": "f2ed71f8930136089b759aa67b1f7c672f417ffe1ba8e4fbd8e906884df07321",
+   "bytes": 539
+  },
+  "designs/environment.planet.toxic/revisions/r008/toxic-moon-1/source-r001/corrected-seed38-capture.log": {
+   "sha256": "007023204dfa2b6fbc7b077c819d82f6dc61a7a6a4b45c64506747967599f3df",
+   "bytes": 2790
+  },
+  "designs/environment.planet.toxic/revisions/r008/toxic-moon-2/source-r001/corrected-run.log": {
+   "sha256": "fb3d9f103d126c9abaff0fa051f4b366c5e997d29fda24473a63ae80eb05e780",
+   "bytes": 551
+  },
+  "designs/environment.planet.toxic/revisions/r008/toxic-moon-2/source-r001/corrected-seed38-capture.log": {
+   "sha256": "61f08b6e37cba93009ac811acb650c8c79548e795e764940821687656a75d918",
+   "bytes": 2790
+  },
+  "designs/environment.planet.volcanic/revisions/r019/artifacts/composition-tests.log": {
+   "sha256": "be478d7d0084eb737ef23c368b6cc7bc830aff78f9a70aee1291646f08b8b133",
+   "bytes": 208
+  },
+  "designs/environment.planet.volcanic/revisions/r020/artifacts/composition-tests.log": {
+   "sha256": "c2d777d5fc9f418d0433b570a5e7a15014f58565402b9f613ae7a8edbf3dba6d",
+   "bytes": 208
+  },
+  "designs/environment.planet.volcanic/revisions/r020/artifacts/corrected-seed38-capture.log": {
+   "sha256": "d8c6890cc5f69a8e295653a3c97c16837875371b68027237dceb6f7f497481bf",
+   "bytes": 2477
+  },
+  "designs/environment.planet.volcanic/revisions/r021/artifacts/corrected-seed38-capture.log": {
+   "sha256": "da0d0f0365df3f176a71bf75e030f4ee5a835aa0db4840c0718588e3d4a2357c",
+   "bytes": 2477
+  },
+  "designs/environment.planet.volcanic/revisions/r022/artifacts/corrected-seed38-capture.log": {
+   "sha256": "875b69a007d0d6f1975cd56cd7245bfb95b7920f682d06e4f8bd3cc02ba76294",
+   "bytes": 2477
+  },
+  "designs/environment.planet.volcanic/revisions/r023/artifacts/corrected-seed38-capture.log": {
+   "sha256": "de966f3eb6837205e5a6fc30c8cd09fc905c10cf96f18b309495e3f8673c04e8",
+   "bytes": 2765
+  },
+  "designs/environment.planet.volcanic/revisions/r023/artifacts/smoke-restored-seed38-capture.log": {
+   "sha256": "5390800fff30281cec1934b4434d1e4a6abf89e6141326cc3afb4ae86ea0d9ae",
+   "bytes": 2780
+  },
+  "designs/environment.planet.volcanic/revisions/r024/volcanic-moon-1/source-r001/corrected-run.log": {
+   "sha256": "24e371cf2ac7ee3f77685314f79da35cb3ef7225415165ee1a84b50c574b8a4e",
+   "bytes": 554
+  },
+  "designs/environment.planet.volcanic/revisions/r024/volcanic-moon-1/source-r001/corrected-seed38-capture.log": {
+   "sha256": "74af3c5f31c67e03c18e32612374ebdea7246163b7bca8f8172fe67cfdd8d480",
+   "bytes": 2791
+  },
+  "designs/environment.planet.volcanic/revisions/r024/volcanic-moon-1/source-r002/corrected-seed38-capture.log": {
+   "sha256": "0f8ce978c744a5b7717d7a9907cde040511a090de5605d10ee9e70e8d2840072",
+   "bytes": 2785
+  },
+  "designs/environment.planet.volcanic/revisions/r024/volcanic-moon-1/source-r002/intended-glow-seed38-capture.log": {
+   "sha256": "2e9b7887d5ae294cc509e6ab878e7cf8e395067a29e01b8cd654e3dac51786d9",
+   "bytes": 2936
+  },
+  "designs/environment.planet.volcanic/revisions/r024/volcanic-moon-2/source-r001/corrected-run.log": {
+   "sha256": "39d91ccc75cb6c8c19bddb48cfeae141a0b187de31001c9aa54ed820d2eec67c",
+   "bytes": 554
+  },
+  "designs/environment.planet.volcanic/revisions/r024/volcanic-moon-2/source-r001/corrected-seed38-capture.log": {
+   "sha256": "36874507268622bf4546ca8fb714498b5795777c6d2de8958bfc30f377382c80",
+   "bytes": 2791
+  },
+  "designs/environment.planet.volcanic/revisions/r024/volcanic-moon-2/source-r002/corrected-seed38-capture.log": {
+   "sha256": "242f79b0a3687e03cfdca6f6ba24660bcf5d943fb933423f23ce221938d64837",
+   "bytes": 2857
+  },
+  "designs/environment.planet.volcanic/revisions/r024/volcanic-moon-2/source-r002/intended-glow-seed38-capture.log": {
+   "sha256": "e8d9eb5c53d082d03322debd997de06a7c5d53b13a2f65af6eaebff1813302ef",
+   "bytes": 2936
+  },
+  "designs/environment.planet.volcanic/revisions/r025/associated-evidence/volcanic-moon2-r005-audit.log": {
+   "sha256": "8e5941982eb1f232b10c687be3113a1ff98df0488e9d50588f6df125a88ad497",
+   "bytes": 266
+  },
+  "designs/environment.planet.volcanic/revisions/r025/associated-evidence/volcanic-moon2-r005-build.log": {
+   "sha256": "102e9a05dde89df4763a60293aa1d96859cfecd4e27464d271ecd60f61690efc",
+   "bytes": 4808
+  },
+  "designs/environment.planet.volcanic/revisions/r025/associated-evidence/volcanic-moon2-r005-preview.log": {
+   "sha256": "dda0faa7efee47497df966840960a6e8183c152ed783254a2bbd10459f3ba2c1",
+   "bytes": 11559
+  },
+  "designs/environment.planet.volcanic/revisions/r025/associated-evidence/volcanic-moon2-r005-tests.log": {
+   "sha256": "3880769548c85ce7192596d31358a145bd4a49c4a4e9ca027d4bf0c4ff454d39",
+   "bytes": 209
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-1-r003/focused-tests.log": {
+   "sha256": "106a7361dc40ab4b272d63221cb0aa3b1e1b4c954f4ebc6e7377c6410cdfe7c6",
+   "bytes": 211
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-1-r003/intended-glow-seed38-capture.log": {
+   "sha256": "be12cead4b5f72ac15d433ca0c7e8e5f03ced852623ea024576065a003880f0d",
+   "bytes": 2936
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r003/focused-tests.log": {
+   "sha256": "106a7361dc40ab4b272d63221cb0aa3b1e1b4c954f4ebc6e7377c6410cdfe7c6",
+   "bytes": 211
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r003/intended-glow-seed38-capture.log": {
+   "sha256": "f05f5c7dd4707642d8c2797c99e2391a7ce937941821f17a787077b02b8b3eeb",
+   "bytes": 2936
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r004/applied-tests.log": {
+   "sha256": "ab0d51b3691a1173c3c8125465f965bcae193b0d6da25a99eb774e5a7fd9b3e5",
+   "bytes": 208
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r004/focused-tests.log": {
+   "sha256": "16bba104cdde0f2271745215f47fe809d12439f03124ad5bc8d636dab933079c",
+   "bytes": 208
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r004/intended-glow-capture.log": {
+   "sha256": "22827e8d609862cefdb36ebea9267b0d332aa3dd440a0a9bfc34e8677afb6524",
+   "bytes": 654
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r004/intended-glow-seed38-capture.log": {
+   "sha256": "ed248c79219d22b3a0eae54821c694b3418a64ff03e22e197df0cb577f74e975",
+   "bytes": 2936
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r005/audit.log": {
+   "sha256": "8e5941982eb1f232b10c687be3113a1ff98df0488e9d50588f6df125a88ad497",
+   "bytes": 266
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r005/build.log": {
+   "sha256": "102e9a05dde89df4763a60293aa1d96859cfecd4e27464d271ecd60f61690efc",
+   "bytes": 4808
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r005/preview.log": {
+   "sha256": "dda0faa7efee47497df966840960a6e8183c152ed783254a2bbd10459f3ba2c1",
+   "bytes": 11559
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r005/tests.log": {
+   "sha256": "3880769548c85ce7192596d31358a145bd4a49c4a4e9ca027d4bf0c4ff454d39",
+   "bytes": 209
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r005/warm-shoulder-capture.log": {
+   "sha256": "9b3a36f84e6fd9cbff5e7303125c62fe89266465d9574b16fadd55b3cdac6311",
+   "bytes": 654
+  },
+  "designs/environment.planet.volcanic/revisions/r025/sources/volcanic-moon-2-r005/warm-shoulder-seed38-capture.log": {
+   "sha256": "0d4f28d6586d0fe6fa3c761af9ad4faa87b68cb144f38e4222532fa3c8c77db3",
+   "bytes": 2985
+  },
+  "designs/environment.planet.volcanic/revisions/r026/associated-evidence/bank-diagnostic-capture.log": {
+   "sha256": "c5972f5639df063e8adfdc261569799eb5e259e57977057846bbd124181af2ac",
+   "bytes": 655
+  },
+  "designs/environment.planet.volcanic/revisions/r026/associated-evidence/bank-diagnostic-seed38-capture.log": {
+   "sha256": "3a4c9aa28671a653e8d62f1a5a820a0ca1d9ddf681faa4cfff19758a48a65f22",
+   "bytes": 2722
+  },
+  "designs/environment.planet.volcanic/revisions/r026/associated-evidence/bank-placement-probe.log": {
+   "sha256": "b652d3e999c4aa6145a2749e275118a3dca53d2fc3e72d3ab8b3220377b80f75",
+   "bytes": 4934
+  },
+  "designs/environment.planet.volcanic/revisions/r026/associated-evidence/volcanic-moon2-r006-audit.log": {
+   "sha256": "8989777d8b64b1277bf2a337f5f1c1979ca13a2c959599d4afe9b527cbc01cc5",
+   "bytes": 266
+  },
+  "designs/environment.planet.volcanic/revisions/r026/associated-evidence/volcanic-moon2-r006-build.log": {
+   "sha256": "14da43a8c1d57f90be27709affc97a35affa5a0e8188af39c60284b42670358a",
+   "bytes": 4920
+  },
+  "designs/environment.planet.volcanic/revisions/r026/associated-evidence/volcanic-moon2-r006-preview.log": {
+   "sha256": "ce6b12a1ce2c5c6eefd528afe960d63f42a2fb7c9c81a31a1a6d253a47e40fd2",
+   "bytes": 11616
+  },
+  "designs/environment.planet.volcanic/revisions/r026/associated-evidence/volcanic-moon2-r006-tests.log": {
+   "sha256": "6bce868928d23e95d411ab9e65f6deb1c73a89f460d5bd37c9f8270aa6a04bd0",
+   "bytes": 207
+  },
+  "designs/environment.planet.volcanic/revisions/r026/sources/volcanic-moon-2-r006/audit.log": {
+   "sha256": "8989777d8b64b1277bf2a337f5f1c1979ca13a2c959599d4afe9b527cbc01cc5",
+   "bytes": 266
+  },
+  "designs/environment.planet.volcanic/revisions/r026/sources/volcanic-moon-2-r006/build.log": {
+   "sha256": "14da43a8c1d57f90be27709affc97a35affa5a0e8188af39c60284b42670358a",
+   "bytes": 4920
+  },
+  "designs/environment.planet.volcanic/revisions/r026/sources/volcanic-moon-2-r006/native-hot-inspection.log": {
+   "sha256": "27cab47d8a7a275271ab695bb979c7d05ecc8be6d359a3548e8e69c460050d1e",
+   "bytes": 673
+  },
+  "designs/environment.planet.volcanic/revisions/r026/sources/volcanic-moon-2-r006/preview.log": {
+   "sha256": "ce6b12a1ce2c5c6eefd528afe960d63f42a2fb7c9c81a31a1a6d253a47e40fd2",
+   "bytes": 11616
+  },
+  "designs/environment.planet.volcanic/revisions/r026/sources/volcanic-moon-2-r006/resolved-bank-capture.log": {
+   "sha256": "9110995f8f3986738dbf5049882f6eeb6fccf5b8a82d925b36c8cd5194d113af",
+   "bytes": 654
+  },
+  "designs/environment.planet.volcanic/revisions/r026/sources/volcanic-moon-2-r006/resolved-bank-seed38-capture.log": {
+   "sha256": "5b6d88567f660647f7410b2060cc8df9bad8e8d8ee74a9cb1313d397e66270d5",
+   "bytes": 2985
+  },
+  "designs/environment.planet.volcanic/revisions/r026/sources/volcanic-moon-2-r006/staging.log": {
+   "sha256": "83ab6e830292f19de7ee0aa45ef2390554ce6ae513203ac81cfa2452da11f10c",
+   "bytes": 2389
+  },
+  "designs/environment.planet.volcanic/revisions/r026/sources/volcanic-moon-2-r006/tests.log": {
+   "sha256": "6bce868928d23e95d411ab9e65f6deb1c73a89f460d5bd37c9f8270aa6a04bd0",
+   "bytes": 207
+  },
+  "prompts/REDESIGN_CURRENT_EQUIPMENT.md": {
+   "sha256": "7b52e8474440fbddaf426f4ccd8f85cae948c66700bc8e488beb13acba4c3720",
+   "bytes": 12085
   }
  },
  "batches": {
@@ -16293,6 +17113,12 @@
    "moved_at": "2026-09-28",
    "what": "generated planet/star kits (kit.json, kit.blend), meshes, textures, renders and superseded planet/star Blender revisions; leftover review renders. Ledgers, generator sources and small metadata stay in git. Runtime planets/stars are the packaged assets/reviewed-celestials payloads.",
    "manifest": "/root/sidereal-art-archive/manifests/repo-slim-20260928.sha256"
+  },
+  "repo-cleanup-20260929": {
+   "source_commit": "0158af88f02fae974e835b8203b2ae2ca5dfb5fe",
+   "moved_at": "2026-09-29",
+   "what": "art-library evidence logs and Markdown notes already on the wiki (REPO-CLEANUP PR D)",
+   "manifest": "/root/sidereal-art-archive/manifests/repo-cleanup-20260929.sha256"
   }
  }
 }

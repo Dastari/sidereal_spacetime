@@ -521,6 +521,423 @@
   "reference/art/weapons-turrets.png": {
    "sha256": "a2fdc3965f3887c87e3accaf5ff682f65d80c569fdfc95699555e52e1c3762c2",
    "bytes": 2553862
+  },
+  "CHANGELOG.md": {
+   "sha256": "89402146ce18f29a155cbe197e26937ada3e5e008ae6826127d4b94298633d2b",
+   "bytes": 24072
+  },
+  "docs/blender_asset_migration.md": {
+   "sha256": "e9606ea765de45a60abaa443ed7e9d1ede6fa91d2cd90559ecf4da1910f825cb",
+   "bytes": 7642
+  },
+  "docs/character_component_authoring.md": {
+   "sha256": "f2272f33e65849995adaf36108cded84b1cb2db2b20cbf119905e05cc6797173",
+   "bytes": 17335
+  },
+  "docs/character_reference_fidelity.md": {
+   "sha256": "213178ed992589431b3887ecc5753f304bfbce848f833010ab3f821ec306a54f",
+   "bytes": 14382
+  },
+  "docs/handoffs/antialiasing_gpu_evidence.json": {
+   "sha256": "aea45445f223cbb93b70da9dabfe2d7ddd52f8a0e63aec9efb908968b6c1e15c",
+   "bytes": 24736
+  },
+  "docs/handoffs/antialiasing_uniform_bone_evidence.json": {
+   "sha256": "432e5a6680ca0aca704c23d8b4c095bc6bb7e6c840499fcf9cbf18b83effa7e2",
+   "bytes": 2886
+  },
+  "docs/handoffs/cargo_assembled_envelope_qualification.json": {
+   "sha256": "ec239caea2c670793007c17ebf9d773212c332b1f97cfef697f6c2a96c832e07",
+   "bytes": 41585
+  },
+  "docs/handoffs/cargo_carrier_authority_evidence.json": {
+   "sha256": "7df9f98d7014916b97db1c072dabbf4121f40c342c34ea9449fd9d844d2e123f",
+   "bytes": 4945
+  },
+  "docs/handoffs/cargo_reserved_envelope_qualification.json": {
+   "sha256": "18bcff34ce44350e5d61a6242406a0c13d6bc358a35459db67096b77b44db755",
+   "bytes": 2510
+  },
+  "docs/handoffs/checkpoint_resume_audit.json": {
+   "sha256": "21c0bbfcdee0dbe1c364a1508320145d6e8a828d4719e8e201e1c1316891b478",
+   "bytes": 772256
+  },
+  "docs/handoffs/combat_pose_integration.patch": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "docs/handoffs/combat_pose_patch_inputs.json": {
+   "sha256": "a75703ce52561ca20f9cd5b5219216e43a74c03c7036279f5b58e4b3778aff67",
+   "bytes": 308
+  },
+  "docs/handoffs/construction_boundary_artifact_checkpoint.json": {
+   "sha256": "8eee7bb400cbe15c3436613f4f53392a3e55885499d48f08cb9961bef034fbba",
+   "bytes": 400567
+  },
+  "docs/handoffs/construction_boundary_source_checkpoint.json": {
+   "sha256": "723dee76d71ed67f31cddb2d8978d9e629d2d58a92a46dd61781534e97ac1892",
+   "bytes": 100249
+  },
+  "docs/handoffs/construction_flight_integration.patch": {
+   "sha256": "c0a63bb626d971468edf01ed3318f4b9e402250beb19869069bcb3f308872404",
+   "bytes": 15948
+  },
+  "docs/handoffs/construction_flight_integration_inputs.json": {
+   "sha256": "9e2fab143aedb4efe29deb51bff6540fcfc78473c8b614ec620f467db9833610",
+   "bytes": 768
+  },
+  "docs/handoffs/current_cockpit_construction_audit.json": {
+   "sha256": "cda00e8c423b8ef1aba4291d6de77fca2fa2e824abe95ce1543bedca3a06be6d",
+   "bytes": 26299
+  },
+  "docs/handoffs/ifcs_update_evidence_20260914/browser-evidence.json": {
+   "sha256": "dffcc0b0b4aeecad198476a6d2242259e41e2b3303c7d8536cff9d71a2325c50",
+   "bytes": 4299
+  },
+  "docs/handoffs/ifcs_update_evidence_20260914/phase6-verification.json": {
+   "sha256": "f0943868742814f9320162036d3859f36e2c2d13d0939165cef19ebf61e39fec",
+   "bytes": 6536
+  },
+  "docs/handoffs/integration_artifact_checkpoint_2026_09_09.json": {
+   "sha256": "5114c70acee0f6d341bb56d4b8cf221f66dcba71eb5ff7e66eb4735e30f02fae",
+   "bytes": 417868
+  },
+  "docs/handoffs/integration_source_checkpoint_2026_09_09.json": {
+   "sha256": "dc0cc43407cf78efd05edf2164e2c95f4ee1721227cf9254a74760c558483b0e",
+   "bytes": 78753
+  },
+  "docs/handoffs/native_pressure_integration_checkpoint.json": {
+   "sha256": "f534801a2ada65c09e88bdca9af445b6a60fec9017667c803c2199668e20f42a",
+   "bytes": 7004
+  },
+  "docs/handoffs/native_traversal_integration_checkpoint.json": {
+   "sha256": "a70760ee0cf3ad9a89274e567a9ff53fc87addc902ae31e221bf034282072adc",
+   "bytes": 2984
+  },
+  "docs/handoffs/render_optimization_20260921/count-passes.cjs": {
+   "sha256": "45af80b3cd15bd66cfb7ed8f43b0b328d1a1655b6d3b3e58f527c3b7efc1e90b",
+   "bytes": 600
+  },
+  "docs/handoffs/render_optimization_20260921/integrated-counts.json": {
+   "sha256": "02f6c294313f1112f3ec5f3d1c610ca77475bddec30bcf0d4c2fe92e79ff3f31",
+   "bytes": 719
+  },
+  "docs/handoffs/render_optimization_20260921/integrated-pixels.json": {
+   "sha256": "ebd4d4082a2206189a2580c19ea3d4464981564d3dba62c20d4770c8baaab912",
+   "bytes": 674
+  },
+  "docs/handoffs/render_optimization_20260921/pixel-compare.cjs": {
+   "sha256": "9d7229d6a38b05e80040c1bbd3cbdf6c2984c6741b8641f5ad30406b9d06bd51",
+   "bytes": 1191
+  },
+  "docs/handoffs/render_optimization_20260921/start-browser.cjs": {
+   "sha256": "cbc06a9f728c63d1b0d4e51934ba7ad3128a548ec950174feaa493b973f543cd",
+   "bytes": 1675
+  },
+  "docs/handoffs/shared_capsule_collision.patch": {
+   "sha256": "34f55367e1a6f6a5f3cfd0337551c8a0769158f659987f4e374f3c13f77fa5ea",
+   "bytes": 3770
+  },
+  "docs/handoffs/ship_construction_asset_audit.json": {
+   "sha256": "28dacaaa8380b7d7db75a1b83b4a97d6e2c29a632b2bca47c533d708fd8bb707",
+   "bytes": 113200
+  },
+  "docs/handoffs/ship_contact_performance_evidence.json": {
+   "sha256": "c2c49025d4445144059629da8d68eeee0580e747445c3b711fdf7533cb783d75",
+   "bytes": 2009
+  },
+  "docs/handoffs/shipyard_spec_history/doorway-request-r000.json": {
+   "sha256": "dfc8b9729942d639a075c79dc4b21298df7bf5c657eea9cdf0a4dc6f1bc9e286",
+   "bytes": 9143
+  },
+  "docs/handoffs/shipyard_spec_history/doorway-request-r001.json": {
+   "sha256": "8f3aa7166354efacabb47068e60a9713dc10c4ec16360e861d7a123fa486c13e",
+   "bytes": 11277
+  },
+  "docs/handoffs/shipyard_spec_history/floor-contact-request-r000.json": {
+   "sha256": "a38f936d8f0323ed81eab4d93208f75f2c0ee2dd1498bf12b94060211f0f8f7f",
+   "bytes": 10793
+  },
+  "docs/handoffs/world_network_acceptance.json": {
+   "sha256": "8be3f1ef11c38222ab06b23039bdb28bb25147943c68ceed796eabb310eb6a4f",
+   "bytes": 1845
+  },
+  "docs/handoffs/world_network_source_checkpoint.json": {
+   "sha256": "b28e524632f4892fe51d01c43cd2c8d6e75b8981457569583ad64f2da536e521",
+   "bytes": 46831
+  },
+  "docs/hull_markings.md": {
+   "sha256": "f49498b7f651c1921f0fdbba294ec7d7701adad058112b274d55659ac1ffad9b",
+   "bytes": 2686
+  },
+  "docs/releases/bridge-bed-fix/bridge-validation.json": {
+   "sha256": "59691611e699c479155cb5f56cefd951523f0d324a67a7b41bfce9faab5a2582",
+   "bytes": 324
+  },
+  "docs/releases/bridge-bed-fix/validation.json": {
+   "sha256": "b6084890fa0132f61a461e79fe8fe8207b34c59eb76749fd7361aea79e6a1157",
+   "bytes": 1078
+  },
+  "docs/releases/construction-boundaries-2026-09-09.json": {
+   "sha256": "4649211f34c642bb2f4f0aeb3911514b2d40a0b09ca648e65f43371c35a187fc",
+   "bytes": 4213
+  },
+  "docs/releases/construction-boundary-family-2026-09-09.json": {
+   "sha256": "4409125b56a79607bb247e5b8fbb5c9f120d0da9f8e2563e5ba25f1a08a9679c",
+   "bytes": 9110
+  },
+  "docs/releases/construction-roofs-2026-09-09.json": {
+   "sha256": "38d9b7b5fd2c98b9fe3daa5c35fcc518b38a16f0863619c2e32ad729b06067f4",
+   "bytes": 3548
+  },
+  "docs/releases/native-ship-2026-09-08/collision-installation.json": {
+   "sha256": "8e17b62b2cda5aa839d78652f0c925966d1a9f2c26f84bddb52618e5c70a4a50",
+   "bytes": 1937
+  },
+  "docs/releases/native-ship-2026-09-08/ice-installation.json": {
+   "sha256": "96a8a47e57dad07bec9c3bf3ab4e266a6b9860585dfc7ac086c4be0bfc97a512",
+   "bytes": 4177
+  },
+  "docs/releases/side-hull-r003/legacy-retirement.json": {
+   "sha256": "1b265c28b87832e9dd674ea08826efe2f540d61713f0817756fd9338070a3e9d",
+   "bytes": 224
+  },
+  "docs/releases/usable-wall-readiness-20260910/batching-gpu.json": {
+   "sha256": "f3bf49372b98316cd8455e8e0d83d92d9edf29b30621e30704de855889a68b04",
+   "bytes": 947
+  },
+  "docs/ship_tileset_corner_authoring_requirements.md": {
+   "sha256": "c59fdb34fd4d5b19a594dd2db23087e0d5b48c5569817234b87aba90511373bf",
+   "bytes": 1460
+  },
+  "docs/ship_tileset_doorway_authoring_requirements.md": {
+   "sha256": "85c1f83236c58eccbde8ab8263d32c762b910468734f085b8748b8b0bbec7899",
+   "bytes": 2731
+  },
+  "docs/ship_tileset_floor_contact_authoring_requirements.md": {
+   "sha256": "1ede1ebbd6d8f3166442b0dfbda01111dc9ebb34f8a750de1026190199a20954",
+   "bytes": 2412
+  },
+  "docs/ship_tileset_internal_authoring_requirements.md": {
+   "sha256": "361576ece26d6c54c520ff5a40a8133703865b24e6efc2e85c911134241247da",
+   "bytes": 1392
+  },
+  "docs/ship_tileset_roof_authoring_requirements.md": {
+   "sha256": "bde3558667c562d9a5a198fb5100d2cdb5973b34b1be3f335fc119c2aea849aa",
+   "bytes": 1577
+  },
+  "docs/ship_tileset_union_junction_authoring_requirements.md": {
+   "sha256": "eb6c358be00f8c65f5c8c36e04397608aaf07aeca0de0876ce3c41ca3dcccf41",
+   "bytes": 1857
+  },
+  "docs/ship_tileset_window_authoring_requirements.md": {
+   "sha256": "77116ac93ff29ddb9656936864c4ae399f3bd0d4161f3e5c16029a147f04db87",
+   "bytes": 2249
+  },
+  "docs/shipyard_player_builder/kit_r005.json": {
+   "sha256": "d0ffbb250be763f632c3c9407e0e5eb1ad99da8e2123588c0f00e2e45eb91b15",
+   "bytes": 49342
+  },
+  "docs/shipyard_player_builder/kit_r006.json": {
+   "sha256": "a2a32a18a9d1449da5e7d0d5934c164297c7a78fc05f657e15ff15f0a71ec254",
+   "bytes": 53021
+  },
+  "docs/shipyard_player_builder/kit_r007.json": {
+   "sha256": "5a0a867cbb66d43235aa1711128a9bd01c0661cca8f4ae131caf4fbc926bb7d5",
+   "bytes": 59418
+  },
+  "docs/shipyard_player_builder/kit_r008.json": {
+   "sha256": "85db0ade70ae1fed9973ba7a652c77cef57795ac977e4544ed382b0c930a00d8",
+   "bytes": 83379
+  },
+  "docs/source_inventory.json": {
+   "sha256": "d6d090ce7d8a1b1deed0f19b29ff2382cc7093ecb788f4f893d3288bcbd32b56",
+   "bytes": 249584
+  },
+  "ops/releases/live-map-genesis-20260921/authority-baseline-sources.json": {
+   "sha256": "42c5dc7d6aa889592decec218ce77a9e55353ae5da3f6e2d1137f4ad2b02adf7",
+   "bytes": 186719
+  },
+  "ops/releases/live-map-genesis-20260921/authority-candidate-sources.json": {
+   "sha256": "ce0aa48e53b80aa8b2cb3223eba5bb5fb87ba794cf2072d48a2a05e868226042",
+   "bytes": 186873
+  },
+  "ops/releases/live-map-genesis-20260921/authority.patch": {
+   "sha256": "e3d93e992b3c346a0e87636c142937122c345863fc30130d8a7b3c97f8e970dc",
+   "bytes": 15058
+  },
+  "ops/releases/live-map-genesis-20260921/manifest.json": {
+   "sha256": "6dce8af0d8763a80cc82f15371e2de93156585bd37af1726d3bc636366df0eb2",
+   "bytes": 24026
+  },
+  "ops/releases/live-map-genesis-20260921/studio-artifact.json": {
+   "sha256": "26612e834d1186b8a636a7cf928a6f5090fba9d05f8fd66f3ea76ec689c90892",
+   "bytes": 617831
+  },
+  "ops/releases/live-map-genesis-20260921/studio-baseline-sources.json": {
+   "sha256": "941708eaeffedea4b7bb6e00efc7d1607b31a733331dae038c12a416846eacd5",
+   "bytes": 398005
+  },
+  "ops/releases/live-map-genesis-20260921/studio-candidate-sources.json": {
+   "sha256": "9609cd4070310dbccf7f1d5439356b4faa5d880d030bf8afda739949133a04fe",
+   "bytes": 399130
+  },
+  "ops/releases/live-map-genesis-20260921/studio.patch": {
+   "sha256": "cb75f1402d80887b3361798e63fb61a6a0918e92551ecb4ae81015644de79345",
+   "bytes": 84582
+  },
+  "ops/releases/shadow-cache-20260922/artifact.json": {
+   "sha256": "9375b432edfd605a31882291b2c591526679c4517a03772431290839c7829d76",
+   "bytes": 629113
+  },
+  "ops/releases/shadow-cache-20260922/baseline-sources.json": {
+   "sha256": "055ae5fab9b952eda6d6111749fbc20df63ab3b3df0dd2a6367060a703062677",
+   "bytes": 250869
+  },
+  "ops/releases/shadow-cache-20260922/candidate-sources.json": {
+   "sha256": "76ab9c9cdc34794b2f6b207ebe9f03c996a91f5c7a0d4583a2a4da2ab3338768",
+   "bytes": 251174
+  },
+  "ops/releases/shadow-cache-20260922/client.patch": {
+   "sha256": "c465060b1916288d7efd98ea1e11b39943fbcd124b33590aa76a69084b73a220",
+   "bytes": 31245
+  },
+  "ops/releases/shadow-cache-20260922/manifest.json": {
+   "sha256": "13b5c343df2cc2ca50b365a5bd7bf272c394222fc635868a481426c74b22572d",
+   "bytes": 2399
+  },
+  "ops/releases/studio-20260921/authority-manifest.json": {
+   "sha256": "e8bbbe8384e15a81831a54e07fdd8c91080e87f77c0cf18121342a4bd931ec54",
+   "bytes": 14142
+  },
+  "ops/releases/studio-20260921/authority.patch": {
+   "sha256": "44d37cae443b4af6bdeb0680486b0db63756dc9c86a1cd0b9d89c0499feeeb55",
+   "bytes": 286179
+  },
+  "ops/releases/studio-20260921/client-manifest.json": {
+   "sha256": "15a860c35dcf80b66e958b575f12d7a62f098081fd69c02ff85f94d5cbfceb0c",
+   "bytes": 6408
+  },
+  "ops/releases/studio-20260921/client.patch": {
+   "sha256": "72107566d47ba1bf746a8b2e7524ee7600a875e32e592a3fdb6038a775310072",
+   "bytes": 98606
+  },
+  "ops/releases/studio-20260921/dashboard-manifest.json": {
+   "sha256": "ead035b2f636a8aeb1b5afee5d95060213fe82ecf7dcabf342fc4aef5fad19cc",
+   "bytes": 10574
+  },
+  "ops/releases/studio-20260921/dashboard.patch": {
+   "sha256": "16a4f7201d4994925cc5eaf6a7f333d5629d21c332e316dfcddaa8aa0d2c8c55",
+   "bytes": 220296
+  },
+  "ops/releases/studio-map-context-20260921.json": {
+   "sha256": "47e1e62f083ab1b4ac40f5569e8c037663cd542210528932a5eb3452d393fa57",
+   "bytes": 11870
+  },
+  "reference/orchard/docs/reference-assets/cute-fantasy-index.json": {
+   "sha256": "fbad212b920f804f2ff08ff5bcc983ab7f4c14d519c0eac8d42fcd534d425da4",
+   "bytes": 1472580
+  },
+  "reference/sidereal/cargo.toml": {
+   "sha256": "4cd3cbb505193d635f13b80b3ac704de33c14fa38cf21963241245c479cd2ae7",
+   "bytes": 3753
+  },
+  "reference/sidereal/docs/features/deferred/.gitkeep": {
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "bytes": 0
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/chaos_caps_off/20260522_145233_visibility_churn_100c/mmo_load_gate_20260522_145233.json": {
+   "sha256": "72905b51bd5330b32934e2d75e59bd0fdebc0fa40413ec54db289049f6e97119",
+   "bytes": 7932
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/chaos_caps_off/20260522_145233_visibility_churn_100c/mmo_load_gate_20260522_145233.txt": {
+   "sha256": "7e866e87c66f4af6939cb1822f996a7aa909b88034a11968962252d9ca97179f",
+   "bytes": 6865
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/chaos_caps_off/20260522_145233_visibility_churn_100c/phase0_headless_summary_20260522_045455.txt": {
+   "sha256": "1aeb7ff1af2a2e8ed49044b47f96516073737faf1f705583a7d1669af4be6a14",
+   "bytes": 41582
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/chaos_caps_on/20260522_150134_visibility_churn_100c/mmo_load_gate_20260522_150134.json": {
+   "sha256": "3e272a4d82f5bb542a2a7d9cc061e75f61c036448410dcfb58ad0d42fd1220d2",
+   "bytes": 7932
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/chaos_caps_on/20260522_150134_visibility_churn_100c/mmo_load_gate_20260522_150134.txt": {
+   "sha256": "2b35709463f518317ba7b68ac538c545a714ea994af1265f9c9ea616608f4feb",
+   "bytes": 6865
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/chaos_caps_on/20260522_150134_visibility_churn_100c/phase0_headless_summary_20260522_050352.txt": {
+   "sha256": "130f4c8a27ea8e0a829f46d81c0d4bf3169c6dec2c33f82f7fcebb2bb94d9359",
+   "bytes": 41475
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/clean/20260522_075724_movement_only_100c/mmo_load_gate_20260522_075724.json": {
+   "sha256": "342bd85290a8709c1c092f6ea60c7faa2da0d67ebc8cf49382d9e64932e9b612",
+   "bytes": 6805
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/clean/20260522_075724_movement_only_100c/mmo_load_gate_20260522_075724.txt": {
+   "sha256": "e4681938ec9635688c534c8f1adc0803bfc92a6d2ae9df369e31119af88acb74",
+   "bytes": 5850
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/clean/20260522_075724_movement_only_100c/phase0_headless_summary_20260521_215951.txt": {
+   "sha256": "a917b405459dc59d9fb77910db73f485aabc78dee4229177e44bbf24e8fc0e0d",
+   "bytes": 37240
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/tier_100_post_phase1/mmo_load_gate_20260522_075724.json": {
+   "sha256": "342bd85290a8709c1c092f6ea60c7faa2da0d67ebc8cf49382d9e64932e9b612",
+   "bytes": 6805
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/tier_100_post_phase1/mmo_load_gate_20260522_075724.txt": {
+   "sha256": "e4681938ec9635688c534c8f1adc0803bfc92a6d2ae9df369e31119af88acb74",
+   "bytes": 5850
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/tier_100_post_phase1/phase0_headless_summary_20260521_215951.txt": {
+   "sha256": "a917b405459dc59d9fb77910db73f485aabc78dee4229177e44bbf24e8fc0e0d",
+   "bytes": 37240
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/tier_100_post_phase3/20260523_113036_movement_only_100c/mmo_load_gate_20260523_113036.json": {
+   "sha256": "8b28128ff4d90e41c326bda7b30260485e8080e4d091b6455d08f0654b523f81",
+   "bytes": 8016
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/tier_100_post_phase3/20260523_113036_movement_only_100c/mmo_load_gate_20260523_113036.txt": {
+   "sha256": "03a3534d309603fb1c2ae4d9542ed5503691870ba1262ead82f5582f3aa215f6",
+   "bytes": 6925
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/tier_100_post_phase3/20260523_113036_movement_only_100c/phase0_headless_summary_20260523_013037.txt": {
+   "sha256": "0cbfdc082dc18363152d53b7c406b0138f53631c89e011c5bee0f7b2e08ae288",
+   "bytes": 41965
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/tier_100_post_phase3/20260523_123200_movement_only_100c/mmo_load_gate_20260523_123200.json": {
+   "sha256": "94eeb53dd46759ca8d714a961f04ef97a219bd230fb05f446ad09661e166eebe",
+   "bytes": 8147
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/tier_100_post_phase3/20260523_123200_movement_only_100c/mmo_load_gate_20260523_123200.txt": {
+   "sha256": "b3a92717c70bca397486d40337a3080fc871f33555b36500914a88f174f7f778",
+   "bytes": 7040
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/tier_100_post_phase3/20260523_123200_movement_only_100c/phase0_headless_summary_20260523_023201.txt": {
+   "sha256": "2981b9ce2fed0c2e7d288e658b90ed0d48e073e966bdfe199838e9fc4fffc557",
+   "bytes": 42170
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/uplink_lossy/20260522_080701_movement_only_100c/mmo_load_gate_20260522_080701.json": {
+   "sha256": "275bc88a18516e497b3a7adc5359bc44ec742a588381ae4e59c18d50a430c824",
+   "bytes": 6825
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/uplink_lossy/20260522_080701_movement_only_100c/mmo_load_gate_20260522_080701.txt": {
+   "sha256": "4b0287a112ccfa90be46522c17cc537e77286c0042239ec9e8cbd17c0b2f82f4",
+   "bytes": 5870
+  },
+  "reference/sidereal/docs/reports/load_baselines/2026-05-21_phase1/uplink_lossy/20260522_080701_movement_only_100c/phase0_headless_summary_20260521_220921.txt": {
+   "sha256": "3f76c04fb93a4a9895ed247657f49d201c96cf7873e32e9875098f499a1ad630",
+   "bytes": 37956
+  }
+ },
+ "batches": {
+  "repo-cleanup-20260929": {
+   "source_commit": "0158af88f02fae974e835b8203b2ae2ca5dfb5fe",
+   "moved_at": "2026-09-29",
+   "what": "docs/ evidence JSON, handoff patches, release manifests (ops/releases), earlier-project reference/ files and Markdown already on the wiki (REPO-CLEANUP PR D). Files still read by code stay in the tree.",
+   "manifest": "/root/sidereal-art-archive/manifests/repo-cleanup-20260929.sha256",
+   "details": "/root/sidereal-art-archive/manifest-repo-cleanup-20260929.json"
   }
  }
 }
