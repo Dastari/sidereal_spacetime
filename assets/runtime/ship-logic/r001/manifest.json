@@ -1,0 +1,109 @@
+{
+  "schema": "sidereal.ship-object-art.v1",
+  "revision": "r001",
+  "status": "proposed, not owner-approved",
+  "frame": "wall: origin at centre of BACK face (wall plane), +X along wall, +Y out of wall/front, +Z up; glTF (x, y, z) -> (x, z, -y); runtime places centre 1.25 m above floor; height is not baked in",
+  "units": "metres; authored 5 mm detail grid in kit texel coordinates",
+  "materialSlots": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b",
+    "slot8_glass"
+  ],
+  "statusLight": {
+    "material": "status_light",
+    "node": "status_light",
+    "primitiveCount": 1,
+    "baseColorFactor": [
+      1,
+      1,
+      1,
+      1
+    ],
+    "emissiveFactor": [
+      1,
+      1,
+      1
+    ],
+    "note": "Separate primitive/material, outside theme slots. Runtime must tint both base and emission per instance; off sets emission to zero and lens colour dim. No state colours baked into GLB."
+  },
+  "bevel": {
+    "bodyWidthM": 0.0025,
+    "lensWidthM": 0.001,
+    "segments": 1
+  },
+  "generator": {
+    "script": "scripts/art_library/ship_component_export.py",
+    "sha256": "7ff655977e255b7b77895a7bb4fa77f0b7ae8ac8dbd05e44511f9e87b8f11081",
+    "builders": "scripts/art_library/ship_object_art.py",
+    "buildersSha256": "ebf1badcd8872ab99998857fd82ee1a51fbb23acff9560848457e8898a6e6ad4",
+    "adapter": "scripts/art_library/logic_device_art.py",
+    "adapterSha256": "9a482b26666ab415a7e62ae88123cafc5dda3f8eb86c74b36d2168d6a5bad59f",
+    "kit": "scripts/art_library/ship_kit_prototype.py",
+    "kitSha256": "60fc91f153279a9b51ed06a5a5daf151bda4d15324868a0a9f95af0f23fd4ebb",
+    "blender": "4.3.2"
+  },
+  "requiredObjectIds": [
+    "logic.button.wall"
+  ],
+  "objects": [
+    {
+      "designId": "logic.button.wall",
+      "glb": "assets/runtime/ship-logic/r001/logic.button.wall.glb",
+      "sha256": "3292ddca424a59901c051ce12b07db845a93fdb1799b02ed46c5bc35eeecad45",
+      "bytes": 18760,
+      "triangles": 616,
+      "boxes": 14,
+      "boundsM": [
+        [
+          -0.14,
+          0.0,
+          -0.18
+        ],
+        [
+          0.14,
+          0.06,
+          0.18
+        ]
+      ],
+      "boundsFrame": "authored Blender wall frame",
+      "gltfBoundsM": [
+        [
+          -0.14,
+          -0.18,
+          -0.06
+        ],
+        [
+          0.14,
+          0.18,
+          0.0
+        ]
+      ],
+      "sizeM": [
+        0.28,
+        0.06,
+        0.36
+      ],
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot5_dark"
+      ],
+      "specialMaterialsUsed": [
+        "status_light"
+      ]
+    }
+  ],
+  "source": {
+    "blend": "assets/source/ship-logic/r001/logic_button_wall.blend",
+    "sha256": "3a158c674e6687d02ddc403c0d4266cb5031840dabd9ba50db1614f13cc4e50b",
+    "bytes": 96572,
+    "note": "Editable housing and separate neutral lens; no review scene or floor offset"
+  }
+}

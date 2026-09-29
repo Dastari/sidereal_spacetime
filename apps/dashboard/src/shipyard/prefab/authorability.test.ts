@@ -34,6 +34,9 @@ import {
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
 import {
+  addAirlockController,
+  addLogicDoor,
+  addLogicWire,
   addVolume,
   removeSelection,
   renameElement,
@@ -49,6 +52,7 @@ import { labelFilter, markingFilter } from "./fields";
 import { SKYLIGHT_SIZES, type ToolState } from "./keymap";
 import { mountExtent, mountModes } from "./snapping";
 import {
+  buttonPlace,
   edgePlace,
   mountPlace,
   mountTilePlace,
@@ -348,6 +352,36 @@ function rebuild(t: Doc): Doc {
       ]),
     );
     doc = rename(placed.doc, placed.select, s.id, `skylight ${s.id}`);
+  }
+
+  // Ship logic. Button tool: click just off the wall on the side the button faces. Button panel:
+  // "Door actuator" for a door, "Airlock controller" with its cycle stage. Inspector: Id, then
+  // "Add wire" from each output to its input.
+  if (t.logic) {
+    for (const d of t.logic.devices) {
+      let res: CommandResult;
+      if (d.kind === "button") {
+        const [nx, ny] = NORMAL_VECTOR[d.normal!];
+        res = buttonPlace(doc, catalog, [
+          d.at![0] + nx * 0.3,
+          d.at![1] + ny * 0.3,
+        ]);
+      } else if (d.kind === "door") res = addLogicDoor(doc, d.door!, catalog);
+      else {
+        expect(
+          d.cycleS,
+          "the Button panel always writes a cycle stage",
+        ).not.toBe(undefined);
+        res = addAirlockController(doc, d.cycleS);
+      }
+      const placed = act(doc, `logic ${d.id}`, res);
+      doc = rename(placed.doc, placed.select, d.id, `logic ${d.id}`);
+      expect(doc.logic!.devices.at(-1)).toEqual(d);
+    }
+    for (const l of t.logic.links) {
+      doc = act(doc, `wire ${l.id}`, addLogicWire(doc, l.from, l.to)).doc;
+      expect(doc.logic!.links.at(-1)).toEqual(l);
+    }
   }
 
   // Markings.

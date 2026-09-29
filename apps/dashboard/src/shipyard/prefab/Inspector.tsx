@@ -39,6 +39,7 @@ import {
 } from "./commands";
 import { geometriesOf } from "./derive";
 import { labelFilter, NumberField, SelectField, TextField } from "./fields";
+import { LogicInspector } from "./LogicPanels";
 import { TilePreview } from "./ToolPanel";
 
 type Doc = ShipPrefabDocumentV1;
@@ -84,9 +85,9 @@ export function Inspector({
       <section className="layout-section">
         <h2>Nothing selected</h2>
         <p className="layout-note">
-          Use the Select tool (V) and click a volume, tile, room, edge, mount or
-          skylight. Clicking a validation issue selects the element it refers
-          to.
+          Use the Select tool (V) and click a volume, tile, room, edge, mount,
+          skylight or logic device. Clicking a validation issue selects the
+          element it refers to.
         </p>
       </section>
     );
@@ -119,6 +120,18 @@ export function Inspector({
   });
 
   switch (selection.kind) {
+    case "logic":
+      return (
+        <LogicInspector
+          doc={doc}
+          catalog={catalog}
+          id={selection.id}
+          select={select}
+          commit={commit}
+          apply={apply}
+          issues={issues}
+        />
+      );
     case "volume": {
       const v = doc.volumes.find((x) => x.id === selection.id);
       if (!v) return null;

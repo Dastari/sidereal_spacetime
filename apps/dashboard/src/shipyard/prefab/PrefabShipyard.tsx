@@ -20,6 +20,7 @@ import {
 import {
   Box,
   ChevronLeft,
+  CircleDot,
   CircleHelp,
   Copy,
   DoorOpen,
@@ -105,6 +106,7 @@ const TOOL_ICONS: Record<ToolId, ReactNode> = {
   mount: <Plug size={17} />,
   tile: <Crosshair size={17} />,
   skylight: <SunDim size={17} />,
+  button: <CircleDot size={17} />,
 };
 
 const LAYER_LABELS: [keyof PrefabLayers, string][] = [
@@ -113,6 +115,7 @@ const LAYER_LABELS: [keyof PrefabLayers, string][] = [
   ["walls", "Walls and doors"],
   ["mounts", "Mounts"],
   ["sockets", "Sockets"],
+  ["logic", "Logic"],
 ];
 
 const RIGHT_TABS = ["Ship", "Inspect", "Stats", "Issues"] as const;
@@ -232,7 +235,7 @@ function Editor({
 
   const pickIssue = useCallback(
     (i: PrefabIssue) => {
-      const s = issueSelection(i);
+      const s = issueSelection(i, doc);
       if (!s) {
         setTab("Ship");
         return;
@@ -296,7 +299,7 @@ function Editor({
       if (k === "s") return setTools({ symmetry: !tools.symmetry });
       if (k === "r") {
         if (selection && tools.tool === "select")
-          return apply("Rotate", rotateSelection(doc, selection));
+          return apply("Rotate", rotateSelection(doc, selection, catalog));
         if (tools.tool === "hull")
           return setTools({
             rot: ((tools.rot + (e.shiftKey ? 3 : 1)) % 4) as QuarterTurn,
@@ -305,7 +308,8 @@ function Editor({
           return setTools({ facing: NEXT_FACING[tools.facing] });
         if (tools.tool === "skylight")
           return setTools({ skylight: [tools.skylight[1], tools.skylight[0]] });
-        if (selection) return apply("Rotate", rotateSelection(doc, selection));
+        if (selection)
+          return apply("Rotate", rotateSelection(doc, selection, catalog));
         return;
       }
       if (k === "f") {
@@ -347,8 +351,12 @@ function Editor({
       if (e.key.startsWith("Arrow") && selection) {
         e.preventDefault();
         const unit =
-          (selection.kind === "mount" ? 0.5 : 1) *
-          (e.shiftKey ? (selection.kind === "mount" ? 10 : 5) : 1);
+          selection.kind === "logic"
+            ? e.shiftKey
+              ? 1
+              : 0.25
+            : (selection.kind === "mount" ? 0.5 : 1) *
+              (e.shiftKey ? (selection.kind === "mount" ? 10 : 5) : 1);
         const d: [number, number] =
           e.key === "ArrowLeft"
             ? [-unit, 0]
@@ -359,13 +367,24 @@ function Editor({
                 : [0, -unit];
         return apply(
           `Nudge ${selection.kind}`,
-          nudgeSelection(doc, selection, d[0], d[1]),
+          nudgeSelection(doc, selection, d[0], d[1], catalog),
         );
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [doc, selection, tools, keys, store, apply, commit, setTool, setTools]);
+  }, [
+    doc,
+    catalog,
+    selection,
+    tools,
+    keys,
+    store,
+    apply,
+    commit,
+    setTool,
+    setTools,
+  ]);
 
   const save =
     store.saveState === "saved"
@@ -592,6 +611,9 @@ function Editor({
           tools={tools}
           setTools={setTools}
           commit={commit}
+          apply={apply}
+          select={select}
+          selection={selection}
         />
         <section className="pf-center">
           <PlanCanvas
@@ -696,6 +718,9 @@ function Editor({
           {doc.volumes.reduce((n, v) => n + v.tiles.length, 0)} tiles,{" "}
           {doc.rooms.length} rooms, {doc.edges.length} edges,{" "}
           {doc.mounts.length} mounts
+          {doc.logic?.devices.length
+            ? `, ${doc.logic.devices.length} logic devices`
+            : ""}
         </span>
         <button
           onClick={() => setTab("Issues")}

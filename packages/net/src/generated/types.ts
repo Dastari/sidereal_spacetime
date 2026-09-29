@@ -1180,6 +1180,29 @@ export const EvaBodyStatus = __t.object("EvaBodyStatus", {
 });
 export type EvaBodyStatus = __Infer<typeof EvaBodyStatus>;
 
+export const EvaSuit = __t.object("EvaSuit", {
+  characterId: __t.string(),
+  owner: __t.identity(),
+  mode: __t.string(),
+  facing: __t.f64(),
+  facingActive: __t.bool(),
+  omega: __t.f64(),
+  massKg: __t.f64(),
+  revision: __t.u64(),
+});
+export type EvaSuit = __Infer<typeof EvaSuit>;
+
+export const EvaSuitStatus = __t.object("EvaSuitStatus", {
+  characterId: __t.string(),
+  mode: __t.string(),
+  facing: __t.f64(),
+  facingActive: __t.bool(),
+  omega: __t.f64(),
+  massKg: __t.f64(),
+  revision: __t.u64(),
+});
+export type EvaSuitStatus = __Infer<typeof EvaSuitStatus>;
+
 export const FieldAsteroid = __t.object("FieldAsteroid", {
   id: __t.string(),
   systemId: __t.string(),
@@ -1600,6 +1623,9 @@ export type OwnEvaAirlockCycle = __Infer<typeof OwnEvaAirlockCycle>;
 export const OwnEvaBody = __t.object("OwnEvaBody", {});
 export type OwnEvaBody = __Infer<typeof OwnEvaBody>;
 
+export const OwnEvaSuit = __t.object("OwnEvaSuit", {});
+export type OwnEvaSuit = __Infer<typeof OwnEvaSuit>;
+
 export const OwnGameShipAccess = __t.object("OwnGameShipAccess", {});
 export type OwnGameShipAccess = __Infer<typeof OwnGameShipAccess>;
 
@@ -1894,6 +1920,39 @@ export const ShipComponentDamageStatus = __t.object("ShipComponentDamageStatus",
   revision: __t.u64(),
 });
 export type ShipComponentDamageStatus = __Infer<typeof ShipComponentDamageStatus>;
+
+export const ShipLogicDeviceStatus = __t.object("ShipLogicDeviceStatus", {
+  key: __t.string(),
+  shipId: __t.string(),
+  deviceId: __t.string(),
+  kind: __t.string(),
+  state: __t.string(),
+  light: __t.string(),
+  open: __t.bool(),
+  endsMicros: __t.u64(),
+  pressedMicros: __t.u64(),
+});
+export type ShipLogicDeviceStatus = __Infer<typeof ShipLogicDeviceStatus>;
+
+export const ShipLogicState = __t.object("ShipLogicState", {
+  key: __t.string(),
+  shipId: __t.string(),
+  deviceId: __t.string(),
+  kind: __t.string(),
+  instanceRevision: __t.u64(),
+  stateJson: __t.string(),
+  updatedMicros: __t.u64(),
+});
+export type ShipLogicState = __Infer<typeof ShipLogicState>;
+
+export const ShipLogicTimer = __t.object("ShipLogicTimer", {
+  key: __t.string(),
+  shipId: __t.string(),
+  deviceId: __t.string(),
+  instanceRevision: __t.u64(),
+  dueMicros: __t.u64(),
+});
+export type ShipLogicTimer = __Infer<typeof ShipLogicTimer>;
 
 export const ShipNetworkSummary = __t.object("ShipNetworkSummary", {
   shipId: __t.string(),
@@ -2301,6 +2360,9 @@ export type VisibleInventoryItem = __Infer<typeof VisibleInventoryItem>;
 
 export const VisibleShipDescriptions = __t.object("VisibleShipDescriptions", {});
 export type VisibleShipDescriptions = __Infer<typeof VisibleShipDescriptions>;
+
+export const VisibleShipLogic = __t.object("VisibleShipLogic", {});
+export type VisibleShipLogic = __Infer<typeof VisibleShipLogic>;
 
 export const VisibleShipMotion = __t.object("VisibleShipMotion", {});
 export type VisibleShipMotion = __Infer<typeof VisibleShipMotion>;

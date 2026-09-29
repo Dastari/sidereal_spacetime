@@ -83,6 +83,25 @@ function bounded<T>(rows: Iterable<T>, limit: number): T[] {
   }
   return out;
 }
+/**
+ * Mass (kg) a character carries and wears: carried containers with their contents and every
+ * equipped item. The crew-mass rule of flight; EVA adds it to the suited body.
+ */
+export function characterCarriedMassKg(
+  ctx: Parameters<typeof legacyInventorySnapshot>[0],
+  characterId: string,
+): number {
+  const snapshot = legacyInventorySnapshot(ctx, characterId),
+    masses = payloadMass(snapshot);
+  let carried = 0;
+  for (const root of snapshot.containers.filter(
+    (c) => c.carried && !c.parentItemId,
+  ))
+    carried += masses.containerMass(root.id);
+  for (const item of snapshot.items.filter((i) => i.equipmentSlot))
+    carried += masses.itemMass(item.id);
+  return carried;
+}
 function payloadMass(snapshot: InventorySnapshot) {
   const definitions = new Map<string, (typeof INVENTORY_DEFINITIONS)[number]>();
   const densities: Record<string, number> = {};
@@ -302,15 +321,7 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
   for (const actor of bounded(ctx.db.character.by_ship.filter(shipId), 256)) {
     // EVA: a character outside the hull (free or maglocked) is not ship mass.
     if (ctx.db.evaBody.characterId.find(actor.id)) continue;
-    const snapshot = legacyInventorySnapshot(ctx, actor.id),
-      masses = payloadMass(snapshot);
-    let carried = 0;
-    for (const root of snapshot.containers.filter(
-      (c) => c.carried && !c.parentItemId,
-    ))
-      carried += masses.containerMass(root.id);
-    for (const item of snapshot.items.filter((i) => i.equipmentSlot))
-      carried += masses.itemMass(item.id);
+    const carried = characterCarriedMassKg(ctx, actor.id);
     const stair = ctx.db.constructionStairWalk.characterId.find(actor.id),
       traversal = ctx.db.constructionTraversal.characterId.find(actor.id);
     if (stair && traversal) throw Error("conflicting-flight-crew-transit");

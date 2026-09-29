@@ -61,6 +61,9 @@ export const WIPED_SHIP_TABLES = [
   "constructionTraversalLink",
   "constructionTraversal",
   "constructionTraversalReservation",
+  // Ship logic (wiki Systems/Ship Logic): device states and timers
+  "shipLogicState",
+  "shipLogicTimer",
   // Seats, interactions, passengers, review
   "constructionInteractionBinding",
   "interactionObject",

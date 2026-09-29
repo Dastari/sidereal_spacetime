@@ -949,6 +949,39 @@ export const INVENTORY_PHYSICAL_DEFINITIONS: readonly FlightPhysicalDefinition[]
       centroid: [0, 0],
       inertiaKgM2: 0,
     },
+    // EVA space suit (EVA milestone 2, 2026-09-29): wardrobe `suit-*` (suit, helmet, jetpack, mag boots).
+    {
+      id: "inventory:wardrobe-suit-body",
+      revision: 1,
+      kind: "inventory",
+      massKg: 4,
+      centroid: [0, 0],
+      inertiaKgM2: 0,
+    },
+    {
+      id: "inventory:wardrobe-suit-helmet",
+      revision: 1,
+      kind: "inventory",
+      massKg: 1.5,
+      centroid: [0, 0],
+      inertiaKgM2: 0,
+    },
+    {
+      id: "inventory:wardrobe-suit-pack",
+      revision: 1,
+      kind: "inventory",
+      massKg: 4,
+      centroid: [0, 0],
+      inertiaKgM2: 0,
+    },
+    {
+      id: "inventory:wardrobe-suit-boots",
+      revision: 1,
+      kind: "inventory",
+      massKg: 3.4,
+      centroid: [0, 0],
+      inertiaKgM2: 0,
+    },
     // r001 handhelds (batch A, 2026-09-29), v1 unit masses (inventory.ts HANDHELD_MASS_KG).
     {
       id: "inventory:pistol",

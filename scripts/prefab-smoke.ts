@@ -81,6 +81,10 @@ const subscribed = () => [
   tables.ownEvaBody,
   tables.ownEvaAirlockCycle,
   tables.visibleEvaBodies,
+  tables.visibleShipLogic,
+  tables.ownEvaSuit,
+  tables.ownReachableCargoItems,
+  tables.ownReachableCargoContainers,
   tables.ownShipNetworks,
   tables.ownShipSystemsReport,
   tables.visibleShipSystemEffects,
@@ -998,7 +1002,7 @@ try {
         },
       }),
     );
-    // EVA milestone 1: out through the airlock, jetpack, maglock, hull walk, back in.
+    // EVA milestone 2: buttons, interlocked cycle, same-plane walk out, hull, ride along, back in.
     console.log(
       JSON.stringify(
         { eva: await evaSmoke(again, shipId, prefab, catalog) },

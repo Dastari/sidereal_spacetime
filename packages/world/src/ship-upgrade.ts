@@ -104,6 +104,9 @@ export const UPGRADE_REBUILT_SHIP_TABLES = [
   ["constructionDoor", "instanceId"],
   ["constructionInteractionBinding", "instanceId"],
   ["interactionObject", "shipId"],
+  // Ship logic state restarts from the new revision's initial state (wiki Systems/Ship Logic).
+  ["shipLogicState", "shipId"],
+  ["shipLogicTimer", "shipId"],
 ] as const satisfies readonly (readonly [keyof Db, string])[];
 
 /**

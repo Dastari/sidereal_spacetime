@@ -58,6 +58,12 @@ import {
   mountTileSpec,
   type MountArc,
 } from "./ship-mount-tiles";
+import {
+  readPrefabLogic,
+  validateLogicWiring,
+  type PrefabLogic,
+  type PrefabLogicDevice,
+} from "./ship-logic";
 
 export const SHIP_PREFAB_SCHEMA = "sidereal.ship-prefab.v1" as const;
 export const SHIP_THEME_IDS = [
@@ -199,6 +205,12 @@ export interface ShipPrefabDocumentV1 {
   mountTiles?: PrefabMountTile[];
   skylights: PrefabSkylight[];
   markings: PrefabMarkings;
+  /**
+   * Ship logic (wiki `Systems/Ship Logic`): signal devices (wall buttons, door actuators, airlock
+   * controllers) and the wires between their ports. Absent = no logic: every actuated door stays
+   * shut (Wren r2-r5 and the other developer prefabs until they are authored).
+   */
+  logic?: PrefabLogic;
 }
 
 // ---------------------------------------------------------------- component catalog adapter
@@ -237,6 +249,8 @@ export interface PrefabComponentSpec {
   visual?: { url: string; node?: string };
   /** Main drives: thrust reverser (N) opposite the forward axis (catalog revision 3+). */
   reverseThrustN?: number;
+  /** The catalogue component has a `data` service port (logic actuators need one). */
+  dataPort?: boolean;
   /** Weapons and sensors: the item's own arc (deg), tracking (deg/s) and range (m). */
   arcDeg?: number;
   trackingDegPerS?: number;
@@ -348,7 +362,7 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
       "skylights",
       "markings",
     ],
-    ["mountTiles"],
+    ["mountTiles", "logic"],
   );
   if (o.schema !== SHIP_PREFAB_SCHEMA)
     fail("schema", `expected ${SHIP_PREFAB_SCHEMA}`);
@@ -581,6 +595,7 @@ export function readShipPrefab(value: unknown): ShipPrefabDocumentV1 {
       };
     })(),
   };
+  if (o.logic !== undefined) doc.logic = readPrefabLogic(o.logic);
   if (tileCount > SHIP_PREFAB_LIMITS.tiles) fail("volumes", "too many tiles");
   uniq(
     doc.volumes.map((v) => v.id),
@@ -1771,7 +1786,8 @@ export type PrefabIssueRef =
   | { kind: "edge"; id: string }
   | { kind: "mount"; id: string }
   | { kind: "tile"; id: string }
-  | { kind: "skylight"; id: string };
+  | { kind: "skylight"; id: string }
+  | { kind: "logic"; id: string };
 
 export interface PrefabIssue {
   severity: "error" | "warning";
@@ -2460,7 +2476,227 @@ export function validateShipPrefab(
       `Heat surplus of ${Math.round(stats.heatBalanceW / 1000)} kW`,
       docRef,
     );
+  if (doc.logic)
+    for (const i of validatePrefabLogic(doc, catalog))
+      push(i.severity, i.code, i.message, { kind: "logic", id: i.id });
   return issues;
+}
+
+// ---------------------------------------------------------------- ship logic placement
+/** Where a wall logic device sits and is used from (prefab plan metres). */
+export interface LogicWallPlacement {
+  /** Point on the wall's lattice line. */
+  at: Pt;
+  /** Unit plan normal of the side the panel faces. */
+  normal: Pt;
+  /** interior: pressed from a room aboard; exterior: pressed from space (EVA). */
+  side: "interior" | "exterior";
+  /** hull: the exterior shell (inner shell face or outer hull face); partition: a room wall. */
+  wall: "hull" | "partition";
+  /** Panel surface point (the device's back face). */
+  surface: Pt;
+  /** Room the panel faces (interior devices). */
+  room: string | null;
+}
+/** Surface offsets from the lattice line: inner shell face, partition face, outer hull face. */
+export const LOGIC_WALL_OFFSET_M = {
+  shell: 0.25,
+  partition: 0.07,
+  exterior: 0.02,
+} as const;
+
+const onSegment = (p: Pt, a: Pt, b: Pt) => {
+  const cross = (b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0]);
+  if (Math.abs(cross) > 1e-6) return false;
+  const t =
+    ((p[0] - a[0]) * (b[0] - a[0]) + (p[1] - a[1]) * (b[1] - a[1])) /
+    Math.max(1e-12, (b[0] - a[0]) ** 2 + (b[1] - a[1]) ** 2);
+  return t >= -1e-9 && t <= 1 + 1e-9;
+};
+
+/**
+ * Placement of a wall device, or the reason it is not on a usable wall. A wall device sits on an
+ * axis-aligned lattice line: on the hull outline facing out (exterior), on the hull outline facing
+ * into a room (the inner shell), or on a room boundary facing into a room (a partition). Never on
+ * a door opening.
+ */
+export function logicWallPlacement(
+  doc: ShipPrefabDocumentV1,
+  device: Pick<PrefabLogicDevice, "at" | "normal">,
+  catalog?: PrefabComponentCatalog,
+): LogicWallPlacement | { error: string } {
+  if (!device.at || !device.normal)
+    return { error: "needs a wall point and a facing" };
+  const deck = deckVolume(doc, 0);
+  if (!deck?.outline) return { error: "the ship has no walkable deck" };
+  const n = NORMAL_VECTOR[device.normal];
+  const at: Pt = [device.at[0], device.at[1]];
+  const axis = n[0] !== 0 ? 0 : 1;
+  if (!Number.isInteger(at[axis]))
+    return { error: "must sit on a wall line (whole metre across its facing)" };
+  const probe = (d: number): Pt => [at[0] + n[0] * d, at[1] + n[1] * d];
+  const front = probe(0.3),
+    back = probe(-0.3);
+  const inDeck = (p: Pt) => insideOutline(deck.outline!, p[0], p[1]);
+  const anyHull = (p: Pt) =>
+    doc.volumes.some((v) => {
+      const g = volumeGeometry(v);
+      return !!g.outline && insideOutline(g.outline, p[0], p[1]);
+    });
+  const roomAt = (p: Pt) =>
+    doc.rooms.find(
+      (r) =>
+        r.deck === 0 &&
+        p[0] > r.rect[0] &&
+        p[0] < r.rect[2] &&
+        p[1] > r.rect[1] &&
+        p[1] < r.rect[3] &&
+        inDeck(p),
+    )?.id ?? null;
+  const interior = deriveInterior(doc, 0, catalog);
+  for (const door of interior.doors)
+    if (onSegment(at, door.a, door.b))
+      return { error: "sits on a door opening" };
+  const shift = (d: number): Pt => [at[0] + n[0] * d, at[1] + n[1] * d];
+  if (!inDeck(front)) {
+    if (!inDeck(back)) return { error: "is not on the hull wall" };
+    if (anyHull(front))
+      return { error: "faces another hull part (not open space)" };
+    return {
+      at,
+      normal: [n[0], n[1]],
+      side: "exterior",
+      wall: "hull",
+      surface: shift(LOGIC_WALL_OFFSET_M.exterior),
+      room: null,
+    };
+  }
+  const room = roomAt(front);
+  if (!room) return { error: "does not face into a room" };
+  if (!inDeck(back))
+    return {
+      at,
+      normal: [n[0], n[1]],
+      side: "interior",
+      wall: "hull",
+      surface: shift(LOGIC_WALL_OFFSET_M.shell),
+      room,
+    };
+  const behind = roomAt(back);
+  if (behind === room) return { error: "is not on a wall (open floor)" };
+  const open = doc.edges.some(
+    (e) =>
+      (e.type === "open" || e.type === "window") && onSegment(at, e.a, e.b),
+  );
+  if (open) return { error: "sits on an open edge" };
+  return {
+    at,
+    normal: [n[0], n[1]],
+    side: "interior",
+    wall: "partition",
+    surface: shift(LOGIC_WALL_OFFSET_M.partition),
+    room,
+  };
+}
+
+/** Logic issues of a document: wiring (`validateLogicWiring`) plus doors and placement. */
+export function validatePrefabLogic(
+  doc: ShipPrefabDocumentV1,
+  catalog: PrefabComponentCatalog,
+): {
+  severity: "error" | "warning";
+  code: string;
+  message: string;
+  id: string;
+}[] {
+  const logic = doc.logic;
+  if (!logic) return [];
+  const out = validateLogicWiring(logic).map((i) => ({
+    severity: i.severity,
+    code: i.code,
+    message: i.message,
+    id: i.ref.id,
+  }));
+  const push = (
+    severity: "error" | "warning",
+    code: string,
+    message: string,
+    id: string,
+  ) => out.push({ severity, code, message, id });
+  const interior = deriveInterior(doc, 0, catalog);
+  const devices = new Map(logic.devices.map((d) => [d.id, d]));
+  const doorOf = (deviceId: string) => {
+    const d = devices.get(deviceId);
+    return d?.kind === "door"
+      ? interior.doors.find((x) => x.id === d.door)
+      : undefined;
+  };
+  for (const d of logic.devices) {
+    if (d.kind === "door") {
+      const door = interior.doors.find((x) => x.id === d.door);
+      if (!door) {
+        push(
+          "error",
+          "logic.door.unknown",
+          `${d.id}: no door ${d.door} on the deck`,
+          d.id,
+        );
+        continue;
+      }
+      if (door.type === "door.forcefield")
+        push(
+          "error",
+          "logic.door.forcefield",
+          `${d.id}: a forcefield has no leaves to actuate`,
+          d.id,
+        );
+      const mount = doc.mounts.find((m) => m.id === d.door);
+      if (mount && !catalog.get(mount.component)?.dataPort)
+        push(
+          "error",
+          "logic.door.no-data-port",
+          `${d.id}: ${mount.component} has no data port to take commands`,
+          d.id,
+        );
+    } else if (d.kind === "button") {
+      const place = logicWallPlacement(doc, d, catalog);
+      if ("error" in place)
+        push("error", "logic.button.placement", `${d.id} ${place.error}`, d.id);
+    } else if (d.kind === "airlock-controller") {
+      const target = (port: string) =>
+        logic.links.find((l) => l.from.device === d.id && l.from.port === port)
+          ?.to.device;
+      const inner = target("inner"),
+        outer = target("outer");
+      const outerDoor = outer ? doorOf(outer) : undefined;
+      const innerDoor = inner ? doorOf(inner) : undefined;
+      if (outer && !outerDoor?.exterior)
+        push(
+          "error",
+          "logic.airlock.outer",
+          `${d.id}: the outer door must be an exterior door`,
+          d.id,
+        );
+      if (inner && (!innerDoor || innerDoor.exterior))
+        push(
+          "error",
+          "logic.airlock.inner",
+          `${d.id}: the inner door must be an interior door`,
+          d.id,
+        );
+      if (innerDoor && outerDoor) {
+        const chamber = innerDoor.rooms.filter((r) => r !== null);
+        if (!outerDoor.rooms.some((r) => r !== null && chamber.includes(r)))
+          push(
+            "error",
+            "logic.airlock.chamber",
+            `${d.id}: the inner and outer doors must open into the same chamber room`,
+            d.id,
+          );
+      }
+    }
+  }
+  return out;
 }
 
 // ---------------------------------------------------------------- stats

@@ -1,9 +1,10 @@
 /**
- * Select-tool picking on the plan: mounts, then edges, skylights, rooms, tiles and
+ * Select-tool picking on the plan: logic devices, mounts, then edges, skylights, rooms, tiles and
  * volumes, respecting layer visibility. Pure; the canvas supplies the plan point.
  */
 import { insideOutline, type Pt } from "@sidereal/content/construction-grammar";
 import {
+  deriveInterior,
   placeMount,
   placeMountTile,
   type PrefabComponentCatalog,
@@ -11,6 +12,7 @@ import {
   type VolumeGeometry,
 } from "@sidereal/content/ship-prefab";
 import { tileIndexAt, type PrefabSelection } from "./commands";
+import { logicAnchors, logicHit, type LogicAnchor } from "./logic-layout";
 
 export interface PrefabLayers {
   hull: boolean;
@@ -18,6 +20,8 @@ export interface PrefabLayers {
   walls: boolean;
   mounts: boolean;
   sockets: boolean;
+  /** Ship logic: buttons, door actuators, controllers and wires. */
+  logic: boolean;
 }
 export const DEFAULT_LAYERS: PrefabLayers = {
   hull: true,
@@ -25,6 +29,7 @@ export const DEFAULT_LAYERS: PrefabLayers = {
   walls: true,
   mounts: true,
   sockets: true,
+  logic: true,
 };
 
 const inRect = (p: Pt, r: readonly number[], pad = 0) =>
@@ -49,6 +54,7 @@ function segDistance(p: Pt, a: readonly number[], b: readonly number[]) {
 /**
  * @param tolerance plan metres within which an edge counts as hit (the canvas passes a few pixels).
  * @param activeVolume in hull mode, tiles of this volume are picked before rooms.
+ * @param logic plan anchors of the logic devices (`logicAnchors`); small markers win over mounts.
  */
 export function hitTest(
   doc: ShipPrefabDocumentV1,
@@ -58,7 +64,12 @@ export function hitTest(
   layers: PrefabLayers,
   tolerance = 0.2,
   activeVolume?: string,
+  logic?: ReadonlyMap<string, LogicAnchor>,
 ): PrefabSelection | null {
+  if (layers.logic && logic) {
+    const id = logicHit(logic, p, Math.min(tolerance, 0.1));
+    if (id) return { kind: "logic", id };
+  }
   if (layers.mounts) {
     // Smaller footprints win so a module inside a bigger one stays pickable.
     const hits = doc.mounts
@@ -118,6 +129,15 @@ export function selectionCentre(
   sel: PrefabSelection,
 ): Pt | null {
   switch (sel.kind) {
+    case "logic":
+      return (
+        logicAnchors(
+          doc,
+          catalog,
+          deriveInterior(doc, 0, catalog).doors,
+          geoms,
+        ).get(sel.id)?.at ?? null
+      );
     case "volume": {
       const g = geoms.find((x) => x.volume.id === sel.id);
       return g

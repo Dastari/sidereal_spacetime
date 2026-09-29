@@ -16,7 +16,9 @@ import {
   type PrefabMount,
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
+import type { LogicFacing } from "@sidereal/content/ship-logic";
 import {
+  addLogicButton,
   addMount,
   addMountTile,
   addRoom,
@@ -24,6 +26,8 @@ import {
   eraseTiles,
   paintTiles,
   placeEdge,
+  checkLogicButton,
+  snapLogicWallPoint,
   type CommandResult,
 } from "./commands";
 import { geometriesOf } from "./derive";
@@ -355,4 +359,45 @@ export function skylightPlace(
   const check = checkSkylight(doc, geometriesOf(doc), c.at, c.size, catalog);
   if (!check.ok) return { doc, error: check.reason };
   return addSkylight(doc, c, mirrorOf(tools));
+}
+
+// ------------------------------------------------------------------ ship logic: wall buttons
+/**
+ * Button tool: the wall line nearest the cursor (whole-metre lines in x or y) and the side of it
+ * the cursor is on, which is the side the button faces (is pressed from).
+ */
+export function buttonGesture(p: Pt): {
+  at: [number, number];
+  normal: LogicFacing;
+} {
+  const dx = Math.abs(p[0] - Math.round(p[0]));
+  const dy = Math.abs(p[1] - Math.round(p[1]));
+  const normal: LogicFacing =
+    dy <= dx
+      ? p[1] >= Math.round(p[1])
+        ? "port"
+        : "starboard"
+      : p[0] >= Math.round(p[0])
+        ? "fore"
+        : "aft";
+  return { at: snapLogicWallPoint(p, normal), normal };
+}
+
+export function buttonPreview(
+  doc: Doc,
+  catalog: PrefabComponentCatalog,
+  p: Pt,
+): { at: [number, number]; normal: LogicFacing; check: PlacementCheck } {
+  const g = buttonGesture(p);
+  return { ...g, check: checkLogicButton(doc, g.at, g.normal, catalog) };
+}
+
+export function buttonPlace(
+  doc: Doc,
+  catalog: PrefabComponentCatalog,
+  p: Pt,
+): CommandResult {
+  const { at, normal, check } = buttonPreview(doc, catalog, p);
+  if (!check.ok) return { doc, error: check.reason };
+  return addLogicButton(doc, at, normal, catalog);
 }

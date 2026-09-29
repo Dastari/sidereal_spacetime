@@ -1,4 +1,4 @@
-import { strokeTiles } from "./tool-actions";
+import { buttonPlace, buttonPreview, strokeTiles } from "./tool-actions";
 /**
  * SVG plan editor for prefab ships. Plan frame: +X fore points right, +Y port points up,
  * 1 m cells with 5 m major lines. The world group is drawn in metres; strokes do not scale.
@@ -42,6 +42,12 @@ import {
 } from "./commands";
 import { geometriesOf } from "./derive";
 import { hitTest, type PrefabLayers } from "./hit-test";
+import {
+  BUTTON_HALF,
+  CONTROLLER_CHIP,
+  DOOR_MARKER_R,
+  logicAnchors,
+} from "./logic-layout";
 import type { ToolState } from "./keymap";
 import { mountColour, ROOM_COLOURS } from "./palette";
 import {
@@ -143,10 +149,15 @@ function PlanCanvas({
     if (stroke.kind === "erase")
       return eraseTiles(doc, tools.volume, stroke.points, mirror);
     if (stroke.kind === "move" && (stroke.delta[0] || stroke.delta[1]))
-      return nudgeSelection(doc, stroke.sel, stroke.delta[0], stroke.delta[1])
-        .doc;
+      return nudgeSelection(
+        doc,
+        stroke.sel,
+        stroke.delta[0],
+        stroke.delta[1],
+        catalog,
+      ).doc;
     return doc;
-  }, [doc, stroke, tools.volume, mirror]);
+  }, [doc, stroke, tools.volume, mirror, catalog]);
   const geoms = useMemo(() => geometriesOf(shown), [shown]);
   const interior = useMemo(
     () => deriveInterior(shown, 0, catalog),
@@ -164,6 +175,10 @@ function PlanCanvas({
   const tilePlacements = useMemo(
     () => (shown.mountTiles ?? []).map((t) => placeMountTile(t, geoms)),
     [shown, geoms],
+  );
+  const logic = useMemo(
+    () => logicAnchors(shown, catalog, interior.doors, geoms),
+    [shown, catalog, interior, geoms],
   );
 
   // ------------------------------------------------------------ view
@@ -470,6 +485,28 @@ function PlanCanvas({
           label: `Skylight ${c.size.join(" x ")}`,
         });
       }
+      case "button": {
+        const b = buttonPreview(shown, catalog, hover);
+        const n = {
+          fore: [1, 0],
+          aft: [-1, 0],
+          port: [0, 1],
+          starboard: [0, -1],
+        }[b.normal];
+        const c: Pt = [b.at[0] + n[0] * 0.2, b.at[1] + n[1] * 0.2];
+        const h = BUTTON_HALF;
+        return out({
+          check: b.check,
+          paths: [rectPath([c[0] - h, c[1] - h, c[0] + h, c[1] + h])],
+          lines: [
+            [
+              [b.at[0], b.at[1]],
+              [c[0] + n[0] * 0.3, c[1] + n[1] * 0.3],
+            ],
+          ],
+          label: `Wall button at ${b.at.join(", ")}, facing ${b.normal}`,
+        });
+      }
       default:
         return null;
     }
@@ -477,9 +514,18 @@ function PlanCanvas({
   const hovered = useMemo(
     () =>
       tools.tool === "select" && hover && !stroke
-        ? hitTest(shown, catalog, geoms, hover, layers, 6 / view.s, undefined)
+        ? hitTest(
+            shown,
+            catalog,
+            geoms,
+            hover,
+            layers,
+            6 / view.s,
+            undefined,
+            logic,
+          )
         : null,
-    [hoverKey, tools.tool, shown, geoms, layers, stroke, view.s],
+    [hoverKey, tools.tool, shown, geoms, layers, stroke, view.s, logic],
   );
 
   useEffect(() => {
@@ -517,6 +563,7 @@ function PlanCanvas({
           layers,
           6 / view.s,
           selection?.kind === "tile" ? selection.volume : undefined,
+          logic,
         );
         select(hit);
         if (
@@ -524,7 +571,9 @@ function PlanCanvas({
           (hit.kind === "room" ||
             hit.kind === "mount" ||
             hit.kind === "mounttile" ||
-            hit.kind === "skylight")
+            hit.kind === "skylight" ||
+            (hit.kind === "logic" &&
+              logic.get(hit.id)?.device.kind === "button"))
         )
           setStroke({ kind: "move", sel: hit, start: p, delta: [0, 0] });
         else if (!hit)
@@ -613,6 +662,9 @@ function PlanCanvas({
         apply("Add skylight", addSkylight(doc, c, mirror));
         return;
       }
+      case "button":
+        apply("Place wall button", buttonPlace(doc, catalog, p));
+        return;
     }
   };
   const onPointerMove = (e: React.PointerEvent<SVGSVGElement>) => {
@@ -641,7 +693,12 @@ function PlanCanvas({
         setStroke({ kind: "erase", points: [...stroke.points, p] });
     } else if (stroke.kind === "room") setStroke({ ...stroke, b: p });
     else if (stroke.kind === "move") {
-      const step = stroke.sel.kind === "mount" ? snapHalf : Math.round;
+      const step =
+        stroke.sel.kind === "mount"
+          ? snapHalf
+          : stroke.sel.kind === "logic"
+            ? (v: number) => Math.round(v * 4) / 4
+            : Math.round;
       const delta: [number, number] = [
         step(p[0] - stroke.start[0]),
         step(p[1] - stroke.start[1]),
@@ -680,7 +737,7 @@ function PlanCanvas({
     } else if (s.kind === "move" && (s.delta[0] || s.delta[1])) {
       apply(
         `Move ${s.sel.kind}`,
-        nudgeSelection(doc, s.sel, s.delta[0], s.delta[1]),
+        nudgeSelection(doc, s.sel, s.delta[0], s.delta[1], catalog),
       );
     }
   };
@@ -774,6 +831,17 @@ function PlanCanvas({
       case "mounttile": {
         const t = tilePlacements.find((x) => x.tile.id === sel.id);
         return t ? { d: rectPath(t.rect) } : null;
+      }
+      case "logic": {
+        const a = logic.get(sel.id);
+        if (!a) return null;
+        const [hw, hh] =
+          a.device.kind === "airlock-controller"
+            ? [CONTROLLER_CHIP[0] / 2 + 0.08, CONTROLLER_CHIP[1] / 2 + 0.08]
+            : [0.28, 0.28];
+        return {
+          d: rectPath([a.at[0] - hw, a.at[1] - hh, a.at[0] + hw, a.at[1] + hh]),
+        };
       }
       case "skylight": {
         const s = shown.skylights.find((x) => x.id === sel.id);
@@ -1089,6 +1157,61 @@ function PlanCanvas({
                 />
               );
             })}
+          {layers.logic && logic.size > 0 && (
+            <g className="pf-logic">
+              {(shown.logic?.links ?? []).map((l) => {
+                const a = logic.get(l.from.device);
+                const b = logic.get(l.to.device);
+                if (!a || !b) return null;
+                const lit =
+                  selection?.kind === "logic" &&
+                  (l.from.device === selection.id ||
+                    l.to.device === selection.id);
+                return (
+                  <path
+                    key={l.id}
+                    className={`pf-wire${lit ? " lit" : ""}`}
+                    d={`M${a.at[0]} ${a.at[1]}L${b.at[0]} ${b.at[1]}`}
+                  />
+                );
+              })}
+              {[...logic.values()].map((a) => {
+                const [x, y] = a.at;
+                const bad = a.placed ? "" : " bad";
+                if (a.device.kind === "button") {
+                  const n = a.normal ?? [0, 0];
+                  const h = BUTTON_HALF;
+                  return (
+                    <g key={a.device.id} className={`pf-logic-button${bad}`}>
+                      <path d={rectPath([x - h, y - h, x + h, y + h])} />
+                      <path
+                        className="tick"
+                        d={`M${x} ${y}L${x + n[0] * 0.32} ${y + n[1] * 0.32}`}
+                      />
+                    </g>
+                  );
+                }
+                if (a.device.kind === "door") {
+                  const r = DOOR_MARKER_R;
+                  return (
+                    <path
+                      key={a.device.id}
+                      className={`pf-logic-door${bad}`}
+                      d={`M${x - r} ${y}L${x} ${y + r}L${x + r} ${y}L${x} ${y - r}Z`}
+                    />
+                  );
+                }
+                const [w, h] = CONTROLLER_CHIP;
+                return (
+                  <path
+                    key={a.device.id}
+                    className="pf-logic-controller"
+                    d={rectPath([x - w / 2, y - h / 2, x + w / 2, y + h / 2])}
+                  />
+                );
+              })}
+            </g>
+          )}
           {mirror !== null && (
             <path className="pf-symmetry" d={`M${wx0} ${mirror}H${wx1}`} />
           )}
@@ -1156,6 +1279,21 @@ function PlanCanvas({
                 {l.text}
               </text>
             ))}
+          {layers.logic &&
+            view.s >= 14 &&
+            [...logic.values()]
+              .filter((a) => a.device.kind === "airlock-controller")
+              .map((a) => (
+                <text
+                  key={`logic-${a.device.id}`}
+                  x={X(a.at[0])}
+                  y={Y(a.at[1])}
+                  className="pf-logic-label"
+                  style={{ fontSize: Math.min(11, Math.max(8, view.s * 0.2)) }}
+                >
+                  {a.device.id.slice(0, 12)}
+                </text>
+              ))}
           {structural.length > 0 && (
             <text
               x={X(sx0) + 4}

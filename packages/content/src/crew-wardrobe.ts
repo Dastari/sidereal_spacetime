@@ -25,6 +25,20 @@ export interface CrewWardrobeItem {
   colourway: string;
   /** Suit-layer tint of a uniform (undersuit) plus its department accent. */
   suit?: { primary: string; secondary: string; accent: string };
+  /**
+   * Space-suit boots with magnetic soles (EVA milestone 2, owner 2026-09-29: "mag locks ... part of
+   * all space suit boots (not shoes or clothing style boots)"). Only boots-slot items set it; the
+   * maglock works only inside ships for now (wiki `Systems/EVA`).
+   */
+  maglock?: boolean;
+  /**
+   * Part of the EVA space suit (owner 2026-09-29: "you're going to need a backpack/spacesuit and
+   * helmet before you can exist in the vacuum of space"). Going outside needs `suit`, `helmet` and
+   * `pack` equipped; `boots` add the maglock. `evaSuitCheck` is the rule.
+   */
+  eva?: "suit" | "helmet" | "pack" | "boots";
+  /** Head-kit helmet id drawn for a helmet item (crew-heads.v1.json `helmets`). */
+  helmet?: string;
 }
 
 /** The four department uniforms of the r006 wardrobe: role undersuit + department accent. */
@@ -94,6 +108,68 @@ function accentFor(colourway: string) {
   return ACCENTS[colourway] ?? "#f3bb3c";
 }
 
+/**
+ * The EVA space suit (proposal, provisional masses kept inside the 32 kg carry limit together with
+ * a normal kit): a pressure suit (the body suit layer with a
+ * harness), a sealed helmet, the EVA jetpack (its nozzles and suit IFCS are `packages/sim/src/
+ * eva-suit.ts`) and mag boots. Item ids are stable: the inventory definitions are `wardrobe-<id>`.
+ */
+function evaSuit(): CrewWardrobeItem[] {
+  const boots = crewArmorPart("armor.boots.heavy");
+  const pack = crewArmorPart("armor.back.jetpack-light");
+  const harness = crewArmorPart("armor.chest.flight");
+  if (
+    boots?.slot !== "boots" ||
+    pack?.slot !== "back" ||
+    harness?.slot !== "chest"
+  )
+    throw new Error("wardrobe: EVA suit armour parts are missing");
+  return [
+    {
+      id: "suit-body",
+      name: "EVA pressure suit",
+      slot: "uniform",
+      massKg: 4,
+      grid: [2, 3],
+      part: harness.id,
+      colourway: "arctic",
+      suit: { primary: "#e8e6f0", secondary: "#f08c1e", accent: "#4f8cff" },
+      eva: "suit",
+    },
+    {
+      id: "suit-helmet",
+      name: "EVA helmet",
+      slot: "helmet",
+      massKg: 1.5,
+      grid: [2, 2],
+      colourway: "arctic",
+      helmet: "explorer",
+      eva: "helmet",
+    },
+    {
+      id: "suit-pack",
+      name: "EVA jetpack",
+      slot: "back",
+      massKg: 4,
+      grid: [pack.grid[0], pack.grid[1]],
+      part: pack.id,
+      colourway: "arctic",
+      eva: "pack",
+    },
+    {
+      id: "suit-boots",
+      name: "Space-suit mag boots",
+      slot: "boots",
+      massKg: boots.massKg,
+      grid: [boots.grid[0], boots.grid[1]],
+      part: boots.id,
+      colourway: "arctic",
+      maglock: true,
+      eva: "boots",
+    },
+  ];
+}
+
 export const CREW_WARDROBE: readonly CrewWardrobeItem[] = [
   ...UNIFORMS.map(uniform),
   ...TIERS.flatMap(([tier, colourway, parts]) =>
@@ -112,6 +188,7 @@ export const CREW_WARDROBE: readonly CrewWardrobeItem[] = [
       };
     }),
   ),
+  ...evaSuit(),
 ];
 
 export const WARDROBE_DEFINITION_PREFIX = "wardrobe-";
@@ -123,13 +200,60 @@ export function crewWardrobeItem(id: string): CrewWardrobeItem | undefined {
 }
 
 /**
+ * Maglock rule input: whether an equipped item (wardrobe id or inventory definition id) is a pair
+ * of space-suit boots. Clothing boots, shoes and armour boots are not.
+ */
+export function isMaglockBoots(id: string | null | undefined): boolean {
+  const item = id ? crewWardrobeItem(id) : undefined;
+  return !!item?.maglock && item.slot === "boots";
+}
+
+/** The parts of the EVA suit needed to go outside (boots are optional: they add the maglock). */
+export const EVA_SUIT_REQUIRED = ["suit", "helmet", "pack"] as const;
+export type EvaSuitPart = (typeof EVA_SUIT_REQUIRED)[number];
+/**
+ * The suit rule: which required EVA suit parts are missing from the equipped items (wardrobe or
+ * inventory definition ids, one per slot). Each part counts only in its own slot.
+ */
+export function evaSuitCheck(
+  equipped: Iterable<{ slot: string; id: string }>,
+): { ready: boolean; missing: EvaSuitPart[] } {
+  const have = new Set<string>();
+  for (const e of equipped) {
+    const item = crewWardrobeItem(e.id);
+    if (item?.eva && item.slot === e.slot) have.add(item.eva);
+  }
+  const missing = EVA_SUIT_REQUIRED.filter((p) => !have.has(p));
+  return { ready: missing.length === 0, missing };
+}
+export const EVA_SUIT_NAMES: Readonly<Record<EvaSuitPart, string>> = {
+  suit: "pressure suit",
+  helmet: "helmet",
+  pack: "EVA jetpack",
+};
+/** "Put on an EVA pressure suit, helmet and EVA jetpack first" style message for the missing parts. */
+export function evaSuitMessage(missing: readonly EvaSuitPart[]): string {
+  const names = missing.map((m) => EVA_SUIT_NAMES[m]);
+  const list =
+    names.length <= 1
+      ? names.join("")
+      : `${names.slice(0, -1).join(", ")} and ${names[names.length - 1]}`;
+  return `EVA needs a ${list}: equip the EVA suit first`;
+}
+
+/**
  * Operator delivery kits (inventory definition ids), each sized for one 14x14 storage container:
  * - `uniforms-and-tiers`: the four department uniforms and the tier 1-2 pieces (new items);
+ * - `eva-suit`: the EVA space suit (pressure suit, helmet, jetpack, mag boots), needed outside;
  * - `role-sets`: the medic, engineer and pilot sets. These are the existing r008 item definitions,
  *   which already render through the r006 role mapping; helmets and visors use the head kit.
  */
 export const CREW_WARDROBE_KITS: Readonly<Record<string, readonly string[]>> = {
-  "uniforms-and-tiers": CREW_WARDROBE.map(
+  "uniforms-and-tiers": CREW_WARDROBE.filter((item) => !item.eva).map(
+    (item) => `${WARDROBE_DEFINITION_PREFIX}${item.id}`,
+  ),
+  /** The EVA space suit (pressure suit, helmet, jetpack, mag boots): needed to go outside. */
+  "eva-suit": CREW_WARDROBE.filter((item) => item.eva).map(
     (item) => `${WARDROBE_DEFINITION_PREFIX}${item.id}`,
   ),
   "role-sets": ["medic", "engineer", "pilot"].flatMap((set) =>

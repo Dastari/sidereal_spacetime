@@ -54,6 +54,7 @@ import EnterLabReducer from "./enter_lab_reducer";
 import EquipInventoryItemReducer from "./equip_inventory_item_reducer";
 import EvaCycleAirlockReducer from "./eva_cycle_airlock_reducer";
 import EvaEmergencyReturnReducer from "./eva_emergency_return_reducer";
+import EvaSetSuitReducer from "./eva_set_suit_reducer";
 import EvaToggleMaglockReducer from "./eva_toggle_maglock_reducer";
 import FireWeaponReducer from "./fire_weapon_reducer";
 import GrantShipPassengerReducer from "./grant_ship_passenger_reducer";
@@ -69,6 +70,7 @@ import OperatorSetStarterPrefabReducer from "./operator_set_starter_prefab_reduc
 import OperatorStockShipCargoReducer from "./operator_stock_ship_cargo_reducer";
 import OperatorUpgradePrefabShipReducer from "./operator_upgrade_prefab_ship_reducer";
 import OperatorWipePlayerShipsReducer from "./operator_wipe_player_ships_reducer";
+import PressShipButtonReducer from "./press_ship_button_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
 import ReleaseInputControlReducer from "./release_input_control_reducer";
 import ReloadWeaponReducer from "./reload_weapon_reducer";
@@ -130,6 +132,7 @@ import OwnConstructionTraversalsRow from "./own_construction_traversals_table";
 import OwnEditReceiptsRow from "./own_edit_receipts_table";
 import OwnEvaAirlockCycleRow from "./own_eva_airlock_cycle_table";
 import OwnEvaBodyRow from "./own_eva_body_table";
+import OwnEvaSuitRow from "./own_eva_suit_table";
 import OwnGameShipAccessRow from "./own_game_ship_access_table";
 import OwnGroundItemsRow from "./own_ground_items_table";
 import OwnIdentityLinksRow from "./own_identity_links_table";
@@ -159,6 +162,7 @@ import VisibleCombatActionsRow from "./visible_combat_actions_table";
 import VisibleCrewPresentationRow from "./visible_crew_presentation_table";
 import VisibleEvaBodiesRow from "./visible_eva_bodies_table";
 import VisibleShipDescriptionsRow from "./visible_ship_descriptions_table";
+import VisibleShipLogicRow from "./visible_ship_logic_table";
 import VisibleShipMotionRow from "./visible_ship_motion_table";
 import VisibleShipSystemEffectsRow from "./visible_ship_system_effects_table";
 
@@ -404,6 +408,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnEvaBodyRow),
+  ownEvaSuit: __table({
+    name: 'own_eva_suit',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnEvaSuitRow),
   ownGameShipAccess: __table({
     name: 'own_game_ship_access',
     indexes: [
@@ -607,6 +618,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, VisibleShipDescriptionsRow),
+  visibleShipLogic: __table({
+    name: 'visible_ship_logic',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleShipLogicRow),
   visibleShipMotion: __table({
     name: 'visible_ship_motion',
     indexes: [
@@ -645,6 +663,7 @@ const reducersSchema = __reducers(
   __reducerSchema("equip_inventory_item", EquipInventoryItemReducer),
   __reducerSchema("eva_cycle_airlock", EvaCycleAirlockReducer),
   __reducerSchema("eva_emergency_return", EvaEmergencyReturnReducer),
+  __reducerSchema("eva_set_suit", EvaSetSuitReducer),
   __reducerSchema("eva_toggle_maglock", EvaToggleMaglockReducer),
   __reducerSchema("fire_weapon", FireWeaponReducer),
   __reducerSchema("grant_ship_passenger", GrantShipPassengerReducer),
@@ -660,6 +679,7 @@ const reducersSchema = __reducers(
   __reducerSchema("operator_stock_ship_cargo", OperatorStockShipCargoReducer),
   __reducerSchema("operator_upgrade_prefab_ship", OperatorUpgradePrefabShipReducer),
   __reducerSchema("operator_wipe_player_ships", OperatorWipePlayerShipsReducer),
+  __reducerSchema("press_ship_button", PressShipButtonReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
   __reducerSchema("release_input_control", ReleaseInputControlReducer),
   __reducerSchema("reload_weapon", ReloadWeaponReducer),

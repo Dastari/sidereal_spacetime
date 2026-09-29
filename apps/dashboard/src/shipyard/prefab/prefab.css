@@ -1798,3 +1798,96 @@ section.prefab-preview > .prefab-preview-status:only-child {
   letter-spacing: 0.06em;
   opacity: 0.8;
 }
+
+/* Ship logic (2026-09-29): wall buttons (square + facing tick), door actuators (diamond at the door
+   centre), airlock controllers (chip in their chamber) and dashed wires between them. */
+.pf-logic {
+  pointer-events: none;
+}
+.pf-wire {
+  fill: none;
+  stroke: #b58cff;
+  stroke-width: 1.2;
+  stroke-dasharray: 4 3;
+  stroke-opacity: 0.75;
+}
+.pf-wire.lit {
+  stroke: #e2d2ff;
+  stroke-width: 2;
+  stroke-opacity: 1;
+}
+.pf-logic-button path {
+  fill: #2a1d45;
+  stroke: #c9a8ff;
+  stroke-width: 1.6;
+}
+.pf-logic-button .tick {
+  fill: none;
+  stroke-width: 2.2;
+  stroke-linecap: round;
+}
+.pf-logic-door {
+  fill: rgba(181, 140, 255, 0.35);
+  stroke: #c9a8ff;
+  stroke-width: 1.6;
+}
+.pf-logic-controller {
+  fill: #2a1d45;
+  stroke: #c9a8ff;
+  stroke-width: 1.6;
+}
+.pf-logic-button.bad path,
+.pf-logic-door.bad {
+  stroke: var(--pf-bad);
+  stroke-dasharray: 3 2;
+}
+.pf-logic-label {
+  fill: #eadcff;
+  font:
+    600 10px Barlow,
+    sans-serif;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+.pf-logic-swatch {
+  width: 10px;
+  height: 10px;
+  border: 1.5px solid #c9a8ff;
+  background: #2a1d45;
+}
+.pf-logic-swatch.k-door {
+  transform: rotate(45deg) scale(0.8);
+  background: rgba(181, 140, 255, 0.35);
+}
+.pf-logic-swatch.k-airlock-controller {
+  height: 7px;
+  border-radius: 2px;
+}
+.pf-logic-inspector h3,
+.pf-logic-addwire h3 {
+  margin: 12px 0 4px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  opacity: 0.8;
+}
+.pf-logic-wires {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 3px;
+  font-size: 12px;
+}
+.pf-logic-wires li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(136, 188, 214, 0.18);
+}
+.prefab-editor .pf-logic-wires li > button {
+  min-height: 24px;
+  padding: 2px 6px;
+}

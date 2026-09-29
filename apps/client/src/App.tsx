@@ -79,17 +79,20 @@ import {
 } from "./crewmates";
 import {
   EVA_HELP,
-  EVA_MAGLOCK_HELP,
-  evaAirlockAction,
+  atOpenHatch,
+  buttonDepressurises,
   evaBodiesForScene,
-  evaCanMaglock,
-  evaHomeVisit,
   evaModelOfDocument,
+  evaSuitRefusalOf,
+  evaThrustFromKeys,
+  evaHomeVisit,
   evaScene,
   evaStatusLabel,
-  evaIntent,
   localAimAngle,
-  screenToShipTopDown,
+  logicButtonAction,
+  logicDoorStates,
+  logicModelOfDocument,
+  logicPanelLights,
   worldAimAngle,
 } from "./eva";
 import {
@@ -323,16 +326,10 @@ export default function App({
           : undefined))
       : undefined;
   localShipId.current = ship?.id;
-  // EVA (wiki Systems/EVA): the own body outside the hull and any running airlock cycle.
+  // EVA (wiki Systems/EVA): the own body outside the hull (same plane as the ship).
   const evaBody =
     c && actor
       ? [...c.db.ownEvaBody.iter()].find((r) => r.characterId === actor.id)
-      : undefined;
-  const evaCycle =
-    c && actor
-      ? [...c.db.ownEvaAirlockCycle.iter()].find(
-          (r) => r.characterId === actor.id,
-        )
       : undefined;
   const evaShipPose = ship
     ? {
@@ -459,43 +456,41 @@ export default function App({
       : outputs;
   }
 
-  const evaModel = evaModelOfDocument(constructionInstance?.documentJson);
   const evaView =
-    evaBody && evaShipPose
-      ? evaScene(evaBody, evaShipPose, evaModel, !!evaCycle)
+    evaBody && evaShipPose ? evaScene(evaBody, evaShipPose) : undefined;
+  const evaSuitRow =
+    c && actor
+      ? [...c.db.ownEvaSuit.iter()].find((r) => r.characterId === actor.id)
       : undefined;
-  const evaAction = evaAirlockAction({
-    shipId: actor?.shipId,
-    model: evaModel,
+  // Ship logic (wiki Systems/Ship Logic): wall buttons, door states and status lights.
+  const logicModel = logicModelOfDocument(constructionInstance?.documentJson);
+  const logicRows = c ? [...c.db.visibleShipLogic.iter()] : [];
+  const logicShipId = constructionInstance?.id;
+  const evaAction = logicButtonAction({
+    shipId: logicShipId,
+    logic: logicModel,
     aboard:
       actor && constructionVisit && !evaBody
-        ? { localX: actor.localX, localY: actor.localY }
+        ? [actor.localX, actor.localY]
         : undefined,
-    eva: evaView,
-    cycle: evaCycle,
+    outside: evaView?.local ? [evaView.localX, evaView.localY] : undefined,
   });
+  const logicDoors = logicDoorStates(logicRows, logicShipId, logicModel);
   const evaNowMicros = BigInt(Math.round(Date.now() * 1000));
   const evaHud = evaBody
     ? {
-        label: evaStatusLabel(evaBody, evaCycle, evaShipPose, evaNowMicros),
-        help: evaBody.phase === "maglocked" ? EVA_MAGLOCK_HELP : EVA_HELP,
-        maglock: evaCanMaglock(evaBody, evaShipPose, evaModel),
+        label: evaStatusLabel(evaBody, evaShipPose, evaNowMicros, evaSuitRow),
+        help: EVA_HELP,
+        maglock: false,
         stranded: evaBody.stranded,
         beacon: evaBody.returnEndsMicros > 0n,
       }
-    : evaCycle
-      ? {
-          label: `Airlock cycling out · ${Math.max(0, Math.ceil(Number(evaCycle.endsMicros - evaNowMicros) / 1e6))} s`,
-          help: "E cancel the cycle",
-          maglock: false,
-          stranded: false,
-          beacon: false,
-        }
-      : undefined;
+    : undefined;
+  const evaLocal = !!evaView?.local;
   useEffect(() => {
-    // The EVA camera is the top-down space view; coming back aboard returns to the deck.
-    setInterior(!evaBody);
-  }, [!!evaBody]);
+    // Same plane: next to the loaded ship the deck view continues; far out, the top-down view.
+    setInterior(!evaBody || evaLocal);
+  }, [!!evaBody, evaLocal]);
   const station = (
     c && ship
       ? [...c.db.ownStations.iter()].find((row) => row.shipId === ship.id)
@@ -583,8 +578,30 @@ export default function App({
             !row.parentItemId && row.kind === "grid" && row.placedObjectId,
         )
       : undefined;
-  const interactionPrompt =
-    evaAction && (evaBody || evaCycle || !contextObject)
+  // Vacuum needs the EVA suit (pressure suit, helmet, jetpack): the server refuses the same.
+  const suitRefusal = evaSuitRefusalOf(inventory.items);
+  const suitPrompt =
+    suitRefusal && !evaBody
+      ? (evaAction &&
+          buttonDepressurises(
+            logicModel,
+            logicRows,
+            logicShipId,
+            evaAction.deviceId,
+          )) ||
+        (actor &&
+          constructionVisit &&
+          atOpenHatch(
+            evaModelOfDocument(constructionInstance?.documentJson),
+            logicDoors,
+            [actor.localX, actor.localY],
+          ))
+        ? suitRefusal
+        : undefined
+      : undefined;
+  const interactionPrompt = suitPrompt
+    ? suitPrompt
+    : evaAction && (evaBody || !contextObject)
       ? evaAction.label
       : contextObject
         ? interactionLabel(contextObject)
@@ -849,6 +866,9 @@ export default function App({
     storageId: reachableStorage?.id,
     evaAction,
     evaPhase: evaView?.phase,
+    evaLocal: false,
+    evaFrameHeading: 0,
+    evaSuitMode: "hold",
     evaBeaconAvailable: false,
     shipHeading: 0,
   });
@@ -866,11 +886,24 @@ export default function App({
     storageId: reachableStorage?.id,
     evaAction,
     evaPhase: evaView?.phase,
+    evaLocal,
+    // The body's heading in its current frame (the facing fallback when there is no pointer).
+    evaFrameHeading: evaBody
+      ? evaLocal
+        ? evaBody.localHeading
+        : evaBody.heading
+      : 0,
+    evaSuitMode: evaSuitRow?.mode ?? "hold",
     evaBeaconAvailable:
       !!evaBody && (evaBody.stranded || evaBody.returnEndsMicros > 0n),
     shipHeading: evaShipPose?.heading ?? 0,
   };
   const actionPending = useRef(false);
+  /** EVA suit controls last sent (facing throttle) and the local stabiliser toggle. */
+  const suitSent = useRef<
+    { facing: number; mode: string; active: boolean; at: number } | undefined
+  >(undefined);
+  const suitMode = useRef<string | undefined>(undefined);
   const perform = async (action: () => Promise<unknown>) => {
     if (actionPending.current || !live.current.ready) return;
     actionPending.current = true;
@@ -993,9 +1026,9 @@ export default function App({
       (live.current.evaPhase || !row)
     )
       void perform(() =>
-        current.reducers.evaCycleAirlock({
+        current.reducers.pressShipButton({
           shipId: eva.shipId,
-          airlockId: eva.airlockId,
+          deviceId: eva.deviceId,
         }),
       );
     else if (row) objectCommand(interactionAction(row), row.placementId);
@@ -1524,23 +1557,19 @@ export default function App({
       y: staticConstruction ? 0 : (ship?.y ?? 0),
       localX: evaView?.localX ?? actor?.localX ?? 0,
       localY: evaView?.localY ?? actor?.localY ?? PILOT_LAYOUT.station.y,
-      interior: interior && !evaView,
+      interior: interior && (!evaView || evaView.local),
       eva: evaView ?? null,
-      airlockCycle: evaCycle
-        ? {
-            airlockId: evaCycle.airlockId,
-            direction: evaCycle.direction,
-            startedMicros: evaCycle.startedMicros,
-            endsMicros: evaCycle.endsMicros,
-          }
-        : null,
+      airlockCycle: null,
+      shipLogic: {
+        doors: logicDoors,
+        panels: logicPanelLights(logicRows, logicShipId),
+      },
       evaBodies:
         ready && c && actor?.connected && evaShipPose
           ? evaBodiesForScene(
               c.db.visibleEvaBodies.iter(),
               actor.id,
               evaShipPose,
-              evaModel,
               presentationLook,
             )
           : [],
@@ -1625,16 +1654,52 @@ export default function App({
       if (blocked) keys.clear();
       const evaPhase = live.current.evaPhase;
       if (evaPhase) {
-        // Outside the hull: jetpack (throttle/turn/strafe) or maglocked walking (ship-local).
+        // Outside the hull (suit IFCS, wiki Systems/EVA): the pointer is the facing the suit
+        // turns to through torque; W/S thrust toward/away from it, A/D strafe. Intent only.
+        const mode = suitMode.current ?? live.current.evaSuitMode;
+        const free = mode === "free";
+        // Free (Newtonian) mode: no pointer facing; thrust along the body and A/D spin it.
+        const pointer = free ? undefined : view.current?.pointerDirection();
+        const aim = pointer
+          ? Math.atan2(-pointer[0], pointer[1]) +
+            (live.current.evaLocal ? 0 : live.current.shipHeading)
+          : undefined;
+        const facing = aim !== undefined ? aim : live.current.evaFrameHeading;
         transmitter.offer(
           c,
-          evaIntent(keys, evaPhase, blocked, (h, v) =>
-            screenToShipTopDown(h, v, live.current.shipHeading),
-          ),
-          evaPhase === "free",
+          evaThrustFromKeys(keys, facing, blocked, free),
+          false,
         );
+        const now = performance.now();
+        const last = suitSent.current;
+        const turned =
+          !last ||
+          Math.abs(
+            Math.atan2(
+              Math.sin(facing - last.facing),
+              Math.cos(facing - last.facing),
+            ),
+          ) > 0.02;
+        if (
+          !last ||
+          last.mode !== mode ||
+          last.active !== (aim !== undefined) ||
+          (turned && now - last.at > 100)
+        ) {
+          suitSent.current = {
+            facing,
+            mode,
+            active: aim !== undefined,
+            at: now,
+          };
+          void c.reducers
+            .evaSetSuit({ mode, facing, facingActive: aim !== undefined })
+            .catch(() => undefined);
+        }
         return;
       }
+      suitSent.current = undefined;
+      suitMode.current = undefined;
       const intent = gameplayIntent(keys, seated, interior, blocked);
       const walk = view.current?.screenToDeck(
         intent.horizontal,
@@ -1670,15 +1735,19 @@ export default function App({
         if (
           !e.repeat &&
           live.current.actor?.shipId !== "" &&
-          !live.current.evaPhase
+          (!live.current.evaPhase || live.current.evaLocal)
         )
           setInterior((v) => !v);
         return;
       }
-      if (e.code === "KeyM" && !e.repeat && live.current.evaPhase) {
+      if (e.code === "KeyX" && !e.repeat && live.current.evaPhase) {
+        // Suit stabiliser: hold (kill rotation and relative drift) or free (pure momentum).
         e.preventDefault();
-        const current = connection.current;
-        if (current) void perform(() => current.reducers.evaToggleMaglock({}));
+        suitMode.current =
+          (suitMode.current ?? live.current.evaSuitMode) === "free"
+            ? "hold"
+            : "free";
+        send();
         return;
       }
       if (e.code === "KeyB" && !e.repeat && live.current.evaBeaconAvailable) {
