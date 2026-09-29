@@ -72,6 +72,39 @@ test("pulling the trigger on an empty weapon reloads it instead of firing", asyn
   input.dispose();
 });
 
+test("a running reload holds fire (the view reports a reloading weapon as full)", async () => {
+  const state: CombatInputState = {
+    active: true,
+    allowed: true,
+    blocked: false,
+    weapon: {
+      itemId: "gun",
+      revision: 2n,
+      energy: 100,
+      shotCost: 10,
+      cooldownMs: 0,
+      capacity: 100,
+      canReload: true,
+      reloading: true,
+    },
+  };
+  const fire = vi.fn(async () => {});
+  const input = createCombatInput({
+    state: () => state,
+    aim: () => 0.5,
+    sendAim: async () => {},
+    fire,
+    error: () => {},
+  });
+  input.trigger(true);
+  await input.tick();
+  expect(fire).not.toHaveBeenCalled();
+  state.weapon!.reloading = false;
+  await input.tick();
+  expect(fire).toHaveBeenCalledTimes(1);
+  input.dispose();
+});
+
 test("the HUD says reloading, the weapon mode, or 'not yet usable' for held tools", () => {
   const until = { current: 0 },
     seen = { current: undefined as bigint | undefined };

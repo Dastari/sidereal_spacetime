@@ -1796,6 +1796,8 @@ export default function App({
                 cooldownMs: row.cooldownMs,
                 capacity: row.capacity,
                 canReload: !!LAB_WEAPONS[row.weaponDefinitionId]?.reloadMs,
+                // The view shows a reloading weapon as full; hold fire until it completes.
+                reloading: reloadingUntil.current > performance.now(),
               }
             : undefined,
         };

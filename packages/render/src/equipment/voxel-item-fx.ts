@@ -61,6 +61,7 @@ interface Live {
   t: number;
   lengthScale: number;
   size: number;
+  shown?: boolean;
   /** Projectiles travel from `from` to `to` at the authored speed, then end. */
   travel?: { from: Vector3; to: Vector3; length: number; speed: number };
   /** Looping effects (beam lance) end after this many seconds. */
@@ -98,6 +99,8 @@ export function createVoxelFxPlayer(
     onMesh?: (mesh: AbstractMesh) => void;
     /** At most this many live effects; the oldest end first. */
     maxLive?: number;
+    /** Presentation time scale (review slow motion); 1 = real time. */
+    timeScale?: number;
   } = {},
 ) {
   const base = options.baseUrl ?? CREW_ITEM_CATALOG.assetBase;
@@ -125,11 +128,16 @@ export function createVoxelFxPlayer(
     fx.root.dispose(false, true);
     fx.onEnd?.();
   };
+  const timeScale = options.timeScale ?? 1;
   const observer = scene.onBeforeRenderObservable.add(() => {
-    const dt = Math.min(scene.getEngine().getDeltaTime() / 1000, 0.1);
+    const dt =
+      Math.min(scene.getEngine().getDeltaTime() / 1000, 0.1) * timeScale;
     for (let i = live.length - 1; i >= 0; i--) {
       const fx = live[i];
-      fx.t += dt;
+      // The first rendered frame shows the effect as spawned: on a slow client a flash shorter
+      // than one frame (muzzle flash 70 ms) or a fast tracer would otherwise never be seen.
+      if (fx.shown) fx.t += dt;
+      fx.shown = true;
       let finished = false;
       if (fx.travel) {
         const d = Math.min(fx.travel.length, fx.t * fx.travel.speed);

@@ -11,6 +11,8 @@ export type CombatInputState = {
     cooldownMs: number;
     /** The weapon accepts a manual reload (a cell or magazine swap). */
     canReload?: boolean;
+    /** An accepted reload is still running: the server refuses fire until it completes. */
+    reloading?: boolean;
     /** Capacity, so a full weapon is not asked to reload. */
     capacity?: number;
   };
@@ -43,6 +45,7 @@ export function createCombatInput(options: {
     if (
       !options.reload ||
       !weapon?.canReload ||
+      weapon.reloading ||
       !active() ||
       (weapon.capacity !== undefined && weapon.energy >= weapon.capacity) ||
       now() - lastReload < 1000
@@ -64,7 +67,13 @@ export function createCombatInput(options: {
       const weapon = options.state().weapon;
       const pressed = !!weapon && pendingPress === weapon.itemId;
       pendingPress = undefined;
-      if (aiming && active() && (held || pressed) && weapon) {
+      if (
+        aiming &&
+        active() &&
+        (held || pressed) &&
+        weapon &&
+        !weapon.reloading
+      ) {
         if (weapon.energy < weapon.shotCost) {
           // Pulling the trigger on an empty weapon reloads it where the weapon allows.
           await reload();

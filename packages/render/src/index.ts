@@ -314,6 +314,12 @@ async function buildWorld(
     recoveringWebGL ? "WebGL recovery mode." : createdEngine.reason,
   );
   const scene = new Scene(engine);
+  // Review aid: `?slowmo=0.25` plays crew clips, draw/holster and weapon effects at that fraction
+  // of real time (presentation only; the server clock is unaffected).
+  const slowmo = Number(pageUrl?.searchParams.get("slowmo"));
+  const presentationScale = slowmo > 0.02 && slowmo < 1 ? slowmo : 1;
+  scene.animationTimeScale = presentationScale;
+  const presentationNow = () => performance.now() * presentationScale;
   const transmissionLifecycle = maintainSceneTransmission(scene);
   // Object selection performs one explicit click ray; camera/HUD use DOM input.
   scene.skipPointerMovePicking = true;
@@ -537,6 +543,7 @@ async function buildWorld(
           reducedMotion: () => !!state.reducedMotion,
           // The first item of a session is already in hand; later changes draw and holster.
           instant: () => firstFrame,
+          now: presentationNow,
         });
       } else {
         const legacy = await createCrewVisual(
@@ -842,6 +849,7 @@ async function buildWorld(
   const fxPlayer = heldItem
     ? createVoxelFxPlayer(scene, shipRoot, {
         onMesh: (mesh) => glow.addIncludedOnlyMesh(mesh as Mesh),
+        timeScale: presentationScale,
       })
     : undefined;
   const combatFx = fxPlayer
