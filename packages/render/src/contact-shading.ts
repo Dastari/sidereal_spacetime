@@ -5,9 +5,10 @@
  * - screen-space at half resolution through Babylon's pre-pass renderer (depth and normals come
  *   from the main pass's extra render targets, so no geometry is drawn twice; the cost is four
  *   full-screen passes);
- * - off with `?ao=0` or localStorage `sidereal.contactShading.v1 = "off"`, and automatically off
- *   where the pre-pass renderer is unsupported or while SSAA/TAA own the scene target (they size
- *   and jitter it differently);
+ * - OFF by default since the owner's live frame-rate report (2026-09-29); switched live from the
+ *   F3 debug window or `?ao=1` (render-quality.ts), and automatically off where the pre-pass
+ *   renderer is unsupported or while SSAA/TAA own the scene target (they size and jitter it
+ *   differently);
  * - MSAA coverage moves to the pre-pass target (same sample count as the antialiasing plan).
  *
  * Presentation only.
@@ -37,23 +38,6 @@ export const CONTACT_SHADING = {
   minZAspect: 0.3,
 } as const;
 
-export const CONTACT_SHADING_STORAGE_KEY = "sidereal.contactShading.v1";
-
-/** Preference: on unless the URL (`ao=0`) or stored preference turns it off. */
-export function contactShadingRequested(
-  storage: Pick<Storage, "getItem"> | undefined,
-  search = "",
-) {
-  const query = new URLSearchParams(search).get("ao");
-  if (query === "0" || query === "off") return false;
-  if (query === "1" || query === "on") return true;
-  try {
-    return storage?.getItem(CONTACT_SHADING_STORAGE_KEY) !== "off";
-  } catch {
-    return true;
-  }
-}
-
 /** Antialiasing modes whose scene target can be shared with the pre-pass renderer. */
 export function contactShadingCompatible(mode: string) {
   return (
@@ -64,6 +48,8 @@ export function contactShadingCompatible(mode: string) {
 export interface ContactShading {
   /** Whether the SSAO pipeline is currently attached. */
   readonly active: boolean;
+  /** Whether SSAO is wanted (it still steps aside under TAA/SSAA). Applied on the next frame. */
+  enabled: boolean;
   dispose(): void;
 }
 
@@ -77,7 +63,8 @@ export function createContactShading(
 ): ContactShading {
   let pipeline: SSAO2RenderingPipeline | undefined;
   let samples = 0;
-  const supported = enabled && SSAO2RenderingPipeline.IsSupported;
+  let wanted = enabled;
+  const supported = SSAO2RenderingPipeline.IsSupported;
   const attach = () => {
     const p = new SSAO2RenderingPipeline(
       "molded-contact-shading",
@@ -103,7 +90,7 @@ export function createContactShading(
   const frame = supported
     ? scene.onBeforeRenderObservable.add(() => {
         const plan = antialiasing.snapshot().effective;
-        const want = contactShadingCompatible(plan.mode);
+        const want = wanted && contactShadingCompatible(plan.mode);
         if (want && !pipeline) pipeline = attach();
         else if (!want && pipeline) detach();
         // MSAA coverage now lives on the pre-pass target.
@@ -117,6 +104,12 @@ export function createContactShading(
   return {
     get active() {
       return !!pipeline;
+    },
+    get enabled() {
+      return wanted;
+    },
+    set enabled(value: boolean) {
+      wanted = value;
     },
     dispose() {
       if (frame) scene.onBeforeRenderObservable.remove(frame);

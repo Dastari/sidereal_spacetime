@@ -100,7 +100,7 @@ export function roleSlotMaterial(
     m.albedoColor = new Color3(0.35, 0.002, 0.006);
     m.emissiveColor = new Color3(1, 0.008, 0.025);
     m.emissiveIntensity = 1.3;
-    applySurfaceFinish(m, "emissive");
+    applySurfaceFinish(m, "emissive", { recaptureBase: true });
     p.set(key, m);
     return m;
   }
@@ -118,9 +118,16 @@ export function roleSlotMaterial(
   const base = slotMaterial(scene, theme, slot);
   const m = base.clone(`prefab-${theme}-${role}-${slot}`) as PBRMaterial;
   m.albedoColor = new Color3(...colour);
+  // Pre-finish response (the game's pre-#59 interior settings), restored when the F3 debug window
+  // turns the plastic finish off.
+  m.roughness = role === "floor" ? 0.62 : 0.55;
+  m.metallic = role === "floor" ? 0.12 : 0.05;
+  m.environmentIntensity = role === "floor" || role === "wall" ? 1.6 : 1;
   // Interior finishes are the same moulded plastic as the hull (one material language); only
   // the colour differs. Re-applied because a clone does not share the grading configuration.
-  applySurfaceFinish(m, shipSlotFamily(slot) ?? "plastic-light");
+  applySurfaceFinish(m, shipSlotFamily(slot) ?? "plastic-light", {
+    recaptureBase: true,
+  });
   p.set(key, m);
   return m;
 }
@@ -139,6 +146,10 @@ export function slotMaterial(
   const m = new PBRMaterial(`prefab-${theme}-${slot}`, scene);
   m.maxSimultaneousLights = 12; // up to 8 room lights plus scene key/fill lights
   m.albedoColor = new Color3(...t.colour);
+  // Pre-finish response (the theme table, metalness capped at the game's pre-#59 0.2 because the
+  // space scene's IBL is dim), restored when the F3 debug window turns the plastic finish off.
+  m.metallic = Math.min(t.metallic, 0.2);
+  m.roughness = t.roughness;
   // Response (metallic, roughness, coat, IOR, reflection environment, grading) comes from the
   // shared molded-plastic family of the slot; the theme table supplies colour and emission.
   applySurfaceFinish(m, shipSlotFamily(slot) ?? "plastic-light");

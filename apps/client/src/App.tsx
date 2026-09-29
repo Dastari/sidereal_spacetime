@@ -1176,6 +1176,8 @@ export default function App({
                   diagnosticsToggle: (key) =>
                     view.current?.toggleDebugFeature(key),
                   diagnosticsReset: () => view.current?.resetDebugFeatures(),
+                  diagnosticsQuality: (patch) =>
+                    view.current?.setRenderQuality(patch),
                   focusDestination: (id) => view.current?.focusBody(id),
                   crew: saveAppearance,
                   graphics: (patch) => {

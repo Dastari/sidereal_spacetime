@@ -147,6 +147,9 @@ export type GameUIActions = {
   diagnostics?: (enabled: boolean) => RenderDiagnostics | undefined;
   diagnosticsToggle?: (key: import("./diagnostics").DebugFeature) => void;
   diagnosticsReset?: () => void;
+  diagnosticsQuality?: (
+    patch: Partial<import("@sidereal/render/render-quality").RenderQuality>,
+  ) => void;
   view: () => void;
   station: () => void;
   enter: (name: string) => void;
@@ -171,7 +174,11 @@ export function createGameUI(
     ui,
     actions.diagnostics,
     actions.diagnosticsToggle || actions.diagnosticsReset
-      ? { toggle: actions.diagnosticsToggle, reset: actions.diagnosticsReset }
+      ? {
+          toggle: actions.diagnosticsToggle,
+          reset: actions.diagnosticsReset,
+          quality: actions.diagnosticsQuality,
+        }
       : undefined,
   );
   const objectDetails = actions.objectDetails

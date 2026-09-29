@@ -95,11 +95,22 @@ import { createVoxelFxPlayer } from "./equipment/voxel-item-fx";
 import { createCombatFx, type CombatActionState } from "./combat-fx";
 export type { RemoteCrewState } from "./crew/remote-crew";
 export type { CombatActionState } from "./combat-fx";
-import { moldedLightRig, setMoldedClearCoat } from "./molded-plastic";
 import {
-  contactShadingRequested,
-  createContactShading,
-} from "./contact-shading";
+  moldedLightRig,
+  refreshMoldedFinishes,
+  setMoldedClearCoat,
+  setMoldedFinishEnabled,
+} from "./molded-plastic";
+import { createContactShading } from "./contact-shading";
+import {
+  applyRenderQualityQuery,
+  hardwareScalingForRenderScale,
+  normalizeRenderQuality,
+  readStoredRenderQuality,
+  RENDER_QUALITY_DEFAULTS,
+  writeRenderQuality,
+  type RenderQuality,
+} from "./render-quality";
 import {
   createVoxelCrewOutfit,
   toneCrewEmissive,
@@ -291,8 +302,14 @@ async function buildWorld(
   const requestedBackend = readRenderBackend(backendStorage);
   const pageUrl =
     typeof window === "undefined" ? undefined : new URL(window.location.href);
-  // Molded-plastic clear-coat lobe: off by default for cost (molded-plastic.ts); ?coat=1 reviews it.
-  setMoldedClearCoat(pageUrl?.searchParams.get("coat") === "1");
+  // Render-cost switches of the F3 debug window (render-quality.ts): saved preference plus review
+  // URL overrides (?ao=, ?coat=, ?plastic=, ?glow=, ?renderScale=). SSAO is off by default.
+  let renderQuality: RenderQuality = applyRenderQualityQuery(
+    readStoredRenderQuality(backendStorage),
+    pageUrl?.search,
+  );
+  setMoldedClearCoat(renderQuality.clearCoat);
+  setMoldedFinishEnabled(renderQuality.plastic);
   const recoveringWebGL =
     pageUrl?.searchParams.get("rendererFallback") === "webgl";
   const createdEngine = await createRenderEngine(
@@ -802,8 +819,36 @@ async function buildWorld(
     scene,
     camera,
     antialiasing,
-    contactShadingRequested(backendStorage, pageUrl?.search),
+    renderQuality.ssao,
   );
+  /** Apply (live) and save the F3 render-cost switches. Presentation only. */
+  function applyRenderQuality(next: RenderQuality) {
+    const previous = renderQuality;
+    renderQuality = normalizeRenderQuality(next);
+    writeRenderQuality(backendStorage, renderQuality);
+    contactShading.enabled = renderQuality.ssao;
+    if (
+      previous.plastic !== renderQuality.plastic ||
+      previous.clearCoat !== renderQuality.clearCoat
+    ) {
+      setMoldedFinishEnabled(renderQuality.plastic);
+      setMoldedClearCoat(renderQuality.clearCoat);
+      refreshMoldedFinishes(scene);
+    }
+    if (debugFeatures.snapshot().glow !== renderQuality.glow)
+      debugFeatures.toggle("glow");
+    if (previous.renderScale !== renderQuality.renderScale) {
+      engine.setHardwareScalingLevel(
+        hardwareScalingForRenderScale(renderQuality.renderScale),
+      );
+      resizePending = true;
+    }
+    fastSnapshot?.invalidate();
+    flightActiveSet.invalidate();
+    invalidateStaticMaterials(scene);
+    antialiasing.resetHistory();
+  }
+  if (!renderQuality.glow) debugFeatures.toggle("glow");
   // A reconstructed scene starts with fresh history. Newly loaded geometry also
   // invalidates samples; this covers remote exteriors and async equipment.
   let temporalGeometryDirty = false;
@@ -917,6 +962,9 @@ async function buildWorld(
   let focusedBodyId: string | undefined;
   const observation = createObservationCamera();
   let resizePending = true;
+  engine.setHardwareScalingLevel(
+    hardwareScalingForRenderScale(renderQuality.renderScale),
+  );
   // Resize clears WebGL's drawing buffer. Keep that clear in the render frame
   // that immediately redraws the scene and HUD, never in ResizeObserver's turn.
   const resize = () => {
@@ -1571,6 +1619,7 @@ async function buildWorld(
       return snapshot
         ? {
             ...snapshot,
+            renderQuality: { ...renderQuality },
             ...fastSnapshot?.activeStats(),
             renderBackend: createdEngine.active,
             snapshotRendering: fastSnapshot?.snapshot(),
@@ -1587,13 +1636,22 @@ async function buildWorld(
       invalidateStaticMaterials(scene);
       debugFeatures.toggle(key);
       antialiasing.resetHistory();
+      if (key === "glow") {
+        renderQuality = { ...renderQuality, glow: debugFeatures.snapshot().glow };
+        writeRenderQuality(backendStorage, renderQuality);
+      }
     },
     resetDebugFeatures() {
       fastSnapshot?.invalidate();
       flightActiveSet.invalidate();
       invalidateStaticMaterials(scene);
       debugFeatures.reset();
-      antialiasing.resetHistory();
+      applyRenderQuality({ ...RENDER_QUALITY_DEFAULTS });
+    },
+    /** F3 render-cost switches (plastic, SSAO, clear coat, glow, render scale): live and saved. */
+    renderQuality: () => ({ ...renderQuality }),
+    setRenderQuality(patch: Partial<RenderQuality>) {
+      applyRenderQuality({ ...renderQuality, ...patch });
     },
     groundItemLabels: () => groundItems.labels(),
     getSharedWorldDiagnostics: () => ({

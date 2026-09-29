@@ -18,6 +18,7 @@
     "./layout-plane-projection": "./src/layout-plane-projection.ts",
     "./antialiasing-settings": "./src/antialiasing-settings.ts",
     "./graphics-settings": "./src/graphics-settings.ts",
+    "./render-quality": "./src/render-quality.ts",
     "./local-light-budget": "./src/local-light-budget.ts",
     "./layout-assembly-preview": "./src/layout-assembly-preview.ts",
     "./diagnostics": "./src/diagnostics.ts",

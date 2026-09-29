@@ -21,6 +21,7 @@ export type RenderDiagnostics = {
     enabledShadowLights: number;
   };
   debugFeatures?: import("./debug-features").DebugFeatures;
+  renderQuality?: import("./render-quality").RenderQuality;
   fps: number;
   frameMs: number;
   renderCpuMs: number;

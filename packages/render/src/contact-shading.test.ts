@@ -5,24 +5,11 @@ import { ArcRotateCamera } from "@babylonjs/core/Cameras/arcRotateCamera";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import {
   CONTACT_SHADING,
-  CONTACT_SHADING_STORAGE_KEY,
   contactShadingCompatible,
-  contactShadingRequested,
   createContactShading,
 } from "./contact-shading";
 
-const store = (value: string | null) => ({ getItem: () => value });
-
 describe("contact shading preference", () => {
-  it("defaults on and honours the stored and URL switches", () => {
-    expect(contactShadingRequested(undefined)).toBe(true);
-    expect(contactShadingRequested(store(null))).toBe(true);
-    expect(contactShadingRequested(store("off"))).toBe(false);
-    expect(contactShadingRequested(store("off"), "?ao=1")).toBe(true);
-    expect(contactShadingRequested(store(null), "?x=1&ao=0")).toBe(false);
-    expect(CONTACT_SHADING_STORAGE_KEY).toMatch(/contactShading/);
-  });
-
   it("only shares the scene target with non-temporal, non-supersampled antialiasing", () => {
     for (const mode of ["off", "msaa", "fxaa", "msaa-fxaa"])
       expect(contactShadingCompatible(mode)).toBe(true);
@@ -51,7 +38,14 @@ describe("contact shading preference", () => {
     );
     scene.render();
     expect(shading.active).toBe(false);
+    expect(shading.enabled).toBe(false);
     expect(scene.prePassRenderer).toBeFalsy();
+    // Live switch (F3 debug window): the wish is recorded; attachment follows on the next frame.
+    shading.enabled = true;
+    expect(shading.enabled).toBe(true);
+    shading.enabled = false;
+    scene.render();
+    expect(shading.active).toBe(false);
     shading.dispose();
     scene.dispose();
     engine.dispose();
