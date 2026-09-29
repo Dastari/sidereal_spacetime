@@ -40,6 +40,8 @@ export interface ShipComponentLike {
   weapon?: { arcDeg: number; trackingDegPerS?: number; rangeM: number } | null;
   sensor?: { arcDeg: number; rangeM: number } | null;
   control: { grants: string } | null;
+  /** Service ports; a `data` port admits logic actuation (ship logic). */
+  ports?: readonly { channel: string }[];
   art: { glb: string | null; artLibraryDesignId: string | null };
 }
 
@@ -115,6 +117,7 @@ export function prefabSpecFromComponent(
         : c.crew.station
       : null,
     berths: c.crew.berths,
+    ...(c.ports?.some((p) => p.channel === "data") ? { dataPort: true } : {}),
     visual: visual?.(c),
   };
 }

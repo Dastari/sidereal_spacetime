@@ -14,6 +14,8 @@
     "./combat": "./src/combat.ts",
     "./combat-damage": "./src/combat-damage.ts",
     "./eva": "./src/eva.ts",
+    "./ship-logic": "./src/ship-logic.ts",
+    "./ship-logic-model": "./src/ship-logic-model.ts",
     "./construction-transactions": "./src/construction-transactions.ts",
     "./construction-boundaries": "./src/construction-boundaries.ts",
     "./construction-roofs": "./src/construction-roofs.ts",

@@ -204,6 +204,8 @@ import * as combatDamage from "./combat-damage";
 import * as characterDeath from "./character-death";
 import * as eva from "./eva";
 import { evaBody, evaAirlockCycle } from "./eva-tables";
+import * as shipLogic from "./ship-logic";
+import { shipLogicState, shipLogicTimer } from "./ship-logic-tables";
 import { characterVitals, shipComponentDamage } from "./combat-damage-tables";
 import { alignPilotLayout } from "./pilot-layout";
 import { pilotLayoutReceipt } from "./pilot-layout-tables";
@@ -329,6 +331,8 @@ const movementTimer = table(
 const db = schema({
   evaBody,
   evaAirlockCycle,
+  shipLogicState,
+  shipLogicTimer,
   systemZone,
   shipZoneState,
   constructionCargoAssembly,
@@ -843,7 +847,9 @@ export const stepWorld = db.reducer(
         );
       },
     });
-    // EVA after the ships moved: cycles, jetpack flight and maglocked walking (eva.ts).
+    // Ship logic timers (airlock stages, door close retries), then EVA after the ships moved:
+    // ride-along, jetpack flight, hull contact and doorway hand-offs (eva.ts).
+    shipLogic.stepShipLogic(ctx);
     eva.stepEva(ctx);
     // Legacy rows remain preserved for explicit validated migration. A missing
     // shared admission/compiled definition may never invoke fixture flight.
@@ -866,9 +872,8 @@ export const stepWorld = db.reducer(
         seat?.occupantId !== actor.id &&
         !ctx.db.couchSeat.characterId.find(actor.id) &&
         !combatDamage.isDead(ctx, actor.id) &&
-        // EVA bodies move in eva.stepEva; a character cycling an airlock holds still.
+        // EVA bodies move in eva.stepEva.
         !eva.isInEva(ctx.db, actor.id) &&
-        !eva.isCyclingAirlock(ctx.db, actor.id) &&
         command &&
         ctx.timestamp.microsSinceUnixEpoch - command.updatedMicros < 300000n &&
         (command.dx !== 0 || command.dy !== 0);
@@ -877,6 +882,8 @@ export const stepWorld = db.reducer(
           ctx.db.character.id.update({ ...actor, sprinting: false });
         continue;
       }
+      // Same-plane EVA: pushing out through an open exterior door steps outside (eva.ts).
+      if (eva.tryStepOut(ctx, actor, command)) continue;
       if (
         constructionInstances.stepActor(
           ctx,
@@ -1075,7 +1082,27 @@ export const visibleCombatActions = db.view(
   ),
 );
 
-/** EVA milestone 1 (additive, 2026-09-29): airlock cycle, maglock, emergency return; see eva.ts. */
+/**
+ * Ship logic (EVA milestone 2, additive): proximity E on a wall button; device states for the
+ * ships the viewer is at. Wiki `Systems/Ship Logic`.
+ */
+export const pressShipButton = db.reducer(
+  { shipId: t.string(), deviceId: t.string() },
+  auth.gameAction(
+    (ctx, args) =>
+      shipLogic.pressShipButton(ctx, args, (actorId, shipId) =>
+        eva.exteriorPanelAllowed(ctx, actorId, shipId),
+      ),
+    true,
+  ),
+);
+export const visibleShipLogic = db.view(
+  { name: "visible_ship_logic", public: true },
+  t.array(shipLogic.visibleShipLogicProjection),
+  auth.gameView(shipLogic.visibleShipLogic),
+);
+
+/** EVA (milestone 1 reducers kept for compatibility; milestone 2 same-plane model): see eva.ts. */
 export const evaCycleAirlock = db.reducer(
   { shipId: t.string(), airlockId: t.string() },
   auth.gameAction(eva.cycleAirlock, true),

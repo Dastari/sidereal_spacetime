@@ -1,8 +1,12 @@
 import { withBow } from "../bow-profiles";
 /** Federation (Orion Crest line): warm white, navy and crimson; tidy symmetric hulls. */
 import {
+  airlockController,
+  airlockLogic,
   armed,
+  button,
   door,
+  doorActuator,
   edge,
   face,
   module,
@@ -77,7 +81,9 @@ export const FED_WREN = prefab({
   edges: [
     door("d-engine", [3, 2], [3, 4], "door.sliding"),
     door("d-bunks", [5, 4], [7, 4]),
-    door("d-hold", [5, 2], [7, 2]),
+    // Revision 6 (2026-09-29, same-plane EVA): the hold is the airlock chamber, so its hall door
+    // is a sealed airlock door driven by the airlock controller.
+    door("d-hold", [5, 2], [7, 2], "door.airlock"),
     door("d-bridge", [8, 2], [8, 4], "door.sliding"),
     edge("g-bridge-s", [8, 0], [8, 2], "wall.glazed"),
     edge("g-bridge-p", [8, 4], [8, 7], "wall.glazed"),
@@ -116,9 +122,34 @@ export const FED_WREN = prefab({
   ],
   skylights: [],
   markings: { name: "WREN", number: "OC-11", emblem: "planet" },
+  // Revision 6 (2026-09-29, owner: "a proper button object on the wall inside and outside (with
+  // proximity E) ... wired to a proper logic system"): the hold is the airlock chamber between the
+  // hall door (inner) and the starboard hatch (outer). Buttons beside the hatch inside and outside
+  // cycle it; a hall button beside the hold door opens the inner side, so the crew is never locked
+  // out of the hold. One 3 s stage simulates (de)pressurisation. Wiki `Systems/Ship Logic`.
+  logic: (() => {
+    const inside = button("btn-lock-in", [7.5, 0], "port");
+    const outside = button("btn-lock-out", [7.5, 0], "starboard");
+    const hall = button("btn-hall", [7.5, 2], "port");
+    return {
+      devices: [
+        airlockController("lock", 3),
+        doorActuator("door-inner", "d-hold"),
+        doorActuator("door-outer", "airlock"),
+        inside,
+        outside,
+        hall,
+      ],
+      links: airlockLogic("lock", "door-inner", "door-outer", [
+        [inside, "cycle"],
+        [outside, "open_outer"],
+        [hall, "open_inner"],
+      ]),
+    };
+  })(),
 });
 
-FED_WREN.revision = 5;
+FED_WREN.revision = 6;
 
 /** Medium: the prototype Wayfarer-class corvette, re-cut on the 1 m grammar. */
 export const FED_CREST = prefab({

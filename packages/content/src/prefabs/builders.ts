@@ -3,6 +3,11 @@
  * (the same `ShipPrefabDocumentV1` the Shipyard edits), so everything built here can be
  * opened, edited and republished in the Shipyard.
  */
+import type {
+  LogicFacing,
+  PrefabLogicDevice,
+  PrefabLogicLink,
+} from "../ship-logic";
 import {
   G,
   insidePolygon,
@@ -275,4 +280,69 @@ export function prefab(
         }
       : {}),
   };
+}
+
+// ------------------------------------------------------------------ ship logic (wiki Systems/Ship Logic)
+
+/** A wall button on a wall line (0.25 m grid), facing the side it is pressed from. */
+export const button = (
+  id: string,
+  at: [number, number],
+  normal: LogicFacing,
+): PrefabLogicDevice => ({ id, kind: "button", at, normal });
+/** A door actuator on the door edge or edge mount `door`. */
+export const doorActuator = (id: string, door: string): PrefabLogicDevice => ({
+  id,
+  kind: "door",
+  door,
+});
+/** An airlock controller (one pressurise/depressurise stage = `cycleS`). */
+export const airlockController = (
+  id: string,
+  cycleS?: number,
+): PrefabLogicDevice => ({
+  id,
+  kind: "airlock-controller",
+  ...(cycleS === undefined ? {} : { cycleS }),
+});
+/** A wire `"device.port"` -> `"device.port"`; its id is derived from both ends. */
+export function wire(from: string, to: string): PrefabLogicLink {
+  const split = (s: string) => {
+    const i = s.lastIndexOf(".");
+    return { device: s.slice(0, i), port: s.slice(i + 1) };
+  };
+  const f = split(from),
+    t = split(to);
+  return {
+    id: `w.${f.device}.${f.port}.${t.device}.${t.port}`
+      .toLowerCase()
+      .replace(/_/g, "-"),
+    from: f,
+    to: t,
+  };
+}
+/**
+ * The standard airlock wiring: controller `ctl` drives door actuators `inner`/`outer` and reads
+ * their states; each button pulses the controller input it names; the controller's light drives
+ * every button's status light.
+ */
+export function airlockLogic(
+  ctl: string,
+  inner: string,
+  outer: string,
+  buttons: readonly [
+    PrefabLogicDevice,
+    "cycle" | "open_inner" | "open_outer",
+  ][],
+): PrefabLogicLink[] {
+  return [
+    wire(`${ctl}.inner`, `${inner}.command`),
+    wire(`${ctl}.outer`, `${outer}.command`),
+    wire(`${inner}.state`, `${ctl}.inner_state`),
+    wire(`${outer}.state`, `${ctl}.outer_state`),
+    ...buttons.flatMap(([b, input]) => [
+      wire(`${b.id}.pressed`, `${ctl}.${input}`),
+      wire(`${ctl}.light`, `${b.id}.light`),
+    ]),
+  ];
 }

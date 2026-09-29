@@ -25,6 +25,12 @@ export interface CrewWardrobeItem {
   colourway: string;
   /** Suit-layer tint of a uniform (undersuit) plus its department accent. */
   suit?: { primary: string; secondary: string; accent: string };
+  /**
+   * Space-suit boots with magnetic soles (EVA milestone 2, owner 2026-09-29: "mag locks ... part of
+   * all space suit boots (not shoes or clothing style boots)"). Only boots-slot items set it; the
+   * maglock works only inside ships for now (wiki `Systems/EVA`).
+   */
+  maglock?: boolean;
 }
 
 /** The four department uniforms of the r006 wardrobe: role undersuit + department accent. */
@@ -94,6 +100,23 @@ function accentFor(colourway: string) {
   return ACCENTS[colourway] ?? "#f3bb3c";
 }
 
+/** Space-suit gear (EVA): the mag boots of a space suit. The heavy mag-boot armour part. */
+function suitBoots(): CrewWardrobeItem {
+  const part = crewArmorPart("armor.boots.heavy");
+  if (!part || part.slot !== "boots")
+    throw new Error("wardrobe: armor.boots.heavy is not a boots part");
+  return {
+    id: "suit-boots",
+    name: "Space-suit mag boots",
+    slot: "boots",
+    massKg: part.massKg,
+    grid: [part.grid[0], part.grid[1]],
+    part: part.id,
+    colourway: "arctic",
+    maglock: true,
+  };
+}
+
 export const CREW_WARDROBE: readonly CrewWardrobeItem[] = [
   ...UNIFORMS.map(uniform),
   ...TIERS.flatMap(([tier, colourway, parts]) =>
@@ -112,6 +135,7 @@ export const CREW_WARDROBE: readonly CrewWardrobeItem[] = [
       };
     }),
   ),
+  suitBoots(),
 ];
 
 export const WARDROBE_DEFINITION_PREFIX = "wardrobe-";
@@ -120,6 +144,15 @@ export function crewWardrobeItem(id: string): CrewWardrobeItem | undefined {
     ? id.slice(WARDROBE_DEFINITION_PREFIX.length)
     : id;
   return CREW_WARDROBE.find((item) => item.id === key);
+}
+
+/**
+ * Maglock rule input: whether an equipped item (wardrobe id or inventory definition id) is a pair
+ * of space-suit boots. Clothing boots, shoes and armour boots are not.
+ */
+export function isMaglockBoots(id: string | null | undefined): boolean {
+  const item = id ? crewWardrobeItem(id) : undefined;
+  return !!item?.maglock && item.slot === "boots";
 }
 
 /**

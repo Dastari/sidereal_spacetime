@@ -76,6 +76,7 @@
     "./construction-grammar": "./src/construction-grammar.ts",
     "./construction-grammar.v1.json": "./src/construction-grammar.v1.json",
     "./ship-prefab": "./src/ship-prefab.ts",
+    "./ship-logic": "./src/ship-logic.ts",
     "./ship-mount-tiles": "./src/ship-mount-tiles.ts",
     "./ship-prefab-components": "./src/ship-prefab-components.ts",
     "./ship-prefab-catalog": "./src/ship-prefab-catalog.ts",

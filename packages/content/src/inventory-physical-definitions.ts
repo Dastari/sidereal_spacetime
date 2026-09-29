@@ -949,6 +949,15 @@ export const INVENTORY_PHYSICAL_DEFINITIONS: readonly FlightPhysicalDefinition[]
       centroid: [0, 0],
       inertiaKgM2: 0,
     },
+    // Space-suit mag boots (EVA milestone 2, 2026-09-29): wardrobe `suit-boots`, maglock soles.
+    {
+      id: "inventory:wardrobe-suit-boots",
+      revision: 1,
+      kind: "inventory",
+      massKg: 3.4,
+      centroid: [0, 0],
+      inertiaKgM2: 0,
+    },
     // r001 handhelds (batch A, 2026-09-29), v1 unit masses (inventory.ts HANDHELD_MASS_KG).
     {
       id: "inventory:pistol",

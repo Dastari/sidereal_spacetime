@@ -45,6 +45,7 @@ import {
 } from "@sidereal/sim/construction-door-motion";
 import { transformPoint } from "@sidereal/content/ship-layout";
 import { operation, receipt, requireGrant } from "./construction";
+import { logicOpeningStates } from "./ship-logic";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 /** Explicit development review interaction constants, not inferred asset ratings. */
@@ -171,14 +172,21 @@ export function constructionCollision(
   const doors = [...ctx.db.constructionDoor.by_deck.filter(deckId)].filter(
     (d) => d.instanceId === instance.id,
   );
+  const native = new Set(doors.map((d) => d.id));
+  // Prefab ships: doors actuated by ship logic (wiki Systems/Ship Logic) are walls while closed.
+  const logic = logicOpeningStates(
+    ctx.db,
+    instance.id,
+    new Set(base.openings.map((o) => o.id).filter((id) => !native.has(id))),
+  );
   const frame = addWayfarerRefitCollision(
     ctx,
     instance,
     deckId,
-    resolveDeckCollision(
-      base,
-      doors.map((d) => ({ openingId: d.id, passable: d.fraction === 1 })),
-    ),
+    resolveDeckCollision(base, [
+      ...doors.map((d) => ({ openingId: d.id, passable: d.fraction === 1 })),
+      ...logic,
+    ]),
   );
   const obstacles = doors.map((d) =>
     doorLeafObstacle(
