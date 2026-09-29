@@ -67,6 +67,7 @@ import { shipLogicModel } from "@sidereal/sim/ship-logic-model";
 import { characterTargets, damageCharacter, isDead } from "./combat-damage";
 import { stepRespawns } from "./character-death";
 import { lifecycleTestTables } from "./lifecycle-test-tables";
+import WREN_R6 from "./fixtures/fed-s-wren-r6.prefab.json";
 
 const catalog = defaultPrefabComponentCatalog();
 const wren = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
@@ -800,6 +801,111 @@ describe("ship impacts with leeway", () => {
     fixture();
     freeBodyBeside(20);
     expect(isDead(ctx, "cap")).toBe(true);
+  });
+});
+
+describe("ships without ship logic never strand anyone (live report 2026-09-29)", () => {
+  /** The ship becomes a logic-less Wren (r6 document; r2-r5 behave the same). */
+  function logicLess() {
+    const instance = ctx.db.constructionInstance.id.find("wren");
+    ctx.db.constructionInstance.id.update({
+      ...instance,
+      revision: instance.revision + 1n,
+      documentJson: JSON.stringify({
+        prefab: { document: WREN_R6, catalog: catalog.revision },
+      }),
+    });
+    const access = ctx.db.gameShipAccess.shipId.find("wren");
+    ctx.db.gameShipAccess.shipId.update({
+      ...access,
+      instanceRevision: instance.revision + 1n,
+    });
+  }
+  /** A milestone-1 spacewalker carried over the publish: outside, unsuited, near the hatch. */
+  function carriedOver(at: readonly [number, number]) {
+    ctx.db.constructionLocation.characterId.delete("cap");
+    ctx.db.evaBody.insert({
+      characterId: "cap",
+      owner,
+      systemId: "sol",
+      ...cell(at[0], at[1]),
+      phase: "free",
+      x: at[0],
+      y: at[1],
+      vx: 0,
+      vy: 0,
+      heading: 0,
+      anchorShipId: "",
+      localX: 0,
+      localY: 0,
+      localHeading: 0,
+      refShipId: "",
+      refVx: 0,
+      refVy: 0,
+      forward: 0,
+      strafe: 0,
+      turn: 0,
+      walking: false,
+      exitShipId: "wren",
+      visitId: "v-cap",
+      deckId: "wren-deck",
+      returnEndsMicros: 0n,
+      serverTick: 0n,
+      revision: 1n,
+    });
+  }
+
+  it("an unsuited walker cannot leave a ship without logic (the hatch never opens)", () => {
+    logicLess();
+    place("cap", plusN(lock.hatch, lock.normal, -0.3));
+    ticks(20, () => input("cap", { dx: lock.normal[0], dy: lock.normal[1] }));
+    expect(ctx.db.evaBody.characterId.find("cap")).toBeUndefined();
+    suitUp("cap");
+    expect(
+      tryStepOut(ctx, ctx.db.character.id.find("cap"), { dx: 1, dy: 0 }),
+    ).toBe(false);
+  });
+
+  it("a carried-over spacewalker gets back in with E at the hatch, unsuited", () => {
+    logicLess();
+    carriedOver(plusN(lock.hatch, lock.normal, 1.5));
+    ticks(5);
+    expect(ctx.db.evaBody.characterId.find("cap")).toBeDefined();
+    cycleAirlock(ctx, { shipId: "wren", airlockId: lock.id });
+    expect(ctx.db.evaBody.characterId.find("cap")).toBeUndefined();
+    expect(ctx.db.evaSuit.characterId.find("cap")).toBeUndefined();
+    expect(
+      ctx.db.constructionLocation.characterId.find("cap")?.instanceId,
+    ).toBe("wren");
+    const c = ctx.db.character.id.find("cap");
+    expect(
+      Math.hypot(c.localX - lock.inside[0], c.localY - lock.inside[1]),
+    ).toBeLessThan(2.3);
+  });
+
+  it("the legacy way in keeps the entry gate: reach and owned access", () => {
+    logicLess();
+    carriedOver([40, 40]);
+    expect(() =>
+      cycleAirlock(ctx, { shipId: "wren", airlockId: lock.id }),
+    ).toThrow("closer");
+    addShip("kite", other, "x");
+    addCharacter("x", other, "kite", [0, 0]);
+    ctx.db.authSession.insert({ connectionId: "c2", owner: other, game: true });
+    ctx.db.constructionLocation.characterId.delete("x");
+    const cap = ctx.db.evaBody.characterId.find("cap");
+    const near = plusN(lock.hatch, lock.normal, 1.5);
+    ctx.db.evaBody.insert({
+      ...cap,
+      characterId: "x",
+      owner: other,
+      x: near[0],
+      y: near[1],
+      ...cell(near[0], near[1]),
+    });
+    expect(() =>
+      cycleAirlock(as(other), { shipId: "wren", airlockId: lock.id }),
+    ).toThrow("does not open for you");
   });
 });
 

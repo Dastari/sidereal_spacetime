@@ -211,7 +211,40 @@ export function evaHomeVisit(
 
 export type EvaAction =
   | { kind: "button"; shipId: string; deviceId: string; label: string }
+  | { kind: "legacy-entry"; shipId: string; airlockId: string; label: string }
   | undefined;
+
+/** Reach from a hatch's outside point for the legacy re-entry (the server rechecks it). */
+const LEGACY_HATCH_REACH_M = 2.5;
+/**
+ * Outside a ship whose exterior door has no ship-logic actuator (Wren r2-r6, other prefabs): that
+ * door never opens, so E at the hatch is the legacy way back in. Never offered for doors that
+ * logic drives (their wall buttons open them).
+ */
+export function legacyEntryAction(input: {
+  shipId: string | undefined;
+  model: EvaShipModel | null;
+  logic: ShipLogicModel | null;
+  outside?: readonly [number, number];
+}): EvaAction {
+  const { shipId, model, logic, outside } = input;
+  if (!shipId || !model || !outside) return;
+  let best: { d: number; id: string } | undefined;
+  for (const e of model.entries) {
+    if (logic?.doors.some((d) => d.doorId === e.id)) continue;
+    const d = Math.hypot(outside[0] - e.outside[0], outside[1] - e.outside[1]);
+    if (d <= LEGACY_HATCH_REACH_M && (!best || d < best.d))
+      best = { d, id: e.id };
+  }
+  return best
+    ? {
+        kind: "legacy-entry",
+        shipId,
+        airlockId: best.id,
+        label: "Enter the airlock",
+      }
+    : undefined;
+}
 
 const BUTTON_LABELS: Record<string, string> = {
   cycle: "Cycle airlock",

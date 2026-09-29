@@ -85,6 +85,7 @@ import {
   evaModelOfDocument,
   evaSuitRefusalOf,
   evaThrustFromKeys,
+  legacyEntryAction,
   evaHomeVisit,
   evaScene,
   evaStatusLabel,
@@ -466,15 +467,22 @@ export default function App({
   const logicModel = logicModelOfDocument(constructionInstance?.documentJson);
   const logicRows = c ? [...c.db.visibleShipLogic.iter()] : [];
   const logicShipId = constructionInstance?.id;
-  const evaAction = logicButtonAction({
-    shipId: logicShipId,
-    logic: logicModel,
-    aboard:
-      actor && constructionVisit && !evaBody
-        ? [actor.localX, actor.localY]
-        : undefined,
-    outside: evaView?.local ? [evaView.localX, evaView.localY] : undefined,
-  });
+  const evaAction =
+    logicButtonAction({
+      shipId: logicShipId,
+      logic: logicModel,
+      aboard:
+        actor && constructionVisit && !evaBody
+          ? [actor.localX, actor.localY]
+          : undefined,
+      outside: evaView?.local ? [evaView.localX, evaView.localY] : undefined,
+    }) ??
+    legacyEntryAction({
+      shipId: logicShipId,
+      model: evaModelOfDocument(constructionInstance?.documentJson),
+      logic: logicModel,
+      outside: evaView ? [evaView.localX, evaView.localY] : undefined,
+    });
   const logicDoors = logicDoorStates(logicRows, logicShipId, logicModel);
   const evaNowMicros = BigInt(Math.round(Date.now() * 1000));
   const evaHud = evaBody
@@ -582,7 +590,7 @@ export default function App({
   const suitRefusal = evaSuitRefusalOf(inventory.items);
   const suitPrompt =
     suitRefusal && !evaBody
-      ? (evaAction &&
+      ? (evaAction?.kind === "button" &&
           buttonDepressurises(
             logicModel,
             logicRows,
@@ -1026,10 +1034,15 @@ export default function App({
       (live.current.evaPhase || !row)
     )
       void perform(() =>
-        current.reducers.pressShipButton({
-          shipId: eva.shipId,
-          deviceId: eva.deviceId,
-        }),
+        eva.kind === "legacy-entry"
+          ? current.reducers.evaCycleAirlock({
+              shipId: eva.shipId,
+              airlockId: eva.airlockId,
+            })
+          : current.reducers.pressShipButton({
+              shipId: eva.shipId,
+              deviceId: eva.deviceId,
+            }),
       );
     else if (row) objectCommand(interactionAction(row), row.placementId);
     else if (
