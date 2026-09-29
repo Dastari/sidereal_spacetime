@@ -332,7 +332,7 @@
    ],
    "seconds": 0.583,
    "extra": false,
-   "nominalSpeed": 2.153
+   "nominalSpeed": 1.791
   },
   {
    "name": "run",
@@ -347,7 +347,7 @@
    ],
    "seconds": 0.5,
    "extra": false,
-   "nominalSpeed": 3.864
+   "nominalSpeed": 6.124
   },
   {
    "name": "crouch_idle",
@@ -376,7 +376,7 @@
    ],
    "seconds": 1.0,
    "extra": false,
-   "nominalSpeed": 0.483
+   "nominalSpeed": 0.403
   },
   {
    "name": "aim_rifle",
@@ -545,7 +545,7 @@
    ],
    "seconds": 0.75,
    "extra": false,
-   "nominalSpeed": 0.773
+   "nominalSpeed": 0.643
   },
   {
    "name": "use_interact",

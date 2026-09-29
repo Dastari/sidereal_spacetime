@@ -58,7 +58,13 @@ export type VoxelCrewWeapon = "none" | "pistol" | "rifle";
 /** Either one full-body clip, or a lower (locomotion) clip with an upper-body override. */
 export type VoxelCrewLayers =
   | { full: VoxelCrewAction; speedRatio: number }
-  | { lower: VoxelCrewAction; upper: VoxelCrewAction; speedRatio: number };
+  | {
+      lower: VoxelCrewAction;
+      upper: VoxelCrewAction;
+      speedRatio: number;
+      /** Upper-layer playback rate (default 1); armed carries keep the legs' cycle period. */
+      upperSpeedRatio?: number;
+    };
 
 const clamp = (v: number, lo: number, hi: number) =>
   Math.max(lo, Math.min(hi, v));

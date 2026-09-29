@@ -110,9 +110,11 @@ describe("voxel crew clip mapping", () => {
   it("scales in-place locomotion toward gameplay speed within readable bounds", () => {
     const walk = voxelCrewSpeedRatio("walk", { moving: true, seated: false });
     const run = voxelCrewSpeedRatio("run", { moving: true, seated: false });
-    expect(walk).toBeGreaterThan(1);
-    expect(walk).toBeLessThanOrEqual(1.3);
-    expect(run).toBeGreaterThan(1);
+    // walk 2.5 / 1.791 m/s authored; run 4.5 / 6.124 m/s authored (long flight-phase strides)
+    expect(walk).toBeGreaterThan(1.3);
+    expect(walk).toBeLessThanOrEqual(1.5);
+    expect(run).toBeGreaterThan(0.65);
+    expect(run).toBeLessThan(0.8);
     expect(voxelCrewSpeedRatio("idle", { moving: false, seated: false })).toBe(
       1,
     );

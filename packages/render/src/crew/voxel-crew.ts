@@ -8,6 +8,7 @@ import { Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import "@babylonjs/loaders/glTF";
 import {
+  VOXEL_CREW_ANKLE_HEIGHT_M,
   VOXEL_CREW_ASSET_URL,
   VOXEL_CREW_DEFAULT_OUTFIT,
   voxelCrewOutfitFor,
@@ -30,7 +31,7 @@ import {
   type FaceAtlasImage,
 } from "@sidereal/content/crew-voxel-face";
 import { createVoxelFace, loadVoxelFaceAtlas } from "./voxel-face";
-import { solveTwoBone } from "./voxel-ik";
+import { createFootPlanting, solveTwoBone } from "./voxel-ik";
 import { setMeshRole } from "../mesh-roles";
 import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
@@ -202,7 +203,42 @@ export async function createVoxelCrewVisual(
   let supportTarget: TransformNode | null = null;
   let supportError = 0;
   const rigRoot = nodes.get("crew_rig") ?? visual;
+  // foot planting on the deck (presentation only): ground clamp + stance lock in the ship frame
+  const legChain = (side: "L" | "R") =>
+    joints.get(`thigh.${side}`) &&
+    joints.get(`shin.${side}`) &&
+    joints.get(`foot.${side}`)
+      ? {
+          root: rigRoot,
+          upper: joints.get(`thigh.${side}`)!,
+          lower: joints.get(`shin.${side}`)!,
+          end: joints.get(`foot.${side}`)!,
+          effector: joints.get(`foot.${side}`)!,
+        }
+      : undefined;
+  const legs = [legChain("L"), legChain("R")].filter((l) => !!l);
+  const footPlanting =
+    legs.length === 2
+      ? createFootPlanting(visual, parent, legs, {
+          restAnkle: VOXEL_CREW_ANKLE_HEIGHT_M,
+        })
+      : undefined;
+  let footIk = true;
   const ikObserver = scene.onAfterAnimationsObservable.add(() => {
+    const m = lastMotion;
+    const onDeck =
+      footIk &&
+      !disposed &&
+      !m.eva &&
+      !m.seated &&
+      !m.dead &&
+      !m.downed &&
+      !m.climbing &&
+      !m.hovering;
+    if (footPlanting) {
+      if (onDeck) footPlanting.step(scene.getEngine().getDeltaTime() / 1000);
+      else footPlanting.reset();
+    }
     if (!supportTarget || !joints.get("upper_arm.L")) return;
     supportError = solveTwoBone(
       {
@@ -480,14 +516,23 @@ export async function createVoxelCrewVisual(
             : has("walk_armed")
               ? name("walk_armed")
               : undefined;
-        const speedRatio = voxelCrewSpeedRatio(
-          motion.sprinting ? "run" : "walk",
-          motion,
-        );
+        // The armed clips' own legs take short strides (0.8 m/s walk, 2.5 m/s run authored): at
+        // gameplay speed they slid. The base walk/run legs, rate-matched to ground speed, carry the
+        // armed upper body (weapon, support hand); the upper layer keeps the legs' cycle period.
+        const legs: VoxelCrewAction = motion.sprinting ? "run" : "walk";
+        const speedRatio = voxelCrewSpeedRatio(legs, motion);
+        const period = (c: VoxelCrewAction) => {
+          const g = clips.get(c);
+          return g ? g.to - g.from : 0;
+        };
+        const upperSpeedRatio =
+          loco && period(legs) > 0
+            ? (speedRatio * period(loco)) / period(legs)
+            : 1;
         if (loco)
           layers = aimClip
-            ? { lower: loco, upper: aimClip, speedRatio }
-            : { full: loco, speedRatio };
+            ? { lower: legs, upper: aimClip, speedRatio }
+            : { lower: legs, upper: loco, speedRatio, upperSpeedRatio };
       } else if (has("idle_armed"))
         layers = { full: aimClip ?? name("idle_armed"), speedRatio: 1 };
     }
@@ -598,7 +643,7 @@ export async function createVoxelCrewVisual(
           clip: layers.upper,
           mask: "upper",
           loop: loops(layers.upper),
-          speed: 1,
+          speed: layers.upperSpeedRatio ?? 1,
         });
     }
     setDesired(wanted, reduced);
@@ -647,6 +692,14 @@ export async function createVoxelCrewVisual(
       supportTarget = target;
     },
     /** Remaining support-hand error (m) from the last solve (0 when the grip is reachable). */
+    /** Foot planting on the deck (default on; review harnesses compare with it off). */
+    setFootIk(enabled: boolean) {
+      footIk = enabled;
+    },
+    /** Remaining planted-foot error (m) from the last solve. */
+    get footError() {
+      return footPlanting?.error ?? 0;
+    },
     get supportError() {
       return supportError;
     },

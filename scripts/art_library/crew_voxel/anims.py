@@ -827,6 +827,9 @@ def lib():
     # locomotion strides are sized so the in-place cycle matches gameplay speed at a playback ratio
     # near 1 (walk 2.5 m/s, sprint 4.5 m/s): the stance foot moves back at exactly the ground speed,
     # so feet stay planted (no sliding) when the runtime scales playback by speed / nominalSpeed.
+    # NOTE (CREW-2 2026-09-30): the formula below over-reads walk/crouch/carry by ~20 % and under-reads
+    # the flight-phase run; the exported manifest carries the planted-foot speeds measured from the GLB
+    # (packages/render/src/crew/voxel-crew-stride.test.ts). Re-measure after any re-export.
     fnact("walk", True, cycle(gait, 14, step=26, lift=4.5, bob=1.4, lean=6, arm_swing=32, elbow=20),
           {"nominalSpeed": round(2 * 26 * LEG * VOX / (14 / FPS), 3)})
     # run: long stride with a flight phase (each foot grounded 32% -> both airborne ~36%), strong
