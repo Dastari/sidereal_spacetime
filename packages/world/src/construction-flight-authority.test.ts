@@ -1,6 +1,4 @@
 import { compileShipFlight } from "./construction-flight-compilation";
-import { wayfarerFlightInput } from "@sidereal/content/wayfarer-flight-definition";
-import { readFileSync } from "node:fs";
 import { expect, test, vi } from "vitest";
 import { Identity } from "spacetimedb";
 vi.mock("spacetimedb/server", () => ({
@@ -25,25 +23,22 @@ vi.mock("./auth", () => ({
     if (!ctx.live) throw Error("Live game required");
   },
 }));
-vi.mock("./construction", () => ({
-  requireGrant: (
-    ctx: { grants: Set<string> },
-    _workspace: string,
-    capability: string,
-  ) => {
-    if (!ctx.grants.has(capability)) throw Error("Current grant required");
-  },
-}));
-import { installConstructionFlightAuthority } from "./construction-flight-authority";
+import { insertQualifiedFlightPlan } from "./construction-flight-writer";
 import { resolveShipFlightDefinition } from "./construction-flight-resolver";
-import {
-  createWayfarerConversionCandidate,
-  type WayfarerPinnedInputs,
-} from "@sidereal/sim/wayfarer-conversion-candidate";
-import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import { planConstructionInstance } from "@sidereal/sim/construction-instance";
-import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
-import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
+import { compileConstruction } from "@sidereal/sim/construction-transactions";
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import {
+  PREFAB_DECK_ID,
+  prefabConstructionDocument,
+} from "@sidereal/sim/prefab-construction";
+import {
+  planPrefabConstructionFlight,
+  prefabFlightInput,
+  prefabFlightModel,
+  prefabPlacedObjectId,
+} from "@sidereal/sim/prefab-flight";
 function table(primary = "id") {
   const rows = new Map<string, any>();
   return {
@@ -70,11 +65,12 @@ function table(primary = "id") {
     },
   };
 }
-const snapshot = createWayfarerConversionCandidate(
-  Object.fromEntries(
-    Object.keys(PIN.sources).map((p) => [p, readFileSync(p, "utf8")]),
-  ) as WayfarerPinnedInputs,
-).snapshot;
+const WREN = prefabById("fed.s.wren")!;
+const catalog = defaultPrefabComponentCatalog();
+const snapshot = compileConstruction(
+  JSON.stringify(prefabConstructionDocument(WREN, catalog)),
+);
+const model = prefabFlightModel(WREN, catalog);
 function fixture() {
   let n = 0;
   const uuid = () =>
@@ -83,18 +79,14 @@ function fixture() {
   const p = planConstructionInstance(
     snapshot,
     {
-      blueprintRevisionId: "b",
+      blueprintRevisionId: `trusted-prefab:fed.s.wren:r${WREN.revision}`,
       expectedBlueprintSha256: snapshot.sha256,
-      sourceDeckId: PIN.deckId,
+      sourceDeckId: PREFAB_DECK_ID,
       bodyRadiusM: 0.3,
       bodyHeightM: 1.8,
       perimeterHalfWidthM: 0,
       partitionHalfWidthM: 0,
-      objectCollisionBindings: qualifiedWayfarerWalkingBindings(
-        snapshot,
-        0.3,
-        1.8,
-      ),
+      objectCollisionBindings: [],
     },
     uuid,
   );
@@ -102,7 +94,6 @@ function fixture() {
     constructionCargoAssembly: table("containerId"),
     instanceInventoryBinding: table("placedObjectId"),
     character: table(),
-    wayfarerRefitAttachment: table(),
     constructionInstance: table(),
     ship: table(),
     station: table(),
@@ -117,7 +108,7 @@ function fixture() {
     constructionFlightStation: table("stationId"),
     constructionFlightReceipt: table(),
   };
-  db.constructionInstance.insert({
+  const instance = {
     id: p.instanceId,
     owner,
     workspaceId: "workspace",
@@ -127,7 +118,8 @@ function fixture() {
     idMapJson: JSON.stringify(p.mappings),
     spawnDeckId: p.spawn.deckId,
     name: p.document.layout.name,
-  });
+  };
+  db.constructionInstance.insert(instance);
   db.ship.insert({ id: "original", owner, revision: 8n });
   db.inventoryItem.insert({ id: "pistol", containerId: "pockets" });
   const ctx: any = {
@@ -136,16 +128,17 @@ function fixture() {
     timestamp: { microsSinceUnixEpoch: 1n },
     newUuidV4: () => ({ toString: uuid }),
     live: true,
-    grants: new Set(["draft.read", "instance.spawn"]),
   };
-  const args = {
-    instanceId: p.instanceId,
-    expectedInstanceRevision: 1n,
-    operationId: "flight",
-  };
-  const hooks = {
-    reserveBerth: () => ({ systemId: "system", x: 50, y: 0, serverTick: 42n }),
-  };
+  /** Trusted prefab installation (as installPrefabShip does), dormant until activated. */
+  const install = () =>
+    insertQualifiedFlightPlan(
+      ctx,
+      planPrefabConstructionFlight(
+        instance,
+        { systemId: "system", x: 50, y: 0, serverTick: 42n },
+        uuid,
+      ),
+    );
   const reader = {
     binding: (id: string) => db.constructionFlightBinding.shipId.find(id),
     constructionInstanceExists: (id: string) =>
@@ -156,19 +149,9 @@ function fixture() {
     compiled: (id: string) => {
       if (!db.constructionFlightBinding.shipId.find(id)) return undefined;
       compileShipFlight(db, id, () =>
-        wayfarerFlightInput(
-          p.document,
-          {
-            variant: "r001",
-            identities: Object.fromEntries(
-              Object.values(p.mappings).flatMap((rows) =>
-                rows.map((row: { sourceId: string; instanceId: string }) => [
-                  row.sourceId,
-                  row.instanceId,
-                ]),
-              ),
-            ),
-          },
+        prefabFlightInput(
+          model,
+          (sourceId) => prefabPlacedObjectId(id, sourceId),
           {
             fittings: db.constructionFlightFitting.by_ship
               .filter(id)
@@ -198,35 +181,28 @@ function fixture() {
     },
     dirty: () => false,
   };
-  return { ctx, db, p, args, hooks, reader };
+  return { ctx, db, p, install, reader };
 }
-test("actual table adapter inserts fresh bound records without legacy entity rewrites", () => {
-  const f = fixture(),
-    result = installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
+test("trusted installation inserts fresh bound records without legacy entity rewrites", () => {
+  const f = fixture();
+  f.install();
   expect(f.db.ship.rows.size).toBe(2);
   expect(f.db.ship.id.find("original").revision).toBe(8n);
   expect(f.db.inventoryItem.id.find("pistol").containerId).toBe("pockets");
-  expect(f.db.constructionFlightFitting.rows.size).toBe(10);
-  expect(f.db.station.id.find(result.stationId).operational).toBe(false);
-  expect(f.db.shipWorldMotion.shipId.find(result.shipId).serverTick).toBe(42n);
+  const binding = f.db.constructionFlightBinding.shipId.find(f.p.instanceId);
+  expect(f.db.constructionFlightFitting.rows.size).toBe(model.fittings.length);
+  expect(f.db.station.id.find(binding.stationId).operational).toBe(false);
+  expect(f.db.shipWorldMotion.shipId.find(f.p.instanceId).serverTick).toBe(42n);
   expect(
-    f.db.constructionFlightStation.stationId.find(result.stationId).deckId,
+    f.db.constructionFlightStation.stationId.find(binding.stationId).deckId,
   ).toBe(f.p.spawn.deckId);
-  expect(installConstructionFlightAuthority(f.ctx, f.args, f.hooks)).toEqual(
-    result,
-  );
-  expect(f.db.constructionFlightFitting.rows.size).toBe(10);
-  f.ctx.grants.delete("draft.read");
-  expect(() =>
-    installConstructionFlightAuthority(f.ctx, f.args, f.hooks),
-  ).toThrow("grant");
+  expect(() => f.install()).toThrow("already installed");
+  expect(f.db.constructionFlightFitting.rows.size).toBe(model.fittings.length);
 });
-test("foreign owner cannot install even with workspace capability; no allocation occurs", () => {
+test("foreign owner cannot install; no allocation occurs", () => {
   const f = fixture();
   f.ctx.sender = Identity.fromString("2".repeat(64));
-  expect(() =>
-    installConstructionFlightAuthority(f.ctx, f.args, f.hooks),
-  ).toThrow("Accessible");
+  expect(() => f.install()).toThrow("Owned qualified flight instance");
   expect(f.db.ship.rows.size).toBe(1);
   expect(f.db.constructionFlightFitting.rows.size).toBe(0);
 });
@@ -238,29 +214,35 @@ test("resolver fails closed on missing bound instances and holds dormant install
   expect(resolveShipFlightDefinition(f.reader, "original").status).toBe(
     "invalid",
   );
-  installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
+  f.install();
   expect(resolveShipFlightDefinition(f.reader, f.p.instanceId).status).toBe(
     "dormant",
   );
 });
 test("active resolver feeds exact approved force definitions with fresh runtime telemetry IDs", () => {
   const f = fixture();
-  installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
+  f.install();
   f.db.constructionFlightBinding.shipId.find(f.p.instanceId).lifecycle =
     "active";
   const result = resolveShipFlightDefinition(f.reader, f.p.instanceId);
   expect(result.status).toBe("ready");
   if (result.status !== "ready") throw Error("unavailable");
   expect(result.kind).toBe("construction");
-  expect(result.actuators).toHaveLength(9);
-  result.actuators.forEach((a, i) => {
-    expect(a.id).not.toBe(LAB_FLIGHT_ACTUATORS[i].id);
-    const fixture = LAB_FLIGHT_ACTUATORS.find(
-      (source) => source.id === a.sourceDeviceId,
-    )!;
-    expect(a.maxThrustN).toBe(fixture.maxThrustN);
-    expect(a.x).toBeCloseTo(fixture.x, 10);
-  });
+  const actuators = model.fittings.filter((x) => x.role === "actuator");
+  expect(result.actuators).toHaveLength(actuators.length);
+  const parts = new Map(model.parts.map((p) => [p.sourceId, p]));
+  const definitions = new Map(model.catalog.definitions.map((d) => [d.id, d]));
+  for (const a of result.actuators) {
+    expect(a.id).not.toBe(a.sourceDeviceId);
+    const part = parts.get(a.sourceDeviceId)!;
+    const definition = definitions.get(part.definitionId) as {
+      maxThrustN: number;
+    };
+    expect(a.maxThrustN).toBe(definition.maxThrustN);
+    expect(a.placedObjectId).toBe(
+      prefabPlacedObjectId(f.p.instanceId, a.sourceDeviceId),
+    );
+  }
   const first = result.actuators[0];
   f.db.constructionFlightFitting.id.find(first.id).powered = false;
   const disabled = resolveShipFlightDefinition(f.reader, f.p.instanceId);
@@ -287,9 +269,13 @@ test("refit, changed definition, missing or extra fittings never fall back to st
     (f: ReturnType<typeof fixture>) =>
       (f.db.constructionFlightFitting.rows.values().next().value.availability =
         NaN),
+    // Only trusted prefab bindings resolve; the retired Wayfarer pin fails closed.
+    (f: ReturnType<typeof fixture>) =>
+      (f.db.constructionFlightBinding.shipId.find(f.p.instanceId).definitionId =
+        "qualified-wayfarer-lab-flight-v1"),
   ]) {
     const f = fixture();
-    installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
+    f.install();
     f.db.constructionFlightBinding.shipId.find(f.p.instanceId).lifecycle =
       "active";
     mutate(f);
@@ -302,7 +288,7 @@ test("refit, changed definition, missing or extra fittings never fall back to st
 test("resolved fitting IDs drive existing IFCS solver and disabled authority produces no thrust", async () => {
   const { stepSystemSpace } = await import("@sidereal/sim/system-space");
   const f = fixture();
-  installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
+  f.install();
   f.db.constructionFlightBinding.shipId.find(f.p.instanceId).lifecycle =
     "active";
   const d = resolveShipFlightDefinition(f.reader, f.p.instanceId);
@@ -345,7 +331,7 @@ test("resolved fitting IDs drive existing IFCS solver and disabled authority pro
 test("dormant installed ships retain their physical definition and cannot stall another ship's contact island", async () => {
   const { stepSystemSpace } = await import("@sidereal/sim/system-space");
   const f = fixture();
-  installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
+  f.install();
   const d = resolveShipFlightDefinition(f.reader, f.p.instanceId);
   if (d.status === "invalid") throw Error(d.reason);
   expect(d.status).toBe("dormant");
@@ -367,40 +353,4 @@ test("dormant installed ships retain their physical definition and cannot stall 
   expect(step.exhausted).toBe(false);
   expect(step.changedBodyIds).toEqual(["another"]);
   expect(step.bodies.find((x) => x.id === "another")!.x).toBeCloseTo(100.05);
-});
-
-test("explicit activation qualifies native station but does not board, seat or change original ships", async () => {
-  const { activateConstructionFlight } =
-    await import("./construction-flight-activation");
-  const f = fixture();
-  installConstructionFlightAuthority(f.ctx, f.args, f.hooks);
-  f.db.constructionDeck = table();
-  f.db.constructionDeck.insert({
-    id: f.p.spawn.deckId,
-    instanceId: f.p.instanceId,
-    elevation: 0,
-  });
-  f.db.worldSystem = table();
-  f.db.worldSystem.insert({ id: "system" });
-  f.db.constructionDoor = { by_deck: { filter: () => [] } };
-  const actor = { shipId: "original", item: "pistol" };
-  const args = {
-    shipId: f.p.instanceId,
-    expectedRevision: 1n,
-    operationId: "activate",
-  };
-  activateConstructionFlight(f.ctx, args);
-  const b = f.db.constructionFlightBinding.shipId.find(f.p.instanceId);
-  expect(b.lifecycle).toBe("active");
-  expect(b.revision).toBe(2n);
-  expect(f.db.station.id.find(b.stationId).operational).toBe(true);
-  expect(f.db.station.id.find(b.stationId).occupantId).toBeUndefined();
-  expect(actor).toEqual({ shipId: "original", item: "pistol" });
-  expect(f.db.ship.id.find("original").revision).toBe(8n);
-  activateConstructionFlight(f.ctx, args);
-  expect(
-    f.db.constructionFlightBinding.shipId.find(f.p.instanceId).revision,
-  ).toBe(2n);
-  f.ctx.grants.delete("draft.read");
-  expect(() => activateConstructionFlight(f.ctx, args)).toThrow("grant");
 });

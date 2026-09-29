@@ -3,16 +3,9 @@ import type world from "./index";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import type { ConstructionInstanceMappings } from "@sidereal/sim/construction-instance";
 import {
-  wayfarerFlightInput,
-  type WayfarerPhysicalVariant,
-} from "@sidereal/content/wayfarer-flight-definition";
-import {
-  WAYFARER_PHYSICAL_CATALOG,
-  WAYFARER_CREW_BODY_DEFINITION,
+  PHYSICAL_CATALOG,
+  CREW_BODY_DEFINITION,
 } from "@sidereal/content/physical-definitions";
-import { WAYFARER_REBUILD_SHA256 } from "@sidereal/sim/wayfarer-rebuild-contract";
-import { WAYFARER_EXTERIOR_SHA256 } from "@sidereal/sim/wayfarer-exterior-qualification";
-import { QUALIFIED_WAYFARER_SHA256 } from "@sidereal/sim/wayfarer-walking-bindings";
 import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
 import { inventoryMass, type InventorySnapshot } from "@sidereal/sim/inventory";
 import {
@@ -116,7 +109,7 @@ function payloadMass(snapshot: InventorySnapshot) {
     const inventory = INVENTORY_DEFINITIONS.find(
       (d) => d.id === item.definitionId,
     );
-    const physical = WAYFARER_PHYSICAL_CATALOG.definitions.find(
+    const physical = PHYSICAL_CATALOG.definitions.find(
       (d) =>
         d.id === "inventory:" + item.definitionId &&
         d.revision === 1 &&
@@ -131,7 +124,7 @@ function payloadMass(snapshot: InventorySnapshot) {
   }
   for (const c of snapshot.containers)
     if (c.kind === "liquid") {
-      const physical = WAYFARER_PHYSICAL_CATALOG.definitions.find(
+      const physical = PHYSICAL_CATALOG.definitions.find(
         (d) =>
           d.id === "liquid:" + c.liquidType &&
           d.revision === 1 &&
@@ -172,28 +165,13 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
   const prefab =
     ctx.db.constructionFlightBinding.shipId.find(shipId)?.definitionId ===
     PREFAB_FLIGHT_DEFINITION;
-  const variant: WayfarerPhysicalVariant = prefab
-    ? "r001"
-    : instance.blueprintSha256 === WAYFARER_REBUILD_SHA256
-      ? "r002"
-      : instance.blueprintSha256 === WAYFARER_EXTERIOR_SHA256
-        ? "r005"
-        : instance.blueprintSha256 === QUALIFIED_WAYFARER_SHA256
-          ? "r001"
-          : (() => {
-              throw Error("unqualified-flight-structure");
-            })();
+  // Only trusted prefab installations compile flight (the Wayfarer variants were
+  // retired on 2026-09-29).
+  if (!prefab) throw Error("unqualified-flight-structure");
   const document = JSON.parse(instance.documentJson) as ConstructionDocument;
   const mappings = JSON.parse(
     instance.idMapJson,
   ) as ConstructionInstanceMappings;
-  const identities = Object.fromEntries(
-    Object.values(mappings).flatMap((rows) =>
-      Array.isArray(rows)
-        ? rows.map((row) => [row.sourceId, row.instanceId])
-        : [],
-    ),
-  );
   const fittingRows = bounded(
     ctx.db.constructionFlightFitting.by_ship.filter(shipId),
     256,
@@ -219,24 +197,11 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
   );
   if (fittingRows.some((f) => f.shipId !== shipId))
     throw Error("flight-fitting-ship-mismatch");
-  const attachments: FlightPlacedPart[] = bounded(
-    ctx.db.wayfarerRefitAttachment.by_instance.filter(shipId),
-    256,
-  ).map((a) => ({
-    id: a.id,
-    definitionId: "physical:" + a.assetId,
-    revision: 1,
-    position: [a.x, a.y, a.z],
-    rotation: 0,
-    flipped: false,
-  }));
   const replacements: { placedObjectId: string; part: FlightPlacedPart }[] = [];
   const cargo: FlightCargoMass[] = [];
   const crew: FlightCrewMass[] = [];
   const roots = new Set<string>();
-  const catalog = new Map(
-    WAYFARER_PHYSICAL_CATALOG.definitions.map((d) => [d.id, d]),
-  );
+  const catalog = new Map(PHYSICAL_CATALOG.definitions.map((d) => [d.id, d]));
   const shellPoint = (part: FlightPlacedPart): readonly [number, number] => {
     const definition = catalog.get(part.definitionId);
     if (!definition || definition.revision !== part.revision)
@@ -297,20 +262,19 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
         part: shell,
       });
     } else {
-      const attached = attachments.find((a) => a.id === binding.placedObjectId);
       const part = document.layout.assembly?.parts.find(
         (p) => p.id === binding.placedObjectId,
       );
-      if (attached || part)
-        shell = attached ?? {
-          id: part!.id,
-          definitionId: "physical:" + part!.assetId,
+      if (part)
+        shell = {
+          id: part.id,
+          definitionId: "physical:" + part.assetId,
           revision: 1,
-          position: part!.position,
-          rotation: part!.rotation,
-          flipped: part!.flipped,
+          position: part.position,
+          rotation: part.rotation,
+          flipped: part.flipped,
         };
-      else if (prefab) {
+      else {
         // Prefab storage socket (operator-bound crate or locker): furniture carries no flight
         // shell of its own, so the payload mass sits at the socket centre on the prefab deck.
         const deck = ctx.db.constructionDeck.id.find(binding.deckId);
@@ -326,7 +290,7 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
             : undefined;
         if (!centre) throw Error("missing-flight-cargo-shell");
         position = centre;
-      } else throw Error("missing-flight-cargo-shell");
+      }
     }
     const containers = bounded(
       ctx.db.inventoryContainerScope.by_root.filter(root.id),
@@ -352,7 +316,7 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
       position: position ?? shellPoint(shell!),
     });
   }
-  const body = catalog.get(WAYFARER_CREW_BODY_DEFINITION);
+  const body = catalog.get(CREW_BODY_DEFINITION);
   if (!body) throw Error("missing-crew-body-definition");
   for (const actor of bounded(ctx.db.character.by_ship.filter(shipId), 256)) {
     // EVA: a character outside the hull (free or maglocked) is not ship mass.
@@ -391,65 +355,48 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
     });
     roots.add(root.id);
   }
-  if (prefab) {
-    if (attachments.length || replacements.length)
-      throw Error("prefab-flight-refit-unsupported");
-    const key = `${instance.id}:${instance.blueprintSha256}`;
-    const model = prefabFlightModelFor(key, instance.documentJson);
-    // Fuel and power supply per actuator from the pinned document and component damage (the
-    // S4-1 ship-systems rule): a drive that burns propellant needs a fuel network with an intact
-    // tank, one that draws power needs the ship's generation. Memoised per source and damage state.
-    if (!isPrefabConstruction(document)) throw Error("prefab-flight-source");
-    const performance = new Map<string, number>();
-    for (const row of bounded(
-      ctx.db.shipComponentDamage.by_ship.filter(shipId),
-      512,
-    ))
-      if (row.objectId.startsWith("mount:"))
-        performance.set(row.objectId.slice("mount:".length), row.performance);
-    const sources = fittingRows
-      .filter((f) => f.kind === "actuator")
-      .map((f) => f.sourceDeviceId)
-      .sort();
-    const supplyKey = JSON.stringify([
-      key,
+  if (replacements.length) throw Error("prefab-flight-refit-unsupported");
+  const key = `${instance.id}:${instance.blueprintSha256}`;
+  const model = prefabFlightModelFor(key, instance.documentJson);
+  // Fuel and power supply per actuator from the pinned document and component damage (the
+  // S4-1 ship-systems rule): a drive that burns propellant needs a fuel network with an intact
+  // tank, one that draws power needs the ship's generation. Memoised per source and damage state.
+  if (!isPrefabConstruction(document)) throw Error("prefab-flight-source");
+  const performance = new Map<string, number>();
+  for (const row of bounded(
+    ctx.db.shipComponentDamage.by_ship.filter(shipId),
+    512,
+  ))
+    if (row.objectId.startsWith("mount:"))
+      performance.set(row.objectId.slice("mount:".length), row.performance);
+  const sources = fittingRows
+    .filter((f) => f.kind === "actuator")
+    .map((f) => f.sourceDeviceId)
+    .sort();
+  const supplyKey = JSON.stringify([
+    key,
+    sources,
+    [...performance].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
+  ]);
+  let bySource = PREFAB_SUPPLY_MEMO.get(supplyKey);
+  if (!bySource) {
+    bySource = prefabActuatorSupply(
+      prefabSupplyDocument(key, document),
+      document.prefab.catalog,
       sources,
-      [...performance].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
-    ]);
-    let bySource = PREFAB_SUPPLY_MEMO.get(supplyKey);
-    if (!bySource) {
-      bySource = prefabActuatorSupply(
-        prefabSupplyDocument(key, document),
-        document.prefab.catalog,
-        sources,
-        (mountId) => performance.get(mountId) ?? 1,
-      );
-      if (PREFAB_SUPPLY_MEMO.size >= 64) PREFAB_SUPPLY_MEMO.clear();
-      PREFAB_SUPPLY_MEMO.set(supplyKey, bySource);
-    }
-    const prefabSupply = Object.fromEntries(
-      fittingRows
-        .filter((f) => f.kind === "actuator")
-        .map((f) => [f.id, bySource[f.sourceDeviceId] ?? 0]),
+      (mountId) => performance.get(mountId) ?? 1,
     );
-    return prefabFlightInput(
-      model,
-      (sourceId) => prefabPlacedObjectId(shipId, sourceId),
-      { fittings, cargo, crew, supply: prefabSupply },
-    );
+    if (PREFAB_SUPPLY_MEMO.size >= 64) PREFAB_SUPPLY_MEMO.clear();
+    PREFAB_SUPPLY_MEMO.set(supplyKey, bySource);
   }
-  return wayfarerFlightInput(
-    document,
-    { variant, identities, replacements, attachments },
-    {
-      fittings,
-      cargo,
-      crew,
-      // M4 will replace this explicit full supply with bounded fuel-network facts.
-      // No fuel is consumed or inferred from inventory in this phase.
-      supply: Object.fromEntries(
-        fittingRows.filter((f) => f.kind === "actuator").map((f) => [f.id, 1]),
-      ),
-    },
+  const prefabSupply = Object.fromEntries(
+    fittingRows
+      .filter((f) => f.kind === "actuator")
+      .map((f) => [f.id, bySource[f.sourceDeviceId] ?? 0]),
+  );
+  return prefabFlightInput(
+    model,
+    (sourceId) => prefabPlacedObjectId(shipId, sourceId),
+    { fittings, cargo, crew, supply: prefabSupply },
   );
 }

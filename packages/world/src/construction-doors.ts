@@ -2,17 +2,12 @@ import { acceptedPassengerAccess } from "./construction-passenger-access";
 import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
 import { planPinnedInsetBoundaries } from "@sidereal/sim/construction-inset-boundaries";
 import { cargoCarrierCollision } from "./construction-cargo-carriers";
-import { addWayfarerRefitCollision } from "./wayfarer-refit-collision";
 import {
   requestNativeAirlockDoor,
   acceptedNativeAirlockCollision,
   ownNativeAirlocks,
 } from "./construction-airlock";
 import { compilePublishedNativeExternalAirlock } from "@sidereal/sim/construction-airlock-published";
-import {
-  qualifiedWayfarerInstanceObstacles,
-  isQualifiedWayfarerBlueprint,
-} from "@sidereal/sim/wayfarer-walking-bindings";
 import { nativeStairRoomCollision } from "@sidereal/sim/construction-stairs-document";
 import {
   validateNativePressureRoomDocument,
@@ -135,23 +130,12 @@ export function constructionCollision(
     if (baseCache.size >= 32) baseCache.clear();
     const document = JSON.parse(instance.documentJson) as ConstructionDocument;
     const width = document.boundaryKit?.revision === "r001" ? 0.0625 : 0;
-    const wayfarer = isQualifiedWayfarerBlueprint(
-      document.layout.source?.blueprintRevision,
-    )
-      ? ctx.db.constructionInstance.id.find(instance.id)
-      : undefined;
-    if (
-      isQualifiedWayfarerBlueprint(document.layout.source?.blueprintRevision) &&
-      !wayfarer
-    )
-      throw new Error("Qualified Wayfarer instance record required");
     base = compileDeckCollision(document.layout, deckId, {
       shipId: instance.id,
       perimeterHalfWidthM: width,
       partitionHalfWidthM: document.pressureRoom ? 0.0625 : width,
-      obstacles: wayfarer
-        ? qualifiedWayfarerInstanceObstacles(wayfarer, deckId)
-        : "prefab" in document && document.prefab
+      obstacles:
+        "prefab" in document && document.prefab
           ? // Trusted prefab ships: furniture and modules from the embedded grammar + catalog.
             // An unreadable binding (e.g. a retired catalog revision) must never abort the
             // world tick; walls, floors and doors still apply.
@@ -180,15 +164,10 @@ export function constructionCollision(
     instance.id,
     new Set(base.openings.map((o) => o.id).filter((id) => !native.has(id))),
   );
-  const frame = addWayfarerRefitCollision(
-    ctx,
-    instance,
-    deckId,
-    resolveDeckCollision(base, [
-      ...doors.map((d) => ({ openingId: d.id, passable: d.fraction === 1 })),
-      ...logic,
-    ]),
-  );
+  const frame = resolveDeckCollision(base, [
+    ...doors.map((d) => ({ openingId: d.id, passable: d.fraction === 1 })),
+    ...logic,
+  ]);
   const obstacles = doors.map((d) =>
     doorLeafObstacle(
       { id: d.id, origin: [d.x, d.y], quarterTurns: d.quarterTurns },

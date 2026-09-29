@@ -12,7 +12,6 @@ MANIFEST = Path('assets/ci/native-inputs-r001.json')
 SCHEMA = 'sidereal.ci-native-inputs.v1'
 PRIVATE_FIXTURES = {
     'assets/art-library/designs/crew.animation.aim/revisions/r003/runtime-aim-space.json',
-    'assets/art-library/designs/shipyard.structure.wayfarer-transition/revisions/r003/wayfarer-transition.glb',
 }
 
 

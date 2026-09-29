@@ -12,24 +12,13 @@ PUBLIC_HELP = {
     "client": {},
     "dashboard": {"docs/public/shipyard.md": "help/shipyard.md"},
 }
-EDITOR_NATIVE_ASSETS = {
-    "assets/art-library/framed-wayfarer/r005/library-02/hull.glb":
-        "assets/shipyard/armor-r005/hull.glb",
-}
-# Only reviewed per-model palette PNGs are public, never the source manifest/renders.
-ARMOR_THUMBNAILS = "assets/art-library/framed-wayfarer/r005/thumbnails-r001"
-for thumbnail in json.loads((ROOT / ARMOR_THUMBNAILS / "manifest.json").read_text())["assets"]:
-    filename = thumbnail["file"]
-    if not re.fullmatch(r"armor-block-[0-9a-f]{20}\.png", filename):
-        raise ValueError("Unexpected native armor thumbnail filename")
-    EDITOR_NATIVE_ASSETS[f"{ARMOR_THUMBNAILS}/{filename}"] = f"assets/shipyard/armor-r005/thumbnails/{filename}"
 # Publication is explicit. Only these `assets/runtime` entries (files or whole
 # directories) are copied into an app's public tree; anything else written into
 # `assets/runtime` (review packages, preview builds, rebuild experiments) stays
 # private until it is listed here.
 PUBLISHED_RUNTIME = (
-    "wayfarer.glb",
-    "assembly",
+    "assembly/floor-manifest.json",
+    "assembly/floor",
     "crew",
     "equipment",
     "environment",
@@ -1383,8 +1372,6 @@ PUBLISHED_RUNTIME = (
     "construction/inset250-r000/union-r001/internal-span-1.5-q2.glb",
     "construction/inset250-r000/union-r001/internal-span-1.5-q3.glb",
     "construction/inset250-r000/union-r001/internal-span-1.5-q4.glb",
-    "construction/wayfarer-rebuild-r002/internal-span-0.125-q4.glb",
-    "construction/wayfarer-rebuild-r002/wayfarer-transition.glb",
 )
 # Review renders that sit beside published assets but are never fetched.
 # Patterns match paths relative to `assets/runtime`.
@@ -1393,24 +1380,6 @@ UNPUBLISHED_PATTERNS = (
     "crew/looks/views",
     "equipment/browser-review.png",
     "equipment/contact-sheet.png",
-)
-# Retired legacy ship assets (owner request 2026-09-25: remove all existing
-# ship assets from the game). They stay published for the dashboard's Shipyard
-# and model tools and stay in repository/art-library history, but the game
-# client never receives them: the legacy voxel/original Wayfarer, its assembly
-# manifests/hull/roof/side-hull/cargo/equipment kits, the framed and native r005
-# Wayfarer exteriors, the pilot hull and the rebuilt r002 Wayfarer visuals.
-CLIENT_RETIRED_PATTERNS = (
-    "wayfarer.glb",
-    "voxels/*",
-    "assembly/*",
-    "construction/wayfarer-rebuild-r002",
-)
-# Generic runtime files inside retired folders that the game still uses.
-CLIENT_RETAINED = (
-    "voxels/asteroid.glb",
-    "assembly/floor-manifest.json",
-    "assembly/floor",
 )
 ASSET_REFERENCE = re.compile(r'"/assets/([^"?#]+)')
 
@@ -1423,31 +1392,10 @@ def _unpublished(relative: str) -> bool:
     )
 
 
-def _matches(relative: str, patterns) -> bool:
-    parts = relative.split("/")
-    return any(
-        fnmatch.fnmatch("/".join(parts[: len(pattern.split("/"))]), pattern)
-        for pattern in patterns
-    )
-
-
-def retired_for(app: str, relative: str) -> bool:
-    """True when a runtime path is a retired ship asset this app must not ship."""
-    if app != "client" or not _matches(relative, CLIENT_RETIRED_PATTERNS):
-        return False
-    return not any(
-        relative == kept or relative.startswith(kept + "/") for kept in CLIENT_RETAINED
-    )
-
-
 def _copy_published(runtime: Path, public_assets: Path, app: str = "dashboard") -> None:
     for entry in PUBLISHED_RUNTIME:
         source = runtime / entry
         target = public_assets / entry
-        if retired_for(app, entry):
-            if not source.exists():
-                raise FileNotFoundError(f"Published runtime entry missing: {entry}")
-            continue
         if source.is_file():
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, target)
@@ -1456,7 +1404,7 @@ def _copy_published(runtime: Path, public_assets: Path, app: str = "dashboard") 
                 base = Path(folder).relative_to(runtime).as_posix()
                 return [
                     n for n in names
-                    if _unpublished(f"{base}/{n}") or retired_for(app, f"{base}/{n}")
+                    if _unpublished(f"{base}/{n}")
                 ]
             shutil.copytree(source, target, ignore=ignore, dirs_exist_ok=True)
         else:
@@ -1496,11 +1444,6 @@ def prepare(app: str, root: Path = ROOT) -> None:
     elif public_assets.is_dir():
         shutil.rmtree(public_assets)
     _copy_published(root / "assets/runtime", public_assets, app)
-    if app == "dashboard":
-        for source, destination in EDITOR_NATIVE_ASSETS.items():
-            target = public / destination
-            target.parent.mkdir(parents=True, exist_ok=True)
-            shutil.copy2(root / source, target)
     check_references(public_assets)
     for name in ("reviewed-planets", "reviewed-stars"):
         source = root / "assets/reviewed-celestials" / name

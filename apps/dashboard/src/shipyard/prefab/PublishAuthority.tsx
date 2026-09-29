@@ -1,7 +1,7 @@
 /**
  * Signed-in construction workspace actions for a prefab publication. Same sign-in,
  * connection session, expected-revision and operation-id pattern as the layout
- * editor's ConstructionPanel; reducers validate and commit, the dashboard only asks.
+ * retired layout editor; reducers validate and commit, the dashboard only asks.
  */
 import { useEffect, useRef, useState } from "react";
 import type { User } from "oidc-client-ts";
@@ -10,7 +10,7 @@ import { createConnectionSession } from "@sidereal/net/connection-session";
 import { connectConstruction } from "@sidereal/net/construction";
 import type { DbConnection } from "@sidereal/net/generated";
 import { authoringAuth, loadAuthoringAccount } from "../../authoring/auth";
-import { uuid } from "../layout/useLayout";
+import { uuid } from "../../editor/uuid";
 import type { PrefabPublication } from "./publish";
 
 export default function PublishAuthority({

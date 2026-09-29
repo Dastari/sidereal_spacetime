@@ -1,11 +1,9 @@
 import { SenderError } from "spacetimedb/server";
-import { WAYFARER_REPLACEMENT_OPERATOR } from "./wayfarer-replacement-operator";
-
 /** The deployment identity that already owns the database and is the only
- * principal allowed to run ship maintenance (same identity as the existing
- * legacy Wayfarer replacement). Game accounts, including construction admins,
- * can never invoke these reducers. */
-export const SHIP_OPERATOR = WAYFARER_REPLACEMENT_OPERATOR;
+ * principal allowed to run ship maintenance. Game accounts, including
+ * construction admins, can never invoke these reducers. */
+export const SHIP_OPERATOR =
+  "c2005c42b5bdfffcfba7f99d5313dc8b1a3a3db7b8ba5453cc010c39d50387be";
 
 export function requireShipOperator(ctx: {
   sender: { toHexString(): string };

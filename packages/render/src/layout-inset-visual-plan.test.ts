@@ -2,7 +2,6 @@ import { expect, it } from "vitest";
 import { emptyLayout, stampTile } from "@sidereal/content/ship-layout";
 import { compileLayout } from "@sidereal/sim/layout-compiler";
 import { planLayoutInsetVisuals } from "./layout-inset-visual-plan";
-import { WAYFARER_REBUILD_SOURCE } from "@sidereal/sim/wayfarer-rebuild-contract";
 function fixture(clearHeight = 96) {
   const doc = emptyLayout("preview", "main");
   doc.decks[0].ceiling = 6 + clearHeight;
@@ -146,63 +145,22 @@ it("rejects unsupported wall height, floor selection and holes without fallback"
     expect(r.issues.length).toBeGreaterThan(0);
   }
 });
-const runWayfarer = (doc: ReturnType<typeof fixture>) =>
-  planLayoutInsetVisuals({
-    document: doc,
-    compiled: compileLayout(doc),
-    deckId: doc.playableDeckId,
-  });
-it("keeps the exact Wayfarer wall adapters when equipment, hull placement and map labels change", () => {
-  const source = structuredClone(WAYFARER_REBUILD_SOURCE.layout),
-    before = runWayfarer(source),
-    document = structuredClone(source);
-  expect(before.issues).toEqual([]);
-  expect(before.requests.length).toBeGreaterThan(0);
-  document.id = "editable-wayfarer";
-  document.assembly!.parts.push({
-    ...structuredClone(document.assembly!.parts[0]),
-    id: "added-equipment",
-    position: [1, 9, 0.1875],
-  });
-  document.assembly!.parts.find((p) => p.id.includes("hull"))!.position[0] +=
-    0.25;
-  document.rooms[0].name = "Flight control";
-  expect(compileLayout(document).valid).toBe(true);
-  expect(runWayfarer(document)).toEqual(before);
-  delete document.assembly;
-  expect(runWayfarer(document)).toEqual(before);
-});
-it.each(["decks", "tiles", "partitions", "openings", "structure"] as const)(
-  "replans an edited Wayfarer %s instead of reusing its old native walls",
-  (field) => {
-    const document = structuredClone(WAYFARER_REBUILD_SOURCE.layout),
-      before = runWayfarer(document);
-    if (field === "decks") document.decks[0].roof = true;
-    if (field === "tiles") document.tiles[0].material = "new-floor-finish";
-    if (field === "partitions") document.partitions[0].seal = "open-divider";
-    if (field === "openings") document.openings[0].clearance += 32;
-    if (field === "structure") document.structure!.hull.width += 32;
-    expect(compileLayout(document).valid).toBe(true);
-    const after = runWayfarer(document);
-    expect(after.requests).not.toEqual(before.requests);
-    expect(after.issues.some((issue) => issue.key === "assembly")).toBe(false);
-    // Both actual interfaces that the general family cannot fit and unsupported
-    // models remain explicit failures; assembly presence does not hide the cause.
-    expect(after.issues.length).toBeGreaterThan(0);
-  },
-);
 it("plans generic native walls alongside unrelated visual assembly parts", () => {
   const document = fixture(),
     before = run(document);
   document.assembly = {
     schema: "sidereal.layout-assembly.v1",
     source: null,
-    revisions: { ...WAYFARER_REBUILD_SOURCE.layout.assembly!.revisions },
+    // Structural admission is catalog-independent: any pinned asset revision is accepted.
+    revisions: { "test-control-seat": "e".repeat(64) },
     parts: [
       {
-        ...structuredClone(WAYFARER_REBUILD_SOURCE.layout.assembly!.parts[0]),
+        assetId: "test-control-seat",
+        flipped: false,
         id: "independent-equipment",
         position: [1, 1, 0.1875],
+        removedCells: [],
+        rotation: 0,
       },
     ],
   };

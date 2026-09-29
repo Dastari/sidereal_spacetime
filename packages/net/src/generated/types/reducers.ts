@@ -7,7 +7,6 @@ import { type Infer as __Infer } from "spacetimedb";
 
 // Import all reducer arg schemas
 import AcceptIdentityLinkReducer from "../accept_identity_link_reducer";
-import ActivateAuthoredShipFlightReducer from "../activate_authored_ship_flight_reducer";
 import ActivateInventoryHotbarReducer from "../activate_inventory_hotbar_reducer";
 import ApplySystemMapReducer from "../apply_system_map_reducer";
 import AssignInventoryHotbarReducer from "../assign_inventory_hotbar_reducer";
@@ -31,7 +30,6 @@ import EvaSetSuitReducer from "../eva_set_suit_reducer";
 import EvaToggleMaglockReducer from "../eva_toggle_maglock_reducer";
 import FireWeaponReducer from "../fire_weapon_reducer";
 import GrantShipPassengerReducer from "../grant_ship_passenger_reducer";
-import InstallAuthoredShipFlightReducer from "../install_authored_ship_flight_reducer";
 import InstallCargoHandlingFixtureReducer from "../install_cargo_handling_fixture_reducer";
 import InteractObjectReducer from "../interact_object_reducer";
 import JoinSharedSystemReducer from "../join_shared_system_reducer";
@@ -46,12 +44,9 @@ import OperatorUpgradePrefabShipReducer from "../operator_upgrade_prefab_ship_re
 import OperatorWipePlayerShipsReducer from "../operator_wipe_player_ships_reducer";
 import PressShipButtonReducer from "../press_ship_button_reducer";
 import PublishConstructionBlueprintReducer from "../publish_construction_blueprint_reducer";
-import RefitExistingWayfarerReducer from "../refit_existing_wayfarer_reducer";
-import RefitRebuiltWayfarerReducer from "../refit_rebuilt_wayfarer_reducer";
 import ReleaseInputControlReducer from "../release_input_control_reducer";
 import ReloadWeaponReducer from "../reload_weapon_reducer";
 import RenameShipReducer from "../rename_ship_reducer";
-import ReplaceLegacyPlayerWayfarerReducer from "../replace_legacy_player_wayfarer_reducer";
 import RequestIdentityLinkReducer from "../request_identity_link_reducer";
 import ReturnAuthoredFlightReviewReducer from "../return_authored_flight_review_reducer";
 import ReturnShipPassengerReducer from "../return_ship_passenger_reducer";
@@ -70,11 +65,9 @@ import SwitchConstructionReviewReducer from "../switch_construction_review_reduc
 import TakeAllInventoryItemsReducer from "../take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "../transfer_inventory_item_reducer";
 import TransferScopedCargoItemReducer from "../transfer_scoped_cargo_item_reducer";
-import TransferWayfarerLiquidReducer from "../transfer_wayfarer_liquid_reducer";
 import UseStationReducer from "../use_station_reducer";
 
 export type AcceptIdentityLinkParams = __Infer<typeof AcceptIdentityLinkReducer>;
-export type ActivateAuthoredShipFlightParams = __Infer<typeof ActivateAuthoredShipFlightReducer>;
 export type ActivateInventoryHotbarParams = __Infer<typeof ActivateInventoryHotbarReducer>;
 export type ApplySystemMapParams = __Infer<typeof ApplySystemMapReducer>;
 export type AssignInventoryHotbarParams = __Infer<typeof AssignInventoryHotbarReducer>;
@@ -98,7 +91,6 @@ export type EvaSetSuitParams = __Infer<typeof EvaSetSuitReducer>;
 export type EvaToggleMaglockParams = __Infer<typeof EvaToggleMaglockReducer>;
 export type FireWeaponParams = __Infer<typeof FireWeaponReducer>;
 export type GrantShipPassengerParams = __Infer<typeof GrantShipPassengerReducer>;
-export type InstallAuthoredShipFlightParams = __Infer<typeof InstallAuthoredShipFlightReducer>;
 export type InstallCargoHandlingFixtureParams = __Infer<typeof InstallCargoHandlingFixtureReducer>;
 export type InteractObjectParams = __Infer<typeof InteractObjectReducer>;
 export type JoinSharedSystemParams = __Infer<typeof JoinSharedSystemReducer>;
@@ -113,12 +105,9 @@ export type OperatorUpgradePrefabShipParams = __Infer<typeof OperatorUpgradePref
 export type OperatorWipePlayerShipsParams = __Infer<typeof OperatorWipePlayerShipsReducer>;
 export type PressShipButtonParams = __Infer<typeof PressShipButtonReducer>;
 export type PublishConstructionBlueprintParams = __Infer<typeof PublishConstructionBlueprintReducer>;
-export type RefitExistingWayfarerParams = __Infer<typeof RefitExistingWayfarerReducer>;
-export type RefitRebuiltWayfarerParams = __Infer<typeof RefitRebuiltWayfarerReducer>;
 export type ReleaseInputControlParams = __Infer<typeof ReleaseInputControlReducer>;
 export type ReloadWeaponParams = __Infer<typeof ReloadWeaponReducer>;
 export type RenameShipParams = __Infer<typeof RenameShipReducer>;
-export type ReplaceLegacyPlayerWayfarerParams = __Infer<typeof ReplaceLegacyPlayerWayfarerReducer>;
 export type RequestIdentityLinkParams = __Infer<typeof RequestIdentityLinkReducer>;
 export type ReturnAuthoredFlightReviewParams = __Infer<typeof ReturnAuthoredFlightReviewReducer>;
 export type ReturnShipPassengerParams = __Infer<typeof ReturnShipPassengerReducer>;
@@ -137,6 +126,5 @@ export type SwitchConstructionReviewParams = __Infer<typeof SwitchConstructionRe
 export type TakeAllInventoryItemsParams = __Infer<typeof TakeAllInventoryItemsReducer>;
 export type TransferInventoryItemParams = __Infer<typeof TransferInventoryItemReducer>;
 export type TransferScopedCargoItemParams = __Infer<typeof TransferScopedCargoItemReducer>;
-export type TransferWayfarerLiquidParams = __Infer<typeof TransferWayfarerLiquidReducer>;
 export type UseStationParams = __Infer<typeof UseStationReducer>;
 

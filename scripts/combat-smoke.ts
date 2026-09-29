@@ -10,7 +10,7 @@ export async function combatSmoke(
   await a.reducers.enterLab({ name: "Combat Smoke" });
   await a.reducers.claimStarterKit({});
   await a.reducers.claimInputControl({});
-  await enterNativePilot(a, true);
+  await enterNativePilot(a);
   const state = () => [...a.db.ownCombat.iter()][0];
   const inventory = () => [...a.db.ownInventoryState.iter()][0];
   const item = (definitionId: string) =>

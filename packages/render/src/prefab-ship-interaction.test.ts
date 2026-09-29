@@ -152,6 +152,42 @@ describe("prefab ship interaction presentation", () => {
     );
   });
 
+  it("hovers exactly one object and clears it when the pointer leaves the canvas", () => {
+    const { scene, ship, screen } = fixture();
+    const listeners = new Map<string, (event: PointerEvent) => void>();
+    const rect = { left: 0, top: 0, width: 800, height: 600 };
+    const canvas = {
+      getBoundingClientRect: () => rect,
+      addEventListener: (type: string, fn: (event: PointerEvent) => void) =>
+        listeners.set(type, fn),
+      removeEventListener: (type: string) => listeners.delete(type),
+      style: {} as CSSStyleDeclaration,
+      dataset: {} as DOMStringMap,
+    } as unknown as HTMLCanvasElement;
+    const picker = createPrefabObjectPicker(
+      scene,
+      canvas,
+      ship,
+      binding,
+      () => true,
+    );
+    const world = ship.computeWorldMatrix(true);
+    const at = (x: number, y: number, z: number) =>
+      screen(Vector3.TransformCoordinates(new Vector3(x, y, z), world));
+    const hoverMeshes = () =>
+      scene.meshes.filter((m) => m.name === "prefab-object-hover");
+    listeners.get("pointermove")!(at(-2, 2.7, 4.5) as PointerEvent);
+    expect(canvas.dataset.prefabObject).toBe(
+      PREFAB_OBJECT_PREFIX + "mount:reactor",
+    );
+    expect(hoverMeshes()).toHaveLength(1);
+    listeners.get("pointerleave")!({} as PointerEvent);
+    expect(canvas.dataset.prefabObject).toBe("");
+    expect(hoverMeshes()).toHaveLength(0);
+    picker.dispose();
+    expect(listeners.size).toBe(0);
+  });
+
   it("plays a short impact flash at a ship-local point and cleans it up", () => {
     const { scene, ship } = fixture();
     let now = 0;

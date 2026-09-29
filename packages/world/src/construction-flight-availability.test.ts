@@ -11,10 +11,21 @@ import {
   queueFlightDamage,
   consumeFlightDamage,
 } from "./construction-flight-availability";
-import { WAYFARER_REBUILD_SHA256 } from "@sidereal/sim/wayfarer-rebuild-contract";
-import source from "@sidereal/content/wayfarer-rebuild-r002.json";
-import { wayfarerFlightInput } from "@sidereal/content/wayfarer-flight-definition";
 import { compileFlightDefinition } from "@sidereal/sim/flight-definition";
+import { prefabById } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import { prefabConstructionDocument } from "@sidereal/sim/prefab-construction";
+import {
+  prefabFlightInput,
+  prefabFlightModel,
+  prefabPlacedObjectId,
+} from "@sidereal/sim/prefab-flight";
+const WREN = prefabById("fed.s.wren")!;
+const catalog = defaultPrefabComponentCatalog();
+const source = JSON.stringify(prefabConstructionDocument(WREN, catalog));
+const model = prefabFlightModel(WREN, catalog);
+const drive = model.fittings.find((x) => x.role === "actuator")!;
+const PREFAB_SHA = "b".repeat(64);
 function table(primary = "id") {
   const rows = new Map<string, any>();
   return {
@@ -43,9 +54,7 @@ function table(primary = "id") {
 function fixture() {
   const owner = Identity.fromString("1".repeat(64)),
     server = Identity.fromString("2".repeat(64));
-  const part = source.layout.assembly.parts.find(
-    (p) => p.assetId === "part-e8b51ac6443c73becfcb",
-  )!;
+  const placedObjectId = prefabPlacedObjectId("ship", drive.sourceId);
   const db: any = {
     constructionFlightBinding: table("shipId"),
     constructionInstance: table(),
@@ -60,7 +69,7 @@ function fixture() {
     owner,
     lifecycle: "active",
     instanceRevision: 1n,
-    blueprintSha256: WAYFARER_REBUILD_SHA256,
+    blueprintSha256: PREFAB_SHA,
     revision: 1n,
     stationId: "seat",
   });
@@ -68,19 +77,17 @@ function fixture() {
     id: "ship",
     owner,
     revision: 1n,
-    blueprintSha256: WAYFARER_REBUILD_SHA256,
-    documentJson: JSON.stringify(source),
-    idMapJson: JSON.stringify({
-      objects: [{ sourceId: part.id, instanceId: part.id }],
-    }),
+    blueprintSha256: PREFAB_SHA,
+    documentJson: source,
+    idMapJson: "{}",
   });
   db.constructionFlightFitting.insert({
     id: "engine",
     shipId: "ship",
-    placedObjectId: part.id,
-    sourceDeviceId: part.id,
-    definitionId: "main-drive-v1",
-    definitionRevision: 1,
+    placedObjectId,
+    sourceDeviceId: drive.sourceId,
+    definitionId: drive.definitionId,
+    definitionRevision: drive.definitionRevision,
     kind: "actuator",
     installed: true,
     powered: true,
@@ -122,9 +129,9 @@ function fixture() {
       availability,
     } = f;
     const c = compileFlightDefinition(
-      wayfarerFlightInput(
-        source as any,
-        { variant: "r002" },
+      prefabFlightInput(
+        model,
+        (sourceId) => prefabPlacedObjectId("ship", sourceId),
         {
           fittings: [
             {
@@ -145,43 +152,16 @@ function fixture() {
   };
   return { ctx, db, args, event, server, compiled };
 }
-test("validated removal preserves UUID/source/audit and changes real compiled mass and actuator list", () => {
+test("fitting disposition fails closed for prefab ships until they are qualified", () => {
   const f = fixture(),
-    before = f.compiled(),
-    sourceBefore = f.db.constructionInstance.id.find("ship").documentJson;
-  changeFlightFittingDisposition(f.ctx, f.args);
-  const after = f.compiled();
-  expect(after.actuators).toEqual([]);
-  expect(after.mass.massKg).toBeLessThan(before.mass.massKg);
-  expect(f.db.constructionFlightFitting.id.find("engine")).toMatchObject({
-    id: "engine",
-    installed: false,
-    revision: 2n,
-  });
-  expect(f.db.constructionInstance.id.find("ship").documentJson).toBe(
-    sourceBefore,
-  );
-  expect(f.db.constructionFlightDirty.shipId.find("ship")).toBeDefined();
-  changeFlightFittingDisposition(f.ctx, f.args);
-  expect(f.db.constructionFlightReceipt.rows.size).toBe(1);
-  expect(() =>
-    changeFlightFittingDisposition(f.ctx, { ...f.args, action: "detach" }),
-  ).toThrow("payload conflict");
-});
-test("detachment retains mass; foreign sender, stale revision and unsupported action cannot mutate a fitting", () => {
-  const f = fixture(),
-    before = f.compiled();
-  for (const [ctx, args] of [
-    [{ ...f.ctx, sender: f.server }, f.args],
-    [f.ctx, { ...f.args, expectedFittingRevision: 2n }],
-    [f.ctx, { ...f.args, action: "rotate" }],
-  ] as const)
-    expect(() => changeFlightFittingDisposition(ctx, args)).toThrow();
-  expect(f.db.constructionFlightFitting.id.find("engine").revision).toBe(1n);
-  changeFlightFittingDisposition(f.ctx, { ...f.args, action: "detach" });
-  const after = f.compiled();
-  expect(after.mass.massKg).toBe(before.mass.massKg);
-  expect(after.actuators[0].availability).toBe(0);
+    before = structuredClone(f.db.constructionFlightFitting.id.find("engine"));
+  for (const action of ["remove", "detach"])
+    expect(() =>
+      changeFlightFittingDisposition(f.ctx, { ...f.args, action }),
+    ).toThrow("Current active qualified flight fitting required");
+  expect(f.db.constructionFlightFitting.id.find("engine")).toEqual(before);
+  expect(f.db.constructionFlightReceipt.rows.size).toBe(0);
+  expect(f.db.constructionFlightDirty.rows.size).toBe(0);
 });
 test("only server events can cause damage, with replay conservation and consumption revision checks", () => {
   const f = fixture(),
@@ -224,12 +204,17 @@ test("damage cannot turn invalid existing availability into committed force stat
     expect(f.db.constructionFlightDirty.rows.size).toBe(0);
   }
 });
-test("damage work is bounded and a removal before consumption cannot redirect damage", () => {
+test("damage work is bounded and a fitting change before consumption cannot redirect damage", () => {
   const f = fixture(),
     ctx = { ...f.ctx, sender: f.server };
   for (let i = 0; i < 10; i++)
     queueFlightDamage(ctx, { ...f.event, id: String(i) });
-  changeFlightFittingDisposition(f.ctx, f.args);
+  // A concurrent authoritative fitting change (removal) advances the fitting revision.
+  f.db.constructionFlightFitting.id.update({
+    ...f.db.constructionFlightFitting.id.find("engine"),
+    installed: false,
+    revision: 2n,
+  });
   expect(consumeFlightDamage(ctx)).toBe(8);
   expect(f.db.constructionFlightDamageEvent.rows.size).toBe(2);
   expect(f.db.constructionFlightFitting.id.find("engine").revision).toBe(2n);

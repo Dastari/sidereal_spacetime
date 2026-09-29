@@ -1,11 +1,4 @@
 import { derivePrefabStructure } from "./prefab-structure";
-import {
-  planWayfarerExteriorGame,
-  verifyQualifiedWayfarerExterior,
-  type WayfarerExteriorDocument,
-} from "./wayfarer-exterior-qualification";
-import { planWayfarerRebuildGame } from "./wayfarer-rebuild-game";
-import { verifyWayfarerRebuildSource } from "./wayfarer-rebuild-contract";
 import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
 import { planPinnedInsetBoundaries } from "./construction-inset-boundaries";
 import { readNativeAirlockDocument } from "./construction-airlock-document";
@@ -134,8 +127,6 @@ export function readConstructionDraft(
           "traversalRoom",
           "stairRoom",
           "airlockRoom",
-          "wayfarerRebuild",
-          "wayfarerExterior",
           "prefab",
         ].includes(k),
     )
@@ -246,9 +237,6 @@ export function readConstructionDraft(
   );
   normalized.floors.sort((a, b) => compareText(a.id, b.id));
   normalized.layout.serviceConnections?.sort((a, b) => compareText(a.id, b.id));
-  if (normalized.wayfarerRebuild) verifyWayfarerRebuildSource(normalized);
-  if (normalized.wayfarerExterior)
-    verifyQualifiedWayfarerExterior(normalized as WayfarerExteriorDocument);
   const canonical = stableStringify(normalized);
   if (input.prefab !== undefined && !options.prefabDerivation) {
     // Prefab ships: the walkable layout and floor bindings must equal their grammar
@@ -307,12 +295,7 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
     input = JSON.parse(snapshot.canonical) as ConstructionDocument,
     layout = input.layout;
   const inset = input.boundaryKit?.id === CONSTRUCTION_INSET_VISUAL_PIN.id;
-  if (
-    layout.structure?.schema === "sidereal.layout-structure.v2" &&
-    !inset &&
-    !input.wayfarerRebuild &&
-    !input.wayfarerExterior
-  )
+  if (layout.structure?.schema === "sidereal.layout-structure.v2" && !inset)
     throw Error(
       "Boundary-treatment native installation adapters are not yet qualified",
     );
@@ -368,10 +351,7 @@ export function compileConstruction(raw: string): ConstructionSnapshot {
   if (input.stairRoom) validateNativeStairRoomDocument(input);
   if (input.pressureRoom) validateNativePressureRoomDocument(input);
   if (input.traversalRoom) validateNativeTraversalRoomDocument(input);
-  if (input.wayfarerExterior)
-    planWayfarerExteriorGame(input as WayfarerExteriorDocument);
-  else if (input.wayfarerRebuild) planWayfarerRebuildGame(input);
-  else if (inset)
+  if (inset)
     for (const deck of layout.decks) planPinnedInsetBoundaries(input, deck.id);
   else if (input.boundaryKit?.revision === "r004")
     for (const deck of layout.decks) planPinnedBoundaryFamily(layout, deck.id);

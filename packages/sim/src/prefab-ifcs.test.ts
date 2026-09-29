@@ -33,7 +33,7 @@ import {
 } from "./prefab-flight";
 import { prefabActuatorSupply } from "./prefab-flight-supply";
 import { compilePrefabShipSystems } from "./prefab-ship-systems";
-import { WAYFARER_FLIGHT_SPEED } from "@sidereal/content/physical-definitions";
+import { SHIP_FLIGHT_SPEED } from "@sidereal/content/physical-definitions";
 
 const catalog = defaultPrefabComponentCatalog();
 const wren = prefabById("fed.s.wren")!;
@@ -99,8 +99,8 @@ function step(
     pilotDesiredMotion(
       s,
       { throttle, turn },
-      WAYFARER_FLIGHT_SPEED.forward,
-      WAYFARER_FLIGHT_SPEED.reverse,
+      SHIP_FLIGHT_SPEED.forward,
+      SHIP_FLIGHT_SPEED.reverse,
       PREFAB_FLIGHT_PROFILE.maxAngularSpeed,
     ),
     c.mass,
@@ -125,7 +125,7 @@ function zeroToCruise(c: ReturnType<typeof compile>) {
   let s = REST;
   for (let n = 1; n < 120 / DT; n++) {
     s = step(c, s, 1, 0).motion;
-    if (Math.hypot(s.vx, s.vy) >= 0.95 * WAYFARER_FLIGHT_SPEED.forward)
+    if (Math.hypot(s.vx, s.vy) >= 0.95 * SHIP_FLIGHT_SPEED.forward)
       return n * DT;
   }
   return Infinity;

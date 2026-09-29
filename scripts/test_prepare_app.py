@@ -5,7 +5,7 @@ import re
 import tempfile
 import unittest
 
-from prepare_app import EDITOR_NATIVE_ASSETS, PUBLISHED_RUNTIME, ROOT, check_references, prepare, retired_for
+from prepare_app import PUBLISHED_RUNTIME, ROOT, check_references, prepare
 
 ASSET_LITERAL = re.compile(r'["\'`](/assets/[^"\'`\s]+)')
 
@@ -18,11 +18,9 @@ def write(root: Path, name: str, text: str | None = None) -> None:
 
 def seed_runtime(root: Path) -> None:
     """Every allowlisted entry must exist; a missing one is a broken build, not a skip."""
-    for source in EDITOR_NATIVE_ASSETS:
-        write(root, source)
     for entry in PUBLISHED_RUNTIME:
         path = root / "assets/runtime" / entry
-        if entry.endswith(".glb"):
+        if entry.endswith((".glb", ".json")):
             write(root, f"assets/runtime/{entry}")
         else:
             path.mkdir(parents=True, exist_ok=True)
@@ -33,7 +31,7 @@ class PrepareAppTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             seed_runtime(root)
-            for name in ("assets/runtime/wayfarer.glb", "assets/runtime/assembly/parts.glb",
+            for name in ("assets/runtime/assembly/parts.glb",
                          "docs/public/shipyard.md", "docs/handoffs/private.md",
                          "reference/legacy.md", "PIVOT.md"):
                 write(root, name)
@@ -43,22 +41,13 @@ class PrepareAppTests(unittest.TestCase):
                         write(root, f"apps/{app}/{destination}/{name}", "old internal content")
                 prepare(app, root)
                 public = root / "apps" / app / "public"
-                if app == "dashboard":
-                    self.assertEqual((public / "assets/wayfarer.glb").read_text(), "assets/runtime/wayfarer.glb")
-                    self.assertEqual((public / "assets/assembly/parts.glb").read_text(), "assets/runtime/assembly/parts.glb")
-                else:
-                    # Retired legacy ship assets never reach the game client.
-                    self.assertFalse((public / "assets/wayfarer.glb").exists())
-                    self.assertFalse((public / "assets/assembly/parts.glb").exists())
+                # Retired (unlisted) assembly assets reach neither app.
+                self.assertFalse((public / "assets/assembly/parts.glb").exists())
                 for destination in ("public", "dist"):
                     output = root / "apps" / app / destination
                     for name in ("docs", "reference", "PIVOT.md", "help/stale.md"):
                         self.assertFalse((output / name).exists(), str(output / name))
                 self.assertEqual((public / "help/shipyard.md").exists(), app == "dashboard")
-                for source, destination in EDITOR_NATIVE_ASSETS.items():
-                    self.assertEqual((public / destination).exists(), app == "dashboard")
-                    if app == "dashboard":
-                        self.assertEqual((public / destination).read_text(), source)
             self.assertTrue((root / "docs/handoffs/private.md").exists())
             self.assertTrue((root / "reference/legacy.md").exists())
 
@@ -88,60 +77,20 @@ class PrepareAppTests(unittest.TestCase):
                             "equipment/contact-sheet.png", "stale"):
                 self.assertFalse((assets / private).exists(), private)
 
-    def test_game_client_never_receives_retired_ship_assets(self):
-        with tempfile.TemporaryDirectory() as folder:
-            root = Path(folder)
-            seed_runtime(root)
-            retired = ("wayfarer.glb", "voxels/wayfarer.glb", "voxels/engine-pod.glb",
-                       "assembly/wayfarer.json", "assembly/wayfarer-exterior-r001.json",
-                       "assembly/hull-manifest.json", "assembly/catalog.json", "assembly/parts.glb",
-                       "assembly/catalog-shipyard-r005.json", "assembly/cargo/crate.glb",
-                       "assembly/equipment/bed.glb", "assembly/hull/r006/part.glb",
-                       "assembly/native/framed-wayfarer/runtime-r001/hull.glb",
-                       "assembly/native/side-hull-r005/a/model.glb",
-                       "construction/wayfarer-rebuild-r002/wayfarer-transition.glb")
-            kept = ("voxels/asteroid.glb", "assembly/floor-manifest.json", "assembly/floor/r002/tile.glb",
-                    "construction/boundary-r004/kit.glb")
-            for name in (*retired, *kept):
-                write(root, f"assets/runtime/{name}")
-            write(root, "docs/public/shipyard.md")
-            prepare("client", root)
-            prepare("dashboard", root)
-            client = root / "apps/client/public/assets"
-            dashboard = root / "apps/dashboard/public/assets"
-            for name in retired:
-                self.assertFalse((client / name).exists(), name)
-                self.assertTrue((dashboard / name).exists(), name)
-                self.assertTrue(retired_for("client", name), name)
-                self.assertFalse(retired_for("dashboard", name), name)
-            for name in kept:
-                self.assertTrue((client / name).exists(), name)
-
-    def test_game_client_source_names_no_retired_ship_asset(self):
-        unresolved = set()
-        for source in (ROOT / "apps/client/src").rglob("*.ts*"):
-            if ".test." in source.name:
-                continue
-            for match in ASSET_LITERAL.finditer(source.read_text(errors="ignore")):
-                relative = match.group(1).split("?")[0][len("/assets/"):]
-                if relative and retired_for("client", relative.rstrip("/")):
-                    unresolved.add(f"{source.relative_to(ROOT)}: {match.group(1)}")
-        self.assertEqual(unresolved, set())
-
     def test_published_manifest_may_not_reference_unpublished_assets(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)
             seed_runtime(root)
-            write(root, "assets/runtime/assembly/hull-manifest.json",
-                  json.dumps({"parts": [{"url": "/assets/assembly/parts.glb?revision=r001"},
+            write(root, "assets/runtime/assembly/floor-manifest.json",
+                  json.dumps({"parts": [{"url": "/assets/assembly/floor/kit.glb?revision=r001"},
                                         {"url": "/assets/construction/complex-preview-r000/join.glb"}]}))
-            write(root, "assets/runtime/assembly/parts.glb")
+            write(root, "assets/runtime/assembly/floor/kit.glb")
             write(root, "assets/runtime/construction/complex-preview-r000/join.glb")
             write(root, "docs/public/shipyard.md")
             with self.assertRaises(RuntimeError) as failure:
                 prepare("dashboard", root)
             self.assertIn("complex-preview-r000/join.glb", str(failure.exception))
-            self.assertNotIn("parts.glb", str(failure.exception))
+            self.assertNotIn("kit.glb", str(failure.exception))
 
     def test_preparing_one_app_does_not_modify_other_app(self):
         with tempfile.TemporaryDirectory() as folder:

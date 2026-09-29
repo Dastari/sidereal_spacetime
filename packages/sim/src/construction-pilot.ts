@@ -3,20 +3,13 @@ import type {
   DeckLocation,
 } from "./construction-collision";
 import { canOccupyDeck, sweepDeckCircle } from "./construction-collision";
-import { qualifiedWayfarerInstanceObstacles } from "./wayfarer-walking-bindings";
 import type { QualifiedFlightInstance } from "./construction-flight";
 export class PilotGeometryError extends Error {}
-export const QUALIFIED_PILOT_APPROACH = [0, 9.375] as const;
-export const QUALIFIED_PILOT_POSITION = [0, 10.25] as const;
-/** Seat and approach points (ship-local metres). Absent means the qualified Wayfarer seat. */
+/** Seat and approach points (ship-local metres). */
 export interface PilotPose {
   position: readonly [number, number];
   approach: readonly [number, number];
 }
-export const QUALIFIED_PILOT_POSE: PilotPose = {
-  position: QUALIFIED_PILOT_POSITION,
-  approach: QUALIFIED_PILOT_APPROACH,
-};
 /** Prefab stations: the seat is the derived pilot station, approached from 0.875 m aft. */
 export const prefabPilotPose = (
   station: readonly [number, number],
@@ -29,8 +22,8 @@ export interface PilotGeometry {
   frame: DeckCollisionFrame;
   seatPlacedObjectId: string;
   supportHeightAt(x: number, y: number): number | undefined;
-  /** Prefab ships only: the re-derived station pose (no native seat collider exists). */
-  pose?: PilotPose;
+  /** The re-derived station pose (prefab stations have no native seat collider). */
+  pose: PilotPose;
 }
 const point = (
   frame: DeckCollisionFrame,
@@ -45,82 +38,13 @@ export function qualifyPilotGeometry(g: PilotGeometry) {
   const { instance, frame } = g;
   if (frame.shipId !== instance.id || frame.deckId !== instance.spawnDeckId)
     throw new PilotGeometryError("Pilot instance/deck frame mismatch");
-  if (g.pose) return qualifyPoseGeometry(g, g.pose);
-  const expected = qualifiedWayfarerInstanceObstacles(instance, frame.deckId);
-  const map = JSON.parse(instance.idMapJson) as {
-    objects: { sourceId: string; instanceId: string }[];
-  };
-  if (
-    !map.objects.some(
-      (m) =>
-        m.sourceId === "equipment-control-seat" &&
-        m.instanceId === g.seatPlacedObjectId,
-    )
-  )
-    throw new PilotGeometryError("Exact native pilot seat mapping required");
-  const own = frame.obstacles.filter((o) =>
-    o.id.startsWith(g.seatPlacedObjectId + ":"),
-  );
-  const source = expected.filter((o) =>
-    o.id.startsWith(g.seatPlacedObjectId + ":"),
-  );
-  if (
-    own.length !== 1 ||
-    source.length !== 1 ||
-    JSON.stringify(own[0].vertices) !== JSON.stringify(source[0].vertices)
-  )
-    throw new PilotGeometryError("Exact native pilot seat collider required");
-  const segments = new Set(
-    own.flatMap((o) =>
-      o.vertices.map((_, i) => `obstacle:${JSON.stringify([o.id, i])}`),
-    ),
-  );
-  if (frame.segments.filter((s) => segments.has(s.id)).length !== segments.size)
-    throw new PilotGeometryError("Complete native pilot seat edges required");
-  const transition = {
-    ...frame,
-    obstacles: frame.obstacles.filter((o) => !own.includes(o)),
-    segments: frame.segments.filter((s) => !segments.has(s.id)),
-  };
-  const approachHeight = g.supportHeightAt(...QUALIFIED_PILOT_APPROACH),
-    seatHeight = g.supportHeightAt(...QUALIFIED_PILOT_POSITION);
-  if (
-    !Number.isFinite(approachHeight) ||
-    !Number.isFinite(seatHeight) ||
-    Math.abs(approachHeight! - 0.1875) > 0.05 ||
-    Math.abs(seatHeight! - 0.1875) > 0.05
-  )
-    throw new PilotGeometryError("Pilot support surface is unqualified");
-  if (
-    !canOccupyDeck(frame, point(frame, ...QUALIFIED_PILOT_APPROACH), 0.3) ||
-    !canOccupyDeck(transition, point(frame, ...QUALIFIED_PILOT_POSITION), 0.3)
-  )
-    throw new PilotGeometryError("Pilot approach/seat is obstructed");
-  const swept = sweepDeckCircle(
-    transition,
-    point(frame, ...QUALIFIED_PILOT_APPROACH),
-    [0, QUALIFIED_PILOT_POSITION[1] - QUALIFIED_PILOT_APPROACH[1]],
-    0.3,
-  );
-  if (
-    Math.hypot(
-      swept.position[0],
-      swept.position[1] - QUALIFIED_PILOT_POSITION[1],
-    ) > 1e-5
-  )
-    throw new PilotGeometryError("Pilot seating transition is obstructed");
-  return {
-    frame,
-    transition,
-    approachHeight: approachHeight!,
-    seatHeight: seatHeight!,
-  };
+  return qualifyPoseGeometry(g, g.pose);
 }
 export function canApproachPilot(
   frame: DeckCollisionFrame,
   x: number,
   y: number,
-  pose: PilotPose = QUALIFIED_PILOT_POSE,
+  pose: PilotPose,
 ) {
   const approach = pose.approach;
   if (
@@ -141,7 +65,7 @@ export function canApproachPilot(
     ) < 1e-5
   );
 }
-/** Prefab seats: no native seat collider; the station itself must be supported, clear and
+/** Station seats: no native seat collider; the station itself must be supported, clear and
  * reachable from its approach point. The station pose is re-derived by the caller. */
 function qualifyPoseGeometry(g: PilotGeometry, pose: PilotPose) {
   const frame = g.frame;
@@ -193,7 +117,7 @@ export function pilotRecoveryPoint(
   if (nearby.length > 128)
     throw new PilotGeometryError("Pilot recovery occupancy budget exceeded");
   const q = qualifyPilotGeometry(g);
-  const pose = g.pose ?? QUALIFIED_PILOT_POSE;
+  const pose = g.pose;
   for (const [dx, dy] of [
     [0, 0],
     [-0.375, 0],

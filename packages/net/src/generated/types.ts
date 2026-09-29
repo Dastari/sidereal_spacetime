@@ -1692,15 +1692,6 @@ export type OwnStations = __Infer<typeof OwnStations>;
 export const OwnSystemMaps = __t.object("OwnSystemMaps", {});
 export type OwnSystemMaps = __Infer<typeof OwnSystemMaps>;
 
-export const OwnWayfarerRebuildOffer = __t.object("OwnWayfarerRebuildOffer", {});
-export type OwnWayfarerRebuildOffer = __Infer<typeof OwnWayfarerRebuildOffer>;
-
-export const OwnWayfarerRefitAttachments = __t.object("OwnWayfarerRefitAttachments", {});
-export type OwnWayfarerRefitAttachments = __Infer<typeof OwnWayfarerRefitAttachments>;
-
-export const OwnWayfarerRefitOffer = __t.object("OwnWayfarerRefitOffer", {});
-export type OwnWayfarerRefitOffer = __Infer<typeof OwnWayfarerRefitOffer>;
-
 export const OwnWorldAdmission = __t.object("OwnWorldAdmission", {});
 export type OwnWorldAdmission = __Infer<typeof OwnWorldAdmission>;
 
@@ -2389,18 +2380,6 @@ export const WayfarerLiquidReceipt = __t.object("WayfarerLiquidReceipt", {
 });
 export type WayfarerLiquidReceipt = __Infer<typeof WayfarerLiquidReceipt>;
 
-export const WayfarerRebuildOfferProjection = __t.object("WayfarerRebuildOfferProjection", {
-  shipId: __t.string(),
-  eligible: __t.bool(),
-  reason: __t.string(),
-  expectedInstanceRevision: __t.u64(),
-  expectedShipRevision: __t.u64(),
-  fingerprint: __t.string(),
-  targetSha256: __t.string(),
-  reportJson: __t.string(),
-});
-export type WayfarerRebuildOfferProjection = __Infer<typeof WayfarerRebuildOfferProjection>;
-
 export const WayfarerRefitAttachment = __t.object("WayfarerRefitAttachment", {
   id: __t.string(),
   instanceId: __t.string(),
@@ -2414,30 +2393,6 @@ export const WayfarerRefitAttachment = __t.object("WayfarerRefitAttachment", {
   revision: __t.u64(),
 });
 export type WayfarerRefitAttachment = __Infer<typeof WayfarerRefitAttachment>;
-
-export const WayfarerRefitAttachmentStatus = __t.object("WayfarerRefitAttachmentStatus", {
-  id: __t.string(),
-  instanceId: __t.string(),
-  deckId: __t.string(),
-  containerId: __t.string(),
-  assetId: __t.string(),
-  assetSha256: __t.string(),
-  x: __t.f64(),
-  y: __t.f64(),
-  z: __t.f64(),
-  revision: __t.u64(),
-});
-export type WayfarerRefitAttachmentStatus = __Infer<typeof WayfarerRefitAttachmentStatus>;
-
-export const WayfarerRefitOffer = __t.object("WayfarerRefitOffer", {
-  shipId: __t.string(),
-  characterId: __t.string(),
-  expectedShipRevision: __t.u64(),
-  expectedInventoryRevision: __t.u64(),
-  fingerprint: __t.string(),
-  status: __t.string(),
-});
-export type WayfarerRefitOffer = __Infer<typeof WayfarerRefitOffer>;
 
 export const WayfarerRefitReceipt = __t.object("WayfarerRefitReceipt", {
   shipId: __t.string(),

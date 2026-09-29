@@ -215,13 +215,13 @@ export function constructionPilotRepository(
         instance = ctx.db.constructionInstance.id.find(s.shipId),
         deck = ctx.db.constructionDeck.id.find(s.deckId),
         mapping = ctx.db.constructionFlightStation.stationId.find(s.id);
-      if (!a || !location || !instance || !deck || !mapping)
+      if (!a || !location || !instance || !deck || !mapping || !s.pose)
         throw new PilotGeometryError("Current native pilot geometry required");
       return {
         instance,
         frame: constructionCollision(ctx, instance, s.deckId),
         seatPlacedObjectId: mapping.seatPlacedObjectId,
-        ...(s.pose ? { pose: s.pose } : {}),
+        pose: s.pose,
         supportHeightAt: (x, y) =>
           support({
             actor: { ...a, localX: x, localY: y },

@@ -35,7 +35,6 @@ import {
 
 // Import all reducer arg schemas
 import AcceptIdentityLinkReducer from "./accept_identity_link_reducer";
-import ActivateAuthoredShipFlightReducer from "./activate_authored_ship_flight_reducer";
 import ActivateInventoryHotbarReducer from "./activate_inventory_hotbar_reducer";
 import ApplySystemMapReducer from "./apply_system_map_reducer";
 import AssignInventoryHotbarReducer from "./assign_inventory_hotbar_reducer";
@@ -59,7 +58,6 @@ import EvaSetSuitReducer from "./eva_set_suit_reducer";
 import EvaToggleMaglockReducer from "./eva_toggle_maglock_reducer";
 import FireWeaponReducer from "./fire_weapon_reducer";
 import GrantShipPassengerReducer from "./grant_ship_passenger_reducer";
-import InstallAuthoredShipFlightReducer from "./install_authored_ship_flight_reducer";
 import InstallCargoHandlingFixtureReducer from "./install_cargo_handling_fixture_reducer";
 import InteractObjectReducer from "./interact_object_reducer";
 import JoinSharedSystemReducer from "./join_shared_system_reducer";
@@ -74,12 +72,9 @@ import OperatorUpgradePrefabShipReducer from "./operator_upgrade_prefab_ship_red
 import OperatorWipePlayerShipsReducer from "./operator_wipe_player_ships_reducer";
 import PressShipButtonReducer from "./press_ship_button_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
-import RefitExistingWayfarerReducer from "./refit_existing_wayfarer_reducer";
-import RefitRebuiltWayfarerReducer from "./refit_rebuilt_wayfarer_reducer";
 import ReleaseInputControlReducer from "./release_input_control_reducer";
 import ReloadWeaponReducer from "./reload_weapon_reducer";
 import RenameShipReducer from "./rename_ship_reducer";
-import ReplaceLegacyPlayerWayfarerReducer from "./replace_legacy_player_wayfarer_reducer";
 import RequestIdentityLinkReducer from "./request_identity_link_reducer";
 import ReturnAuthoredFlightReviewReducer from "./return_authored_flight_review_reducer";
 import ReturnShipPassengerReducer from "./return_ship_passenger_reducer";
@@ -98,7 +93,6 @@ import SwitchConstructionReviewReducer from "./switch_construction_review_reduce
 import TakeAllInventoryItemsReducer from "./take_all_inventory_items_reducer";
 import TransferInventoryItemReducer from "./transfer_inventory_item_reducer";
 import TransferScopedCargoItemReducer from "./transfer_scoped_cargo_item_reducer";
-import TransferWayfarerLiquidReducer from "./transfer_wayfarer_liquid_reducer";
 import UseStationReducer from "./use_station_reducer";
 
 // Import all procedure arg schemas
@@ -161,9 +155,6 @@ import OwnShipsRow from "./own_ships_table";
 import OwnSpaceBodiesRow from "./own_space_bodies_table";
 import OwnStationsRow from "./own_stations_table";
 import OwnSystemMapsRow from "./own_system_maps_table";
-import OwnWayfarerRebuildOfferRow from "./own_wayfarer_rebuild_offer_table";
-import OwnWayfarerRefitAttachmentsRow from "./own_wayfarer_refit_attachments_table";
-import OwnWayfarerRefitOfferRow from "./own_wayfarer_refit_offer_table";
 import OwnWorldAdmissionRow from "./own_world_admission_table";
 import VisibleBodyDescriptionsRow from "./visible_body_descriptions_table";
 import VisibleBodyMotionRow from "./visible_body_motion_table";
@@ -578,27 +569,6 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnSystemMapsRow),
-  ownWayfarerRebuildOffer: __table({
-    name: 'own_wayfarer_rebuild_offer',
-    indexes: [
-    ],
-    constraints: [
-    ],
-  }, OwnWayfarerRebuildOfferRow),
-  ownWayfarerRefitAttachments: __table({
-    name: 'own_wayfarer_refit_attachments',
-    indexes: [
-    ],
-    constraints: [
-    ],
-  }, OwnWayfarerRefitAttachmentsRow),
-  ownWayfarerRefitOffer: __table({
-    name: 'own_wayfarer_refit_offer',
-    indexes: [
-    ],
-    constraints: [
-    ],
-  }, OwnWayfarerRefitOfferRow),
   ownWorldAdmission: __table({
     name: 'own_world_admission',
     indexes: [
@@ -674,7 +644,6 @@ const tablesSchema = __schema({
 /** The schema information for all reducers in this module. This is defined the same way as the reducers would have been defined in the server, except the body of the reducer is omitted in code generation. */
 const reducersSchema = __reducers(
   __reducerSchema("accept_identity_link", AcceptIdentityLinkReducer),
-  __reducerSchema("activate_authored_ship_flight", ActivateAuthoredShipFlightReducer),
   __reducerSchema("activate_inventory_hotbar", ActivateInventoryHotbarReducer),
   __reducerSchema("apply_system_map", ApplySystemMapReducer),
   __reducerSchema("assign_inventory_hotbar", AssignInventoryHotbarReducer),
@@ -698,7 +667,6 @@ const reducersSchema = __reducers(
   __reducerSchema("eva_toggle_maglock", EvaToggleMaglockReducer),
   __reducerSchema("fire_weapon", FireWeaponReducer),
   __reducerSchema("grant_ship_passenger", GrantShipPassengerReducer),
-  __reducerSchema("install_authored_ship_flight", InstallAuthoredShipFlightReducer),
   __reducerSchema("install_cargo_handling_fixture", InstallCargoHandlingFixtureReducer),
   __reducerSchema("interact_object", InteractObjectReducer),
   __reducerSchema("join_shared_system", JoinSharedSystemReducer),
@@ -713,12 +681,9 @@ const reducersSchema = __reducers(
   __reducerSchema("operator_wipe_player_ships", OperatorWipePlayerShipsReducer),
   __reducerSchema("press_ship_button", PressShipButtonReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
-  __reducerSchema("refit_existing_wayfarer", RefitExistingWayfarerReducer),
-  __reducerSchema("refit_rebuilt_wayfarer", RefitRebuiltWayfarerReducer),
   __reducerSchema("release_input_control", ReleaseInputControlReducer),
   __reducerSchema("reload_weapon", ReloadWeaponReducer),
   __reducerSchema("rename_ship", RenameShipReducer),
-  __reducerSchema("replace_legacy_player_wayfarer", ReplaceLegacyPlayerWayfarerReducer),
   __reducerSchema("request_identity_link", RequestIdentityLinkReducer),
   __reducerSchema("return_authored_flight_review", ReturnAuthoredFlightReviewReducer),
   __reducerSchema("return_ship_passenger", ReturnShipPassengerReducer),
@@ -737,7 +702,6 @@ const reducersSchema = __reducers(
   __reducerSchema("take_all_inventory_items", TakeAllInventoryItemsReducer),
   __reducerSchema("transfer_inventory_item", TransferInventoryItemReducer),
   __reducerSchema("transfer_scoped_cargo_item", TransferScopedCargoItemReducer),
-  __reducerSchema("transfer_wayfarer_liquid", TransferWayfarerLiquidReducer),
   __reducerSchema("use_station", UseStationReducer),
 );
 

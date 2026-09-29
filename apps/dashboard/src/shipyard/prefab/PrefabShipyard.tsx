@@ -55,8 +55,8 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import "../layout/layout.css";
-import "../layout/workbench.css";
+import "./layout.css";
+import "./workbench.css";
 import "./prefab.css";
 import {
   NEXT_FACING,

@@ -1,18 +1,15 @@
 import { placementAtFace } from "./structural-batches";
 import { setMeshRole } from "./mesh-roles";
-import { WAYFARER_V1_NOZZLES } from "@sidereal/content/wayfarer-nozzles";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import type { Scene } from "@babylonjs/core/scene";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Material } from "@babylonjs/core/Materials/material";
-import type { loadInstalledEquipment } from "./installed-equipment";
+import type { InstalledPlacement } from "./installed-equipment";
 import { createSelectionSilhouette } from "./selection-silhouette";
 import "@babylonjs/core/Culling/ray";
 
-type Installed = Awaited<
-  ReturnType<typeof loadInstalledEquipment>
->["placements"];
+type Installed = InstalledPlacement[];
 type EmissiveMaterial = Material & { emissiveColor: Color3 };
 
 /** Selection is presentation only; object actions arrive through validated world rows. */
@@ -26,15 +23,6 @@ export function createObjectPresentation(
   /** Objects without meshes of their own (batched prefab ships): a geometric pick. */
   fallbackPick?: (event: PointerEvent) => string | undefined,
 ) {
-  for (const mesh of meshes)
-    if (!mesh.metadata?.partId) {
-      const drive = WAYFARER_V1_NOZZLES.find(
-        (device) =>
-          mesh.name === `GEO-${device.id}` ||
-          mesh.name.startsWith(`GEO-${device.id}_`),
-      );
-      if (drive) mesh.metadata = { ...mesh.metadata, partId: drive.id };
-    }
   let selected: string | undefined;
   let silhouette: ReturnType<typeof createSelectionSilhouette> | undefined;
   const offMaterials = new Map<Material, Material>();

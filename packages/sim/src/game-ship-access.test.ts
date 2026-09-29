@@ -1,6 +1,10 @@
 import { expect, test } from "vitest";
-import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
-import { gameShipAccess, type GameShipAccessFacts } from "./game-ship-access";
+import {
+  TRUSTED_PREFAB_BLUEPRINT_PREFIX,
+  gameShipAccess,
+  type GameShipAccessFacts,
+} from "./game-ship-access";
+const PREFAB_SHA = "a".repeat(64);
 const facts = (): GameShipAccessFacts => ({
   ship: { id: "ship", ownerId: "owner" },
   motion: { shipId: "ship", systemId: "shared" },
@@ -13,7 +17,7 @@ const facts = (): GameShipAccessFacts => ({
     deckId: "deck",
     ownerId: "owner",
     characterId: "actor",
-    templateSha256: WAYFARER_STARTER.sha256,
+    templateSha256: PREFAB_SHA,
     instanceRevision: 1n,
     lifecycle: "active",
   },
@@ -21,7 +25,8 @@ const facts = (): GameShipAccessFacts => ({
     id: "ship",
     ownerId: "owner",
     revision: 1n,
-    blueprintSha256: WAYFARER_STARTER.sha256,
+    blueprintSha256: PREFAB_SHA,
+    blueprintId: TRUSTED_PREFAB_BLUEPRINT_PREFIX + "fed.s.wren:r1",
   },
   deck: { id: "deck", instanceId: "ship" },
   location: { characterId: "actor", instanceId: "ship", deckId: "deck" },
@@ -108,7 +113,7 @@ test("a trusted prefab keeps access at a later instance revision only when bindi
   const prefab = (revision: bigint, bound: bigint) => {
     const f = facts();
     f.instance!.blueprintSha256 = "prefab-r4";
-    f.instance!.blueprintId = "trusted-prefab:fed.s.wren:r4";
+    f.instance!.blueprintId = TRUSTED_PREFAB_BLUEPRINT_PREFIX + "fed.s.wren:r4";
     f.instance!.revision = revision;
     f.binding!.templateSha256 = "prefab-r4";
     f.binding!.instanceRevision = bound;
@@ -118,9 +123,12 @@ test("a trusted prefab keeps access at a later instance revision only when bindi
   expect(prefab(1n, 1n)).toBe(true);
   expect(prefab(2n, 2n)).toBe(true);
   expect(prefab(2n, 1n)).toBe(false);
-  // Without the trusted prefab blueprint id, only the pinned starters' revisions are admitted.
-  const f = facts();
-  f.instance!.blueprintSha256 = "prefab-r4";
-  f.binding!.templateSha256 = "prefab-r4";
-  expect(gameShipAccess(f).walkDeck).toBe(false);
+  expect(prefab(0n, 0n)).toBe(false);
+  // Without the trusted prefab blueprint id no instance is admitted (player publications and
+  // the retired Wayfarer template alike).
+  for (const blueprintId of [undefined, "player-blueprint", "fed.s.wren:r1"]) {
+    const f = facts();
+    f.instance!.blueprintId = blueprintId;
+    expect(gameShipAccess(f).walkDeck).toBe(false);
+  }
 });

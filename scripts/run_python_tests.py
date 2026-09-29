@@ -14,6 +14,4 @@ if not geometry_python.is_file():
 # The numeric/CSG evidence is versioned. A different installed version is a new
 # qualification, not a reason to silently skip tests or accept stale artifacts.
 subprocess.run([str(geometry_python), "-c", "from importlib.metadata import version; from pathlib import Path; pins=[line.split('==') for line in Path('scripts/geometry_tests/requirements.txt').read_text().splitlines() if line and not line.startswith('#')]; assert all(version(name)==expected for name,expected in pins), 'Native geometry dependency versions differ from declared qualification environment'"], cwd=ROOT, check=True)
-# Rebuild private read-only fixtures from exact tracked source hashes for clean CI.
-subprocess.run([str(ROOT / "node_modules/.bin/tsx"), "scripts/prepare_wayfarer_conversion.ts"], cwd=ROOT, check=True)
 subprocess.run([str(geometry_python), "-m", "unittest", "discover", "-s", "scripts/geometry_tests", "-p", "test_*.py"], cwd=ROOT, check=True)

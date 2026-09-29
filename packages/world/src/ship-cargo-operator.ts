@@ -18,7 +18,7 @@ import {
   INVENTORY_DEFINITIONS,
   inventoryDefinition,
 } from "@sidereal/content/inventory";
-import { WAYFARER_PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
+import { PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import {
   PREFAB_DECK_ID,
@@ -80,7 +80,7 @@ function parseDefinitionIds(json: string) {
       fail("Unknown item definition: " + id);
     // Ship flight mass needs an explicit physical definition for every item on board.
     if (
-      !WAYFARER_PHYSICAL_CATALOG.definitions.some(
+      !PHYSICAL_CATALOG.definitions.some(
         (d) => d.id === "inventory:" + id && d.kind === "inventory",
       )
     )

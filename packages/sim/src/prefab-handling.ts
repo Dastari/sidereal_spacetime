@@ -6,7 +6,7 @@
  * acceleration, turning and stopping. `prefab-handling.test.ts` asserts the S-class envelope and
  * that M/L hulls stay heavier.
  */
-import { WAYFARER_FLIGHT_SPEED } from "@sidereal/content/physical-definitions";
+import { SHIP_FLIGHT_SPEED } from "@sidereal/content/physical-definitions";
 import type {
   PrefabComponentCatalog,
   ShipPrefabDocumentV1,
@@ -68,7 +68,7 @@ export function compilePrefabFlight(
 export function prefabHandling(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
-  speed = WAYFARER_FLIGHT_SPEED,
+  speed = SHIP_FLIGHT_SPEED,
 ): PrefabHandling {
   const compiled = compilePrefabFlight(doc, catalog);
   const { mass, actuators, envelope } = compiled;

@@ -1,10 +1,7 @@
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
 import { ShipSystemsPanel } from "./ShipSystemsPanel";
-import { ShipRefitPanel, shipRefitAvailable } from "./ShipRefitPanel";
-import { MountedFuelPanel } from "./MountedFuelPanel";
 import {
-  supportsAuthoredFlightPresentation,
   authoredFlightPresentation,
   passengerFlightAdmitted,
   authoredExhaustTelemetry,
@@ -21,7 +18,6 @@ import {
   sharedBodyPresentation,
   bodyDestinations,
 } from "./shared-body-presentation";
-import { constructionInspectionCatalog } from "./construction-inspection";
 import {
   PREFAB_OBJECT_PREFIX,
   prefabObjectDetails,
@@ -383,25 +379,6 @@ export default function App({
   );
   const constructionVisit = constructionScene.visit;
   const constructionInstance = constructionScene.instance;
-  const refitAttachmentKey = JSON.stringify(
-    c && constructionVisit
-      ? [...c.db.ownWayfarerRefitAttachments.iter()]
-          .filter(
-            (a) =>
-              a.instanceId === constructionVisit.instanceId &&
-              a.deckId === constructionVisit.deckId,
-          )
-          .map(({ revision, containerId, ...visual }) => visual)
-          .sort((a, b) => a.id.localeCompare(b.id))
-      : [],
-  );
-  const refitAttachments = useMemo(
-    () =>
-      JSON.parse(
-        refitAttachmentKey,
-      ) as import("@sidereal/render/construction-refit-attachments").RefitAttachmentVisual[],
-    [refitAttachmentKey],
-  );
   const sceneDocument = useRef({
     json: undefined as string | undefined,
     version: 0,
@@ -419,7 +396,6 @@ export default function App({
     constructionInstance?.id,
     sceneDocument.current.version,
     constructionVisit?.visitId,
-    refitAttachmentKey,
     constructionScene.egress?.proofHash,
     constructionScene.egress?.stairId,
     gameShipAccess?.shipId,
@@ -515,24 +491,6 @@ export default function App({
     // Same plane: next to the loaded ship the deck view continues; far out, the top-down view.
     setInterior(!evaBody || evaLocal);
   }, [!!evaBody, evaLocal]);
-  const inspectionCatalog = useMemo(
-    () =>
-      constructionScene.active
-        ? constructionInspectionCatalog(
-            equipmentCatalog,
-            constructionInstance?.documentJson,
-            refitAttachments,
-            constructionVisit?.deckId,
-          )
-        : equipmentCatalog,
-    [
-      equipmentCatalog,
-      constructionScene.active,
-      constructionInstance?.documentJson,
-      refitAttachments,
-      constructionVisit?.deckId,
-    ],
-  );
   const station = (
     c && ship
       ? [...c.db.ownStations.iter()].find((row) => row.shipId === ship.id)
@@ -802,9 +760,6 @@ export default function App({
         ...(actor?.shipId
           ? [{ id: "ship-systems", label: "Ship systems" }]
           : []),
-        ...(shipRefitAvailable(c)
-          ? [{ id: "ship-refit", label: "Ship refit" }]
-          : []),
         ...(testShips !== undefined
           ? [{ id: "test-ships", label: `Shipyard test ships (${testShips})` }]
           : []),
@@ -850,7 +805,7 @@ export default function App({
       ? prefabDetails
       : objectDetails(
           selectedObject,
-          inspectionCatalog,
+          equipmentCatalog,
           interactions,
           actor,
           { seated, near: nearStation, occupied: !!station?.occupantId },
@@ -1138,10 +1093,6 @@ export default function App({
             },
             sharedWorld: sharedEnabled
               ? {
-                  store: sharedPresentation.store,
-                  localShipId: () =>
-                    sharedPresentation.store.getSnapshot().admission[0]
-                      ?.shipId ?? localShipId.current,
                   bodies: (nowMs) =>
                     sharedPresentation.store.getSnapshot().admission.length
                       ? [
@@ -1152,25 +1103,10 @@ export default function App({
                           ...fieldBodies(),
                         ]
                       : undefined,
-                  // Retired stock Wayfarer exterior is not delivered to the game.
-                  stockExterior: false,
                 }
               : undefined,
-            // The game never loads the retired legacy stock ship: without an
-            // authorized construction scene the character has no vessel.
-            vessel:
-              constructionScene.construction || constructionScene.egress
-                ? undefined
-                : "none",
-            construction: constructionScene.construction
-              ? {
-                  ...constructionScene.construction,
-                  attachments: refitAttachments,
-                }
-              : undefined,
-            authoredFlightEffects: supportsAuthoredFlightPresentation(
-              constructionInstance?.blueprintSha256,
-            ),
+            // Without an authorized construction scene the character has no vessel.
+            construction: constructionScene.construction,
             constructionEgress: constructionScene.egress,
             onScene(scene) {
               if (disposed) return;
@@ -1473,7 +1409,6 @@ export default function App({
     sceneKey,
     constructionInstance?.id,
     constructionInstance?.documentJson,
-    refitAttachmentKey,
     constructionVisit?.visitId,
     constructionScene.egress?.proofHash,
     constructionScene.egress?.stairId,
@@ -2050,12 +1985,6 @@ export default function App({
         )}
         {!awaitingShip && (
           <>
-            <ShipRefitPanel
-              connection={c}
-              onError={setError}
-              open={servicePanel === "ship-refit"}
-              onClose={closeServicePanel}
-            />
             <ShipSystemsPanel
               connection={c}
               onError={setError}
@@ -2077,11 +2006,6 @@ export default function App({
             </span>
           </div>
         )}
-        <MountedFuelPanel
-          connection={c}
-          selectedObject={selectedObject}
-          onError={setError}
-        />
         {sharedReview && (
           <SharedWorldReview
             connection={c}

@@ -5,10 +5,6 @@ import {
   readGroundPlacement,
   writeGroundPlacement,
 } from "@sidereal/sim/ground-placement";
-import {
-  isQualifiedWayfarerBlueprint,
-  qualifiedWayfarerInstanceObstacles,
-} from "@sidereal/sim/wayfarer-walking-bindings";
 import { readCargo } from "./scoped-inventory-authority";
 import { resolveCargoAccess } from "./scoped-inventory";
 import type { access } from "./inventory";
@@ -56,39 +52,6 @@ export function createGroundAccess(ctx: Context, actor: Actor, nowMicros = 0n) {
   }
   let cached: ReturnType<typeof native> | undefined;
   const current = () => (cached ??= native());
-  let historical: boolean | undefined;
-  function historicalWayfarer(
-    mode: Extract<ReturnType<typeof native>, { kind: "native" }>,
-  ) {
-    if (historical !== undefined) return historical;
-    historical = false;
-    const { instance, scope } = mode;
-    if (
-      !instance ||
-      !isQualifiedWayfarerBlueprint(instance.blueprintSha256) ||
-      instance.id !== scope.instanceId
-    )
-      return false;
-    try {
-      const decks = JSON.parse(instance.documentJson).layout.decks;
-      const deck = ctx.db.constructionDeck.id.find(scope.deckId);
-      if (
-        decks.length === 1 &&
-        decks[0].id === scope.deckId &&
-        decks[0].elevation === 0 &&
-        deck?.instanceId === instance.id &&
-        deck.elevation === 0
-      ) {
-        // Only historical wrappers need the immutable source+UUID proof. New
-        // wrappers already carry an explicit instance/deck/support qualification.
-        qualifiedWayfarerInstanceObstacles(instance, scope.deckId);
-        historical = true;
-      }
-    } catch {
-      /* An altered or ambiguous historical source stays inaccessible. */
-    }
-    return historical;
-  }
   function position(
     container: Container,
     binding: { placementId: string },
@@ -133,10 +96,11 @@ export function createGroundAccess(ctx: Context, actor: Actor, nowMicros = 0n) {
     const { scope, geometry } = mode;
     if (
       container.shipId !== scope.instanceId ||
-      (placement.version === 2
-        ? placement.instanceId !== scope.instanceId ||
-          placement.deckId !== scope.deckId
-        : !historicalWayfarer(mode))
+      // Only explicit version-2 native placements (the version-1 Wayfarer
+      // wrappers were retired with the Wayfarer on 2026-09-29).
+      placement.version !== 2 ||
+      placement.instanceId !== scope.instanceId ||
+      placement.deckId !== scope.deckId
     )
       return;
     const from = {

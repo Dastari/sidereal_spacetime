@@ -47,17 +47,16 @@
     "suit": "GEO-crew-suit-male",
     "gear": "GEO-crew-gear-male"
    },
-   "trisDefaultLook": 14742,
+   "trisDefaultLook": 14702,
    "trisByRegion": {
-    "base": 3036,
+    "base": 2952,
     "hands": 544,
     "head": 756,
-    "suit": 6350,
+    "suit": 6310,
     "gear": 3684
    },
    "slots": [
     "skin",
-    "metal",
     "dark",
     "face"
    ],
@@ -128,17 +127,16 @@
     "suit": "GEO-crew-suit-female",
     "gear": "GEO-crew-gear-female"
    },
-   "trisDefaultLook": 16162,
+   "trisDefaultLook": 16122,
    "trisByRegion": {
-    "base": 3152,
+    "base": 3068,
     "hands": 544,
     "head": 756,
-    "suit": 6186,
+    "suit": 6146,
     "gear": 3684
    },
    "slots": [
     "skin",
-    "metal",
     "dark",
     "face"
    ],
@@ -210,17 +208,16 @@
     "suit": "GEO-crew-suit-neutral",
     "gear": "GEO-crew-gear-neutral"
    },
-   "trisDefaultLook": 14742,
+   "trisDefaultLook": 14702,
    "trisByRegion": {
-    "base": 3036,
+    "base": 2952,
     "hands": 544,
     "head": 756,
-    "suit": 6350,
+    "suit": 6310,
     "gear": 3684
    },
    "slots": [
     "skin",
-    "metal",
     "dark",
     "face"
    ],
@@ -1111,23 +1108,23 @@
  ],
  "files": {
   "crew-body-male.glb": {
-   "sha256": "95b250758a1d70491a9f35c1aa57a4fe6a770e08aa1f50bc8d13219b4f5cabde",
-   "bytes": 1848740,
+   "sha256": "bcf1969b57aa9307bd8161cb0e87edefc1051fcd0f8f4fc2a24d5b2382030bf1",
+   "bytes": 1844076,
    "variant": "male"
   },
   "crew-body-female.glb": {
-   "sha256": "366176275afba77bf898672ce8ea0f95561f0ad9a3d0210c8ee064824a22db97",
-   "bytes": 1909284,
+   "sha256": "899fd0a635fecf3b24adbff0a54241ce797b9edee4d69a713a37f0707b4d1608",
+   "bytes": 1904584,
    "variant": "female"
   },
   "crew-body-neutral.glb": {
-   "sha256": "53bb57740a3490d409585d44ae9e2018936704926b70c71b23ac4064e4635189",
-   "bytes": 1848796,
+   "sha256": "9ca1b9bd2dfd0870641f242831edbb6318a74ee8ce0ae02cfb0ef2c559f2105e",
+   "bytes": 1844132,
    "variant": "neutral"
   },
   "crew-body.glb": {
-   "sha256": "63f7a2164a41b0d3eb2932364a58bf0c062e54bd85acab5dc8b2504ae60a3619",
-   "bytes": 2548264,
+   "sha256": "0d407c7fee07fbbd46974e422ae9d6c6469dfef3d8e32edeb968cfa570c32b57",
+   "bytes": 2541092,
    "variant": "male+female",
    "note": "runtime bundle; bodyType neutral renders the masculine meshes"
   }
