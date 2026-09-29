@@ -349,6 +349,35 @@ describe("voxel crew runtime", () => {
     engine.dispose();
   });
 
+  it("plays stationary full-body reload over layered armed idle", async () => {
+    const { engine, scene, crew } = await load();
+    const armed = await SceneLoader.LoadAssetContainerAsync(
+      "",
+      new Uint8Array(
+        readFileSync(
+          new URL(
+            "../../../../assets/runtime/crew/items/r001/armed-actions.glb",
+            import.meta.url,
+          ),
+        ),
+      ),
+      scene,
+      undefined,
+      ".glb",
+    );
+    crew.addClips(armed);
+    crew.setArmedClass("rifle");
+    expect(crew.layers).toMatchObject({
+      lower: "idle",
+      upper: "rifle.idle_armed",
+    });
+    crew.play("rifle.reload");
+    expect(crew.activeClips).toEqual(["rifle.reload"]);
+    crew.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
   it("support-hand IK pins socket.hand.L onto a held item's support socket after animations", async () => {
     const { engine, scene, crew } = await load();
     crew.customize({ weapon: "rifle" });

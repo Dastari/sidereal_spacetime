@@ -597,16 +597,16 @@ export async function createVoxelCrewVisual(
       restart?: boolean;
     }[] = [];
     const shot = oneShot;
-    if ("full" in layers) {
-      if (shot?.layer === "full") {
-        wanted.push({
-          clip: shot.clip,
-          mask: "full",
-          loop: false,
-          speed: 1,
-          restart: restartOneShot,
-        });
-      } else if (shot?.layer === "upper") {
+    if (shot?.layer === "full") {
+      wanted.push({
+        clip: shot.clip,
+        mask: "full",
+        loop: false,
+        speed: 1,
+        restart: restartOneShot,
+      });
+    } else if ("full" in layers) {
+      if (shot?.layer === "upper") {
         wanted.push({
           clip: layers.full,
           mask: "lower",
