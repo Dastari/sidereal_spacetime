@@ -826,15 +826,17 @@
    "frame": "face",
    "kitConvention": "face",
    "glb": "assets/runtime/ship-components/r004/rcs.sm.glb",
-   "sha256": "f7ca8f9450375dea0c44a8cdea706b7369fab7aeaad043132d308c9242daaec9",
-   "bytes": 5804,
-   "boxes": 5,
-   "triangles": 48,
-   "vertices": 40,
+   "sha256": "c8591be61bbe28a875a1f71eae1b9fded7934d0ddff594e62ed39fe7eb59f01e",
+   "bytes": 37480,
+   "boxes": 8,
+   "triangles": 654,
+   "vertices": 1160,
    "materialSlotsUsed": [
     "slot0_primary",
     "slot1_secondary",
-    "slot4_metal"
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
    ],
    "boundsM": [
     [
@@ -873,15 +875,17 @@
    "frame": "face",
    "kitConvention": "face",
    "glb": "assets/runtime/ship-components/r004/rcs.md.glb",
-   "sha256": "5824919cf5ff17c246555d60cd727c114c2c34d22bcd6f52e3d146bcbdf2c56c",
-   "bytes": 7500,
-   "boxes": 9,
-   "triangles": 80,
-   "vertices": 72,
+   "sha256": "af8caae4de8e36dc62c99c1ad108175399b55d88435b63cc14405aebcf05b006",
+   "bytes": 45128,
+   "boxes": 11,
+   "triangles": 786,
+   "vertices": 1448,
    "materialSlotsUsed": [
     "slot0_primary",
     "slot1_secondary",
-    "slot4_metal"
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
    ],
    "boundsM": [
     [
