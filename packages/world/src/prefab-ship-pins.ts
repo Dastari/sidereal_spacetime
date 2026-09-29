@@ -18,15 +18,16 @@ export interface PinnedPrefabShip {
  * Wren revision 6 (2026-09-29, FLIGHT-IFCS): fly-by-wire handling earned by real thrusters. Four
  * quad RCS blocks at the nose and stern corners (catalogue revision 4: nozzles exhaust clear of the
  * hull and act at their exits), three small thrust blocks on the centreline, the r5 roof weapons and
- * sensor. New assignments and in-place upgrades.
+ * sensor, plus a coolant pump and a small ballistic magazine so the ship-systems budget closes
+ * (S4-1 catalogue rules). New assignments and in-place upgrades.
  */
 export const FED_WREN_PIN: PinnedPrefabShip = {
   prefabId: "fed.s.wren",
   catalogRevision: "ship-components-v1@4",
   blueprintSha256:
-    "3b90e00a0e7d13c326a4ba1542c633745eb47567c99ddd0c08d16ae88ed897d8",
+    "9e243122dcea41e4ff4eb988a509303de177adeb58e1e17ef2a5bcb5a2a98e84",
   flightDefinitionSha256:
-    "9749303c41fb3e262d8c8ce1cc32fe8b264fd11246ffa568993457642eef0626",
+    "b996952862e4ee89fcd9f16df6280742bf69731c48e2152b9b5a5137ea1f00ff",
   description: "Wren (Federation courier, size S, prefab r6)",
 };
 

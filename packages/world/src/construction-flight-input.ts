@@ -66,6 +66,8 @@ function prefabStorageSocketCentres(
   return centres;
 }
 
+/** Actuator supply by source id, memoised per source, actuator set and damage state. */
+const PREFAB_SUPPLY_MEMO = new Map<string, Record<string, number>>();
 /** Parsed prefab source of an instance, memoised per source (supply reads its mounts). */
 const PREFAB_DOC_MEMO = new Map<string, ShipPrefabDocumentV1>();
 function prefabSupplyDocument(
@@ -383,8 +385,9 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
       throw Error("prefab-flight-refit-unsupported");
     const key = `${instance.id}:${instance.blueprintSha256}`;
     const model = prefabFlightModelFor(key, instance.documentJson);
-    // Fuel and power supply per actuator from the pinned document and component damage: a drive
-    // that burns propellant needs an intact tank, one that draws power needs a working generator.
+    // Fuel and power supply per actuator from the pinned document and component damage (the
+    // S4-1 ship-systems rule): a drive that burns propellant needs a fuel network with an intact
+    // tank, one that draws power needs the ship's generation. Memoised per source and damage state.
     if (!isPrefabConstruction(document)) throw Error("prefab-flight-source");
     const performance = new Map<string, number>();
     for (const row of bounded(
@@ -393,14 +396,26 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
     ))
       if (row.objectId.startsWith("mount:"))
         performance.set(row.objectId.slice("mount:".length), row.performance);
-    const bySource = prefabActuatorSupply(
-      prefabSupplyDocument(key, document),
-      document.prefab.catalog,
-      fittingRows
-        .filter((f) => f.kind === "actuator")
-        .map((f) => f.sourceDeviceId),
-      (mountId) => performance.get(mountId) ?? 1,
-    );
+    const sources = fittingRows
+      .filter((f) => f.kind === "actuator")
+      .map((f) => f.sourceDeviceId)
+      .sort();
+    const supplyKey = JSON.stringify([
+      key,
+      sources,
+      [...performance].sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0)),
+    ]);
+    let bySource = PREFAB_SUPPLY_MEMO.get(supplyKey);
+    if (!bySource) {
+      bySource = prefabActuatorSupply(
+        prefabSupplyDocument(key, document),
+        document.prefab.catalog,
+        sources,
+        (mountId) => performance.get(mountId) ?? 1,
+      );
+      if (PREFAB_SUPPLY_MEMO.size >= 64) PREFAB_SUPPLY_MEMO.clear();
+      PREFAB_SUPPLY_MEMO.set(supplyKey, bySource);
+    }
     const prefabSupply = Object.fromEntries(
       fittingRows
         .filter((f) => f.kind === "actuator")

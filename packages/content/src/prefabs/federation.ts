@@ -115,6 +115,10 @@ export const FED_WREN = prefab({
     module("life", "life-support.sm", [2, 0], "port"),
     module("fuel", "fuel-tank.md", [0, 0], "port"),
     module("bunk", "crew-bunk.sm", [3.5, 5.5], "starboard"),
+    // r6 (S4-1 catalogue rules): a coolant pump so the radiators can reject heat, and a small
+    // ballistic magazine feeding the roof autocannons. Interior modules; no hardpoints.
+    module("coolant", "coolant-pump.md", [2, 1], "port"),
+    module("ammo", "magazine.ballistic.sm", [7, 6], "port"),
   ],
   armed: [
     armed("turret", "turret", "MD", [4.5, 2.5], "fore", "autocannon.sm"),

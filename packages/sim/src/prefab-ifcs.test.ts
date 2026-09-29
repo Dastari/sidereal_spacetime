@@ -32,6 +32,7 @@ import {
   prefabFlightModel,
 } from "./prefab-flight";
 import { prefabActuatorSupply } from "./prefab-flight-supply";
+import { compilePrefabShipSystems } from "./prefab-ship-systems";
 import { WAYFARER_FLIGHT_SPEED } from "@sidereal/content/physical-definitions";
 
 const catalog = defaultPrefabComponentCatalog();
@@ -322,6 +323,15 @@ describe("actuator fuel and power supply", () => {
     prefabFlightModel(doc, catalog)
       .fittings.filter((f) => f.role === "actuator")
       .map((f) => f.sourceId);
+
+  it("Wren r6 closes its ship-systems budget (control slots, coolant, magazine, heat)", () => {
+    const issues = (
+      compilePrefabShipSystems(wren, catalog.revision).report as unknown as {
+        issues: { severity: string; code: string }[];
+      }
+    ).issues;
+    expect(issues.filter((i) => i.severity === "error")).toEqual([]);
+  });
 
   it("an intact tank and generator supply every Wren actuator", () => {
     const s = prefabActuatorSupply(
