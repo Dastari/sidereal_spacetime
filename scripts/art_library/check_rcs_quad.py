@@ -128,8 +128,20 @@ def validate(size):
     assert near(bounds[0], (-extent, -depth, -extent))
     assert near(bounds[1], (extent, 0, extent)), bounds
     assert 0 < triangles <= limit, triangles
+    # Measure the actual mesh rims on the five datum planes, independent of
+    # builder metadata. The main nozzle must be larger than four equal jets.
+    radii = {}
+    for name, (centre, direction) in expected.items():
+        axis = next(j for j in range(3) if direction[j])
+        rim = [p for p in points if abs(p[axis]-centre[axis]) < 1e-6]
+        assert len(rim) >= 16, (name, "missing open rim")
+        radii[name] = max(abs(p[j]-centre[j]) for p in rim for j in range(3) if j != axis)
+        radius = ((.08125 if size == "sm" else .121875) if name == "nozzle.out"
+                  else (.06875 if size == "sm" else .105))
+        assert abs(radii[name]-radius) < 1e-6, (name, radii[name], radius)
+    assert radii["nozzle.out"] > max(r for n, r in radii.items() if n != "nozzle.out")
     slots = sorted(m["name"] for m in model["materials"])
-    assert slots == ["slot0_primary", "slot1_secondary", "slot4_metal", "slot5_dark", "slot6_emit_a"]
+    assert slots == ["slot0_primary", "slot1_secondary", "slot2_accent", "slot4_metal", "slot5_dark", "slot6_emit_a"]
     donor, _ = read(RUNTIME / "thrust-block.sm.glb")
     donor_slots = {m["name"]: m for m in donor["materials"]}
     assert all(m == donor_slots[m["name"]] for m in model["materials"]), "kit material changed"
@@ -151,7 +163,7 @@ def validate(size):
         assert row["envelopeOverhangM"] == 0
     assert path.read_bytes() == (ART / "glb" / path.name).read_bytes()
     print(json.dumps({"component": cid, "boundsKitM": bounds, "triangles": triangles,
-                      "vertices": vertices, "nozzles": nozzle_report, "rcs_quad": "passed"}))
+                      "vertices": vertices, "exitDiametersM": {n: 2*r for n,r in radii.items()}, "nozzles": nozzle_report, "rcs_quad": "passed"}))
 
 
 if __name__ == "__main__":
