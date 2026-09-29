@@ -205,6 +205,19 @@ describe("crew head catalog", () => {
 });
 
 describe("animated face", () => {
+  test("owner minimum expressions switch texture frames only; pain is the hurt face", () => {
+    const base = { age: "adult" };
+    const neutral = resolveFaceFrames(base, { expression: "neutral" });
+    for (const e of ["happy", "angry", "sad", "surprised", "pain"])
+      expect(resolveFaceFrames(base, { expression: e })).not.toEqual(neutral);
+    expect(resolveFaceFrames(base, { expression: "pain" })).toEqual(
+      resolveFaceFrames(base, { expression: "hurt" }),
+    );
+    expect(
+      resolveFaceFrames(base, { expression: "neutral", blink: "half" }).eyes,
+    ).toBe("half");
+  });
+
   test("blink only replaces open-type eyes, visemes replace the mouth, look moves the iris", () => {
     const base = { age: "adult" };
     expect(

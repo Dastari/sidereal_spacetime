@@ -36,8 +36,29 @@ type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 const HEAD_ORIGIN_M = 39 / 32;
 
 /**
+ * Uniform scale of the whole head kit (skull, face canvas, hair, facial hair, accessories, helmets,
+ * visors, masks) about the head bone rest head (the chin/neck joint), so the chin stays on the
+ * collar and every head-kit layer keeps its fit. Owner feedback 2026-09-29: "Heads feel a little
+ * too big by comparison to the body" (proposal: 10 % smaller; not owner-approved).
+ */
+export const VOXEL_CREW_HEAD_SCALE = 0.9;
+
+/**
+ * Head-space local matrix under the animated head joint: uniform `scale` about the head bone rest
+ * head, then the rest-pose offset. world(rest) = S(scale) * T(head origin) * bodyModelWorld.
+ */
+export function crewHeadSpaceMatrix(
+  inverseBind: Matrix,
+  scale = VOXEL_CREW_HEAD_SCALE,
+) {
+  return Matrix.Scaling(scale, scale, scale)
+    .multiply(Matrix.Translation(0, HEAD_ORIGIN_M, 0))
+    .multiply(inverseBind);
+}
+
+/**
  * CHAR-HEADS head space under the animated head joint: origin at the head bone rest head, glTF
- * axes of the body. world(rest) = T(head origin) * bodyModelWorld; follows every head animation.
+ * axes of the body, scaled by VOXEL_CREW_HEAD_SCALE; follows every head animation.
  */
 function headSpaceNode(scene: Scene, crew: VoxelCrew) {
   const joint = crew.joints.get("head");
@@ -45,9 +66,7 @@ function headSpaceNode(scene: Scene, crew: VoxelCrew) {
   if (!joint || !bone) throw new Error("voxel crew has no head joint");
   const node = new TransformNode("crew-head-space", scene);
   node.parent = joint;
-  const local = Matrix.Translation(0, HEAD_ORIGIN_M, 0).multiply(
-    bone.getAbsoluteInverseBindMatrix(),
-  );
+  const local = crewHeadSpaceMatrix(bone.getAbsoluteInverseBindMatrix());
   const s = new Vector3();
   const q = new Quaternion();
   const t = new Vector3();
