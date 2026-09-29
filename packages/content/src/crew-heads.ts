@@ -22,6 +22,7 @@
  */
 import catalog from "./crew-heads.v1.json";
 import faceAtlas from "./crew-face-atlas.v1.json";
+import { FACE_EXPRESSION_ALIASES } from "./crew-voxel-face";
 
 export const CREW_HEAD_SLOTS = [
   "skin",
@@ -370,7 +371,10 @@ export function resolveFaceFrames(
   s: FaceState,
   mouthHidden = false,
 ): Record<FaceLayer, string> {
-  const ex = A.expressions[s.expression] ?? A.expressions.neutral;
+  const ex =
+    A.expressions[s.expression] ??
+    A.expressions[FACE_EXPRESSION_ALIASES[s.expression] ?? ""] ??
+    A.expressions.neutral;
   const blinking = !!s.blink && !A.blinkSuppressedEyes.includes(ex.eyes);
   const eyes = blinking ? s.blink! : ex.eyes;
   const irisBase = blinking ? s.blink! : ex.iris;

@@ -63,12 +63,23 @@ export type FaceAtlasImage = {
   data: Uint8Array | Uint8ClampedArray;
 };
 
+/**
+ * Gameplay-facing expression names that reuse an atlas expression (atlas keys stay the
+ * FACE_ATLAS_SPEC names). "pain" is the owner's word (2026-09-29) for the atlas "hurt" face.
+ */
+export const FACE_EXPRESSION_ALIASES: Readonly<Record<string, string>> = {
+  pain: "hurt",
+};
+
 /** Frame name per layer for a state (null = draw nothing on that layer). */
 export function faceFrames(
   atlas: FaceAtlas,
   state: FaceState,
 ): Record<FaceLayer, string | null> {
-  const ex = atlas.expressions[state.expression] ?? atlas.expressions.neutral;
+  const ex =
+    atlas.expressions[state.expression] ??
+    atlas.expressions[FACE_EXPRESSION_ALIASES[state.expression] ?? ""] ??
+    atlas.expressions.neutral;
   const look = atlas.looks[String(state.look ?? 0)] ?? "c";
   const mouth = state.viseme
     ? (atlas.visemes[state.viseme] ?? ex.mouth)

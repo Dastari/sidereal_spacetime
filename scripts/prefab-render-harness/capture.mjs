@@ -15,20 +15,10 @@
  * --custom "name|query;name|query": game.html close-ups with explicit queries instead of the defaults
  *   (e.g. "bridge|interior=1&cam=-0.6,0.95,7,0,3"); the prefab id is prepended to name and query.
  */
-import { spawn } from "node:child_process";
-import {
-  existsSync,
-  mkdirSync,
-  mkdtempSync,
-  readdirSync,
-  rmSync,
-  writeFileSync,
-} from "node:fs";
-import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { join, resolve } from "node:path";
+import { cdp, launchChrome, sleep, startHarness } from "./cdp.mjs";
 
-const repo = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 const args = process.argv.slice(2);
 const opt = (name, fallback) => {
   const i = args.indexOf(name);
@@ -50,129 +40,9 @@ const PORT = Number(opt("--port", 5391));
 const BASE = `http://127.0.0.1:${PORT}/`;
 mkdirSync(out, { recursive: true });
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-function chromium() {
-  const base = join(process.env.HOME ?? "/root", ".cache/ms-playwright");
-  for (const dir of readdirSync(base)
-    .filter((d) => d.startsWith("chromium_headless_shell"))
-    .sort()
-    .reverse()) {
-    const bin = join(
-      base,
-      dir,
-      "chrome-headless-shell-linux64/chrome-headless-shell",
-    );
-    if (existsSync(bin)) return bin;
-  }
-  throw Error("No Playwright chrome-headless-shell in ~/.cache/ms-playwright");
-}
-
-async function up(url) {
-  try {
-    return (await fetch(url)).ok;
-  } catch {
-    return false;
-  }
-}
-
-async function startHarness() {
-  if (await up(BASE)) return null;
-  const vite = spawn(
-    process.execPath,
-    [
-      join(repo, "node_modules/vite/bin/vite.js"),
-      "--config",
-      "scripts/prefab-render-harness/vite.config.ts",
-      "--port",
-      String(PORT),
-      "--strictPort",
-    ],
-    {
-      cwd: repo,
-      stdio: ["ignore", "pipe", "pipe"],
-    },
-  );
-  vite.stderr.on("data", (d) => process.stderr.write(d));
-  for (let i = 0; i < 120; i++) {
-    if (await up(BASE)) return vite;
-    await sleep(250);
-  }
-  vite.kill();
-  throw Error("Harness did not start on " + BASE);
-}
-
-async function launchChrome() {
-  const profile = mkdtempSync(join(tmpdir(), "prefab-capture-"));
-  const chrome = spawn(
-    chromium(),
-    [
-      "--headless",
-      "--no-sandbox",
-      "--hide-scrollbars",
-      "--disable-dev-shm-usage",
-      "--remote-debugging-address=127.0.0.1",
-      "--remote-debugging-port=0",
-      "--use-gl=angle",
-      "--use-angle=swiftshader",
-      "--enable-unsafe-swiftshader",
-      "--ignore-gpu-blocklist",
-      `--window-size=${W},${H}`,
-      `--user-data-dir=${profile}`,
-      "about:blank",
-    ],
-    { stdio: ["ignore", "pipe", "pipe"] },
-  );
-  const endpoint = await new Promise((ok, fail) => {
-    let buf = "";
-    const timer = setTimeout(
-      () => fail(Error("chrome did not report a DevTools endpoint")),
-      20000,
-    );
-    chrome.stderr.on("data", (d) => {
-      buf += d;
-      const m = /DevTools listening on (ws:\/\/[^\s]+)/.exec(buf);
-      if (m) {
-        clearTimeout(timer);
-        ok(m[1]);
-      }
-    });
-    chrome.on("exit", () => fail(Error("chrome exited: " + buf.slice(-500))));
-  });
-  return { chrome, endpoint, profile };
-}
-
-/** Minimal CDP session over the browser WebSocket with flattened page sessions. */
-async function cdp(endpoint) {
-  const ws = new WebSocket(endpoint);
-  await new Promise((ok, fail) => {
-    ws.onopen = ok;
-    ws.onerror = fail;
-  });
-  let id = 0;
-  const pending = new Map();
-  const listeners = [];
-  ws.onmessage = (ev) => {
-    const msg = JSON.parse(ev.data);
-    if (msg.id && pending.has(msg.id)) {
-      const { ok, fail } = pending.get(msg.id);
-      pending.delete(msg.id);
-      if (msg.error) fail(Error(JSON.stringify(msg.error)));
-      else ok(msg.result);
-    } else for (const l of listeners) l(msg);
-  };
-  const send = (method, params = {}, sessionId) =>
-    new Promise((ok, fail) => {
-      const mid = ++id;
-      pending.set(mid, { ok, fail });
-      ws.send(JSON.stringify({ id: mid, method, params, sessionId }));
-    });
-  return { send, on: (l) => listeners.push(l), close: () => ws.close() };
-}
-
 async function main() {
-  const vite = await startHarness();
-  const { chrome, endpoint, profile } = await launchChrome();
+  const vite = await startHarness(PORT);
+  const { chrome, endpoint, profile } = await launchChrome(W, H);
   const session = await cdp(endpoint);
   const { targetId } = await session.send("Target.createTarget", {
     url: "about:blank",
