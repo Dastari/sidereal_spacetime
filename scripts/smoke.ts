@@ -33,6 +33,7 @@ import { operatorCall } from "./smoke-operator";
 import { contentDefinitionsSmoke } from "./content-definitions-smoke";
 import { itemDefinitionsSmoke } from "./item-definitions-smoke";
 import {
+  itemDefinitionLeakSmoke,
   visibilityLeakSmoke,
   watchRemoteExhaust,
 } from "./visibility-leak-smoke";
@@ -859,6 +860,15 @@ if (restore) {
       (reducer, ...args) => operatorCall(host, database, reducer, ...args),
       lifecycleSql,
     );
+    // X-2 views once revisions are published and other players' items are pinned.
+    summary.item_definition_leak = await itemDefinitionLeakSmoke({
+      host,
+      database,
+      owner: a,
+      observer: b,
+      observerToken: second.token,
+      wait,
+    });
     summary.two_account_appearance_inventory_equipment_reconnect = true;
     if (process.env.SIDEREAL_SMOKE_OIDC_TOKEN_FILE)
       summary.real_oidc_identity_link = await identityLinkSmoke(

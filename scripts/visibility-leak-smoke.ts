@@ -51,6 +51,25 @@ const PRIVATE_TABLES = [
   "ship_world_motion",
   "construction_flight_fitting",
   "station",
+  // X-2 pinned definitions: pins are per item; definitions are served through the public view.
+  "inventory_item_pin",
+  "content_definition",
+];
+/** X-2 `published_item_definitions`: public game content by design, exact columns. */
+const PUBLISHED_ITEM_DEFINITION_COLUMNS = [
+  "definitionId",
+  "definitionRef",
+  "kind",
+  "payloadJson",
+  "revision",
+  "sha256",
+  "status",
+];
+const ITEM_PIN_COLUMNS = [
+  "definitionId",
+  "itemId",
+  "itemRevision",
+  "weaponRevision",
 ];
 
 type Db = Record<
@@ -78,6 +97,101 @@ function ownIdentifiers(c: DbConnection): Set<string> {
           out.add(value);
   }
   return out;
+}
+
+/**
+ * X-2 `published_item_definitions` is public by design: exact columns, only published or retired
+ * item/weapon revisions. `own_item_definition_pins` holds only the observer's own items and cargo
+ * it can reach, never the owner's (or anyone else's) pins.
+ */
+function checkItemDefinitionViews(
+  spy: DbConnection,
+  observer: DbConnection,
+  owner: DbConnection,
+) {
+  const published = [...spy.db.publishedItemDefinitions.iter()];
+  for (const row of published) {
+    assert.deepEqual(
+      Object.keys(row).sort(),
+      PUBLISHED_ITEM_DEFINITION_COLUMNS,
+      "published_item_definitions exposes only its public columns",
+    );
+    assert(
+      row.status === "published" || row.status === "retired",
+      `published_item_definitions: no draft rows (${row.status})`,
+    );
+    assert(
+      (row.kind === "item" || row.kind === "weapon") &&
+        row.definitionRef.startsWith(`${row.kind}:`),
+      `published_item_definitions: item and weapon definitions only (${row.definitionRef})`,
+    );
+  }
+  const observerItems = new Set([
+    ...[...observer.db.ownInventoryItems.iter()].map((i) => i.id),
+    ...[...observer.db.ownReachableCargoItems.iter()].map(
+      (i) => (i as { id: string }).id,
+    ),
+  ]);
+  const ownerItems = new Set(
+    [...owner.db.ownInventoryItems.iter()].map((i) => i.id),
+  );
+  assert(ownerItems.size > 0, "the owner holds items whose pins could leak");
+  const pins = [...spy.db.ownItemDefinitionPins.iter()];
+  for (const pin of pins) {
+    assert.deepEqual(
+      Object.keys(pin).sort(),
+      ITEM_PIN_COLUMNS,
+      "own_item_definition_pins exposes only its columns",
+    );
+    assert(
+      observerItems.has(pin.itemId) && !ownerItems.has(pin.itemId),
+      `own_item_definition_pins: only the observer's own pins (${pin.itemId})`,
+    );
+  }
+  return { published, pins };
+}
+
+/**
+ * X-2 pass after the item-definition smoke has published revisions and pinned other players'
+ * items: a fresh observer session sees public definitions and its own pins only.
+ */
+export async function itemDefinitionLeakSmoke(options: {
+  host: string;
+  database: string;
+  owner: DbConnection;
+  observer: DbConnection;
+  observerToken: string;
+  wait: (fn: () => boolean, label: string) => Promise<void>;
+}) {
+  let applied = false;
+  const spy = DbConnection.builder()
+    .withUri(options.host)
+    .withDatabaseName(options.database)
+    .withToken(options.observerToken)
+    .onConnect((c) => {
+      c.subscriptionBuilder()
+        .onApplied(() => (applied = true))
+        .subscribe([
+          tables.publishedItemDefinitions,
+          tables.ownItemDefinitionPins,
+        ]);
+    })
+    .build();
+  try {
+    await options.wait(() => applied, "observer subscribed to X-2 views");
+    const { published, pins } = checkItemDefinitionViews(
+      spy,
+      options.observer,
+      options.owner,
+    );
+    assert(published.length > 0, "published item definitions are public");
+    return {
+      publishedItemDefinitions: published.length,
+      observerItemPins: pins.length,
+    };
+  } finally {
+    spy.disconnect();
+  }
 }
 
 export async function visibilityLeakSmoke(options: {
@@ -197,6 +311,8 @@ export async function visibilityLeakSmoke(options: {
       ),
       "own_eva_suit: only the observer's own suit",
     );
+    // X-2 pinned definitions: published content public, pins own-only.
+    const { published, pins } = checkItemDefinitionViews(spy, observer, owner);
     // Private base tables stay unreachable.
     const rejected: string[] = [];
     for (const name of PRIVATE_TABLES) {
@@ -213,6 +329,8 @@ export async function visibilityLeakSmoke(options: {
       rows: Object.values(checked).reduce((a, b) => a + b, 0),
       interiorIdentifiersTracked: secrets.length,
       ownShipLogicRows: logic.length,
+      publishedItemDefinitions: published.length,
+      observerItemPins: pins.length,
       exterior: {
         publishedExteriorAssetId: description.publishedExteriorAssetId,
         appearanceRevision: description.appearanceRevision.toString(),
