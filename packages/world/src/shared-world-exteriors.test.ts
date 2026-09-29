@@ -11,6 +11,7 @@ import { UNPUBLISHED_EXTERIOR_ID } from "@sidereal/sim/ship-exterior";
 import {
   publishedShipExterior,
   SHIP_CONTACT_CANDIDATE_BUDGET,
+  visibleActuatorExhaust,
   visibleShipDescriptions,
   visibleShipMotion,
   type SharedViewContext,
@@ -185,5 +186,82 @@ describe("published exteriors (hard rule 6: exterior only)", () => {
       owner.toHexString(),
     ])
       expect(wire).not.toContain(secret);
+  });
+});
+
+describe("remote thruster exhaust (exterior-only, coarse)", () => {
+  function exhaustSetup() {
+    const f = setup();
+    const table = (primary: string) => {
+      const rows = new Map<string, any>();
+      return { rows, [primary]: { find: (id: string) => rows.get(id) } };
+    };
+    f.db.constructionFlightCompiled = table("shipId");
+    f.db.constructionFlightDirty = table("shipId");
+    f.place("ship1", 0, 0);
+    f.place("ship2", 50, 0);
+    f.db.constructionFlightCompiled.rows.set("ship2", {
+      shipId: "ship2",
+      status: "ready",
+      actuatorsJson: json([
+        // Prefab placed objects are `<shipId>:<blueprint source id>`.
+        { id: "fit-7c1e-private", placedObjectId: "ship2:mount-main-c" },
+        {
+          id: "fit-91aa-private",
+          placedObjectId: "ship2:mount-rcs-bow-s#fore",
+        },
+        { id: "fit-0b3d-private", placedObjectId: "ship2:mount-main-p" },
+        {
+          id: "fit-55f0-private",
+          placedObjectId: "6b9c2f3e-1d4a-4c1b-9f00-0123456789ab",
+        },
+        { id: "fit-a1b2-private", placedObjectId: "ship9:mount-main-c" },
+      ]),
+    });
+    const output = (id: string, throttle: number) =>
+      f.db.actuatorOutput.insert({
+        id: `ship2:${id}`,
+        shipId: "ship2",
+        actuatorId: id,
+        throttle,
+        tick: 1n,
+      });
+    output("fit-7c1e-private", 0.73);
+    output("fit-91aa-private", 0.2);
+    output("fit-0b3d-private", 0);
+    output("fit-55f0-private", 1);
+    return f;
+  }
+
+  it("shows firing prefab thrusters of perceived ships only, keyed by blueprint mount", () => {
+    const f = exhaustSetup();
+    const rows = visibleActuatorExhaust(f.view());
+    expect(rows).toEqual([
+      {
+        key: "ship2/mount-main-c",
+        shipId: "ship2",
+        sourceId: "mount-main-c",
+        throttle: 0.75,
+      },
+      {
+        key: "ship2/mount-rcs-bow-s#fore",
+        shipId: "ship2",
+        sourceId: "mount-rcs-bow-s#fore",
+        throttle: 0.1875,
+      },
+    ]);
+    // No fitting UUID, idle jet or non-blueprint source.
+    const wire = json(rows);
+    for (const secret of ["fit-", "6b9c2f3e", "mount-main-p"])
+      expect(wire).not.toContain(secret);
+  });
+
+  it("withholds ships out of perception range and ships with dirty flight", () => {
+    const f = exhaustSetup();
+    f.place("ship2", 500, 0);
+    expect(visibleActuatorExhaust(f.view())).toEqual([]);
+    f.place("ship2", 50, 0);
+    f.db.constructionFlightDirty.rows.set("ship2", { shipId: "ship2" });
+    expect(visibleActuatorExhaust(f.view())).toEqual([]);
   });
 });

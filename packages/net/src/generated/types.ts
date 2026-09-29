@@ -1973,6 +1973,14 @@ export const SharedShipMotionProjection = __t.object("SharedShipMotionProjection
 });
 export type SharedShipMotionProjection = __Infer<typeof SharedShipMotionProjection>;
 
+export const SharedThrusterExhaustProjection = __t.object("SharedThrusterExhaustProjection", {
+  key: __t.string(),
+  shipId: __t.string(),
+  sourceId: __t.string(),
+  throttle: __t.f64(),
+});
+export type SharedThrusterExhaustProjection = __Infer<typeof SharedThrusterExhaustProjection>;
+
 export const Ship = __t.object("Ship", {
   id: __t.string(),
   owner: __t.identity(),
@@ -2334,6 +2342,9 @@ export const SystemZone = __t.object("SystemZone", {
   definitionJson: __t.string(),
 });
 export type SystemZone = __Infer<typeof SystemZone>;
+
+export const VisibleActuatorExhaust = __t.object("VisibleActuatorExhaust", {});
+export type VisibleActuatorExhaust = __Infer<typeof VisibleActuatorExhaust>;
 
 export const VisibleBodyDescriptions = __t.object("VisibleBodyDescriptions", {});
 export type VisibleBodyDescriptions = __Infer<typeof VisibleBodyDescriptions>;

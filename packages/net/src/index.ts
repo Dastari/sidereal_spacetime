@@ -127,6 +127,8 @@ export function connect(
           // Ship logic (door, button and airlock states of the ships the viewer is at).
           tables.visibleShipLogic,
           tables.ownEvaSuit,
+          // Firing thrusters of perceived ships (remote plumes; exterior only).
+          tables.visibleActuatorExhaust,
           tables.visibleCombatActions,
           tables.ownConstructionDoors,
           tables.ownConstructionNativePressure,

@@ -1526,6 +1526,12 @@ export const ownWorldAdmission = db.view(
   t.array(sharedViews.ownWorldAdmissionProjection),
   auth.gameView(sharedViews.ownWorldAdmission),
 );
+// Remote plumes and RCS puffs: firing thrusters of perceived ships (exterior-only, coarse).
+export const visibleActuatorExhaust = db.view(
+  { name: "visible_actuator_exhaust", public: true },
+  t.array(sharedViews.visibleActuatorExhaustProjection),
+  auth.gameView(sharedViews.visibleActuatorExhaust),
+);
 export const visibleShipMotion = db.view(
   { name: "visible_ship_motion", public: true },
   t.array(sharedViews.visibleShipMotionProjection),

@@ -348,6 +348,106 @@ export function visibleShipDescriptions(
       : [];
   });
 }
+/** Coarse thruster output of perceived ships: an engine plume is a public exterior effect. */
+export const visibleActuatorExhaustProjection = t.row(
+  "SharedThrusterExhaustProjection",
+  {
+    key: t.string().primaryKey(),
+    shipId: t.string(),
+    /** Blueprint-derived flight source id (`mount-<id>[#suffix]`), never a fitting UUID. */
+    sourceId: t.string(),
+    /** Achieved command 0..1 in steps of 1/EXHAUST_THROTTLE_STEPS; only firing jets. */
+    throttle: t.f64(),
+  },
+);
+export const EXHAUST_THROTTLE_STEPS = 16;
+export interface ExhaustReadDatabase {
+  constructionFlightCompiled: {
+    shipId: {
+      find(
+        id: string,
+      ): { status: string; actuatorsJson: string } | null | undefined;
+    };
+  };
+  constructionFlightDirty: { shipId: { find(id: string): unknown } };
+  actuatorOutput: {
+    id: { find(id: string): { throttle: number } | null | undefined };
+  };
+}
+/** Prefab flight source ids only (published blueprint mounts); anything else is withheld. */
+const PREFAB_FLIGHT_SOURCE =
+  /^mount-[A-Za-z0-9][A-Za-z0-9._-]{0,63}(#[A-Za-z0-9._-]{1,32})?$/;
+const EXHAUST_SOURCES = new Map<
+  string,
+  { json: string; sources: { id: string; sourceId: string }[] }
+>();
+function exhaustSources(shipId: string, json: string) {
+  const cached = EXHAUST_SOURCES.get(shipId);
+  if (cached?.json === json) return cached.sources;
+  let sources: { id: string; sourceId: string }[] = [];
+  try {
+    const parsed = JSON.parse(json) as unknown;
+    // Prefab placed objects are `<shipId>:<sourceId>`; only the blueprint source id is disclosed.
+    const prefix = shipId + ":";
+    if (Array.isArray(parsed) && parsed.length <= 256)
+      sources = parsed.flatMap(
+        (a: { id?: unknown; placedObjectId?: unknown }) => {
+          if (
+            typeof a?.id !== "string" ||
+            typeof a.placedObjectId !== "string" ||
+            !a.placedObjectId.startsWith(prefix)
+          )
+            return [];
+          const sourceId = a.placedObjectId.slice(prefix.length);
+          return PREFAB_FLIGHT_SOURCE.test(sourceId)
+            ? [{ id: a.id, sourceId }]
+            : [];
+        },
+      );
+  } catch {
+    sources = [];
+  }
+  if (EXHAUST_SOURCES.size >= 256) EXHAUST_SOURCES.clear();
+  EXHAUST_SOURCES.set(shipId, { json, sources });
+  return sources;
+}
+/**
+ * Firing thrusters of every perceived ship, for remote plumes and RCS puffs (exterior only): the
+ * ship, the blueprint mount the jet belongs to and a coarse achieved throttle. No fitting UUID,
+ * power, fuel, damage or pilot data. Same perception as `visible_ship_motion`.
+ */
+export function visibleActuatorExhaust(
+  ctx: SharedViewContext & { db: ExhaustReadDatabase },
+) {
+  const out: {
+    key: string;
+    shipId: string;
+    sourceId: string;
+    throttle: number;
+  }[] = [];
+  for (const m of shipContacts(ctx)) {
+    if (ctx.db.constructionFlightDirty.shipId.find(m.shipId)) continue;
+    const compiled = ctx.db.constructionFlightCompiled.shipId.find(m.shipId);
+    if (compiled?.status !== "ready") continue;
+    for (const s of exhaustSources(m.shipId, compiled.actuatorsJson)) {
+      const raw =
+        ctx.db.actuatorOutput.id.find(`${m.shipId}:${s.id}`)?.throttle ?? 0;
+      const throttle =
+        Math.round(
+          Math.max(0, Math.min(1, Number.isFinite(raw) ? raw : 0)) *
+            EXHAUST_THROTTLE_STEPS,
+        ) / EXHAUST_THROTTLE_STEPS;
+      if (throttle > 0)
+        out.push({
+          key: `${m.shipId}/${s.sourceId}`,
+          shipId: m.shipId,
+          sourceId: s.sourceId,
+          throttle,
+        });
+    }
+  }
+  return out;
+}
 export function visibleBodyMotion(ctx: SharedViewContext) {
   return bodyContacts(ctx).map(({ body, motion }) => ({
     bodyId: body.id,
