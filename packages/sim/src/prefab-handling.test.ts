@@ -19,6 +19,10 @@ import { PREFAB_FLIGHT_PROFILE } from "./prefab-flight";
  * | yaw rate while at cruise        | >= 45 deg/s     |
  *
  * M and L hulls stay heavier: every one is slower than every S hull on each measure.
+ *
+ * FLIGHT-IFCS (2026-09-29): the turn numbers are earned by torque. Facing and speed are separate
+ * pilot intents and every heading change comes from the allocated actuator wrench, so a ship only
+ * meets the yaw targets when its RCS placement gives it the torque (`prefab-ifcs.test.ts`).
  */
 const catalog = defaultPrefabComponentCatalog();
 const deg = (r: number) => (r * 180) / Math.PI;
@@ -28,7 +32,7 @@ const handling = new Map(
 const small = PREFAB_SHIPS.filter((p) => p.sizeClass === "S");
 const large = PREFAB_SHIPS.filter((p) => p.sizeClass !== "S");
 
-describe("prefab handling envelope (catalog revision 3, proposed)", () => {
+describe("prefab handling envelope (catalog revision 4, proposed)", () => {
   for (const p of small)
     it(`${p.id} (S) accelerates, turns and stops snappily with budgets closing`, () => {
       const h = handling.get(p.id)!;

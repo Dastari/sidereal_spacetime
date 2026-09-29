@@ -39,14 +39,14 @@ describe("prefab object details", () => {
     expect(stat(reactor, "State")).toBe("Installed");
     expect(reactor.distance).toBeGreaterThan(0);
     const drive = prefabObjectDetails(
-      PREFAB_OBJECT_PREFIX + "mount:main-s1",
+      PREFAB_OBJECT_PREFIX + "mount:main-s",
       FED_WREN,
       catalog,
       "owner",
       {
         shipId: "ship-1",
-        powerFittings: [{ sourceDeviceId: "mount-main-s1", powered: true }],
-        throttles: [{ actuatorId: "ship-1:mount-main-s1", throttle: 0.5 }],
+        powerFittings: [{ sourceDeviceId: "mount-main-s", powered: true }],
+        throttles: [{ actuatorId: "ship-1:mount-main-s", throttle: 0.5 }],
       },
     )!;
     expect(stat(drive, "Thrust")).toMatch(/kN$/);

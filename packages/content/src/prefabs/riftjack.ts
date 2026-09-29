@@ -187,6 +187,8 @@ export const RJ_MARAUDER = prefab({
     face("block", "thrust-block.lg", "aft", [0, 1.5]),
     face("salvage-md", "ion-drive.salvaged.md", "aft", [0, 5]),
     face("rcs", "rcs.sm", "aft", [0, 7]),
+    face("rcs-bow-p", "rcs.md", "port", [17.5, 8]),
+    face("rcs-bow-s", "rcs.md", "starboard", [17.5, 0]),
     face("pod-drive", "ion-drive.salvaged.sm", "aft", [4, 9.5]),
     opening("cargo-door", "cargo-door.2m", "starboard", [13, 0]),
     opening("lock", "airlock.exterior.md", "starboard", [16, 0]),
@@ -207,15 +209,16 @@ export const RJ_MARAUDER = prefab({
     armed("guns", "fixed", "LG", [5, 1], "fore", "autocannon.lg"),
     armed("missiles", "fixed", "MD", [9, 9], "fore", "missile-pod.md"),
     armed("flak", "turret", "MD", [15, 3], "fore", "flak-cannon.sm"),
-    armed("gun-s", "fixed", "SM", [8, -2], "starboard", "autocannon.sm"),
-    armed("gun-p", "fixed", "MD", [7, 9], "port", "autocannon.md"),
     armed("sensor", "fixed", "SM", [12, 1], "fore", "sensor-dish.sm"),
   ],
   markings: { name: "MARAUDER", number: "RJ-66", emblem: "skull" },
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-RJ_MARAUDER.revision = 2;
+// Revision 3 (2026-09-29, FLIGHT-IFCS; owner: "The side cannons on the ships need to go"): the
+// port/starboard-boresight fixed roof guns (broadside side cannons) are removed, and two bow quad RCS
+// blocks join the single stern cluster, which alone gave the IFCS no pure yaw couple.
+RJ_MARAUDER.revision = 3;
 
 /** Large: jawed pirate carrier with twin salvage pods. */
 export const RJ_MAW = prefab({
@@ -360,12 +363,12 @@ export const RJ_MAW = prefab({
     armed("missiles-p", "fixed", "MD", [12, 15], "fore", "missile-pod.md"),
     armed("flak", "turret", "LG", [12, 1], "fore", "flak-cannon.md"),
     armed("pd", "turret", "LG", [20, 1], "fore", "point-defense.md"),
-    armed("gun-s", "fixed", "MD", [14, -3], "starboard", "autocannon.md"),
-    armed("gun-p", "fixed", "MD", [15, 15], "port", "autocannon.md"),
     armed("sensor", "fixed", "MD", [24, 5], "fore", "sensor-dish.md"),
   ],
   markings: { name: "MAW", number: "RJ-01", emblem: "skull" },
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-RJ_MAW.revision = 2;
+// Revision 3 (2026-09-29, FLIGHT-IFCS; owner: "The side cannons on the ships need to go"): the
+// port/starboard-boresight fixed roof guns (broadside side cannons) are removed.
+RJ_MAW.revision = 3;

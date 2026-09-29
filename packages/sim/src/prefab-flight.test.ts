@@ -56,6 +56,7 @@ describe("prefab flight compile", () => {
       const main = compiled.actuators.filter(
         (a) =>
           !a.definitionId.endsWith("#nozzle") &&
+          !a.definitionId.endsWith("#quad-nozzle") &&
           !a.definitionId.endsWith("#reverser"),
       );
       expect(main.every((a) => Math.abs(a.rotation) < 1e-9)).toBe(true);
@@ -80,17 +81,18 @@ describe("prefab flight compile", () => {
   });
 });
 
-describe("prefab flight balance (proposed, catalog revision 3)", () => {
+describe("prefab flight balance (proposed, catalog revision 4)", () => {
   const components = new Map(
     buildShipComponentCatalog().components.map((c) => [c.id, c]),
   );
   const byId = (id: string) => PREFAB_SHIPS.find((p) => p.id === id)!;
 
   for (const id of ["fed.s.wren", "rj.s.jackal"])
-    it(`${id} (S starter) reaches 4-5 m/s^2 forward with power, heat and fuel closing`, () => {
+    it(`${id} (S starter) reaches 3.5-5 m/s^2 on its main drives with power, heat and fuel closing`, () => {
       const prefab = byId(id);
       const stats = prefabStats(prefab, catalog);
-      expect(stats.accelerationMs2).toBeGreaterThanOrEqual(4);
+      // Main drives alone (catalogue stat); the IFCS envelope below adds the RCS aft nozzles.
+      expect(stats.accelerationMs2).toBeGreaterThanOrEqual(3.5);
       expect(stats.accelerationMs2).toBeLessThanOrEqual(5);
       expect(stats.powerBalanceW).toBeGreaterThanOrEqual(0);
       expect(stats.heatBalanceW).toBeLessThanOrEqual(0);
@@ -102,12 +104,14 @@ describe("prefab flight balance (proposed, catalog revision 3)", () => {
       );
     });
 
-  it("Wren turns and strafes on its RCS and carries propellant for its drives", () => {
+  it("Wren turns and strafes on its corner RCS quads and carries propellant for its drives", () => {
     const prefab = byId("fed.s.wren");
     const envelope = compiled(prefab).envelope;
-    expect(envelope.angularPositive).toBeGreaterThanOrEqual(0.25);
-    expect(envelope.angularNegative).toBeGreaterThanOrEqual(0.25);
-    expect(envelope.left).toBeGreaterThanOrEqual(0.8);
+    expect(envelope.angularPositive).toBeGreaterThanOrEqual(1.5);
+    expect(envelope.angularNegative).toBeGreaterThanOrEqual(1.5);
+    expect(envelope.left).toBeGreaterThanOrEqual(1.5);
+    expect(envelope.right).toBeGreaterThanOrEqual(1.5);
+    expect(envelope.forward).toBeGreaterThanOrEqual(6);
     let capacityL = 0;
     let mainBurnLps = 0;
     for (const m of prefab.mounts) {
@@ -117,12 +121,19 @@ describe("prefab flight balance (proposed, catalog revision 3)", () => {
     }
     // At least 30 minutes of continuous full main burn.
     expect(capacityL / mainBurnLps).toBeGreaterThanOrEqual(30 * 60);
-    // Four small drives (r4: thrust blocks), no medium nacelles on the 12 m hull.
+    // Three small thrust blocks (r6; r4-r5 flew four), no medium nacelles on the 12 m hull, and an
+    // RCS quad at each nose and stern corner.
     expect(
       prefab.mounts
         .filter((m) => components.get(m.component)?.propulsion?.role === "main")
         .map((m) => components.get(m.component)!.sizeClass),
-    ).toEqual(["SM", "SM", "SM", "SM"]);
+    ).toEqual(["SM", "SM", "SM"]);
+    expect(
+      prefab.mounts
+        .filter((m) => m.component.startsWith("rcs."))
+        .map((m) => m.id)
+        .sort(),
+    ).toEqual(["rcs-bow-p", "rcs-bow-s", "rcs-stern-p", "rcs-stern-s"]);
   });
 
   it("M and L hulls stay slower and heavier than the S starters", () => {

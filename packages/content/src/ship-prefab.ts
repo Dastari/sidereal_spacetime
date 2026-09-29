@@ -2176,10 +2176,14 @@ export function validateShipPrefab(
       `Structure is ${bx1 - bx0} x ${by1 - by0} m; size ${doc.sizeClass} allows ${size.maxCells[0]} x ${size.maxCells[1]} m`,
       docRef,
     );
-  // A roof mount tile is one hardpoint however many linked items it carries.
+  // A roof mount tile is one hardpoint however many linked items it carries. Edge openings
+  // (airlocks, cargo doors, docking ports) are hull doors, not hardpoint mounts (Roof Mounts rule,
+  // 2026-09-29), so they do not count against the size-class budget.
   const hardpoints =
-    doc.mounts.filter((m) => m.attach !== "interior" && m.tile === undefined)
-      .length + (doc.mountTiles?.length ?? 0);
+    doc.mounts.filter(
+      (m) =>
+        m.attach !== "interior" && m.attach !== "edge" && m.tile === undefined,
+    ).length + (doc.mountTiles?.length ?? 0);
   if (hardpoints > size.maxMounts)
     push(
       "error",

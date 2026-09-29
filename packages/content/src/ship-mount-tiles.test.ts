@@ -89,8 +89,8 @@ describe("mount rules in prefab documents", () => {
     }
   });
 
-  it("Wren r5 carries its basic roof sensor and roof weapons on tiles", () => {
-    expect(wren.revision).toBe(5);
+  it("Wren (r5+) carries its basic roof sensor and roof weapons on tiles", () => {
+    expect(wren.revision).toBeGreaterThanOrEqual(5);
     const tiles = Object.fromEntries(
       wren.mountTiles!.map((t) => [t.id, `${t.kind}.${t.size}.${t.facing}`]),
     );
@@ -162,11 +162,22 @@ describe("mount rules in prefab documents", () => {
     expect(codes(big)).toContain("tile.size-class");
   });
 
-  it("counts a tile as one hardpoint however many items it carries", () => {
+  it("counts a tile as one hardpoint however many items it carries; hull doors are not hardpoints", () => {
     const hardpoints =
-      wren.mounts.filter((m) => m.attach !== "interior" && !m.tile).length +
-      wren.mountTiles!.length;
+      wren.mounts.filter(
+        (m) => m.attach !== "interior" && m.attach !== "edge" && !m.tile,
+      ).length + wren.mountTiles!.length;
     expect(hardpoints).toBe(12);
+    // One more face mount would exceed the size-S budget; an extra edge opening would not count.
+    const over = clone(wren);
+    over.mounts.push({
+      id: "rcs-extra",
+      component: "rcs.sm",
+      attach: "face",
+      at: [2.5, 7],
+      normal: "port",
+    });
+    expect(codes(over)).toContain("size.mounts");
     expect(wren.mounts.filter((m) => m.tile).length).toBe(4);
   });
 
