@@ -12,6 +12,7 @@ import {
   CircleDot,
   FilePlus2,
   History,
+  Lock,
   RefreshCw,
   Search,
   Send,
@@ -28,12 +29,14 @@ import {
   grantAllows,
   isDefinitionCapability,
   publishBlocker,
+  retireBlocker,
   revisionIssues,
   validateDefinition,
   type DefinitionCapability,
   type DefinitionKind,
 } from "@sidereal/sim/content-definitions";
 import { stableStringify } from "@sidereal/sim/layout-geometry";
+import { protectedDefinitionUses } from "@sidereal/content/definition-references";
 import { uuid } from "../editor/uuid";
 import { DefinitionForm } from "./DefinitionForm";
 import { useDefinitionsConnection } from "./useDefinitionsConnection";
@@ -82,6 +85,12 @@ function summary(kind: DefinitionKind, p: Payload | null) {
     return `${p.width}×${p.height} · ${p.massKg} kg${p.equipSlot ? " · " + p.equipSlot : ""}`;
   if (kind === "weapon")
     return `${p.damage} dmg · ${p.cooldownMs} ms · ${p.rangeMeters} m${p.mode ? " · " + p.mode : ""}`;
+  if (kind === "component")
+    return `${p.sizeClass} · ${p.family} · ${p.massKg} kg${p.status === "future" ? " · future" : ""}`;
+  if (kind === "interaction" && Array.isArray(p.verbs))
+    return `${(p.verbs as { label: string }[]).map((v) => v.label).join(" / ")} · ${p.reachM} m`;
+  if (kind === "loot_table" && Array.isArray(p.entries))
+    return `${p.entries.length} entries · ${p.rolls} roll${p.rolls === 1 ? "" : "s"}`;
   return typeof p.name === "string" ? p.name : "";
 }
 const when = (micros: bigint) =>
@@ -197,6 +206,7 @@ export default function DefinitionsWorkspace() {
   const canWrite = can(kind, "definition.write");
   const canPublish = can(kind, "definition.publish");
   const blocker = publishBlocker(kind);
+  const protectedUses = selected ? protectedDefinitionUses(kind, selected) : [];
 
   useEffect(() => {
     if (tab === "json" && payload)
@@ -376,9 +386,15 @@ export default function DefinitionsWorkspace() {
       </p>
       <div className="defs-body">
         <nav className="defs-kinds" aria-label="Definition kinds">
-          {(["seeded", "planned"] as const).map((stage) => (
+          {(["seeded", "validated", "planned"] as const).map((stage) => (
             <section key={stage}>
-              <h2>{stage === "seeded" ? "Editable now" : "Planned kinds"}</h2>
+              <h2>
+                {stage === "seeded"
+                  ? "Editable now"
+                  : stage === "validated"
+                    ? "Drafts · publish opens with runtime"
+                    : "Planned kinds"}
+              </h2>
               {DEFINITION_KINDS.filter(
                 (k) => DEFINITION_KIND_SPECS[k].stage === stage,
               ).map((k) => {
@@ -402,9 +418,9 @@ export default function DefinitionsWorkspace() {
                           ]
                             .filter(Boolean)
                             .join(" · ") + (count ? ` · ${count}` : "")
-                        : stage === "planned"
-                          ? `lands in ${s.landsIn}`
-                          : "no access"}
+                        : stage === "seeded"
+                          ? "no access"
+                          : `publish: ${s.landsIn.split(" (")[0]}`}
                     </span>
                   </button>
                 );
@@ -520,9 +536,10 @@ export default function DefinitionsWorkspace() {
                   <li className="defs-empty small">
                     {kindHeads.length
                       ? "Nothing matches the filter."
-                      : spec.stage === "seeded"
-                        ? "Registry empty for this kind: the operator seed import has not run."
-                        : "No drafts yet."}
+                      : spec.seededFrom.startsWith("Nothing") ||
+                          spec.stage === "planned"
+                        ? "No drafts yet."
+                        : "Registry empty for this kind: the operator seed import has not run."}
                   </li>
                 )}
               </ul>
@@ -752,60 +769,86 @@ export default function DefinitionsWorkspace() {
                   </div>
                 )}
                 {tab === "history" && (
-                  <table className="defs-history">
-                    <thead>
-                      <tr>
-                        <th>Revision</th>
-                        <th>Status</th>
-                        <th>Source</th>
-                        <th>Published (UTC)</th>
-                        <th>sha256</th>
-                        <th />
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {history_.map((r) => (
-                        <tr key={r.definitionRef}>
-                          <td>
-                            <code>{r.definitionRef}</code>
-                            {r.revision === head?.currentRevision && (
-                              <span className="defs-chip published">
-                                current
-                              </span>
-                            )}
-                          </td>
-                          <td>
-                            <span className={"defs-chip " + r.status}>
-                              {r.status}
-                            </span>
-                          </td>
-                          <td>{r.source}</td>
-                          <td>{when(r.publishedMicros)}</td>
-                          <td>
-                            <code>{r.sha256.slice(0, 10)}</code>
-                          </td>
-                          <td>
-                            {r.status === "published" && (
-                              <button
-                                onClick={() => retire(r.revision)}
-                                disabled={busy || !canPublish}
-                                title="Retire: no new pins; existing pins stay valid"
-                              >
-                                <History size={14} /> Retire
-                              </button>
-                            )}
-                          </td>
-                        </tr>
-                      ))}
-                      {!history_.length && (
+                  <>
+                    <table className="defs-history">
+                      <thead>
                         <tr>
-                          <td colSpan={6} className="muted">
-                            Nothing published yet.
-                          </td>
+                          <th>Revision</th>
+                          <th>Status</th>
+                          <th>Source</th>
+                          <th>Published (UTC)</th>
+                          <th>sha256</th>
+                          <th />
                         </tr>
-                      )}
-                    </tbody>
-                  </table>
+                      </thead>
+                      <tbody>
+                        {history_.map((r) => (
+                          <tr key={r.definitionRef}>
+                            <td>
+                              <code>{r.definitionRef}</code>
+                              {r.revision === head?.currentRevision && (
+                                <span className="defs-chip published">
+                                  current
+                                </span>
+                              )}
+                            </td>
+                            <td>
+                              <span className={"defs-chip " + r.status}>
+                                {r.status}
+                              </span>
+                            </td>
+                            <td>{r.source}</td>
+                            <td>{when(r.publishedMicros)}</td>
+                            <td>
+                              <code>{r.sha256.slice(0, 10)}</code>
+                            </td>
+                            <td>
+                              {r.status === "published" &&
+                                (() => {
+                                  const guard = retireBlocker(
+                                    kind,
+                                    selected,
+                                    history_,
+                                    r.revision,
+                                  );
+                                  return (
+                                    <button
+                                      onClick={() => retire(r.revision)}
+                                      disabled={busy || !canPublish || !!guard}
+                                      title={
+                                        guard ??
+                                        "Retire: no new pins; existing pins stay valid"
+                                      }
+                                    >
+                                      {guard ? (
+                                        <Lock size={14} />
+                                      ) : (
+                                        <History size={14} />
+                                      )}{" "}
+                                      {guard ? "Protected" : "Retire"}
+                                    </button>
+                                  );
+                                })()}
+                            </td>
+                          </tr>
+                        ))}
+                        {!history_.length && (
+                          <tr>
+                            <td colSpan={6} className="muted">
+                              Nothing published yet.
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                    {protectedUses.length > 0 && (
+                      <p className="defs-protected">
+                        <Lock size={14} /> Protected: {key} is used by{" "}
+                        {protectedUses.join(", ")}. Its last published revision
+                        cannot be retired; publish a replacement first.
+                      </p>
+                    )}
+                  </>
                 )}
                 {tab === "usage" && (
                   <div className="defs-usage">

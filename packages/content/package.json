@@ -84,7 +84,8 @@
     "./crew-wardrobe": "./src/crew-wardrobe.ts",
     "./crew-voxel-appearance": "./src/crew-voxel-appearance.ts",
     "./content-definition-seed": "./src/content-definition-seed.ts",
-    "./item-presentation": "./src/item-presentation.ts"
+    "./item-presentation": "./src/item-presentation.ts",
+    "./definition-references": "./src/definition-references.ts"
   },
   "dependencies": {}
 }

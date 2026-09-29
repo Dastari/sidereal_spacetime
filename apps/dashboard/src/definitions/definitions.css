@@ -510,3 +510,47 @@
     grid-template-columns: 180px 260px minmax(0, 1fr);
   }
 }
+.defs-protected {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 10px 0 0;
+  font-size: 13px;
+  color: var(--warm);
+  max-width: 900px;
+}
+.df-list {
+  grid-template-columns: 1fr;
+}
+.df-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+}
+.df-list-item > .df-group,
+.df-list-item > .df-field {
+  flex: 1;
+}
+.df-count {
+  color: var(--muted);
+  font-size: 12px;
+  margin-left: 4px;
+}
+.df-none {
+  color: var(--muted);
+  font-size: 12px;
+  margin-left: 6px;
+}
+.defs button.df-add {
+  justify-self: start;
+  font-size: 13px;
+}
+.df-vector {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+}
+.df-vector .df-number input {
+  width: 100%;
+  min-width: 56px;
+}
