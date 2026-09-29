@@ -64,7 +64,6 @@ export function lifecycleEvents(db: {
     .sort((a, b) => (a.eventId < b.eventId ? -1 : 1))
     .map((row) => ({
       ...row,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       payload: JSON.parse(row.payloadJson) as Record<string, any>,
     }));
 }
