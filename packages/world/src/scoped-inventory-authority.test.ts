@@ -35,6 +35,7 @@ import {
 import { WAYFARER_CONVERSION_PIN as PIN } from "@sidereal/content/wayfarer-conversion-candidate";
 import { qualifiedWayfarerWalkingBindings } from "@sidereal/sim/wayfarer-walking-bindings";
 import { planConstructionInstance } from "@sidereal/sim/construction-instance";
+import { lifecycleTestTables } from "./lifecycle-test-tables";
 // Ordinary indexed ctx.db emulator. Real transactional behavior is separately
 // required in the isolated authority journey; mocks never claim rollback proof.
 function table(primary = "id", indices: Record<string, string[]> = {}) {
@@ -103,6 +104,7 @@ function fixture() {
     uuid,
   );
   const db: any = {
+    ...lifecycleTestTables(),
     constructionFlightBinding: { shipId: { find: () => undefined } },
     constructionCargoAssembly: table("containerId", {
       by_instance: ["instanceId"],

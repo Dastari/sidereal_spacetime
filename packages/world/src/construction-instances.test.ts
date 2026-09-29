@@ -1,5 +1,6 @@
 import { test, expect, vi } from "vitest";
 import { Identity } from "spacetimedb";
+import { lifecycleEvents, lifecycleTestTables } from "./lifecycle-test-tables";
 vi.mock("spacetimedb/server", () => ({
   table: () => ({}),
   SenderError: class extends Error {},
@@ -75,6 +76,7 @@ function fixture() {
     JSON.stringify(bindConstructionLayout(layout).document),
   );
   const db: any = {
+    ...lifecycleTestTables(),
     constructionFlightBinding: { shipId: { find: () => undefined } },
     constructionCargoAssembly: table(
       { by_instance: "instanceId" },
@@ -203,6 +205,28 @@ test("two server spawns are independent, replay-safe and scoped to their owner",
   expect(ownDecks({ ...ctx, sender: other })).toEqual([]);
   expect(ctx.db.constructionBlueprint.rows[0].canonical).not.toContain(
     rows[0].id,
+  );
+});
+test("lifecycle: a spawn is one creation; replays and rejected spawns log nothing", () => {
+  const { ctx, other, args } = fixture();
+  spawnBlueprint(ctx, args);
+  spawnBlueprint(ctx, args); // replay
+  expect(() => spawnBlueprint({ ...ctx, sender: other }, args)).toThrow();
+  expect(() =>
+    spawnBlueprint(ctx, { ...args, operationId: "x", sourceDeckId: "no" }),
+  ).toThrow();
+  const [row] = ownInstances(ctx);
+  const events = lifecycleEvents(ctx.db);
+  expect(events.map((e) => [e.objectId, e.kind, e.sequence])).toEqual([
+    [row.id, "object.created", 1n],
+  ]);
+  expect(events[0]).toMatchObject({
+    objectKind: "ship",
+    frameId: row.id,
+    causationId: `spawn:${row.id}:${args.operationId}`,
+  });
+  expect(ctx.db.objectLifecycle.objectId.find(row.id).definitionRef).toBe(
+    args.blueprintId,
   );
 });
 test("wrong revision, missing grant and expired replay cannot create instances", () => {
@@ -512,6 +536,23 @@ test("door obstruction retains state until clear, with stale visit/revision and 
     blocked: false,
     moving: false,
   });
+  // Rejected requests logged nothing; motion steps are not events, phase changes are.
+  const doorEvents = lifecycleEvents(ctx.db).filter(
+    (e) => e.objectId === door.id,
+  );
+  expect(doorEvents.map((e) => [e.payload.door, e.sequence])).toEqual([
+    ["opening", 1n],
+    ["blocked", 2n],
+    ["opening", 3n],
+    ["open", 4n],
+  ]);
+  expect(doorEvents[0]).toMatchObject({
+    kind: "object.updated",
+    objectKind: "door",
+    actorId: "door-actor",
+    causationId: "door-actor:open",
+  });
+  expect(doorEvents[1]!.actorId).toBe("");
 });
 
 const ordinaryHooks = {

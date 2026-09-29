@@ -21,6 +21,7 @@ import {
   sealedDoorPhase,
 } from "@sidereal/sim/construction-seal-motion";
 import { doorSweepOccupied } from "@sidereal/sim/construction-door-motion";
+import { recordDoorChange } from "./lifecycle";
 import {
   ATMOSPHERE_LIMITS,
   initializeAtmosphere,
@@ -439,6 +440,12 @@ export function stepNativePressure(
         moving,
         revision: door!.revision + 1n,
       });
+      recordDoorChange(
+        ctx,
+        door!,
+        { ...door!, fraction: next.hingeFraction, blocked: next.blocked },
+        { causationId: `door:${door!.id}@${door!.revision + 1n}` },
+      );
     }
   }
   const gasChanges = stepAtmosphere(

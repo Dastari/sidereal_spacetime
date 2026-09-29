@@ -204,6 +204,13 @@ import * as combatDamage from "./combat-damage";
 import * as characterDeath from "./character-death";
 import * as eva from "./eva";
 import { evaBody, evaAirlockCycle } from "./eva-tables";
+import {
+  objectLifecycle,
+  lifecycleEvent,
+  lifecycleOutbox,
+  lifecycleCursor,
+} from "./lifecycle-tables";
+import * as lifecycle from "./lifecycle";
 import { characterVitals, shipComponentDamage } from "./combat-damage-tables";
 import { alignPilotLayout } from "./pilot-layout";
 import { pilotLayoutReceipt } from "./pilot-layout-tables";
@@ -429,6 +436,10 @@ const db = schema({
   shipPolicy,
   shipOperatorOperation,
   shipWipeArchive,
+  objectLifecycle,
+  lifecycleEvent,
+  lifecycleOutbox,
+  lifecycleCursor,
 });
 export default db;
 /** Wrap a world action a dead character may not take (move, interact, pilot, use inventory). */
@@ -573,6 +584,23 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
         });
   };
   if (existing) {
+    // Re-entry hydrates a persisted character: restored, never created again (after a
+    // server restart this is the first thing a returning session does).
+    lifecycle.recordLifecycleEvent(
+      ctx,
+      {
+        objectId: existing.id,
+        objectKind: "character",
+        frameId: existing.shipId,
+        adoptAs: combatDamage.isDead(ctx, existing.id) ? "disabled" : "active",
+      },
+      "object.restored",
+      {
+        causationId: `enter:${existing.id}@${ctx.timestamp.microsSinceUnixEpoch}`,
+        actorId: existing.id,
+      },
+      { connected: existing.connected },
+    );
     // Awaiting-ship characters (after an operator wipe, or created while starter
     // ships are disabled) have no frame to seed; they only come online.
     if (isAwaitingShip(existing)) {
@@ -793,6 +821,7 @@ export const stepWorld = db.reducer(
     combat.stepCombat(ctx);
     combatDamage.stepDamage(ctx);
     characterDeath.stepRespawns(ctx);
+    lifecycle.pruneLifecycleEvents(ctx);
     consumeFlightDamage(ctx);
     // The canonical contact island advances once for all admitted ships/bodies,
     // never inside the legacy per-owner loop below.

@@ -43,6 +43,7 @@ import {
   CHARACTER_MAX_HEALTH,
   RESPAWN_MICROS,
 } from "@sidereal/sim/combat-damage";
+import { lifecycleEvents, lifecycleTestTables } from "./lifecycle-test-tables";
 
 /** Minimal in-memory table: primary key accessor, optional btree indexes by column. */
 function table(
@@ -97,6 +98,7 @@ const server = Identity.fromString("2".repeat(64));
 
 function fixture() {
   const db: any = {
+    ...lifecycleTestTables(),
     character: table("id", { by_ship: "shipId", by_owner: "owner" }),
     ship: table("id", { by_owner: "owner" }),
     characterVitals: table("characterId"),
@@ -663,4 +665,58 @@ test("a destroyed reactor browns out every flight fitting", () => {
   }
   for (const id of ["drive", "rcs-fore", "rcs-aft", "core-fit"])
     expect(db.constructionFlightFitting.id.find(id).availability).toBe(0);
+});
+
+test("lifecycle: one event per applied hit, the killing hit is the death, respawn reactivates", () => {
+  const { db, ctx, at } = fixture();
+  const shooter = db.character.id.find("pilot");
+  const cause = { causationId: "pilot:shot-1", actorId: "pilot" };
+  for (let i = 0; i < 7; i++)
+    applyShotDamage(
+      ctx,
+      shooter,
+      { kind: "character", targetId: "mate" },
+      15,
+      cause,
+    );
+  // A shot at a dead body applies nothing and logs nothing.
+  applyShotDamage(ctx, shooter, { kind: "character", targetId: "mate" }, 15);
+  applyShotDamage(
+    ctx,
+    shooter,
+    { kind: "object", targetId: "mount:core" },
+    15,
+    cause,
+  );
+  // Unknown mounts are not objects with a lifecycle.
+  applyShotDamage(ctx, shooter, { kind: "object", targetId: "mount:nope" }, 15);
+  at(1_000_000n + RESPAWN_MICROS + 1n);
+  stepRespawns(ctx);
+  const events = lifecycleEvents(db);
+  expect(events.map((e) => [e.objectId, e.kind, e.sequence])).toEqual([
+    ...[1n, 2n, 3n, 4n, 5n, 6n].map((s) => ["mate", "combat.after_damage", s]),
+    ["mate", "combat.death", 7n],
+    ["wren|mount:core", "combat.after_damage", 1n],
+    ["mate", "object.activated", 8n],
+  ]);
+  expect(events[6]).toMatchObject({
+    causationId: "pilot:shot-1",
+    actorId: "pilot",
+    frameId: "wren",
+    payload: { damage: 10, health: 0 },
+  });
+  expect(events[7]).toMatchObject({
+    objectKind: "component",
+    frameId: "wren",
+    payload: { damage: 12, hp: 68, maxHp: 80, state: "pristine" },
+  });
+  expect(events[8]!.actorId).toBe(""); // the respawn timer is system-origin
+  expect(db.objectLifecycle.objectId.find("mate")).toMatchObject({
+    state: "active",
+    origin: "adopted",
+  });
+  expect(
+    db.objectLifecycle.objectId.find("wren|mount:core").definitionRef,
+  ).toBe("ship-components-v1@1/computer-core.sm");
+  expect(db.lifecycleOutbox.id.find(0).rejectedEvents).toBe(0n);
 });

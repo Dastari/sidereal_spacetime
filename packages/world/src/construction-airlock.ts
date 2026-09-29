@@ -48,6 +48,7 @@ import {
   ownAtmospheres,
 } from "./construction-atmosphere";
 import type { NativeRoomInstalledPart } from "@sidereal/sim/construction-native-room";
+import { recordDoorChange } from "./lifecycle";
 
 export const constructionAirlock = table(
   {
@@ -590,12 +591,17 @@ export function requestNativeAirlockDoor(
     receipt(ctx, op.key, op.request, door!.id, door!.revision);
     return true;
   }
-  ctx.db.constructionDoor.id.update({
+  const requested = {
     ...door!,
     targetOpen: args.open,
     blocked: false,
     moving: true,
     revision: door!.revision + 1n,
+  };
+  ctx.db.constructionDoor.id.update(requested);
+  recordDoorChange(ctx, door!, requested, {
+    causationId: `${actor!.id}:${args.operationId}`,
+    actorId: actor!.id,
   });
   ctx.db.constructionAirlock.id.update({
     ...driven,
@@ -662,6 +668,12 @@ export function stepNativeAirlocks(
           moving,
           revision: old.revision + 1n,
         });
+        recordDoorChange(
+          ctx,
+          old,
+          { ...old, fraction: n.hingeFraction, blocked: n.blocked },
+          { causationId: `door:${old.id}@${old.revision + 1n}` },
+        );
         poseChanged = true;
       }
     }

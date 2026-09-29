@@ -38,6 +38,7 @@ import {
 import { constructionCollision } from "./construction-doors";
 import { createConstructionStandingSupport } from "./construction-standing-support";
 import { clearAim } from "./combat";
+import { recordItemMove } from "./lifecycle";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "sender" | "db">;
@@ -309,19 +310,28 @@ export function readCargo(
 }
 export function moveScopedCargo(ctx: Context, request: ScopedTransferRequest) {
   const reader = readCargo(ctx, ctx.timestamp.microsSinceUnixEpoch);
+  const mover = ctx.db.character.by_owner
+    .filter(ctx.sender)
+    [Symbol.iterator]()
+    .next().value?.id;
   const repo: CargoRepository = {
     ...reader,
     writeItem: (item: ScopedItem) => {
       const old = ctx.db.inventoryItem.id.find(item.id),
         m = ctx.db.inventoryItemMembership.itemId.find(item.id);
       if (!old || !m) fail("Inventory item changed");
-      ctx.db.inventoryItem.id.update({
+      const moved = {
         ...old,
         containerId: item.containerId,
         equipmentSlot: item.equipmentSlot,
         x: item.x,
         y: item.y,
         rotated: item.rotated,
+      };
+      ctx.db.inventoryItem.id.update(moved);
+      recordItemMove(ctx, old, moved, {
+        causationId: `${mover ?? "cargo"}:${request.operationId}`,
+        actorId: mover,
       });
       ctx.db.inventoryItemMembership.itemId.update({
         ...m,
