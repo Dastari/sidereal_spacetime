@@ -55,6 +55,7 @@ import {
   type DressedShip,
 } from "@sidereal/sim/ship-dresser";
 import { setMeshRole, type MeshRole } from "../mesh-roles";
+import { withoutAirlockLeaves } from "./doors";
 import { CONTACT_STRIP_OPACITY } from "../molded-plastic";
 import { meshBoxes, newBuilder, type GeometryBuilder } from "./box-mesher";
 import {
@@ -147,6 +148,8 @@ export interface PrefabShipViewOptions {
   /** Merge static geometry into one mesh per (view, slot, role). Default true; false keeps
    * per-piece thin instances (useful for editors that inspect pieces). */
   batch?: boolean;
+  /** The caller draws animated airlock leaves (doors.ts); strip the airlock GLB's baked leaves. */
+  externalDoorLeaves?: boolean;
 }
 
 export interface PrefabShipMetrics {
@@ -653,7 +656,11 @@ export async function createPrefabShipView(
     const missing: string[] = [];
     await Promise.all(
       [...glbs].map(async ([url, { list }]) => {
-        const geom = await loadGlbGeometry(scene, url);
+        const loaded = await loadGlbGeometry(scene, url);
+        const geom =
+          loaded && options.externalDoorLeaves
+            ? withoutAirlockLeaves(loaded)
+            : loaded;
         if (!geom) {
           missing.push(url);
           standins.push(...list);
