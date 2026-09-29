@@ -6,20 +6,34 @@ import { bowJoinErrors } from "@sidereal/content/bow-profiles";
  */
 import {
   G,
+  NORMAL_VECTOR,
   placedTilePolygon,
   placedTileSize,
   insidePolygon,
   tileOverlaps,
   type FaceNormal,
+  type Pt,
   type QuarterTurn,
   type ShapeTilePlacement,
 } from "@sidereal/content/construction-grammar";
+import {
+  SHIP_LOGIC_DEVICES,
+  SHIP_LOGIC_LIMITS,
+  validateLogicWiring,
+  type LogicFacing,
+  type PrefabLogic,
+  type PrefabLogicDevice,
+  type PrefabLogicEndpoint,
+  type PrefabLogicLink,
+} from "@sidereal/content/ship-logic";
 import {
   mountTileAccepts,
   mountTileCapacity,
   mountTileRequired,
 } from "@sidereal/content/ship-mount-tiles";
 import {
+  deriveInterior,
+  logicWallPlacement,
   mountTileCapacityText,
   type PrefabComponentCatalog,
   type PrefabEdge,
@@ -51,7 +65,9 @@ export type PrefabSelection =
   | { kind: "edge"; id: string }
   | { kind: "mount"; id: string }
   | { kind: "mounttile"; id: string }
-  | { kind: "skylight"; id: string };
+  | { kind: "skylight"; id: string }
+  /** A ship logic device (wall button, door actuator, airlock controller). */
+  | { kind: "logic"; id: string };
 
 export interface CommandResult {
   doc: Doc;
@@ -651,6 +667,297 @@ export function updateSkylight(
   };
 }
 
+// ------------------------------------------------------------------ ship logic (wiki Systems/Ship Logic)
+const EMPTY_LOGIC: PrefabLogic = { devices: [], links: [] };
+const logicOf = (doc: Doc): PrefabLogic => doc.logic ?? EMPTY_LOGIC;
+const withLogic = (doc: Doc, logic: PrefabLogic): Doc => ({ ...doc, logic });
+const quarter = (v: number) => Math.round(v * 4) / 4 || 0;
+
+/**
+ * Snap a plan point for a wall device: the 0.25 m grid along the wall, and the nearest whole-metre
+ * wall line across its facing (the line the panel's back sits on).
+ */
+export function snapLogicWallPoint(
+  p: readonly number[],
+  normal: LogicFacing,
+): [number, number] {
+  const axis = NORMAL_VECTOR[normal][0] !== 0 ? 0 : 1;
+  const at: [number, number] = [quarter(p[0]), quarter(p[1])];
+  at[axis] = Math.round(p[axis]) || 0;
+  return at;
+}
+
+/** Whether a wall button fits at this (snapped) point and facing; reasons are the validator's. */
+export function checkLogicButton(
+  doc: Doc,
+  at: [number, number],
+  normal: LogicFacing,
+  catalog?: PrefabComponentCatalog,
+  ignore?: string,
+): { ok: boolean; reason?: string } {
+  const place = logicWallPlacement(doc, { at, normal }, catalog);
+  if ("error" in place) return { ok: false, reason: `Button ${place.error}` };
+  const clash = logicOf(doc).devices.find(
+    (d) =>
+      d.id !== ignore &&
+      d.kind === "button" &&
+      d.normal === normal &&
+      d.at?.[0] === at[0] &&
+      d.at?.[1] === at[1],
+  );
+  if (clash) return { ok: false, reason: `Button ${clash.id} is already here` };
+  return { ok: true };
+}
+
+function addLogicDevice(
+  doc: Doc,
+  device: Omit<PrefabLogicDevice, "id">,
+  base: string,
+): CommandResult {
+  const logic = logicOf(doc);
+  if (logic.devices.length >= SHIP_LOGIC_LIMITS.devices)
+    return {
+      doc,
+      error: `A ship holds at most ${SHIP_LOGIC_LIMITS.devices} logic devices`,
+    };
+  const id = uniqueId(
+    logic.devices.map((d) => d.id),
+    base,
+  );
+  return {
+    doc: withLogic(doc, {
+      devices: [...logic.devices, { id, ...device }],
+      links: logic.links,
+    }),
+    select: { kind: "logic", id },
+  };
+}
+
+/** Add a wall button at a plan point, facing the side it is pressed from. */
+export function addLogicButton(
+  doc: Doc,
+  p: readonly number[],
+  normal: LogicFacing,
+  catalog?: PrefabComponentCatalog,
+): CommandResult {
+  const at = snapLogicWallPoint(p, normal);
+  const check = checkLogicButton(doc, at, normal, catalog);
+  if (!check.ok) return { doc, error: check.reason };
+  return addLogicDevice(doc, { kind: "button", at, normal }, "btn");
+}
+
+/** Move (and optionally turn) a wall button; the new spot must be a usable wall. */
+export function moveLogicButton(
+  doc: Doc,
+  id: string,
+  p: readonly number[],
+  normal?: LogicFacing,
+  catalog?: PrefabComponentCatalog,
+): CommandResult {
+  const logic = logicOf(doc);
+  const d = logic.devices.find((x) => x.id === id);
+  if (!d) return { doc };
+  if (d.kind !== "button" || !d.normal)
+    return { doc, error: "Only wall buttons have a wall position" };
+  const facing = normal ?? d.normal;
+  const at = snapLogicWallPoint(p, facing);
+  if (d.at?.[0] === at[0] && d.at?.[1] === at[1] && d.normal === facing)
+    return { doc };
+  const check = checkLogicButton(doc, at, facing, catalog, id);
+  if (!check.ok) return { doc, error: check.reason };
+  return {
+    doc: withLogic(doc, {
+      devices: logic.devices.map((x) =>
+        x.id === id ? { ...x, at, normal: facing } : x,
+      ),
+      links: logic.links,
+    }),
+  };
+}
+
+/** Doors of the deck a door actuator can drive: door edges and edge-mount openings. */
+export function logicDoors(doc: Doc, catalog?: PrefabComponentCatalog) {
+  return deriveInterior(doc, 0, catalog).doors;
+}
+
+/** Add a door actuator on a door edge or edge-mount opening (one actuator per door). */
+export function addLogicDoor(
+  doc: Doc,
+  door: string,
+  catalog: PrefabComponentCatalog,
+): CommandResult {
+  const d = logicDoors(doc, catalog).find((x) => x.id === door);
+  if (!d) return { doc, error: `No door ${door} on the deck` };
+  if (d.type === "door.forcefield")
+    return { doc, error: "A forcefield has no leaves to actuate" };
+  const mount = doc.mounts.find((m) => m.id === door);
+  if (mount && !catalog.get(mount.component)?.dataPort)
+    return {
+      doc,
+      error: `${mount.component} has no data port to take commands`,
+    };
+  const taken = logicOf(doc).devices.find(
+    (x) => x.kind === "door" && x.door === door,
+  );
+  if (taken)
+    return {
+      doc,
+      error: `Door ${door} already has an actuator (${taken.id})`,
+    };
+  return addLogicDevice(doc, { kind: "door", door }, `door-${door}`);
+}
+
+const cycleError = (s: number) =>
+  !Number.isFinite(s) ||
+  s < SHIP_LOGIC_LIMITS.cycleMinS ||
+  s > SHIP_LOGIC_LIMITS.cycleMaxS ||
+  Math.abs(s * 10 - Math.round(s * 10)) > 1e-9
+    ? `Cycle time is ${SHIP_LOGIC_LIMITS.cycleMinS} to ${SHIP_LOGIC_LIMITS.cycleMaxS} s in 0.1 s steps`
+    : undefined;
+
+/** Add an airlock controller (virtual: no placement); `cycleS` is one (de)pressurise stage. */
+export function addAirlockController(doc: Doc, cycleS?: number): CommandResult {
+  if (cycleS !== undefined) {
+    const error = cycleError(cycleS);
+    if (error) return { doc, error };
+  }
+  return addLogicDevice(
+    doc,
+    {
+      kind: "airlock-controller",
+      ...(cycleS === undefined ? {} : { cycleS: Math.round(cycleS * 10) / 10 }),
+    },
+    "airlock",
+  );
+}
+
+/** Set (or clear, with undefined: the default stage) an airlock controller's cycle time. */
+export function setControllerCycle(
+  doc: Doc,
+  id: string,
+  cycleS: number | undefined,
+): CommandResult {
+  const logic = logicOf(doc);
+  const d = logic.devices.find((x) => x.id === id);
+  if (!d || d.kind !== "airlock-controller") return { doc };
+  if (cycleS !== undefined) {
+    const error = cycleError(cycleS);
+    if (error) return { doc, error };
+    cycleS = Math.round(cycleS * 10) / 10;
+  }
+  if (d.cycleS === cycleS) return { doc };
+  const { cycleS: _old, ...rest } = d;
+  void _old;
+  const next = cycleS === undefined ? rest : { ...rest, cycleS };
+  return {
+    doc: withLogic(doc, {
+      devices: logic.devices.map((x) => (x.id === id ? next : x)),
+      links: logic.links,
+    }),
+  };
+}
+
+/** Remove a logic device and every wire to or from it. */
+export function removeLogicDevice(doc: Doc, id: string): Doc {
+  const logic = doc.logic;
+  if (!logic?.devices.some((d) => d.id === id)) return doc;
+  return withLogic(doc, {
+    devices: logic.devices.filter((d) => d.id !== id),
+    links: logic.links.filter(
+      (l) => l.from.device !== id && l.to.device !== id,
+    ),
+  });
+}
+
+/** Default wire id, the same derivation as the prefab builders' `wire()`. */
+export const logicWireId = (
+  from: PrefabLogicEndpoint,
+  to: PrefabLogicEndpoint,
+) =>
+  `w.${from.device}.${from.port}.${to.device}.${to.port}`
+    .toLowerCase()
+    .replace(/_/g, "-");
+
+/**
+ * Wire an output port to an input port. Refused (with the wiring validator's message) when the new
+ * wire itself is wrong: missing port, wrong direction, type mismatch, self wire, duplicate, or a
+ * second driver of a value input.
+ */
+export function addLogicWire(
+  doc: Doc,
+  from: PrefabLogicEndpoint,
+  to: PrefabLogicEndpoint,
+): CommandResult {
+  const logic = logicOf(doc);
+  const ids = new Set(logic.devices.map((d) => d.id));
+  if (!ids.has(from.device)) return { doc, error: `No device ${from.device}` };
+  if (!ids.has(to.device)) return { doc, error: `No device ${to.device}` };
+  if (logic.links.length >= SHIP_LOGIC_LIMITS.links)
+    return {
+      doc,
+      error: `A ship holds at most ${SHIP_LOGIC_LIMITS.links} wires`,
+    };
+  const link: PrefabLogicLink = {
+    id: uniqueId(
+      logic.links.map((l) => l.id),
+      logicWireId(from, to),
+    ),
+    from: { device: from.device, port: from.port },
+    to: { device: to.device, port: to.port },
+  };
+  const next: PrefabLogic = {
+    devices: logic.devices,
+    links: [...logic.links, link],
+  };
+  const own = validateLogicWiring(next).find(
+    (i) =>
+      i.severity === "error" && i.ref.kind === "link" && i.ref.id === link.id,
+  );
+  if (own) return { doc, error: own.message };
+  return {
+    doc: withLogic(doc, next),
+    select: { kind: "logic", id: from.device },
+  };
+}
+
+export function removeLogicWire(doc: Doc, id: string): Doc {
+  const logic = doc.logic;
+  if (!logic?.links.some((l) => l.id === id)) return doc;
+  return withLogic(doc, {
+    devices: logic.devices,
+    links: logic.links.filter((l) => l.id !== id),
+  });
+}
+
+/** Wires with an end on this device. */
+export const deviceWires = (doc: Doc, id: string) =>
+  logicOf(doc).links.filter((l) => l.from.device === id || l.to.device === id);
+
+/** Catalogue name of a device kind. */
+export const logicDeviceName = (d: Pick<PrefabLogicDevice, "kind">) =>
+  SHIP_LOGIC_DEVICES[d.kind].name;
+
+/** Move a wall button by a plan delta (re-snapped onto its wall line). */
+const nudgeButton = (
+  doc: Doc,
+  d: PrefabLogicDevice,
+  dx: number,
+  dy: number,
+  catalog?: PrefabComponentCatalog,
+): CommandResult =>
+  d.kind === "button" && d.at
+    ? moveLogicButton(
+        doc,
+        d.id,
+        [d.at[0] + dx, d.at[1] + dy] as Pt,
+        undefined,
+        catalog,
+      )
+    : {
+        doc,
+        error: "Only wall buttons move; door actuators follow their door",
+      };
+
 // ------------------------------------------------------------------ selection commands
 export function selectionExists(
   doc: Doc,
@@ -672,6 +979,8 @@ export function selectionExists(
       return !!doc.mountTiles?.some((t) => t.id === sel.id);
     case "skylight":
       return doc.skylights.some((s) => s.id === sel.id);
+    case "logic":
+      return !!doc.logic?.devices.some((d) => d.id === sel.id);
   }
 }
 
@@ -705,17 +1014,27 @@ export function removeSelection(doc: Doc, sel: PrefabSelection): Doc {
         ...doc,
         skylights: doc.skylights.filter((s) => s.id !== sel.id),
       };
+    case "logic":
+      return removeLogicDevice(doc, sel.id);
   }
 }
 
-/** Move the selection by whole cells (mounts: 0.5 m steps along their grid). */
+/**
+ * Move the selection by whole cells (mounts: 0.5 m steps along their grid; wall buttons re-snap
+ * to the 0.25 m grid on a wall line).
+ */
 export function nudgeSelection(
   doc: Doc,
   sel: PrefabSelection,
   dx: number,
   dy: number,
+  catalog?: PrefabComponentCatalog,
 ): CommandResult {
   switch (sel.kind) {
+    case "logic": {
+      const d = doc.logic?.devices.find((x) => x.id === sel.id);
+      return d ? nudgeButton(doc, d, dx, dy, catalog) : { doc };
+    }
     case "room": {
       const r = doc.rooms.find((x) => x.id === sel.id);
       if (!r) return { doc };
@@ -825,8 +1144,29 @@ export const NEXT_FACING: Record<FaceNormal, FaceNormal> = {
   starboard: "fore",
 };
 
-/** R: turn a tile a quarter (counter-clockwise) or an interior module's facing. */
-export function rotateSelection(doc: Doc, sel: PrefabSelection): CommandResult {
+const OPPOSITE: Record<LogicFacing, LogicFacing> = {
+  fore: "aft",
+  aft: "fore",
+  port: "starboard",
+  starboard: "port",
+};
+
+/**
+ * R: turn a tile a quarter (counter-clockwise) or an interior module's facing; flip a wall button
+ * to the other side of its wall.
+ */
+export function rotateSelection(
+  doc: Doc,
+  sel: PrefabSelection,
+  catalog?: PrefabComponentCatalog,
+): CommandResult {
+  if (sel.kind === "logic") {
+    const d = doc.logic?.devices.find((x) => x.id === sel.id);
+    if (!d) return { doc };
+    if (d.kind !== "button" || !d.at || !d.normal)
+      return { doc, error: "Only wall buttons turn" };
+    return moveLogicButton(doc, d.id, d.at, OPPOSITE[d.normal], catalog);
+  }
   if (sel.kind === "tile") {
     const t = doc.volumes.find((v) => v.id === sel.volume)?.tiles[sel.index];
     if (!t) return { doc };
@@ -862,12 +1202,13 @@ export function rotateSelection(doc: Doc, sel: PrefabSelection): CommandResult {
   }
   return {
     doc,
-    error: "Select a tile, interior module, mount tile or skylight to rotate",
+    error:
+      "Select a tile, interior module, mount tile, skylight or wall button to rotate",
   };
 }
 
 // ------------------------------------------------------------------ ids
-/** Grammar element ids (volumes, rooms, edges, mounts, skylights). */
+/** Grammar element ids (volumes, rooms, edges, mounts, skylights, logic devices). */
 export const ELEMENT_ID = /^[a-z0-9][a-z0-9._-]{0,79}$/;
 
 /**
@@ -886,6 +1227,26 @@ export function renameElement(
       doc,
       error: "Ids use lower-case letters, digits, dots, dashes and underscores",
     };
+  if (sel.kind === "logic") {
+    const logic = doc.logic;
+    if (!logic?.devices.some((d) => d.id === sel.id)) return { doc };
+    if (logic.devices.some((d) => d.id === id))
+      return { doc, error: `${id} is already used by another logic device` };
+    // Wires keep their ids; their ends follow the device.
+    const end = (e: PrefabLogicEndpoint) =>
+      e.device === sel.id ? { ...e, device: id } : e;
+    return {
+      doc: withLogic(doc, {
+        devices: logic.devices.map((d) => (d.id === sel.id ? { ...d, id } : d)),
+        links: logic.links.map((l) => ({
+          ...l,
+          from: end(l.from),
+          to: end(l.to),
+        })),
+      }),
+      select: { kind: "logic", id },
+    };
+  }
   if (sel.kind === "mounttile") {
     const tiles = doc.mountTiles ?? [];
     if (!tiles.some((t) => t.id === sel.id)) return { doc };

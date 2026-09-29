@@ -1,4 +1,7 @@
-/** Left panel: options for the active tool (volumes and tiles, rooms, edges, mounts, skylights). */
+/**
+ * Left panel: options for the active tool (volumes and tiles, rooms, edges, mounts, skylights,
+ * ship logic).
+ */
 import {
   BLUEPRINT_SIZE_CLASS_IDS,
   EDGE_TYPE_IDS,
@@ -29,9 +32,16 @@ import {
 } from "@sidereal/content/ship-mount-tiles";
 import { FlipHorizontal2, Plus, RotateCcw, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
-import { addVolume, removeVolume, updateVolume } from "./commands";
+import {
+  addVolume,
+  removeVolume,
+  updateVolume,
+  type CommandResult,
+  type PrefabSelection,
+} from "./commands";
 import { CheckField, SelectField } from "./fields";
 import { SKYLIGHT_SIZES, TOOLS, type ToolState } from "./keymap";
+import { LogicToolPanel } from "./LogicPanels";
 import { CATEGORY_LABELS, mountColour, ROOM_COLOURS } from "./palette";
 import { mountModes, type MountMode } from "./snapping";
 
@@ -43,6 +53,10 @@ interface Props {
   tools: ToolState;
   setTools: (patch: Partial<ToolState>) => void;
   commit: (label: string, doc: Doc) => void;
+  /** Commands that create and select (logic devices). */
+  apply: (label: string, r: CommandResult) => void;
+  select: (s: PrefabSelection | null) => void;
+  selection: PrefabSelection | null;
 }
 
 export function TilePreview({
@@ -824,6 +838,7 @@ export function ToolPanel(props: Props) {
       {tools.tool === "mount" && <MountPanel {...props} />}
       {tools.tool === "tile" && <MountTilePanel {...props} />}
       {tools.tool === "skylight" && <SkylightPanel {...props} />}
+      {tools.tool === "button" && <LogicToolPanel {...props} />}
     </aside>
   );
 }

@@ -38,9 +38,26 @@ export function admissionIssue(doc: ShipPrefabDocumentV1): PrefabIssue | null {
   }
 }
 
-export function issueSelection(issue: PrefabIssue): PrefabSelection | null {
+/**
+ * The element an issue refers to. Logic issues name a device or a wire; a wire selects the device
+ * it starts from (wires are edited in that device's Inspector), which needs the document.
+ */
+export function issueSelection(
+  issue: PrefabIssue,
+  doc?: ShipPrefabDocumentV1,
+): PrefabSelection | null {
   const r = issue.ref;
   if (r.kind === "document") return null;
+  if (r.kind === "logic") {
+    const logic = doc?.logic;
+    if (!logic || logic.devices.some((d) => d.id === r.id))
+      return { kind: "logic", id: r.id };
+    const link = logic.links.find((l) => l.id === r.id);
+    const end = [link?.from.device, link?.to.device].find((id) =>
+      logic.devices.some((d) => d.id === id),
+    );
+    return end ? { kind: "logic", id: end } : null;
+  }
   if (r.kind === "volume")
     return r.tile !== undefined
       ? { kind: "tile", volume: r.id, index: r.tile }

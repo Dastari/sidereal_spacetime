@@ -11,7 +11,15 @@ import type {
 import type { MountMode } from "./snapping";
 
 export type ToolId =
-  "select" | "hull" | "erase" | "room" | "edge" | "mount" | "tile" | "skylight";
+  | "select"
+  | "hull"
+  | "erase"
+  | "room"
+  | "edge"
+  | "mount"
+  | "tile"
+  | "skylight"
+  | "button";
 
 export const TOOLS: { id: ToolId; label: string; key: string; hint: string }[] =
   [
@@ -63,6 +71,12 @@ export const TOOLS: { id: ToolId; label: string; key: string; hint: string }[] =
       key: "K",
       hint: "Click the roof to add a skylight. R swaps 2x3 and 3x2.",
     },
+    {
+      id: "button",
+      label: "Button",
+      key: "L",
+      hint: "Click beside a wall to place a wall button facing the side you clicked. Wire it in the Inspector.",
+    },
   ];
 
 export const TOOL_BY_KEY: Record<string, ToolId> = Object.fromEntries(
@@ -75,7 +89,7 @@ export const SHORTCUTS: { keys: string; action: string }[] = [
   {
     keys: "R",
     action:
-      "Rotate tile, interior module facing, mount tile boresight or skylight",
+      "Rotate tile, interior module facing, mount tile boresight or skylight; flip a wall button",
   },
   { keys: "F", action: "Mirror the hull tile" },
   {
@@ -84,7 +98,8 @@ export const SHORTCUTS: { keys: string; action: string }[] = [
   },
   {
     keys: "Arrows",
-    action: "Nudge the selection 1 m (mounts 0.5 m); Shift for 5 m",
+    action:
+      "Nudge the selection 1 m (mounts 0.5 m, wall buttons 0.25 m along their wall); Shift for 5 m (buttons 1 m)",
   },
   { keys: "Delete", action: "Remove the selection" },
   { keys: "Esc", action: "Deselect, cancel the drag" },
