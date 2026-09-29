@@ -24,6 +24,8 @@ import { prefabFlightModel } from "../packages/sim/src/prefab-flight";
 import { prefabPilotPose } from "../packages/sim/src/construction-pilot";
 import { prefabWalkRoute } from "../packages/sim/src/prefab-construction";
 import { prefabCargoSockets } from "../packages/sim/src/prefab-cargo-sockets";
+import { shipLogicModel } from "../packages/sim/src/ship-logic-model";
+import { CREW_WARDROBE_KITS } from "../packages/content/src/crew-wardrobe";
 import {
   FED_WREN_PIN,
   PREFAB_UPGRADE_SOURCES,
@@ -94,6 +96,7 @@ async function client(token?: string) {
           tables.ownAuthoredFlights,
           tables.ownAuthoredFlightPhysics,
           tables.ownAuthoredFlightActuators,
+          tables.visibleShipLogic,
         ]);
     })
     .build();
@@ -206,7 +209,10 @@ for (const [socket, kit, name] of [
     items: stocked[socket].length,
   };
 }
-assert.equal(stocked["hold/cargo.standard.medium"]!.length, 18);
+assert.equal(
+  stocked["hold/cargo.standard.medium"]!.length,
+  CREW_WARDROBE_KITS["uniforms-and-tiers"]!.length,
+);
 assert.equal(stocked["bunks/shipyard.equipment.wall-locker"]!.length, 27);
 const before = held();
 evidence.heldBefore = {
@@ -416,6 +422,33 @@ try {
     evidence.groundItem = [...x.db.ownGroundItems.iter()].find(
       (i) => i.id === owner.groundItemId,
     );
+  }
+
+  // Ship logic (r6+, after the ground-drop check, which needs line of sight from the locker): the
+  // hold is the airlock chamber. It starts pressurised (hold door open,
+  // hatch shut); the inside button cycles it open and closed again.
+  const logic = shipLogicModel(prefab, catalog);
+  if (logic) {
+    const device = (id: string) =>
+      [...x.db.visibleShipLogic.iter()].find(
+        (r) => r.shipId === owner.shipId && r.deviceId === id,
+      );
+    await wait(() => device("lock")?.state === "pressurised", "airlock pressurised");
+    assert.equal(device("door-inner")?.open, true);
+    assert.equal(device("door-outer")?.open, false);
+    const button = logic.panels.find((p) => p.deviceId === "btn-lock-in")!;
+    for (const [px, py] of prefabWalkRoute(
+      prefab,
+      catalog,
+      [actor().localX, actor().localY],
+      button.front,
+    ))
+      await walkNative(x, px, py);
+    await x.reducers.pressShipButton({ shipId: owner.shipId, deviceId: button.deviceId });
+    await wait(() => !!device("door-outer")?.open, "hatch opened by the button", 10000);
+    await x.reducers.pressShipButton({ shipId: owner.shipId, deviceId: button.deviceId });
+    await wait(() => device("lock")?.state === "pressurised", "cycled back", 10000);
+    evidence.airlockAfterUpgrade = { cycled: true };
   }
 
   // Take the helm and fly.
