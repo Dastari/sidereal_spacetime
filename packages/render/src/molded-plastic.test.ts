@@ -17,6 +17,9 @@ import {
   moldedClearCoatEnabled,
   moldedImageProcessing,
   moldedLightRig,
+  refreshMoldedFinishes,
+  setMoldedClearCoat,
+  setMoldedFinishEnabled,
   shipSlotFamily,
   studioEnvironmentHdr,
   studioRadiance,
@@ -186,6 +189,53 @@ describe("applying the finish", () => {
     // A later theme swap that rewrites roughness is corrected on the next pass.
     grip.roughness = 0.85;
     expect(applyMoldedFinishToMeshes(meshes, { studio: false })).toBe(1);
+    scene.dispose();
+    engine.dispose();
+  });
+
+  it("switches the whole finish off and on live, restoring the pre-finish response", () => {
+    const engine = new NullEngine();
+    const scene = new Scene(engine);
+    const rig = moldedLightRig(scene);
+    const m = new PBRMaterial("prefab-federation-primary", scene);
+    // Pre-#59 game response set by the caller before the finish.
+    m.metallic = 0.2;
+    m.roughness = 0.55;
+    m.environmentIntensity = 1.6;
+    applySurfaceFinish(m, "plastic-light", { studio: false });
+    expect(m.roughness).toBeCloseTo(0.32, 5);
+    try {
+      setMoldedFinishEnabled(false);
+      expect(refreshMoldedFinishes(scene)).toBe(1);
+      expect(m.metallic).toBe(0.2);
+      expect(m.roughness).toBe(0.55);
+      expect(m.environmentIntensity).toBe(1.6);
+      expect(m.enableSpecularAntiAliasing).toBe(false);
+      expect(m.imageProcessingConfiguration).toBe(
+        scene.imageProcessingConfiguration,
+      );
+      expect(scene.getLightByName("molded-rim")!.isEnabled()).toBe(false);
+      expect(scene.getLightByName("molded-cool-fill")!.isEnabled()).toBe(true);
+      // Materials created while the finish is off keep their own response.
+      const late = new PBRMaterial("crew.suit_primary", scene);
+      late.roughness = 0.7;
+      const box = CreateBox("late", {}, scene);
+      box.material = late;
+      applyMoldedFinishToMeshes([box], { studio: false });
+      expect(late.roughness).toBe(0.7);
+      setMoldedFinishEnabled(true);
+      setMoldedClearCoat(true);
+      expect(refreshMoldedFinishes(scene)).toBe(2);
+      expect(m.roughness).toBeCloseTo(0.32, 5);
+      expect(m.clearCoat.isEnabled).toBe(true);
+      expect(late.roughness).toBeCloseTo(SURFACE_FINISHES.fabric.roughness, 5);
+      expect(m.imageProcessingConfiguration).toBe(moldedImageProcessing(scene));
+      expect(scene.getLightByName("molded-rim")!.isEnabled()).toBe(true);
+    } finally {
+      setMoldedFinishEnabled(true);
+      setMoldedClearCoat(false);
+    }
+    rig.dispose();
     scene.dispose();
     engine.dispose();
   });

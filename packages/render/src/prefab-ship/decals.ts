@@ -103,6 +103,9 @@ export function buildDecals(
     material.albedoTexture = texture;
     material.useAlphaFromAlbedoTexture = true;
     material.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
+    // Pre-finish response (restored when the F3 debug window turns the plastic finish off).
+    material.metallic = 0;
+    material.roughness = 0.55;
     // Pad-printed ink on the moulded panel: same finish and grading as the plate beneath it.
     applySurfaceFinish(material, "plastic-light");
     material.zOffset = -2;

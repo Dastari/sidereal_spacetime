@@ -428,16 +428,80 @@ export function moldedClearCoatEnabled() {
 }
 
 /**
+ * Whole-finish switch (F3 debug window, render-quality.ts). Off restores every finished material's
+ * pre-finish response (what the caller set before the first applySurfaceFinish: pre-#59 metallic,
+ * roughness, IBL share and the scene's own grading) and turns the rim light off, for frame-rate
+ * comparisons. Colours, emission and batching never change.
+ */
+let finishEnabled = true;
+export function setMoldedFinishEnabled(enabled: boolean) {
+  finishEnabled = enabled;
+}
+export function moldedFinishEnabled() {
+  return finishEnabled;
+}
+
+/** Metadata key of the response a material had before its first finish. */
+export const MOLDED_BASE_KEY = "moldedBase";
+interface MoldedBase {
+  metallic: number | null;
+  roughness: number | null;
+  ior: number;
+  specular: number;
+  specularAA: boolean;
+  environment: number;
+  reflection: PBRMaterial["reflectionTexture"];
+}
+
+function captureBase(material: PBRMaterial): MoldedBase {
+  return {
+    metallic: material.metallic,
+    roughness: material.roughness,
+    ior: material.indexOfRefraction,
+    specular: material.specularIntensity,
+    specularAA: material.enableSpecularAntiAliasing,
+    environment: material.environmentIntensity,
+    reflection: material.reflectionTexture,
+  };
+}
+
+/**
  * Apply a family's finish to one (shared) PBR material. Colours, alpha and emissive colour stay
- * with the caller's slot table; this sets the response only. Idempotent.
+ * with the caller's slot table; this sets the response only. Idempotent. While the finish is
+ * switched off (setMoldedFinishEnabled) the material keeps/regains its pre-finish response.
  */
 export function applySurfaceFinish(
   material: PBRMaterial,
   family: SurfaceFamily,
-  options: MoldedFinishOptions = {},
+  options: MoldedFinishOptions & { recaptureBase?: boolean } = {},
 ) {
   const f = SURFACE_FINISHES[family];
   const scene = material.getScene();
+  const stored = material.metadata?.[MOLDED_BASE_KEY] as MoldedBase | undefined;
+  const base =
+    !stored || options.recaptureBase ? captureBase(material) : stored;
+  const { recaptureBase: _recapture, ...kept } = options;
+  material.metadata = {
+    ...material.metadata,
+    [MOLDED_FINISH_KEY]: family,
+    [MOLDED_BASE_KEY]: base,
+    moldedOptions: kept,
+    moldedApplied: finishEnabled,
+  };
+  if (!finishEnabled) {
+    material.metallic = base.metallic;
+    material.roughness = base.roughness;
+    material.indexOfRefraction = base.ior;
+    material.specularIntensity = base.specular;
+    material.clearCoat.isEnabled = false;
+    material.enableSpecularAntiAliasing = base.specularAA;
+    // Null re-attaches the scene's own image processing.
+    material.imageProcessingConfiguration =
+      null as unknown as ImageProcessingConfiguration;
+    material.reflectionTexture = base.reflection;
+    material.environmentIntensity = base.environment;
+    return material;
+  }
   material.metallic = f.metallic;
   material.roughness = f.roughness;
   material.indexOfRefraction = f.ior;
@@ -459,8 +523,28 @@ export function applySurfaceFinish(
     const sceneIntensity = scene.environmentIntensity || 1;
     material.environmentIntensity = f.environment / sceneIntensity;
   }
-  material.metadata = { ...material.metadata, [MOLDED_FINISH_KEY]: family };
   return material;
+}
+
+/**
+ * Re-apply every finished material of the scene after a finish/clear-coat switch change (live,
+ * no reload), and switch the rim light with the finish. Returns the number of materials updated.
+ */
+export function refreshMoldedFinishes(scene: Scene) {
+  let updated = 0;
+  for (const m of scene.materials) {
+    if (!(m instanceof PBRMaterial)) continue;
+    const family = m.metadata?.[MOLDED_FINISH_KEY] as SurfaceFamily | undefined;
+    if (!family) continue;
+    applySurfaceFinish(
+      m,
+      family,
+      (m.metadata?.moldedOptions as MoldedFinishOptions | undefined) ?? {},
+    );
+    updated++;
+  }
+  rigs.get(scene)?.setRimEnabled(finishEnabled);
+  return updated;
 }
 
 /** Finish every PBR material of the meshes by material name (crew, heads, armour, items, fx). */
@@ -483,13 +567,20 @@ export function applyMoldedFinishToMeshes(
       // Skip materials already in this finish; a later theme/colourway pass that rewrote the
       // response (e.g. item themes carry their own roughness) is finished again.
       const f = SURFACE_FINISHES[family];
+      const same = m.metadata?.[MOLDED_FINISH_KEY] === family;
       if (
-        m.metadata?.[MOLDED_FINISH_KEY] === family &&
-        m.roughness === f.roughness &&
-        m.metallic === f.metallic
+        same &&
+        m.metadata?.moldedApplied === finishEnabled &&
+        (!finishEnabled ||
+          (m.roughness === f.roughness && m.metallic === f.metallic))
       )
         continue;
-      applySurfaceFinish(m, family, options);
+      // A finished material whose response no longer matches (a theme/colourway pass rewrote it)
+      // takes that rewritten response as its new pre-finish base.
+      applySurfaceFinish(m, family, {
+        ...options,
+        recaptureBase: same && m.metadata?.moldedApplied === true,
+      });
       finished++;
     }
   }
@@ -522,6 +613,8 @@ export const MOLDED_LIGHTING = {
 export interface MoldedLightRig {
   /** Light these meshes with the rig (idempotent; disposed meshes are pruned). */
   include(meshes: readonly AbstractMesh[]): void;
+  /** The rim belongs to the molded finish; the fill stays (it replaced the pre-finish fill). */
+  setRimEnabled(enabled: boolean): void;
   dispose(): void;
 }
 const rigs = new WeakMap<Scene, MoldedLightRig>();
@@ -548,6 +641,7 @@ export function moldedLightRig(scene: Scene): MoldedLightRig {
   rim.diffuse = new Color3(...MOLDED_LIGHTING.rim.colour);
   rim.specular = new Color3(...MOLDED_LIGHTING.rim.colour);
   rim.shadowEnabled = false;
+  rim.setEnabled(finishEnabled);
   const lit: AbstractMesh[] = [];
   fill.includedOnlyMeshes = lit;
   rim.includedOnlyMeshes = lit;
@@ -581,6 +675,9 @@ export function moldedLightRig(scene: Scene): MoldedLightRig {
         fill.includedOnlyMeshes = lit;
         rim.includedOnlyMeshes = lit;
       }
+    },
+    setRimEnabled(enabled) {
+      rim.setEnabled(enabled);
     },
     dispose() {
       scene.onBeforeRenderObservable.remove(follow);

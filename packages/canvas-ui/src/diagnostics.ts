@@ -1,5 +1,10 @@
 import type { RenderDiagnostics } from "../../render/src/diagnostics";
 import type { DebugFeature } from "@sidereal/render/debug-features";
+import {
+  RENDER_QUALITY_DEFAULTS,
+  RENDER_SCALES,
+  type RenderQuality,
+} from "@sidereal/render/render-quality";
 export type { DebugFeature } from "@sidereal/render/debug-features";
 import { CanvasUI, palette } from "./toolkit";
 import { WindowStack } from "./windows";
@@ -7,7 +12,6 @@ const features: readonly [DebugFeature, string][] = [
   ["lighting", "Lighting"],
   ["equipment", "Equipment"],
   ["shadows", "Shadows"],
-  ["glow", "Glow"],
   ["planets", "Planets"],
   ["characters", "Characters"],
   ["globalIllumination", "Global illumination"],
@@ -18,11 +22,18 @@ const overlays: readonly [DebugFeature, string][] = [
   ["collision", "Collision"],
 ];
 
+/** Height of the render-cost group at the top of the Visuals tab. */
+const QUALITY_HEIGHT = 172;
+
 /** Debug instrumentation is requested only while the movable F3 window is open. */
 export function createDiagnosticsUI(
   ui: CanvasUI,
   sample?: (enabled: boolean) => RenderDiagnostics | undefined,
-  controls?: { toggle?: (key: DebugFeature) => void; reset?: () => void },
+  controls?: {
+    toggle?: (key: DebugFeature) => void;
+    reset?: () => void;
+    quality?: (patch: Partial<RenderQuality>) => void;
+  },
 ) {
   const stack = new WindowStack();
   let refresh: ReturnType<typeof setInterval> | undefined;
@@ -30,11 +41,16 @@ export function createDiagnosticsUI(
   let tab: "metrics" | "visuals" = "metrics";
   const remember = (data: RenderDiagnostics | undefined) => {
     if (data?.debugFeatures) enabled = { ...data.debugFeatures };
+    if (data?.renderQuality) quality = { ...data.renderQuality };
   };
-  const disabled = () =>
-    features
+  let quality: RenderQuality = { ...RENDER_QUALITY_DEFAULTS };
+  const disabled = () => [
+    ...features
       .filter(([key]) => enabled[key] === false)
-      .map(([, label]) => label.toLowerCase());
+      .map(([, label]) => label.toLowerCase()),
+    // Glow lives with the render-cost switches but is still a visible "off" state.
+    ...(enabled.glow === false ? ["glow"] : []),
+  ];
   const close = () => {
     stack.close("diagnostics");
     if (refresh !== undefined) clearInterval(refresh);
@@ -236,6 +252,7 @@ export function createDiagnosticsUI(
       ];
       const visualHeight =
         343 +
+        QUALITY_HEIGHT +
         visualLines.reduce(
           (sum, line) =>
             sum +
@@ -295,9 +312,88 @@ export function createDiagnosticsUI(
             );
           });
         };
-        drawGroup(features, "RENDER FEATURES", top, false);
-        drawGroup(overlays, "DEBUG OVERLAYS", top + 165, true);
-        const reset = { x: viewport.x, y: top + 269, w: viewport.w, h: 28 };
+        const inView = (b: { y: number; h: number }) =>
+          b.y >= viewport.y && b.y + b.h <= viewport.y + viewport.h;
+        // Render-cost switches (owner live feedback 2026-09-29): saved on this device, applied live.
+        ui.text("RENDER COST", viewport.x, top, 11, palette.muted, viewport.w);
+        ui.text(
+          `${data.fps.toFixed(0)} fps · ${data.frameMs.toFixed(1)} ms · ${data.drawCalls} draws · ${data.renderWidth}×${data.renderHeight}`,
+          viewport.x,
+          top + 18,
+          12,
+          palette.blue,
+          viewport.w,
+        );
+        const switches: [keyof RenderQuality, string][] = [
+          ["plastic", "Plastic finish"],
+          ["ssao", "SSAO"],
+          ["clearCoat", "Clear coat"],
+          ["glow", "Glow / bloom"],
+        ];
+        switches.forEach(([key, label], i) => {
+          const on = quality[key] === true;
+          const b = {
+            x: viewport.x + (i % 2) * (width + 8),
+            y: top + 40 + Math.floor(i / 2) * 34,
+            w: width,
+            h: 28,
+          };
+          if (!inView(b)) return;
+          ui.button(
+            `diagnostics-quality-${key}`,
+            `${label}: ${on ? "On" : "Off"}`,
+            b,
+            () => {
+              quality = { ...quality, [key]: !on };
+              controls.quality?.({ [key]: !on });
+              remember(sample?.(true));
+              ui.invalidate();
+            },
+            { disabled: !controls.quality, accent: on },
+          );
+        });
+        ui.text(
+          `Render scale ${Math.round(quality.renderScale * 100)}%`,
+          viewport.x,
+          top + 112,
+          11,
+          palette.muted,
+          viewport.w,
+        );
+        const step =
+          (viewport.w - 4 * (RENDER_SCALES.length - 1)) / RENDER_SCALES.length;
+        RENDER_SCALES.forEach((scale, i) => {
+          const b = {
+            x: viewport.x + i * (step + 4),
+            y: top + 130,
+            w: step,
+            h: 28,
+          };
+          if (!inView(b)) return;
+          ui.button(
+            `diagnostics-scale-${Math.round(scale * 100)}`,
+            `${Math.round(scale * 100)}%`,
+            b,
+            () => {
+              quality = { ...quality, renderScale: scale };
+              controls.quality?.({ renderScale: scale });
+              ui.invalidate();
+            },
+            {
+              disabled: !controls.quality,
+              selected: Math.abs(quality.renderScale - scale) < 0.005,
+            },
+          );
+        });
+        const featuresTop = top + QUALITY_HEIGHT;
+        drawGroup(features, "RENDER FEATURES", featuresTop, false);
+        drawGroup(overlays, "DEBUG OVERLAYS", featuresTop + 131, true);
+        const reset = {
+          x: viewport.x,
+          y: featuresTop + 235,
+          w: viewport.w,
+          h: 28,
+        };
         if (
           reset.y >= viewport.y &&
           reset.y + reset.h <= viewport.y + viewport.h
@@ -315,10 +411,17 @@ export function createDiagnosticsUI(
               disabled:
                 !controls.reset ||
                 (disabled().length === 0 &&
-                  !overlays.some(([key]) => enabled[key] === true)),
+                  !overlays.some(([key]) => enabled[key] === true) &&
+                  (
+                    Object.keys(
+                      RENDER_QUALITY_DEFAULTS,
+                    ) as (keyof RenderQuality)[]
+                  ).every(
+                    (key) => quality[key] === RENDER_QUALITY_DEFAULTS[key],
+                  )),
             },
           );
-        let y = top + 310;
+        let y = featuresTop + 276;
         for (const line of visualLines) {
           const count = Math.max(20, Math.floor(viewport.w / 5.8));
           const words = line.split(" ");
