@@ -15,6 +15,10 @@ import numpy as np
 from vox import Grid
 
 CAP_Z = 9.5
+# Minimum design thickness of the shell behind the skull: one quantised 2-voxel block (see shell()).
+BACK_MIN_T = 1.375
+# Minimum design side thickness for styles with side hair (one quantised block past design X 6.67).
+SIDE_MIN_T = 0.75
 
 
 # =========================================================================== helpers
@@ -44,7 +48,15 @@ def shell(g, t=1.0, top=1.25, front=10.0, side=7.25, back=3.0, burn=None, r=1.5,
           side_t=None, back_t=None):
     """Hair cap hugging the skull. front/side/back are the hairline heights; burn the sideburn height."""
     st = t if side_t is None else side_t
-    bt = t if back_t is None else back_t
+    # Same quantisation at the sides (first block centre past the skull at design X 6.67): a 0.5 side
+    # left the back corners bare. Shaved styles (t 0.25: mohawk, side undercut) keep bare sides.
+    if st >= 0.5:
+        st = max(SIDE_MIN_T, st)
+    # The shell is painted on the 2-voxel main-block grid (q=2 below). Behind the skull the v2 map
+    # stretches design units by KO, so the first quantised block centre past the skull sits at design
+    # Y 7.33: any back thickness under ~1.34 left NO back shell at all and 16 of 28 styles showed bare
+    # skin over the back of the head in game (owner live feedback 2026-09-29). Keep at least one block.
+    bt = max(BACK_MIN_T, t if back_t is None else back_t)
     ztop = 13 + top + 0.5          # a little extra crown volume on every style
 
     def fn(X, Y, Z):
