@@ -16,6 +16,7 @@ import { CHARACTER_APPEARANCE_ENUMS } from "./appearance";
 import {
   VOXEL_CREW_DEFAULT_OUTFIT,
   voxelCrewHiddenRegions,
+  voxelCrewOutfitFor,
 } from "./crew-voxel-bundle";
 
 test("wardrobe: 4 uniforms and 14 tier 1-2 pieces with unique, stable definition ids", () => {
@@ -87,8 +88,19 @@ test("every persisted look maps to a valid head-kit loadout; helmets and visors 
   expect(validateHeadLoadout(captain).ok).toBe(true);
 });
 
-test("an undressed character wears the r005 jumpsuit, never the underwear base", () => {
+test("an undressed character is the r005 base body: no jumpsuit, no crew gear", () => {
   const hidden = voxelCrewHiddenRegions(VOXEL_CREW_DEFAULT_OUTFIT);
-  expect(hidden).toContain("base");
-  expect(hidden).not.toContain("suit");
+  expect(hidden).not.toContain("base");
+  expect(hidden).not.toContain("hands");
+  expect(hidden).toContain("suit");
+  expect(hidden).toContain("gear");
+  expect(voxelCrewOutfitFor({})).toEqual(VOXEL_CREW_DEFAULT_OUTFIT);
+  // Only an equipped uniform draws the suit layer; the gear layer never draws.
+  expect(voxelCrewOutfitFor({ uniform: "wardrobe-uniform-command" })).toEqual({
+    suit: true,
+    gear: false,
+  });
+  expect(voxelCrewOutfitFor({ back: "engineer-back", gloves: "x" }).gear).toBe(
+    false,
+  );
 });

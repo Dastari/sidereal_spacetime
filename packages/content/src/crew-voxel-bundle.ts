@@ -156,10 +156,25 @@ export const VOXEL_CREW_REGIONS = [
 ] as const;
 export type VoxelCrewRegion = (typeof VOXEL_CREW_REGIONS)[number];
 export type VoxelCrewOutfit = { suit: boolean; gear: boolean };
+/**
+ * Nothing equipped draws the base body: privacy shorts, plus a sports bra on the
+ * feminine body (owner rule 2026-09-29; replaces the #52 jumpsuit default).
+ */
 export const VOXEL_CREW_DEFAULT_OUTFIT: VoxelCrewOutfit = {
-  suit: true,
-  gear: true,
+  suit: false,
+  gear: false,
 };
+/**
+ * What is drawn matches what is equipped. The jumpsuit/undersuit layer appears only
+ * with an equipped uniform (which tints it). The body's built-in "gear" layer
+ * (harness, pads, gloves, back plate) is never drawn: armour, gloves and packs come
+ * from their own equipped parts (crew-armor), so an empty slot shows nothing.
+ */
+export function voxelCrewOutfitFor(
+  equipped: Readonly<Partial<Record<string, string | undefined>>> | undefined,
+): VoxelCrewOutfit {
+  return { suit: !!equipped?.uniform, gear: false };
+}
 /** Regions hidden by the outfit: a suit replaces the underwear base body, gear gloves replace hands. */
 export function voxelCrewHiddenRegions(
   outfit: VoxelCrewOutfit,
