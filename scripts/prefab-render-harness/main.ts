@@ -27,6 +27,7 @@ import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTextur
 import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTexture";
 import { ImageProcessingConfiguration } from "@babylonjs/core/Materials/imageProcessingConfiguration";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
 import {
   SHIP_THEME_IDS,
@@ -257,8 +258,9 @@ async function main() {
       () => (glowDraws = engine._drawCalls.current - glowStart),
     );
     applyShipGlowProfile(glow);
-    const emissive = new Set(views.flatMap((v) => v.emissiveMeshes()));
-    for (const mesh of emissive) glow.addIncludedOnlyMesh(mesh);
+    const emitters = views.flatMap((v) => v.emissiveMeshes());
+    const emissive = new Set<AbstractMesh>(emitters);
+    for (const mesh of emitters) glow.addIncludedOnlyMesh(mesh);
     const occluders = createGlowOccluders(glow);
     occluders.set(
       views.flatMap((v) =>
