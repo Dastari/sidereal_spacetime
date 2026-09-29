@@ -47,7 +47,8 @@ export const FED_WREN_R6_PIN: PinnedPrefabShip = {
     "9e243122dcea41e4ff4eb988a509303de177adeb58e1e17ef2a5bcb5a2a98e84",
   flightDefinitionSha256:
     "b996952862e4ee89fcd9f16df6280742bf69731c48e2152b9b5a5137ea1f00ff",
-  description: "Wren (Federation courier, size S, prefab r6; legacy live instances)",
+  description:
+    "Wren (Federation courier, size S, prefab r6; legacy live instances)",
 };
 
 /**

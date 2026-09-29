@@ -717,7 +717,9 @@ describe("frames: ride along in the bubble, drop off when left behind", () => {
     }
     const after = ctx.db.evaBody.characterId.find("cap");
     expect(after.phase).toBe("local");
-    expect(Math.hypot(after.localX - before.localX, after.localY - before.localY)).toBeLessThan(0.02);
+    expect(
+      Math.hypot(after.localX - before.localX, after.localY - before.localY),
+    ).toBeLessThan(0.02);
   });
 
   it("drops into world space when the ship out-accelerates the suit, keeping its velocity", () => {
