@@ -7,6 +7,7 @@ import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
 import { PointLight } from "@babylonjs/core/Lights/pointLight";
 import { prefabById } from "@sidereal/content/prefabs";
 import { createPrefabShipView } from "./ship-view";
+import { prefabNozzleLayout } from "./exhaust";
 import {
   createRemoteShipExteriors,
   loadRemoteExteriorPrototype,
@@ -192,6 +193,27 @@ describe("remote prefab exteriors (other ships never render interiors)", () => {
     const near = scene.getTransformNodeByName("remote-ship-near")!;
     expect(near.position.x).toBeCloseTo(20);
     expect(near.rotation.y).toBeCloseTo(0.5);
+    // Remote plumes: the server's coarse throttle per blueprint mount lights that jet only.
+    const wren = prefabById("fed.s.wren")!;
+    const jet = prefabNozzleLayout(wren, defaultPrefabComponentCatalog())[0];
+    expect(jet).toBeDefined();
+    remote.update(
+      { x: 0, y: 0 },
+      16,
+      camera,
+      1000,
+      new Map([
+        ["near", new Map([[jet.id, 1]])],
+        ["odd", new Map([[jet.id, 1]])],
+      ]),
+    );
+    const lit = (id: string) =>
+      remote.diagnostics().ships.find((s) => s.shipId === id)!.litJets;
+    expect(lit("near")).toBe(1);
+    expect(lit("far")).toBe(0);
+    expect(lit("odd")).toBe(0); // unpublished hull: marker only, no guessed nozzles
+    remote.update({ x: 0, y: 0 }, 32, camera, 1000, new Map());
+    expect(lit("near")).toBe(0);
     // A row leaving the view removes the ship at once.
     store.replace([
       { id: "local", x: 0, y: 0 },

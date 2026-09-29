@@ -17,6 +17,7 @@ import {
   moveCargoBatch,
 } from "./scoped-cargo";
 import { useSharedWorldEntry } from "./use-shared-world-entry";
+import { remoteExhaustByShip } from "./remote-exhaust";
 import { SharedWorldReview } from "./SharedWorldReview";
 import {
   sharedBodyPresentation,
@@ -1127,6 +1128,11 @@ export default function App({
                   ships: {
                     store: sharedPresentation.store,
                     localShipId: () => localShipId.current,
+                    exhaust: () =>
+                      remoteExhaustByShip(
+                        connection.current?.db.visibleActuatorExhaust.iter() ??
+                          [],
+                      ),
                   },
                 }
               : undefined,

@@ -231,6 +231,8 @@ export interface WorldOptions {
     ships?: {
       store: import("./prefab-ship/remote-exteriors").RemoteShipStore;
       localShipId: () => string | undefined;
+      /** `visible_actuator_exhaust`: firing thrusters per perceived ship (source id -> throttle). */
+      exhaust?: () => ReadonlyMap<string, ReadonlyMap<string, number>>;
     };
   };
   construction?: ConstructionRenderInput & { visitId?: string };
@@ -1200,6 +1202,7 @@ async function buildWorld(
       frameStarted,
       camera,
       engine.getRenderHeight(),
+      sharedShips?.exhaust?.(),
     );
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,

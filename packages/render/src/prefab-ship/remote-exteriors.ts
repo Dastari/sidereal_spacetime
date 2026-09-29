@@ -44,6 +44,13 @@ import {
   type ShipLodTier,
 } from "../presentation-lod";
 import { meshBoxes } from "./box-mesher";
+import {
+  createShipExhaust,
+  jetsFromLayout,
+  prefabNozzleLayout,
+  type ExhaustJet,
+  type ShipExhaust,
+} from "./exhaust";
 import { roleSlotMaterial } from "./materials";
 import { createPrefabShipView } from "./ship-view";
 
@@ -113,6 +120,9 @@ export interface RemoteExteriorPrototype {
   readonly radius: number;
   /** Hidden source meshes (exterior batches and the proxy); lighting binds to these. */
   readonly sources: readonly Mesh[];
+  /** Hull theme (exhaust colour) and nozzle geometry keyed by flight source id (exhaust.ts). */
+  readonly theme: ShipPrefabDocumentV1["theme"];
+  readonly nozzles: readonly Omit<ExhaustJet, "throttle">[];
   readonly metrics: {
     exteriorMeshes: number;
     exteriorTriangles: number;
@@ -241,11 +251,19 @@ export async function loadRemoteExteriorPrototype(
       };
     }
   };
+  let nozzles: Omit<ExhaustJet, "throttle">[] = [];
+  try {
+    nozzles = prefabNozzleLayout(resolved.doc, resolved.catalog);
+  } catch (error) {
+    console.warn("remote ship exhaust layout unavailable", error);
+  }
   return {
     key: resolved.key,
     exact: resolved.exact,
     radius,
     sources,
+    theme: resolved.doc.theme,
+    nozzles,
     metrics: {
       exteriorMeshes: exterior.length,
       exteriorTriangles: exterior.reduce((n, m) => n + triangles(m), 0),
@@ -301,6 +319,8 @@ interface Entry {
   proxy?: TransformNode;
   marker: InstancedMesh;
   tier?: ShipLodTier;
+  /** Plumes and RCS puffs from `visible_actuator_exhaust` (created when a jet first fires). */
+  exhaust?: ShipExhaust;
 }
 
 export interface RemoteShipExteriorsOptions {
@@ -341,14 +361,17 @@ export function createRemoteShipExteriors(
     inexact = 0;
 
   const release = (entry: Entry) => {
+    entry.exhaust?.dispose();
     entry.full?.dispose();
     entry.proxy?.dispose();
     entry.full = entry.proxy = entry.prototype = entry.tier = undefined;
+    entry.exhaust = undefined;
   };
   const destroy = (id: string) => {
     const entry = entries.get(id);
     if (!entry) return;
     entries.delete(id);
+    entry.exhaust?.dispose();
     entry.root.dispose();
   };
   const attach = (entry: Entry) => {
@@ -458,6 +481,8 @@ export function createRemoteShipExteriors(
       nowMs: number,
       camera: Camera | null | undefined,
       viewportHeightPx: number,
+      /** Firing thrusters per perceived ship: flight source id -> coarse achieved throttle. */
+      exhaust?: ReadonlyMap<string, ReadonlyMap<string, number>>,
       delayMs = 100,
     ) {
       if (disposed) return;
@@ -500,6 +525,19 @@ export function createRemoteShipExteriors(
         entry.full?.setEnabled(tier === 0);
         entry.proxy?.setEnabled(tier === 1);
         entry.marker.setEnabled(tier === 2);
+        // Plumes and RCS puffs on hull tiers only, from the server's achieved outputs.
+        const jets = exhaust?.get(id);
+        if (entry.prototype && tier !== 2 && (jets?.size || entry.exhaust)) {
+          entry.exhaust ??= createShipExhaust(
+            scene,
+            entry.root,
+            entry.prototype.theme,
+          );
+          entry.exhaust.update(
+            jetsFromLayout(entry.prototype.nozzles, jets ?? new Map()),
+            nowMs,
+          );
+        } else entry.exhaust?.update([], nowMs);
         if (tier === 2) {
           // A constant on-screen size: scale by metres per pixel at this distance.
           const radius = entry.prototype?.radius ?? DEFAULT_RADIUS_M;
@@ -519,6 +557,7 @@ export function createRemoteShipExteriors(
             shipId: e.shipId,
             exterior: e.key ?? null,
             loaded: !!e.prototype,
+            litJets: e.exhaust?.lit().length ?? 0,
             enabled: e.root.isEnabled(),
             tier:
               e.tier === 0
