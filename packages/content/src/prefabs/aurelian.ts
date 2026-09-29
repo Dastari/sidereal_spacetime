@@ -76,6 +76,11 @@ export const AU_LUMEN = prefab({
     module("life", "life-support.sm", [0.5, 5], "fore"),
     module("bunk", "crew-bunk.sm", [4.5, 4.5], "starboard"),
     module("garden", "hydroponics.sm", [5, 0.5], "port"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.sm", [0, 0], "fore"),
+    module("coolant", "coolant-pump.md", [1, 0], "fore"),
+    module("capacitor", "capacitor.sm", [1.5, 4.5], "fore"),
+    module("battery", "battery.sm", [2, 0], "fore"),
   ],
   armed: [
     armed("plasma", "fixed", "MD", [4, 2], "fore", "plasma-turret.md"),
@@ -85,7 +90,7 @@ export const AU_LUMEN = prefab({
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-AU_LUMEN.revision = 2;
+AU_LUMEN.revision = 3;
 
 /** Medium: the prototype Crescent explorer, round bow and crescent wings. */
 export const AU_CRESCENT = prefab({
@@ -162,6 +167,13 @@ export const AU_CRESCENT = prefab({
     module("bunk-2", "crew-bunk.sm", [6.5, 6.5], "starboard"),
     module("garden-1", "hydroponics.sm", [4.5, 0.5], "port"),
     module("garden-2", "hydroponics.sm", [6.5, 0.5], "port"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.md", [1, 6], "fore"),
+    module("coolant", "coolant-pump.md", [0, 1], "fore"),
+    module("coolant-aux", "coolant-pump.sm", [0, 6], "fore"),
+    module("capacitor", "capacitor.sm", [2, 0], "fore"),
+    module("ammo", "magazine.ballistic.sm", [2, 1], "fore"),
+    module("battery", "battery.md", [3, 0], "port"),
   ],
   armed: [
     armed("plasma", "turret", "LG", [5, 1], "fore", "plasma-turret.md"),
@@ -174,7 +186,7 @@ export const AU_CRESCENT = prefab({
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-AU_CRESCENT.revision = 2;
+AU_CRESCENT.revision = 3;
 
 /** Large: cathedral cruiser with a round crown bow, crystal spire and four resonance drives. */
 export const AU_CATHEDRAL = prefab({
@@ -282,6 +294,13 @@ export const AU_CATHEDRAL = prefab({
     module("bunk-4", "crew-bunk.sm", [9.5, 8.5], "starboard"),
     module("garden-1", "hydroponics.sm", [5.5, 0.5], "port"),
     module("garden-2", "hydroponics.sm", [7.5, 0.5], "port"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.lg", [5, 1.5], "fore"),
+    module("coolant", "coolant-pump.lg", [0, 4.5], "fore"),
+    module("coolant-aux", "coolant-pump.md", [0, 6.5], "fore"),
+    module("capacitor", "capacitor.md", [3.5, 4.5], "fore"),
+    module("ammo", "magazine.ballistic.sm", [3.5, 5.5], "fore"),
+    module("battery", "battery.lg", [5, 5], "fore"),
   ],
   armed: [
     armed("plasma-s", "turret", "XL", [6, 1], "fore", "plasma-turret.lg"),
@@ -297,4 +316,4 @@ export const AU_CATHEDRAL = prefab({
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-AU_CATHEDRAL.revision = 2;
+AU_CATHEDRAL.revision = 3;

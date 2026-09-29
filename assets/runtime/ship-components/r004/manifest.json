@@ -3848,33 +3848,721 @@
     "coolant-in",
     "coolant-out"
    ]
+  },
+  {
+   "id": "battery.lg",
+   "kitKey": "x.battery.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/battery.lg.glb",
+   "sha256": "e512a4bc0031ff6170980803fd8392ece638b1d86cbf6b5c6d518eb0dfec10fb",
+   "bytes": 115656,
+   "boxes": 131,
+   "triangles": 5764,
+   "vertices": 3144,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.8125,
+     -0.75,
+     0.0
+    ],
+    [
+     0.75,
+     0.75,
+     1.625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.9,
+     0
+    ],
+    [
+     0.9,
+     0.9,
+     1.8
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "battery.md",
+   "kitKey": "x.battery.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/battery.md.glb",
+   "sha256": "db1d9f4582cc56b455b21ffb3573fcf4c1b215f0caa002b1fcd30af876135fb7",
+   "bytes": 53620,
+   "boxes": 57,
+   "triangles": 2508,
+   "vertices": 1368,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.375,
+     -0.75,
+     0.0
+    ],
+    [
+     0.3125,
+     0.75,
+     1.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.9,
+     0
+    ],
+    [
+     0.45,
+     0.9,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "battery.sm",
+   "kitKey": "x.battery.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/battery.sm.glb",
+   "sha256": "55a009ed75e1007fd76ab8898b45d6f7209683ab4757668e5dbfe72d55dc8ea9",
+   "bytes": 33780,
+   "boxes": 34,
+   "triangles": 1496,
+   "vertices": 816,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.375,
+     -0.3125,
+     0.0
+    ],
+    [
+     0.3125,
+     0.3125,
+     1.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "capacitor.lg",
+   "kitKey": "x.capacitor.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/capacitor.lg.glb",
+   "sha256": "b7da773f97eb0da2b8f23940ab94562f1e7272cc3b6c1c401f25d87a289b178c",
+   "bytes": 42880,
+   "boxes": 44,
+   "triangles": 1936,
+   "vertices": 1056,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.75,
+     -0.3125,
+     0.0
+    ],
+    [
+     0.75,
+     0.3125,
+     1.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "capacitor.md",
+   "kitKey": "x.capacitor.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/capacitor.md.glb",
+   "sha256": "b664013c96edee657f28277bf44f85498637700f6f6f221c470f20c654dcd6f4",
+   "bytes": 42880,
+   "boxes": 44,
+   "triangles": 1936,
+   "vertices": 1056,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.3125,
+     -0.3125,
+     0.0
+    ],
+    [
+     0.3125,
+     0.3125,
+     1.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.45,
+     -0.45,
+     0
+    ],
+    [
+     0.45,
+     0.45,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in",
+    "coolant-in"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "capacitor.sm",
+   "kitKey": "x.capacitor.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/capacitor.sm.glb",
+   "sha256": "f8b5d45634b1bb44ac2f29619a9b1b34f001af5f877de9a22fc4705140c2c41b",
+   "bytes": 20792,
+   "boxes": 18,
+   "triangles": 792,
+   "vertices": 432,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     -0.25,
+     0.0
+    ],
+    [
+     0.25,
+     0.25,
+     0.875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.4,
+     -0.4,
+     0
+    ],
+    [
+     0.4,
+     0.4,
+     1
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "power-out",
+    "data-in"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "console.engineering.sm",
+   "kitKey": "x.console-engineering.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/console.engineering.sm.glb",
+   "sha256": "3919423c79fe9b9cd2d24da191b02dacd33d0dfe934a4a217dd3bbdb935bd072",
+   "bytes": 38440,
+   "boxes": 39,
+   "triangles": 1716,
+   "vertices": 936,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     1.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     1.3
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "coolant-pump.lg",
+   "kitKey": "x.coolant-pump.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/coolant-pump.lg.glb",
+   "sha256": "4a42d6541715072a17c49f77486a24095ebb41bae0fc1f20d59ce65c5cf6c6f6",
+   "bytes": 25676,
+   "boxes": 24,
+   "triangles": 1056,
+   "vertices": 576,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.75,
+     -0.3125,
+     0.0
+    ],
+    [
+     0.75,
+     0.3125,
+     1.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "coolant-out"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "coolant-pump.sm",
+   "kitKey": "x.coolant-pump.SM",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/coolant-pump.sm.glb",
+   "sha256": "e43e75c3891f2311568aa986b7c30558565736956e09ee4fbc5423987f2aeddd",
+   "bytes": 18844,
+   "boxes": 17,
+   "triangles": 748,
+   "vertices": 408,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a"
+   ],
+   "boundsM": [
+    [
+     -0.25,
+     -0.25,
+     0.0
+    ],
+    [
+     0.25,
+     0.25,
+     0.75
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.4,
+     -0.4,
+     0
+    ],
+    [
+     0.4,
+     0.4,
+     0.9
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "coolant-in",
+    "coolant-out"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "fuel-tank.lg",
+   "kitKey": "x.fuel-tank.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/fuel-tank.lg.glb",
+   "sha256": "7ab7ee4b3fa670e0b27aca23bb831d1c13237e9f1a4686946f4373dd7752b5e1",
+   "bytes": 53848,
+   "boxes": 60,
+   "triangles": 2640,
+   "vertices": 1440,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -1.3125,
+     -1.3125,
+     0.0
+    ],
+    [
+     1.3125,
+     1.3125,
+     1.1875
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -1.45,
+     -1.45,
+     0
+    ],
+    [
+     1.45,
+     1.45,
+     1.5
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "fuel-out"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "magazine.ballistic.lg",
+   "kitKey": "x.magazine-ballistic.LG",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/magazine.ballistic.lg.glb",
+   "sha256": "85640d12bb0a3254745e60e4f9ded5c553fe63f5649b71713dd17740c2dc538b",
+   "bytes": 58612,
+   "boxes": 63,
+   "triangles": 2772,
+   "vertices": 1512,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.8125,
+     -0.8125,
+     0.0
+    ],
+    [
+     0.8125,
+     0.8125,
+     1.4375
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.9,
+     0
+    ],
+    [
+     0.9,
+     0.9,
+     1.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-out"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "magazine.missile.md",
+   "kitKey": "x.magazine-missile.MD",
+   "frame": "interior",
+   "kitConvention": "interior",
+   "glb": "assets/runtime/ship-components/r004/magazine.missile.md.glb",
+   "sha256": "db36e89021c26c1c1fc9edfd4ee60493ae9d60faffc2b39a90d5809079a2c1b4",
+   "bytes": 58096,
+   "boxes": 62,
+   "triangles": 2728,
+   "vertices": 1488,
+   "materialSlotsUsed": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.8125,
+     -0.375,
+     0.0
+    ],
+    [
+     0.8125,
+     0.3125,
+     1.25
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.9,
+     -0.45,
+     0
+    ],
+    [
+     0.9,
+     0.45,
+     1.4
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "power-in",
+    "data-in",
+    "ammo-out"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
+  },
+  {
+   "id": "radiator.sm",
+   "kitKey": "x.radiator.SM",
+   "frame": "top",
+   "kitConvention": "top",
+   "glb": "assets/runtime/ship-components/r004/radiator.sm.glb",
+   "sha256": "cf5e5a1798bc94f6308e41619007fd735ba784b3bf3c26bdaed8e4096f5a4d05",
+   "bytes": 22312,
+   "boxes": 20,
+   "triangles": 880,
+   "vertices": 480,
+   "materialSlotsUsed": [
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot6_emit_a",
+    "slot7_emit_b"
+   ],
+   "boundsM": [
+    [
+     -0.5,
+     -0.5,
+     0.0
+    ],
+    [
+     0.5,
+     0.5,
+     0.5625
+    ]
+   ],
+   "catalogEnvelopeM": [
+    [
+     -0.5,
+     -0.5,
+     0
+    ],
+    [
+     0.5,
+     0.5,
+     0.6
+    ]
+   ],
+   "envelopeOverhangM": 0.0,
+   "ports": [
+    "coolant-in",
+    "coolant-out"
+   ],
+   "sourceManifest": "assets/art-library/ship-components/r004/manifest.json"
   }
  ],
  "source": {
   "blend": "assets/art-library/ship-components/r004/source/ship-components-r004-runtime.blend",
   "sha256": "7e134fb09dd536b860dc5fa18736f46ca5bec77d0b091f48de76d9f6fcd353d7",
-  "note": "editable Blender source saved by this export; GLBs are exported from it"
+  "note": "Existing runtime exports plus S4-2 native r004 exports; added GLBs verified against their sourceManifest sha256."
  },
  "requiredComponentIds": [
   "airlock.exterior.md",
   "autocannon.lg",
   "autocannon.md",
   "autocannon.sm",
+  "battery.lg",
+  "battery.md",
+  "battery.sm",
+  "capacitor.lg",
+  "capacitor.md",
+  "capacitor.sm",
   "cargo-door.2m",
   "cargo-door.4m",
   "computer-core.lg",
   "computer-core.md",
   "computer-core.sm",
   "console.command.sm",
+  "console.engineering.sm",
   "console.fire-control.sm",
   "console.navigation.sm",
   "console.sensor.sm",
+  "coolant-pump.lg",
   "coolant-pump.md",
+  "coolant-pump.sm",
   "crew-bunk.sm",
   "docking-clamp.lg",
   "docking-clamp.md",
   "flak-cannon.md",
   "flak-cannon.sm",
+  "fuel-tank.lg",
   "fuel-tank.md",
   "fuel-tank.sm",
   "hydroponics.sm",
@@ -3891,9 +4579,11 @@
   "life-support.lg",
   "life-support.md",
   "life-support.sm",
+  "magazine.ballistic.lg",
   "magazine.ballistic.md",
   "magazine.ballistic.sm",
   "magazine.missile.lg",
+  "magazine.missile.md",
   "mining-laser.md",
   "mining-laser.sm",
   "missile-pod.lg",
@@ -3904,6 +4594,7 @@
   "point-defense.sm",
   "radiator.lg",
   "radiator.md",
+  "radiator.sm",
   "railgun.lg",
   "rcs.md",
   "rcs.sm",

@@ -360,6 +360,8 @@ test("availability interface: current rows only; a queued recompile or a new rev
   ).toEqual({ power: 1, fuel: 1, performance: 1 });
   for (let i = 0; i < 400; i++)
     damageComponent(ctx, "wren-avail", `mount:${reactor.id}`, 5000, true);
+  for (let i = 0; i < 400; i++)
+    damageComponent(ctx, "wren-avail", "mount:battery", 5000, true);
   // Queued: callers keep their existing behaviour until the recompile lands.
   expect(shipSystemsAvailabilityOf(ctx, "wren-avail")).toBeUndefined();
   tick();

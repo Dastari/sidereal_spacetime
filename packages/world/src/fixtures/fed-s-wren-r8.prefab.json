@@ -1,0 +1,1390 @@
+{
+  "schema": "sidereal.ship-prefab.v1",
+  "revision": 8,
+  "decks": [
+    {
+      "index": 0,
+      "name": "Main deck"
+    }
+  ],
+  "edges": [
+    {
+      "id": "d-engine",
+      "deck": 0,
+      "a": [
+        3,
+        2
+      ],
+      "b": [
+        3,
+        4
+      ],
+      "type": "door.sliding"
+    },
+    {
+      "id": "d-bunks",
+      "deck": 0,
+      "a": [
+        5,
+        4
+      ],
+      "b": [
+        7,
+        4
+      ],
+      "type": "door.standard"
+    },
+    {
+      "id": "d-hold",
+      "deck": 0,
+      "a": [
+        5,
+        2
+      ],
+      "b": [
+        7,
+        2
+      ],
+      "type": "door.airlock"
+    },
+    {
+      "id": "d-bridge",
+      "deck": 0,
+      "a": [
+        8,
+        2
+      ],
+      "b": [
+        8,
+        4
+      ],
+      "type": "door.sliding"
+    },
+    {
+      "id": "g-bridge-s",
+      "deck": 0,
+      "a": [
+        8,
+        0
+      ],
+      "b": [
+        8,
+        2
+      ],
+      "type": "wall.glazed"
+    },
+    {
+      "id": "g-bridge-p",
+      "deck": 0,
+      "a": [
+        8,
+        4
+      ],
+      "b": [
+        8,
+        7
+      ],
+      "type": "wall.glazed"
+    }
+  ],
+  "skylights": [],
+  "id": "fed.s.wren",
+  "name": "Wren",
+  "description": "Orion Crest light courier. Sloped bow, swept wings, one airlock and a snug four-room deck. Starter candidate.",
+  "faction": "Federation",
+  "role": "Courier",
+  "theme": "federation",
+  "sizeClass": "S",
+  "volumes": [
+    {
+      "id": "hull",
+      "kind": "hull",
+      "height": "deck",
+      "deck": 0,
+      "tiles": [
+        {
+          "x": 10,
+          "y": 0,
+          "shape": "slope1",
+          "rot": 3,
+          "reflected": false,
+          "bow": {
+            "step": 2,
+            "axis": 1
+          }
+        },
+        {
+          "x": 11,
+          "y": 1,
+          "shape": "slope1",
+          "rot": 3,
+          "reflected": false,
+          "bow": {
+            "step": 3,
+            "axis": 1
+          }
+        },
+        {
+          "x": 11,
+          "y": 5,
+          "shape": "slope1",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 3,
+            "axis": 0
+          }
+        },
+        {
+          "x": 10,
+          "y": 6,
+          "shape": "slope1",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 2,
+            "axis": 0
+          }
+        },
+        {
+          "x": 0,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 4,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 4,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 4,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 4,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 4,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 4,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 4,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 5,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 5,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 5,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 5,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 5,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 5,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 5,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 6,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 6,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 6,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 6,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 6,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 6,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 6,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 7,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 7,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 7,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 7,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 7,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 7,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 7,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 8,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 8,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 8,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 8,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 8,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 8,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 8,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 9,
+          "y": 0,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 1,
+            "axis": 0
+          }
+        },
+        {
+          "x": 9,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 1,
+            "axis": 0
+          }
+        },
+        {
+          "x": 9,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 1,
+            "axis": 0
+          }
+        },
+        {
+          "x": 9,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 1,
+            "axis": 0
+          }
+        },
+        {
+          "x": 9,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 1,
+            "axis": 0
+          }
+        },
+        {
+          "x": 9,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 1,
+            "axis": 0
+          }
+        },
+        {
+          "x": 9,
+          "y": 6,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 1,
+            "axis": 0
+          }
+        },
+        {
+          "x": 10,
+          "y": 1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 2,
+            "axis": 0
+          }
+        },
+        {
+          "x": 10,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 2,
+            "axis": 0
+          }
+        },
+        {
+          "x": 10,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 2,
+            "axis": 0
+          }
+        },
+        {
+          "x": 10,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 2,
+            "axis": 0
+          }
+        },
+        {
+          "x": 10,
+          "y": 5,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 2,
+            "axis": 0
+          }
+        },
+        {
+          "x": 11,
+          "y": 2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 3,
+            "axis": 0
+          }
+        },
+        {
+          "x": 11,
+          "y": 3,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 3,
+            "axis": 0
+          }
+        },
+        {
+          "x": 11,
+          "y": 4,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false,
+          "bow": {
+            "step": 3,
+            "axis": 0
+          }
+        }
+      ],
+      "spine": true,
+      "logo": true
+    },
+    {
+      "id": "wing-s",
+      "kind": "plate",
+      "height": "wing",
+      "deck": 0,
+      "tiles": [
+        {
+          "x": 3,
+          "y": -2,
+          "shape": "slope1",
+          "rot": 3,
+          "reflected": false
+        },
+        {
+          "x": 4,
+          "y": -1,
+          "shape": "slope1",
+          "rot": 3,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": -2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": -1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": -2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": -1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": -2,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": -1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": -1,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        }
+      ]
+    },
+    {
+      "id": "wing-p",
+      "kind": "plate",
+      "height": "wing",
+      "deck": 0,
+      "tiles": [
+        {
+          "x": 4,
+          "y": 7,
+          "shape": "slope1",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": 8,
+          "shape": "slope1",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": 7,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 0,
+          "y": 8,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": 7,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 1,
+          "y": 8,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": 7,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 2,
+          "y": 8,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        },
+        {
+          "x": 3,
+          "y": 7,
+          "shape": "square",
+          "rot": 0,
+          "reflected": false
+        }
+      ]
+    }
+  ],
+  "rooms": [
+    {
+      "id": "engine",
+      "label": "ENGINE",
+      "type": "engineering",
+      "deck": 0,
+      "rect": [
+        0,
+        0,
+        3,
+        7
+      ]
+    },
+    {
+      "id": "hall",
+      "label": "HALL",
+      "type": "corridor",
+      "deck": 0,
+      "rect": [
+        3,
+        2,
+        8,
+        4
+      ]
+    },
+    {
+      "id": "bunks",
+      "label": "BUNKS",
+      "type": "quarters",
+      "deck": 0,
+      "rect": [
+        3,
+        4,
+        8,
+        7
+      ]
+    },
+    {
+      "id": "hold",
+      "label": "HOLD",
+      "type": "cargo",
+      "deck": 0,
+      "rect": [
+        3,
+        0,
+        8,
+        2
+      ]
+    },
+    {
+      "id": "bridge",
+      "label": "BRIDGE",
+      "type": "bridge",
+      "deck": 0,
+      "rect": [
+        8,
+        0,
+        12,
+        7
+      ]
+    }
+  ],
+  "mounts": [
+    {
+      "id": "main-s",
+      "component": "thrust-block.sm",
+      "attach": "face",
+      "at": [
+        0,
+        2.5
+      ],
+      "normal": "aft"
+    },
+    {
+      "id": "main-c",
+      "component": "thrust-block.sm",
+      "attach": "face",
+      "at": [
+        0,
+        3.5
+      ],
+      "normal": "aft"
+    },
+    {
+      "id": "main-p",
+      "component": "thrust-block.sm",
+      "attach": "face",
+      "at": [
+        0,
+        4.5
+      ],
+      "normal": "aft"
+    },
+    {
+      "id": "rcs-bow-s",
+      "component": "rcs.md",
+      "attach": "face",
+      "at": [
+        9.5,
+        0
+      ],
+      "normal": "starboard"
+    },
+    {
+      "id": "rcs-bow-p",
+      "component": "rcs.md",
+      "attach": "face",
+      "at": [
+        9.5,
+        7
+      ],
+      "normal": "port"
+    },
+    {
+      "id": "rcs-stern-s",
+      "component": "rcs.md",
+      "attach": "face",
+      "at": [
+        0.5,
+        -2
+      ],
+      "normal": "starboard"
+    },
+    {
+      "id": "rcs-stern-p",
+      "component": "rcs.md",
+      "attach": "face",
+      "at": [
+        0.5,
+        9
+      ],
+      "normal": "port"
+    },
+    {
+      "id": "airlock",
+      "component": "airlock.exterior.md",
+      "attach": "edge",
+      "at": [
+        6,
+        0
+      ],
+      "normal": "starboard"
+    },
+    {
+      "id": "rad-a",
+      "component": "radiator.md",
+      "attach": "top",
+      "at": [
+        0.5,
+        1
+      ]
+    },
+    {
+      "id": "rad-b",
+      "component": "radiator.md",
+      "attach": "top",
+      "at": [
+        0.5,
+        4
+      ]
+    },
+    {
+      "id": "helm",
+      "component": "console.navigation.sm",
+      "attach": "interior",
+      "at": [
+        9,
+        3
+      ],
+      "normal": "fore"
+    },
+    {
+      "id": "core",
+      "component": "computer-core.sm",
+      "attach": "interior",
+      "at": [
+        8,
+        0.5
+      ],
+      "normal": "port"
+    },
+    {
+      "id": "reactor",
+      "component": "reactor.md",
+      "attach": "interior",
+      "at": [
+        0,
+        4
+      ],
+      "normal": "starboard"
+    },
+    {
+      "id": "life",
+      "component": "life-support.sm",
+      "attach": "interior",
+      "at": [
+        2,
+        0
+      ],
+      "normal": "port"
+    },
+    {
+      "id": "fuel",
+      "component": "fuel-tank.md",
+      "attach": "interior",
+      "at": [
+        0,
+        0
+      ],
+      "normal": "port"
+    },
+    {
+      "id": "bunk",
+      "component": "crew-bunk.sm",
+      "attach": "interior",
+      "at": [
+        3.5,
+        5.5
+      ],
+      "normal": "starboard"
+    },
+    {
+      "id": "coolant",
+      "component": "coolant-pump.md",
+      "attach": "interior",
+      "at": [
+        2,
+        1
+      ],
+      "normal": "port"
+    },
+    {
+      "id": "ammo",
+      "component": "magazine.ballistic.sm",
+      "attach": "interior",
+      "at": [
+        7,
+        6
+      ],
+      "normal": "port"
+    },
+    {
+      "id": "turret",
+      "component": "autocannon.sm",
+      "attach": "top",
+      "at": [
+        4.5,
+        2.5
+      ],
+      "tile": "turret"
+    },
+    {
+      "id": "guns-a",
+      "component": "autocannon.sm",
+      "attach": "top",
+      "at": [
+        7,
+        2.5
+      ],
+      "tile": "guns"
+    },
+    {
+      "id": "guns-b",
+      "component": "autocannon.sm",
+      "attach": "top",
+      "at": [
+        7,
+        2.5
+      ],
+      "tile": "guns"
+    },
+    {
+      "id": "sensor",
+      "component": "sensor-dish.sm",
+      "attach": "top",
+      "at": [
+        3,
+        3
+      ],
+      "tile": "sensor"
+    }
+  ],
+  "markings": {
+    "name": "WREN",
+    "number": "OC-11",
+    "emblem": "planet"
+  },
+  "logic": {
+    "devices": [
+      {
+        "id": "lock",
+        "kind": "airlock-controller",
+        "cycleS": 3
+      },
+      {
+        "id": "door-inner",
+        "kind": "door",
+        "door": "d-hold"
+      },
+      {
+        "id": "door-outer",
+        "kind": "door",
+        "door": "airlock"
+      },
+      {
+        "id": "btn-lock-in",
+        "kind": "button",
+        "at": [
+          7.5,
+          0
+        ],
+        "normal": "port"
+      },
+      {
+        "id": "btn-lock-out",
+        "kind": "button",
+        "at": [
+          7.5,
+          0
+        ],
+        "normal": "starboard"
+      },
+      {
+        "id": "btn-hall",
+        "kind": "button",
+        "at": [
+          7.5,
+          2
+        ],
+        "normal": "port"
+      }
+    ],
+    "links": [
+      {
+        "id": "w.lock.inner.door-inner.command",
+        "from": {
+          "device": "lock",
+          "port": "inner"
+        },
+        "to": {
+          "device": "door-inner",
+          "port": "command"
+        }
+      },
+      {
+        "id": "w.lock.outer.door-outer.command",
+        "from": {
+          "device": "lock",
+          "port": "outer"
+        },
+        "to": {
+          "device": "door-outer",
+          "port": "command"
+        }
+      },
+      {
+        "id": "w.door-inner.state.lock.inner-state",
+        "from": {
+          "device": "door-inner",
+          "port": "state"
+        },
+        "to": {
+          "device": "lock",
+          "port": "inner_state"
+        }
+      },
+      {
+        "id": "w.door-outer.state.lock.outer-state",
+        "from": {
+          "device": "door-outer",
+          "port": "state"
+        },
+        "to": {
+          "device": "lock",
+          "port": "outer_state"
+        }
+      },
+      {
+        "id": "w.btn-lock-in.pressed.lock.cycle",
+        "from": {
+          "device": "btn-lock-in",
+          "port": "pressed"
+        },
+        "to": {
+          "device": "lock",
+          "port": "cycle"
+        }
+      },
+      {
+        "id": "w.lock.light.btn-lock-in.light",
+        "from": {
+          "device": "lock",
+          "port": "light"
+        },
+        "to": {
+          "device": "btn-lock-in",
+          "port": "light"
+        }
+      },
+      {
+        "id": "w.btn-lock-out.pressed.lock.cycle",
+        "from": {
+          "device": "btn-lock-out",
+          "port": "pressed"
+        },
+        "to": {
+          "device": "lock",
+          "port": "cycle"
+        }
+      },
+      {
+        "id": "w.lock.light.btn-lock-out.light",
+        "from": {
+          "device": "lock",
+          "port": "light"
+        },
+        "to": {
+          "device": "btn-lock-out",
+          "port": "light"
+        }
+      },
+      {
+        "id": "w.btn-hall.pressed.lock.open-inner",
+        "from": {
+          "device": "btn-hall",
+          "port": "pressed"
+        },
+        "to": {
+          "device": "lock",
+          "port": "open_inner"
+        }
+      },
+      {
+        "id": "w.lock.light.btn-hall.light",
+        "from": {
+          "device": "lock",
+          "port": "light"
+        },
+        "to": {
+          "device": "btn-hall",
+          "port": "light"
+        }
+      }
+    ]
+  },
+  "fixtures": [
+    {
+      "id": "suit-locker",
+      "design": "shipyard.equipment.wall-locker",
+      "at": [
+        6.95,
+        1.2
+      ],
+      "facing": "starboard"
+    }
+  ],
+  "mountTiles": [
+    {
+      "id": "turret",
+      "kind": "turret",
+      "size": "MD",
+      "at": [
+        4.5,
+        2.5
+      ],
+      "facing": "fore"
+    },
+    {
+      "id": "guns",
+      "kind": "fixed",
+      "size": "MD",
+      "at": [
+        7,
+        2.5
+      ],
+      "facing": "fore"
+    },
+    {
+      "id": "sensor",
+      "kind": "fixed",
+      "size": "SM",
+      "at": [
+        3,
+        3
+      ],
+      "facing": "fore"
+    }
+  ]
+}

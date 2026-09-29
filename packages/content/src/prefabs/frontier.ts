@@ -117,6 +117,12 @@ export const IND_MULE = prefab({
     module("bunk-2", "crew-bunk.sm", [4.5, 6.5], "starboard"),
     top("arm-s", "salvage-arm.md", [18, 1]),
     top("arm-p", "salvage-arm.md", [18, 7]),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("coolant", "coolant-pump.md", [0, 3.5], "fore"),
+    module("coolant-aux", "coolant-pump.sm", [0, 4.5], "fore"),
+    module("ammo", "magazine.ballistic.sm", [0, 8], "fore"),
+    module("engineer", "console.engineering.sm", [0, 9], "fore"),
+    module("battery", "battery.md", [1, 3.5], "fore"),
   ],
   armed: [
     armed("pd", "turret", "MD", [10, 1], "fore", "point-defense.sm"),
@@ -126,7 +132,7 @@ export const IND_MULE = prefab({
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-IND_MULE.revision = 2;
+IND_MULE.revision = 3;
 
 /** Medium crystalline alien: faceted shard hull with 1:2 crystal spikes. */
 export const CRY_SHARD = prefab({
@@ -217,6 +223,12 @@ export const CRY_SHARD = prefab({
     module("life", "life-support.sm", [2, 0.5], "fore"),
     module("bunk-1", "crew-bunk.sm", [4.5, 6.5], "starboard"),
     module("bunk-2", "crew-bunk.sm", [6.5, 6.5], "starboard"),
+    // S4-2: connected utility stores, cooling and charged black-start battery.
+    module("fuel", "fuel-tank.md", [2, 6], "fore"),
+    module("coolant", "coolant-pump.md", [1, 1], "fore"),
+    module("coolant-aux", "coolant-pump.sm", [1, 6], "fore"),
+    module("capacitor", "capacitor.sm", [3, 0], "fore"),
+    module("battery", "battery.md", [4, 0], "fore"),
   ],
   armed: [
     armed("lance", "fixed", "MD", [5, 1], "fore", "laser-cannon.md"),
@@ -227,4 +239,4 @@ export const CRY_SHARD = prefab({
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-CRY_SHARD.revision = 2;
+CRY_SHARD.revision = 3;

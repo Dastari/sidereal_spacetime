@@ -451,9 +451,10 @@ describe("hit testing", () => {
     const geoms = doc.volumes.map(volumeGeometry);
     const top = doc.mounts.find((m) => m.attach === "top")!;
     const p: [number, number] = [top.at[0] + 0.25, top.at[1] + 0.25];
+    // The smaller fuel-tank footprint below the roof radiator wins at their shared plan XY.
     expect(hitTest(doc, catalog, geoms, p, DEFAULT_LAYERS)).toEqual({
       kind: "mount",
-      id: top.id,
+      id: "fuel",
     });
     expect(
       hitTest(doc, catalog, geoms, p, { ...DEFAULT_LAYERS, mounts: false })

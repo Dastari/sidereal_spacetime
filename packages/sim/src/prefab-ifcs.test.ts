@@ -378,7 +378,7 @@ describe("actuator fuel and power supply", () => {
       lumen,
       catalog.revision,
       sources(lumen),
-      (m) => (m === "reactor" ? 0 : 1),
+      (m) => (m === "reactor" || m === "battery" ? 0 : 1),
     );
     expect(
       Object.entries(noPower)

@@ -44,6 +44,7 @@ import {
   FED_WREN_R5_PIN,
   FED_WREN_R6_PIN,
   FED_WREN_R7_PIN,
+  FED_WREN_R8_PIN,
   PREFAB_UPGRADE_SOURCES,
   WREN_SUIT_LOCKER_SOCKET,
   type PinnedPrefabShip,
@@ -291,6 +292,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
     FED_WREN_R5_PIN,
     FED_WREN_R6_PIN,
     FED_WREN_R7_PIN,
+    FED_WREN_R8_PIN,
   ]);
   expect(trustedPrefabTemplate("fed.s.wren").snapshot.sha256).toBe(
     FED_WREN_PIN.blueprintSha256,
@@ -301,7 +303,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
 // for different source revisions, so each liveWren starts from an empty cache.
 const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
   test(
-    `a live Wren r${revision} upgrades to r8 in place: same ship, deck, pose, containers and items; the suit locker is stocked after`,
+    `a live Wren r${revision} upgrades to r9 in place: same ship, deck, pose, containers and items; the suit locker is stocked after`,
     HEAVY,
     () => {
       const { f, characterId, shipId, deckId } = liveWren(pin, revision);
@@ -349,7 +351,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
       upgradePrefabShip(f.ctx, upgradeArgs(shipId, pin));
       const instance = f.db.constructionInstance.id.find(shipId);
       expect(instance.blueprintSha256).toBe(FED_WREN_PIN.blueprintSha256);
-      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r8");
+      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r9");
       expect(instance.revision).toBe(2n);
       expect(f.db.constructionDeck.rows.map((d: Row) => d.id)).toEqual([
         deckId,
@@ -654,3 +656,60 @@ upgradeCase(FED_WREN_R4_PIN, 4);
 upgradeCase(FED_WREN_R5_PIN, 5);
 upgradeCase(FED_WREN_R6_PIN, 6);
 upgradeCase(FED_WREN_R7_PIN, 7);
+
+upgradeCase(FED_WREN_R8_PIN, 8);
+
+test(
+  "r8 occupied EVA suit locker survives r9 upgrade with all item pins and grid positions",
+  { timeout: 60_000 },
+  () => {
+    const { f, characterId, shipId } = liveWren(FED_WREN_R8_PIN, 8);
+    stockShipCargo(f.ctx, {
+      operationId: "stock-preserved-r8-suit",
+      dryRun: false,
+      characterId,
+      shipId,
+      socketKey: WREN_SUIT_LOCKER_SOCKET,
+      containerName: "EVA suit locker",
+      definitionIdsJson: JSON.stringify(CREW_WARDROBE_KITS["eva-suit"]),
+    });
+    const binding = {
+      ...f.db.instanceInventoryBinding.rows.find((b: Row) =>
+        b.placedObjectId.endsWith(WREN_SUIT_LOCKER_SOCKET),
+      ),
+    };
+    const items = f.db.inventoryItem.rows
+      .filter((i: Row) => i.containerId === binding.containerId)
+      .map((i: Row) => ({ ...i }));
+    expect(items).toHaveLength(CREW_WARDROBE_KITS["eva-suit"]!.length);
+    const suitIds = new Set(items.map((i: Row) => i.id));
+    const pins = f.db.inventoryItemPin.rows
+      .filter((p: Row) => suitIds.has(p.itemId))
+      .map((p: Row) => ({ ...p }));
+    expect(pins).toHaveLength(items.length);
+    const inventory = heldInventory(f, shipId);
+    upgradePrefabShip(f.ctx, upgradeArgs(shipId, FED_WREN_R8_PIN));
+    expect(heldInventory(f, shipId)).toEqual(inventory);
+    const after = f.db.instanceInventoryBinding.rows.filter((b: Row) =>
+      b.placedObjectId.endsWith(WREN_SUIT_LOCKER_SOCKET),
+    );
+    expect(after).toEqual([binding]);
+    expect(
+      f.db.inventoryItem.rows.filter(
+        (i: Row) => i.containerId === binding.containerId,
+      ),
+    ).toEqual(items);
+    expect(
+      f.db.inventoryItemPin.rows.filter((p: Row) => suitIds.has(p.itemId)),
+    ).toEqual(pins);
+    expect(
+      f.db.inventoryContainerScope.rows.find(
+        (s: Row) => s.rootContainerId === binding.containerId,
+      ),
+    ).toMatchObject({
+      instanceId: shipId,
+      instanceRevision: 2n,
+      lifecycle: "active",
+    });
+  },
+);

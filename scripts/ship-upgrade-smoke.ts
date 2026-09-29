@@ -384,6 +384,10 @@ assert.match(refusedAgain, /already has the target revision/);
       stocked[WREN_SUIT_LOCKER_SOCKET]!.length,
       CREW_WARDROBE_KITS["eva-suit"]!.length,
     );
+    // r8+ issues already contain a suit. The upgrade keeps those UUIDs and stocking adds a kit.
+    stocked[WREN_SUIT_LOCKER_SOCKET] = sqlRows(
+      `SELECT id FROM inventory_item WHERE container_id = ${quote(out.summary.containerId)}`,
+    ).map((i) => i.id as string);
     evidence[`stocked:${WREN_SUIT_LOCKER_SOCKET}`] = {
       containerId: out.summary.containerId,
       items: stocked[WREN_SUIT_LOCKER_SOCKET]!.length,

@@ -316,7 +316,7 @@ describe("Wren revision 4+ layout (unchanged in r5-r7; r8 adds the suit locker)"
   });
 
   it("r8: the EVA suit locker stands in the airlock chamber, pressable-button distance from its front", () => {
-    expect(wren.revision).toBe(8);
+    expect(wren.revision).toBe(9);
     expect(validatePrefabFixtures(wren, catalog)).toEqual([]);
     const interior = deriveInterior(wren, 0, catalog);
     const locker = interior.sockets.find((s) => s.fixture === "suit-locker")!;
