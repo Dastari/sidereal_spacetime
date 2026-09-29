@@ -1460,6 +1460,8 @@ async function buildWorld(
         cameraRadius: camera.radius,
         interior: state.interior,
         pointer: this.pointerDirection(),
+        /** Screen-to-ship mapping angle (camera azimuth + ship heading), review drivers only. */
+        screenAngle: camera.alpha + state.heading,
         bodies: evaCrew?.diagnostics() ?? [],
       };
     },
