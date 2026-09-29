@@ -34,3 +34,4 @@ jobs:
       - run: npm run lint
       - run: npm run format:check
       - run: npm run test:python
+      - run: npm run art:check
