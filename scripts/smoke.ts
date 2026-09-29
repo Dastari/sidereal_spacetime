@@ -21,6 +21,12 @@ import { persistenceSmoke, verifyPersistence } from "./persistence-smoke";
 import { combatSmoke } from "./combat-smoke";
 import { interactionSmoke } from "./interaction-smoke";
 import { inventorySmoke } from "./inventory-smoke";
+import {
+  assertLogInvariants,
+  lifecycleSmoke,
+  ownerSql,
+  verifyLifecycleRestart,
+} from "./lifecycle-smoke";
 import { QUALIFIED_PILOT_POSITION } from "../packages/sim/src/construction-pilot";
 import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
 import assert from "node:assert/strict";
@@ -223,6 +229,19 @@ if (restore) {
     }
     if (evidence.persistenceEvidence)
       await verifyPersistence(client, evidence.persistenceEvidence, wait);
+    if (evidence.lifecycleEvidence) {
+      const sql = ownerSql(host, database);
+      const restored = await verifyLifecycleRestart(
+        client,
+        wait,
+        sql,
+        evidence.lifecycleEvidence,
+      );
+      console.log(
+        "Lifecycle restart proof passed: " +
+          JSON.stringify({ ...restored, log: assertLogInvariants(sql) }),
+      );
+    }
     console.log(
       process.env.SIDEREAL_SMOKE_PERSISTENT_ROWS_ONLY === "1"
         ? "Restart persistence proof passed: ship/receipt, inventory/equipment, combat balances, and both full appearance/item/container/hotbar snapshots survived. Transient moving-body discovery was not asserted."
@@ -838,6 +857,13 @@ if (restore) {
     );
     summary.character_components = await characterComponentsSmoke(client, wait);
     const persistenceEvidence = await persistenceSmoke(client, wait);
+    const lifecycleSql = ownerSql(host, database);
+    const lifecycleEvidence = await lifecycleSmoke(client, wait, lifecycleSql);
+    summary.lifecycle_created_restored_one_event_per_move_private = {
+      characterSequence: lifecycleEvidence.characterSequence,
+      movedItems: lifecycleEvidence.movedItems,
+    };
+    summary.lifecycle_log = assertLogInvariants(lifecycleSql);
     summary.two_account_appearance_inventory_equipment_reconnect = true;
     if (process.env.SIDEREAL_SMOKE_OIDC_TOKEN_FILE)
       summary.real_oidc_identity_link = await identityLinkSmoke(
@@ -859,6 +885,11 @@ if (restore) {
         inventoryEvidence,
         combatToken: combatClient.token,
         combatEvidence,
+        lifecycleEvidence: {
+          token: lifecycleEvidence.token,
+          characterId: lifecycleEvidence.characterId,
+          characterSequence: lifecycleEvidence.characterSequence,
+        },
       }),
       { mode: 0o600 },
     );
