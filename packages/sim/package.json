@@ -79,6 +79,7 @@
     "./passenger-admission": "./src/passenger-admission.ts",
     "./ground-placement": "./src/ground-placement.ts",
     "./backpack-swap": "./src/backpack-swap.ts",
+    "./content-definitions": "./src/content-definitions.ts",
     "./flight-frame": "./src/flight-frame.ts",
     "./system-map": "./src/system-map.ts",
     "./space-background": "./src/space-background.ts",

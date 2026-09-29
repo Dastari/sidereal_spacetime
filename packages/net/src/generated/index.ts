@@ -47,6 +47,7 @@ import ChangeShipFlightFittingReducer from "./change_ship_flight_fitting_reducer
 import ClaimCharacterArmoryReducer from "./claim_character_armory_reducer";
 import ClaimInputControlReducer from "./claim_input_control_reducer";
 import ClaimStarterKitReducer from "./claim_starter_kit_reducer";
+import DiscardDefinitionDraftReducer from "./discard_definition_draft_reducer";
 import DropInventoryItemReducer from "./drop_inventory_item_reducer";
 import EnterAuthoredPilotReducer from "./enter_authored_pilot_reducer";
 import EnterConstructionReviewReducer from "./enter_construction_review_reducer";
@@ -66,20 +67,26 @@ import LeaveConstructionReviewReducer from "./leave_construction_review_reducer"
 import MoveCargoCarrierReducer from "./move_cargo_carrier_reducer";
 import MoveInventoryItemReducer from "./move_inventory_item_reducer";
 import OperatorAssignPrefabShipReducer from "./operator_assign_prefab_ship_reducer";
+import OperatorImportContentSeedReducer from "./operator_import_content_seed_reducer";
+import OperatorSetDefinitionGrantReducer from "./operator_set_definition_grant_reducer";
 import OperatorSetStarterPrefabReducer from "./operator_set_starter_prefab_reducer";
 import OperatorStockShipCargoReducer from "./operator_stock_ship_cargo_reducer";
 import OperatorUpgradePrefabShipReducer from "./operator_upgrade_prefab_ship_reducer";
 import OperatorWipePlayerShipsReducer from "./operator_wipe_player_ships_reducer";
 import PressShipButtonReducer from "./press_ship_button_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
+import PublishDefinitionReducer from "./publish_definition_reducer";
+import RefreshDefinitionUsageReducer from "./refresh_definition_usage_reducer";
 import ReleaseInputControlReducer from "./release_input_control_reducer";
 import ReloadWeaponReducer from "./reload_weapon_reducer";
 import RenameShipReducer from "./rename_ship_reducer";
 import RequestIdentityLinkReducer from "./request_identity_link_reducer";
+import RetireDefinitionReducer from "./retire_definition_reducer";
 import ReturnAuthoredFlightReviewReducer from "./return_authored_flight_review_reducer";
 import ReturnShipPassengerReducer from "./return_ship_passenger_reducer";
 import RevokeShipPassengerReducer from "./revoke_ship_passenger_reducer";
 import SaveConstructionDraftReducer from "./save_construction_draft_reducer";
+import SaveDefinitionDraftReducer from "./save_definition_draft_reducer";
 import SetCharacterAppearanceReducer from "./set_character_appearance_reducer";
 import SetCombatAimReducer from "./set_combat_aim_reducer";
 import SetConstructionComputerPowerReducer from "./set_construction_computer_power_reducer";
@@ -98,6 +105,9 @@ import UseStationReducer from "./use_station_reducer";
 // Import all procedure arg schemas
 
 // Import all table schema definitions
+import AdminContentDefinitionHeadsRow from "./admin_content_definition_heads_table";
+import AdminContentDefinitionUsageRow from "./admin_content_definition_usage_table";
+import AdminContentDefinitionsRow from "./admin_content_definitions_table";
 import AdmittedSystemScapesRow from "./admitted_system_scapes_table";
 import CurrentInteriorCrewRow from "./current_interior_crew_table";
 import CurrentPassengerInteriorRow from "./current_passenger_interior_table";
@@ -170,6 +180,27 @@ import VisibleShipSystemEffectsRow from "./visible_ship_system_effects_table";
 
 /** The schema information for all tables in this module. This is defined the same was as the tables would have been defined in the server. */
 const tablesSchema = __schema({
+  adminContentDefinitionHeads: __table({
+    name: 'admin_content_definition_heads',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, AdminContentDefinitionHeadsRow),
+  adminContentDefinitionUsage: __table({
+    name: 'admin_content_definition_usage',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, AdminContentDefinitionUsageRow),
+  adminContentDefinitions: __table({
+    name: 'admin_content_definitions',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, AdminContentDefinitionsRow),
   admittedSystemScapes: __table({
     name: 'admitted_system_scapes',
     indexes: [
@@ -656,6 +687,7 @@ const reducersSchema = __reducers(
   __reducerSchema("claim_character_armory", ClaimCharacterArmoryReducer),
   __reducerSchema("claim_input_control", ClaimInputControlReducer),
   __reducerSchema("claim_starter_kit", ClaimStarterKitReducer),
+  __reducerSchema("discard_definition_draft", DiscardDefinitionDraftReducer),
   __reducerSchema("drop_inventory_item", DropInventoryItemReducer),
   __reducerSchema("enter_authored_pilot", EnterAuthoredPilotReducer),
   __reducerSchema("enter_construction_review", EnterConstructionReviewReducer),
@@ -675,20 +707,26 @@ const reducersSchema = __reducers(
   __reducerSchema("move_cargo_carrier", MoveCargoCarrierReducer),
   __reducerSchema("move_inventory_item", MoveInventoryItemReducer),
   __reducerSchema("operator_assign_prefab_ship", OperatorAssignPrefabShipReducer),
+  __reducerSchema("operator_import_content_seed", OperatorImportContentSeedReducer),
+  __reducerSchema("operator_set_definition_grant", OperatorSetDefinitionGrantReducer),
   __reducerSchema("operator_set_starter_prefab", OperatorSetStarterPrefabReducer),
   __reducerSchema("operator_stock_ship_cargo", OperatorStockShipCargoReducer),
   __reducerSchema("operator_upgrade_prefab_ship", OperatorUpgradePrefabShipReducer),
   __reducerSchema("operator_wipe_player_ships", OperatorWipePlayerShipsReducer),
   __reducerSchema("press_ship_button", PressShipButtonReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
+  __reducerSchema("publish_definition", PublishDefinitionReducer),
+  __reducerSchema("refresh_definition_usage", RefreshDefinitionUsageReducer),
   __reducerSchema("release_input_control", ReleaseInputControlReducer),
   __reducerSchema("reload_weapon", ReloadWeaponReducer),
   __reducerSchema("rename_ship", RenameShipReducer),
   __reducerSchema("request_identity_link", RequestIdentityLinkReducer),
+  __reducerSchema("retire_definition", RetireDefinitionReducer),
   __reducerSchema("return_authored_flight_review", ReturnAuthoredFlightReviewReducer),
   __reducerSchema("return_ship_passenger", ReturnShipPassengerReducer),
   __reducerSchema("revoke_ship_passenger", RevokeShipPassengerReducer),
   __reducerSchema("save_construction_draft", SaveConstructionDraftReducer),
+  __reducerSchema("save_definition_draft", SaveDefinitionDraftReducer),
   __reducerSchema("set_character_appearance", SetCharacterAppearanceReducer),
   __reducerSchema("set_combat_aim", SetCombatAimReducer),
   __reducerSchema("set_construction_computer_power", SetConstructionComputerPowerReducer),

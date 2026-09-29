@@ -30,6 +30,7 @@ import {
   verifyLifecycleRestart,
 } from "./lifecycle-smoke";
 import { operatorCall } from "./smoke-operator";
+import { contentDefinitionsSmoke } from "./content-definitions-smoke";
 import { prefabWalkFrame } from "../packages/sim/src/prefab-construction";
 import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
@@ -820,6 +821,13 @@ if (restore) {
       movedItems: lifecycleEvidence.movedItems,
     };
     summary.lifecycle_log = assertLogInvariants(lifecycleSql);
+    summary.content_definitions_x1 = await contentDefinitionsSmoke(
+      host,
+      database,
+      wait,
+      (reducer, ...args) => operatorCall(host, database, reducer, ...args),
+      lifecycleSql,
+    );
     summary.two_account_appearance_inventory_equipment_reconnect = true;
     if (process.env.SIDEREAL_SMOKE_OIDC_TOKEN_FILE)
       summary.real_oidc_identity_link = await identityLinkSmoke(

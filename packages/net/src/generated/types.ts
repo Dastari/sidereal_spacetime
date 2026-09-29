@@ -19,6 +19,15 @@ export const ActuatorOutput = __t.object("ActuatorOutput", {
 });
 export type ActuatorOutput = __Infer<typeof ActuatorOutput>;
 
+export const AdminContentDefinitionHeads = __t.object("AdminContentDefinitionHeads", {});
+export type AdminContentDefinitionHeads = __Infer<typeof AdminContentDefinitionHeads>;
+
+export const AdminContentDefinitionUsage = __t.object("AdminContentDefinitionUsage", {});
+export type AdminContentDefinitionUsage = __Infer<typeof AdminContentDefinitionUsage>;
+
+export const AdminContentDefinitions = __t.object("AdminContentDefinitions", {});
+export type AdminContentDefinitions = __Infer<typeof AdminContentDefinitions>;
+
 export const AdmittedSystemScapes = __t.object("AdmittedSystemScapes", {});
 export type AdmittedSystemScapes = __Infer<typeof AdmittedSystemScapes>;
 
@@ -1058,6 +1067,61 @@ export const ConstructionTraversalStatus = __t.object("ConstructionTraversalStat
   z: __t.f64(),
 });
 export type ConstructionTraversalStatus = __Infer<typeof ConstructionTraversalStatus>;
+
+export const ContentDefinition = __t.object("ContentDefinition", {
+  definitionRef: __t.string(),
+  definitionKey: __t.string(),
+  kind: __t.string(),
+  definitionId: __t.string(),
+  revision: __t.u64(),
+  status: __t.string(),
+  payloadJson: __t.string(),
+  sha256: __t.string(),
+  validator: __t.string(),
+  source: __t.string(),
+  operationId: __t.string(),
+  publishedBy: __t.identity(),
+  publishedMicros: __t.u64(),
+  retiredMicros: __t.u64(),
+});
+export type ContentDefinition = __Infer<typeof ContentDefinition>;
+
+export const ContentDefinitionHead = __t.object("ContentDefinitionHead", {
+  definitionKey: __t.string(),
+  kind: __t.string(),
+  definitionId: __t.string(),
+  revision: __t.u64(),
+  draftJson: __t.string(),
+  draftSha256: __t.string(),
+  draftBaseRevision: __t.u64(),
+  latestRevision: __t.u64(),
+  currentRevision: __t.u64(),
+  updatedBy: __t.identity(),
+  updatedMicros: __t.u64(),
+});
+export type ContentDefinitionHead = __Infer<typeof ContentDefinitionHead>;
+
+export const ContentDefinitionReceipt = __t.object("ContentDefinitionReceipt", {
+  id: __t.string(),
+  principal: __t.identity(),
+  kind: __t.string(),
+  request: __t.string(),
+  resultRef: __t.string(),
+  revision: __t.u64(),
+  createdMicros: __t.u64(),
+});
+export type ContentDefinitionReceipt = __Infer<typeof ContentDefinitionReceipt>;
+
+export const ContentDefinitionUsage = __t.object("ContentDefinitionUsage", {
+  definitionKey: __t.string(),
+  kind: __t.string(),
+  definitionId: __t.string(),
+  instanceCount: __t.u64(),
+  pinsJson: __t.string(),
+  referencedByJson: __t.string(),
+  computedMicros: __t.u64(),
+});
+export type ContentDefinitionUsage = __Infer<typeof ContentDefinitionUsage>;
 
 export const CouchSeat = __t.object("CouchSeat", {
   characterId: __t.string(),
