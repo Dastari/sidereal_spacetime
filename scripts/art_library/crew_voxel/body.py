@@ -57,8 +57,10 @@ def base_body(v):
     b["upper_arm.R"].brick(7, -3, 32, 12, 3, 37, K).cut(11, -3, 36, 12, 3, 37)   # deltoid
     b["forearm.R"].brick(7, -2, 21, 12, 3, 27, K)
     pe = b["pelvis"]
+    # Owner 2026-09-29 ("white plane cutting through the middle"): no protruding pale waistband. The
+    # shorts end in a flush band one voxel tall, a slightly darker navy (same tintable slot).
     pe.brick(-7, -4, 19, 7, 5, 25, U).cut(-1, -4, 19, 1, 5, 20)         # privacy shorts
-    pe.brick(-7, -5, 24, 7, 6, 25, M)                                   # waistband
+    pe.paint(-7, -4, 24, 7, 5, 25, U + ":band")                         # flush waistband
     b["spine"].brick(-w, -4, 25, w, 5, 30, K)
     ch = b["chest"]
     ch.brick(-7, -5, 29, 7, 5, 37, K).cut(-7, -5, 36, -6, 5, 37).cut(6, -5, 36, 7, 5, 37)
@@ -96,8 +98,7 @@ def suit(v):
     sh.brick(1, -3, 7, 7, 4, 11, P)
     sh.brick(0, -4, 5, 8, 5, 8, P)                                     # hem flared over the boot top
     sh.brick(2, 4, 9, 6, 5, 12, S)                                     # knee panel
-    sh.brick(1, -4, 3, 8, 5, 6, D)                                     # boot shaft
-    sh.brick(1, -4, 6, 8, 5, 7, D)                                     # boot rim
+    sh.brick(1, -4, 3, 8, 5, 5, D)                                     # boot shaft (under the hem)
     ft = s["foot.R"]
     ft.brick(1, -4, 1, 8, 4, 3, D)
     ft.brick(1, -4, 0, 8, 4, 1, M)                                     # distinct pale sole
@@ -110,15 +111,15 @@ def suit(v):
     ua.brick(7, -2, 27, 12, 3, 32, P)
     fa = s["forearm.R"]
     fa.brick(7, -2, 22, 12, 3, 27, P)
-    fa.brick(6, -3, 20, 13, 4, 22, S)                                  # cuff
+    fa.brick(6, -3, 20, 13, 4, 22, S).cut(7, -3, 20, 13, 3, 21)        # cuff; its lower row rings the hand
     pe = s["pelvis"]
-    pe.brick(-7, -4, 19, 7, 5, 24, P).cut(-1, -4, 19, 1, 5, 20)
+    pe.brick(-7, -4, 19, 7, 5, 23, P).cut(-1, -4, 19, 1, 5, 20)
     pe.brick(-7, -5, 23, 7, 6, 25, D)                                  # belt
     pe.brick(-2, 6, 23, 2, 7, 25, M).paint(-1, 6, 23, 1, 7, 25, A)     # buckle
     pe.brick(3, 6, 23, 5, 7, 25, D)
     sp = s["spine"]
     sp.brick(-w, -4, 24, w, 5, 30, P)
-    sp.paint(-1, 4, 24, 0, 5, 30, S)
+    sp.paint(-1, 4, 24, 0, 5, 29, S)                                   # zip seam, up to the chest
     ch = s["chest"]
     ch.brick(-7, -5, 29, 7, 5, 37, P).cut(-7, -5, 36, -6, 5, 37).cut(6, -5, 36, 7, 5, 37)
     if v["pockets"]:
@@ -131,8 +132,9 @@ def suit(v):
         ch.paint(-1, 5, 31, 0, 6, 34, S)
     ch.brick(-5, 5, 34, -3, 6, 35, M)                                  # rank pins
     ch.brick(4, 5, 35, 5, 6, 36, EM)                                   # status light
-    col = Vol().box(-4, -5, 36, 4, 4, 38, S)                           # standing collar
-    col.cut(-3, -4, 36, 3, 3, 38).cut(-1, 3, 36, 1, 4, 38)
+    ch.paint(-4, -5, 36, 4, -4, 37, S)                                 # collar foot (on the chest)
+    col = Vol().box(-4, -5, 37, 4, 4, 38, S)                           # standing collar
+    col.cut(-3, -4, 37, 3, 3, 38).cut(-1, 3, 37, 1, 4, 38)
     ch.island(col)
     ch.brick(-3, 5, 35, -1, 6, 37, P)                                  # lapels
     ch.brick(1, 5, 35, 3, 6, 37, P)

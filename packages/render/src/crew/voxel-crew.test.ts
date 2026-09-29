@@ -246,6 +246,39 @@ describe("voxel crew runtime", () => {
     engine.dispose();
   });
 
+  it("nothing equipped draws only the base body (skin + underwear), hands, head and hair", async () => {
+    const { engine, scene, crew } = await load();
+    for (const bodyType of ["male", "female"] as const) {
+      crew.customize({ bodyType, equippedComponents: {} });
+      const drawn = scene.meshes
+        .filter(
+          (m) =>
+            m.isEnabled() &&
+            m.isVisible &&
+            m.layerMask !== 0 &&
+            m.getTotalVertices() > 0,
+        )
+        .map((m) => m.name.replace(/_primitive\d+$/, ""));
+      expect([...new Set(drawn)].sort()).toEqual(
+        [
+          `GEO-crew-base-${bodyType}`,
+          `GEO-crew-hair-default-${bodyType}`,
+          `GEO-crew-hands-${bodyType}`,
+          `GEO-crew-head-${bodyType}`,
+        ].sort(),
+      );
+      // The base body is skin and navy underwear (its flush waistband is a darker vertex tone of
+      // the same slot): no pale metal waistband ledge (owner 2026-09-29).
+      const slots = scene.meshes
+        .filter((m) => m.name.startsWith(`GEO-crew-base-${bodyType}`))
+        .map((m) => m.material?.name.replace(/\.\d+$/, ""));
+      expect([...new Set(slots)].sort()).toEqual(["crew.dark", "crew.skin"]);
+    }
+    crew.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
   it("stands 1.8 m tall to the hair, faces gameplay forward (-Z) and keeps the grip socket in the right hand", async () => {
     const { engine, scene, crew } = await load();
     scene.useRightHandedSystem = false;
