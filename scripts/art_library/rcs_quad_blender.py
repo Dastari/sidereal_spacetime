@@ -1,4 +1,4 @@
-"""Proposal RCS art, r002. Blender 4.3, metres, Z-up face mount at y=0.
+"""Proposal RCS art, r003. Blender 4.3, metres, Z-up face mount at y=0.
 
 Run from any directory (one Blender process; TMPDIR must be disk backed)::
 
@@ -14,7 +14,7 @@ geometry. Exact nozzle centres follow the brief (Y does not scale by 0.6).
 GLB local +Y is the exhaust axis; Blender local +Z converts to that axis.
 The optional comparison reads the original runtime rcs.md.glb saved before the
 first build as /root/sidereal-scratch/flight-ifcs/codex/rcs-old-md.glb, plus
-rcs-r001-md.glb captured from commit 7ad79705 before building r002.
+rcs-r002-md.glb captured from commit 0edf3c4c before building r003.
 """
 import argparse
 import hashlib
@@ -110,7 +110,7 @@ def bell(name, exit_point, direction, length, radius, mats, objects):
     d, u, v = frame(direction)
     throat_depth = min(length * .4, radius * .45)
     profile = [(-length, .72), (0, 1), (0, .79),
-               (-throat_depth, .40), (-throat_depth, .30)]
+               (-throat_depth, .66), (-throat_depth, .42)]
     verts = [Vector(exit_point) + d * depth + radius * r * (u * x + v * y)
              for depth, r in profile for x, y in CORNERS]
     faces, slots = [], []
@@ -130,7 +130,7 @@ def socket_head(size, lo, hi, specs, mats, objects):
     The square-to-octagon transitions join the buried bell roots. Face rings
     use eight triangles each; no boolean slivers or overlapping solid faces.
     """
-    box(size + "-head", lo, hi, "slot0_primary", mats, objects)
+    box(size + "-head", lo, hi, "slot1_secondary", mats, objects)
     ob = objects.pop()
     verts = [v.co.copy() + ob.location for v in ob.data.vertices]
     faces, slots = [], []
@@ -138,7 +138,7 @@ def socket_head(size, lo, hi, specs, mats, objects):
         match = next((spec for spec in specs if poly.normal.dot(Vector(spec[1])) > .999), None)
         if match is None:
             faces.append(tuple(poly.vertices))
-            slots.append("slot0_primary")
+            slots.append("slot1_secondary")
             continue
         point, direction, length, radius = match
         d, u, v = frame(direction)
@@ -146,7 +146,11 @@ def socket_head(size, lo, hi, specs, mats, objects):
         face_depth = verts[poly.vertices[0]].dot(d)
         centre = Vector(point) + d * (face_depth - Vector(point).dot(d))
         square = [(-1, -1), (1, -1), (1, 1), (-1, 1)]
-        half = radius * 1.06
+        # Keep the enlarged small tangential socket inside the bevelled face.
+        # Its bell root remains buried; the mouth can overhang the socket.
+        clearance = min(abs((verts[i] - centre).dot(basis))
+                        for i in poly.vertices for basis in (u, v))
+        half = min(radius * 1.06, clearance - .001)
         inner = []
         for x, y in square:
             inner.append(len(verts))
@@ -161,7 +165,7 @@ def socket_head(size, lo, hi, specs, mats, objects):
             groups.append(ids[0])
         for k in range(4):
             faces.append((groups[k], groups[(k+1) % 4], inner[(k+1) % 4], inner[k]))
-            slots.append("slot0_primary")
+            slots.append("slot1_secondary")
         root = len(verts)
         verts.extend(Vector(point) - d*length + radius*.72*(u*x+v*y) for x,y in CORNERS)
         # CORNERS starts on the left-bottom edge; bridge each square corner
@@ -191,14 +195,14 @@ def build(size, mats, original):
     # The head and collar use whole grid dimensions, including the small
     # head's 5/8 m width (nearest symmetric grid size to the requested 75%).
     if sm:
-        blocks = [("mount", (-.3125, -.0625, -.3125), (.3125, 0, .3125), 1),
-                  ("collar-base", (-.25, -.1875, -.25), (.25, -.0625, .25), 1),
-                  ("collar-neck", (-.1875, -.25, -.1875), (.1875, -.125, .1875), 2)]
+        blocks = [("mount", (-.3125, -.0625, -.3125), (.3125, 0, .3125), 0),
+                  ("collar-base", (-.25, -.1875, -.25), (.25, -.0625, .25), 0),
+                  ("collar-neck", (-.1875, -.25, -.1875), (.1875, -.125, .1875), 5)]
         lo, hi = (-.3125, -.4375, -.3125), (.3125, -.1875, .3125)
     else:
-        blocks = [("mount", (-.5625, -.125, -.5625), (.5625, 0, .5625), 1),
-                  ("collar-base", (-.4375, -.3125, -.4375), (.4375, -.0625, .4375), 1),
-                  ("collar-neck", (-.375, -.5, -.375), (.375, -.25, .375), 2)]
+        blocks = [("mount", (-.5625, -.125, -.5625), (.5625, 0, .5625), 0),
+                  ("collar-base", (-.4375, -.3125, -.4375), (.4375, -.0625, .4375), 0),
+                  ("collar-neck", (-.375, -.5, -.375), (.375, -.25, .375), 5)]
         lo, hi = (-.5, -.9375, -.5), (.5, -.4375, .5)
     for name, low, high, slot in blocks:
         box(size + "-" + name, low, high, SLOTS[slot], mats, objects)
@@ -206,6 +210,7 @@ def build(size, mats, original):
     for name, (point, direction) in nozzle_table(size).items():
         length = (.1 if name == "out" else .125) if sm else (.125 if name == "out" else .25)
         radius = (.08125 if sm else .121875) if name == "out" else (.06875 if sm else .105)
+        radius *= 1.25  # r003: every exit diameter is 25% larger than r002.
         specs.append((point, direction, length, radius))
         bell(size + "-bell-" + name, point, direction, length, radius, mats, objects)
     socket_head(size, lo, hi, specs, mats, objects)
@@ -215,14 +220,14 @@ def build(size, mats, original):
         x = r if sign > 0 else -r-.0625
         box(size + "-feed", (x, front, -.0625), (x+.0625, back, 0),
             "slot4_metal", mats, objects, bevel=False)
-    # Surface inlays: accent on the collar and two panel seams on the head.
+    # Surface inlays: accent on the collar and broad crimson stripes on the navy head.
     # These are finite-area faces, offset from the supporting surface to avoid z-fighting.
     verts, faces, slots = [], [], []
     for x0, x1, y0, y1, z, slot in [
         (-r+.0625, r-.0625, back-.03125, back-.09375, r+.001, "slot2_accent"),
         (-r+.0625, r-.0625, back-.03125, back-.09375, -r-.001, "slot2_accent"),
-        (lo[0]+.04, hi[0]-.04, hi[1]-.034, hi[1]-.025, hi[2]+.001, "slot1_secondary"),
-        (lo[0]+.04, hi[0]-.04, hi[1]-.034, hi[1]-.025, lo[2]-.001, "slot1_secondary")]:
+        (lo[0]+.04, hi[0]-.04, hi[1]-(.09375 if sm else .125), hi[1]-.03125, hi[2]+.001, "slot2_accent"),
+        (lo[0]+.04, hi[0]-.04, hi[1]-(.09375 if sm else .125), hi[1]-.03125, lo[2]-.001, "slot2_accent")]:
         i = len(verts)
         verts.extend([(x0,y0,z),(x1,y0,z),(x1,y1,z),(x0,y1,z)])
         faces.append((i,i+1,i+2,i+3))
@@ -250,7 +255,7 @@ def build(size, mats, original):
     root_data = next(n for n in original["nodes"] if n["name"] == root.name)
     for key, value in root_data.get("extras", {}).items():
         root[key] = value
-    root["artRevision"] = "rcs-quad-r002"
+    root["artRevision"] = "rcs-quad-r003"
     root["artSource"] = str(SOURCE.relative_to(ROOT))
     root["artBuilder"] = str(Path(__file__).resolve().relative_to(ROOT))
     root["boxCount"] = boxes
@@ -295,7 +300,7 @@ def build(size, mats, original):
     for ob in root.children:
         if ob.type == "EMPTY":
             ob.name = size + "." + ob.name
-    collection = bpy.data.collections.new("RCS " + size.upper() + " | proposal r002")
+    collection = bpy.data.collections.new("RCS " + size.upper() + " | proposal r003")
     bpy.context.scene.collection.children.link(collection)
     for ob in [root, *root.children]:
         for coll in list(ob.users_collection):
@@ -357,12 +362,12 @@ def render_comparison(previous="old"):
     camera.rotation_euler = rotation.to_euler()
     camera.data.ortho_scale = 3.9
     right, up = rotation @ Vector((1, 0, 0)), rotation @ Vector((0, 1, 0))
-    previous_path = SCRATCH / ("rcs-r001-md.glb" if previous == "r001" else "rcs-old-md.glb")
+    previous_path = SCRATCH / ("rcs-r002-md.glb" if previous == "r002" else "rcs-old-md.glb")
     def triangles(path):
         model = glb_json(path)
         return sum(model["accessors"][p["indices"]]["count"]//3 for m in model["meshes"] for p in m["primitives"])
     for side, path, label in [(-1, previous_path, previous.upper() + " / " + str(triangles(previous_path)) + " triangles"),
-                              (1, RUNTIME / "rcs.md.glb", "R002 / " + str(triangles(RUNTIME / "rcs.md.glb")) + " triangles")]:
+                              (1, RUNTIME / "rcs.md.glb", "R003 / " + str(triangles(RUNTIME / "rcs.md.glb")) + " triangles")]:
         before = set(bpy.data.objects)
         bpy.ops.import_scene.gltf(filepath=str(path))
         imported = set(bpy.data.objects) - before
@@ -376,7 +381,7 @@ def render_comparison(previous="old"):
         ob.rotation_euler = rotation.to_euler()
         ob.location = target + right * side * .95 + up * .91
     bpy.context.scene.render.resolution_y = 750
-    bpy.context.scene.render.filepath = str(EVIDENCE / ("rcs-quad-r002-md-r001-vs-r002.png" if previous == "r001" else "rcs-quad-r002-md-old-vs-new.png"))
+    bpy.context.scene.render.filepath = str(EVIDENCE / ("rcs-quad-r003-md-r002-vs-r003.png" if previous == "r002" else "rcs-quad-r003-md-old-vs-new.png"))
     bpy.ops.render.render(write_still=True)
 
 
@@ -397,8 +402,8 @@ def main():
         mats = materials()
         stats = {"rcs." + s: build(s, mats, originals[s]) for s in ("sm", "md")}
         # Keep small visible on opening; medium is an independently editable collection.
-        bpy.data.collections["RCS MD | proposal r002"].hide_viewport = True
-        bpy.data.collections["RCS SM | proposal r002"].hide_render = False
+        bpy.data.collections["RCS MD | proposal r003"].hide_viewport = True
+        bpy.data.collections["RCS SM | proposal r003"].hide_render = False
         bpy.ops.wm.save_as_mainfile(filepath=str(SOURCE), compress=True)
         for folder in (RUNTIME, ART):
             path = folder / "manifest.json"
@@ -411,11 +416,11 @@ def main():
         for size in ("sm", "md"):
             for view in ("three-quarter", "top"):
                 render(RUNTIME / ("rcs." + size + ".glb"), size, view,
-                       EVIDENCE / ("rcs-quad-r002-" + size + "-" + view + ".png"))
+                       EVIDENCE / ("rcs-quad-r003-" + size + "-" + view + ".png"))
     if args.render or args.compare:
         if (SCRATCH / "rcs-old-md.glb").exists():
             render_comparison()
-            render_comparison("r001")
+            render_comparison("r002")
         else:
             print("Comparison needs the pre-edit runtime GLB at", SCRATCH / "rcs-old-md.glb")
     print("RCS quad proposal complete")

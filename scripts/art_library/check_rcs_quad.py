@@ -91,6 +91,7 @@ def validate(size):
     for index in model["scenes"][model.get("scene", 0)]["nodes"]:
         walk(index, IDENTITY)
     points, nozzle_report, triangles, vertices, material_ids = [], {}, 0, 0, []
+    slot_points = {}
     for index, m in world.items():
         node = model["nodes"][index]
         name = node.get("name", "")
@@ -111,7 +112,10 @@ def validate(size):
             assert primitive.get("mode", 4) == 4
             local = accessor(model, binary, primitive["attributes"]["POSITION"])
             assert all(math.isfinite(v) for p in local for v in p)
-            points.extend(kit(transform(m, p)) for p in local)
+            transformed = [kit(transform(m, p)) for p in local]
+            points.extend(transformed)
+            slot = model["materials"][primitive["material"]]["name"]
+            slot_points.setdefault(slot, []).extend(transformed)
             indices = [i[0] for i in accessor(model, binary, primitive["indices"])]
             assert len(indices) % 3 == 0 and all(0 <= i < len(local) for i in indices)
             for offset in range(0, len(indices), 3):
@@ -138,8 +142,27 @@ def validate(size):
         radii[name] = max(abs(p[j]-centre[j]) for p in rim for j in range(3) if j != axis)
         radius = ((.08125 if size == "sm" else .121875) if name == "nozzle.out"
                   else (.06875 if size == "sm" else .105))
+        radius *= 1.25  # r003 mouths, measured from exported geometry.
         assert abs(radii[name]-radius) < 1e-6, (name, radii[name], radius)
     assert radii["nozzle.out"] > max(r for n, r in radii.items() if n != "nozzle.out")
+    # White is confined to the mount/collar; the head's structural faces are navy.
+    assert min(p[1] for p in slot_points["slot0_primary"]) >= (-.1875 if size == "sm" else -.3125) - 1e-6
+    navy = slot_points["slot1_secondary"]
+    head_bounds = ((-.3125, -.4375, -.3125), (.3125, -.1875, .3125)) if size == "sm" else (
+        (-.5, -.9375, -.5), (.5, -.4375, .5))
+    assert near([min(p[j] for p in navy) for j in range(3)], head_bounds[0])
+    assert near([max(p[j] for p in navy) for j in range(3)], head_bounds[1])
+    # Each mouth contains a broad recessed emissive annulus, not a filled dot.
+    for name, (centre, direction) in expected.items():
+        axis = next(j for j in range(3) if direction[j])
+        length = (.1 if name == "nozzle.out" else .125) if size == "sm" else (
+            .125 if name == "nozzle.out" else .25)
+        ring_depth = min(length * .4, radii[name] * .45)
+        plane = centre[axis] - direction[axis] * ring_depth
+        ring = [p for p in slot_points["slot6_emit_a"] if abs(p[axis] - plane) < 1e-6]
+        assert len(ring) >= 16, (name, "missing emissive ring")
+        ring_radii = [max(abs(p[j]-centre[j]) for j in range(3) if j != axis) for p in ring]
+        assert near((min(ring_radii), max(ring_radii)), (radii[name]*.42, radii[name]*.66))
     slots = sorted(m["name"] for m in model["materials"])
     assert slots == ["slot0_primary", "slot1_secondary", "slot2_accent", "slot4_metal", "slot5_dark", "slot6_emit_a"]
     donor, _ = read(RUNTIME / "thrust-block.sm.glb")
@@ -150,6 +173,7 @@ def validate(size):
     assert {n["name"].split(".")[1] for n in ports} == {"power-in", "data-in", "fuel-in"}
     root = next(n for n in model["nodes"] if n.get("name") == "component." + cid)
     assert root["extras"]["status"] == "proposed"
+    assert root["extras"]["artRevision"] == "rcs-quad-r003"
     assert (ROOT / root["extras"]["artSource"]).is_file()
     for folder in (RUNTIME, ART):
         row = next(r for r in json.loads((folder / "manifest.json").read_text())["components"] if r["id"] == cid)
