@@ -32,7 +32,8 @@ async (page) => {
     {},
     { polling: 300, timeout: 90000 },
   );
-  await click("character-open");
+  // The HUD has no Character button; C opens the character window.
+  await page.keyboard.press("KeyC");
   await page.waitForTimeout(1500);
   await page.evaluate(() => {
     const u = window.__componentUI;

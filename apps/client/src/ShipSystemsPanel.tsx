@@ -21,11 +21,15 @@ function engineName(sourceId: string): string {
 export function ShipSystemsPanel({
   connection,
   onError,
+  open,
+  onClose,
 }: {
   connection: DbConnection | null;
   onError: (message: string) => void;
+  /** Opened from the system menu's Vessel tab; there is no HUD toggle. */
+  open: boolean;
+  onClose: () => void;
 }) {
-  const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const [error, setError] = useState("");
   const [pending, setPending] = useState("");
@@ -121,13 +125,6 @@ export function ShipSystemsPanel({
   }
   return (
     <>
-      <button
-        className="ship-refit-toggle ship-systems-toggle"
-        aria-expanded={open}
-        onClick={() => setOpen((value) => !value)}
-      >
-        Ship systems
-      </button>
       {open && (
         <section
           className="ship-service-panel ship-systems-panel"
@@ -136,7 +133,7 @@ export function ShipSystemsPanel({
           <button
             className="service-close"
             aria-label="Close ship systems"
-            onClick={() => setOpen(false)}
+            onClick={onClose}
           >
             ×
           </button>

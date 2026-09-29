@@ -1,8 +1,7 @@
-import { AuthoredFlightReview } from "./AuthoredFlightReview";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
 import { ShipSystemsPanel } from "./ShipSystemsPanel";
-import { ShipRefitPanel } from "./ShipRefitPanel";
+import { ShipRefitPanel, shipRefitAvailable } from "./ShipRefitPanel";
 import { MountedFuelPanel } from "./MountedFuelPanel";
 import {
   supportsAuthoredFlightPresentation,
@@ -34,11 +33,12 @@ import { groundItemsForScene } from "./ground-items";
 import { createMovementControl } from "./movement-control";
 import { createIntentTransmitter } from "./intent-transmitter";
 import { LAB_STORAGE_FIXTURES } from "@sidereal/content/storage-fixtures";
-import { ConstructionReview } from "./ConstructionReview";
+import { ConstructionReview, testShipCount } from "./ConstructionReview";
 import { PILOT_LAYOUT } from "../../../packages/content/src/pilot-layout";
-import { AccountPanel } from "./AccountPanel";
+import { AccountPanel, accountSummary } from "./AccountPanel";
 import { createConnectionSession } from "./connection-session";
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useRef,
@@ -100,7 +100,9 @@ import { resolveCrewBundle } from "@sidereal/content/crew-voxel-bundle";
 import {
   createGameUI,
   gameplayIntent,
+  isEditableTarget,
   type GameUIState,
+  type MenuService,
 } from "../../../packages/canvas-ui/src";
 /** Shooter feedback labels for structure hits (components use their catalogue name). */
 const IMPACT_LABELS: Record<string, string> = {
@@ -134,6 +136,13 @@ export default function App({
   const localShipId = useRef<string | undefined>(undefined);
   const [selectedObject, setSelectedObject] = useState<string>();
   const [combatEnabled, setCombatEnabled] = useState(false);
+  /** The DOM service panel opened from the system menu ("" when none). */
+  const [servicePanel, setServicePanel] = useState("");
+  const servicePanelOpen = useRef("");
+  servicePanelOpen.current = servicePanel;
+  const closeServicePanel = useCallback(() => setServicePanel(""), []);
+  const onSignOutRef = useRef(onSignOut);
+  onSignOutRef.current = onSignOut;
   // Legacy stock-ship inspection catalog is retired with its assets (see below).
   const [equipmentCatalog] = useState<EquipmentCatalog>();
   const appearanceWrites = useRef(Promise.resolve());
@@ -770,8 +779,27 @@ export default function App({
         targetMaxHp: combatImpact.targetMaxHp,
       }
     : undefined;
+  const testShips = passengerVisit ? undefined : testShipCount(c);
+  const vesselServices: MenuService[] = awaitingShip
+    ? []
+    : [
+        ...(actor?.shipId
+          ? [{ id: "ship-systems", label: "Ship systems" }]
+          : []),
+        ...(shipRefitAvailable(c)
+          ? [{ id: "ship-refit", label: "Ship refit" }]
+          : []),
+        ...(testShips !== undefined
+          ? [{ id: "test-ships", label: `Shipyard test ships (${testShips})` }]
+          : []),
+      ];
   const uiState: GameUIState = {
     accountKind: auth?.kind === "oidc" ? "oidc" : "development",
+    account: {
+      name: accountName,
+      ...accountSummary(c, actor?.id, !!auth),
+    },
+    vesselServices,
     sharedEntry: sharedEnabled && !awaitingShip ? sharedEntry.state : undefined,
     characterAppearance: cosmetics,
     graphics: view.current?.getGraphicsSettings(),
@@ -1132,6 +1160,13 @@ export default function App({
                   },
                   interact,
                   combat: () => setCombatEnabled((v) => !v),
+                  openService: setServicePanel,
+                  closeService: () => {
+                    if (!servicePanelOpen.current) return false;
+                    setServicePanel("");
+                    return true;
+                  },
+                  signOut: () => onSignOutRef.current(),
                   objectDetails: {
                     action: (action) =>
                       objectCommand(
@@ -1684,6 +1719,7 @@ export default function App({
     };
     const down = (e: KeyboardEvent) => {
       if (
+        isEditableTarget(e.target) ||
         loadingRef.current ||
         gui.current?.blocked() ||
         !actor?.connected ||
@@ -1918,13 +1954,15 @@ export default function App({
           </div>
         )}
         {!passengerVisit && (
-          <ConstructionReview connection={c} onError={setError} />
+          <ConstructionReview
+            connection={c}
+            onError={setError}
+            open={servicePanel === "test-ships"}
+            onClose={closeServicePanel}
+          />
         )}
         {passengerInterior && (
-          <aside
-            aria-label="Passenger interior"
-            className="construction-flight-properties"
-          >
+          <aside aria-label="Passenger interior" className="passenger-interior">
             <strong>{passengerInterior.name} · Passenger</strong>
             {passengerInterior.flightStatus !== "ready" && (
               <p role="status">
@@ -1943,8 +1981,18 @@ export default function App({
         )}
         {!awaitingShip && (
           <>
-            <ShipRefitPanel connection={c} onError={setError} />
-            <ShipSystemsPanel connection={c} onError={setError} />
+            <ShipRefitPanel
+              connection={c}
+              onError={setError}
+              open={servicePanel === "ship-refit"}
+              onClose={closeServicePanel}
+            />
+            <ShipSystemsPanel
+              connection={c}
+              onError={setError}
+              open={servicePanel === "ship-systems"}
+              onClose={closeServicePanel}
+            />
           </>
         )}
         {awaitingShip && ready && (
@@ -1959,16 +2007,6 @@ export default function App({
               assigned to your account.
             </span>
           </div>
-        )}
-        {c && gameShipAccess && constructionInstance && (
-          <details className="construction-flight-properties">
-            <summary>Flight properties</summary>
-            <AuthoredFlightReview
-              connection={c}
-              instanceId={constructionInstance.id}
-              onError={setError}
-            />
-          </details>
         )}
         <MountedFuelPanel
           connection={c}
@@ -1988,6 +2026,8 @@ export default function App({
           characterId={actor?.id}
           name={accountName}
           oidc={!!auth}
+          open={servicePanel === "account"}
+          onClose={closeServicePanel}
           onSignOut={onSignOut}
         />
       </div>

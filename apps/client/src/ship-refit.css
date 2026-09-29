@@ -1,14 +1,3 @@
-.ship-refit-toggle {
-  position: fixed;
-  right: 6rem;
-  bottom: 1rem;
-  z-index: 8;
-  padding: 0.5rem 0.9rem;
-  background: #061a30;
-  color: #d8efff;
-  border: 1px solid #40cdeb;
-  cursor: pointer;
-}
 .ship-service-panel {
   position: fixed;
   right: 1rem;
@@ -72,29 +61,30 @@
   right: auto;
 }
 
-.construction-flight-properties {
+/* Passenger visit card: top centre, clear of the bottom-left player status. */
+.passenger-interior {
   position: fixed;
-  left: 1rem;
-  bottom: 4rem;
-  z-index: 12;
-  max-width: 25rem;
-  max-height: 65vh;
-  overflow: auto;
-  padding: 0.6rem 0.8rem;
-  border: 1px solid #496477;
-  border-radius: 0.3rem;
+  top: 2.4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8;
+  display: grid;
+  gap: 0.2rem;
+  max-width: min(25rem, calc(100vw - 2rem));
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #40cdeb;
   color: #e3ecf2;
-  background: #14202b;
+  background: #05162bee;
 }
-.construction-flight-properties summary {
-  cursor: pointer;
+.passenger-interior p {
+  margin: 0;
 }
-.construction-flight-properties dl {
+.construction-review-controls dl {
   display: grid;
   grid-template-columns: auto 1fr;
   gap: 0.25rem 0.8rem;
   font-size: 0.85rem;
 }
-.construction-flight-properties dd {
+.construction-review-controls dd {
   margin: 0;
 }

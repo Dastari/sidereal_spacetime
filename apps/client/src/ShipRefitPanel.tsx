@@ -2,17 +2,33 @@ import { useRef, useState } from "react";
 import type { DbConnection } from "@sidereal/net";
 import { createOperationId } from "./operation-id";
 import "./ship-refit.css";
-import { ShipRebuildPanel } from "./ShipRebuildPanel";
+import { ShipRebuildPanel, shipRebuildApplicable } from "./ShipRebuildPanel";
+
+/** Either refit (legacy Wayfarer layout or rebuilt Wayfarer) is on offer. */
+export function shipRefitAvailable(connection: DbConnection | null) {
+  const actor = connection && [...connection.db.ownCharacters.iter()][0];
+  return (
+    (!!connection &&
+      [...connection.db.ownWayfarerRefitOffer.iter()].some(
+        (o) => o.characterId === actor?.id && o.shipId === actor.shipId,
+      )) ||
+    shipRebuildApplicable(connection)
+  );
+}
 
 export function ShipRefitPanel({
   connection,
   onError,
+  open,
+  onClose,
 }: {
   connection: DbConnection | null;
   onError: (message: string) => void;
+  /** Opened from the system menu's Vessel tab; there is no HUD toggle. */
+  open: boolean;
+  onClose: () => void;
 }) {
-  const [open, setOpen] = useState(false),
-    [pending, setPending] = useState(false);
+  const [pending, setPending] = useState(false);
   const sending = useRef(false);
   const actor = connection && [...connection.db.ownCharacters.iter()][0];
   const offer =
@@ -21,7 +37,14 @@ export function ShipRefitPanel({
       (o) => o.characterId === actor?.id && o.shipId === actor.shipId,
     );
   if (!offer)
-    return <ShipRebuildPanel connection={connection} onError={onError} />;
+    return (
+      <ShipRebuildPanel
+        connection={connection}
+        onError={onError}
+        open={open}
+        onClose={onClose}
+      />
+    );
   async function refit() {
     if (!connection || sending.current) return;
     const currentActor = [...connection.db.ownCharacters.iter()][0];
@@ -45,7 +68,7 @@ export function ShipRefitPanel({
         fingerprint: current.fingerprint,
         operationId: createOperationId(),
       });
-      setOpen(false);
+      onClose();
     } catch (error) {
       onError(String(error));
     } finally {
@@ -55,15 +78,12 @@ export function ShipRefitPanel({
   }
   return (
     <>
-      <button className="ship-refit-toggle" onClick={() => setOpen((v) => !v)}>
-        Ship refit
-      </button>
       {open && (
         <section className="ship-service-panel" aria-label="Wayfarer refit">
           <button
             className="service-close"
             aria-label="Close ship refit"
-            onClick={() => setOpen(false)}
+            onClick={onClose}
           >
             ×
           </button>

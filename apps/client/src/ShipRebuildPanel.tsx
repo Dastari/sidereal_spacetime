@@ -3,15 +3,30 @@ import { tables, type DbConnection } from "@sidereal/net";
 import { WAYFARER_STARTER } from "@sidereal/content/wayfarer-starter";
 import { createOperationId } from "./operation-id";
 
+/** The rebuilt-Wayfarer refit applies to ships built from the starter template. */
+export function shipRebuildApplicable(connection: DbConnection | null) {
+  const actor = connection && [...connection.db.ownCharacters.iter()][0];
+  const access =
+    connection &&
+    [...connection.db.ownGameShipAccess.iter()].find(
+      (a) => a.shipId === actor?.shipId,
+    );
+  return access?.templateSha256 === WAYFARER_STARTER.sha256;
+}
+
 /** An owner-reviewed, revision-checked refit; opening this panel never edits a ship. */
 export function ShipRebuildPanel({
   connection,
   onError,
+  open,
+  onClose,
 }: {
   connection: DbConnection | null;
   onError: (message: string) => void;
+  /** Opened from the system menu's Vessel tab; there is no HUD toggle. */
+  open: boolean;
+  onClose: () => void;
 }) {
-  const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
   const [unavailable, setUnavailable] = useState(false);
   const [pending, setPending] = useState(false);
@@ -89,7 +104,7 @@ export function ShipRebuildPanel({
         fingerprint: offer.fingerprint,
         operationId: createOperationId(),
       });
-      setOpen(false);
+      onClose();
     } catch (error) {
       onError(String(error));
       setReviewed("");
@@ -100,9 +115,6 @@ export function ShipRebuildPanel({
   }
   return (
     <>
-      <button className="ship-refit-toggle" onClick={() => setOpen((v) => !v)}>
-        Ship refit
-      </button>
       {open && (
         <section
           className="ship-service-panel"
@@ -111,7 +123,7 @@ export function ShipRebuildPanel({
           <button
             className="service-close"
             aria-label="Close ship refit"
-            onClick={() => setOpen(false)}
+            onClick={onClose}
           >
             ×
           </button>
