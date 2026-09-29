@@ -16,26 +16,29 @@ export const skyFragment = /* glsl */ `
 precision highp float;varying vec3 vLocal;
 uniform sampler2D nebula;uniform sampler2D nebula2;uniform vec3 tint2;uniform float gasStrength;uniform float time;uniform vec3 tint;uniform float strength;uniform float seed;uniform float viewportHeight;
 ${noise}
-vec4 skyPlate(vec3 p,vec3 core,sampler2D plate){
+// Returns the plate UV (xy) and its seam/pole weight (z). Sampling stays at the call site:
+// WebGPU GLSL (glslang) rejects sampler2D function parameters built from split texture/sampler.
+vec3 skyPlate(vec3 p,vec3 core){
  vec3 right=normalize(cross(core,vec3(0.,1.,0.)));vec3 up=cross(right,core);
  float forward=dot(p,core);
  vec2 uv=vec2(dot(p,right),dot(p,up))/max(.1,forward)*1.3+.5;
  uv=(floor(uv*vec2(1536.,1024.))+.5)/vec2(1536.,1024.);
- vec3 image=texture2D(plate,clamp(uv,vec2(.001),vec2(.999))).rgb;
  float seam=smoothstep(0.,.15,uv.x)*smoothstep(0.,.15,1.-uv.x)*smoothstep(.1,.5,forward);
  float poles=smoothstep(0.,.15,uv.y)*smoothstep(0.,.15,1.-uv.y);
- return vec4(image,seam*poles);
+ return vec3(clamp(uv,vec2(.001),vec2(.999)),seam*poles);
 }
 void main(){
  // Both art projections are fixed world directions, never camera-relative plates.
  vec3 direction=normalize(vLocal);
  float starGrid=clamp(viewportHeight*2.6,1024.,4096.);
  vec3 cell=floor(direction*starGrid);vec3 p=normalize((cell+.5)/starGrid);
- vec4 rpg=skyPlate(p,normalize(vec3(.74,-.58,.355)),nebula);
- vec4 downward=skyPlate(p,normalize(vec3(-.20,-.96,-.18)),nebula);
+ vec3 rpgPlate=skyPlate(p,normalize(vec3(.74,-.58,.355)));
+ vec3 downPlate=skyPlate(p,normalize(vec3(-.20,-.96,-.18)));
+ vec4 rpg=vec4(texture2D(nebula,rpgPlate.xy).rgb,rpgPlate.z);
+ vec4 downward=vec4(texture2D(nebula,downPlate.xy).rgb,downPlate.z);
  vec3 image=mix(rpg.rgb*rpg.a,downward.rgb*downward.a,smoothstep(.78,.97,-p.y));
- vec4 rpg2=skyPlate(p,normalize(vec3(.74,-.58,.355)),nebula2);
- vec4 downward2=skyPlate(p,normalize(vec3(-.20,-.96,-.18)),nebula2);
+ vec4 rpg2=vec4(texture2D(nebula2,rpgPlate.xy).rgb,rpgPlate.z);
+ vec4 downward2=vec4(texture2D(nebula2,downPlate.xy).rgb,downPlate.z);
  vec3 image2=mix(rpg2.rgb*rpg2.a,downward2.rgb*downward2.a,smoothstep(.78,.97,-p.y));
  float cloud=fbm(p*4.5+seed);
  float overhead=smoothstep(.25,.85,-p.y);

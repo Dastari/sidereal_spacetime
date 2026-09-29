@@ -5,6 +5,7 @@ import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import type { Scene } from "@babylonjs/core/scene";
 import type { UniformBuffer } from "@babylonjs/core/Materials/uniformBuffer";
 import type { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
+import { glslPluginHost } from "../glsl-plugin-host";
 
 export const ICE_FINISH = Object.freeze({
   roughness: 0.21,
@@ -43,7 +44,7 @@ export function iceOpticalResponse(
 class IceOpticsPlugin extends MaterialPluginBase {
   private readonly towardLight = new Vector3(0.6, 1, -0.45).normalize();
   constructor(material: PBRMaterial) {
-    super(material, "AstraIceOptics", 180, {}, true, true);
+    super(glslPluginHost(material), "AstraIceOptics", 180, {}, true, true);
   }
   override getClassName() {
     return "AstraIceOptics";
@@ -100,7 +101,8 @@ class IceOpticsPlugin extends MaterialPluginBase {
  * Uses the existing PBR direct light/shadow path and adds no lights or geometry.
  */
 export function createIceMaterial(scene: Scene, name: string): PBRMaterial {
-  const material = new PBRMaterial(name, scene);
+  // GLSL plugins: keep the GLSL path on WebGPU as well (compiled via glslang).
+  const material = new PBRMaterial(name, scene, true);
   material.albedoColor = Color3.White();
   material.metallic = 0;
   material.roughness = ICE_FINISH.roughness;

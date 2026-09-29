@@ -92,7 +92,7 @@ export interface SpaceBodyState {
   seed: number;
   recipe?: PlanetRecipe;
 }
-function material(
+export function material(
   scene: Scene,
   name: string,
   fragmentSource: string,
