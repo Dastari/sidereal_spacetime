@@ -6,7 +6,10 @@ import {
   characterEquipmentFromInventory,
 } from "../../../packages/content/src/inventory";
 import type { CrewAppearance } from "../../../packages/render/src/crew/appearance";
-import type { EquipmentAsset } from "../../../packages/render/src/equipment";
+import {
+  EQUIPMENT_ASSETS,
+  type EquipmentAsset,
+} from "../../../packages/render/src/equipment";
 
 /** Only server-filtered projections enter the game UI; no private base table is subscribed. */
 export function inventoryView(
@@ -52,14 +55,24 @@ export function inventoryView(
 export function inventoryAppearance(
   inventory: InventoryState,
   cosmetics: CrewAppearance,
-): { crewAppearance: CrewAppearance; equippedAsset: EquipmentAsset | null } {
+): {
+  crewAppearance: CrewAppearance;
+  equippedAsset: EquipmentAsset | null;
+  heldItem: string | null;
+} {
   return equipmentAppearance(inventory.items, cosmetics);
 }
 /** Crew look from worn items (definition id + slot): the local character and crewmates alike. */
 export function equipmentAppearance(
   items: readonly { definitionId: string; equipmentSlot: string }[],
   cosmetics: CrewAppearance,
-): { crewAppearance: CrewAppearance; equippedAsset: EquipmentAsset | null } {
+): {
+  crewAppearance: CrewAppearance;
+  /** Legacy r008 crew only: the 2026-09-08 equipment asset, when the item has one. */
+  equippedAsset: EquipmentAsset | null;
+  /** Voxel crew: the r001 item in hand (the definition's crewItemId, the only art mapping). */
+  heldItem: string | null;
+} {
   const held = items.find((item) => item.equipmentSlot === "hand");
   const definition = INVENTORY_DEFINITIONS.find(
     (d) => d.id === held?.definitionId,
@@ -74,6 +87,11 @@ export function equipmentAppearance(
       backpack,
       backpackStyle: "utility",
     },
-    equippedAsset: (definition?.assetId as EquipmentAsset) ?? null,
+    equippedAsset: EQUIPMENT_ASSETS.includes(
+      definition?.assetId as EquipmentAsset,
+    )
+      ? (definition!.assetId as EquipmentAsset)
+      : null,
+    heldItem: definition?.crewItemId ?? null,
   };
 }

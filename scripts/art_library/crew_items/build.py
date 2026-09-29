@@ -24,7 +24,7 @@ ROOT = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 
 import bpy  # noqa: E402
 
-from crew_items import blend, body_frames, fx as FX, items as ITEMS, themes as TH  # noqa: E402
+from crew_items import blend, body_frames, footprint, fx as FX, items as ITEMS, themes as TH  # noqa: E402
 from crew_items.glb import stats  # noqa: E402
 from crew_items.voxel import ITEM_SLOTS, blender_to_gltf  # noqa: E402
 
@@ -120,7 +120,7 @@ def item_record(item):
         "category": item.category, "animationSet": item.animation_set, "poseProfile": m["pose_profile"],
         "twoHanded": m["two_handed"], "supportMode": m["support_mode"],
         "holster": {"preset": m["holster"], **body_frames.holster_local(holster)} if holster else None,
-        "fx": m["fx"], "references": m["refs"], "replacesLegacyAsset": m["replaces"],
+        "fx": m["fx"], "references": m["refs"],
         "defaultTheme": item.theme,
         "slotOverrides": {k: {"color": list(v[0]), "emissiveStrength": v[1]} if isinstance(v[0], (tuple, list)) else {"color": list(v)}
                           for k, v in item.overrides.items()},
@@ -134,6 +134,8 @@ def item_record(item):
         "clearance": clearance(item),
         "files": {"lod0": f"{item.id}.glb", "lod1": f"{item.id}.lod1.glb", "icon": f"icons/{item.id}.png"},
         "notes": m["notes"],
+        # Inventory grid footprint from the voxel bounds (footprint.py; mirrored in crew-items.ts).
+        "grid": footprint.footprint([b[3] - b[0], b[4] - b[1], b[5] - b[2]]),
     }
 
 
@@ -174,7 +176,7 @@ def export_all(o, items, fxs):
     sc.render.fps = ANIM_FPS
     coll = bpy.data.collections.new("EXPORT")
     sc.collection.children.link(coll)
-    manifest = {"schema": "sidereal.crew.items/1", "revision": REVISION, "status": "proposal (not owner-approved, unpublished)",
+    manifest = {"schema": "sidereal.crew.items/1", "revision": REVISION, "status": "first revision, accepted by the owner for live use (2026-09-29)",
                 "generator": "scripts/art_library/crew_items/build.py", "items": [], "fx": []}
     for item in items:
         root, objs = blend.assemble_export(item, coll, bevel=True)
@@ -227,7 +229,7 @@ def export_all(o, items, fxs):
 def content_json(items, fxs):
     return {
         "schema": "sidereal.crew.items/1", "revision": REVISION,
-        "status": "proposal (not owner-approved); presentation data only - confers no inventory, combat or equip rights",
+        "status": "first revision, accepted by the owner for live use (2026-09-29); presentation data only - confers no inventory, combat or equip rights (inventory definitions do)",
         "assetBase": f"/assets/crew/items/{REVISION}/",
         "voxelSize": 1 / 32, "animationFps": ANIM_FPS,
         "bodySpec": {"schema": "sidereal.crew.body-spec/1", "revision": body_frames.BODY_SPEC_REVISION},
@@ -262,6 +264,7 @@ def main():
         with open(o.content, "w") as fh:
             json.dump(data, fh, indent=1)
             fh.write("\n")
+        footprint.prettier(o.content)  # the repository format check pins prettier output
         manifest["contentSha256"] = sha(o.content)
         with open(os.path.join(o.out, "manifest.json"), "w") as fh:
             json.dump(manifest, fh, indent=1)

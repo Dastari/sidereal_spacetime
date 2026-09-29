@@ -33,6 +33,8 @@ import {
 export type CharacterPreviewAppearance = Partial<CrewAppearance> & {
   /** Current visual catalog ID; grants no inventory or equipment capability. */
   equipmentAsset?: string;
+  /** Voxel crew: the r001 item in hand (the inventory definition's crewItemId). */
+  equipmentItem?: string;
 };
 export type CharacterPreviewStatus = "loading" | "ready" | "error" | "disposed";
 
@@ -193,16 +195,21 @@ function buildCharacterPreview(
         ? preset
         : "engineer"
     ) as CrewAppearance["outfit"];
-    const { equipmentAsset: _asset, ...customization } = appearance;
+    const {
+      equipmentAsset: _asset,
+      equipmentItem,
+      ...customization
+    } = appearance;
     crew.customize({ outfit, ...customization, weaponFixture: !gear });
     applyVoxelOutfit({ outfit, ...customization });
     dirty = true;
     subjects();
-    const asset = EQUIPMENT_ASSETS.includes(
-      appearance.equipmentAsset as EquipmentAsset,
-    )
-      ? (appearance.equipmentAsset as EquipmentAsset)
-      : undefined;
+    const voxelPreview = "bundle" in crew && crew.bundle === "voxel";
+    const asset = voxelPreview
+      ? equipmentItem
+      : EQUIPMENT_ASSETS.includes(appearance.equipmentAsset as EquipmentAsset)
+        ? (appearance.equipmentAsset as EquipmentAsset)
+        : undefined;
     if (asset === selectedEquipment) return;
     selectedEquipment = asset;
     equipmentFailed = false;
@@ -226,8 +233,8 @@ function buildCharacterPreview(
       : createEquipmentVisual(
           scene,
           crew.sockets.handR,
-          asset,
-          poseConfiguration?.items[asset]
+          asset as EquipmentAsset,
+          poseConfiguration?.items[asset as EquipmentAsset]
             ? poseConfiguration.equipmentUrl
             : undefined,
         )

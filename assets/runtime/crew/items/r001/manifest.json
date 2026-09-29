@@ -1,7 +1,7 @@
 {
  "schema": "sidereal.crew.items/1",
  "revision": "r001",
- "status": "proposal (not owner-approved, unpublished)",
+ "status": "first revision, accepted by the owner for live use (2026-09-29)",
  "generator": "scripts/art_library/crew_items/build.py",
  "items": [
   {
@@ -2128,5 +2128,5 @@
  },
  "content": "packages/content/src/crew-items-r001.json",
  "referenceCrops": "scripts/art_library/crew_items_reference_crops.json",
- "contentSha256": "74252e229537b3d299b8c9f3a8c888e3b17d4612ac3fdb12b2100b1cb61fdeee"
+ "contentSha256": "4ae956552ff4e40e31fbfe746dc08723366e72473f7850b03ed91bef861f0e94"
 }

@@ -11,6 +11,7 @@
     "./prefab-cargo-sockets": "./src/prefab-cargo-sockets.ts",
     "./prefab-deck-objects": "./src/prefab-deck-objects.ts",
     "./prefab-beam": "./src/prefab-beam.ts",
+    "./combat": "./src/combat.ts",
     "./combat-damage": "./src/combat-damage.ts",
     "./eva": "./src/eva.ts",
     "./construction-transactions": "./src/construction-transactions.ts",

@@ -47,6 +47,7 @@ import PublishConstructionBlueprintReducer from "../publish_construction_bluepri
 import RefitExistingWayfarerReducer from "../refit_existing_wayfarer_reducer";
 import RefitRebuiltWayfarerReducer from "../refit_rebuilt_wayfarer_reducer";
 import ReleaseInputControlReducer from "../release_input_control_reducer";
+import ReloadWeaponReducer from "../reload_weapon_reducer";
 import RenameShipReducer from "../rename_ship_reducer";
 import ReplaceLegacyPlayerWayfarerReducer from "../replace_legacy_player_wayfarer_reducer";
 import RequestIdentityLinkReducer from "../request_identity_link_reducer";
@@ -111,6 +112,7 @@ export type PublishConstructionBlueprintParams = __Infer<typeof PublishConstruct
 export type RefitExistingWayfarerParams = __Infer<typeof RefitExistingWayfarerReducer>;
 export type RefitRebuiltWayfarerParams = __Infer<typeof RefitRebuiltWayfarerReducer>;
 export type ReleaseInputControlParams = __Infer<typeof ReleaseInputControlReducer>;
+export type ReloadWeaponParams = __Infer<typeof ReloadWeaponReducer>;
 export type RenameShipParams = __Infer<typeof RenameShipReducer>;
 export type ReplaceLegacyPlayerWayfarerParams = __Infer<typeof ReplaceLegacyPlayerWayfarerReducer>;
 export type RequestIdentityLinkParams = __Infer<typeof RequestIdentityLinkReducer>;

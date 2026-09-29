@@ -153,6 +153,11 @@ export function voxelCrewActionLayer(
   moving: boolean,
 ): "upper" | "full" {
   if (action.startsWith("shoot")) return "upper";
+  // CHAR-WEAPONS armed clips `<class>.<clip>`: shots over any gait; reload/draw/holster keep the
+  // legs walking while moving.
+  const armed = /^[a-z]+\.(shoot|reload|draw|holster)$/.exec(action)?.[1];
+  if (armed === "shoot") return "upper";
+  if (armed) return moving ? "upper" : "full";
   return moving && UPPER_BODY_ACTIONS.has(action) ? "upper" : "full";
 }
 

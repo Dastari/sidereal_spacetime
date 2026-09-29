@@ -31,6 +31,8 @@ import {
 } from "../packages/sim/src/prefab-beam";
 import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 import { evaSmoke } from "./eva-smoke-steps";
+import { blastDamage, pelletAngles } from "../packages/sim/src/combat";
+import { LAB_WEAPONS } from "../packages/content/src/weapons";
 
 const host = process.env.SIDEREAL_SMOKE_URL,
   database = process.env.SIDEREAL_SMOKE_DATABASE,
@@ -72,6 +74,7 @@ const subscribed = () => [
   tables.ownInventoryItems,
   tables.ownCombat,
   tables.ownCombatImpact,
+  tables.visibleCombatActions,
   tables.ownCharacterVitals,
   tables.ownShipComponentDamage,
   tables.ownEvaBody,
@@ -303,6 +306,142 @@ try {
   }
   await c.reducers.setCombatAim({ active: false, angle: 0 });
   console.log(JSON.stringify({ impacts }));
+
+  // Items batch A (2026-09-29): shotgun pellets, reload, baton reach and a grenade's blast,
+  // resolved by the same authoritative beam as the pistol above.
+  const combatNow = () => [...c.db.ownCombat.iter()][0] as any;
+  const ownAction = () =>
+    [...c.db.visibleCombatActions.iter()].find(
+      (r: any) => r.characterId === actor().id,
+    ) as any;
+  const health = () =>
+    ([...c.db.ownCharacterVitals.iter()][0] as any)?.health ?? 100;
+  const hold = async (definitionId: string) => {
+    await c.reducers.holdPrefabSmokeWeapon({ definitionId });
+    await wait(
+      () => combatNow()?.weaponDefinitionId === definitionId,
+      "holding " + definitionId,
+    );
+  };
+  const fireAt = async (angle: number) => {
+    await c.reducers.setCombatAim({ active: true, angle });
+    await wait(() => combatNow()?.aimActive, "aim active");
+    const before = combatNow();
+    await c.reducers.fireWeapon({
+      itemId: heldId,
+      expectedRevision: before.revision,
+      operationId: crypto.randomUUID(),
+    });
+    await wait(
+      () => ownAction()?.shotSequence === before.shotSequence + 1n,
+      "own combat action row",
+    );
+    return ownAction();
+  };
+  const heldId = item().id; // one item UUID; the smoke-only reducer retypes it
+  await hold("shotgun");
+  const pelletAngle = Math.PI / 2;
+  const pelletShot = await fireAt(pelletAngle);
+  const pellets = JSON.parse(pelletShot.pointsJson) as number[][];
+  assert.equal(pelletShot.mode, "pellets");
+  assert.equal(pelletShot.definitionId, "shotgun");
+  assert.equal(pellets.length, LAB_WEAPONS.shotgun.pellets);
+  pelletAngles(
+    pelletAngle,
+    LAB_WEAPONS.shotgun.pellets!,
+    LAB_WEAPONS.shotgun.spreadRad!,
+  ).forEach((a, i) => {
+    const expected = castPrefabBeam(
+      beam,
+      [actor().localX, actor().localY],
+      a,
+      LAB_WEAPONS.shotgun.rangeMeters,
+    );
+    assert(
+      Math.hypot(
+        pellets[i][0] - expected.point[0],
+        pellets[i][1] - expected.point[1],
+      ) < 1e-6,
+      `pellet ${i} ends where the authoritative beam ends`,
+    );
+    assert.equal(pellets[i][2], expected.kind === "none" ? 0 : 1);
+  });
+  const beforeReload = combatNow();
+  await c.reducers.reloadWeapon({
+    itemId: heldId,
+    expectedRevision: beforeReload.revision,
+    operationId: crypto.randomUUID(),
+  });
+  await wait(
+    () =>
+      combatNow().energy === combatNow().capacity &&
+      ownAction()?.reloadSequence === 1n,
+    "shotgun reloaded",
+  );
+  await c.reducers.setCombatAim({ active: true, angle: pelletAngle });
+  await assert.rejects(
+    c.reducers.fireWeapon({
+      itemId: heldId,
+      expectedRevision: combatNow().revision,
+      operationId: crypto.randomUUID(),
+    }),
+    /Reloading/,
+  );
+  await pause(LAB_WEAPONS.shotgun.reloadMs! + 200);
+  await hold("baton");
+  const swing = await fireAt(pelletAngle);
+  assert.equal(swing.mode, "melee");
+  const reach = ([...c.db.ownCombatImpact.iter()][0] as any).distanceM;
+  assert(reach <= LAB_WEAPONS.baton.rangeMeters + 1e-9, "baton reach");
+  // A grenade toward the nearest wall lands 0.3 m short of it and, after the fuse, damages the
+  // thrower standing inside the blast (friendly fire), with the authoritative falloff.
+  const nearest = [
+    ...(impacts as { angle: number; kind: string; distanceM: number }[]),
+  ]
+    .filter((i) => i.kind === "wall")
+    .sort((a, b) => a.distanceM - b.distanceM)[0];
+  await hold("grenade");
+  await pause(LAB_WEAPONS.baton.cooldownMs);
+  const healthBefore = health();
+  const thrown = await fireAt(nearest.angle);
+  assert.equal(thrown.mode, "thrown");
+  assert.equal(thrown.detonated, false);
+  const landGap = Math.hypot(
+    thrown.landX - actor().localX,
+    thrown.landY - actor().localY,
+  );
+  assert(
+    Math.abs(landGap - Math.max(0, nearest.distanceM - 0.3)) < 1e-4,
+    "lands 0.3 m short of the wall",
+  );
+  await wait(() => ownAction()?.detonated === true, "detonation", 5000);
+  const expectedBlast = blastDamage(
+    LAB_WEAPONS.grenade.damage,
+    landGap,
+    LAB_WEAPONS.grenade.blastRadiusM!,
+    LAB_WEAPONS.grenade.blastEdgeFraction!,
+  );
+  await wait(
+    () => ([...c.db.ownCombatImpact.iter()][0] as any)?.kind === "blast",
+    "blast impact row",
+  );
+  const blastRow = [...c.db.ownCombatImpact.iter()][0] as any;
+  assert(Math.abs(blastRow.damage - expectedBlast) < 1e-6, "blast damage");
+  await wait(
+    () => Math.abs(healthBefore - health() - expectedBlast) < 1e-6,
+    "thrower health after the blast",
+  );
+  await c.reducers.setCombatAim({ active: false, angle: 0 });
+  await hold("compact-pistol");
+  console.log(
+    JSON.stringify({
+      itemsBatchA: {
+        pellets: pellets.map((p) => p[2]),
+        reach,
+        grenade: { landGap, blastDamage: expectedBlast },
+      },
+    }),
+  );
 
   // Walk from here to the derived pilot approach (around furniture), then sit.
   const pose = prefabPilotPose(model.station!);

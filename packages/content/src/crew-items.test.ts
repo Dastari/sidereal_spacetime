@@ -10,7 +10,8 @@ import {
   CREW_ITEM_FX,
   crewItem,
   crewItemActionPlan,
-  crewItemForLegacyAsset,
+  crewItemGridFootprint,
+  crewItemGridIconUrl,
   crewArmedClip,
   crewArmedClipInfo,
   CREW_ARMED_CLIPS,
@@ -203,11 +204,42 @@ describe("crew voxel items r001", () => {
         expect(c.supportErrorMaxM, c.animation).toBeLessThan(0.02);
   });
 
-  it("maps legacy equipment assets to voxel replacements", () => {
-    expect(crewItemForLegacyAsset("compact-pistol")?.id).toBe("pistol");
-    expect(crewItemForLegacyAsset("carbine")?.id).toBe("compact-carbine");
-    expect(crewItemForLegacyAsset("long-rifle")?.id).toBe("rail-rifle");
-    expect(crewItemForLegacyAsset("supply-crate")).toBeUndefined();
+  it("derives every grid footprint from the voxel bounds (8 voxels per cell)", () => {
+    for (const item of CREW_ITEMS)
+      expect(item.grid, item.id).toEqual(
+        crewItemGridFootprint(item.sizeVoxels),
+      );
+    // same-length long guns share a footprint; the square sample scanner is square
+    expect(crewItem("compact-carbine").grid).toMatchObject({
+      width: 4,
+      height: 2,
+    });
+    expect(crewItem("rifle").grid).toMatchObject({ width: 4, height: 2 });
+    expect(crewItem("sample-scanner").grid).toMatchObject({
+      width: 2,
+      height: 2,
+    });
+    expect(crewItem("grenade").grid).toMatchObject({ width: 1, height: 1 });
+    expect(crewItemGridFootprint([4, 17, 9])).toEqual({
+      width: 2,
+      height: 1,
+      view: "side",
+    });
+    expect(crewItemGridFootprint([12, 4, 11])).toMatchObject({ view: "front" });
+    const broken = structuredClone(CREW_ITEM_CATALOG) as CrewItemCatalog;
+    (broken.items[0] as { grid: { width: number } }).grid.width = 9;
+    expect(() => validateCrewItemCatalog(broken)).toThrow(/grid footprint/);
+  });
+
+  it("ships one grid icon per item at its footprint aspect", () => {
+    for (const item of CREW_ITEMS) {
+      const url = crewItemGridIconUrl(item);
+      expect(url).toContain(`/icons/grid/${item.id}.png?revision=r001`);
+      const png = readFileSync(join(ASSETS, "icons/grid", item.id + ".png"));
+      expect(png.subarray(1, 4).toString("latin1"), item.id).toBe("PNG");
+      expect(png.readUInt32BE(16), item.id).toBe(item.grid.width * 96);
+      expect(png.readUInt32BE(20), item.id).toBe(item.grid.height * 96);
+    }
   });
 
   it("samples FX keys (one-shots finish, loops wrap)", () => {

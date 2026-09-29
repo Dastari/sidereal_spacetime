@@ -50,7 +50,8 @@ describe("crewmates from the two server views", () => {
       localX: 1,
       localY: 2,
       elevation: 0.1875,
-      heldAsset: "carbine",
+      // the legacy carbine shows its r001 art (inventory crewItemId, the only mapping)
+      heldItem: "compact-carbine",
       shot: undefined,
     });
   });
@@ -71,7 +72,7 @@ describe("crewmates from the two server views", () => {
       [look("mate", { appearanceJson: "{", equipmentJson: '["hand"]' })],
       undefined,
     );
-    expect(mate.heldAsset).toBeNull();
+    expect(mate.heldItem).toBeNull();
     expect(mate.appearance.weapon).toBe("none");
   });
 

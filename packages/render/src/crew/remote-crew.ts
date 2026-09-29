@@ -14,7 +14,7 @@ import { setMeshRole } from "../mesh-roles";
 import type { CrewAppearance } from "./appearance";
 import { createVoxelCrewVisual } from "./voxel-crew";
 import { createVoxelCrewOutfit } from "./voxel-crew-outfit";
-import { equipVoxelCrewItem } from "./voxel-crew-kit";
+import { createVoxelHeldItem, type VoxelHeldItem } from "./voxel-held-item";
 import { createRemoteCrewMotion } from "./remote-crew-motion";
 import type { VoxelCrewEva } from "./voxel-crew-clips";
 import {
@@ -42,8 +42,8 @@ export interface RemoteCrewState {
   /** Ship-local end of the latest accepted shot. */
   shot?: { x: number; y: number; struck: boolean };
   appearance: CrewAppearance;
-  /** Held item asset (inventory definition assetId), or null for an empty hand. */
-  heldAsset: string | null;
+  /** r001 item in hand (the inventory definition's crewItemId), or null for an empty hand. */
+  heldItem: string | null;
   /** Outside a ship (EVA, `visible_eva_bodies`): zero-g / maglock pose and heading. */
   eva?: VoxelCrewEva & { localHeading: number };
 }
@@ -55,22 +55,21 @@ const BEAM_HEIGHT_M = 1.3;
 const TRACER_MS = 110;
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
-type HeldItem = Awaited<ReturnType<typeof equipVoxelCrewItem>>;
 
 interface Entry {
   state: RemoteCrewState;
   motion: ReturnType<typeof createRemoteCrewMotion>;
   crew?: VoxelCrew;
   outfit?: ReturnType<typeof createVoxelCrewOutfit>;
-  item?: HeldItem;
-  itemAsset: string | null;
-  itemRevision: number;
+  /** Draws and holsters the held item like the local character. */
+  held?: VoxelHeldItem;
   appearanceKey: string;
   /** Name label; absent where no 2D canvas exists (headless tests). */
   label?: Mesh;
   labelKey: string;
   lastShot?: bigint;
   evaBody?: ReturnType<typeof createEvaBodyPresentation>;
+  lookApplied?: boolean;
   disposed: boolean;
 }
 
@@ -93,6 +92,8 @@ export function createRemoteCrew(
     onShot?: (impact: { x: number; y: number; struck: boolean }) => void;
     /** A short-lived emissive effect mesh (shot tracer) was created (glow inclusion). */
     onEffectMesh?: (mesh: Mesh) => void;
+    /** Draw the plain green tracer per shot (off where the r001 weapon FX play instead). */
+    tracers?: boolean;
   } = {},
 ) {
   const now = options.now ?? (() => performance.now());
@@ -183,31 +184,20 @@ export function createRemoteCrew(
       crew.customize(entry.state.appearance);
       entry.outfit?.apply(entry.state.appearance);
     }
-    const asset = entry.state.heldAsset;
-    if (asset === entry.itemAsset) return;
-    entry.itemAsset = asset;
-    const revision = ++entry.itemRevision;
-    entry.item?.dispose();
-    entry.item = undefined;
-    if (!asset) return changed();
-    equipVoxelCrewItem(scene, crew, asset)
-      .then((item) => {
-        if (entry.disposed || revision !== entry.itemRevision)
-          return item.dispose();
-        entry.item = item;
-        changed();
-      })
-      .catch((error) =>
-        console.warn(`remote crew item ${asset} unavailable`, error),
-      );
+    entry.held ??= createVoxelHeldItem(scene, crew, {
+      onChange: changed,
+      reducedMotion: () => reducedMotion,
+      // A body first seen already holds its item (no draw replayed on arrival).
+      instant: () => !entry.lookApplied,
+    });
+    entry.held.set(entry.state.heldItem);
+    entry.lookApplied = true;
   };
 
   const create = (state: RemoteCrewState) => {
     const entry: Entry = {
       state,
       motion: createRemoteCrewMotion(),
-      itemAsset: null,
-      itemRevision: 0,
       appearanceKey: "",
       label: makeLabel(state.id),
       labelKey: "",
@@ -247,7 +237,7 @@ export function createRemoteCrew(
     if (!entry) return;
     entry.disposed = true;
     entries.delete(id);
-    entry.item?.dispose();
+    entry.held?.dispose();
     entry.outfit?.dispose();
     const material = entry.label?.material;
     entry.label?.dispose();
@@ -262,7 +252,7 @@ export function createRemoteCrew(
     const crew = entry.crew;
     if (!shot || !crew) return;
     const ship = shipRoot.computeWorldMatrix(true);
-    const muzzle = entry.item?.getMuzzleWorld()?.position;
+    const muzzle = entry.held?.muzzle()?.position;
     const origin =
       muzzle ??
       Vector3.TransformCoordinates(
@@ -275,7 +265,7 @@ export function createRemoteCrew(
     );
     const length = Vector3.Distance(origin, end);
     options.onShot?.(shot);
-    if (length < 0.05 || reducedMotion) return;
+    if (length < 0.05 || reducedMotion || options.tracers === false) return;
     const mesh = CreateBox("remote-crew-tracer", { size: 1 }, scene);
     setMeshRole(mesh, "effect");
     mesh.material = tracerMaterial;
@@ -387,6 +377,11 @@ export function createRemoteCrew(
             .filter((m) => !m.name.startsWith("remote-crew-label")) ?? [],
       );
     },
+    /** A loaded body on this deck: its crew visual, held item and ship-frame position. */
+    body(id: string) {
+      const e = entries.get(id);
+      return e?.crew ? { crew: e.crew, held: e.held } : undefined;
+    },
     tracerMeshes(): AbstractMesh[] {
       return tracers.map((t) => t.mesh);
     },
@@ -423,7 +418,8 @@ export function createRemoteCrew(
         position: e.motion.last
           ? [e.motion.last.x, e.motion.last.y, e.motion.last.z]
           : undefined,
-        item: e.itemAsset,
+        item: e.held?.itemId ?? null,
+        itemPhase: e.held?.phase ?? null,
         armour: e.outfit?.armour ?? {},
         dead: e.state.dead,
       }));

@@ -20,6 +20,46 @@ export const weaponEnergy = table(
     lastShotAngle: t.f64(),
   },
 );
+/**
+ * Private, one row per character (items batch A, 2026-09-29): what others on the deck need to draw
+ * that character's latest combat action with the right effects, and the stun that character is
+ * under. Projected by `visible_combat_actions` to bodies on the viewer's own deck (own included);
+ * never item UUIDs, energy, damage numbers or hit targets.
+ */
+export const combatAction = table(
+  { name: "combat_action" },
+  {
+    characterId: t.string().primaryKey(),
+    shipId: t.string(),
+    /** Construction deck of the shot ("" aboard ships without construction locations). */
+    deckId: t.string(),
+    /** Inventory definition of the weapon (catalogue id, never the item UUID). */
+    definitionId: t.string(),
+    /** beam | pellets | melee | thrown (content/weapons.ts) */
+    mode: t.string(),
+    /** Mirrors the weapon's accepted shot sequence (weapon_energy.shot_sequence). */
+    shotSequence: t.u64(),
+    shotMicros: t.u64(),
+    originX: t.f64(),
+    originY: t.f64(),
+    /** Ship-local end points `[[x, y, struck]]` of every ray of the latest shot (pellets: one each). */
+    pointsJson: t.string(),
+    /** Thrown: landing point, detonation time and blast radius; `detonated` once resolved. */
+    landX: t.f64(),
+    landY: t.f64(),
+    detonateMicros: t.u64(),
+    detonated: t.bool(),
+    blastRadiusM: t.f64(),
+    reloadSequence: t.u64(),
+    /** The item of the latest manual reload; its fire is refused until reloadUntilMicros. Kept
+     * here (a new table) rather than on weapon_energy so no existing table changes shape. */
+    reloadItemId: t.string(),
+    reloadUntilMicros: t.u64(),
+    /** This character cannot aim or fire until then (stun gun, baton). */
+    stunnedUntilMicros: t.u64(),
+    stunSequence: t.u64(),
+  },
+);
 export const combatReceipt = table(
   {
     name: "combat_receipt",

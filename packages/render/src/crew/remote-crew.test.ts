@@ -132,7 +132,7 @@ const mate = (over: Partial<RemoteCrewState> = {}): RemoteCrewState => ({
   aimAngle: 0,
   shotSequence: 0n,
   appearance: {},
-  heldAsset: null,
+  heldItem: null,
   ...over,
 });
 

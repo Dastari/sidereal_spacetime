@@ -37,6 +37,19 @@ export const damagePrefabSmokeCharacter = db.reducer({damage:t.f64()},auth.gameA
   if(!(args.damage>0&&args.damage<=100000))throw new SenderError("Bounded damage required");
   damageSmokeCharacter(ctx,actors[0].id,args.damage);
 }));
+// Smoke-only (items batch A): the caller's held item becomes another weapon definition (same item
+// UUID, fresh weapon state), so one smoke identity can exercise every fire mode. Production stocks
+// real items through operator_stock_ship_cargo and equips them.
+import { LAB_WEAPONS as SMOKE_WEAPONS } from "../../content/src/weapons";
+export const holdPrefabSmokeWeapon = db.reducer({definitionId:t.string()},auth.gameAction((ctx,args)=>{
+  const actors=[...ctx.db.character.by_owner.filter(ctx.sender)];
+  if(actors.length!==1)throw new SenderError("One owned smoke character required");
+  if(!SMOKE_WEAPONS[args.definitionId])throw new SenderError("Weapon definition required");
+  const item=[...ctx.db.inventoryItem.by_character.filter(actors[0].id)].find(i=>i.equipmentSlot==="hand");
+  if(!item)throw new SenderError("Hold the starter pistol first");
+  ctx.db.inventoryItem.id.update({...item,definitionId:args.definitionId});
+  if(ctx.db.weaponEnergy.itemId.find(item.id))ctx.db.weaponEnergy.itemId.delete(item.id);
+},true));
 '''
 
 

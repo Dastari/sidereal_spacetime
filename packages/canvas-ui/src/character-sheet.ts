@@ -217,6 +217,7 @@ export function createCharacterSheet(
         backpack: state.items.some((i) => i.equipmentSlot === "back"),
         backpackStyle: "utility",
         equipmentAsset: heldDef?.assetId,
+        equipmentItem: heldDef?.crewItemId,
       });
       preview.render(
         performance.now() / 1000,

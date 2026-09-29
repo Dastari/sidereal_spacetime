@@ -221,7 +221,7 @@ describe("EVA client presentation", () => {
       "cap",
       ship,
       model,
-      () => ({ crewAppearance: {}, equippedAsset: null }),
+      () => ({ crewAppearance: {}, heldItem: null }),
     );
     expect(rows).toHaveLength(1);
     expect(rows[0].localX).toBeCloseTo(2, 9);

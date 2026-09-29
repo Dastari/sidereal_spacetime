@@ -332,13 +332,13 @@ export function evaBodiesForScene(
   look: (
     appearanceJson: string,
     equipmentJson: string,
-  ) => { crewAppearance: CrewAppearance; equippedAsset: string | null },
+  ) => { crewAppearance: CrewAppearance; heldItem: string | null },
 ) {
   if (!ship) return [];
   const out = [];
   for (const row of rows) {
     if (row.characterId === ownId) continue;
-    const { crewAppearance, equippedAsset } = look(
+    const { crewAppearance, heldItem } = look(
       row.appearanceJson,
       row.equipmentJson,
     );
@@ -375,7 +375,7 @@ export function evaBodiesForScene(
         ? { x: shot[0], y: shot[1], struck: row.shotStruck }
         : undefined,
       appearance: crewAppearance,
-      heldAsset: equippedAsset,
+      heldItem,
       eva: scene,
     });
   }

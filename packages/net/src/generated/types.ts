@@ -227,6 +227,53 @@ export const CharacterVitalsStatus = __t.object("CharacterVitalsStatus", {
 });
 export type CharacterVitalsStatus = __Infer<typeof CharacterVitalsStatus>;
 
+export const CombatAction = __t.object("CombatAction", {
+  characterId: __t.string(),
+  shipId: __t.string(),
+  deckId: __t.string(),
+  definitionId: __t.string(),
+  mode: __t.string(),
+  shotSequence: __t.u64(),
+  shotMicros: __t.u64(),
+  originX: __t.f64(),
+  originY: __t.f64(),
+  pointsJson: __t.string(),
+  landX: __t.f64(),
+  landY: __t.f64(),
+  detonateMicros: __t.u64(),
+  detonated: __t.bool(),
+  blastRadiusM: __t.f64(),
+  reloadSequence: __t.u64(),
+  reloadItemId: __t.string(),
+  reloadUntilMicros: __t.u64(),
+  stunnedUntilMicros: __t.u64(),
+  stunSequence: __t.u64(),
+});
+export type CombatAction = __Infer<typeof CombatAction>;
+
+export const CombatActionStatus = __t.object("CombatActionStatus", {
+  characterId: __t.string(),
+  shipId: __t.string(),
+  deckId: __t.string(),
+  definitionId: __t.string(),
+  mode: __t.string(),
+  shotSequence: __t.u64(),
+  shotMicros: __t.u64(),
+  originX: __t.f64(),
+  originY: __t.f64(),
+  pointsJson: __t.string(),
+  landX: __t.f64(),
+  landY: __t.f64(),
+  detonateMicros: __t.u64(),
+  detonated: __t.bool(),
+  blastRadiusM: __t.f64(),
+  reloadSequence: __t.u64(),
+  reloadUntilMicros: __t.u64(),
+  stunnedUntilMicros: __t.u64(),
+  stunSequence: __t.u64(),
+});
+export type CombatActionStatus = __Infer<typeof CombatActionStatus>;
+
 export const CombatAim = __t.object("CombatAim", {
   characterId: __t.string(),
   active: __t.bool(),
@@ -1970,6 +2017,9 @@ export type VisibleBodyDescriptions = __Infer<typeof VisibleBodyDescriptions>;
 
 export const VisibleBodyMotion = __t.object("VisibleBodyMotion", {});
 export type VisibleBodyMotion = __Infer<typeof VisibleBodyMotion>;
+
+export const VisibleCombatActions = __t.object("VisibleCombatActions", {});
+export type VisibleCombatActions = __Infer<typeof VisibleCombatActions>;
 
 export const VisibleCrewPresentation = __t.object("VisibleCrewPresentation", {});
 export type VisibleCrewPresentation = __Infer<typeof VisibleCrewPresentation>;
