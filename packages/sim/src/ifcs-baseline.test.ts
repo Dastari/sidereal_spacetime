@@ -30,9 +30,13 @@ test.each([
   ).toBeCloseTo(spent, 6);
 });
 
-test("phase 1 eight-second full throttle turn from 30 m/s", () => {
+test("eight-second full-throttle turn from 30 m/s: facing follows the yaw intent, speed recovers along it", () => {
+  // Facing and speed are separate intents (fly-by-wire, 2026-09-29). The nose turns at the
+  // pilot's rate through allocated torque; the drives swing the velocity after it, so the
+  // ship slides while turning and regains the requested speed along the new heading.
   let state = { x: 0, y: 0, vx: 0, vy: 30, heading: 0, omega: 0 };
-  for (let i = 0; i < 480; i++)
+  let peakOmega = 0;
+  for (let i = 0; i < 480; i++) {
     state = solveFlight(
       state,
       pilotDesiredMotion(state, { throttle: 1, turn: 1 }, 30, 12, 0.65),
@@ -41,8 +45,23 @@ test("phase 1 eight-second full throttle turn from 30 m/s", () => {
       true,
       profile,
     ).motion;
-  // Phase 0 ended at 15.2373 m/s; phase 1 holds the requested 30 m/s.
-  expect(Math.abs(Math.hypot(state.vx, state.vy) - 30) / 30).toBeLessThan(0.02);
+    peakOmega = Math.max(peakOmega, state.omega);
+  }
+  expect(peakOmega).toBeLessThanOrEqual(0.65 + 1e-9);
+  expect(peakOmega).toBeGreaterThan(0.6);
+  for (let i = 0; i < 1800; i++)
+    state = solveFlight(
+      state,
+      pilotDesiredMotion(state, { throttle: 1, turn: 0 }, 30, 12, 0.65),
+      mass,
+      actuators,
+      true,
+      profile,
+    ).motion;
+  const along =
+    -state.vx * Math.sin(state.heading) + state.vy * Math.cos(state.heading);
+  expect(Math.abs(along - 30) / 30).toBeLessThan(0.02);
+  expect(Math.abs(state.omega)).toBeLessThan(1e-3);
 });
 
 test("phase 1 one-radian heading capture overshoot", () => {

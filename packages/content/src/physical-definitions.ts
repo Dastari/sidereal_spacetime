@@ -2475,7 +2475,6 @@ export const WAYFARER_FLIGHT_PROFILE: FlightProfile = Object.freeze({
   maxAcceleration: 3,
   maxAngularAcceleration: 0.65,
   maxAngularSpeed: 0.65,
-  rawTurnBehavior: false,
 });
 export const WAYFARER_FLIGHT_SPEED = Object.freeze({
   forward: 30,

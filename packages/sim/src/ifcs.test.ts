@@ -411,9 +411,9 @@ test("combined controller request is feasible while guidance shortfall stays vis
   ).toBeGreaterThan(1);
 });
 
-test("raw-turn profile opt-out permits speed loss and validates boolean separately", () => {
+test("pilot yaw intent turns the nose by allocated torque while drives swing the velocity after it", () => {
   let state = { x: 0, y: 0, vx: 0, vy: 30, heading: 0, omega: 0 };
-  const profile = { ...LAB_FLIGHT_PROFILE, rawTurnBehavior: true };
+  const profile = LAB_FLIGHT_PROFILE;
   for (let i = 0; i < 480; i++)
     state = solveFlight(
       state,
