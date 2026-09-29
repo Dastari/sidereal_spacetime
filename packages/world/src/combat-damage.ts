@@ -35,6 +35,7 @@ import {
 } from "@sidereal/sim/combat-damage";
 import { queueFlightDamage } from "./construction-flight-availability";
 import { markShipSystemsDirty } from "./ship-systems-dirty";
+import { markShipFlightDirty } from "./construction-flight-dirty";
 import { releaseForDeath, vitalsOf } from "./character-death";
 import { recordLifecycleEvent, type LifecycleCause } from "./lifecycle";
 
@@ -246,8 +247,11 @@ export function damageComponent(
       },
     );
     // S4-1: the compiled systems budget follows the damage state.
-    if (state.performance !== (row?.performance ?? 1))
+    if (state.performance !== (row?.performance ?? 1)) {
       markShipSystemsDirty(ctx, shipId, "damage");
+      // Tank and generator damage change actuator supply (prefab-flight-supply): recompile flight.
+      markShipFlightDirty(ctx, shipId);
+    }
   }
   return {
     damage: applied,

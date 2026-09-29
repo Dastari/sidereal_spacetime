@@ -1,0 +1,1064 @@
+{
+  "decks": [
+    {
+      "index": 0,
+      "name": "Main deck"
+    }
+  ],
+  "description": "Orion Crest light courier. Sloped bow, swept wings, one airlock and a snug four-room deck. Starter candidate.",
+  "edges": [
+    {
+      "a": [3, 2],
+      "b": [3, 4],
+      "deck": 0,
+      "id": "d-engine",
+      "type": "door.sliding"
+    },
+    {
+      "a": [5, 4],
+      "b": [7, 4],
+      "deck": 0,
+      "id": "d-bunks",
+      "type": "door.standard"
+    },
+    {
+      "a": [5, 2],
+      "b": [7, 2],
+      "deck": 0,
+      "id": "d-hold",
+      "type": "door.standard"
+    },
+    {
+      "a": [8, 2],
+      "b": [8, 4],
+      "deck": 0,
+      "id": "d-bridge",
+      "type": "door.sliding"
+    },
+    {
+      "a": [8, 0],
+      "b": [8, 2],
+      "deck": 0,
+      "id": "g-bridge-s",
+      "type": "wall.glazed"
+    },
+    {
+      "a": [8, 4],
+      "b": [8, 7],
+      "deck": 0,
+      "id": "g-bridge-p",
+      "type": "wall.glazed"
+    }
+  ],
+  "faction": "Federation",
+  "id": "fed.s.wren",
+  "markings": {
+    "emblem": "planet",
+    "name": "WREN",
+    "number": "OC-11"
+  },
+  "mountTiles": [
+    {
+      "at": [4.5, 2.5],
+      "facing": "fore",
+      "id": "turret",
+      "kind": "turret",
+      "size": "MD"
+    },
+    {
+      "at": [7, 2.5],
+      "facing": "fore",
+      "id": "guns",
+      "kind": "fixed",
+      "size": "MD"
+    },
+    {
+      "at": [3, 3],
+      "facing": "fore",
+      "id": "sensor",
+      "kind": "fixed",
+      "size": "SM"
+    }
+  ],
+  "mounts": [
+    {
+      "at": [0, 2],
+      "attach": "face",
+      "component": "thrust-block.sm",
+      "id": "main-s1",
+      "normal": "aft"
+    },
+    {
+      "at": [0, 3],
+      "attach": "face",
+      "component": "thrust-block.sm",
+      "id": "main-s2",
+      "normal": "aft"
+    },
+    {
+      "at": [0, 4],
+      "attach": "face",
+      "component": "thrust-block.sm",
+      "id": "main-p2",
+      "normal": "aft"
+    },
+    {
+      "at": [0, 5],
+      "attach": "face",
+      "component": "thrust-block.sm",
+      "id": "main-p1",
+      "normal": "aft"
+    },
+    {
+      "at": [0.5, -2],
+      "attach": "face",
+      "component": "rcs.md",
+      "id": "rcs-s",
+      "normal": "starboard"
+    },
+    {
+      "at": [0.5, 9],
+      "attach": "face",
+      "component": "rcs.md",
+      "id": "rcs-p",
+      "normal": "port"
+    },
+    {
+      "at": [6, 0],
+      "attach": "edge",
+      "component": "airlock.exterior.md",
+      "id": "airlock",
+      "normal": "starboard"
+    },
+    {
+      "at": [0.5, 1],
+      "attach": "top",
+      "component": "radiator.md",
+      "id": "rad-a"
+    },
+    {
+      "at": [0.5, 4],
+      "attach": "top",
+      "component": "radiator.md",
+      "id": "rad-b"
+    },
+    {
+      "at": [9, 3],
+      "attach": "interior",
+      "component": "console.navigation.sm",
+      "id": "helm",
+      "normal": "fore"
+    },
+    {
+      "at": [8, 0.5],
+      "attach": "interior",
+      "component": "computer-core.sm",
+      "id": "core",
+      "normal": "port"
+    },
+    {
+      "at": [0, 4],
+      "attach": "interior",
+      "component": "reactor.md",
+      "id": "reactor",
+      "normal": "starboard"
+    },
+    {
+      "at": [2, 0],
+      "attach": "interior",
+      "component": "life-support.sm",
+      "id": "life",
+      "normal": "port"
+    },
+    {
+      "at": [0, 0],
+      "attach": "interior",
+      "component": "fuel-tank.md",
+      "id": "fuel",
+      "normal": "port"
+    },
+    {
+      "at": [3.5, 5.5],
+      "attach": "interior",
+      "component": "crew-bunk.sm",
+      "id": "bunk",
+      "normal": "starboard"
+    },
+    {
+      "at": [4.5, 2.5],
+      "attach": "top",
+      "component": "autocannon.sm",
+      "id": "turret",
+      "tile": "turret"
+    },
+    {
+      "at": [7, 2.5],
+      "attach": "top",
+      "component": "autocannon.sm",
+      "id": "guns-a",
+      "tile": "guns"
+    },
+    {
+      "at": [7, 2.5],
+      "attach": "top",
+      "component": "autocannon.sm",
+      "id": "guns-b",
+      "tile": "guns"
+    },
+    {
+      "at": [3, 3],
+      "attach": "top",
+      "component": "sensor-dish.sm",
+      "id": "sensor",
+      "tile": "sensor"
+    }
+  ],
+  "name": "Wren",
+  "revision": 5,
+  "role": "Courier",
+  "rooms": [
+    {
+      "deck": 0,
+      "id": "engine",
+      "label": "ENGINE",
+      "rect": [0, 0, 3, 7],
+      "type": "engineering"
+    },
+    {
+      "deck": 0,
+      "id": "hall",
+      "label": "HALL",
+      "rect": [3, 2, 8, 4],
+      "type": "corridor"
+    },
+    {
+      "deck": 0,
+      "id": "bunks",
+      "label": "BUNKS",
+      "rect": [3, 4, 8, 7],
+      "type": "quarters"
+    },
+    {
+      "deck": 0,
+      "id": "hold",
+      "label": "HOLD",
+      "rect": [3, 0, 8, 2],
+      "type": "cargo"
+    },
+    {
+      "deck": 0,
+      "id": "bridge",
+      "label": "BRIDGE",
+      "rect": [8, 0, 12, 7],
+      "type": "bridge"
+    }
+  ],
+  "schema": "sidereal.ship-prefab.v1",
+  "sizeClass": "S",
+  "skylights": [],
+  "theme": "federation",
+  "volumes": [
+    {
+      "deck": 0,
+      "height": "deck",
+      "id": "hull",
+      "kind": "hull",
+      "logo": true,
+      "spine": true,
+      "tiles": [
+        {
+          "bow": {
+            "axis": 1,
+            "step": 2
+          },
+          "reflected": false,
+          "rot": 3,
+          "shape": "slope1",
+          "x": 10,
+          "y": 0
+        },
+        {
+          "bow": {
+            "axis": 1,
+            "step": 3
+          },
+          "reflected": false,
+          "rot": 3,
+          "shape": "slope1",
+          "x": 11,
+          "y": 1
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 3
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "slope1",
+          "x": 11,
+          "y": 5
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 2
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "slope1",
+          "x": 10,
+          "y": 6
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": 0
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": 1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": 2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": 3
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": 4
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": 5
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": 6
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": 0
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": 1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": 2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": 3
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": 4
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": 5
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": 6
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": 0
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": 1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": 2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": 3
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": 4
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": 5
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": 6
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 3,
+          "y": 0
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 3,
+          "y": 1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 3,
+          "y": 2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 3,
+          "y": 3
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 3,
+          "y": 4
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 3,
+          "y": 5
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 3,
+          "y": 6
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 4,
+          "y": 0
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 4,
+          "y": 1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 4,
+          "y": 2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 4,
+          "y": 3
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 4,
+          "y": 4
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 4,
+          "y": 5
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 4,
+          "y": 6
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 5,
+          "y": 0
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 5,
+          "y": 1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 5,
+          "y": 2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 5,
+          "y": 3
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 5,
+          "y": 4
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 5,
+          "y": 5
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 5,
+          "y": 6
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 6,
+          "y": 0
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 6,
+          "y": 1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 6,
+          "y": 2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 6,
+          "y": 3
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 6,
+          "y": 4
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 6,
+          "y": 5
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 6,
+          "y": 6
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 7,
+          "y": 0
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 7,
+          "y": 1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 7,
+          "y": 2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 7,
+          "y": 3
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 7,
+          "y": 4
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 7,
+          "y": 5
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 7,
+          "y": 6
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 8,
+          "y": 0
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 8,
+          "y": 1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 8,
+          "y": 2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 8,
+          "y": 3
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 8,
+          "y": 4
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 8,
+          "y": 5
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 8,
+          "y": 6
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 1
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 9,
+          "y": 0
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 1
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 9,
+          "y": 1
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 1
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 9,
+          "y": 2
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 1
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 9,
+          "y": 3
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 1
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 9,
+          "y": 4
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 1
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 9,
+          "y": 5
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 1
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 9,
+          "y": 6
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 2
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 10,
+          "y": 1
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 2
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 10,
+          "y": 2
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 2
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 10,
+          "y": 3
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 2
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 10,
+          "y": 4
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 2
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 10,
+          "y": 5
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 3
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 11,
+          "y": 2
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 3
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 11,
+          "y": 3
+        },
+        {
+          "bow": {
+            "axis": 0,
+            "step": 3
+          },
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 11,
+          "y": 4
+        }
+      ]
+    },
+    {
+      "deck": 0,
+      "height": "wing",
+      "id": "wing-s",
+      "kind": "plate",
+      "tiles": [
+        {
+          "reflected": false,
+          "rot": 3,
+          "shape": "slope1",
+          "x": 3,
+          "y": -2
+        },
+        {
+          "reflected": false,
+          "rot": 3,
+          "shape": "slope1",
+          "x": 4,
+          "y": -1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": -2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": -1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": -2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": -1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": -2
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": -1
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 3,
+          "y": -1
+        }
+      ]
+    },
+    {
+      "deck": 0,
+      "height": "wing",
+      "id": "wing-p",
+      "kind": "plate",
+      "tiles": [
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "slope1",
+          "x": 4,
+          "y": 7
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "slope1",
+          "x": 3,
+          "y": 8
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": 7
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 0,
+          "y": 8
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": 7
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 1,
+          "y": 8
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": 7
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 2,
+          "y": 8
+        },
+        {
+          "reflected": false,
+          "rot": 0,
+          "shape": "square",
+          "x": 3,
+          "y": 7
+        }
+      ]
+    }
+  ]
+}

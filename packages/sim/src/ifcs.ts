@@ -43,7 +43,6 @@ export type FlightProfile = {
   torqueLengthMeters?: number;
   /** Dimensionless tie-breaker, applied only after exact wrench and minimum N. */
   effortWeight?: number;
-  rawTurnBehavior?: boolean;
 };
 export type FlightEnvelope = {
   forward: number;
@@ -171,9 +170,7 @@ export function desiredWrench(
     numericProfile.some((v) => v < 0) ||
     Object.values(envelope ?? {}).some((v) => v < 0) ||
     (profile.torqueLengthMeters !== undefined &&
-      profile.torqueLengthMeters <= 0) ||
-    (profile.rawTurnBehavior !== undefined &&
-      typeof profile.rawTurnBehavior !== "boolean")
+      profile.torqueLengthMeters <= 0)
   )
     throw new Error("Invalid flight controller");
   const c = Math.cos(state.heading),
@@ -201,28 +198,15 @@ export function desiredWrench(
       Math.abs(error) * gain,
       Math.sqrt(2 * (error >= 0 ? negative : positive) * Math.abs(error)),
     );
-  let omega = clamp(
+  // Facing and velocity are separate pilot intents (fly-by-wire): the yaw-rate setpoint is
+  // limited only by the flight computer's rate limit, and the torque that realises it is
+  // clamped below to what the installed actuators can deliver. No kinematic turn exists:
+  // heading changes only through the allocated torque integrated in `integrateWrench`.
+  const omega = clamp(
     (desired.angularVelocity ?? 0) + capture,
     -profile.maxAngularSpeed,
     profile.maxAngularSpeed,
   );
-  if (
-    envelope &&
-    !profile.rawTurnBehavior &&
-    desired.angularVelocity !== undefined
-  ) {
-    const speed = Math.max(
-      Math.hypot(state.vx, state.vy),
-      Math.hypot(desired.vx, desired.vy),
-    );
-    const forwardSpeed = -desired.vx * s + desired.vy * c;
-    const lateral = omega * forwardSpeed >= 0 ? envelope.left : envelope.right;
-    omega = clamp(
-      omega,
-      -Math.min(profile.maxAcceleration, lateral) / Math.max(speed, 1e-12),
-      Math.min(profile.maxAcceleration, lateral) / Math.max(speed, 1e-12),
-    );
-  }
   // Heading guidance holds a fixed world velocity. Pilot rate guidance rotates its velocity target.
   const feedforward = desired.angularVelocity === undefined ? 0 : omega;
   const ax =
@@ -544,16 +528,15 @@ export function integrateWrench(
   };
 }
 
-/** Pilot axes are rate/velocity setpoints, matching the legacy coupled flight
- * computer. Released keys request rest, so opposing engines brake residual motion. */
+/** Pilot axes are intents: a yaw-rate setpoint (where the nose should point) and a speed
+ * along the current heading (how fast to go). Released keys request rest, so opposing
+ * engines brake residual motion. The IFCS realises both through allocated thrust only. */
 export function pilotDesiredMotion(
   state: Motion,
   intent: Intent,
   maxForwardSpeed: number,
   maxReverseSpeed: number,
   maxAngularSpeed: number,
-  envelope?: FlightEnvelope,
-  profile: FlightProfile = STANDARD_FLIGHT,
 ): DesiredMotion {
   finite([
     intent.throttle,
@@ -566,15 +549,7 @@ export function pilotDesiredMotion(
     throw new Error("Invalid pilot flight envelope");
   const throttle = clamp(intent.throttle, -1, 1);
   const speed = throttle * (throttle >= 0 ? maxForwardSpeed : maxReverseSpeed);
-  let angularVelocity = clamp(intent.turn, -1, 1) * maxAngularSpeed;
-  if (envelope && !profile.rawTurnBehavior) {
-    const lateral =
-      angularVelocity * speed >= 0 ? envelope.left : envelope.right;
-    const limit =
-      Math.min(profile.maxAcceleration, lateral) /
-      Math.max(Math.hypot(state.vx, state.vy), Math.abs(speed), 1e-12);
-    angularVelocity = clamp(angularVelocity, -limit, limit);
-  }
+  const angularVelocity = clamp(intent.turn, -1, 1) * maxAngularSpeed;
   return {
     vx: -Math.sin(state.heading) * speed,
     vy: Math.cos(state.heading) * speed,

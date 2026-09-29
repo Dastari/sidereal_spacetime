@@ -44,7 +44,7 @@ describe("prefab deck objects", () => {
       "mount:life",
       "mount:core",
       "mount:helm",
-      "mount:main-s1",
+      "mount:main-s",
       "mount:turret",
       "door:d-bridge",
     ])
@@ -56,7 +56,7 @@ describe("prefab deck objects", () => {
     expect(byId.get("mount:bunk")!.blocks).toBe(true);
     expect(byId.get("mount:helm")!.blocks).toBe(false);
     expect(byId.get("mount:helm")!.station).toBe("pilot");
-    expect(byId.get("mount:main-s1")!.blocks).toBe(false);
+    expect(byId.get("mount:main-s")!.blocks).toBe(false);
     expect(byId.get("door:d-bridge")!.blocks).toBe(false);
     // Room furniture from the grammar sockets (locker in the bunk room, a crate in the hold, the
     // bridge bank moved clear of the bridge door and the helm).
@@ -81,7 +81,7 @@ describe("prefab deck objects", () => {
       2, 1,
     ]);
     // A main drive on the aft face extends aft of the hull (plan x < 0).
-    const drive = o.find((x) => x.id === "mount:main-s1")!;
+    const drive = o.find((x) => x.id === "mount:main-s")!;
     expect(drive.max[0]).toBeCloseTo(0, 6);
     expect(drive.min[0]).toBeLessThan(-2);
   });
@@ -260,9 +260,9 @@ describe("prefab deck objects in the source document", () => {
   });
 });
 
-describe("Wren revision 4+ layout (unchanged in r5)", () => {
+describe("Wren revision 4+ layout (unchanged in r5 and r6)", () => {
   it("fits every module and furniture piece at catalog scale: nothing is trimmed out of an approach", () => {
-    expect(wren.revision).toBe(5);
+    expect(wren.revision).toBeGreaterThanOrEqual(5);
     expect(
       prefabDeckBlockers(wren, catalog)
         .filter((b) => b.trimmed)

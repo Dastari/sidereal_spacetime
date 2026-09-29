@@ -92,6 +92,9 @@ function fixture() {
     shipSystemsState: table("shipId"),
     shipSystemsDirty: table("shipId"),
     shipSystemsClock: table("id"),
+    // Component damage also marks prefab flight dirty (FLIGHT-IFCS actuator supply); these ships
+    // have no flight binding, so nothing is queued.
+    constructionFlightBinding: table("shipId"),
     ...lifecycleTestTables(),
   };
   const ctx: any = { db, timestamp: { microsSinceUnixEpoch: 10_000_000n } };

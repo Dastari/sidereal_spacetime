@@ -41,9 +41,15 @@ export const SHIP_COMPONENT_CATALOG_ID = "ship-components-v1";
  *   (SM 50 %, MD 25 %, LG 12 %, XL 8 % of forward thrust, same engine, no extra power), small
  *   drives and RCS clusters gain authority with matching power, heat and propellant, so S hulls
  *   accelerate, turn and stop briskly while M/L hulls stay heavy.
+ * - 4 (2026-09-29, FLIGHT-IFCS; owner: side thrusters "should be positioned on the ship" and the
+ *   IFCS must "ask [each engine] what thrust and what thrust vectors it can deliver"): RCS clusters
+ *   are quad-nozzle blocks. A face-mounted cluster fires only nozzles whose exhaust clears the hull
+ *   (outward and both ways along the face) and each nozzle acts at its exit point; main-drive
+ *   reversers act at the drive's nozzle exit. Stats are unchanged from revision 3; the flight
+ *   compiler (`prefab-flight.ts`, `PREFAB_QUAD_RCS_CATALOG_REVISION`) reads the revision.
  */
-export const SHIP_COMPONENT_CATALOG_REVISION = 3;
-export const SHIP_COMPONENT_CATALOG_REVISIONS = [1, 2, 3] as const;
+export const SHIP_COMPONENT_CATALOG_REVISION = 4;
+export const SHIP_COMPONENT_CATALOG_REVISIONS = [1, 2, 3, 4] as const;
 export type ShipComponentCatalogRevision =
   (typeof SHIP_COMPONENT_CATALOG_REVISIONS)[number];
 /** Art-library revision directory that holds the exported component GLBs. */
@@ -805,7 +811,7 @@ const rcsSpec = (rev: number): KindSpec => ({
       lengthM: [0.8, 1.4][i],
       radiusM: [0.12, 0.22][i],
     }),
-  revision: () => (rev >= 3 ? 3 : 1),
+  revision: () => (rev >= 4 ? 4 : rev >= 3 ? 3 : 1),
   cost: RCS(rev).cost,
   buildTimeS: [30, 60],
   kitKey: (_i, s) => `rcs.${s}`,

@@ -15,22 +15,42 @@ export interface PinnedPrefabShip {
 }
 
 /**
- * Wren revision 5 (2026-09-29, SHIP-MOUNTS): weapons and the basic sensor dish on roof mount tiles
- * (turret MD autocannon, fixed MD twin autocannons, fixed SM sensor dish), engines aft only;
- * catalog revision 3 (drive reversers, stronger RCS). New assignments and in-place upgrades.
+ * Wren revision 6 (2026-09-29, FLIGHT-IFCS): fly-by-wire handling earned by real thrusters. Four
+ * quad RCS blocks at the nose and stern corners (catalogue revision 4: nozzles exhaust clear of the
+ * hull and act at their exits), three small thrust blocks on the centreline, the r5 roof weapons and
+ * sensor, plus a coolant pump and a small ballistic magazine so the ship-systems budget closes
+ * (S4-1 catalogue rules). New assignments and in-place upgrades.
  */
 export const FED_WREN_PIN: PinnedPrefabShip = {
+  prefabId: "fed.s.wren",
+  catalogRevision: "ship-components-v1@4",
+  blueprintSha256:
+    "9e243122dcea41e4ff4eb988a509303de177adeb58e1e17ef2a5bcb5a2a98e84",
+  flightDefinitionSha256:
+    "b996952862e4ee89fcd9f16df6280742bf69731c48e2152b9b5a5137ea1f00ff",
+  description: "Wren (Federation courier, size S, prefab r6)",
+};
+
+/**
+ * Wren revision 5 (2026-09-29, SHIP-MOUNTS) as assigned on the live authority until r6: weapons
+ * and the basic sensor dish on roof mount tiles, engines aft only, RCS only at the wing tips,
+ * catalog revision 3. No longer registered as a spawner; existing instances keep these pins until
+ * `operator_upgrade_prefab_ship` moves them to FED_WREN_PIN. `fixtures/fed-s-wren-r5.prefab.json`
+ * is its canonical document.
+ */
+export const FED_WREN_R5_PIN: PinnedPrefabShip = {
   prefabId: "fed.s.wren",
   catalogRevision: "ship-components-v1@3",
   blueprintSha256:
     "c080b1397fd61b4609d4b8459239111aaed3bd398f868975ae2702418ad71eaf",
   flightDefinitionSha256:
     "c6d252e906de0d8fad479e156a8ca512f0ac58500f4d7a0f3d888c13902a447d",
-  description: "Wren (Federation courier, size S, prefab r5)",
+  description:
+    "Wren (Federation courier, size S, prefab r5; legacy live instances)",
 };
 
 /**
- * Wren revision 4 (2026-09-28) as assigned on the live authority until r5: 12 x 7 m hull, four
+ * Wren revision 4 (2026-09-28) as assigned on the live authority until r5/r6: 12 x 7 m hull, four
  * small thrust blocks, side cannons and a bare roof autocannon, catalog revision 2. No longer
  * registered as a spawner; existing instances keep these pins until `operator_upgrade_prefab_ship`
  * moves them to FED_WREN_PIN. `fixtures/fed-s-wren-r4.prefab.json` is its canonical document.
@@ -92,4 +112,5 @@ export const PREFAB_UPGRADE_SOURCES: readonly PinnedPrefabShip[] = [
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
   FED_WREN_R4_PIN,
+  FED_WREN_R5_PIN,
 ];

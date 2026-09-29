@@ -92,13 +92,20 @@ export const FED_WREN = prefab({
   // autocannon, a fixed forward mount with two more linked small autocannons) and Wren gains its basic roof sensor
   // dish on a small fixed mount. Engines stay aft; catalog revision 3 gives the thrust blocks
   // reversers and the RCS clusters real braking and yaw authority.
+  // Revision 6 (2026-09-29, FLIGHT-IFCS; owner: "The side thrusters need to be mounted in a better
+  // location", turning must come from real thrusters): four quad RCS blocks (catalogue revision 4)
+  // at the nose and stern corners, so every translation and yaw has a pure (couple-free) nozzle set
+  // and the fly-by-wire IFCS earns its turn rate from RCS torque. To stay within the 12 S-class
+  // hardpoints (the airlock is a hull door, not a hardpoint) the drives go from four to three small
+  // thrust blocks on the centreline; the RCS aft nozzles more than replace the fourth drive.
   mounts: [
-    face("main-s1", "thrust-block.sm", "aft", [0, 2]),
-    face("main-s2", "thrust-block.sm", "aft", [0, 3]),
-    face("main-p2", "thrust-block.sm", "aft", [0, 4]),
-    face("main-p1", "thrust-block.sm", "aft", [0, 5]),
-    face("rcs-s", "rcs.md", "starboard", [0.5, -2]),
-    face("rcs-p", "rcs.md", "port", [0.5, 9]),
+    face("main-s", "thrust-block.sm", "aft", [0, 2.5]),
+    face("main-c", "thrust-block.sm", "aft", [0, 3.5]),
+    face("main-p", "thrust-block.sm", "aft", [0, 4.5]),
+    face("rcs-bow-s", "rcs.md", "starboard", [9.5, 0]),
+    face("rcs-bow-p", "rcs.md", "port", [9.5, 7]),
+    face("rcs-stern-s", "rcs.md", "starboard", [0.5, -2]),
+    face("rcs-stern-p", "rcs.md", "port", [0.5, 9]),
     opening("airlock", "airlock.exterior.md", "starboard", [6, 0]),
     top("rad-a", "radiator.md", [0.5, 1]),
     top("rad-b", "radiator.md", [0.5, 4]),
@@ -108,6 +115,10 @@ export const FED_WREN = prefab({
     module("life", "life-support.sm", [2, 0], "port"),
     module("fuel", "fuel-tank.md", [0, 0], "port"),
     module("bunk", "crew-bunk.sm", [3.5, 5.5], "starboard"),
+    // r6 (S4-1 catalogue rules): a coolant pump so the radiators can reject heat, and a small
+    // ballistic magazine feeding the roof autocannons. Interior modules; no hardpoints.
+    module("coolant", "coolant-pump.md", [2, 1], "port"),
+    module("ammo", "magazine.ballistic.sm", [7, 6], "port"),
   ],
   armed: [
     armed("turret", "turret", "MD", [4.5, 2.5], "fore", "autocannon.sm"),
@@ -118,7 +129,7 @@ export const FED_WREN = prefab({
   markings: { name: "WREN", number: "OC-11", emblem: "planet" },
 });
 
-FED_WREN.revision = 5;
+FED_WREN.revision = 6;
 
 /** Medium: the prototype Wayfarer-class corvette, re-cut on the 1 m grammar. */
 export const FED_CREST = prefab({
@@ -205,6 +216,8 @@ export const FED_CREST = prefab({
     face("main-c", "ion-drive.md", "aft", [0, 5]),
     face("rcs-p", "rcs.sm", "aft", [4, 11.5]),
     face("rcs-s", "rcs.sm", "aft", [4, -1.5]),
+    face("rcs-bow-p", "rcs.md", "port", [19.5, 10]),
+    face("rcs-bow-s", "rcs.md", "starboard", [19.5, 0]),
     opening("lock", "airlock.exterior.md", "starboard", [18, 0]),
     opening("cargo-door", "cargo-door.2m", "starboard", [15, 0]),
     top("rad-lg", "radiator.lg", [1, 1]),
@@ -221,8 +234,6 @@ export const FED_CREST = prefab({
   ],
   skylights: [skylight("sky", [20, 4], [3, 2])],
   armed: [
-    armed("gun-p", "fixed", "SM", [6, 11], "port", "autocannon.sm"),
-    armed("gun-s", "fixed", "SM", [6, -2], "starboard", "autocannon.sm"),
     armed("turret", "turret", "LG", [5, 1], "fore", "autocannon.md"),
     armed("laser", "fixed", "MD", [13, 7], "fore", "laser-cannon.md"),
     armed("pd", "turret", "MD", [17, 2], "fore", "point-defense.sm"),
@@ -232,7 +243,10 @@ export const FED_CREST = prefab({
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-FED_CREST.revision = 2;
+// Revision 3 (2026-09-29, FLIGHT-IFCS; owner: "The side cannons on the ships need to go"): the
+// port/starboard-boresight fixed roof guns (broadside side cannons) are removed, and two bow quad RCS
+// blocks join the stern pair: with RCS only at the stern the IFCS had no pure yaw couple.
+FED_CREST.revision = 3;
 
 /** Large: side-pod frigate with a long spine, XL drives and heavy turrets. */
 export const FED_BASTION = prefab({
@@ -382,8 +396,6 @@ export const FED_BASTION = prefab({
     armed("missiles-p", "fixed", "MD", [31, 8], "fore", "missile-pod.md"),
     armed("flak", "turret", "LG", [12, -3], "fore", "flak-cannon.md"),
     armed("pd", "turret", "LG", [12, 13], "fore", "point-defense.md"),
-    armed("gun-s", "fixed", "MD", [16, -3], "starboard", "autocannon.md"),
-    armed("gun-p", "fixed", "MD", [16, 13], "port", "autocannon.md"),
     armed("dish", "fixed", "MD", [18, 13], "fore", "sensor-dish.md"),
     armed("beacon", "fixed", "SM", [21, 2], "fore", "relay-beacon.sm"),
   ],
@@ -391,7 +403,9 @@ export const FED_BASTION = prefab({
 });
 
 // Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
-FED_BASTION.revision = 2;
+// Revision 3 (2026-09-29, FLIGHT-IFCS; owner: "The side cannons on the ships need to go"): the
+// port/starboard-boresight fixed roof guns (broadside side cannons) are removed.
+FED_BASTION.revision = 3;
 
 /**
  * Art-calibration ship: the approved reference silhouette (3d-rpg-after / top-down-after) as a
