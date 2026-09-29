@@ -23,6 +23,10 @@ import { stockShipCargo, STOCKED_CARGO_GRID } from "./ship-cargo-operator";
 import { FED_WREN_PIN, WREN_SUIT_LOCKER_SOCKET } from "./prefab-ship-pins";
 import { setStarterPrefab } from "./ship-policy";
 import {
+  SHIP_ISSUE_KIT_IDS,
+  protectedDefinitionUses,
+} from "@sidereal/content/definition-references";
+import {
   moveScopedCargo,
   reachableCargoContainers,
   reachableCargoItems,
@@ -646,6 +650,19 @@ test("a new Wren is issued with the EVA suit in its suit locker; the owner takes
   expect(inLocker.map((i: Row) => i.definitionId).sort()).toEqual(
     [...CREW_WARDROBE_KITS["eva-suit"]].sort(),
   );
+  // Issued through the pinned creation path (X-2): every suit item pins its definition revision,
+  // and the retire guard (X-3) protects every issued definition.
+  for (const item of inLocker) {
+    expect(f.db.inventoryItemPin.itemId.find(item.id)).toMatchObject({
+      definitionId: item.definitionId,
+      source: "created",
+    });
+    expect(protectedDefinitionUses("item", item.definitionId)).toContain(
+      'the "eva-suit" kit issued with every new ship',
+    );
+  }
+  for (const stock of FED_WREN_PIN.issueStock ?? [])
+    expect(SHIP_ISSUE_KIT_IDS as readonly string[]).toContain(stock.kit);
   // Room to spare: the kit takes 26 of the 196 cells.
   const cells = inLocker
     .map((i: Row) =>

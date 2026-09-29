@@ -5,6 +5,7 @@
  * `packages/world/src/personal-kit.ts` and `inventory.ts` (a test checks both).
  */
 import { CREW_WARDROBE_DEFINITIONS, OPERATOR_ITEM_KITS } from "./inventory";
+import { CREW_WARDROBE_KITS } from "./crew-wardrobe";
 
 /** Personal kit of every new character (`issuePersonalKit`). */
 export const STARTER_KIT_DEFINITION_IDS = [
@@ -24,6 +25,13 @@ export const LAB_KIT_DEFINITION_IDS = [
 ] as const;
 
 /**
+ * Kits (`CREW_WARDROBE_KITS`) a prefab spawner issues into a new ship's storage (a pin's
+ * `issueStock` in `packages/world/src/prefab-ship-pins.ts`; a world test keeps them in step): the
+ * EVA suit in every new Wren's suit locker.
+ */
+export const SHIP_ISSUE_KIT_IDS = ["eva-suit"] as const;
+
+/**
  * Why a definition is protected from losing its last published revision: one reason per creation
  * path that uses it. Weapons share the item's ID, so a kit item protects its weapon too. Empty when
  * nothing creates it automatically.
@@ -38,6 +46,9 @@ export function protectedDefinitionUses(
     uses.push("the starter kit of every new character");
   else if ((LAB_KIT_DEFINITION_IDS as readonly string[]).includes(definitionId))
     uses.push("the lab starter kit");
+  for (const kit of SHIP_ISSUE_KIT_IDS)
+    if (CREW_WARDROBE_KITS[kit]?.includes(definitionId))
+      uses.push(`the "${kit}" kit issued with every new ship`);
   if (CREW_WARDROBE_DEFINITIONS.some((d) => d.id === definitionId))
     uses.push("uniform and armour tier issue");
   for (const [kit, ids] of Object.entries(OPERATOR_ITEM_KITS))
