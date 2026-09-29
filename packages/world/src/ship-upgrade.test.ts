@@ -51,6 +51,7 @@ import {
   UPGRADE_REFUSED_SHIP_TABLES,
   upgradePrefabShip,
 } from "./ship-upgrade";
+import { stepShipSystems } from "./ship-systems";
 
 const HEAVY = { timeout: 120_000 };
 type Row = Record<string, any>;
@@ -120,6 +121,18 @@ function fixture() {
         {
           get(t, index: string) {
             if (index in t) return (t as any)[index];
+            if (index === "count") return () => BigInt(rows.length);
+            if (index === "by_revision")
+              return {
+                filter: () =>
+                  [...rows].sort((a, b) =>
+                    a.revision < b.revision
+                      ? -1
+                      : a.revision > b.revision
+                        ? 1
+                        : 0,
+                  ),
+              };
             const column = FIELD[index] ?? index;
             return {
               find: (value: unknown) =>
@@ -446,6 +459,38 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
 
 upgradeCase(FED_WREN_R3_PIN, 3);
 upgradeCase(FED_WREN_R2_PIN, 2);
+
+test(
+  "S4-1: install queues a systems compile; the in-place upgrade rebuilds it at the new revision",
+  HEAVY,
+  () => {
+    const { f, shipId } = liveWren(FED_WREN_R4_PIN, 4);
+    expect(f.db.shipSystemsDirty.shipId.find(shipId)).toMatchObject({
+      reason: "install",
+    });
+    stepShipSystems(f.ctx);
+    const r4 = { ...f.db.shipSystemsState.shipId.find(shipId) };
+    expect(r4).toMatchObject({
+      prefabRevision: 4,
+      instanceRevision: 1n,
+      catalog: FED_WREN_R4_PIN.catalogRevision,
+    });
+    upgradePrefabShip(f.ctx, upgradeArgs(shipId, FED_WREN_R4_PIN));
+    // The rebuilt row was archived and deleted; the reinstall queued a refit compile.
+    expect(f.db.shipSystemsState.shipId.find(shipId)).toBeUndefined();
+    expect(f.db.shipSystemsDirty.shipId.find(shipId)).toMatchObject({
+      reason: "refit",
+    });
+    stepShipSystems(f.ctx);
+    const r5 = f.db.shipSystemsState.shipId.find(shipId);
+    expect(r5).toMatchObject({
+      prefabRevision: trustedPrefabTemplate("fed.s.wren").prefab.revision,
+      instanceRevision: 2n,
+      catalog: FED_WREN_PIN.catalogRevision,
+    });
+    expect(r5.inputHash).not.toBe(r4.inputHash);
+  },
+);
 
 test(
   "a stocked prefab ship compiles flight with its storage payload at the sockets",

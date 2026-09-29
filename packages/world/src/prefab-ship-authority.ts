@@ -44,6 +44,7 @@ import {
   commitFlightCharacter,
   markShipFlightDirty,
 } from "./construction-flight-dirty";
+import { markShipSystemsDirty } from "./ship-systems-dirty";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 export type PrefabCharacterRow = NonNullable<
@@ -312,6 +313,8 @@ export function installPrefabShip(
     (row) => ctx.db.character.id.update(row),
   );
   markShipFlightDirty(ctx, shipId);
+  // S4-1: compile the systems budget on the next tick (a reinstall is an upgrade/refit).
+  markShipSystemsDirty(ctx, shipId, revision > 1n ? "refit" : "install");
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
   const locationRow = {
     characterId: actor.id,

@@ -97,6 +97,8 @@ export const UPGRADE_REBUILT_SHIP_TABLES = [
   ["constructionFlightDirty", "shipId"],
   ["constructionFlightDamageEvent", "shipId"],
   ["shipComponentDamage", "shipId"],
+  ["shipSystemsState", "shipId"],
+  ["shipSystemsDirty", "shipId"],
   ["actuatorOutput", "shipId"],
   ["pilotLayoutReceipt", "shipId"],
   ["constructionDoor", "instanceId"],

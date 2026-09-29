@@ -212,6 +212,12 @@ import {
 } from "./lifecycle-tables";
 import * as lifecycle from "./lifecycle";
 import { characterVitals, shipComponentDamage } from "./combat-damage-tables";
+import {
+  shipSystemsState,
+  shipSystemsDirty,
+  shipSystemsClock,
+} from "./ship-systems-tables";
+import * as shipSystems from "./ship-systems";
 import { alignPilotLayout } from "./pilot-layout";
 import { pilotLayoutReceipt } from "./pilot-layout-tables";
 import { PILOT_LAYOUT, constrainLabDeck } from "../../content/src/pilot-layout";
@@ -407,6 +413,9 @@ const db = schema({
   combatAction,
   characterVitals,
   shipComponentDamage,
+  shipSystemsState,
+  shipSystemsDirty,
+  shipSystemsClock,
   pilotLayoutReceipt,
   interactionObject,
   couchSeat,
@@ -820,6 +829,7 @@ export const stepWorld = db.reducer(
     stairs.stepConstructionStairs(ctx, createConstructionStairWorldHooks(ctx));
     combat.stepCombat(ctx);
     combatDamage.stepDamage(ctx);
+    shipSystems.stepShipSystems(ctx);
     characterDeath.stepRespawns(ctx);
     lifecycle.pruneLifecycleEvents(ctx);
     consumeFlightDamage(ctx);
@@ -1080,6 +1090,24 @@ export const ownShipComponentDamage = db.view(
   { name: "own_ship_component_damage", public: true },
   t.array(combatDamage.componentDamageProjection),
   auth.gameView(combatDamage.componentDamageView),
+);
+/** S4-1 (additive): compiled ship-systems budgets. Owner and admitted crew: summary. */
+export const ownShipNetworks = db.view(
+  { name: "own_ship_networks", public: true },
+  t.array(shipSystems.shipNetworkSummaryProjection),
+  auth.gameView(shipSystems.ownShipNetworks),
+);
+/** S4-1 (additive): the full compiled report, owner only. */
+export const ownShipSystemsReport = db.view(
+  { name: "own_ship_systems_report", public: true },
+  t.array(shipSystems.shipSystemsReportProjection),
+  auth.gameView(shipSystems.ownShipSystemsReport),
+);
+/** S4-1 (additive): inspect scope, outward power effect of discovered ships only. */
+export const visibleShipSystemEffects = db.view(
+  { name: "visible_ship_system_effects", public: true },
+  t.array(shipSystems.shipSystemEffectsProjection),
+  auth.gameView(shipSystems.visibleShipSystemEffects),
 );
 export const setCombatAim = db.reducer(
   { active: t.bool(), angle: t.f64() },
