@@ -130,8 +130,39 @@ export function validateScriptRevision(value: unknown): ScriptRevision {
     capabilities: [...(row.capabilities as ScriptCapability[])],
   };
 }
-export type ObjectLifecycle =
-  "new" | "active" | "suspended" | "despawned" | "destroyed";
+export function isLifecycleEventKind(
+  value: string,
+): value is LifecycleEventKind {
+  return (LIFECYCLE_EVENTS as readonly string[]).includes(value);
+}
+/** Object kinds that share one lifecycle and one event log (roadmap S1). Domain tables stay
+ * authoritative; the lifecycle row is a shared envelope keyed by the object's stable ID. */
+export const LIFECYCLE_OBJECT_KINDS = [
+  "character",
+  "item",
+  "ship",
+  "component",
+  "door",
+  "placed-object",
+  "station",
+  "npc",
+  "quest-entity",
+] as const;
+export type LifecycleObjectKind = (typeof LIFECYCLE_OBJECT_KINDS)[number];
+/** `new` means no lifecycle yet. `disabled` is present but out of action (a dead character);
+ * `despawned` removes presence and keeps identity; `destroyed` is final. */
+export const OBJECT_LIFECYCLE_STATES = [
+  "new",
+  "active",
+  "suspended",
+  "disabled",
+  "despawned",
+  "destroyed",
+] as const;
+export type ObjectLifecycle = (typeof OBJECT_LIFECYCLE_STATES)[number];
+export function isObjectLifecycle(value: string): value is ObjectLifecycle {
+  return (OBJECT_LIFECYCLE_STATES as readonly string[]).includes(value);
+}
 /** Restore rehydrates an existing phase: it never replays creation rewards. */
 export function nextLifecycle(
   current: ObjectLifecycle,
@@ -142,15 +173,26 @@ export function nextLifecycle(
     if (current !== "new") throw new Error("Creation may only run once");
     return "active";
   }
+  if (current === "new")
+    throw new Error("Object has no lifecycle yet; create or adopt it first");
   if (event === "object.destroyed") return "destroyed";
   if (event === "object.activated") {
-    if (current !== "suspended" && current !== "despawned")
+    if (
+      current !== "suspended" &&
+      current !== "despawned" &&
+      current !== "disabled"
+    )
       throw new Error("Object is not inactive");
     return "active";
   }
   if (event === "object.suspended") {
     if (current !== "active") throw new Error("Object is not active");
     return "suspended";
+  }
+  if (event === "combat.death") {
+    if (current !== "active" && current !== "suspended")
+      throw new Error("Object is not alive");
+    return "disabled";
   }
   if (event === "object.despawned") return "despawned";
   return current;
