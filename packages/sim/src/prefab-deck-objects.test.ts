@@ -6,6 +6,7 @@ import {
   deriveInterior,
   planRectsOverlap,
   SOCKET_APPROACH_TOLERANCE_M,
+  validatePrefabFixtures,
 } from "@sidereal/content/ship-prefab";
 import {
   planRectToShip,
@@ -30,6 +31,7 @@ import {
 import { prefabFlightModel } from "./prefab-flight";
 import { prefabPilotPose } from "./construction-pilot";
 import { prefabCargoSockets } from "./prefab-cargo-sockets";
+import { reachablePanel, shipLogicModel } from "./ship-logic-model";
 
 const catalog = defaultPrefabComponentCatalog();
 const wren = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
@@ -59,11 +61,13 @@ describe("prefab deck objects", () => {
     expect(byId.get("mount:main-s")!.blocks).toBe(false);
     expect(byId.get("door:d-bridge")!.blocks).toBe(false);
     // Room furniture from the grammar sockets (locker in the bunk room, a crate in the hold, the
-    // bridge bank moved clear of the bridge door and the helm).
+    // bridge bank moved clear of the bridge door and the helm), plus r8's hand-placed EVA suit
+    // locker in the airlock chamber.
     const furniture = objects.filter((o) => o.kind === "furniture");
     expect(furniture.map((o) => o.designId).sort()).toEqual([
       "cargo.standard.medium",
       "shipyard.equipment.bridge-bank",
+      "shipyard.equipment.wall-locker",
       "shipyard.equipment.wall-locker",
     ]);
     expect(furniture.every((o) => o.blocks)).toBe(true);
@@ -260,7 +264,7 @@ describe("prefab deck objects in the source document", () => {
   });
 });
 
-describe("Wren revision 4+ layout (unchanged in r5 and r6)", () => {
+describe("Wren revision 4+ layout (unchanged in r5-r7; r8 adds the suit locker)", () => {
   it("fits every module and furniture piece at catalog scale: nothing is trimmed out of an approach", () => {
     expect(wren.revision).toBeGreaterThanOrEqual(5);
     expect(
@@ -302,11 +306,57 @@ describe("Wren revision 4+ layout (unchanged in r5 and r6)", () => {
           ]),
           `${s.room}/${s.designId} ${z.id}`,
         ).toBe(false);
-    // The storage furniture keeps its designs (and so its storage socket keys) for migration.
+    // The storage furniture keeps its designs (and so its storage socket keys) for migration;
+    // r8 adds the suit locker's socket.
     expect(prefabCargoSockets(wren, 0, catalog).map((s) => s.key)).toEqual([
       "bunks/shipyard.equipment.wall-locker",
       "hold/cargo.standard.medium",
+      "hold/shipyard.equipment.wall-locker",
     ]);
+  });
+
+  it("r8: the EVA suit locker stands in the airlock chamber, pressable-button distance from its front", () => {
+    expect(wren.revision).toBe(8);
+    expect(validatePrefabFixtures(wren, catalog)).toEqual([]);
+    const interior = deriveInterior(wren, 0, catalog);
+    const locker = interior.sockets.find((s) => s.fixture === "suit-locker")!;
+    expect(locker).toMatchObject({
+      designId: "shipyard.equipment.wall-locker",
+      room: "hold",
+      facing: "starboard",
+    });
+    // The hold is the chamber of the airlock controller.
+    const model = shipLogicModel(wren, catalog)!;
+    expect(model.chambers.map((c) => c.room)).toEqual(["hold"]);
+    const socket = prefabCargoSockets(wren, 0, catalog).find(
+      (s) => s.key === "hold/shipyard.equipment.wall-locker",
+    )!;
+    const front = socket.approachesM[0];
+    // From the locker's front a crew member presses the inside cycle button, and from the
+    // button's standing point the locker is within storage reach.
+    expect(reachablePanel(model, front, "interior")?.deviceId).toBe(
+      "btn-lock-in",
+    );
+    const inside = model.panels.find((p) => p.deviceId === "btn-lock-in")!;
+    expect(
+      Math.hypot(
+        inside.front[0] - socket.centreM[0],
+        inside.front[1] - socket.centreM[1],
+      ),
+    ).toBeLessThan(1.8 - 0.3);
+    // Both airlock doors and every button keep their standing zones: fixtures there are refused.
+    for (const at of [
+      [5.5, 1.2],
+      [6.25, 0.3],
+      [7.2, 0.3],
+    ] as [number, number][])
+      expect(
+        validatePrefabFixtures(
+          { ...wren, fixtures: [{ ...wren.fixtures![0], at }] },
+          catalog,
+        ).map((i) => i.code),
+        at.join(),
+      ).not.toEqual([]);
   });
 
   it("walks from spawn to both sides of every door, every storage socket and the helm", () => {

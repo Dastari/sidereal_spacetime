@@ -12,23 +12,66 @@ export interface PinnedPrefabShip {
   /** flightDefinitionCatalogHash of the prefab physical catalog (binding definitionSha256). */
   readonly flightDefinitionSha256: string;
   readonly description: string;
+  /**
+   * Storage the spawner stocks when it issues a NEW ship of this pin (starter onboarding and
+   * operator assignment; never in-place upgrades): each entry binds a container to the storage
+   * socket and fills it with the named `CREW_WARDROBE_KITS` kit, in the issuing transaction.
+   */
+  readonly issueStock?: readonly PrefabIssueStock[];
 }
+
+export interface PrefabIssueStock {
+  /** Storage socket key (`prefabCargoSockets`). */
+  readonly socketKey: string;
+  readonly containerName: string;
+  /** `CREW_WARDROBE_KITS` id. */
+  readonly kit: string;
+}
+
+/** Wren r8 suit locker: the storage socket of its hand-placed `suit-locker` fixture. */
+export const WREN_SUIT_LOCKER_SOCKET = "hold/shipyard.equipment.wall-locker";
+
+/**
+ * Wren revision 8 (2026-09-29, SUIT-LOCKER): r7 plus a dedicated EVA suit locker (a wall locker
+ * storage socket, `WREN_SUIT_LOCKER_SOCKET`) in the airlock chamber beside the inside airlock
+ * button. Flight and catalogue unchanged from r7. New Wrens are issued with the `eva-suit` kit in
+ * the locker (EVA still needs the suit on: no suit, no vacuum). New assignments and in-place
+ * upgrades (the upgrade adds the empty socket; `scripts/ship_cargo.py` stocks it).
+ */
+export const FED_WREN_PIN: PinnedPrefabShip = {
+  prefabId: "fed.s.wren",
+  catalogRevision: "ship-components-v1@4",
+  blueprintSha256:
+    "52fcc23ea095e10bdd516dd4a9afeb6ae83635e38aa47266ffb7f944ba36f695",
+  flightDefinitionSha256:
+    "b996952862e4ee89fcd9f16df6280742bf69731c48e2152b9b5a5137ea1f00ff",
+  description: "Wren (Federation courier, size S, prefab r8)",
+  issueStock: [
+    {
+      socketKey: WREN_SUIT_LOCKER_SOCKET,
+      containerName: "EVA suit locker",
+      kit: "eva-suit",
+    },
+  ],
+};
 
 /**
  * Wren revision 7 (2026-09-29, EVA milestone 2): r6 geometry, flight and catalogue @4; the hold
  * becomes the airlock chamber (its hall door is a sealed airlock door) and the prefab carries ship
  * logic: an airlock controller interlocking the hold door and the starboard hatch, and three wall
- * buttons (inside the hold, outside on the hull, in the hall). New assignments and in-place
- * upgrades. Wiki `Systems/Ship Logic`.
+ * buttons (inside the hold, outside on the hull, in the hall). Wiki `Systems/Ship Logic`.
+ * Registered until r8; existing instances keep these pins until `operator_upgrade_prefab_ship`
+ * moves them to FED_WREN_PIN. `fixtures/fed-s-wren-r7.prefab.json` is its canonical document.
  */
-export const FED_WREN_PIN: PinnedPrefabShip = {
+export const FED_WREN_R7_PIN: PinnedPrefabShip = {
   prefabId: "fed.s.wren",
   catalogRevision: "ship-components-v1@4",
   blueprintSha256:
     "340c45977ec43ef461982de3efdbe9fff9e255f6222ed97eb7140f9c6832a12e",
   flightDefinitionSha256:
     "b996952862e4ee89fcd9f16df6280742bf69731c48e2152b9b5a5137ea1f00ff",
-  description: "Wren (Federation courier, size S, prefab r7)",
+  description:
+    "Wren (Federation courier, size S, prefab r7; legacy live instances)",
 };
 
 /**
@@ -134,4 +177,5 @@ export const PREFAB_UPGRADE_SOURCES: readonly PinnedPrefabShip[] = [
   FED_WREN_R4_PIN,
   FED_WREN_R5_PIN,
   FED_WREN_R6_PIN,
+  FED_WREN_R7_PIN,
 ];

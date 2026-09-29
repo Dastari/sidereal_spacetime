@@ -14,7 +14,9 @@ import { SenderError } from "spacetimedb/server";
 import { registerPrefabShipSpawner } from "./ship-assign";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { PREFAB_FLIGHT_DEFINITION } from "@sidereal/sim/prefab-flight";
+import { CREW_WARDROBE_KITS } from "@sidereal/content/crew-wardrobe";
 import { installPrefabShip } from "./prefab-ship-authority";
+import { issueSocketStock } from "./ship-cargo-operator";
 import {
   REGISTERED_PREFAB_PINS,
   type PinnedPrefabShip,
@@ -54,6 +56,21 @@ function registerPinned(pin: PinnedPrefabShip) {
         throw new SenderError(
           `${pin.prefabId} flight definition drifted from its pin`,
         );
+      // Issue stock (e.g. the EVA suit in a new Wren's suit locker), in the same transaction.
+      for (const stock of pin.issueStock ?? []) {
+        const kit = CREW_WARDROBE_KITS[stock.kit];
+        if (!kit)
+          throw new SenderError(
+            `${pin.prefabId} issue kit ${stock.kit} unknown`,
+          );
+        issueSocketStock(
+          ctx,
+          result.shipId,
+          stock.socketKey,
+          stock.containerName,
+          JSON.stringify(kit),
+        );
+      }
       return result;
     },
   });

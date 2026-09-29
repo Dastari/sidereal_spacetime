@@ -8,8 +8,10 @@
  * exactly as documented:
  *   1. stock the owner's Wren: hold crate (uniforms-and-tiers, 18) and wall locker (role-sets, 27);
  *   2. export a backup, dry-run and apply `operator_upgrade_prefab_ship`, verify against the backup;
- *   3. as the owner: same ship id, r4 pins, walk from spawn to both containers and see every item,
- *      see the ground drop, take the helm and fly.
+ *      then (r8+) stock the EVA suit into the new suit locker socket with scripts/ship_cargo.py;
+ *   3. as the owner: same ship id, target pins, walk from spawn to every container and see every
+ *      item, see the ground drop, reach the suit locker from the inside airlock button, take the
+ *      helm and fly.
  * Evidence: ship-upgrade-smoke.json in SIDEREAL_SMOKE_EVIDENCE_DIR. */
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
@@ -29,6 +31,7 @@ import { CREW_WARDROBE_KITS } from "../packages/content/src/crew-wardrobe";
 import {
   FED_WREN_PIN,
   PREFAB_UPGRADE_SOURCES,
+  WREN_SUIT_LOCKER_SOCKET,
 } from "../packages/world/src/prefab-ship-pins";
 
 const host = process.env.SIDEREAL_SMOKE_URL ?? "";
@@ -345,6 +348,50 @@ try {
 }
 assert.match(refusedAgain, /already has the target revision/);
 
+// 2b. Wren r8: the upgrade adds the suit locker empty; the operator stocks the EVA suit into it
+// (the new socket, beside the crate and locker stocked as full as live's).
+{
+  const target = prefabCargoSockets(
+    prefabById("fed.s.wren")!,
+    0,
+    defaultPrefabComponentCatalog(),
+  );
+  if (target.some((s) => s.key === WREN_SUIT_LOCKER_SOCKET)) {
+    const out = json(
+      python(
+        "ship_cargo.py",
+        "apply",
+        "--operation-id",
+        "rehearsal-stock-eva-suit",
+        "--character-id",
+        owner.characterId,
+        "--ship-id",
+        owner.shipId,
+        "--socket",
+        WREN_SUIT_LOCKER_SOCKET,
+        "--container-name",
+        "EVA suit locker",
+        "--kit",
+        "eva-suit",
+        "--confirm-database",
+        database,
+      ),
+    );
+    stocked[WREN_SUIT_LOCKER_SOCKET] = (
+      out.summary.items as { id: string }[]
+    ).map((i) => i.id);
+    assert.equal(
+      stocked[WREN_SUIT_LOCKER_SOCKET]!.length,
+      CREW_WARDROBE_KITS["eva-suit"]!.length,
+    );
+    evidence[`stocked:${WREN_SUIT_LOCKER_SOCKET}`] = {
+      containerId: out.summary.containerId,
+      items: stocked[WREN_SUIT_LOCKER_SOCKET]!.length,
+      accessPointM: out.summary.accessPointM,
+    };
+  }
+}
+
 // 3. The owner returns: same ship, r4, containers reachable, ground drop visible, flies.
 const x = await client(owner.token);
 try {
@@ -394,6 +441,7 @@ try {
       [...x.db.ownReachableCargoItems.iter()].filter(
         (i) => i.containerId === container()!.id,
       );
+    assert(expected, `${socket.key} was stocked`);
     await wait(
       () => items().length === expected.length,
       `${socket.key} shows ${expected.length} items`,
@@ -456,7 +504,19 @@ try {
       );
     assert.match(refusal, /EVA needs a pressure suit/);
     assert.equal(device("lock")?.state, "pressurised");
-    evidence.airlockAfterUpgrade = { pressurised: true, unsuitedRefused: true };
+    // r8: the suit locker is within reach where the inside button is pressed.
+    const suitLocker = stocked[WREN_SUIT_LOCKER_SOCKET]
+      ? [...x.db.ownReachableCargoContainers.iter()].find((c) =>
+          c.placedObjectId.endsWith(":" + WREN_SUIT_LOCKER_SOCKET),
+        )
+      : undefined;
+    if (stocked[WREN_SUIT_LOCKER_SOCKET])
+      assert(suitLocker, "suit locker reachable from the inside button");
+    evidence.airlockAfterUpgrade = {
+      pressurised: true,
+      unsuitedRefused: true,
+      suitLockerReachableAtButton: !!suitLocker,
+    };
   }
 
   // Take the helm and fly.

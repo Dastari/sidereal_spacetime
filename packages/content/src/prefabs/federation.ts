@@ -9,6 +9,7 @@ import {
   doorActuator,
   edge,
   face,
+  fixture,
   module,
   opening,
   polygonTiles,
@@ -159,9 +160,23 @@ export const FED_WREN = prefab({
       ]),
     };
   })(),
+  // Revision 8 (2026-09-29, owner: "Maybe create another crate if it will fit? Or make the locker
+  // a storage item I can interact with and add the items there."): a dedicated EVA suit locker in
+  // the airlock chamber, backed onto the hall wall beside the inside airlock button and opening
+  // toward it, so a crew member suits up and cycles the lock from one spot. It is a normal wall
+  // locker storage socket (`hold/shipyard.equipment.wall-locker`), clear of both airlock door
+  // approaches and the button's standing zone. New Wrens are issued with the EVA suit in it.
+  fixtures: [
+    fixture(
+      "suit-locker",
+      "shipyard.equipment.wall-locker",
+      [6.95, 1.2],
+      "starboard",
+    ),
+  ],
 });
 
-FED_WREN.revision = 7;
+FED_WREN.revision = 8;
 
 /** Medium: the prototype Wayfarer-class corvette, re-cut on the 1 m grammar. */
 export const FED_CREST = prefab({

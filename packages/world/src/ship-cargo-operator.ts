@@ -7,6 +7,9 @@
  * so it is purely additive; replaying the same operation ID is a no-op. Access afterwards is the
  * normal scoped-cargo authority: the owner stands at the qualified approach point and transfers
  * items into carried inventory, then equips them with `equip_inventory_item`.
+ *
+ * `issueSocketStock` runs the same plan and commit inside the prefab spawner's issuing
+ * transaction (a pin's `issueStock`, e.g. the EVA suit in a new Wren r8's suit locker).
  */
 import {
   SenderError,
@@ -25,7 +28,10 @@ import {
   isPrefabConstruction,
 } from "@sidereal/sim/prefab-construction";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
-import { prefabCargoSockets } from "@sidereal/sim/prefab-cargo-sockets";
+import {
+  prefabCargoSockets,
+  type PrefabCargoSocket,
+} from "@sidereal/sim/prefab-cargo-sockets";
 import { packArmorIssue } from "@sidereal/sim/armor-issue";
 import { SCOPED_INVENTORY_LIMITS } from "@sidereal/sim/scoped-inventory";
 import {
@@ -89,38 +95,19 @@ function parseDefinitionIds(json: string, defs: PinnedItemDefinitions) {
   return ids as string[];
 }
 
-/** Plans and (unless dryRun) commits the stock. Throws, rolling back, on any failed check. */
-export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
-  requireShipOperator(ctx);
-  const kind = args.dryRun ? "stock-ship-cargo-dry-run" : "stock-ship-cargo";
-  const request = JSON.stringify({
-    characterId: args.characterId,
-    shipId: args.shipId,
-    socketKey: args.socketKey,
-    containerName: args.containerName,
-    definitionIdsJson: args.definitionIdsJson,
-  });
-  if (priorOperation(ctx.db, ctx.sender, args.operationId, kind, request))
-    return;
-  const name = args.containerName.trim();
-  if (!name || name.length > 40) fail("Container name must be 1-40 characters");
-  const defs = itemDefinitions(ctx);
-  const definitionIds = parseDefinitionIds(args.definitionIdsJson, defs);
+type ConstructionInstanceRow = NonNullable<
+  ReturnType<Context["db"]["constructionInstance"]["id"]["find"]>
+>;
+type ConstructionDeckRow = NonNullable<
+  ReturnType<Context["db"]["constructionDeck"]["id"]["find"]>
+>;
 
-  // The ship must be the character's active game-owned prefab ship.
-  const actor = ctx.db.character.id.find(args.characterId);
-  if (!actor) fail("Character not found");
-  const access = ctx.db.gameShipAccess.shipId.find(args.shipId);
-  if (
-    !access ||
-    access.characterId !== actor.id ||
-    access.lifecycle !== "active" ||
-    access.owner.toHexString() !== actor.owner.toHexString()
-  )
-    fail("Ship is not the character's active game ship");
-  const instance = ctx.db.constructionInstance.id.find(args.shipId);
-  if (!instance || instance.workspaceId !== GAME_OWNED_TEMPLATE_NAMESPACE)
-    fail("Game-owned construction instance required");
+/** The prefab deck and storage socket `socketKey` of a game-owned prefab ship instance. */
+function prefabStorageSocket(
+  ctx: Context,
+  instance: ConstructionInstanceRow,
+  socketKey: string,
+) {
   const document = JSON.parse(instance.documentJson) as unknown;
   if (!isPrefabConstruction(document))
     fail("Storage sockets are only defined for trusted prefab ships");
@@ -131,15 +118,32 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   ].find((d) => d.sourceDeckId === PREFAB_DECK_ID);
   if (!deck) fail("Prefab deck not found");
   const socket = prefabCargoSockets(prefab, 0, catalog).find(
-    (s) => s.key === args.socketKey,
+    (s) => s.key === socketKey,
   );
-  if (!socket) fail("Unknown storage socket: " + args.socketKey);
+  if (!socket) fail("Unknown storage socket: " + socketKey);
+  return { deck, socket };
+}
+
+/**
+ * Plans NEW items into the container bound to a storage socket (a new container, with a standing
+ * approach qualified against current collision, when none is bound yet). Pure reads; throws,
+ * rolling back, on any failed check.
+ */
+function planSocketStock(
+  ctx: Context,
+  instance: ConstructionInstanceRow,
+  deck: ConstructionDeckRow,
+  socket: PrefabCargoSocket,
+  definitionIds: readonly string[],
+  defs: PinnedItemDefinitions,
+) {
   const placedObjectId = `${instance.id}:${deck.id}:${socket.key}`;
 
   // Reuse the bound container, or qualify a new one's approach against current collision.
   const binding =
     ctx.db.instanceInventoryBinding.placedObjectId.find(placedObjectId);
-  let root = binding && ctx.db.inventoryContainer.id.find(binding.containerId);
+  const root =
+    binding && ctx.db.inventoryContainer.id.find(binding.containerId);
   const rootScope =
     binding &&
     ctx.db.inventoryContainerScope.containerId.find(binding.containerId);
@@ -226,41 +230,37 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
   } catch {
     fail("No room for these items in the storage container");
   }
-  const planned = ordered.map((d, i) => ({
-    definitionId: d.id,
-    x: placements[i].x,
-    y: placements[i].y,
-  }));
-  const summary = {
-    characterId: actor.id,
-    characterName: actor.name,
-    shipId: instance.id,
-    socketKey: socket.key,
+  const items: { definitionId: string; x: number; y: number; id?: string }[] =
+    ordered.map((d, i) => ({
+      definitionId: d.id,
+      x: placements[i].x,
+      y: placements[i].y,
+    }));
+  return {
     placedObjectId,
-    containerId: root?.id ?? "",
-    createdContainer: !root,
-    accessPointM: accessPoint,
+    root,
+    rootScope,
+    accessPoint,
+    width,
+    height,
+    maxMassKg,
     massKg,
-    items: planned as {
-      definitionId: string;
-      x: number;
-      y: number;
-      id?: string;
-    }[],
+    items,
   };
-  if (args.dryRun) {
-    ctx.db.shipOperatorOperation.insert({
-      operationId: args.operationId,
-      principal: ctx.sender,
-      kind,
-      request,
-      summaryJson: archiveJson(summary),
-      createdMicros: ctx.timestamp.microsSinceUnixEpoch,
-    });
-    return;
-  }
+}
 
-  // Commit: container binding (if new), then items, nested storage and revisions.
+/** Commits a `planSocketStock` plan: container binding (if new), items, nested storage. */
+function commitSocketStock(
+  ctx: Context,
+  instance: ConstructionInstanceRow,
+  deck: ConstructionDeckRow,
+  socket: PrefabCargoSocket,
+  plan: ReturnType<typeof planSocketStock>,
+  name: string,
+  defs: PinnedItemDefinitions,
+) {
+  const { placedObjectId, accessPoint, rootScope } = plan;
+  let root = plan.root;
   const scopeBase = {
     rootKind: "instance",
     rootCharacterId: "",
@@ -284,9 +284,9 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
       parentItemId: "",
       kind: "grid",
       name,
-      width,
-      height,
-      maxMassKg,
+      width: plan.width,
+      height: plan.height,
+      maxMassKg: plan.maxMassKg,
       capacityLitres: 0,
       amountLitres: 0,
       liquidType: "",
@@ -315,7 +315,7 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
       revision: rootScope!.revision + 1n,
     });
   const container = root;
-  for (const item of summary.items) {
+  for (const item of plan.items) {
     const id = ctx.newUuidV4().toString();
     if (
       ctx.db.inventoryItem.id.find(id) ||
@@ -363,12 +363,119 @@ export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
     }
   }
   markShipFlightDirty(ctx, instance.id);
+  return container.id;
+}
+
+/**
+ * Issue-time stock, inside the prefab spawner's issuing transaction (a pin's `issueStock`): binds
+ * a storage socket of the freshly installed ship and fills it with NEW items. Same checks and
+ * packing as the operator stock, no operator ledger row. Returns the container id.
+ */
+export function issueSocketStock(
+  ctx: Context,
+  shipId: string,
+  socketKey: string,
+  containerName: string,
+  definitionIdsJson: string,
+) {
+  const name = containerName.trim();
+  if (!name || name.length > 40) fail("Container name must be 1-40 characters");
+  const defs = itemDefinitions(ctx);
+  const definitionIds = parseDefinitionIds(definitionIdsJson, defs);
+  const instance = ctx.db.constructionInstance.id.find(shipId);
+  if (!instance || instance.workspaceId !== GAME_OWNED_TEMPLATE_NAMESPACE)
+    fail("Game-owned construction instance required");
+  const { deck, socket } = prefabStorageSocket(ctx, instance, socketKey);
+  const plan = planSocketStock(
+    ctx,
+    instance,
+    deck,
+    socket,
+    definitionIds,
+    defs,
+  );
+  return commitSocketStock(ctx, instance, deck, socket, plan, name, defs);
+}
+
+/** Plans and (unless dryRun) commits the stock. Throws, rolling back, on any failed check. */
+export function stockShipCargo(ctx: Context, args: StockShipCargoArgs) {
+  requireShipOperator(ctx);
+  const kind = args.dryRun ? "stock-ship-cargo-dry-run" : "stock-ship-cargo";
+  const request = JSON.stringify({
+    characterId: args.characterId,
+    shipId: args.shipId,
+    socketKey: args.socketKey,
+    containerName: args.containerName,
+    definitionIdsJson: args.definitionIdsJson,
+  });
+  if (priorOperation(ctx.db, ctx.sender, args.operationId, kind, request))
+    return;
+  const name = args.containerName.trim();
+  if (!name || name.length > 40) fail("Container name must be 1-40 characters");
+  const defs = itemDefinitions(ctx);
+  const definitionIds = parseDefinitionIds(args.definitionIdsJson, defs);
+
+  // The ship must be the character's active game-owned prefab ship.
+  const actor = ctx.db.character.id.find(args.characterId);
+  if (!actor) fail("Character not found");
+  const access = ctx.db.gameShipAccess.shipId.find(args.shipId);
+  if (
+    !access ||
+    access.characterId !== actor.id ||
+    access.lifecycle !== "active" ||
+    access.owner.toHexString() !== actor.owner.toHexString()
+  )
+    fail("Ship is not the character's active game ship");
+  const instance = ctx.db.constructionInstance.id.find(args.shipId);
+  if (!instance || instance.workspaceId !== GAME_OWNED_TEMPLATE_NAMESPACE)
+    fail("Game-owned construction instance required");
+  const { deck, socket } = prefabStorageSocket(ctx, instance, args.socketKey);
+  const plan = planSocketStock(
+    ctx,
+    instance,
+    deck,
+    socket,
+    definitionIds,
+    defs,
+  );
+  const summary = {
+    characterId: actor.id,
+    characterName: actor.name,
+    shipId: instance.id,
+    socketKey: socket.key,
+    placedObjectId: plan.placedObjectId,
+    containerId: plan.root?.id ?? "",
+    createdContainer: !plan.root,
+    accessPointM: plan.accessPoint,
+    massKg: plan.massKg,
+    items: plan.items,
+  };
+  if (args.dryRun) {
+    ctx.db.shipOperatorOperation.insert({
+      operationId: args.operationId,
+      principal: ctx.sender,
+      kind,
+      request,
+      summaryJson: archiveJson(summary),
+      createdMicros: ctx.timestamp.microsSinceUnixEpoch,
+    });
+    return;
+  }
+  const containerId = commitSocketStock(
+    ctx,
+    instance,
+    deck,
+    socket,
+    plan,
+    name,
+    defs,
+  );
   ctx.db.shipOperatorOperation.insert({
     operationId: args.operationId,
     principal: ctx.sender,
     kind,
     request,
-    summaryJson: archiveJson({ ...summary, containerId: container.id }),
+    summaryJson: archiveJson({ ...summary, containerId }),
     createdMicros: ctx.timestamp.microsSinceUnixEpoch,
   });
 }

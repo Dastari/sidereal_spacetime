@@ -13,9 +13,12 @@ operation ID is a no-op. Every command names the server and database explicitly.
   ledger   print the ledger row of an operation
 
 Kits (packages/content/src/crew-wardrobe.ts CREW_WARDROBE_KITS): ``uniforms-and-tiers`` (the four
-department uniforms and the tier 1-2 pieces) and ``role-sets`` (medic, engineer, pilot sets).
-Wren sockets: ``hold/cargo.standard.medium`` (storage crate) and
-``bunks/shipyard.equipment.wall-locker`` (wall locker). See the wiki: Operations/Ship Cargo Stocking.
+department uniforms and the tier 1-2 pieces), ``eva-suit`` (pressure suit, helmet, jetpack, mag
+boots) and ``role-sets`` (medic, engineer, pilot sets).
+Wren sockets: ``hold/cargo.standard.medium`` (storage crate),
+``bunks/shipyard.equipment.wall-locker`` (wall locker) and, from Wren r8,
+``hold/shipyard.equipment.wall-locker`` (the EVA suit locker beside the inside airlock button; new
+Wrens are issued with the eva-suit kit in it). See the wiki: Operations/Ship Cargo Stocking.
 """
 import argparse
 import json

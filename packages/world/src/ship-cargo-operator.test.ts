@@ -20,6 +20,8 @@ import { onboardNewCharacter } from "./ship-policy";
 import { ensureCanonicalSystem } from "./shared-world";
 import { assignPrefabShip, prefabShipSpawner } from "./ship-assign";
 import { stockShipCargo, STOCKED_CARGO_GRID } from "./ship-cargo-operator";
+import { FED_WREN_PIN, WREN_SUIT_LOCKER_SOCKET } from "./prefab-ship-pins";
+import { setStarterPrefab } from "./ship-policy";
 import {
   moveScopedCargo,
   reachableCargoContainers,
@@ -29,6 +31,7 @@ import { equipItem, inventoryItemsView } from "./inventory";
 import {
   CREW_WARDROBE_KITS,
   CREW_WARDROBE_STARTER_DELIVERY,
+  evaSuitCheck,
 } from "@sidereal/content/crew-wardrobe";
 import {
   INVENTORY_DEFINITIONS,
@@ -201,6 +204,11 @@ async function wrenOwner() {
   return { f, characterId, shipId };
 }
 
+const crateBinding = (f: ReturnType<typeof fixture>) =>
+  f.db.instanceInventoryBinding.rows.find((b: Row) =>
+    b.placedObjectId.endsWith(":hold/cargo.standard.medium"),
+  );
+
 const stockArgs = (
   characterId: string,
   shipId: string,
@@ -217,17 +225,28 @@ const stockArgs = (
   ...patch,
 });
 
-test("Wren exposes its hold crate and bunk locker as storage sockets with approach points", () => {
+test("Wren exposes its hold crate, bunk locker and suit locker as storage sockets with approach points", () => {
   const sockets = prefabCargoSockets(prefabById("fed.s.wren")!, 0);
   expect(sockets.map((s) => s.key)).toEqual([
     "bunks/shipyard.equipment.wall-locker",
     "hold/cargo.standard.medium",
+    WREN_SUIT_LOCKER_SOCKET,
   ]);
   const crate = sockets[1];
   // Wren r4 (12 x 7 m): the crate stands against the hold's aft wall, starboard corner.
   expect(crate.centreM).toEqual([2.65, -2.2]);
   // Front (fore) first: ship-local +y from the crate face.
   expect(crate.approachesM[0]).toEqual([2.65, -1.25]);
+  // Wren r8: the suit locker backs onto the hall wall of the airlock chamber and opens to
+  // starboard (ship-local +x), toward the inside airlock button.
+  const suit = sockets[2];
+  expect(suit).toMatchObject({
+    designId: "shipyard.equipment.wall-locker",
+    room: "hold",
+    facing: "starboard",
+    centreM: [2.05, 1.325],
+  });
+  expect(suit.approachesM[0]).toEqual([2.75, 1.325]);
 });
 
 test("live r3 Wren instances expose the same storage socket keys (in-place upgrade mapping)", () => {
@@ -244,9 +263,10 @@ test("live r3 Wren instances expose the same storage socket keys (in-place upgra
     0,
     prefabComponentCatalogFor("ship-components-v1@2"),
   );
-  expect(sockets.map((s) => s.key)).toEqual(
+  // Every live socket key exists in the registered revision; r8 only adds the suit locker.
+  expect(
     prefabCargoSockets(prefabById("fed.s.wren")!, 0).map((s) => s.key),
-  );
+  ).toEqual([...sockets.map((s) => s.key), WREN_SUIT_LOCKER_SOCKET]);
   expect(sockets[1].centreM).toEqual([2.15, -1.7]);
 });
 
@@ -298,7 +318,12 @@ test("only the deployment operator can stock ship cargo; game identities are ref
       ),
     ).toThrow("Deployment operator required");
   }
-  expect(f.db.instanceInventoryBinding.rows).toHaveLength(0);
+  // Only the suit locker the Wren was issued with is bound.
+  expect(
+    f.db.instanceInventoryBinding.rows.map((b: Row) => b.placedObjectId),
+  ).toEqual([
+    expect.stringMatching(/:hold\/shipyard\.equipment\.wall-locker$/),
+  ]);
 });
 
 test("dry run plans the crate and placements and writes only its ledger row", async () => {
@@ -363,11 +388,13 @@ test("rejects unknown sockets, unknown items, another character's ship and overf
       stockArgs(characterId, shipId, Array(60).fill("wardrobe-t2-chest")),
     ),
   ).toThrow("No room");
+  // Nothing beyond the EVA suit the Wren was issued with.
   expect(
-    f.db.inventoryItem.rows.filter((i: Row) =>
-      i.definitionId.startsWith("wardrobe-"),
-    ),
-  ).toHaveLength(0);
+    f.db.inventoryItem.rows
+      .filter((i: Row) => i.definitionId.startsWith("wardrobe-"))
+      .map((i: Row) => i.definitionId)
+      .sort(),
+  ).toEqual([...CREW_WARDROBE_KITS["eva-suit"]].sort());
 });
 
 test("stocks Wren's crate additively; the owner takes a uniform and equips it (visual follows)", async () => {
@@ -388,8 +415,8 @@ test("stocks Wren's crate additively; the owner takes a uniform and equips it (v
       operationId: "stock-wren-wardrobe-02",
     }),
   );
-  expect(f.db.instanceInventoryBinding.rows).toHaveLength(1);
-  const binding = f.db.instanceInventoryBinding.rows[0];
+  const binding = crateBinding(f);
+  expect(f.db.instanceInventoryBinding.rows).toHaveLength(2);
   const crate = f.db.inventoryContainer.id.find(binding.containerId);
   expect(crate).toMatchObject({
     characterId: "",
@@ -516,11 +543,13 @@ test("the two delivery kits fit Wren's hold crate and bunk locker", async () => 
       containerName: "Wall locker",
     }),
   );
-  expect(f.db.instanceInventoryBinding.rows).toHaveLength(2);
+  expect(f.db.instanceInventoryBinding.rows).toHaveLength(3);
   expect(
     f.db.inventoryItemMembership.rows.filter((m: Row) =>
       f.db.instanceInventoryBinding.rows.some(
-        (b: Row) => b.containerId === m.rootContainerId,
+        (b: Row) =>
+          b.containerId === m.rootContainerId &&
+          !b.placedObjectId.endsWith(WREN_SUIT_LOCKER_SOCKET),
       ),
     ),
   ).toHaveLength(CREW_WARDROBE_STARTER_DELIVERY.length);
@@ -573,4 +602,184 @@ test("the weapons-and-tools kit fits an empty Wren locker, or splits beside both
   expect(INVENTORY_DEFINITIONS.find((d) => d.id === "shotgun")?.equipSlot).toBe(
     "hand",
   );
+});
+
+test("a new Wren is issued with the EVA suit in its suit locker; the owner takes it and suits up", async () => {
+  expect(FED_WREN_PIN.issueStock).toEqual([
+    {
+      socketKey: WREN_SUIT_LOCKER_SOCKET,
+      containerName: "EVA suit locker",
+      kit: "eva-suit",
+    },
+  ]);
+  await import("./prefab-ship-spawners");
+  const f = fixture();
+  ensureCanonicalSystem(f.db as never);
+  // Starter onboarding (the policy names the Wren): the ship and its suit come in one transaction.
+  f.as(SHIP_OPERATOR);
+  setStarterPrefab(f.ctx, {
+    operationId: "starter-wren-01",
+    prefabId: "fed.s.wren",
+    expectedCatalogRevision: FED_WREN_PIN.catalogRevision,
+    allowLegacy: false,
+  });
+  f.as(OWNER);
+  const characterId = onboardNewCharacter(f.ctx, "Dastari");
+  const shipId = f.db.character.id.find(characterId).shipId as string;
+  expect(shipId).not.toBe("");
+  const [binding] = f.db.instanceInventoryBinding.rows;
+  expect(f.db.instanceInventoryBinding.rows).toHaveLength(1);
+  expect(binding.placedObjectId.endsWith(":" + WREN_SUIT_LOCKER_SOCKET)).toBe(
+    true,
+  );
+  const locker = f.db.inventoryContainer.id.find(binding.containerId);
+  expect(locker).toMatchObject({
+    characterId: "",
+    shipId,
+    name: "EVA suit locker",
+    width: STOCKED_CARGO_GRID.width,
+    height: STOCKED_CARGO_GRID.height,
+  });
+  const inLocker = f.db.inventoryItem.rows.filter(
+    (i: Row) => i.containerId === locker.id,
+  );
+  expect(inLocker.map((i: Row) => i.definitionId).sort()).toEqual(
+    [...CREW_WARDROBE_KITS["eva-suit"]].sort(),
+  );
+  // Room to spare: the kit takes 26 of the 196 cells.
+  const cells = inLocker
+    .map((i: Row) =>
+      INVENTORY_DEFINITIONS.find((d) => d.id === i.definitionId)!,
+    )
+    .reduce(
+      (n: number, d: { width: number; height: number }) =>
+        n + d.width * d.height,
+      0,
+    );
+  expect(cells).toBeLessThan((locker.width * locker.height) / 4);
+  // No operator ledger row: issue stock is part of the issuing transaction.
+  expect(
+    f.db.shipOperatorOperation.rows.filter((r: Row) =>
+      r.kind.startsWith("stock-ship-cargo"),
+    ),
+  ).toHaveLength(0);
+
+  // Standing at the locker's approach, the owner can reach it and take every suit part.
+  const scope = f.db.inventoryContainerScope.containerId.find(locker.id);
+  const actor = f.db.character.id.find(characterId);
+  f.db.character.id.update({
+    ...actor,
+    localX: scope.accessX,
+    localY: scope.accessY,
+  });
+  f.db.authSession.insert({
+    id: "session-owner",
+    owner: Identity.fromString(OWNER),
+    game: true,
+    expiresMicros: 10n ** 18n,
+  });
+  expect(reachableCargoContainers(f.ctx).map((c) => c.id)).toContain(locker.id);
+  const revision = (id: string) =>
+    f.db.inventoryContainerScope.containerId.find(id).revision;
+  const definition = (id: string) =>
+    INVENTORY_DEFINITIONS.find((d) => d.id === id)!;
+  // The client's "Equip" on a cargo item: a scoped transfer to the first free carried cell
+  // (pockets or the worn pack, either orientation), then the normal equip.
+  const freeCell = (container: Row, w: number, h: number) => {
+    const taken = f.db.inventoryItem.rows
+      .filter((i: Row) => i.containerId === container.id)
+      .map((i: Row) => {
+        const q = definition(i.definitionId);
+        return i.rotated
+          ? [i.x, i.y, q.height, q.width]
+          : [i.x, i.y, q.width, q.height];
+      });
+    for (const [cw, ch, rotated] of [
+      [w, h, false],
+      [h, w, true],
+    ] as const)
+      for (let y = 0; y + ch <= container.height; y++)
+        for (let x = 0; x + cw <= container.width; x++)
+          if (
+            taken.every(
+              ([tx, ty, tw, th]: number[]) =>
+                x >= tx + tw || x + cw <= tx || y >= ty + th || y + ch <= ty,
+            )
+          )
+            return { x, y, rotated };
+    return undefined;
+  };
+  let op = 0;
+  const move = (itemId: string, from: string, to: string, at: Row) =>
+    moveScopedCargo(f.ctx, {
+      operationId: `suit-move-${++op}`,
+      itemId,
+      expectedItemRevision:
+        reachableCargoItems(f.ctx).find((i) => i.id === itemId)?.revision ??
+        f.db.inventoryItemMembership.itemId.find(itemId)?.revision,
+      sourceContainerId: from,
+      expectedSourceRevision: revision(from),
+      destinationContainerId: to,
+      expectedDestinationRevision: revision(to),
+      expectedCharacterRevision:
+        f.db.inventoryState.characterId.find(characterId).revision,
+      x: at.x,
+      y: at.y,
+      rotated: at.rotated,
+    });
+  const carried = () =>
+    f.db.inventoryContainer.rows.filter(
+      (c: Row) =>
+        c.kind === "grid" &&
+        (c.carried ||
+          f.db.inventoryItem.rows.some(
+            (i: Row) =>
+              i.id === c.parentItemId &&
+              i.characterId === characterId &&
+              i.equipmentSlot,
+          )),
+    );
+  const suit = reachableCargoItems(f.ctx).filter((i) =>
+    i.definitionId.startsWith("wardrobe-suit-"),
+  );
+  expect(suit).toHaveLength(4);
+  for (const part of suit) {
+    const d = definition(part.definitionId);
+    let spot: { container: Row; at: Row } | undefined;
+    const find = () => {
+      for (const container of carried()) {
+        const at = freeCell(container, d.width, d.height);
+        if (at) return { container, at };
+      }
+    };
+    spot = find();
+    if (!spot) {
+      // The starter pack is full: stow its bulkiest item in the locker (room to spare) first.
+      const pack = carried().find((c: Row) => c.parentItemId)!;
+      const bulky = f.db.inventoryItem.rows
+        .filter((i: Row) => i.containerId === pack.id)
+        .sort(
+          (x: Row, y: Row) =>
+            definition(y.definitionId).width *
+              definition(y.definitionId).height -
+            definition(x.definitionId).width *
+              definition(x.definitionId).height,
+        )[0];
+      const q = definition(bulky.definitionId);
+      move(bulky.id, pack.id, locker.id, freeCell(locker, q.width, q.height)!);
+      spot = find();
+    }
+    expect(spot, part.definitionId).toBeTruthy();
+    move(part.id, locker.id, spot!.container.id, spot!.at);
+    equipItem(f.ctx, {
+      itemId: part.id,
+      expectedRevision:
+        f.db.inventoryState.characterId.find(characterId).revision,
+      operationId: `equip-${part.definitionId}`,
+    });
+  }
+  const worn = inventoryItemsView(f.ctx)
+    .filter((i) => i.equipmentSlot)
+    .map((i) => ({ slot: i.equipmentSlot, id: i.definitionId }));
+  expect(evaSuitCheck(worn)).toEqual({ ready: true, missing: [] });
 });
