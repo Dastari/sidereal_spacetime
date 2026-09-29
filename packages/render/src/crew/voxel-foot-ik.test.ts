@@ -139,6 +139,66 @@ describe("foot planting (presentation-only two-bone foot IK)", () => {
       expect(on.lowest).toBeGreaterThan(VOXEL_CREW_ANKLE_HEIGHT_M - 0.002);
     });
 
+  it("drops a releasing airborne foot pin when the root abruptly relocates", async () => {
+    const engine = new NullEngine();
+    engine.getDeltaTime = () => 16;
+    const scene = new Scene(engine);
+    scene.useConstantAnimationDeltaTime = true;
+    new FreeCamera("review", new Vector3(0, 1, -4), scene);
+    const ship = new TransformNode("ship-frame", scene);
+    const crew = await createVoxelCrewVisual(scene, ship, asset(), {
+      faceAtlas: false,
+    });
+    crew.update({ moving: true, seated: false, sprinting: true });
+    const feet = ["foot.L", "foot.R"].map((n) => crew.joints.get(n)!);
+    let previousContact: boolean[] | undefined;
+    let frames = 0;
+    let warped = false;
+    // Run before the actual foot solver: choose the first lift after established stance, then
+    // emulate a respawn/network warp while its former ground pin is still releasing.
+    scene.onAfterAnimationsObservable.add(
+      () => {
+        for (const node of scene.transformNodes) node.computeWorldMatrix(true);
+        const inv = crew.root.computeWorldMatrix(true).clone().invert();
+        const heights = feet.map(
+          (f) => Vector3.TransformCoordinates(f.getAbsolutePosition(), inv).y,
+        );
+        const contact = heights.map(
+          (h, i) =>
+            heights.every((other, j) => j === i || h <= other + 1e-4) &&
+            h < VOXEL_CREW_ANKLE_HEIGHT_M + 0.012,
+        );
+        if (
+          frames > 40 &&
+          !warped &&
+          contact.some((onDeck, i) => previousContact?.[i] && !onDeck)
+        ) {
+          crew.root.position.x += 3;
+          crew.root.position.z += 2;
+          warped = true;
+        }
+        previousContact = contact;
+        frames++;
+      },
+      -1,
+      true,
+    );
+    let maxError = 0;
+    for (let i = 0; i < 120; i++) {
+      crew.root.position.z -= SPRINT_SPEED_MPS * 0.016;
+      scene.render();
+      if (warped) maxError = Math.max(maxError, crew.footError);
+    }
+    expect(
+      warped,
+      "must relocate on a real stance-to-airborne transition",
+    ).toBe(true);
+    expect(maxError).toBeLessThan(0.01);
+    crew.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
   it("plants in the ship frame while the ship translates and turns", async () => {
     const fixed = await stride(true, false);
     const moving = await stride(true, false, true);

@@ -199,10 +199,16 @@ export function createFootPlanting(
           clamped,
           model.getWorldMatrix(),
         );
+        const here = Vector3.TransformCoordinates(target, frameInv);
+        const previousPin = state.lock ?? state.from;
+        // A warp or excessive animated drift invalidates even an airborne pin that is still
+        // blending out. Otherwise the release can pull the leg toward a pre-relocation anchor.
+        if (previousPin && Vector3.Distance(previousPin, here) > maxDrift) {
+          state.lock = state.from = undefined;
+          state.weight = 0;
+        }
         if (planted) {
-          const here = Vector3.TransformCoordinates(target, frameInv);
-          if (!state.lock || Vector3.Distance(state.lock, here) > maxDrift)
-            state.lock = here;
+          state.lock ??= here;
           state.weight = 1;
           state.from = undefined;
         } else if (state.lock) {
