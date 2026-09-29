@@ -25,10 +25,10 @@ export async function loadAuthoringAccount() {
       : null;
     if (
       next?.origin === location.origin &&
-      ["/map", "/planets"].includes(next.pathname)
+      ["/map", "/planets", "/shipyard/prefabs"].includes(next.pathname)
     )
       location.replace(next.pathname + next.search);
-    else history.replaceState(null, "", "/shipyard");
+    else history.replaceState(null, "", "/shipyard/prefabs");
     return user;
   }
   // Panels can unmount while the account renews. Read current storage, not a cached old User.

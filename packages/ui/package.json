@@ -5,7 +5,6 @@
   "type": "module",
   "exports": {
     ".": "./src/index.tsx",
-    "./editor-controls": "./src/editor-controls.tsx",
     "./editor-commands": "./src/editor-commands.ts",
     "./property-controls": "./src/property-controls.tsx",
     "./astronomical-units": "./src/astronomical-units.ts"
