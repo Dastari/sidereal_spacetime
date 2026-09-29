@@ -18,6 +18,7 @@ import {
   SHIP_COMPONENT_CATALOG_REVISIONS,
 } from "@sidereal/content/ship-components-source";
 import { beamDirection } from "./prefab-beam";
+import { catalogBaseRevision } from "./component-catalogs";
 
 export const CHARACTER_MAX_HEALTH = 100;
 /** A dead character respawns automatically this long after dying. */
@@ -164,8 +165,10 @@ const damageStateCache = new Map<number, readonly DamageStateRule[]>();
 export function catalogDamageStates(
   catalogRevision?: string,
 ): readonly DamageStateRule[] {
-  const at = catalogRevision?.match(/@(\d+)$/);
-  const revision = at ? Number(at[1]) : SHIP_COMPONENT_CATALOG_REVISION;
+  // Damage states are catalogue-wide: a registry-composed pin uses its base revision's table.
+  const revision = catalogRevision
+    ? catalogBaseRevision(catalogRevision)
+    : SHIP_COMPONENT_CATALOG_REVISION;
   if (
     !(SHIP_COMPONENT_CATALOG_REVISIONS as readonly number[]).includes(revision)
   )

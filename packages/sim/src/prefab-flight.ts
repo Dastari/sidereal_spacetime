@@ -105,8 +105,9 @@ const RCS_QUAD_GEOMETRY: Record<
   SM: { depth: 0.5, side: 0.35, half: 0.375 },
   MD: { depth: 1.0, side: 0.7, half: 0.625 },
 };
+/** Code revision of a catalogue pin; a registry-composed pin (`@4+hash`) reports its base. */
 export const catalogRevisionNumber = (revision: string) => {
-  const at = revision.match(/@(\d+)$/);
+  const at = revision.match(/@(\d+)(?:\+[0-9a-f]{16})?$/);
   return at ? Number(at[1]) : 0;
 };
 const FLOOR_KG_PER_M2 = 40;

@@ -1,8 +1,8 @@
 /**
  * Roadmap X-3 definition kinds: ship components, loot tables and interactions (wiki
  * `Systems/Content Definitions`). Real validators and Studio forms; components and interactions
- * are seeded from today's code. The game does not read these kinds from the registry yet, so they
- * keep drafts only (`stage: "validated"`) until the runtime switch lands (X-3b).
+ * are seeded from today's code. Since X-3b the game reads pinned components (new ships) and
+ * interactions (new objects); loot tables keep drafts only until destruction profiles exist.
  */
 import {
   SHIP_COMPONENT_CHANNELS,
@@ -454,12 +454,11 @@ export const COMPONENT_KIND: DefinitionKindSpec = {
   label: "Ship components",
   description:
     "Size, sockets, mass, hp, damage states, power, heat, coolant, fuel, data, ports and kind stats.",
-  stage: "validated",
-  landsIn:
-    "X-3b (flight compiler, systems compile and combat read the registry)",
+  stage: "seeded",
+  landsIn: "X-3b",
   studioEditor: "ST-4",
   runtimeConsumer:
-    "Flight compile, networks, combat (still the code catalogue)",
+    "New ships: flight compile, ship systems, combat damage and deck objects (existing ships keep their catalogue until an operator upgrade)",
   seededFrom: "ship-components-source.ts, catalogue revision 4",
   validator: "component/v1",
   fields: COMPONENT_FIELDS,
@@ -590,10 +589,11 @@ export const INTERACTION_KIND: DefinitionKindSpec = {
   label: "Interactions",
   description:
     "Verbs, reach, line of sight, approach point, required tool, permission and occupancy of an interactable object.",
-  stage: "validated",
-  landsIn: "X-3b (interaction descriptors read the registry)",
+  stage: "seeded",
+  landsIn: "X-3b",
   studioEditor: "ST-6",
-  runtimeConsumer: "Seats and lights (sim/interactions.ts, still code)",
+  runtimeConsumer:
+    "Seats and lights: reach and available verbs (new objects pin the current revision)",
   seededFrom:
     "sim/interactions.ts rules for the LAB_INTERACTIONS kinds (seat, light)",
   validator: "interaction/v1",

@@ -44,6 +44,11 @@ import {
   requireShipOperator,
 } from "./ship-operator";
 import { itemDefinitions } from "./item-definitions";
+import { componentChangeBlocker } from "./component-catalog";
+import { REGISTERED_PREFAB_PINS } from "./prefab-ship-pins";
+
+/** Prefabs new ships are issued from; component changes must keep them valid. */
+const SPAWNABLE_PREFABS = REGISTERED_PREFAB_PINS.map((p) => p.prefabId);
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
@@ -315,6 +320,16 @@ export function publishDefinition(
   );
   if (grows.length)
     throw new SenderError(`Revision rule failed: ${formatIssues(grows)}`);
+  // Components: the catalogue new ships pin after this publication must stay valid, and every
+  // spawnable prefab must still compile and fly with it (X-3b).
+  if (kind === "component") {
+    const refused = componentChangeBlocker(ctx.db, SPAWNABLE_PREFABS, {
+      kind: "publish",
+      definitionId: args.definitionId,
+      payloadJson: checked.canonical,
+    });
+    if (refused) throw new SenderError(refused);
+  }
   const revision = head.latestRevision + 1n;
   if (revision > BigInt(DEFINITION_LIMITS.revisionsPerDefinition))
     throw new SenderError("Revision limit reached for this definition");
@@ -388,6 +403,14 @@ export function retireDefinition(
     args.revision,
   );
   if (blocked) throw new SenderError(blocked);
+  if (kind === "component") {
+    const refused = componentChangeBlocker(ctx.db, SPAWNABLE_PREFABS, {
+      kind: "retire",
+      definitionId: args.definitionId,
+      revision: args.revision,
+    });
+    if (refused) throw new SenderError(refused);
+  }
   ctx.db.contentDefinition.definitionRef.update({
     ...row,
     status: "retired",

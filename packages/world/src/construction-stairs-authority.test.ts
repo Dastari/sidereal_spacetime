@@ -36,6 +36,7 @@ function table(primary = "id", indexes: Record<string, string> = {}) {
   let writes = 0;
   const t: any = {
     iter: () => rows.values(),
+    count: () => BigInt(rows.size),
     writes: () => writes,
     insert: (r: any) => {
       if (rows.has(r[primary])) throw Error("duplicate");
@@ -72,6 +73,7 @@ function fixture() {
     egress = 0,
     combat = 0;
   const db: any = {
+    componentCatalogSnapshot: table("pin"),
     constructionFlightBinding: table("shipId"),
     constructionPilotSeat: table("characterId", { by_owner: "owner" }),
     constructionFlightReview: table("characterId"),

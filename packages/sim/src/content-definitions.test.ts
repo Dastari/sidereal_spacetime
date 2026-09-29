@@ -48,14 +48,15 @@ describe("kind registry", () => {
       DEFINITION_KINDS.filter(
         (k) => DEFINITION_KIND_SPECS[k].stage === "seeded",
       ),
-    ).toEqual(["item", "weapon"]);
-    // X-3 kinds have validators (and seeds where content exists) but keep drafts only.
+    ).toEqual(["item", "weapon", "component", "interaction"]);
+    // Loot tables have a validator but keep drafts until destruction profiles exist.
     expect(
       DEFINITION_KINDS.filter(
         (k) => DEFINITION_KIND_SPECS[k].stage === "validated",
       ),
-    ).toEqual(["component", "loot_table", "interaction"]);
-    expect(publishBlocker("component")).toMatch(/X-3b/);
+    ).toEqual(["loot_table"]);
+    expect(publishBlocker("component")).toBeNull();
+    expect(publishBlocker("loot_table")).toMatch(/S1-4/);
     for (const kind of SEEDED_DEFINITION_KINDS)
       expect(DEFINITION_KIND_SPECS[kind].stage).not.toBe("planned");
   });

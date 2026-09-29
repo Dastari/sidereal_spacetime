@@ -165,6 +165,11 @@ import {
   inventoryItemPin,
   combatActionPin,
 } from "./item-definition-pin-tables";
+import {
+  componentCatalogSnapshot,
+  interactionObjectPin,
+} from "./component-catalog-tables";
+import * as componentCatalog from "./component-catalog";
 import * as itemDefinitionViews from "./item-definition-views";
 import { resyncItemDefinitions } from "./item-definition-resync";
 import {
@@ -457,6 +462,8 @@ const db = schema({
   contentDefinitionUsage,
   inventoryItemPin,
   combatActionPin,
+  componentCatalogSnapshot,
+  interactionObjectPin,
 });
 export default db;
 /** Wrap a world action a dead character may not take (move, interact, pilot, use inventory). */
@@ -651,12 +658,16 @@ export const enterLab = db.reducer({ name: t.string() }, (ctx, { name }) => {
   // personal kit and waits for a ship.
   onboardNewCharacter(ctx, clean);
 });
-export const connectSession = db.clientConnected(connected);
+export const connectSession = db.clientConnected((ctx) => {
+  componentCatalog.syncComponentSnapshots(ctx.db);
+  connected(ctx);
+});
 export const bindGameSession = db.reducer(
   { connectionId: t.string() },
   auth.bindGameSession,
 );
 export const disconnect = db.clientDisconnected((ctx) => {
+  componentCatalog.syncComponentSnapshots(ctx.db);
   inputControl.disconnectInputControl(ctx);
   if (lastDisconnected(ctx)) {
     traversal.interruptConstructionTraversalOwner(ctx, ctx.sender);
@@ -826,6 +837,7 @@ export const stepWorld = db.reducer(
   (ctx) => {
     if (!ctx.sender.isEqual(ctx.databaseIdentity))
       throw new SenderError("Server schedule only");
+    componentCatalog.syncComponentSnapshots(ctx.db);
     migrateSolarSystem(ctx.db, ctx.timestamp.microsSinceUnixEpoch);
     auth.expireSessions(ctx);
     construction.expireGrants(ctx);
@@ -1350,6 +1362,12 @@ export const publishedItemDefinitions = db.view(
   t.array(itemDefinitionViews.publishedItemDefinitionProjection),
   auth.gameView(itemDefinitionViews.publishedItemDefinitions),
 );
+/** Registry-composed component catalogues ships pin (X-3b); the client composes the same catalogue. */
+export const componentCatalogSnapshots = db.view(
+  { name: "component_catalog_snapshots", public: true },
+  t.array(componentCatalog.componentSnapshotProjection),
+  auth.gameView(componentCatalog.componentSnapshotsView),
+);
 export const ownItemDefinitionPins = db.view(
   { name: "own_item_definition_pins", public: true },
   t.array(itemDefinitionViews.itemPinProjection),
@@ -1712,6 +1730,20 @@ export const moveCargoCarrier = db.reducer(
   }, true),
 );
 
+/** Operator ship reducers resolve ship catalogues: load registry-composed ones first (X-3b). */
+const withComponentSnapshots =
+  <
+    C extends {
+      db: Parameters<typeof componentCatalog.syncComponentSnapshots>[0];
+    },
+    A,
+  >(
+    action: (ctx: C, args: A) => void,
+  ) =>
+  (ctx: C, args: A) => {
+    componentCatalog.syncComponentSnapshots(ctx.db);
+    action(ctx, args);
+  };
 /** Operator-only ship maintenance (deployment identity). See
  * the wiki page Operations/Ship Wipe Runbook. Never invoked automatically. */
 export const operatorSetStarterPrefab = db.reducer(
@@ -1721,7 +1753,7 @@ export const operatorSetStarterPrefab = db.reducer(
     expectedCatalogRevision: t.string(),
     allowLegacy: t.bool(),
   },
-  setStarterPrefab,
+  withComponentSnapshots(setStarterPrefab),
 );
 export const operatorWipePlayerShips = db.reducer(
   {
@@ -1731,7 +1763,7 @@ export const operatorWipePlayerShips = db.reducer(
     expectedInstances: t.u32(),
     expectedCharacters: t.u32(),
   },
-  wipePlayerShips,
+  withComponentSnapshots(wipePlayerShips),
 );
 export const operatorAssignPrefabShip = db.reducer(
   {
@@ -1743,7 +1775,7 @@ export const operatorAssignPrefabShip = db.reducer(
     expectedCharacterShipId: t.string(),
     allowLegacy: t.bool(),
   },
-  assignPrefabShip,
+  withComponentSnapshots(assignPrefabShip),
 );
 /** Operator-only, additive: binds a prefab storage socket (e.g. Wren's hold crate) to a
  * ship-owned container if needed and inserts new item instances. See ship-cargo-operator.ts. */
@@ -1757,7 +1789,7 @@ export const operatorStockShipCargo = db.reducer(
     containerName: t.string(),
     definitionIdsJson: t.string(),
   },
-  stockShipCargo,
+  withComponentSnapshots(stockShipCargo),
 );
 /** Operator-only: replaces one game-owned prefab ship's revision in place (e.g. Wren r2/r3 -> r4),
  * keeping the ship/deck ids, pose, owner, containers and items. See ship-upgrade.ts. */
@@ -1771,7 +1803,7 @@ export const operatorUpgradePrefabShip = db.reducer(
     targetPrefabId: t.string(),
     expectedTargetBlueprintSha256: t.string(),
   },
-  upgradePrefabShip,
+  withComponentSnapshots(upgradePrefabShip),
 );
 
 export const setConstructionEnginePower = db.reducer(

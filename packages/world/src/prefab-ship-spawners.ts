@@ -15,8 +15,16 @@ import { registerPrefabShipSpawner } from "./ship-assign";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { PREFAB_FLIGHT_DEFINITION } from "@sidereal/sim/prefab-flight";
 import { CREW_WARDROBE_KITS } from "@sidereal/content/crew-wardrobe";
-import { installPrefabShip } from "./prefab-ship-authority";
+import {
+  installPrefabShip,
+  trustedPrefabTemplateFor,
+} from "./prefab-ship-authority";
 import { issueSocketStock } from "./ship-cargo-operator";
+import { prefabById } from "@sidereal/content/prefabs";
+import {
+  currentComponentCatalog,
+  effectivePrefabPin,
+} from "./component-catalog";
 import {
   REGISTERED_PREFAB_PINS,
   type PinnedPrefabShip,
@@ -39,19 +47,29 @@ function registerPinned(pin: PinnedPrefabShip) {
         throw new SenderError(
           `${pin.prefabId} pinned catalog ${pin.catalogRevision} but the module has ${catalog}`,
         );
-      const result = installPrefabShip(ctx, actor, {
-        prefabId: pin.prefabId,
-        pose: request.pose,
-      });
+      // X-3b: new ships pin the current component catalogue (the code catalogue with published
+      // registry revisions applied). With nothing published this is the pin itself.
+      const current = currentComponentCatalog(ctx);
+      const effective = effectivePrefabPin(pin, current);
+      const prefab = prefabById(pin.prefabId);
+      if (!prefab) throw new SenderError(`Unknown prefab ${pin.prefabId}`);
+      const result = installPrefabShip(
+        ctx,
+        actor,
+        { prefabId: pin.prefabId, pose: request.pose },
+        current.revision === pin.catalogRevision
+          ? {}
+          : { template: trustedPrefabTemplateFor(prefab, current) },
+      );
       const instance = ctx.db.constructionInstance.id.find(result.shipId);
       const binding = ctx.db.constructionFlightBinding.shipId.find(
         result.shipId,
       );
-      if (instance?.blueprintSha256 !== pin.blueprintSha256)
+      if (instance?.blueprintSha256 !== effective.blueprintSha256)
         throw new SenderError(`${pin.prefabId} blueprint drifted from its pin`);
       if (
         binding?.definitionId !== PREFAB_FLIGHT_DEFINITION ||
-        binding.definitionSha256 !== pin.flightDefinitionSha256
+        binding.definitionSha256 !== effective.flightDefinitionSha256
       )
         throw new SenderError(
           `${pin.prefabId} flight definition drifted from its pin`,

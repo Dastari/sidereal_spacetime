@@ -108,6 +108,7 @@ function fixture() {
         {
           rows,
           iter: () => rows.values(),
+          count: () => BigInt(rows.length),
           delete: (row: Row) => {
             const at = rows.findIndex((r) => key(r[pk]) === key(row[pk]));
             if (at < 0) return false;

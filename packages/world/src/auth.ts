@@ -12,6 +12,7 @@ import { GAME_AUTH_POLICY } from "../../content/src/auth-policy";
 import { classifyVerifiedClaims } from "../../sim/src/auth-policy";
 import * as combat from "./combat";
 import * as interactions from "./interactions";
+import { syncComponentSnapshots } from "./component-catalog-sync";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 const forever = 18446744073709551615n;
@@ -114,6 +115,8 @@ export function bindGameSession(ctx: Context, args: { connectionId: string }) {
   else ctx.db.authSession.insert(row);
 }
 export function canReadGame(ctx: ReadContext): boolean {
+  // Ships may pin registry-composed component catalogues (X-3b): load them before any read.
+  syncComponentSnapshots(ctx.db);
   return (
     !ctx.db.retiredIdentity.source.find(ctx.sender) &&
     [...ctx.db.authSession.by_owner.filter(ctx.sender)].some((s) => s.game)
@@ -128,6 +131,7 @@ export function canConsume(ctx: Context, owner: Identity): boolean {
   );
 }
 export function requireGame(ctx: Context) {
+  syncComponentSnapshots(ctx.db);
   if (!ctx.connectionId || !canConsume(ctx, ctx.sender))
     throw new SenderError("Active game authentication required");
   const session = ctx.db.authSession.connectionId.find(

@@ -81,6 +81,7 @@
     "./backpack-swap": "./src/backpack-swap.ts",
     "./content-definitions": "./src/content-definitions.ts",
     "./content-definition-schema": "./src/content-definition-schema.ts",
+    "./component-catalogs": "./src/component-catalogs.ts",
     "./pinned-definitions": "./src/pinned-definitions.ts",
     "./flight-frame": "./src/flight-frame.ts",
     "./system-map": "./src/system-map.ts",
