@@ -605,7 +605,7 @@ export class CanvasUI {
       c.stroke();
       c.restore();
     }
-    const keycap = /^(Esc|Tab|E)   (.+)$/.exec(label);
+    const keycap = /^(Esc|Tab|[A-Z])   (.+)$/.exec(label);
     let inset = 12;
     if (keycap) {
       const kw = keycap[1].length > 1 ? 35 : 24;

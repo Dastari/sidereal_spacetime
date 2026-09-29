@@ -4,19 +4,23 @@ import type { Rect } from "./layout";
 
 // createGameUI builds a CanvasUI over a Babylon layer; the HUD tests only need
 // its drawing and hit list, so the constructor returns a canvas-free fixture.
-const fake = vi.hoisted(() => ({ ui: undefined as unknown }));
+const fake = vi.hoisted(() => ({
+  ui: undefined as unknown,
+  proto: undefined as unknown as object,
+}));
 vi.mock("./toolkit", async (original) => {
   const actual = await original<typeof import("./toolkit")>();
+  fake.proto = actual.CanvasUI.prototype;
   return {
     ...actual,
-    CanvasUI: class extends actual.CanvasUI {
+    CanvasUI: class {
       constructor() {
         return fake.ui as never;
       }
     },
   };
 });
-import { CanvasUI } from "./toolkit";
+import type { CanvasUI } from "./toolkit";
 import {
   CONTROL_KEYS,
   MENU_TABS,
@@ -100,7 +104,7 @@ function hud(overrides: Partial<GameUIState> = {}) {
       set: (o, k, v) => Reflect.set(o, k, v),
     },
   );
-  const ui = Object.assign(Object.create(CanvasUI.prototype), {
+  const ui = Object.assign(Object.create(fake.proto), {
     ctx,
     hits: [],
     panels: [],
