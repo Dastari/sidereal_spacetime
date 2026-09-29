@@ -462,6 +462,40 @@ describe("airlock buttons and ship logic (Wren r6)", () => {
     for (const secret of ["owner", "characterId", "stateJson"])
       expect(row[secret]).toBeUndefined();
   });
+
+  it("a spacewalker in another player's ship frame sees that ship's exterior devices only", () => {
+    // Mate left their own Kite and floats in the frame of Cap's Wren (no interior presence there).
+    addShip("kite", other, "mate");
+    addCharacter("mate", other, "kite", lock.inside);
+    ctx.db.constructionLocation.characterId.delete("mate");
+    ctx.db.evaBody.insert({
+      characterId: "mate",
+      owner: other,
+      systemId: "sol",
+      phase: "local",
+      anchorShipId: "wren",
+      exitShipId: "kite",
+    });
+    const rows = visibleShipLogic(as(other));
+    const wrenRows = rows.filter((r) => r.shipId === "wren");
+    const exterior = new Set([
+      ...logic.panels
+        .filter((p) => p.side === "exterior")
+        .map((p) => p.deviceId),
+      ...logic.doors.filter((d) => d.exterior).map((d) => d.deviceId),
+    ]);
+    expect(exterior.size).toBeGreaterThan(0);
+    expect(wrenRows.map((r) => r.deviceId).sort()).toEqual(
+      [...exterior].sort(),
+    );
+    // No interior door, interior button or airlock controller of a ship they are not aboard.
+    for (const id of ["door-inner", "btn-lock-in", "btn-hall", "lock"])
+      expect(wrenRows.some((r) => r.deviceId === id)).toBe(false);
+    // Their own home ship (left through its airlock) still shows every device.
+    expect(rows.filter((r) => r.shipId === "kite").length).toBe(
+      visibleShipLogic(ctx).length,
+    );
+  });
 });
 
 describe("the EVA suit (vacuum needs suit, helmet and jetpack)", () => {

@@ -448,24 +448,39 @@ export const visibleShipLogicProjection = t.row("ShipLogicDeviceStatus", {
 /**
  * Device states of the ships the viewer is at: the ship they stand aboard, the ship whose frame
  * their EVA body is in, and the home ship they left. Door, light and phase values only; never who
- * pressed or any other character data.
+ * pressed or any other character data. A ship the viewer is only floating beside (EVA frame of
+ * another ship, no interior presence) shows its exterior devices only: hull-face buttons and
+ * exterior doors, never interior doors, interior buttons or controllers (wiki `Architecture/
+ * Visibility and Interest Management`, hard rule 6).
  */
 export function visibleShipLogic(ctx: ReadContext) {
   const actor = [...ctx.db.character.by_owner.filter(ctx.sender)][0];
   if (!actor?.connected) return [];
+  // Interior presence: aboard now, or the ship this spacewalker left through its airlock.
+  const inside = new Set<string>();
   const ships = new Set<string>();
   const location = ctx.db.constructionLocation.characterId.find(actor.id);
-  if (location) ships.add(location.instanceId);
+  if (location) inside.add(location.instanceId);
   const body = ctx.db.evaBody.characterId.find(actor.id);
-  if (body) {
-    if (body.anchorShipId) ships.add(body.anchorShipId);
-    if (body.exitShipId) ships.add(body.exitShipId);
-  }
+  if (body?.exitShipId) inside.add(body.exitShipId);
+  for (const id of inside) ships.add(id);
+  if (body?.anchorShipId) ships.add(body.anchorShipId);
   const out = [];
   for (const shipId of [...ships].sort()) {
     const binding = shipPrefabBinding(ctx.db, shipId);
     if (!binding?.logic) continue;
+    const exterior = inside.has(shipId)
+      ? undefined
+      : new Set([
+          ...binding.logic.panels
+            .filter((p) => p.side === "exterior")
+            .map((p) => p.deviceId),
+          ...binding.logic.doors
+            .filter((d) => d.exterior)
+            .map((d) => d.deviceId),
+        ]);
     for (const node of binding.logic.graph.devices.values()) {
+      if (exterior && !exterior.has(node.id)) continue;
       const s = logicDeviceState(ctx.db, binding, node.id);
       if (!s) continue;
       out.push({
