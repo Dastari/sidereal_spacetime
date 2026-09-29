@@ -15,9 +15,9 @@ type Context = ReducerCtx<InferSchema<typeof world>>;
 type Container = Infer<typeof inventoryContainer.rowType>;
 type Item = Infer<typeof inventoryItem.rowType>;
 
-/** Same carried seven-item kit as existing onboarding, without lab supply crates,
+/** The carried seven-item personal kit, without lab supply crates,
  * uniforms or engineering tanks. Internal first-character transaction only. */
-export function issueWayfarerPersonalKit(ctx: Context, characterId: string) {
+export function issuePersonalKit(ctx: Context, characterId: string) {
   const actor = ctx.db.character.id.find(characterId);
   if (!actor?.owner.isEqual(ctx.sender) || !actor.connected)
     throw Error("Owned connected starter character required");
@@ -139,36 +139,23 @@ export function issueWayfarerPersonalKit(ctx: Context, characterId: string) {
   synchronizeLegacyInventory(ctx, characterId, before);
 }
 
-/** A redeemed native starter must never fall through to the legacy laboratory
- * storage/uniform initializer when the public kit command is replayed. */
-export function preserveWayfarerStarterKit(ctx: Context): boolean {
-  const receipt = ctx.db.personalStarterReceipt.owner.find(ctx.sender);
-  if (!receipt) {
-    const actors = [...ctx.db.character.by_owner.filter(ctx.sender)];
-    const actor = actors[0];
-    const access = actor && ctx.db.gameShipAccess.shipId.find(actor.shipId);
-    if (!access) return false;
-    // Conversion grants no starter entitlement. Even an empty historical kit
-    // must not fall through to laboratory storage creation after conversion.
-    if (
-      actors.length !== 1 ||
-      !actor?.owner.isEqual(ctx.sender) ||
-      !actor.connected ||
-      !access.owner.isEqual(ctx.sender) ||
-      access.characterId !== actor.id ||
-      access.instanceId !== actor.shipId ||
-      access.lifecycle !== "active"
-    )
-      throw Error("Converted inventory requires explicit recovery");
-    return true;
-  }
-  const actor = ctx.db.character.id.find(receipt.characterId);
-  const state = ctx.db.inventoryState.characterId.find(receipt.characterId);
+/** A character boarded on an accepted game ship (a prefab ship) keeps its
+ * personal kit: replaying the public kit command must never fall through to the
+ * legacy laboratory storage/uniform initializer. */
+export function preserveShipKit(ctx: Context): boolean {
+  const actors = [...ctx.db.character.by_owner.filter(ctx.sender)];
+  const actor = actors[0];
+  const access = actor && ctx.db.gameShipAccess.shipId.find(actor.shipId);
+  if (!access) return false;
   if (
+    actors.length !== 1 ||
     !actor?.owner.isEqual(ctx.sender) ||
     !actor.connected ||
-    !state?.kitGranted
+    !access.owner.isEqual(ctx.sender) ||
+    access.characterId !== actor.id ||
+    access.instanceId !== actor.shipId ||
+    access.lifecycle !== "active"
   )
-    throw Error("Redeemed starter inventory requires explicit recovery");
+    throw Error("Ship inventory requires explicit recovery");
   return true;
 }

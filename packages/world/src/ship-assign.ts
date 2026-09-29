@@ -1,7 +1,6 @@
 import { SenderError } from "spacetimedb/server";
 import type { InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
-import { CURRENT_WAYFARER_STARTER } from "@sidereal/content/wayfarer-current-starter";
 import {
   archiveJson,
   archiveRow,
@@ -9,10 +8,6 @@ import {
   priorOperation,
   requireShipOperator,
 } from "./ship-operator";
-import {
-  installReplacementWayfarer,
-  type WayfarerStarterContext,
-} from "./wayfarer-starter-authority";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 export type CharacterRow = NonNullable<
@@ -39,8 +34,9 @@ export interface PrefabShipSpawner {
   /** Ship-components catalog revision the prefab compiled against. */
   readonly catalogRevision: string;
   readonly blueprintSha256: string;
-  /** Legacy Wayfarer templates are the ships being removed; they are refused
-   * unless allowLegacy is set (isolated legacy regression smoke only). */
+  /** Legacy spawners are refused unless allowLegacy is set. None is registered
+   * since the Wayfarer was retired (2026-09-29); the flag stays for the reducer
+   * signatures. */
   readonly legacy: boolean;
   readonly description: string;
   spawn(
@@ -68,31 +64,6 @@ export function prefabShipSpawner(prefabId: string) {
 export function prefabShipSpawners() {
   return [...spawners.values()];
 }
-
-/** Legacy stand-in: the only template this authority can qualify today. It is
- * never used by the runbook; it exists so the isolated legacy regression smoke
- * and unit tests can exercise the assignment and starter paths. */
-export const LEGACY_WAYFARER_PREFAB_ID = "legacy-wayfarer-r002";
-registerPrefabShipSpawner({
-  prefabId: LEGACY_WAYFARER_PREFAB_ID,
-  catalogRevision: "legacy-wayfarer",
-  legacy: true,
-  description:
-    "Legacy rebuilt Wayfarer r002 (being removed; isolated regression only)",
-  blueprintSha256: CURRENT_WAYFARER_STARTER.sha256,
-  spawn(ctx, actor, request) {
-    if (request.pose.kind !== "berth")
-      throw new SenderError("Legacy Wayfarer only supports canonical berths");
-    const installed = installReplacementWayfarer(
-      ctx as unknown as WayfarerStarterContext,
-      actor,
-    );
-    if (installed.kind !== "created")
-      throw Error("Legacy Wayfarer assignment did not install a ship");
-    const location = ctx.db.constructionLocation.characterId.find(actor.id);
-    return { shipId: installed.actor.shipId, deckId: location?.deckId ?? "" };
-  },
-});
 
 /** Owner-selected starter ship (2026-09-26): the SHIPS-PREFABS Wren, installed
  * from its grammar prefab through the trusted prefab path (no Wayfarer pins). */

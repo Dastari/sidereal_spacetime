@@ -26,7 +26,6 @@ export function validateHullPaint(
 export function canPaintHullAsset(asset: PartAsset): boolean {
   return (
     isExteriorAsset(asset) ||
-    asset.visual?.designId === "shipyard.wayfarer.framed.hull" ||
     asset.category === "engine" ||
     /\bthruster\b/i.test(asset.label)
   );

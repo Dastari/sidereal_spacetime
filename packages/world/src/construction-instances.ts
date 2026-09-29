@@ -16,14 +16,7 @@ import {
   ownedGameShipAccess,
   GAME_OWNED_TEMPLATE_NAMESPACE,
 } from "./game-ship-access-authority";
-import { installQualifiedInstanceInteractions } from "./construction-interactions";
-import {
-  qualifiedWayfarerWalkingBindings,
-  isQualifiedWayfarerBlueprint,
-} from "@sidereal/sim/wayfarer-walking-bindings";
-import { qualifyWayfarerThresholdMotion } from "@sidereal/sim/wayfarer-threshold";
 import { createConstructionStandingSupport } from "./construction-standing-support";
-import { installQualifiedInstanceCargo } from "./scoped-inventory-installation";
 import {
   installConstructionStair,
   requireNoConstructionStair,
@@ -103,9 +96,7 @@ export function spawnBlueprint(
         bodyHeightM: 1.8,
         perimeterHalfWidthM: legacyNativeBoundaries ? 0.0625 : 0,
         partitionHalfWidthM: legacyNativeBoundaries ? 0.0625 : 0,
-        objectCollisionBindings: isQualifiedWayfarerBlueprint(snapshot.sha256)
-          ? qualifiedWayfarerWalkingBindings(snapshot, 0.3, 1.8)
-          : [],
+        objectCollisionBindings: [],
       },
       () => ctx.newUuidV4().toString(),
     );
@@ -175,8 +166,6 @@ export function spawnBlueprint(
       compilePublishedNativeExternalAirlock,
     );
   }
-  installQualifiedInstanceCargo(ctx, plan);
-  installQualifiedInstanceInteractions(ctx, plan);
   if (plan.document.stairRoom) installConstructionStair(ctx, plan.instanceId);
   if (plan.document.traversalRoom) {
     installTraversalLink(
@@ -644,18 +633,6 @@ export function stepActor(
     return true;
   const moved =
     next.position[0] !== actor.localX || next.position[1] !== actor.localY;
-  if (moved && isQualifiedWayfarerBlueprint(instance.blueprintSha256)) {
-    // The collision frame already qualified the immutable native instance.
-    // Check all intermediate low-step contacts before accepting the XY move.
-    try {
-      qualifyWayfarerThresholdMotion(
-        [actor.localX, actor.localY],
-        next.position,
-      );
-    } catch {
-      return true;
-    }
-  }
   const sprinting = command.sprint && moved;
   if (moved || actor.sprinting !== sprinting)
     commitFlightCharacter(

@@ -5,13 +5,11 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 import type { Scene } from "@babylonjs/core/scene";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Material } from "@babylonjs/core/Materials/material";
-import type { loadInstalledEquipment } from "./installed-equipment";
+import type { InstalledPlacement } from "./installed-equipment";
 import { createSelectionSilhouette } from "./selection-silhouette";
 import "@babylonjs/core/Culling/ray";
 
-type Installed = Awaited<
-  ReturnType<typeof loadInstalledEquipment>
->["placements"];
+type Installed = InstalledPlacement[];
 type EmissiveMaterial = Material & { emissiveColor: Color3 };
 
 /** Selection is presentation only; object actions arrive through validated world rows. */

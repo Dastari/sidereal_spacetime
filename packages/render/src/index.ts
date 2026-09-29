@@ -62,7 +62,7 @@ import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { cabinIsVisible, createCabinVisibility } from "./cabin-visibility";
 import { LAB_INTERACTIONS } from "../../content/src/interactions";
 import { PILOT_LAYOUT } from "../../content/src/pilot-layout";
-import { loadInstalledEquipment } from "./installed-equipment";
+import type { InstalledPlacement } from "./installed-equipment";
 import { createObjectPresentation } from "./object-presentation";
 import { applyCutawayVisibility, prepareCutawayMeshes } from "./cutaway";
 import {
@@ -392,12 +392,8 @@ async function buildWorld(
   marker.material = cyan;
   marker.parent = shipRoot;
   let imported: { meshes: AbstractMesh[] };
-  let installed: Awaited<
-    ReturnType<typeof loadInstalledEquipment>
-  >["placements"] = [];
-  let shipEquipment: Awaited<
-    ReturnType<typeof loadInstalledEquipment>
-  >["placements"] = [];
+  let installed: InstalledPlacement[] = [];
+  const shipEquipment: InstalledPlacement[] = [];
   let assetFailure = false;
   let walkingElevation = 0.1875;
   let constructionFrame:

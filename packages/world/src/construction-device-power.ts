@@ -1,11 +1,11 @@
 import type { ConstructionPilotContext } from "./construction-pilot-authority";
 import { requireGame } from "./auth";
-import { isQualifiedWayfarerBlueprint } from "@sidereal/sim/wayfarer-walking-bindings";
+import { shipFeatureQualified } from "./ship-feature-qualification";
 import {
-  WAYFARER_REACTOR_ASSET_ID,
-  WAYFARER_REACTOR_SOURCE_ID,
+  NATIVE_REACTOR_ASSET_ID,
+  NATIVE_REACTOR_SOURCE_ID,
 } from "@sidereal/content/device-services";
-import { WAYFARER_PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
+import { PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
 import { markShipFlightDirty } from "./construction-flight-dirty";
 import type { ConstructionDocument } from "@sidereal/content/construction";
 import type { ConstructionInstanceMappings } from "@sidereal/sim/construction-instance";
@@ -72,7 +72,7 @@ function setDevicePower(
   )
     throw Error("Owned power installation required");
   if (
-    !isQualifiedWayfarerBlueprint(instance.blueprintSha256) ||
+    !shipFeatureQualified("device-power", instance.blueprintSha256) ||
     binding.blueprintSha256 !== instance.blueprintSha256 ||
     binding.instanceRevision !== instance.revision ||
     binding.lifecycle !== "active"
@@ -106,13 +106,13 @@ function setDevicePower(
     instance.idMapJson,
   ) as ConstructionInstanceMappings;
   const reactor = mappings.objects.find(
-    (m) => m.sourceId === WAYFARER_REACTOR_SOURCE_ID,
+    (m) => m.sourceId === NATIVE_REACTOR_SOURCE_ID,
   );
   if (
     !reactor ||
     !document.layout.assembly?.parts.some(
       (p) =>
-        p.id === reactor.instanceId && p.assetId === WAYFARER_REACTOR_ASSET_ID,
+        p.id === reactor.instanceId && p.assetId === NATIVE_REACTOR_ASSET_ID,
     )
   )
     throw Error("Installed qualified reactor required");
@@ -138,7 +138,7 @@ function setDevicePower(
     );
     const physical =
       part &&
-      WAYFARER_PHYSICAL_CATALOG.definitions.find(
+      PHYSICAL_CATALOG.definitions.find(
         (d) =>
           d.id === "physical:" + part.assetId &&
           d.revision === fitting.definitionRevision,
@@ -160,7 +160,7 @@ function setDevicePower(
   );
   const source =
     placed &&
-    WAYFARER_PHYSICAL_CATALOG.definitions.find(
+    PHYSICAL_CATALOG.definitions.find(
       (d) =>
         d.id === "physical:" + placed.assetId &&
         d.revision === engine?.definitionRevision &&

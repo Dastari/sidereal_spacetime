@@ -2,7 +2,6 @@ import { INVENTORY_PHYSICAL_DEFINITIONS } from "./inventory-physical-definitions
 import type {
   FlightDefinitionCatalog,
   FlightPhysicalDefinition,
-  FlightHullDefinition,
   ActuatorDefinition,
 } from "@sidereal/sim/flight-definition";
 import type { FlightProfile } from "@sidereal/sim/ifcs";
@@ -2451,24 +2450,12 @@ function immutable<T>(value: T): T {
   }
   return value;
 }
-export const WAYFARER_PHYSICAL_CATALOG: FlightDefinitionCatalog = Object.freeze(
-  {
-    id: "wayfarer-physical-v1",
-    revision: 1,
-    definitions: immutable(definitions),
-  },
-);
-/** Independent collision-envelope version, preserving the accepted r006 proxy.
- * The compiler subtracts COM from this authored midpoint; it never edits native
- * collision revisions, authored frame coordinates or visual source pins. */
-export const WAYFARER_FLIGHT_HULL: FlightHullDefinition = immutable({
-  id: "wayfarer-r006-capsule-v1",
+export const PHYSICAL_CATALOG: FlightDefinitionCatalog = Object.freeze({
+  id: "wayfarer-physical-v1",
   revision: 1,
-  radius: 5.4,
-  halfLength: 7.125,
-  center: [0, 1.125] as const,
+  definitions: immutable(definitions),
 });
-export const WAYFARER_FLIGHT_PROFILE: FlightProfile = Object.freeze({
+export const BASE_FLIGHT_PROFILE: FlightProfile = Object.freeze({
   velocityGain: 1.5,
   headingGain: 2,
   angularGain: 4,
@@ -2476,13 +2463,13 @@ export const WAYFARER_FLIGHT_PROFILE: FlightProfile = Object.freeze({
   maxAngularAcceleration: 0.65,
   maxAngularSpeed: 0.65,
 });
-export const WAYFARER_FLIGHT_SPEED = Object.freeze({
+export const SHIP_FLIGHT_SPEED = Object.freeze({
   forward: 30,
   reverse: 12,
 });
-export const WAYFARER_CREW_BODY_DEFINITION = "crew-body-v1";
-export const WAYFARER_ACTUATOR_DEFINITIONS = Object.freeze(
-  WAYFARER_PHYSICAL_CATALOG.definitions.filter(
+export const CREW_BODY_DEFINITION = "crew-body-v1";
+export const PHYSICAL_ACTUATOR_DEFINITIONS = Object.freeze(
+  PHYSICAL_CATALOG.definitions.filter(
     (d): d is ActuatorDefinition => d.kind === "actuator",
   ),
 );

@@ -1,8 +1,4 @@
 import { markShipFlightDirty } from "./construction-flight-dirty";
-import {
-  planQualifiedConstructionFlight,
-  type ConstructionFlightPlan,
-} from "@sidereal/sim/construction-flight";
 import type { ConstructionFlightContext } from "./construction-flight-authority";
 import {
   PREFAB_FLIGHT_DEFINITION,
@@ -21,7 +17,7 @@ const serialize = (value: unknown) =>
  * seat, grant access, mutate actors/admission/inventory, or write receipts. */
 export function insertQualifiedFlightPlan(
   ctx: ConstructionFlightContext,
-  plan: ConstructionFlightPlan | PrefabConstructionFlightPlan,
+  plan: PrefabConstructionFlightPlan,
 ) {
   const instance = ctx.db.constructionInstance.id.find(plan.instanceId);
   if (!instance?.owner.isEqual(ctx.sender))
@@ -38,13 +34,11 @@ export function insertQualifiedFlightPlan(
     ...plan.actuators.map((a) => a.id),
   ];
   let cursor = 0;
-  // The planner is chosen by the plan's own definition pin; the prefab planner refuses
-  // non-prefab documents, so a forged plan cannot switch reconstruction paths.
-  const planner =
-    plan.definitionId === PREFAB_FLIGHT_DEFINITION
-      ? planPrefabConstructionFlight
-      : planQualifiedConstructionFlight;
-  const rebuilt = planner(instance, plan.motion, () => {
+  // The prefab planner refuses non-prefab documents, so a forged plan cannot
+  // switch reconstruction paths.
+  if (plan.definitionId !== PREFAB_FLIGHT_DEFINITION)
+    throw Error("Prefab flight plan required");
+  const rebuilt = planPrefabConstructionFlight(instance, plan.motion, () => {
     const id = ids[cursor++];
     if (
       !id ||
