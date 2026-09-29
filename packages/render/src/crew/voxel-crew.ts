@@ -534,7 +534,11 @@ export async function createVoxelCrewVisual(
             ? { lower: legs, upper: aimClip, speedRatio }
             : { lower: legs, upper: loco, speedRatio, upperSpeedRatio };
       } else if (has("idle_armed"))
-        layers = { full: aimClip ?? name("idle_armed"), speedRatio: 1 };
+        // Item-bundle ready poses carry different leg rest heights. Retain the body bundle's
+        // grounded idle legs while their weapon-specific upper pose and hand IK remain active.
+        layers = aimClip
+          ? { full: aimClip, speedRatio: 1 }
+          : { lower: "idle", upper: name("idle_armed"), speedRatio: 1 };
     }
     // Seated / downed / dead / climbing bodies cancel any gesture or shot in progress.
     if (

@@ -1,6 +1,7 @@
 import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
+import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
@@ -23,7 +24,12 @@ const asset = () =>
  * Walk the body across the ship frame at gameplay speed with Babylon's fixed 16 ms frames and measure the
  * planted (lower) foot: its ground-plane speed over the deck and its lowest ankle height.
  */
-async function stride(footIk: boolean, sprint: boolean, movingShip = false) {
+async function stride(
+  footIk: boolean,
+  sprint: boolean,
+  movingShip = false,
+  armedIdle?: string,
+) {
   const engine = new NullEngine();
   engine.getDeltaTime = () => 16;
   const scene = new Scene(engine);
@@ -33,9 +39,27 @@ async function stride(footIk: boolean, sprint: boolean, movingShip = false) {
   const crew = await createVoxelCrewVisual(scene, ship, asset(), {
     faceAtlas: false,
   });
+  if (armedIdle) {
+    const armed = await SceneLoader.LoadAssetContainerAsync(
+      "",
+      new Uint8Array(
+        readFileSync(
+          new URL(
+            "../../../../assets/runtime/crew/items/r001/armed-actions.glb",
+            import.meta.url,
+          ),
+        ),
+      ),
+      scene,
+      undefined,
+      ".glb",
+    );
+    crew.addClips(armed);
+    crew.setArmedClass(armedIdle);
+  }
   crew.setFootIk(footIk);
-  crew.update({ moving: true, seated: false, sprinting: sprint });
-  const speed = sprint ? SPRINT_SPEED_MPS : WALK_SPEED_MPS;
+  crew.update({ moving: !armedIdle, seated: false, sprinting: sprint });
+  const speed = armedIdle ? 0 : sprint ? SPRINT_SPEED_MPS : WALK_SPEED_MPS;
   const feet = ["foot.L", "foot.R"].map((n) => crew.joints.get(n)!);
   const slips: number[] = [];
   let lowest = Infinity;
@@ -76,6 +100,13 @@ async function stride(footIk: boolean, sprint: boolean, movingShip = false) {
 }
 
 describe("foot planting (presentation-only two-bone foot IK)", () => {
+  for (const cls of ["rifle", "heavy"])
+    it(`${cls} ready pose keeps real deck contact with the body rig's idle legs`, async () => {
+      const on = await stride(true, false, false, cls);
+      expect(on.slip).toBeLessThan(0.05);
+      expect(on.lowest).toBeLessThan(VOXEL_CREW_ANKLE_HEIGHT_M + 0.012);
+      expect(on.maxError).toBeLessThan(0.01);
+    });
   for (const sprint of [false, true])
     it(`${sprint ? "run" : "walk"}: planted feet stay put on the deck and never sink into it`, async () => {
       const on = await stride(true, sprint);
