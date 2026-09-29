@@ -827,14 +827,17 @@ def lib():
     # locomotion strides are sized so the in-place cycle matches gameplay speed at a playback ratio
     # near 1 (walk 2.5 m/s, sprint 4.5 m/s): the stance foot moves back at exactly the ground speed,
     # so feet stay planted (no sliding) when the runtime scales playback by speed / nominalSpeed.
+    # NOTE (CREW-2 2026-09-30): the step/period estimate over-reads walk/crouch/carry by ~20 % and
+    # under-reads the flight-phase run. These metadata values are planted-foot speeds measured from the GLB
+    # (packages/render/src/crew/voxel-crew-stride.test.ts). Re-measure after any re-export.
     fnact("walk", True, cycle(gait, 14, step=26, lift=4.5, bob=1.4, lean=6, arm_swing=32, elbow=20),
-          {"nominalSpeed": round(2 * 26 * LEG * VOX / (14 / FPS), 3)})
+          {"nominalSpeed": 1.791})
     # run: long stride with a flight phase (each foot grounded 32% -> both airborne ~36%), strong
     # forward lean, high knees, big arm pump with bent elbows, bounce peaking in flight
     fnact("run", True, cycle(gait, 12, step=40, lift=12, bob=3.2, lean=26, arm_swing=62, elbow=95,
                              pelvis_z=-1.0, stance=0.32, sway=0.3, drop=2.5, twist=14, bounce_head=3.5, width=4.0,
                              flight=3.0),
-          {"nominalSpeed": round(2 * 40 * LEG * VOX / (12 / FPS), 3)})
+          {"nominalSpeed": 6.124})
 
     def crouch_at(ph, moving=False):
         if moving:
@@ -855,7 +858,7 @@ def lib():
 
     fnact("crouch_idle", True, cycle(crouch_at, 72))
     fnact("crouch_walk", True, cycle(lambda ph: crouch_at(ph, True), 24),
-          {"nominalSpeed": round(2 * 10 * LEG * VOX / (24 / FPS), 3)})
+          {"nominalSpeed": 0.403})
 
     # ---------------------------------------------------------------- aiming / shooting
     def aim_base():
@@ -1010,7 +1013,7 @@ def lib():
         return P
 
     fnact("carry_idle", True, cycle(carry_at, 72), {"carry": "box between hands, centre (0, 9, 29) vox chest-relative"})
-    fnact("carry_walk", True, cycle(lambda ph: carry_at(ph, True), 18), {"nominalSpeed": round(2 * 12 * LEG * VOX / (18 / FPS), 3)})
+    fnact("carry_walk", True, cycle(lambda ph: carry_at(ph, True), 18), {"nominalSpeed": 0.643})
 
     # use / interact: reach forward-right and press
     UI = B()

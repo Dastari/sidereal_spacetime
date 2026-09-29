@@ -4,7 +4,7 @@ import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 /**
  * Analytic two-bone IK for the voxel crew, solved in the rig-root space (free of the glTF
  * handedness flip on the loader's __root__). Presentation only: used after animations to pin the
- * support hand onto a held item's support socket every frame, and by future foot planting.
+ * support hand onto a held item's support socket every frame and to plant feet on the deck.
  */
 export type TwoBoneChain = {
   root: TransformNode; // armature root (any ancestor with unit, non-mirrored scale below it)
@@ -112,4 +112,127 @@ export function solveTwoBone(
   }
   const reached = rel(chain.effector, rootInv).getTranslation();
   return Vector3.Distance(reached, target.getTranslation());
+}
+
+/**
+ * Presentation-only foot planting on a flat deck (the body model's y = 0 plane), run after the
+ * animations every frame:
+ * - ground clamp: an ankle never drops below its rest height, so soles never sink into the deck;
+ * - stance lock: when a foot comes down (the lower foot, within `stanceBand` of the ground) its
+ *   position is pinned in the parent (ship) frame, and a two-bone solve (thigh -> shin -> foot, knee
+ *   in its animated bend plane, animated foot rotation kept) holds it there while the body moves on.
+ *   The lock releases when the animated foot lifts (blended out over `releaseSeconds`) or drifts
+ *   more than `maxDrift` (turns, speed changes), so residual stride error never becomes a stretch.
+ */
+export type FootPlantingOptions = {
+  restAnkle: number;
+  stanceBand?: number;
+  maxDrift?: number;
+  releaseSeconds?: number;
+};
+
+type FootState = { lock?: Vector3; weight: number; from?: Vector3 };
+
+export function createFootPlanting(
+  model: TransformNode,
+  frame: TransformNode,
+  legs: TwoBoneChain[],
+  options: FootPlantingOptions,
+) {
+  const band = options.stanceBand ?? 0.012;
+  const maxDrift = options.maxDrift ?? 0.12;
+  const release = options.releaseSeconds ?? 0.08;
+  const feet: FootState[] = legs.map(() => ({ weight: 0 }));
+  let maxSlip = 0;
+  const reset = () => {
+    maxSlip = 0;
+    for (const f of feet) {
+      f.lock = undefined;
+      f.from = undefined;
+      f.weight = 0;
+    }
+  };
+  return {
+    /** Largest remaining planted-foot error (m) in the last frame (diagnostics). */
+    get error() {
+      return maxSlip;
+    },
+    reset,
+    step(dt: number, plant = true) {
+      if (!plant) reset();
+      maxSlip = 0;
+      // animated locals are fresh, cached world matrices may not be: recompute top-down
+      for (const leg of legs) {
+        const chain: TransformNode[] = [];
+        for (
+          let n: TransformNode | null = leg.end;
+          n;
+          n = n.parent as TransformNode | null
+        )
+          chain.unshift(n);
+        for (const n of chain) n.computeWorldMatrix(true);
+      }
+      const modelInv = model.computeWorldMatrix(true).clone().invert();
+      const frameWorld = frame.computeWorldMatrix(true);
+      const frameInv = frameWorld.clone().invert();
+      const heights = legs.map(
+        (leg) =>
+          Vector3.TransformCoordinates(
+            leg.end.computeWorldMatrix(true).getTranslation(),
+            modelInv,
+          ).y,
+      );
+      legs.forEach((leg, i) => {
+        const state = feet[i];
+        const endWorld = leg.end.computeWorldMatrix(true).clone();
+        const animated = endWorld.getTranslation();
+        const animatedModel = Vector3.TransformCoordinates(animated, modelInv);
+        const lowest = heights.every(
+          (h, j) => j === i || heights[i] <= h + 1e-4,
+        );
+        const planted =
+          plant && lowest && animatedModel.y < options.restAnkle + band;
+        // ground clamp target (model frame) -> world
+        const clamped = animatedModel.clone();
+        clamped.y = Math.max(clamped.y, options.restAnkle);
+        let target = Vector3.TransformCoordinates(
+          clamped,
+          model.getWorldMatrix(),
+        );
+        const here = Vector3.TransformCoordinates(target, frameInv);
+        const previousPin = state.lock ?? state.from;
+        // A warp or excessive animated drift invalidates even an airborne pin that is still
+        // blending out. Otherwise the release can pull the leg toward a pre-relocation anchor.
+        if (previousPin && Vector3.Distance(previousPin, here) > maxDrift) {
+          state.lock = state.from = undefined;
+          state.weight = 0;
+        }
+        if (planted) {
+          state.lock ??= here;
+          state.weight = 1;
+          state.from = undefined;
+        } else if (state.lock) {
+          state.from ??= state.lock;
+          state.weight = Math.max(0, state.weight - dt / release);
+          if (state.weight === 0) state.lock = state.from = undefined;
+        }
+        const pin = state.lock ?? state.from;
+        if (pin && state.weight > 0) {
+          const pinned = Vector3.TransformCoordinates(pin, frameWorld);
+          // keep the animated / clamped height; pin only the ground-plane position
+          const pinnedModel = Vector3.TransformCoordinates(pinned, modelInv);
+          pinnedModel.y = clamped.y;
+          const pinWorld = Vector3.TransformCoordinates(
+            pinnedModel,
+            model.getWorldMatrix(),
+          );
+          target = Vector3.Lerp(target, pinWorld, state.weight);
+        }
+        if (Vector3.Distance(target, animated) < 1e-4) return;
+        const goal = endWorld.clone();
+        goal.setTranslation(target);
+        maxSlip = Math.max(maxSlip, solveTwoBone(leg, goal));
+      });
+    },
+  };
 }

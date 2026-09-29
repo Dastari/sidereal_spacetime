@@ -40,12 +40,18 @@ describe("voxel crew item runtime hook", () => {
     engine.dispose();
   });
 
-  it("maps item forward (+Y) onto the hand socket barrel axis (+X)", () => {
-    const forward = new Vector3(0, 1, 0).rotateByQuaternionToRef(
+  it("maps exported glTF item forward (-Z) onto the hand socket barrel axis (+X) and keeps up (+Y)", () => {
+    const forward = new Vector3(0, 0, -1).rotateByQuaternionToRef(
       crewItemHandSocketRotation(),
       new Vector3(),
     );
     expect(forward.x).toBeCloseTo(1, 5);
     expect(forward.y).toBeCloseTo(0, 5);
+    expect(forward.z).toBeCloseTo(0, 5);
+    const up = Vector3.Up().rotateByQuaternionToRef(
+      crewItemHandSocketRotation(),
+      new Vector3(),
+    );
+    expect(up.asArray()).toEqual([0, 1, 0]);
   });
 });

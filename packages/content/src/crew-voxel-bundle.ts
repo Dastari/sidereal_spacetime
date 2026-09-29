@@ -132,14 +132,21 @@ export const VOXEL_CREW_LOOPING: ReadonlySet<VoxelCrewAction> =
     "Maglock_Idle",
   ]);
 
-/** Authored in-place locomotion speeds (m/s) used to scale playback to gameplay speed. */
+/** Ankle joint height above the deck at rest (CHARACTER_SPEC_BODY r005 `ankleVox` 3 × 1/32 m). */
+export const VOXEL_CREW_ANKLE_HEIGHT_M = 3 / 32;
+
+/**
+ * Authored in-place locomotion speeds (m/s): the planted foot's backward speed in the body frame,
+ * measured from the r005 clips (voxel-crew-stride.test.ts keeps these within 5 %). Playback rate =
+ * gameplay speed / nominal, so a planted foot stays put on the deck.
+ */
 export const VOXEL_CREW_NOMINAL_SPEED: Partial<
   Record<VoxelCrewAction, number>
 > = {
-  walk: 2.153,
-  run: 3.864,
-  crouch_walk: 0.483,
-  carry_walk: 0.773,
+  walk: 1.791,
+  run: 6.124,
+  crouch_walk: 0.403,
+  carry_walk: 0.643,
   Maglock_Walk: 0.9,
 };
 
