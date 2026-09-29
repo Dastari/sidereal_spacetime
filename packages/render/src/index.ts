@@ -1155,6 +1155,8 @@ async function buildWorld(
     camera.maxZ = Math.max(1600, camera.radius + 1600);
     updateConstructionView?.(camera.position, state.interior);
     prefabView?.setInterior(state.interior);
+    // Per-actuator exhaust from the achieved allocation (own ship; FLIGHT-IFCS).
+    prefabView?.updateExhaust(state.flightActuators ?? [], performance.now());
     // Door leaves (presentation only): the airlock outer door follows the EVA cycle; interior
     // doors slide open for nearby characters.
     prefabView?.updateDoors({

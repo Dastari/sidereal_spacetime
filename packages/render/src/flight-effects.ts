@@ -10,6 +10,8 @@ import { Color3 } from "@babylonjs/core/Maths/math.color";
 /** Owner-scoped compiled projection. UUIDs stay intact through presentation. */
 export interface FlightEffectActuator {
   id: string;
+  /** Compiled placed-object id (`<shipId>:<sourceId>`); prefab exhaust keys jets by it. */
+  placedObjectId?: string;
   nozzleX: number;
   nozzleY: number;
   height: number;

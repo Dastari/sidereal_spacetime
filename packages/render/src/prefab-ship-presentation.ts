@@ -9,6 +9,11 @@ import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { createGlowOccluders } from "./glow-occluders";
 import { moldedLightRig } from "./molded-plastic";
+import {
+  createShipExhaust,
+  prefabExhaustJets,
+  type ShipExhaust,
+} from "./prefab-ship/exhaust";
 
 /** Game-side handle over the SHIPS-PREFABS dressed ship view. */
 export interface PrefabShipViewHandle {
@@ -23,6 +28,13 @@ export interface PrefabShipViewHandle {
   ): void;
   /** Door leaf states (review diagnostics). */
   doors(): { id: string; open: number; airlock: boolean }[];
+  /** Per-actuator exhaust from `own_authored_flight_actuators` rows (achieved throttles). */
+  updateExhaust(
+    actuators: Parameters<typeof prefabExhaustJets>[2],
+    nowMs: number,
+  ): void;
+  /** Lit jets (review diagnostics). */
+  exhaust(): ReturnType<ShipExhaust["lit"]>;
   dispose(): void;
   /** Mesh-origin and draw metrics of the dressed view (evidence/diagnostics). */
   metrics(): ReturnType<
@@ -78,7 +90,10 @@ export async function loadPrefabShipPresentation(
     parent: shipRoot,
     // Closed, animated door leaves (doors.ts) replace the airlock GLB's baked leaves.
     externalDoorLeaves: true,
+    // Engines glow only while the server fires them (exhaust.ts), not as a baked idle plume.
+    staticPlumes: false,
   });
+  const exhaust = createShipExhaust(scene, view.root, doc.theme);
   const doors = createPrefabDoors(scene, view.root, doc, catalog);
   // Ship logic wall buttons (wiki Systems/Ship Logic): lights follow `visible_ship_logic`.
   const panels = createLogicPanels(scene, view.root, doc, catalog);
@@ -157,8 +172,22 @@ export async function loadPrefabShipPresentation(
     metrics: () => view.metrics(),
     updateDoors: (input) => doors.update(input),
     updatePanels: (lights, nowMs) => panels.update(lights, nowMs),
+    updateExhaust(actuators, nowMs) {
+      exhaust.update(prefabExhaustJets(doc, catalog, actuators), nowMs);
+      // Review diagnostics: lit jet count on the canvas (changes only when the count changes).
+      const canvas = scene.getEngine().getRenderingCanvas();
+      const lit = String(exhaust.lit().length);
+      if (canvas && canvas.dataset.exhaustLit !== lit)
+        canvas.dataset.exhaustLit = lit;
+      // Jets are created on first fire; add new ones to the ship glow.
+      for (const mesh of exhaust.meshes())
+        if (!glowing.has(mesh))
+          (glowing.add(mesh), glow.addIncludedOnlyMesh(mesh));
+    },
+    exhaust: () => exhaust.lit(),
     doors: () => doors.doors(),
     dispose() {
+      exhaust.dispose();
       panels.dispose();
       doors.dispose();
       occluders.dispose();
