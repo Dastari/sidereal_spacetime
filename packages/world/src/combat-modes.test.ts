@@ -75,6 +75,8 @@ function fixture(weapon: string, mateAt: [number, number] = [0, 3]) {
     combatImpact: table("characterId"),
     combatReceipt: table("id", { by_character: "characterId" }),
     combatAction: table("characterId"),
+    evaBody: table("characterId"),
+    evaAirlockCycle: table("characterId"),
   };
   db.ship.insert({ id: "ship", owner: shooterId, x: 0, y: 0, heading: 0 });
   db.constructionInstance.insert({
@@ -328,4 +330,11 @@ test("visible combat actions carry catalogue ids and rays, never item UUIDs or d
     bodies: [{ body: db.character.id.find("shooter") }],
   });
   expect(moved[0]).toMatchObject({ shotSequence: 0n, pointsJson: "[]" });
+});
+
+test("a grenade cannot be thrown in EVA (no deck to land on); nothing is spent", () => {
+  const { db, shoot } = fixture("grenade");
+  db.evaBody.insert({ characterId: "shooter", systemId: "sol", x: 0, y: 0 });
+  expect(() => shoot()).toThrow("Nothing to throw at in EVA");
+  expect(db.weaponEnergy.itemId.find("item-shooter")).toBeUndefined();
 });
