@@ -287,12 +287,12 @@ export async function equipVoxelCrewItem(
         : null,
     );
   updateSupport();
-  const observer = scene.onBeforeRenderObservable.add(updateSupport);
+  const observer = scene.onBeforeAnimationsObservable.add(updateSupport);
   const dispose = visual.dispose;
   return {
     ...visual,
     dispose() {
-      scene.onBeforeRenderObservable.remove(observer);
+      scene.onBeforeAnimationsObservable.remove(observer);
       crew.setSupportTarget(null);
       crew.setArmedClass(null);
       dispose();

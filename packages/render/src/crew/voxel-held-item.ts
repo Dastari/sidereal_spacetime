@@ -185,6 +185,8 @@ export function createVoxelHeldItem(
     step();
     updateSupport();
   });
+  // The solver runs onAfterAnimations: select/release its target before that frame animates.
+  const supportObserver = scene.onBeforeAnimationsObservable.add(updateSupport);
   function updateSupport() {
     // Reload/draw/holster author the free hand reaching a magazine or holster. Keep those
     // choreographed tracks free; solve the foregrip in ready/aim/fire and locomotion poses.
@@ -249,6 +251,7 @@ export function createVoxelHeldItem(
       if (disposed) return;
       disposed = true;
       scene.onBeforeRenderObservable.remove(observer);
+      scene.onBeforeAnimationsObservable.remove(supportObserver);
       crew.setSupportTarget(null);
       held?.visual.dispose();
       held = undefined;

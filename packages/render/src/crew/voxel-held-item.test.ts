@@ -101,18 +101,18 @@ describe("held r001 item with draw and holster", () => {
       ["rifle.run_armed:upper", "run:lower"],
     ]) {
       crew.activeClips = clips;
-      scene.onBeforeRenderObservable.notifyObservers(scene);
+      scene.onBeforeAnimationsObservable.notifyObservers(scene);
       expect(crew.supportTarget).toBe(visual.supportTarget);
     }
     for (const clips of [["rifle.reload:upper"], ["sit_idle"]]) {
       crew.activeClips = clips;
-      scene.onBeforeRenderObservable.notifyObservers(scene);
+      scene.onBeforeAnimationsObservable.notifyObservers(scene);
       expect(crew.supportTarget).toBeNull();
     }
     visual.dispose();
     expect(crew.supportTarget).toBeNull();
     crew.activeClips = ["rifle.aim:upper"];
-    scene.onBeforeRenderObservable.notifyObservers(scene);
+    scene.onBeforeAnimationsObservable.notifyObservers(scene);
     expect(crew.supportTarget).toBeNull();
   });
 
@@ -138,13 +138,13 @@ describe("held r001 item with draw and holster", () => {
     await vi.waitFor(() => expect(held.phase).toBe("held"));
     expect(crew.supportTarget).toBe(held.visual!.supportTarget);
     crew.activeClips = ["sit_idle"];
-    scene.onBeforeRenderObservable.notifyObservers(scene);
+    scene.onBeforeAnimationsObservable.notifyObservers(scene);
     expect(crew.supportTarget).toBeNull();
     crew.activeClips = ["rifle.reload:upper"];
-    scene.onBeforeRenderObservable.notifyObservers(scene);
+    scene.onBeforeAnimationsObservable.notifyObservers(scene);
     expect(crew.supportTarget).toBeNull();
     crew.activeClips = ["rifle.walk_armed:upper", "walk:lower"];
-    scene.onBeforeRenderObservable.notifyObservers(scene);
+    scene.onBeforeAnimationsObservable.notifyObservers(scene);
     expect(crew.supportTarget).toBe(held.visual!.supportTarget);
     held.set(null);
     expect(crew.supportTarget).toBeNull();
