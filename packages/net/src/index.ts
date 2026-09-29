@@ -15,6 +15,7 @@ export const getSharedWorldBinding = (connection: DbConnection | null) =>
   connection ? sharedBindings.get(connection) : undefined;
 import { bindGameSessionProof } from "./game-session-proof";
 import { installItemPresentation } from "./item-definitions";
+import { installComponentSnapshots } from "./component-catalogs";
 import {
   createConnectionResources,
   subscriptionErrorMessage,
@@ -98,6 +99,7 @@ export function connect(
         .subscriptionBuilder()
         .onApplied(() => {
           if (!resources.applied(subscription)) return;
+          installComponentSnapshots(connection);
           installItemPresentation(connection);
           onStatus("ready");
           onChange();
@@ -167,6 +169,8 @@ export function connect(
           // X-2: published item/weapon revisions and the pins of the viewer's items.
           tables.publishedItemDefinitions,
           tables.ownItemDefinitionPins,
+          // X-3b: composed component catalogues pinned by ships.
+          tables.componentCatalogSnapshots,
         ]);
       resources.retain("game", subscription);
     })
@@ -240,6 +244,14 @@ export function connect(
       table.removeOnDelete(onChange);
     });
   }
+  const snapshotsChanged = () => {
+    installComponentSnapshots(connection);
+    onChange();
+  };
+  connection.db.componentCatalogSnapshots.onInsert(snapshotsChanged);
+  resources.listen(() =>
+    connection.db.componentCatalogSnapshots.removeOnInsert(snapshotsChanged),
+  );
   const presentationChanged = () => {
     installItemPresentation(connection);
     onChange();

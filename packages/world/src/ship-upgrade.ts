@@ -62,7 +62,6 @@ import {
   currentComponentCatalog,
   effectivePrefabPin,
 } from "./component-catalog";
-import { isComposedCatalogPin } from "@sidereal/sim/component-catalogs";
 import {
   PREFAB_UPGRADE_SOURCES,
   REGISTERED_PREFAB_PINS,
@@ -229,15 +228,12 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
         p.blueprintSha256 === instance.blueprintSha256 &&
         p.prefabId === sourcePrefab.id,
     ) ??
-    (isComposedCatalogPin(sourceCatalog.revision)
-      ? REGISTERED_PREFAB_PINS.filter(
-          (p) => p.prefabId === sourcePrefab.id,
-        ).find(
-          (p) =>
-            effectivePrefabPin(p, sourceCatalog).blueprintSha256 ===
-            instance.blueprintSha256,
-        )
-      : undefined);
+    // The registered revision itself on its own or a composed catalogue (component resync).
+    REGISTERED_PREFAB_PINS.filter((p) => p.prefabId === sourcePrefab.id).find(
+      (p) =>
+        effectivePrefabPin(p, sourceCatalog).blueprintSha256 ===
+        instance.blueprintSha256,
+    );
   const registered = REGISTERED_PREFAB_PINS.find(
     (p) => p.prefabId === args.targetPrefabId,
   );

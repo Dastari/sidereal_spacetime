@@ -203,12 +203,15 @@ export function componentChangeBlocker(
   return null;
 }
 
-export const componentSnapshotProjection = t.row("ComponentCatalogSnapshot", {
-  pin: t.string().primaryKey(),
-  baseRevision: t.u32(),
-  snapshotJson: t.string(),
-  sha256: t.string(),
-});
+export const componentSnapshotProjection = t.row(
+  "VisibleComponentCatalogSnapshot",
+  {
+    pin: t.string().primaryKey(),
+    baseRevision: t.u32(),
+    snapshotJson: t.string(),
+    sha256: t.string(),
+  },
+);
 /** Published component content referenced by ship pins; the client composes the same catalogue. */
 export function componentSnapshotsView(ctx: { db: Db }) {
   return [...ctx.db.componentCatalogSnapshot.iter()].map(

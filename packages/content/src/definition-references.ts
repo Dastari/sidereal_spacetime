@@ -40,6 +40,11 @@ export function protectedDefinitionUses(
   kind: string,
   definitionId: string,
 ): string[] {
+  // Lab ship interaction objects are created from these kinds (world/interactions.ts).
+  if (kind === "interaction")
+    return definitionId === "seat" || definitionId === "light"
+      ? ["lab ship interaction objects"]
+      : [];
   if (kind !== "item" && kind !== "weapon") return [];
   const uses: string[] = [];
   if ((STARTER_KIT_DEFINITION_IDS as readonly string[]).includes(definitionId))

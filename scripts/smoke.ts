@@ -32,6 +32,7 @@ import {
 import { operatorCall } from "./smoke-operator";
 import { contentDefinitionsSmoke } from "./content-definitions-smoke";
 import { itemDefinitionsSmoke } from "./item-definitions-smoke";
+import { componentDefinitionsSmoke } from "./component-definitions-smoke";
 import {
   itemDefinitionLeakSmoke,
   visibilityLeakSmoke,
@@ -854,6 +855,13 @@ if (restore) {
       lifecycleSql,
     );
     summary.item_definitions_x2 = await itemDefinitionsSmoke(
+      host,
+      database,
+      wait,
+      (reducer, ...args) => operatorCall(host, database, reducer, ...args),
+      lifecycleSql,
+    );
+    summary.component_definitions_x3b = await componentDefinitionsSmoke(
       host,
       database,
       wait,

@@ -358,6 +358,19 @@ export const CombatStatus = __t.object("CombatStatus", {
 });
 export type CombatStatus = __Infer<typeof CombatStatus>;
 
+export const ComponentCatalogSnapshot = __t.object("ComponentCatalogSnapshot", {
+  pin: __t.string(),
+  baseRevision: __t.u32(),
+  snapshotJson: __t.string(),
+  sha256: __t.string(),
+  componentRefsJson: __t.string(),
+  createdMicros: __t.u64(),
+});
+export type ComponentCatalogSnapshot = __Infer<typeof ComponentCatalogSnapshot>;
+
+export const ComponentCatalogSnapshots = __t.object("ComponentCatalogSnapshots", {});
+export type ComponentCatalogSnapshots = __Infer<typeof ComponentCatalogSnapshots>;
+
 export const ConnectionPresence = __t.object("ConnectionPresence", {
   connectionId: __t.string(),
   owner: __t.identity(),
@@ -1372,6 +1385,14 @@ export const InteractionObject = __t.object("InteractionObject", {
 });
 export type InteractionObject = __Infer<typeof InteractionObject>;
 
+export const InteractionObjectPin = __t.object("InteractionObjectPin", {
+  objectId: __t.string(),
+  definitionId: __t.string(),
+  revision: __t.u64(),
+  pinnedMicros: __t.u64(),
+});
+export type InteractionObjectPin = __Infer<typeof InteractionObjectPin>;
+
 export const InteractionReceipt = __t.object("InteractionReceipt", {
   id: __t.string(),
   characterId: __t.string(),
@@ -2354,6 +2375,14 @@ export type VisibleBodyMotion = __Infer<typeof VisibleBodyMotion>;
 
 export const VisibleCombatActions = __t.object("VisibleCombatActions", {});
 export type VisibleCombatActions = __Infer<typeof VisibleCombatActions>;
+
+export const VisibleComponentCatalogSnapshot = __t.object("VisibleComponentCatalogSnapshot", {
+  pin: __t.string(),
+  baseRevision: __t.u32(),
+  snapshotJson: __t.string(),
+  sha256: __t.string(),
+});
+export type VisibleComponentCatalogSnapshot = __Infer<typeof VisibleComponentCatalogSnapshot>;
 
 export const VisibleCrewPresentation = __t.object("VisibleCrewPresentation", {});
 export type VisibleCrewPresentation = __Infer<typeof VisibleCrewPresentation>;
