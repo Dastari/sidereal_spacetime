@@ -22,7 +22,11 @@ import {
   type FlightCrewMass,
 } from "@sidereal/sim/flight-definition";
 import { legacyInventorySnapshot } from "./scoped-inventory-authority";
-import { readShipPrefab } from "@sidereal/content/ship-prefab";
+import {
+  readShipPrefab,
+  type ShipPrefabDocumentV1,
+} from "@sidereal/content/ship-prefab";
+import { prefabActuatorSupply } from "@sidereal/sim/prefab-flight-supply";
 import {
   PREFAB_DECK_ID,
   isPrefabConstruction,
@@ -60,6 +64,20 @@ function prefabStorageSocketCentres(
   if (PREFAB_SOCKET_MEMO.size >= 64) PREFAB_SOCKET_MEMO.clear();
   PREFAB_SOCKET_MEMO.set(key, centres);
   return centres;
+}
+
+/** Parsed prefab source of an instance, memoised per source (supply reads its mounts). */
+const PREFAB_DOC_MEMO = new Map<string, ShipPrefabDocumentV1>();
+function prefabSupplyDocument(
+  key: string,
+  document: { prefab: { document: unknown } },
+): ShipPrefabDocumentV1 {
+  const hit = PREFAB_DOC_MEMO.get(key);
+  if (hit) return hit;
+  const doc = readShipPrefab(document.prefab.document);
+  if (PREFAB_DOC_MEMO.size >= 64) PREFAB_DOC_MEMO.clear();
+  PREFAB_DOC_MEMO.set(key, doc);
+  return doc;
 }
 
 function bounded<T>(rows: Iterable<T>, limit: number): T[] {
@@ -360,20 +378,38 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
     });
     roots.add(root.id);
   }
-  const supply = Object.fromEntries(
-    fittingRows.filter((f) => f.kind === "actuator").map((f) => [f.id, 1]),
-  );
   if (prefab) {
     if (attachments.length || replacements.length)
       throw Error("prefab-flight-refit-unsupported");
-    const model = prefabFlightModelFor(
-      `${instance.id}:${instance.blueprintSha256}`,
-      instance.documentJson,
+    const key = `${instance.id}:${instance.blueprintSha256}`;
+    const model = prefabFlightModelFor(key, instance.documentJson);
+    // Fuel and power supply per actuator from the pinned document and component damage: a drive
+    // that burns propellant needs an intact tank, one that draws power needs a working generator.
+    if (!isPrefabConstruction(document)) throw Error("prefab-flight-source");
+    const performance = new Map<string, number>();
+    for (const row of bounded(
+      ctx.db.shipComponentDamage.by_ship.filter(shipId),
+      512,
+    ))
+      if (row.objectId.startsWith("mount:"))
+        performance.set(row.objectId.slice("mount:".length), row.performance);
+    const bySource = prefabActuatorSupply(
+      prefabSupplyDocument(key, document),
+      document.prefab.catalog,
+      fittingRows
+        .filter((f) => f.kind === "actuator")
+        .map((f) => f.sourceDeviceId),
+      (mountId) => performance.get(mountId) ?? 1,
+    );
+    const prefabSupply = Object.fromEntries(
+      fittingRows
+        .filter((f) => f.kind === "actuator")
+        .map((f) => [f.id, bySource[f.sourceDeviceId] ?? 0]),
     );
     return prefabFlightInput(
       model,
       (sourceId) => prefabPlacedObjectId(shipId, sourceId),
-      { fittings, cargo, crew, supply },
+      { fittings, cargo, crew, supply: prefabSupply },
     );
   }
   return wayfarerFlightInput(
