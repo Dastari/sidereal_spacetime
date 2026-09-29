@@ -1489,6 +1489,22 @@ async function buildWorld(
         pointer: this.pointerDirection(),
         /** Screen-to-ship mapping angle (camera azimuth + ship heading), review drivers only. */
         screenAngle: camera.alpha + state.heading,
+        /** The own body's position on screen (CSS pixels in the canvas), review drivers only. */
+        bodyScreen: (() => {
+          const rect = canvas.getBoundingClientRect();
+          const w = engine.getRenderWidth(),
+            h = engine.getRenderHeight();
+          const p = Vector3.Project(
+            avatar.getAbsolutePosition(),
+            Matrix.Identity(),
+            scene.getTransformMatrix(),
+            camera.viewport.toGlobal(w, h),
+          );
+          return [
+            rect.left + (p.x / w) * rect.width,
+            rect.top + (p.y / h) * rect.height,
+          ];
+        })(),
         bodies: evaCrew?.diagnostics() ?? [],
       };
     },
