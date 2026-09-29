@@ -82,7 +82,8 @@
     "./prefabs/builders": "./src/prefabs/builders.ts",
     "./crew-items": "./src/crew-items.ts",
     "./crew-wardrobe": "./src/crew-wardrobe.ts",
-    "./crew-voxel-appearance": "./src/crew-voxel-appearance.ts"
+    "./crew-voxel-appearance": "./src/crew-voxel-appearance.ts",
+    "./content-definition-seed": "./src/content-definition-seed.ts"
   },
   "dependencies": {}
 }

@@ -21,6 +21,10 @@ import type {
   ConstructionCapability,
   ConstructionGrant,
 } from "../../content/src/construction";
+import {
+  isDefinitionCapability,
+  validGrantScope,
+} from "@sidereal/sim/content-definitions";
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 const capabilities: ConstructionCapability[] = [
@@ -131,7 +135,11 @@ export function setGrant(
   if (!administrator) requireGrant(ctx, args.workspaceId, "grant.manage");
   if (
     !validId(args.workspaceId) ||
-    !capabilities.includes(args.capability as ConstructionCapability) ||
+    !(
+      capabilities.includes(args.capability as ConstructionCapability) ||
+      isDefinitionCapability(args.capability)
+    ) ||
+    !validGrantScope(args.workspaceId, args.capability) ||
     args.expiresMicros < 0n ||
     (args.expiresMicros !== forever &&
       args.expiresMicros <= ctx.timestamp.microsSinceUnixEpoch)

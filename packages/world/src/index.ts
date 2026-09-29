@@ -161,6 +161,13 @@ import {
 import * as constructionDoors from "./construction-doors";
 import * as constructionInstances from "./construction-instances";
 import * as construction from "./construction";
+import * as contentDefinitions from "./content-definitions";
+import {
+  contentDefinitionHead,
+  contentDefinition,
+  contentDefinitionReceipt,
+  contentDefinitionUsage,
+} from "./content-definition-tables";
 import {
   constructionGrant,
   constructionDraft,
@@ -439,6 +446,10 @@ const db = schema({
   lifecycleEvent,
   lifecycleOutbox,
   lifecycleCursor,
+  contentDefinitionHead,
+  contentDefinition,
+  contentDefinitionReceipt,
+  contentDefinitionUsage,
 });
 export default db;
 /** Wrap a world action a dead character may not take (move, interact, pilot, use inventory). */
@@ -1258,6 +1269,83 @@ export const publishConstructionBlueprint = db.reducer(
     operationId: t.string(),
   },
   auth.gameAction(construction.publishBlueprint, true),
+);
+
+/** Content definition registry (roadmap X-1). Admin-scoped: rows only for the kinds the sender
+ * holds a `definition.*` grant on (`definitions:<kind>`). No player view reads these tables. */
+export const adminContentDefinitionHeads = db.view(
+  { name: "admin_content_definition_heads", public: true },
+  t.array(contentDefinitionHead.rowType),
+  auth.gameView(contentDefinitions.adminHeads),
+);
+export const adminContentDefinitions = db.view(
+  { name: "admin_content_definitions", public: true },
+  t.array(contentDefinition.rowType),
+  auth.gameView(contentDefinitions.adminRevisions),
+);
+export const adminContentDefinitionUsage = db.view(
+  { name: "admin_content_definition_usage", public: true },
+  t.array(contentDefinitionUsage.rowType),
+  auth.gameView(contentDefinitions.adminUsage),
+);
+export const saveDefinitionDraft = db.reducer(
+  {
+    kind: t.string(),
+    definitionId: t.string(),
+    payloadJson: t.string(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(contentDefinitions.saveDefinitionDraft),
+);
+export const discardDefinitionDraft = db.reducer(
+  {
+    kind: t.string(),
+    definitionId: t.string(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(contentDefinitions.discardDefinitionDraft),
+);
+export const publishDefinition = db.reducer(
+  {
+    kind: t.string(),
+    definitionId: t.string(),
+    expectedRevision: t.u64(),
+    expectedDraftSha256: t.string(),
+    operationId: t.string(),
+  },
+  auth.gameAction(contentDefinitions.publishDefinition),
+);
+export const retireDefinition = db.reducer(
+  {
+    kind: t.string(),
+    definitionId: t.string(),
+    revision: t.u64(),
+    expectedRevision: t.u64(),
+    operationId: t.string(),
+  },
+  auth.gameAction(contentDefinitions.retireDefinition),
+);
+export const refreshDefinitionUsage = db.reducer(
+  { kind: t.string() },
+  auth.gameAction(contentDefinitions.refreshDefinitionUsage),
+);
+/** Operator-only (deployment identity): seed items/weapons as revision 1; bootstrap grants. */
+export const operatorImportContentSeed = db.reducer(
+  { operationId: t.string(), kind: t.string(), dryRun: t.bool() },
+  contentDefinitions.importContentSeed,
+);
+export const operatorSetDefinitionGrant = db.reducer(
+  {
+    operationId: t.string(),
+    principal: t.string(),
+    kind: t.string(),
+    capability: t.string(),
+    expiresMicros: t.u64(),
+    revoked: t.bool(),
+  },
+  contentDefinitions.operatorSetDefinitionGrant,
 );
 
 export const ownConstructionInstances = db.view(

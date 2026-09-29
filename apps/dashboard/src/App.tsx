@@ -11,6 +11,7 @@ import {
   BookOpen,
   Box,
   ChartNoAxesCombined,
+  DatabaseZap,
   Code2,
   Compass,
   FlaskConical,
@@ -36,6 +37,9 @@ import "./style.css";
 const MapEditor = lazy(() => import("./map-editor/MapEditor"));
 const PlanetStudio = lazy(() => import("./planet-studio/PlanetStudio"));
 const PrefabShipyard = lazy(() => import("./shipyard/prefab/PrefabShipyard"));
+const DefinitionsWorkspace = lazy(
+  () => import("./definitions/DefinitionsWorkspace"),
+);
 const tools = [
   [
     "World explorer",
@@ -110,7 +114,8 @@ const tools = [
     "M9",
   ],
 ] as const;
-type Route = "map" | "planets" | "dashboard" | "prefabs" | "components";
+type Route =
+  "map" | "planets" | "dashboard" | "prefabs" | "components" | "definitions";
 const ROUTE_PATHS: Partial<Record<Route, string>> = {
   dashboard: "/",
   prefabs: "/shipyard/prefabs",
@@ -123,9 +128,11 @@ const currentRoute = (): Route =>
       ? "prefabs"
       : location.pathname.includes("planets")
         ? "planets"
-        : location.pathname.includes("components")
-          ? "components"
-          : "dashboard";
+        : location.pathname.startsWith("/definitions")
+          ? "definitions"
+          : location.pathname.includes("components")
+            ? "components"
+            : "dashboard";
 export default function App() {
   return (
     <StudioAuthGate>
@@ -196,6 +203,13 @@ function StudioApp() {
           >
             <FlaskConical />
           </ToolButton>
+          <ToolButton
+            label="Definitions"
+            active={route === "definitions"}
+            onClick={() => navigate("definitions")}
+          >
+            <DatabaseZap />
+          </ToolButton>
           <span className="rail-spacer" />
           <a
             className="tool-button"
@@ -236,6 +250,8 @@ function StudioApp() {
               <PlanetStudio />
             ) : route === "prefabs" ? (
               <PrefabShipyard />
+            ) : route === "definitions" ? (
+              <DefinitionsWorkspace />
             ) : route === "dashboard" ? (
               <main className="dashboard">
                 <div className="page-heading">
@@ -268,7 +284,9 @@ function StudioApp() {
                               ? navigate("prefabs")
                               : title === "Genesis"
                                 ? navigate("planets")
-                                : setToolDetail(tool)
+                                : title === "Foundry"
+                                  ? navigate("definitions")
+                                  : setToolDetail(tool)
                         }
                       >
                         <span className="suite-icon">
@@ -285,7 +303,9 @@ function StudioApp() {
                               ? "Prefab Shipyard ready"
                               : title === "Genesis"
                                 ? "Generator ready"
-                                : milestone + " planned"}
+                                : title === "Foundry"
+                                  ? "Definitions: items and weapons"
+                                  : milestone + " planned"}
                         </Status>
                         <ArrowUpRight size={18} />
                       </button>
