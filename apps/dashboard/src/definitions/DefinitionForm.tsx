@@ -215,7 +215,7 @@ function Field({
         {items.map((item, i) => (
           <div className="df-list-item" key={i}>
             <Field
-              spec={spec.of}
+              spec={{ ...spec.of, required: true }}
               label={`${spec.of.label || label} ${i + 1}`}
               value={item}
               path={`${path}[${i}]`}

@@ -365,7 +365,7 @@ export default function DefinitionsWorkspace() {
     <main className="defs" aria-label="Content definitions">
       <header className="defs-header">
         <div>
-          <span className="muted">Definitions · roadmap X-1, X-2</span>
+          <span className="muted">Definitions · roadmap X-1 to X-3</span>
           <h1>Content definitions</h1>
         </div>
         <div className="defs-connection" role="status">
