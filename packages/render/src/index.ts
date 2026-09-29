@@ -1366,7 +1366,9 @@ async function buildWorld(
     // doors slide open for nearby characters.
     prefabView?.updateDoors({
       nowMs: Date.now(),
-      dt,
+      // Real elapsed time (the frame dt is capped at 0.1 s): on slow software-rendered clients
+      // the leaves still finish their stroke inside the airlock cycle window.
+      dt: Math.min(engine.getDeltaTime() / 1000, 1),
       cycle: state.airlockCycle ?? null,
       actors: [
         ...(state.eva ? [] : [{ x: displayed.localX, y: displayed.localY }]),
