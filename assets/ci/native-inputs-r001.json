@@ -1,17 +1,12 @@
 {
   "schema": "sidereal.ci-native-inputs.v1",
   "archive": "native-inputs-r001.tar.xz",
-  "archiveSha256": "ab51baf161126dddaa74c05ecaf8f5f4378f9b08bc7d85d41ae28071641eab94",
+  "archiveSha256": "b880728b934955759a65f9ee28d6b002fb4b036e15c2f9942b7e6a05d94c374d",
   "members": [
     {
       "path": "assets/art-library/designs/crew.animation.aim/revisions/r003/runtime-aim-space.json",
       "bytes": 66599,
       "sha256": "ec269e27b11673dc9080da6114d51ddfdfff26f8acad773c4e0951c4168e1885"
-    },
-    {
-      "path": "assets/art-library/designs/shipyard.structure.wayfarer-transition/revisions/r003/wayfarer-transition.glb",
-      "bytes": 602248,
-      "sha256": "cf008a583532494febff62ee58ce5cdb2e065d5095a08748efebca54d4ab8922"
     },
     {
       "path": "assets/runtime/construction/complex-preview-r000/complex-r005/join-006e0d7b91e2-q1.glb",
@@ -6672,16 +6667,6 @@
       "path": "assets/runtime/construction/inset250-r000/union-r001/internal-span-1.5-q4.glb",
       "bytes": 587232,
       "sha256": "8aa0c4f097d965fbb720f8fef488fe4d2b41f0f03049072f51acdf6950399cb3"
-    },
-    {
-      "path": "assets/runtime/construction/wayfarer-rebuild-r002/internal-span-0.125-q4.glb",
-      "bytes": 579708,
-      "sha256": "9ae55fc62ec463eb434ddb7567c625010a96bb469a7a7416c19908ad63d2b390"
-    },
-    {
-      "path": "assets/runtime/construction/wayfarer-rebuild-r002/wayfarer-transition.glb",
-      "bytes": 602248,
-      "sha256": "cf008a583532494febff62ee58ce5cdb2e065d5095a08748efebca54d4ab8922"
     }
   ]
 }

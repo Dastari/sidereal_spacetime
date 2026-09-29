@@ -17,7 +17,8 @@ PUBLIC_HELP = {
 # `assets/runtime` (review packages, preview builds, rebuild experiments) stays
 # private until it is listed here.
 PUBLISHED_RUNTIME = (
-    "assembly",
+    "assembly/floor-manifest.json",
+    "assembly/floor",
     "crew",
     "equipment",
     "environment",
@@ -1370,8 +1371,6 @@ PUBLISHED_RUNTIME = (
     "construction/inset250-r000/union-r001/internal-span-1.5-q2.glb",
     "construction/inset250-r000/union-r001/internal-span-1.5-q3.glb",
     "construction/inset250-r000/union-r001/internal-span-1.5-q4.glb",
-    "construction/wayfarer-rebuild-r002/internal-span-0.125-q4.glb",
-    "construction/wayfarer-rebuild-r002/wayfarer-transition.glb",
 )
 # Review renders that sit beside published assets but are never fetched.
 # Patterns match paths relative to `assets/runtime`.
@@ -1380,18 +1379,6 @@ UNPUBLISHED_PATTERNS = (
     "crew/looks/views",
     "equipment/browser-review.png",
     "equipment/contact-sheet.png",
-)
-# Retired legacy Wayfarer assets (owner: "Retire Wayfarer.", 2026-09-29) that
-# the authority's pinned Wayfarer sources still hash until that code is removed.
-# The game client never receives them.
-CLIENT_RETIRED_PATTERNS = (
-    "assembly/*",
-    "construction/wayfarer-rebuild-r002",
-)
-# Generic runtime files inside retired folders that the game still uses.
-CLIENT_RETAINED = (
-    "assembly/floor-manifest.json",
-    "assembly/floor",
 )
 ASSET_REFERENCE = re.compile(r'"/assets/([^"?#]+)')
 
@@ -1404,31 +1391,10 @@ def _unpublished(relative: str) -> bool:
     )
 
 
-def _matches(relative: str, patterns) -> bool:
-    parts = relative.split("/")
-    return any(
-        fnmatch.fnmatch("/".join(parts[: len(pattern.split("/"))]), pattern)
-        for pattern in patterns
-    )
-
-
-def retired_for(app: str, relative: str) -> bool:
-    """True when a runtime path is a retired ship asset this app must not ship."""
-    if app != "client" or not _matches(relative, CLIENT_RETIRED_PATTERNS):
-        return False
-    return not any(
-        relative == kept or relative.startswith(kept + "/") for kept in CLIENT_RETAINED
-    )
-
-
 def _copy_published(runtime: Path, public_assets: Path, app: str = "dashboard") -> None:
     for entry in PUBLISHED_RUNTIME:
         source = runtime / entry
         target = public_assets / entry
-        if retired_for(app, entry):
-            if not source.exists():
-                raise FileNotFoundError(f"Published runtime entry missing: {entry}")
-            continue
         if source.is_file():
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(source, target)
@@ -1437,7 +1403,7 @@ def _copy_published(runtime: Path, public_assets: Path, app: str = "dashboard") 
                 base = Path(folder).relative_to(runtime).as_posix()
                 return [
                     n for n in names
-                    if _unpublished(f"{base}/{n}") or retired_for(app, f"{base}/{n}")
+                    if _unpublished(f"{base}/{n}")
                 ]
             shutil.copytree(source, target, ignore=ignore, dirs_exist_ok=True)
         else:
