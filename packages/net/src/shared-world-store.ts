@@ -91,6 +91,8 @@ function motionValid(row: SharedMotion) {
     )
   );
 }
+/** Server `SHIP_CONTACT_CANDIDATE_BUDGET` (packages/world/src/shared-world-views.ts). */
+export const SHARED_CACHE_MAX_SHIPS = 4096;
 const shortAngle = (from: number, to: number, alpha: number) =>
   from + Math.atan2(Math.sin(to - from), Math.cos(to - from)) * alpha;
 export class SharedWorldStore {
@@ -113,11 +115,17 @@ export class SharedWorldStore {
   private snapshot: SharedWorldSnapshot = this.empty();
   constructor(
     private readonly now: () => number = () => performance.now(),
-    private readonly limits = { ships: 64, bodies: 64, samples: 8 },
+    // Ships: a memory bound matched to the server's contact work bound, not a visibility cap
+    // (wiki `Architecture/Visibility and Interest Management`, hard rule 5).
+    private readonly limits = {
+      ships: SHARED_CACHE_MAX_SHIPS,
+      bodies: 64,
+      samples: 8,
+    },
   ) {
     if (
       ![limits.ships, limits.bodies, limits.samples].every(
-        (n) => Number.isInteger(n) && n > 0 && n <= 1024,
+        (n) => Number.isInteger(n) && n > 0 && n <= SHARED_CACHE_MAX_SHIPS,
       ) ||
       limits.samples < 2
     )

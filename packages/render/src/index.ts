@@ -227,6 +227,13 @@ export interface WorldOptions {
   /** Opt-in accepted shared projections, separate from the private local ship. */
   sharedWorld?: {
     bodies: (nowMs: number) => readonly SpaceBodyState[] | undefined;
+    /** Other players' ships from the accepted `visible_ship_*` views (exterior only). */
+    ships?: {
+      store: import("./prefab-ship/remote-exteriors").RemoteShipStore;
+      localShipId: () => string | undefined;
+      /** `visible_actuator_exhaust`: firing thrusters per perceived ship (source id -> throttle). */
+      exhaust?: () => ReadonlyMap<string, ReadonlyMap<string, number>>;
+    };
   };
   construction?: ConstructionRenderInput & { visitId?: string };
   constructionEgress?: NativeStairEgressGeometry;
@@ -906,6 +913,20 @@ async function buildWorld(
   canvas.addEventListener("wheel", wheel, { passive: false });
   canvas.addEventListener("contextmenu", context);
   window.addEventListener("blur", up);
+  // Other players' ships: exterior only, dynamic LOD, one shared prototype per published hull
+  // (wiki `Architecture/Visibility and Interest Management`). Loads in the background; a ship
+  // whose hull is still loading is drawn as a marker, never hidden.
+  const sharedShips = options.sharedWorld?.ships;
+  const remoteShips = sharedShips
+    ? await import("./prefab-ship/remote-exteriors").then(
+        ({ createRemoteShipExteriors }) =>
+          createRemoteShipExteriors(scene, sharedShips.store, {
+            localShipId: sharedShips.localShipId,
+            onError: (error) =>
+              console.warn("remote ship exterior unavailable", error),
+          }),
+      )
+    : undefined;
   const visibleBodies = (nowMs: number) =>
     options.sharedWorld?.bodies(nowMs) ?? state.bodies ?? [];
   const debugVisibilityRevision = createDebugVisibilityRevision();
@@ -1176,6 +1197,13 @@ async function buildWorld(
     });
     prefabView?.updatePanels(state.shipLogic?.panels, Date.now());
     camera.getViewMatrix(true);
+    remoteShips?.update(
+      { x: displayed.x, y: displayed.y },
+      frameStarted,
+      camera,
+      engine.getRenderHeight(),
+      sharedShips?.exhaust?.(),
+    );
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,
       region: state.spaceRegion,
@@ -1440,6 +1468,13 @@ async function buildWorld(
     setRenderQuality(patch: Partial<RenderQuality>) {
       applyRenderQuality({ ...renderQuality, ...patch });
     },
+    /** Other players' ships and remote crew as drawn now: ids, published hull, LOD tier. */
+    getSharedWorldDiagnostics: () => ({
+      enabled: !!remoteShips,
+      remoteShips: remoteShips?.diagnostics(),
+      remoteCrew: remoteCrew?.tiers(),
+      evaCrew: evaCrew?.tiers(),
+    }),
     groundItemLabels: () => groundItems.labels(),
     update(next: SceneState) {
       if (
@@ -1512,6 +1547,7 @@ async function buildWorld(
     dispose() {
       if (disposed) return;
       disposed = true;
+      remoteShips?.dispose();
       fastSnapshot?.dispose();
       flightActiveSet.dispose();
       staticMaterials.dispose();

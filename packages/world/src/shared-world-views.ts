@@ -14,6 +14,11 @@ import {
   spatialCell,
   withinSpaceDiscovery,
 } from "@sidereal/sim/spatial-cells";
+import { TRUSTED_PREFAB_BLUEPRINT_PREFIX } from "@sidereal/sim/game-ship-access";
+import {
+  prefabExteriorAssetId,
+  UNPUBLISHED_EXTERIOR_ID,
+} from "@sidereal/sim/ship-exterior";
 import type {
   SharedWorldReadDatabase,
   ShipMotionRow,
@@ -55,6 +60,62 @@ export type PublishedExteriorResolver = (
   shipId: string,
 ) =>
   { publishedExteriorAssetId: string; appearanceRevision: bigint } | undefined;
+
+/** Private rows that name a ship's hull (read inside views only; never delivered). */
+export interface ExteriorReadDatabase {
+  gameShipAccess: {
+    shipId: {
+      find(id: string): { instanceId: string } | null | undefined;
+    };
+  };
+  constructionInstance: {
+    id: {
+      find(id: string): { blueprintId: string } | null | undefined;
+    };
+  };
+}
+/** `trusted-prefab:<prefabId>:r<revision>` (prefab-ship-authority.ts `blueprintRevisionId`). */
+const TRUSTED_PREFAB_BLUEPRINT = new RegExp(
+  "^" +
+    TRUSTED_PREFAB_BLUEPRINT_PREFIX.replace(/[.*+?^${}()|[\]\\]/g, "\\$&") +
+    "([a-z0-9][a-z0-9.-]{2,63}):r([0-9]{1,9})$",
+);
+/**
+ * The public exterior of a perceived ship (wiki `Architecture/Visibility and Interest
+ * Management`, hard rule 6). A game-owned ship built from a trusted developer prefab is named by
+ * its blueprint pin only: `prefab:<prefabId>` plus the prefab document revision. Nothing from the
+ * instance (layout document, rooms, modules, containers, items, crew, damage) is disclosed; the
+ * client draws the exterior of the published developer prefab. Any other ship is "unpublished"
+ * and is drawn as a marker.
+ */
+export function publishedShipExterior(
+  db: ExteriorReadDatabase,
+  shipId: string,
+): { publishedExteriorAssetId: string; appearanceRevision: bigint } {
+  const access = db.gameShipAccess.shipId.find(shipId);
+  const instance = access
+    ? db.constructionInstance.id.find(access.instanceId)
+    : undefined;
+  const match = instance
+    ? TRUSTED_PREFAB_BLUEPRINT.exec(instance.blueprintId)
+    : null;
+  return match
+    ? {
+        publishedExteriorAssetId: prefabExteriorAssetId(match[1]),
+        appearanceRevision: BigInt(match[2]),
+      }
+    : {
+        publishedExteriorAssetId: UNPUBLISHED_EXTERIOR_ID,
+        appearanceRevision: 0n,
+      };
+}
+/**
+ * Server work bound of one ship-contact evaluation: motion rows examined in the observer's nine
+ * cells. It is far above any physical density (hulls cannot overlap) and it only bounds work: past
+ * it the evaluation keeps what it has found (centre cell first) and always the observer's own
+ * ship. It never returns nothing, and it is not a visibility cap (hard rule 5).
+ */
+export const SHIP_CONTACT_CANDIDATE_BUDGET = 4096;
 const motionFields = {
   systemId: t.string(),
   cellX: t.i64(),
@@ -173,19 +234,28 @@ function shipContacts(ctx: SharedViewContext): ShipMotionRow[] {
   if (!origin) return [];
   const found = new Map<string, ShipMotionRow>();
   let examined = 0;
-  for (const cell of origin.cells)
+  // Centre cell first, so a work-bound overflow keeps the nearest contacts (never nothing).
+  const [cx, cy] = [origin.cells[4].cellX, origin.cells[4].cellY];
+  const cells = [...origin.cells].sort(
+    (a, b) =>
+      Math.abs(a.cellX - cx) +
+      Math.abs(a.cellY - cy) -
+      (Math.abs(b.cellX - cx) + Math.abs(b.cellY - cy)),
+  );
+  scan: for (const cell of cells)
     for (const motion of ctx.db.shipWorldMotion.by_cell.filter([
       origin.admitted.systemId,
       BigInt(cell.cellX),
       BigInt(cell.cellY),
     ])) {
-      if (++examined > 64) return [];
+      if (++examined > SHIP_CONTACT_CANDIDATE_BUDGET) break scan;
       if (motion.systemId !== origin.admitted.systemId) continue;
       try {
         if (withinSpaceDiscovery(origin.point, motion))
           found.set(motion.shipId, motion);
       } catch {
-        return [];
+        // An invalid row is skipped; it never blinds the observer to every other contact.
+        continue;
       }
     }
   found.set(origin.center.shipId, origin.center);
@@ -277,6 +347,106 @@ export function visibleShipDescriptions(
         ]
       : [];
   });
+}
+/** Coarse thruster output of perceived ships: an engine plume is a public exterior effect. */
+export const visibleActuatorExhaustProjection = t.row(
+  "SharedThrusterExhaustProjection",
+  {
+    key: t.string().primaryKey(),
+    shipId: t.string(),
+    /** Blueprint-derived flight source id (`mount-<id>[#suffix]`), never a fitting UUID. */
+    sourceId: t.string(),
+    /** Achieved command 0..1 in steps of 1/EXHAUST_THROTTLE_STEPS; only firing jets. */
+    throttle: t.f64(),
+  },
+);
+export const EXHAUST_THROTTLE_STEPS = 16;
+export interface ExhaustReadDatabase {
+  constructionFlightCompiled: {
+    shipId: {
+      find(
+        id: string,
+      ): { status: string; actuatorsJson: string } | null | undefined;
+    };
+  };
+  constructionFlightDirty: { shipId: { find(id: string): unknown } };
+  actuatorOutput: {
+    id: { find(id: string): { throttle: number } | null | undefined };
+  };
+}
+/** Prefab flight source ids only (published blueprint mounts); anything else is withheld. */
+const PREFAB_FLIGHT_SOURCE =
+  /^mount-[A-Za-z0-9][A-Za-z0-9._-]{0,63}(#[A-Za-z0-9._-]{1,32})?$/;
+const EXHAUST_SOURCES = new Map<
+  string,
+  { json: string; sources: { id: string; sourceId: string }[] }
+>();
+function exhaustSources(shipId: string, json: string) {
+  const cached = EXHAUST_SOURCES.get(shipId);
+  if (cached?.json === json) return cached.sources;
+  let sources: { id: string; sourceId: string }[] = [];
+  try {
+    const parsed = JSON.parse(json) as unknown;
+    // Prefab placed objects are `<shipId>:<sourceId>`; only the blueprint source id is disclosed.
+    const prefix = shipId + ":";
+    if (Array.isArray(parsed) && parsed.length <= 256)
+      sources = parsed.flatMap(
+        (a: { id?: unknown; placedObjectId?: unknown }) => {
+          if (
+            typeof a?.id !== "string" ||
+            typeof a.placedObjectId !== "string" ||
+            !a.placedObjectId.startsWith(prefix)
+          )
+            return [];
+          const sourceId = a.placedObjectId.slice(prefix.length);
+          return PREFAB_FLIGHT_SOURCE.test(sourceId)
+            ? [{ id: a.id, sourceId }]
+            : [];
+        },
+      );
+  } catch {
+    sources = [];
+  }
+  if (EXHAUST_SOURCES.size >= 256) EXHAUST_SOURCES.clear();
+  EXHAUST_SOURCES.set(shipId, { json, sources });
+  return sources;
+}
+/**
+ * Firing thrusters of every perceived ship, for remote plumes and RCS puffs (exterior only): the
+ * ship, the blueprint mount the jet belongs to and a coarse achieved throttle. No fitting UUID,
+ * power, fuel, damage or pilot data. Same perception as `visible_ship_motion`.
+ */
+export function visibleActuatorExhaust(
+  ctx: SharedViewContext & { db: ExhaustReadDatabase },
+) {
+  const out: {
+    key: string;
+    shipId: string;
+    sourceId: string;
+    throttle: number;
+  }[] = [];
+  for (const m of shipContacts(ctx)) {
+    if (ctx.db.constructionFlightDirty.shipId.find(m.shipId)) continue;
+    const compiled = ctx.db.constructionFlightCompiled.shipId.find(m.shipId);
+    if (compiled?.status !== "ready") continue;
+    for (const s of exhaustSources(m.shipId, compiled.actuatorsJson)) {
+      const raw =
+        ctx.db.actuatorOutput.id.find(`${m.shipId}:${s.id}`)?.throttle ?? 0;
+      const throttle =
+        Math.round(
+          Math.max(0, Math.min(1, Number.isFinite(raw) ? raw : 0)) *
+            EXHAUST_THROTTLE_STEPS,
+        ) / EXHAUST_THROTTLE_STEPS;
+      if (throttle > 0)
+        out.push({
+          key: `${m.shipId}/${s.sourceId}`,
+          shipId: m.shipId,
+          sourceId: s.sourceId,
+          throttle,
+        });
+    }
+  }
+  return out;
 }
 export function visibleBodyMotion(ctx: SharedViewContext) {
   return bodyContacts(ctx).map(({ body, motion }) => ({

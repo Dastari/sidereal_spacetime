@@ -169,6 +169,7 @@ import OwnStationsRow from "./own_stations_table";
 import OwnSystemMapsRow from "./own_system_maps_table";
 import OwnWorldAdmissionRow from "./own_world_admission_table";
 import PublishedItemDefinitionsRow from "./published_item_definitions_table";
+import VisibleActuatorExhaustRow from "./visible_actuator_exhaust_table";
 import VisibleBodyDescriptionsRow from "./visible_body_descriptions_table";
 import VisibleBodyMotionRow from "./visible_body_motion_table";
 import VisibleCombatActionsRow from "./visible_combat_actions_table";
@@ -624,6 +625,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, PublishedItemDefinitionsRow),
+  visibleActuatorExhaust: __table({
+    name: 'visible_actuator_exhaust',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleActuatorExhaustRow),
   visibleBodyDescriptions: __table({
     name: 'visible_body_descriptions',
     indexes: [

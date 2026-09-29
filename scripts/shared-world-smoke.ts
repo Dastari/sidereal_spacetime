@@ -2,10 +2,11 @@ import assert from "node:assert/strict";
 import { randomUUID } from "node:crypto";
 import { writeFileSync } from "node:fs";
 import { DbConnection, tables } from "../packages/net/src/generated";
+import { SHARED_SYSTEM_SEED } from "@sidereal/content/shared-system";
 import {
-  SHARED_SYSTEM_SEED,
-  SHARED_STOCK_EXTERIOR_ID,
-} from "@sidereal/content/shared-system";
+  prefabIdOfExterior,
+  UNPUBLISHED_EXTERIOR_ID,
+} from "../packages/sim/src/ship-exterior";
 import { sharedCellQueries } from "../packages/net/src/world-subscriptions";
 
 type Client = (
@@ -145,9 +146,10 @@ export async function sharedWorldSmoke(client: Client, wait: Wait) {
         "canonical body ID",
       );
     const description = a.db.visibleShipDescriptions.shipId.find(oldB.id)!;
-    assert.equal(
-      description.publishedExteriorAssetId,
-      SHARED_STOCK_EXTERIOR_ID,
+    // Exterior only: a published prefab hull id or "unpublished" (drawn as a marker).
+    assert(
+      description.publishedExteriorAssetId === UNPUBLISHED_EXTERIOR_ID ||
+        !!prefabIdOfExterior(description.publishedExteriorAssetId),
     );
     assert.deepEqual(
       Object.keys(description).sort(),
