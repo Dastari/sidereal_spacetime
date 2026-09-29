@@ -518,7 +518,9 @@ export async function createVoxelCrewVisual(
       !motion.seated &&
       !motion.dead &&
       !motion.downed &&
-      !motion.climbing
+      !motion.climbing &&
+      !motion.carrying &&
+      !motion.hovering
     ) {
       const has = (c: string) => clips.has(`${armedClass}.${c}`);
       const name = (c: string) => `${armedClass}.${c}` as VoxelCrewAction;
@@ -536,7 +538,8 @@ export async function createVoxelCrewVisual(
         // The armed clips' own legs take short strides (0.8 m/s walk, 2.5 m/s run authored): at
         // gameplay speed they slid. The base walk/run legs, rate-matched to ground speed, carry the
         // armed upper body (weapon, support hand); the upper layer keeps the legs' cycle period.
-        const legs: VoxelCrewAction = motion.sprinting ? "run" : "walk";
+        const legs: VoxelCrewAction =
+          "lower" in layers ? layers.lower : layers.full;
         const speedRatio = voxelCrewSpeedRatio(legs, motion);
         const period = (c: VoxelCrewAction) => {
           const g = clips.get(c);
@@ -553,9 +556,14 @@ export async function createVoxelCrewVisual(
       } else if (has("idle_armed"))
         // Item-bundle ready poses carry different leg rest heights. Retain the body bundle's
         // grounded idle legs while their weapon-specific upper pose and hand IK remain active.
-        layers = aimClip
-          ? { full: aimClip, speedRatio: 1 }
-          : { lower: "idle", upper: name("idle_armed"), speedRatio: 1 };
+        layers =
+          aimClip && !motion.crouching
+            ? { full: aimClip, speedRatio: 1 }
+            : {
+                lower: motion.crouching ? "crouch_idle" : "idle",
+                upper: aimClip ?? name("idle_armed"),
+                speedRatio: 1,
+              };
     }
     // Seated / downed / dead / climbing bodies cancel any gesture or shot in progress.
     if (

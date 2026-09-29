@@ -349,6 +349,62 @@ describe("voxel crew runtime", () => {
     engine.dispose();
   });
 
+  it("armed classes retain real crouched legs and preserve carry/hover states", async () => {
+    const { engine, scene, crew } = await load();
+    const armed = await SceneLoader.LoadAssetContainerAsync(
+      "",
+      new Uint8Array(
+        readFileSync(
+          new URL(
+            "../../../../assets/runtime/crew/items/r001/armed-actions.glb",
+            import.meta.url,
+          ),
+        ),
+      ),
+      scene,
+      undefined,
+      ".glb",
+    );
+    crew.addClips(armed);
+    crew.setArmedClass("rifle");
+    new FreeCamera("review", new Vector3(0, 1, -4), scene);
+    engine.getDeltaTime = () => 16;
+    scene.useConstantAnimationDeltaTime = true;
+    for (let i = 0; i < 30; i++) scene.render();
+    const standing = crew.joints.get("pelvis")!.getAbsolutePosition().y;
+    crew.update({ moving: false, seated: false, crouching: true });
+    expect(crew.layers).toMatchObject({
+      lower: "crouch_idle",
+      upper: "rifle.idle_armed",
+    });
+    for (let i = 0; i < 30; i++) scene.render();
+    expect(crew.joints.get("pelvis")!.getAbsolutePosition().y).toBeLessThan(
+      standing - 0.1,
+    );
+    crew.update({
+      moving: false,
+      seated: false,
+      crouching: true,
+      combat: true,
+    });
+    expect(crew.layers).toMatchObject({
+      lower: "crouch_idle",
+      upper: "rifle.aim",
+    });
+    crew.update({ moving: true, seated: false, crouching: true });
+    expect(crew.layers).toMatchObject({
+      lower: "crouch_walk",
+      upper: "rifle.walk_armed",
+    });
+    crew.update({ moving: true, seated: false, carrying: true });
+    expect(crew.layers).toMatchObject({ full: "carry_walk" });
+    crew.update({ moving: false, seated: false, hovering: true });
+    expect(crew.layers).toMatchObject({ full: "jetpack_hover" });
+    crew.dispose();
+    scene.dispose();
+    engine.dispose();
+  });
+
   it("plays stationary full-body reload over layered armed idle", async () => {
     const { engine, scene, crew } = await load();
     const armed = await SceneLoader.LoadAssetContainerAsync(
