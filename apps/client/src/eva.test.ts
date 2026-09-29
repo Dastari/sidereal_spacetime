@@ -14,6 +14,7 @@ import {
   evaIntent,
   evaScene,
   localAimAngle,
+  legacyEntryAction,
   logicButtonAction,
   logicDoorStates,
   logicPanelLights,
@@ -159,8 +160,8 @@ describe("wall buttons (E)", () => {
         shipId: "wren",
         logic,
         aboard: panel("btn-lock-out").front,
-      })?.deviceId,
-    ).not.toBe("btn-lock-out");
+      }),
+    ).not.toMatchObject({ deviceId: "btn-lock-out" });
     expect(
       logicButtonAction({ shipId: "wren", logic, aboard: [0, 0] }),
     ).toBeUndefined();
@@ -333,5 +334,28 @@ describe("suit gate on the client (the server enforces the same rule)", () => {
     ];
     expect(atOpenHatch(model, new Map([[lock.id, true]]), inLane)).toBe(true);
     expect(atOpenHatch(model, new Map([[lock.id, false]]), inLane)).toBe(false);
+  });
+});
+
+describe("legacy re-entry at hatches without ship logic (never stranded)", () => {
+  it("offers E at a logic-less hatch, never at a logic-driven one", () => {
+    const at: [number, number] = [lock.outside[0], lock.outside[1]];
+    expect(
+      legacyEntryAction({ shipId: "wren", model, logic: null, outside: at }),
+    ).toMatchObject({
+      kind: "legacy-entry",
+      airlockId: lock.id,
+    });
+    expect(
+      legacyEntryAction({ shipId: "wren", model, logic, outside: at }),
+    ).toBeUndefined();
+    expect(
+      legacyEntryAction({
+        shipId: "wren",
+        model,
+        logic: null,
+        outside: [60, 60],
+      }),
+    ).toBeUndefined();
   });
 });
