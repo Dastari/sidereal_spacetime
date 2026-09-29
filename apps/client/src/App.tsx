@@ -1123,6 +1123,11 @@ export default function App({
                           ...fieldBodies(),
                         ]
                       : undefined,
+                  // Other players' ships: exterior only, from the accepted visible_ship_* views.
+                  ships: {
+                    store: sharedPresentation.store,
+                    localShipId: () => localShipId.current,
+                  },
                 }
               : undefined,
             // Without an authorized construction scene the character has no vessel.
@@ -1405,9 +1410,14 @@ export default function App({
           view.current = result;
           result.update(sceneState.current);
           // Development review only: EVA presentation diagnostics (never simulation state).
-          if (import.meta.env.DEV)
+          if (import.meta.env.DEV) {
             (globalThis as { __siderealEva?: () => unknown }).__siderealEva =
               () => result.getEva();
+            // Remote ships and crew as drawn (ids, published hull, LOD tier).
+            (
+              globalThis as { __siderealSharedWorld?: () => unknown }
+            ).__siderealSharedWorld = () => result.getSharedWorldDiagnostics();
+          }
         }
       })
       .catch((e) => {

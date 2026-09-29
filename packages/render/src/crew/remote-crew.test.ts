@@ -216,12 +216,12 @@ describe("remote crew", () => {
     remote.dispose();
   });
 
-  it("draws at most the nearest bodies", async () => {
+  it("draws the nearest bodies in full and every other body as a marker (no cap)", async () => {
     vi.spyOn(console, "warn").mockImplementation(() => undefined);
     const s = scene();
     const remote = createRemoteCrew(s, new TransformNode("ship", s), {
       assetUrl: bodyUrl,
-      maxBodies: 2,
+      fullBodies: 2,
     });
     remote.sync(
       [
@@ -231,13 +231,55 @@ describe("remote crew", () => {
       ],
       { x: 0, y: 0 },
     );
-    expect(
-      remote
-        .diagnostics()
-        .map((d) => d.id)
-        .sort(),
-    ).toEqual(["mid", "near"]);
+    const tierOf = () =>
+      Object.fromEntries(remote.diagnostics().map((d) => [d.id, d.tier]));
+    expect(tierOf()).toEqual({ near: "full", mid: "full", far: "marker" });
+    // The marker body is drawn at its accepted position once motion is ready.
+    remote.sync(
+      [
+        mate({ id: "far", localX: 9 }),
+        mate({ id: "near", localX: 1 }),
+        mate({ id: "mid", localX: 4 }),
+      ],
+      { x: 0, y: 0 },
+    );
+    remote.frame(true);
+    const marker = s.meshes.find((m) => m.name === "crowd-marker-far")!;
+    expect(marker.isEnabled()).toBe(true);
+    // Walking closer promotes it; the previous full body that is now furthest becomes a marker.
+    remote.sync(
+      [
+        mate({ id: "far", localX: 0.5 }),
+        mate({ id: "near", localX: 1 }),
+        mate({ id: "mid", localX: 8 }),
+      ],
+      { x: 0, y: 0 },
+    );
+    expect(tierOf()).toEqual({ near: "full", mid: "marker", far: "full" });
+    expect(s.meshes.some((m) => m.name === "crowd-marker-far")).toBe(false);
     remote.dispose();
     expect(remote.count).toBe(0);
+  });
+
+  it("represents 100 bodies on one deck: every one drawn at some tier", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => undefined);
+    const s = scene();
+    const remote = createRemoteCrew(s, new TransformNode("ship", s), {
+      assetUrl: bodyUrl,
+    });
+    const crowd = Array.from({ length: 100 }, (_, i) =>
+      mate({ id: `crew-${i}`, localX: (i % 10) - 5, localY: i / 10 }),
+    );
+    remote.sync(crowd, { x: 0, y: 0 });
+    remote.sync(crowd, { x: 0, y: 0 });
+    remote.frame(true);
+    expect(remote.count).toBe(100);
+    expect(remote.tiers()).toEqual({ full: 12, marker: 88 });
+    const markers = s.meshes.filter((m) =>
+      m.name.startsWith("crowd-marker-crew-"),
+    );
+    expect(markers).toHaveLength(88);
+    expect(markers.every((m) => m.isEnabled())).toBe(true);
+    remote.dispose();
   });
 });

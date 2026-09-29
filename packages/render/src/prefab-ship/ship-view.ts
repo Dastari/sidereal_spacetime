@@ -54,6 +54,7 @@ import {
   type DressView,
   type DressedShip,
 } from "@sidereal/sim/ship-dresser";
+import { exteriorOnlyDress } from "@sidereal/sim/ship-exterior";
 import { setMeshRole, type MeshRole } from "../mesh-roles";
 import { withoutAirlockLeaves } from "./doors";
 import { CONTACT_STRIP_OPACITY } from "../molded-plastic";
@@ -153,6 +154,10 @@ export interface PrefabShipViewOptions {
   /** Bake a static idle plume on every main drive (editor previews). Default true; the game passes
    * false and draws throttle-driven exhaust from the achieved actuator outputs (exhaust.ts). */
   staticPlumes?: boolean;
+  /** Another player's ship (wiki `Architecture/Visibility and Interest Management`, hard rule 6):
+   * build the flight exterior only (`exteriorOnlyDress`): no deck geometry, interior modules,
+   * furniture, room lights or labels, and no static exhaust plumes. The view stays "flight". */
+  exteriorOnly?: boolean;
 }
 
 export interface PrefabShipMetrics {
@@ -372,14 +377,19 @@ export async function createPrefabShipView(
   if (options.parent) root.parent = options.parent;
   const frame = new TransformNode(`prefab-ship:${doc.id}:prefab-frame`, scene);
   frame.parent = root;
-  let view: PrefabShipPresentation = options.view;
+  let view: PrefabShipPresentation = options.exteriorOnly
+    ? "flight"
+    : options.view;
   let theme: ShipThemeId = options.theme ?? doc.theme;
   let built: Built | null = null;
   let generation = 0;
   let disposed = false;
 
   async function build(d: ShipPrefabDocumentV1): Promise<Built> {
-    const dressed = dressShip(d, { catalog: options.catalog });
+    const dressing = dressShip(d, { catalog: options.catalog });
+    const dressed = options.exteriorOnly
+      ? exteriorOnlyDress(dressing)
+      : dressing;
     const out: Built = {
       dressed,
       instanced: [],
@@ -431,8 +441,13 @@ export async function createPrefabShipView(
         role: MeshRole;
       }[]
     > = { flight: [], deck: [] };
+    // An exterior-only view never shows "deck": no deck-tagged copies of shared geometry.
     const views = (tag: DressView): ("flight" | "deck")[] =>
-      tag === "both" ? ["flight", "deck"] : [tag];
+      tag === "both"
+        ? options.exteriorOnly
+          ? ["flight"]
+          : ["flight", "deck"]
+        : [tag];
     const add = (
       tag: DressView,
       slot: ShipKitSlot,
@@ -790,7 +805,7 @@ export async function createPrefabShipView(
     radius: number,
     c: ComponentPlacement,
   ) {
-    if (options.staticPlumes === false) return;
+    if (options.staticPlumes === false || options.exteriorOnly) return;
     const local = newBuilder();
     const colours: number[] = [];
     const main = !!c.placement.spec?.thrustN;
@@ -1228,7 +1243,7 @@ export async function createPrefabShipView(
       return built!.dressed;
     },
     setView(v) {
-      if (v === view) return;
+      if (v === view || options.exteriorOnly) return;
       view = v;
       if (built) apply(built);
     },

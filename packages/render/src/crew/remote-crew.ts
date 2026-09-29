@@ -4,6 +4,9 @@ import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { CreatePlane } from "@babylonjs/core/Meshes/Builders/planeBuilder";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
+import { CreateCylinder } from "@babylonjs/core/Meshes/Builders/cylinderBuilder";
+import type { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
+import "@babylonjs/core/Meshes/instancedMesh";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
@@ -16,6 +19,11 @@ import { createVoxelCrewVisual } from "./voxel-crew";
 import { createVoxelCrewOutfit } from "./voxel-crew-outfit";
 import { createVoxelHeldItem, type VoxelHeldItem } from "./voxel-held-item";
 import { createRemoteCrewMotion } from "./remote-crew-motion";
+import {
+  assignCrewTiers,
+  CREW_LOD,
+  type CrewLodTier,
+} from "../presentation-lod";
 import type { VoxelCrewEva } from "./voxel-crew-clips";
 import {
   createEvaBodyPresentation,
@@ -48,8 +56,12 @@ export interface RemoteCrewState {
   eva?: VoxelCrewEva & { localHeading: number };
 }
 
-/** At most this many other bodies are drawn (nearest first); the view bounds rows at 256. */
-export const REMOTE_CREW_MAX_BODIES = 12;
+/**
+ * Skinned full-detail bodies drawn at once (nearest first). Every other body the server delivers
+ * is still drawn, as an instanced marker body (crew LOD C3): no cap hides a perceived character
+ * (wiki `Architecture/Visibility and Interest Management`, hard rule 5).
+ */
+export const REMOTE_CREW_FULL_BODIES = CREW_LOD.fullBodyBudget;
 /** Beam height used by the authoritative shot (see the server beam and the local impact flash). */
 const BEAM_HEIGHT_M = 1.3;
 const TRACER_MS = 110;
@@ -59,6 +71,12 @@ type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 interface Entry {
   state: RemoteCrewState;
   motion: ReturnType<typeof createRemoteCrewMotion>;
+  /** Presentation tier (presentation-lod.ts); a marker body is still a drawn, perceived body. */
+  tier: CrewLodTier;
+  /** Marker tier: one instance of the shared low-poly body. */
+  marker?: InstancedMesh;
+  /** Bumped on every tier change: a body load from an older promotion is discarded. */
+  generation: number;
   crew?: VoxelCrew;
   outfit?: ReturnType<typeof createVoxelCrewOutfit>;
   /** Draws and holsters the held item like the local character. */
@@ -84,7 +102,8 @@ export function createRemoteCrew(
   shipRoot: TransformNode,
   options: {
     now?: () => number;
-    maxBodies?: number;
+    /** Full-detail (skinned) body budget; bodies past it are drawn as markers, never hidden. */
+    fullBodies?: number;
     assetUrl?: string;
     /** Called when meshes are added or removed (lighting, glow occlusion, molded finish). */
     onMeshesChanged?: () => void;
@@ -97,7 +116,7 @@ export function createRemoteCrew(
   } = {},
 ) {
   const now = options.now ?? (() => performance.now());
-  const maxBodies = options.maxBodies ?? REMOTE_CREW_MAX_BODIES;
+  const fullBodies = options.fullBodies ?? REMOTE_CREW_FULL_BODIES;
   const group = new TransformNode("remote-crew", scene);
   group.parent = shipRoot;
   const entries = new Map<string, Entry>();
@@ -116,6 +135,43 @@ export function createRemoteCrew(
   tracerMaterial.emissiveColor = new Color3(0.15, 1, 0.35);
   tracerMaterial.diffuseColor = Color3.Black();
   const tracers: { mesh: Mesh; start: number }[] = [];
+
+  // Crew LOD C3: one low-poly body source per crowd; every marker body is an instance of it, so
+  // any number of marker bodies costs one draw call. Unlit, so it needs no light binding.
+  let markerSource: Mesh | undefined;
+  let markerMaterial: StandardMaterial | undefined;
+  const markerOf = (id: string) => {
+    if (!markerSource) {
+      markerSource = CreateCylinder(
+        "crowd-marker-source",
+        {
+          height: 1.6,
+          diameterTop: 0.34,
+          diameterBottom: 0.52,
+          tessellation: 8,
+        },
+        scene,
+      );
+      // Feet at the origin, like the crew body.
+      markerSource.bakeTransformIntoVertices(Matrix.Translation(0, 0.8, 0));
+      markerMaterial = new StandardMaterial("crowd-marker", scene);
+      markerMaterial.disableLighting = true;
+      markerMaterial.emissiveColor = new Color3(0.62, 0.72, 0.86);
+      markerMaterial.diffuseColor = Color3.Black();
+      markerMaterial.specularColor = Color3.Black();
+      markerSource.material = markerMaterial;
+      markerSource.parent = group;
+      markerSource.isPickable = false;
+      markerSource.isVisible = false;
+      setMeshRole(markerSource, "effect");
+    }
+    const marker = markerSource.createInstance("crowd-marker-" + id);
+    marker.parent = group;
+    marker.isPickable = false;
+    marker.setEnabled(false);
+    setMeshRole(marker, "effect");
+    return marker;
+  };
 
   const canDrawText =
     typeof OffscreenCanvas !== "undefined" || typeof document !== "undefined";
@@ -194,17 +250,15 @@ export function createRemoteCrew(
     entry.lookApplied = true;
   };
 
-  const create = (state: RemoteCrewState) => {
-    const entry: Entry = {
-      state,
-      motion: createRemoteCrewMotion(),
-      appearanceKey: "",
-      label: makeLabel(state.id),
-      labelKey: "",
-      disposed: false,
-    };
+  /** Full tier: load the skinned body, outfit, held item and name label. */
+  const promote = (entry: Entry) => {
+    entry.tier = "full";
+    entry.marker?.dispose();
+    entry.marker = undefined;
+    const token = ++entry.generation;
+    entry.label ??= makeLabel(entry.state.id);
+    entry.labelKey = "";
     entry.label?.setEnabled(false);
-    entries.set(state.id, entry);
     createVoxelCrewVisual(
       scene,
       group,
@@ -214,8 +268,9 @@ export function createRemoteCrew(
       },
     )
       .then((crew) => {
-        if (entry.disposed || disposed) return crew.dispose();
-        crew.root.name = "remote-crew-" + state.id;
+        if (entry.disposed || disposed || token !== entry.generation)
+          return crew.dispose();
+        crew.root.name = "remote-crew-" + entry.state.id;
         crew.root.setEnabled(false);
         entry.crew = crew;
         entry.outfit = createVoxelCrewOutfit(scene, crew, {
@@ -229,6 +284,49 @@ export function createRemoteCrew(
         changed();
       })
       .catch((error) => console.warn("remote crew body unavailable", error));
+  };
+
+  /** Release the full-detail body (skinned mesh, outfit, held item, label, EVA effects). */
+  const releaseFull = (entry: Entry) => {
+    entry.generation++;
+    entry.held?.dispose();
+    entry.held = undefined;
+    entry.outfit?.dispose();
+    entry.outfit = undefined;
+    const material = entry.label?.material;
+    entry.label?.dispose();
+    entry.label = undefined;
+    material?.dispose(true, true);
+    entry.evaBody?.dispose();
+    entry.evaBody = undefined;
+    const hadBody = !!entry.crew;
+    entry.crew?.dispose();
+    entry.crew = undefined;
+    entry.appearanceKey = "";
+    entry.lookApplied = false;
+    if (hadBody) changed();
+  };
+
+  /** Marker tier: the body stays on screen as an instance of the shared low-poly body. */
+  const demote = (entry: Entry) => {
+    entry.tier = "marker";
+    releaseFull(entry);
+    entry.marker ??= markerOf(entry.state.id);
+  };
+
+  const create = (state: RemoteCrewState, tier: CrewLodTier) => {
+    const entry: Entry = {
+      state,
+      motion: createRemoteCrewMotion(),
+      tier,
+      generation: 0,
+      appearanceKey: "",
+      labelKey: "",
+      disposed: false,
+    };
+    entries.set(state.id, entry);
+    if (tier === "full") promote(entry);
+    else demote(entry);
     return entry;
   };
 
@@ -237,13 +335,9 @@ export function createRemoteCrew(
     if (!entry) return;
     entry.disposed = true;
     entries.delete(id);
-    entry.held?.dispose();
-    entry.outfit?.dispose();
-    const material = entry.label?.material;
-    entry.label?.dispose();
-    entry.evaBody?.dispose();
-    material?.dispose(true, true);
-    entry.crew?.dispose();
+    releaseFull(entry);
+    entry.marker?.dispose();
+    entry.marker = undefined;
     changed();
   };
 
@@ -283,19 +377,26 @@ export function createRemoteCrew(
     sync(states: readonly RemoteCrewState[], local?: { x: number; y: number }) {
       if (disposed) return;
       const t = now();
-      const chosen = local
-        ? [...states]
-            .sort(
-              (a, b) =>
-                Math.hypot(a.localX - local.x, a.localY - local.y) -
-                Math.hypot(b.localX - local.x, b.localY - local.y),
-            )
-            .slice(0, maxBodies)
-        : states.slice(0, maxBodies);
-      const wanted = new Set(chosen.map((s) => s.id));
-      for (const id of [...entries.keys()]) if (!wanted.has(id)) destroy(id);
-      for (const state of chosen) {
-        const entry = entries.get(state.id) ?? create(state);
+      // Every delivered body is drawn; the nearest get the full tier (presentation-lod.ts).
+      const tiers = assignCrewTiers(
+        states.map((s, i) => ({
+          id: s.id,
+          distanceM: local
+            ? Math.hypot(s.localX - local.x, s.localY - local.y)
+            : i,
+          previous: entries.get(s.id)?.tier,
+        })),
+        fullBodies,
+      );
+      for (const id of [...entries.keys()]) if (!tiers.has(id)) destroy(id);
+      for (const state of states) {
+        const tier = tiers.get(state.id)!;
+        let entry = entries.get(state.id);
+        if (!entry) entry = create(state, tier);
+        else if (entry.tier !== tier) {
+          if (tier === "full") promote(entry);
+          else demote(entry);
+        }
         entry.state = state;
         entry.motion.push(t, state.localX, state.localY, state.elevation);
         applyLook(entry);
@@ -312,10 +413,6 @@ export function createRemoteCrew(
       lastFrameAt = t;
       for (const entry of entries.values()) {
         const { crew, state } = entry;
-        if (!crew || !entry.motion.ready) continue;
-        crew.root.setEnabled(visible);
-        entry.label?.setEnabled(visible);
-        if (!visible) continue;
         const pose = {
           seated: state.seated,
           dead: state.dead,
@@ -324,6 +421,20 @@ export function createRemoteCrew(
           // Same seat facing rule as the local character (seats face the aisle).
           seatFacing: (Math.sign(state.localX) * Math.PI) / 2,
         };
+        const marker = entry.marker;
+        if (marker) {
+          // Marker tier: position and facing only; lying down when dead.
+          marker.setEnabled(visible && entry.motion.ready);
+          if (!visible || !entry.motion.ready) continue;
+          const d = entry.motion.sample(t, pose);
+          marker.position.set(d.x, d.z + (state.dead ? 0.26 : 0), -d.y);
+          marker.rotation.set(0, d.yaw, state.dead ? Math.PI / 2 : 0);
+          continue;
+        }
+        if (!crew || !entry.motion.ready) continue;
+        crew.root.setEnabled(visible);
+        entry.label?.setEnabled(visible);
+        if (!visible) continue;
         const d = entry.motion.sample(t, pose);
         crew.root.position.set(d.x, d.z, -d.y);
         crew.root.rotation.y = d.yaw;
@@ -412,8 +523,9 @@ export function createRemoteCrew(
       return [...entries.entries()].map(([id, e]) => ({
         id,
         name: e.state.name,
+        tier: e.tier,
         loaded: !!e.crew,
-        enabled: !!e.crew?.root.isEnabled(),
+        enabled: !!(e.crew?.root.isEnabled() || e.marker?.isEnabled()),
         clips: e.crew?.activeClips ?? [],
         position: e.motion.last
           ? [e.motion.last.x, e.motion.last.y, e.motion.last.z]
@@ -424,8 +536,18 @@ export function createRemoteCrew(
         dead: e.state.dead,
       }));
     },
+    /** Every represented body (full and marker tiers). */
     get count() {
       return entries.size;
+    },
+    /** Bodies per presentation tier (review diagnostics). */
+    tiers() {
+      let full = 0,
+        marker = 0;
+      for (const e of entries.values())
+        if (e.tier === "full") full++;
+        else marker++;
+      return { full, marker };
     },
     dispose() {
       if (disposed) return;
@@ -434,6 +556,8 @@ export function createRemoteCrew(
       for (const t of tracers) t.mesh.dispose();
       tracers.length = 0;
       tracerMaterial.dispose();
+      markerSource?.dispose();
+      markerMaterial?.dispose();
       group.dispose();
     },
   };
