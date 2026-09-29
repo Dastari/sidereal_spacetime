@@ -7,7 +7,7 @@ counts, material slots and typed port sockets.
 
 Run (headless only):
   blender -b --factory-startup --python-exit-code 1 -P scripts/art_library/ship_component_export.py -- \
-      --out assets/art-library/ship-components/r001 [--only id,id] [--sheets DIR] [--samples 32]
+      --out assets/art-library/ship-components/r004 [--only id,id] [--sheets DIR] [--samples 32]
 
 Conventions (see packages/content/src/ship-components.ts):
 - Every GLB is authored in its catalog frame (top / face / interior) with the

@@ -42,7 +42,7 @@ const only = opt("--only")?.split(",").filter(Boolean);
 mkdirSync(out, { recursive: true });
 
 const COMPONENT_MANIFEST =
-  "assets/art-library/ship-components/r001/manifest.json";
+  "assets/art-library/ship-components/r004/manifest.json";
 const compManifest = JSON.parse(
   readFileSync(join(root, COMPONENT_MANIFEST), "utf8"),
 ) as {

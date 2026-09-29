@@ -36,7 +36,6 @@ PUBLISHED_RUNTIME = (
     "materials",
     "planets",
     "voxels",
-    "ship-kit/r001",
     "ship-components/r004",
     "ship-kit/r002",
     "ship-objects/r001",

@@ -20,19 +20,12 @@ const MOUNTS: [string, string[]][] = [
   ["/assets/ship-kit/", ["assets/runtime/ship-kit"]],
   ["/assets/materials/", ["assets/runtime/materials"]],
   ["/assets/environment/", ["assets/runtime/environment"]],
-  // Component GLBs: the published runtime copy (any art revision) first, else the art-library export.
+  // Component GLBs: the published runtime copy first, else the art-library export.
   [
-    "/assets/ship-components/r001/",
+    "/assets/ship-components/r004/",
     [
-      "assets/runtime/ship-components/r001",
-      "assets/art-library/ship-components/r001/glb",
-    ],
-  ],
-  [
-    "/assets/ship-components/r002/",
-    [
-      "assets/runtime/ship-components/r002",
-      "assets/art-library/ship-components/r002/glb",
+      "assets/runtime/ship-components/r004",
+      "assets/art-library/ship-components/r004/glb",
     ],
   ],
   // game.html (the real game renderer) needs the rest of the published runtime tree.
