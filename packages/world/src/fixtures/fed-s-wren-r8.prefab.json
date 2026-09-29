@@ -11,79 +11,43 @@
     {
       "id": "d-engine",
       "deck": 0,
-      "a": [
-        3,
-        2
-      ],
-      "b": [
-        3,
-        4
-      ],
+      "a": [3, 2],
+      "b": [3, 4],
       "type": "door.sliding"
     },
     {
       "id": "d-bunks",
       "deck": 0,
-      "a": [
-        5,
-        4
-      ],
-      "b": [
-        7,
-        4
-      ],
+      "a": [5, 4],
+      "b": [7, 4],
       "type": "door.standard"
     },
     {
       "id": "d-hold",
       "deck": 0,
-      "a": [
-        5,
-        2
-      ],
-      "b": [
-        7,
-        2
-      ],
+      "a": [5, 2],
+      "b": [7, 2],
       "type": "door.airlock"
     },
     {
       "id": "d-bridge",
       "deck": 0,
-      "a": [
-        8,
-        2
-      ],
-      "b": [
-        8,
-        4
-      ],
+      "a": [8, 2],
+      "b": [8, 4],
       "type": "door.sliding"
     },
     {
       "id": "g-bridge-s",
       "deck": 0,
-      "a": [
-        8,
-        0
-      ],
-      "b": [
-        8,
-        2
-      ],
+      "a": [8, 0],
+      "b": [8, 2],
       "type": "wall.glazed"
     },
     {
       "id": "g-bridge-p",
       "deck": 0,
-      "a": [
-        8,
-        4
-      ],
-      "b": [
-        8,
-        7
-      ],
+      "a": [8, 4],
+      "b": [8, 7],
       "type": "wall.glazed"
     }
   ],
@@ -905,60 +869,35 @@
       "label": "ENGINE",
       "type": "engineering",
       "deck": 0,
-      "rect": [
-        0,
-        0,
-        3,
-        7
-      ]
+      "rect": [0, 0, 3, 7]
     },
     {
       "id": "hall",
       "label": "HALL",
       "type": "corridor",
       "deck": 0,
-      "rect": [
-        3,
-        2,
-        8,
-        4
-      ]
+      "rect": [3, 2, 8, 4]
     },
     {
       "id": "bunks",
       "label": "BUNKS",
       "type": "quarters",
       "deck": 0,
-      "rect": [
-        3,
-        4,
-        8,
-        7
-      ]
+      "rect": [3, 4, 8, 7]
     },
     {
       "id": "hold",
       "label": "HOLD",
       "type": "cargo",
       "deck": 0,
-      "rect": [
-        3,
-        0,
-        8,
-        2
-      ]
+      "rect": [3, 0, 8, 2]
     },
     {
       "id": "bridge",
       "label": "BRIDGE",
       "type": "bridge",
       "deck": 0,
-      "rect": [
-        8,
-        0,
-        12,
-        7
-      ]
+      "rect": [8, 0, 12, 7]
     }
   ],
   "mounts": [
@@ -966,218 +905,152 @@
       "id": "main-s",
       "component": "thrust-block.sm",
       "attach": "face",
-      "at": [
-        0,
-        2.5
-      ],
+      "at": [0, 2.5],
       "normal": "aft"
     },
     {
       "id": "main-c",
       "component": "thrust-block.sm",
       "attach": "face",
-      "at": [
-        0,
-        3.5
-      ],
+      "at": [0, 3.5],
       "normal": "aft"
     },
     {
       "id": "main-p",
       "component": "thrust-block.sm",
       "attach": "face",
-      "at": [
-        0,
-        4.5
-      ],
+      "at": [0, 4.5],
       "normal": "aft"
     },
     {
       "id": "rcs-bow-s",
       "component": "rcs.md",
       "attach": "face",
-      "at": [
-        9.5,
-        0
-      ],
+      "at": [9.5, 0],
       "normal": "starboard"
     },
     {
       "id": "rcs-bow-p",
       "component": "rcs.md",
       "attach": "face",
-      "at": [
-        9.5,
-        7
-      ],
+      "at": [9.5, 7],
       "normal": "port"
     },
     {
       "id": "rcs-stern-s",
       "component": "rcs.md",
       "attach": "face",
-      "at": [
-        0.5,
-        -2
-      ],
+      "at": [0.5, -2],
       "normal": "starboard"
     },
     {
       "id": "rcs-stern-p",
       "component": "rcs.md",
       "attach": "face",
-      "at": [
-        0.5,
-        9
-      ],
+      "at": [0.5, 9],
       "normal": "port"
     },
     {
       "id": "airlock",
       "component": "airlock.exterior.md",
       "attach": "edge",
-      "at": [
-        6,
-        0
-      ],
+      "at": [6, 0],
       "normal": "starboard"
     },
     {
       "id": "rad-a",
       "component": "radiator.md",
       "attach": "top",
-      "at": [
-        0.5,
-        1
-      ]
+      "at": [0.5, 1]
     },
     {
       "id": "rad-b",
       "component": "radiator.md",
       "attach": "top",
-      "at": [
-        0.5,
-        4
-      ]
+      "at": [0.5, 4]
     },
     {
       "id": "helm",
       "component": "console.navigation.sm",
       "attach": "interior",
-      "at": [
-        9,
-        3
-      ],
+      "at": [9, 3],
       "normal": "fore"
     },
     {
       "id": "core",
       "component": "computer-core.sm",
       "attach": "interior",
-      "at": [
-        8,
-        0.5
-      ],
+      "at": [8, 0.5],
       "normal": "port"
     },
     {
       "id": "reactor",
       "component": "reactor.md",
       "attach": "interior",
-      "at": [
-        0,
-        4
-      ],
+      "at": [0, 4],
       "normal": "starboard"
     },
     {
       "id": "life",
       "component": "life-support.sm",
       "attach": "interior",
-      "at": [
-        2,
-        0
-      ],
+      "at": [2, 0],
       "normal": "port"
     },
     {
       "id": "fuel",
       "component": "fuel-tank.md",
       "attach": "interior",
-      "at": [
-        0,
-        0
-      ],
+      "at": [0, 0],
       "normal": "port"
     },
     {
       "id": "bunk",
       "component": "crew-bunk.sm",
       "attach": "interior",
-      "at": [
-        3.5,
-        5.5
-      ],
+      "at": [3.5, 5.5],
       "normal": "starboard"
     },
     {
       "id": "coolant",
       "component": "coolant-pump.md",
       "attach": "interior",
-      "at": [
-        2,
-        1
-      ],
+      "at": [2, 1],
       "normal": "port"
     },
     {
       "id": "ammo",
       "component": "magazine.ballistic.sm",
       "attach": "interior",
-      "at": [
-        7,
-        6
-      ],
+      "at": [7, 6],
       "normal": "port"
     },
     {
       "id": "turret",
       "component": "autocannon.sm",
       "attach": "top",
-      "at": [
-        4.5,
-        2.5
-      ],
+      "at": [4.5, 2.5],
       "tile": "turret"
     },
     {
       "id": "guns-a",
       "component": "autocannon.sm",
       "attach": "top",
-      "at": [
-        7,
-        2.5
-      ],
+      "at": [7, 2.5],
       "tile": "guns"
     },
     {
       "id": "guns-b",
       "component": "autocannon.sm",
       "attach": "top",
-      "at": [
-        7,
-        2.5
-      ],
+      "at": [7, 2.5],
       "tile": "guns"
     },
     {
       "id": "sensor",
       "component": "sensor-dish.sm",
       "attach": "top",
-      "at": [
-        3,
-        3
-      ],
+      "at": [3, 3],
       "tile": "sensor"
     }
   ],
@@ -1206,28 +1079,19 @@
       {
         "id": "btn-lock-in",
         "kind": "button",
-        "at": [
-          7.5,
-          0
-        ],
+        "at": [7.5, 0],
         "normal": "port"
       },
       {
         "id": "btn-lock-out",
         "kind": "button",
-        "at": [
-          7.5,
-          0
-        ],
+        "at": [7.5, 0],
         "normal": "starboard"
       },
       {
         "id": "btn-hall",
         "kind": "button",
-        "at": [
-          7.5,
-          2
-        ],
+        "at": [7.5, 2],
         "normal": "port"
       }
     ],
@@ -1348,10 +1212,7 @@
     {
       "id": "suit-locker",
       "design": "shipyard.equipment.wall-locker",
-      "at": [
-        6.95,
-        1.2
-      ],
+      "at": [6.95, 1.2],
       "facing": "starboard"
     }
   ],
@@ -1360,30 +1221,21 @@
       "id": "turret",
       "kind": "turret",
       "size": "MD",
-      "at": [
-        4.5,
-        2.5
-      ],
+      "at": [4.5, 2.5],
       "facing": "fore"
     },
     {
       "id": "guns",
       "kind": "fixed",
       "size": "MD",
-      "at": [
-        7,
-        2.5
-      ],
+      "at": [7, 2.5],
       "facing": "fore"
     },
     {
       "id": "sensor",
       "kind": "fixed",
       "size": "SM",
-      "at": [
-        3,
-        3
-      ],
+      "at": [3, 3],
       "facing": "fore"
     }
   ]
