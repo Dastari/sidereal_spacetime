@@ -48,6 +48,7 @@ import { prefabToShipMetres } from "./prefab-construction";
 import {
   compileShipSystems,
   type ShipSystemsInput,
+  type ShipSystemsMode,
   type ShipSystemsReport,
 } from "./ship-systems";
 
@@ -196,6 +197,7 @@ export function prefabShipSystemsInput(
 }
 
 export interface PrefabShipSystemsCompile {
+  input: ShipSystemsInput;
   report: ShipSystemsReport;
   /** sha256 of everything the report depends on (dirty detection, not authority). */
   inputHash: string;
@@ -227,9 +229,60 @@ export function compilePrefabShipSystems(
   );
   const values = Object.values(performance);
   return {
+    input,
     report: compileShipSystems(input),
     inputHash,
     damaged: values.filter((v) => v < 1).length,
     destroyed: values.filter((v) => v <= 0).length,
   };
+}
+
+/**
+ * What a placed component can deliver by the compiled budget (S4-1 interface for flight and module
+ * performance; S4-1 itself gates nothing on it):
+ * - `power`: supplied fraction of its power demand in `mode` after priority brownout (1 when it
+ *   draws no power);
+ * - `fuel`: 1 when it burns fuel and shares a fuel network with a tank that is not destroyed (or it
+ *   burns none), else 0 (bus mode joins every fuel port);
+ * - `performance`: its damage-state output multiplier.
+ * Keys are placement ids (`mount:<mountId>`); flight fittings name the same mount as
+ * `mount-<mountId>` (reversers `mount-<mountId>#reverser`).
+ */
+export interface PlacementAvailability {
+  power: number;
+  fuel: number;
+  performance: number;
+}
+export function shipSystemsAvailability(
+  compiled: Pick<PrefabShipSystemsCompile, "input" | "report">,
+  mode: ShipSystemsMode = "combat",
+): Record<string, PlacementAvailability> {
+  const { input, report } = compiled;
+  const defs = new Map(input.catalog.components.map((c) => [c.id, c]));
+  const perf = (id: string) => input.performance?.[id] ?? 1;
+  const componentOf = new Map(input.components.map((p) => [p.id, p]));
+  const fed = new Set<string>();
+  for (const network of report.networks) {
+    if (network.channel !== "fuel") continue;
+    const live = network.members.some((id) => {
+      const d = defs.get(componentOf.get(id)?.componentId ?? "");
+      return !!d && d.fluids.fuelCapacityL > 0 && perf(id) > 0;
+    });
+    if (live) for (const id of network.members) fed.add(id);
+  }
+  const supply = report.power.modes[mode].supply;
+  const out: Record<string, PlacementAvailability> = {};
+  for (const p of [...input.components].sort((a, b) =>
+    a.id < b.id ? -1 : a.id > b.id ? 1 : 0,
+  )) {
+    const d = defs.get(p.componentId);
+    if (!d) continue;
+    const burns = d.fluids.fuelActiveLps > 0 || d.fluids.fuelIdleLps > 0;
+    out[p.id] = {
+      power: d.power.peakKw > 0 ? (supply[p.id] ?? 0) : 1,
+      fuel: burns ? (fed.has(p.id) ? 1 : 0) : 1,
+      performance: perf(p.id),
+    };
+  }
+  return out;
 }

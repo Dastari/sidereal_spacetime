@@ -30,6 +30,7 @@ import {
   compileShipSystemsFor,
   ownShipNetworks,
   ownShipSystemsReport,
+  shipSystemsAvailabilityOf,
   stepShipSystems,
   visibleShipSystemEffects,
 } from "./ship-systems";
@@ -322,4 +323,28 @@ test("views: owner reads summary and report; crew aboard reads summary; outsider
     { shipId: "wren-view", power: "powered" },
   ]);
   access.visible = [];
+});
+
+test("availability interface: current rows only; a queued recompile or a new revision reads as unknown", () => {
+  const { db, ctx, tick, addShip } = fixture();
+  const wren = prefabById("fed.s.wren")!;
+  addShip("wren-avail", wren);
+  expect(shipSystemsAvailabilityOf(ctx, "wren-avail")).toBeUndefined();
+  tick();
+  const drive = wren.mounts.find((m) => m.component.startsWith("thrust-"))!;
+  const reactor = wren.mounts.find((m) => m.component.startsWith("reactor."))!;
+  expect(
+    shipSystemsAvailabilityOf(ctx, "wren-avail")![`mount:${drive.id}`],
+  ).toEqual({ power: 1, fuel: 1, performance: 1 });
+  for (let i = 0; i < 400; i++)
+    damageComponent(ctx, "wren-avail", `mount:${reactor.id}`, 5000, true);
+  // Queued: callers keep their existing behaviour until the recompile lands.
+  expect(shipSystemsAvailabilityOf(ctx, "wren-avail")).toBeUndefined();
+  tick();
+  expect(
+    shipSystemsAvailabilityOf(ctx, "wren-avail")![`mount:${drive.id}`].power,
+  ).toBe(0);
+  const instance = db.constructionInstance.id.find("wren-avail");
+  db.constructionInstance.id.update({ ...instance, revision: 2n });
+  expect(shipSystemsAvailabilityOf(ctx, "wren-avail")).toBeUndefined();
 });

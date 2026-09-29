@@ -6,6 +6,7 @@ import {
   compilePrefabShipSystems,
   prefabShipSystemsInput,
   shipComponentCatalogFor,
+  shipSystemsAvailability,
 } from "./prefab-ship-systems";
 import { compileShipSystems, degradeShipComponent } from "./ship-systems";
 
@@ -109,4 +110,43 @@ test("degradeShipComponent scales output, keeps demand, and a destroyed part is 
   expect(
     JSON.stringify(compileShipSystems({ ...input, performance: {} })),
   ).toBe(JSON.stringify(compileShipSystems(input)));
+});
+
+test("availability: per-placement power, fuel and performance from the compile", () => {
+  const wren = prefabById("fed.s.wren")!;
+  const whole = shipSystemsAvailability(
+    compilePrefabShipSystems(wren, catalog.revision),
+  );
+  const drives = wren.mounts.filter(
+    (m) =>
+      m.component.startsWith("thrust-block") ||
+      m.component.startsWith("ion-drive"),
+  );
+  expect(drives.length).toBeGreaterThan(0);
+  for (const m of drives)
+    expect(whole[`mount:${m.id}`], m.id).toEqual({
+      power: 1,
+      fuel: 1,
+      performance: 1,
+    });
+  // No tank: burners are unfed. No reactor: powered parts are unsupplied.
+  const tank = wren.mounts.find((m) => m.component.startsWith("fuel-tank"))!;
+  const reactor = wren.mounts.find((m) => m.component.startsWith("reactor."))!;
+  const dry = shipSystemsAvailability(
+    compilePrefabShipSystems(wren, catalog.revision, [
+      { objectId: `mount:${tank.id}`, performance: 0 },
+      { objectId: `mount:${reactor.id}`, performance: 0 },
+    ]),
+  );
+  for (const m of drives) {
+    const a = dry[`mount:${m.id}`];
+    if (a.fuel !== 1 || whole[`mount:${m.id}`].fuel !== 1)
+      expect(a.fuel, m.id).toBe(0);
+    expect(a.power, m.id).toBe(0);
+  }
+  expect(
+    drives.some((m) => dry[`mount:${m.id}`].fuel === 0),
+    "some drive burns fuel",
+  ).toBe(true);
+  expect(dry[`mount:${reactor.id}`].performance).toBe(0);
 });

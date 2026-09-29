@@ -22,9 +22,14 @@ import { Range, t } from "spacetimedb/server";
 import type world from "./index";
 import {
   compilePrefabShipSystems,
+  shipSystemsAvailability,
+  type PlacementAvailability,
   type PrefabComponentCondition,
 } from "@sidereal/sim/prefab-ship-systems";
-import type { ShipSystemsReport } from "@sidereal/sim/ship-systems";
+import type {
+  ShipSystemsMode,
+  ShipSystemsReport,
+} from "@sidereal/sim/ship-systems";
 import { prefabBindingOf } from "./combat-damage";
 import { acceptedPassengerAccess } from "./construction-passenger-access";
 import {
@@ -153,6 +158,41 @@ export function compileShipSystemsFor(
   if (old) db.shipSystemsState.shipId.update(row);
   else db.shipSystemsState.insert(row);
   return "changed";
+}
+
+const availability = new Map<string, Record<string, PlacementAvailability>>();
+/**
+ * Server interface for flight and module performance (FLIGHT-IFCS, S4-2): per placement
+ * (`mount:<mountId>`) power supply fraction in `mode`, fuel connection and damage performance, from
+ * the ship's CURRENT compiled row. Undefined when the ship has no row or its row is stale (a
+ * recompile is queued): callers must then keep their pre-S4 behaviour, never invent availability.
+ * Cached per compile input hash; pure reads only.
+ */
+export function shipSystemsAvailabilityOf(
+  ctx: Pick<Context, "db">,
+  shipId: string,
+  mode: ShipSystemsMode = "combat",
+): Readonly<Record<string, PlacementAvailability>> | undefined {
+  const db = ctx.db;
+  const row = db.shipSystemsState.shipId.find(shipId);
+  if (!row || db.shipSystemsDirty.shipId.find(shipId)) return undefined;
+  const instance = db.constructionInstance.id.find(shipId);
+  if (!instance || instance.revision !== row.instanceRevision) return undefined;
+  const key = `${shipId}:${row.inputHash}:${mode}`;
+  const cached = availability.get(key);
+  if (cached) return cached;
+  const binding = prefabBindingOf(instance);
+  if (!binding) return undefined;
+  const compiled = compilePrefabShipSystems(
+    binding.doc,
+    binding.catalog,
+    conditionsOf(db, shipId),
+  );
+  if (compiled.inputHash !== row.inputHash) return undefined;
+  const result = shipSystemsAvailability(compiled, mode);
+  if (availability.size >= 128) availability.clear();
+  availability.set(key, result);
+  return result;
 }
 
 function clockOf(db: Db) {
