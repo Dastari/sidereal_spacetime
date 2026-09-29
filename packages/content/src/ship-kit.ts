@@ -18,6 +18,7 @@ import {
   cassetteHeights,
   volumeTiers,
   HEIGHT_CLASS_IDS,
+  MOUNT_SIZE_IDS,
   SHAPE_TILE_IDS,
   shapeTileLocalPolygon,
 } from "./construction-grammar";
@@ -54,7 +55,9 @@ export type ShipKitFamily =
   | "face-module"
   | "canopy"
   | "shell"
-  | "bow";
+  | "bow"
+  /** Roof mount tiles (Blender bundle `mount-tiles.glb`, scripts/art_library/mount_tiles_blender.py). */
+  | "mount-tile";
 
 export interface ShipKitPieceSpec {
   id: string;
@@ -496,6 +499,20 @@ export function enumerateShipKitPieces(): ShipKitPieceSpec[] {
               label: `Grid-true ${G.bowProfiles.labels[step]} (${part})`,
             });
         }
+  // Roof mount tiles: Blender-authored and bundled (one GLB, one node per piece); origin at the tile
+  // centre, +Y the boresight. The kit exporter keeps the bundle; mount_tiles_blender.py rebuilds it.
+  for (const kind of ["fixed", "turret"] as const)
+    for (const size of MOUNT_SIZE_IDS) {
+      if (!G.mountTiles.kinds[kind][size]) continue;
+      add({
+        id: `mount.${kind}.${size.toLowerCase()}`,
+        family: "mount-tile",
+        mount: "top",
+        builder: "mount_tile",
+        args: [kind, size],
+        label: `${kind === "fixed" ? "Fixed directional" : "Turret"} mount ${size}`,
+      });
+    }
   for (const spec of out.values())
     if (spec.family === "canopy" && !spec.id.startsWith("canopy.upright.")) {
       spec.gridTrue = false;

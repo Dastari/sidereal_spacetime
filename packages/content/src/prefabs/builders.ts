@@ -10,6 +10,8 @@ import {
   type EdgeTypeId,
   type FaceNormal,
   type HeightClassId,
+  type MountSizeId,
+  type MountTileKind,
   type Pt,
   type QuarterTurn,
   type RoomTypeId,
@@ -21,6 +23,7 @@ import {
   SHIP_PREFAB_SCHEMA,
   type PrefabEdge,
   type PrefabMount,
+  type PrefabMountTile,
   type PrefabRoom,
   type PrefabSkylight,
   type PrefabVolume,
@@ -214,19 +217,62 @@ export const skylight = (
   size: [number, number],
 ): PrefabSkylight => ({ id, at, size });
 
+/** A roof mount tile with its linked items (1, 2 or 4 identical weapons or sensors). */
+export interface ArmedTile {
+  tile: PrefabMountTile;
+  mounts: PrefabMount[];
+}
+/**
+ * Roof mount tile carrying `count` linked `component`s. Mount ids: the tile id for a single item,
+ * `<id>-a`, `<id>-b`, ... for dual and quad configurations.
+ */
+export function armed(
+  id: string,
+  kind: MountTileKind,
+  size: MountSizeId,
+  at: [number, number],
+  facing: FaceNormal,
+  component: string,
+  count: 1 | 2 | 4 = 1,
+): ArmedTile {
+  return {
+    tile: { id, kind, size, at, facing },
+    mounts: Array.from({ length: count }, (_, i) => ({
+      id: count === 1 ? id : `${id}-${"abcd"[i]}`,
+      component,
+      attach: "top" as const,
+      at,
+      tile: id,
+    })),
+  };
+}
+
 export function prefab(
   d: Omit<
     ShipPrefabDocumentV1,
-    "schema" | "revision" | "decks" | "edges" | "skylights"
+    "schema" | "revision" | "decks" | "edges" | "skylights" | "mountTiles"
   > &
-    Partial<Pick<ShipPrefabDocumentV1, "edges" | "skylights">>,
+    Partial<Pick<ShipPrefabDocumentV1, "edges" | "skylights">> & {
+      /**
+       * Roof mount tiles and their weapons/sensors. Present (even empty) = the 2026-09-29 mount
+       * rules apply; omit only to rebuild a legacy document.
+       */
+      armed?: ArmedTile[];
+    },
 ): ShipPrefabDocumentV1 {
+  const { armed: tiles, ...rest } = d;
   return {
     schema: SHIP_PREFAB_SCHEMA,
     revision: 1,
     decks: [{ index: 0, name: "Main deck" }],
     edges: [],
     skylights: [],
-    ...d,
+    ...rest,
+    ...(tiles
+      ? {
+          mounts: [...rest.mounts, ...tiles.flatMap((t) => t.mounts)],
+          mountTiles: tiles.map((t) => t.tile),
+        }
+      : {}),
   };
 }

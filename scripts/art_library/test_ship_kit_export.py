@@ -85,6 +85,9 @@ class ShipKitExportTests(unittest.TestCase):
                 if self.by_id[pid]["family"] == "bow":
                     self.assertEqual(e.get("node"), pid)
                     self.assertRegex(e["file"], r"^bow-[a-z]+\.glb$")
+                elif self.by_id[pid]["family"] == "mount-tile":
+                    self.assertEqual(e.get("node"), pid)
+                    self.assertEqual(e["file"], "mount-tiles.glb")
                 else:
                     self.assertNotIn("node", e)
                     self.assertEqual(e["file"], f"{pid}.glb")
@@ -93,7 +96,7 @@ class ShipKitExportTests(unittest.TestCase):
         for pid, e in self.manifest["pieces"].items():
             spec = self.by_id[pid]
             with self.subTest(pid):
-                if spec["family"] != "bow" and spec["builder"] not in BLENDER_BUILDERS:
+                if spec["family"] not in ("bow", "mount-tile") and spec["builder"] not in BLENDER_BUILDERS:
                     self.assertTrue(e["voxelAligned"], "grid snap is mandatory for non-Blender pieces")
                 self.assertEqual(len(e["bounds"]), 6)
                 self.assertTrue(all(e["bounds"][i] < e["bounds"][i + 3] for i in range(3)))

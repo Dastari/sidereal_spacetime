@@ -10,7 +10,16 @@ import {
   type QuarterTurn,
 } from "@sidereal/content/construction-grammar";
 import {
+  mountTileConfigs,
+  mountTileRequired,
+  mountTileSizes,
+  mountTileSpec,
+} from "@sidereal/content/ship-mount-tiles";
+import {
+  mountTileCapacityText,
+  prefabMountArcs,
   validateMount,
+  validateMountTile,
   type PrefabComponentCatalog,
   type PrefabIssue,
   type ShipPrefabDocumentV1,
@@ -19,6 +28,8 @@ import { Trash2 } from "lucide-react";
 import {
   removeSelection,
   replaceTile,
+  setTileItems,
+  updateMountTile,
   updateEdge,
   updateMount,
   updateRoom,
@@ -98,6 +109,8 @@ export function Inspector({
         r.id === selection.volume &&
         r.tile === selection.index
       );
+    if (selection.kind === "mounttile")
+      return r.kind === "tile" && r.id === selection.id;
     return (
       r.kind === selection.kind &&
       "id" in r &&
@@ -421,6 +434,164 @@ export function Inspector({
                 </button>
               </>
             ))}
+          {remove}
+          <IssuesFor issues={live} />
+        </section>
+      );
+    }
+    case "mounttile": {
+      const t = doc.mountTiles?.find((x) => x.id === selection.id);
+      if (!t) return null;
+      const items = doc.mounts.filter((m) => m.tile === t.id);
+      const ts = mountTileSpec(t.kind, t.size);
+      const live = [
+        ...validateMountTile(doc, t, catalog),
+        ...items.flatMap((m) => validateMount(doc, m, catalog)),
+      ];
+      const count = (items.length || 1) as 1 | 2 | 4;
+      const configs = mountTileConfigs(t.kind, t.size);
+      const candidates = catalog
+        .list()
+        .filter(
+          (c) => mountTileRequired(c.category) && c.attach.includes("top"),
+        );
+      const arcs = prefabMountArcs(doc, catalog).filter((a) => a.tile === t.id);
+      const current = items[0]?.component ?? "";
+      return (
+        <section className="layout-section pf-tile-inspector">
+          <h2>
+            {t.size} {t.kind === "turret" ? "turret" : "fixed"} mount {t.id}
+          </h2>
+          <p className="layout-id">
+            roof mount tile · {mountTileCapacityText(t.kind, t.size)}
+          </p>
+          <dl>
+            <dt>Tile mass</dt>
+            <dd>{ts ? `${ts.massKg} kg` : "–"}</dd>
+            {!!ts?.powerKw && (
+              <>
+                <dt>Traverse drive</dt>
+                <dd>
+                  {ts.powerKw} kW, {ts.heatKw} kW heat, {ts.traverseDegPerS}°/s
+                </dd>
+              </>
+            )}
+            {arcs[0] && (
+              <>
+                <dt>Arc</dt>
+                <dd>
+                  {arcs[0].arcDeg}° about {t.facing}
+                  {arcs[0].traverseDegPerS
+                    ? `, slews ${arcs[0].traverseDegPerS}°/s`
+                    : ""}
+                  {arcs[0].rangeM ? `, ${arcs[0].rangeM} m` : ""}
+                </dd>
+              </>
+            )}
+          </dl>
+          <SelectField<string>
+            label="Kind and size"
+            value={`${t.kind}.${t.size}`}
+            options={(["fixed", "turret"] as const).flatMap((k) =>
+              mountTileSizes(k).map((s) => ({
+                value: `${k}.${s}`,
+                label: `${k === "fixed" ? "Fixed" : "Turret"} ${s}`,
+              })),
+            )}
+            onChange={(v) => {
+              const [kind, size] = v.split(".") as [
+                "fixed" | "turret",
+                "SM" | "MD" | "LG" | "XL",
+              ];
+              commit(
+                "Change mount tile",
+                updateMountTile(doc, t.id, { kind, size }),
+              );
+            }}
+          />
+          <SelectField<FaceNormal>
+            label={t.kind === "turret" ? "Rest direction" : "Boresight"}
+            value={t.facing}
+            options={FACE_NORMALS}
+            onChange={(facing) =>
+              commit("Turn mount tile", updateMountTile(doc, t.id, { facing }))
+            }
+          />
+          <div className="pf-grid2">
+            <NumberField
+              label="X"
+              unit="m"
+              step={0.5}
+              value={t.at[0]}
+              onCommit={(x) =>
+                commit(
+                  "Move mount tile",
+                  updateMountTile(doc, t.id, { at: [x, t.at[1]] }),
+                )
+              }
+            />
+            <NumberField
+              label="Y"
+              unit="m"
+              step={0.5}
+              value={t.at[1]}
+              onCommit={(y) =>
+                commit(
+                  "Move mount tile",
+                  updateMountTile(doc, t.id, { at: [t.at[0], y] }),
+                )
+              }
+            />
+          </div>
+          <h3>Mounted</h3>
+          <SelectField<string>
+            label="Weapon or sensor"
+            value={current}
+            options={[
+              { value: "", label: "Nothing mounted" },
+              ...candidates.map((c) => ({
+                value: c.id,
+                label: `${c.label} (${c.category})`,
+              })),
+            ]}
+            onChange={(id) =>
+              apply(
+                id ? "Mount on tile" : "Clear mount tile",
+                setTileItems(doc, t.id, id || null, count, catalog),
+              )
+            }
+          />
+          <div
+            className="pf-segmented"
+            role="radiogroup"
+            aria-label="Linked items"
+          >
+            {([1, 2, 4] as const).map((n) => {
+              const cfg = configs.find((c) => c.count === n);
+              return (
+                <button
+                  key={n}
+                  role="radio"
+                  aria-checked={count === n}
+                  aria-pressed={count === n}
+                  disabled={!cfg}
+                  title={
+                    cfg ? `Up to ${cfg.maxItem}` : "Does not fit this tile"
+                  }
+                  onClick={() =>
+                    current &&
+                    apply(
+                      `Mount ${n} linked`,
+                      setTileItems(doc, t.id, current, n, catalog),
+                    )
+                  }
+                >
+                  {n === 1 ? "Single" : n === 2 ? "Dual" : "Quad"}
+                  {cfg ? ` ≤ ${cfg.maxItem}` : ""}
+                </button>
+              );
+            })}
+          </div>
           {remove}
           <IssuesFor issues={live} />
         </section>

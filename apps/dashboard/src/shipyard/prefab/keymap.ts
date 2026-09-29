@@ -2,6 +2,8 @@
 import type {
   EdgeTypeId,
   FaceNormal,
+  MountSizeId,
+  MountTileKind,
   QuarterTurn,
   RoomTypeId,
   ShapeTileId,
@@ -9,7 +11,7 @@ import type {
 import type { MountMode } from "./snapping";
 
 export type ToolId =
-  "select" | "hull" | "erase" | "room" | "edge" | "mount" | "skylight";
+  "select" | "hull" | "erase" | "room" | "edge" | "mount" | "tile" | "skylight";
 
 export const TOOLS: { id: ToolId; label: string; key: string; hint: string }[] =
   [
@@ -50,6 +52,12 @@ export const TOOLS: { id: ToolId; label: string; key: string; hint: string }[] =
       hint: "Pick a component, then click a green anchor. R turns interior modules.",
     },
     {
+      id: "tile",
+      label: "Mount tile",
+      key: "T",
+      hint: "Weapons and sensors mount on roof tiles. Pick fixed or turret and a size, click the roof; R turns the boresight. Select a tile to mount items on it.",
+    },
+    {
       id: "skylight",
       label: "Skylight",
       key: "K",
@@ -64,7 +72,11 @@ export const TOOL_BY_KEY: Record<string, ToolId> = Object.fromEntries(
 export const SHORTCUTS: { keys: string; action: string }[] = [
   ...TOOLS.map((t) => ({ keys: t.key, action: `${t.label} tool` })),
   { keys: "S", action: "Toggle port/starboard symmetry" },
-  { keys: "R", action: "Rotate tile, interior module facing or skylight" },
+  {
+    keys: "R",
+    action:
+      "Rotate tile, interior module facing, mount tile boresight or skylight",
+  },
   { keys: "F", action: "Mirror the hull tile" },
   {
     keys: "[ ]",
@@ -97,6 +109,9 @@ export interface ToolState {
   component: string | null;
   mountMode: MountMode;
   facing: FaceNormal;
+  /** Mount-tile tool: fixed directional plinth or turret ring, and its size. */
+  tileKind?: MountTileKind;
+  tileSize?: MountSizeId;
   skylight: [number, number];
   symmetry: boolean;
   centreline: number;

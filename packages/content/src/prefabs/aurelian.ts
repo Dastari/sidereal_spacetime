@@ -1,5 +1,6 @@
 /** Aurelian Synod (alien): lavender, violet and gold; rounded bows, crescent wings, crystal decorators. */
 import {
+  armed,
   arcTile,
   door,
   edge,
@@ -59,15 +60,13 @@ export const AU_LUMEN = prefab({
     edge("canopy-bow", [8, 0], [8, 6], "canopy"),
   ],
   mounts: [
-    face("rcs-bow-p", "rcs.sm", "port", [7.5, 6]),
-    face("rcs-bow-s", "rcs.sm", "starboard", [7.5, 0]),
-    face("rcs-stern-p", "rcs.sm", "port", [0.5, 8]),
-    face("rcs-stern-s", "rcs.sm", "starboard", [0.5, -2]),
+    face("rcs-bow-p", "rcs.md", "port", [7.5, 6]),
+    face("rcs-bow-s", "rcs.md", "starboard", [7.5, 0]),
+    face("rcs-stern-p", "rcs.md", "port", [0.5, 8]),
+    face("rcs-stern-s", "rcs.md", "starboard", [0.5, -2]),
     face("drive-s", "resonance-drive.aurelian.md", "aft", [0, 1.5]),
     face("drive-p", "resonance-drive.aurelian.md", "aft", [0, 4.5]),
     opening("airlock", "airlock.exterior.md", "starboard", [6, 0]),
-    top("plasma", "plasma-turret.md", [4, 2]),
-    top("lance", "laser-cannon.sm", [9, 2.5]),
     top("ward", "shield-emitter.sm", [1, 4.5]),
     top("rad-a", "radiator.md", [1, 1]),
     top("rad-b", "radiator.md", [6, 4]),
@@ -78,8 +77,15 @@ export const AU_LUMEN = prefab({
     module("bunk", "crew-bunk.sm", [4.5, 4.5], "starboard"),
     module("garden", "hydroponics.sm", [5, 0.5], "port"),
   ],
+  armed: [
+    armed("plasma", "fixed", "MD", [4, 2], "fore", "plasma-turret.md"),
+    armed("sensor", "turret", "MD", [8, 2], "fore", "sensor-dish.sm"),
+  ],
   markings: { name: "LUMEN", number: "AS-03", emblem: "crystal" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+AU_LUMEN.revision = 2;
 
 /** Medium: the prototype Crescent explorer, round bow and crescent wings. */
 export const AU_CRESCENT = prefab({
@@ -144,12 +150,7 @@ export const AU_CRESCENT = prefab({
     face("drive-s", "resonance-drive.aurelian.lg", "aft", [0, 2.5]),
     face("drive-p", "resonance-drive.aurelian.lg", "aft", [0, 5.5]),
     opening("lock", "airlock.exterior.md", "starboard", [13, 0]),
-    top("plasma", "plasma-turret.md", [5, 1]),
-    top("lance", "laser-cannon.md", [10, 5]),
     top("ward", "shield-emitter.md", [15, 3]),
-    top("dish", "sensor-dish.md", [2, 5]),
-    top("pd-p", "point-defense.sm", [6, 8.5]),
-    top("pd-s", "point-defense.sm", [6, -1.5]),
     top("rad-lg", "radiator.lg", [1, 1.5]),
     top("rad-md", "radiator.md", [7, 5]),
     top("rad-md-2", "radiator.md", [11, 1]),
@@ -162,8 +163,18 @@ export const AU_CRESCENT = prefab({
     module("garden-1", "hydroponics.sm", [4.5, 0.5], "port"),
     module("garden-2", "hydroponics.sm", [6.5, 0.5], "port"),
   ],
+  armed: [
+    armed("plasma", "turret", "LG", [5, 1], "fore", "plasma-turret.md"),
+    armed("lance", "fixed", "MD", [10, 5], "fore", "laser-cannon.md"),
+    armed("sensor", "fixed", "MD", [2, 5], "fore", "sensor-dish.md"),
+    armed("pd-p", "turret", "MD", [5.5, 8], "fore", "point-defense.sm"),
+    armed("pd-s", "turret", "MD", [5.5, -2], "fore", "point-defense.sm"),
+  ],
   markings: { name: "CRESCENT", number: "AS-07", emblem: "crystal" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+AU_CRESCENT.revision = 2;
 
 /** Large: cathedral cruiser with a round crown bow, crystal spire and four resonance drives. */
 export const AU_CATHEDRAL = prefab({
@@ -251,15 +262,7 @@ export const AU_CATHEDRAL = prefab({
     face("drive-3", "resonance-drive.aurelian.lg", "aft", [0, 7.5]),
     face("drive-4", "resonance-drive.aurelian.lg", "aft", [0, 10.5]),
     opening("lock", "airlock.exterior.md", "starboard", [25, 0]),
-    top("plasma-s", "plasma-turret.lg", [6, 1]),
-    top("plasma-p", "plasma-turret.lg", [6, 8]),
-    top("lance-s", "laser-cannon.md", [21, 1]),
-    top("lance-p", "laser-cannon.md", [21, 9]),
     top("ward", "shield-emitter.lg", [14, 4.5]),
-    top("dish", "sensor-dish.lg", [28.5, 4.5]),
-    top("beacon", "relay-beacon.md", [25, 2]),
-    top("pd-p", "point-defense.md", [12, 12]),
-    top("pd-s", "point-defense.md", [12, -2]),
     top("rad-1", "radiator.lg", [1, 1]),
     top("rad-2", "radiator.lg", [1, 8]),
     top("rad-3", "radiator.lg", [16, 9]),
@@ -280,5 +283,18 @@ export const AU_CATHEDRAL = prefab({
     module("garden-1", "hydroponics.sm", [5.5, 0.5], "port"),
     module("garden-2", "hydroponics.sm", [7.5, 0.5], "port"),
   ],
+  armed: [
+    armed("plasma-s", "turret", "XL", [6, 1], "fore", "plasma-turret.lg"),
+    armed("plasma-p", "turret", "XL", [6, 7], "fore", "plasma-turret.lg"),
+    armed("lance-s", "fixed", "MD", [21, 1], "fore", "laser-cannon.md"),
+    armed("lance-p", "fixed", "MD", [21, 9], "fore", "laser-cannon.md"),
+    armed("sensor", "fixed", "LG", [28.5, 4.5], "fore", "sensor-dish.lg"),
+    armed("beacon", "fixed", "MD", [25, 2], "fore", "relay-beacon.md"),
+    armed("pd-p", "turret", "MD", [12, 12], "fore", "point-defense.sm"),
+    armed("pd-s", "turret", "MD", [12, -2], "fore", "point-defense.sm"),
+  ],
   markings: { name: "CATHEDRAL", number: "AS-01", emblem: "crystal" },
 });
+
+// Revision 2 (2026-09-29): weapons and sensors on roof mount tiles, engines only aft/side.
+AU_CATHEDRAL.revision = 2;

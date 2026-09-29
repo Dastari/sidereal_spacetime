@@ -193,7 +193,7 @@ export function prefabShipObjects(
   const out: PrefabShipObject[] = [];
   for (const m of doc.mounts) {
     const spec = catalog.get(m.component);
-    const p = placeMount(m, spec, geoms);
+    const p = placeMount(m, spec, geoms, doc);
     const def = prefabComponentDefinition(m.component, catalog.revision);
     const box = mountBox(p, def);
     const isStation =

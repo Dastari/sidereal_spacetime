@@ -21,6 +21,12 @@ import type {
   ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
 import { SHIP_KIT_REVISION, kitId } from "@sidereal/content/ship-kit";
+import {
+  mountTileConfigs,
+  mountTileRequired,
+  mountTileSizes,
+  mountTileSpec,
+} from "@sidereal/content/ship-mount-tiles";
 import { FlipHorizontal2, Plus, RotateCcw, Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { addVolume, removeVolume, updateVolume } from "./commands";
@@ -524,6 +530,13 @@ function MountPanel({ doc, catalog, tools, setTools }: Props) {
               )}
             </div>
           )}
+          {doc.mountTiles && mountTileRequired(spec.category) && (
+            <p className="layout-note pf-tile-hint" role="note">
+              Weapons and sensors mount on roof mount tiles: place a fixed or
+              turret tile with the Mount tile tool (T), then select the tile and
+              mount {spec.label} on it.
+            </p>
+          )}
           <p className="layout-note">
             {tools.mountMode === "top" &&
               "Top hardpoints snap to the 0.5 m roof grid; the footprint must sit on one roof height."}
@@ -655,6 +668,139 @@ function SkylightPanel({ tools, setTools }: Pick<Props, "tools" | "setTools">) {
   );
 }
 
+const SIZE_NUMBER = { SM: 0, MD: 1, LG: 2, XL: 3 } as const;
+
+/** Mount-tile tool: fixed directional plinths and turret rings, with the size-penalty table. */
+function MountTilePanel({ doc, tools, setTools }: Props) {
+  const kind = tools.tileKind ?? "fixed";
+  const sizes = mountTileSizes(kind);
+  const maxMount = G.blueprintSizeClasses[doc.sizeClass].maxMount;
+  const size = sizes.includes(tools.tileSize ?? "SM")
+    ? (tools.tileSize ?? "SM")
+    : sizes[0];
+  const spec = mountTileSpec(kind, size)!;
+  return (
+    <>
+      <section className="layout-section">
+        <h2>Tile</h2>
+        {!doc.mountTiles && (
+          <p className="layout-note pf-tile-hint" role="note">
+            This prefab predates roof mount tiles. Adopt the mount rules in the
+            Ship panel to place tiles.
+          </p>
+        )}
+        <div className="pf-segmented" role="radiogroup" aria-label="Tile kind">
+          {(["fixed", "turret"] as const).map((k) => (
+            <button
+              key={k}
+              role="radio"
+              aria-checked={kind === k}
+              aria-pressed={kind === k}
+              onClick={() =>
+                setTools({
+                  tileKind: k,
+                  tileSize: mountTileSizes(k).includes(size)
+                    ? size
+                    : mountTileSizes(k)[0],
+                })
+              }
+            >
+              {k === "fixed" ? "Fixed mount" : "Turret mount"}
+            </button>
+          ))}
+        </div>
+        <div className="pf-segmented" role="radiogroup" aria-label="Tile size">
+          {sizes.map((s) => (
+            <button
+              key={s}
+              role="radio"
+              aria-checked={size === s}
+              aria-pressed={size === s}
+              disabled={mountSizeRank(s) > mountSizeRank(maxMount)}
+              title={
+                mountSizeRank(s) > mountSizeRank(maxMount)
+                  ? `A size-${doc.sizeClass} blueprint allows mounts up to ${maxMount}`
+                  : G.mountSizes[s].label
+              }
+              onClick={() => setTools({ tileKind: kind, tileSize: s })}
+            >
+              {s}
+            </button>
+          ))}
+        </div>
+        <div className="pf-segmented" role="radiogroup" aria-label="Boresight">
+          {(["fore", "port", "aft", "starboard"] as FaceNormal[]).map((f) => (
+            <button
+              key={f}
+              role="radio"
+              aria-checked={tools.facing === f}
+              aria-pressed={tools.facing === f}
+              onClick={() => setTools({ facing: f })}
+            >
+              {f}
+            </button>
+          ))}
+        </div>
+        <p className="pf-spec-line">
+          <b className={`pf-size s-${size}`}>{size}</b> size {SIZE_NUMBER[size]}{" "}
+          {kind} · {spec.massKg} kg
+          {spec.powerKw ? ` · ${spec.powerKw} kW traverse` : ""}
+          {spec.heatKw ? ` · ${spec.heatKw} kW heat` : ""}
+          {kind === "fixed"
+            ? ` · ${spec.arcDeg}° cone`
+            : ` · ${spec.traverseDegPerS}°/s ring`}
+        </p>
+        <p className="layout-note">
+          Carries:{" "}
+          {mountTileConfigs(kind, size)
+            .map(
+              (c) =>
+                `${c.count === 1 ? "one" : c.count === 2 ? "two linked" : "four linked"} ${c.maxItem} (size ${SIZE_NUMBER[c.maxItem]})`,
+            )
+            .join(", or ")}
+          .{" "}
+          {kind === "fixed"
+            ? "Fixed mounts carry full-size items that fire along the boresight."
+            : "Turret mounts rotate but carry one size smaller."}{" "}
+          R turns the boresight.
+        </p>
+      </section>
+      <section className="layout-section">
+        <h2>Size table</h2>
+        <table className="pf-tile-table">
+          <thead>
+            <tr>
+              <th>Tile</th>
+              <th>1</th>
+              <th>2 linked</th>
+              <th>4 linked</th>
+            </tr>
+          </thead>
+          <tbody>
+            {(["fixed", "turret"] as const).flatMap((k) =>
+              mountTileSizes(k).map((s) => {
+                const c = Object.fromEntries(
+                  mountTileConfigs(k, s).map((x) => [x.count, x.maxItem]),
+                );
+                return (
+                  <tr key={`${k}.${s}`} aria-current={k === kind && s === size}>
+                    <th>
+                      {k} {s}
+                    </th>
+                    <td>{c[1] ?? "–"}</td>
+                    <td>{c[2] ?? "–"}</td>
+                    <td>{c[4] ?? "–"}</td>
+                  </tr>
+                );
+              }),
+            )}
+          </tbody>
+        </table>
+      </section>
+    </>
+  );
+}
+
 export function ToolPanel(props: Props) {
   const { tools } = props;
   const info = TOOLS.find((t) => t.id === tools.tool)!;
@@ -676,6 +822,7 @@ export function ToolPanel(props: Props) {
       {tools.tool === "room" && <RoomPanel {...props} />}
       {tools.tool === "edge" && <EdgePanel {...props} />}
       {tools.tool === "mount" && <MountPanel {...props} />}
+      {tools.tool === "tile" && <MountTilePanel {...props} />}
       {tools.tool === "skylight" && <SkylightPanel {...props} />}
     </aside>
   );

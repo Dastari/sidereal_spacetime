@@ -228591,6 +228591,181 @@
    "triangles": 124,
    "voxelAligned": true
   },
+  "mount.fixed.lg": {
+   "bounds": [
+    -24.0,
+    -24.0,
+    0.0,
+    24.0,
+    24.0,
+    4.0
+   ],
+   "decals": [],
+   "file": "mount-tiles.glb",
+   "node": "mount.fixed.lg",
+   "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1036,
+   "voxelAligned": false
+  },
+  "mount.fixed.md": {
+   "bounds": [
+    -16.0,
+    -16.0,
+    0.0,
+    16.0,
+    16.0,
+    4.0
+   ],
+   "decals": [],
+   "file": "mount-tiles.glb",
+   "node": "mount.fixed.md",
+   "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 728,
+   "voxelAligned": false
+  },
+  "mount.fixed.sm": {
+   "bounds": [
+    -8.0,
+    -8.0,
+    0.0,
+    8.0,
+    8.0,
+    4.0
+   ],
+   "decals": [],
+   "file": "mount-tiles.glb",
+   "node": "mount.fixed.sm",
+   "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 596,
+   "voxelAligned": false
+  },
+  "mount.fixed.xl": {
+   "bounds": [
+    -32.0,
+    -32.0,
+    0.0,
+    32.0,
+    32.0,
+    4.0
+   ],
+   "decals": [],
+   "file": "mount-tiles.glb",
+   "node": "mount.fixed.xl",
+   "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1256,
+   "voxelAligned": false
+  },
+  "mount.turret.lg": {
+   "bounds": [
+    -24.0,
+    -24.0,
+    0.0,
+    24.0,
+    24.0,
+    6.0
+   ],
+   "decals": [],
+   "file": "mount-tiles.glb",
+   "node": "mount.turret.lg",
+   "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1364,
+   "voxelAligned": false
+  },
+  "mount.turret.md": {
+   "bounds": [
+    -16.0,
+    -16.0,
+    0.0,
+    16.0,
+    16.0,
+    6.0
+   ],
+   "decals": [],
+   "file": "mount-tiles.glb",
+   "node": "mount.turret.md",
+   "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1020,
+   "voxelAligned": false
+  },
+  "mount.turret.xl": {
+   "bounds": [
+    -32.0,
+    -32.0,
+    0.0,
+    32.0,
+    32.0,
+    6.0
+   ],
+   "decals": [],
+   "file": "mount-tiles.glb",
+   "node": "mount.turret.xl",
+   "sha256": "79148e96b5176bb5ddd6812f18667f1d7e63169b4f9b37c9e37ed8655d1a6b8e",
+   "slots": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a"
+   ],
+   "triangles": 1452,
+   "voxelAligned": false
+  },
   "post.hull.cabin": {
    "bounds": [
     -3.9265,

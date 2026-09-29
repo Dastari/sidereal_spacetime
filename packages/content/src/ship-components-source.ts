@@ -34,9 +34,16 @@ export const SHIP_COMPONENT_CATALOG_ID = "ship-components-v1";
  * - 2 (2026-09-28, WREN-POLISH): small (SM) main drives trade power, heat and propellant for thrust
  *   density, so S-class hulls reach 4-5 m/s^2 with proportionate engines. MD and larger drives are
  *   unchanged, so M/L hulls stay slower and heavier.
+ * - 3 (2026-09-29, SHIP-MOUNTS; owner: "all guns/turrets etc.. should mount on the roof", "Ships
+ *   engines/reactors need to power the ships so they feel snappy"): weapons and sensors take roof
+ *   (top) sockets only and mount through roof mount tiles; face-only weapons (side cannon, torpedo
+ *   launcher) are retired to `future` until they have roof art. Main drives gain thrust reversers
+ *   (SM 50 %, MD 25 %, LG 12 %, XL 8 % of forward thrust, same engine, no extra power), small
+ *   drives and RCS clusters gain authority with matching power, heat and propellant, so S hulls
+ *   accelerate, turn and stop briskly while M/L hulls stay heavy.
  */
-export const SHIP_COMPONENT_CATALOG_REVISION = 2;
-export const SHIP_COMPONENT_CATALOG_REVISIONS = [1, 2] as const;
+export const SHIP_COMPONENT_CATALOG_REVISION = 3;
+export const SHIP_COMPONENT_CATALOG_REVISIONS = [1, 2, 3] as const;
 export type ShipComponentCatalogRevision =
   (typeof SHIP_COMPONENT_CATALOG_REVISIONS)[number];
 /** Art-library revision directory that holds the exported component GLBs. */
@@ -463,16 +470,22 @@ const propulsion = (
   gimbalDeg: number,
   throttleResponseS: number,
   plume: { lengthM: number; radiusM: number } | null,
+  reverseThrustKn?: number,
 ): Partial<ShipComponentDefinition> => ({
   propulsion: {
     role,
     thrustKn,
+    ...(reverseThrustKn ? { reverseThrustKn } : {}),
     gimbalDeg,
     throttleResponseS,
     specificImpulseS: isp(thrustKn, fuelLps),
     plume,
   },
 });
+/** Revision 3 thrust reversers by size (fraction of forward thrust); none before revision 3. */
+const REVERSER = [0.5, 0.25, 0.12, 0.08];
+const reverser = (rev: number, i: number, thrustKn: number) =>
+  rev >= 3 ? r2(thrustKn * REVERSER[i]) : undefined;
 const plumeClear = (w: number, len: number) => ({
   kind: "plume" as const,
   lengthM: r2(len),
@@ -481,18 +494,32 @@ const plumeClear = (w: number, len: number) => ({
 
 // ---------------------------------------------------------------- propulsion
 const ION_LEN = [2.75, 4.625, 5.75, 8.25];
-/** Revision 2 small-drive tables: the SM entry changes, MD/LG/XL are identical to revision 1. */
-const smallDrive = <T>(rev: number, r1: readonly T[], r2: readonly T[]) =>
-  rev >= 2 ? r2 : r1;
+/** Revision 2 small-drive tables: the SM entry changes, MD/LG/XL are identical to revision 1.
+ * Revision 3 may override the table again (`r3`); omitted means unchanged from revision 2. */
+const smallDrive = <T>(
+  rev: number,
+  r1: readonly T[],
+  r2: readonly T[],
+  r3?: readonly T[],
+) => (rev >= 3 && r3 ? r3 : rev >= 2 ? r2 : r1);
+/** Component definition revision: SM drives changed in catalog 2 and 3; all drives gain reversers in 3. */
+const driveRevision = (rev: number) => (i: number) =>
+  rev >= 3 ? 3 : rev >= 2 && i === 0 ? 2 : 1;
 const ionSpec = (variant: "standard" | "salvaged", rev: number): KindSpec => {
   const k = variant === "salvaged";
   const m = (a: readonly number[], f: number, d = 0) =>
     a.map((v) => (d ? Math.round(v * f * d) / d : Math.round(v * f)));
-  const ION_THRUST = smallDrive(rev, [11, 24, 50, 95], [20, 24, 50, 95]);
+  const ION_THRUST = smallDrive(
+    rev,
+    [11, 24, 50, 95],
+    [20, 24, 50, 95],
+    [22, 24, 50, 95],
+  );
   const ION_FUEL = smallDrive(
     rev,
     [0.012, 0.026, 0.054, 0.1],
     [0.02, 0.026, 0.054, 0.1],
+    [0.022, 0.026, 0.054, 0.1],
   );
   const thrust = k ? ION_THRUST.map((t) => r2(t * 0.85)) : ION_THRUST;
   return {
@@ -509,7 +536,12 @@ const ionSpec = (variant: "standard" | "salvaged", rev: number): KindSpec => {
     clearance: (i, s) =>
       plumeClear(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 3.3),
     massKg: m(
-      smallDrive(rev, [380, 900, 2000, 4200], [420, 900, 2000, 4200]),
+      smallDrive(
+        rev,
+        [380, 900, 2000, 4200],
+        [420, 900, 2000, 4200],
+        [430, 900, 2000, 4200],
+      ),
       k ? 1.12 : 1,
     ),
     hp: m(
@@ -522,14 +554,24 @@ const ionSpec = (variant: "standard" | "salvaged", rev: number): KindSpec => {
     power: {
       idle: [2, 4, 8, 15],
       active: m(
-        smallDrive(rev, [60, 130, 260, 480], [100, 130, 260, 480]),
+        smallDrive(
+          rev,
+          [60, 130, 260, 480],
+          [100, 130, 260, 480],
+          [110, 130, 260, 480],
+        ),
         k ? 1.2 : 1,
       ),
     },
     heat: {
       idle: [1, 2, 3, 5],
       active: m(
-        smallDrive(rev, [21, 46, 91, 168], [35, 46, 91, 168]),
+        smallDrive(
+          rev,
+          [21, 46, 91, 168],
+          [35, 46, 91, 168],
+          [38, 46, 91, 168],
+        ),
         k ? 1.5 : 1,
       ),
     },
@@ -546,14 +588,20 @@ const ionSpec = (variant: "standard" | "salvaged", rev: number): KindSpec => {
           lengthM: r2(SHIP_SIZE_CELLS[s] * 2.2),
           radiusM: r2(SHIP_SIZE_CELLS[s] * 0.31),
         },
+        reverser(rev, i, thrust[i]),
       ),
     cost: m(
-      smallDrive(rev, [4200, 9800, 21000, 42000], [5200, 9800, 21000, 42000]),
+      smallDrive(
+        rev,
+        [4200, 9800, 21000, 42000],
+        [5200, 9800, 21000, 42000],
+        [5500, 9800, 21000, 42000],
+      ),
       k ? 0.4 : 1,
     ),
     buildTimeS: m([120, 240, 480, 900], k ? 0.6 : 1),
     techTier: [1, 2, 2, 3],
-    revision: (i) => (rev >= 2 && i === 0 ? 2 : 1),
+    revision: driveRevision(rev),
     kitKey: (_i, s) => (k ? `ion.${s}.scrap` : `ion.${s}`),
     notes: k
       ? "Same sockets and envelope as the ion drive. Cheaper, weaker, hotter and more fragile; burns on destruction."
@@ -568,8 +616,14 @@ const blockSpec = (rev: number): KindSpec => {
     rev,
     [0.08, 0.17, 0.35, 0.65],
     [0.12, 0.17, 0.35, 0.65],
+    [0.14, 0.17, 0.35, 0.65],
   );
-  const BLOCK_THRUST = smallDrive(rev, [16, 34, 70, 130], [24, 34, 70, 130]);
+  const BLOCK_THRUST = smallDrive(
+    rev,
+    [16, 34, 70, 130],
+    [24, 34, 70, 130],
+    [28, 34, 70, 130],
+  );
   return {
     kind: "thrust-block",
     name: "Thrust block",
@@ -580,35 +634,64 @@ const blockSpec = (rev: number): KindSpec => {
     envelope: (i, s) =>
       outward(SHIP_SIZE_CELLS[s] + 0.25, BLOCK_LEN[i], BLOCK_H[i] + 0.25),
     clearance: (i, s) => plumeClear(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 3),
-    massKg: smallDrive(rev, [320, 800, 1800, 3800], [350, 800, 1800, 3800]),
+    massKg: smallDrive(
+      rev,
+      [320, 800, 1800, 3800],
+      [350, 800, 1800, 3800],
+      [370, 800, 1800, 3800],
+    ),
     hp: [160, 340, 600, 950],
     armor: [3, 4, 6, 8],
     destroyedEffect: "fire",
     crew: { automation: "computer", station: "pilot" },
     power: {
       idle: [1, 1.5, 3, 5],
-      active: smallDrive(rev, [10, 20, 38, 70], [14, 20, 38, 70]),
+      active: smallDrive(
+        rev,
+        [10, 20, 38, 70],
+        [14, 20, 38, 70],
+        [16, 20, 38, 70],
+      ),
     },
     heat: {
       idle: [1, 2, 3, 5],
-      active: smallDrive(rev, [20, 42, 85, 160], [30, 42, 85, 160]),
-      peak: smallDrive(rev, [25, 53, 106, 200], [38, 53, 106, 200]),
+      active: smallDrive(
+        rev,
+        [20, 42, 85, 160],
+        [30, 42, 85, 160],
+        [32, 42, 85, 160],
+      ),
+      peak: smallDrive(
+        rev,
+        [25, 53, 106, 200],
+        [38, 53, 106, 200],
+        [40, 53, 106, 200],
+      ),
     },
     fuel: { active: BLOCK_FUEL },
     data: { demandKbps: [20, 20, 30, 40], slotsUsed: [1, 1, 1, 1] },
     stats: (i, s) =>
-      propulsion("main", BLOCK_THRUST[i], BLOCK_FUEL[i], 8, 0.3, {
-        lengthM: r2(SHIP_SIZE_CELLS[s] * 1.8),
-        radiusM: r2(BLOCK_H[i] * 0.3),
-      }),
+      propulsion(
+        "main",
+        BLOCK_THRUST[i],
+        BLOCK_FUEL[i],
+        8,
+        0.3,
+        {
+          lengthM: r2(SHIP_SIZE_CELLS[s] * 1.8),
+          radiusM: r2(BLOCK_H[i] * 0.3),
+        },
+        reverser(rev, i, BLOCK_THRUST[i]),
+      ),
     cost: smallDrive(
       rev,
       [3200, 7600, 16500, 33000],
       [3900, 7600, 16500, 33000],
+      [4300, 7600, 16500, 33000],
     ),
     buildTimeS: [100, 200, 420, 780],
     techTier: [1, 1, 2, 2],
-    revision: (i) => (rev >= 2 && i === 0 ? 2 : 1),
+    revision: driveRevision(rev),
     kitKey: (_i, s) => `block.${s}`,
     notes:
       "Chemical/fusion torch block: 45% more thrust than the ion drive of the same size, ~7x the propellant, little power. XL has twin nozzles and is rear-only.",
@@ -616,7 +699,7 @@ const blockSpec = (rev: number): KindSpec => {
 };
 
 const resonanceSpec = (rev: number): KindSpec => {
-  const RES_THRUST = smallDrive(rev, [13, 28, 58], [22, 28, 58]);
+  const RES_THRUST = smallDrive(rev, [13, 28, 58], [22, 28, 58], [26, 28, 58]);
   return {
     kind: "resonance-drive",
     name: "Aurelian resonance drive",
@@ -633,7 +716,12 @@ const resonanceSpec = (rev: number): KindSpec => {
       ),
     clearance: (_i, s) =>
       plumeClear(SHIP_SIZE_CELLS[s], SHIP_SIZE_CELLS[s] * 2.6),
-    massKg: smallDrive(rev, [300, 720, 1600], [340, 720, 1600]),
+    massKg: smallDrive(
+      rev,
+      [300, 720, 1600],
+      [340, 720, 1600],
+      [360, 720, 1600],
+    ),
     hp: [120, 260, 460],
     armor: [2, 3, 4],
     destroyedEffect: "explosion",
@@ -641,29 +729,61 @@ const resonanceSpec = (rev: number): KindSpec => {
     crew: { automation: "computer", station: "pilot" },
     power: {
       idle: [3, 6, 12],
-      active: smallDrive(rev, [70, 150, 300], [115, 150, 300]),
+      active: smallDrive(rev, [70, 150, 300], [115, 150, 300], [136, 150, 300]),
     },
     heat: {
       idle: [1, 1, 2],
-      active: smallDrive(rev, [13, 28, 55], [21, 28, 55]),
+      active: smallDrive(rev, [13, 28, 55], [21, 28, 55], [25, 28, 55]),
     },
     data: { demandKbps: [40, 40, 60], slotsUsed: [1, 1, 1] },
     stats: (i, s) =>
-      propulsion("main", RES_THRUST[i], 0, 12, 0.6, {
-        lengthM: r2(SHIP_SIZE_CELLS[s] * 1.8),
-        radiusM: r2(SHIP_SIZE_CELLS[s] * 0.28),
-      }),
-    cost: smallDrive(rev, [10500, 24500, 52000], [12500, 24500, 52000]),
+      propulsion(
+        "main",
+        RES_THRUST[i],
+        0,
+        12,
+        0.6,
+        {
+          lengthM: r2(SHIP_SIZE_CELLS[s] * 1.8),
+          radiusM: r2(SHIP_SIZE_CELLS[s] * 0.28),
+        },
+        reverser(rev, i, RES_THRUST[i]),
+      ),
+    cost: smallDrive(
+      rev,
+      [10500, 24500, 52000],
+      [12500, 24500, 52000],
+      [13500, 24500, 52000],
+    ),
     buildTimeS: [300, 600, 1200],
     techTier: [4, 4, 4],
-    revision: (i) => (rev >= 2 && i === 0 ? 2 : 1),
+    revision: driveRevision(rev),
     kitKey: (_i, s) => `x.resonance.${s}`,
     notes:
       "Alien variant: propellant-free (power only), lighter and cooler, explodes when destroyed. Faction-locked tech tier 4.",
   };
 };
 
-const rcsSpec: KindSpec = {
+/** Revision 3: small-craft RCS clusters carry real braking and yaw authority. */
+const RCS = (rev: number) =>
+  rev >= 3
+    ? {
+        thrust: [8, 22],
+        mass: [60, 160],
+        power: [10, 24],
+        heat: [3, 5],
+        fuel: [0.04, 0.1],
+        cost: [900, 2200],
+      }
+    : {
+        thrust: [3, 9],
+        mass: [45, 120],
+        power: [4, 10],
+        heat: [2, 4],
+        fuel: [0.015, 0.04],
+        cost: [600, 1500],
+      };
+const rcsSpec = (rev: number): KindSpec => ({
   kind: "rcs",
   name: "RCS thruster",
   family: "propulsion",
@@ -672,25 +792,26 @@ const rcsSpec: KindSpec = {
   cells: () => [1, 1],
   envelope: (i) => outward([0.75, 1.25][i], [0.5, 1.0][i], [0.75, 1.25][i]),
   clearance: (i) => plumeClear(1, [1.5, 2.5][i]),
-  massKg: [45, 120],
+  massKg: RCS(rev).mass,
   hp: [60, 120],
   armor: [1, 2],
   crew: { automation: "computer", station: "pilot" },
-  power: { idle: [0.2, 0.4], active: [4, 10] },
-  heat: { idle: [0, 0], active: [2, 4] },
-  fuel: { active: [0.015, 0.04] },
+  power: { idle: [0.2, 0.4], active: RCS(rev).power },
+  heat: { idle: [0, 0], active: RCS(rev).heat },
+  fuel: { active: RCS(rev).fuel },
   data: { demandKbps: [10, 10], slotsUsed: [0, 0] },
   stats: (i) =>
-    propulsion("maneuver", [3, 9][i], [0.015, 0.04][i], 0, 0.1, {
+    propulsion("maneuver", RCS(rev).thrust[i], RCS(rev).fuel[i], 0, 0.1, {
       lengthM: [0.8, 1.4][i],
       radiusM: [0.12, 0.22][i],
     }),
-  cost: [600, 1500],
+  revision: () => (rev >= 3 ? 3 : 1),
+  cost: RCS(rev).cost,
   buildTimeS: [30, 60],
   kitKey: (_i, s) => `rcs.${s}`,
   notes:
     "Monopropellant attitude thruster. Both sizes fit a single 1 m cell; RCS clusters share the ship's IFCS computer slot.",
-};
+});
 
 const vtolSpec: KindSpec = {
   kind: "vtol-thruster",
@@ -2411,7 +2532,7 @@ const specsFor = (rev: number): readonly KindSpec[] => [
   blockSpec(rev),
   ionSpec("salvaged", rev),
   resonanceSpec(rev),
-  rcsSpec,
+  rcsSpec(rev),
   vtolSpec,
   warpSpec,
   reactorSpec,
@@ -2463,6 +2584,24 @@ function applyGrammar(c: ShipComponentDefinition): ShipComponentDefinition {
     return { ...c, mount: { ...c.mount, sockets: ["rear"], rearOnly: true } };
   return c;
 }
+/**
+ * Revision 3 mount rules (owner, 2026-09-29): weapons and sensors mount on the roof only, through
+ * roof mount tiles (fixed directional or turret; see `ship-mount-tiles.ts`). Face-only weapons have
+ * no roof art yet, so they leave the buildable catalog (`future`) until they get it.
+ */
+const FACE_ONLY_WEAPONS = new Set(["side-cannon", "torpedo-launcher"]);
+function applyRevisionRules(rev: number) {
+  return (c: ShipComponentDefinition): ShipComponentDefinition => {
+    if (rev < 3 || (c.family !== "weapon" && c.family !== "sensor")) return c;
+    if (c.family === "weapon" && FACE_ONLY_WEAPONS.has(c.kind))
+      return { ...c, status: "future" };
+    return {
+      ...c,
+      revision: Math.max(c.revision, 3),
+      mount: { ...c.mount, sockets: ["top"] },
+    };
+  };
+}
 /** Plain JSON data (drops undefined fields) so the snapshot compares exactly. */
 function clean(c: ShipComponentDefinition): ShipComponentDefinition {
   return JSON.parse(JSON.stringify(c));
@@ -2478,6 +2617,7 @@ export function buildShipComponentCatalog(
   const components = specsFor(revision)
     .flatMap(build)
     .map(applyGrammar)
+    .map(applyRevisionRules(revision))
     .map(clean);
   return {
     schema: SHIP_COMPONENT_SCHEMA,

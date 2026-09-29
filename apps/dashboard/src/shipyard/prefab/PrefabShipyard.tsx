@@ -30,6 +30,7 @@ import {
   MousePointer2,
   PaintBucket,
   Plug,
+  Crosshair,
   Redo2,
   RotateCcw,
   Save,
@@ -102,6 +103,7 @@ const TOOL_ICONS: Record<ToolId, ReactNode> = {
   room: <SquareDashed size={17} />,
   edge: <DoorOpen size={17} />,
   mount: <Plug size={17} />,
+  tile: <Crosshair size={17} />,
   skylight: <SunDim size={17} />,
 };
 
@@ -299,7 +301,7 @@ function Editor({
           return setTools({
             rot: ((tools.rot + (e.shiftKey ? 3 : 1)) % 4) as QuarterTurn,
           });
-        if (tools.tool === "mount")
+        if (tools.tool === "mount" || tools.tool === "tile")
           return setTools({ facing: NEXT_FACING[tools.facing] });
         if (tools.tool === "skylight")
           return setTools({ skylight: [tools.skylight[1], tools.skylight[0]] });

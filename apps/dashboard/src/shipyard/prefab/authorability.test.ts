@@ -39,6 +39,7 @@ import {
   renameElement,
   updateMarkings,
   updateMeta,
+  setTileItems,
   updateMount,
   updateVolume,
   type CommandResult,
@@ -50,6 +51,7 @@ import { mountExtent, mountModes } from "./snapping";
 import {
   edgePlace,
   mountPlace,
+  mountTilePlace,
   paintStroke,
   roomDrag,
   roomToolLabel,
@@ -263,7 +265,9 @@ function rebuild(t: Doc): Doc {
   }
 
   // Mount tool: pick the component, hardpoint mode and facing, click the anchor.
+  // (Weapons and sensors on roof mount tiles are placed through the tile below.)
   for (const m of t.mounts) {
+    if (m.tile !== undefined) continue;
     const spec = catalog.get(m.component)!;
     expect(spec, `${t.id} ${m.id} component in the palette`).toBeTruthy();
     expect(
@@ -291,6 +295,41 @@ function rebuild(t: Doc): Doc {
         updateMount(doc, m.id, { z: m.z }),
       ).doc;
     expect(doc.mounts[doc.mounts.length - 1]).toEqual(m);
+  }
+
+  // Mount-tile tool: kind, size and boresight (R), click the tile centre; then the tile Inspector
+  // mounts its linked weapons or sensors.
+  for (const tile of t.mountTiles ?? []) {
+    const n = G.mountSizes[tile.size].cells;
+    const tl = tools(doc, {
+      tool: "tile",
+      tileKind: tile.kind,
+      tileSize: tile.size,
+      facing: tile.facing,
+    });
+    const placed = act(
+      doc,
+      `tile ${tile.id}`,
+      mountTilePlace(doc, catalog, tl, [
+        tile.at[0] + n / 2,
+        tile.at[1] + n / 2,
+      ]),
+    );
+    doc = rename(placed.doc, placed.select, tile.id, `tile ${tile.id}`);
+    const items = t.mounts.filter((m) => m.tile === tile.id);
+    if (items.length)
+      doc = act(
+        doc,
+        `tile ${tile.id} items`,
+        setTileItems(
+          doc,
+          tile.id,
+          items[0].component,
+          items.length as 1 | 2 | 4,
+          catalog,
+        ),
+      ).doc;
+    expect(doc.mountTiles![doc.mountTiles!.length - 1]).toEqual(tile);
   }
 
   // Skylight tool: size (R swaps), click the centre.

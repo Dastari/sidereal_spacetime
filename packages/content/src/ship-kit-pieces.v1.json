@@ -161913,6 +161913,83 @@
    ],
    "gridTrue": true,
    "label": "Grid-true Nose cap (edge17)"
+  },
+  {
+   "id": "mount.fixed.sm",
+   "family": "mount-tile",
+   "mount": "top",
+   "builder": "mount_tile",
+   "args": [
+    "fixed",
+    "SM"
+   ],
+   "label": "Fixed directional mount SM"
+  },
+  {
+   "id": "mount.fixed.md",
+   "family": "mount-tile",
+   "mount": "top",
+   "builder": "mount_tile",
+   "args": [
+    "fixed",
+    "MD"
+   ],
+   "label": "Fixed directional mount MD"
+  },
+  {
+   "id": "mount.fixed.lg",
+   "family": "mount-tile",
+   "mount": "top",
+   "builder": "mount_tile",
+   "args": [
+    "fixed",
+    "LG"
+   ],
+   "label": "Fixed directional mount LG"
+  },
+  {
+   "id": "mount.fixed.xl",
+   "family": "mount-tile",
+   "mount": "top",
+   "builder": "mount_tile",
+   "args": [
+    "fixed",
+    "XL"
+   ],
+   "label": "Fixed directional mount XL"
+  },
+  {
+   "id": "mount.turret.md",
+   "family": "mount-tile",
+   "mount": "top",
+   "builder": "mount_tile",
+   "args": [
+    "turret",
+    "MD"
+   ],
+   "label": "Turret mount MD"
+  },
+  {
+   "id": "mount.turret.lg",
+   "family": "mount-tile",
+   "mount": "top",
+   "builder": "mount_tile",
+   "args": [
+    "turret",
+    "LG"
+   ],
+   "label": "Turret mount LG"
+  },
+  {
+   "id": "mount.turret.xl",
+   "family": "mount-tile",
+   "mount": "top",
+   "builder": "mount_tile",
+   "args": [
+    "turret",
+    "XL"
+   ],
+   "label": "Turret mount XL"
   }
  ]
 }

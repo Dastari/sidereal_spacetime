@@ -293,6 +293,37 @@
       "label": "Extra large 4x4, rear only, may overhang the face"
     }
   },
+  "mountTiles": {
+    "note": "Roof mount tiles (owner 2026-09-29): weapons and sensors mount only on roof tiles. Fixed tiles carry full-size items on a fixed boresight arc; turret tiles rotate but carry one size smaller. capacity[kind][size][count] = largest item size for that many linked identical items. Proposed balance.",
+    "families": ["weapon", "sensor"],
+    "heightTexels": { "fixed": 4, "turret": 6 },
+    "kinds": {
+      "fixed": {
+        "SM": { "massKg": 60, "powerKw": 0, "heatKw": 0, "arcDeg": 30, "traverseDegPerS": 0 },
+        "MD": { "massKg": 140, "powerKw": 0, "heatKw": 0, "arcDeg": 24, "traverseDegPerS": 0 },
+        "LG": { "massKg": 320, "powerKw": 0, "heatKw": 0, "arcDeg": 20, "traverseDegPerS": 0 },
+        "XL": { "massKg": 650, "powerKw": 0, "heatKw": 0, "arcDeg": 16, "traverseDegPerS": 0 }
+      },
+      "turret": {
+        "MD": { "massKg": 220, "powerKw": 4, "heatKw": 1.5, "arcDeg": 360, "traverseDegPerS": 90 },
+        "LG": { "massKg": 520, "powerKw": 9, "heatKw": 3.5, "arcDeg": 360, "traverseDegPerS": 60 },
+        "XL": { "massKg": 1100, "powerKw": 18, "heatKw": 7, "arcDeg": 360, "traverseDegPerS": 40 }
+      }
+    },
+    "capacity": {
+      "fixed": {
+        "SM": { "1": "SM" },
+        "MD": { "1": "MD", "2": "SM" },
+        "LG": { "1": "LG", "2": "SM", "4": "SM" },
+        "XL": { "1": "XL", "2": "MD", "4": "MD" }
+      },
+      "turret": {
+        "MD": { "1": "SM" },
+        "LG": { "1": "MD", "2": "SM" },
+        "XL": { "1": "LG", "2": "MD", "4": "SM" }
+      }
+    }
+  },
   "blueprintSizeClasses": {
     "S": {
       "label": "Small craft",
