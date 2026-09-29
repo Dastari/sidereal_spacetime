@@ -191,7 +191,7 @@ def verify(args):
         problems.append('game-ship access is not active for the character')
     # Items, memberships, bindings and personal state: byte-identical.
     for name in ('inventory_item', 'inventory_item_membership', 'instance_inventory_binding', 'storage_binding',
-                 'inventory_hotbar', 'weapon_energy', 'inventory_state', 'personal_starter_receipt',
+                 'inventory_hotbar', 'weapon_energy', 'inventory_item_pin', 'inventory_state', 'personal_starter_receipt',
                  'identity_link', 'character_appearance'):
         same(name)
     # Containers: identical except the ship-held containers' deck positions.

@@ -1,5 +1,6 @@
 import type { InventoryDefinition } from "@sidereal/content/inventory";
-import { LAB_WEAPONS, weaponMode } from "@sidereal/content/weapons";
+import { weaponMode, type WeaponDefinition } from "@sidereal/content/weapons";
+import { weaponDefinitionOf } from "@sidereal/content/item-presentation";
 import { itemRarity } from "./character-data";
 import { drawItemFrame, ITEM_RARITY_PALETTES } from "./item-frame";
 import type { CanvasUI } from "./toolkit";
@@ -58,8 +59,9 @@ const HANDHELD_LABELS: Record<
   medical: "Medical",
 };
 /** Provisional server stats of a weapon (content/weapons.ts; the balance table is on the wiki). */
-function weaponStats(id: string): [string, string, number][] | undefined {
-  const w = LAB_WEAPONS[id];
+function weaponStats(
+  w: WeaponDefinition | undefined,
+): [string, string, number][] | undefined {
   if (!w) return undefined;
   const mode = weaponMode(w);
   const perShot =
@@ -111,7 +113,13 @@ function weaponStats(id: string): [string, string, number][] | undefined {
       : []),
   ];
 }
-export function itemDetails(d: InventoryDefinition) {
+/** `weapon` is the instance's pinned weapon revision (X-2); revision 1 when omitted. */
+export function itemDetails(
+  d: InventoryDefinition,
+  weapon: WeaponDefinition | undefined = weaponDefinitionOf({
+    definitionId: d.id,
+  }),
+) {
   const category: ItemCategory = d.storage
     ? "Storage"
     : d.characterComponentId || d.wardrobeId
@@ -123,7 +131,7 @@ export function itemDetails(d: InventoryDefinition) {
   const label = d.category
     ? HANDHELD_LABELS[d.category] + (d.role ? " · " + d.role : "")
     : category;
-  const usable = !d.category || !!LAB_WEAPONS[d.id];
+  const usable = !d.category || !!weapon;
   const seed = [...d.id].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 7);
   const archetype = d.characterComponentId?.split("-")[0] ?? "crew";
   const description =
@@ -147,8 +155,8 @@ export function itemDetails(d: InventoryDefinition) {
         ["Contents", d.reservoir.liquidType, 1],
         ["Seal condition", "Intact", 1],
       ]
-    : weaponStats(d.id)
-      ? weaponStats(d.id)!
+    : weaponStats(weapon)
+      ? weaponStats(weapon)!
       : d.category
         ? [
             ["Use", "Not yet usable", 0],
@@ -205,8 +213,11 @@ export function drawItemTooltip(
   d: InventoryDefinition,
   anchor: Rect,
   icon: (ui: CanvasUI, d: InventoryDefinition, r: Rect) => void,
+  weapon: WeaponDefinition | undefined = weaponDefinitionOf({
+    definitionId: d.id,
+  }),
 ) {
-  const data = itemDetails(d),
+  const data = itemDetails(d, weapon),
     color = ITEM_RARITY_PALETTES[data.rarity],
     w = Math.min(360, ui.width - 20);
   const wrappedHeight = (text: string, width: number, size: number) => {
@@ -308,7 +319,7 @@ export function drawItemTooltip(
     color.edge,
   );
   ui.text(
-    LAB_WEAPONS[d.id]
+    weapon
       ? "Provisional server stats · preview price"
       : "Includes preview stats & price",
     r.x + 17,

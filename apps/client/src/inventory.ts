@@ -1,7 +1,7 @@
+import { itemDefinitionOf } from "@sidereal/content/item-presentation";
 import type { DbConnection } from "@sidereal/net";
 import type { InventoryState } from "../../../packages/canvas-ui/src";
 import {
-  INVENTORY_DEFINITIONS,
   CHARACTER_CARRY_LIMIT_KG,
   characterEquipmentFromInventory,
 } from "../../../packages/content/src/inventory";
@@ -74,9 +74,7 @@ export function equipmentAppearance(
   heldItem: string | null;
 } {
   const held = items.find((item) => item.equipmentSlot === "hand");
-  const definition = INVENTORY_DEFINITIONS.find(
-    (d) => d.id === held?.definitionId,
-  );
+  const definition = itemDefinitionOf(held);
   const equippedComponents = characterEquipmentFromInventory(items);
   const backpack = items.some((item) => item.equipmentSlot === "back");
   return {

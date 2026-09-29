@@ -75,6 +75,7 @@ beforeEach(() => {
     contentDefinitionUsage: fakeTable("definitionKey", { by_kind: "kind" }),
     shipOperatorOperation: fakeTable("operationId"),
     inventoryItem: fakeTable("id"),
+    inventoryItemPin: fakeTable("itemId"),
   };
 });
 const ctx = (sender: Identity) =>

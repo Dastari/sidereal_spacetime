@@ -2,7 +2,8 @@ import {
   inventoryMass,
   itemSize,
   validateInventory,
-  type GridDefinition,
+  definitionResolver,
+  type GridDefinitions,
   type GridItem,
   type InventoryLocation,
   type InventorySnapshot,
@@ -13,16 +14,16 @@ import {
  * of the old pack move as intact item/container subtrees. Nothing is mutated. */
 export function planBackpackEquip(
   snapshot: InventorySnapshot,
-  definitions: readonly GridDefinition[],
+  definitions: GridDefinitions,
   density: Readonly<Record<string, number>>,
   pocketsId: string,
   carryLimitKg: number,
   itemId: string,
   previousDestinationId?: string,
 ): GridItem[] {
-  const defs = new Map(definitions.map((d) => [d.id, d]));
+  const defs = definitionResolver(definitions);
   const incoming = snapshot.items.find((i) => i.id === itemId);
-  if (!incoming || defs.get(incoming.definitionId)?.equipSlot !== "back")
+  if (!incoming || defs(incoming)?.equipSlot !== "back")
     throw new Error("Item is not a backpack");
   const previous = snapshot.items.find((i) => i.equipmentSlot === "back");
   if (previous?.id === incoming.id) return [...snapshot.items];
@@ -89,12 +90,12 @@ export function planBackpackEquip(
   ): Generator<InventoryLocation> {
     const c = snapshot.containers.find((c) => c.id === item.containerId);
     if (!c || c.kind !== "grid") return;
-    const d = defs.get(item.definitionId)!;
+    const d = defs(item)!;
     const occupied = items
       .filter(
         (i) => i.containerId === c.id && i.id !== item.id && !ignored.has(i.id),
       )
-      .map((i) => ({ ...i, ...itemSize(i, defs.get(i.definitionId)!) }));
+      .map((i) => ({ ...i, ...itemSize(i, defs(i)!) }));
     function fits(x: number, y: number, rotated: boolean) {
       const size = itemSize({ ...item, rotated }, d);
       return (
@@ -143,8 +144,8 @@ export function planBackpackEquip(
   // Largest rectangles first, with backtracking for layouts that defeat greedy
   // placement. A fixed bound prevents pathological inventory requests stalling a tick.
   const ordered = [...moving].sort((a, b) => {
-    const x = defs.get(a.definitionId)!,
-      y = defs.get(b.definitionId)!;
+    const x = defs(a)!,
+      y = defs(b)!;
     return y.width * y.height - x.width * x.height || a.id.localeCompare(b.id);
   });
   let attempts = 0;

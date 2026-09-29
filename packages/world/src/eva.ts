@@ -68,6 +68,7 @@ import { damageCharacter, isDead } from "./combat-damage";
 import { clearAim } from "./combat";
 import { freeDeckSpot } from "./character-death";
 import { visibleEquipment } from "./crew-presentation";
+import { itemDefinitions } from "./item-definitions";
 import { spaceObserver } from "./shared-world-views";
 import { constructionCollision } from "./construction-doors";
 import { openExteriorDoors, shipPrefabBinding } from "./ship-logic";
@@ -1351,6 +1352,7 @@ export function visibleEvaBodies(ctx: ReadContext) {
         equipmentJson: JSON.stringify(
           visibleEquipment(
             ctx.db.inventoryItem.by_character.filter(body.characterId),
+            itemDefinitions(ctx).find,
           ),
         ),
         aimActive,

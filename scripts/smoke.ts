@@ -31,6 +31,7 @@ import {
 } from "./lifecycle-smoke";
 import { operatorCall } from "./smoke-operator";
 import { contentDefinitionsSmoke } from "./content-definitions-smoke";
+import { itemDefinitionsSmoke } from "./item-definitions-smoke";
 import { prefabWalkFrame } from "../packages/sim/src/prefab-construction";
 import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
@@ -822,6 +823,13 @@ if (restore) {
     };
     summary.lifecycle_log = assertLogInvariants(lifecycleSql);
     summary.content_definitions_x1 = await contentDefinitionsSmoke(
+      host,
+      database,
+      wait,
+      (reducer, ...args) => operatorCall(host, database, reducer, ...args),
+      lifecycleSql,
+    );
+    summary.item_definitions_x2 = await itemDefinitionsSmoke(
       host,
       database,
       wait,

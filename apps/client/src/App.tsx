@@ -1,3 +1,7 @@
+import {
+  itemDefinitionOf,
+  weaponDefinitionOf,
+} from "@sidereal/content/item-presentation";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { GameLoadingScreen } from "./GameLoadingScreen";
 import { ShipSystemsPanel } from "./ShipSystemsPanel";
@@ -61,8 +65,6 @@ import { LAB_INTERACTIONS } from "../../../packages/content/src/interactions";
 import { inventoryView, inventoryAppearance } from "./inventory";
 import { createCombatInput } from "./combat-input";
 import { createOperationId } from "./operation-id";
-import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
-import { LAB_WEAPONS } from "@sidereal/content/weapons";
 import { combatNote, trackReload } from "./combat-status";
 import {
   objectDetails,
@@ -724,11 +726,8 @@ export default function App({
         })()
       : combatImpactRow;
   // The held item (own inventory projection) and this body's latest combat action (reload timing).
-  const heldHandheld = INVENTORY_DEFINITIONS.find(
-    (d) =>
-      d.id ===
-      inventory.items.find((item) => item.equipmentSlot === "hand")
-        ?.definitionId,
+  const heldHandheld = itemDefinitionOf(
+    inventory.items.find((item) => item.equipmentSlot === "hand"),
   );
   const ownCombatAction =
     c && ready && actor?.connected
@@ -788,8 +787,14 @@ export default function App({
       enabled: combatEnabled,
       active: !!combat?.aimActive,
       weaponName:
-        INVENTORY_DEFINITIONS.find((d) => d.id === combat?.weaponDefinitionId)
-          ?.name ??
+        itemDefinitionOf(
+          combat?.weaponDefinitionId
+            ? {
+                id: combat.weaponItemId,
+                definitionId: combat.weaponDefinitionId,
+              }
+            : undefined,
+        )?.name ??
         heldHandheld?.name ??
         "Equip a weapon",
       note: combatNote(
@@ -797,6 +802,8 @@ export default function App({
         heldHandheld,
         ownCombatAction,
         reloadingUntil.current,
+        performance.now(),
+        combat?.weaponItemId,
       ),
       energy: combat?.energy ?? 0,
       capacity: combat?.capacity ?? 0,
@@ -1850,7 +1857,10 @@ export default function App({
                 shotCost: row.shotCost,
                 cooldownMs: row.cooldownMs,
                 capacity: row.capacity,
-                canReload: !!LAB_WEAPONS[row.weaponDefinitionId]?.reloadMs,
+                canReload: !!weaponDefinitionOf({
+                  id: row.weaponItemId,
+                  definitionId: row.weaponDefinitionId,
+                })?.reloadMs,
                 // The view shows a reloading weapon as full; hold fire until it completes.
                 reloading: reloadingUntil.current > performance.now(),
               }

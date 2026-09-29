@@ -45,6 +45,7 @@ WIPED_SHIP_TABLES = [
 CHARACTER_AND_INVENTORY_TABLES = [
     'character', 'inventory_state', 'inventory_item', 'inventory_container', 'inventory_hotbar',
     'inventory_container_scope', 'inventory_item_membership', 'storage_binding', 'weapon_energy',
+    'inventory_item_pin',
     'personal_starter_receipt', 'identity_link', 'character_appearance',
 ]
 # Must mirror PRESERVED_MAP_TABLES. Static tables are compared exactly after a

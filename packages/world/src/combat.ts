@@ -22,6 +22,8 @@ import {
   blastDamage,
 } from "../../sim/src/combat";
 import { resolveShotImpact, type ShotHit } from "./combat-impact";
+import { itemDefinitions, registryReader } from "./item-definitions";
+import { resolveWeaponDefinition } from "@sidereal/sim/pinned-definitions";
 import {
   applyShotDamage,
   damageCharacter,
@@ -111,7 +113,7 @@ export function combatView(ctx: ReadContext) {
     item = [...ctx.db.inventoryItem.by_character.filter(actor.id)].find(
       (i) => i.equipmentSlot === "hand",
     ),
-    definition = item && LAB_WEAPONS[item.definitionId],
+    definition = item && itemDefinitions(ctx).weapon(item),
     energy = item && ctx.db.weaponEnergy.itemId.find(item.id);
   return [
     {
@@ -146,8 +148,9 @@ function weaponIntent(ctx: Context, args: WeaponArgs, kind: string) {
   if (actor && isDead(ctx, actor.id)) throw new SenderError("You are dead");
   if (!actor || !available(ctx, actor))
     throw new SenderError("Stand on deck before firing");
+  const defs = itemDefinitions(ctx);
   const item = ctx.db.inventoryItem.id.find(args.itemId),
-    definition = item && LAB_WEAPONS[item.definitionId];
+    definition = item && defs.weapon(item);
   if (
     !item ||
     item.characterId !== actor.id ||
@@ -186,7 +189,17 @@ function weaponIntent(ctx: Context, args: WeaponArgs, kind: string) {
         now,
       )
     : definition.capacity;
-  return { actor, item, definition, old, energy, now, id, request };
+  return {
+    actor,
+    item,
+    definition,
+    weaponRevision: defs.pin(item).weaponRevision,
+    old,
+    energy,
+    now,
+    id,
+    request,
+  };
 }
 
 function receipt(
@@ -318,7 +331,17 @@ function resolveRays(
 export function fire(ctx: Context, args: WeaponArgs) {
   const intent = weaponIntent(ctx, args, "fire");
   if (!intent) return;
-  const { actor, item, definition, old, energy, now, id, request } = intent;
+  const {
+    actor,
+    item,
+    definition,
+    weaponRevision,
+    old,
+    energy,
+    now,
+    id,
+    request,
+  } = intent;
   const aim = ctx.db.combatAim.characterId.find(actor.id);
   if (!aim || !aimIsFresh(aim.active, aim.updatedMicros, now))
     throw new SenderError("Aim intent expired");
@@ -441,6 +464,14 @@ export function fire(ctx: Context, args: WeaponArgs) {
     detonated: false,
     blastRadiusM: landing ? (definition.blastRadiusM ?? 0) : 0,
   }));
+  const actionPin = {
+    characterId: actor.id,
+    definitionId: item.definitionId,
+    weaponRevision,
+  };
+  if (ctx.db.combatActionPin.characterId.find(actor.id))
+    ctx.db.combatActionPin.characterId.update(actionPin);
+  else ctx.db.combatActionPin.insert(actionPin);
   receipt(ctx, actor, id, request, now);
 }
 
@@ -479,7 +510,16 @@ export function reload(ctx: Context, args: WeaponArgs) {
 /** Resolve a thrown charge whose fuse has run out: every standing body on its deck within the blast
  * radius, not shielded by structure, takes falloff damage (friendly fire on, the thrower included). */
 function detonate(ctx: Context, action: CombatActionRow) {
-  const definition = LAB_WEAPONS[action.definitionId];
+  // The rules the charge was thrown with (X-2 pin), not the item's current state.
+  const pin = ctx.db.combatActionPin.characterId.find(action.characterId);
+  const definition =
+    pin && pin.definitionId === action.definitionId
+      ? resolveWeaponDefinition(
+          registryReader(ctx.db),
+          pin.definitionId,
+          pin.weaponRevision,
+        )
+      : LAB_WEAPONS[action.definitionId];
   const thrower = ctx.db.character.id.find(action.characterId);
   writeAction(ctx, action.characterId, (row) => ({ ...row, detonated: true }));
   if (!definition || !(action.blastRadiusM > 0)) return;
@@ -602,10 +642,11 @@ export function stepCombat(ctx: Context) {
     )
       clearAim(ctx, aim.characterId);
   }
+  const defs = itemDefinitions(ctx);
   for (const old of ctx.db.weaponEnergy.iter()) {
     if (now - old.checkpointMicros < 250_000n) continue;
     const item = ctx.db.inventoryItem.id.find(old.itemId),
-      definition = item && LAB_WEAPONS[item.definitionId];
+      definition = item && defs.weapon(item);
     if (!definition || old.energy >= definition.capacity) continue;
     const energy = recoveredEnergy(
       old.energy,

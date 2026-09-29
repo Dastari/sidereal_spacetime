@@ -21,6 +21,7 @@ vi.mock("./construction-instances", () => ({
   readableInstances: (ctx: { db: { readableForTest: unknown[] } }) =>
     ctx.db.readableForTest,
 }));
+import { itemDefinitionTestTables } from "./lifecycle-test-tables";
 import { Identity } from "spacetimedb";
 import {
   CARGO_CARRIER_REVISION,
@@ -161,6 +162,7 @@ function fixture() {
     });
   }
   const db = {
+    ...itemDefinitionTestTables(),
     constructionCargoAssembly: {
       containerId: { find: (id: string) => assemblies.get(id) },
       by_instance: {

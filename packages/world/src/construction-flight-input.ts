@@ -6,7 +6,8 @@ import {
   PHYSICAL_CATALOG,
   CREW_BODY_DEFINITION,
 } from "@sidereal/content/physical-definitions";
-import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+import type { GridDefinition } from "@sidereal/sim/inventory";
+import { itemDefinitions } from "./item-definitions";
 import { inventoryMass, type InventorySnapshot } from "@sidereal/sim/inventory";
 import {
   transformFlightVector,
@@ -92,7 +93,7 @@ export function characterCarriedMassKg(
   characterId: string,
 ): number {
   const snapshot = legacyInventorySnapshot(ctx, characterId),
-    masses = payloadMass(snapshot);
+    masses = payloadMass(ctx, snapshot);
   let carried = 0;
   for (const root of snapshot.containers.filter(
     (c) => c.carried && !c.parentItemId,
@@ -102,24 +103,35 @@ export function characterCarriedMassKg(
     carried += masses.itemMass(item.id);
   return carried;
 }
-function payloadMass(snapshot: InventorySnapshot) {
-  const definitions = new Map<string, (typeof INVENTORY_DEFINITIONS)[number]>();
+/**
+ * Payload mass from each item's pinned definition (X-2). Revision 1 keeps the explicit v1 physical
+ * snapshot (equal to the seed); a later revision, or an item the snapshot does not list, uses its
+ * pinned definition's mass. A published edit never retunes items already aboard.
+ */
+function payloadMass(
+  ctx: Parameters<typeof itemDefinitions>[0],
+  snapshot: InventorySnapshot,
+) {
+  const defs = itemDefinitions(ctx);
+  const definitions = new Map<string, GridDefinition>();
   const densities: Record<string, number> = {};
   for (const item of snapshot.items) {
-    const inventory = INVENTORY_DEFINITIONS.find(
-      (d) => d.id === item.definitionId,
-    );
-    const physical = PHYSICAL_CATALOG.definitions.find(
-      (d) =>
-        d.id === "inventory:" + item.definitionId &&
-        d.revision === 1 &&
-        d.kind === "inventory",
-    );
-    if (!inventory || !physical)
+    const pin = defs.pin(item),
+      inventory = defs.find(item);
+    const physical =
+      pin.itemRevision === 1n
+        ? PHYSICAL_CATALOG.definitions.find(
+            (d) =>
+              d.id === "inventory:" + item.definitionId &&
+              d.revision === 1 &&
+              d.kind === "inventory",
+          )
+        : undefined;
+    if (!inventory)
       throw Error("missing-inventory-physical-definition:" + item.definitionId);
-    definitions.set(item.definitionId, {
+    definitions.set(item.id, {
       ...inventory,
-      massKg: physical.massKg,
+      massKg: physical?.massKg ?? inventory.massKg,
     });
   }
   for (const c of snapshot.containers)
@@ -147,7 +159,7 @@ function payloadMass(snapshot: InventorySnapshot) {
     )
       throw Error("invalid-flight-liquid-mass");
   }
-  return inventoryMass(snapshot, [...definitions.values()], densities);
+  return inventoryMass(snapshot, (i) => definitions.get(i.id), densities);
 }
 /** Read current authoritative placement and inventory joins only. No reducer
  * supplies this input, no fixture fills missing mass, and no permission follows
@@ -312,7 +324,7 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
     });
     cargo.push({
       containerId: root.id,
-      massKg: payloadMass({ containers, items }).containerMass(root.id),
+      massKg: payloadMass(ctx, { containers, items }).containerMass(root.id),
       position: position ?? shellPoint(shell!),
     });
   }
@@ -350,7 +362,7 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
     const snapshot = legacyInventorySnapshot(ctx, root.characterId);
     cargo.push({
       containerId: root.id,
-      massKg: payloadMass(snapshot).containerMass(root.id),
+      massKg: payloadMass(ctx, snapshot).containerMass(root.id),
       position: [root.localX, root.localY],
     });
     roots.add(root.id);

@@ -163,6 +163,12 @@ import * as constructionInstances from "./construction-instances";
 import * as construction from "./construction";
 import * as contentDefinitions from "./content-definitions";
 import {
+  inventoryItemPin,
+  combatActionPin,
+} from "./item-definition-pin-tables";
+import * as itemDefinitionViews from "./item-definition-views";
+import { resyncItemDefinitions } from "./item-definition-resync";
+import {
   contentDefinitionHead,
   contentDefinition,
   contentDefinitionReceipt,
@@ -450,6 +456,8 @@ const db = schema({
   contentDefinition,
   contentDefinitionReceipt,
   contentDefinitionUsage,
+  inventoryItemPin,
+  combatActionPin,
 });
 export default db;
 /** Wrap a world action a dead character may not take (move, interact, pilot, use inventory). */
@@ -1335,6 +1343,30 @@ export const refreshDefinitionUsage = db.reducer(
 export const operatorImportContentSeed = db.reducer(
   { operationId: t.string(), kind: t.string(), dryRun: t.bool() },
   contentDefinitions.importContentSeed,
+);
+/** Pinned item and weapon definitions (roadmap X-2): published revisions (no drafts, no
+ * publisher identities) and the explicit pins of the items the viewer can see. */
+export const publishedItemDefinitions = db.view(
+  { name: "published_item_definitions", public: true },
+  t.array(itemDefinitionViews.publishedItemDefinitionProjection),
+  auth.gameView(itemDefinitionViews.publishedItemDefinitions),
+);
+export const ownItemDefinitionPins = db.view(
+  { name: "own_item_definition_pins", public: true },
+  t.array(itemDefinitionViews.itemPinProjection),
+  auth.gameView(itemDefinitionViews.ownItemDefinitionPins),
+);
+/** Operator-only (deployment identity): move chosen instances to another published revision. */
+export const operatorResyncItemDefinitions = db.reducer(
+  {
+    operationId: t.string(),
+    definitionId: t.string(),
+    itemRevision: t.u64(),
+    weaponRevision: t.u64(),
+    itemIdsJson: t.string(),
+    dryRun: t.bool(),
+  },
+  resyncItemDefinitions,
 );
 export const operatorSetDefinitionGrant = db.reducer(
   {

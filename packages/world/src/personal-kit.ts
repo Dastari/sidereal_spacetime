@@ -1,8 +1,8 @@
 import type { Infer, InferSchema, ReducerCtx } from "spacetimedb/server";
 import type world from "./index";
 import type { inventoryContainer, inventoryItem } from "./inventory-tables";
+import { itemDefinitions, commitPin } from "./item-definitions";
 import {
-  INVENTORY_DEFINITIONS,
   CHARACTER_CARRY_LIMIT_KG,
   LIQUID_DENSITY_KG_PER_LITRE,
 } from "@sidereal/content/inventory";
@@ -33,7 +33,8 @@ export function issuePersonalKit(ctx: Context, characterId: string) {
     throw Error("Existing personal inventory requires explicit recovery");
   const containers: Container[] = [],
     items: Item[] = [],
-    used = new Set<string>();
+    used = new Set<string>(),
+    defs = itemDefinitions(ctx);
   const uuid = () => {
     const id = ctx.newUuidV4().toString();
     if (
@@ -81,6 +82,7 @@ export function issuePersonalKit(ctx: Context, characterId: string) {
     equipmentSlot = "",
   ) => {
     const id = uuid();
+    defs.stage(id, definitionId);
     items.push({
       id,
       characterId,
@@ -95,13 +97,27 @@ export function issuePersonalKit(ctx: Context, characterId: string) {
   };
   const pockets = grid("Pockets", 4, 2, 6, true);
   const pack = item("field-pack", "", 0, 0, "back");
-  const backpack = grid("Field backpack", 8, 6, 24, false, pack);
+  // Container sizes come from each new instance's pinned definition (revision 1 = 8x6, 24 kg).
+  const packStorage = defs.item({ id: pack, definitionId: "field-pack" })
+    .storage ?? { width: 8, height: 6, maxMassKg: 24 };
+  const backpack = grid(
+    "Field backpack",
+    packStorage.width,
+    packStorage.height,
+    packStorage.maxMassKg,
+    false,
+    pack,
+  );
   item("compact-pistol", backpack, 0, 0);
   item("carbine", backpack, 2, 0);
   item("scanner", backpack, 4, 0);
   item("medkit", backpack, 5, 0);
   item("power-cell", backpack, 7, 0);
   const canister = item("resource-canister", backpack, 0, 2);
+  const reservoir = defs.item({
+    id: canister,
+    definitionId: "resource-canister",
+  }).reservoir ?? { capacityLitres: 5, liquidType: "fuel" };
   containers.push({
     id: uuid(),
     characterId,
@@ -110,10 +126,12 @@ export function issuePersonalKit(ctx: Context, characterId: string) {
     name: "Canister reservoir",
     width: 0,
     height: 0,
-    maxMassKg: 4,
-    capacityLitres: 5,
-    amountLitres: 2,
-    liquidType: "fuel",
+    maxMassKg:
+      reservoir.capacityLitres *
+      (LIQUID_DENSITY_KG_PER_LITRE[reservoir.liquidType] ?? 1),
+    capacityLitres: reservoir.capacityLitres,
+    amountLitres: Math.min(2, reservoir.capacityLitres),
+    liquidType: reservoir.liquidType,
     shipId: actor.shipId,
     localX: 0,
     localY: 0,
@@ -121,13 +139,16 @@ export function issuePersonalKit(ctx: Context, characterId: string) {
   });
   validateInventory(
     { items, containers },
-    INVENTORY_DEFINITIONS,
+    defs.grid,
     LIQUID_DENSITY_KG_PER_LITRE,
     pockets,
     CHARACTER_CARRY_LIMIT_KG,
   );
   for (const c of containers) ctx.db.inventoryContainer.insert(c);
-  for (const i of items) ctx.db.inventoryItem.insert(i);
+  for (const i of items) {
+    ctx.db.inventoryItem.insert(i);
+    commitPin(ctx, defs, i.id);
+  }
   ctx.db.inventoryState.insert({ characterId, revision: 1n, kitGranted: true });
   for (let slot = 0; slot < 5; slot++)
     ctx.db.inventoryHotbar.insert({

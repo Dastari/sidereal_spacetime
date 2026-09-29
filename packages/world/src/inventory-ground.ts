@@ -1,5 +1,4 @@
 import { SenderError } from "spacetimedb/server";
-import { inventoryDefinition } from "@sidereal/content/inventory";
 import type { access, transaction } from "./inventory";
 
 /** Build, but do not insert, the same server-positioned private drop wrapper for
@@ -17,7 +16,7 @@ export function prepareGroundDrop(
   const item = a.data.items.find((i) => i.id === itemId);
   if (!item || !a.canItem(itemId))
     throw new SenderError("Item is out of reach");
-  const d = inventoryDefinition(item.definitionId),
+  const d = a.defs.item(item),
     id = ctx.newUuidV4().toString();
   const container = {
     ...a.pockets!,

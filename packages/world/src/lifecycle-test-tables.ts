@@ -42,6 +42,19 @@ export function lifecycleTestTables() {
     worldSystem: keyed("id"),
   };
 }
+/** Empty definition registry and pin tables (X-2): with no rows every item resolves to the seed
+ * (revision 1 = the code catalogue), exactly as on a database without the seed import. */
+export function itemDefinitionTestTables() {
+  return {
+    inventoryItemPin: keyed("itemId"),
+    combatActionPin: keyed("characterId"),
+    contentDefinition: keyed("definitionRef", {
+      by_kind: "kind",
+      by_key: "definitionKey",
+    }),
+    contentDefinitionHead: keyed("definitionKey", { by_kind: "kind" }),
+  };
+}
 type StoredEvent = {
   eventId: bigint;
   objectId: string;

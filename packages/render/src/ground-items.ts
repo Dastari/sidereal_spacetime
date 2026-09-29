@@ -1,12 +1,10 @@
+import { itemDefinitionOf } from "@sidereal/content/item-presentation";
 import type { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import type { AssetContainer } from "@babylonjs/core/assetContainer";
 import { Vector3, Matrix } from "@babylonjs/core/Maths/math.vector";
-import {
-  INVENTORY_DEFINITIONS,
-  type InventoryDefinition,
-} from "@sidereal/content/inventory";
+import { type InventoryDefinition } from "@sidereal/content/inventory";
 import { crewArmorAssetUrl, crewArmorPart } from "@sidereal/content/crew-armor";
 import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
 import { CREW_ITEMS, CREW_ITEM_CATALOG } from "@sidereal/content/crew-items";
@@ -63,7 +61,7 @@ export function createGroundItems(scene: Scene, ship: TransformNode) {
     for (const row of rows) {
       let entry = entries.get(row.id);
       if (!entry) {
-        const d = INVENTORY_DEFINITIONS.find((d) => d.id === row.definitionId);
+        const d = itemDefinitionOf(row);
         if (!d) continue;
         const root = new TransformNode("ground-item:" + row.id, scene);
         root.parent = ship;

@@ -14,7 +14,6 @@ import { Identity } from "spacetimedb";
 import type world from "./index";
 import {
   DEFINITION_LIMITS,
-  IMPLICIT_PIN_REVISION,
   currentRevisionOf,
   definitionKey,
   definitionKindOfWorkspace,
@@ -43,6 +42,7 @@ import {
   priorOperation,
   requireShipOperator,
 } from "./ship-operator";
+import { itemDefinitions } from "./item-definitions";
 
 type Context = ReducerCtx<InferSchema<typeof world>>;
 type ReadContext = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
@@ -399,8 +399,9 @@ export function retireDefinition(
 }
 
 /**
- * Where-used snapshot. Items: `inventory_item` rows by definition ID. Weapons: the item with the
- * same ID and its instances. Until X-2 stores explicit pins every instance pins revision 1.
+ * Where-used snapshot. Items: `inventory_item` rows by definition ID, counted by pinned item
+ * revision. Weapons: instances of the item with the same ID, counted by pinned weapon revision
+ * (instances without weapon rules are not counted). Instances created before X-2 pin revision 1.
  * Planned kinds have no instances yet, so their snapshot is empty.
  */
 export function refreshDefinitionUsage(ctx: Context, args: { kind: string }) {
@@ -409,12 +410,21 @@ export function refreshDefinitionUsage(ctx: Context, args: { kind: string }) {
   for (const row of [...ctx.db.contentDefinitionUsage.by_kind.filter(kind)])
     ctx.db.contentDefinitionUsage.definitionKey.delete(row.definitionKey);
   if (kind !== "item" && kind !== "weapon") return;
-  const counts = new Map<string, number>();
+  const counts = new Map<string, number>(),
+    pins = new Map<string, Record<string, number>>(),
+    defs = itemDefinitions(ctx);
   let scanned = 0;
   for (const item of ctx.db.inventoryItem.iter()) {
     if (++scanned > DEFINITION_LIMITS.usageScanRows)
       throw new SenderError("Too many item instances to count in one refresh");
+    const pin = defs.pin(item),
+      revision = kind === "item" ? pin.itemRevision : pin.weaponRevision;
+    if (revision === 0n) continue;
     counts.set(item.definitionId, (counts.get(item.definitionId) ?? 0) + 1);
+    const byRevision = pins.get(item.definitionId) ?? {};
+    byRevision[revision.toString()] =
+      (byRevision[revision.toString()] ?? 0) + 1;
+    pins.set(item.definitionId, byRevision);
   }
   const heads = (k: DefinitionKind) =>
     new Set(
@@ -430,7 +440,7 @@ export function refreshDefinitionUsage(ctx: Context, args: { kind: string }) {
   const ids =
     kind === "item"
       ? new Set([...heads("item"), ...counts.keys()])
-      : new Set([...heads("weapon")]);
+      : new Set([...heads("weapon"), ...counts.keys()]);
   for (const definitionId of [...ids].sort()) {
     const instanceCount = counts.get(definitionId) ?? 0;
     const referencedBy =
@@ -446,11 +456,7 @@ export function refreshDefinitionUsage(ctx: Context, args: { kind: string }) {
       kind,
       definitionId,
       instanceCount: BigInt(instanceCount),
-      pinsJson: JSON.stringify(
-        instanceCount
-          ? { [IMPLICIT_PIN_REVISION.toString()]: instanceCount }
-          : {},
-      ),
+      pinsJson: JSON.stringify(pins.get(definitionId) ?? {}),
       referencedByJson: JSON.stringify(referencedBy),
       computedMicros: ctx.timestamp.microsSinceUnixEpoch,
     });
