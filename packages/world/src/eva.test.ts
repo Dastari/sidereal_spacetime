@@ -704,6 +704,22 @@ describe("frames: ride along in the bubble, drop off when left behind", () => {
     expect(body.phase).toBe("local");
   });
 
+  it("keeps station while the ship accelerates within the suit's limit", () => {
+    goOutside();
+    ticks(10, () => input("cap", { dx: 1 }));
+    ticks(240);
+    const before = ctx.db.evaBody.characterId.find("cap");
+    for (let i = 1; i <= 40; i++) {
+      const m = ctx.db.shipWorldMotion.shipId.find("wren");
+      // 3 m/s² along the bow, integrated by the test like the ship step would.
+      setShip("wren", { x: m.x, y: m.y + m.vy * 0.05, vx: 0, vy: 0.15 * i });
+      tick();
+    }
+    const after = ctx.db.evaBody.characterId.find("cap");
+    expect(after.phase).toBe("local");
+    expect(Math.hypot(after.localX - before.localX, after.localY - before.localY)).toBeLessThan(0.02);
+  });
+
   it("drops into world space when the ship out-accelerates the suit, keeping its velocity", () => {
     goOutside();
     ticks(10, () => input("cap", { dx: 1 }));
