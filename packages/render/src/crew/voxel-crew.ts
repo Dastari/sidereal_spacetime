@@ -305,6 +305,7 @@ export async function createVoxelCrewVisual(
   let blendElapsed = 0;
   let blendDuration = 0.2;
   let lastKey = "";
+  let footPoseKey = "";
   const setDesired = (
     wanted: {
       clip: VoxelCrewAction;
@@ -344,6 +345,18 @@ export async function createVoxelCrewVisual(
     const next = wanted.map((w) => w.clip).join("+");
     blendDuration =
       reducedMotion || !lastKey ? 0 : voxelCrewBlendDuration(lastKey, next);
+    // Ground anchors from a gait or full-body action may be unreachable in the next pose.
+    // Keep the clamp through the actual lower-body blend, then plant fresh stance contacts.
+    const nextFootPose = wanted
+      .filter((w) => w.mask !== "upper")
+      .map((w) => `${w.clip}|${w.mask}`)
+      .sort()
+      .join(",");
+    if (nextFootPose !== footPoseKey) {
+      footPoseKey = nextFootPose;
+      footSettleS = blendDuration;
+      footPlanting?.reset();
+    }
     lastKey = signature;
     blendElapsed = 0;
     for (const [key, t] of tracks) {
@@ -491,15 +504,6 @@ export async function createVoxelCrewVisual(
   const update = (input: VoxelCrewMotion) => {
     const motion = override ? { ...input, ...override } : input;
     lastInput = input;
-    if (
-      motion.moving !== lastMotion.moving ||
-      !!motion.sprinting !== !!lastMotion.sprinting
-    ) {
-      // An old gait contact can be unreachable once the new idle/run pose settles. Clamp the
-      // deck throughout the 0.2 s gait blend, then acquire fresh stance anchors in the new pose.
-      footSettleS = 0.2;
-      footPlanting?.reset();
-    }
     lastMotion = motion;
     if (disposed) return;
     const fallback = resolveCrewAppearance(appearance).weapon;

@@ -6,7 +6,10 @@ import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
-import { VOXEL_CREW_ANKLE_HEIGHT_M } from "@sidereal/content/crew-voxel-bundle";
+import {
+  VOXEL_CREW_ANKLE_HEIGHT_M,
+  type VoxelCrewAction,
+} from "@sidereal/content/crew-voxel-bundle";
 import { SPRINT_SPEED_MPS, WALK_SPEED_MPS } from "@sidereal/sim";
 import { createVoxelCrewVisual } from "./voxel-crew";
 
@@ -30,6 +33,7 @@ async function stride(
   movingShip = false,
   armedIdle?: string,
   stopFrame = 100,
+  afterReload = false,
 ) {
   const engine = new NullEngine();
   engine.getDeltaTime = () => 16;
@@ -68,6 +72,10 @@ async function stride(
     }
   }
   crew.update({ moving: !armedIdle, seated: false, sprinting: sprint });
+  if (afterReload && armedIdle) {
+    crew.play(`${armedIdle}.reload` as VoxelCrewAction);
+    for (let i = 0; i < 180; i++) scene.render();
+  }
   const speed = armedIdle ? 0 : sprint ? SPRINT_SPEED_MPS : WALK_SPEED_MPS;
   const feet = ["foot.L", "foot.R"].map((n) => crew.joints.get(n)!);
   const slips: number[] = [];
@@ -109,6 +117,13 @@ async function stride(
 }
 
 describe("foot planting (presentation-only two-bone foot IK)", () => {
+  for (const cls of ["rifle", "heavy"])
+    it(`${cls} full-body reload returns to real grounded ready contact`, async () => {
+      const on = await stride(true, false, false, cls, 100, true);
+      expect(on.slip).toBeLessThan(0.05);
+      expect(on.lowest).toBeLessThan(VOXEL_CREW_ANKLE_HEIGHT_M + 0.012);
+      expect(on.maxError).toBeLessThan(0.01);
+    });
   for (const cls of ["rifle", "heavy"])
     for (const stopFrame of [85, 100, 135])
       it(`${cls} stop at frame ${stopFrame} from run regains real deck contact with the body rig's idle legs`, async () => {
