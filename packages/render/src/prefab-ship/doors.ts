@@ -218,6 +218,11 @@ export interface DoorUpdate {
   actors: readonly { x: number; y: number }[];
   /** Other spacewalkers currently cycling (own-ship frame). */
   cyclingBodies?: readonly { x: number; y: number }[];
+  /**
+   * Doors actuated by ship logic (door id -> open), from `visible_ship_logic`: authoritative, so
+   * they override every presentation rule above (wiki `Systems/Ship Logic`).
+   */
+  logic?: ReadonlyMap<string, boolean>;
 }
 
 type View = "deck" | "flight";
@@ -415,7 +420,9 @@ export function createPrefabDoors(
       for (const d of doors) {
         const { spec } = d;
         let target = 0;
-        if (spec.airlock) {
+        const actuated = input.logic?.get(spec.id);
+        if (actuated !== undefined) target = actuated ? 1 : 0;
+        else if (spec.airlock) {
           if (input.cycle?.airlockId === spec.id)
             target = airlockOuterTarget(input.cycle, nowMicros);
           for (const b of input.cyclingBodies ?? [])

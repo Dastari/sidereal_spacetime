@@ -83,17 +83,17 @@ import {
 } from "./crewmates";
 import {
   EVA_HELP,
-  EVA_MAGLOCK_HELP,
-  evaAirlockAction,
   evaBodiesForScene,
-  evaCanMaglock,
   evaHomeVisit,
-  evaModelOfDocument,
   evaScene,
   evaStatusLabel,
   evaIntent,
   localAimAngle,
-  screenToShipTopDown,
+  logicButtonAction,
+  logicDoorStates,
+  logicModelOfDocument,
+  logicPanelLights,
+  screenToWorldTopDown,
   worldAimAngle,
 } from "./eva";
 import {
@@ -327,16 +327,10 @@ export default function App({
           : undefined))
       : undefined;
   localShipId.current = ship?.id;
-  // EVA (wiki Systems/EVA): the own body outside the hull and any running airlock cycle.
+  // EVA (wiki Systems/EVA): the own body outside the hull (same plane as the ship).
   const evaBody =
     c && actor
       ? [...c.db.ownEvaBody.iter()].find((r) => r.characterId === actor.id)
-      : undefined;
-  const evaCycle =
-    c && actor
-      ? [...c.db.ownEvaAirlockCycle.iter()].find(
-          (r) => r.characterId === actor.id,
-        )
       : undefined;
   const evaShipPose = ship
     ? {
@@ -483,43 +477,36 @@ export default function App({
       : outputs;
   }
 
-  const evaModel = evaModelOfDocument(constructionInstance?.documentJson);
   const evaView =
-    evaBody && evaShipPose
-      ? evaScene(evaBody, evaShipPose, evaModel, !!evaCycle)
-      : undefined;
-  const evaAction = evaAirlockAction({
-    shipId: actor?.shipId,
-    model: evaModel,
+    evaBody && evaShipPose ? evaScene(evaBody, evaShipPose) : undefined;
+  // Ship logic (wiki Systems/Ship Logic): wall buttons, door states and status lights.
+  const logicModel = logicModelOfDocument(constructionInstance?.documentJson);
+  const logicRows = c ? [...c.db.visibleShipLogic.iter()] : [];
+  const logicShipId = constructionInstance?.id;
+  const evaAction = logicButtonAction({
+    shipId: logicShipId,
+    logic: logicModel,
     aboard:
       actor && constructionVisit && !evaBody
-        ? { localX: actor.localX, localY: actor.localY }
+        ? [actor.localX, actor.localY]
         : undefined,
-    eva: evaView,
-    cycle: evaCycle,
+    outside: evaView?.local ? [evaView.localX, evaView.localY] : undefined,
   });
   const evaNowMicros = BigInt(Math.round(Date.now() * 1000));
   const evaHud = evaBody
     ? {
-        label: evaStatusLabel(evaBody, evaCycle, evaShipPose, evaNowMicros),
-        help: evaBody.phase === "maglocked" ? EVA_MAGLOCK_HELP : EVA_HELP,
-        maglock: evaCanMaglock(evaBody, evaShipPose, evaModel),
+        label: evaStatusLabel(evaBody, evaShipPose, evaNowMicros),
+        help: EVA_HELP,
+        maglock: false,
         stranded: evaBody.stranded,
         beacon: evaBody.returnEndsMicros > 0n,
       }
-    : evaCycle
-      ? {
-          label: `Airlock cycling out · ${Math.max(0, Math.ceil(Number(evaCycle.endsMicros - evaNowMicros) / 1e6))} s`,
-          help: "E cancel the cycle",
-          maglock: false,
-          stranded: false,
-          beacon: false,
-        }
-      : undefined;
+    : undefined;
+  const evaLocal = !!evaView?.local;
   useEffect(() => {
-    // The EVA camera is the top-down space view; coming back aboard returns to the deck.
-    setInterior(!evaBody);
-  }, [!!evaBody]);
+    // Same plane: next to the loaded ship the deck view continues; far out, the top-down view.
+    setInterior(!evaBody || evaLocal);
+  }, [!!evaBody, evaLocal]);
   const inspectionCatalog = useMemo(
     () =>
       constructionScene.active
@@ -626,7 +613,7 @@ export default function App({
         )
       : undefined;
   const interactionPrompt =
-    evaAction && (evaBody || evaCycle || !contextObject)
+    evaAction && (evaBody || !contextObject)
       ? evaAction.label
       : contextObject
         ? interactionLabel(contextObject)
@@ -894,6 +881,7 @@ export default function App({
     storageId: reachableStorage?.id,
     evaAction,
     evaPhase: evaView?.phase,
+    evaLocal: false,
     evaBeaconAvailable: false,
     shipHeading: 0,
   });
@@ -911,6 +899,7 @@ export default function App({
     storageId: reachableStorage?.id,
     evaAction,
     evaPhase: evaView?.phase,
+    evaLocal,
     evaBeaconAvailable:
       !!evaBody && (evaBody.stranded || evaBody.returnEndsMicros > 0n),
     shipHeading: evaShipPose?.heading ?? 0,
@@ -1038,9 +1027,9 @@ export default function App({
       (live.current.evaPhase || !row)
     )
       void perform(() =>
-        current.reducers.evaCycleAirlock({
+        current.reducers.pressShipButton({
           shipId: eva.shipId,
-          airlockId: eva.airlockId,
+          deviceId: eva.deviceId,
         }),
       );
     else if (row) objectCommand(interactionAction(row), row.placementId);
@@ -1589,23 +1578,19 @@ export default function App({
       y: staticConstruction ? 0 : (ship?.y ?? 0),
       localX: evaView?.localX ?? actor?.localX ?? 0,
       localY: evaView?.localY ?? actor?.localY ?? PILOT_LAYOUT.station.y,
-      interior: interior && !evaView,
+      interior: interior && (!evaView || evaView.local),
       eva: evaView ?? null,
-      airlockCycle: evaCycle
-        ? {
-            airlockId: evaCycle.airlockId,
-            direction: evaCycle.direction,
-            startedMicros: evaCycle.startedMicros,
-            endsMicros: evaCycle.endsMicros,
-          }
-        : null,
+      airlockCycle: null,
+      shipLogic: {
+        doors: logicDoorStates(logicRows, logicShipId, logicModel),
+        panels: logicPanelLights(logicRows, logicShipId),
+      },
       evaBodies:
         ready && c && actor?.connected && evaShipPose
           ? evaBodiesForScene(
               c.db.visibleEvaBodies.iter(),
               actor.id,
               evaShipPose,
-              evaModel,
               presentationLook,
             )
           : [],
@@ -1690,13 +1675,16 @@ export default function App({
       if (blocked) keys.clear();
       const evaPhase = live.current.evaPhase;
       if (evaPhase) {
-        // Outside the hull: jetpack (throttle/turn/strafe) or maglocked walking (ship-local).
+        // Outside the hull: WASD is the jetpack thrust direction, screen relative. In the ship's
+        // frame the deck camera maps it ship-local; far out the top-down camera maps it to world.
         transmitter.offer(
           c,
-          evaIntent(keys, evaPhase, blocked, (h, v) =>
-            screenToShipTopDown(h, v, live.current.shipHeading),
+          evaIntent(keys, true, blocked, (h, v) =>
+            live.current.evaLocal
+              ? (view.current?.screenToDeck(h, v) ?? { dx: 0, dy: 0 })
+              : screenToWorldTopDown(h, v),
           ),
-          evaPhase === "free",
+          false,
         );
         return;
       }
@@ -1735,15 +1723,9 @@ export default function App({
         if (
           !e.repeat &&
           live.current.actor?.shipId !== "" &&
-          !live.current.evaPhase
+          (!live.current.evaPhase || live.current.evaLocal)
         )
           setInterior((v) => !v);
-        return;
-      }
-      if (e.code === "KeyM" && !e.repeat && live.current.evaPhase) {
-        e.preventDefault();
-        const current = connection.current;
-        if (current) void perform(() => current.reducers.evaToggleMaglock({}));
         return;
       }
       if (e.code === "KeyB" && !e.repeat && live.current.evaBeaconAvailable) {

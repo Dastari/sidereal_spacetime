@@ -25,7 +25,7 @@ export const FED_WREN_PIN: PinnedPrefabShip = {
   prefabId: "fed.s.wren",
   catalogRevision: "ship-components-v1@3",
   blueprintSha256:
-    "6b40d9821766d76030e12675275bc8295d4042bc65a931bb7c2e2e4fd29cbed9",
+    "72c303e7ff2d6004dbee9d9cadd5a177287ad499bbef0f748edc59e29d4704ad",
   flightDefinitionSha256:
     "c6d252e906de0d8fad479e156a8ca512f0ac58500f4d7a0f3d888c13902a447d",
   description: "Wren (Federation courier, size S, prefab r6)",

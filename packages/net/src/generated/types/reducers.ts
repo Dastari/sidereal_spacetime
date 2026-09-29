@@ -43,6 +43,7 @@ import OperatorSetStarterPrefabReducer from "../operator_set_starter_prefab_redu
 import OperatorStockShipCargoReducer from "../operator_stock_ship_cargo_reducer";
 import OperatorUpgradePrefabShipReducer from "../operator_upgrade_prefab_ship_reducer";
 import OperatorWipePlayerShipsReducer from "../operator_wipe_player_ships_reducer";
+import PressShipButtonReducer from "../press_ship_button_reducer";
 import PublishConstructionBlueprintReducer from "../publish_construction_blueprint_reducer";
 import RefitExistingWayfarerReducer from "../refit_existing_wayfarer_reducer";
 import RefitRebuiltWayfarerReducer from "../refit_rebuilt_wayfarer_reducer";
@@ -108,6 +109,7 @@ export type OperatorSetStarterPrefabParams = __Infer<typeof OperatorSetStarterPr
 export type OperatorStockShipCargoParams = __Infer<typeof OperatorStockShipCargoReducer>;
 export type OperatorUpgradePrefabShipParams = __Infer<typeof OperatorUpgradePrefabShipReducer>;
 export type OperatorWipePlayerShipsParams = __Infer<typeof OperatorWipePlayerShipsReducer>;
+export type PressShipButtonParams = __Infer<typeof PressShipButtonReducer>;
 export type PublishConstructionBlueprintParams = __Infer<typeof PublishConstructionBlueprintReducer>;
 export type RefitExistingWayfarerParams = __Infer<typeof RefitExistingWayfarerReducer>;
 export type RefitRebuiltWayfarerParams = __Infer<typeof RefitRebuiltWayfarerReducer>;

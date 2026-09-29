@@ -1,14 +1,14 @@
 /**
- * EVA presentation and input for the game client (design: wiki `Systems/EVA`). Pure: reads the
- * own EVA views and the own ship pose, returns what the renderer and the HUD need, and maps keys
- * to the ordinary `set_intent` row. The server owns every position; nothing here is authority.
+ * EVA and ship-logic presentation and input for the game client (wiki `Systems/EVA`,
+ * `Systems/Ship Logic`). Pure: reads the own EVA view, `visible_ship_logic` and the own ship pose,
+ * returns what the renderer and the HUD need, and maps keys to the ordinary `set_intent` row. The
+ * server owns every position, door and button state; nothing here is authority.
+ *
+ * Same-plane model: a spacewalker in the loaded ship's frame (`local`) is drawn on the deck plane
+ * next to the ship in the ordinary deck view; far away (`free`) the top-down space view follows it.
  */
 import {
   EVA,
-  airlockFromInside,
-  airlockFromOutside,
-  hullSurfaceAt,
-  maglockPoint,
   pointVelocity,
   prefabEvaModel,
   rotate,
@@ -17,6 +17,11 @@ import {
   type EvaShipModel,
   type ShipPose,
 } from "@sidereal/sim/eva";
+import {
+  reachablePanel,
+  shipLogicModel,
+  type ShipLogicModel,
+} from "@sidereal/sim/ship-logic-model";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import type { CrewAppearance } from "@sidereal/render/crew/appearance";
@@ -42,14 +47,6 @@ export interface EvaBodyRow {
   deckId: string;
   returnEndsMicros: bigint;
   stranded: boolean;
-}
-export interface EvaCycleRow {
-  characterId: string;
-  shipId: string;
-  airlockId: string;
-  direction: string;
-  startedMicros: bigint;
-  endsMicros: bigint;
 }
 export interface VisibleEvaRow {
   characterId: string;
@@ -78,41 +75,63 @@ export interface VisibleEvaRow {
   shotY: number;
   shotStruck: boolean;
 }
+export interface ShipLogicRow {
+  shipId: string;
+  deviceId: string;
+  kind: string;
+  state: string;
+  light: string;
+  open: boolean;
+  endsMicros: bigint;
+  pressedMicros: bigint;
+}
 
-const models = new Map<string, EvaShipModel | null>();
-/** EVA geometry of a construction instance document (prefab ships only), cached per document. */
-export function evaModelOfDocument(
-  documentJson: string | undefined,
-): EvaShipModel | null {
+interface PrefabModels {
+  eva: EvaShipModel;
+  logic: ShipLogicModel | null;
+}
+const models = new Map<string, PrefabModels | null>();
+function modelsOfDocument(documentJson: string | undefined) {
   if (!documentJson) return null;
   if (models.has(documentJson)) return models.get(documentJson)!;
   if (models.size > 8) models.clear();
-  let model: EvaShipModel | null = null;
+  let out: PrefabModels | null = null;
   try {
     const binding = (
       JSON.parse(documentJson) as {
         prefab?: { document?: unknown; catalog?: unknown };
       }
     ).prefab;
-    if (binding && typeof binding === "object")
-      model = prefabEvaModel(
-        readShipPrefab(binding.document),
-        prefabComponentCatalogFor(String(binding.catalog)),
-      );
+    if (binding && typeof binding === "object") {
+      const doc = readShipPrefab(binding.document);
+      const catalog = prefabComponentCatalogFor(String(binding.catalog));
+      out = {
+        eva: prefabEvaModel(doc, catalog),
+        logic: shipLogicModel(doc, catalog),
+      };
+    }
   } catch {
-    model = null;
+    out = null;
   }
-  models.set(documentJson, model);
-  return model;
+  models.set(documentJson, out);
+  return out;
 }
+/** EVA geometry of a construction instance document (prefab ships only), cached per document. */
+export const evaModelOfDocument = (documentJson: string | undefined) =>
+  modelsOfDocument(documentJson)?.eva ?? null;
+/** Ship logic geometry (panels, doors) of a construction instance document, or null. */
+export const logicModelOfDocument = (documentJson: string | undefined) =>
+  modelsOfDocument(documentJson)?.logic ?? null;
 
-/** Presentation height of a body over the hull (m): maglocked on the roof, else floating above. */
-const FLOAT_ABOVE_ROOF_M = 0.2;
-const OPEN_SPACE_HEIGHT_M = 2.2;
+/** Deck floor top above the ship datum (m): the walking elevation. */
+const DECK_FLOOR_M = 0.1875;
 
 export interface EvaScene {
+  /** Render clip family: floating (zero-g). `maglocked` is reserved for mag boots aboard. */
   phase: "free" | "maglocked";
-  /** Own-ship-local position and heading (ship convention), what the avatar under the ship uses. */
+  /** In the loaded ship's frame (same plane): drawn in the deck view like a crewmate. */
+  local: boolean;
+  /** Own-ship-local position and heading (ship convention). */
   localX: number;
   localY: number;
   localHeading: number;
@@ -125,40 +144,49 @@ export interface EvaScene {
 }
 
 /**
- * The own body in the own ship's frame. A maglocked body on the own ship uses its accepted local
- * point; any other body is the world pose transformed by the accepted ship pose (both rows come
- * from the same server tick, so the relative pose is consistent while the ship moves).
+ * A body in the loaded ship's frame: a body in that ship's frame uses its accepted local point;
+ * any other body is the world pose transformed by the accepted ship pose (both rows come from the
+ * same server tick, so the relative pose is consistent while the ship moves). Same plane: the body
+ * floats just above deck height.
  */
 export function evaScene(
-  body: EvaBodyRow,
+  body: Pick<
+    EvaBodyRow,
+    | "phase"
+    | "x"
+    | "y"
+    | "heading"
+    | "anchorShipId"
+    | "localX"
+    | "localY"
+    | "localHeading"
+    | "forward"
+    | "strafe"
+    | "turn"
+    | "walking"
+  >,
   ship: ShipPose & { id: string },
-  model: EvaShipModel | null,
-  cycling: boolean,
 ): EvaScene {
-  const anchored = body.phase === "maglocked" && body.anchorShipId === ship.id;
-  const local = anchored
+  const local =
+    (body.phase === "local" || body.phase === "maglocked") &&
+    body.anchorShipId === ship.id;
+  const p = local
     ? ([body.localX, body.localY] as [number, number])
     : worldToShip(ship, [body.x, body.y]);
-  const localHeading = anchored
-    ? body.localHeading
-    : wrapAngle(body.heading - ship.heading);
-  const roof = model ? hullSurfaceAt(model, local) : undefined;
-  const elevation =
-    body.phase === "maglocked"
-      ? (roof ?? OPEN_SPACE_HEIGHT_M)
-      : Math.max(roof ?? 0, OPEN_SPACE_HEIGHT_M - FLOAT_ABOVE_ROOF_M) +
-        FLOAT_ABOVE_ROOF_M;
   return {
-    phase: body.phase === "maglocked" ? "maglocked" : "free",
-    localX: local[0],
-    localY: local[1],
-    localHeading,
-    elevation,
+    phase: "free",
+    local,
+    localX: p[0],
+    localY: p[1],
+    localHeading: local
+      ? body.localHeading
+      : wrapAngle(body.heading - ship.heading),
+    elevation: DECK_FLOOR_M + EVA.floatElevationM,
     forward: body.forward,
-    strafe: body.strafe,
-    turn: body.turn,
-    walking: body.walking,
-    cycling,
+    strafe: 0,
+    turn: 0,
+    walking: false,
+    cycling: false,
   };
 }
 
@@ -175,105 +203,109 @@ export function evaHomeVisit(
     instanceId: actor.shipId,
     deckId: body.deckId,
     revision: 0n,
-    standingElevationM: 0.1875,
+    standingElevationM: DECK_FLOOR_M,
   };
 }
 
 export type EvaAction =
-  | { kind: "cycle"; shipId: string; airlockId: string; label: string }
+  | { kind: "button"; shipId: string; deviceId: string; label: string }
   | undefined;
 
+const BUTTON_LABELS: Record<string, string> = {
+  cycle: "Cycle airlock",
+  open_outer: "Open airlock (outer door)",
+  open_inner: "Open airlock (inner door)",
+};
+
 /**
- * What E does about airlocks: from the deck at a hatch, cycle out; from space within reach of a
- * hatch's outside point, cycle in; while cycling, cancel. The server rechecks all of it.
+ * What E does at a wall button: the nearest panel on the right side within reach (from the deck:
+ * interior panels; from space in the ship's frame: exterior panels). The server rechecks all of it.
  */
-export function evaAirlockAction(input: {
+export function logicButtonAction(input: {
   shipId: string | undefined;
-  model: EvaShipModel | null;
-  aboard: { localX: number; localY: number } | undefined;
-  eva: EvaScene | undefined;
-  cycle: EvaCycleRow | undefined;
+  logic: ShipLogicModel | null;
+  aboard?: readonly [number, number];
+  outside?: readonly [number, number];
 }): EvaAction {
-  const { shipId, model, aboard, eva, cycle } = input;
-  if (cycle)
-    return {
-      kind: "cycle",
-      shipId: cycle.shipId,
-      airlockId: cycle.airlockId,
-      label: "Cancel airlock cycle",
-    };
-  if (!shipId || !model) return;
-  if (eva) {
-    const lock = airlockFromOutside(model, [eva.localX, eva.localY]);
-    return lock
-      ? {
-          kind: "cycle",
-          shipId,
-          airlockId: lock.id,
-          label: "Cycle airlock (enter)",
-        }
-      : undefined;
-  }
-  if (!aboard) return;
-  const lock = airlockFromInside(model, [aboard.localX, aboard.localY]);
-  return lock
-    ? {
-        kind: "cycle",
-        shipId,
-        airlockId: lock.id,
-        label: "Cycle airlock (EVA)",
-      }
-    : undefined;
+  const { shipId, logic } = input;
+  if (!shipId || !logic) return;
+  const at = input.aboard ?? input.outside;
+  if (!at) return;
+  const panel = reachablePanel(logic, at, input.aboard ? "interior" : "exterior");
+  if (!panel) return;
+  const port = logic.graph.wires.get(`${panel.deviceId}.pressed`)?.[0]?.port;
+  return {
+    kind: "button",
+    shipId,
+    deviceId: panel.deviceId,
+    label: (port && BUTTON_LABELS[port]) || "Press button",
+  };
 }
 
-/** Whether M would lock the boots onto the own hull (the server also tries nearby hulls). */
-export function evaCanMaglock(
-  body: EvaBodyRow | undefined,
-  ship: ShipPose | undefined,
-  model: EvaShipModel | null,
-) {
-  if (!body || body.phase !== "free" || !ship || !model) return false;
-  const local = worldToShip(ship, [body.x, body.y]);
-  if (!maglockPoint(model, local)) return false;
-  const v = pointVelocity(ship, [body.x, body.y]);
-  return Math.hypot(body.vx - v[0], body.vy - v[1]) <= EVA.maglockMaxRelSpeed;
+/** Door id → open, for the loaded ship's logic-actuated doors (renderer door leaves). */
+export function logicDoorStates(
+  rows: Iterable<ShipLogicRow>,
+  shipId: string | undefined,
+  logic: ShipLogicModel | null,
+): Map<string, boolean> {
+  const out = new Map<string, boolean>();
+  if (!shipId || !logic) return out;
+  const byDevice = new Map<string, ShipLogicRow>();
+  for (const r of rows) if (r.shipId === shipId) byDevice.set(r.deviceId, r);
+  for (const d of logic.doors) {
+    const row = byDevice.get(d.deviceId);
+    out.set(d.doorId, !!row?.open);
+  }
+  return out;
+}
+/** Button device id → status light, for the loaded ship (renderer panels). */
+export function logicPanelLights(
+  rows: Iterable<ShipLogicRow>,
+  shipId: string | undefined,
+): Map<string, { light: string; pressedMicros: number }> {
+  const out = new Map<string, { light: string; pressedMicros: number }>();
+  if (!shipId) return out;
+  for (const r of rows)
+    if (r.shipId === shipId && r.kind === "button")
+      out.set(r.deviceId, {
+        light: r.light,
+        pressedMicros: Number(r.pressedMicros),
+      });
+  return out;
 }
 
 const pressed = (keys: ReadonlySet<string>, code: string) =>
   Number(keys.has(code));
 
 /**
- * Keys to the ordinary input row while outside. Free (jetpack): W/S thrust along the heading,
- * A/D turn (A = counter-clockwise, like the helm), Shift+A/D strafe. Maglocked: WASD walks
- * screen-relative; `screenToShip` turns the screen direction into the ship-local walk direction.
+ * Keys to the ordinary input row while outside: WASD is the jetpack thrust direction, screen
+ * relative. `screenToFrame` maps it into the body's frame: the deck camera's ship-local mapping
+ * while in the ship's frame, the north-up world mapping while free.
  */
 export function evaIntent(
   keys: ReadonlySet<string>,
-  phase: "free" | "maglocked" | undefined,
+  active: boolean,
   blocked: boolean,
-  screenToShip: (h: number, v: number) => { dx: number; dy: number },
+  screenToFrame: (h: number, v: number) => { dx: number; dy: number },
 ) {
   const none = { throttle: 0, turn: 0, dx: 0, dy: 0, sprint: false };
-  if (blocked || !phase) return none;
+  if (blocked || !active) return none;
   const vertical = pressed(keys, "KeyW") - pressed(keys, "KeyS");
   const horizontal = pressed(keys, "KeyD") - pressed(keys, "KeyA");
-  if (phase === "maglocked") {
-    const walk = screenToShip(horizontal, vertical);
-    return { ...none, dx: walk.dx, dy: walk.dy };
-  }
-  const shift = keys.has("ShiftLeft") || keys.has("ShiftRight");
-  return {
-    ...none,
-    throttle: vertical,
-    turn: shift || !horizontal ? 0 : -horizontal,
-    dx: shift ? horizontal : 0,
-  };
+  if (!vertical && !horizontal) return none;
+  const d = screenToFrame(horizontal, vertical);
+  return { ...none, dx: d.dx, dy: d.dy };
 }
 
-/**
- * Screen direction to a ship-local direction for the top-down EVA camera (north-up: screen up is
- * world +Y, screen right is world +X), rotated into the ship frame.
- */
+/** Screen direction to a world direction for the top-down EVA camera (north-up). */
+export function screenToWorldTopDown(
+  h: number,
+  v: number,
+): { dx: number; dy: number } {
+  const len = Math.hypot(h, v);
+  return len < 1e-9 ? { dx: 0, dy: 0 } : { dx: h / len, dy: v / len };
+}
+/** Screen direction (north-up top-down camera) to a ship-local direction. */
 export function screenToShipTopDown(
   h: number,
   v: number,
@@ -294,14 +326,9 @@ export const localAimAngle = (worldAngle: number, shipHeading: number) =>
 /** HUD line for the own EVA state. */
 export function evaStatusLabel(
   body: EvaBodyRow,
-  cycle: EvaCycleRow | undefined,
   ship: ShipPose | undefined,
   nowMicros: bigint,
 ) {
-  if (cycle) {
-    const left = Number(cycle.endsMicros - nowMicros) / 1e6;
-    return `Airlock cycling ${cycle.direction === "in" ? "in" : "out"} · ${Math.max(0, Math.ceil(left))} s`;
-  }
   if (body.returnEndsMicros > 0n) {
     const left = Number(body.returnEndsMicros - nowMicros) / 1e6;
     return `Rescue beacon · return in ${Math.max(0, Math.ceil(left))} s`;
@@ -313,22 +340,18 @@ export function evaStatusLabel(
       })()
     : Math.hypot(body.vx, body.vy);
   const distance = ship ? Math.hypot(body.x - ship.x, body.y - ship.y) : 0;
-  return body.phase === "maglocked"
-    ? `EVA · Maglocked on hull`
-    : `EVA · Jetpack · ${rel.toFixed(1)} m/s · ship ${distance.toFixed(0)} m${body.stranded ? " · STRANDED" : ""}`;
+  const frame =
+    body.phase === "local" ? "riding along" : "free";
+  return `EVA · Jetpack (${frame}) · ${rel.toFixed(1)} m/s · ship ${distance.toFixed(0)} m${body.stranded ? " · STRANDED" : ""}`;
 }
 
-export const EVA_HELP =
-  "W/S thrust · A/D turn · Shift+A/D strafe · M maglock · E airlock · V combat";
-export const EVA_MAGLOCK_HELP =
-  "WASD walk on the hull · M release boots · E airlock · V combat";
+export const EVA_HELP = "WASD jetpack · E button · V combat";
 
 /** Other EVA bodies as own-ship-local remote crew states (the renderer draws them like crewmates). */
 export function evaBodiesForScene(
   rows: Iterable<VisibleEvaRow>,
   ownId: string,
   ship: (ShipPose & { id: string }) | undefined,
-  model: EvaShipModel | null,
   look: (
     appearanceJson: string,
     equipmentJson: string,
@@ -342,21 +365,7 @@ export function evaBodiesForScene(
       row.appearanceJson,
       row.equipmentJson,
     );
-    const scene = evaScene(
-      {
-        ...row,
-        vx: 0,
-        vy: 0,
-        exitShipId: "",
-        visitId: "",
-        deckId: "",
-        returnEndsMicros: 0n,
-        stranded: false,
-      },
-      ship,
-      model,
-      row.cycling,
-    );
+    const scene = evaScene(row, ship);
     const shot = worldToShip(ship, [row.shotX, row.shotY]);
     out.push({
       id: row.characterId,

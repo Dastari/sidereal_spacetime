@@ -634,23 +634,26 @@ export function stepEvaLocal(
 
 // ------------------------------------------------------------------ frames
 
-/** World pose/velocity of a ship-local body (its velocity relative to the hull added). */
+/**
+ * World pose/velocity of a ship-local body. The ship's frame carries the body with the ship's
+ * CENTRE velocity: a turning ship's rotation is presentation only (no centripetal or Coriolis
+ * terms, owner brief 2026-09-29), so the world velocity is the ship velocity plus the body's
+ * velocity relative to the hull, rotated into the world. `refVx/refVy` is that ship velocity.
+ */
 export function localToWorld(pose: ShipPose, s: EvaLocalState) {
   const [x, y] = shipToWorld(pose, [s.x, s.y]);
-  const pv = pointVelocity(pose, [x, y]);
   const rv = rotate([s.vx, s.vy], pose.heading);
   return {
     x,
     y,
-    vx: zero(pv[0] + rv[0]),
-    vy: zero(pv[1] + rv[1]),
+    vx: zero(pose.vx + rv[0]),
+    vy: zero(pose.vy + rv[1]),
     heading: wrapAngle(pose.heading + s.heading),
-    /** The hull's point velocity (the reference). */
-    refVx: pv[0],
-    refVy: pv[1],
+    refVx: pose.vx,
+    refVy: pose.vy,
   };
 }
-/** Ship-local state of a world body (velocity relative to the hull point). */
+/** Ship-local state of a world body (velocity relative to the hull point under it). */
 export function worldToLocal(pose: ShipPose, s: EvaFreeState): EvaLocalState {
   const [x, y] = worldToShip(pose, [s.x, s.y]);
   const pv = pointVelocity(pose, [s.x, s.y]);
@@ -706,20 +709,20 @@ export function evaCaptureShip(
 
 /**
  * Why a ship-local body leaves the ship's frame this tick, if it does: beyond the release radius,
- * or the ship's point acceleration at the body (from last tick's reference velocity) exceeds what
- * the suit can follow.
+ * or the ship's linear acceleration (its velocity change since last tick, `shipVPrevious`) exceeds
+ * what the suit can follow (`EVA.accelLimit`). Rotation never releases a body (presentation only).
  */
 export function evaReleaseReason(
   pose: ShipPose,
   radiusM: number,
   local: readonly [number, number],
-  refPrevious: readonly [number, number] | undefined,
+  shipVPrevious: readonly [number, number] | undefined,
   dt: number = EVA.tickSeconds,
 ): "far" | "outpaced" | undefined {
   if (Math.hypot(local[0], local[1]) - radiusM > EVA.releaseM) return "far";
-  if (!refPrevious) return;
-  const pv = pointVelocity(pose, shipToWorld(pose, local));
-  const a = Math.hypot(pv[0] - refPrevious[0], pv[1] - refPrevious[1]) / dt;
+  if (!shipVPrevious) return;
+  const a =
+    Math.hypot(pose.vx - shipVPrevious[0], pose.vy - shipVPrevious[1]) / dt;
   return a > EVA.accelLimit ? "outpaced" : undefined;
 }
 

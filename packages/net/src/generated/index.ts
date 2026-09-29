@@ -71,6 +71,7 @@ import OperatorSetStarterPrefabReducer from "./operator_set_starter_prefab_reduc
 import OperatorStockShipCargoReducer from "./operator_stock_ship_cargo_reducer";
 import OperatorUpgradePrefabShipReducer from "./operator_upgrade_prefab_ship_reducer";
 import OperatorWipePlayerShipsReducer from "./operator_wipe_player_ships_reducer";
+import PressShipButtonReducer from "./press_ship_button_reducer";
 import PublishConstructionBlueprintReducer from "./publish_construction_blueprint_reducer";
 import RefitExistingWayfarerReducer from "./refit_existing_wayfarer_reducer";
 import RefitRebuiltWayfarerReducer from "./refit_rebuilt_wayfarer_reducer";
@@ -166,6 +167,7 @@ import VisibleCombatActionsRow from "./visible_combat_actions_table";
 import VisibleCrewPresentationRow from "./visible_crew_presentation_table";
 import VisibleEvaBodiesRow from "./visible_eva_bodies_table";
 import VisibleShipDescriptionsRow from "./visible_ship_descriptions_table";
+import VisibleShipLogicRow from "./visible_ship_logic_table";
 import VisibleShipMotionRow from "./visible_ship_motion_table";
 
 /** Type-only namespace exports for generated type groups. */
@@ -620,6 +622,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, VisibleShipDescriptionsRow),
+  visibleShipLogic: __table({
+    name: 'visible_ship_logic',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleShipLogicRow),
   visibleShipMotion: __table({
     name: 'visible_ship_motion',
     indexes: [
@@ -668,6 +677,7 @@ const reducersSchema = __reducers(
   __reducerSchema("operator_stock_ship_cargo", OperatorStockShipCargoReducer),
   __reducerSchema("operator_upgrade_prefab_ship", OperatorUpgradePrefabShipReducer),
   __reducerSchema("operator_wipe_player_ships", OperatorWipePlayerShipsReducer),
+  __reducerSchema("press_ship_button", PressShipButtonReducer),
   __reducerSchema("publish_construction_blueprint", PublishConstructionBlueprintReducer),
   __reducerSchema("refit_existing_wayfarer", RefitExistingWayfarerReducer),
   __reducerSchema("refit_rebuilt_wayfarer", RefitRebuiltWayfarerReducer),

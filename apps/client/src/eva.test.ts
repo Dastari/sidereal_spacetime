@@ -1,44 +1,42 @@
 import { describe, expect, it } from "vitest";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
-import { prefabEvaModel, shipToWorld } from "@sidereal/sim/eva";
+import { EVA, prefabEvaModel, shipToWorld } from "@sidereal/sim/eva";
+import { shipLogicModel } from "@sidereal/sim/ship-logic-model";
 import {
-  evaAirlockAction,
   evaBodiesForScene,
-  evaCanMaglock,
   evaHomeVisit,
   evaIntent,
   evaScene,
   localAimAngle,
+  logicButtonAction,
+  logicDoorStates,
+  logicPanelLights,
   screenToShipTopDown,
+  screenToWorldTopDown,
   worldAimAngle,
   type EvaBodyRow,
+  type ShipLogicRow,
 } from "./eva";
 
+const catalog = defaultPrefabComponentCatalog();
 const wren = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
-const model = prefabEvaModel(wren, defaultPrefabComponentCatalog());
-const lock = model.airlocks[0];
-const ship = {
-  id: "wren",
-  x: 100,
-  y: -20,
-  vx: 3,
-  vy: 0,
-  heading: 0.6,
-  omega: 0,
-};
+const model = prefabEvaModel(wren, catalog);
+const logic = shipLogicModel(wren, catalog)!;
+const lock = model.entries[0];
+const ship = { id: "wren", x: 100, y: -20, vx: 3, vy: 0, heading: 0.6, omega: 0 };
 const body = (over: Partial<EvaBodyRow> = {}): EvaBodyRow => ({
   characterId: "cap",
-  phase: "free",
+  phase: "local",
   x: 0,
   y: 0,
   vx: 3,
   vy: 0,
   heading: 0.6,
-  anchorShipId: "",
-  localX: 0,
-  localY: 0,
-  localHeading: 0,
+  anchorShipId: "wren",
+  localX: 7,
+  localY: 1,
+  localHeading: 0.2,
   forward: 0,
   strafe: 0,
   turn: 0,
@@ -51,181 +49,91 @@ const body = (over: Partial<EvaBodyRow> = {}): EvaBodyRow => ({
   ...over,
 });
 const keys = (...codes: string[]) => new Set(codes);
-const noWalk = () => ({ dx: 0, dy: 0 });
+const identity = (h: number, v: number) => ({ dx: h, dy: v });
 
-describe("EVA client input", () => {
-  it("maps jetpack keys: W/S thrust, A/D turn (A counter-clockwise), Shift+A/D strafe", () => {
-    expect(evaIntent(keys("KeyW"), "free", false, noWalk)).toMatchObject({
-      throttle: 1,
-      turn: 0,
-      dx: 0,
-    });
-    expect(evaIntent(keys("KeyA"), "free", false, noWalk).turn).toBe(1);
-    expect(
-      evaIntent(keys("KeyD", "ShiftLeft"), "free", false, noWalk),
-    ).toMatchObject({
-      turn: 0,
-      dx: 1,
-    });
-    expect(evaIntent(keys("KeyW"), "free", true, noWalk).throttle).toBe(0);
-    expect(evaIntent(keys("KeyW"), undefined, false, noWalk).throttle).toBe(0);
+describe("EVA client input (jetpack, screen relative)", () => {
+  it("WASD is the thrust direction through the frame mapping; blocked or inactive sends nothing", () => {
+    expect(evaIntent(keys("KeyW"), true, false, identity)).toMatchObject({ dx: 0, dy: 1, throttle: 0, turn: 0 });
+    expect(evaIntent(keys("KeyA"), true, false, identity)).toMatchObject({ dx: -1, dy: 0 });
+    expect(evaIntent(keys("KeyW"), true, true, identity).dy).toBe(0);
+    expect(evaIntent(keys("KeyW"), false, false, identity).dy).toBe(0);
+    expect(evaIntent(keys(), true, false, identity)).toMatchObject({ dx: 0, dy: 0 });
   });
-
-  it("walks screen-relative when maglocked, rotated into the ship frame", () => {
-    const walk = evaIntent(keys("KeyW"), "maglocked", false, (h, v) =>
-      screenToShipTopDown(h, v, Math.PI / 2),
-    );
+  it("maps the north-up top-down camera to world and ship directions", () => {
+    expect(screenToWorldTopDown(1, 1).dx).toBeCloseTo(Math.SQRT1_2, 9);
     // ship heading 90°: bow points world −X; screen up (world +Y) is ship starboard (+x)
-    expect(walk.throttle).toBe(0);
-    expect(walk.dx).toBeCloseTo(1, 9);
-    expect(walk.dy).toBeCloseTo(0, 9);
-  });
-
-  it("converts aim between the ship-local and world conventions", () => {
-    expect(worldAimAngle(0, Math.PI / 2)).toBeCloseTo(-Math.PI / 2, 9);
-    expect(localAimAngle(worldAimAngle(0.3, 1.1), 1.1)).toBeCloseTo(0.3, 9);
+    const d = screenToShipTopDown(0, 1, Math.PI / 2);
+    expect(d.dx).toBeCloseTo(1, 9);
+    expect(d.dy).toBeCloseTo(0, 9);
   });
 });
 
-describe("EVA client presentation", () => {
-  it("places a free body in the own ship frame from the world pose", () => {
-    const [x, y] = shipToWorld(ship, [4, -1]);
-    const scene = evaScene(body({ x, y }), ship, model, false);
-    expect(scene.localX).toBeCloseTo(4, 9);
-    expect(scene.localY).toBeCloseTo(-1, 9);
-    expect(scene.localHeading).toBeCloseTo(0, 9);
-    expect(scene.phase).toBe("free");
-    expect(scene.elevation).toBeGreaterThan(2);
+describe("same-plane scene", () => {
+  it("a body in the loaded ship's frame keeps its accepted local point, floating at deck height", () => {
+    const s = evaScene(body(), ship);
+    expect(s.local).toBe(true);
+    expect([s.localX, s.localY]).toEqual([7, 1]);
+    expect(s.localHeading).toBe(0.2);
+    expect(s.phase).toBe("free");
+    expect(s.elevation).toBeCloseTo(0.1875 + EVA.floatElevationM, 9);
   });
-
-  it("uses the accepted local point and the roof height when maglocked on the own ship", () => {
-    const scene = evaScene(
-      body({
-        phase: "maglocked",
-        anchorShipId: "wren",
-        localX: 0,
-        localY: 0,
-        localHeading: 1,
-      }),
-      ship,
-      model,
-      false,
-    );
-    expect([scene.localX, scene.localY, scene.localHeading]).toEqual([0, 0, 1]);
-    expect(scene.elevation).toBeCloseTo(43 / 16, 9);
+  it("a free body (or one in another ship's frame) is placed by its world pose", () => {
+    const w = shipToWorld(ship, [20, -3]);
+    const s = evaScene(body({ phase: "free", anchorShipId: "", x: w[0], y: w[1] }), ship);
+    expect(s.local).toBe(false);
+    expect(s.localX).toBeCloseTo(20, 9);
+    expect(s.localY).toBeCloseTo(-3, 9);
   });
+  it("keeps the home visit while outside", () => {
+    expect(evaHomeVisit(body(), { id: "cap", shipId: "wren" })).toMatchObject({ instanceId: "wren", visitId: "visit-1" });
+    expect(evaHomeVisit(body({ exitShipId: "other" }), { id: "cap", shipId: "wren" })).toBeUndefined();
+  });
+});
 
-  it("keeps the home ship scene only for the ship left", () => {
-    expect(evaHomeVisit(body(), { id: "cap", shipId: "wren" })).toMatchObject({
-      visitId: "visit-1",
-      instanceId: "wren",
-      deckId: "deck",
+describe("wall buttons (E)", () => {
+  const panel = (id: string) => logic.panels.find((p) => p.deviceId === id)!;
+  it("offers the right button from the deck and from space, with a label from its wiring", () => {
+    expect(logicButtonAction({ shipId: "wren", logic, aboard: panel("btn-lock-in").front })).toMatchObject({
+      kind: "button",
+      deviceId: "btn-lock-in",
+      label: "Cycle airlock",
     });
-    expect(
-      evaHomeVisit(body(), { id: "cap", shipId: "other" }),
-    ).toBeUndefined();
-  });
-
-  it("offers the airlock from the deck, from space and to cancel", () => {
-    expect(
-      evaAirlockAction({
-        shipId: "wren",
-        model,
-        aboard: { localX: lock.inside[0], localY: lock.inside[1] },
-        eva: undefined,
-        cycle: undefined,
-      })?.label,
-    ).toBe("Cycle airlock (EVA)");
-    const outside = evaScene(
-      body({ ...Object.fromEntries([["x", 0]]) }),
-      { ...ship, x: 0, y: 0, heading: 0 },
-      model,
-      false,
+    expect(logicButtonAction({ shipId: "wren", logic, outside: panel("btn-lock-out").front })?.label).toBe(
+      "Cycle airlock",
     );
-    expect(
-      evaAirlockAction({
-        shipId: "wren",
-        model,
-        aboard: undefined,
-        eva: { ...outside, localX: lock.outside[0], localY: lock.outside[1] },
-        cycle: undefined,
-      })?.label,
-    ).toBe("Cycle airlock (enter)");
-    expect(
-      evaAirlockAction({
-        shipId: "wren",
-        model,
-        aboard: undefined,
-        eva: { ...outside, localX: 30, localY: 30 },
-        cycle: undefined,
-      }),
-    ).toBeUndefined();
-    expect(
-      evaAirlockAction({
-        shipId: "wren",
-        model,
-        aboard: undefined,
-        eva: undefined,
-        cycle: {
-          characterId: "cap",
-          shipId: "wren",
-          airlockId: "airlock",
-          direction: "out",
-          startedMicros: 0n,
-          endsMicros: 1n,
-        },
-      })?.label,
-    ).toBe("Cancel airlock cycle");
-  });
-
-  it("offers the maglock only over the hull at a safe relative speed", () => {
-    const still = { ...ship, x: 0, y: 0, vx: 0, heading: 0 };
-    expect(evaCanMaglock(body({ vx: 0 }), still, model)).toBe(true);
-    expect(evaCanMaglock(body({ vx: 5 }), still, model)).toBe(false);
-    expect(evaCanMaglock(body({ x: 40, vx: 0 }), still, model)).toBe(false);
-  });
-
-  it("draws other EVA bodies as remote crew with zero-g state, never the own body", () => {
-    const [x, y] = shipToWorld(ship, [2, 3]);
-    const rows = evaBodiesForScene(
-      [
-        {
-          characterId: "mate",
-          name: "Mate",
-          phase: "free",
-          x,
-          y,
-          heading: ship.heading + 0.5,
-          anchorShipId: "",
-          localX: 0,
-          localY: 0,
-          localHeading: 0,
-          forward: 1,
-          strafe: 0,
-          turn: 0,
-          walking: false,
-          cycling: false,
-          dead: false,
-          connected: true,
-          appearanceJson: "{}",
-          equipmentJson: "{}",
-          aimActive: false,
-          aimAngle: 0,
-          shotSequence: 0n,
-          shotX: 0,
-          shotY: 0,
-          shotStruck: false,
-        },
-        { characterId: "cap" } as never,
-      ],
-      "cap",
-      ship,
-      model,
-      () => ({ crewAppearance: {}, heldItem: null }),
+    expect(logicButtonAction({ shipId: "wren", logic, aboard: panel("btn-hall").front })?.label).toBe(
+      "Open airlock (inner door)",
     );
-    expect(rows).toHaveLength(1);
-    expect(rows[0].localX).toBeCloseTo(2, 9);
-    expect(rows[0].eva.localHeading).toBeCloseTo(0.5, 9);
-    expect(rows[0].eva.forward).toBe(1);
+    // An outside panel is not offered from the deck (and vice versa); far away: nothing.
+    expect(logicButtonAction({ shipId: "wren", logic, aboard: panel("btn-lock-out").front })?.deviceId).not.toBe(
+      "btn-lock-out",
+    );
+    expect(logicButtonAction({ shipId: "wren", logic, aboard: [0, 0] })).toBeUndefined();
+  });
+  it("reads door states and lights from the logic view for the loaded ship only", () => {
+    const rows: ShipLogicRow[] = [
+      { shipId: "wren", deviceId: "door-outer", kind: "door", state: "open", light: "off", open: true, endsMicros: 0n, pressedMicros: 0n },
+      { shipId: "wren", deviceId: "btn-lock-in", kind: "button", state: "red", light: "red", open: false, endsMicros: 0n, pressedMicros: 5n },
+      { shipId: "kite", deviceId: "door-inner", kind: "door", state: "open", light: "off", open: true, endsMicros: 0n, pressedMicros: 0n },
+    ];
+    const doors = logicDoorStates(rows, "wren", logic);
+    expect(doors.get(lock.id)).toBe(true);
+    expect(doors.get("d-hold")).toBe(false);
+    expect(logicPanelLights(rows, "wren").get("btn-lock-in")).toEqual({ light: "red", pressedMicros: 5 });
+  });
+});
+
+describe("remote spacewalkers and aim", () => {
+  it("draws other spacewalkers in the own ship frame, never the own body", () => {
+    const rows = [
+      { ...body(), characterId: "cap", name: "Cap", cycling: false, dead: false, connected: true, appearanceJson: "{}", equipmentJson: "[]", aimActive: false, aimAngle: 0, shotSequence: 0n, shotX: 0, shotY: 0, shotStruck: false },
+      { ...body({ localX: 9, localY: 2 }), characterId: "mate", name: "Mate", cycling: false, dead: false, connected: true, appearanceJson: "{}", equipmentJson: "[]", aimActive: false, aimAngle: 0, shotSequence: 0n, shotX: 0, shotY: 0, shotStruck: false },
+    ];
+    const out = evaBodiesForScene(rows, "cap", ship, () => ({ crewAppearance: {} as never, heldItem: null }));
+    expect(out.map((r) => r.id)).toEqual(["mate"]);
+    expect([out[0].localX, out[0].localY]).toEqual([9, 2]);
+  });
+  it("converts aim between the ship frame and the world", () => {
+    expect(localAimAngle(worldAimAngle(0.3, 1.1), 1.1)).toBeCloseTo(0.3, 9);
   });
 });

@@ -1851,6 +1851,39 @@ export const ShipComponentDamageStatus = __t.object("ShipComponentDamageStatus",
 });
 export type ShipComponentDamageStatus = __Infer<typeof ShipComponentDamageStatus>;
 
+export const ShipLogicDeviceStatus = __t.object("ShipLogicDeviceStatus", {
+  key: __t.string(),
+  shipId: __t.string(),
+  deviceId: __t.string(),
+  kind: __t.string(),
+  state: __t.string(),
+  light: __t.string(),
+  open: __t.bool(),
+  endsMicros: __t.u64(),
+  pressedMicros: __t.u64(),
+});
+export type ShipLogicDeviceStatus = __Infer<typeof ShipLogicDeviceStatus>;
+
+export const ShipLogicState = __t.object("ShipLogicState", {
+  key: __t.string(),
+  shipId: __t.string(),
+  deviceId: __t.string(),
+  kind: __t.string(),
+  instanceRevision: __t.u64(),
+  stateJson: __t.string(),
+  updatedMicros: __t.u64(),
+});
+export type ShipLogicState = __Infer<typeof ShipLogicState>;
+
+export const ShipLogicTimer = __t.object("ShipLogicTimer", {
+  key: __t.string(),
+  shipId: __t.string(),
+  deviceId: __t.string(),
+  instanceRevision: __t.u64(),
+  dueMicros: __t.u64(),
+});
+export type ShipLogicTimer = __Infer<typeof ShipLogicTimer>;
+
 export const ShipOperatorOperation = __t.object("ShipOperatorOperation", {
   operationId: __t.string(),
   principal: __t.identity(),
@@ -2135,6 +2168,9 @@ export type VisibleInventoryItem = __Infer<typeof VisibleInventoryItem>;
 
 export const VisibleShipDescriptions = __t.object("VisibleShipDescriptions", {});
 export type VisibleShipDescriptions = __Infer<typeof VisibleShipDescriptions>;
+
+export const VisibleShipLogic = __t.object("VisibleShipLogic", {});
+export type VisibleShipLogic = __Infer<typeof VisibleShipLogic>;
 
 export const VisibleShipMotion = __t.object("VisibleShipMotion", {});
 export type VisibleShipMotion = __Infer<typeof VisibleShipMotion>;

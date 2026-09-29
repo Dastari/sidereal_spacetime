@@ -125,8 +125,9 @@ export const FED_WREN = prefab({
   // Revision 6 (2026-09-29, owner: "a proper button object on the wall inside and outside (with
   // proximity E) ... wired to a proper logic system"): the hold is the airlock chamber between the
   // hall door (inner) and the starboard hatch (outer). Buttons beside the hatch inside and outside
-  // cycle it; a hall button beside the hold door opens the inner side, so the crew is never locked
-  // out of the hold. One 3 s stage simulates (de)pressurisation. Wiki `Systems/Ship Logic`.
+  // cycle it (a spacewalker can seal the ship behind them and call the lock back); a hall button
+  // beside the hold door opens the inner side, so the crew is never locked out of the hold. One 3 s
+  // stage simulates (de)pressurisation. Wiki `Systems/Ship Logic`.
   logic: (() => {
     const inside = button("btn-lock-in", [7.5, 0], "port");
     const outside = button("btn-lock-out", [7.5, 0], "starboard");
@@ -142,7 +143,7 @@ export const FED_WREN = prefab({
       ],
       links: airlockLogic("lock", "door-inner", "door-outer", [
         [inside, "cycle"],
-        [outside, "open_outer"],
+        [outside, "cycle"],
         [hall, "open_inner"],
       ]),
     };

@@ -216,11 +216,16 @@ export type SceneState = {
   evaBodies?: readonly RemoteCrewState[];
   /** The own running airlock cycle (`own_eva_airlock_cycle`): animates that hatch's outer door. */
   airlockCycle?: import("./prefab-ship/doors").AirlockCycleState | null;
+  /** Ship logic of the loaded ship (`visible_ship_logic`): actuated door states and button lights. */
+  shipLogic?: {
+    doors: ReadonlyMap<string, boolean>;
+    panels: ReadonlyMap<string, { light: string; pressedMicros: number }>;
+  };
 };
 export type EvaSceneState = VoxelCrewEva & {
   /** Own-ship-local heading (ship convention: counter-clockwise, forward = (−sin h, cos h)). */
   localHeading: number;
-  /** Presentation height above the ship datum (m): the roof when maglocked, above it when free. */
+  /** Presentation height above the ship datum (m): floating just above the deck plane (same plane). */
   elevation: number;
 };
 /** Top-down EVA camera: half view extent (m) on leaving the ship, and the slight tilt. */
@@ -1315,7 +1320,9 @@ async function buildWorld(
       cyclingBodies: (state.evaBodies ?? [])
         .filter((b) => b.eva?.cycling)
         .map((b) => ({ x: b.localX, y: b.localY })),
+      logic: state.shipLogic?.doors,
     });
+    prefabView?.updatePanels(state.shipLogic?.panels, Date.now());
     camera.getViewMatrix(true);
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,

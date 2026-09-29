@@ -80,20 +80,24 @@ describe("ship logic (Wren r6 airlock)", () => {
     expect(h.light("btn-lock-out")).toBe("red");
   });
 
-  it("outside button calls the lock open; inside button cycles back in", () => {
+  it("outside button cycles too: a spacewalker seals the ship behind them and calls the lock back", () => {
     const h = harness(wren.logic!);
     h.fire({ kind: "press", device: "btn-lock-out" }, 0);
     h.runTimers(3_000_000);
     expect(h.door("door-outer").open).toBe(true);
-    // Pressing the outside button again in vacuum keeps the outer door open (no cycle).
+    // Outside, press again: the outer door seals and the chamber pressurises (inner opens).
     h.fire({ kind: "press", device: "btn-lock-out" }, 3_500_000);
-    expect(h.phase()).toBe("vacuum");
-    h.fire({ kind: "press", device: "btn-lock-in" }, 4_000_000);
     expect(h.phase()).toBe("pressurising");
     expect(h.door("door-outer").open).toBe(false);
-    h.runTimers(7_000_000);
+    h.runTimers(6_500_000);
     expect(h.phase()).toBe("pressurised");
     expect(h.door("door-inner").open).toBe(true);
+    // A press during a running stage is ignored (no reversal mid-cycle).
+    h.fire({ kind: "press", device: "btn-lock-out" }, 7_000_000);
+    h.fire({ kind: "press", device: "btn-lock-in" }, 7_100_000);
+    expect(h.phase()).toBe("depressurising");
+    h.runTimers(10_000_000);
+    expect(h.phase()).toBe("vacuum");
   });
 
   it("hall button opens the inner side from vacuum", () => {

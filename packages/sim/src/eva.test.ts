@@ -160,10 +160,10 @@ describe("frames: ride-along bubble and drop-off", () => {
     expect(Math.hypot(s.vx, s.vy)).toBe(0);
     const turning: ShipPose = { ...moving, omega: 0.3 };
     const w = localToWorld(turning, s);
-    // Its world velocity is exactly the hull's point velocity: it rides along.
-    const pv = pointVelocity(turning, [w.x, w.y]);
-    expect(w.vx).toBeCloseTo(pv[0], 9);
-    expect(w.vy).toBeCloseTo(pv[1], 9);
+    // It moves with the ship's frame: the ship's velocity, rotation carried as presentation only.
+    expect(w.vx).toBeCloseTo(turning.vx, 9);
+    expect(w.vy).toBeCloseTo(turning.vy, 9);
+    expect(w.refVx).toBe(turning.vx);
   });
 
   it("captures a slow body inside the bubble, not a fast or distant one", () => {
@@ -189,6 +189,11 @@ describe("frames: ride-along bubble and drop-off", () => {
     expect(
       evaReleaseReason(moving, model.radiusM, [model.radiusM + EVA.releaseM + 1, 0], pv),
     ).toBe("far");
+    // A fast-spinning ship never flings a rider off: rotation is presentation only.
+    const spinning: ShipPose = { ...moving, omega: 2 };
+    expect(
+      evaReleaseReason(spinning, model.radiusM, [model.radiusM + 5, 0], [spinning.vx, spinning.vy]),
+    ).toBeUndefined();
   });
 
   it("jetpacking clear: full thrust reaches the speed cap relative to the reference", () => {
