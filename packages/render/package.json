@@ -13,6 +13,7 @@
     "./antialiasing-settings": "./src/antialiasing-settings.ts",
     "./graphics-settings": "./src/graphics-settings.ts",
     "./render-quality": "./src/render-quality.ts",
+    "./ship-glow-profile": "./src/ship-glow-profile.ts",
     "./local-light-budget": "./src/local-light-budget.ts",
     "./diagnostics": "./src/diagnostics.ts",
     "./mesh-roles": "./src/mesh-roles.ts",
