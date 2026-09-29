@@ -94,7 +94,8 @@
     "./zone-path": "./src/zone-path.ts",
     "./ship-dresser": "./src/ship-dresser.ts",
     "./ship-systems": "./src/ship-systems.ts",
-    "./lifecycle-outbox": "./src/lifecycle-outbox.ts"
+    "./lifecycle-outbox": "./src/lifecycle-outbox.ts",
+    "./prefab-ship-systems": "./src/prefab-ship-systems.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",

@@ -103,6 +103,7 @@ function fixture() {
     ship: table("id", { by_owner: "owner" }),
     characterVitals: table("characterId"),
     shipComponentDamage: table("id", { by_ship: "shipId" }),
+    shipSystemsDirty: table("shipId"),
     constructionInstance: table("id"),
     constructionLocation: table("characterId", { by_instance: "instanceId" }),
     constructionPilotSeat: table("characterId"),
@@ -617,6 +618,10 @@ test("component damage reaches flight fittings through the server damage produce
     revision: 2n,
   });
   expect(db.constructionFlightDirty.shipId.find("wren")).toBeTruthy();
+  // S4-1: the damage-state change queued a ship-systems recompile.
+  expect(db.shipSystemsDirty.shipId.find("wren")).toMatchObject({
+    reason: "damage",
+  });
   // Destroyed: availability drops to zero; nothing more is queued afterwards.
   for (let i = 0; i < 3; i++)
     applyShotDamage(

@@ -78,6 +78,11 @@ export interface ShipSystemsInput {
   ammoFraction?: number;
   /** Allow `status: "future"` placeholders (they stay idle). */
   allowFuture?: boolean;
+  /**
+   * Damage-state performance 0..1 per placement id (default 1). Outputs scale by it
+   * (`degradeShipComponent`); 0 is a destroyed component that neither supplies nor draws.
+   */
+  performance?: Readonly<Record<string, number>>;
 }
 export interface ShipPowerModeReport {
   demandKw: number;
@@ -314,6 +319,89 @@ export function fitShipComponentToHardpoint(
   return { ok: errors.length === 0, errors, warnings };
 }
 
+// ------------------------------------------------------------------ damage
+/**
+ * A component definition at a damage-state performance (catalogue `damageStates`: a multiplier
+ * on output — thrust, generation, rejection, supply, range, damage). Demand is unchanged while
+ * the part works; a destroyed part (performance 0) is inert: no output, no demand, no station
+ * or control slots, but it keeps its mass. Returns the same object at full performance.
+ */
+export function degradeShipComponent(
+  d: ShipComponentDefinition,
+  performance: number,
+): ShipComponentDefinition {
+  const f = Number.isFinite(performance)
+    ? Math.min(1, Math.max(0, performance))
+    : 1;
+  if (f >= 1) return d;
+  const dead = f <= 0;
+  const out = (v: number) => v * f;
+  const draw = (v: number) => (dead ? 0 : v);
+  return {
+    ...d,
+    crew: dead ? { ...d.crew, station: null } : d.crew,
+    power: {
+      ...d.power,
+      idleKw: draw(d.power.idleKw),
+      activeKw: draw(d.power.activeKw),
+      peakKw: draw(d.power.peakKw),
+      generationKw: out(d.power.generationKw),
+      maxDischargeKw: out(d.power.maxDischargeKw),
+      maxChargeKw: out(d.power.maxChargeKw),
+    },
+    heat: {
+      ...d.heat,
+      idleKw: draw(d.heat.idleKw),
+      activeKw: draw(d.heat.activeKw),
+      peakKw: draw(d.heat.peakKw),
+      rejectionKw: out(d.heat.rejectionKw),
+    },
+    fluids: {
+      ...d.fluids,
+      coolantDemandLps: draw(d.fluids.coolantDemandLps),
+      coolantSupplyLps: out(d.fluids.coolantSupplyLps),
+      fuelIdleLps: draw(d.fluids.fuelIdleLps),
+      fuelActiveLps: draw(d.fluids.fuelActiveLps),
+      airSupplyM3s: out(d.fluids.airSupplyM3s),
+      crewSupported: out(d.fluids.crewSupported),
+    },
+    data: {
+      ...d.data,
+      demandKbps: draw(d.data.demandKbps),
+      supplyKbps: out(d.data.supplyKbps),
+      controlSlots: dead ? 0 : d.data.controlSlots,
+      controlSlotsUsed: dead ? 0 : d.data.controlSlotsUsed,
+    },
+    propulsion: d.propulsion && {
+      ...d.propulsion,
+      thrustKn: out(d.propulsion.thrustKn),
+      ...(d.propulsion.reverseThrustKn === undefined
+        ? {}
+        : { reverseThrustKn: out(d.propulsion.reverseThrustKn) }),
+    },
+    weapon: d.weapon && {
+      ...d.weapon,
+      damagePerShot: out(d.weapon.damagePerShot),
+      rangeM: out(d.weapon.rangeM),
+    },
+    shield: d.shield && {
+      ...d.shield,
+      capacityHp: out(d.shield.capacityHp),
+      rechargePerS: out(d.shield.rechargePerS),
+    },
+    sensor: d.sensor && {
+      ...d.sensor,
+      rangeM: out(d.sensor.rangeM),
+      commRangeM: out(d.sensor.commRangeM),
+    },
+    tool: d.tool && {
+      ...d.tool,
+      forceKn: out(d.tool.forceKn),
+      rateKgPerS: out(d.tool.rateKgPerS),
+    },
+  };
+}
+
 // ------------------------------------------------------------------- modes
 type Rule =
   | "main"
@@ -498,7 +586,12 @@ export function compileShipSystems(input: ShipSystemsInput): ShipSystemsReport {
       continue;
     }
     seen.add(p.id);
-    const d = defs.get(p.componentId);
+    const base = defs.get(p.componentId);
+    const performance = input.performance?.[p.id];
+    const d =
+      base && performance !== undefined
+        ? degradeShipComponent(base, performance)
+        : base;
     if (!d) {
       issue(
         "error",

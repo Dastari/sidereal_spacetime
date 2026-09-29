@@ -42,6 +42,8 @@ export const WIPED_SHIP_TABLES = [
   // Flight, damage, zones and legacy per-ship bodies
   "constructionFlightDamageEvent",
   "shipComponentDamage",
+  "shipSystemsState",
+  "shipSystemsDirty",
   "constructionPilotSeat",
   "actuatorOutput",
   "spaceBody",

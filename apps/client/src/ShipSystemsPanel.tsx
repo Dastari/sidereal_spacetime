@@ -2,6 +2,13 @@ import { useEffect, useRef, useState } from "react";
 import { tables, type DbConnection } from "@sidereal/net";
 import { LAB_FLIGHT_ACTUATORS } from "@sidereal/content/flight";
 import { createOperationId } from "./operation-id";
+import {
+  budgetLines,
+  budgetOfReport,
+  budgetStatus,
+  estimateShipSystems,
+  type ShipBudget,
+} from "./ship-systems-budget";
 import "./ship-refit.css";
 import "./ship-systems.css";
 
@@ -46,6 +53,8 @@ export function ShipSystemsPanel({
     const watched = [
       connection.db.ownAuthoredFlights,
       connection.db.ownAuthoredFlightPowerFittings,
+      connection.db.ownShipNetworks,
+      connection.db.ownShipSystemsReport,
     ];
     for (const table of watched) {
       table.onInsert(changed);
@@ -65,6 +74,8 @@ export function ShipSystemsPanel({
       .subscribe([
         tables.ownAuthoredFlights,
         tables.ownAuthoredFlightPowerFittings,
+        tables.ownShipNetworks,
+        tables.ownShipSystemsReport,
       ]);
     return () => {
       disposed = true;
@@ -82,6 +93,52 @@ export function ShipSystemsPanel({
   const binding = [...connection.db.ownAuthoredFlights.iter()].find(
     (row) => row.shipId === actor.shipId,
   );
+  // S4-1: the server-compiled budget (owner or admitted crew); while it is pending the owner
+  // sees the client estimate over the same document and damage rows.
+  const network = [...connection.db.ownShipNetworks.iter()].find(
+    (row) => row.shipId === actor.shipId,
+  );
+  const report = [...connection.db.ownShipSystemsReport.iter()].find(
+    (row) => row.shipId === actor.shipId,
+  );
+  const owned = [...connection.db.ownShips.iter()].some(
+    (row) => row.id === actor.shipId,
+  );
+  const estimate =
+    !network && owned
+      ? estimateShipSystems(
+          [...connection.db.ownConstructionInstances.iter()].find(
+            (row) => row.id === actor.shipId,
+          )?.documentJson,
+          [...connection.db.ownShipComponentDamage.iter()]
+            .filter((row) => row.shipId === actor.shipId)
+            .map((row) => ({
+              objectId: row.objectId,
+              performance: row.performance,
+            })),
+        )
+      : undefined;
+  const budget: ShipBudget | undefined =
+    network ??
+    (estimate &&
+      budgetOfReport(estimate.report, estimate.damaged, estimate.destroyed));
+  const issues = (() => {
+    const json = report?.reportJson;
+    if (!json && !estimate) return [];
+    try {
+      const parsed = json
+        ? (JSON.parse(json) as {
+            issues: { severity: string; message: string }[];
+          })
+        : estimate!.report;
+      return parsed.issues
+        .filter((i) => i.severity !== "info")
+        .slice(0, 5)
+        .map((i) => i.message);
+    } catch {
+      return [];
+    }
+  })();
   const engines = [...connection.db.ownAuthoredFlightPowerFittings.iter()]
     .filter((row) => row.shipId === actor.shipId && row.kind === "actuator")
     .sort((a, b) => a.sourceDeviceId.localeCompare(b.sourceDeviceId));
@@ -139,10 +196,39 @@ export function ShipSystemsPanel({
           </button>
           <h2>Ship systems</h2>
           {error && <p role="alert">{error}</p>}
+          {ready && budget && (
+            <div className="ship-systems-budget" aria-label="Systems budget">
+              <p>
+                {budgetStatus(budget)}
+                <small>
+                  {network
+                    ? `Server compile r${network.compileRevision}${network.access === "crew" ? " · crew view" : ""}`
+                    : "Estimate · server compile pending"}
+                </small>
+              </p>
+              <dl>
+                {budgetLines(budget).map((line) => (
+                  <div key={line.label}>
+                    <dt>{line.label}</dt>
+                    <dd>{line.value}</dd>
+                  </div>
+                ))}
+              </dl>
+              {issues.length > 0 && (
+                <ul className="ship-systems-issues">
+                  {issues.map((message) => (
+                    <li key={message}>{message}</li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          )}
           {!ready ? (
             <p role="status">Loading ship connections…</p>
           ) : !binding || !engines.length ? (
-            <p>No compatible power installation on this ship.</p>
+            budget ? null : (
+              <p>No compatible power installation on this ship.</p>
+            )
           ) : (
             <>
               <p>Reactor · emits power</p>

@@ -34,6 +34,7 @@ import {
   type CharacterTarget,
 } from "@sidereal/sim/combat-damage";
 import { queueFlightDamage } from "./construction-flight-availability";
+import { markShipSystemsDirty } from "./ship-systems-dirty";
 import { releaseForDeath, vitalsOf } from "./character-death";
 import { recordLifecycleEvent, type LifecycleCause } from "./lifecycle";
 
@@ -148,7 +149,7 @@ type PrefabBinding = {
 };
 const bindings = new Map<string, PrefabBinding | null>();
 /** Parsed prefab binding of a construction instance, cached per instance revision. */
-function prefabBindingOf(instance: {
+export function prefabBindingOf(instance: {
   id: string;
   revision: bigint;
   documentJson: string;
@@ -244,6 +245,9 @@ export function damageComponent(
         previousState: row?.state ?? "pristine",
       },
     );
+    // S4-1: the compiled systems budget follows the damage state.
+    if (state.performance !== (row?.performance ?? 1))
+      markShipSystemsDirty(ctx, shipId, "damage");
   }
   return {
     damage: applied,
