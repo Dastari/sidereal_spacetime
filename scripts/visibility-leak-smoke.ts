@@ -34,7 +34,10 @@ const EXTERIOR_VIEWS: Record<string, readonly string[]> = {
     "shipId",
   ],
   visibleShipSystemEffects: ["power", "shipId"],
+  visibleActuatorExhaust: ["key", "shipId", "sourceId", "throttle"],
 };
+/** Blueprint-derived flight source ids (never fitting UUIDs). */
+const PREFAB_SOURCE = /^mount-[A-Za-z0-9][A-Za-z0-9._-]*(#[A-Za-z0-9._-]+)?$/;
 /** Private base tables behind the interior and exterior views; never directly subscribable. */
 const PRIVATE_TABLES = [
   "ship",
@@ -219,4 +222,82 @@ export async function visibilityLeakSmoke(options: {
   } finally {
     spy.disconnect();
   }
+}
+
+/**
+ * Remote plumes: while the owner (A) flies, the observer (B) receives A's firing thrusters through
+ * `visible_actuator_exhaust` only: exact columns, blueprint source ids, coarse throttle, and no
+ * fitting UUID or other interior identifier. Start before A thrusts; `finish` after.
+ */
+export async function watchRemoteExhaust(options: {
+  host: string;
+  database: string;
+  owner: DbConnection;
+  observer: DbConnection;
+  observerToken: string;
+  wait: (fn: () => boolean, label: string) => Promise<void>;
+}) {
+  const { owner, observer, wait } = options;
+  const shipId = [...owner.db.ownShips.iter()][0]!.id;
+  const shared = ownIdentifiers(observer);
+  const secrets = [...ownIdentifiers(owner)].filter(
+    (v) => v !== shipId && !shared.has(v),
+  );
+  const seen: Record<string, unknown>[] = [];
+  let applied = false;
+  const watcher = DbConnection.builder()
+    .withUri(options.host)
+    .withDatabaseName(options.database)
+    .withToken(options.observerToken)
+    .onConnect((c) => {
+      const record = (_ctx: unknown, row: Record<string, unknown>) =>
+        seen.push({ ...row });
+      c.db.visibleActuatorExhaust.onInsert(record as never);
+      c.db.visibleActuatorExhaust.onUpdate(((
+        _ctx: unknown,
+        _old: unknown,
+        row: Record<string, unknown>,
+      ) => seen.push({ ...row })) as never);
+      c.subscriptionBuilder()
+        .onApplied(() => (applied = true))
+        .subscribe([tables.visibleActuatorExhaust]);
+    })
+    .build();
+  await wait(() => applied, "observer subscribed to remote exhaust");
+  return {
+    async finish() {
+      try {
+        const theirs = seen.filter((r) => r.shipId === shipId);
+        assert(
+          theirs.length > 0,
+          "the observer saw the owner's thrusters fire",
+        );
+        for (const row of seen) {
+          assert.deepEqual(
+            Object.keys(row).sort(),
+            EXTERIOR_VIEWS.visibleActuatorExhaust,
+            "visible_actuator_exhaust exposes only its exterior columns",
+          );
+          assert(
+            PREFAB_SOURCE.test(String(row.sourceId)),
+            `blueprint source id, never a fitting UUID: ${json(row)}`,
+          );
+          const throttle = Number(row.throttle);
+          assert(
+            throttle > 0 && throttle <= 1 && Number.isInteger(throttle * 16),
+            `coarse throttle: ${throttle}`,
+          );
+          const text = json(row);
+          for (const secret of secrets)
+            assert(!text.includes(secret), `exhaust leaks ${secret}`);
+        }
+        return {
+          rowsSeen: seen.length,
+          ownerJets: [...new Set(theirs.map((r) => String(r.sourceId)))].sort(),
+        };
+      } finally {
+        watcher.disconnect();
+      }
+    },
+  };
 }

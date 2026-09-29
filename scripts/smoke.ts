@@ -32,7 +32,10 @@ import {
 import { operatorCall } from "./smoke-operator";
 import { contentDefinitionsSmoke } from "./content-definitions-smoke";
 import { itemDefinitionsSmoke } from "./item-definitions-smoke";
-import { visibilityLeakSmoke } from "./visibility-leak-smoke";
+import {
+  visibilityLeakSmoke,
+  watchRemoteExhaust,
+} from "./visibility-leak-smoke";
 import { prefabWalkFrame } from "../packages/sim/src/prefab-construction";
 import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 import { SHARED_SYSTEM_SEED } from "../packages/content/src/shared-system";
@@ -391,6 +394,15 @@ if (restore) {
       sharedBodies(b).some(
         (r) => r.key === "approach-rock" && r.vy > 0 && r.tick > 0n,
       );
+    // Beta watches Alpha's thrusters fire through the exterior-only exhaust view.
+    const exhaustWatch = await watchRemoteExhaust({
+      host,
+      database,
+      owner: a,
+      observer: b,
+      observerToken: second.token,
+      wait,
+    });
     for (let i = 1; i <= 300 && !rockMoving(); i++) {
       await a.reducers.setIntent({
         sprint: false,
@@ -410,6 +422,7 @@ if (restore) {
       dx: 0,
       dy: 0,
     });
+    summary.remote_exhaust = await exhaustWatch.finish();
     await wait(
       () =>
         sharedBodies(b).some(
