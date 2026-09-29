@@ -1,6 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
-import { INVENTORY_PHYSICAL_DEFINITIONS } from "../../content/src/inventory-physical-definitions";
+import { PHYSICAL_CATALOG } from "@sidereal/content/physical-definitions";
 import { LAB_WEAPONS } from "@sidereal/content/weapons";
 import {
   CONTENT_DEFINITION_SEED,
@@ -115,7 +115,7 @@ describe("seed reproduces the code catalogues", () => {
   test("item mass agrees with the flight mass snapshot (one physical truth)", () => {
     for (const d of INVENTORY_DEFINITIONS)
       expect(
-        INVENTORY_PHYSICAL_DEFINITIONS.find((p) => p.id === "inventory:" + d.id)
+        PHYSICAL_CATALOG.definitions.find((p) => p.id === "inventory:" + d.id)
           ?.massKg,
       ).toBe(d.massKg);
   });
