@@ -7,7 +7,7 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { createObjectOutline } from "./object-outline";
-import { objectProxyMesh } from "./prefab-ship-interaction";
+import { objectProxyMesh, outlineExclusions } from "./prefab-ship-interaction";
 
 const cleanup: (() => void)[] = [];
 afterEach(() => {
@@ -80,6 +80,41 @@ describe("object silhouette proxy", () => {
     );
     expect(all.getTotalIndices()).toBe(12);
     expect(parts.getTotalIndices()).toBe(6);
+  });
+
+  it("never outlines a neighbour whose geometry lies inside a larger object's box", () => {
+    const scene = fixture();
+    const ship = new TransformNode("ship", scene);
+    const view = new TransformNode("prefab-ship:test", scene);
+    view.parent = ship;
+    batch(scene, view);
+    // A large object (e.g. a module) whose box also encloses a small locker at x 3..4.
+    const big = {
+      min: new Vector3(-0.1, 0, -0.1),
+      max: new Vector3(4.1, 1, 1.1),
+    };
+    const locker = {
+      min: new Vector3(2.9, 0, -0.1),
+      max: new Vector3(4.1, 1, 1.1),
+    };
+    const objects = [
+      { id: "module", box: big },
+      { id: "locker", box: locker },
+    ];
+    expect(outlineExclusions(objects, "module")).toEqual([locker]);
+    expect(outlineExclusions(objects, "locker")).toEqual([]);
+    const proxy = objectProxyMesh(
+      scene,
+      ship,
+      view,
+      big,
+      "proxy",
+      undefined,
+      outlineExclusions(objects, "module"),
+    );
+    expect(proxy.getTotalIndices()).toBe(6);
+    const xs = proxy.getVerticesData("position")!.filter((_, i) => i % 3 === 0);
+    expect(Math.max(...xs)).toBeLessThanOrEqual(1);
   });
 
   it("falls back to the object's box when the view has no geometry there", () => {

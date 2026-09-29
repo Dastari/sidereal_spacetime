@@ -208,6 +208,11 @@ function rayBox(o: Vector3, d: Vector3, b: Box): number | undefined {
   return t0;
 }
 
+/** Whether an object is drawn (and so pickable/outlinable) in the deck or flight view. */
+function inView(o: PrefabShipObject, deck: boolean) {
+  return o.view === "both" || (o.view === "deck") === deck;
+}
+
 /** Source roles of an outlined object: placed parts, or the door frame for doors. */
 const PART_ROLES: ReadonlySet<string> = new Set(["equipment"]);
 const DOOR_ROLES: ReadonlySet<string> = new Set(["wall"]);
@@ -246,6 +251,35 @@ function shipTriangles(mesh: Mesh, shipRoot: TransformNode) {
 }
 
 /**
+ * Boxes of the other objects drawn in the same view that own triangles inside `box`: smaller
+ * overlapping boxes (ties by id). A triangle belongs to the smallest object box containing it, so
+ * an outline never spills onto a neighbour whose geometry sits inside a larger object's box.
+ */
+export function outlineExclusions(
+  objects: readonly { id: string; box: Box }[],
+  id: string,
+): Box[] {
+  const volume = (b: Box) =>
+    (b.max.x - b.min.x) * (b.max.y - b.min.y) * (b.max.z - b.min.z);
+  const own = objects.find((o) => o.id === id);
+  if (!own) return [];
+  const size = volume(own.box);
+  return objects
+    .filter(
+      (o) =>
+        o.id !== id &&
+        (volume(o.box) < size || (volume(o.box) === size && o.id < id)) &&
+        o.box.min.x < own.box.max.x &&
+        o.box.max.x > own.box.min.x &&
+        o.box.min.y < own.box.max.y &&
+        o.box.max.y > own.box.min.y &&
+        o.box.min.z < own.box.max.z &&
+        o.box.max.z > own.box.min.z,
+    )
+    .map((o) => o.box);
+}
+
+/**
  * Outline proxy for one picked object: the triangles of the currently drawn (batched) ship
  * meshes whose centroid lies inside the object's box, in ship-root space; the box itself when the
  * view has no geometry there (stand-ins, tests). Never drawn in the main pass (layerMask 0).
@@ -258,6 +292,8 @@ export function objectProxyMesh(
   name: string,
   /** Source roles the object is cut from (batch `roleRanges`); all triangles when omitted. */
   roles?: ReadonlySet<string>,
+  /** Boxes owned by other objects (see outlineExclusions): their triangles are left out. */
+  exclude: readonly Box[] = [],
 ) {
   // Batches merge every role per material, so the object is cut out by containment: every
   // vertex within the box (plus a small tolerance) and the centroid strictly inside it. Large
@@ -314,6 +350,18 @@ export function objectProxyMesh(
         )
           continue;
         if (outer(a, p) || outer(b, p) || outer(c, p)) continue;
+        if (
+          exclude.some(
+            (e) =>
+              x > e.min.x &&
+              x < e.max.x &&
+              y > e.min.y &&
+              y < e.max.y &&
+              z > e.min.z &&
+              z < e.max.z,
+          )
+        )
+          continue;
         const base = positions.length / 3;
         for (const k of [a, b, c]) positions.push(p[k], p[k + 1], p[k + 2]);
         indices.push(base, base + 1, base + 2);
@@ -380,6 +428,7 @@ export function createPrefabObjectPicker(
         const viewRoot = shipRoot
           .getChildTransformNodes(false)
           .find((n) => n.name === viewRootName);
+        const deck = isDeckView();
         mesh = objectProxyMesh(
           scene,
           shipRoot,
@@ -387,6 +436,12 @@ export function createPrefabObjectPicker(
           hit.box,
           name,
           hit.object.id.startsWith("door:") ? DOOR_ROLES : PART_ROLES,
+          outlineExclusions(
+            objects
+              .filter((o) => inView(o.object, deck))
+              .map((o) => ({ id: o.object.id, box: o.box })),
+            hit.object.id,
+          ),
         );
         silhouette.set(kind, mesh);
       },
@@ -418,7 +473,7 @@ export function createPrefabObjectPicker(
     const deck = isDeckView();
     let best: { t: number; id: string } | undefined;
     for (const { object, box } of objects) {
-      if (object.view !== "both" && (object.view === "deck") !== deck) continue;
+      if (!inView(object, deck)) continue;
       const t = rayBox(o, d, box);
       // Doors are thin slabs; prefer any object whose box the ray actually enters first.
       if (t !== undefined && (!best || t < best.t))
@@ -426,8 +481,9 @@ export function createPrefabObjectPicker(
     }
     return best?.id;
   }
-  const move = (event: PointerEvent) => {
-    const id = pickAt(event.clientX, event.clientY);
+  // Exactly one hovered object: each move replaces the previous one, and leaving the canvas
+  // (or losing the pointer) clears it rather than leaving a stale outline behind.
+  const hover = (id: string | undefined) => {
     if (id === hoverId) return;
     hoverId = id;
     hovered.show(id && id !== selectedId ? id : undefined);
@@ -435,7 +491,12 @@ export function createPrefabObjectPicker(
     // Hovered object id for assistive tooling and browser reviews (presentation only).
     if (canvas.dataset) canvas.dataset.prefabObject = id ?? "";
   };
+  const move = (event: PointerEvent) =>
+    hover(pickAt(event.clientX, event.clientY));
+  const leave = () => hover(undefined);
   canvas.addEventListener("pointermove", move);
+  canvas.addEventListener("pointerleave", leave);
+  canvas.addEventListener("pointercancel", leave);
   return {
     pick: (event: { clientX: number; clientY: number }) =>
       pickAt(event.clientX, event.clientY),
@@ -449,6 +510,8 @@ export function createPrefabObjectPicker(
     objectIds: () => objects.map((o) => PREFAB_OBJECT_PREFIX + o.object.id),
     dispose() {
       canvas.removeEventListener("pointermove", move);
+      canvas.removeEventListener("pointerleave", leave);
+      canvas.removeEventListener("pointercancel", leave);
       selected.dispose();
       hovered.dispose();
       silhouette.dispose();
