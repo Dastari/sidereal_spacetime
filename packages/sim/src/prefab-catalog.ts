@@ -14,12 +14,16 @@ import {
   SHIP_COMPONENT_CATALOG_REVISIONS,
 } from "@sidereal/content/ship-components-source";
 import type { PrefabComponentCatalog } from "@sidereal/content/ship-prefab";
+import { composedPrefabComponentCatalog } from "./component-catalogs";
 
 export function prefabComponentCatalogFor(
   revision: string,
 ): PrefabComponentCatalog {
   const current = defaultPrefabComponentCatalog();
   if (revision === current.revision) return current;
+  // Registry-composed catalogue (X-3b): `ship-components-v1@N+<hash>`.
+  const composed = composedPrefabComponentCatalog(revision);
+  if (composed) return composed;
   const legacy = SHIP_COMPONENT_CATALOG_REVISIONS.find(
     (r) => revision === `${SHIP_COMPONENT_CATALOG_ID}@${r}`,
   );

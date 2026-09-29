@@ -298,25 +298,45 @@ export async function contentDefinitionsSmoke(
       /propulsion without stats/,
       "component validator reason",
     );
+    // X-3b: a component change that would stop new Wrens being issued is refused.
+    const blockHead = () =>
+      designer.db.adminContentDefinitionHeads.definitionKey.find(
+        "component:thrust-block.sm",
+      )!;
+    const block = JSON.parse(
+      designer.db.adminContentDefinitions.definitionRef.find(
+        "component:thrust-block.sm@1",
+      )!.payloadJson,
+    );
     await designer.reducers.saveDefinitionDraft({
       kind: "component",
-      definitionId: "ion-drive.sm",
-      payloadJson: JSON.stringify({ ...drive, massKg: drive.massKg + 10 }),
-      expectedRevision: componentHead()!.revision,
-      operationId: `x3-save-component-${stamp}`,
+      definitionId: "thrust-block.sm",
+      payloadJson: JSON.stringify({
+        ...block,
+        mount: { ...block.mount, frame: "interior", sockets: ["interior"] },
+      }),
+      expectedRevision: blockHead().revision,
+      operationId: `x3b-save-bad-block-${stamp}`,
     });
-    await wait(() => !!componentHead()!.draftJson, "component draft");
+    await wait(() => !!blockHead().draftJson, "component draft");
     await rejects(
       designer.reducers.publishDefinition({
         kind: "component",
-        definitionId: "ion-drive.sm",
-        expectedRevision: componentHead()!.revision,
-        expectedDraftSha256: componentHead()!.draftSha256,
-        operationId: `x3-publish-component-${stamp}`,
+        definitionId: "thrust-block.sm",
+        expectedRevision: blockHead().revision,
+        expectedDraftSha256: blockHead().draftSha256,
+        operationId: `x3b-publish-bad-block-${stamp}`,
       }),
-      /publishing opens in X-3b/,
-      "components keep drafts until the runtime reads them",
+      /could not be issued/,
+      "a component change must keep the starter prefab valid",
     );
+    await designer.reducers.discardDefinitionDraft({
+      kind: "component",
+      definitionId: "thrust-block.sm",
+      expectedRevision: blockHead().revision,
+      operationId: `x3b-discard-bad-block-${stamp}`,
+    });
+    await wait(() => !blockHead().draftJson, "draft discarded");
     return {
       seeded: { items: INVENTORY_DEFINITIONS.length, weapons },
       pistolRevisions: 2,

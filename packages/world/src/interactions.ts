@@ -14,7 +14,14 @@ import {
 } from "spacetimedb/server";
 import type world from "./index";
 import { LAB_INTERACTIONS } from "../../content/src/interactions";
-import { validateInteraction } from "../../sim/src/interactions";
+import {
+  DEFAULT_INTERACTION_REACH_M,
+  validateInteraction,
+} from "../../sim/src/interactions";
+import {
+  interactionRules,
+  pinNewInteractionObject,
+} from "./interaction-definitions";
 import { interactionLineOfSight } from "../../sim/src/interactions";
 import { CABIN_PARTITIONS } from "../../content/src/interior";
 const cabinLineOfSight = (ax: number, ay: number, bx: number, by: number) =>
@@ -28,14 +35,17 @@ export function seedInteractions(ctx: Context, shipId: string) {
     ),
   );
   for (const definition of LAB_INTERACTIONS)
-    if (!existing.has(definition.placementId))
+    if (!existing.has(definition.placementId)) {
+      const id = ctx.newUuidV4().toString();
       ctx.db.interactionObject.insert({
-        id: ctx.newUuidV4().toString(),
+        id,
         shipId,
         placementId: definition.placementId,
         revision: 1n,
         enabled: true,
       });
+      pinNewInteractionObject(ctx, id, definition.kind);
+    }
 }
 export function clearInteractionInput(ctx: Context, characterId: string) {
   const input = ctx.db.input.characterId.find(characterId);
@@ -121,7 +131,9 @@ export function interactionView(ctx: ReadContext) {
           occupied: !!seat,
           seatedByYou: seat?.characterId === actor.id,
           reachable:
-            Math.hypot(actor.localX - d.x, actor.localY - d.y) <= 1.8 &&
+            Math.hypot(actor.localX - d.x, actor.localY - d.y) <=
+              (interactionRules(ctx.db, object.id, d.kind)?.reachM ??
+                DEFAULT_INTERACTION_REACH_M) &&
             cabinLineOfSight(
               actor.localX,
               actor.localY,
@@ -152,8 +164,9 @@ export function interact(
   if (!/^[A-Za-z0-9_-]{1,96}$/.test(args.operationId))
     throw new SenderError("Invalid operation ID");
   const distance = Math.hypot(actor.localX - d.x, actor.localY - d.y);
+  const rules = interactionRules(ctx.db, object.id, d.kind);
   if (
-    distance > 1.8 ||
+    distance > (rules?.reachM ?? DEFAULT_INTERACTION_REACH_M) ||
     !cabinLineOfSight(actor.localX, actor.localY, d.approachX, d.approachY)
   )
     throw new SenderError("Move closer to the object");
@@ -178,6 +191,7 @@ export function interact(
       distance,
       !!occupied,
       occupied?.characterId === actor.id,
+      rules,
     );
   } catch (error) {
     throw new SenderError(

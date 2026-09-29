@@ -110,6 +110,7 @@ import AdminContentDefinitionHeadsRow from "./admin_content_definition_heads_tab
 import AdminContentDefinitionUsageRow from "./admin_content_definition_usage_table";
 import AdminContentDefinitionsRow from "./admin_content_definitions_table";
 import AdmittedSystemScapesRow from "./admitted_system_scapes_table";
+import ComponentCatalogSnapshotsRow from "./component_catalog_snapshots_table";
 import CurrentInteriorCrewRow from "./current_interior_crew_table";
 import CurrentPassengerInteriorRow from "./current_passenger_interior_table";
 import NearbyFieldAsteroidsRow from "./nearby_field_asteroids_table";
@@ -212,6 +213,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, AdmittedSystemScapesRow),
+  componentCatalogSnapshots: __table({
+    name: 'component_catalog_snapshots',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, ComponentCatalogSnapshotsRow),
   currentInteriorCrew: __table({
     name: 'current_interior_crew',
     indexes: [

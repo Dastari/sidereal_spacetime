@@ -56,7 +56,12 @@ import { GAME_OWNED_TEMPLATE_NAMESPACE } from "./game-ship-access-authority";
 import {
   installPrefabShip,
   trustedPrefabTemplate,
+  trustedPrefabTemplateFor,
 } from "./prefab-ship-authority";
+import {
+  currentComponentCatalog,
+  effectivePrefabPin,
+} from "./component-catalog";
 import {
   PREFAB_UPGRADE_SOURCES,
   REGISTERED_PREFAB_PINS,
@@ -214,15 +219,26 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
   const sourcePrefab = readShipPrefab(document.prefab.document);
   const sourceCatalog = prefabComponentCatalogFor(document.prefab.catalog);
 
-  // Source and target pins.
-  const source: PinnedPrefabShip | undefined = PREFAB_UPGRADE_SOURCES.find(
-    (p) =>
-      p.blueprintSha256 === instance.blueprintSha256 &&
-      p.prefabId === sourcePrefab.id,
-  );
-  const target = REGISTERED_PREFAB_PINS.find(
+  // Source and target pins. X-3b: a ship spawned on a registry-composed component catalogue is a
+  // known source when its prefab is a registered pin's prefab derived with that catalogue; the
+  // target is the registered pin derived with the CURRENT catalogue (the component resync path).
+  const source: PinnedPrefabShip | undefined =
+    PREFAB_UPGRADE_SOURCES.find(
+      (p) =>
+        p.blueprintSha256 === instance.blueprintSha256 &&
+        p.prefabId === sourcePrefab.id,
+    ) ??
+    // The registered revision itself on its own or a composed catalogue (component resync).
+    REGISTERED_PREFAB_PINS.filter((p) => p.prefabId === sourcePrefab.id).find(
+      (p) =>
+        effectivePrefabPin(p, sourceCatalog).blueprintSha256 ===
+        instance.blueprintSha256,
+    );
+  const registered = REGISTERED_PREFAB_PINS.find(
     (p) => p.prefabId === args.targetPrefabId,
   );
+  const target =
+    registered && effectivePrefabPin(registered, currentComponentCatalog(ctx));
   if (!source)
     refuse(
       `instance blueprint ${instance.blueprintSha256} is not a known upgradable pin`,
@@ -237,15 +253,24 @@ export function planPrefabUpgrade(ctx: Context, args: UpgradePrefabShipArgs) {
   if (target.prefabId !== sourcePrefab.id)
     refuse("target is a different prefab");
   if (target.blueprintSha256 !== args.expectedTargetBlueprintSha256)
-    refuse("target blueprint differs from the registered pin");
+    refuse(
+      `target blueprint differs from the registered pin (current target ${target.blueprintSha256})`,
+    );
   if (target.blueprintSha256 === instance.blueprintSha256)
     refuse("ship already has the target revision");
-  const template = trustedPrefabTemplate(target.prefabId);
+  const baseTemplate = trustedPrefabTemplate(target.prefabId);
   if (
-    template.snapshot.sha256 !== target.blueprintSha256 ||
-    template.catalogRevision !== target.catalogRevision
+    baseTemplate.snapshot.sha256 !== registered!.blueprintSha256 ||
+    baseTemplate.catalogRevision !== registered!.catalogRevision
   )
     fail("Module prefab differs from its registered pin");
+  const template =
+    target.catalogRevision === registered!.catalogRevision
+      ? baseTemplate
+      : trustedPrefabTemplateFor(
+          baseTemplate.prefab,
+          prefabComponentCatalogFor(target.catalogRevision),
+        );
   const targetPrefab: ShipPrefabDocumentV1 = template.prefab;
   const targetCatalog: PrefabComponentCatalog = prefabComponentCatalogFor(
     target.catalogRevision,

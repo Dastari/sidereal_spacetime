@@ -18,6 +18,7 @@
  * control. Deterministic and bounded; inputs are never mutated.
  */
 import { sha256 } from "@noble/hashes/sha2.js";
+import { composedShipComponentCatalog } from "./component-catalogs";
 import { bytesToHex, utf8ToBytes } from "@noble/hashes/utils.js";
 import {
   SHIP_COMPONENT_CATALOG_ID,
@@ -92,6 +93,8 @@ const catalogs = new Map<string, ShipComponentCatalog>();
 export function shipComponentCatalogFor(
   revision: string,
 ): ShipComponentCatalog {
+  const composed = composedShipComponentCatalog(revision);
+  if (composed) return composed;
   let catalog = catalogs.get(revision);
   if (!catalog) {
     const n = SHIP_COMPONENT_CATALOG_REVISIONS.find(

@@ -42,6 +42,7 @@ import {
 } from "@sidereal/content/ship-components-source";
 import type { DeckObstacle } from "./construction-collision";
 import { prefabComponentCatalogFor } from "./prefab-catalog";
+import { composedShipComponentCatalog } from "./component-catalogs";
 
 const TEXEL = 1 / 16;
 type Rect = [number, number, number, number];
@@ -85,6 +86,10 @@ export function prefabComponentDefinition(
   id: string,
   catalogRevision?: string,
 ): ShipComponentDefinition | undefined {
+  if (catalogRevision) {
+    const composed = composedShipComponentCatalog(catalogRevision);
+    if (composed) return composed.components.find((c) => c.id === id);
+  }
   const at = catalogRevision?.match(/@(\d+)$/);
   const revision = (
     at ? Number(at[1]) : SHIP_COMPONENT_CATALOG_REVISION

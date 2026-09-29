@@ -64,6 +64,7 @@ function fixture() {
     return result;
   }
   const db: any = {
+    componentCatalogSnapshot: { count: () => 0n, iter: () => [] },
     constructionPilotSeat: table("characterId", { by_owner: "owner" }),
     worldAdmission: table("characterId", { by_owner: "owner" }),
     constructionInstance: table("id", { by_owner: "owner" }),

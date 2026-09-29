@@ -18,7 +18,11 @@ import { requireGrant } from "./construction";
 import { clearAim } from "./combat";
 import { consumeInputControl } from "./input-control";
 import { LAB_INTERACTIONS } from "@sidereal/content/interactions";
-import { validateInteraction } from "@sidereal/sim/interactions";
+import {
+  DEFAULT_INTERACTION_REACH_M,
+  validateInteraction,
+} from "@sidereal/sim/interactions";
+import { interactionRules } from "./interaction-definitions";
 import {
   canOccupyDeck,
   sweepDeckCircle,
@@ -375,6 +379,7 @@ export function interactWithConstructionObject(
     distance,
     !!occupied,
     occupied?.characterId === actor.id,
+    interactionRules(ctx.db, q.object.id, q.definition.kind),
   );
   if (args.action === "stand") {
     if (ownSeat?.objectId !== args.objectId)
@@ -509,7 +514,9 @@ export function constructionInteractionView(ctx: ReadContext) {
               Math.hypot(
                 actor.localX - q.definition.x,
                 actor.localY - q.definition.y,
-              ) <= 1.8 &&
+              ) <=
+                (interactionRules(ctx.db, q.object.id, q.definition.kind)
+                  ?.reachM ?? DEFAULT_INTERACTION_REACH_M) &&
               unobstructed(
                 q.frame,
                 binding,

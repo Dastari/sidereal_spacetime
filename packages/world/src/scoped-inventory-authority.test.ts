@@ -99,6 +99,7 @@ function fixture() {
         {
           rows,
           iter: () => rows.values(),
+          count: () => BigInt(rows.length),
           insert: (row: Row) => {
             if (rows.some((r) => key(r[pk]) === key(row[pk])))
               throw Error("Duplicate row:" + name);

@@ -143,7 +143,7 @@ describe("interaction/v1", () => {
       new URL("./interactions.ts", import.meta.url),
       "utf8",
     );
-    expect(sim).toMatch(/distance > 1\.8/);
+    expect(sim).toMatch(/DEFAULT_INTERACTION_REACH_M = 1\.8/);
     const actions = [
       ...sim.matchAll(/"(sit|stand|set-light-on|set-light-off)"/g),
     ].map((m) => m[1]);
