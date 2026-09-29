@@ -21,6 +21,7 @@ import {
   type VoxelCrewRegion,
   type VoxelCrewSocket,
   type VoxelCrewVariant,
+  VOXEL_CREW_CLIP_FALLBACK,
 } from "@sidereal/content/crew-voxel-bundle";
 import {
   hexToRgb,
@@ -257,6 +258,8 @@ export async function createVoxelCrewVisual(
     }
     return g;
   };
+  const resolveClip = (clip: VoxelCrewAction): VoxelCrewAction =>
+    clips.has(clip) ? clip : (VOXEL_CREW_CLIP_FALLBACK[clip] ?? clip);
   const tracks = new Map<string, Track>();
   let blendElapsed = 0;
   let blendDuration = 0.2;
@@ -271,6 +274,8 @@ export async function createVoxelCrewVisual(
     }[],
     reducedMotion: boolean,
   ) => {
+    // EVA clips authored in parallel: play the fallback while the bundle lacks one.
+    wanted = wanted.map((w) => ({ ...w, clip: resolveClip(w.clip) }));
     const keys = new Set(wanted.map((w) => `${w.clip}|${w.mask}`));
     const signature = [...keys].sort().join(",");
     for (const w of wanted) {
@@ -449,6 +454,7 @@ export async function createVoxelCrewVisual(
     layers = selectVoxelCrewLayers(motion, weapon);
     if (
       armedClass &&
+      !motion.eva &&
       !motion.seated &&
       !motion.dead &&
       !motion.downed &&
@@ -642,6 +648,10 @@ export async function createVoxelCrewVisual(
     },
     get variant() {
       return variant;
+    },
+    /** Whether the loaded bundle has this clip (EVA clips arrive in parallel). */
+    hasClip(clip: string) {
+      return clips.has(clip);
     },
     /** Masked clip keys currently blending toward full weight. */
     get activeClips() {

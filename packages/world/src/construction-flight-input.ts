@@ -316,6 +316,8 @@ export function readConstructionFlightInput(ctx: Context, shipId: string) {
   const body = catalog.get(WAYFARER_CREW_BODY_DEFINITION);
   if (!body) throw Error("missing-crew-body-definition");
   for (const actor of bounded(ctx.db.character.by_ship.filter(shipId), 256)) {
+    // EVA: a character outside the hull (free or maglocked) is not ship mass.
+    if (ctx.db.evaBody.characterId.find(actor.id)) continue;
     const snapshot = legacyInventorySnapshot(ctx, actor.id),
       masses = payloadMass(snapshot);
     let carried = 0;

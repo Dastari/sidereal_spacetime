@@ -1051,6 +1051,88 @@ export const EditReceipt = __t.object("EditReceipt", {
 });
 export type EditReceipt = __Infer<typeof EditReceipt>;
 
+export const EvaAirlockCycle = __t.object("EvaAirlockCycle", {
+  characterId: __t.string(),
+  lockKey: __t.string(),
+  owner: __t.identity(),
+  shipId: __t.string(),
+  airlockId: __t.string(),
+  direction: __t.string(),
+  startedMicros: __t.u64(),
+  endsMicros: __t.u64(),
+});
+export type EvaAirlockCycle = __Infer<typeof EvaAirlockCycle>;
+
+export const EvaAirlockCycleStatus = __t.object("EvaAirlockCycleStatus", {
+  characterId: __t.string(),
+  shipId: __t.string(),
+  airlockId: __t.string(),
+  direction: __t.string(),
+  startedMicros: __t.u64(),
+  endsMicros: __t.u64(),
+});
+export type EvaAirlockCycleStatus = __Infer<typeof EvaAirlockCycleStatus>;
+
+export const EvaBody = __t.object("EvaBody", {
+  characterId: __t.string(),
+  owner: __t.identity(),
+  systemId: __t.string(),
+  cellX: __t.i64(),
+  cellY: __t.i64(),
+  phase: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  anchorShipId: __t.string(),
+  localX: __t.f64(),
+  localY: __t.f64(),
+  localHeading: __t.f64(),
+  refShipId: __t.string(),
+  refVx: __t.f64(),
+  refVy: __t.f64(),
+  forward: __t.f64(),
+  strafe: __t.f64(),
+  turn: __t.f64(),
+  walking: __t.bool(),
+  exitShipId: __t.string(),
+  visitId: __t.string(),
+  deckId: __t.string(),
+  returnEndsMicros: __t.u64(),
+  serverTick: __t.u64(),
+  revision: __t.u64(),
+});
+export type EvaBody = __Infer<typeof EvaBody>;
+
+export const EvaBodyStatus = __t.object("EvaBodyStatus", {
+  characterId: __t.string(),
+  systemId: __t.string(),
+  phase: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  anchorShipId: __t.string(),
+  localX: __t.f64(),
+  localY: __t.f64(),
+  localHeading: __t.f64(),
+  refShipId: __t.string(),
+  forward: __t.f64(),
+  strafe: __t.f64(),
+  turn: __t.f64(),
+  walking: __t.bool(),
+  exitShipId: __t.string(),
+  visitId: __t.string(),
+  deckId: __t.string(),
+  returnEndsMicros: __t.u64(),
+  stranded: __t.bool(),
+  serverTick: __t.u64(),
+  revision: __t.u64(),
+});
+export type EvaBodyStatus = __Infer<typeof EvaBodyStatus>;
+
 export const FieldAsteroid = __t.object("FieldAsteroid", {
   id: __t.string(),
   systemId: __t.string(),
@@ -1417,6 +1499,12 @@ export type OwnConstructionTraversals = __Infer<typeof OwnConstructionTraversals
 
 export const OwnEditReceipts = __t.object("OwnEditReceipts", {});
 export type OwnEditReceipts = __Infer<typeof OwnEditReceipts>;
+
+export const OwnEvaAirlockCycle = __t.object("OwnEvaAirlockCycle", {});
+export type OwnEvaAirlockCycle = __Infer<typeof OwnEvaAirlockCycle>;
+
+export const OwnEvaBody = __t.object("OwnEvaBody", {});
+export type OwnEvaBody = __Infer<typeof OwnEvaBody>;
 
 export const OwnGameShipAccess = __t.object("OwnGameShipAccess", {});
 export type OwnGameShipAccess = __Infer<typeof OwnGameShipAccess>;
@@ -1885,6 +1973,42 @@ export type VisibleBodyMotion = __Infer<typeof VisibleBodyMotion>;
 
 export const VisibleCrewPresentation = __t.object("VisibleCrewPresentation", {});
 export type VisibleCrewPresentation = __Infer<typeof VisibleCrewPresentation>;
+
+export const VisibleEvaBodies = __t.object("VisibleEvaBodies", {});
+export type VisibleEvaBodies = __Infer<typeof VisibleEvaBodies>;
+
+export const VisibleEvaBody = __t.object("VisibleEvaBody", {
+  characterId: __t.string(),
+  name: __t.string(),
+  systemId: __t.string(),
+  phase: __t.string(),
+  x: __t.f64(),
+  y: __t.f64(),
+  vx: __t.f64(),
+  vy: __t.f64(),
+  heading: __t.f64(),
+  anchorShipId: __t.string(),
+  localX: __t.f64(),
+  localY: __t.f64(),
+  localHeading: __t.f64(),
+  forward: __t.f64(),
+  strafe: __t.f64(),
+  turn: __t.f64(),
+  walking: __t.bool(),
+  cycling: __t.bool(),
+  dead: __t.bool(),
+  connected: __t.bool(),
+  appearanceJson: __t.string(),
+  equipmentJson: __t.string(),
+  aimActive: __t.bool(),
+  aimAngle: __t.f64(),
+  shotSequence: __t.u64(),
+  shotX: __t.f64(),
+  shotY: __t.f64(),
+  shotStruck: __t.bool(),
+  serverTick: __t.u64(),
+});
+export type VisibleEvaBody = __Infer<typeof VisibleEvaBody>;
 
 export const VisibleGroundItem = __t.object("VisibleGroundItem", {
   id: __t.string(),

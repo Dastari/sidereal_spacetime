@@ -46,6 +46,20 @@ function parseObject(json: string): Record<string, unknown> {
  * Join the two server views into what the renderer draws for other characters. A body is drawn only
  * when both views agree on its ship and deck (they update separately), and never the viewer's own.
  */
+/** Server cosmetic document + worn catalogue ids → the crew look and held item asset. */
+export function presentationLook(
+  appearanceJson: string,
+  equipmentJson: string,
+) {
+  const items = Object.entries(parseObject(equipmentJson))
+    .filter((entry): entry is [string, string] => typeof entry[1] === "string")
+    .map(([equipmentSlot, definitionId]) => ({ equipmentSlot, definitionId }));
+  return equipmentAppearance(
+    items,
+    parseObject(appearanceJson) as CrewAppearance,
+  );
+}
+
 export function crewmatesFromViews(
   interior: Iterable<InteriorCrewRow>,
   presentation: Iterable<CrewPresentationRow>,
@@ -63,17 +77,9 @@ export function crewmatesFromViews(
       look.deckId !== body.deckId
     )
       continue;
-    const items = Object.entries(parseObject(look.equipmentJson))
-      .filter(
-        (entry): entry is [string, string] => typeof entry[1] === "string",
-      )
-      .map(([equipmentSlot, definitionId]) => ({
-        equipmentSlot,
-        definitionId,
-      }));
-    const { crewAppearance, equippedAsset } = equipmentAppearance(
-      items,
-      parseObject(look.appearanceJson) as CrewAppearance,
+    const { crewAppearance, equippedAsset } = presentationLook(
+      look.appearanceJson,
+      look.equipmentJson,
     );
     out.push({
       id: body.characterId,

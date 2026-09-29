@@ -68,9 +68,44 @@ export const VOXEL_CREW_EXTRA_ACTIONS = [
   "Maglock_Walk",
   "Maglock_Idle",
 ] as const;
+/**
+ * EVA clips (owner names, 2026-09-29; contract `_shared/ZEROG_ANIMS_NOTICE.md`), authored in
+ * parallel. The runtime plays them when the bundle has them and falls back otherwise.
+ */
+export const VOXEL_CREW_EVA_ACTIONS = [
+  "ZeroG_Prone",
+  "ZeroG_Flight",
+  "ZeroG_Swim",
+  "ZeroG_Locomotion_Prone",
+  "ZeroG_Enter",
+  "ZeroG_Exit",
+  "Maglock_Idle",
+  "Maglock_Walk",
+] as const;
 export type VoxelCrewAction =
   | (typeof VOXEL_CREW_ACTIONS)[number]
-  | (typeof VOXEL_CREW_EXTRA_ACTIONS)[number];
+  | (typeof VOXEL_CREW_EXTRA_ACTIONS)[number]
+  | (typeof VOXEL_CREW_EVA_ACTIONS)[number];
+/** Clip played while an EVA clip is missing from the loaded bundle. */
+export const VOXEL_CREW_CLIP_FALLBACK: Partial<
+  Record<VoxelCrewAction, VoxelCrewAction>
+> = {
+  ZeroG_Prone: "idle",
+  ZeroG_Swim: "idle",
+  ZeroG_Flight: "jetpack_hover",
+  ZeroG_Locomotion_Prone: "jetpack_hover",
+  Maglock_Idle: "idle",
+  Maglock_Walk: "walk",
+};
+/** Zero-g loops that show the body prone (belly-down); the runtime pitches the model itself only
+ * while such a clip is missing (the authored clips bake the prone pose in). */
+export const VOXEL_CREW_PRONE_ACTIONS: ReadonlySet<VoxelCrewAction> =
+  new Set<VoxelCrewAction>([
+    "ZeroG_Prone",
+    "ZeroG_Flight",
+    "ZeroG_Swim",
+    "ZeroG_Locomotion_Prone",
+  ]);
 
 export const VOXEL_CREW_LOOPING: ReadonlySet<VoxelCrewAction> =
   new Set<VoxelCrewAction>([

@@ -43,6 +43,18 @@ export interface GameShipAccessDatabase {
     >;
   };
   retiredIdentity: { source: Find<unknown, Identity> };
+  /** EVA bodies (optional for fixtures): see `evaHomeLocation`. */
+  evaBody?: {
+    characterId: Find<{
+      characterId: string;
+      exitShipId: string;
+      visitId: string;
+      deckId: string;
+      systemId: string;
+      x: number;
+      y: number;
+    }>;
+  };
   authSession: {
     by_owner: {
       filter(
@@ -57,6 +69,29 @@ export interface GameShipAccessContext {
 }
 /** All facts come from private rows. Tick/reducer callers pass the real current
  * time and use the actor's verified owner; views use materialized auth expiry. */
+/**
+ * EVA milestone 1: a character outside the hull keeps read-only views of the own ship it left
+ * (instance document, decks, flight state), so the client can keep drawing it. The aboard
+ * location is reconstructed from the EVA body; it never grants walking or object use.
+ */
+export function evaHomeLocation(
+  db: Pick<GameShipAccessDatabase, "evaBody">,
+  actor: { id: string; shipId: string },
+) {
+  const body = db.evaBody?.characterId.find(actor.id);
+  if (!body?.visitId || !body.deckId || !actor.shipId) return undefined;
+  if (body.exitShipId !== actor.shipId) return undefined;
+  return {
+    characterId: actor.id,
+    visitId: body.visitId,
+    instanceId: actor.shipId,
+    deckId: body.deckId,
+    returnShipId: "",
+    returnX: 0,
+    returnY: 0,
+    revision: 0n,
+  };
+}
 export function ownedGameShipAccess(
   ctx: GameShipAccessContext,
   targetInstanceId: string,
@@ -81,7 +116,9 @@ export function ownedGameShipAccess(
     deck = ctx.db.constructionDeck.id.find(targetDeckId),
     ship = ctx.db.ship.id.find(targetInstanceId),
     motion = ctx.db.shipWorldMotion.shipId.find(targetInstanceId),
-    location = ctx.db.constructionLocation.characterId.find(actor.id),
+    aboard = ctx.db.constructionLocation.characterId.find(actor.id),
+    outside = aboard ? undefined : evaHomeLocation(ctx.db, actor),
+    location = aboard ?? outside,
     admission = ctx.db.worldAdmission.characterId.find(actor.id);
   if (
     !binding ||
@@ -94,7 +131,7 @@ export function ownedGameShipAccess(
     !["active", "suspended"].includes(binding.lifecycle)
   )
     return denied();
-  return gameShipAccess({
+  const access = gameShipAccess({
     principalId,
     liveGame: true,
     actor: {
@@ -114,6 +151,8 @@ export function ownedGameShipAccess(
     location,
     admission,
   });
+  // Outside the hull: read the own ship's views only; never walk its deck or use its objects.
+  return outside ? { ...access, walkDeck: false, useObjects: false } : access;
 }
 export const gameShipAccessProjection = t.row("GameShipAccessStatus", {
   shipId: t.string().primaryKey(),
@@ -127,7 +166,9 @@ export function ownGameShipAccess(ctx: GameShipAccessContext) {
   const actors = [...ctx.db.character.by_owner.filter(ctx.sender)];
   const actor = actors[0];
   if (!actor || actors.length !== 1) return [];
-  const location = ctx.db.constructionLocation.characterId.find(actor.id);
+  const location =
+    ctx.db.constructionLocation.characterId.find(actor.id) ??
+    evaHomeLocation(ctx.db, actor);
   if (
     !location ||
     !ownedGameShipAccess(ctx, location.instanceId, location.deckId).readInterior

@@ -140,21 +140,33 @@ function admission(ctx: SharedViewContext): AdmissionRow | undefined {
     return undefined;
   return row;
 }
-function observer(ctx: SharedViewContext) {
+/**
+ * The admitted viewer's discovery centre: their EVA body while outside a ship (EVA milestone 1),
+ * otherwise their ship. `center` stays the admitted ship's motion row (always visible to its own
+ * character); `point` is where discovery is measured from.
+ */
+export function spaceObserver(ctx: SharedViewContext) {
   const admitted = admission(ctx);
   if (!admitted) return undefined;
   const center = ctx.db.shipWorldMotion.shipId.find(admitted.shipId);
   if (!center || center.systemId !== admitted.systemId) return undefined;
+  const eva = ctx.db.evaBody?.characterId.find(admitted.characterId);
+  const point =
+    eva && eva.systemId === admitted.systemId
+      ? { x: eva.x, y: eva.y }
+      : { x: center.x, y: center.y };
   try {
     return {
       admitted,
       center,
-      cells: neighboringSpatialCells(spatialCell(center)),
+      point,
+      cells: neighboringSpatialCells(spatialCell(point)),
     };
   } catch {
     return undefined;
   }
 }
+const observer = spaceObserver;
 /** Caller-supplied SQL never participates in these authority predicates. */
 function shipContacts(ctx: SharedViewContext): ShipMotionRow[] {
   const origin = observer(ctx);
@@ -170,7 +182,7 @@ function shipContacts(ctx: SharedViewContext): ShipMotionRow[] {
       if (++examined > 64) return [];
       if (motion.systemId !== origin.admitted.systemId) continue;
       try {
-        if (withinSpaceDiscovery(origin.center, motion))
+        if (withinSpaceDiscovery(origin.point, motion))
           found.set(motion.shipId, motion);
       } catch {
         return [];
@@ -206,7 +218,7 @@ function bodyContacts(
       )
         continue;
       try {
-        if (withinSpaceDiscovery(origin.center, motion))
+        if (withinSpaceDiscovery(origin.point, motion))
           found.set(body.id, { body, motion });
       } catch {
         return [];

@@ -87,6 +87,16 @@ export type GameUIState = {
   inventory?: InventoryState;
   objectDetails?: ObjectDetailsState;
   interactionPrompt?: string;
+  /** Outside the hull (EVA, wiki Systems/EVA): status line, controls and key offers. */
+  eva?: {
+    label: string;
+    help: string;
+    /** M would lock the boots onto the hull under the body. */
+    maglock: boolean;
+    /** Far from the own ship: B starts the rescue beacon. */
+    stranded: boolean;
+    beacon: boolean;
+  };
   status: string;
   error: string;
   modelStatus: string;
@@ -373,7 +383,9 @@ export function createGameUI(
       ui.panel(r);
       ui.text(state.actorName, r.x + 12, r.y + 8, 17, palette.text, r.w - 24);
       ui.text(
-        `${state.seated ? "Helm" : state.resting ? "Seated" : "On foot"}   /   ${num(state.speed)} m/s   /   ${num(state.heading, 0)}°`,
+        state.eva
+          ? state.eva.label
+          : `${state.seated ? "Helm" : state.resting ? "Seated" : "On foot"}   /   ${num(state.speed)} m/s   /   ${num(state.heading, 0)}°`,
         r.x + 12,
         r.y + 32,
         12,
@@ -414,15 +426,27 @@ export function createGameUI(
         9,
         palette.muted,
       );
+      if (state.eva && state.vitals?.state !== "dead") {
+        const offer = state.eva.beacon
+          ? "B   Cancel rescue beacon"
+          : state.eva.stranded
+            ? "B   Emergency return (rescue beacon)"
+            : state.eva.maglock
+              ? "M   Maglock onto the hull"
+              : "";
+        if (offer) ui.text(offer, 270, h - 140, 14, palette.blue, w - 300);
+      }
       if (help && w > 1180)
         ui.text(
-          state.resting
-            ? "Stand up to walk · C character · I inventory"
-            : state.seated
-              ? "W / S thrust · A / D turn · Release to brake"
-              : state.combat?.enabled
-                ? "Mouse aim · Left click fire · Right-drag orbit · V leave combat"
-                : "WASD walk · Shift sprint · C character · I inventory · Z loot labels",
+          state.eva
+            ? state.eva.help
+            : state.resting
+              ? "Stand up to walk · C character · I inventory"
+              : state.seated
+                ? "W / S thrust · A / D turn · Release to brake"
+                : state.combat?.enabled
+                  ? "Mouse aim · Left click fire · Right-drag orbit · V leave combat"
+                  : "WASD walk · Shift sprint · C character · I inventory · Z loot labels",
           270,
           h - 116,
           12,

@@ -53,6 +53,9 @@ import EnterAuthoredPilotReducer from "./enter_authored_pilot_reducer";
 import EnterConstructionReviewReducer from "./enter_construction_review_reducer";
 import EnterLabReducer from "./enter_lab_reducer";
 import EquipInventoryItemReducer from "./equip_inventory_item_reducer";
+import EvaCycleAirlockReducer from "./eva_cycle_airlock_reducer";
+import EvaEmergencyReturnReducer from "./eva_emergency_return_reducer";
+import EvaToggleMaglockReducer from "./eva_toggle_maglock_reducer";
 import FireWeaponReducer from "./fire_weapon_reducer";
 import GrantShipPassengerReducer from "./grant_ship_passenger_reducer";
 import InstallAuthoredShipFlightReducer from "./install_authored_ship_flight_reducer";
@@ -130,6 +133,8 @@ import OwnConstructionStairWalksRow from "./own_construction_stair_walks_table";
 import OwnConstructionTraversalLinksRow from "./own_construction_traversal_links_table";
 import OwnConstructionTraversalsRow from "./own_construction_traversals_table";
 import OwnEditReceiptsRow from "./own_edit_receipts_table";
+import OwnEvaAirlockCycleRow from "./own_eva_airlock_cycle_table";
+import OwnEvaBodyRow from "./own_eva_body_table";
 import OwnGameShipAccessRow from "./own_game_ship_access_table";
 import OwnGroundItemsRow from "./own_ground_items_table";
 import OwnIdentityLinksRow from "./own_identity_links_table";
@@ -157,6 +162,7 @@ import OwnWorldAdmissionRow from "./own_world_admission_table";
 import VisibleBodyDescriptionsRow from "./visible_body_descriptions_table";
 import VisibleBodyMotionRow from "./visible_body_motion_table";
 import VisibleCrewPresentationRow from "./visible_crew_presentation_table";
+import VisibleEvaBodiesRow from "./visible_eva_bodies_table";
 import VisibleShipDescriptionsRow from "./visible_ship_descriptions_table";
 import VisibleShipMotionRow from "./visible_ship_motion_table";
 
@@ -388,6 +394,20 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, OwnEditReceiptsRow),
+  ownEvaAirlockCycle: __table({
+    name: 'own_eva_airlock_cycle',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnEvaAirlockCycleRow),
+  ownEvaBody: __table({
+    name: 'own_eva_body',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, OwnEvaBodyRow),
   ownGameShipAccess: __table({
     name: 'own_game_ship_access',
     indexes: [
@@ -577,6 +597,13 @@ const tablesSchema = __schema({
     constraints: [
     ],
   }, VisibleCrewPresentationRow),
+  visibleEvaBodies: __table({
+    name: 'visible_eva_bodies',
+    indexes: [
+    ],
+    constraints: [
+    ],
+  }, VisibleEvaBodiesRow),
   visibleShipDescriptions: __table({
     name: 'visible_ship_descriptions',
     indexes: [
@@ -614,6 +641,9 @@ const reducersSchema = __reducers(
   __reducerSchema("enter_construction_review", EnterConstructionReviewReducer),
   __reducerSchema("enter_lab", EnterLabReducer),
   __reducerSchema("equip_inventory_item", EquipInventoryItemReducer),
+  __reducerSchema("eva_cycle_airlock", EvaCycleAirlockReducer),
+  __reducerSchema("eva_emergency_return", EvaEmergencyReturnReducer),
+  __reducerSchema("eva_toggle_maglock", EvaToggleMaglockReducer),
   __reducerSchema("fire_weapon", FireWeaponReducer),
   __reducerSchema("grant_ship_passenger", GrantShipPassengerReducer),
   __reducerSchema("install_authored_ship_flight", InstallAuthoredShipFlightReducer),

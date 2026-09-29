@@ -75,6 +75,8 @@ export const WIPED_SHIP_TABLES = [
   "instanceInventoryBinding",
   // Character presence aboard a ship (character rows themselves are preserved)
   "constructionLocation",
+  "evaBody",
+  "evaAirlockCycle",
   "worldAdmission",
   "input",
 ] as const satisfies readonly (keyof Db)[];

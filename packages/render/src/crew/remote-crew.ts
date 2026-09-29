@@ -16,6 +16,11 @@ import { createVoxelCrewVisual } from "./voxel-crew";
 import { createVoxelCrewOutfit } from "./voxel-crew-outfit";
 import { equipVoxelCrewItem } from "./voxel-crew-kit";
 import { createRemoteCrewMotion } from "./remote-crew-motion";
+import type { VoxelCrewEva } from "./voxel-crew-clips";
+import {
+  createEvaBodyPresentation,
+  evaHipLiftCorrection,
+} from "../eva/eva-body";
 
 /** Server-projected presentation of another character (current_interior_crew + visible_crew_presentation). */
 export interface RemoteCrewState {
@@ -39,6 +44,8 @@ export interface RemoteCrewState {
   appearance: CrewAppearance;
   /** Held item asset (inventory definition assetId), or null for an empty hand. */
   heldAsset: string | null;
+  /** Outside a ship (EVA, `visible_eva_bodies`): zero-g / maglock pose and heading. */
+  eva?: VoxelCrewEva & { localHeading: number };
 }
 
 /** At most this many other bodies are drawn (nearest first); the view bounds rows at 256. */
@@ -63,6 +70,7 @@ interface Entry {
   label?: Mesh;
   labelKey: string;
   lastShot?: bigint;
+  evaBody?: ReturnType<typeof createEvaBodyPresentation>;
   disposed: boolean;
 }
 
@@ -95,6 +103,8 @@ export function createRemoteCrew(
   let disposed = false;
   let visible = true;
   let reducedMotion = false;
+  let lastFrameAt: number | undefined;
+  const onEffectMesh = options.onEffectMesh;
   const changed = () => {
     if (!disposed) options.onMeshesChanged?.();
   };
@@ -241,6 +251,7 @@ export function createRemoteCrew(
     entry.outfit?.dispose();
     const material = entry.label?.material;
     entry.label?.dispose();
+    entry.evaBody?.dispose();
     material?.dispose(true, true);
     entry.crew?.dispose();
     changed();
@@ -307,6 +318,8 @@ export function createRemoteCrew(
       visible = show;
       reducedMotion = !!options.reducedMotion;
       const t = now();
+      const dt = Math.min(0.1, Math.max(0, (t - (lastFrameAt ?? t)) / 1000));
+      lastFrameAt = t;
       for (const entry of entries.values()) {
         const { crew, state } = entry;
         if (!crew || !entry.motion.ready) continue;
@@ -324,8 +337,25 @@ export function createRemoteCrew(
         const d = entry.motion.sample(t, pose);
         crew.root.position.set(d.x, d.z, -d.y);
         crew.root.rotation.y = d.yaw;
+        if (state.eva) {
+          crew.root.position.y -= evaHipLiftCorrection(state.eva, (clip) =>
+            crew.hasClip(clip),
+          );
+          // Outside a ship: the accepted heading (or the aim) turns the body; zero-g clips play.
+          crew.root.rotation.y = state.aimActive
+            ? -state.aimAngle
+            : state.eva.localHeading;
+          entry.evaBody ??= createEvaBodyPresentation(scene, crew, {
+            onMeshes: (meshes) => meshes.forEach((m) => onEffectMesh?.(m)),
+          });
+        }
+        entry.evaBody?.update(state.eva, dt, {
+          reducedMotion,
+          dead: state.dead,
+        });
         crew.update({
-          moving: d.moving,
+          eva: state.eva,
+          moving: state.eva ? state.eva.walking : d.moving,
           seated: state.seated,
           sprinting: state.sprinting && d.moving,
           combat: state.aimActive,
