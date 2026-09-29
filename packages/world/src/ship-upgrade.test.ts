@@ -41,6 +41,7 @@ import {
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
   FED_WREN_R4_PIN,
+  FED_WREN_R5_PIN,
   PREFAB_UPGRADE_SOURCES,
   type PinnedPrefabShip,
 } from "./prefab-ship-pins";
@@ -266,6 +267,7 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
     FED_WREN_R2_PIN,
     FED_WREN_R3_PIN,
     FED_WREN_R4_PIN,
+    FED_WREN_R5_PIN,
   ]);
   expect(trustedPrefabTemplate("fed.s.wren").snapshot.sha256).toBe(
     FED_WREN_PIN.blueprintSha256,
@@ -276,12 +278,12 @@ test("upgrade table lists classify wiped per-ship tables once; the rest refuse",
 // for different source revisions, so each liveWren starts from an empty cache.
 const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
   test(
-    `a live Wren r${revision} upgrades to r5 in place: same ship, deck, pose, containers and items`,
+    `a live Wren r${revision} upgrades to r6 in place: same ship, deck, pose, containers and items`,
     HEAVY,
     () => {
       const { f, characterId, shipId, deckId } = liveWren(pin, revision);
       const before = heldInventory(f, shipId);
-      // 18 + 27 stocked items and the owner's carried kit, in the crate, locker and pockets.
+      // 19 + 27 stocked items and the owner's carried kit, in the crate, locker and pockets.
       const bound = f.db.instanceInventoryBinding.rows.map((b: Row) => ({
         ...b,
       }));
@@ -294,7 +296,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
           (i: Row) => i.containerId === containerId,
         ).length;
       expect(bound.map((b: Row) => stocked(b.containerId)).sort()).toEqual([
-        18, 27,
+        19, 27,
       ]);
       const motion = { ...f.db.shipWorldMotion.shipId.find(shipId) };
       const shipBefore = { ...f.db.ship.id.find(shipId) };
@@ -324,7 +326,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
       upgradePrefabShip(f.ctx, upgradeArgs(shipId, pin));
       const instance = f.db.constructionInstance.id.find(shipId);
       expect(instance.blueprintSha256).toBe(FED_WREN_PIN.blueprintSha256);
-      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r5");
+      expect(instance.blueprintId).toBe("trusted-prefab:fed.s.wren:r6");
       expect(instance.revision).toBe(2n);
       expect(f.db.constructionDeck.rows.map((d: Row) => d.id)).toEqual([
         deckId,
@@ -358,7 +360,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
       expect(
         f.db.instanceInventoryBinding.rows.map((b: Row) => ({ ...b })),
       ).toEqual(bound);
-      // ...and the storage roots now sit at the r5 sockets with a qualified approach.
+      // ...and the storage roots now sit at the r6 sockets with a qualified approach.
       const sockets = new Map(
         prefabCargoSockets(
           readShipPrefab(JSON.parse(instance.documentJson).prefab.document),
@@ -395,7 +397,7 @@ const upgradeCase = (pin: PinnedPrefabShip, revision: number) =>
           ).toBe(true);
         }
       }
-      // The owner stands at the r5 spawn with the next-revision game-ship access allowed.
+      // The owner stands at the r6 spawn with the next-revision game-ship access allowed.
       const actor = f.db.character.id.find(characterId);
       expect(actor.shipId).toBe(shipId);
       expect(
@@ -558,3 +560,4 @@ test("refuses unsafe upgrades and changes nothing", HEAVY, () => {
 });
 
 upgradeCase(FED_WREN_R4_PIN, 4);
+upgradeCase(FED_WREN_R5_PIN, 5);

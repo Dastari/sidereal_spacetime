@@ -260,9 +260,9 @@ describe("prefab deck objects in the source document", () => {
   });
 });
 
-describe("Wren revision 4+ layout (unchanged in r5)", () => {
+describe("Wren revision 4+ layout (unchanged in r5 and r6)", () => {
   it("fits every module and furniture piece at catalog scale: nothing is trimmed out of an approach", () => {
-    expect(wren.revision).toBe(5);
+    expect(wren.revision).toBe(6);
     expect(
       prefabDeckBlockers(wren, catalog)
         .filter((b) => b.trimmed)

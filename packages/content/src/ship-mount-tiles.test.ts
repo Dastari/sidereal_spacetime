@@ -89,8 +89,8 @@ describe("mount rules in prefab documents", () => {
     }
   });
 
-  it("Wren r5 carries its basic roof sensor and roof weapons on tiles", () => {
-    expect(wren.revision).toBe(5);
+  it("Wren r5+ carries its basic roof sensor and roof weapons on tiles", () => {
+    expect(wren.revision).toBe(6);
     const tiles = Object.fromEntries(
       wren.mountTiles!.map((t) => [t.id, `${t.kind}.${t.size}.${t.facing}`]),
     );

@@ -33,6 +33,7 @@ WIPED_SHIP_TABLES = [
     'construction_airlock', 'construction_native_pressure', 'construction_atmosphere',
     'construction_stair_link', 'construction_stair_walk', 'construction_stair_reservation',
     'construction_traversal_link', 'construction_traversal', 'construction_traversal_reservation',
+    'ship_logic_state', 'ship_logic_timer',
     'construction_interaction_binding', 'interaction_object', 'couch_seat',
     'construction_passenger_grant', 'construction_passenger_visit', 'construction_flight_review',
     'construction_review_origin', 'wayfarer_refit_attachment', 'construction_cargo_assembly',

@@ -28,6 +28,7 @@ import {
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
   FED_WREN_R4_PIN,
+  FED_WREN_R5_PIN,
 } from "./prefab-ship-pins";
 import { readFileSync } from "node:fs";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
@@ -162,11 +163,50 @@ test(
     expect(
       flightDefinitionCatalogHash(prefabFlightModel(legacy, catalog).catalog),
     ).toBe(FED_WREN_R3_PIN.flightDefinitionSha256);
-    // The registered spawner is r5; r3 is only an upgrade source.
+    // The registered spawner is r6; r3 is only an upgrade source.
     expect(FED_WREN_PIN.blueprintSha256).not.toBe(
       FED_WREN_R3_PIN.blueprintSha256,
     );
-    expect(prefabById("fed.s.wren")!.revision).toBe(5);
+    expect(prefabById("fed.s.wren")!.revision).toBe(6);
+    expect(prefabShipSpawner("fed.s.wren")?.blueprintSha256).toBe(
+      FED_WREN_PIN.blueprintSha256,
+    );
+  },
+);
+
+test(
+  "live Wren r5 instances keep their pins until an operator upgrades them to r6",
+  HEAVY,
+  () => {
+    // Wren r5 (2026-09-29) has no ship logic: its frozen document still derives the r5 pins under
+    // the same catalog revision as r6.
+    const legacy = readShipPrefab(
+      JSON.parse(
+        readFileSync(
+          new URL("./fixtures/fed-s-wren-r5.prefab.json", import.meta.url),
+          "utf8",
+        ),
+      ),
+    );
+    expect(legacy.revision).toBe(5);
+    expect(legacy.logic).toBeUndefined();
+    const catalog = prefabComponentCatalogFor(FED_WREN_R5_PIN.catalogRevision);
+    expect(catalog.revision).toBe(FED_WREN_PIN.catalogRevision);
+    const snapshot = compileConstruction(
+      JSON.stringify(prefabConstructionDocument(legacy, catalog)),
+    );
+    expect(snapshot.sha256).toBe(FED_WREN_R5_PIN.blueprintSha256);
+    expect(
+      flightDefinitionCatalogHash(prefabFlightModel(legacy, catalog).catalog),
+    ).toBe(FED_WREN_R5_PIN.flightDefinitionSha256);
+    // Same flight, new blueprint: the registered spawner is r6; r5 is only an upgrade source.
+    expect(FED_WREN_PIN.flightDefinitionSha256).toBe(
+      FED_WREN_R5_PIN.flightDefinitionSha256,
+    );
+    expect(FED_WREN_PIN.blueprintSha256).not.toBe(
+      FED_WREN_R5_PIN.blueprintSha256,
+    );
+    expect(prefabById("fed.s.wren")!.revision).toBe(6);
     expect(prefabShipSpawner("fed.s.wren")?.blueprintSha256).toBe(
       FED_WREN_PIN.blueprintSha256,
     );
@@ -197,11 +237,11 @@ test(
     expect(
       flightDefinitionCatalogHash(prefabFlightModel(legacy, catalog).catalog),
     ).toBe(FED_WREN_R4_PIN.flightDefinitionSha256);
-    // The registered spawner is r5; r4 is only an upgrade source.
+    // The registered spawner is r6; r4 is only an upgrade source.
     expect(FED_WREN_PIN.blueprintSha256).not.toBe(
       FED_WREN_R4_PIN.blueprintSha256,
     );
-    expect(prefabById("fed.s.wren")!.revision).toBe(5);
+    expect(prefabById("fed.s.wren")!.revision).toBe(6);
     expect(prefabShipSpawner("fed.s.wren")?.blueprintSha256).toBe(
       FED_WREN_PIN.blueprintSha256,
     );

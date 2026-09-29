@@ -15,18 +15,38 @@ export interface PinnedPrefabShip {
 }
 
 /**
- * Wren revision 5 (2026-09-29, SHIP-MOUNTS): weapons and the basic sensor dish on roof mount tiles
- * (turret MD autocannon, fixed MD twin autocannons, fixed SM sensor dish), engines aft only;
- * catalog revision 3 (drive reversers, stronger RCS). New assignments and in-place upgrades.
+ * Wren revision 6 (2026-09-29, EVA milestone 2): same geometry, flight and catalogue as r5; the
+ * hold becomes the airlock chamber (the hall door is a sealed airlock door) and the prefab carries
+ * ship logic: an airlock controller interlocking the hold door and the starboard hatch, and three
+ * wall buttons (inside the hold, outside on the hull, in the hall). New assignments and in-place
+ * upgrades.
  */
 export const FED_WREN_PIN: PinnedPrefabShip = {
+  prefabId: "fed.s.wren",
+  catalogRevision: "ship-components-v1@3",
+  blueprintSha256:
+    "6b40d9821766d76030e12675275bc8295d4042bc65a931bb7c2e2e4fd29cbed9",
+  flightDefinitionSha256:
+    "c6d252e906de0d8fad479e156a8ca512f0ac58500f4d7a0f3d888c13902a447d",
+  description: "Wren (Federation courier, size S, prefab r6)",
+};
+
+/**
+ * Wren revision 5 (2026-09-29, SHIP-MOUNTS) as assigned on the live authority until r6: weapons
+ * and the basic sensor dish on roof mount tiles, engines aft only, catalog revision 3. No ship
+ * logic (its hatch never opens under the same-plane EVA model). No longer registered as a spawner;
+ * existing instances keep these pins until `operator_upgrade_prefab_ship` moves them to
+ * FED_WREN_PIN. `fixtures/fed-s-wren-r5.prefab.json` is its canonical document.
+ */
+export const FED_WREN_R5_PIN: PinnedPrefabShip = {
   prefabId: "fed.s.wren",
   catalogRevision: "ship-components-v1@3",
   blueprintSha256:
     "c080b1397fd61b4609d4b8459239111aaed3bd398f868975ae2702418ad71eaf",
   flightDefinitionSha256:
     "c6d252e906de0d8fad479e156a8ca512f0ac58500f4d7a0f3d888c13902a447d",
-  description: "Wren (Federation courier, size S, prefab r5)",
+  description:
+    "Wren (Federation courier, size S, prefab r5; legacy live instances)",
 };
 
 /**
@@ -92,4 +112,5 @@ export const PREFAB_UPGRADE_SOURCES: readonly PinnedPrefabShip[] = [
   FED_WREN_R2_PIN,
   FED_WREN_R3_PIN,
   FED_WREN_R4_PIN,
+  FED_WREN_R5_PIN,
 ];

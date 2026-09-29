@@ -19,15 +19,19 @@ import {
   voxelCrewOutfitFor,
 } from "./crew-voxel-bundle";
 
-test("wardrobe: 4 uniforms and 14 tier 1-2 pieces with unique, stable definition ids", () => {
+test("wardrobe: 4 uniforms, 14 tier 1-2 pieces and the suit mag boots with unique, stable definition ids", () => {
   expect(CREW_WARDROBE.filter((w) => w.slot === "uniform")).toHaveLength(4);
   expect(
-    CREW_WARDROBE.filter((w) => w.part && w.slot !== "uniform"),
+    CREW_WARDROBE.filter((w) => w.part && w.slot !== "uniform" && !w.maglock),
   ).toHaveLength(14);
+  // Maglock is a property of space-suit boots only (owner 2026-09-29), never clothing or armour.
+  expect(CREW_WARDROBE.filter((w) => w.maglock).map((w) => [w.id, w.slot])).toEqual([
+    ["suit-boots", "boots"],
+  ]);
   const ids = INVENTORY_DEFINITIONS.map((d) => d.id);
   expect(new Set(ids).size).toBe(ids.length);
   for (const d of CREW_WARDROBE_DEFINITIONS) {
-    expect(d.id).toMatch(/^wardrobe-(uniform-|t[12]-)/);
+    expect(d.id).toMatch(/^wardrobe-(uniform-|t[12]-|suit-boots$)/);
     expect(d.equipSlot).toBeTruthy();
     // Flight mass needs an explicit physical definition for every item that can be on board.
     expect(
