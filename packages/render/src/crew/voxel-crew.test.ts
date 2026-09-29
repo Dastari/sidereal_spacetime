@@ -209,7 +209,13 @@ describe("voxel crew runtime", () => {
     for (const socket of VOXEL_CREW_SOCKETS)
       expect(crew.socketNodes[socket]).toBeDefined();
     const enabled = (prefix: string) =>
-      scene.meshes.some((m) => m.name.startsWith(prefix) && m.isEnabled());
+      scene.meshes.some(
+        (m) =>
+          m.name.startsWith(prefix) &&
+          !m.name.endsWith("-pressure-neck") &&
+          !m.name.endsWith("-regional-union") &&
+          m.isEnabled(),
+      );
     // Nothing equipped: the base body (privacy shorts; sports bra on the feminine
     // body) with bare hands. No jumpsuit and never the built-in crew gear layer.
     expect(enabled("GEO-crew-base-male")).toBe(true);

@@ -35,6 +35,11 @@ import { createFootPlanting, solveTwoBone } from "./voxel-ik";
 import { setMeshRole } from "../mesh-roles";
 import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
+import type { CrewArmorSlot } from "@sidereal/content/crew-armor";
+import {
+  createCrewRegionalLayers,
+  crewArmorClothRegions,
+} from "./voxel-crew-regions";
 import {
   selectVoxelCrewLayers,
   voxelCrewActionLayer,
@@ -407,6 +412,8 @@ export async function createVoxelCrewVisual(
   let outfit: VoxelCrewOutfit = { ...VOXEL_CREW_DEFAULT_OUTFIT };
   // Review harnesses may force a layer; the game derives the outfit from equipment.
   let outfitOverride: Partial<VoxelCrewOutfit> = {};
+  const regionalLayers = createCrewRegionalLayers(container.meshes);
+  let armourCloth = crewArmorClothRegions([]);
   const face = createVoxelFace(
     scene,
     container.materials.find(
@@ -468,6 +475,15 @@ export async function createVoxelCrewVisual(
         (region === "hair" && (hairHidden || hiddenRegions.has("head")));
       mesh.setEnabled(match[2] === meshVariant() && !hidden);
     }
+    const uniform = appearance.equippedComponents?.uniform;
+    const eva = !!uniform && crewWardrobeItem(uniform)?.eva === "suit";
+    regionalLayers.refresh(
+      meshVariant(),
+      outfit.suit,
+      armourCloth,
+      eva,
+      hiddenRegions,
+    );
   };
   // face: the driving clip's expression track each frame, plus the blink timer
   const faceObserver = scene.onBeforeRenderObservable.add(() => {
@@ -702,6 +718,12 @@ export async function createVoxelCrewVisual(
       for (const r of regions) hiddenRegions.add(r);
       refreshRegions();
     },
+    /** Only successfully loaded equipment owns cloth/masks; no inventory inference. */
+    setArmorCloth(slots: Iterable<CrewArmorSlot>) {
+      if (disposed) return;
+      armourCloth = crewArmorClothRegions(slots);
+      refreshRegions();
+    },
     /** Wardrobe: a suit replaces the underwear base body; gear gloves replace the bare hands. */
     setOutfit(next: Partial<VoxelCrewOutfit>) {
       outfitOverride = { ...outfitOverride, ...next };
@@ -808,6 +830,7 @@ export async function createVoxelCrewVisual(
       for (const g of owned) g.dispose();
       for (const part of attached) part.dispose();
       attached.clear();
+      regionalLayers.dispose();
       container.dispose();
       root.dispose();
     },

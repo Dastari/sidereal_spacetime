@@ -92,12 +92,14 @@ export const VOXEL_VISOR_VISUALS: Readonly<Record<string, string>> = {
   "recon-visor": "ar",
 };
 
-function helmetVisual(id: string | undefined) {
+function helmetVisual(
+  id: string | undefined,
+): { helmet?: string; accessory?: string; sealed?: boolean } | undefined {
   if (!id) return undefined;
   // Wardrobe helmets (EVA suit) name their head-kit helmet directly.
   const wardrobe = crewWardrobeItem(id);
   if (wardrobe?.slot === "helmet" && wardrobe.helmet)
-    return { helmet: wardrobe.helmet };
+    return { helmet: wardrobe.helmet, sealed: wardrobe.eva === "helmet" };
   return VOXEL_HELMET_VISUALS[id.replace(/^crew-/, "")];
 }
 
@@ -140,6 +142,8 @@ export function voxelHeadLoadoutFromAppearance(
   if (!female && facialHair) tryAdd({ facialHair });
   if (detail) tryAdd({ details: [detail] });
   if (worn?.helmet) tryAdd({ helmet: worn.helmet });
+  // The pressure helmet owns its window; an optional valid visor only changes the optics.
+  if (worn?.sealed && loadout.helmet) tryAdd({ visor: "clear" });
   if (worn?.accessory)
     tryAdd({ accessories: [...(loadout.accessories ?? []), worn.accessory] });
   if (visor) {

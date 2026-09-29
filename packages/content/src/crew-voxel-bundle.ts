@@ -1,3 +1,5 @@
+import { crewWardrobeItem } from "./crew-wardrobe";
+
 /**
  * Voxel crew bundle (CHAR-BODY r005): 1/32 m voxel body, `crew_rig`, sockets and the baked
  * animation library. Accepted as a first revision (wiki: Decisions/2026-09-27 First Revision Art
@@ -170,15 +172,19 @@ export const VOXEL_CREW_DEFAULT_OUTFIT: VoxelCrewOutfit = {
   gear: false,
 };
 /**
- * What is drawn matches what is equipped. The jumpsuit/undersuit layer appears only
- * with an equipped uniform (which tints it). The body's built-in "gear" layer
+ * The whole jumpsuit appears with a valid equipped uniform (which tints it).
+ * Loaded armor separately owns regional cloth through the renderer assembly helper.
+ * The body's built-in "gear" layer
  * (harness, pads, gloves, back plate) is never drawn: armour, gloves and packs come
  * from their own equipped parts (crew-armor), so an empty slot shows nothing.
  */
 export function voxelCrewOutfitFor(
   equipped: Readonly<Partial<Record<string, string | undefined>>> | undefined,
 ): VoxelCrewOutfit {
-  return { suit: !!equipped?.uniform, gear: false };
+  const uniform = equipped?.uniform
+    ? crewWardrobeItem(equipped.uniform)
+    : undefined;
+  return { suit: uniform?.slot === "uniform" && !!uniform.suit, gear: false };
 }
 /** Regions hidden by the outfit: a suit replaces the underwear base body, gear gloves replace hands. */
 export function voxelCrewHiddenRegions(

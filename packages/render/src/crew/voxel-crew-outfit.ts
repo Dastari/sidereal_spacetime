@@ -70,7 +70,7 @@ export function voxelArmorLoadout(
     ? crewWardrobeItem(equipped.uniform)
     : undefined;
   const insignia = uniform?.part ? crewArmorPart(uniform.part) : undefined;
-  if (!out.chest && uniform && insignia?.slot === "chest")
+  if (!out.chest && uniform?.slot === "uniform" && insignia?.slot === "chest")
     out.chest = { part: insignia.id, colourway: uniform.colourway };
   return out;
 }
@@ -101,8 +101,15 @@ export function createVoxelCrewOutfit(
       regions.add("hair");
     }
     for (const entry of armour.values())
-      for (const region of entry.attachment?.hidesBodyRegions ?? [])
+      for (const region of entry.attachment?.meshes.length
+        ? entry.attachment.hidesBodyRegions
+        : [])
         regions.add(region);
+    crew.setArmorCloth(
+      [...armour]
+        .filter(([, entry]) => entry.attachment?.meshes.length)
+        .map(([slot]) => slot),
+    );
     crew.setHiddenRegions(regions);
     toneCrewEmissive(crew.root.getChildMeshes());
     options.onChange?.();
@@ -162,7 +169,12 @@ export function createVoxelCrewOutfit(
         armour.delete(slot);
         continue;
       }
-      armour.set(slot, { key: wantKey, revision });
+      const request = { key: wantKey, revision } as {
+        key: string;
+        revision: number;
+        attachment?: CrewArmorAttachment;
+      };
+      armour.set(slot, request);
       const part = crewArmorPart(want.part)!;
       void track(
         attachCrewArmor(
@@ -177,7 +189,8 @@ export function createVoxelCrewOutfit(
       )
         .then((attachment) => {
           const entry = armour.get(slot);
-          if (disposed || entry?.revision !== revision) {
+          // Identity survives remove/re-add cycles, unlike a revision counter reset by deletion.
+          if (disposed || entry !== request) {
             attachment.dispose();
             return;
           }
@@ -197,10 +210,12 @@ export function createVoxelCrewOutfit(
     get pending() {
       return pending;
     },
-    /** Current armour part ids by slot (diagnostics and tests). */
+    /** Successfully loaded armour part ids by slot (diagnostics and tests). */
     get armour() {
       return Object.fromEntries(
-        [...armour].map(([slot, entry]) => [slot, entry.key.split("|")[0]]),
+        [...armour]
+          .filter(([, entry]) => entry.attachment?.meshes.length)
+          .map(([slot, entry]) => [slot, entry.key.split("|")[0]]),
       ) as Partial<Record<CrewArmorSlot, string>>;
     },
     dispose() {
@@ -209,6 +224,8 @@ export function createVoxelCrewOutfit(
       head?.dispose();
       for (const entry of armour.values()) entry.attachment?.dispose();
       armour.clear();
+      crew.setArmorCloth([]);
+      crew.setHiddenRegions([]);
     },
   };
 }
