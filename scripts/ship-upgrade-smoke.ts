@@ -447,25 +447,16 @@ try {
       button.front,
     ))
       await walkNative(x, px, py);
-    await x.reducers.pressShipButton({
-      shipId: owner.shipId,
-      deviceId: button.deviceId,
-    });
-    await wait(
-      () => !!device("door-outer")?.open,
-      "hatch opened by the button",
-      10000,
-    );
-    await x.reducers.pressShipButton({
-      shipId: owner.shipId,
-      deviceId: button.deviceId,
-    });
-    await wait(
-      () => device("lock")?.state === "pressurised",
-      "cycled back",
-      10000,
-    );
-    evidence.airlockAfterUpgrade = { cycled: true };
+    // Unsuited, the inside button refuses to depressurise (vacuum needs the EVA suit).
+    const refusal = await x.reducers
+      .pressShipButton({ shipId: owner.shipId, deviceId: button.deviceId })
+      .then(
+        () => "",
+        (e: unknown) => String(e),
+      );
+    assert.match(refusal, /EVA needs a pressure suit/);
+    assert.equal(device("lock")?.state, "pressurised");
+    evidence.airlockAfterUpgrade = { pressurised: true, unsuitedRefused: true };
   }
 
   // Take the helm and fly.
