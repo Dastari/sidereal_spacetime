@@ -1564,6 +1564,14 @@ export default function App({
       localY: evaView?.localY ?? actor?.localY ?? PILOT_LAYOUT.station.y,
       interior: interior && !evaView,
       eva: evaView ?? null,
+      airlockCycle: evaCycle
+        ? {
+            airlockId: evaCycle.airlockId,
+            direction: evaCycle.direction,
+            startedMicros: evaCycle.startedMicros,
+            endsMicros: evaCycle.endsMicros,
+          }
+        : null,
       evaBodies:
         ready && c && actor?.connected && evaShipPose
           ? evaBodiesForScene(

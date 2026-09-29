@@ -220,6 +220,8 @@ export type SceneState = {
   eva?: EvaSceneState | null;
   /** Other EVA bodies in view (`visible_eva_bodies`), in the own ship's frame. */
   evaBodies?: readonly RemoteCrewState[];
+  /** The own running airlock cycle (`own_eva_airlock_cycle`): animates that hatch's outer door. */
+  airlockCycle?: import("./prefab-ship/doors").AirlockCycleState | null;
 };
 export type EvaSceneState = VoxelCrewEva & {
   /** Own-ship-local heading (ship convention: counter-clockwise, forward = (−sin h, cos h)). */
@@ -1360,6 +1362,20 @@ async function buildWorld(
     camera.maxZ = Math.max(1600, camera.radius + 1600);
     updateConstructionView?.(camera.position, state.interior);
     prefabView?.setInterior(state.interior);
+    // Door leaves (presentation only): the airlock outer door follows the EVA cycle; interior
+    // doors slide open for nearby characters.
+    prefabView?.updateDoors({
+      nowMs: Date.now(),
+      dt,
+      cycle: state.airlockCycle ?? null,
+      actors: [
+        ...(state.eva ? [] : [{ x: displayed.localX, y: displayed.localY }]),
+        ...(state.crewmates ?? []).map((c) => ({ x: c.localX, y: c.localY })),
+      ],
+      cyclingBodies: (state.evaBodies ?? [])
+        .filter((b) => b.eva?.cycling)
+        .map((b) => ({ x: b.localX, y: b.localY })),
+    });
     camera.getViewMatrix(true);
     environment.update({
       id: state.vistaId ?? DEFAULT_SPACE_VISTA,

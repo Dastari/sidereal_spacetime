@@ -13,6 +13,10 @@ import { moldedLightRig } from "./molded-plastic";
 /** Game-side handle over the SHIPS-PREFABS dressed ship view. */
 export interface PrefabShipViewHandle {
   setInterior(interior: boolean): void;
+  /** Animate door leaves (airlock outer door from the EVA cycle, interior doors on approach). */
+  updateDoors(input: import("./prefab-ship/doors").DoorUpdate): void;
+  /** Door leaf states (review diagnostics). */
+  doors(): { id: string; open: number; airlock: boolean }[];
   dispose(): void;
   /** Mesh-origin and draw metrics of the dressed view (evidence/diagnostics). */
   metrics(): ReturnType<
@@ -50,7 +54,10 @@ export async function loadPrefabShipPresentation(
   if (!binding || typeof binding.catalog !== "string") return undefined;
   const doc = readShipPrefab(binding.document);
   const catalog = prefabComponentCatalogFor(binding.catalog);
-  const { createPrefabShipView } = await import("./prefab-ship/ship-view");
+  const [{ createPrefabShipView }, { createPrefabDoors }] = await Promise.all([
+    import("./prefab-ship/ship-view"),
+    import("./prefab-ship/doors"),
+  ]);
   let interior = true;
   // Published component (ship-components/r002) and interior object (ship-objects/r001) GLBs;
   // anything unpublished falls back to stand-ins inside the view. One ceiling light per room.
@@ -58,7 +65,10 @@ export async function loadPrefabShipPresentation(
     catalog,
     view: "deck",
     parent: shipRoot,
+    // Closed, animated door leaves (doors.ts) replace the airlock GLB's baked leaves.
+    externalDoorLeaves: true,
   });
+  const doors = createPrefabDoors(scene, view.root, doc, catalog);
   // The native construction loader also builds boundary guide meshes for the same layout; the
   // dressed view replaces them visually (walking and collision stay authoritative), so hide them.
   for (const mesh of shipRoot.getChildMeshes())
@@ -126,11 +136,15 @@ export async function loadPrefabShipPresentation(
       if (next === interior) return;
       interior = next;
       view.setView(next ? "deck" : "flight");
+      doors.setView(next ? "deck" : "flight");
       adapt();
       logMetrics();
     },
     metrics: () => view.metrics(),
+    updateDoors: (input) => doors.update(input),
+    doors: () => doors.doors(),
     dispose() {
+      doors.dispose();
       occluders.dispose();
       glow.dispose();
       view.dispose();
