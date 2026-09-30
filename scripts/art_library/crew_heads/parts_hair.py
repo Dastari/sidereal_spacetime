@@ -21,6 +21,8 @@ BACK_MIN_T = 1.375
 # Minimum design side thickness for styles with side hair (one quantised block past design X 6.67).
 SIDE_MIN_T = 0.75
 COHESIVE = ContextVar("cohesive_hair_candidate", default=False)
+COHESIVE_STYLE = ContextVar("cohesive_hair_style", default="")
+PROFILE_STYLES = {"high_bun", "messy_bun", "long_gathered", "gathered_fringe", "topknot_sweep", "long_straight", "long_side_fringe"}
 
 
 # =========================================================================== helpers
@@ -49,6 +51,8 @@ def snap(v, s=0.25):
 def shell(g, t=1.0, top=1.25, front=10.0, side=7.25, back=3.0, burn=None, r=1.5, amp=0.5, seed=1, front_fn=None,
           side_t=None, back_t=None):
     """Hair cap hugging the skull. front/side/back are the hairline heights; burn the sideburn height."""
+    if COHESIVE.get() and COHESIVE_STYLE.get() in PROFILE_STYLES:
+        r = 0.75
     st = t if side_t is None else side_t
     # Same quantisation at the sides (first block centre past the skull at design X 6.67): a 0.5 side
     # left the back corners bare. Shaved styles (t 0.25: mohawk, side undercut) keep bare sides.
@@ -156,6 +160,7 @@ def directional_curtain(g, t, zbot, sides, back, front_y, amp, seed, flare, ztop
     Clumps change direction and thickness down their length; their roots overlap the fitted crown.
     The irregular lower outline and side-specific sweep preserve each authored cut/updo.
     """
+    broad = COHESIVE_STYLE.get() in PROFILE_STYLES
     def fn(X, Y, Z):
         ax = np.abs(X)
         f = np.clip((ztop - Z) / max(1e-6, ztop - zbot), 0, 1)
@@ -166,12 +171,18 @@ def directional_curtain(g, t, zbot, sides, back, front_y, amp, seed, flare, ztop
         back_phase = np.floor((X + 1.5 * f + seed % 3) / 3.25)
         sr = ((hsh(side_phase.astype(np.int64), seed) % 3) / 2) * 0.625
         br = ((hsh(back_phase.astype(np.int64), seed + 17) % 3) / 2) * 0.625
+        if broad:
+            sr *= 2.5
+            br *= 4.0
         side = sides & (ax >= 5.875) & (ax < 6 + tt + sr) & (Y > front_y) & (Y < 6 + tt + br)
         bk = back & (Y >= 5.875) & (Y < 6 + tt + br) & (ax < 6 + tt + sr - taper * f * f)
         phase = np.where(ax >= np.abs(Y), side_phase, back_phase)
         drop = (hsh(phase.astype(np.int64), seed + 9) % 3) * amp / 2
+        if broad:
+            drop *= 1.5
         return (side | bk) & (Z >= zbot + drop) & (Z < ztop)
-    g.new().region(-7 - t - flare, front_y, zbot - 1, 7 + t + flare, 7 + t + flare,
+    relief = 3.0 if broad else 0.0
+    g.new().region(-7 - t - flare - relief, front_y, zbot - 1, 7 + t + flare + relief, 7 + t + flare + relief,
                    ztop, fn, "hair", q=0.5)
     return g
 
@@ -458,7 +469,7 @@ def s_gathered_fringe():
     if COHESIVE.get():
         # The swept outer temple's low step shares a broad root with the fall above it.
         # Head export flips authored X as well as Y; this is the negative runtime-X temple.
-        g.new().box(5.875, -4.5, -0.75, 7.75, -3.75, 1.5, "hair")
+        g.new().box(5.875, -4.5, -0.75, 7.75, -3.75, 3.5, "hair")
     _bangs(g, [(-5.75, -3.25, 7.5), (-3.25, -0.75, 8.75), (-0.75, 1.75, 9.25), (1.75, 5.75, 8.25)])
     return g
 
@@ -497,6 +508,9 @@ def s_long_straight():
     curtain(g, 1.25, -9.0, sides=False, amp=2.5, seed=44, taper=3.5)
     g.cut(-0.25, -7.5, 13.5, 0.25, 0.0, 15.0)                     # centre parting
     _bangs(g, [(-5.75, -3.0, 7.0), (3.0, 5.75, 7.0)])
+    if COHESIVE.get():
+        # Backing under the staggered left temple lock keeps its low tip attached to the fall.
+        g.new().box(-7.75, -5.25, -2.0, -5.875, -4.5, 3.5, "hair")
     return g
 
 
@@ -598,18 +612,23 @@ def puff(g, cells=4):
 
 def hair_variants(hid, cohesive=False):
     token = COHESIVE.set(cohesive)
+    style_token = COHESIVE_STYLE.set(hid)
     try:
         g = STYLES[hid]()
     finally:
         COHESIVE.reset(token)
+        COHESIVE_STYLE.reset(style_token)
     if cohesive:
         g.continuous = True
         # Broad directional crown masses share the fitted substrate. Retain shaved sides and
         # the distinct spikes/curls/buns already authored by the style, without strand tiling.
-        if hid not in NO_STRANDS and hid not in {"close_crop", "mohawk", "side_undercut", "flat_top", "tall_crest"}:
+        if hid not in NO_STRANDS and hid not in {
+            "close_crop", "mohawk", "side_undercut", "flat_top", "tall_crest",
+            "high_bun", "messy_bun", "long_gathered", "gathered_fringe", "topknot_sweep",
+        }:
             for k, (x, y) in enumerate(((-3.75, -2.75), (-0.75, -0.5), (2.5, 2.0))):
                 spike(g, x, y - 1.5, 13.0, 4.0, 2.75 + (k % 2) * 0.75,
-                      lean=(0.3, 0.35), d=5.5, taper=0.55)
+                      lean=(0.3, 0.35), d=5.5, taper=0.55, step=1.0 if hid in PROFILE_STYLES else 0.5)
     else:
         puff(g)
     if not cohesive and hid not in NO_STRANDS:

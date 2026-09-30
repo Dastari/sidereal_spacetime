@@ -7,7 +7,7 @@ import {
 
 export const HEAD_ART_CANDIDATE = "refinement-r005";
 export const HEAD_ART_MANIFEST_SHA256 =
-  "9d3af2e8fb1ea99ad06f1c080229cac9fbefcf4a0280faab380e25a0c1e7cbed";
+  "5532242e63549c7182c4f28721f5da13cba48d4abfbdd2b4d07b40ca67a0fd11";
 const BASE = `/assets/crew/heads/${HEAD_ART_CANDIDATE}/`;
 type FilePin = { path: string; sha256: string; bytes: number; nodes: string[] };
 export type HeadArtManifest = {
@@ -139,6 +139,16 @@ export function validateHeadArtBytes(
     )
   )
     throw new Error("invalid character art nodes, slots or external maps");
+  const roots = doc.scenes?.[doc.scene ?? 0]?.nodes;
+  if (
+    !Array.isArray(roots) ||
+    roots.some((i: number) => !Number.isInteger(i) || !doc.nodes?.[i]) ||
+    !equal(
+      roots.map((i: number) => doc.nodes[i].name),
+      pin.nodes,
+    )
+  )
+    throw new Error("character art required nodes missing from active scene");
   const widths: Record<string, number> = { SCALAR: 1, VEC3: 3, VEC4: 4 };
   const sizes: Record<number, number> = { 5121: 1, 5123: 2, 5125: 4, 5126: 4 };
   for (const a of doc.accessors ?? []) {
@@ -178,7 +188,10 @@ export function validateHeadArtBytes(
   for (const n of doc.nodes ?? []) {
     if (n.matrix || n.translation || n.rotation || n.scale || n.children)
       throw new Error("character art frame must be baked");
-    for (const p of doc.meshes?.[n.mesh]?.primitives ?? []) {
+    const primitives = doc.meshes?.[n.mesh]?.primitives;
+    if (!Array.isArray(primitives) || !primitives.length)
+      throw new Error("character art required node has no geometry");
+    for (const p of primitives) {
       const pos = doc.accessors[p.attributes?.POSITION];
       const normal = doc.accessors[p.attributes?.NORMAL];
       const color = doc.accessors[p.attributes?.COLOR_0];
@@ -199,10 +212,33 @@ export function validateHeadArtBytes(
         index.count % 3 ||
         (p.mode ?? 4) !== 4 ||
         !doc.materials[p.material] ||
-        !pos.min?.every((v: number) => Number.isFinite(v) && v >= -1.5) ||
-        !pos.max?.every((v: number) => Number.isFinite(v) && v <= 1.5)
+        pos.min?.length !== 3 ||
+        pos.max?.length !== 3 ||
+        !pos.min.every(
+          (v: number, k: number) =>
+            Number.isFinite(v) && v >= -1.5 && v <= pos.max[k],
+        ) ||
+        !pos.max.every((v: number) => Number.isFinite(v) && v <= 1.5)
       )
         throw new Error("invalid character art channels or head-space bounds");
+      const positionView = doc.bufferViews[pos.bufferView];
+      const positionStart =
+        jsonEnd + 8 + (positionView.byteOffset ?? 0) + (pos.byteOffset ?? 0);
+      for (let i = 0; i < pos.count; i++)
+        for (let k = 0; k < 3; k++) {
+          const v = view.getFloat32(
+            positionStart + i * (positionView.byteStride ?? 12) + k * 4,
+            true,
+          );
+          if (
+            Math.abs(v) > 1.5 ||
+            v < pos.min[k] - 1e-6 ||
+            v > pos.max[k] + 1e-6
+          )
+            throw new Error(
+              "character art position outside declared or head-space bounds",
+            );
+        }
       const b = doc.bufferViews[index.bufferView];
       const size = sizes[index.componentType];
       const start = jsonEnd + 8 + (b.byteOffset ?? 0) + (index.byteOffset ?? 0);

@@ -136,18 +136,20 @@ export function createVoxelCrewOutfit(
       headKey = key;
       const revision = ++headRevision;
       void track(
-        attachVoxelCrewHead(scene, crew, loadout, resolved.headArtRevision),
+        attachVoxelCrewHead(scene, crew, loadout, resolved.headArtRevision, {
+          deferActivation: true,
+        }),
       )
         .then((next) => {
           if (disposed || revision !== headRevision) {
-            // A stale head kit clears the body's hidden regions when disposed;
-            // restore the current head/armour hides (else gloves/hands flash back).
+            // Deferred attachments have not changed the current face composer or body hides.
             next.dispose();
             changed();
             return;
           }
           head?.dispose();
           head = next;
+          next.activate();
           changed();
         })
         .catch((error) => {

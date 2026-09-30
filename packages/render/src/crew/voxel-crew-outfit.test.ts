@@ -12,9 +12,33 @@ const control = vi.hoisted(() => ({
   delayed: false,
   fail: false,
   requests: [] as { release: () => void; attachment: CrewArmorAttachment }[],
+  headDelayed: false,
+  face: "",
+  heads: [] as {
+    release: () => void;
+    activate: ReturnType<typeof vi.fn>;
+    dispose: ReturnType<typeof vi.fn>;
+  }[],
 }));
 vi.mock("./voxel-crew-kit", () => ({
-  attachVoxelCrewHead: async () => ({ dispose() {} }),
+  attachVoxelCrewHead: async (
+    _scene: unknown,
+    _crew: unknown,
+    _loadout: unknown,
+    revision: string,
+    options?: { deferActivation?: boolean },
+  ) => {
+    const activate = vi.fn(() => {
+      control.face = revision;
+    });
+    const dispose = vi.fn();
+    if (control.headDelayed)
+      await new Promise<void>((release) =>
+        control.heads.push({ release, activate, dispose }),
+      );
+    if (!options?.deferActivation) activate();
+    return { activate, dispose };
+  },
 }));
 vi.mock("./armor-attach", async (importOriginal) => {
   const actual = await importOriginal<typeof import("./armor-attach")>();
@@ -105,6 +129,41 @@ async function setup(bodyType: "male" | "female") {
 }
 
 describe("shared regional outfit assembly with actual body and armor GLBs", () => {
+  it("accepts the latest head revision before binding a face and never activates stale or disposed loads", async () => {
+    const s = await setup("male");
+    control.headDelayed = true;
+    const apply = (headArtRevision: string) =>
+      s.outfit.apply({ bodyType: "male", headArtRevision });
+    const tick = () => new Promise((resolve) => setTimeout(resolve, 0));
+    try {
+      apply("refinement-r005");
+      apply("legacy");
+      while (control.heads.length < 2) await tick();
+      const [stale, current] = control.heads;
+      current.release();
+      await tick();
+      expect(control.face).toBe("legacy");
+      expect(current.activate).toHaveBeenCalledTimes(1);
+      stale.release();
+      await tick();
+      expect(stale.dispose).toHaveBeenCalledTimes(1);
+      expect(stale.activate).not.toHaveBeenCalled();
+      expect(control.face).toBe("legacy");
+      expect(current.dispose).not.toHaveBeenCalled();
+      apply("refinement-r005");
+      while (control.heads.length < 3) await tick();
+      s.outfit.dispose();
+      control.heads[2].release();
+      await tick();
+      expect(control.heads[2].activate).not.toHaveBeenCalled();
+      expect(control.heads[2].dispose).toHaveBeenCalledTimes(1);
+    } finally {
+      control.headDelayed = false;
+      control.heads.length = 0;
+      control.face = "";
+      s.dispose();
+    }
+  });
   for (const variant of ["male", "female"] as const)
     it(`${variant}: bare, uniform, full, partial, mixed and EVA retain ownership`, async () => {
       const s = await setup(variant);

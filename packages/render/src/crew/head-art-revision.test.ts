@@ -116,4 +116,56 @@ describe("explicit character art revision", () => {
       }),
     ).toThrow(/non-finite/);
   });
+  it("rejects finite positions outside truthful declared bounds even with a matching hash", () => {
+    const pin = manifest().files["hair/close_crop"];
+    for (const value of [1000, 1.0]) {
+      const bytes = readFileSync(ROOT + pin.path);
+      const view = new DataView(
+        bytes.buffer,
+        bytes.byteOffset,
+        bytes.byteLength,
+      );
+      const end = 20 + view.getUint32(12, true);
+      const doc = JSON.parse(bytes.subarray(20, end).toString());
+      const a = doc.accessors[doc.meshes[0].primitives[0].attributes.POSITION];
+      view.setFloat32(
+        end +
+          8 +
+          (doc.bufferViews[a.bufferView].byteOffset ?? 0) +
+          (a.byteOffset ?? 0),
+        value,
+        true,
+      );
+      expect(() =>
+        validateHeadArtBytes(bytes, {
+          ...pin,
+          sha256: bytesToHex(sha256(bytes)),
+        }),
+      ).toThrow(/position outside/);
+    }
+  });
+  it("rejects named geometry omitted from the selected Babylon scene", () => {
+    const pin = manifest().files["hair/close_crop"];
+    const original = readFileSync(ROOT + pin.path);
+    const end = 20 + original.readUInt32LE(12);
+    const doc = JSON.parse(original.subarray(20, end).toString());
+    doc.scenes[doc.scene ?? 0].nodes = [];
+    const json = Buffer.from(JSON.stringify(doc));
+    const padded = Buffer.alloc(Math.ceil(json.length / 4) * 4, 32);
+    json.copy(padded);
+    const bytes = Buffer.concat([
+      original.subarray(0, 20),
+      padded,
+      original.subarray(end),
+    ]);
+    bytes.writeUInt32LE(bytes.length, 8);
+    bytes.writeUInt32LE(padded.length, 12);
+    expect(() =>
+      validateHeadArtBytes(bytes, {
+        ...pin,
+        bytes: bytes.length,
+        sha256: bytesToHex(sha256(bytes)),
+      }),
+    ).toThrow(/active scene/);
+  });
 });
