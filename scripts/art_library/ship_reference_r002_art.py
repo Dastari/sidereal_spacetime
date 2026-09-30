@@ -156,7 +156,13 @@ def medical_bed(K,w,d,h):
     p=K.Piece("reference.r002.medbed","object","interior",(w,d,h));b=p.b
     b(w*.4,d*.32,0,w*.6,d*.68,4,"metal")
     b(2,2,0,w-2,d-2,1,"trim")
-    b(0,0,4,w,d,6,"primary.furniture-cover")
+    # An actual front service opening: continuous rear deck, finite end housings,
+    # and top/bottom rails surround the retained recessed control backing.
+    b(0,0,4,w,d-1,6,"primary.furniture-cover")
+    for x,X in ((0,w*.36),(w*.70,w)):
+        b(x,d-1,4,X,d,6,"primary.furniture-cover")
+    b(w*.36,d-1,4,w*.70,d,4.5,"primary")
+    b(w*.36,d-1,5.5,w*.70,d,6,"primary")
     b(2,1,6,w-2,d-1,8,"primary.fabric.furniture-cover")
     b(3,2,8,8,d-2,10,"primary.fabric.furniture-cover")
     b(w*.48,1.2,8,w-2,d-1.2,9.2,"accent.fabric")
@@ -170,9 +176,9 @@ def medical_bed(K,w,d,h):
         b(6,y,7,7,y+1,9,"metal")
         b(w-6,y,7,w-5,y+1,9,"metal")
     # Side-owned docking/control recess stays below the mattress and seating edge.
-    b(w*.38,d-.8,4.5,w*.67,d-.3,5.5,"dark")
-    b(w*.42,d-.25,4.7,w*.49,d-.1,5.15,"metal")
-    b(w*.55,d-.25,4.8,w*.62,d-.1,5.05,"emit_b")
+    b(w*.38,d-.95,4.55,w*.67,d-.55,5.45,"dark")
+    b(w*.42,d-.5,4.6,w*.49,d-.05,5.4,"metal")
+    b(w*.55,d-.5,4.6,w*.62,d-.05,5.4,"emit_b")
     return p
 
 
@@ -187,15 +193,15 @@ def table(K,w,d,h):
     b(3,3,z+.7,10,8,z+1,"trim")
     for x,y in ((4,4),(7,5)):
         # Four walls and a backed bottom leave the mug genuinely open from above.
-        b(x,y,z+1,x+1.6,y+1.6,z+1.25,"primary")
-        b(x+.2,y+.2,z+1.25,x+1.4,y+1.4,z+1.35,"dark")
+        b(x,y,z+1,x+1.6,y+1.6,z+1.25,"primary.mug-body")
+        b(x+.2,y+.2,z+1.25,x+1.4,y+1.4,z+1.35,"dark.mug-body")
         for a,A in ((x,x+.2),(x+1.4,x+1.6)):
-            b(a,y,z+1.2,A,y+1.6,z+2.7,"primary")
+            b(a,y,z+1.2,A,y+1.6,z+2.7,"primary.mug-body")
         for a,A in ((y,y+.2),(y+1.4,y+1.6)):
-            b(x+.2,a,z+1.2,x+1.4,A,z+2.7,"primary")
-        b(x+1.5,y+.4,z+1.4,x+2,y+.65,z+2.3,"metal")
-        b(x+1.5,y+1,z+1.4,x+2,y+1.2,z+2.3,"metal")
-        b(x+1.9,y+.4,z+1.4,x+2.15,y+1.2,z+1.65,"metal")
+            b(x+.2,a,z+1.2,x+1.4,A,z+2.7,"primary.mug-body")
+        b(x+1.5,y+.4,z+1.4,x+2,y+.65,z+2.3,"metal.mug-body")
+        b(x+1.5,y+1,z+1.4,x+2,y+1.2,z+2.3,"metal.mug-body")
+        b(x+1.9,y+.4,z+1.4,x+2.15,y+1.2,z+1.65,"metal.mug-body")
     b(w-6,d-6,z+.7,w-2,d-2,z+1.8,"secondary")
     b(w-5.5,d-5.5,z+1.8,w-2.5,d-2.5,z+2,"dark")
     b(w-4.3,d-4.3,z+2,w-3.7,d-3.7,h,"accent.flora")
@@ -374,7 +380,9 @@ for alias,base in (("metal.barrel","metal"),("secondary.vessel","secondary"),
                    ("primary.furniture-cover","primary"),("secondary.furniture-cover","secondary"),
                    ("primary.fabric.furniture-cover","primary.fabric"),
                    ("secondary.fabric.furniture-cover","secondary.fabric"),
-                   ("accent.fabric.furniture-cover","accent.fabric")):
+                   ("accent.fabric.furniture-cover","accent.fabric"),
+                   ("primary.mug-body","primary"),("dark.mug-body","dark"),
+                   ("metal.mug-body","metal")):
     E.SI[alias]=len(E.SLOTS);E.SLOTS.append(alias)
     K.SLOT_PBR[alias]=K.SLOT_PBR[base]
     for theme in K.THEMES.values():theme[alias]=theme[base]
@@ -384,14 +392,18 @@ for alias,base in (("metal.barrel","metal"),("secondary.vessel","secondary"),
 # rectangular exporter untouched: only this candidate runner changes their occlusion.
 NONRECT_COVER_SLOTS = frozenset(alias for alias in E.SLOTS if alias.endswith(
     ("receiver-cover", "thermal-cover", "furniture-cover")))
+EXACT_DETAIL_SLOTS = frozenset(("primary.mug-body", "dark.mug-body", "metal.mug-body"))
 original_hidden_faces = E.hidden_faces
 original_trim_buried_emissive = E.trim_buried_emissive
 
 def reference_hidden_faces(boxes):
-    if not any(b[6] in NONRECT_COVER_SLOTS for b in boxes):
+    if not any(b[6] in NONRECT_COVER_SLOTS | EXACT_DETAIL_SLOTS for b in boxes):
         return original_hidden_faces(boxes)
-    occupancy = [(*b[:6], "glass") if b[6] in NONRECT_COVER_SLOTS else b for b in boxes]
-    return original_hidden_faces(occupancy)
+    occupancy = [(*b[:6], "glass") if b[6] in NONRECT_COVER_SLOTS | EXACT_DETAIL_SLOTS else b for b in boxes]
+    hidden = original_hidden_faces(occupancy)
+    # Mug walls/bottoms are thinner than the inherited half-texel occupancy grid.
+    # Preserve their six exact authored faces; an empty sampled slice cannot hide them.
+    return [(False,)*6 if b[6] in EXACT_DETAIL_SLOTS else faces for b,faces in zip(boxes,hidden)]
 
 def reference_trim_buried_emissive(boxes):
     covers = [b for b in boxes if b[6] in NONRECT_COVER_SLOTS]
