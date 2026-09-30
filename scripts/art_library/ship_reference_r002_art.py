@@ -1,7 +1,7 @@
 """r002 reference hardware: selective molded housings, furnished stations and open engine bells.
 
 Build on the delivered primitive family without changing any previous export or fitting envelope.
-Runtime chamfers apply only to broad exposed housings/cushions, never each voxel terrace.
+Authored chamfers apply only to broad exposed housings/cushions, never each voxel terrace.
 """
 import json
 import math
@@ -131,19 +131,24 @@ def lounge_sofa(K,w,d,h):
     p=K.Piece("reference.r002.sofa","object","interior",(w,d,h));b=p.b
     for x in (2,w-4):
         for y in (2,d-3):b(x,y,0,x+2,y+1,3,"metal")
-    b(1,1,3,w-1,d-1,5,"primary")
+    b(1,1,3,w-1,d-1,5,"primary.furniture-cover")
     b(1,0,5,w-1,2,h-1,"primary")
     cw=(w-5)/3
     for i in range(3):
         x=2+i*cw
-        b(x,3,5,x+cw-.6,d-1,8,"accent.fabric")
-        b(x,1.7,8,x+cw-.6,4,h-1,"accent.fabric")
-        b(x+.4,d-2,7.5,x+cw-1, d-1.4,8.1,"primary.fabric")
+        b(x,3,5,x+cw-.6,d-1,8,"accent.fabric.furniture-cover")
+        b(x,1.7,8,x+cw-.6,4,h-1,"accent.fabric.furniture-cover")
+        # Low fabric welts follow each cushion rather than a contrasting plastic stripe.
+        b(x+.6,d-1.5,7.8,x+cw-1.2,d-1.1,8.15,"accent.fabric")
     for x in (0,w-2):
-        b(x,1,4,x+2,d-1,10,"primary")
-        b(x+.25,2,10,x+1.75,d-1.5,11,"secondary.fabric")
+        b(x,1,4,x+2,d-1,10,"primary.furniture-cover")
+        b(x+.25,2,10,x+1.75,d-1.5,11,"secondary.fabric.furniture-cover")
     # One pale loose cushion, rather than uniform repeated plastic seats.
-    b(w-9,3,8,w-4.5,6,11.5,"primary.fabric")
+    b(w-9,3,8,w-4.5,6,11.5,"primary.fabric.furniture-cover")
+    # A folded throw on one seat breaks repetition without filling its entire top.
+    b(5,4,8,10,d-2,8.35,"secondary.fabric.furniture-cover")
+    b(5,d-2.4,6.3,10,d-1.8,8.3,"secondary.fabric")
+    b(3,d-1,3.3,w-3,d-.6,4.25,"trim")
     return p
 
 
@@ -151,9 +156,9 @@ def medical_bed(K,w,d,h):
     p=K.Piece("reference.r002.medbed","object","interior",(w,d,h));b=p.b
     b(w*.4,d*.32,0,w*.6,d*.68,4,"metal")
     b(2,2,0,w-2,d-2,1,"trim")
-    b(0,0,4,w,d,6,"primary")
-    b(2,1,6,w-2,d-1,8,"primary.fabric")
-    b(3,2,8,8,d-2,10,"primary.fabric")
+    b(0,0,4,w,d,6,"primary.furniture-cover")
+    b(2,1,6,w-2,d-1,8,"primary.fabric.furniture-cover")
+    b(3,2,8,8,d-2,10,"primary.fabric.furniture-cover")
     b(w*.48,1.2,8,w-2,d-1.2,9.2,"accent.fabric")
     for y in (1.5,d-2):b(w*.5,y,9.2,w-2.5,y+.4,9.5,"primary.fabric")
     b(0,1,6,2,d-1,h,"primary")
@@ -164,6 +169,10 @@ def medical_bed(K,w,d,h):
         b(5,y,6,w-4,y+1,7,"metal")
         b(6,y,7,7,y+1,9,"metal")
         b(w-6,y,7,w-5,y+1,9,"metal")
+    # Side-owned docking/control recess stays below the mattress and seating edge.
+    b(w*.38,d-.8,4.5,w*.67,d-.3,5.5,"dark")
+    b(w*.42,d-.25,4.7,w*.49,d-.1,5.15,"metal")
+    b(w*.55,d-.25,4.8,w*.62,d-.1,5.05,"emit_b")
     return p
 
 
@@ -172,36 +181,51 @@ def table(K,w,d,h):
     z=h-4
     b(w*.4,d*.38,0,w*.6,d*.62,z-1,"metal")
     b(w*.28,d*.25,0,w*.72,d*.75,1,"trim")
-    b(0,0,z-1,w,d,z,"secondary")
-    b(.7,.7,z,w-.7,d-.7,z+.7,"primary")
+    b(0,0,z-1,w,d,z,"secondary.furniture-cover")
+    b(.7,.7,z,w-.7,d-.7,z+.7,"primary.furniture-cover")
     # Tray, two mugs and one small living accent belong to this table, not new entities.
     b(3,3,z+.7,10,8,z+1,"trim")
     for x,y in ((4,4),(7,5)):
-        b(x,y,z+1,x+1.6,y+1.6,z+2.7,"primary")
-        b(x+.3,y+.3,z+2.7,x+1.3,y+1.3,z+2.85,"dark")
-        b(x+1.5,y+.4,z+1.4,x+2,y+1.2,z+2.3,"metal")
+        # Four walls and a backed bottom leave the mug genuinely open from above.
+        b(x,y,z+1,x+1.6,y+1.6,z+1.25,"primary")
+        b(x+.2,y+.2,z+1.25,x+1.4,y+1.4,z+1.35,"dark")
+        for a,A in ((x,x+.2),(x+1.4,x+1.6)):
+            b(a,y,z+1.2,A,y+1.6,z+2.7,"primary")
+        for a,A in ((y,y+.2),(y+1.4,y+1.6)):
+            b(x+.2,a,z+1.2,x+1.4,A,z+2.7,"primary")
+        b(x+1.5,y+.4,z+1.4,x+2,y+.65,z+2.3,"metal")
+        b(x+1.5,y+1,z+1.4,x+2,y+1.2,z+2.3,"metal")
+        b(x+1.9,y+.4,z+1.4,x+2.15,y+1.2,z+1.65,"metal")
     b(w-6,d-6,z+.7,w-2,d-2,z+1.8,"secondary")
     b(w-5.5,d-5.5,z+1.8,w-2.5,d-2.5,z+2,"dark")
     b(w-4.3,d-4.3,z+2,w-3.7,d-3.7,h,"accent.flora")
     for x,y,Z in ((w-5.6,d-4.8,h-1.1),(w-4.3,d-3.8,h-.6),(w-3.9,d-5.2,h-.3)):
         b(x,y,Z-.5,x+1.6,y+.8,Z,"accent.flora")
+    b(11,4,z+.7,14.5,7,z+.95,"secondary")
+    b(11.3,4.3,z+.95,14.2,6.7,z+1,"dark")
     return p
 
 
 def kitchen(K,w,d,h):
     p=K.Piece("reference.r002.galley","object","interior",(w,d,h));b=p.b
     b(.5,.5,0,w-.5,d-.5,2,"secondary")
-    b(1,1,2,w-1,d-1,10,"secondary")
+    sy0,sy1=d-13,d-5
+    # A retained eight-course cabinet core backs a real sink, rather than filling it.
+    b(1,1,2,w-1,d-1,8.7,"secondary")
+    b(1,1,8.7,3,d-1,10,"secondary")
+    b(w-2,1,8.7,w-1,d-1,10,"secondary")
+    b(3,1,8.7,w-2,sy0,10,"secondary")
+    b(3,sy1,8.7,w-2,d-1,10,"secondary")
     for y in range(1,int(d)-3,7):
         b(w-1,y,2,w,y+6,9.5,"primary")
         b(w-.2,y+1,8,w,y+5,8.5,"metal")
     # Counter is four solid courses around an actual recessed sink aperture.
-    sy0,sy1=d-13,d-5
     b(0,0,10,3,d,11,"trim")
     b(w-2,0,10,w,d,11,"trim")
     b(3,0,10,w-2,sy0,11,"trim")
     b(3,sy1,10,w-2,d,11,"trim")
     b(3,sy0,9,w-2,sy1,9.5,"dark")
+    b(w/2-.4,(sy0+sy1)/2-.4,9.5,w/2+.4,(sy0+sy1)/2+.4,9.65,"metal")
     for y in (sy0,sy1-1):b(3,y,9.5,w-2,y+1,11,"metal")
     for x in (3,w-3):b(x,sy0,9.5,x+1,sy1,11,"metal")
     b(1.5,sy0+3,11,2.2,sy0+3.8,14,"metal")
@@ -346,15 +370,20 @@ E.build_piece=machinery_piece
 
 # Finite authored shape aliases preserve the same semantic slots and surface families.
 for alias,base in (("metal.barrel","metal"),("secondary.vessel","secondary"),
-                   ("primary.receiver-cover","primary"),("primary.thermal-cover","primary")):
+                   ("primary.receiver-cover","primary"),("primary.thermal-cover","primary"),
+                   ("primary.furniture-cover","primary"),("secondary.furniture-cover","secondary"),
+                   ("primary.fabric.furniture-cover","primary.fabric"),
+                   ("secondary.fabric.furniture-cover","secondary.fabric"),
+                   ("accent.fabric.furniture-cover","accent.fabric")):
     E.SI[alias]=len(E.SLOTS);E.SLOTS.append(alias)
     K.SLOT_PBR[alias]=K.SLOT_PBR[base]
     for theme in K.THEMES.values():theme[alias]=theme[base]
 
 
-# These two true shaped covers are not solid bounding boxes. Keep the default
+# These true shaped covers are not solid bounding boxes. Keep the default
 # rectangular exporter untouched: only this candidate runner changes their occlusion.
-NONRECT_COVER_SLOTS = frozenset(("primary.receiver-cover", "primary.thermal-cover"))
+NONRECT_COVER_SLOTS = frozenset(alias for alias in E.SLOTS if alias.endswith(
+    ("receiver-cover", "thermal-cover", "furniture-cover")))
 original_hidden_faces = E.hidden_faces
 original_trim_buried_emissive = E.trim_buried_emissive
 
@@ -490,11 +519,14 @@ def cover_mesh(name,box):
     x,y,z=lo;X,Y,Z=hi;w,d,h=X-x,Y-y,Z-z
     # Export frame conversion may turn the original receiver's long X into Y.
     long_axis=0 if w>=d else 1
-    cut=min(w,d)*.22
+    furniture=box[6].endswith("furniture-cover")
+    cut=min(w,d)*(.12 if furniture else .22)
     outline=[(x+cut,y),(X-cut,y),(X,y+cut),(X,Y-cut),
              (X-cut,Y),(x+cut,Y),(x,Y-cut),(x,y+cut)]
     thermal=box[6].endswith("thermal-cover")
     def roof_height(px,py):
+        if furniture:
+            return Z
         if thermal:
             # A broad inward shoulder changes level by a meaningful fraction of the
             # casing height, rather than rounded edges on another horizontal slab.
@@ -526,7 +558,7 @@ def cover_mesh(name,box):
         face(tuple(reversed(bottom)));face(tuple(top))
     bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
     # Selective broad fused cover bevel; no modifier per constituent box.
-    width=min(.04,min(w,d,h)*.16)
+    width=min(.025 if furniture else .04,min(w,d,h)*.16)
     bmesh.ops.bevel(bm,geom=list(bm.edges),offset=width,segments=2,affect="EDGES",clamp_overlap=True)
     bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
     me=bpy.data.meshes.new(name);bm.to_mesh(me);bm.free();return me
@@ -541,7 +573,7 @@ def authored_mesh(name,boxes,hidden=None):
             dims=[box[a+3]-box[a] for a in range(3)]
             smooth_barrel=box[6]=="metal.barrel"
             smooth_vessel=box[6]=="secondary.vessel"
-            shaped_cover=box[6].endswith(("receiver-cover","thermal-cover"))
+            shaped_cover=box[6].endswith(("receiver-cover","thermal-cover","furniture-cover"))
             part=cover_mesh(name,box) if shaped_cover else barrel_mesh(name,box) if smooth_barrel else pressure_mesh(name,box) if smooth_vessel else R.original_mesh(name,[box],[hidden[i]] if hidden else None)
             sub=bmesh.new();sub.from_mesh(part);bpy.data.meshes.remove(part)
             # Round only broad exposed pieces. Narrow ribs, voxel rows, keys and lenses stay sharp.
