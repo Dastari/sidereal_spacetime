@@ -1,0 +1,5169 @@
+{
+  "schema": "sidereal.crew-head-art.v1",
+  "id": "refinement-r005",
+  "status": "proposal",
+  "legacyCatalogRevision": 4,
+  "hairRevision": 5,
+  "helmetRevision": 8,
+  "voxelMeters": 0.03125,
+  "space": {
+    "anchorBone": "head",
+    "origin": "head bone rest head (neck/skull joint), centred under the skull",
+    "axes": "Armature axes: x = character right, y = forward (the face looks +Y), z = up. glTF: +Y up, face looks -Z.",
+    "units": "metres",
+    "skullVoxels": [
+      [
+        -8,
+        -7,
+        0
+      ],
+      [
+        8,
+        7,
+        16
+      ]
+    ],
+    "sockets": {
+      "socket.head": [
+        0,
+        0,
+        0.5
+      ],
+      "socket.face": [
+        0,
+        0.21875,
+        0.1875
+      ],
+      "socket.eyes": [
+        0,
+        0.21875,
+        0.234375
+      ]
+    },
+    "faceCanvas": {
+      "px": [
+        16,
+        16
+      ],
+      "headSpaceVoxels": {
+        "x": [
+          8,
+          -8
+        ],
+        "z": [
+          16,
+          0
+        ]
+      },
+      "uv": "u = (8 - x)/16, v = z/16 (Blender), material crew.face; see FACE_ATLAS_SPEC"
+    }
+  },
+  "headScale": 0.9,
+  "hairStyles": [
+    "spiked_quiff",
+    "swept_quiff",
+    "pompadour",
+    "short_spikes",
+    "pointed_quiff",
+    "short_waves",
+    "close_crop",
+    "tall_crest",
+    "mohawk",
+    "side_undercut",
+    "hanging_locks",
+    "flat_top",
+    "broad_spikes",
+    "curly_top",
+    "afro",
+    "side_bob",
+    "layered_bob",
+    "straight_bob",
+    "long_side_fringe",
+    "high_bun",
+    "long_gathered",
+    "gathered_fringe",
+    "long_bob",
+    "messy_bun",
+    "blunt_bob",
+    "long_straight",
+    "silver_bob",
+    "topknot_sweep"
+  ],
+  "hairModes": [
+    "full",
+    "cap",
+    "fringe"
+  ],
+  "helmets": [
+    "open",
+    "closed",
+    "tactical",
+    "hazmat",
+    "pilot",
+    "mining",
+    "security",
+    "explorer",
+    "engineer"
+  ],
+  "visors": [
+    "clear",
+    "tinted",
+    "hud",
+    "mirrored",
+    "ar"
+  ],
+  "intentionalOpenHelmets": [
+    "open"
+  ],
+  "maps": {},
+  "files": {
+    "hair/spiked_quiff": {
+      "path": "hair/spiked_quiff.glb",
+      "sha256": "a9315d273506835d88261c32a44387ca7edac688c98e191051bc371382039750",
+      "bytes": 269148,
+      "nodes": [
+        "hair.spiked_quiff.full",
+        "hair.spiked_quiff.full.lod1",
+        "hair.spiked_quiff.cap",
+        "hair.spiked_quiff.cap.lod1",
+        "hair.spiked_quiff.fringe",
+        "hair.spiked_quiff.fringe.lod1"
+      ]
+    },
+    "hair/swept_quiff": {
+      "path": "hair/swept_quiff.glb",
+      "sha256": "8945a8df002b6fe551deec84d694683f45834540f61132e699f4b50ecced5d07",
+      "bytes": 221552,
+      "nodes": [
+        "hair.swept_quiff.full",
+        "hair.swept_quiff.full.lod1",
+        "hair.swept_quiff.cap",
+        "hair.swept_quiff.cap.lod1",
+        "hair.swept_quiff.fringe",
+        "hair.swept_quiff.fringe.lod1"
+      ]
+    },
+    "hair/pompadour": {
+      "path": "hair/pompadour.glb",
+      "sha256": "9ef03f71393dce33392b0b7a176b1e0216db8aa5eea46eaa384b0a08d5cd954b",
+      "bytes": 205668,
+      "nodes": [
+        "hair.pompadour.full",
+        "hair.pompadour.full.lod1",
+        "hair.pompadour.cap",
+        "hair.pompadour.cap.lod1",
+        "hair.pompadour.fringe",
+        "hair.pompadour.fringe.lod1"
+      ]
+    },
+    "hair/short_spikes": {
+      "path": "hair/short_spikes.glb",
+      "sha256": "6684fd0b24119ffab3c8775deb366965b4095ca90af4d2c4d6a063481acfb178",
+      "bytes": 277072,
+      "nodes": [
+        "hair.short_spikes.full",
+        "hair.short_spikes.full.lod1",
+        "hair.short_spikes.cap",
+        "hair.short_spikes.cap.lod1",
+        "hair.short_spikes.fringe",
+        "hair.short_spikes.fringe.lod1"
+      ]
+    },
+    "hair/pointed_quiff": {
+      "path": "hair/pointed_quiff.glb",
+      "sha256": "97c7a4cd9bcf376ef3f6bd1ed54cdb1b42118a6a8d0b62a98ddcf24ee2abf5de",
+      "bytes": 230688,
+      "nodes": [
+        "hair.pointed_quiff.full",
+        "hair.pointed_quiff.full.lod1",
+        "hair.pointed_quiff.cap",
+        "hair.pointed_quiff.cap.lod1",
+        "hair.pointed_quiff.fringe",
+        "hair.pointed_quiff.fringe.lod1"
+      ]
+    },
+    "hair/short_waves": {
+      "path": "hair/short_waves.glb",
+      "sha256": "3cd06ae55f50b1dd4312a1c594af02d5e4be174356ed2e998ffdcda54ce338e3",
+      "bytes": 190932,
+      "nodes": [
+        "hair.short_waves.full",
+        "hair.short_waves.full.lod1",
+        "hair.short_waves.cap",
+        "hair.short_waves.cap.lod1",
+        "hair.short_waves.fringe",
+        "hair.short_waves.fringe.lod1"
+      ]
+    },
+    "hair/close_crop": {
+      "path": "hair/close_crop.glb",
+      "sha256": "b3959f53a794d4fa38f7123d0a91d78744ffcbffacb17114325927f1919231a1",
+      "bytes": 112560,
+      "nodes": [
+        "hair.close_crop.full",
+        "hair.close_crop.full.lod1",
+        "hair.close_crop.cap",
+        "hair.close_crop.cap.lod1",
+        "hair.close_crop.fringe",
+        "hair.close_crop.fringe.lod1"
+      ]
+    },
+    "hair/tall_crest": {
+      "path": "hair/tall_crest.glb",
+      "sha256": "052f45584be7224d7f287c770f41ee61a1bf7ffc66cbb72b1bc6f8f6c002b527",
+      "bytes": 175748,
+      "nodes": [
+        "hair.tall_crest.full",
+        "hair.tall_crest.full.lod1",
+        "hair.tall_crest.cap",
+        "hair.tall_crest.cap.lod1",
+        "hair.tall_crest.fringe",
+        "hair.tall_crest.fringe.lod1"
+      ]
+    },
+    "hair/mohawk": {
+      "path": "hair/mohawk.glb",
+      "sha256": "2b4449212b7e540170ab2695187bf9cf28e3001c432f3fa5eb965b98a7a55ad7",
+      "bytes": 134384,
+      "nodes": [
+        "hair.mohawk.full",
+        "hair.mohawk.full.lod1",
+        "hair.mohawk.cap",
+        "hair.mohawk.cap.lod1",
+        "hair.mohawk.fringe",
+        "hair.mohawk.fringe.lod1"
+      ]
+    },
+    "hair/side_undercut": {
+      "path": "hair/side_undercut.glb",
+      "sha256": "7e055201fc4d702060eac4a0afefaca6b46febbf80c1b5311c8f5244643ae94c",
+      "bytes": 108288,
+      "nodes": [
+        "hair.side_undercut.full",
+        "hair.side_undercut.full.lod1",
+        "hair.side_undercut.cap",
+        "hair.side_undercut.cap.lod1",
+        "hair.side_undercut.fringe",
+        "hair.side_undercut.fringe.lod1"
+      ]
+    },
+    "hair/hanging_locks": {
+      "path": "hair/hanging_locks.glb",
+      "sha256": "564689d1c398c81a4fb7e539b6d300abb651234d85bbadc707c961e5aa616fa3",
+      "bytes": 1124484,
+      "nodes": [
+        "hair.hanging_locks.full",
+        "hair.hanging_locks.full.lod1",
+        "hair.hanging_locks.cap",
+        "hair.hanging_locks.cap.lod1",
+        "hair.hanging_locks.fringe",
+        "hair.hanging_locks.fringe.lod1"
+      ]
+    },
+    "hair/flat_top": {
+      "path": "hair/flat_top.glb",
+      "sha256": "ef3c9358c26f693f45daa46f7085d4ac443a1862d34399a0b82f6e43e524e387",
+      "bytes": 131984,
+      "nodes": [
+        "hair.flat_top.full",
+        "hair.flat_top.full.lod1",
+        "hair.flat_top.cap",
+        "hair.flat_top.cap.lod1",
+        "hair.flat_top.fringe",
+        "hair.flat_top.fringe.lod1"
+      ]
+    },
+    "hair/broad_spikes": {
+      "path": "hair/broad_spikes.glb",
+      "sha256": "ea19006aeb9ab9251a6b06eb84c8b54b952c63c5001d96e107f9991de817f7c0",
+      "bytes": 340644,
+      "nodes": [
+        "hair.broad_spikes.full",
+        "hair.broad_spikes.full.lod1",
+        "hair.broad_spikes.cap",
+        "hair.broad_spikes.cap.lod1",
+        "hair.broad_spikes.fringe",
+        "hair.broad_spikes.fringe.lod1"
+      ]
+    },
+    "hair/curly_top": {
+      "path": "hair/curly_top.glb",
+      "sha256": "4082011b51abb66cbbfea0690936750478cc08b353a389e27c0293fbca7e5417",
+      "bytes": 293852,
+      "nodes": [
+        "hair.curly_top.full",
+        "hair.curly_top.full.lod1",
+        "hair.curly_top.cap",
+        "hair.curly_top.cap.lod1",
+        "hair.curly_top.fringe",
+        "hair.curly_top.fringe.lod1"
+      ]
+    },
+    "hair/afro": {
+      "path": "hair/afro.glb",
+      "sha256": "be6c93a31d7700fda93735764f99199a496551defec084b7340448035d7e5f59",
+      "bytes": 375768,
+      "nodes": [
+        "hair.afro.full",
+        "hair.afro.full.lod1",
+        "hair.afro.cap",
+        "hair.afro.cap.lod1",
+        "hair.afro.fringe",
+        "hair.afro.fringe.lod1"
+      ]
+    },
+    "hair/side_bob": {
+      "path": "hair/side_bob.glb",
+      "sha256": "c3a7c04d696a7738d4fb92cfe9d842c018979a7a60450d6549843c584ebe4974",
+      "bytes": 430092,
+      "nodes": [
+        "hair.side_bob.full",
+        "hair.side_bob.full.lod1",
+        "hair.side_bob.cap",
+        "hair.side_bob.cap.lod1",
+        "hair.side_bob.fringe",
+        "hair.side_bob.fringe.lod1"
+      ]
+    },
+    "hair/layered_bob": {
+      "path": "hair/layered_bob.glb",
+      "sha256": "c8b3461859c7d69fe8843814fea28e7829660c48f866c97c45d4d838bd61e64a",
+      "bytes": 628568,
+      "nodes": [
+        "hair.layered_bob.full",
+        "hair.layered_bob.full.lod1",
+        "hair.layered_bob.cap",
+        "hair.layered_bob.cap.lod1",
+        "hair.layered_bob.fringe",
+        "hair.layered_bob.fringe.lod1"
+      ]
+    },
+    "hair/straight_bob": {
+      "path": "hair/straight_bob.glb",
+      "sha256": "7a382886022dfa07b5883a5bdec8b02d3f72885ab3d254dd2b2f8bfd7604fbb2",
+      "bytes": 375488,
+      "nodes": [
+        "hair.straight_bob.full",
+        "hair.straight_bob.full.lod1",
+        "hair.straight_bob.cap",
+        "hair.straight_bob.cap.lod1",
+        "hair.straight_bob.fringe",
+        "hair.straight_bob.fringe.lod1"
+      ]
+    },
+    "hair/long_side_fringe": {
+      "path": "hair/long_side_fringe.glb",
+      "sha256": "780fcc1dddf4cd8b6710171143514164e14d2b8c11008bbd2072dde2b76eeba6",
+      "bytes": 530480,
+      "nodes": [
+        "hair.long_side_fringe.full",
+        "hair.long_side_fringe.full.lod1",
+        "hair.long_side_fringe.cap",
+        "hair.long_side_fringe.cap.lod1",
+        "hair.long_side_fringe.fringe",
+        "hair.long_side_fringe.fringe.lod1"
+      ]
+    },
+    "hair/high_bun": {
+      "path": "hair/high_bun.glb",
+      "sha256": "74756d28cca15a158ec4414fcca9f5557e2627cd9043ad17a61f53650bbb3c1b",
+      "bytes": 188204,
+      "nodes": [
+        "hair.high_bun.full",
+        "hair.high_bun.full.lod1",
+        "hair.high_bun.cap",
+        "hair.high_bun.cap.lod1",
+        "hair.high_bun.fringe",
+        "hair.high_bun.fringe.lod1"
+      ]
+    },
+    "hair/long_gathered": {
+      "path": "hair/long_gathered.glb",
+      "sha256": "f1552074c52c89a259d8fb84bb9a16c088b749e706d4d6cc245e13ef79f31d6d",
+      "bytes": 430688,
+      "nodes": [
+        "hair.long_gathered.full",
+        "hair.long_gathered.full.lod1",
+        "hair.long_gathered.cap",
+        "hair.long_gathered.cap.lod1",
+        "hair.long_gathered.fringe",
+        "hair.long_gathered.fringe.lod1"
+      ]
+    },
+    "hair/gathered_fringe": {
+      "path": "hair/gathered_fringe.glb",
+      "sha256": "ec1cb47249afeee519de9219d37a52a0c5c1d2f191e2ee7945c5a7487b5035af",
+      "bytes": 724324,
+      "nodes": [
+        "hair.gathered_fringe.full",
+        "hair.gathered_fringe.full.lod1",
+        "hair.gathered_fringe.cap",
+        "hair.gathered_fringe.cap.lod1",
+        "hair.gathered_fringe.fringe",
+        "hair.gathered_fringe.fringe.lod1"
+      ]
+    },
+    "hair/long_bob": {
+      "path": "hair/long_bob.glb",
+      "sha256": "49114c3985a3000b1dc493243f428da7e7ab2283691d75a11873a37b5503f4af",
+      "bytes": 474692,
+      "nodes": [
+        "hair.long_bob.full",
+        "hair.long_bob.full.lod1",
+        "hair.long_bob.cap",
+        "hair.long_bob.cap.lod1",
+        "hair.long_bob.fringe",
+        "hair.long_bob.fringe.lod1"
+      ]
+    },
+    "hair/messy_bun": {
+      "path": "hair/messy_bun.glb",
+      "sha256": "ef052309a7af600bc193fefac9a1ec3e1f5a2bd0f64cfc99ea7cedabe3b33a5e",
+      "bytes": 270336,
+      "nodes": [
+        "hair.messy_bun.full",
+        "hair.messy_bun.full.lod1",
+        "hair.messy_bun.cap",
+        "hair.messy_bun.cap.lod1",
+        "hair.messy_bun.fringe",
+        "hair.messy_bun.fringe.lod1"
+      ]
+    },
+    "hair/blunt_bob": {
+      "path": "hair/blunt_bob.glb",
+      "sha256": "179128554ead28e6cb6620dd77eed1c2c179ebad9f80fdd903480d72af7b2577",
+      "bytes": 415120,
+      "nodes": [
+        "hair.blunt_bob.full",
+        "hair.blunt_bob.full.lod1",
+        "hair.blunt_bob.cap",
+        "hair.blunt_bob.cap.lod1",
+        "hair.blunt_bob.fringe",
+        "hair.blunt_bob.fringe.lod1"
+      ]
+    },
+    "hair/long_straight": {
+      "path": "hair/long_straight.glb",
+      "sha256": "3a5d709ebe6cd1e95d6f9fea42bfb760479fce859058f8ba6da9f572aca232b1",
+      "bytes": 306180,
+      "nodes": [
+        "hair.long_straight.full",
+        "hair.long_straight.full.lod1",
+        "hair.long_straight.cap",
+        "hair.long_straight.cap.lod1",
+        "hair.long_straight.fringe",
+        "hair.long_straight.fringe.lod1"
+      ]
+    },
+    "hair/silver_bob": {
+      "path": "hair/silver_bob.glb",
+      "sha256": "6af27232e9136d476b234f66f0d296eff2667f07da19264f5edc8178b2b42789",
+      "bytes": 557580,
+      "nodes": [
+        "hair.silver_bob.full",
+        "hair.silver_bob.full.lod1",
+        "hair.silver_bob.cap",
+        "hair.silver_bob.cap.lod1",
+        "hair.silver_bob.fringe",
+        "hair.silver_bob.fringe.lod1"
+      ]
+    },
+    "hair/topknot_sweep": {
+      "path": "hair/topknot_sweep.glb",
+      "sha256": "edf0a6bc847ab40402caeee48d4e11f4a86934b536891557e70459abc934fa62",
+      "bytes": 126168,
+      "nodes": [
+        "hair.topknot_sweep.full",
+        "hair.topknot_sweep.full.lod1",
+        "hair.topknot_sweep.cap",
+        "hair.topknot_sweep.cap.lod1",
+        "hair.topknot_sweep.fringe",
+        "hair.topknot_sweep.fringe.lod1"
+      ]
+    },
+    "helmets": {
+      "path": "helmets.glb",
+      "sha256": "642909c2e72d02c4bac4c66d3772fa3beb934cd317fd7df582397af56304a54b",
+      "bytes": 4695952,
+      "nodes": [
+        "helmet.open",
+        "helmet.closed",
+        "visor.closed.clear",
+        "visor.closed.tinted",
+        "visor.closed.hud",
+        "visor.closed.mirrored",
+        "visor.closed.ar",
+        "helmet.tactical",
+        "visor.tactical.clear",
+        "visor.tactical.tinted",
+        "visor.tactical.hud",
+        "visor.tactical.mirrored",
+        "visor.tactical.ar",
+        "helmet.hazmat",
+        "visor.hazmat.clear",
+        "visor.hazmat.tinted",
+        "visor.hazmat.hud",
+        "visor.hazmat.mirrored",
+        "visor.hazmat.ar",
+        "helmet.pilot",
+        "visor.pilot.clear",
+        "visor.pilot.tinted",
+        "visor.pilot.hud",
+        "visor.pilot.mirrored",
+        "visor.pilot.ar",
+        "helmet.mining",
+        "visor.mining.clear",
+        "visor.mining.tinted",
+        "visor.mining.hud",
+        "visor.mining.mirrored",
+        "visor.mining.ar",
+        "helmet.security",
+        "visor.security.clear",
+        "visor.security.tinted",
+        "visor.security.hud",
+        "visor.security.mirrored",
+        "visor.security.ar",
+        "helmet.explorer",
+        "visor.explorer.clear",
+        "visor.explorer.tinted",
+        "visor.explorer.hud",
+        "visor.explorer.mirrored",
+        "visor.explorer.ar",
+        "helmet.engineer",
+        "visor.engineer.clear",
+        "visor.engineer.tinted",
+        "visor.engineer.hud",
+        "visor.engineer.mirrored",
+        "visor.engineer.ar"
+      ]
+    }
+  },
+  "nodes": {
+    "hair.spiked_quiff.full": {
+      "node": "hair.spiked_quiff.full",
+      "category": "hair",
+      "glb": "hair/spiked_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25781,
+          0.6875
+        ]
+      ],
+      "triangles": 3168
+    },
+    "hair.spiked_quiff.full.lod1": {
+      "node": "hair.spiked_quiff.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/spiked_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25781,
+          0.6875
+        ]
+      ],
+      "triangles": 1056
+    },
+    "hair.spiked_quiff.cap": {
+      "node": "hair.spiked_quiff.cap",
+      "category": "hair",
+      "glb": "hair/spiked_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 1168
+    },
+    "hair.spiked_quiff.cap.lod1": {
+      "node": "hair.spiked_quiff.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/spiked_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 388
+    },
+    "hair.spiked_quiff.fringe": {
+      "node": "hair.spiked_quiff.fringe",
+      "category": "hair",
+      "glb": "hair/spiked_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.36719
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 458
+    },
+    "hair.spiked_quiff.fringe.lod1": {
+      "node": "hair.spiked_quiff.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/spiked_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.36719
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 152
+    },
+    "hair.swept_quiff.full": {
+      "node": "hair.swept_quiff.full",
+      "category": "hair",
+      "glb": "hair/swept_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.28125,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 2258
+    },
+    "hair.swept_quiff.full.lod1": {
+      "node": "hair.swept_quiff.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/swept_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.28125,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 758
+    },
+    "hair.swept_quiff.cap": {
+      "node": "hair.swept_quiff.cap",
+      "category": "hair",
+      "glb": "hair/swept_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 1038
+    },
+    "hair.swept_quiff.cap.lod1": {
+      "node": "hair.swept_quiff.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/swept_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 352
+    },
+    "hair.swept_quiff.fringe": {
+      "node": "hair.swept_quiff.fringe",
+      "category": "hair",
+      "glb": "hair/swept_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.39062
+        ],
+        [
+          0.25,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 296
+    },
+    "hair.swept_quiff.fringe.lod1": {
+      "node": "hair.swept_quiff.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/swept_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.39062
+        ],
+        [
+          0.25,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 98
+    },
+    "hair.pompadour.full": {
+      "node": "hair.pompadour.full",
+      "category": "hair",
+      "glb": "hair/pompadour",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.28125,
+          0.25781,
+          0.6875
+        ]
+      ],
+      "triangles": 1954
+    },
+    "hair.pompadour.full.lod1": {
+      "node": "hair.pompadour.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/pompadour",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.28125,
+          0.25781,
+          0.6875
+        ]
+      ],
+      "triangles": 650
+    },
+    "hair.pompadour.cap": {
+      "node": "hair.pompadour.cap",
+      "category": "hair",
+      "glb": "hair/pompadour",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 1034
+    },
+    "hair.pompadour.cap.lod1": {
+      "node": "hair.pompadour.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/pompadour",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 352
+    },
+    "hair.pompadour.fringe": {
+      "node": "hair.pompadour.fringe",
+      "category": "hair",
+      "glb": "hair/pompadour",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 300
+    },
+    "hair.pompadour.fringe.lod1": {
+      "node": "hair.pompadour.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/pompadour",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 100
+    },
+    "hair.short_spikes.full": {
+      "node": "hair.short_spikes.full",
+      "category": "hair",
+      "glb": "hair/short_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.66406
+        ]
+      ],
+      "triangles": 3232
+    },
+    "hair.short_spikes.full.lod1": {
+      "node": "hair.short_spikes.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/short_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.66406
+        ]
+      ],
+      "triangles": 1104
+    },
+    "hair.short_spikes.cap": {
+      "node": "hair.short_spikes.cap",
+      "category": "hair",
+      "glb": "hair/short_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 1104
+    },
+    "hair.short_spikes.cap.lod1": {
+      "node": "hair.short_spikes.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/short_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 368
+    },
+    "hair.short_spikes.fringe": {
+      "node": "hair.short_spikes.fringe",
+      "category": "hair",
+      "glb": "hair/short_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 252
+    },
+    "hair.short_spikes.fringe.lod1": {
+      "node": "hair.short_spikes.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/short_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 84
+    },
+    "hair.pointed_quiff.full": {
+      "node": "hair.pointed_quiff.full",
+      "category": "hair",
+      "glb": "hair/pointed_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.73438
+        ]
+      ],
+      "triangles": 2856
+    },
+    "hair.pointed_quiff.full.lod1": {
+      "node": "hair.pointed_quiff.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/pointed_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.73438
+        ]
+      ],
+      "triangles": 948
+    },
+    "hair.pointed_quiff.cap": {
+      "node": "hair.pointed_quiff.cap",
+      "category": "hair",
+      "glb": "hair/pointed_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 1104
+    },
+    "hair.pointed_quiff.cap.lod1": {
+      "node": "hair.pointed_quiff.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/pointed_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 368
+    },
+    "hair.pointed_quiff.fringe": {
+      "node": "hair.pointed_quiff.fringe",
+      "category": "hair",
+      "glb": "hair/pointed_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 252
+    },
+    "hair.pointed_quiff.fringe.lod1": {
+      "node": "hair.pointed_quiff.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/pointed_quiff",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 84
+    },
+    "hair.short_waves.full": {
+      "node": "hair.short_waves.full",
+      "category": "hair",
+      "glb": "hair/short_waves",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30469,
+          -0.28125,
+          0.13281
+        ],
+        [
+          0.30469,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 1884
+    },
+    "hair.short_waves.full.lod1": {
+      "node": "hair.short_waves.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/short_waves",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30469,
+          -0.28125,
+          0.13281
+        ],
+        [
+          0.30469,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 630
+    },
+    "hair.short_waves.cap": {
+      "node": "hair.short_waves.cap",
+      "category": "hair",
+      "glb": "hair/short_waves",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30469,
+          -0.3125,
+          0.13281
+        ],
+        [
+          0.30469,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 1132
+    },
+    "hair.short_waves.cap.lod1": {
+      "node": "hair.short_waves.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/short_waves",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30469,
+          -0.3125,
+          0.13281
+        ],
+        [
+          0.30469,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 382
+    },
+    "hair.short_waves.fringe": {
+      "node": "hair.short_waves.fringe",
+      "category": "hair",
+      "glb": "hair/short_waves",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.36719
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 334
+    },
+    "hair.short_waves.fringe.lod1": {
+      "node": "hair.short_waves.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/short_waves",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.36719
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 118
+    },
+    "hair.close_crop.full": {
+      "node": "hair.close_crop.full",
+      "category": "hair",
+      "glb": "hair/close_crop",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.28125,
+          0.23438,
+          0.55469
+        ]
+      ],
+      "triangles": 948
+    },
+    "hair.close_crop.full.lod1": {
+      "node": "hair.close_crop.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/close_crop",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.28125,
+          0.23438,
+          0.55469
+        ]
+      ],
+      "triangles": 316
+    },
+    "hair.close_crop.cap": {
+      "node": "hair.close_crop.cap",
+      "category": "hair",
+      "glb": "hair/close_crop",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 848
+    },
+    "hair.close_crop.cap.lod1": {
+      "node": "hair.close_crop.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/close_crop",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 288
+    },
+    "hair.close_crop.fringe": {
+      "node": "hair.close_crop.fringe",
+      "category": "hair",
+      "glb": "hair/close_crop",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.23438,
+          0.44141
+        ]
+      ],
+      "triangles": 204
+    },
+    "hair.close_crop.fringe.lod1": {
+      "node": "hair.close_crop.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/close_crop",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.23438,
+          0.44141
+        ]
+      ],
+      "triangles": 68
+    },
+    "hair.tall_crest.full": {
+      "node": "hair.tall_crest.full",
+      "category": "hair",
+      "glb": "hair/tall_crest",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.28125,
+          0.23438,
+          0.72266
+        ]
+      ],
+      "triangles": 2050
+    },
+    "hair.tall_crest.full.lod1": {
+      "node": "hair.tall_crest.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/tall_crest",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.28125,
+          0.23438,
+          0.72266
+        ]
+      ],
+      "triangles": 690
+    },
+    "hair.tall_crest.cap": {
+      "node": "hair.tall_crest.cap",
+      "category": "hair",
+      "glb": "hair/tall_crest",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 846
+    },
+    "hair.tall_crest.cap.lod1": {
+      "node": "hair.tall_crest.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/tall_crest",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 288
+    },
+    "hair.tall_crest.fringe": {
+      "node": "hair.tall_crest.fringe",
+      "category": "hair",
+      "glb": "hair/tall_crest",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.23438,
+          0.44141
+        ]
+      ],
+      "triangles": 204
+    },
+    "hair.tall_crest.fringe.lod1": {
+      "node": "hair.tall_crest.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/tall_crest",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.23438,
+          0.44141
+        ]
+      ],
+      "triangles": 68
+    },
+    "hair.mohawk.full": {
+      "node": "hair.mohawk.full",
+      "category": "hair",
+      "glb": "hair/mohawk",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25781,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.25781,
+          0.23438,
+          0.73438
+        ]
+      ],
+      "triangles": 1396
+    },
+    "hair.mohawk.full.lod1": {
+      "node": "hair.mohawk.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/mohawk",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25781,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.25781,
+          0.23438,
+          0.73438
+        ]
+      ],
+      "triangles": 468
+    },
+    "hair.mohawk.cap": {
+      "node": "hair.mohawk.cap",
+      "category": "hair",
+      "glb": "hair/mohawk",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 554
+    },
+    "hair.mohawk.cap.lod1": {
+      "node": "hair.mohawk.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/mohawk",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 190
+    },
+    "hair.mohawk.fringe": {
+      "node": "hair.mohawk.fringe",
+      "category": "hair",
+      "glb": "hair/mohawk",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.23047,
+          0.44141
+        ]
+      ],
+      "triangles": 212
+    },
+    "hair.mohawk.fringe.lod1": {
+      "node": "hair.mohawk.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/mohawk",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.23047,
+          0.44141
+        ]
+      ],
+      "triangles": 68
+    },
+    "hair.side_undercut.full": {
+      "node": "hair.side_undercut.full",
+      "category": "hair",
+      "glb": "hair/side_undercut",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30859,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.27344,
+          0.28906,
+          0.64062
+        ]
+      ],
+      "triangles": 940
+    },
+    "hair.side_undercut.full.lod1": {
+      "node": "hair.side_undercut.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/side_undercut",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30859,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.27344,
+          0.28906,
+          0.64062
+        ]
+      ],
+      "triangles": 304
+    },
+    "hair.side_undercut.cap": {
+      "node": "hair.side_undercut.cap",
+      "category": "hair",
+      "glb": "hair/side_undercut",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30859,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.27734,
+          0.375
+        ]
+      ],
+      "triangles": 624
+    },
+    "hair.side_undercut.cap.lod1": {
+      "node": "hair.side_undercut.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/side_undercut",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30859,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.27734,
+          0.375
+        ]
+      ],
+      "triangles": 208
+    },
+    "hair.side_undercut.fringe": {
+      "node": "hair.side_undercut.fringe",
+      "category": "hair",
+      "glb": "hair/side_undercut",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.34766
+        ],
+        [
+          0.25,
+          0.28906,
+          0.44141
+        ]
+      ],
+      "triangles": 348
+    },
+    "hair.side_undercut.fringe.lod1": {
+      "node": "hair.side_undercut.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/side_undercut",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.34766
+        ],
+        [
+          0.25,
+          0.28906,
+          0.44141
+        ]
+      ],
+      "triangles": 112
+    },
+    "hair.hanging_locks.full": {
+      "node": "hair.hanging_locks.full",
+      "category": "hair",
+      "glb": "hair/hanging_locks",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.32031,
+          -0.28906,
+          -0.375
+        ],
+        [
+          0.32031,
+          0.25781,
+          0.60547
+        ]
+      ],
+      "triangles": 9356
+    },
+    "hair.hanging_locks.full.lod1": {
+      "node": "hair.hanging_locks.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/hanging_locks",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.32031,
+          -0.28906,
+          -0.375
+        ],
+        [
+          0.32031,
+          0.25781,
+          0.60547
+        ]
+      ],
+      "triangles": 3176
+    },
+    "hair.hanging_locks.cap": {
+      "node": "hair.hanging_locks.cap",
+      "category": "hair",
+      "glb": "hair/hanging_locks",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.32031,
+          -0.3125,
+          -0.375
+        ],
+        [
+          0.32031,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 7646
+    },
+    "hair.hanging_locks.cap.lod1": {
+      "node": "hair.hanging_locks.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/hanging_locks",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.32031,
+          -0.3125,
+          -0.375
+        ],
+        [
+          0.32031,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 2612
+    },
+    "hair.hanging_locks.fringe": {
+      "node": "hair.hanging_locks.fringe",
+      "category": "hair",
+      "glb": "hair/hanging_locks",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.15234
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 936
+    },
+    "hair.hanging_locks.fringe.lod1": {
+      "node": "hair.hanging_locks.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/hanging_locks",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.15234
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 324
+    },
+    "hair.flat_top.full": {
+      "node": "hair.flat_top.full",
+      "category": "hair",
+      "glb": "hair/flat_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.28125,
+          0.24219,
+          0.6875
+        ]
+      ],
+      "triangles": 1148
+    },
+    "hair.flat_top.full.lod1": {
+      "node": "hair.flat_top.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/flat_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.17188
+        ],
+        [
+          0.28125,
+          0.24219,
+          0.6875
+        ]
+      ],
+      "triangles": 388
+    },
+    "hair.flat_top.cap": {
+      "node": "hair.flat_top.cap",
+      "category": "hair",
+      "glb": "hair/flat_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 846
+    },
+    "hair.flat_top.cap.lod1": {
+      "node": "hair.flat_top.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/flat_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.17188
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 288
+    },
+    "hair.flat_top.fringe": {
+      "node": "hair.flat_top.fringe",
+      "category": "hair",
+      "glb": "hair/flat_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.23438,
+          0.44141
+        ]
+      ],
+      "triangles": 204
+    },
+    "hair.flat_top.fringe.lod1": {
+      "node": "hair.flat_top.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/flat_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.40625
+        ],
+        [
+          0.25,
+          0.23438,
+          0.44141
+        ]
+      ],
+      "triangles": 68
+    },
+    "hair.broad_spikes.full": {
+      "node": "hair.broad_spikes.full",
+      "category": "hair",
+      "glb": "hair/broad_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.32031,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.30859,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 4588
+    },
+    "hair.broad_spikes.full.lod1": {
+      "node": "hair.broad_spikes.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/broad_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.32031,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.30859,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 1520
+    },
+    "hair.broad_spikes.cap": {
+      "node": "hair.broad_spikes.cap",
+      "category": "hair",
+      "glb": "hair/broad_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30469,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.30469,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 1080
+    },
+    "hair.broad_spikes.cap.lod1": {
+      "node": "hair.broad_spikes.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/broad_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.30469,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.30469,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 364
+    },
+    "hair.broad_spikes.fringe": {
+      "node": "hair.broad_spikes.fringe",
+      "category": "hair",
+      "glb": "hair/broad_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.39062
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 204
+    },
+    "hair.broad_spikes.fringe.lod1": {
+      "node": "hair.broad_spikes.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/broad_spikes",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.39062
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 68
+    },
+    "hair.curly_top.full": {
+      "node": "hair.curly_top.full",
+      "category": "hair",
+      "glb": "hair/curly_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.28125,
+          0.26562,
+          0.66406
+        ]
+      ],
+      "triangles": 3022
+    },
+    "hair.curly_top.full.lod1": {
+      "node": "hair.curly_top.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/curly_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.28125,
+          0.26562,
+          0.66406
+        ]
+      ],
+      "triangles": 1000
+    },
+    "hair.curly_top.cap": {
+      "node": "hair.curly_top.cap",
+      "category": "hair",
+      "glb": "hair/curly_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 1034
+    },
+    "hair.curly_top.cap.lod1": {
+      "node": "hair.curly_top.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/curly_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 352
+    },
+    "hair.curly_top.fringe": {
+      "node": "hair.curly_top.fringe",
+      "category": "hair",
+      "glb": "hair/curly_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.39062
+        ],
+        [
+          0.25,
+          0.26562,
+          0.44141
+        ]
+      ],
+      "triangles": 442
+    },
+    "hair.curly_top.fringe.lod1": {
+      "node": "hair.curly_top.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/curly_top",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.39062
+        ],
+        [
+          0.25,
+          0.26562,
+          0.44141
+        ]
+      ],
+      "triangles": 148
+    },
+    "hair.afro.full": {
+      "node": "hair.afro.full",
+      "category": "hair",
+      "glb": "hair/afro",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.36719,
+          -0.33594,
+          0.13281
+        ],
+        [
+          0.32031,
+          0.26562,
+          0.71094
+        ]
+      ],
+      "triangles": 4061
+    },
+    "hair.afro.full.lod1": {
+      "node": "hair.afro.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/afro",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.36719,
+          -0.33594,
+          0.13281
+        ],
+        [
+          0.32031,
+          0.26562,
+          0.71094
+        ]
+      ],
+      "triangles": 1362
+    },
+    "hair.afro.cap": {
+      "node": "hair.afro.cap",
+      "category": "hair",
+      "glb": "hair/afro",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.36719,
+          -0.33594,
+          0.13281
+        ],
+        [
+          0.32031,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 1764
+    },
+    "hair.afro.cap.lod1": {
+      "node": "hair.afro.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/afro",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.36719,
+          -0.33594,
+          0.13281
+        ],
+        [
+          0.32031,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 592
+    },
+    "hair.afro.fringe": {
+      "node": "hair.afro.fringe",
+      "category": "hair",
+      "glb": "hair/afro",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.38281
+        ],
+        [
+          0.25,
+          0.26562,
+          0.44141
+        ]
+      ],
+      "triangles": 204
+    },
+    "hair.afro.fringe.lod1": {
+      "node": "hair.afro.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/afro",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.38281
+        ],
+        [
+          0.25,
+          0.26562,
+          0.44141
+        ]
+      ],
+      "triangles": 68
+    },
+    "hair.side_bob.full": {
+      "node": "hair.side_bob.full",
+      "category": "hair",
+      "glb": "hair/side_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.32812,
+          0.01562
+        ],
+        [
+          0.35938,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 4700
+    },
+    "hair.side_bob.full.lod1": {
+      "node": "hair.side_bob.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/side_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.32812,
+          0.01562
+        ],
+        [
+          0.35938,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 1566
+    },
+    "hair.side_bob.cap": {
+      "node": "hair.side_bob.cap",
+      "category": "hair",
+      "glb": "hair/side_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.32812,
+          0.01562
+        ],
+        [
+          0.35938,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 2640
+    },
+    "hair.side_bob.cap.lod1": {
+      "node": "hair.side_bob.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/side_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.32812,
+          0.01562
+        ],
+        [
+          0.35938,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 876
+    },
+    "hair.side_bob.fringe": {
+      "node": "hair.side_bob.fringe",
+      "category": "hair",
+      "glb": "hair/side_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.30859
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 572
+    },
+    "hair.side_bob.fringe.lod1": {
+      "node": "hair.side_bob.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/side_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.30859
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 190
+    },
+    "hair.layered_bob.full": {
+      "node": "hair.layered_bob.full",
+      "category": "hair",
+      "glb": "hair/layered_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.35938,
+          -0.32812,
+          0.01562
+        ],
+        [
+          0.35938,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 5989
+    },
+    "hair.layered_bob.full.lod1": {
+      "node": "hair.layered_bob.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/layered_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.35938,
+          -0.32812,
+          0.01562
+        ],
+        [
+          0.35938,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 2002
+    },
+    "hair.layered_bob.cap": {
+      "node": "hair.layered_bob.cap",
+      "category": "hair",
+      "glb": "hair/layered_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.35938,
+          -0.32812,
+          0.01562
+        ],
+        [
+          0.35938,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 3497
+    },
+    "hair.layered_bob.cap.lod1": {
+      "node": "hair.layered_bob.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/layered_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.35938,
+          -0.32812,
+          0.01562
+        ],
+        [
+          0.35938,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 1158
+    },
+    "hair.layered_bob.fringe": {
+      "node": "hair.layered_bob.fringe",
+      "category": "hair",
+      "glb": "hair/layered_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.32812
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 372
+    },
+    "hair.layered_bob.fringe.lod1": {
+      "node": "hair.layered_bob.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/layered_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.32812
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 124
+    },
+    "hair.straight_bob.full": {
+      "node": "hair.straight_bob.full",
+      "category": "hair",
+      "glb": "hair/straight_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.3125,
+          0.0
+        ],
+        [
+          0.34375,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 4306
+    },
+    "hair.straight_bob.full.lod1": {
+      "node": "hair.straight_bob.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/straight_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.3125,
+          0.0
+        ],
+        [
+          0.34375,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 1438
+    },
+    "hair.straight_bob.cap": {
+      "node": "hair.straight_bob.cap",
+      "category": "hair",
+      "glb": "hair/straight_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.3125,
+          0.0
+        ],
+        [
+          0.34375,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 2052
+    },
+    "hair.straight_bob.cap.lod1": {
+      "node": "hair.straight_bob.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/straight_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.3125,
+          0.0
+        ],
+        [
+          0.34375,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 682
+    },
+    "hair.straight_bob.fringe": {
+      "node": "hair.straight_bob.fringe",
+      "category": "hair",
+      "glb": "hair/straight_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.29688
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 476
+    },
+    "hair.straight_bob.fringe.lod1": {
+      "node": "hair.straight_bob.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/straight_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.29688
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 158
+    },
+    "hair.long_side_fringe.full": {
+      "node": "hair.long_side_fringe.full",
+      "category": "hair",
+      "glb": "hair/long_side_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.39062,
+          -0.39062,
+          -0.3125
+        ],
+        [
+          0.39062,
+          0.25781,
+          0.6875
+        ]
+      ],
+      "triangles": 5154
+    },
+    "hair.long_side_fringe.full.lod1": {
+      "node": "hair.long_side_fringe.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_side_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.39062,
+          -0.39062,
+          -0.3125
+        ],
+        [
+          0.39062,
+          0.25781,
+          0.6875
+        ]
+      ],
+      "triangles": 1710
+    },
+    "hair.long_side_fringe.cap": {
+      "node": "hair.long_side_fringe.cap",
+      "category": "hair",
+      "glb": "hair/long_side_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.39062,
+          -0.39062,
+          -0.3125
+        ],
+        [
+          0.39062,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 3628
+    },
+    "hair.long_side_fringe.cap.lod1": {
+      "node": "hair.long_side_fringe.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_side_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.39062,
+          -0.39062,
+          -0.3125
+        ],
+        [
+          0.39062,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 1206
+    },
+    "hair.long_side_fringe.fringe": {
+      "node": "hair.long_side_fringe.fringe",
+      "category": "hair",
+      "glb": "hair/long_side_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.21094,
+          0.25
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 376
+    },
+    "hair.long_side_fringe.fringe.lod1": {
+      "node": "hair.long_side_fringe.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_side_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.21094,
+          0.25
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 122
+    },
+    "hair.high_bun.full": {
+      "node": "hair.high_bun.full",
+      "category": "hair",
+      "glb": "hair/high_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.13281
+        ],
+        [
+          0.28125,
+          0.25,
+          0.67578
+        ]
+      ],
+      "triangles": 1388
+    },
+    "hair.high_bun.full.lod1": {
+      "node": "hair.high_bun.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/high_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.13281
+        ],
+        [
+          0.28125,
+          0.25,
+          0.67578
+        ]
+      ],
+      "triangles": 470
+    },
+    "hair.high_bun.cap": {
+      "node": "hair.high_bun.cap",
+      "category": "hair",
+      "glb": "hair/high_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.13281
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 1092
+    },
+    "hair.high_bun.cap.lod1": {
+      "node": "hair.high_bun.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/high_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.13281
+        ],
+        [
+          0.29688,
+          0.25,
+          0.375
+        ]
+      ],
+      "triangles": 384
+    },
+    "hair.high_bun.fringe": {
+      "node": "hair.high_bun.fringe",
+      "category": "hair",
+      "glb": "hair/high_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.19922,
+          0.15234
+        ],
+        [
+          0.23828,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 524
+    },
+    "hair.high_bun.fringe.lod1": {
+      "node": "hair.high_bun.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/high_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.19922,
+          0.15234
+        ],
+        [
+          0.23828,
+          0.25,
+          0.44141
+        ]
+      ],
+      "triangles": 172
+    },
+    "hair.long_gathered.full": {
+      "node": "hair.long_gathered.full",
+      "category": "hair",
+      "glb": "hair/long_gathered",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.375,
+          -0.375,
+          -0.3125
+        ],
+        [
+          0.32812,
+          0.25781,
+          0.61719
+        ]
+      ],
+      "triangles": 3814
+    },
+    "hair.long_gathered.full.lod1": {
+      "node": "hair.long_gathered.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_gathered",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.375,
+          -0.375,
+          -0.3125
+        ],
+        [
+          0.32812,
+          0.25781,
+          0.61719
+        ]
+      ],
+      "triangles": 1278
+    },
+    "hair.long_gathered.cap": {
+      "node": "hair.long_gathered.cap",
+      "category": "hair",
+      "glb": "hair/long_gathered",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.35938,
+          -0.375,
+          -0.3125
+        ],
+        [
+          0.32812,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 3148
+    },
+    "hair.long_gathered.cap.lod1": {
+      "node": "hair.long_gathered.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_gathered",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.35938,
+          -0.375,
+          -0.3125
+        ],
+        [
+          0.32812,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 1044
+    },
+    "hair.long_gathered.fringe": {
+      "node": "hair.long_gathered.fringe",
+      "category": "hair",
+      "glb": "hair/long_gathered",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.19922,
+          0.01953
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 932
+    },
+    "hair.long_gathered.fringe.lod1": {
+      "node": "hair.long_gathered.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_gathered",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.19922,
+          0.01953
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 306
+    },
+    "hair.gathered_fringe.full": {
+      "node": "hair.gathered_fringe.full",
+      "category": "hair",
+      "glb": "hair/gathered_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.40625,
+          -0.42188,
+          -0.32812
+        ],
+        [
+          0.40625,
+          0.25781,
+          0.61719
+        ]
+      ],
+      "triangles": 6137
+    },
+    "hair.gathered_fringe.full.lod1": {
+      "node": "hair.gathered_fringe.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/gathered_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.40625,
+          -0.42188,
+          -0.32812
+        ],
+        [
+          0.40625,
+          0.25781,
+          0.61719
+        ]
+      ],
+      "triangles": 2042
+    },
+    "hair.gathered_fringe.cap": {
+      "node": "hair.gathered_fringe.cap",
+      "category": "hair",
+      "glb": "hair/gathered_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.40625,
+          -0.42188,
+          -0.32812
+        ],
+        [
+          0.40625,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 4814
+    },
+    "hair.gathered_fringe.cap.lod1": {
+      "node": "hair.gathered_fringe.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/gathered_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.40625,
+          -0.42188,
+          -0.32812
+        ],
+        [
+          0.40625,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 1596
+    },
+    "hair.gathered_fringe.fringe": {
+      "node": "hair.gathered_fringe.fringe",
+      "category": "hair",
+      "glb": "hair/gathered_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.21094,
+          0.28906
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 248
+    },
+    "hair.gathered_fringe.fringe.lod1": {
+      "node": "hair.gathered_fringe.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/gathered_fringe",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.21094,
+          0.28906
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 80
+    },
+    "hair.long_bob.full": {
+      "node": "hair.long_bob.full",
+      "category": "hair",
+      "glb": "hair/long_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.39062,
+          -0.35938,
+          -0.0625
+        ],
+        [
+          0.39062,
+          0.26562,
+          0.66406
+        ]
+      ],
+      "triangles": 4790
+    },
+    "hair.long_bob.full.lod1": {
+      "node": "hair.long_bob.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.39062,
+          -0.35938,
+          -0.0625
+        ],
+        [
+          0.39062,
+          0.26562,
+          0.66406
+        ]
+      ],
+      "triangles": 1602
+    },
+    "hair.long_bob.cap": {
+      "node": "hair.long_bob.cap",
+      "category": "hair",
+      "glb": "hair/long_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.39062,
+          -0.35938,
+          -0.0625
+        ],
+        [
+          0.39062,
+          0.26562,
+          0.375
+        ]
+      ],
+      "triangles": 3120
+    },
+    "hair.long_bob.cap.lod1": {
+      "node": "hair.long_bob.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.39062,
+          -0.35938,
+          -0.0625
+        ],
+        [
+          0.39062,
+          0.26562,
+          0.375
+        ]
+      ],
+      "triangles": 1036
+    },
+    "hair.long_bob.fringe": {
+      "node": "hair.long_bob.fringe",
+      "category": "hair",
+      "glb": "hair/long_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.31641
+        ],
+        [
+          0.25,
+          0.26562,
+          0.44141
+        ]
+      ],
+      "triangles": 348
+    },
+    "hair.long_bob.fringe.lod1": {
+      "node": "hair.long_bob.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.31641
+        ],
+        [
+          0.25,
+          0.26562,
+          0.44141
+        ]
+      ],
+      "triangles": 116
+    },
+    "hair.messy_bun.full": {
+      "node": "hair.messy_bun.full",
+      "category": "hair",
+      "glb": "hair/messy_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.28125,
+          0.11719
+        ],
+        [
+          0.29688,
+          0.25781,
+          0.72266
+        ]
+      ],
+      "triangles": 2016
+    },
+    "hair.messy_bun.full.lod1": {
+      "node": "hair.messy_bun.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/messy_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.28125,
+          0.11719
+        ],
+        [
+          0.29688,
+          0.25781,
+          0.72266
+        ]
+      ],
+      "triangles": 694
+    },
+    "hair.messy_bun.cap": {
+      "node": "hair.messy_bun.cap",
+      "category": "hair",
+      "glb": "hair/messy_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.11719
+        ],
+        [
+          0.29688,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 1524
+    },
+    "hair.messy_bun.cap.lod1": {
+      "node": "hair.messy_bun.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/messy_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.11719
+        ],
+        [
+          0.29688,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 522
+    },
+    "hair.messy_bun.fringe": {
+      "node": "hair.messy_bun.fringe",
+      "category": "hair",
+      "glb": "hair/messy_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.19922,
+          0.11719
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 694
+    },
+    "hair.messy_bun.fringe.lod1": {
+      "node": "hair.messy_bun.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/messy_bun",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.19922,
+          0.11719
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 242
+    },
+    "hair.blunt_bob.full": {
+      "node": "hair.blunt_bob.full",
+      "category": "hair",
+      "glb": "hair/blunt_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.3125,
+          0.01562
+        ],
+        [
+          0.34375,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 4376
+    },
+    "hair.blunt_bob.full.lod1": {
+      "node": "hair.blunt_bob.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/blunt_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.3125,
+          0.01562
+        ],
+        [
+          0.34375,
+          0.25781,
+          0.66406
+        ]
+      ],
+      "triangles": 1462
+    },
+    "hair.blunt_bob.cap": {
+      "node": "hair.blunt_bob.cap",
+      "category": "hair",
+      "glb": "hair/blunt_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.3125,
+          0.01562
+        ],
+        [
+          0.34375,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 2516
+    },
+    "hair.blunt_bob.cap.lod1": {
+      "node": "hair.blunt_bob.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/blunt_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.34375,
+          -0.3125,
+          0.01562
+        ],
+        [
+          0.34375,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 840
+    },
+    "hair.blunt_bob.fringe": {
+      "node": "hair.blunt_bob.fringe",
+      "category": "hair",
+      "glb": "hair/blunt_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.34766
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 276
+    },
+    "hair.blunt_bob.fringe.lod1": {
+      "node": "hair.blunt_bob.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/blunt_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.34766
+        ],
+        [
+          0.25,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 92
+    },
+    "hair.long_straight.full": {
+      "node": "hair.long_straight.full",
+      "category": "hair",
+      "glb": "hair/long_straight",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.375,
+          -0.39062,
+          -0.42188
+        ],
+        [
+          0.375,
+          0.25781,
+          0.6875
+        ]
+      ],
+      "triangles": 3064
+    },
+    "hair.long_straight.full.lod1": {
+      "node": "hair.long_straight.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_straight",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.375,
+          -0.39062,
+          -0.42188
+        ],
+        [
+          0.375,
+          0.25781,
+          0.6875
+        ]
+      ],
+      "triangles": 1014
+    },
+    "hair.long_straight.cap": {
+      "node": "hair.long_straight.cap",
+      "category": "hair",
+      "glb": "hair/long_straight",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.375,
+          -0.39062,
+          -0.42188
+        ],
+        [
+          0.375,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 2240
+    },
+    "hair.long_straight.cap.lod1": {
+      "node": "hair.long_straight.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_straight",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.375,
+          -0.39062,
+          -0.42188
+        ],
+        [
+          0.375,
+          0.25781,
+          0.375
+        ]
+      ],
+      "triangles": 746
+    },
+    "hair.long_straight.fringe": {
+      "node": "hair.long_straight.fringe",
+      "category": "hair",
+      "glb": "hair/long_straight",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.21094,
+          0.26953
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 256
+    },
+    "hair.long_straight.fringe.lod1": {
+      "node": "hair.long_straight.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/long_straight",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.21094,
+          0.26953
+        ],
+        [
+          0.23828,
+          0.25781,
+          0.44141
+        ]
+      ],
+      "triangles": 82
+    },
+    "hair.silver_bob.full": {
+      "node": "hair.silver_bob.full",
+      "category": "hair",
+      "glb": "hair/silver_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.40625,
+          -0.375,
+          0.03125
+        ],
+        [
+          0.40625,
+          0.26562,
+          0.66406
+        ]
+      ],
+      "triangles": 5502
+    },
+    "hair.silver_bob.full.lod1": {
+      "node": "hair.silver_bob.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/silver_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.40625,
+          -0.375,
+          0.03125
+        ],
+        [
+          0.40625,
+          0.26562,
+          0.66406
+        ]
+      ],
+      "triangles": 1818
+    },
+    "hair.silver_bob.cap": {
+      "node": "hair.silver_bob.cap",
+      "category": "hair",
+      "glb": "hair/silver_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.40625,
+          -0.375,
+          0.03125
+        ],
+        [
+          0.40625,
+          0.26562,
+          0.375
+        ]
+      ],
+      "triangles": 3640
+    },
+    "hair.silver_bob.cap.lod1": {
+      "node": "hair.silver_bob.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/silver_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.40625,
+          -0.375,
+          0.03125
+        ],
+        [
+          0.40625,
+          0.26562,
+          0.375
+        ]
+      ],
+      "triangles": 1192
+    },
+    "hair.silver_bob.fringe": {
+      "node": "hair.silver_bob.fringe",
+      "category": "hair",
+      "glb": "hair/silver_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.30859
+        ],
+        [
+          0.25,
+          0.26562,
+          0.44141
+        ]
+      ],
+      "triangles": 348
+    },
+    "hair.silver_bob.fringe.lod1": {
+      "node": "hair.silver_bob.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/silver_bob",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          0.1875,
+          0.30859
+        ],
+        [
+          0.25,
+          0.26562,
+          0.44141
+        ]
+      ],
+      "triangles": 116
+    },
+    "hair.topknot_sweep.full": {
+      "node": "hair.topknot_sweep.full",
+      "category": "hair",
+      "glb": "hair/topknot_sweep",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.28125,
+          0.28125,
+          0.65234
+        ]
+      ],
+      "triangles": 1206
+    },
+    "hair.topknot_sweep.full.lod1": {
+      "node": "hair.topknot_sweep.full.lod1",
+      "category": "hair_lod",
+      "glb": "hair/topknot_sweep",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.28125,
+          -0.28125,
+          0.15625
+        ],
+        [
+          0.28125,
+          0.28125,
+          0.65234
+        ]
+      ],
+      "triangles": 398
+    },
+    "hair.topknot_sweep.cap": {
+      "node": "hair.topknot_sweep.cap",
+      "category": "hair",
+      "glb": "hair/topknot_sweep",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.28125,
+          0.375
+        ]
+      ],
+      "triangles": 782
+    },
+    "hair.topknot_sweep.cap.lod1": {
+      "node": "hair.topknot_sweep.cap.lod1",
+      "category": "hair_lod",
+      "glb": "hair/topknot_sweep",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.29688,
+          -0.3125,
+          0.15625
+        ],
+        [
+          0.29688,
+          0.28125,
+          0.375
+        ]
+      ],
+      "triangles": 266
+    },
+    "hair.topknot_sweep.fringe": {
+      "node": "hair.topknot_sweep.fringe",
+      "category": "hair",
+      "glb": "hair/topknot_sweep",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.21094,
+          0.33594
+        ],
+        [
+          0.23828,
+          0.28125,
+          0.44141
+        ]
+      ],
+      "triangles": 272
+    },
+    "hair.topknot_sweep.fringe.lod1": {
+      "node": "hair.topknot_sweep.fringe.lod1",
+      "category": "hair_lod",
+      "glb": "hair/topknot_sweep",
+      "slots": [
+        "hair"
+      ],
+      "boundsM": [
+        [
+          -0.23828,
+          0.21094,
+          0.33594
+        ],
+        [
+          0.23828,
+          0.28125,
+          0.44141
+        ]
+      ],
+      "triangles": 88
+    },
+    "helmet.open": {
+      "node": "helmet.open",
+      "category": "helmet",
+      "glb": "helmets",
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal"
+      ],
+      "boundsM": [
+        [
+          -0.37891,
+          -0.30078,
+          0.00781
+        ],
+        [
+          0.37891,
+          0.25,
+          0.65234
+        ]
+      ],
+      "triangles": 3988
+    },
+    "helmet.closed": {
+      "node": "helmet.closed",
+      "category": "helmet",
+      "glb": "helmets",
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "boundsM": [
+        [
+          -0.37891,
+          -0.3125,
+          -0.15234
+        ],
+        [
+          0.37891,
+          0.28906,
+          0.67578
+        ]
+      ],
+      "triangles": 13524
+    },
+    "visor.closed.clear": {
+      "node": "visor.closed.clear",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27344,
+          0.39844
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.closed.tinted": {
+      "node": "visor.closed.tinted",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27344,
+          0.39844
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.closed.hud": {
+      "node": "visor.closed.hud",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27734,
+          0.39844
+        ]
+      ],
+      "triangles": 724
+    },
+    "visor.closed.mirrored": {
+      "node": "visor.closed.mirrored",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27344,
+          0.39844
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.closed.ar": {
+      "node": "visor.closed.ar",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27734,
+          0.39844
+        ]
+      ],
+      "triangles": 772
+    },
+    "helmet.tactical": {
+      "node": "helmet.tactical",
+      "category": "helmet",
+      "glb": "helmets",
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark"
+      ],
+      "boundsM": [
+        [
+          -0.39062,
+          -0.3125,
+          -0.15234
+        ],
+        [
+          0.39062,
+          0.30469,
+          0.62891
+        ]
+      ],
+      "triangles": 14060
+    },
+    "visor.tactical.clear": {
+      "node": "visor.tactical.clear",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.28906,
+          0.26172,
+          0.17969
+        ],
+        [
+          0.28906,
+          0.27344,
+          0.41797
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.tactical.tinted": {
+      "node": "visor.tactical.tinted",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.28906,
+          0.26172,
+          0.17969
+        ],
+        [
+          0.28906,
+          0.27344,
+          0.41797
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.tactical.hud": {
+      "node": "visor.tactical.hud",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.28906,
+          0.26172,
+          0.17969
+        ],
+        [
+          0.28906,
+          0.27734,
+          0.41797
+        ]
+      ],
+      "triangles": 724
+    },
+    "visor.tactical.mirrored": {
+      "node": "visor.tactical.mirrored",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.28906,
+          0.26172,
+          0.17969
+        ],
+        [
+          0.28906,
+          0.27344,
+          0.41797
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.tactical.ar": {
+      "node": "visor.tactical.ar",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.28906,
+          0.26172,
+          0.17969
+        ],
+        [
+          0.28906,
+          0.27734,
+          0.41797
+        ]
+      ],
+      "triangles": 754
+    },
+    "helmet.hazmat": {
+      "node": "helmet.hazmat",
+      "category": "helmet",
+      "glb": "helmets",
+      "slots": [
+        "suit_primary",
+        "accent",
+        "metal",
+        "dark"
+      ],
+      "boundsM": [
+        [
+          -0.36719,
+          -0.3125,
+          -0.15234
+        ],
+        [
+          0.36719,
+          0.35156,
+          0.6875
+        ]
+      ],
+      "triangles": 14076
+    },
+    "visor.hazmat.clear": {
+      "node": "visor.hazmat.clear",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.27734,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.28906,
+          0.41797
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.hazmat.tinted": {
+      "node": "visor.hazmat.tinted",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.27734,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.28906,
+          0.41797
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.hazmat.hud": {
+      "node": "visor.hazmat.hud",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.27734,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.29297,
+          0.41797
+        ]
+      ],
+      "triangles": 732
+    },
+    "visor.hazmat.mirrored": {
+      "node": "visor.hazmat.mirrored",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.27734,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.28906,
+          0.41797
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.hazmat.ar": {
+      "node": "visor.hazmat.ar",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.27734,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.29297,
+          0.41797
+        ]
+      ],
+      "triangles": 774
+    },
+    "helmet.pilot": {
+      "node": "helmet.pilot",
+      "category": "helmet",
+      "glb": "helmets",
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark"
+      ],
+      "boundsM": [
+        [
+          -0.3125,
+          -0.32422,
+          -0.15234
+        ],
+        [
+          0.3125,
+          0.32031,
+          0.6875
+        ]
+      ],
+      "triangles": 14392
+    },
+    "visor.pilot.clear": {
+      "node": "visor.pilot.clear",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.26953,
+          0.10156
+        ],
+        [
+          0.24609,
+          0.28125,
+          0.39844
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.pilot.tinted": {
+      "node": "visor.pilot.tinted",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.26953,
+          0.10156
+        ],
+        [
+          0.24609,
+          0.28125,
+          0.39844
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.pilot.hud": {
+      "node": "visor.pilot.hud",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.26953,
+          0.10156
+        ],
+        [
+          0.24609,
+          0.28516,
+          0.39844
+        ]
+      ],
+      "triangles": 754
+    },
+    "visor.pilot.mirrored": {
+      "node": "visor.pilot.mirrored",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.26953,
+          0.10156
+        ],
+        [
+          0.24609,
+          0.28125,
+          0.39844
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.pilot.ar": {
+      "node": "visor.pilot.ar",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.26953,
+          0.10156
+        ],
+        [
+          0.24609,
+          0.28516,
+          0.39844
+        ]
+      ],
+      "triangles": 766
+    },
+    "helmet.mining": {
+      "node": "helmet.mining",
+      "category": "helmet",
+      "glb": "helmets",
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "boundsM": [
+        [
+          -0.37891,
+          -0.33594,
+          -0.15234
+        ],
+        [
+          0.37891,
+          0.34375,
+          0.66406
+        ]
+      ],
+      "triangles": 16946
+    },
+    "visor.mining.clear": {
+      "node": "visor.mining.clear",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27344,
+          0.37891
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.mining.tinted": {
+      "node": "visor.mining.tinted",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27344,
+          0.37891
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.mining.hud": {
+      "node": "visor.mining.hud",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27734,
+          0.37891
+        ]
+      ],
+      "triangles": 740
+    },
+    "visor.mining.mirrored": {
+      "node": "visor.mining.mirrored",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27344,
+          0.37891
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.mining.ar": {
+      "node": "visor.mining.ar",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.08203
+        ],
+        [
+          0.22266,
+          0.27734,
+          0.37891
+        ]
+      ],
+      "triangles": 766
+    },
+    "helmet.security": {
+      "node": "helmet.security",
+      "category": "helmet",
+      "glb": "helmets",
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "boundsM": [
+        [
+          -0.37891,
+          -0.3125,
+          -0.15234
+        ],
+        [
+          0.37891,
+          0.30469,
+          0.72266
+        ]
+      ],
+      "triangles": 12846
+    },
+    "visor.security.clear": {
+      "node": "visor.security.clear",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.20312,
+          0.26172,
+          0.14062
+        ],
+        [
+          0.20312,
+          0.27344,
+          0.35938
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.security.tinted": {
+      "node": "visor.security.tinted",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.20312,
+          0.26172,
+          0.14062
+        ],
+        [
+          0.20312,
+          0.27344,
+          0.35938
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.security.hud": {
+      "node": "visor.security.hud",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.20312,
+          0.26172,
+          0.14062
+        ],
+        [
+          0.20312,
+          0.27734,
+          0.35938
+        ]
+      ],
+      "triangles": 732
+    },
+    "visor.security.mirrored": {
+      "node": "visor.security.mirrored",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.20312,
+          0.26172,
+          0.14062
+        ],
+        [
+          0.20312,
+          0.27344,
+          0.35938
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.security.ar": {
+      "node": "visor.security.ar",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.20312,
+          0.26172,
+          0.14062
+        ],
+        [
+          0.20312,
+          0.27734,
+          0.35938
+        ]
+      ],
+      "triangles": 746
+    },
+    "helmet.explorer": {
+      "node": "helmet.explorer",
+      "category": "helmet",
+      "glb": "helmets",
+      "slots": [
+        "suit_primary",
+        "accent",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "boundsM": [
+        [
+          -0.40234,
+          -0.3125,
+          -0.15234
+        ],
+        [
+          0.40234,
+          0.3125,
+          0.85156
+        ]
+      ],
+      "triangles": 13432
+    },
+    "visor.explorer.clear": {
+      "node": "visor.explorer.clear",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.28516,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.29688,
+          0.4375
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.explorer.tinted": {
+      "node": "visor.explorer.tinted",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.28516,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.29688,
+          0.4375
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.explorer.hud": {
+      "node": "visor.explorer.hud",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.28516,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.30078,
+          0.4375
+        ]
+      ],
+      "triangles": 732
+    },
+    "visor.explorer.mirrored": {
+      "node": "visor.explorer.mirrored",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.28516,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.29688,
+          0.4375
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.explorer.ar": {
+      "node": "visor.explorer.ar",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.24609,
+          0.28516,
+          0.04297
+        ],
+        [
+          0.24609,
+          0.30078,
+          0.4375
+        ]
+      ],
+      "triangles": 766
+    },
+    "helmet.engineer": {
+      "node": "helmet.engineer",
+      "category": "helmet",
+      "glb": "helmets",
+      "slots": [
+        "suit_primary",
+        "suit_secondary",
+        "metal",
+        "dark",
+        "emit"
+      ],
+      "boundsM": [
+        [
+          -0.41406,
+          -0.3125,
+          -0.15234
+        ],
+        [
+          0.41406,
+          0.28906,
+          0.67578
+        ]
+      ],
+      "triangles": 13956
+    },
+    "visor.engineer.clear": {
+      "node": "visor.engineer.clear",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.10156
+        ],
+        [
+          0.22266,
+          0.27344,
+          0.37891
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.engineer.tinted": {
+      "node": "visor.engineer.tinted",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.10156
+        ],
+        [
+          0.22266,
+          0.27344,
+          0.37891
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.engineer.hud": {
+      "node": "visor.engineer.hud",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.10156
+        ],
+        [
+          0.22266,
+          0.27734,
+          0.37891
+        ]
+      ],
+      "triangles": 726
+    },
+    "visor.engineer.mirrored": {
+      "node": "visor.engineer.mirrored",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.10156
+        ],
+        [
+          0.22266,
+          0.27344,
+          0.37891
+        ]
+      ],
+      "triangles": 108
+    },
+    "visor.engineer.ar": {
+      "node": "visor.engineer.ar",
+      "category": "visor",
+      "glb": "helmets",
+      "slots": [
+        "emit",
+        "glass"
+      ],
+      "boundsM": [
+        [
+          -0.22266,
+          0.26172,
+          0.10156
+        ],
+        [
+          0.22266,
+          0.27734,
+          0.37891
+        ]
+      ],
+      "triangles": 750
+    }
+  },
+  "sources": {
+    "hair": {
+      "path": "assets/source/crew-hair-r005.blend",
+      "sha256": "7907c04b3df64531eb0a076c1da4534ff9c28b4bc029de6cd4ccbe8b796d8f13"
+    },
+    "helmets": {
+      "path": "assets/source/crew-helmets-r008.blend",
+      "sha256": "44aa42b10626b598abf7202f4e1e5c88439e16c7d1daa86b902ec131cc4be78c"
+    }
+  },
+  "authoring": {
+    "parts_hair.py": "5bdb8e1eb92dc3d9279e0ed19c3340a56356e1e5649b6d36952bbf8255959bd3",
+    "parts_gear.py": "edcefd78072dc43b4a205ac0783d2f321c35ba4d76ace24d8ee71de097ddacc5",
+    "vox.py": "f98ccda43e16e9e3e9201fd86359a97c754f2d0fcca1c75ca70bd32f7e58f569",
+    "kit.py": "b3a7dcbd78b945df7f360340b0b1af9e80943e2308e36228f31f6d23c9545d72",
+    "build_refinement.py": "5c28b459e3954e50fcec7f35e442f5d7bb3bd34fb92e4814e69b30fff08b3942"
+  }
+}

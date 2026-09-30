@@ -131,21 +131,25 @@ export function createVoxelCrewOutfit(
       bodyType: resolved.bodyType,
       equippedComponents: equipped,
     });
-    const key = JSON.stringify(loadout);
+    const key = JSON.stringify([loadout, resolved.headArtRevision]);
     if (key !== headKey) {
       headKey = key;
       const revision = ++headRevision;
-      void track(attachVoxelCrewHead(scene, crew, loadout))
+      void track(
+        attachVoxelCrewHead(scene, crew, loadout, resolved.headArtRevision, {
+          deferActivation: true,
+        }),
+      )
         .then((next) => {
           if (disposed || revision !== headRevision) {
-            // A stale head kit clears the body's hidden regions when disposed;
-            // restore the current head/armour hides (else gloves/hands flash back).
+            // Deferred attachments have not changed the current face composer or body hides.
             next.dispose();
             changed();
             return;
           }
           head?.dispose();
           head = next;
+          next.activate();
           changed();
         })
         .catch((error) => {
@@ -209,6 +213,11 @@ export function createVoxelCrewOutfit(
     /** Loads still in flight (tests, first-frame readiness). */
     get pending() {
       return pending;
+    },
+    get headArtStatus() {
+      return head
+        ? { revision: head.artRevision, error: head.artError }
+        : undefined;
     },
     /** Successfully loaded armour part ids by slot (diagnostics and tests). */
     get armour() {

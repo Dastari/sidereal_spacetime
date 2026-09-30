@@ -370,9 +370,10 @@ HELMETS = {
 }
 
 
-def helmet(hid, visor_ids):
+def helmet(hid, visor_ids, continuous=False):
     W, front, back, top, bottom, r, rt, rects = HELMETS[hid]
     g = Grid(f"helmet.{hid}")
+    g.continuous = continuous
     helmet_shell(g, W, front, back, top, bottom, r, rt)
     if hid == "open":
         g.cut(-5.5, -front - 1, bottom - 1, 5.5, -3.0, 10.5)                           # open face
@@ -387,6 +388,22 @@ def helmet(hid, visor_ids):
     window(g, rects, front)
     frame(g, rects, front, "accent" if hid in ("hazmat", "explorer") else "suit_secondary",
           t=0.75 if hid == "hazmat" else 0.5, proud=0.5 if hid == "hazmat" else 0.25)
+    if continuous:
+        # Opaque window seat with hidden pane overlap, meshed into the same supporting shell.
+        # The old exactly abutting rectangle opens when shell and pane bevels recede.
+        for x0, z0, x1, z1 in rects:
+            g.new().box(x0 - 0.375, -front + 0.125, z0 - 0.375,
+                        x1 + 0.375, -front + 1.75, z1 + 0.375, "dark")
+            g.cut(x0 + 0.25, -front - 0.125, z0 + 0.25,
+                  x1 - 0.25, -front + 1.875, z1 - 0.25)
+        # A tapered pressure boot closes the broad helmet aperture around the head's neck plug
+        # and overlaps the unscaled chest collar. Shared labels are colour, never seam geometry.
+        def boot(X, Y, Z):
+            f = np.clip((Z + 3.25) / 3.5, 0, 1)
+            outer = 3.5 + 3.75 * f
+            inner = 1.375 + 1.625 * f
+            return (np.abs(X) < outer) & (np.abs(Y) < outer) & ~((np.abs(X) < inner) & (np.abs(Y) < inner))
+        g.new().region(-7.25, -7.25, -3.25, 7.25, 7.25, 0.5, boot, "dark", q=0.25)
     if hid == "closed":
         g.new().box(-1.5, -6.0, top - 0.5, 1.5, 6.0, top + 0.25, "suit_secondary")
         for s in (-1, 1):
@@ -451,9 +468,12 @@ def helmet(hid, visor_ids):
     visors = {}
     for vid in visor_ids:
         v = Grid(f"visor.{hid}.{vid}")
+        v.continuous = continuous
         pane_y0, pane_y1 = -front + 0.25, -front + 0.625
         for x0, z0, x1, z1 in rects:
-            v.box(x0, pane_y0, z0, x1, pane_y1, z1, "glass")
+            overlap = 0.375 if continuous else 0
+            v.box(x0 - overlap, pane_y0, z0 - overlap,
+                  x1 + overlap, pane_y1, z1 + overlap, "glass")
         x0, z0, x1, z1 = rects[0]
         if vid == "hud":
             v.new()

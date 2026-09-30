@@ -11,6 +11,7 @@ four variants, chosen at runtime by the most restrictive equipped headwear:
 from __future__ import annotations
 
 import numpy as np
+from contextvars import ContextVar
 
 from vox import Grid
 
@@ -19,6 +20,9 @@ CAP_Z = 9.5
 BACK_MIN_T = 1.375
 # Minimum design side thickness for styles with side hair (one quantised block past design X 6.67).
 SIDE_MIN_T = 0.75
+COHESIVE = ContextVar("cohesive_hair_candidate", default=False)
+COHESIVE_STYLE = ContextVar("cohesive_hair_style", default="")
+PROFILE_STYLES = {"high_bun", "messy_bun", "long_gathered", "gathered_fringe", "topknot_sweep", "long_straight", "long_side_fringe"}
 
 
 # =========================================================================== helpers
@@ -47,6 +51,8 @@ def snap(v, s=0.25):
 def shell(g, t=1.0, top=1.25, front=10.0, side=7.25, back=3.0, burn=None, r=1.5, amp=0.5, seed=1, front_fn=None,
           side_t=None, back_t=None):
     """Hair cap hugging the skull. front/side/back are the hairline heights; burn the sideburn height."""
+    if COHESIVE.get() and COHESIVE_STYLE.get() in PROFILE_STYLES:
+        r = 0.75
     st = t if side_t is None else side_t
     # Same quantisation at the sides (first block centre past the skull at design X 6.67): a 0.5 side
     # left the back corners bare. Shaved styles (t 0.25: mohawk, side undercut) keep bare sides.
@@ -64,7 +70,10 @@ def shell(g, t=1.0, top=1.25, front=10.0, side=7.25, back=3.0, burn=None, r=1.5,
         wx = 6 + st
         wy_back, wy_front = 6 + bt, 6 + t
         inside = (ax < wx) & (Y > -wy_front) & (Y < wy_back) & (Z < ztop)
-        outside_skull = (ax > 6) | (ay > 6) | (Z > 13)
+        # A fitted substrate enters the skull by a hidden paint cell. The final envelope is
+        # bevelled once; no trough at a fringe/temple join can expose the underlying scalp.
+        fit = 5.875 if COHESIVE.get() else 6
+        outside_skull = (ax > fit) | (ay > fit) | (Z > (12.875 if COHESIVE.get() else 13))
         ex = np.maximum(ax - (wx - r), 0)
         ey = np.maximum(np.where(Y < 0, -Y - (wy_front - r), Y - (wy_back - r)), 0)
         ez = np.maximum(Z - (ztop - r), 0)
@@ -75,7 +84,7 @@ def shell(g, t=1.0, top=1.25, front=10.0, side=7.25, back=3.0, burn=None, r=1.5,
         zl = zl + jag(X, Y, amp, seed)
         return inside & outside_skull & rounded & (Z >= zl)
 
-    g.region(-6 - st, -6 - t, min(back, side, front) - 1, 6 + st, 6 + bt, ztop, fn, "hair", q=2.0)
+    g.region(-6 - st, -6 - t, min(back, side, front) - 1, 6 + st, 6 + bt, ztop, fn, "hair", q=0.25 if COHESIVE.get() else 2.0)
     return g
 
 
@@ -99,6 +108,20 @@ def tuft(g, x0, y0, z0, x1, y1, z1):
 
 def fringe(g, cols, depth=0.75, top=13.0, y=-6.0):
     """Forehead strands: cols = [(x0, x1, z_bottom), ...], each its own island."""
+    if COHESIVE.get():
+        # Connected recessed roots, with broad locks swept across them in three overlapping
+        # steps. Unequal depth/lean gives a directional silhouette instead of one flat brow panel.
+        g.new().box(min(c[0] for c in cols), y - 0.375, max(c[2] for c in cols),
+                    max(c[1] for c in cols), y + 0.125, top, "hair")
+        for i, (x0, x1, zb) in enumerate(cols):
+            for k in range(3):
+                f = k / 3
+                z0, z1 = zb + (top - zb) * f, zb + (top - zb) * (k + 1) / 3 + 0.125
+                sweep = (0.5 if i % 2 else 0.25) * f
+                proud = depth + (0.5 if i % 3 == 0 else 0.125) - f * 0.25
+                g.new().box(snap(x0 + sweep - 0.125), y - proud, snap(z0),
+                            snap(x1 + sweep + 0.125), y + 0.125, min(top, snap(z1)), "hair")
+        return g
     for x0, x1, zb in cols:
         g.new().box(snap(x0), y - depth, snap(zb), snap(x1), y, top, "hair")
     return g
@@ -106,6 +129,8 @@ def fringe(g, cols, depth=0.75, top=13.0, y=-6.0):
 
 def curtain(g, t, zbot, sides=True, back=True, front_y=-5.0, amp=1.0, seed=2, split=1.5, flare=0.0, ztop=12.5, taper=0.0):
     """Hanging hair beside and behind the head, split into strand islands `split` voxels wide."""
+    if COHESIVE.get():
+        return directional_curtain(g, t, zbot, sides, back, front_y, amp, seed, flare, ztop, taper)
     base = int(g.isl.max()) + 1
 
     def fn(X, Y, Z):
@@ -126,6 +151,39 @@ def curtain(g, t, zbot, sides=True, back=True, front_y=-5.0, amp=1.0, seed=2, sp
                    np.floor(np.broadcast_to(X, sub.shape) / split) + 100)
     sub[m] = (base + (col[m].astype(np.int64) % 97 + 97) % 97 + (np.sign(np.broadcast_to(X, sub.shape)[m]) > 0) * 200).astype(np.int16)
     g.cur = int(g.isl.max()) + 1
+    return g
+
+
+def directional_curtain(g, t, zbot, sides, back, front_y, amp, seed, flare, ztop, taper):
+    """A connected inner fall with a few overlapping swept masses, rather than vertical panels.
+
+    Clumps change direction and thickness down their length; their roots overlap the fitted crown.
+    The irregular lower outline and side-specific sweep preserve each authored cut/updo.
+    """
+    broad = COHESIVE_STYLE.get() in PROFILE_STYLES
+    def fn(X, Y, Z):
+        ax = np.abs(X)
+        f = np.clip((ztop - Z) / max(1e-6, ztop - zbot), 0, 1)
+        tt = t + flare * f
+        # Broad asymmetric locks wrap the corners. Relief is outward from a continuous thickness
+        # floor, so a valley never cuts down to the scalp or disconnects a hanging lock.
+        side_phase = np.floor((Y + (0.8 if seed % 2 else -0.8) * f * Z + np.sign(X) * 0.9) / 3.25)
+        back_phase = np.floor((X + 1.5 * f + seed % 3) / 3.25)
+        sr = ((hsh(side_phase.astype(np.int64), seed) % 3) / 2) * 0.625
+        br = ((hsh(back_phase.astype(np.int64), seed + 17) % 3) / 2) * 0.625
+        if broad:
+            sr *= 2.5
+            br *= 4.0
+        side = sides & (ax >= 5.875) & (ax < 6 + tt + sr) & (Y > front_y) & (Y < 6 + tt + br)
+        bk = back & (Y >= 5.875) & (Y < 6 + tt + br) & (ax < 6 + tt + sr - taper * f * f)
+        phase = np.where(ax >= np.abs(Y), side_phase, back_phase)
+        drop = (hsh(phase.astype(np.int64), seed + 9) % 3) * amp / 2
+        if broad:
+            drop *= 1.5
+        return (side | bk) & (Z >= zbot + drop) & (Z < ztop)
+    relief = 3.0 if broad else 0.0
+    g.new().region(-7 - t - flare - relief, front_y, zbot - 1, 7 + t + flare + relief, 7 + t + flare + relief,
+                   ztop, fn, "hair", q=0.5)
     return g
 
 
@@ -408,6 +466,10 @@ def s_gathered_fringe():
     bun(g, 3.25, 3.0, 12.5, 3.5, 3.0)
     curtain(g, 1.25, -1.5, front_y=-4.5, amp=2.0, seed=39, flare=0.5)
     curtain(g, 1.25, -7.0, sides=False, amp=2.5, seed=139, taper=3.5)
+    if COHESIVE.get():
+        # The swept outer temple's low step shares a broad root with the fall above it.
+        # Head export flips authored X as well as Y; this is the negative runtime-X temple.
+        g.new().box(5.875, -4.5, -0.75, 7.75, -3.75, 3.5, "hair")
     _bangs(g, [(-5.75, -3.25, 7.5), (-3.25, -0.75, 8.75), (-0.75, 1.75, 9.25), (1.75, 5.75, 8.25)])
     return g
 
@@ -446,6 +508,9 @@ def s_long_straight():
     curtain(g, 1.25, -9.0, sides=False, amp=2.5, seed=44, taper=3.5)
     g.cut(-0.25, -7.5, 13.5, 0.25, 0.0, 15.0)                     # centre parting
     _bangs(g, [(-5.75, -3.0, 7.0), (3.0, 5.75, 7.0)])
+    if COHESIVE.get():
+        # Backing under the staggered left temple lock keeps its low tip attached to the fall.
+        g.new().box(-7.75, -5.25, -2.0, -5.875, -4.5, 3.5, "hair")
     return g
 
 
@@ -545,17 +610,46 @@ def puff(g, cells=4):
     return g
 
 
-def hair_variants(hid):
-    g = STYLES[hid]()
-    puff(g)
-    if hid not in NO_STRANDS:
+def hair_variants(hid, cohesive=False):
+    token = COHESIVE.set(cohesive)
+    style_token = COHESIVE_STYLE.set(hid)
+    try:
+        g = STYLES[hid]()
+    finally:
+        COHESIVE.reset(token)
+        COHESIVE_STYLE.reset(style_token)
+    if cohesive:
+        g.continuous = True
+        # Broad directional crown masses share the fitted substrate. Retain shaved sides and
+        # the distinct spikes/curls/buns already authored by the style, without strand tiling.
+        if hid not in NO_STRANDS and hid not in {
+            "close_crop", "mohawk", "side_undercut", "flat_top", "tall_crest",
+            "high_bun", "messy_bun", "long_gathered", "gathered_fringe", "topknot_sweep",
+        }:
+            for k, (x, y) in enumerate(((-3.75, -2.75), (-0.75, -0.5), (2.5, 2.0))):
+                spike(g, x, y - 1.5, 13.0, 4.0, 2.75 + (k % 2) * 0.75,
+                      lean=(0.3, 0.35), d=5.5, taper=0.55, step=1.0 if hid in PROFILE_STYLES else 0.5)
+    else:
+        puff(g)
+    if not cohesive and hid not in NO_STRANDS:
         strandify(g, seed=len(hid))
     cap = g.copy(f"hair.{hid}.cap")
     cap.region(-12, -12, CAP_Z, 12, 12, 20, lambda X, Y, Z: Z > CAP_Z, "hair", cut=True)
     fr = g.copy(f"hair.{hid}.fringe")
     fr.region(-12, -12, -8, 12, 12, 20, lambda X, Y, Z: ~((Y < -5.5) & (Z < 11.5) & (np.abs(X) < 5.75)), "hair", cut=True)
+    if cohesive:
+        # Fringe is a forehead attachment; clipping must also remove hanging tips below the
+        # old bounded cut volume, including long_straight's tail below design z=-8.
+        X, Y, Z = fr.centers()
+        fr.mask_cut(~((Y < -5.5) & (Z >= 0) & (Z < 11.5) & (np.abs(X) < 5.75)))
     if fr.empty():
         fr.box(-4.5, -6.5, 10.0, 4.5, -6.0, 11.5, "hair")
+    if cohesive:
+        # Mode clipping removes the crown roots. A shallow fitted bridge stays under the
+        # corresponding hat/hood lip and joins the remaining asymmetric fringe tips.
+        fr.new().box(-5.75, -6.375, 10.875, 5.75, -5.875, 11.5, "hair")
+        cap.new().region(-7, -7, 9.25, 7, 8, 9.5,
+                         lambda X, Y, Z: (np.abs(X) > 5.875) | (np.abs(Y) > 5.875), "hair", q=0.125)
     out = {"full": g, "cap": cap, "fringe": fr}
     for k, v in out.items():
         v.name = f"hair.{hid}.{k}"

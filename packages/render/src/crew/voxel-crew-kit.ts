@@ -14,7 +14,6 @@ import {
   DEFAULT_HEAD_LOADOUT,
   composeFace as composeHeadFace,
   crewFaceAtlasUrl,
-  crewHeadAssetUrl,
   resolveFaceFrames,
   resolveHeadLoadout,
   type HeadLoadout,
@@ -29,6 +28,7 @@ import { setMeshRole } from "../mesh-roles";
 import type { createVoxelCrewVisual } from "./voxel-crew";
 import { loadRgbaImage } from "./voxel-face";
 import { tagCrewPart } from "../molded-plastic";
+import { headArtSources } from "./head-art-revision";
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 
@@ -169,95 +169,141 @@ export async function attachVoxelCrewHead(
   scene: Scene,
   crew: VoxelCrew,
   loadout: HeadLoadout,
+  artRevision?: string,
+  options: { deferActivation?: boolean } = {},
 ) {
   const resolved = resolveHeadLoadout(loadout);
   const files = [...new Set(resolved.nodes.map((n) => n.file))];
   const wanted = new Set(resolved.nodes.map((n) => n.node));
-  const containers: AssetContainer[] = await Promise.all(
-    files.map((f) =>
-      SceneLoader.LoadAssetContainerAsync(
-        "",
-        crewHeadAssetUrl(f),
-        scene,
-        undefined,
-        ".glb",
-      ),
-    ),
-  );
-  const space = headSpaceNode(scene, crew);
-  for (const c of containers) {
-    c.addAllToScene();
-    for (const g of c.animationGroups) g.stop();
-    const gltfRoot = c.rootNodes[0];
-    for (const child of gltfRoot.getChildren() as TransformNode[])
-      child.parent = space;
-    for (const node of [...c.transformNodes, ...c.meshes]) {
-      const named = [
-        node,
-        ...(function* () {
-          for (let p = node.parent; p; p = p.parent) yield p;
-        })(),
-      ].some((n) => wanted.has(n.name));
-      node.setEnabled(named);
-    }
-    for (const m of c.meshes) setMeshRole(m, "crew");
-    gltfRoot.dispose(true);
-  }
-  // colour the person slots (skin, hair, eye) on every head material
-  const person: Record<string, string> = {
-    skin: resolved.face.tints.skin,
-    hair: resolved.face.tints.hair,
-    eye: resolved.face.tints.eye,
-  };
-  let faceMaterial: PBRMaterial | undefined;
-  for (const c of containers) tagCrewPart(c.materials, "head");
-  for (const c of containers)
-    for (const m of c.materials) {
-      if (!(m instanceof PBRMaterial)) continue;
-      const slot = m.name.replace(/^crew\./, "").replace(/\.\d+$/, "");
-      if (slot === "face") faceMaterial ??= m;
-      else if (person[slot])
-        m.albedoColor = Color3.FromHexString(person[slot]).toLinearSpace();
-    }
-  crew.setHiddenRegions(["head", "hair"]);
-  // Two v1 head-kit export defects, repaired at load (see ensureFaceCanvasUVs /
-  // alignWindingToNormals): no TEXCOORD_0, so the pixel face sampled one texel (flat skin); and
-  // triangle winding opposite to the (outward) normals on several parts, so double-sided lighting
-  // flipped them inward and faces rendered near black.
-  for (const c of containers)
-    for (const mesh of c.meshes) {
-      alignWindingToNormals(mesh);
-      if (mesh.material?.name.replace(/\.\d+$/, "") === "crew.face")
-        ensureFaceCanvasUVs(mesh, space);
-    }
-  if (faceMaterial) {
-    const atlas = await loadRgbaImage(crewFaceAtlasUrl(resolved.face.variant));
-    crew.face.setComposer(faceMaterial, (st) =>
-      composeHeadFace(
-        atlas,
-        resolved.face.variant,
-        resolveFaceFrames(
-          loadout,
-          {
-            expression: st.expression,
-            blink: st.blinkEyes ?? null,
-            viseme: st.viseme ?? null,
-            look: st.look ?? 0,
-          },
-          resolved.face.mouthHidden,
+  let selected = await headArtSources(files, artRevision);
+  let artError = selected.error;
+  const load = async () => {
+    const results = await Promise.allSettled(
+      files.map((f) =>
+        SceneLoader.LoadAssetContainerAsync(
+          "",
+          selected.sources.get(f)!,
+          scene,
+          undefined,
+          ".glb",
         ),
-        resolved.face.tints,
       ),
     );
-  }
-  return {
-    resolved,
-    dispose() {
-      space.dispose();
-      for (const c of containers) c.dispose();
-      crew.setHiddenRegions([]);
-    },
+    const failed = results.find((r) => r.status === "rejected");
+    if (failed?.status === "rejected") {
+      for (const r of results) if (r.status === "fulfilled") r.value.dispose();
+      throw failed.reason;
+    }
+    return results.map(
+      (r) => (r as PromiseFulfilledResult<AssetContainer>).value,
+    );
   };
+  let containers: AssetContainer[];
+  try {
+    containers = await load();
+  } catch (error) {
+    if (!artRevision || artRevision === "legacy" || artError) throw error;
+    artError = `character art renderer rejected candidate: ${String(error)}`;
+    selected = await headArtSources(files, undefined);
+    containers = await load();
+  }
+  if (artError) console.warn("character art review retained legacy", artError);
+  const space = headSpaceNode(scene, crew);
+  space.setEnabled(false);
+  try {
+    for (const c of containers) {
+      c.addAllToScene();
+      for (const g of c.animationGroups) g.stop();
+      const gltfRoot = c.rootNodes[0];
+      for (const child of gltfRoot.getChildren() as TransformNode[])
+        child.parent = space;
+      for (const node of [...c.transformNodes, ...c.meshes]) {
+        const named = [
+          node,
+          ...(function* () {
+            for (let p = node.parent; p; p = p.parent) yield p;
+          })(),
+        ].some((n) => wanted.has(n.name));
+        node.setEnabled(named);
+      }
+      for (const m of c.meshes) setMeshRole(m, "crew");
+      gltfRoot.dispose(true);
+    }
+    // colour the person slots (skin, hair, eye) on every head material
+    const person: Record<string, string> = {
+      skin: resolved.face.tints.skin,
+      hair: resolved.face.tints.hair,
+      eye: resolved.face.tints.eye,
+    };
+    let faceMaterial: PBRMaterial | undefined;
+    for (const c of containers) tagCrewPart(c.materials, "head");
+    for (const c of containers)
+      for (const m of c.materials) {
+        if (!(m instanceof PBRMaterial)) continue;
+        const slot = m.name.replace(/^crew\./, "").replace(/\.\d+$/, "");
+        if (slot === "face") faceMaterial ??= m;
+        else if (person[slot])
+          m.albedoColor = Color3.FromHexString(person[slot]).toLinearSpace();
+      }
+    // Two v1 head-kit export defects, repaired at load (see ensureFaceCanvasUVs /
+    // alignWindingToNormals): no TEXCOORD_0, so the pixel face sampled one texel (flat skin); and
+    // triangle winding opposite to the (outward) normals on several parts, so double-sided lighting
+    // flipped them inward and faces rendered near black.
+    for (const c of containers)
+      for (const mesh of c.meshes) {
+        alignWindingToNormals(mesh);
+        if (mesh.material?.name.replace(/\.\d+$/, "") === "crew.face")
+          ensureFaceCanvasUVs(mesh, space);
+      }
+    const atlas = faceMaterial
+      ? await loadRgbaImage(crewFaceAtlasUrl(resolved.face.variant))
+      : undefined;
+    let active = false;
+    let disposed = false;
+    const activate = () => {
+      if (disposed || active) return;
+      active = true;
+      space.setEnabled(true);
+      crew.setHiddenRegions(["head", "hair"]);
+      if (faceMaterial && atlas) {
+        crew.face.setComposer(faceMaterial, (st) =>
+          composeHeadFace(
+            atlas,
+            resolved.face.variant,
+            resolveFaceFrames(
+              loadout,
+              {
+                expression: st.expression,
+                blink: st.blinkEyes ?? null,
+                viseme: st.viseme ?? null,
+                look: st.look ?? 0,
+              },
+              resolved.face.mouthHidden,
+            ),
+            resolved.face.tints,
+          ),
+        );
+      }
+    };
+    if (!options.deferActivation) activate();
+    return {
+      artRevision: artError ? "legacy" : (artRevision ?? "legacy"),
+      artError,
+      resolved,
+      activate,
+      dispose() {
+        if (disposed) return;
+        disposed = true;
+        space.dispose();
+        for (const c of containers) c.dispose();
+        if (active) crew.setHiddenRegions([]);
+      },
+    };
+  } catch (error) {
+    space.dispose();
+    for (const c of containers) c.dispose();
+    throw error;
+  }
 }
 
 /**
