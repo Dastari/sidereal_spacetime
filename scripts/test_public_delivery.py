@@ -95,3 +95,8 @@ class DeliveryHttpTests(unittest.TestCase):
         result = subprocess.run(['node', '--test', 'scripts/glb_delivery.test.mjs'],
             cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+
+    def test_precompression_duplicate_cache_publication(self):
+        result = subprocess.run(['node', '--test', 'scripts/precompress_assets.test.mjs'],
+            cwd=Path(__file__).resolve().parents[1], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
