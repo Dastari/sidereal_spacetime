@@ -314,7 +314,10 @@ test("committed solve tolerates bounded enqueue timestamp inversion; stale, impo
     timestamp: { microsSinceUnixEpoch: micros },
   });
   // Both timestamps are within the same fixed tick.
-  f.db.shipPowerState.shipId.update({ ...row, solvedMicros: row.solvedMicros + 20n });
+  f.db.shipPowerState.shipId.update({
+    ...row,
+    solvedMicros: row.solvedMicros + 20n,
+  });
   expect(prefabPowerReady(at(row.solvedMicros + 8n), "ship")).toBe(true);
   // Command enqueue is 12 us before the boundary; the committed solve is on it.
   f.db.shipPowerState.shipId.update(row);
@@ -323,7 +326,10 @@ test("committed solve tolerates bounded enqueue timestamp inversion; stale, impo
   expect(prefabPowerReady(at(row.solvedMicros + 100_001n), "ship")).toBe(false);
   expect(prefabPowerReady(at(row.solvedMicros + 100_000n), "ship")).toBe(true);
   // Neither an impossible solve timestamp nor a clock older than its row is accepted.
-  f.db.shipPowerState.shipId.update({ ...row, solvedMicros: row.solvedMicros + 50_000n });
+  f.db.shipPowerState.shipId.update({
+    ...row,
+    solvedMicros: row.solvedMicros + 50_000n,
+  });
   expect(prefabPowerReady(at(row.solvedMicros), "ship")).toBe(false);
   f.db.shipPowerState.shipId.update(row);
   f.db.shipPowerClock.id.update({ ...clock, lastTick: row.tick - 1n });
@@ -710,8 +716,9 @@ test.each(["destroyed", "disconnected"] as const)(
     const fuelMounts = prefabById("fed.s.wren")!
       .mounts.filter(
         (m) =>
-          shipComponentCatalogFor(CATALOG.revision).components.find((d) => d.id === m.component)!.fluids
-            .fuelCapacityL > 0,
+          shipComponentCatalogFor(CATALOG.revision).components.find(
+            (d) => d.id === m.component,
+          )!.fluids.fuelCapacityL > 0,
       )
       .map((m) => m.id);
     expect(fuelMounts.length).toBeGreaterThan(0);
@@ -770,10 +777,13 @@ test.each(["destroyed", "disconnected"] as const)(
         ),
       ).toBe(
         shipComponentCatalogFor(CATALOG.revision).components.find(
-          (d) => d.id === prefabById("fed.s.wren")!.mounts.find(
-            (m) => m.id === "reactor",
-          )!.component,
-        )!.power.idleKw * 1000 * 0.05,
+          (d) =>
+            d.id ===
+            prefabById("fed.s.wren")!.mounts.find((m) => m.id === "reactor")!
+              .component,
+        )!.power.idleKw *
+          1000 *
+          0.05,
       );
       expect(
         JSON.parse(currentShipPower(f.ctx, "ship")!.networksJson).every(

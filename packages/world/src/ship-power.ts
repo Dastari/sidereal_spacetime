@@ -523,11 +523,7 @@ export function currentShipPower(
     // Permit at most one fixed step ahead; old-state expiry remains exactly 100 ms.
     const now = ctx.timestamp.microsSinceUnixEpoch;
     const age = now - row.solvedMicros;
-    if (
-      age > 100_000n ||
-      age < -50_000n ||
-      row.tick > now / 50_000n + 1n
-    )
+    if (age > 100_000n || age < -50_000n || row.tick > now / 50_000n + 1n)
       return undefined;
   }
   return row;

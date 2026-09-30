@@ -341,7 +341,12 @@ test("views: owner reads summary and report; crew aboard reads summary; outsider
 
   // Inspect: discovered ships expose only their outward power effect.
   access.visible = ["jackal", "wren-view", "unknown"];
-  db.shipPowerClock.insert({ id: 0, legacyCutoffMicros: 1n, lastTick: 1n, admissionValid: true });
+  db.shipPowerClock.insert({
+    id: 0,
+    legacyCutoffMicros: 1n,
+    lastTick: 1n,
+    admissionValid: true,
+  });
   for (const shipId of ["jackal", "wren-view"]) {
     const compiled = db.shipSystemsState.shipId.find(shipId);
     db.shipPowerState.insert({
