@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "517956bad12538a672f175ecf305a479c230d90d4437923c046162a36a0a755d",
+  "compilerSha256": "b97183aa634e992dd29708fd7a8395c44967ab0a205844f699097f3d69811e3a",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -16,7 +16,7 @@
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "bf46ff470fad7622fd3988da982dddc8993d4ee6b5df59bfc1b1a414e505e03e"
+      "sha256": "150e198ec7da4017da611a857e72e9bed6939e76f7392472ebd0737e09c9cabb"
     },
     {
       "path": "packages/sim/src/ship-visual-sampler.ts",
@@ -35,16 +35,52 @@
       "sha256": "2ce1be65fd4158072fe1e889504ee48a82179931081a0e174639bd01379c46f7"
     },
     {
+      "path": "packages/render/src/prefab-ship/ship-view.ts",
+      "sha256": "b3b097433e049c60ba89d0f3e214680b0c8b06995a5d533f5753fd8543f49996"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/batch.ts",
+      "sha256": "36538f0863a52dd058031dab7ae31d62095dc90175216815db783356b2a78b5b"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/coplanar.ts",
+      "sha256": "62422f9a856ae42f75f35fd78c7c40f82eec0902efddfdc4c8b8e53b67d74258"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/surface-attributes.ts",
+      "sha256": "d4f0391733ee4e7973cad84db2742a916ecd7063d5464c86d41f7821b1416fd3"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/visual-variant.ts",
+      "sha256": "721f600665ac5c7b3fb2460277814eb841af309741110f3714101ee49cfb3b21"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/shadows.ts",
+      "sha256": "a5136e1b5704931c81dfecbb012be93828c2e4b523ec22c7ee30ac4e2a76ec4e"
+    },
+    {
+      "path": "packages/render/src/prefab-ship-presentation.ts",
+      "sha256": "5f5df8030a1aae28d30cc16c12946d5cafdfc3335aea216f33f78167266acd00"
+    },
+    {
+      "path": "packages/render/src/construction-instance.ts",
+      "sha256": "1a00f227ea5b779c59bae0f8fde1dc65ab5db2939794ff6aad859b4c2880b863"
+    },
+    {
+      "path": "packages/render/src/index.ts",
+      "sha256": "ed5ce3811bde585b52152cccd47626943abf461e017b795bdbd8e97beb911684"
+    },
+    {
       "path": "scripts/art_library/ship_reference_r002_art.py",
-      "sha256": "5ed981b285992c2d7f7f5c7bab4d98b838ce625d3f65a4b9c05799cdbc03299d"
+      "sha256": "9e57af1358aeed55bd1ae0e61ed696e1a4d9191210dc2c72296ab12934d56d0e"
     },
     {
       "path": "scripts/art_library/ship_reference_r002_maps.py",
-      "sha256": "211b12b192faa7bf2eed660f6ce31576f7ac9903762c75980a71e13471466120"
+      "sha256": "50f08dc6e0896779d82bf1cbc53cb5f41b181791707e9b7864dc5e07194c2645"
     },
     {
       "path": "packages/render/src/prefab-ship/reference-finish.ts",
-      "sha256": "276807dc7688cc4bee655954a80c3248170e6ad4f46e1a76ce2ec7487f6e1488"
+      "sha256": "a491936a4608f7104a212c8e939aa4b33daf687dbae1de47c07556bca6826e89"
     },
     {
       "path": "packages/render/src/prefab-ship/reference-instruments.ts",

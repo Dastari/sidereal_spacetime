@@ -149,3 +149,30 @@ describe("reference candidate pigment isolation", () => {
     ).toBe("fabric");
   });
 });
+
+it("routes the candidate walkable deck through the shared matte polymer family", () => {
+  const { base } = fixture();
+  const selection = {
+    revision: "r002",
+    profile: "federation",
+    role: "floor",
+    slot: "secondary",
+  } as const;
+  const floor = referenceSurfaceMaterial(base, selection);
+  expect(floor.metadata.moldedFinish).toBe("rubber");
+  expect(floor.clearCoat.isEnabled).toBe(false);
+  expect(floor.roughness).toBe(0.65);
+  expect(floor.specularIntensity).toBe(0.6);
+  expect(floor.indexOfRefraction).toBe(base.indexOfRefraction);
+  expect(floor.metadata.moldedBase.roughness).toBe(base.roughness);
+  expect(referenceSurfaceMaterial(base, selection)).toBe(floor);
+  for (const role of ["wall", "hull", "equipment"]) {
+    const housing = referenceSurfaceMaterial(base, { ...selection, role });
+    expect(housing.metadata.moldedFinish).toBe("plastic-light");
+    expect(housing.roughness).toBe(base.roughness);
+  }
+  expect(
+    referenceSurfaceMaterial(base, { ...selection, revision: "r001" }),
+  ).toBe(base);
+  expect(base.clearCoat.isEnabled).toBe(true);
+});

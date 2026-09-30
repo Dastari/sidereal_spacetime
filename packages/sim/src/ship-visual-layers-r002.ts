@@ -142,7 +142,7 @@ export function shipVisualLayersR002(
         if (!tile) continue;
         const [rawLo, rawHi] = bowHeights(tile, volume.height, world);
         const lo = Math.floor(rawLo),
-          hi = tile.bow ? Math.floor(rawHi / 4) * 4 : Math.ceil(rawHi);
+          hi = tile.bow ? Math.floor(rawHi) : Math.ceil(rawHi);
         const floor = tile.bow
           ? lo + G.bowProfiles.shellThicknessTexels[volume.height][0]
           : deck
@@ -301,7 +301,7 @@ export function shipVisualLayersR002(
               column(
                 `${family}:protective-frame`,
                 "frame",
-                shellNormal ? "primary" : "trim",
+                "trim",
                 x,
                 y,
                 z0,
@@ -582,7 +582,7 @@ export function shipVisualLayersR002(
             column(
               `${family}:cap`,
               "frame",
-              shellNormal ? "primary" : "trim",
+              "trim",
               x,
               y,
               Math.max(floor, top - 2),
@@ -602,69 +602,72 @@ export function shipVisualLayersR002(
             hi - 1,
             family,
           );
-          // Nearly joined armor sits on one continuous subframe; only functional spine bays open.
-          const u = mod(x, profile.course),
+          // Offset 1x2 / 2x2 m enclosure fields join an integrated service belt.
+          // Their cadence is global, while mount/pressure junctions choose real cavities.
+          const row = Math.floor(y / 32);
+          const offset = mod(row, 2) ? Math.floor(profile.course / 2) : 0;
+          const roofKind = mod(
+            Math.floor((x - offset) / (profile.course * 2)) + row,
+            4,
+          );
+          const plateWidth =
+            roofKind < 2 ? profile.course : Math.floor(profile.course / 2);
+          const u = mod(x - offset, plateWidth),
             v = mod(y, 32);
-          const bayCentre: Pt = [
-            (x - u + profile.course / 2) / 16,
-            (y - v + 16) / 16,
-          ];
-          const service = doc.mounts.some(
+          const spineCentre = Math.round((by + bY) / 2),
+            spineHalf = deck ? 14 : 6;
+          const spine =
+            Math.abs(y - spineCentre) < spineHalf && x > bx + 6 && x < bX - 12;
+          const nearestMount = doc.mounts.find(
             (m) =>
               m.attach === "top" &&
-              Math.hypot(bayCentre[0] - m.at[0], bayCentre[1] - m.at[1]) < 1.4,
+              Math.hypot(world[0] - m.at[0], world[1] - m.at[1]) < 0.95,
           );
-          const roofKind = mod(
-            Math.floor(x / profile.course) + 2 * Math.floor(y / 32),
-            5,
-          );
-          const spineCentre = Math.round((by + bY) / 2);
-          const spine =
-            Math.abs(y - spineCentre) < 6 && x > bx + 12 && x < bX - 24;
-          const spineBay =
-            x - u >= bx + 12 && x - u + profile.course <= bX - 24;
-          const serviceCassette =
+          const equipmentBelt =
+            !!nearestMount && Math.abs(world[1] - nearestMount.at[1]) < 0.75;
+          const service = spine || equipmentBelt;
+          const serviceU = mod(x, profile.course);
+          const serviceBay =
+            x - serviceU >= bx + 6 && x - serviceU + profile.course <= bX - 12;
+          const cavity =
             service &&
-            roofKind !== 4 &&
-            u >= 6 &&
-            u < profile.course - 6 &&
-            v >= 6 &&
-            v < 26;
-          const spineCassette =
-            spineBay &&
-            spine &&
-            roofKind !== 4 &&
-            u >= 6 &&
-            u < profile.course - 6;
-          const cassette = serviceCassette || spineCassette;
-          if (u >= 1 && u < profile.course - 1 && v >= 1 && v < 31 && !spine) {
-            const plateSlot =
-              roofKind === 2 && u > profile.course * 0.5 && v > 16
-                ? "accent"
-                : "primary";
+            serviceBay &&
+            mod(Math.floor(x / profile.course), 3) !== 2 &&
+            serviceU >= 6 &&
+            serviceU < profile.course - 6 &&
+            Math.abs(y - spineCentre) < spineHalf - 3;
+          const redField =
+            roofKind === 2 && u > plateWidth * 0.25 && v >= 8 && v < 24;
+          if (service) {
+            column(
+              `${family}:roof-service-spine`,
+              "service",
+              "trim",
+              x,
+              y,
+              hi - 1,
+              hi + 1,
+              family,
+            );
+          } else if (u >= 1 && u < plateWidth - 1 && v >= 1 && v < 31) {
+            const slot = redField ? "accent" : "primary";
             column(
               `${family}:roof-armor`,
               "plate",
-              plateSlot,
+              slot,
               x,
               y,
               hi - 1,
               hi,
               family,
             );
-            // Discrete plate ends are stepped by two cells; broad fields remain joined and quiet.
-            const clippedEnd = roofKind % 2 === 0 && u < 3 && v < 3;
-            if (
-              !clippedEnd &&
-              u >= 2 &&
-              u < profile.course - 2 &&
-              v >= 2 &&
-              v < 30
-            )
+            // One course overlaps the subframe; selected corners step without an outline frill.
+            const steppedEnd = roofKind === 1 && u < 3 && v < 3;
+            if (!steppedEnd && u >= 2 && u < plateWidth - 2 && v >= 2 && v < 30)
               column(
                 `${family}:roof-armor-field`,
                 "plate",
-                plateSlot,
+                slot,
                 x,
                 y,
                 hi,
@@ -672,18 +675,7 @@ export function shipVisualLayersR002(
                 family,
               );
           }
-          if (spine)
-            column(
-              `${family}:roof-service-spine`,
-              "service",
-              "secondary",
-              x,
-              y,
-              hi - 1,
-              hi,
-              family,
-            );
-          if (cassette) {
+          if (cavity) {
             column(
               `${family}:roof-cassette-well`,
               "void",
@@ -694,13 +686,13 @@ export function shipVisualLayersR002(
               hi + 2,
               family,
             );
-            const localV = serviceCassette ? v - 6 : y - (spineCentre - 6);
-            const maxV = serviceCassette ? 20 : 12;
+            const localV = y - (spineCentre - spineHalf + 3),
+              height = 2 * spineHalf - 6;
             const rim =
-              u < 8 ||
-              u >= profile.course - 8 ||
+              serviceU < 8 ||
+              serviceU >= profile.course - 8 ||
               localV < 2 ||
-              localV >= maxV - 2;
+              localV >= height - 2;
             if (rim)
               column(
                 `${family}:roof-cassette-rim`,
@@ -712,10 +704,7 @@ export function shipVisualLayersR002(
                 hi + 2,
                 family,
               );
-            else if (
-              (localV >= 3 && localV < 5) ||
-              (localV >= maxV - 5 && localV < maxV - 3)
-            )
+            else if (localV === 4 || localV === height - 5)
               column(
                 `${family}:roof-cassette-fin`,
                 "service",
@@ -727,37 +716,16 @@ export function shipVisualLayersR002(
                 family,
               );
           }
+          // An access lid belongs to its enclosing plate course, with its handle one level proud.
           if (
-            roofKind === 3 &&
-            u >= 10 &&
-            u < profile.course - 10 &&
+            redField &&
+            !service &&
+            u >= 3 &&
+            u < plateWidth - 3 &&
             v >= 10 &&
-            v < 21 &&
-            !cassette &&
-            !spine
+            v < 22
           ) {
-            column(
-              `${family}:roof-access-gasket`,
-              "frame",
-              "secondary",
-              x,
-              y,
-              hi,
-              hi + 2,
-              family,
-            );
-            if (u >= 12 && u < profile.course - 12 && v >= 12 && v < 19)
-              column(
-                `${family}:roof-access-lid`,
-                "plate",
-                "accent",
-                x,
-                y,
-                hi,
-                hi + 1,
-                family,
-              );
-            if (u === profile.course - 13 && v >= 14 && v < 17)
+            if (u === plateWidth - 4 && v >= 14 && v < 18)
               column(
                 `${family}:roof-access-latch`,
                 "service",
@@ -809,7 +777,8 @@ export function shipVisualLayersR002(
           boundary = polygonBoundarySample(p, poly);
         const inside = insidePolygon(poly, p[0], p[1]);
         if (
-          boundary.distance > (inside ? 1 : 2) ||
+          !inside ||
+          boundary.distance > 1 ||
           holes.some((h) => insidePolygon(h, p[0], p[1]))
         )
           continue;
@@ -824,7 +793,7 @@ export function shipVisualLayersR002(
         if (!tile) continue;
         const [rawLo, rawHi] = bowHeights(tile, volume.height, world);
         const lo = Math.floor(rawLo),
-          hi = tile.bow ? Math.floor(rawHi / 4) * 4 : Math.ceil(rawHi);
+          hi = tile.bow ? Math.floor(rawHi) : Math.ceil(rawHi);
         const floor = tile.bow
           ? lo + G.bowProfiles.shellThicknessTexels[volume.height][0]
           : deck
@@ -847,11 +816,11 @@ export function shipVisualLayersR002(
           Math.max(lo + 1, floor),
           family,
         );
-        if (!inside || boundary.distance < 1)
+        if (inside && boundary.distance < 1)
           column(
             `${family}:continuous-upper-guard`,
             "frame",
-            shellNormal ? "primary" : "trim",
+            "trim",
             x,
             y,
             Math.max(floor, top - 2),
@@ -891,7 +860,7 @@ export function shipVisualLayersR002(
       glazed = false,
       half = false,
     ) => {
-      const wallCap = half ? ft + 14 : cap;
+      const wallCap = half ? ft + 14 : jamb || glazed ? cap : ft + 22;
       const ax = a[0] * 16,
         ay = a[1] * 16,
         bx = b[0] * 16,
@@ -920,7 +889,10 @@ export function shipVisualLayersR002(
       for (let start = 0; start < span; start += profile.course) {
         const end = Math.min(span, start + profile.course),
           width = end - start;
-        const kind = mod(Math.floor(start / profile.course) + idPhase, 3);
+        const fallbackKind = mod(
+          Math.floor(start / profile.course) + idPhase,
+          3,
+        );
         const Z = glazed ? ft + 11 : wallCap - 3;
         const surface = (
           side: number,
@@ -956,11 +928,37 @@ export function shipVisualLayersR002(
             surface(side, start + 1, end - 1, ft + 3, Z),
             family,
           );
-          if (glazed || width < 12 || wallCap < ft + 20) continue;
-          const centre = (start + end) / 2;
-          // Opposite faces never cut the same pressure-web cell. The back of a useful
-          // bay stays a quiet enclosure instead of repeating the same grille everywhere.
-          if (side !== (kind === 1 ? 1 : -1)) continue;
+          if (glazed || width < 24 || wallCap < ft + 20) continue;
+          const centre = start + width * (side < 0 ? 0.28 : 0.72);
+          const roomProbe: Pt = vertical
+            ? [x0 / 16 + side * 0.5, (y0 + start + width / 2) / 16]
+            : [(x0 + start + width / 2) / 16, y0 / 16 + side * 0.5];
+          const room = doc.rooms.find(
+            (r) =>
+              roomProbe[0] >= r.rect[0] &&
+              roomProbe[0] < r.rect[2] &&
+              roomProbe[1] >= r.rect[1] &&
+              roomProbe[1] < r.rect[3],
+          );
+          const nearDoor = interior.doors.some(
+            (d) =>
+              Math.hypot(
+                roomProbe[0] - (d.a[0] + d.b[0]) / 2,
+                roomProbe[1] - (d.a[1] + d.b[1]) / 2,
+              ) < 1.3,
+          );
+          const kind =
+            nearDoor || room?.type === "bridge"
+              ? 1
+              : room?.type === "engineering" || room?.type === "workshop"
+                ? 0
+                : room?.type === "quarters" ||
+                    room?.type === "lounge" ||
+                    room?.type === "cargo"
+                  ? 2
+                  : mod(fallbackKind + (side > 0 ? 1 : 0), 3);
+          // Two opposite inserts occupy different half-bays and retain a shared backing.
+          const halfWidth = Math.min(7, width * 0.2);
           const cavity = (u: number, U: number, z: number, Z: number) => {
             const well = surface(side, u, U, z, Z);
             if (vertical) {
@@ -981,17 +979,17 @@ export function shipVisualLayersR002(
           };
           if (kind === 0) {
             // Compact horizontal ventilation cassette, with two actual recessed louvers.
-            const u = centre - Math.min(width / 3, 10),
-              U = centre + Math.min(width / 3, 10);
+            const u = centre - halfWidth,
+              U = centre + halfWidth;
             box(
               `${id}:vent-surround`,
               "frame",
               "metal",
-              surface(side, u, U, ft + 7, ft + 13),
+              surface(side, u, U, ft + 5, ft + 15),
               family,
             );
-            cavity(u + 1, U - 1, ft + 8, ft + 12);
-            for (const z of [ft + 8, ft + 10])
+            cavity(u + 1, U - 1, ft + 7, ft + 13);
+            for (const z of [ft + 8, ft + 11])
               box(
                 `${id}:vent-fin`,
                 "service",
@@ -1071,6 +1069,40 @@ export function shipVisualLayersR002(
                 family,
               );
           }
+          const headerU = centre - halfWidth,
+            headerX = centre + halfWidth;
+          box(
+            `${id}:task-header-housing`,
+            "service",
+            "secondary",
+            surface(side, headerU, headerX, ft + 15, ft + 18),
+            family,
+          );
+          if (kind === 1) {
+            box(
+              `${id}:task-cyan-header`,
+              "service",
+              "emit_a",
+              surface(side, headerU + 2, headerX - 2, ft + 16, ft + 17),
+              family,
+            );
+          } else {
+            box(
+              `${id}:task-amber-strip`,
+              "service",
+              "emit_b",
+              surface(side, headerX - 2, headerX - 1, ft + 8, ft + 13),
+              family,
+            );
+          }
+          for (const u of [headerU + 1, headerX - 2])
+            box(
+              `${id}:housing-fastener`,
+              "service",
+              "metal",
+              surface(side, u, u + 1, ft + 15, ft + 16),
+              family,
+            );
           if (jamb)
             box(
               `${id}:interface-lens`,
@@ -1101,17 +1133,46 @@ export function shipVisualLayersR002(
         box(`${id}:glass-aperture`, "void", "dark", carve, family);
       }
     };
-    for (const [i, w] of interior.partitions.entries())
-      edge(
-        `partition:${i}`,
-        w.a,
-        w.b,
-        false,
-        w.type === "wall.glazed" ||
-          w.type === "window" ||
-          w.variant === "glazed",
-        w.type === "wall.half" || w.variant === "half",
-      );
+    // The dressing contract emits metre pieces. Join only contiguous collinear
+    // pieces of identical structural type before placing two-metre visual bays; gaps/doors stay gaps.
+    const wallRuns = new Map<string, typeof interior.partitions>();
+    for (const w of interior.partitions) {
+      const vertical = Math.abs(w.a[0] - w.b[0]) < 1e-6;
+      const fixed = vertical ? w.a[0] : w.a[1];
+      const key = `${vertical}:${fixed}:${w.type}:${w.variant === "glazed" || w.variant === "half" ? w.variant : "solid"}`;
+      const a: Pt = vertical
+        ? [fixed, Math.min(w.a[1], w.b[1])]
+        : [Math.min(w.a[0], w.b[0]), fixed];
+      const b: Pt = vertical
+        ? [fixed, Math.max(w.a[1], w.b[1])]
+        : [Math.max(w.a[0], w.b[0]), fixed];
+      wallRuns.set(key, [...(wallRuns.get(key) ?? []), { ...w, a, b }]);
+    }
+    let runIndex = 0;
+    for (const walls of wallRuns.values()) {
+      const axis = Math.abs(walls[0].a[0] - walls[0].b[0]) < 1e-6 ? 1 : 0;
+      walls.sort((a, b) => a.a[axis] - b.a[axis]);
+      let run = { ...walls[0] };
+      const emit = () =>
+        edge(
+          `partition:run:${runIndex++}`,
+          run.a,
+          run.b,
+          false,
+          run.type === "wall.glazed" ||
+            run.type === "window" ||
+            run.variant === "glazed",
+          run.type === "wall.half" || run.variant === "half",
+        );
+      for (const w of walls.slice(1)) {
+        if (Math.abs(run.b[axis] - w.a[axis]) < 1e-6) run = { ...run, b: w.b };
+        else {
+          emit();
+          run = { ...w };
+        }
+      }
+      emit();
+    }
     // Existing door widths and travel remain intact: only side jambs occupy the module.
     for (const d of interior.doors) {
       if (d.exterior) continue;

@@ -56,6 +56,8 @@ it("batched meshes follow a moving ship root", async () => {
     parent: shipRoot,
     standinComponents: true,
   });
+  expect(view.metrics()).not.toHaveProperty("visualManifestSha256");
+  expect(view.metrics()).not.toHaveProperty("visualCompilerSha256");
   const batched = view.root
     .getChildMeshes()
     .filter((m) => m.name.includes(":batch:"));
@@ -250,6 +252,24 @@ it("theme changes retain candidate finish and the exact instrument atlas", async
     },
     { uvs, uvsComplete: true },
   );
+  const hardwareMesh = batches.find(
+    (m) =>
+      m !== finishMesh &&
+      m !== displayMesh &&
+      m.material?.name.endsWith("-secondary"),
+  )!;
+  expect(hardwareMesh).toBeDefined();
+  hardwareMesh.metadata = { ...hardwareMesh.metadata, role: "wall" };
+  hardwareMesh.material = referenceSurfaceMaterial(
+    roleSlotMaterial(scene, doc.theme, "secondary", "hull"),
+    {
+      revision: "r002",
+      profile: "federation",
+      slot: "secondary",
+      role: "wall",
+    },
+  );
+  const initialHardware = hardwareMesh.material;
   const initialFinish = finishMesh.material,
     initialDisplay = displayMesh.material;
   const atlas = (initialDisplay as PBRMaterial).emissiveTexture;
@@ -257,6 +277,18 @@ it("theme changes retain candidate finish and the exact instrument atlas", async
   expect(finishMesh.material).toBe(initialFinish);
   expect(displayMesh.material).toBe(initialDisplay);
   view.setTheme("riftjack");
+  expect(hardwareMesh.material).toBe(
+    referenceSurfaceMaterial(
+      roleSlotMaterial(scene, "riftjack", "secondary", "hull"),
+      {
+        revision: "r002",
+        profile: "riftjack",
+        slot: "secondary",
+        role: "wall",
+      },
+    ),
+  );
+  expect(hardwareMesh.metadata.role).toBe("wall");
   expect(finishMesh.material?.metadata.shipReferenceFinish).toMatchObject({
     revision: "r002",
     profile: "riftjack",
@@ -295,5 +327,7 @@ it("theme changes retain candidate finish and the exact instrument atlas", async
   view.setTheme(doc.theme);
   expect(finishMesh.material).toBe(initialFinish);
   expect(displayMesh.material).toBe(initialDisplay);
+  expect(hardwareMesh.material).toBe(initialHardware);
+  expect(hardwareMesh.metadata.role).toBe("wall");
   view.dispose();
 });

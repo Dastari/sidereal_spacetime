@@ -20,10 +20,17 @@ def main():
     out=Path(args.out);out.mkdir(parents=True,exist_ok=True)
     n=256
     h=np.full((n,n),128,dtype=np.float32)
-    # Flat fields stay quiet. Do not stamp a border/screw array across every metre.
-    # Manufacturer tooling marks are shallow, small and phase-stable on the global UV chart.
-    h[180:182,42:82]=119
-    h[180:182,90:116]=119
+    # A small tooling group occupies under five percent of each chart. No panel border grid:
+    # meaningful frame joints/recesses are real geometry, and broad fields stay calm.
+    h[178:182,40:85]=113
+    h[178:182,94:119]=113
+    h[168:171,40:65]=120
+    yy,xx=np.mgrid[:n,:n]
+    for cx,cy in ((45,153),(75,153)):
+        radius=np.sqrt((xx-cx)**2+(yy-cy)**2)
+        h[(radius>=4)&(radius<6)]=133   # shallow molded fastener lip
+        h[radius<4]=113              # recessed dimple, no painted albedo dot
+        h[(radius<3)&(abs(yy-cy)<1)]=104
     dx=(np.roll(h,-1,axis=1)-np.roll(h,1,axis=1))/2/24
     dy=(np.roll(h,-1,axis=0)-np.roll(h,1,axis=0))/2/24
     normal=np.dstack((-dx,-dy,np.ones_like(h)))

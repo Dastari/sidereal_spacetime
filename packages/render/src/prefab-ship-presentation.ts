@@ -4,11 +4,13 @@ import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { GlowLayer } from "@babylonjs/core/Layers/glowLayer";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { Mesh } from "@babylonjs/core/Meshes/mesh";
+import type { ShadowGenerator } from "@babylonjs/core/Lights/Shadows/shadowGenerator";
 import { readShipPrefab } from "@sidereal/content/ship-prefab";
 import { prefabComponentCatalogFor } from "@sidereal/sim/prefab-catalog";
 import { createGlowOccluders } from "./glow-occluders";
 import { moldedLightRig } from "./molded-plastic";
 import { applyShipGlowProfile, SHIP_GLOW_PROFILE } from "./ship-glow-profile";
+import { createPrefabShadowBinding } from "./prefab-ship/shadows";
 import {
   createShipExhaust,
   prefabExhaustJets,
@@ -18,6 +20,8 @@ import {
 /** Game-side handle over the SHIPS-PREFABS dressed ship view. */
 export interface PrefabShipViewHandle {
   setInterior(interior: boolean): void;
+  /** Bind replacement geometry to the existing star light after scene lighting is assembled. */
+  setShadowGenerator(generator: ShadowGenerator): void;
   /** Animate door leaves (airlock outer door from the EVA cycle, interior doors on approach). */
   updateDoors(input: import("./prefab-ship/doors").DoorUpdate): void;
   /** Wall button lights and press flashes by button device id (ship logic). */
@@ -122,9 +126,11 @@ export async function loadPrefabShipPresentation(
   // Shared molded light rig (cool fill + camera-relative rim), also lighting the crew.
   const rig = moldedLightRig(scene);
   const glowing = new Set<AbstractMesh>();
+  let shadows: ReturnType<typeof createPrefabShadowBinding> | undefined;
   const adapt = () => {
     const meshes = view.root.getChildMeshes();
     rig.include(meshes);
+    shadows?.sync(meshes);
     for (const mesh of meshes) {
       const m = mesh.material;
       // Interior-palette clones (materials.ts roleSlotMaterial) are named prefab-<theme>-<role>-<slot>.
@@ -150,6 +156,11 @@ export async function loadPrefabShipPresentation(
     });
   logMetrics();
   const handle: PrefabShipViewHandle = {
+    setShadowGenerator(generator) {
+      shadows?.dispose();
+      shadows = createPrefabShadowBinding(generator);
+      shadows.sync(view.root.getChildMeshes());
+    },
     setInterior(next) {
       if (next === interior) return;
       interior = next;
@@ -177,6 +188,7 @@ export async function loadPrefabShipPresentation(
     exhaust: () => exhaust.lit(),
     doors: () => doors.doors(),
     dispose() {
+      shadows?.dispose();
       exhaust.dispose();
       panels.dispose();
       doors.dispose();

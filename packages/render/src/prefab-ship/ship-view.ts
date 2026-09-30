@@ -876,6 +876,18 @@ export async function createPrefabShipView(
     });
   }
 
+  function candidateBaseRole(
+    revision: string | undefined,
+    slot: ShipKitSlot,
+    role: string,
+  ) {
+    return revision === "r002" &&
+      ((role === "wall" && slot !== "primary") ||
+        (role === "floor" && slot === "metal"))
+      ? "hull"
+      : role;
+  }
+
   function candidateMaterial(
     base: PBRMaterial,
     variant: VerifiedVisualVariant,
@@ -936,7 +948,12 @@ export async function createPrefabShipView(
           frame,
           s,
         );
-        const base = roleSlotMaterial(scene, theme, s.slot, role);
+        const base = roleSlotMaterial(
+          scene,
+          theme,
+          s.slot,
+          candidateBaseRole(out.variant!.manifest.revision, s.slot, role),
+        );
         mesh.material = ["emit_a", "emit_b", "glass"].includes(s.slot)
           ? base
           : candidateMaterial(base, out.variant!, s, s.slot, role);
@@ -1581,7 +1598,15 @@ export async function createPrefabShipView(
       const replay = (mesh: Mesh, slot: ShipKitSlot) => {
         const previous = mesh.material;
         const channels = meshGeometry(mesh) ?? undefined;
-        let material = roleSlotMaterial(scene, t, slot, roleOf(mesh));
+        const detail = normalDetailSelectionOf(previous);
+        const candidateRevision =
+          detail?.revision ?? previous?.metadata?.shipReferenceFinish?.revision;
+        let material = roleSlotMaterial(
+          scene,
+          t,
+          slot,
+          candidateBaseRole(candidateRevision, slot, roleOf(mesh)),
+        );
         if (previous?.metadata?.shipAuthoredPalette)
           material = referenceFloraMaterial(scene, material);
         const finish = previous?.metadata?.shipReferenceFinish;

@@ -222,6 +222,124 @@ R.O.table=table
 R.O.kitchen=kitchen
 
 
+def enclosed_reactor(original):
+    """Four enclosure faces around one pressure body, not alternating open colored discs."""
+    lo=[min(q[i] for q in original.boxes) for i in range(3)]
+    hi=[max(q[i+3] for q in original.boxes) for i in range(3)]
+    x,y,z=lo;X,Y,Z=hi;w,d,h=X-x,Y-y,Z-z
+    p=K.Piece("reference.r002.reactor",original.family,original.mount,original.size);b=p.b
+    b(x,y,z,X,Y,z+2,"trim")
+    b(x+3,y+3,z+2,X-3,Y-3,Z-3,"secondary")
+    # Broad molded shrouds are offset from the backing, with selected open service faces.
+    for a,A in ((x+1,x+4),(X-4,X-1)):
+        b(a,y+3,z+3,A,Y-3,Z-3,"primary")
+        b(a,y+5,z+7,A,Y-5,z+h*.55,"trim")
+        b(a,y+6,z+9,A,Y-6,z+h*.50,"accent")
+    for a,A in ((y+1,y+4),(Y-4,Y-1)):
+        b(x+3,a,z+3,X-3,A,z+h*.33,"primary")
+        b(x+3,a,z+h*.68,X-3,A,Z-3,"primary")
+        for xx,XX in ((x+3,x+6),(X-6,X-3)):
+            b(xx,a,z+h*.33,XX,A,z+h*.68,"primary")
+        b(x+6,a+1,z+h*.36,X-6,A-1,z+h*.64,"dark")
+        for zz in (z+h*.40,z+h*.54):
+            b(x+7,a,zz,X-7,A,zz+1,"metal")
+    b(x+2,y+2,Z-3,X-2,Y-2,Z-1,"trim")
+    b(x+5,y+5,Z-1,X-5,Y-5,Z,"primary")
+    b(x+w*.53,y+d*.54,Z-.8,x+w*.77,y+d*.76,Z,"accent")
+    b(x+w*.62,y+d*.60,Z-.5,x+w*.65,y+d*.70,Z,"metal")
+    # One protected diagnostic lens; coolant feeds remain inside the existing footprint.
+    b(x+w*.42,Y-3,z+h*.72,x+w*.58,Y-2.5,z+h*.75,"emit_a")
+    for xx in (x+4,X-6):
+        b(xx,y+4,z+4,xx+2,y+6,Z-4,"metal")
+    return p
+
+
+def enclosed_weapon(original,kind):
+    """One low pivot inside an armored receiver; payload keeps its original mounting axis."""
+    lo=[min(q[i] for q in original.boxes) for i in range(3)]
+    hi=[max(q[i+3] for q in original.boxes) for i in range(3)]
+    W=original.size[0];c=W/2;H=hi[2];zc=H*.57
+    p=K.Piece("reference.r002."+kind,original.family,original.mount,original.size);b=p.b
+    b(1,1,0,W-1,W-1,H*.11,"trim")
+    p.disc("z",c,c,max(2,round(W*.25)),H*.11,H*.23,"metal")
+    # Protective cheeks enclose the breech/pivot; no three-disc staircase pedestal.
+    for ya,yb in ((c-W*.30,c-W*.20),(c+W*.20,c+W*.30)):
+        b(c-W*.28,ya,H*.20,c+W*.24,yb,H*.72,"primary")
+        b(c-W*.18,ya,H*.29,c+W*.14,yb,H*.48,"accent")
+    b(c-W*.28,c-W*.20,H*.32,c+W*.24,c+W*.20,H*.76,"secondary")
+    b(c-W*.30,c-W*.23,H*.65,c+W*.17,c+W*.23,H*.80,"primary")
+    # Deep access panel and latch on the receiver's rear, with sparse local fasteners.
+    b(c-W*.32,c-W*.15,H*.40,c-W*.29,c+W*.15,H*.65,"trim")
+    b(c-W*.33,c-W*.10,H*.44,c-W*.32,c+W*.10,H*.61,"accent")
+    b(c-W*.34,c+W*.045,H*.47,c-W*.33,c+W*.075,H*.57,"metal")
+    front=max(c+W*.34,hi[0]-1);start=c+W*.22
+    if "missile" in kind:
+        b(c-W*.24,c-W*.24,H*.36,c+W*.24,c+W*.24,H*.87,"primary")
+        for yy in (c-W*.12,c+W*.12):
+            b(c+W*.24,yy-W*.055,H*.50,c+W*.27,yy+W*.055,H*.70,"dark")
+            b(c+W*.27,yy-W*.025,H*.56,c+W*.28,yy+W*.025,H*.65,"metal")
+    elif "railgun" in kind:
+        bw=max(1,W*.095)
+        b(start,c-bw,zc-bw,front,c+bw,zc+bw,"trim")
+        for yy in (c-bw,c+bw-1):b(start,yy,zc-bw,front,yy+1,zc+bw,"metal")
+        b(start+1,c-bw+1,zc-bw+1,front-2,c+bw-1,zc+bw-1,"dark")
+        for i in range(3):
+            xx=start+(front-start)*(.25+i*.22)
+            b(xx,c-bw+1,zc-.5,xx+1,c+bw-1,zc+.5,"emit_a")
+    else:
+        r=max(.65,W*(.055 if "autocannon" in kind else .036 if "point" in kind or kind.startswith("pd") else .10))
+        centres=[(c,zc)]
+        if "autocannon" in kind:centres=[(c-W*.10,zc),(c+W*.10,zc)]
+        elif "point" in kind or kind.startswith("pd"):centres=[(c+dy*W*.075,zc+dz*H*.08) for dy in (-1,1) for dz in (-1,1)]
+        for yy,zz in centres:
+            b(start,yy-r*1.35,zz-r*1.35,start+(front-start)*.30,yy+r*1.35,zz+r*1.35,"secondary")
+            b(start+(front-start)*.24,yy-r,zz-r,front,yy+r,zz+r,"metal.barrel")
+    # Protected optic is attached to the receiver, never a glowing giant cap.
+    b(c-W*.10,c-W*.09,H*.80,c+W*.08,c+W*.09,min(H,H*.94),"trim")
+    b(c+W*.08,c-W*.05,H*.83,c+W*.09,c+W*.05,min(H,H*.90),"emit_a")
+    return p
+
+
+previous_r002_piece=E.build_piece
+def machinery_piece(component):
+    p,conv,zc=previous_r002_piece(component)
+    if component["kind"]=="reactor":p=enclosed_reactor(p)
+    if component["art"]["kitKey"].startswith("wpn."):p=enclosed_weapon(p,component["kind"])
+    return p,conv,zc
+E.build_piece=machinery_piece
+
+
+# A finite material alias identifies real smooth authored barrels; the semantic slot stays metal.
+E.SI["metal.barrel"]=len(E.SLOTS);E.SLOTS.append("metal.barrel")
+K.SLOT_PBR["metal.barrel"]=K.SLOT_PBR["metal"]
+for theme in K.THEMES.values():theme["metal.barrel"]=theme["metal"]
+
+
+def barrel_mesh(name,box):
+    # Exporter has already converted kit-top +X into catalog +Y. Detect the
+    # converted long axis rather than assuming the original author's coordinate frame.
+    lo=[q*E.T for q in box[:3]];hi=[q*E.T for q in box[3:6]]
+    axis=max(range(3),key=lambda a:hi[a]-lo[a]);u,v=(axis+1)%3,(axis+2)%3
+    centre=[(a+b)/2 for a,b in zip(lo,hi)]
+    radius=min(hi[u]-lo[u],hi[v]-lo[v])/2;n=24
+    profiles=[(lo[axis],radius,"metal.barrel"),(hi[axis],radius,"metal.barrel"),
+              (hi[axis],radius*.70,"metal.barrel"),(hi[axis]-radius*.7,radius*.70,"dark"),
+              (hi[axis]-radius*.8,0,"dark")]
+    verts=[];faces=[];slots=[]
+    for at,r,slot in profiles:
+        for k in range(n):
+            a=k*2*math.pi/n;point=centre.copy();point[axis]=at
+            point[u]+=math.cos(a)*r;point[v]+=math.sin(a)*r;verts.append(point)
+    for j in range(len(profiles)-1):
+        for k in range(n):
+            f=(j*n+k,j*n+(k+1)%n,(j+1)*n+(k+1)%n,(j+1)*n+k)
+            if profiles[j+1][1]==0:f=f[:3]
+            faces.append(f);slots.append(E.SI[profiles[j][2]])
+    me=bpy.data.meshes.new(name);me.from_pydata(verts,[],faces)
+    me.polygons.foreach_set("material_index",slots);me.polygons.foreach_set("use_smooth",[True]*len(faces))
+    return me
+
+
 def engine_mesh(name,boxes):
     """Pressure housing with service pods; only the aft quarter becomes an open exhaust bell."""
     lo=[min(b[i] for b in boxes)*E.T for i in range(3)]
@@ -282,14 +400,16 @@ def authored_mesh(name,boxes,hidden=None):
         bm=bmesh.new()
         for i,box in enumerate(boxes):
             dims=[box[a+3]-box[a] for a in range(3)]
-            part=R.original_mesh(name,[box],[hidden[i]] if hidden else None)
+            smooth_barrel=box[6]=="metal.barrel"
+            part=barrel_mesh(name,box) if smooth_barrel else R.original_mesh(name,[box],[hidden[i]] if hidden else None)
             sub=bmesh.new();sub.from_mesh(part);bpy.data.meshes.remove(part)
             # Round only broad exposed pieces. Narrow ribs, voxel rows, keys and lenses stay sharp.
             if box[6].split(".")[0] in ("primary","secondary","trim","accent") and min(dims)>=1.5 and max(dims)>=5:
                 edges=[e for e in sub.edges if len(e.link_faces)==2]
                 width=min(.025 if any(s in name for s in ("bunk","seat","navigation","sofa","medical-bed")) else .015,min(dims)*E.T*.16)
                 if edges:bmesh.ops.bevel(sub,geom=edges,offset=width,segments=2,affect="EDGES",clamp_overlap=True)
-            for f in sub.faces:f.material_index=E.SI[box[6]]
+            if not smooth_barrel:
+                for f in sub.faces:f.material_index=E.SI[box[6]]
             temp=bpy.data.meshes.new("GEO-reference-part");sub.to_mesh(temp);sub.free();bm.from_mesh(temp);bpy.data.meshes.remove(temp)
         me=bpy.data.meshes.new(name);bm.to_mesh(me);bm.free()
     uv=me.uv_layers.new(name="authored-surface")

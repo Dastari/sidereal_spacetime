@@ -429,6 +429,9 @@ export function createConstructionLighting(
   sun.intensity = 2.1;
   protectPbrLight(sun, 0);
   protectPbrLight(fill, 1);
+  // Camera far clips cover distant space. Fit shadow depth to casters so the existing
+  // normalized bias remains small enough for ship-scale contact and sampled relief.
+  sun.autoCalcShadowZBounds = true;
   const shadow = new ShadowGenerator(1024, sun);
   shadow.usePercentageCloserFiltering = true;
   shadow.bias = 0.0035;
@@ -442,6 +445,7 @@ export function createConstructionLighting(
   addActor(meshes);
   return {
     primaryLight: sun,
+    shadowGenerator: shadow,
     addActor,
     setCabinVisible(_visible: boolean) {},
     update(_blend: number, _x: number, _y: number) {},

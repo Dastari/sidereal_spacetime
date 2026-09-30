@@ -545,6 +545,7 @@ async function buildWorld(
   );
   prepareCutawayMeshes(roof);
   const lighting = createConstructionLighting(scene, imported.meshes);
+  prefabView?.setShadowGenerator(lighting.shadowGenerator);
   environment.setPrimaryLight(lighting.primaryLight);
   lighting.addActor(avatar.getChildMeshes());
   const cabinVisibility = createCabinVisibility(

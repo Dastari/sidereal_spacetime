@@ -1,4 +1,4 @@
-/** Candidate pigments only. The shared molded-plastic response and released art stay intact. */
+/** Candidate pigments and explicit deck/upholstery families; released art stays intact. */
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import type { Scene } from "@babylonjs/core/scene";
@@ -31,7 +31,7 @@ const FLOOR: Partial<Record<ShipKitSlot, readonly [number, number, number]>> = {
 };
 const pools = new WeakMap<Scene, Map<string, PBRMaterial>>();
 
-/** Scene-pooled materials are borrowed by ship views. No response, light or emitter changes. */
+/** Scene-pooled materials are borrowed by ship views. Finite finishes reuse shared family/F3 behavior. */
 export function referenceSurfaceMaterial(
   base: PBRMaterial,
   selection: ReferenceFinishSelection,
@@ -40,6 +40,7 @@ export function referenceSurfaceMaterial(
   const fabric =
     ["primary", "secondary", "accent"].includes(selection.slot) &&
     /(?:^|\.)fabric(?:\.|$)/.test(selection.materialName ?? "");
+  const tread = selection.role === "floor" && selection.slot === "secondary";
   const colour =
     selection.profile !== "federation"
       ? undefined
@@ -75,7 +76,7 @@ export function referenceSurfaceMaterial(
   const cached = pool.get(key);
   if (cached) return cached;
   const material = base.clone(
-    `reference-r002:${base.name}:${pigmentRole}:${selection.profile}:${fabric ? "fabric" : "plastic"}`,
+    `reference-r002:${base.name}:${pigmentRole}:${selection.profile}:${fabric ? "fabric" : tread ? "rubber" : "plastic"}`,
   )!;
   // HDRCubeTexture.clone loses prefilter-on-load state. Retain the original studio resource;
   // dispose the transient clone so repeated ships do not retain an unused environment texture.
@@ -86,6 +87,8 @@ export function referenceSurfaceMaterial(
   material.imageProcessingConfiguration = base.imageProcessingConfiguration;
   if (colour) material.albedoColor = new Color3(...colour);
   if (fabric) applySurfaceFinish(material, "fabric", { recaptureBase: true });
+  else if (tread)
+    applySurfaceFinish(material, "rubber", { recaptureBase: true });
   material.metadata = {
     ...base.metadata,
     ...material.metadata,
