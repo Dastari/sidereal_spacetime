@@ -183,11 +183,11 @@ function fixture(prefabId = "fed.s.wren", medical = false) {
   };
   return { ctx, db, bed, args, transact };
 }
-test("all back/belt equipment refuses either bed atomically; stowing preserves the failed sit retry", () => {
-  for (const medical of [false, true])
-    for (const definition of INVENTORY_DEFINITIONS.filter(
-      (d) => d.equipSlot === "back" || d.equipSlot === "belt",
-    )) {
+for (const medical of [false, true])
+  for (const definition of INVENTORY_DEFINITIONS.filter(
+    (d) => d.equipSlot === "back" || d.equipSlot === "belt",
+  ))
+    test(`${medical ? "medical" : "bunk"} refuses ${definition.id} atomically; stowing preserves exact sit retry`, () => {
       const f = fixture(medical ? "fed.m.crest" : "fed.s.wren", medical);
       f.db.inventoryItem.insert({
         id: definition.id,
@@ -212,8 +212,7 @@ test("all back/belt equipment refuses either bed atomically; stowing preserves t
       f.transact();
       f.transact();
       expect(f.db.couchSeat.rows).toHaveLength(1);
-    }
-});
+    });
 test("back/belt equip and swap refuse on either bed; stale source fails closed and stand/death/disconnect restores clearance", () => {
   for (const medical of [false, true])
     for (const reason of ["stand", "death", "disconnect"] as const) {

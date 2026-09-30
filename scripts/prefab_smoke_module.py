@@ -11,11 +11,30 @@ import shutil
 
 ADDON = '''
 import { installPrefabShip } from "./prefab-ship-authority";
+import { itemDefinitions as smokeItemDefinitions, commitPin as commitSmokePin } from "./item-definitions";
+import { legacyInventorySnapshot as smokeInventorySnapshot, synchronizeLegacyInventory as syncSmokeInventory } from "./scoped-inventory-authority";
+import { firstInventoryPlacement as smokePlacement, validateInventory as validateSmokeInventory } from "@sidereal/sim/inventory";
+import { LIQUID_DENSITY_KG_PER_LITRE as smokeDensity, CHARACTER_CARRY_LIMIT_KG as smokeCarryLimit } from "@sidereal/content/inventory";
 export const assignPrefabSmokeShip = db.reducer({prefabId:t.string()},auth.gameAction((ctx,args)=>{
   const actors=[...ctx.db.character.by_owner.filter(ctx.sender)];
   if(actors.length!==1)throw new SenderError("One owned smoke character required");
   if(!/^[a-z0-9][a-z0-9.-]{2,63}$/.test(args.prefabId))throw new SenderError("Invalid prefab id");
   installPrefabShip(ctx,actors[0],{prefabId:args.prefabId,pose:{kind:"berth"}});
+  // Real carried belt fixture for bed equip/hotbar refusal. No production reducer or reach bypass.
+  const actor=actors[0], before=smokeInventorySnapshot(ctx,actor.id);
+  if(!before.items.some(i=>i.definitionId==="wardrobe-t2-belt")){
+    const pockets=before.containers.find(c=>c.carried&&!c.parentItemId&&c.kind==="grid");
+    if(!pockets)throw new SenderError("Existing carried smoke pockets required");
+    const defs=smokeItemDefinitions(ctx), id=ctx.newUuidV4().toString();
+    defs.stage(id,"wardrobe-t2-belt");
+    const item={id,characterId:actor.id,definitionId:"wardrobe-t2-belt",containerId:"",equipmentSlot:"",x:0,y:0,rotated:false};
+    const pending={...before,items:[...before.items,item]};
+    const location=smokePlacement(pending,defs.grid,smokeDensity,pockets.id,smokeCarryLimit,id,pockets.id);
+    if(!location)throw new SenderError("Free carried belt fixture space required");
+    const placed={...item,...location};
+    validateSmokeInventory({...before,items:[...before.items,placed]},defs.grid,smokeDensity,pockets.id,smokeCarryLimit);
+    ctx.db.inventoryItem.insert(placed);commitSmokePin(ctx,defs,id);syncSmokeInventory(ctx,actor.id,before);
+  }
 },true));
 // Smoke-only trigger for large component damage (a handheld needs ~90 shots to kill a reactor):
 // the real damage adapter on the caller's own ship, so the smoke can check the flight effect.

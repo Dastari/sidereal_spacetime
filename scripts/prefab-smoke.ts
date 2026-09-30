@@ -309,9 +309,16 @@ try {
   );
   const inventoryRevision = () =>
     ([...c.db.ownInventoryState.iter()][0] as any).revision;
+  const belt = [...c.db.ownInventoryItems.iter()].find(
+    (r: any) => r.definitionId === "wardrobe-t2-belt",
+  ) as any;
+  assert(
+    belt && !belt.equipmentSlot,
+    "real belt fixture stowed in carried pockets",
+  );
   await c.reducers.assignInventoryHotbar({
     slot: 4,
-    itemId: pack.id,
+    itemId: belt.id,
     expectedRevision: inventoryRevision(),
     operationId: crypto.randomUUID(),
   });
@@ -342,23 +349,24 @@ try {
     "bed supplies no helm control",
   );
   await c.reducers.interactObject(sitBed); // exact operation receipt retry survives incremented CAS
-  const packEquip = {
-    itemId: pack.id,
+  const beltEquip = {
+    itemId: belt.id,
     expectedRevision: inventoryRevision(),
     operationId: crypto.randomUUID(),
   };
   await assert.rejects(
-    c.reducers.equipInventoryItem(packEquip),
+    c.reducers.equipInventoryItem(beltEquip),
     /Stand from bed/i,
   );
   const packPickup = {
-    ...packEquip,
+    itemId: pack.id,
+    expectedRevision: inventoryRevision(),
     containerId: "",
     operationId: crypto.randomUUID(),
   };
   await assert.rejects(
     c.reducers.transferInventoryItem(packPickup),
-    /Stand from bed/i,
+    /Item is out of reach/i,
   );
   await assert.rejects(
     c.reducers.activateInventoryHotbar({
@@ -370,8 +378,8 @@ try {
   );
   assert.equal(
     inventoryRevision(),
-    packEquip.expectedRevision,
-    "refused back equip/hotbar/ground pickup leaves inventory CAS unchanged",
+    beltEquip.expectedRevision,
+    "refused carried belt equip/hotbar and inaccessible ground pickup leave inventory CAS unchanged",
   );
   await assert.rejects(
     c.reducers.interactObject({ ...sitBed, operationId: crypto.randomUUID() }),
@@ -399,6 +407,17 @@ try {
         (r: any) => r.id === pack.id && r.equipmentSlot === "back",
       ),
     "back gear restored after standing",
+  );
+  await c.reducers.equipInventoryItem({
+    ...beltEquip,
+    expectedRevision: inventoryRevision(),
+  }); // failed operation ID remains usable after inventory CAS advances
+  await wait(
+    () =>
+      [...c.db.ownInventoryItems.iter()].some(
+        (r: any) => r.id === belt.id && r.equipmentSlot === "belt",
+      ),
+    "belt equip succeeds after standing",
   );
   console.log(
     JSON.stringify({
