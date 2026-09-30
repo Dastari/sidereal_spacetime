@@ -10,6 +10,7 @@
     "./prefab-flight-supply": "./src/prefab-flight-supply.ts",
     "./prefab-construction": "./src/prefab-construction.ts",
     "./prefab-catalog": "./src/prefab-catalog.ts",
+    "./prefab-seats": "./src/prefab-seats.ts",
     "./prefab-cargo-sockets": "./src/prefab-cargo-sockets.ts",
     "./prefab-deck-objects": "./src/prefab-deck-objects.ts",
     "./prefab-beam": "./src/prefab-beam.ts",

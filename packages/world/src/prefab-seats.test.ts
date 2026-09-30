@@ -44,7 +44,7 @@ import {
   prefabConstructionDocument,
   prefabWalkFrame,
 } from "@sidereal/sim/prefab-construction";
-import { prefabBedSeats, qualifyPrefabBed } from "../../sim/src/prefab-seats";
+import { prefabBedSeats, qualifyPrefabBed } from "@sidereal/sim/prefab-seats";
 import {
   constructionInteractionView,
   interactWithConstructionObject,

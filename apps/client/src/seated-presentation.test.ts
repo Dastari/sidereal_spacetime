@@ -1,7 +1,7 @@
 import { expect, test } from "vitest";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
-import { prefabBedSeats } from "../../../packages/sim/src/prefab-seats";
+import { prefabBedSeats } from "@sidereal/sim/prefab-seats";
 import { prefabSeatPresentation } from "./seated-presentation";
 
 test("current admitted bed geometry supplies all four yaws and bounded support; stale positions supply no pose", () => {

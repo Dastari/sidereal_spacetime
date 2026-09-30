@@ -93,7 +93,9 @@ for (const bodyType of ["male", "female"] as const)
       crew.root.position.y = 0;
       crew.update({ moving: false, seated: false, reducedMotion: true });
       for (let frame = 0; frame < 60; frame++) scene.render();
-      const standingSpine = crew.joints.get("spine")!.rotationQuaternion!.clone();
+      const standingSpine = crew.joints
+        .get("spine")!
+        .rotationQuaternion!.clone();
       if (height === 0.375)
         expect(Math.abs(standingSpine.x - seatedSpine.x)).toBeGreaterThan(0.1);
       crew.root.position.y = lift;

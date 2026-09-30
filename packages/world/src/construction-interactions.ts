@@ -31,7 +31,7 @@ import {
   prefabBedTransitionFrame,
   qualifyPrefabBed,
   type PrefabSeatDefinition,
-} from "../../sim/src/prefab-seats";
+} from "@sidereal/sim/prefab-seats";
 import {
   canOccupyDeck,
   sweepDeckCircle,

@@ -2,7 +2,7 @@ import type {
   ShipPrefabDocumentV1,
   PrefabComponentCatalog,
 } from "@sidereal/content/ship-prefab";
-import { prefabBedSeats } from "../../../packages/sim/src/prefab-seats";
+import { prefabBedSeats } from "@sidereal/sim/prefab-seats";
 
 /** Render-facing only. Bed metadata comes from the viewer's current admitted prefab document;
  * actor position and seated status still come from private server views. */
