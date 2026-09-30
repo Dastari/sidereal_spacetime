@@ -170,7 +170,7 @@ export function interactionLabel(row: InteractionRow) {
   return row.kind === "seat"
     ? row.seatedByYou
       ? "Stand up"
-      : "Sit on sofa"
+      : `Sit on ${row.name.toLowerCase()}`
     : row.enabled
       ? "Turn grow light off"
       : "Turn grow light on";

@@ -55,6 +55,19 @@ function rotateRel(node: TransformNode, q: Quaternion, rootInv: Matrix) {
   setRel(node, m.multiply(toOrigin).multiply(rot).multiply(back), rootInv);
 }
 
+/** Presentation-only joint adjustment in the visible model frame, after clip evaluation. */
+export function leanSeatSpine(
+  model: TransformNode,
+  spine: TransformNode,
+  radians: number,
+) {
+  rotateRel(
+    spine,
+    Quaternion.RotationAxis(Vector3.Right(), radians),
+    model.computeWorldMatrix(true).clone().invert(),
+  );
+}
+
 /**
  * Move the chain so `effector` reaches `targetWorld` (position and orientation). The elbow keeps
  * its current bend plane (pole = current elbow offset), so animated arm character is preserved.

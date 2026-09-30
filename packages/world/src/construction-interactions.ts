@@ -22,7 +22,16 @@ import {
   DEFAULT_INTERACTION_REACH_M,
   validateInteraction,
 } from "@sidereal/sim/interactions";
-import { interactionRules } from "./interaction-definitions";
+import {
+  interactionRules,
+  pinNewInteractionObject,
+} from "./interaction-definitions";
+import {
+  prefabBedsOfDocument,
+  prefabBedTransitionFrame,
+  qualifyPrefabBed,
+  type PrefabSeatDefinition,
+} from "../../sim/src/prefab-seats";
 import {
   canOccupyDeck,
   sweepDeckCircle,
@@ -79,14 +88,16 @@ const loc = (b: ConstructionInteractionBinding, x: number, y: number) => ({
 });
 const approach = (
   sourceId: string,
-  definition: (typeof LAB_INTERACTIONS)[number],
+  definition: (typeof LAB_INTERACTIONS)[number] | PrefabSeatDefinition,
 ) => [definition.approachX, definition.approachY] as const;
 function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
   const instance = ctx.db.constructionInstance.id.find(binding.instanceId),
     object = ctx.db.interactionObject.id.find(binding.objectId),
-    definition = LAB_INTERACTIONS.find(
-      (d) => d.placementId === binding.sourceId,
-    ),
+    definition = binding.sourceId.startsWith("prefab:")
+      ? prefabBedsOfDocument(instance?.documentJson ?? "{}").find(
+          (d) => d.placementId === binding.sourceId,
+        )
+      : LAB_INTERACTIONS.find((d) => d.placementId === binding.sourceId),
     deck = ctx.db.constructionDeck.id.find(binding.deckId);
   if (
     !instance ||
@@ -100,10 +111,12 @@ function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
     object.placementId !== binding.placedObjectId
   )
     throw new SenderError("Qualified instance interaction binding required");
+  const prefabBed = "obstacleId" in definition;
   const map = JSON.parse(instance.idMapJson) as {
     objects: { sourceId: string; instanceId: string }[];
   };
   if (
+    !prefabBed &&
     !map.objects.some(
       (m) =>
         m.sourceId === binding.sourceId &&
@@ -113,6 +126,14 @@ function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
     throw new SenderError("Interaction placed identity changed");
   const frame = constructionCollision(ctx, instance, binding.deckId),
     point = approach(binding.sourceId, definition);
+  if (
+    prefabBed &&
+    (binding.deckId !== instance.spawnDeckId ||
+      binding.placedObjectId !==
+        `${instance.id}:${binding.deckId}:${definition.placementId}` ||
+      !qualifyPrefabBed(frame, definition as PrefabSeatDefinition))
+  )
+    throw new SenderError("Current supported prefab bed required");
   if (!canOccupyDeck(frame, loc(binding, ...point), 0.3))
     throw new SenderError("Interaction approach has no standing support");
   return { instance, object, definition, frame, approach: point };
@@ -170,6 +191,11 @@ function seatTransitionFrame(
   frame: DeckCollisionFrame,
   binding: ConstructionInteractionBinding,
 ): DeckCollisionFrame {
+  if (binding.sourceId.startsWith("prefab:"))
+    return prefabBedTransitionFrame(
+      frame,
+      `prefab-${binding.sourceId.slice(7)}`,
+    );
   const own = frame.obstacles.filter((o) =>
     o.id.startsWith(binding.placedObjectId + ":"),
   );
@@ -320,9 +346,50 @@ export function interactWithConstructionObject(
     operationId: string;
   },
 ) {
-  const binding = ctx.db.constructionInteractionBinding.objectId.find(
+  let binding = ctx.db.constructionInteractionBinding.objectId.find(
     args.objectId,
   );
+  if (!binding) {
+    const actor = actorFor(ctx);
+    const visit =
+      actor && ctx.db.constructionLocation.characterId.find(actor.id);
+    const instance =
+      visit && ctx.db.constructionInstance.id.find(visit.instanceId);
+    if (
+      actor?.connected &&
+      visit &&
+      instance &&
+      actor.shipId === instance.id &&
+      visit.deckId === instance.spawnDeckId
+    ) {
+      const definition = prefabBedsOfDocument(instance.documentJson).find(
+        (d) => `${instance.id}:seat:${d.placementId}` === args.objectId,
+      );
+      if (definition) {
+        // These writes share the reducer transaction with all access/CAS/collision checks below.
+        // Refused first use rolls back registration; a read-only view never mutates the world.
+        binding = {
+          objectId: args.objectId,
+          placedObjectId: `${instance.id}:${visit.deckId}:${definition.placementId}`,
+          instanceId: instance.id,
+          deckId: visit.deckId,
+          sourceId: definition.placementId,
+          instanceRevision: instance.revision,
+          recoveryRequested: false,
+          recoveryReason: "",
+        };
+        ctx.db.interactionObject.insert({
+          id: args.objectId,
+          shipId: instance.id,
+          placementId: binding.placedObjectId,
+          revision: 1n,
+          enabled: true,
+        });
+        ctx.db.constructionInteractionBinding.insert(binding);
+        pinNewInteractionObject(ctx, args.objectId, "seat");
+      }
+    }
+  }
   if (!binding) return false;
   requireGame(ctx);
   const actor = actorFor(ctx);
@@ -487,7 +554,7 @@ export function constructionInteractionView(ctx: ReadContext) {
     !passenger &&
     (gameAccess.useObjects ||
       grants.some((g) => g.capability === "instance.spawn"));
-  return [
+  const registered = [
     ...ctx.db.constructionInteractionBinding.by_instance.filter(instance.id),
   ].flatMap((binding) => {
     if (binding.deckId !== visit.deckId) return [];
@@ -498,7 +565,10 @@ export function constructionInteractionView(ctx: ReadContext) {
       return [
         {
           id: binding.objectId,
-          placementId: binding.placedObjectId,
+          placementId:
+            "obstacleId" in q.definition
+              ? q.definition.placementId
+              : binding.placedObjectId,
           assetId: q.definition.assetId,
           name: q.definition.name,
           kind: q.definition.kind,
@@ -529,6 +599,52 @@ export function constructionInteractionView(ctx: ReadContext) {
       return [];
     }
   });
+  if (visit.deckId !== instance.spawnDeckId) return registered;
+  const known = new Set(registered.map((r) => r.id));
+  const frame = constructionCollision(ctx, instance, visit.deckId);
+  const beds = prefabBedsOfDocument(instance.documentJson).flatMap(
+    (definition) => {
+      const id = `${instance.id}:seat:${definition.placementId}`;
+      if (
+        known.has(id) ||
+        ctx.db.constructionInteractionBinding.objectId.find(id) ||
+        !qualifyPrefabBed(frame, definition)
+      )
+        return [];
+      const binding = {
+        instanceId: instance.id,
+        deckId: visit.deckId,
+      } as ConstructionInteractionBinding;
+      return [
+        {
+          id,
+          placementId: definition.placementId,
+          assetId: definition.assetId,
+          name: definition.name,
+          kind: "seat",
+          localX: definition.x,
+          localY: definition.y,
+          revision: 1n,
+          enabled: true,
+          occupied: false,
+          seatedByYou: false,
+          reachable:
+            canInteract &&
+            Math.hypot(
+              actor.localX - definition.x,
+              actor.localY - definition.y,
+            ) <= DEFAULT_INTERACTION_REACH_M &&
+            unobstructed(
+              frame,
+              binding,
+              [actor.localX, actor.localY],
+              [definition.approachX, definition.approachY],
+            ),
+        },
+      ];
+    },
+  );
+  return [...registered, ...beds];
 }
 export const constructionSeatProjection = t.row("OwnConstructionSeatStatus", {
   characterId: t.string().primaryKey(),

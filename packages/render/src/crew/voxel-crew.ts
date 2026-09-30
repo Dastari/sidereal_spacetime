@@ -31,7 +31,7 @@ import {
   type FaceAtlasImage,
 } from "@sidereal/content/crew-voxel-face";
 import { createVoxelFace, loadVoxelFaceAtlas } from "./voxel-face";
-import { createFootPlanting, solveTwoBone } from "./voxel-ik";
+import { createFootPlanting, solveTwoBone, leanSeatSpine } from "./voxel-ik";
 import { setMeshRole } from "../mesh-roles";
 import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
@@ -228,10 +228,41 @@ export async function createVoxelCrewVisual(
           restAnkle: VOXEL_CREW_ANKLE_HEIGHT_M,
         })
       : undefined;
+  let seatContact:
+    { lift: number; lean: number; footSupport: number } | undefined;
   let footIk = true;
   let footSettleS = 0;
+  let seatSpineOriginal: Quaternion | undefined;
+  const seatResetObserver = scene.onBeforeAnimationsObservable.add(() => {
+    const spine = joints.get("spine");
+    if (spine && seatSpineOriginal)
+      spine.rotationQuaternion = seatSpineOriginal;
+    seatSpineOriginal = undefined;
+  });
   const ikObserver = scene.onAfterAnimationsObservable.add(() => {
     const m = lastMotion;
+    if (m.seated && seatContact && !m.dead) {
+      const spine = joints.get("spine");
+      if (spine && seatContact.lean) {
+        seatSpineOriginal =
+          spine.rotationQuaternion?.clone() ??
+          Quaternion.FromEulerVector(spine.rotation);
+        leanSeatSpine(visual, spine, seatContact.lean);
+      }
+      const inverse = root.computeWorldMatrix(true).clone().invert();
+      for (const leg of legs) {
+        const goal = leg.end.computeWorldMatrix(true).clone();
+        const at = Vector3.TransformCoordinates(goal.getTranslation(), inverse);
+        at.y =
+          VOXEL_CREW_ANKLE_HEIGHT_M +
+          seatContact.footSupport -
+          seatContact.lift;
+        goal.setTranslation(
+          Vector3.TransformCoordinates(at, root.getWorldMatrix()),
+        );
+        solveTwoBone(leg, goal);
+      }
+    }
     const onDeck =
       footIk &&
       !disposed &&
@@ -743,6 +774,12 @@ export async function createVoxelCrewVisual(
       supportTarget = target;
       if (!target) supportError = 0;
     },
+    /** Exact authored support relative to the standing floor; never writes actor state. */
+    setSeatContact(
+      contact: { lift: number; lean: number; footSupport: number } | undefined,
+    ) {
+      seatContact = contact;
+    },
     /** Foot planting on the deck (default on; review harnesses compare with it off). */
     setFootIk(enabled: boolean) {
       footIk = enabled;
@@ -825,6 +862,7 @@ export async function createVoxelCrewVisual(
       disposed = true;
       scene.onBeforeRenderObservable.remove(blendObserver);
       scene.onBeforeRenderObservable.remove(faceObserver);
+      scene.onBeforeAnimationsObservable.remove(seatResetObserver);
       scene.onAfterAnimationsObservable.remove(ikObserver);
       face.dispose();
       for (const g of owned) g.dispose();

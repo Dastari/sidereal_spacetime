@@ -351,6 +351,23 @@ test("paper-doll backpack accepts contents while matching armor equips and unequ
   source.drag?.(7, 7);
   draw();
   const back = hit("equip-slot-back").rect;
+  for (const slot of [
+    "helmet",
+    "shoulders",
+    "hand",
+    "gloves",
+    "legs",
+    "uniform",
+    "visor",
+    "chest",
+    "back",
+    "belt",
+    "boots",
+  ]) {
+    const box = hit("equip-slot-" + slot).rect;
+    expect(box.w).toBe(box.h);
+    expect(box.w).toBe(back.w);
+  }
   source.drop?.(back.x + 10, back.y + 10);
   expect(actions.transferItem).toHaveBeenCalledWith("gun", "bag");
   const hand = hit("equip-slot-hand").rect;

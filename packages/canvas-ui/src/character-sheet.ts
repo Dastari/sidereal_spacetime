@@ -247,7 +247,7 @@ export function createCharacterSheet(
   }
   function equipment(r: Rect, state: InventoryState, pending: boolean) {
     section(ui, { ...r, h: 490 }, "EQUIPMENT");
-    const cardW = Math.max(65, Math.min(90, r.w * 0.245));
+    const cardW = Math.min(59, Math.max(40, Math.floor(r.w * 0.245)));
     const view = {
       x: r.x + cardW + 4,
       y: r.y + 36,
@@ -321,7 +321,7 @@ export function createCharacterSheet(
         x: col ? r.x + r.w - cardW - 8 : r.x + 8,
         y: r.y + 36 + row * step,
         w: cardW,
-        h: step - 6,
+        h: cardW,
       };
       const item = slot
         ? state.items.find((it) => it.equipmentSlot === slot)

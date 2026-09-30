@@ -42,6 +42,9 @@ export interface RemoteCrewState {
   connected: boolean;
   sprinting: boolean;
   seated: boolean;
+  /** Authored seat view direction from the admitted prefab (Babylon yaw). */
+  seatFacing?: number;
+  seatContact?: { lift: number; lean: number; footSupport: number };
   dead: boolean;
   aimActive: boolean;
   aimAngle: number;
@@ -419,7 +422,8 @@ export function createRemoteCrew(
           aimActive: state.aimActive,
           aimAngle: state.aimAngle,
           // Same seat facing rule as the local character (seats face the aisle).
-          seatFacing: (Math.sign(state.localX) * Math.PI) / 2,
+          seatFacing:
+            state.seatFacing ?? (Math.sign(state.localX) * Math.PI) / 2,
         };
         const marker = entry.marker;
         if (marker) {
@@ -427,7 +431,16 @@ export function createRemoteCrew(
           marker.setEnabled(visible && entry.motion.ready);
           if (!visible || !entry.motion.ready) continue;
           const d = entry.motion.sample(t, pose);
-          marker.position.set(d.x, d.z + (state.dead ? 0.26 : 0), -d.y);
+          marker.position.set(
+            d.x,
+            d.z +
+              (state.dead
+                ? 0.26
+                : state.seated
+                  ? (state.seatContact?.lift ?? 0)
+                  : 0),
+            -d.y,
+          );
           marker.rotation.set(0, d.yaw, state.dead ? Math.PI / 2 : 0);
           continue;
         }
@@ -436,7 +449,12 @@ export function createRemoteCrew(
         entry.label?.setEnabled(visible);
         if (!visible) continue;
         const d = entry.motion.sample(t, pose);
-        crew.root.position.set(d.x, d.z, -d.y);
+        crew.setSeatContact(state.seated ? state.seatContact : undefined);
+        crew.root.position.set(
+          d.x,
+          d.z + (state.seated ? (state.seatContact?.lift ?? 0) : 0),
+          -d.y,
+        );
         crew.root.rotation.y = d.yaw;
         if (state.eva) {
           crew.root.position.y -= evaHipLiftCorrection(state.eva, (clip) =>

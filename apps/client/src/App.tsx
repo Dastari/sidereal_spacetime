@@ -63,6 +63,8 @@ import {
 import { SPACE_VISTAS, DEFAULT_SPACE_VISTA } from "@sidereal/content";
 import { LAB_BODIES } from "../../../packages/content/src/space";
 import { LAB_INTERACTIONS } from "../../../packages/content/src/interactions";
+import { containerSelection } from "./container-selection";
+import { prefabSeatPresentation } from "./seated-presentation";
 import { inventoryView, inventoryAppearance } from "./inventory";
 import { createCombatInput } from "./combat-input";
 import { createOperationId } from "./operation-id";
@@ -709,6 +711,27 @@ export default function App({
         actor,
       )
     : undefined;
+  const inspectedSeat = interactions.find(
+    (row) => row.placementId === selectedObject && row.kind === "seat",
+  );
+  if (prefabDetails && inspectedSeat) {
+    prefabDetails.actions = [
+      {
+        id: interactionAction(inspectedSeat),
+        label: interactionLabel(inspectedSeat),
+        enabled:
+          inspectedSeat.reachable &&
+          (!inspectedSeat.occupied || inspectedSeat.seatedByYou),
+      },
+    ];
+    prefabDetails.status = inspectedSeat.seatedByYou
+      ? "You are seated here"
+      : inspectedSeat.occupied
+        ? "Occupied"
+        : inspectedSeat.reachable
+          ? "Available"
+          : "Move closer to sit";
+  }
   const combatImpactRow =
     c && ready && actor?.connected
       ? [...c.db.ownCombatImpact.iter()].find(
@@ -1007,11 +1030,23 @@ export default function App({
       connectionNow &&
       live.current.actor?.connected
     ) {
-      const container = [...inventoryView(connectionNow, true).containers].find(
-        (container) =>
-          container.placementId === placementId && container.kind === "grid",
+      const visit = [...connectionNow.db.ownConstructionLocation.iter()][0];
+      const selected = containerSelection(
+        placementId,
+        inventoryView(connectionNow, true).containers,
+        visit &&
+          live.current.constructionInstance && {
+            ...visit,
+            documentJson: live.current.constructionInstance.documentJson,
+          },
       );
-      if (container) gui.current?.openContainer(container.id);
+      setSelectedObject(undefined);
+      if (selected.containerId)
+        gui.current?.openContainer(selected.containerId);
+      else
+        setError(
+          "Move closer to this storage. Its inventory must be available to open it.",
+        );
       return;
     }
     if (
@@ -1392,19 +1427,21 @@ export default function App({
                 );
                 return;
               }
-              if (
-                id &&
-                (LAB_STORAGE_FIXTURES.some(
-                  (fixture) => fixture.placementId === id,
-                ) ||
-                  (connection.current &&
-                    inventoryView(connection.current, true).containers.some(
-                      (container) =>
-                        container.placementId === id &&
-                        container.kind === "grid",
-                    )))
-              ) {
-                setSelectedObject(id);
+              const current = connection.current;
+              const visit =
+                current && [...current.db.ownConstructionLocation.iter()][0];
+              const selected = containerSelection(
+                id,
+                current ? inventoryView(current, true).containers : [],
+                visit && live.current.constructionInstance
+                  ? {
+                      ...visit,
+                      documentJson:
+                        live.current.constructionInstance.documentJson,
+                    }
+                  : undefined,
+              );
+              if (selected.storage) {
                 objectCommand("open-storage", id);
               } else setSelectedObject(id);
             },
@@ -1624,8 +1661,21 @@ export default function App({
       seated: seated || !!couch || !!constructionSeat,
       seatFacing:
         couch || constructionSeat
-          ? (Math.sign((couch ?? constructionSeat)!.localX) * Math.PI) / 2
+          ? (prefabSeatPresentation(
+              prefabShip,
+              actor?.localX ?? 0,
+              actor?.localY ?? 0,
+            )?.facing ??
+            (Math.sign((couch ?? constructionSeat)!.localX) * Math.PI) / 2)
           : 0,
+      seatContact:
+        couch || constructionSeat
+          ? prefabSeatPresentation(
+              prefabShip,
+              actor?.localX ?? 0,
+              actor?.localY ?? 0,
+            )
+          : undefined,
       sprinting: actor?.sprinting ?? false,
       dead: ownVitals?.state === "dead",
       // Other characters on this deck: two server views, never their inventory or health.
@@ -1635,7 +1685,16 @@ export default function App({
               c.db.currentInteriorCrew.iter(),
               c.db.visibleCrewPresentation.iter(),
               actor.id,
-            )
+            ).map((mate) => ({
+              ...mate,
+              seatFacing: mate.seated
+                ? prefabSeatPresentation(prefabShip, mate.localX, mate.localY)
+                    ?.facing
+                : undefined,
+              seatContact: mate.seated
+                ? prefabSeatPresentation(prefabShip, mate.localX, mate.localY)
+                : undefined,
+            }))
           : [],
       // Accepted combat actions on this deck (own included) drive the r001 weapon effects.
       selfCharacterId: actor?.id,
