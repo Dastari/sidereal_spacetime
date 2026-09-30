@@ -12,7 +12,7 @@
     "./content-definitions": "./src/content-definitions.ts"
   },
   "dependencies": {
-    "@sidereal/sim": "0.4.2",
+    "@sidereal/sim": "0.4.3",
     "spacetimedb": "2.10.0"
   }
 }

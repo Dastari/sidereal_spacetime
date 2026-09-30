@@ -29,6 +29,10 @@ import {
   castPrefabBeam,
   prefabBeamModel,
 } from "../packages/sim/src/prefab-beam";
+import {
+  prefabBedSeats,
+  qualifyPrefabBed,
+} from "../packages/sim/src/prefab-seats";
 import { canOccupyDeck } from "../packages/sim/src/construction-collision";
 import { evaSmoke } from "./eva-smoke-steps";
 import { blastDamage, pelletAngles } from "../packages/sim/src/combat";
@@ -63,6 +67,8 @@ const subscribed = () => [
   tables.ownCharacters,
   tables.ownShips,
   tables.ownStations,
+  tables.ownInteractions,
+  tables.ownConstructionSeat,
   tables.ownGameShipAccess,
   tables.ownConstructionLocation,
   tables.ownWorldAdmission,
@@ -73,6 +79,7 @@ const subscribed = () => [
   tables.ownActuatorOutputs,
   tables.ownInventoryState,
   tables.ownInventoryItems,
+  tables.ownInventoryHotbar,
   tables.ownCombat,
   tables.ownCombatImpact,
   tables.visibleCombatActions,
@@ -238,6 +245,197 @@ try {
         (e: any) => e.shipId === shipId && e.power === "powered",
       ),
     "outward power effect of the own ship",
+  );
+
+  // Lower-berth/medical seats reuse the authoritative couch occupancy and CAS channel.
+  const bed = prefabBedSeats(prefab, catalog).find((b) =>
+    qualifyPrefabBed(prefabWalkFrame(prefab, catalog), b),
+  );
+  assert(bed, "current admitted prefab has a physically qualified bed seat");
+  const bedId = `${shipId}:seat:${bed.placementId}`;
+  await wait(
+    () => [...c.db.ownInteractions.iter()].some((r: any) => r.id === bedId),
+    "private admitted bed descriptor",
+  );
+  const bedRow = () =>
+    [...c.db.ownInteractions.iter()].find((r: any) => r.id === bedId) as any;
+  await assert.rejects(
+    c.reducers.interactObject({
+      objectId: bedId,
+      action: "sit",
+      expectedRevision: 999n,
+      operationId: crypto.randomUUID(),
+    }),
+    /Object changed/i,
+  );
+  assert.equal(
+    [...c.db.ownConstructionSeat.iter()].length,
+    0,
+    "failed first use creates no occupied bed",
+  );
+  for (const [x, y] of prefabWalkRoute(
+    prefab,
+    catalog,
+    [actor().localX, actor().localY],
+    [bed.approachX, bed.approachY],
+  ))
+    await walkNative(c, x, y);
+  await wait(() => bedRow()?.reachable, "bed approach is reachable");
+  const pack = [...c.db.ownInventoryItems.iter()].find(
+    (r: any) => r.equipmentSlot === "back",
+  ) as any;
+  assert(pack, "starter back gear available for lower-bunk clearance proof");
+  assert.equal(
+    bedRow().enabled,
+    false,
+    "equipped back gear disables lower-bunk sit",
+  );
+  const bedOperation = crypto.randomUUID();
+  const bedRevision = bedRow().revision;
+  const sitBed = {
+    objectId: bedId,
+    action: "sit",
+    expectedRevision: bedRevision,
+    operationId: bedOperation,
+  };
+  await assert.rejects(
+    c.reducers.interactObject(sitBed),
+    /Stow back gear and equipment belt/i,
+  );
+  assert.equal(
+    [...c.db.ownConstructionSeat.iter()].length,
+    0,
+    "gear refusal leaves no occupied seat",
+  );
+  const inventoryRevision = () =>
+    ([...c.db.ownInventoryState.iter()][0] as any).revision;
+  const belt = [...c.db.ownInventoryItems.iter()].find(
+    (r: any) => r.definitionId === "wardrobe-t2-belt",
+  ) as any;
+  assert(
+    belt && !belt.equipmentSlot,
+    "real belt fixture stowed in carried pockets",
+  );
+  await c.reducers.assignInventoryHotbar({
+    slot: 4,
+    itemId: belt.id,
+    expectedRevision: inventoryRevision(),
+    operationId: crypto.randomUUID(),
+  });
+  await c.reducers.dropInventoryItem({
+    itemId: pack.id,
+    expectedRevision: inventoryRevision(),
+    operationId: crypto.randomUUID(),
+  });
+  await wait(
+    () => bedRow()?.enabled,
+    "stowed back gear restores lower-bunk sit",
+  );
+  await c.reducers.interactObject(sitBed);
+  await wait(
+    () =>
+      [...c.db.ownConstructionSeat.iter()].some(
+        (r: any) => r.objectId === bedId,
+      ),
+    "seated on bed",
+  );
+  assert(
+    Math.hypot(actor().localX - bed.seatX, actor().localY - bed.seatY) < 1e-5,
+    "server-derived bed anchor",
+  );
+  assert.notEqual(
+    flightOf(shipId)?.seatState,
+    "seated",
+    "bed supplies no helm control",
+  );
+  await c.reducers.interactObject(sitBed); // exact operation receipt retry survives incremented CAS
+  const beltEquip = {
+    itemId: belt.id,
+    expectedRevision: inventoryRevision(),
+    operationId: crypto.randomUUID(),
+  };
+  await assert.rejects(
+    c.reducers.equipInventoryItem(beltEquip),
+    /Stand from bed/i,
+  );
+  const packPickup = {
+    itemId: pack.id,
+    expectedRevision: inventoryRevision(),
+    containerId: "",
+    operationId: crypto.randomUUID(),
+  };
+  await assert.rejects(
+    c.reducers.transferInventoryItem(packPickup),
+    /Item is out of reach/i,
+  );
+  await assert.rejects(
+    c.reducers.activateInventoryHotbar({
+      slot: 4,
+      expectedRevision: inventoryRevision(),
+      operationId: crypto.randomUUID(),
+    }),
+    /Stand from bed/i,
+  );
+  assert.equal(
+    inventoryRevision(),
+    beltEquip.expectedRevision,
+    "refused carried belt equip/hotbar and inaccessible ground pickup leave inventory CAS unchanged",
+  );
+  await assert.rejects(
+    c.reducers.interactObject({ ...sitBed, operationId: crypto.randomUUID() }),
+    /Object changed/i,
+  );
+  await c.reducers.interactObject({
+    objectId: bedId,
+    action: "stand",
+    expectedRevision: bedRow().revision,
+    operationId: crypto.randomUUID(),
+  });
+  await wait(
+    () => [...c.db.ownConstructionSeat.iter()].length === 0,
+    "safe bed exit",
+  );
+  assert(
+    Math.hypot(actor().localX - bed.approachX, actor().localY - bed.approachY) <
+      1e-5,
+    "bed exit returns to validated approach",
+  );
+  await c.reducers.transferInventoryItem(packPickup); // same failed ground-pickup operation remains retryable
+  await wait(
+    () =>
+      [...c.db.ownInventoryItems.iter()].some(
+        (r: any) => r.id === pack.id && r.equipmentSlot === "back",
+      ),
+    "back gear restored after standing",
+  );
+  await c.reducers.equipInventoryItem({
+    ...beltEquip,
+    expectedRevision: inventoryRevision(),
+  }); // failed operation ID remains usable after inventory CAS advances
+  await wait(
+    () =>
+      [...c.db.ownInventoryItems.iter()].some(
+        (r: any) => r.id === belt.id && r.equipmentSlot === "belt",
+      ),
+    "belt equip succeeds after standing",
+  );
+  console.log(
+    JSON.stringify({
+      bedSeat: {
+        id: bedId,
+        source: bed.assetId,
+        seat: [bed.seatX, bed.seatY],
+        approach: [bed.approachX, bed.approachY],
+        facing: bed.facing,
+        cas: true,
+        receiptRetry: true,
+        bedEquipmentSitRejected: true,
+        carriedBeltEquipAndHotbarRejected: true,
+        groundAccessRejected: true,
+        failedGroundReceiptRetry: true,
+        noHelm: true,
+      },
+    }),
   );
 
   // Furniture collision (SHIP-INTERACTION): walk up to a blocking module and push into it.

@@ -192,6 +192,7 @@ export type SceneState = {
   grid: boolean;
   seated?: boolean;
   seatFacing?: number;
+  seatContact?: { lift: number; lean: number; footSupport: number };
   sprinting?: boolean;
   /** Own character is dead (authoritative vitals): the crew rig plays and holds `death`. */
   dead?: boolean;
@@ -1096,7 +1097,12 @@ async function buildWorld(
     evaCrew?.frame(debugFeatures.snapshot().characters, {
       reducedMotion: state.reducedMotion,
     });
-    avatar.position.set(displayed.localX, walkingElevation, -displayed.localY);
+    crew?.setSeatContact(state.seated ? state.seatContact : undefined);
+    avatar.position.set(
+      displayed.localX,
+      walkingElevation + (state.seated ? (state.seatContact?.lift ?? 0) : 0),
+      -displayed.localY,
+    );
     if (traversalFrame?.acceptedPositionM) {
       const [x, y, z] = traversalFrame.acceptedPositionM;
       avatar.position.set(x, z, -y);
