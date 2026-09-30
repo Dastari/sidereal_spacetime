@@ -75,6 +75,7 @@ function appearanceFor(
     : undefined;
   return {
     crewAppearance: {
+      headArtRevision: q.get("headart") ?? undefined,
       bodyType: (q.get("body") === "female" ? "female" : "male") as
         "male" | "female",
       hairStyle: (q.get("hair") ?? undefined) as never,

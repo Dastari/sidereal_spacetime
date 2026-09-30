@@ -14,7 +14,6 @@ import {
   DEFAULT_HEAD_LOADOUT,
   composeFace as composeHeadFace,
   crewFaceAtlasUrl,
-  crewHeadAssetUrl,
   resolveFaceFrames,
   resolveHeadLoadout,
   type HeadLoadout,
@@ -29,6 +28,7 @@ import { setMeshRole } from "../mesh-roles";
 import type { createVoxelCrewVisual } from "./voxel-crew";
 import { loadRgbaImage } from "./voxel-face";
 import { tagCrewPart } from "../molded-plastic";
+import { headArtSources } from "./head-art-revision";
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 
@@ -169,21 +169,44 @@ export async function attachVoxelCrewHead(
   scene: Scene,
   crew: VoxelCrew,
   loadout: HeadLoadout,
+  artRevision?: string,
 ) {
   const resolved = resolveHeadLoadout(loadout);
   const files = [...new Set(resolved.nodes.map((n) => n.file))];
   const wanted = new Set(resolved.nodes.map((n) => n.node));
-  const containers: AssetContainer[] = await Promise.all(
-    files.map((f) =>
-      SceneLoader.LoadAssetContainerAsync(
-        "",
-        crewHeadAssetUrl(f),
-        scene,
-        undefined,
-        ".glb",
+  let selected = await headArtSources(files, artRevision);
+  let artError = selected.error;
+  const load = async () => {
+    const results = await Promise.allSettled(
+      files.map((f) =>
+        SceneLoader.LoadAssetContainerAsync(
+          "",
+          selected.sources.get(f)!,
+          scene,
+          undefined,
+          ".glb",
+        ),
       ),
-    ),
-  );
+    );
+    const failed = results.find((r) => r.status === "rejected");
+    if (failed?.status === "rejected") {
+      for (const r of results) if (r.status === "fulfilled") r.value.dispose();
+      throw failed.reason;
+    }
+    return results.map(
+      (r) => (r as PromiseFulfilledResult<AssetContainer>).value,
+    );
+  };
+  let containers: AssetContainer[];
+  try {
+    containers = await load();
+  } catch (error) {
+    if (!artRevision || artRevision === "legacy" || artError) throw error;
+    artError = `character art renderer rejected candidate: ${String(error)}`;
+    selected = await headArtSources(files, undefined);
+    containers = await load();
+  }
+  if (artError) console.warn("character art review retained legacy", artError);
   const space = headSpaceNode(scene, crew);
   for (const c of containers) {
     c.addAllToScene();
@@ -251,6 +274,8 @@ export async function attachVoxelCrewHead(
     );
   }
   return {
+    artRevision: artError ? "legacy" : (artRevision ?? "legacy"),
+    artError,
     resolved,
     dispose() {
       space.dispose();

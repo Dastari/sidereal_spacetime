@@ -16,6 +16,8 @@ import looks from "../../../content/src/crew-looks.json";
 export type CrewLook = keyof typeof looks;
 /** Local visual slots only: these values grant no equipment or gameplay capability. */
 export type CrewAppearance = {
+  /** Explicit presentation/review candidate; omitted preserves the published head kit. */
+  headArtRevision?: string;
   bodyType?: CharacterBodyType;
   /** Omitted: catalog preview; provided (including {}): actual inventory authority. */
   equippedComponents?: EquippedCharacterComponents;
@@ -98,6 +100,7 @@ export function resolveCrewAppearance(
   const outfit = input.outfit ?? "engineer";
   return {
     outfit,
+    headArtRevision: "legacy",
     bodyType: "male",
     equippedComponents:
       input.equippedComponents ??

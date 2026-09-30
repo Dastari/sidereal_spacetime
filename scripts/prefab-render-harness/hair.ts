@@ -29,7 +29,14 @@ import { moldedLightRig } from "../../packages/render/src/molded-plastic";
 declare global {
   interface Window {
     __hairSheet?: string;
+    __hairCanvas?: HTMLCanvasElement;
     __hairError?: string;
+    __hairReview?: {
+      style: string;
+      revision: string;
+      error?: string;
+      nodes: string[];
+    }[];
   }
 }
 
@@ -91,6 +98,7 @@ async function main() {
   ctx.font = "bold 14px sans-serif";
   VIEWS.forEach(([name], i) => ctx.fillText(name, 150 + i * TILE + 8, 20));
   let head: Awaited<ReturnType<typeof attachVoxelCrewHead>> | undefined;
+  window.__hairReview = [];
   for (const [row, style] of styles.entries()) {
     const loadout: HeadLoadout = {
       ...DEFAULT_HEAD_LOADOUT,
@@ -101,7 +109,18 @@ async function main() {
       ...(variant === "fringe" ? { accessories: ["hood"] } : {}),
     };
     head?.dispose();
-    head = await attachVoxelCrewHead(scene, crew, loadout);
+    head = await attachVoxelCrewHead(
+      scene,
+      crew,
+      loadout,
+      q.get("headart") ?? undefined,
+    );
+    window.__hairReview.push({
+      style,
+      revision: head.artRevision,
+      error: head.artError,
+      nodes: head.resolved.nodes.map((n) => n.node),
+    });
     const meshes = crew.root.getChildMeshes();
     toneCrewEmissive(meshes);
     moldedLightRig(scene).include(meshes);
@@ -116,6 +135,7 @@ async function main() {
     }
   }
   window.__hairSheet = sheet.toDataURL("image/png");
+  window.__hairCanvas = sheet;
 }
 
 main().catch((e) => {

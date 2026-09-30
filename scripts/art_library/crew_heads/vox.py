@@ -80,6 +80,9 @@ class Grid:
         self.isl = np.zeros(SHAPE, np.int16)
         self.slot = np.zeros(SHAPE, np.int8)
         self.cur = 1
+        # Candidate organic/seal volumes mesh their union envelope. Labels still drive colour,
+        # but boundaries between touching authored masses are not geometry or bevel seams.
+        self.continuous = False
 
     # ------------------------------------------------------------------ painting
     def new(self):
@@ -163,6 +166,7 @@ class Grid:
         g.isl = self.isl.copy()
         g.slot = self.slot.copy()
         g.cur = self.cur
+        g.continuous = self.continuous
         return g
 
     def merge(self, other):
@@ -207,7 +211,7 @@ class Grid:
                 sh[axis] = slice(1 + sign, isl.shape[axis] - 1 + sign)
                 nb = isl[tuple(sh)]
                 me = isl[core]
-                face = (me > 0) & (nb != me)
+                face = (me > 0) & ((nb == 0) if self.continuous else (nb != me))
                 cells = np.argwhere(face)
                 if not len(cells):
                     continue
@@ -232,7 +236,8 @@ class Grid:
             return np.zeros((0, 3)), np.zeros((0, 4), np.int64), np.zeros(0, np.int64), np.zeros(0, np.int64), np.zeros(0, np.int64)
         allq = np.concatenate([q for q, _ in quads])
         lab = np.concatenate([np.repeat(l[:, None], 4, 1) for _, l in quads])
-        key = (lab << 30) | (allq[..., 0] << 20) | (allq[..., 1] << 10) | allq[..., 2]
+        vertex_lab = np.ones_like(lab) if self.continuous else lab
+        key = (vertex_lab << 30) | (allq[..., 0] << 20) | (allq[..., 1] << 10) | allq[..., 2]
         uniq, inv = np.unique(key.ravel(), return_inverse=True)
         faces = inv.reshape(-1, 4)
         coords = np.stack([(uniq >> 20) & 1023, (uniq >> 10) & 1023, uniq & 1023], 1).astype(np.float64) + lo

@@ -9,7 +9,7 @@ import numpy as np
 from mathutils import Vector
 
 import look
-from vox import FACE_PLUS_Y, SLOTS, V, mesh_from_grid
+from vox import FACE_PLUS_Y, SI, SLOTS, V, mesh_from_grid
 
 BEVEL = {  # (width m, segments): soft rounded part edges, no per-voxel grooves (owner feedback 2026-09-25)
     "head": (0.016, 3), "face": (0.0011, 1), "facialhair": (0.004, 2), "detail": (0.0010, 1), "hair": (0.0055, 1),
@@ -48,6 +48,11 @@ class Library:
             ob.modifiers.remove(ob.modifiers["brick"])
         old = ob.data
         ob.data = baked
+        if grid.continuous and category in ("hair", "hair_lod"):
+            # Blender's bevel can assign slot zero to a new junction face at a concave union.
+            # Hair owns one tint slot throughout its envelope, including those generated faces.
+            for poly in baked.polygons:
+                poly.material_index = SI["hair"]
         bpy.data.meshes.remove(old)
         lo, hi = grid.bounds_vox()
         if FACE_PLUS_Y:
