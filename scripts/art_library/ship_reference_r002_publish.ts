@@ -25,6 +25,8 @@ const sources = [
   "packages/content/src/ship-visual.ts",
   "packages/content/src/ship-visual-r002.ts",
   "packages/sim/src/ship-visual-layers-r002.ts",
+  "packages/sim/src/ship-dresser.ts",
+  "packages/content/src/ship-prefab.ts",
   "packages/sim/src/ship-visual-sampler.ts",
   "packages/sim/src/ship-visual-compiler.ts",
   "packages/render/src/prefab-ship/sampled-structure.ts",

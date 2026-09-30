@@ -9,6 +9,8 @@ import { bowGlass, bowHeights } from "@sidereal/content/bow-profiles";
 import {
   deriveInterior,
   volumeGeometry,
+  placeMount,
+  placeMountTile,
   type PrefabComponentCatalog,
   type ShipPrefabDocumentV1,
 } from "@sidereal/content/ship-prefab";
@@ -19,6 +21,7 @@ import {
 } from "@sidereal/content/ship-visual";
 import type { ShipKitSlot } from "@sidereal/content/ship-kit";
 import { polygonBoundarySample } from "./ship-visual-sampler";
+import { dressShip } from "./ship-dresser";
 
 import { SHIP_VISUAL_PROFILES_R002 } from "@sidereal/content/ship-visual-r002";
 
@@ -77,6 +80,28 @@ export function shipVisualLayersR002(
       poly: placedTilePolygon(tile),
     })),
   }));
+  // Reuse the same transformed, catalog-qualified footprints as the actual dresser.
+  // Raw mount.at is neither an anchor nor a tile-carried item's occupied rectangle.
+  const geoms = assemblies.map((a) => a.geometry);
+  const roofObstacles = [
+    ...doc.mounts
+      .filter((m) => m.attach === "top")
+      .map((m) => placeMount(m, catalog.get(m.component), geoms, doc).rect),
+    ...(doc.mountTiles ?? []).map((t) => placeMountTile(t, geoms).rect),
+  ].map((r) => r.map((n) => n * 16));
+  const roofMarkings = dressShip(doc, { catalog })
+    .decals.filter((d) => d.normal[2] > 0.99)
+    .map((d) => [
+      Math.min(...d.corners.map((p) => p[0])) * 16,
+      Math.min(...d.corners.map((p) => p[1])) * 16,
+      Math.max(...d.corners.map((p) => p[0])) * 16,
+      Math.max(...d.corners.map((p) => p[1])) * 16,
+    ]);
+  const inRect = (x: number, y: number, r: number[], padding = 0) =>
+    x >= r[0] - padding &&
+    x < r[2] + padding &&
+    y >= r[1] - padding &&
+    y < r[3] + padding;
   // Rich bays belong to exposed assembled boundaries. Attached wings hide their parent
   // shell, so assigning functions by global modulo alone puts equipment behind solid art.
   const blockedByAttachment = (
@@ -163,20 +188,83 @@ export function shipVisualLayersR002(
     }
     const deck = G.heightClasses[volume.height].walkable;
     const family = `volume:${volume.id}`;
-    const trayCentreY = Math.round((by + bY) / 2);
-    const topMounts = doc.mounts.filter((m) => m.attach === "top");
-    const trayCassetteX = [0.32, 0.68, 0.18, 0.8]
-      .map((t) => Math.round(bx + (bX - bx) * t))
-      .find(
-        (at) =>
-          at >= bx + 8 &&
-          at + 12 < bX - 8 &&
-          topMounts.every(
-            (m) =>
-              Math.hypot((at + 6) / 16 - m.at[0], trayCentreY / 16 - m.at[1]) >
-              1.05,
-          ),
-      );
+    const routeCandidates = [
+      Math.round(by + (bY - by) * 0.25),
+      Math.round(by + (bY - by) * 0.75),
+    ];
+    const exposedScore = (y: number) => {
+      let n = 0;
+      for (let x = bx + 8; x < bX - 8; x++)
+        if (
+          insidePolygon(poly, x + 0.5, y + 0.5) &&
+          !holes.some((h) => insidePolygon(h, x + 0.5, y + 0.5)) &&
+          ![...roofObstacles, ...roofMarkings].some((r) => inRect(x, y, r, 5))
+        )
+          n++;
+      return n;
+    };
+    const routeYs =
+      deck && bY - by >= 48
+        ? routeCandidates
+        : [
+            routeCandidates.sort(
+              (a, b) => exposedScore(b) - exposedScore(a),
+            )[0],
+          ];
+    const trayCassetteX = new Map<number, number | undefined>();
+    const roofPatches: { bounds: number[]; kind: "vent" | "access" }[] = [];
+    for (const routeY of routeYs) {
+      const candidates: {
+        bounds: number[];
+        kind: "vent" | "access";
+        score: number;
+      }[] = [];
+      for (let at = Math.ceil((bx + 8) / 32) * 32; at + 24 < bX - 8; at += 32) {
+        const bounds = [at, routeY - 7, at + 24, routeY + 7];
+        if (
+          [...roofObstacles, ...roofMarkings].some(
+            (r) =>
+              bounds[0] < r[2] + 3 &&
+              bounds[2] > r[0] - 3 &&
+              bounds[1] < r[3] + 3 &&
+              bounds[3] > r[1] - 3,
+          )
+        )
+          continue;
+        if (
+          ![
+            [bounds[0], bounds[1]],
+            [bounds[2], bounds[1]],
+            [bounds[0], bounds[3]],
+            [bounds[2], bounds[3]],
+          ].every(
+            ([x, y]) =>
+              insidePolygon(poly, x, y) &&
+              !holes.some((h) => insidePolygon(h, x, y)),
+          )
+        )
+          continue;
+        const centre: Pt = [(at + 12) / 16, routeY / 16];
+        const room = doc.rooms.find(
+          (r) =>
+            centre[0] >= r.rect[0] &&
+            centre[0] < r.rect[2] &&
+            centre[1] >= r.rect[1] &&
+            centre[1] < r.rect[3],
+        );
+        const vent = room?.type === "engineering" || room?.type === "workshop";
+        candidates.push({
+          bounds,
+          kind: vent ? "vent" : "access",
+          score: vent ? 3 : room ? 2 : 1,
+        });
+      }
+      const selected = candidates
+        .sort((a, b) => b.score - a.score || a.bounds[0] - b.bounds[0])
+        .filter((_, i) => i < 2);
+      if (deck) roofPatches.push(...selected);
+      trayCassetteX.set(routeY, selected[0]?.bounds[0]);
+    }
     for (let y = by; y < bY; y++)
       for (let x = bx; x < bX; x++) {
         const p: Pt = [x + 0.5, y + 0.5];
@@ -815,32 +903,42 @@ export function shipVisualLayersR002(
             // A housed pressure tray, not independent cards on a thin sheet. Two broad
             // shoulders overlap along a real assembly joint and protect one recessed service
             // channel. Every pocket terminates before the source footprint ends/holes.
-            const centreY = trayCentreY;
-            const channelHalf = deck
-              ? Math.min(10, Math.floor((bY - by) * 0.12))
-              : 4;
+            const centreY = routeYs.reduce(
+              (best, y) =>
+                Math.abs(y - p[1]) < Math.abs(best - p[1]) ? y : best,
+              routeYs[0],
+            );
+            const channelHalf = 4;
             const fromEnd = Math.min(x - bx, bX - 1 - x);
-            const mountClear = topMounts.every(
-              (m) => Math.hypot(world[0] - m.at[0], world[1] - m.at[1]) > 0.8,
+            const marked = roofMarkings.some((r) => inRect(p[0], p[1], r, 1));
+            const mountClear = !roofObstacles.some((r) =>
+              inRect(p[0], p[1], r, 2),
             );
             const channel =
-              Math.abs(y - centreY) < channelHalf && fromEnd >= 8 && mountClear;
+              Math.abs(y - centreY) < channelHalf &&
+              fromEnd >= 8 &&
+              mountClear &&
+              !marked;
             const serviceBelt =
-              Math.abs(y - centreY) < channelHalf + 4 && fromEnd >= 6;
+              Math.abs(y - centreY) < channelHalf + 4 &&
+              fromEnd >= 6 &&
+              mountClear &&
+              !marked;
             const joint = Math.round(bx + (bX - bx) * 0.58);
             const foreShoulder = x >= joint;
+            const fieldCourse = mod(
+              Math.floor(x / 32) + (y < (by + bY) / 2 ? 0 : 1),
+              3,
+            );
+            const fieldTop = marked
+              ? hi
+              : deck
+                ? hi + (fieldCourse === 1 ? 1 : 0)
+                : hi + (foreShoulder ? 1 : 0);
+            const fieldSeam =
+              deck && !marked && mod(x, fieldCourse === 2 ? 64 : 32) === 0;
             const endInset = fromEnd < 4 ? 2 : 0;
             const shoulder = distance >= 2 + endInset && !serviceBelt;
-            column(
-              `${family}:roof-pressure-tray`,
-              "core",
-              "secondary",
-              x,
-              y,
-              hi - 5,
-              hi - 3,
-              family,
-            );
             column(
               `${family}:roof-subframe`,
               "frame",
@@ -861,10 +959,17 @@ export function shipVisualLayersR002(
                 x,
                 y,
                 hi - 3,
-                hi + (foreShoulder ? 1 : 0),
+                fieldSeam ? hi - 1 : fieldTop,
                 family,
               );
-              if (x >= joint - 2 && x < joint + 2 && distance >= 4)
+              if (
+                !deck &&
+                !marked &&
+                x >= joint - 2 &&
+                x < joint + 2 &&
+                distance >= 4 &&
+                !serviceBelt
+              )
                 column(
                   `${family}:roof-shoulder-overlap`,
                   "plate",
@@ -889,7 +994,8 @@ export function shipVisualLayersR002(
               );
               // Continuous pressure floor remains below the 3-cell well. Two service
               // sections have distinct functions, not an A/B/C/D wallpaper cadence.
-              const cassetteX = trayCassetteX ?? Number.NEGATIVE_INFINITY;
+              const cassetteX =
+                trayCassetteX.get(centreY) ?? Number.NEGATIVE_INFINITY;
               const cassette = x >= cassetteX && x < cassetteX + 12;
               if (cassette) {
                 column(
@@ -976,6 +1082,122 @@ export function shipVisualLayersR002(
             family,
           );
         }
+      }
+    // Seal the continuous tray after facade voids too: an outboard route can share
+    // columns with a side cassette, whose later compacted void must never pierce it.
+    surfaceRole = "roof";
+    shellNormal = undefined;
+    roofChart = undefined;
+    if (view === "flight" || !deck)
+      for (let y = by; y < bY; y++)
+        for (let x = bx; x < bX; x++) {
+          const p: Pt = [x + 0.5, y + 0.5],
+            world: Pt = [p[0] / 16, p[1] / 16];
+          if (
+            !insidePolygon(poly, p[0], p[1]) ||
+            holes.some((h) => insidePolygon(h, p[0], p[1]))
+          )
+            continue;
+          const tile = tileCells
+            .get(`${Math.floor(world[0])},${Math.floor(world[1])}`)
+            ?.find((t) => insidePolygon(t.poly, world[0], world[1]))?.tile;
+          if (!tile || tile.bow) continue;
+          const hi = Math.ceil(bowHeights(tile, volume.height, world)[1]);
+          column(
+            `${family}:roof-pressure-tray`,
+            "core",
+            "secondary",
+            x,
+            y,
+            hi - 5,
+            hi - 3,
+            family,
+          );
+        }
+    // Functional pockets are an explicit final overlay after all continuous route
+    // courses. Per-column compaction must not reorder a later route void over a lid.
+    surfaceRole = "roof";
+    shellNormal = undefined;
+    roofChart = undefined;
+    if (view === "flight" || !deck)
+      for (const patch of roofPatches) {
+        const [a, b, A, B] = patch.bounds;
+        for (let y = b; y < B; y++)
+          for (let x = a; x < A; x++) {
+            const p: Pt = [x + 0.5, y + 0.5];
+            const world: Pt = [p[0] / 16, p[1] / 16];
+            if (
+              !insidePolygon(poly, p[0], p[1]) ||
+              holes.some((h) => insidePolygon(h, p[0], p[1]))
+            )
+              continue;
+            const tile = tileCells
+              .get(`${Math.floor(world[0])},${Math.floor(world[1])}`)
+              ?.find((t) => insidePolygon(t.poly, world[0], world[1]))?.tile;
+            if (
+              !tile ||
+              tile.bow ||
+              roofMarkings.some((r) => inRect(p[0], p[1], r, 1)) ||
+              roofObstacles.some((r) => inRect(p[0], p[1], r, 2))
+            )
+              continue;
+            const hi = Math.ceil(bowHeights(tile, volume.height, world)[1]);
+            const rim = x < a + 2 || x >= A - 2 || y < b + 2 || y >= B - 2;
+            column(
+              `${family}:roof-functional-pocket`,
+              "void",
+              "dark",
+              x,
+              y,
+              hi - 2,
+              hi + 2,
+              family,
+            );
+            if (rim)
+              column(
+                `${family}:roof-pocket-housing`,
+                "frame",
+                "trim",
+                x,
+                y,
+                hi - 3,
+                hi + 1,
+                family,
+              );
+            else if (patch.kind === "access") {
+              column(
+                `${family}:roof-offset-access`,
+                "service",
+                "accent",
+                x,
+                y,
+                hi - 2,
+                hi - 1,
+                family,
+              );
+              if (x >= A - 6 && x < A - 4 && y >= b + 5 && y < B - 5)
+                column(
+                  `${family}:roof-pocket-latch`,
+                  "service",
+                  "metal",
+                  x,
+                  y,
+                  hi - 1,
+                  hi,
+                  family,
+                );
+            } else if (mod(x - a, 6) < 2)
+              column(
+                `${family}:roof-pocket-fin`,
+                "service",
+                "metal",
+                x,
+                y,
+                hi - 2,
+                hi,
+                family,
+              );
+          }
       }
     // Seal the middle course after all facade voids. This is a distinct final source layer,
     // so column compaction cannot reorder an outer cassette void over pressure backing.
@@ -1340,10 +1562,12 @@ export function shipVisualLayersR002(
         capbox[4] -= 1;
       }
       box(`${id}:cap`, "frame", "trim", capbox, family);
-      for (const [u, U] of [
-        [0, Math.min(3, span)],
-        [Math.max(0, span - 3), span],
-      ])
+      for (const [u, U] of jamb || span < 16
+        ? []
+        : [
+            [0, Math.min(3, span)],
+            [Math.max(0, span - 3), span],
+          ])
         box(
           `${id}:shaped-end`,
           "frame",
@@ -1416,7 +1640,14 @@ export function shipVisualLayersR002(
         `post:${i}`,
         "frame",
         "trim",
-        [p[0] * 16 - 2, p[1] * 16 - 2, ft, p[0] * 16 + 2, p[1] * 16 + 2, cap],
+        [
+          p[0] * 16 - 2,
+          p[1] * 16 - 2,
+          ft,
+          p[0] * 16 + 2,
+          p[1] * 16 + 2,
+          ft + 22,
+        ],
         `post:${i}`,
       );
   }

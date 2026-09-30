@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "4d39dcc60bd19ef9c8cdc57c856271c168d711af6066da078d76bb860fe16520",
+  "compilerSha256": "c58da74e4a3d0d877bb408861402cb846fef89e0e076ba9d6a3e2f4c5f35ef67",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -16,7 +16,15 @@
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "b178b91791fa70e98c8858ea835677075de6e5a077f0de1daabb071f315a8c97"
+      "sha256": "a324b320fdebdb7778b642e904aa7e72a54059f7d8bf44216081244920423129"
+    },
+    {
+      "path": "packages/sim/src/ship-dresser.ts",
+      "sha256": "6a78913796d4e7e2ec64278c57a105a55cb0aec7984acd530eabac56de9354fb"
+    },
+    {
+      "path": "packages/content/src/ship-prefab.ts",
+      "sha256": "d5c9fd0ca77bfe5fc726a78af0e92d1846b2f2f32f9e17114f5c8430b7db3d22"
     },
     {
       "path": "packages/sim/src/ship-visual-sampler.ts",

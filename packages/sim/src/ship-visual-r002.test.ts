@@ -1,6 +1,11 @@
 import { describe, expect, it } from "vitest";
 import { insidePolygon } from "@sidereal/content/construction-grammar";
-import { volumeGeometry } from "@sidereal/content/ship-prefab";
+import {
+  volumeGeometry,
+  placeMount,
+  placeMountTile,
+} from "@sidereal/content/ship-prefab";
+import { dressShip } from "./ship-dresser";
 import { polygonBoundarySample } from "./ship-visual-sampler";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
@@ -187,5 +192,111 @@ describe("versioned reference recipes", () => {
     expect(() =>
       compileShipVisual(doc, catalog, "deck", "federation", undefined, "r003"),
     ).toThrow("Unknown");
+  });
+  it("leaves two exposed backed roof service routes beside actual fittings and preserves marking fields", () => {
+    for (const id of ["fed.s.wren", "fed.m.crest"]) {
+      const ship = PREFAB_SHIPS.find((d) => d.id === id)!;
+      const geoms = ship.volumes.map(volumeGeometry);
+      const roof = compileShipVisual(
+        ship,
+        catalog,
+        "flight",
+        "federation",
+        undefined,
+        "r002",
+      );
+      const obstacles = [
+        ...ship.mounts
+          .filter((m) => m.attach === "top")
+          .map(
+            (m) => placeMount(m, catalog.get(m.component), geoms, ship).rect,
+          ),
+        ...(ship.mountTiles ?? []).map((t) => placeMountTile(t, geoms).rect),
+      ];
+      const markings = dressShip(ship, { catalog })
+        .decals.filter((d) => d.normal[2] > 0.99)
+        .map((d) => [
+          Math.min(...d.corners.map((p) => p[0])),
+          Math.min(...d.corners.map((p) => p[1])),
+          Math.max(...d.corners.map((p) => p[0])),
+          Math.max(...d.corners.map((p) => p[1])),
+        ]);
+      const hull = geoms.find((g) => g.volume.id === "hull")!;
+      const outline = hull.outline!.outer.map(([x, y]): [number, number] => [
+        x * 16,
+        y * 16,
+      ]);
+      const mid = (hull.bounds[1] + hull.bounds[3]) * 8;
+      const separation = (hull.bounds[3] - hull.bounds[1]) * 16 * 0.17;
+      const counts = [0, 0];
+      for (const c of roof.cells.values()) {
+        if (
+          c.family !== "volume:hull" ||
+          c.surfaceRole !== "roof" ||
+          c.slot === "primary" ||
+          c.z < hull.z[1] - 5 ||
+          roof.cells.has(visualCellKey(c.x, c.y, c.z + 1)) ||
+          Math.abs(c.y - mid) < separation ||
+          polygonBoundarySample([c.x + 0.5, c.y + 0.5], outline).distance < 6
+        )
+          continue;
+        const x = (c.x + 0.5) / 16,
+          y = (c.y + 0.5) / 16;
+        if (
+          [...obstacles, ...markings].some(
+            (r) =>
+              x >= r[0] - 0.125 &&
+              x < r[2] + 0.125 &&
+              y >= r[1] - 0.125 &&
+              y < r[3] + 0.125,
+          )
+        )
+          continue;
+        counts[c.y < mid ? 0 : 1]++;
+        expect(
+          [1, 2, 3, 4].some((n) =>
+            roof.cells.has(visualCellKey(c.x, c.y, c.z - n)),
+          ),
+        ).toBe(true);
+      }
+      // These are surviving top-facing cells beyond the occupied centreline, not
+      // source-layer names or a count of a well hidden beneath an installed turret.
+      expect(counts[0]).toBeGreaterThan(200);
+      expect(counts[1]).toBeGreaterThan(200);
+      for (const layer of roof.layers.filter((l) =>
+        l.id.endsWith(":roof-protected-channel"),
+      )) {
+        const [x, y, , X, Y] = layer.bounds;
+        for (let a = x; a < X; a++)
+          for (let b = y; b < Y; b++)
+            expect(
+              markings.some(
+                (r) =>
+                  (a + 0.5) / 16 >= r[0] &&
+                  (a + 0.5) / 16 < r[2] &&
+                  (b + 0.5) / 16 >= r[1] &&
+                  (b + 0.5) / 16 < r[3],
+              ),
+            ).toBe(false);
+      }
+      const deck = compileShipVisual(
+        ship,
+        catalog,
+        "deck",
+        "federation",
+        undefined,
+        "r002",
+      );
+      expect(
+        deck.layers.some(
+          (l) => l.id.endsWith(":shaped-end") && !l.id.startsWith("partition:"),
+        ),
+      ).toBe(false);
+      expect(
+        deck.layers
+          .filter((l) => l.id.startsWith("post:"))
+          .every((l) => l.bounds[5] <= 25),
+      ).toBe(true);
+    }
   });
 });
