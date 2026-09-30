@@ -114,6 +114,14 @@ describe("prefab door specs", () => {
     const before = scene.meshes.length;
     for (const bad of [
       { ...geom, primitives: [...geom.primitives, geom.primitives[0]] },
+      { ...geom, bounds: [NaN, ...geom.bounds.slice(1)] } as GlbGeometry,
+      { ...geom, bounds: geom.bounds.slice(0, 5) } as GlbGeometry,
+      {
+        ...geom,
+        primitives: geom.primitives.map((p, i) =>
+          i ? p : { ...p, indices: new Uint32Array() },
+        ),
+      },
       {
         ...geom,
         bounds: [-0.6, -0.5, -0.0455, 0.5, 0.5, 0.0455],

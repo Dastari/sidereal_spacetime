@@ -4,7 +4,7 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "ea5b94d6a07f911d65a5c4be296e74eb3e720edd958379ba8e0a2c99a1d8d876",
+  "compilerSha256": "5e783959d052467c5ed1a76789c1b1310ca00ebabd37923aeb626f26ed83232e",
   "profilesSha256": "3b9e8ef8f4cddf2458fa258d1701abf5001d35dcbfb9ec70a69d1979a05de3d2",
   "slots": [
     "primary",
@@ -336,8 +336,8 @@
         1.4375
       ],
       "url": "/assets/ship-components/r006/autocannon.lg.glb",
-      "sha256": "b51dcf7f91f9eec8bb5c7316f2886feca9e7996d8987250f801a1c3202903117",
-      "bytes": 70876
+      "sha256": "dd9eed6175ba17cf3d60c117785c10d336678afde9f5532775e353a0dcba075e",
+      "bytes": 86412
     },
     {
       "kind": "component",
@@ -352,8 +352,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/autocannon.md.glb",
-      "sha256": "b3199595ba2859320c2185f01a71523d27064f9f59e20e49f0764b14c76ab344",
-      "bytes": 68080
+      "sha256": "927ea2a0eede67b38c34503e58bdd4fa62a46c9d5419d24c692310860b9ead52",
+      "bytes": 82648
     },
     {
       "kind": "component",
@@ -368,8 +368,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/autocannon.sm.glb",
-      "sha256": "4bcc62c6e1aa993ddb2ac1f715f2410de6efd55ee09d78fb76402093593a9643",
-      "bytes": 52592
+      "sha256": "58677e87ad2cafa67d1c334c2ef4f016a764ad7e17dafe962c85696d79fe7d4f",
+      "bytes": 71572
     },
     {
       "kind": "component",
@@ -640,8 +640,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/console.navigation.sm.glb",
-      "sha256": "a31f4f3c80c3621f3ebe47841e93cbf071372081c20cde9d60886271608d3ad3",
-      "bytes": 54480
+      "sha256": "38040bf3158cf13f0953f5af7d5ed5f1265bf8103906d2dd56e88316c274194a",
+      "bytes": 49500
     },
     {
       "kind": "component",
@@ -736,8 +736,8 @@
         1.4375
       ],
       "url": "/assets/ship-components/r006/docking-clamp.lg.glb",
-      "sha256": "8c7df2e9dbf6194f479dd1eee360e42e5610c6a6e0885ccabb0ad86d3ce6809d",
-      "bytes": 56928
+      "sha256": "b06bf7fa734cf1c0411e3772993e05cb6e622d82f23370af6a4540c3e5516574",
+      "bytes": 72464
     },
     {
       "kind": "component",
@@ -752,8 +752,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/docking-clamp.md.glb",
-      "sha256": "d62b3ab14d3c9452d9173e9d0afb1627e1258c434f4a0be83babdd3b5332c410",
-      "bytes": 54136
+      "sha256": "4a7fee47d207a93d131d3652fef20720a039c31df02b855af697e99af49d3c56",
+      "bytes": 69284
     },
     {
       "kind": "component",
@@ -832,8 +832,8 @@
         1.4375
       ],
       "url": "/assets/ship-components/r006/flak-cannon.lg.glb",
-      "sha256": "966fbccb02001101b5aef888d0bf56cf49fb33b154620b0fd07ab873dcc1a7dc",
-      "bytes": 58204
+      "sha256": "dc3d8765475657a758e3b39de8dd00c17c4253d5a6bae1553bf912e3e1ca0ca8",
+      "bytes": 73740
     },
     {
       "kind": "component",
@@ -848,8 +848,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/flak-cannon.md.glb",
-      "sha256": "a3dd621d8b2e36653ee0e91f46cdffd2a96d04dc1d1655e1799c4816795e2c3e",
-      "bytes": 54520
+      "sha256": "39a93e287384e3a7dd719ca5424b0a62194272a5524dcfa610cce1e6c61e56b7",
+      "bytes": 69084
     },
     {
       "kind": "component",
@@ -864,8 +864,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/flak-cannon.sm.glb",
-      "sha256": "cca9373c8acdf1f820627a54d8eef4e0d6e5c827f505f5055aad99db7f0b7d3a",
-      "bytes": 40440
+      "sha256": "aac1d0b5967bbea461ed25ed07c01b4e2a39d56edca5e93c575654d2ad392c55",
+      "bytes": 59292
     },
     {
       "kind": "component",
@@ -988,12 +988,12 @@
         0,
         -0.4375,
         0.8125,
-        0.8625,
+        0.8485,
         0.375
       ],
       "url": "/assets/ship-components/r006/heat-sink.md.glb",
-      "sha256": "c98a774d00b69b3bcdb8794380dbc9d9190354743f74c585ad6e0fd2ebe7c2b9",
-      "bytes": 33484
+      "sha256": "7223b1d01c3d86e79760aaa2cf0c9e13acce95bedb06c89ce8298c3f40bed898",
+      "bytes": 47924
     },
     {
       "kind": "component",
@@ -1004,12 +1004,12 @@
         0,
         -0.4375,
         0.375,
-        0.7331,
+        0.7178,
         0.375
       ],
       "url": "/assets/ship-components/r006/heat-sink.sm.glb",
-      "sha256": "f6b880fed906530abd6467848364ed40756657b9f312ad17130671da9d2dc78a",
-      "bytes": 27344
+      "sha256": "09ce811467521f63e1a200c4490b31ae17bb7312cddc56138e477a77b1ad7257",
+      "bytes": 48752
     },
     {
       "kind": "component",
@@ -1168,8 +1168,8 @@
         1.4375
       ],
       "url": "/assets/ship-components/r006/laser-cannon.lg.glb",
-      "sha256": "4c5422a072acaf2cbab0421c5a6f4ead6038d6dce3d5e02ef0e5dfc4f83e9837",
-      "bytes": 57944
+      "sha256": "20d3594c2ba43ec762f8816f167bbe023ea0bb10fc4f84444c93751b2d2551f4",
+      "bytes": 73488
     },
     {
       "kind": "component",
@@ -1184,8 +1184,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/laser-cannon.md.glb",
-      "sha256": "f411f61106267d6ed4240d60aed6e9d04e15c21e895176a6831151cfd23adbcb",
-      "bytes": 54300
+      "sha256": "0384b76c038c8072ce13b61af2bfa962b3ff6ac076377fe1d55e869852664231",
+      "bytes": 68868
     },
     {
       "kind": "component",
@@ -1200,8 +1200,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/laser-cannon.sm.glb",
-      "sha256": "9754ba9d6a2fd8a6af99d6dc0a0471c3da705cc6591114d376e92fbf8a5fdb6b",
-      "bytes": 40644
+      "sha256": "1d858600ac07951fd26148e3dc42625a7609b3e44aeb5f0745e0fd14d7ba087a",
+      "bytes": 57864
     },
     {
       "kind": "component",
@@ -1408,8 +1408,8 @@
         1.4375
       ],
       "url": "/assets/ship-components/r006/missile-pod.lg.glb",
-      "sha256": "34e99992660e610bc1ff85f24d53539ab77b83134cf8aef5ab5e186f65dd4fc9",
-      "bytes": 47492
+      "sha256": "ffd7c5a8ba4b2bf87c10d947d16dc3577dfc70552ec6429c47c8008cc7055c89",
+      "bytes": 63976
     },
     {
       "kind": "component",
@@ -1424,8 +1424,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/missile-pod.md.glb",
-      "sha256": "ec3d2da885593b48c02e8e97d553d6b4d964110d1d670a3d4e3ab388b56ffca4",
-      "bytes": 41572
+      "sha256": "ce32d3d2b38979f6fa75ae668144b587e935c7183f530e5244ec05a79dfd41f1",
+      "bytes": 59604
     },
     {
       "kind": "component",
@@ -1440,8 +1440,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/missile-pod.sm.glb",
-      "sha256": "20842ccb85ef4b95eae57af15cb168e01f5eada0c4f26df7c4d288035f0d9895",
-      "bytes": 34348
+      "sha256": "c3b9e232a0a9d7776eb20a62ab2b7f30ee89e0fa09612eaf2267b1d345bc476e",
+      "bytes": 50272
     },
     {
       "kind": "component",
@@ -1520,8 +1520,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/point-defense.md.glb",
-      "sha256": "56f8bc9537bf200b4156683c218f3d0adfbaba2967b20ce3ee88548b0d72935c",
-      "bytes": 95196
+      "sha256": "267a9f757b8c09fe2f8ce1782777848dfab5a0da1795ad4d389c569d1fedb11a",
+      "bytes": 109768
     },
     {
       "kind": "component",
@@ -1536,8 +1536,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/point-defense.sm.glb",
-      "sha256": "b6ffa43b142d37a0aa80f54e78fec57a5361a4e8b69190d005b40a16770dcace",
-      "bytes": 75428
+      "sha256": "1f3a5ced386108a9d92ab1f8fc311de7df096d75b0c76d694b58f59aba4268a1",
+      "bytes": 94928
     },
     {
       "kind": "component",
@@ -1580,12 +1580,12 @@
         0,
         -1.5,
         1.5,
-        0.8194,
+        0.7987,
         1.5
       ],
       "url": "/assets/ship-components/r006/radiator.lg.glb",
-      "sha256": "6e2466512be34737f9c53da5480e300373cb84e35c1eac432b9d741e7de03663",
-      "bytes": 33588
+      "sha256": "67d0feb26d8b53326969de5499331be3000444cd8f19f3d180d5bbeedd216baa",
+      "bytes": 47860
     },
     {
       "kind": "component",
@@ -1596,12 +1596,12 @@
         0,
         -1,
         1,
-        0.6037,
+        0.5815,
         1
       ],
       "url": "/assets/ship-components/r006/radiator.md.glb",
-      "sha256": "c5a89cd81ddb094f3df4551e64c80270f429e3889d6fb92053776d4bc860bbe8",
-      "bytes": 32156
+      "sha256": "971880f4abd31eef6695057618dd5df0356504d2bc82f4c00b4bb25fa811d442",
+      "bytes": 47844
     },
     {
       "kind": "component",
@@ -1612,12 +1612,12 @@
         0,
         -0.5,
         0.5,
-        0.3881,
+        0.3734,
         0.5
       ],
       "url": "/assets/ship-components/r006/radiator.sm.glb",
-      "sha256": "10a9e78a48cdede9a56ad7be50c3a66145a439b24d85728d715ec10f8a902ab1",
-      "bytes": 27976
+      "sha256": "b304e75f3b1de8438613881f3234bfd018b20935ff6656e291f60cb123029d61",
+      "bytes": 48996
     },
     {
       "kind": "component",
@@ -1632,8 +1632,8 @@
         1.4375
       ],
       "url": "/assets/ship-components/r006/railgun.lg.glb",
-      "sha256": "fcbeb27e7f80ed7b4d25f3921febc43ce90b23c588f4014c78c7811c4c65a651",
-      "bytes": 45548
+      "sha256": "91f4095a06241ab701c3f10298b99798195e8f58c3da9c5827c57fa787108faa",
+      "bytes": 61080
     },
     {
       "kind": "component",
@@ -1648,8 +1648,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/railgun.md.glb",
-      "sha256": "7e9bd557dadb5ffd2313ba1f1195f05ed0d464b08ea4ae320c07b3c98266d734",
-      "bytes": 42720
+      "sha256": "16de62a87fb7fba3adb22e06e926af248b2544e759d01cb9195a37d1b3f7bfe9",
+      "bytes": 57424
     },
     {
       "kind": "component",
@@ -1744,8 +1744,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/relay-beacon.md.glb",
-      "sha256": "8e117ac0a016c6e811d8ab70f53f65aa5aac4fa6dee485ed4b1ba7b14bf61b2b",
-      "bytes": 54128
+      "sha256": "e7e748daed4b00b874d7fd214d3747267b950d785ccda59fb5857988121c332c",
+      "bytes": 68824
     },
     {
       "kind": "component",
@@ -1760,8 +1760,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/relay-beacon.sm.glb",
-      "sha256": "2932f9a637f26b510e103aeb229fbcd4d86e21f4adc9614877deb5c549482f65",
-      "bytes": 43160
+      "sha256": "1bbfe46f13a4d6b395e5156566e195720fc5b33257c8a840656e469bf07396c6",
+      "bytes": 59720
     },
     {
       "kind": "component",
@@ -1888,8 +1888,8 @@
         1.4375
       ],
       "url": "/assets/ship-components/r006/sensor-dish.lg.glb",
-      "sha256": "c558f4ed25dfd3a5c2a3024004e3ec095a60c577fea4da84ac487a5817df86cb",
-      "bytes": 57068
+      "sha256": "a64e9531867aa8724cccf738ded3d5871c60c1c535d9df245bd4cd6d61e885bf",
+      "bytes": 72612
     },
     {
       "kind": "component",
@@ -1904,8 +1904,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/sensor-dish.md.glb",
-      "sha256": "7a9ab90c7a8c9cd810956b6051a950a34a28e87fe833279eb8c420a16eb4537a",
-      "bytes": 54296
+      "sha256": "a66420271c4ce6347341441d3bb20f156d2761e0cc9b4a57259036ada1a481ca",
+      "bytes": 69444
     },
     {
       "kind": "component",
@@ -1920,8 +1920,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/sensor-dish.sm.glb",
-      "sha256": "44d931877c52ede51544fe62015a25205c22b3491ea15436a6ebaea064a743af",
-      "bytes": 43156
+      "sha256": "b97d4c5eaa151100e659d59383e85d846bc6c2ba5742050c710a2588a03f5623",
+      "bytes": 60556
     },
     {
       "kind": "component",
@@ -1936,8 +1936,8 @@
         1.4375
       ],
       "url": "/assets/ship-components/r006/shield-emitter.lg.glb",
-      "sha256": "b344be3864b5bb7adb901597f44275229255fad6e2e7ec49be17a4efd1c0ce31",
-      "bytes": 56996
+      "sha256": "704aa13a4783cb142822186434b4c053f955e27860a000b4e0c8c00f3886ab49",
+      "bytes": 72532
     },
     {
       "kind": "component",
@@ -1952,8 +1952,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/shield-emitter.md.glb",
-      "sha256": "a7ea4ff4f1a6dfdf40f38b9aa1e1042cc7abe69f49baac1c0aeb2ec06b74af03",
-      "bytes": 54136
+      "sha256": "ca2a7e2d5baf1480d8be1b4b038def1018263381b6210dbaad4574edf76469fb",
+      "bytes": 68704
     },
     {
       "kind": "component",
@@ -1968,8 +1968,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/shield-emitter.sm.glb",
-      "sha256": "09241ee97bd19f686487e20f8ebfeadeb3d2677b53f00cb6cf8b1762781105c7",
-      "bytes": 43164
+      "sha256": "810e2b494b40e7180d4458c6a989059fe512420790d2e16ea8ef150c67261ad5",
+      "bytes": 59852
     },
     {
       "kind": "component",
@@ -2208,8 +2208,8 @@
         1.4375
       ],
       "url": "/assets/ship-components/r006/tractor-projector.lg.glb",
-      "sha256": "4f3847e280fd522329d00f9284fa680c541b560214a81324d5361b17284f6903",
-      "bytes": 57116
+      "sha256": "35cc6b754922439e54b8b09bc6b3751da66f5a9f7413423bfcb48bf3c7f7de39",
+      "bytes": 72652
     },
     {
       "kind": "component",
@@ -2224,8 +2224,8 @@
         0.9375
       ],
       "url": "/assets/ship-components/r006/tractor-projector.md.glb",
-      "sha256": "ee8031f435914f0c241416a123c97f4948d4e85ef0b24f92ec018915c0b413fc",
-      "bytes": 54288
+      "sha256": "1ede78cbcdf15ee13b4b204add0a0a8a2f01f3286992d19f7b1f5c33bd23b73b",
+      "bytes": 68992
     },
     {
       "kind": "component",
@@ -2240,8 +2240,8 @@
         0.4375
       ],
       "url": "/assets/ship-components/r006/tractor-projector.sm.glb",
-      "sha256": "b520f54ccc4b04c68df842739bd289612deecd0d872e8f6626a96ea634627b70",
-      "bytes": 40928
+      "sha256": "690d7acaf9c0f501425d7b1604399a97b5da8ebfbf3b649350253ec42d1ff6a5",
+      "bytes": 59908
     },
     {
       "kind": "component",

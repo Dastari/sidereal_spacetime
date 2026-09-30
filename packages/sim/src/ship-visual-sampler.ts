@@ -37,6 +37,9 @@ export function polygonBoundarySample(
 ) {
   let distance = Infinity,
     alongAxis = 0,
+    edgeIndex = 0,
+    edgeT = 0,
+    edgeLength = 0,
     normalHint: [number, number, number] = [0, 0, 0];
   for (let i = 0; i < poly.length; i++) {
     const a = poly[i],
@@ -54,11 +57,14 @@ export function polygonBoundarySample(
     const d = Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy);
     if (d < distance) {
       distance = d;
+      edgeIndex = i;
+      edgeT = t;
+      edgeLength = length;
       alongAxis = Math.abs(dx) >= Math.abs(dy) ? 0 : 1;
       normalHint = [dy / (length || 1), -dx / (length || 1), 0];
     }
   }
-  return { distance, alongAxis, normalHint };
+  return { distance, alongAxis, normalHint, edgeIndex, edgeT, edgeLength };
 }
 export function polygonBoundaryDistance(
   p: readonly [number, number],

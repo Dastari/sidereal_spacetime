@@ -127,6 +127,82 @@ describe("versioned reference recipes", () => {
       );
     }
   });
+  it("replaces exposed top and lower rim courses with real supported shoulder cross-sections", () => {
+    for (const ship of [doc, PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!])
+      for (const view of ["deck", "flight"] as const) {
+        const result = compileShipVisual(
+          ship,
+          catalog,
+          view,
+          "federation",
+          undefined,
+          "r002",
+        );
+        const shoulders = result.layers.filter((l) =>
+          l.id.endsWith(":molded-shoulder"),
+        );
+        const shoes = result.layers.filter((l) =>
+          l.id.endsWith(":molded-sill-shoulder"),
+        );
+        expect(shoulders.length).toBeGreaterThan(0);
+        expect(shoes.length).toBeGreaterThan(0);
+        let outer = 0,
+          exposedUpper = 0,
+          exposedLower = 0;
+        for (const l of [...shoulders, ...shoes]) {
+          const volume = ship.volumes.find(
+            (v) => l.support === `volume:${v.id}`,
+          )!;
+          const poly = volumeGeometry(volume).outline!.outer.map(
+            ([x, y]): [number, number] => [x * 16, y * 16],
+          );
+          expect(l.role).toBe("core");
+          expect(l.normalHint![2]).toBeGreaterThan(0);
+          for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+            for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+              const d = polygonBoundarySample(
+                [x + 0.5, y + 0.5],
+                poly,
+              ).distance;
+              expect(d).toBeLessThan(4);
+              if (d < 1) outer++;
+              const top = result.cells.get(
+                visualCellKey(x, y, l.bounds[5] - 1),
+              );
+              if (
+                top &&
+                top.normalChart === l.normalChart &&
+                !result.cells.has(visualCellKey(x, y, top.z + 1))
+              ) {
+                expect(top.normalFaces! & (1 << 5)).not.toBe(0);
+                expect(top.role).toBe("core");
+                if (l.id.endsWith(":molded-shoulder")) exposedUpper++;
+                else exposedLower++;
+              }
+            }
+        }
+        // This is the actual exposed outer row and shoe, not merely inboard layers.
+        expect(outer).toBeGreaterThan(50);
+        expect(exposedUpper).toBeGreaterThan(100);
+        expect(exposedLower).toBeGreaterThan(50);
+        const cell = [...result.cells.values()].find(
+          (c) => c.normalChart?.includes(":shoulder:") && c.normalFaces! & 32,
+        )!;
+        const removed = visualCellKey(cell.x, cell.y, cell.z);
+        const cut = compileShipVisual(
+          ship,
+          catalog,
+          view,
+          "federation",
+          new Set([removed]),
+          "r002",
+        );
+        expect(cut.cells.has(removed)).toBe(false);
+        // A fresh underlying top is a real hard cut, never the intact shoulder normal.
+        const below = cut.cells.get(visualCellKey(cell.x, cell.y, cell.z - 1));
+        if (below?.normalChart) expect(below.normalFaces! & 32).toBe(0);
+      }
+  }, 20000);
   it("retains the delivered r001 profile and exact Wren deck volume", () => {
     expect(visualProfilesSha256()).toBe(
       "8c9a58bc361116c1ab663dcad5dd2b05c06fdf1cd7d9711339cdbc714b6649d6",

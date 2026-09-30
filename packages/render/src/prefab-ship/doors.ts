@@ -379,6 +379,7 @@ export function validateReferenceDoorLeaf(geometry: GlbGeometry): void {
       [...p.positions, ...p.normals, ...Array.from(p.uvs)].some(
         (n) => !Number.isFinite(n),
       ) ||
+      !p.indices.length ||
       p.indices.length % 3 ||
       [...p.indices].some((i) => i >= p.positions.length / 3)
     )
@@ -391,6 +392,8 @@ export function validateReferenceDoorLeaf(geometry: GlbGeometry): void {
   }
   const bounds = [...low, ...high];
   if (
+    geometry.bounds.length !== 6 ||
+    Array.from(geometry.bounds).some((v) => !Number.isFinite(v)) ||
     bounds.some((v, i) => Math.abs(v - geometry.bounds[i]) > 0.00002) ||
     [0, 1, 3, 4].some(
       (i) => Math.abs(bounds[i] - (i < 3 ? -0.5 : 0.5)) > 0.00002,

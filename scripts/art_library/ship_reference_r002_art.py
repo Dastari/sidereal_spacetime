@@ -80,15 +80,20 @@ def pilot_seat(K,w,d,h):
 
 def navigation_station(K,w,d,h):
     p=K.Piece("reference.r002.navigation","equipment","interior",(w,d,h)); b=p.b
-    dd=d//2+2
-    for x in (1,w-4):b(x,1,0,x+3,dd-1,12,"primary")
-    b(4,1,2,w-4,2,9,"secondary")
-    b(1,dd-3,12,w-1,dd+1,14,"trim").b(2,3,13,w-2,dd,14,"primary")
+    # Measured r005 seated-body derivative: operator edge at artY6 leaves the
+    # actual torso/thigh corridor free. Original chair and catalog bounds stay.
+    for x in (1,w-2):b(x,1,0,x+1,5,12,"primary")
+    b(2,1,2,w-2,2,9,"secondary")
+    b(1,3,12,w-1,6,14,"trim").b(2,3,13,w-2,6,14,"primary")
     b(2,1,12,w-2,4,h,"primary").b(2.7,3,14,w-2.7,4.7,h-1,"trim")
     b(3.5,4.4,15,w-3.5,4.65,h-2,"dark")
     b(3.5,4.65,15,w-3.5,4.75,h-2,"emit_a")
     for row in range(2):
-        for x in range(3,int(w)-3,3):b(x,dd-4+row*1.3,14,x+1.5,dd-3+row*1.3,14.5,"metal")
+        for x in range(3,int(w)-3,3):b(x,3+row*1.3,14,x+1.5,4+row*1.3,14.5,"metal")
+    # Foot support matches the independently measured candidate sit root lift.
+    # It is authored station geometry, not a collider/state or walkable-layout edit.
+    b(w/2-4.2,4.4,0,w/2+4.2,9.2,4.5,"trim")
+    b(w/2-4.2,4.4,4.5,w/2+4.2,9.2,4.7,"metal")
     sx0,sx1=w//2-4,w//2+4
     b(sx0+2,d-5,0,sx1-2,d-3,5.5,"metal")
     b(sx0,d-8,5.5,sx1,d-1,7.5,"primary")
@@ -267,12 +272,11 @@ def enclosed_weapon(original,kind):
     # Compact dark breech remains visible between two stepped partial cheek shrouds.
     # The front shoulder lowers toward the payload instead of a tall rectangular tower.
     b(c-W*.28,c-W*.20,H*.21,c+W*.24,c+W*.20,H*.59,"secondary")
+    # Each cheek is ONE authored clipped wedge, not two stacked pale blocks.
     for ya,yb in ((c-W*.30,c-W*.20),(c+W*.20,c+W*.30)):
-        b(c-W*.28,ya,H*.23,c-W*.04,yb,H*.63,"primary")
-        b(c-W*.04,ya,H*.23,c+W*.24,yb,H*.46,"primary")
+        b(c-W*.28,ya,H*.23,c+W*.24,yb,H*.63,"primary.receiver-cover")
         b(c-W*.23,ya,H*.31,c-W*.11,yb,H*.46,"trim")
         b(c-W*.21,ya,H*.34,c-W*.13,yb,H*.43,"accent")
-    b(c-W*.23,c-W*.15,H*.59,c-W*.04,c+W*.15,H*.65,"primary")
     # Recessed receiver access, mechanical latch, and a protected exposed top saddle.
     b(c-W*.32,c-W*.15,H*.28,c-W*.29,c+W*.15,H*.53,"trim")
     b(c-W*.33,c-W*.10,H*.32,c-W*.32,c+W*.10,H*.49,"accent")
@@ -321,13 +325,9 @@ def enclosed_thermal(original):
         for k in range(3):
             xx=a+(A-a)*k/3
             b(xx,y+d*.20,z+h*.30,xx+(A-a)*.18,Y-d*.20,z+h*.54,"metal")
-    # Fused shoulder cheeks and front/rear header housings protect the cooling cores.
-    for a,A in ((x,x+w*.12),(X-w*.12,X)):
-        b(a,y+d*.08,z+h*.18,A,Y-d*.08,z+h*.63,"primary")
-        b(a,y+d*.16,z+h*.63,A,Y-d*.16,z+h*.69,"primary")
-    for a,A in ((y,y+d*.17),(Y-d*.17,Y)):
-        b(x+w*.10,a,z+h*.18,X-w*.10,A,z+h*.62,"primary")
-        b(x+w*.20,a,z+h*.62,X-w*.20,A,z+h*.67,"trim")
+    # One authored ring cover joins its sloping shoulders around the real thermal
+    # aperture. A lower offset rear service cover belongs to that housing.
+    b(x,y+d*.08,z+h*.18,X,Y-d*.08,z+h*.69,"primary.thermal-cover")
     b(x+w*.46,y+d*.10,z+h*.27,x+w*.54,Y-d*.10,z+h*.64,"secondary")
     b(x+w*.47,y+d*.18,z+h*.64,x+w*.53,y+d*.35,z+h*.66,"accent")
     b(x+w*.46,y,z+h*.35,x+w*.54,y+d*.02,z+h*.40,"emit_b")
@@ -345,7 +345,8 @@ E.build_piece=machinery_piece
 
 
 # Finite authored shape aliases preserve the same semantic slots and surface families.
-for alias,base in (("metal.barrel","metal"),("secondary.vessel","secondary")):
+for alias,base in (("metal.barrel","metal"),("secondary.vessel","secondary"),
+                   ("primary.receiver-cover","primary"),("primary.thermal-cover","primary")):
     E.SI[alias]=len(E.SLOTS);E.SLOTS.append(alias)
     K.SLOT_PBR[alias]=K.SLOT_PBR[base]
     for theme in K.THEMES.values():theme[alias]=theme[base]
@@ -461,6 +462,54 @@ def engine_mesh(name,boxes):
     return me
 
 
+def cover_mesh(name,box):
+    """Editable manufactured cover prism/ring with clipped ends and angled shoulders."""
+    lo=[q*E.T for q in box[:3]];hi=[q*E.T for q in box[3:6]]
+    x,y,z=lo;X,Y,Z=hi;w,d,h=X-x,Y-y,Z-z
+    # Export frame conversion may turn the original receiver's long X into Y.
+    long_axis=0 if w>=d else 1
+    cut=min(w,d)*.22
+    outline=[(x+cut,y),(X-cut,y),(X,y+cut),(X,Y-cut),
+             (X-cut,Y),(x+cut,Y),(x,Y-cut),(x,y+cut)]
+    thermal=box[6].endswith("thermal-cover")
+    def roof_height(px,py):
+        if thermal:
+            # A broad inward shoulder changes level by a meaningful fraction of the
+            # casing height, rather than rounded edges on another horizontal slab.
+            rim=min(px-x,X-px,py-y,Y-py)
+            return z+h*(.64+.36*min(1,rim/max(.01,min(w,d)*.11)))
+        t=((px-x)/w) if long_axis==0 else ((py-y)/d)
+        # Continuous stepped-breech wedge: high rear, falling forward shoulder.
+        return Z-h*.38*max(0,min(1,(t-.35)/.65))
+    bm=bmesh.new()
+    bottom=[bm.verts.new((px,py,z)) for px,py in outline]
+    top=[bm.verts.new((px,py,roof_height(px,py))) for px,py in outline]
+    def face(vs):
+        f=bm.faces.new(vs);f.material_index=E.SI[box[6]];return f
+    for i in range(8):face((bottom[i],bottom[(i+1)%8],top[(i+1)%8],top[i]))
+    if thermal:
+        # The centre is open all the way to the retained dark cassette backing/fins.
+        ix,iy,Ix,Iy=x+w*.12,y+d*.12,X-w*.12,Y-d*.12
+        ic=min(Ix-ix,Iy-iy)*.05
+        hole=[(ix+ic,iy),(Ix-ic,iy),(Ix,iy+ic),(Ix,Iy-ic),
+              (Ix-ic,Iy),(ix+ic,Iy),(ix,Iy-ic),(ix,iy+ic)]
+        inner_bottom=[bm.verts.new((px,py,z)) for px,py in hole]
+        inner_top=[bm.verts.new((px,py,Z)) for px,py in hole]
+        for i in range(8):
+            j=(i+1)%8
+            face((top[i],top[j],inner_top[j],inner_top[i]))
+            face((inner_bottom[i],inner_top[i],inner_top[j],inner_bottom[j]))
+            face((bottom[j],bottom[i],inner_bottom[i],inner_bottom[j]))
+    else:
+        face(tuple(reversed(bottom)));face(tuple(top))
+    bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
+    # Selective broad fused cover bevel; no modifier per constituent box.
+    width=min(.04,min(w,d,h)*.16)
+    bmesh.ops.bevel(bm,geom=list(bm.edges),offset=width,segments=2,affect="EDGES",clamp_overlap=True)
+    bmesh.ops.recalc_face_normals(bm,faces=list(bm.faces))
+    me=bpy.data.meshes.new(name);bm.to_mesh(me);bm.free();return me
+
+
 def authored_mesh(name,boxes,hidden=None):
     if any(k in name for k in ("ion-drive","resonance-drive","thrust-block")):
         me=engine_mesh(name,boxes)
@@ -470,10 +519,11 @@ def authored_mesh(name,boxes,hidden=None):
             dims=[box[a+3]-box[a] for a in range(3)]
             smooth_barrel=box[6]=="metal.barrel"
             smooth_vessel=box[6]=="secondary.vessel"
-            part=barrel_mesh(name,box) if smooth_barrel else pressure_mesh(name,box) if smooth_vessel else R.original_mesh(name,[box],[hidden[i]] if hidden else None)
+            shaped_cover=box[6].endswith(("receiver-cover","thermal-cover"))
+            part=cover_mesh(name,box) if shaped_cover else barrel_mesh(name,box) if smooth_barrel else pressure_mesh(name,box) if smooth_vessel else R.original_mesh(name,[box],[hidden[i]] if hidden else None)
             sub=bmesh.new();sub.from_mesh(part);bpy.data.meshes.remove(part)
             # Round only broad exposed pieces. Narrow ribs, voxel rows, keys and lenses stay sharp.
-            if not smooth_vessel and box[6].split(".")[0] in ("primary","secondary","trim","accent") and min(dims)>=1.5 and max(dims)>=5:
+            if not smooth_vessel and not shaped_cover and box[6].split(".")[0] in ("primary","secondary","trim","accent") and min(dims)>=1.5 and max(dims)>=5:
                 edges=[e for e in sub.edges if len(e.link_faces)==2]
                 width=min(.025 if any(s in name for s in ("bunk","seat","navigation","sofa","medical-bed")) else .04 if any(s in name for s in ("reactor","cannon","point-defense","railgun","missile-pod","radiator","heat-sink")) else .015,min(dims)*E.T*.22)
                 if edges:bmesh.ops.bevel(sub,geom=edges,offset=width,segments=2,affect="EDGES",clamp_overlap=True)
