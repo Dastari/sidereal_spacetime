@@ -30,7 +30,7 @@ test("current admitted bed geometry supplies all four yaws and bounded support; 
     ).toMatchObject({
       facing: yaw,
       lift: 0.07500000000000001,
-      lean: (-25 * Math.PI) / 180,
+      lean: (-35 * Math.PI) / 180,
       footSupport: 0,
     });
     expect(

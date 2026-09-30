@@ -90,6 +90,13 @@ const approach = (
   sourceId: string,
   definition: (typeof LAB_INTERACTIONS)[number] | PrefabSeatDefinition,
 ) => [definition.approachX, definition.approachY] as const;
+const prefabBed = (
+  definition: (typeof LAB_INTERACTIONS)[number] | PrefabSeatDefinition,
+) => "obstacleId" in definition;
+const hasBedGear = (ctx: ReadContext, characterId: string) =>
+  [...ctx.db.inventoryItem.by_character.filter(characterId)].some(
+    (item) => item.equipmentSlot === "back" || item.equipmentSlot === "belt",
+  );
 function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
   const instance = ctx.db.constructionInstance.id.find(binding.instanceId),
     object = ctx.db.interactionObject.id.find(binding.objectId),
@@ -137,6 +144,38 @@ function qualified(ctx: ReadContext, binding: ConstructionInteractionBinding) {
   if (!canOccupyDeck(frame, loc(binding, ...point), 0.3))
     throw new SenderError("Interaction approach has no standing support");
   return { instance, object, definition, frame, approach: point };
+}
+/** All equip routes use this current server-owned seat/source qualification. */
+export function requireBedEquipmentClearance(
+  ctx: ReadContext,
+  characterId: string,
+) {
+  const seat = ctx.db.couchSeat.characterId.find(characterId);
+  if (!seat) return;
+  const binding = ctx.db.constructionInteractionBinding.objectId.find(
+    seat.objectId,
+  );
+  if (!binding) {
+    // Bed IDs are server-created; legacy lab couches have no construction binding.
+    if (seat.objectId.includes(":seat:prefab:"))
+      throw new SenderError(
+        "Leave unsupported seat before equipping bed-restricted gear",
+      );
+    return;
+  }
+  if (!binding.sourceId.startsWith("prefab:")) return;
+  let definition: ReturnType<typeof qualified>["definition"];
+  try {
+    definition = qualified(ctx, binding).definition;
+  } catch {
+    throw new SenderError(
+      "Leave unsupported seat before equipping bed-restricted gear",
+    );
+  }
+  if (prefabBed(definition))
+    throw new SenderError(
+      "Stand from bed before equipping back gear or an equipment belt",
+    );
 }
 const clearInput = (
   ctx: ConstructionInteractionContext,
@@ -448,6 +487,14 @@ export function interactWithConstructionObject(
     occupied?.characterId === actor.id,
     interactionRules(ctx.db, q.object.id, q.definition.kind),
   );
+  if (
+    args.action === "sit" &&
+    prefabBed(q.definition) &&
+    hasBedGear(ctx, actor.id)
+  )
+    throw new SenderError(
+      "Stow back gear and equipment belt before sitting on a bed",
+    );
   if (args.action === "stand") {
     if (ownSeat?.objectId !== args.objectId)
       throw new SenderError("Own occupied seat required");
@@ -575,7 +622,11 @@ export function constructionInteractionView(ctx: ReadContext) {
           localX: q.definition.x,
           localY: q.definition.y,
           revision: q.object.revision,
-          enabled: q.object.enabled,
+          enabled:
+            q.object.enabled &&
+            (seatedByYou ||
+              !prefabBed(q.definition) ||
+              !hasBedGear(ctx, actor.id)),
           occupied: !!seat,
           seatedByYou,
           reachable:
@@ -625,7 +676,7 @@ export function constructionInteractionView(ctx: ReadContext) {
           localX: definition.x,
           localY: definition.y,
           revision: 1n,
-          enabled: true,
+          enabled: !prefabBed(definition) || !hasBedGear(ctx, actor.id),
           occupied: false,
           seatedByYou: false,
           reachable:

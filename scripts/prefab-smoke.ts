@@ -79,6 +79,7 @@ const subscribed = () => [
   tables.ownActuatorOutputs,
   tables.ownInventoryState,
   tables.ownInventoryItems,
+  tables.ownInventoryHotbar,
   tables.ownCombat,
   tables.ownCombatImpact,
   tables.visibleCombatActions,
@@ -280,6 +281,15 @@ try {
   ))
     await walkNative(c, x, y);
   await wait(() => bedRow()?.reachable, "bed approach is reachable");
+  const pack = [...c.db.ownInventoryItems.iter()].find(
+    (r: any) => r.equipmentSlot === "back",
+  ) as any;
+  assert(pack, "starter back gear available for lower-bunk clearance proof");
+  assert.equal(
+    bedRow().enabled,
+    false,
+    "equipped back gear disables lower-bunk sit",
+  );
   const bedOperation = crypto.randomUUID();
   const bedRevision = bedRow().revision;
   const sitBed = {
@@ -288,6 +298,32 @@ try {
     expectedRevision: bedRevision,
     operationId: bedOperation,
   };
+  await assert.rejects(
+    c.reducers.interactObject(sitBed),
+    /Stow back gear and equipment belt/i,
+  );
+  assert.equal(
+    [...c.db.ownConstructionSeat.iter()].length,
+    0,
+    "gear refusal leaves no occupied seat",
+  );
+  const inventoryRevision = () =>
+    ([...c.db.ownInventoryState.iter()][0] as any).revision;
+  await c.reducers.assignInventoryHotbar({
+    slot: 4,
+    itemId: pack.id,
+    expectedRevision: inventoryRevision(),
+    operationId: crypto.randomUUID(),
+  });
+  await c.reducers.dropInventoryItem({
+    itemId: pack.id,
+    expectedRevision: inventoryRevision(),
+    operationId: crypto.randomUUID(),
+  });
+  await wait(
+    () => bedRow()?.enabled,
+    "stowed back gear restores lower-bunk sit",
+  );
   await c.reducers.interactObject(sitBed);
   await wait(
     () =>
@@ -306,6 +342,37 @@ try {
     "bed supplies no helm control",
   );
   await c.reducers.interactObject(sitBed); // exact operation receipt retry survives incremented CAS
+  const packEquip = {
+    itemId: pack.id,
+    expectedRevision: inventoryRevision(),
+    operationId: crypto.randomUUID(),
+  };
+  await assert.rejects(
+    c.reducers.equipInventoryItem(packEquip),
+    /Stand from bed/i,
+  );
+  const packPickup = {
+    ...packEquip,
+    containerId: "",
+    operationId: crypto.randomUUID(),
+  };
+  await assert.rejects(
+    c.reducers.transferInventoryItem(packPickup),
+    /Stand from bed/i,
+  );
+  await assert.rejects(
+    c.reducers.activateInventoryHotbar({
+      slot: 4,
+      expectedRevision: inventoryRevision(),
+      operationId: crypto.randomUUID(),
+    }),
+    /Stand from bed/i,
+  );
+  assert.equal(
+    inventoryRevision(),
+    packEquip.expectedRevision,
+    "refused back equip/hotbar/ground pickup leaves inventory CAS unchanged",
+  );
   await assert.rejects(
     c.reducers.interactObject({ ...sitBed, operationId: crypto.randomUUID() }),
     /Object changed/i,
@@ -325,6 +392,14 @@ try {
       1e-5,
     "bed exit returns to validated approach",
   );
+  await c.reducers.transferInventoryItem(packPickup); // same failed ground-pickup operation remains retryable
+  await wait(
+    () =>
+      [...c.db.ownInventoryItems.iter()].some(
+        (r: any) => r.id === pack.id && r.equipmentSlot === "back",
+      ),
+    "back gear restored after standing",
+  );
   console.log(
     JSON.stringify({
       bedSeat: {
@@ -335,6 +410,8 @@ try {
         facing: bed.facing,
         cas: true,
         receiptRetry: true,
+        bedEquipmentSitRejected: true,
+        backEquipAndHotbarRejected: true,
         noHelm: true,
       },
     }),

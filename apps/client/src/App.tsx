@@ -567,11 +567,17 @@ export default function App({
   const selectedInteraction = interactions.find(
     (row) =>
       row.placementId === selectedObject &&
+      (row.kind !== "seat" || row.enabled || row.seatedByYou) &&
       row.reachable &&
       (!row.occupied || row.seatedByYou),
   );
   const nearestInteraction = interactions
-    .filter((row) => row.reachable && (!row.occupied || row.seatedByYou))
+    .filter(
+      (row) =>
+        row.reachable &&
+        (row.kind !== "seat" || row.enabled || row.seatedByYou) &&
+        (!row.occupied || row.seatedByYou),
+    )
     .sort(
       (a, b) =>
         Math.hypot(a.localX - actor!.localX, a.localY - actor!.localY) -
@@ -720,6 +726,7 @@ export default function App({
         id: interactionAction(inspectedSeat),
         label: interactionLabel(inspectedSeat),
         enabled:
+          (inspectedSeat.enabled || inspectedSeat.seatedByYou) &&
           inspectedSeat.reachable &&
           (!inspectedSeat.occupied || inspectedSeat.seatedByYou),
       },
@@ -728,9 +735,18 @@ export default function App({
       ? "You are seated here"
       : inspectedSeat.occupied
         ? "Occupied"
-        : inspectedSeat.reachable
-          ? "Available"
-          : "Move closer to sit";
+        : !inspectedSeat.enabled &&
+            /(?:^|\.)(?:crew-bunk|medical-bed)(?:\.|$)/.test(
+              inspectedSeat.assetId,
+            ) &&
+            inventory?.items.some(
+              (item) =>
+                item.equipmentSlot === "back" || item.equipmentSlot === "belt",
+            )
+          ? "Stow back gear and equipment belt before sitting on a bed"
+          : inspectedSeat.reachable
+            ? "Available"
+            : "Move closer to sit";
   }
   const combatImpactRow =
     c && ready && actor?.connected

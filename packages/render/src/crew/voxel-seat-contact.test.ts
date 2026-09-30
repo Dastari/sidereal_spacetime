@@ -33,7 +33,7 @@ for (const bodyType of ["male", "female"] as const)
       crew.root.position.y = lift;
       crew.setSeatContact({
         lift,
-        lean: height === 0.375 ? (-25 * Math.PI) / 180 : 0,
+        lean: height === 0.375 ? (-35 * Math.PI) / 180 : 0,
         footSupport: 0,
       });
       crew.update({ moving: false, seated: true, reducedMotion: true });
@@ -86,7 +86,7 @@ for (const bodyType of ["male", "female"] as const)
       }
       expect(footError).toBeLessThan(0.006);
       expect(hipBottom).toBeCloseTo(height, 2);
-      expect(hipRear).toBeGreaterThan(0.1875); // hips reach the mattress from the admitted edge anchor
+      expect(hipRear).toBeGreaterThan(0.1875); // hips reach the structural front bed edge from the admitted edge anchor
       if (height === 0.375) expect(rearUpper).toBeLessThan(0.1875); // upper torso clears the bunk's upper berth
       const seatedSpine = crew.joints.get("spine")!.rotationQuaternion!.clone();
       crew.setSeatContact(undefined);
@@ -101,7 +101,7 @@ for (const bodyType of ["male", "female"] as const)
       crew.root.position.y = lift;
       crew.setSeatContact({
         lift,
-        lean: height === 0.375 ? (-25 * Math.PI) / 180 : 0,
+        lean: height === 0.375 ? (-35 * Math.PI) / 180 : 0,
         footSupport: 0,
       });
       crew.update({ moving: false, seated: true, reducedMotion: true });

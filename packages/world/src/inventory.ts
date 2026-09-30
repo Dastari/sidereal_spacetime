@@ -3,6 +3,7 @@ import {
   synchronizeLegacyInventory,
 } from "./scoped-inventory-authority";
 import { packArmorIssue } from "@sidereal/sim/armor-issue";
+import { requireBedEquipmentClearance } from "./construction-interactions";
 import { LAB_STORAGE_FIXTURES } from "../../content/src/storage-fixtures";
 import { CABIN_PARTITIONS } from "../../content/src/interior";
 import { interactionLineOfSight } from "../../sim/src/interactions";
@@ -458,6 +459,8 @@ export function equip(
   const item = a.data.items.find((i) => i.id === itemId)!,
     slot = a.defs.item(item).equipSlot;
   if (!slot) fail("Item cannot be equipped");
+  if (slot === "back" || slot === "belt")
+    requireBedEquipmentClearance(ctx, a.actor.id);
   if (item.equipmentSlot === slot) return;
   const previous = a.data.items.find((i) => i.equipmentSlot === slot);
   if (slot === "back") {

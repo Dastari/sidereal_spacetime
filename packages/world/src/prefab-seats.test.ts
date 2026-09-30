@@ -39,6 +39,8 @@ vi.mock("./construction-doors", () => ({
   constructionCollision: (ctx: any) => ctx.frame,
 }));
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import { INVENTORY_DEFINITIONS } from "@sidereal/content/inventory";
+import { equip } from "./inventory";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   prefabConstructionDocument,
@@ -49,6 +51,7 @@ import {
   constructionInteractionView,
   interactWithConstructionObject,
   releaseConstructionSeat,
+  requireBedEquipmentClearance,
 } from "./construction-interactions";
 
 function store(key = "id", indices: Record<string, string> = {}) {
@@ -81,16 +84,18 @@ function store(key = "id", indices: Record<string, string> = {}) {
     };
   return table;
 }
-function fixture() {
-  const doc = PREFAB_SHIPS.find((p) => p.id === "fed.s.wren")!;
+function fixture(prefabId = "fed.s.wren", medical = false) {
+  const doc = PREFAB_SHIPS.find((p) => p.id === prefabId)!;
   const catalog = defaultPrefabComponentCatalog();
   const frame = {
     ...prefabWalkFrame(doc, catalog),
     shipId: "ship",
     deckId: "deck",
   };
-  const bed = prefabBedSeats(doc, catalog).find((b) =>
-    qualifyPrefabBed(frame, b),
+  const bed = prefabBedSeats(doc, catalog).find(
+    (b) =>
+      qualifyPrefabBed(frame, b) &&
+      (!medical || b.assetId.endsWith("medical-bed")),
   )!;
   const owner = Identity.fromString("a".repeat(64));
   const db: any = {
@@ -105,6 +110,7 @@ function fixture() {
     }),
     interactionObject: store("id", { by_ship: "shipId" }),
     couchSeat: store("characterId", { objectId: "objectId" }),
+    inventoryItem: store("id", { by_character: "characterId" }),
     input: store("characterId"),
     station: store("id", { shipId: "shipId" }),
     interactionReceipt: store("id", { by_character: "characterId" }),
@@ -177,6 +183,87 @@ function fixture() {
   };
   return { ctx, db, bed, args, transact };
 }
+test("all back/belt equipment refuses either bed atomically; stowing preserves the failed sit retry", () => {
+  for (const medical of [false, true])
+    for (const definition of INVENTORY_DEFINITIONS.filter(
+      (d) => d.equipSlot === "back" || d.equipSlot === "belt",
+    )) {
+      const f = fixture(medical ? "fed.m.crest" : "fed.s.wren", medical);
+      f.db.inventoryItem.insert({
+        id: definition.id,
+        characterId: "actor",
+        equipmentSlot: definition.equipSlot,
+      });
+      expect(
+        constructionInteractionView(f.ctx).find((r) => r.id === f.args.objectId)
+          ?.enabled,
+      ).toBe(false);
+      expect(() => f.transact()).toThrow(
+        "Stow back gear and equipment belt before sitting on a bed",
+      );
+      expect(f.db.constructionInteractionBinding.rows).toHaveLength(0);
+      expect(f.db.couchSeat.rows).toHaveLength(0);
+      expect(f.db.interactionReceipt.rows).toHaveLength(0);
+      f.db.inventoryItem.rows[0].equipmentSlot = "";
+      expect(
+        constructionInteractionView(f.ctx).find((r) => r.id === f.args.objectId)
+          ?.enabled,
+      ).toBe(true);
+      f.transact();
+      f.transact();
+      expect(f.db.couchSeat.rows).toHaveLength(1);
+    }
+});
+test("back/belt equip and swap refuse on either bed; stale source fails closed and stand/death/disconnect restores clearance", () => {
+  for (const medical of [false, true])
+    for (const reason of ["stand", "death", "disconnect"] as const) {
+      const f = fixture(medical ? "fed.m.crest" : "fed.s.wren", medical);
+      f.transact();
+      for (const slot of ["back", "belt"])
+        for (const id of ["item", "replacement"]) {
+          const access: any = {
+            actor: f.db.character.rows[0],
+            canItem: () => true,
+            data: { items: [{ id, equipmentSlot: "" }] },
+            defs: { item: () => ({ equipSlot: slot }) },
+          };
+          expect(() => equip(f.ctx, access, id)).toThrow(
+            "Stand from bed before equipping back gear or an equipment belt",
+          );
+        }
+      expect(f.db.couchSeat.rows).toHaveLength(1);
+      // Current equipped state cannot disable its owner's safe stand action.
+      f.db.inventoryItem.insert({
+        id: "race-item",
+        characterId: "actor",
+        equipmentSlot: "belt",
+      });
+      expect(
+        constructionInteractionView(f.ctx).find(
+          (r) => r.id === f.args.objectId,
+        ),
+      ).toMatchObject({ enabled: true, seatedByYou: true });
+      const instance = f.db.constructionInstance.rows[0];
+      instance.revision = 2n;
+      expect(() => requireBedEquipmentClearance(f.ctx, "actor")).toThrow(
+        "Leave unsupported seat",
+      );
+      instance.revision = 1n;
+      const binding = f.db.constructionInteractionBinding.rows.pop();
+      expect(() => requireBedEquipmentClearance(f.ctx, "actor")).toThrow(
+        "Leave unsupported seat",
+      );
+      f.db.constructionInteractionBinding.rows.push(binding);
+      expect(
+        releaseConstructionSeat(
+          f.ctx,
+          "actor",
+          reason === "death" ? "stand" : reason,
+        ).released,
+      ).toBe(true);
+      expect(() => requireBedEquipmentClearance(f.ctx, "actor")).not.toThrow();
+    }
+});
 test("bed descriptors are read-only; first sit uses existing exclusive seat, clears input and safe exit", () => {
   const f = fixture();
   const rows = constructionInteractionView(f.ctx);
