@@ -10,6 +10,12 @@
  * Sets window.__prefabReady = true once everything is loaded and a few frames have rendered;
  * window.__prefabMetrics holds per-ship metrics, window.__prefabError any failure.
  */
+import {
+  SHIP_VISUAL_FIXTURES,
+  familyReviewCut,
+} from "@sidereal/content/ship-visual-fixture";
+import { SHIP_REFERENCE_VISUAL } from "../art_library/ship_reference_revision";
+import { createPrefabDoors } from "../../packages/render/src/prefab-ship/doors";
 import { BOW_REVIEW_POD, BOW_HOSTS } from "./bow-fixtures";
 import { Engine } from "@babylonjs/core/Engines/engine";
 import { Scene } from "@babylonjs/core/scene";
@@ -51,6 +57,10 @@ declare global {
     __prefabReady?: boolean;
     __prefabMetrics?: unknown;
     __prefabError?: string;
+    __prefabVisualError?: string;
+    __prefabDoors?: unknown;
+    __prefabScene?: Scene;
+    __prefabViews?: PrefabShipView[];
   }
 }
 
@@ -154,7 +164,6 @@ function placeCamera(
 async function main() {
   if (q.get("list") === "1") {
     window.__prefabMetrics = PREFAB_SHIPS.map((p) => ({ id: p.id }));
-    if (q.get("freeze") === "1") engine.stopRenderLoop();
     window.__prefabReady = true;
     return;
   }
@@ -165,6 +174,7 @@ async function main() {
   });
   engine.setSize(width, height);
   const scene = new Scene(engine);
+  window.__prefabScene = scene;
   scene.useRightHandedSystem = true;
   scene.clearColor = new Color4(0.07, 0.04, 0.14, 1);
   nebulaBackdrop(scene);
@@ -205,17 +215,29 @@ async function main() {
   const docs: ShipPrefabDocumentV1[] = lineup
     ? [...PREFAB_SHIPS]
     : [
-        BOW_HOSTS.find((p) => p.id === q.get("prefab")) ??
+        SHIP_VISUAL_FIXTURES.find((p) => p.id === q.get("prefab")) ??
+          BOW_HOSTS.find((p) => p.id === q.get("prefab")) ??
           prefabById(q.get("prefab") ?? PREFAB_SHIPS[0].id) ??
           PREFAB_SHIPS[0],
       ];
   const views: PrefabShipView[] = [];
+  window.__prefabViews = views;
   const anchors: TransformNode[] = [];
   let offset = 0;
   for (const doc of docs) {
     const anchor = new TransformNode(`anchor:${doc.id}`, scene);
     const v = await createPrefabShipView(scene, doc, {
       catalog,
+      visualVariant:
+        q.get("visual") === "reference-r001"
+          ? SHIP_REFERENCE_VISUAL
+          : undefined,
+      visualReviewRemovedCells:
+        q.get("damage") === "synthetic" ? familyReviewCut() : undefined,
+      onVisualVariantError: (message) => {
+        window.__prefabVisualError = message;
+      },
+      externalDoorLeaves: q.get("visual") === "reference-r001",
       view,
       theme,
       parent: anchor,
@@ -225,6 +247,23 @@ async function main() {
       batch: q.get("batch") !== "0",
       roomLights: Number(q.get("lights") ?? 0),
     });
+    if (q.get("visual") === "reference-r001") {
+      const doors = createPrefabDoors(
+        scene,
+        v.root,
+        doc,
+        catalog,
+        theme ?? doc.theme,
+        !!v.metrics().visualRevision,
+      );
+      doors.setView(view);
+      const targets = new Map(
+        doors.doors().map((d) => [d.id, q.get("doors") === "open"]),
+      );
+      doors.update({ actors: [], nowMs: 0, dt: 1, logic: targets });
+      window.__prefabDoors = doors.doors();
+      scene.onDisposeObservable.addOnce(() => doors.dispose());
+    }
     const { beam } = shipExtent(v);
     if (lineup) {
       anchor.position.x = offset + beam / 2;
@@ -273,9 +312,12 @@ async function main() {
   }
 
   await scene.whenReadyAsync();
-  engine.runRenderLoop(() => scene.render());
-  for (let i = 0; i < 6; i++)
-    await new Promise((r) => requestAnimationFrame(r));
+  // Bounded evidence frames also work when the owned T3 tab is hidden.
+  for (let i = 0; i < 3; i++) {
+    scene.render();
+    await new Promise((r) => setTimeout(r, 0));
+  }
+  if (q.get("freeze") !== "1") engine.runRenderLoop(() => scene.render());
 
   const labels = document.getElementById("labels")!;
   if (lineup) {
@@ -315,6 +357,7 @@ async function main() {
         `${m.id} ${m.view}: ${m.drawCalls} draws/frame (main ${m.mainDraws}, glow ${m.glowDraws}), ${m.meshes} meshes, ${m.instances} inst, ${(m.triangles / 1000).toFixed(1)}k tris, ${m.pieces} pieces`,
     )
     .join("\n");
+  if (q.get("freeze") === "1") engine.stopRenderLoop();
   window.__prefabReady = true;
 }
 

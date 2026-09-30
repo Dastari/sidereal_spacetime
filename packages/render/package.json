@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/render",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "private": true,
   "type": "module",
   "exports": {
@@ -29,8 +29,8 @@
   "dependencies": {
     "@babylonjs/core": "9.25.0",
     "@babylonjs/loaders": "9.25.0",
-    "@sidereal/content": "0.6.2",
-    "@sidereal/sim": "0.4.1",
+    "@sidereal/content": "0.6.3",
+    "@sidereal/sim": "0.4.2",
     "@noble/hashes": "2.4.0"
   }
 }

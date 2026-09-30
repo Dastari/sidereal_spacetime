@@ -236,7 +236,51 @@ interface Part {
   t: number;
 }
 
-function leafParts(spec: PrefabDoorSpec, height: number): Part[] {
+function leafParts(
+  spec: PrefabDoorSpec,
+  height: number,
+  referenceStyle = false,
+): Part[] {
+  if (referenceStyle) {
+    const w = spec.airlock
+      ? AIRLOCK_LEAF_M
+      : Math.max(0.3, (spec.span - 2 * INTERIOR_JAMB_M) / 2);
+    return [
+      { slot: "dark", u: 0, v: height / 2, w, h: height, t: LEAF_T },
+      {
+        slot: "primary",
+        u: 0,
+        v: height * 0.54,
+        w: w * 0.82,
+        h: height * 0.72,
+        t: LEAF_T + 0.012,
+      },
+      {
+        slot: "trim",
+        u: 0,
+        v: height * 0.08,
+        w: w * 0.94,
+        h: height * 0.09,
+        t: LEAF_T + 0.018,
+      },
+      {
+        slot: "metal",
+        u: w * 0.3,
+        v: height * 0.48,
+        w: 0.04,
+        h: 0.22,
+        t: LEAF_T + 0.02,
+      },
+      {
+        slot: "emit_b",
+        u: -w * 0.22,
+        v: height * 0.77,
+        w: 0.055,
+        h: 0.035,
+        t: LEAF_T + 0.021,
+      },
+    ];
+  }
   if (spec.airlock)
     return [
       {
@@ -308,6 +352,7 @@ export function createPrefabDoors(
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
   theme: ShipThemeId = doc.theme,
+  referenceStyle = false,
 ) {
   const doors: DoorState[] = prefabDoorSpecs(doc, catalog).map((spec) => ({
     spec,
@@ -350,7 +395,7 @@ export function createPrefabDoors(
       const cx = spec.center[0] + spec.normal[0] * offset;
       const cz = -(spec.center[1] + spec.normal[1] * offset);
       for (const side of [-1, 1]) {
-        for (const p of leafParts(spec, height)) {
+        for (const p of leafParts(spec, height, referenceStyle)) {
           const leafW = spec.airlock
             ? AIRLOCK_LEAF_M
             : Math.max(0.3, (spec.span - 2 * INTERIOR_JAMB_M) / 2);

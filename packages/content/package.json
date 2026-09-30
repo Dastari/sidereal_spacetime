@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/content",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "private": true,
   "type": "module",
   "exports": {
@@ -76,16 +76,15 @@
     "./ship-components-reference-fits": "./src/ship-components-reference-fits.ts",
     "./bow-profiles": "./src/bow-profiles.ts",
     "./crew-armor": "./src/crew-armor.ts",
-    "./crew-heads": "./src/crew-heads.ts",
-    "./crew-voxel-bundle": "./src/crew-voxel-bundle.ts",
-    "./crew-voxel-face": "./src/crew-voxel-face.ts",
     "./prefabs/builders": "./src/prefabs/builders.ts",
     "./crew-items": "./src/crew-items.ts",
     "./crew-wardrobe": "./src/crew-wardrobe.ts",
     "./crew-voxel-appearance": "./src/crew-voxel-appearance.ts",
     "./content-definition-seed": "./src/content-definition-seed.ts",
     "./item-presentation": "./src/item-presentation.ts",
-    "./definition-references": "./src/definition-references.ts"
+    "./definition-references": "./src/definition-references.ts",
+    "./ship-visual": "./src/ship-visual.ts",
+    "./ship-visual-fixture": "./src/ship-visual-fixture.ts"
   },
   "dependencies": {}
 }

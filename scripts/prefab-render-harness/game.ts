@@ -11,6 +11,7 @@ import { BOW_HOSTS } from "./bow-fixtures";
  * Sets window.__prefabReady once the world has rendered a few frames; __prefabError on failure;
  * __prefabMetrics = [{ id, meshes, drawCalls }].
  */
+import { SHIP_REFERENCE_VISUAL } from "../art_library/ship_reference_revision";
 import { createWorld, type SceneState } from "@sidereal/render";
 import type { Scene } from "@babylonjs/core/scene";
 import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstrumentation";
@@ -51,6 +52,10 @@ async function main() {
     canvas,
     (text) => (document.getElementById("hud")!.textContent = text),
     {
+      prefabVisualVariant:
+        q.get("visual") === "reference-r001"
+          ? SHIP_REFERENCE_VISUAL
+          : undefined,
       construction: {
         instanceId: construction.layout.id,
         documentJson: JSON.stringify(construction),
@@ -75,6 +80,23 @@ async function main() {
     inspect: q.get("inspect") === "1",
     grid: false,
   };
+  if (q.get("crew") === "t2") {
+    world.customizeCrew({
+      bodyType: "male",
+      hairStyle: "spiked_quiff",
+      weapon: "none",
+      backpack: true,
+      equippedComponents: {
+        chest: "wardrobe-t2-chest",
+        shoulders: "wardrobe-t2-shoulders",
+        gloves: "wardrobe-t2-gloves",
+        belt: "wardrobe-t2-belt",
+        legs: "wardrobe-t2-legs",
+        boots: "wardrobe-t2-boots",
+        back: "wardrobe-t2-back",
+      },
+    });
+  }
   world.update(state);
   window.__prefabWorld = world;
   // Review hook: shots can re-issue the state with extra fields (e.g. airlockCycle).
