@@ -57,6 +57,7 @@ export async function loadPrefabShipPresentation(
   scene: Scene,
   shipRoot: TransformNode,
   documentJson: string,
+  visualVariant?: import("./prefab-ship/visual-variant").VisualVariantSelection,
 ): Promise<PrefabShipViewHandle | undefined> {
   let binding: { document?: unknown; catalog?: unknown } | undefined;
   try {
@@ -81,6 +82,7 @@ export async function loadPrefabShipPresentation(
   // anything unpublished falls back to stand-ins inside the view. One ceiling light per room.
   const view = await createPrefabShipView(scene, doc, {
     catalog,
+    visualVariant,
     view: "deck",
     parent: shipRoot,
     // Closed, animated door leaves (doors.ts) replace the airlock GLB's baked leaves.
@@ -89,7 +91,14 @@ export async function loadPrefabShipPresentation(
     staticPlumes: false,
   });
   const exhaust = createShipExhaust(scene, view.root, doc.theme);
-  const doors = createPrefabDoors(scene, view.root, doc, catalog);
+  const doors = createPrefabDoors(
+    scene,
+    view.root,
+    doc,
+    catalog,
+    doc.theme,
+    view.metrics().visualRevision !== undefined,
+  );
   // Ship logic wall buttons (wiki Systems/Ship Logic): lights follow `visible_ship_logic`.
   const panels = createLogicPanels(scene, view.root, doc, catalog);
   // The native construction loader also builds boundary guide meshes for the same layout; the

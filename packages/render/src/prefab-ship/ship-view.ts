@@ -1,3 +1,4 @@
+import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 /**
  * Babylon presentation of a prefab ship (docs/shipyard_player_builder_design.md §3.7, §6, §12).
  *
@@ -106,6 +107,16 @@ import {
   slotOfMaterialName,
 } from "./materials";
 
+import { compileShipVisual } from "@sidereal/sim/ship-visual-compiler";
+import { meshSampledStructure } from "./sampled-structure";
+import {
+  prepareCandidateMaterials,
+  referenceFloraMaterial,
+  resolveVisualVariant,
+  type VisualVariantSelection,
+  type VerifiedVisualVariant,
+} from "./visual-variant";
+
 const roleOf = (mesh: Mesh): string =>
   (mesh.metadata as { role?: string } | null)?.role ?? "hull";
 
@@ -137,6 +148,11 @@ export type PrefabShipPresentation = "flight" | "deck";
 
 export interface PrefabShipViewOptions {
   catalog: PrefabComponentCatalog;
+  /** Explicit exact proposal pin; absent preserves all legacy art/defaults. */
+  visualVariant?: VisualVariantSelection;
+  /** Explicit offline review cut, never connected to accepted damage state. */
+  visualReviewRemovedCells?: ReadonlySet<string>;
+  onVisualVariantError?: (message: string) => void;
   view: PrefabShipPresentation;
   /** Kit GLB directory, with trailing slash. Default `/assets/ship-kit/${SHIP_KIT_REVISION}/`. */
   kitBaseUrl?: string;
@@ -167,6 +183,8 @@ export interface PrefabShipViewOptions {
 }
 
 export interface PrefabShipMetrics {
+  /** Selected immutable proposal revision; absent is the legacy renderer. */
+  visualRevision?: string;
   /** Engine draw calls of the last rendered frame (whole scene, including post/glow passes). */
   drawCalls: number;
   /** Enabled thin instances (kit pieces and component GLB primitives). */
@@ -237,6 +255,7 @@ interface StaticEntry {
 }
 
 interface Built {
+  variant: VerifiedVisualVariant | null;
   dressed: DressedShip;
   instanced: InstancedEntry[];
   statics: StaticEntry[];
@@ -397,12 +416,57 @@ export async function createPrefabShipView(
   let generation = 0;
   let disposed = false;
 
-  async function build(d: ShipPrefabDocumentV1): Promise<Built> {
+  async function build(
+    d: ShipPrefabDocumentV1,
+    candidateAllowed = true,
+  ): Promise<Built> {
     const dressing = dressShip(d, { catalog: options.catalog });
     const dressed = options.exteriorOnly
       ? exteriorOnlyDress(dressing)
       : dressing;
+    let variant: VerifiedVisualVariant | null = null;
+    if (candidateAllowed && options.visualVariant) {
+      try {
+        variant = await resolveVisualVariant(
+          scene,
+          d,
+          dressed,
+          options.visualVariant,
+        );
+      } catch (error) {
+        const message = `Visual candidate rejected: ${String(error)}`;
+        options.onVisualVariantError?.(message);
+        warnOnce(`visual:${options.visualVariant.sha256}:${d.id}`, message);
+      }
+    }
+    let sampled: ReturnType<typeof meshSampledStructure>[] | null = null;
+    if (variant) {
+      try {
+        sampled = (
+          options.exteriorOnly
+            ? (["flight"] as const)
+            : (["deck", "flight"] as const)
+        ).map((v) =>
+          meshSampledStructure(
+            compileShipVisual(
+              d,
+              options.catalog,
+              v,
+              variant!.profile,
+              options.visualReviewRemovedCells,
+            ).cells,
+          ),
+        );
+      } catch (error) {
+        variant.release();
+        variant = null;
+        const message = `Visual compiler rejected: ${String(error)}`;
+        options.onVisualVariantError?.(message);
+        warnOnce(`visual-compile:${d.id}`, message);
+      }
+    }
     const out: Built = {
+      variant,
       dressed,
       instanced: [],
       statics: [],
@@ -413,17 +477,62 @@ export async function createPrefabShipView(
       componentGlbs: 0,
       componentStandins: 0,
     };
-    await Promise.all([buildKit(out), buildComponents(out), buildObjects(out)]);
-    buildGenerated(out);
-    buildLightPools(out);
-    buildContactShadows(out);
-    buildLabels(out, prefabOrigin(d));
-    out.decals = buildDecals(scene, frame, dressed, theme).map((h) => ({
-      ...h,
-      tag: h.decal.view,
-    }));
-    if (options.batch !== false) batchBuilt(out);
-    return out;
+    try {
+      const loads = await Promise.allSettled([
+        buildKit(out),
+        buildComponents(out),
+        buildObjects(out),
+      ]);
+      const failed = loads.find((r) => r.status === "rejected");
+      if (failed?.status === "rejected") throw failed.reason;
+      if (variant && sampled) buildSampled(out, sampled);
+      else buildGenerated(out);
+      buildLightPools(out);
+      buildContactShadows(out);
+      buildLabels(out, prefabOrigin(d));
+      out.decals = buildDecals(scene, frame, dressed, theme).map((h) => ({
+        ...h,
+        tag: h.decal.view,
+      }));
+      if (options.batch !== false) batchBuilt(out);
+      if (options.visualVariant) {
+        // Prepare the exact thin-instance shader variant while hidden, including view-only entries.
+        for (const entry of out.instanced) {
+          const matrices = [
+            ...entry.matrices.both,
+            ...entry.matrices.deck,
+            ...entry.matrices.flight,
+          ];
+          if (matrices.length) {
+            entry.mesh.thinInstanceSetBuffer(
+              "matrix",
+              new Float32Array(matrices),
+              16,
+              true,
+            );
+            entry.mesh.thinInstanceRefreshBoundingInfo(false);
+          }
+        }
+        for (const entry of out.instanced) entry.mesh.setEnabled(false);
+        for (const entry of out.statics) entry.mesh.setEnabled(false);
+        for (const light of out.lights) light.light.setEnabled(false);
+        for (const decal of out.decals) decal.mesh.setEnabled(false);
+        await prepareCandidateMaterials(scene, [
+          ...out.instanced.map((e) => e.mesh),
+          ...out.statics.map((s) => s.mesh),
+        ]);
+      }
+      return out;
+    } catch (error) {
+      release(out);
+      if (variant && !disposed && !scene.isDisposed) {
+        const message = `Visual build rejected: ${String(error)}`;
+        options.onVisualVariantError?.(message);
+        warnOnce(`visual-build:${d.id}`, message);
+        return build(d, false);
+      }
+      throw error;
+    }
   }
 
   /**
@@ -441,6 +550,7 @@ export async function createPrefabShipView(
       glb: number;
       ts: number;
       material: ReturnType<typeof roleSlotMaterial>;
+      surfaceCharts: Set<string>;
     };
     const groups = new Map<string, Group>();
     // Every appended placement primitive, per presentation, for the coplanar pass below.
@@ -469,13 +579,16 @@ export async function createPrefabShipView(
       m: ArrayLike<number>,
       glb: boolean,
       sourceMaterial: Mesh["material"],
+      sourceCharts: readonly string[] = [],
     ) => {
       const detail = normalDetailSelectionOf(sourceMaterial);
-      const material = normalDetailMaterial(
-        roleSlotMaterial(scene, theme, slot, role),
-        detail,
-        geo,
-      );
+      const material = sourceMaterial?.metadata?.shipAuthoredPalette
+        ? (sourceMaterial as PBRMaterial)
+        : normalDetailMaterial(
+            roleSlotMaterial(scene, theme, slot, role),
+            detail,
+            geo,
+          );
       const mat = material.name;
       for (const view of views(tag)) {
         const key = detail
@@ -496,8 +609,10 @@ export async function createPrefabShipView(
               glb: 0,
               ts: 0,
               material,
+              surfaceCharts: new Set(),
             }),
           );
+        for (const chart of sourceCharts) g.surfaceCharts.add(chart);
         const first = g.indices.length;
         appendTransformed(g, geo.positions, geo.normals, geo.indices, m, geo, {
           correctNormals: !!detail,
@@ -554,6 +669,7 @@ export async function createPrefabShipView(
           localToParent(st.mesh),
           false,
           st.mesh.material,
+          st.mesh.metadata?.shipSurfaceCharts,
         );
       st.mesh.dispose();
     }
@@ -586,10 +702,13 @@ export async function createPrefabShipView(
         // cache/source data without enabling a partial or inconsistent tangent buffer.
         { ...g, tangents: undefined },
       );
-      mesh.material = normalDetailSelectionOf(g.material)
-        ? g.material
-        : roleSlotMaterial(scene, theme, g.slot, role);
+      mesh.material =
+        normalDetailSelectionOf(g.material) ||
+        g.material.metadata?.shipAuthoredPalette
+          ? g.material
+          : roleSlotMaterial(scene, theme, g.slot, role);
       setMeshRole(mesh, role);
+      mesh.metadata.shipSurfaceCharts = [...g.surfaceCharts];
       // Index ranges per source role (a batch merges every role of one material), so an
       // outline can cut one placed object's triangles out of the batch (prefab-ship-interaction).
       mesh.metadata.roleRanges = (["flight", "deck"] as const).flatMap((v) =>
@@ -627,6 +746,12 @@ export async function createPrefabShipView(
     }
     await Promise.all(
       [...byPiece].map(async ([piece, matrices]) => {
+        if (out.variant) {
+          const geom = out.variant.kit.get(piece);
+          if (geom)
+            addInstanced(out, geom, piece, matrices, roleOfPiece(piece));
+          return;
+        }
         const file =
           manifest?.pieces[piece]?.file ?? (manifest ? null : `${piece}.glb`);
         if (!file)
@@ -657,6 +782,13 @@ export async function createPrefabShipView(
     role: MeshRole,
   ) {
     geom.primitives.forEach((p, i) => {
+      if (
+        out.variant &&
+        piece &&
+        slotOfMaterialName(p.material) !== "glass" &&
+        !piece.startsWith("mount.")
+      )
+        return;
       const slot = slotOfMaterialName(p.material);
       if (!slot)
         warnOnce(
@@ -677,6 +809,17 @@ export async function createPrefabShipView(
         slot ?? "primary",
         finishRole,
       );
+      if (
+        out.variant &&
+        slot &&
+        !["emit_a", "emit_b", "glass"].includes(slot)
+      ) {
+        mesh.material =
+          slot === "accent" &&
+          geom.url.endsWith("shipyard.equipment.bridge-bank.glb")
+            ? referenceFloraMaterial(scene, mesh.material as PBRMaterial)
+            : candidateMaterial(mesh.material as PBRMaterial, out.variant, p);
+      }
       setMeshRole(mesh, finishRole);
       out.instanced.push({
         mesh,
@@ -687,6 +830,66 @@ export async function createPrefabShipView(
         count: 0,
       });
     });
+  }
+
+  function candidateMaterial(
+    base: PBRMaterial,
+    variant: VerifiedVisualVariant,
+    channels: SurfaceChannels,
+  ) {
+    return normalDetailMaterial(
+      base,
+      {
+        enabled: true,
+        profile: variant.profile,
+        family: "panel",
+        revision: variant.manifest.revision,
+        normalUrl: variant.normalUrl,
+        normalSha256: variant.normalSha256,
+        strength: 0.32,
+      },
+      channels,
+    );
+  }
+
+  function buildSampled(
+    out: Built,
+    results: ReturnType<typeof meshSampledStructure>[],
+  ) {
+    const tags = options.exteriorOnly
+      ? (["flight"] as const)
+      : (["deck", "flight"] as const);
+    for (let index = 0; index < results.length; index++)
+      for (const s of results[index]) {
+        const tag = tags[index];
+        const role: MeshRole =
+          s.role === "floor"
+            ? "floor"
+            : s.role === "roof"
+              ? "roof"
+              : s.role === "doorframe"
+                ? "wall"
+                : "hull";
+        const mesh = makeMesh(
+          scene,
+          `${out.dressed.id}:sampled:${tag}:${s.slot}:${s.role}`,
+          frame,
+          s,
+        );
+        const base = roleSlotMaterial(scene, theme, s.slot, role);
+        mesh.material = ["emit_a", "emit_b", "glass"].includes(s.slot)
+          ? base
+          : candidateMaterial(base, out.variant!, s);
+        setMeshRole(mesh, role);
+        mesh.metadata.shipSurfaceCharts = s.surfaceCharts;
+        out.statics.push({
+          mesh,
+          tag,
+          slot: s.slot,
+          triangles: s.triangles,
+          kind: "generated",
+        });
+      }
   }
 
   function buildGenerated(out: Built) {
@@ -737,7 +940,9 @@ export async function createPrefabShipView(
     const missing: string[] = [];
     await Promise.all(
       [...glbs].map(async ([url, { list }]) => {
-        const loaded = await loadGlbGeometry(scene, url);
+        const loaded = out.variant
+          ? (out.variant.components.get(list[0].component) ?? null)
+          : await loadGlbGeometry(scene, url);
         const geom =
           loaded && options.externalDoorLeaves
             ? withoutAirlockLeaves(loaded)
@@ -904,7 +1109,9 @@ export async function createPrefabShipView(
     }
     await Promise.all(
       [...byUrl].map(async ([url, list]) => {
-        const geom = await loadGlbGeometry(scene, url);
+        const geom = out.variant
+          ? (out.variant.objects.get(list[0].designId) ?? null)
+          : await loadGlbGeometry(scene, url);
         if (!geom) {
           warnOnce(
             `object:${url}`,
@@ -1263,6 +1470,7 @@ export async function createPrefabShipView(
   }
 
   function release(b: Built) {
+    b.variant?.release();
     for (const e of b.instanced) e.mesh.dispose();
     for (const s of b.statics) s.mesh.dispose();
     for (const l of b.lights) l.light.dispose();
@@ -1273,7 +1481,6 @@ export async function createPrefabShipView(
 
   async function rebuild(d: ShipPrefabDocumentV1) {
     const mine = ++generation;
-    applyFrame(frame, prefabOrigin(d));
     const next = await build(d);
     if (disposed || mine !== generation) {
       release(next);
@@ -1281,6 +1488,7 @@ export async function createPrefabShipView(
     }
     if (built) release(built);
     built = next;
+    applyFrame(frame, prefabOrigin(d));
     apply(next);
   }
 
@@ -1302,14 +1510,28 @@ export async function createPrefabShipView(
       if (!built) return;
       for (const e of built.instanced)
         if (e.slot)
-          e.mesh.material = roleSlotMaterial(scene, t, e.slot, roleOf(e.mesh));
+          e.mesh.material = e.mesh.material?.metadata?.shipAuthoredPalette
+            ? referenceFloraMaterial(
+                scene,
+                roleSlotMaterial(scene, t, e.slot, roleOf(e.mesh)),
+              )
+            : normalDetailMaterial(
+                roleSlotMaterial(scene, t, e.slot, roleOf(e.mesh)),
+                normalDetailSelectionOf(e.mesh.material),
+                meshGeometry(e.mesh) ?? undefined,
+              );
       for (const s of built.statics) {
         if (s.kind === "generated" || s.kind === "standin")
-          s.mesh.material = normalDetailMaterial(
-            roleSlotMaterial(scene, t, s.slot!, roleOf(s.mesh)),
-            normalDetailSelectionOf(s.mesh.material),
-            meshGeometry(s.mesh) ?? undefined,
-          );
+          s.mesh.material = s.mesh.material?.metadata?.shipAuthoredPalette
+            ? referenceFloraMaterial(
+                scene,
+                roleSlotMaterial(scene, t, s.slot!, roleOf(s.mesh)),
+              )
+            : normalDetailMaterial(
+                roleSlotMaterial(scene, t, s.slot!, roleOf(s.mesh)),
+                normalDetailSelectionOf(s.mesh.material),
+                meshGeometry(s.mesh) ?? undefined,
+              );
         else if (s.kind === "plume") s.mesh.material = plumeMaterial(scene, t);
         else if (s.kind === "object-fill" || s.kind === "object-frame")
           s.mesh.material = placeholderMaterial(
@@ -1381,6 +1603,7 @@ export async function createPrefabShipView(
           triangles += 2;
         }
       return {
+        visualRevision: b.variant?.manifest.revision,
         drawCalls,
         instances,
         triangles,

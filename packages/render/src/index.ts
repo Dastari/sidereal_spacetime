@@ -224,6 +224,8 @@ export type EvaSceneState = VoxelCrewEva & {
 const EVA_FLIGHT_ZOOM = 7;
 const EVA_CAMERA_BETA = 0.22;
 export interface WorldOptions {
+  /** Exact reviewed proposal selection; absent keeps published presentation. */
+  prefabVisualVariant?: import("./prefab-ship/visual-variant").VisualVariantSelection;
   /** Opt-in accepted shared projections, separate from the private local ship. */
   sharedWorld?: {
     bodies: (nowMs: number) => readonly SpaceBodyState[] | undefined;
@@ -477,6 +479,7 @@ async function buildWorld(
           scene,
           shipRoot,
           options.construction.documentJson,
+          options.prefabVisualVariant,
         );
         if (prefabView)
           for (const mesh of imported.meshes) mesh.setEnabled(false);

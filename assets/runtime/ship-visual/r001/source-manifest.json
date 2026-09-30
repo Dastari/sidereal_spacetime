@@ -1,0 +1,38 @@
+{
+  "status": "proposal",
+  "compilerSha256": "d99da5da464eec6575bf76a4307f32150404bbd4402a3e118c591590da0f3ea9",
+  "sources": [
+    {
+      "path": "packages/content/src/ship-visual-fixture.ts",
+      "sha256": "279958c4ef32ac0f4b01ad0314fdbdc346cf9bebad549e64b8e65840eb31aeaf"
+    },
+    {
+      "path": "packages/content/src/ship-visual.ts",
+      "sha256": "b3738b3ca5e50652b926cb55768b39700e8b615d4f1fe0de2fa5749939c9e41f"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-layers.ts",
+      "sha256": "0af277f268a9fc273915e560054a4ef52447f13793c6d1ca11b9b424d6f3af2d"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-sampler.ts",
+      "sha256": "8f29bfec8fd9a9133e58ab25ae46c12d3a4fe33c7a3603108e161cb58769b8b7"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-compiler.ts",
+      "sha256": "9a4b3a9c762895da6a62d91920b94fbab12b12d0f63e3b35f38be1f802868ca7"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/sampled-structure.ts",
+      "sha256": "89cf02c81a6818d5b9e7885b730b9510a6d614e5c55ea028714d5a8edbd3fe2d"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_art.py",
+      "sha256": "9f9979a08ae5e439806fddedafe47cc3bac4ac852d53f5819f8c64867c3d02cd"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_maps.py",
+      "sha256": "66443a04dcd91e606f7ded3457af739a90317294cb829e64f14af8b3ac3f8706"
+    }
+  ]
+}
