@@ -54,7 +54,7 @@ import {
 } from "./ship-systems";
 
 /** Bump when the adapter's mapping changes, so stored compiles are recomputed. */
-export const PREFAB_SHIP_SYSTEMS_REVISION = 1;
+export const PREFAB_SHIP_SYSTEMS_REVISION = 2;
 /** Placed-object id of a prefab mount (same as `ship_component_damage.objectId`). */
 export const prefabMountObjectId = (mountId: string) => `mount:${mountId}`;
 
@@ -189,7 +189,11 @@ export function prefabShipSystemsInput(
   for (const d of [...damage].sort((a, b) =>
     a.objectId < b.objectId ? -1 : a.objectId > b.objectId ? 1 : 0,
   ))
-    if (known.has(d.objectId) && Number.isFinite(d.performance))
+    if (
+      known.has(d.objectId) &&
+      Number.isFinite(d.performance) &&
+      d.performance < 1
+    )
       performance[d.objectId] = Math.min(1, Math.max(0, d.performance));
   return {
     catalog,

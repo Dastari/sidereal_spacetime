@@ -90,6 +90,8 @@ function fixture() {
     gameShipAccess: table("shipId"),
     shipComponentDamage: table("id", { by_ship: "shipId" }),
     shipSystemsState: table("shipId"),
+    shipPowerState: table("shipId"),
+    shipPowerClock: table("id"),
     shipSystemsDirty: table("shipId"),
     shipSystemsClock: table("id"),
     // Component damage also marks prefab flight dirty (FLIGHT-IFCS actuator supply); these ships
@@ -339,10 +341,43 @@ test("views: owner reads summary and report; crew aboard reads summary; outsider
 
   // Inspect: discovered ships expose only their outward power effect.
   access.visible = ["jackal", "wren-view", "unknown"];
+  db.shipPowerClock.insert({
+    id: 0,
+    legacyCutoffMicros: 1n,
+    lastTick: 1n,
+    admissionValid: true,
+  });
+  for (const shipId of ["jackal", "wren-view"]) {
+    const compiled = db.shipSystemsState.shipId.find(shipId);
+    db.shipPowerState.insert({
+      shipId,
+      instanceRevision: compiled.instanceRevision,
+      inputHash: compiled.inputHash,
+      tick: 1n,
+      solvedMicros: 50_000n,
+      generationW: 1,
+      energyJ: 1,
+      brownout: false,
+    });
+  }
   const effects = visibleShipSystemEffects(as(STRANGER));
   expect(effects).toEqual([
     { shipId: "jackal", power: "powered" },
     { shipId: "wren-view", power: "powered" },
+  ]);
+  db.shipPowerState.shipId.update({
+    ...db.shipPowerState.shipId.find("jackal"),
+    energyJ: 0,
+    generationW: 0,
+  });
+  markShipSystemsDirty(
+    { db, timestamp: { microsSinceUnixEpoch: 1n } } as any,
+    "wren-view",
+    "damage",
+  );
+  expect(visibleShipSystemEffects(as(STRANGER))).toEqual([
+    { shipId: "jackal", power: "dark" },
+    { shipId: "wren-view", power: "dark" },
   ]);
   access.visible = [];
 });

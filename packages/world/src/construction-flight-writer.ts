@@ -1,3 +1,4 @@
+import { SHARED_SYSTEM_MAX_SHIPS } from "@sidereal/content/shared-system";
 import { markShipFlightDirty } from "./construction-flight-dirty";
 import type { ConstructionFlightContext } from "./construction-flight-authority";
 import {
@@ -28,6 +29,12 @@ export function insertQualifiedFlightPlan(
     ctx.db.constructionFlightBinding.shipId.find(plan.instanceId)
   )
     throw Error("Flight already installed");
+  // Explicit-at trusted prefab placements must obey the same capacity as reserveBerth.
+  // Every canonical motion insertion is either this writer or joinSharedSystem's berth path.
+  let admitted = 0;
+  for (const _ of ctx.db.shipWorldMotion.by_system.filter(plan.motion.systemId))
+    if (++admitted >= SHARED_SYSTEM_MAX_SHIPS)
+      throw Error("Shared contact island is full");
   const ids = [
     plan.station.id,
     plan.computer.id,

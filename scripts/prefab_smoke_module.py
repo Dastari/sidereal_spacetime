@@ -63,6 +63,28 @@ export const wearPrefabSmokeEvaSuit = db.reducer({},auth.gameAction((ctx)=>{
     ctx.db.inventoryItem.insert({id:ctx.newUuidV4().toString(),characterId:actors[0].id,definitionId:"wardrobe-suit-"+part,containerId:"",equipmentSlot:slot,x:0,y:0,rotated:false});
   }
 },true));
+// S4-2 isolated lifecycle/restart fixture. This ADDON is never in the production module.
+export const exercisePrefabPowerSmoke = db.reducer({action:t.string()},auth.gameAction((ctx,args)=>{
+  const actor=[...ctx.db.character.by_owner.filter(ctx.sender)][0];
+  const ship=actor && ctx.db.ship.id.find(actor.shipId);
+  if(!actor||!ship||!ship.owner.isEqual(ctx.sender))throw new SenderError("Own smoke ship required");
+  if(args.action==="checkpoint"){
+    for(const timer of ctx.db.movementTimer.iter())ctx.db.movementTimer.scheduledId.delete(timer.scheduledId);
+    const battery=[...ctx.db.shipPowerDevice.by_ship.filter(ship.id)].find(d=>d.mountId==="mount:battery");
+    if(!battery)throw new SenderError("Issued battery required");
+    // Fixture seeding of a non-full value exposes accidental compiler/restart charging.
+    ctx.db.shipPowerDevice.id.update({...battery,energyJ:123456});
+  }else if(args.action==="recompile"){
+    ctx.db.shipPowerState.shipId.delete(ship.id);
+    shipSystems.compileShipSystemsFor(ctx,ship.id);
+  }else if(args.action==="refit-retain"){
+    shipPower.installPrefabPower(ctx,ship.id);
+  }else if(args.action==="replace"){
+    const battery=[...ctx.db.shipPowerDevice.by_ship.filter(ship.id)].find(d=>d.mountId==="mount:battery");
+    if(!battery)throw new SenderError("Issued battery required");
+    shipPower.replaceInstalledPowerDevice(ctx,ship.id,battery.mountId,battery.id);
+  }else throw new SenderError("Known smoke lifecycle action required");
+},true));
 '''
 
 

@@ -55,6 +55,10 @@ function table(primary = "id") {
         rows.set(row[primary], { ...row });
       },
     },
+    by_system: {
+      filter: (systemId: string) =>
+        [...rows.values()].filter((r) => r.systemId === systemId),
+    },
     by_instance: {
       filter: (instanceId: string) =>
         [...rows.values()].filter((r) => r.instanceId === instanceId),

@@ -176,7 +176,6 @@ export async function evaSmoke(
   // 2. Walk out through the open hatch: the hand-off keeps the ship-local point.
   const inLane = plus(lock.hatch, lock.normal, -EVA.entryDepthM - 0.05);
   await walkNative(s, inLane[0], inLane[1]);
-  const lastDeck: [number, number] = [actor().localX, actor().localY];
   const outEnd = Date.now() + 8000;
   while (!body() && Date.now() < outEnd) {
     await intent({ dx: lock.normal[0], dy: lock.normal[1] });
@@ -184,16 +183,20 @@ export async function evaSmoke(
   }
   assert(body(), "stepped outside");
   await intent({});
+  assert.equal(body().phase, "local");
+  assert.equal(body().anchorShipId, shipId);
+  // These views share one subscription. After the committed outside body appears,
+  // the actor retains its exact deck crossing point until stepping aboard again.
+  // Comparing to that point excludes ordinary walking before the handoff.
+  const crossingDeck: [number, number] = [actor().localX, actor().localY];
   const handoffGap = Math.hypot(
-    body().localX - lastDeck[0],
-    body().localY - lastDeck[1],
+    body().localX - crossingDeck[0],
+    body().localY - crossingDeck[1],
   );
   assert(
     handoffGap < 0.35,
     `continuous hand-off at the doorway (${handoffGap} m)`,
   );
-  assert.equal(body().phase, "local");
-  assert.equal(body().anchorShipId, shipId);
   await wait(() => !location(), "no aboard location while outside", 5000);
   let massDrop = 0;
   if (massAboard?.status === "ready")

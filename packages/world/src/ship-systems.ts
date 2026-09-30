@@ -12,8 +12,8 @@
  * At most `SHIP_SYSTEMS_COMPILES_PER_TICK` ships compile per tick; the rest stay queued oldest
  * first and the deferral is counted on `ship_systems_clock`.
  *
- * Scope: S4-1 is a budget authority only. Nothing reads these rows to gate flight, power a device or
- * grant control; live flight keeps its own compile and `prefabPowerFactor` until S4-2 replaces it.
+ * Scope: S4-1 is the compile authority; S4-2 owns finite runtime joules and transient supply.
+ * Catalogue budgets remain design estimates, never proof of live stored energy.
  * Visibility: the owner reads the full report; admitted crew (an accepted passenger aboard) read the
  * summary; anyone who can see the ship reads only its outward power effect.
  */
@@ -30,6 +30,7 @@ import type {
   ShipSystemsMode,
   ShipSystemsReport,
 } from "@sidereal/sim/ship-systems";
+import { currentShipPower } from "./ship-power";
 import { prefabBindingOf } from "./combat-damage";
 import { acceptedPassengerAccess } from "./construction-passenger-access";
 import {
@@ -473,6 +474,14 @@ export function visibleShipSystemEffects(ctx: SharedViewContext) {
   const db = ctx.db as unknown as ReadContext["db"];
   return visibleShipMotion(ctx).flatMap((m) => {
     const row = db.shipSystemsState.shipId.find(m.shipId);
-    return row ? [{ shipId: m.shipId, power: shipPowerEffect(row) }] : [];
+    if (!row) return [];
+    const runtime = currentShipPower({ db }, m.shipId);
+    const power =
+      !runtime || (runtime.generationW <= 0 && runtime.energyJ <= 0)
+        ? "dark"
+        : runtime.brownout
+          ? "brownout"
+          : "powered";
+    return [{ shipId: m.shipId, power }];
   });
 }

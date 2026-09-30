@@ -1779,6 +1779,12 @@ export type OwnShipComponentDamage = __Infer<typeof OwnShipComponentDamage>;
 export const OwnShipNetworks = __t.object("OwnShipNetworks", {});
 export type OwnShipNetworks = __Infer<typeof OwnShipNetworks>;
 
+export const OwnShipPower = __t.object("OwnShipPower", {});
+export type OwnShipPower = __Infer<typeof OwnShipPower>;
+
+export const OwnShipPowerDevices = __t.object("OwnShipPowerDevices", {});
+export type OwnShipPowerDevices = __Infer<typeof OwnShipPowerDevices>;
+
 export const OwnShipSystemsReport = __t.object("OwnShipSystemsReport", {});
 export type OwnShipSystemsReport = __Infer<typeof OwnShipSystemsReport>;
 
@@ -2140,6 +2146,72 @@ export const ShipPolicy = __t.object("ShipPolicy", {
   updatedMicros: __t.u64(),
 });
 export type ShipPolicy = __Infer<typeof ShipPolicy>;
+
+export const ShipPowerClock = __t.object("ShipPowerClock", {
+  id: __t.u32(),
+  legacyCutoffMicros: __t.u64(),
+  lastTick: __t.u64(),
+  admissionValid: __t.bool(),
+});
+export type ShipPowerClock = __Infer<typeof ShipPowerClock>;
+
+export const ShipPowerDevice = __t.object("ShipPowerDevice", {
+  id: __t.string(),
+  shipId: __t.string(),
+  mountId: __t.string(),
+  definition: __t.string(),
+  energyJ: __t.f64(),
+  running: __t.bool(),
+  issuedMicros: __t.u64(),
+});
+export type ShipPowerDevice = __Infer<typeof ShipPowerDevice>;
+
+export const ShipPowerDeviceStatus = __t.object("ShipPowerDeviceStatus", {
+  id: __t.string(),
+  shipId: __t.string(),
+  mountId: __t.string(),
+  definition: __t.string(),
+  energyJ: __t.f64(),
+  running: __t.bool(),
+});
+export type ShipPowerDeviceStatus = __Infer<typeof ShipPowerDeviceStatus>;
+
+export const ShipPowerInstallation = __t.object("ShipPowerInstallation", {
+  shipId: __t.string(),
+  initializedMicros: __t.u64(),
+  policy: __t.string(),
+  lastSolvedTick: __t.u64(),
+});
+export type ShipPowerInstallation = __Infer<typeof ShipPowerInstallation>;
+
+export const ShipPowerState = __t.object("ShipPowerState", {
+  shipId: __t.string(),
+  instanceRevision: __t.u64(),
+  inputHash: __t.string(),
+  tick: __t.u64(),
+  solvedMicros: __t.u64(),
+  energyJ: __t.f64(),
+  generationW: __t.f64(),
+  demandW: __t.f64(),
+  brownout: __t.bool(),
+  corePowered: __t.bool(),
+  supplyJson: __t.string(),
+  networksJson: __t.string(),
+});
+export type ShipPowerState = __Infer<typeof ShipPowerState>;
+
+export const ShipPowerSummary = __t.object("ShipPowerSummary", {
+  shipId: __t.string(),
+  instanceRevision: __t.u64(),
+  tick: __t.u64(),
+  energyJ: __t.f64(),
+  generationW: __t.f64(),
+  demandW: __t.f64(),
+  brownout: __t.bool(),
+  corePowered: __t.bool(),
+  networksJson: __t.string(),
+});
+export type ShipPowerSummary = __Infer<typeof ShipPowerSummary>;
 
 export const ShipSystemEffects = __t.object("ShipSystemEffects", {
   shipId: __t.string(),

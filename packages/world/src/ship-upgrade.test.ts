@@ -61,6 +61,8 @@ import { stepShipSystems } from "./ship-systems";
 const HEAVY = { timeout: 120_000 };
 type Row = Record<string, any>;
 const PRIMARY: Record<string, string> = {
+  shipPowerInstallation: "shipId",
+  shipPowerState: "shipId",
   personalStarterReceipt: "owner",
   gameShipAccess: "shipId",
   shipWorldMotion: "shipId",

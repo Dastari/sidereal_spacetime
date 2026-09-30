@@ -90,6 +90,7 @@
     "./zone-path": "./src/zone-path.ts",
     "./ship-dresser": "./src/ship-dresser.ts",
     "./ship-exterior": "./src/ship-exterior.ts",
+    "./ship-power": "./src/ship-power.ts",
     "./ship-systems": "./src/ship-systems.ts",
     "./lifecycle-outbox": "./src/lifecycle-outbox.ts",
     "./prefab-ship-systems": "./src/prefab-ship-systems.ts"
