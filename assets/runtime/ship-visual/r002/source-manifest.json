@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "b97183aa634e992dd29708fd7a8395c44967ab0a205844f699097f3d69811e3a",
+  "compilerSha256": "5114650fbd050f3d4d4b26da853a5614211670ea057619a5b5a6768c84ebe59e",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -8,7 +8,7 @@
     },
     {
       "path": "packages/content/src/ship-visual.ts",
-      "sha256": "40cebd3d2d1a603c5ec596d6ac318c26d4873281af0aa11aa1441fdc9f20a608"
+      "sha256": "f4ef4f2923b818c81af61665ca8355214fa137984ff83e13e7e63eb4e3f318e9"
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
@@ -16,19 +16,19 @@
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "150e198ec7da4017da611a857e72e9bed6939e76f7392472ebd0737e09c9cabb"
+      "sha256": "679de83d26010d855993ed87f0975a1e7ca6de8fd37aceb69153bbe6c7c83803"
     },
     {
       "path": "packages/sim/src/ship-visual-sampler.ts",
-      "sha256": "f738f94be8f74a3973ffec7379a60397d4b09627d71484099bd1eb45b4b66383"
+      "sha256": "c881b688c78a07a2bf378d6d3594735bafaf0da27e3906df71a569d3e8523701"
     },
     {
       "path": "packages/sim/src/ship-visual-compiler.ts",
-      "sha256": "732ed7a1afb39af94987b101b0db378ccab8b74448742d3fa49a3845e7286e1b"
+      "sha256": "63239b7c2dac248a00499ef0d51bf3f7d2f0263702655893c3954d82ae44d9ae"
     },
     {
       "path": "packages/render/src/prefab-ship/sampled-structure.ts",
-      "sha256": "5ee12c60cce9cab7ce7f5a29ca68e5092c6745890d1eda77b81709c98a96d044"
+      "sha256": "505b5fa0893eac5b20f0fe68889ab4ddfd66f61d37d1acea51cf7ac944c7d774"
     },
     {
       "path": "packages/render/src/prefab-ship/sampled-ao.ts",
@@ -36,7 +36,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/ship-view.ts",
-      "sha256": "b3b097433e049c60ba89d0f3e214680b0c8b06995a5d533f5753fd8543f49996"
+      "sha256": "45f682d234c0804c16f486716c69c6c06bd55b6d9693e2552f61363a73ab114f"
     },
     {
       "path": "packages/render/src/prefab-ship/batch.ts",
@@ -72,7 +72,7 @@
     },
     {
       "path": "scripts/art_library/ship_reference_r002_art.py",
-      "sha256": "9e57af1358aeed55bd1ae0e61ed696e1a4d9191210dc2c72296ab12934d56d0e"
+      "sha256": "56554a07b020a32b73dfb8c9287ad6e2d2de414cfc8ba427014c8928f430be02"
     },
     {
       "path": "scripts/art_library/ship_reference_r002_maps.py",

@@ -223,34 +223,36 @@ R.O.kitchen=kitchen
 
 
 def enclosed_reactor(original):
-    """Four enclosure faces around one pressure body, not alternating open colored discs."""
+    """Compact pressure vessel and partial service shrouds inside the original fitting envelope."""
     lo=[min(q[i] for q in original.boxes) for i in range(3)]
     hi=[max(q[i+3] for q in original.boxes) for i in range(3)]
     x,y,z=lo;X,Y,Z=hi;w,d,h=X-x,Y-y,Z-z
     p=K.Piece("reference.r002.reactor",original.family,original.mount,original.size);b=p.b
-    b(x,y,z,X,Y,z+2,"trim")
-    b(x+3,y+3,z+2,X-3,Y-3,Z-3,"secondary")
-    # Broad molded shrouds are offset from the backing, with selected open service faces.
-    for a,A in ((x+1,x+4),(X-4,X-1)):
-        b(a,y+3,z+3,A,Y-3,Z-3,"primary")
-        b(a,y+5,z+7,A,Y-5,z+h*.55,"trim")
-        b(a,y+6,z+9,A,Y-6,z+h*.50,"accent")
-    for a,A in ((y+1,y+4),(Y-4,Y-1)):
-        b(x+3,a,z+3,X-3,A,z+h*.33,"primary")
-        b(x+3,a,z+h*.68,X-3,A,Z-3,"primary")
-        for xx,XX in ((x+3,x+6),(X-6,X-3)):
-            b(xx,a,z+h*.33,XX,A,z+h*.68,"primary")
-        b(x+6,a+1,z+h*.36,X-6,A-1,z+h*.64,"dark")
-        for zz in (z+h*.40,z+h*.54):
-            b(x+7,a,zz,X-7,A,zz+1,"metal")
-    b(x+2,y+2,Z-3,X-2,Y-2,Z-1,"trim")
-    b(x+5,y+5,Z-1,X-5,Y-5,Z,"primary")
-    b(x+w*.53,y+d*.54,Z-.8,x+w*.77,y+d*.76,Z,"accent")
-    b(x+w*.62,y+d*.60,Z-.5,x+w*.65,y+d*.70,Z,"metal")
-    # One protected diagnostic lens; coolant feeds remain inside the existing footprint.
-    b(x+w*.42,Y-3,z+h*.72,x+w*.58,Y-2.5,z+h*.75,"emit_a")
-    for xx in (x+4,X-6):
-        b(xx,y+4,z+4,xx+2,y+6,Z-4,"metal")
+    b(x+1,y+1,z,X-1,Y-1,z+2,"trim")
+    # One pressure vessel: soft shoulders, two mechanical collars, no stacked exposed discs.
+    b(x+3,y+3,z+2,X-3,Y-3,z+h*.76,"secondary.vessel")
+    # Shrouds protect discrete service faces and leave the curved pressure body visible.
+    for xx,XX in ((x+1,x+6),(X-6,X-1)):
+        b(xx,y+d*.24,z+3,XX,y+d*.76,z+h*.62,"primary")
+        b(xx,y+d*.30,z+7,XX,y+d*.70,z+h*.48,"trim")
+        b(xx,y+d*.37,z+9,XX,y+d*.62,z+h*.44,"accent")
+    for yy,YY in ((y+1,y+5),(Y-5,Y-1)):
+        b(x+w*.19,yy,z+3,x+w*.81,YY,z+h*.22,"primary")
+        b(x+w*.22,yy,z+h*.48,x+w*.78,YY,z+h*.62,"primary")
+        for xx,XX in ((x+w*.20,x+w*.29),(x+w*.71,x+w*.80)):
+            b(xx,yy,z+h*.22,XX,YY,z+h*.48,"trim")
+        # Service controls are recessed behind their guards, with visible two-level vent fins.
+        b(x+w*.29,yy+1,z+h*.25,x+w*.71,YY-1,z+h*.46,"dark")
+        for zz in (z+h*.28,z+h*.38):
+            b(x+w*.31,yy+.5,zz,x+w*.68,YY-.5,zz+1,"metal")
+        b(x+w*.37,yy,z+h*.53,x+w*.63,YY,z+h*.55,"emit_b")
+    b(x+w*.30,y+d*.30,z+h*.76,x+w*.70,y+d*.70,z+h*.81,"trim")
+    b(x+w*.36,y+d*.36,z+h*.81,x+w*.64,y+d*.64,z+h*.85,"primary")
+    b(x+w*.42,y+d*.41,z+h*.85,x+w*.60,y+d*.60,z+h*.87,"accent")
+    # Narrow protected coolant feed pylons retain machine height without filling the whole cuboid.
+    for xx in (x+3,X-5):
+        b(xx,y+3,z+3,xx+2,y+5,Z-1,"metal")
+        b(xx-.5,y+2.5,z+h*.69,xx+2.5,y+5.5,z+h*.78,"trim")
     return p
 
 
@@ -309,10 +311,11 @@ def machinery_piece(component):
 E.build_piece=machinery_piece
 
 
-# A finite material alias identifies real smooth authored barrels; the semantic slot stays metal.
-E.SI["metal.barrel"]=len(E.SLOTS);E.SLOTS.append("metal.barrel")
-K.SLOT_PBR["metal.barrel"]=K.SLOT_PBR["metal"]
-for theme in K.THEMES.values():theme["metal.barrel"]=theme["metal"]
+# Finite authored shape aliases preserve the same semantic slots and surface families.
+for alias,base in (("metal.barrel","metal"),("secondary.vessel","secondary")):
+    E.SI[alias]=len(E.SLOTS);E.SLOTS.append(alias)
+    K.SLOT_PBR[alias]=K.SLOT_PBR[base]
+    for theme in K.THEMES.values():theme[alias]=theme[base]
 
 
 def barrel_mesh(name,box):
@@ -330,6 +333,28 @@ def barrel_mesh(name,box):
         for k in range(n):
             a=k*2*math.pi/n;point=centre.copy();point[axis]=at
             point[u]+=math.cos(a)*r;point[v]+=math.sin(a)*r;verts.append(point)
+    for j in range(len(profiles)-1):
+        for k in range(n):
+            f=(j*n+k,j*n+(k+1)%n,(j+1)*n+(k+1)%n,(j+1)*n+k)
+            if profiles[j+1][1]==0:f=f[:3]
+            faces.append(f);slots.append(E.SI[profiles[j][2]])
+    me=bpy.data.meshes.new(name);me.from_pydata(verts,[],faces)
+    me.polygons.foreach_set("material_index",slots);me.polygons.foreach_set("use_smooth",[True]*len(faces))
+    return me
+
+
+def pressure_mesh(name,box):
+    lo=[q*E.T for q in box[:3]];hi=[q*E.T for q in box[3:6]]
+    cx,cy=(lo[0]+hi[0])/2,(lo[1]+hi[1])/2
+    rx,ry=(hi[0]-lo[0])/2,(hi[1]-lo[1])/2;L=hi[2]-lo[2];n=32
+    profiles=[(lo[2],.82,"trim"),(lo[2]+L*.07,1,"trim"),
+              (lo[2]+L*.13,.91,"secondary.vessel"),(lo[2]+L*.79,.91,"secondary.vessel"),
+              (lo[2]+L*.84,1,"metal"),(lo[2]+L*.91,1,"metal"),
+              (hi[2],.75,"secondary.vessel"),(hi[2],0,"secondary.vessel")]
+    verts=[];faces=[];slots=[]
+    for zz,r,slot in profiles:
+        for k in range(n):
+            a=k*2*math.pi/n;verts.append((cx+math.cos(a)*rx*r,cy+math.sin(a)*ry*r,zz))
     for j in range(len(profiles)-1):
         for k in range(n):
             f=(j*n+k,j*n+(k+1)%n,(j+1)*n+(k+1)%n,(j+1)*n+k)
@@ -401,14 +426,15 @@ def authored_mesh(name,boxes,hidden=None):
         for i,box in enumerate(boxes):
             dims=[box[a+3]-box[a] for a in range(3)]
             smooth_barrel=box[6]=="metal.barrel"
-            part=barrel_mesh(name,box) if smooth_barrel else R.original_mesh(name,[box],[hidden[i]] if hidden else None)
+            smooth_vessel=box[6]=="secondary.vessel"
+            part=barrel_mesh(name,box) if smooth_barrel else pressure_mesh(name,box) if smooth_vessel else R.original_mesh(name,[box],[hidden[i]] if hidden else None)
             sub=bmesh.new();sub.from_mesh(part);bpy.data.meshes.remove(part)
             # Round only broad exposed pieces. Narrow ribs, voxel rows, keys and lenses stay sharp.
-            if box[6].split(".")[0] in ("primary","secondary","trim","accent") and min(dims)>=1.5 and max(dims)>=5:
+            if not smooth_vessel and box[6].split(".")[0] in ("primary","secondary","trim","accent") and min(dims)>=1.5 and max(dims)>=5:
                 edges=[e for e in sub.edges if len(e.link_faces)==2]
-                width=min(.025 if any(s in name for s in ("bunk","seat","navigation","sofa","medical-bed")) else .015,min(dims)*E.T*.16)
+                width=min(.025 if any(s in name for s in ("bunk","seat","navigation","sofa","medical-bed")) else .04 if any(s in name for s in ("reactor","cannon","point-defense","railgun","missile-pod")) else .015,min(dims)*E.T*.22)
                 if edges:bmesh.ops.bevel(sub,geom=edges,offset=width,segments=2,affect="EDGES",clamp_overlap=True)
-            if not smooth_barrel:
+            if not smooth_barrel and not smooth_vessel:
                 for f in sub.faces:f.material_index=E.SI[box[6]]
             temp=bpy.data.meshes.new("GEO-reference-part");sub.to_mesh(temp);sub.free();bm.from_mesh(temp);bpy.data.meshes.remove(temp)
         me=bpy.data.meshes.new(name);bm.to_mesh(me);bm.free()
@@ -451,5 +477,5 @@ if __name__=="__main__":
     manifest=Path(args.out)/"manifest.json"
     if manifest.exists():
         meta=json.loads(manifest.read_text())
-        meta["referenceMesh"]={"revision":"r002","selectiveHousingChamferM":.015,"cushionChamferM":.025,"segments":2,"engineBellSegments":32,"previousArtifactsChanged":False}
+        meta["referenceMesh"]={"revision":"r002","selectiveHousingChamferM":.015,"machineryHousingChamferM":.04,"cushionChamferM":.025,"segments":2,"engineBellSegments":32,"previousArtifactsChanged":False}
         manifest.write_text(json.dumps(meta,indent=2)+"\n")

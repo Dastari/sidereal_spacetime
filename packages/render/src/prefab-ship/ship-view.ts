@@ -123,6 +123,18 @@ import {
   type VerifiedVisualVariant,
 } from "./visual-variant";
 
+export function candidateBaseRole(
+  revision: string | undefined,
+  slot: ShipKitSlot,
+  role: string,
+) {
+  return revision === "r002" &&
+    ((role === "wall" && slot !== "primary") ||
+      (role === "floor" && slot === "metal"))
+    ? "hull"
+    : role;
+}
+
 const roleOf = (mesh: Mesh): string =>
   (mesh.metadata as { role?: string } | null)?.role ?? "hull";
 
@@ -602,7 +614,16 @@ export async function createPrefabShipView(
         sourceMaterial?.metadata?.shipReferenceInstrument
           ? (sourceMaterial as PBRMaterial)
           : normalDetailMaterial(
-              roleSlotMaterial(scene, theme, slot, role),
+              roleSlotMaterial(
+                scene,
+                theme,
+                slot,
+                candidateBaseRole(
+                  detail?.revision ?? out.variant?.manifest.revision ?? "",
+                  slot,
+                  role,
+                ),
+              ),
               detail,
               geo,
             );
@@ -729,7 +750,16 @@ export async function createPrefabShipView(
         g.material.metadata?.shipReferenceFinish ||
         g.material.metadata?.shipReferenceInstrument
           ? g.material
-          : roleSlotMaterial(scene, theme, g.slot, role);
+          : roleSlotMaterial(
+              scene,
+              theme,
+              g.slot,
+              candidateBaseRole(
+                out.variant?.manifest.revision ?? "",
+                g.slot,
+                role,
+              ),
+            );
       setMeshRole(mesh, role);
       mesh.metadata.shipSurfaceCharts = [...g.surfaceCharts];
       // Index ranges per source role (a batch merges every role of one material), so an
@@ -874,18 +904,6 @@ export async function createPrefabShipView(
         count: 0,
       });
     });
-  }
-
-  function candidateBaseRole(
-    revision: string | undefined,
-    slot: ShipKitSlot,
-    role: string,
-  ) {
-    return revision === "r002" &&
-      ((role === "wall" && slot !== "primary") ||
-        (role === "floor" && slot === "metal"))
-      ? "hull"
-      : role;
   }
 
   function candidateMaterial(

@@ -9,7 +9,7 @@ import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { Constants } from "@babylonjs/core/Engines/constants";
 import { prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
-import { createPrefabShipView } from "./ship-view";
+import { createPrefabShipView, candidateBaseRole } from "./ship-view";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { referenceSurfaceMaterial } from "./reference-finish";
 import { roleSlotMaterial } from "./materials";
@@ -330,4 +330,36 @@ it("theme changes retain candidate finish and the exact instrument atlas", async
   expect(hardwareMesh.material).toBe(initialHardware);
   expect(hardwareMesh.metadata.role).toBe("wall");
   view.dispose();
+});
+
+it("uses one candidate metal family for floor grilles and hull equipment without merging deck finish responses", () => {
+  const engine = new NullEngine();
+  engines.push(engine);
+  const scene = new Scene(engine);
+  for (const theme of ["federation", "riftjack", "aurelian"] as const) {
+    const metal = roleSlotMaterial(
+      scene,
+      theme,
+      "metal",
+      candidateBaseRole("r002", "metal", "floor"),
+    );
+    expect(metal).toBe(roleSlotMaterial(scene, theme, "metal", "hull"));
+    expect(metal).not.toBe(roleSlotMaterial(scene, theme, "metal", "floor"));
+    const floor = roleSlotMaterial(
+      scene,
+      theme,
+      "secondary",
+      candidateBaseRole("r002", "secondary", "floor"),
+    );
+    expect(floor).toBe(roleSlotMaterial(scene, theme, "secondary", "floor"));
+    expect(floor).not.toBe(roleSlotMaterial(scene, theme, "secondary", "hull"));
+    expect(
+      roleSlotMaterial(
+        scene,
+        theme,
+        "metal",
+        candidateBaseRole("r001", "metal", "floor"),
+      ),
+    ).toBe(roleSlotMaterial(scene, theme, "metal", "floor"));
+  }
 });

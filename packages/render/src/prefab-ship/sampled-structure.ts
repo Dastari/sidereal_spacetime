@@ -27,6 +27,7 @@ interface Face {
   v: number;
   family: string;
   normalHint?: readonly [number, number, number];
+  chartFace?: boolean;
   lights?: number[];
 }
 interface Plane {
@@ -53,6 +54,11 @@ export function meshSampledStructure(
         const at = p[axis] + (side > 0 ? 1 : 0),
           u = (axis + 1) % 3,
           v = (axis + 2) % 3;
+        const normalHint = c.normalChart
+          ? (c.normalFaces ?? 0) & (1 << (axis * 2 + (side > 0 ? 1 : 0)))
+            ? c.normalHint
+            : undefined
+          : c.normalHint;
         const key = `${axis}:${side}:${at}:${c.slot}:${c.role}:${c.surfaceRole ?? ""}`;
         let plane = planes.get(key);
         if (!plane)
@@ -72,7 +78,8 @@ export function meshSampledStructure(
           u: p[u],
           v: p[v],
           family: c.family,
-          normalHint: c.normalHint,
+          normalHint,
+          ...(c.normalChart && normalHint ? { chartFace: true } : {}),
           ...(options.ambientOcclusion
             ? {
                 lights: [
@@ -82,7 +89,7 @@ export function meshSampledStructure(
                   [0, 1],
                 ].map(([u, v]) =>
                   c.role === "frame" ||
-                  c.normalHint !== undefined ||
+                  normalHint !== undefined ||
                   ["emit_a", "emit_b", "glass"].includes(c.slot)
                     ? 1
                     : sampledCornerLight(
@@ -138,6 +145,7 @@ export function meshSampledStructure(
       if (!plane.faces.has(`${f.u},${f.v}`)) continue;
       const same = (u: number, v: number) =>
         plane.faces.get(`${u},${v}`)?.family === f.family &&
+        plane.faces.get(`${u},${v}`)?.chartFace === f.chartFace &&
         plane.faces.get(`${u},${v}`)?.normalHint?.join(",") ===
           f.normalHint?.join(",") &&
         plane.faces.get(`${u},${v}`)?.lights?.join(",") === f.lights?.join(",");
@@ -164,7 +172,11 @@ export function meshSampledStructure(
         V = (plane.axis + 2) % 3,
         normal = [0, 0, 0];
       normal[plane.axis] = plane.side;
-      if (plane.axis < 2 && f.normalHint) {
+      if (f.chartFace && f.normalHint) {
+        // Intact analytic tread/riser ownership was qualified above. No dot threshold:
+        // a shallow roof has a small lateral normal component but still owns its step riser.
+        for (let a = 0; a < 3; a++) normal[a] = f.normalHint[a];
+      } else if (plane.axis < 2 && f.normalHint) {
         const dot = normal[plane.axis] * f.normalHint[plane.axis];
         if (Math.abs(dot) > 0.3)
           for (let a = 0; a < 3; a++)

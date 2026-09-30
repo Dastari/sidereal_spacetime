@@ -8,6 +8,7 @@ import {
   compileShipVisual,
   visualProfilesSha256,
   visualVolumeSha256,
+  visualCellKey,
 } from "./ship-visual-compiler";
 
 describe("versioned reference recipes", () => {
@@ -43,6 +44,50 @@ describe("versioned reference recipes", () => {
       "access-handle",
     ])
       expect(result.layers.some((l) => l.id.endsWith(suffix))).toBe(true);
+    // Rich inward surfaces must belong to the occupied hull, even where an attached wing
+    // hides its outward cassette. A mere partition-only layer does not satisfy this.
+    for (const suffix of [
+      "inner-service-well",
+      "inner-service-backing",
+      "inner-task-header",
+      "inner-vent-fin",
+      "inner-access-latch",
+    ]) {
+      const rows = result.layers.filter(
+        (l) => l.support === "volume:hull" && l.id.endsWith(suffix),
+      );
+      expect(rows.length).toBeGreaterThan(0);
+      expect(rows.every((l) => l.surfaceRole === "wall")).toBe(true);
+    }
+    let openCells = 0,
+      backedCells = 0;
+    for (const well of result.layers.filter(
+      (l) => l.support === "volume:hull" && l.id.endsWith("inner-service-well"),
+    )) {
+      const [x, y, z, X, Y, Z] = well.bounds;
+      for (let a = x; a < X; a++)
+        for (let b = y; b < Y; b++)
+          for (let c = z; c < Z; c++) {
+            if (result.cells.has(visualCellKey(a, b, c))) continue;
+            openCells++;
+            if (
+              [
+                [1, 0],
+                [-1, 0],
+                [0, 1],
+                [0, -1],
+              ].some(([dx, dy]) => {
+                const backing = result.cells.get(
+                  visualCellKey(a + dx, b + dy, c),
+                );
+                return backing !== undefined;
+              })
+            )
+              backedCells++;
+          }
+    }
+    expect(openCells).toBeGreaterThan(100);
+    expect(backedCells).toBe(openCells);
     const guards = result.layers.filter((l) =>
       l.id.endsWith(":continuous-sill"),
     );

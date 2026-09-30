@@ -4,6 +4,7 @@ import {
   visualCellKey,
   removeShipVisualCells,
 } from "@sidereal/sim/ship-visual-compiler";
+import type { ShipVisualLayer } from "@sidereal/content/ship-visual";
 import { meshSampledStructure } from "./sampled-structure";
 
 describe("sampled exposed surfaces", () => {
@@ -78,6 +79,86 @@ describe("sampled exposed surfaces", () => {
     );
     expect(meshSampledStructure(sampleShipVisualLayers(layers))).toEqual(
       before,
+    );
+  });
+  it("shades shallow intact roof treads and risers while keeping removed-cell cuts and patch edges hard", () => {
+    const normal: [number, number, number] = [
+      -0.25 / Math.hypot(0.25, 1),
+      0,
+      1 / Math.hypot(0.25, 1),
+    ];
+    const layers: ShipVisualLayer[] = [
+      { id: "backing", role: "core", slot: "dark", bounds: [0, 0, 0, 8, 2, 1] },
+    ];
+    for (let x = 0; x < 8; x++) {
+      const height = Math.floor(x * 0.25) + 2;
+      layers.push({
+        id: `roof:${x}`,
+        role: "plate",
+        slot: "primary",
+        bounds: [x, 0, 1, x + 1, 2, height],
+        normalHint: normal,
+        normalChart: "intact-plane",
+      });
+    }
+    const intact = sampleShipVisualLayers(layers);
+    const withoutCharts = sampleShipVisualLayers(
+      layers.map(({ normalHint, normalChart, ...l }) => l),
+    );
+    expect([...intact.keys()]).toEqual([...withoutCharts.keys()]);
+    // A pre-existing hint without chart qualification retains the old axis/dot behavior.
+    const legacyHints = sampleShipVisualLayers(
+      layers.map(({ normalChart, ...l }) => l),
+    );
+    for (const g of meshSampledStructure(legacyHints))
+      for (let i = 0; i < g.normals.length; i += 3)
+        expect(
+          Array.from(g.normals.slice(i, i + 3)).filter((n) => Math.abs(n) === 1)
+            .length,
+        ).toBe(1);
+
+    const normalsAt = (cells: typeof intact, match: (p: number[]) => boolean) =>
+      meshSampledStructure(cells).flatMap((g) => {
+        const rows: number[][] = [];
+        for (let i = 0; i < g.indices.length; i += 3) {
+          const vs = Array.from(g.indices.slice(i, i + 3));
+          const centre = [0, 1, 2].map(
+            (a) => vs.reduce((sum, v) => sum + g.positions[v * 3 + a], 0) / 3,
+          );
+          if (match(centre))
+            rows.push(Array.from(g.normals.slice(vs[0] * 3, vs[0] * 3 + 3)));
+        }
+        return rows;
+      });
+    // The shallow analytic X component is below the old .3 gate, but owns its intact riser.
+    const risers = normalsAt(intact, (p) => p[0] === 4 / 16 && p[2] > 2 / 16);
+    expect(risers.length).toBeGreaterThan(0);
+    for (const n of risers) expect(n).toEqual(normal.map(Math.fround));
+    const boundary = normalsAt(intact, (p) => p[1] === 0 && p[2] > 1 / 16);
+    expect(boundary.length).toBeGreaterThan(0);
+    for (const n of boundary) expect(n).toEqual([0, -1, 0]);
+    const removedSide = removeShipVisualCells(
+      intact,
+      new Set([visualCellKey(5, 0, 2)]),
+    );
+    const cuts = normalsAt(
+      removedSide,
+      (p) => p[0] === 5 / 16 && p[1] < 1 / 16 && p[2] > 2 / 16,
+    );
+    expect(cuts.length).toBeGreaterThan(0);
+    for (const n of cuts) expect(n).toEqual([1, 0, 0]);
+    const removedTop = removeShipVisualCells(
+      intact,
+      new Set([visualCellKey(4, 0, 2)]),
+    );
+    const tops = normalsAt(
+      removedTop,
+      (p) => p[0] > 4 / 16 && p[0] < 5 / 16 && p[1] < 1 / 16 && p[2] === 2 / 16,
+    );
+    expect(tops.length).toBeGreaterThan(0);
+    for (const n of tops) expect(n).toEqual([0, 0, 1]);
+    expect(meshSampledStructure(sampleShipVisualLayers(layers))).toEqual(
+      meshSampledStructure(intact),
     );
   });
 });

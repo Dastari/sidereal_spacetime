@@ -44,6 +44,7 @@ export function shipVisualLayersR002(
     layers.push({ id, role, slot, bounds: q, support, surfaceRole });
   };
   let shellNormal: [number, number, number] | undefined;
+  let roofChart: { id: string; normal: [number, number, number] } | undefined;
   const column = (
     id: string,
     role: ShipVisualLayer["role"],
@@ -56,7 +57,10 @@ export function shipVisualLayersR002(
   ) => {
     const before = layers.length;
     box(id, role, slot, [x, y, z0, x + 1, y + 1, z1], support);
-    if (
+    if (roofChart && layers.length > before) {
+      layers[layers.length - 1].normalChart = roofChart.id;
+      layers[layers.length - 1].normalHint = roofChart.normal;
+    } else if (
       shellNormal &&
       layers.length > before &&
       !["floor", "roof", "void", "service"].includes(role)
@@ -64,6 +68,7 @@ export function shipVisualLayersR002(
       layers[layers.length - 1].normalHint = shellNormal;
   };
   const interior = deriveInterior(doc, 0, catalog);
+  const analyticCharts = new Map<string, [number, number, number]>();
   const assemblies = doc.volumes.map((volume) => ({
     volume,
     geometry: volumeGeometry(volume),
@@ -107,10 +112,41 @@ export function shipVisualLayersR002(
       string,
       { tile: (typeof volume.tiles)[number]; poly: Pt[] }[]
     >();
+    const tileRoofCharts = new Map<
+      (typeof volume.tiles)[number],
+      { id: string; normal: [number, number, number]; dx: number; dy: number }
+    >();
+    const innerBackings: {
+      x: number;
+      y: number;
+      z0: number;
+      z1: number;
+      normal?: [number, number, number];
+    }[] = [];
     for (const tile of volume.tiles) {
       const poly = placedTilePolygon(tile),
         xs = poly.map((p) => p[0]),
         ys = poly.map((p) => p[1]);
+      if (tile.bow) {
+        const world: Pt = [
+          xs.reduce((a, b) => a + b, 0) / xs.length,
+          ys.reduce((a, b) => a + b, 0) / ys.length,
+        ];
+        const z = bowHeights(tile, volume.height, world)[1];
+        const dx =
+          bowHeights(tile, volume.height, [world[0] + 1 / 16, world[1]])[1] - z;
+        const dy =
+          bowHeights(tile, volume.height, [world[0], world[1] + 1 / 16])[1] - z;
+        const intercept = z - dx * world[0] * 16 - dy * world[1] * 16;
+        const id = `volume:${volume.id}:roof-plane:${dx.toFixed(6)}:${dy.toFixed(6)}:${intercept.toFixed(6)}`;
+        let normal = analyticCharts.get(id);
+        if (!normal) {
+          const length = Math.hypot(dx, dy, 1);
+          normal = [-dx / length, -dy / length, 1 / length];
+          analyticCharts.set(id, normal);
+        }
+        tileRoofCharts.set(tile, { id, normal, dx, dy });
+      }
       for (
         let y = Math.floor(Math.min(...ys));
         y < Math.ceil(Math.max(...ys));
@@ -322,12 +358,13 @@ export function shipVisualLayersR002(
           }
           if (
             distance >= 1 &&
-            distance < 2 &&
-            phase >= 4 &&
-            phase < profile.course - 4
+            distance < (shellNormal ? 3 : 2) &&
+            (shellNormal || (phase >= 4 && phase < profile.course - 4))
           ) {
-            const plateSlot =
-              detailKind === 2 && phase > profile.course * 0.62
+            // A diagonal is one coherent neutral enclosure, not alternating narrow pale slats.
+            const plateSlot = shellNormal
+              ? "trim"
+              : detailKind === 2 && phase > profile.course * 0.62
                 ? "accent"
                 : "primary";
             column(
@@ -520,62 +557,203 @@ export function shipVisualLayersR002(
               Math.min(floor, lo + 4),
               family,
             );
-          if (distance >= 3 && deck && top > floor + 8) {
+          if (distance >= 2 && deck && top > floor + 8) {
             surfaceRole = "wall";
-            column(
-              `${family}:inner-gasket`,
-              "core",
-              "secondary",
-              x,
-              y,
-              floor + 3,
-              top - 3,
-              family,
-            );
-            if (phase > 1 && phase < profile.course - 1)
-              column(
-                `${family}:inner-lower-panel`,
-                "plate",
-                "primary",
+            // Outward attachment occlusion cannot suppress the occupied room's inward equipment.
+            // The middle pressure course stays solid between the two facade recesses.
+            if (distance < 3)
+              innerBackings.push({
                 x,
                 y,
-                floor + 4,
+                z0: floor + 3,
+                z1: top - 3,
+                normal: shellNormal,
+              });
+            if (distance >= 3) {
+              column(
+                `${family}:inner-gasket`,
+                "core",
+                "secondary",
+                x,
+                y,
+                floor + 3,
                 top - 3,
                 family,
               );
-
-            if (
-              detailKind === 1 &&
-              phase >= 9 &&
-              phase < 21 &&
-              top > floor + 19
-            )
-              column(
-                `${family}:inner-control`,
-                "service",
-                phase < 17 ? "metal" : "dark",
-                x,
-                y,
-                floor + 16,
-                floor + 20,
-                family,
-              );
-            if (
-              detailKind === 1 &&
-              phase >= 18 &&
-              phase < 21 &&
-              top > floor + 20
-            )
-              column(
-                `${family}:inner-task-lens`,
-                "service",
-                "emit_b",
-                x,
-                y,
-                floor + 20,
-                floor + 21,
-                family,
-              );
+              if (shellNormal || (phase > 1 && phase < profile.course - 1))
+                column(
+                  `${family}:inner-lower-panel`,
+                  "plate",
+                  "primary",
+                  x,
+                  y,
+                  floor + 4,
+                  top - 3,
+                  family,
+                );
+              if (!shellNormal && top >= floor + 27) {
+                const inwardKind =
+                  nearInterface || room?.type === "bridge"
+                    ? 1
+                    : room?.type === "engineering" || room?.type === "workshop"
+                      ? 0
+                      : room?.type === "quarters" ||
+                          room?.type === "lounge" ||
+                          room?.type === "cargo"
+                        ? 2
+                        : mod(bay, 3);
+                const left = inwardKind === 1 ? 4 : 9,
+                  right = Math.min(
+                    profile.course - 3,
+                    left + (inwardKind === 0 ? 18 : 15),
+                  );
+                const z0 = floor + (inwardKind === 1 ? 7 : 5),
+                  z1 = floor + 20;
+                if (phase >= left && phase < right) {
+                  column(
+                    `${family}:inner-service-surround`,
+                    "frame",
+                    "trim",
+                    x,
+                    y,
+                    z0,
+                    z1,
+                    family,
+                  );
+                  const border = phase < left + 2 || phase >= right - 2;
+                  if (!border) {
+                    column(
+                      `${family}:inner-service-well`,
+                      "void",
+                      "dark",
+                      x,
+                      y,
+                      z0 + 2,
+                      z1 - 2,
+                      family,
+                    );
+                    // Short protected inserts occupy selected positions in the well; most of it stays open.
+                    if (inwardKind === 0) {
+                      for (const z of [z0 + 4, z1 - 5])
+                        column(
+                          `${family}:inner-vent-fin`,
+                          "service",
+                          "metal",
+                          x,
+                          y,
+                          z,
+                          z + 1,
+                          family,
+                        );
+                    } else if (inwardKind === 1) {
+                      if (phase < left + 7)
+                        column(
+                          `${family}:inner-control-housing`,
+                          "service",
+                          "metal",
+                          x,
+                          y,
+                          z0 + 3,
+                          z1 - 3,
+                          family,
+                        );
+                      if (phase >= left + 4 && phase < left + 6)
+                        column(
+                          `${family}:inner-control-lens`,
+                          "service",
+                          "emit_a",
+                          x,
+                          y,
+                          z0 + 7,
+                          z0 + 9,
+                          family,
+                        );
+                      if (phase >= right - 5 && phase < right - 3)
+                        column(
+                          `${family}:inner-control-keybank`,
+                          "service",
+                          "primary",
+                          x,
+                          y,
+                          z0 + 4,
+                          z0 + 6,
+                          family,
+                        );
+                    } else {
+                      if (phase < right - 5)
+                        column(
+                          `${family}:inner-access-lid`,
+                          "plate",
+                          "accent",
+                          x,
+                          y,
+                          z0 + 3,
+                          z1 - 3,
+                          family,
+                        );
+                      if (phase >= right - 5 && phase < right - 3)
+                        column(
+                          `${family}:inner-access-latch`,
+                          "service",
+                          "metal",
+                          x,
+                          y,
+                          z0 + 6,
+                          z1 - 5,
+                          family,
+                        );
+                    }
+                  }
+                  if (phase === left + 1 || phase === right - 2)
+                    for (const z of [z0 + 1, z1 - 2])
+                      column(
+                        `${family}:inner-service-fastener`,
+                        "service",
+                        "metal",
+                        x,
+                        y,
+                        z,
+                        z + 1,
+                        family,
+                      );
+                }
+                // A room task header has an opaque protective housing, not an exposed glow strip.
+                if (phase >= 4 && phase < profile.course - 5) {
+                  column(
+                    `${family}:inner-task-header`,
+                    "frame",
+                    "trim",
+                    x,
+                    y,
+                    floor + 22,
+                    floor + 26,
+                    family,
+                  );
+                  if (phase >= 6 && phase < profile.course - 7)
+                    column(
+                      `${family}:inner-task-lens`,
+                      "service",
+                      inwardKind === 0 ? "emit_b" : "emit_a",
+                      x,
+                      y,
+                      floor + 23,
+                      floor + 24,
+                      family,
+                    );
+                }
+                if (phase === left - 2)
+                  column(
+                    `${family}:inner-vertical-task-lens`,
+                    "service",
+                    "emit_b",
+                    x,
+                    y,
+                    z0 + 3,
+                    z1 - 3,
+                    family,
+                  );
+              }
+            }
           }
           surfaceRole = "hull";
           if (distance >= 1 && distance < 3)
@@ -602,140 +780,168 @@ export function shipVisualLayersR002(
             hi - 1,
             family,
           );
-          // Offset 1x2 / 2x2 m enclosure fields join an integrated service belt.
-          // Their cadence is global, while mount/pressure junctions choose real cavities.
-          const row = Math.floor(y / 32);
-          const offset = mod(row, 2) ? Math.floor(profile.course / 2) : 0;
-          const roofKind = mod(
-            Math.floor((x - offset) / (profile.course * 2)) + row,
-            4,
-          );
-          const plateWidth =
-            roofKind < 2 ? profile.course : Math.floor(profile.course / 2);
-          const u = mod(x - offset, plateWidth),
-            v = mod(y, 32);
-          const spineCentre = Math.round((by + bY) / 2),
-            spineHalf = deck ? 14 : 6;
-          const spine =
-            Math.abs(y - spineCentre) < spineHalf && x > bx + 6 && x < bX - 12;
-          const nearestMount = doc.mounts.find(
-            (m) =>
-              m.attach === "top" &&
-              Math.hypot(world[0] - m.at[0], world[1] - m.at[1]) < 0.95,
-          );
-          const equipmentBelt =
-            !!nearestMount && Math.abs(world[1] - nearestMount.at[1]) < 0.75;
-          const service = spine || equipmentBelt;
-          const serviceU = mod(x, profile.course);
-          const serviceBay =
-            x - serviceU >= bx + 6 && x - serviceU + profile.course <= bX - 12;
-          const cavity =
-            service &&
-            serviceBay &&
-            mod(Math.floor(x / profile.course), 3) !== 2 &&
-            serviceU >= 6 &&
-            serviceU < profile.course - 6 &&
-            Math.abs(y - spineCentre) < spineHalf - 3;
-          const redField =
-            roofKind === 2 && u > plateWidth * 0.25 && v >= 8 && v < 24;
-          if (service) {
+          const chart = tileRoofCharts.get(tile);
+          const slopedPatch = chart && Math.hypot(chart.dx, chart.dy) > 1e-6;
+          if (slopedPatch) {
+            roofChart = chart;
+            // A clipped analytic plate exists before rasterization. Its fine treads share one
+            // continuous pigment/skin; flat-roof cards, wells and hatches never stamp the slope.
             column(
-              `${family}:roof-service-spine`,
-              "service",
-              "trim",
+              `${family}:sloped-roof-plate`,
+              "plate",
+              "primary",
               x,
               y,
               hi - 1,
               hi + 1,
               family,
             );
-          } else if (u >= 1 && u < plateWidth - 1 && v >= 1 && v < 31) {
-            const slot = redField ? "accent" : "primary";
-            column(
-              `${family}:roof-armor`,
-              "plate",
-              slot,
-              x,
-              y,
-              hi - 1,
-              hi,
-              family,
+            roofChart = undefined;
+          } else {
+            // Offset 1x2 / 2x2 m enclosure fields join an integrated service belt.
+            // Their cadence is global, while mount/pressure junctions choose real cavities.
+            const row = Math.floor(y / 32);
+            const offset = mod(row, 2) ? Math.floor(profile.course / 2) : 0;
+            const roofKind = mod(
+              Math.floor((x - offset) / (profile.course * 2)) + row,
+              4,
             );
-            // One course overlaps the subframe; selected corners step without an outline frill.
-            const steppedEnd = roofKind === 1 && u < 3 && v < 3;
-            if (!steppedEnd && u >= 2 && u < plateWidth - 2 && v >= 2 && v < 30)
-              column(
-                `${family}:roof-armor-field`,
-                "plate",
-                slot,
-                x,
-                y,
-                hi,
-                hi + 1,
-                family,
-              );
-          }
-          if (cavity) {
-            column(
-              `${family}:roof-cassette-well`,
-              "void",
-              "dark",
-              x,
-              y,
-              hi - 1,
-              hi + 2,
-              family,
+            const plateWidth =
+              roofKind < 2 ? profile.course : Math.floor(profile.course / 2);
+            const u = mod(x - offset, plateWidth),
+              v = mod(y, 32);
+            const spineCentre = Math.round((by + bY) / 2),
+              spineHalf = deck ? 14 : 6;
+            const spine =
+              Math.abs(y - spineCentre) < spineHalf &&
+              x > bx + 6 &&
+              x < bX - 12;
+            const nearestMount = doc.mounts.find(
+              (m) =>
+                m.attach === "top" &&
+                Math.hypot(world[0] - m.at[0], world[1] - m.at[1]) < 0.95,
             );
-            const localV = y - (spineCentre - spineHalf + 3),
-              height = 2 * spineHalf - 6;
-            const rim =
-              serviceU < 8 ||
-              serviceU >= profile.course - 8 ||
-              localV < 2 ||
-              localV >= height - 2;
-            if (rim)
+            const equipmentBelt =
+              !!nearestMount && Math.abs(world[1] - nearestMount.at[1]) < 0.75;
+            const service = spine || equipmentBelt;
+            const serviceU = mod(x, profile.course);
+            const serviceBay =
+              x - serviceU >= bx + 6 &&
+              x - serviceU + profile.course <= bX - 12;
+            const cavity =
+              service &&
+              serviceBay &&
+              mod(Math.floor(x / profile.course), 3) !== 2 &&
+              serviceU >= 6 &&
+              serviceU < profile.course - 6 &&
+              Math.abs(y - spineCentre) < spineHalf - 3;
+            const redField =
+              roofKind === 2 && u > plateWidth * 0.25 && v >= 8 && v < 24;
+            if (service) {
               column(
-                `${family}:roof-cassette-rim`,
-                "frame",
+                `${family}:roof-service-spine`,
+                "service",
                 "trim",
                 x,
                 y,
                 hi - 1,
-                hi + 2,
+                hi + 1,
                 family,
               );
-            else if (localV === 4 || localV === height - 5)
+            } else if (u >= 1 && u < plateWidth - 1 && v >= 1 && v < 31) {
+              const slot = redField ? "accent" : "primary";
               column(
-                `${family}:roof-cassette-fin`,
-                "service",
-                "metal",
+                `${family}:roof-armor`,
+                "plate",
+                slot,
                 x,
                 y,
                 hi - 1,
-                hi + 1,
+                hi,
                 family,
               );
-          }
-          // An access lid belongs to its enclosing plate course, with its handle one level proud.
-          if (
-            redField &&
-            !service &&
-            u >= 3 &&
-            u < plateWidth - 3 &&
-            v >= 10 &&
-            v < 22
-          ) {
-            if (u === plateWidth - 4 && v >= 14 && v < 18)
+              // One course overlaps the subframe; selected corners step without an outline frill.
+              const steppedEnd = roofKind === 1 && u < 3 && v < 3;
+              if (
+                !steppedEnd &&
+                u >= 2 &&
+                u < plateWidth - 2 &&
+                v >= 2 &&
+                v < 30
+              )
+                column(
+                  `${family}:roof-armor-field`,
+                  "plate",
+                  slot,
+                  x,
+                  y,
+                  hi,
+                  hi + 1,
+                  family,
+                );
+            }
+            if (cavity) {
               column(
-                `${family}:roof-access-latch`,
-                "service",
-                "metal",
+                `${family}:roof-cassette-well`,
+                "void",
+                "dark",
                 x,
                 y,
-                hi + 1,
+                hi - 1,
                 hi + 2,
                 family,
               );
+              const localV = y - (spineCentre - spineHalf + 3),
+                height = 2 * spineHalf - 6;
+              const rim =
+                serviceU < 8 ||
+                serviceU >= profile.course - 8 ||
+                localV < 2 ||
+                localV >= height - 2;
+              if (rim)
+                column(
+                  `${family}:roof-cassette-rim`,
+                  "frame",
+                  "trim",
+                  x,
+                  y,
+                  hi - 1,
+                  hi + 2,
+                  family,
+                );
+              else if (localV === 4 || localV === height - 5)
+                column(
+                  `${family}:roof-cassette-fin`,
+                  "service",
+                  "metal",
+                  x,
+                  y,
+                  hi - 1,
+                  hi + 1,
+                  family,
+                );
+            }
+            // An access lid belongs to its enclosing plate course, with its handle one level proud.
+            if (
+              redField &&
+              !service &&
+              u >= 3 &&
+              u < plateWidth - 3 &&
+              v >= 10 &&
+              v < 22
+            ) {
+              if (u === plateWidth - 4 && v >= 14 && v < 18)
+                column(
+                  `${family}:roof-access-latch`,
+                  "service",
+                  "metal",
+                  x,
+                  y,
+                  hi + 1,
+                  hi + 2,
+                  family,
+                );
+            }
           }
         }
         // Bow sill and structural brow: real sampled bands around the optical roof aperture.
@@ -768,6 +974,22 @@ export function shipVisualLayersR002(
           );
         }
       }
+    // Seal the middle course after all facade voids. This is a distinct final source layer,
+    // so column compaction cannot reorder an outer cassette void over pressure backing.
+    surfaceRole = "wall";
+    for (const backing of innerBackings) {
+      shellNormal = backing.normal;
+      column(
+        `${family}:inner-service-backing`,
+        "core",
+        "secondary",
+        backing.x,
+        backing.y,
+        backing.z0,
+        backing.z1,
+        family,
+      );
+    }
     surfaceRole = "hull";
     // Continuous pressure-skirt and sill segments. Sample the coherent molded source
     // on the global lattice; never decorate a diagonal with one large cube per step.

@@ -69,6 +69,8 @@ export interface ShipVisualLayer {
   support?: string;
   /** Presentation shading on sampled sloped shell faces; silhouette/cell occupancy stays unchanged. */
   normalHint?: [number, number, number];
+  /** Analytic intact plate chart. Sampling records its original exposed faces for cut-safe shading. */
+  normalChart?: string;
   /** Optional candidate finish ownership; independent of support/layer roles and authority. */
   surfaceRole?: "floor" | "wall" | "roof" | "hull";
 }
@@ -208,6 +210,15 @@ export function validateShipVisualLayers(
         Math.abs(Math.hypot(...l.normalHint) - 1) > 0.001)
     )
       throw Error("Invalid sampled presentation normal");
+    if (
+      l.normalChart !== undefined &&
+      (typeof l.normalChart !== "string" ||
+        !l.normalChart ||
+        l.normalChart.length > 160 ||
+        !l.normalHint ||
+        l.normalHint[2] < 1 / 64)
+    )
+      throw Error("Invalid sampled normal chart");
     if (
       l.surfaceRole !== undefined &&
       !["floor", "wall", "roof", "hull"].includes(l.surfaceRole)
