@@ -10,6 +10,7 @@
 import type { Scene } from "@babylonjs/core/scene";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
+import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import { LoadAssetContainerAsync } from "@babylonjs/core/Loading/sceneLoader";
 import "@babylonjs/loaders/glTF";
 import { sha256 } from "@noble/hashes/sha2.js";
@@ -87,19 +88,25 @@ export function extractGlbPrimitive(mesh: Mesh): GlbPrimitive | null {
   const matrix = mesh.computeWorldMatrix(true);
   // Babylon's VertexData.transform flips winding on reflection but leaves tangent w unchanged.
   // Preserve the legacy normal path; compute correct authored tangent frames separately.
-  const tangents =
-    data.tangents && data.normals
-      ? Float32Array.from(data.tangents)
-      : undefined;
-  if (tangents && data.normals)
+  const tangents = data.tangents ? Float32Array.from(data.tangents) : undefined;
+  if (tangents) {
+    // A primitive may supply TANGENT without NORMAL. Its temporary local frame
+    // supports tangent transport without changing the legacy generated normals.
+    const frameNormals =
+      data.normals ?? new Float32Array(data.positions.length);
+    if (!data.normals)
+      VertexData.ComputeNormals(data.positions, data.indices, frameNormals);
+    const normalMatrix = Matrix.Transpose(Matrix.Invert(matrix));
     for (let i = 0; i < tangents.length / 4; i++) {
       const frame = transformSurfaceFrame(
-        [data.normals[i * 3], data.normals[i * 3 + 1], data.normals[i * 3 + 2]],
+        [frameNormals[i * 3], frameNormals[i * 3 + 1], frameNormals[i * 3 + 2]],
         tangents.subarray(i * 4, i * 4 + 4),
         matrix,
+        normalMatrix,
       );
       tangents.set(frame.tangent!, i * 4);
     }
+  }
   data.transform(matrix);
   const positions = Float32Array.from(data.positions);
   const normals = data.normals

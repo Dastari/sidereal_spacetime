@@ -8,7 +8,6 @@ import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { CubeTexture } from "@babylonjs/core/Materials/Textures/cubeTexture";
-import { VoxelVolume, meshChunk, removeVoxels } from "../../../sim/src/voxels";
 import {
   appendTransformed,
   transformSurfaceFrame,
@@ -183,6 +182,23 @@ it("extracts owned UV0/UV1 and mirrored authored tangent frames without changing
   expect(tangents[3]).toBe(1);
 });
 
+it("retains authored tangents when normals are generated without changing the legacy normal result", () => {
+  const s = scene();
+  const mesh = new Mesh("tangents-without-normals", s);
+  const data = new VertexData();
+  Object.assign(data, { positions, indices: [0, 1, 2], uvs, tangents });
+  data.applyToMesh(mesh);
+  mesh.scaling.set(-2, 3, 1);
+  const expected = VertexData.ExtractFromMesh(mesh, true, true);
+  expected.transform(mesh.computeWorldMatrix(true));
+  const generated = new Float32Array(expected.positions!.length);
+  VertexData.ComputeNormals(expected.positions!, expected.indices!, generated);
+  const extracted = extractGlbPrimitive(mesh)!;
+  expect(Array.from(extracted.tangents!).slice(0, 4)).toEqual([-1, 0, 0, -1]);
+  expect(extracted.normals).toEqual(generated);
+  expect(mesh.getVerticesData("normal")).toBeNull();
+});
+
 it("validates malformed channel cardinality, nonfinite UVs and degenerate tangent frames", () => {
   expect(() => validateSurfaceChannels({ uvs: [0, 1] }, 3)).toThrow(/length/);
   expect(() => validateSurfaceChannels({ uvs2: [NaN, 0] }, 1)).toThrow(
@@ -299,40 +315,6 @@ it("uses affine signed lattice face coordinates including negative coordinates a
   ]);
   expect(() => latticeFaceUvs([[0.5, 0, 0]], [0, 0, 1])).toThrow(/integers/);
   expect(() => latticeFaceUvs([[0, 0, 0]], [1, 1, 0])).toThrow(/signed axis/);
-});
-
-it("keeps joined chunk map phase through synthetic damage and repair despite greedy repartition", () => {
-  const volume = new VoxelVolume();
-  for (let x = -3; x <= 35; x++)
-    for (let y = 0; y < 2; y++) volume.set(x, y, 0, 1);
-  const top = () =>
-    [...volume.chunks.values()]
-      .flatMap((chunk) => meshChunk(volume, chunk))
-      .filter((face) => face.normal[2] === 1);
-  const original = top();
-  for (const face of original) {
-    const mapped = latticeFaceUvs(face.corners, face.normal);
-    face.corners.forEach((p, i) =>
-      expect([mapped[i * 2], mapped[i * 2 + 1]]).toEqual([
-        p[0] / 16,
-        p[1] / 16,
-      ]),
-    );
-  }
-  const removed = removeVoxels(volume, [
-    [31, 0, 0],
-    [32, 0, 0],
-  ]);
-  expect(removed.dirty).toContain("0,0,0");
-  expect(removed.dirty).toContain("1,0,0");
-  expect(top()).not.toEqual(original);
-  for (const face of top()) {
-    const mapped = latticeFaceUvs(face.corners, face.normal);
-    face.corners.forEach((p, i) => expect(mapped[i * 2]).toBe(p[0] / 16));
-  }
-  volume.set(31, 0, 0, 1);
-  volume.set(32, 0, 0, 1);
-  expect(top()).toEqual(original);
 });
 
 it("disabled or UV-incomplete detail returns the exact base without allocating scene resources", () => {

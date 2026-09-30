@@ -15,6 +15,8 @@ export interface NormalDetailSelection {
   family: "panel" | "service" | "trim";
   /** Immutable visual/recipe revision. Asset bytes must be validated by candidate selection. */
   revision: string;
+  /** Exact verified bytes (e.g. a verified Blob URL), not a mutable asset refetch.
+   * This helper uses the hash for resource identity; it does not authenticate URLs. */
   normalUrl: string;
   normalSha256: string;
   strength?: number;
