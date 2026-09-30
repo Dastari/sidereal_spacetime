@@ -8,24 +8,34 @@
  * rebuild only pays for files whose bytes changed. A sidecar is skipped when
  * compression would not save at least 5% or the file is under 1 KiB.
  */
-import { createHash } from "node:crypto";
+import { createHash, randomUUID } from "node:crypto";
 import {
-  copyFile,
   mkdir,
   readdir,
   readFile,
+  rename,
+  rm,
   stat,
   utimes,
   writeFile,
 } from "node:fs/promises";
 import { extname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { brotliCompress, constants, gzip } from "node:zlib";
+import {
+  brotliCompress,
+  brotliDecompress,
+  constants,
+  gzip,
+  gunzip,
+} from "node:zlib";
 import { promisify } from "node:util";
 import { COMPRESSIBLE } from "./glb_delivery.mjs";
 
 const brotli = promisify(brotliCompress);
 const gz = promisify(gzip);
+const decode = { ".br": promisify(brotliDecompress), ".gz": promisify(gunzip) };
+// Shared across simultaneous precompress calls, not only the four workers in one call.
+const inFlight = new Map();
 const MIN_BYTES = 1024;
 const MIN_SAVING = 0.05;
 const CONCURRENCY = 4;
@@ -58,6 +68,61 @@ async function encode(bytes, extension) {
   return { ".br": br, ".gz": zipped };
 }
 
+async function publish(cached, output) {
+  const temporary = `${cached}.${randomUUID()}.tmp`;
+  try {
+    await writeFile(temporary, output, { flag: "wx" });
+    // Same-directory rename publishes only complete bytes, including to other processes.
+    await rename(temporary, cached);
+  } finally {
+    await rm(temporary, { force: true });
+  }
+}
+
+async function cachedEncodings(cache, key, bytes, extension) {
+  const location = join(resolve(cache), key);
+  let work = inFlight.get(location);
+  if (!work) {
+    work = (async () => {
+      let encoded;
+      const outputs = {};
+      for (const suffix of [".br", ".gz"]) {
+        const cached = location + suffix;
+        let output;
+        try {
+          output = await readFile(cached);
+        } catch (error) {
+          if (error.code !== "ENOENT") throw error;
+        }
+        if (output) {
+          try {
+            // Old builds could publish a truncated entry. A decode alone does not prove
+            // Brotli content identity; require the source hash for both encodings.
+            const decoded = await decode[suffix](output);
+            if (createHash("sha256").update(decoded).digest("hex") !== key)
+              output = undefined;
+          } catch {
+            output = undefined;
+          }
+        }
+        if (!output) {
+          encoded ??= await encode(bytes, extension);
+          output = encoded[suffix];
+          await publish(cached, output);
+        }
+        outputs[suffix] = output;
+      }
+      return outputs;
+    })();
+    inFlight.set(location, work);
+  }
+  try {
+    return await work;
+  } finally {
+    if (inFlight.get(location) === work) inFlight.delete(location);
+  }
+}
+
 /** @returns {Promise<{files:number, sidecars:number, bytes:number, brotli:number}>} bytes/brotli count files that gained a .br sidecar. */
 export async function precompress(folder, { cache = defaultCache() } = {}) {
   const root = resolve(folder);
@@ -79,19 +144,12 @@ export async function precompress(folder, { cache = defaultCache() } = {}) {
       if (info.size < MIN_BYTES) continue;
       const bytes = await readFile(file);
       const key = createHash("sha256").update(bytes).digest("hex");
-      let encoded;
+      const encoded = await cachedEncodings(cache, key, bytes, extension);
       for (const suffix of [".br", ".gz"]) {
-        const cached = join(cache, key + suffix);
-        let output;
-        try {
-          output = await readFile(cached);
-        } catch {
-          encoded ??= await encode(bytes, extension);
-          output = encoded[suffix];
-          await writeFile(cached, output);
-        }
+        const output = encoded[suffix];
         if (output.length > bytes.length * (1 - MIN_SAVING)) continue;
-        await copyFile(cached, file + suffix);
+        // Use the verified in-memory representation; no second read of a mutable cache path.
+        await writeFile(file + suffix, output);
         // Delivery trusts a sidecar only when it is not older than its source.
         await utimes(file + suffix, info.atime, new Date(info.mtimeMs + 1000));
         summary.sidecars++;
