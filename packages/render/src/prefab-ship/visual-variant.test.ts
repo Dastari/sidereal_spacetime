@@ -34,6 +34,7 @@ function candidate(
   normal = new Uint8Array([137, 80, 78, 71, ...Array(20).fill(0)]),
   pieces: Record<string, { slots: string[] }> = {},
   albedo?: Uint8Array,
+  revision = "r001",
 ) {
   const native = new TextEncoder().encode(
     JSON.stringify({
@@ -47,12 +48,12 @@ function candidate(
   );
   const manifest = {
     schema: SHIP_VISUAL_SCHEMA,
-    revision: "r001",
+    revision,
     status: "proposal",
     frame: SHIP_VISUAL_FRAME,
     lattice: 16,
     compilerSha256: "a".repeat(64),
-    profilesSha256: visualProfilesSha256(),
+    profilesSha256: visualProfilesSha256(revision),
     slots: SHIP_KIT_SLOTS,
     prefabs: { [PREFAB_SHIPS[0].id]: visualPrefabSha256(PREFAB_SHIPS[0]) },
     assets: [
@@ -113,6 +114,13 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 describe("whole visual candidate prerequisites", () => {
+  it("rejects an r002 selection lacking its independently required authored leaf before imports", async () => {
+    const selection = candidate(undefined, {}, undefined, "r002");
+    await expect(
+      resolveVisualVariant(scene, PREFAB_SHIPS[0], dressed, selection),
+    ).rejects.toThrow("required");
+    expect(fetch).toHaveBeenCalledTimes(1);
+  });
   it("rejects a hash-valid PNG header whose image cannot decode", async () => {
     const selection = candidate();
     vi.stubGlobal(

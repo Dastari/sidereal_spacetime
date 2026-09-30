@@ -23,6 +23,7 @@ import {
 import type { DressedShip } from "@sidereal/sim/ship-dresser";
 import { loadVerifiedGlbGeometry, type GlbGeometry } from "./glb-library";
 import { slotOfMaterialName } from "./materials";
+import { validateReferenceDoorLeaf } from "./doors";
 
 export interface VisualVariantSelection {
   url: string;
@@ -98,6 +99,7 @@ export async function resolveVisualVariant(
     "normal:panel",
     "kit-manifest:native",
   ]);
+  if (manifest.revision === "r002") required.add("kit:door-leaf.reference");
   const albedoAssets = manifest.assets.filter((a) => a.kind === "albedo");
   if (albedoAssets.length > 1 || albedoAssets.some((a) => a.id !== "panel"))
     throw Error("Visual revision has an unsupported albedo map");
@@ -218,6 +220,10 @@ export async function resolveVisualVariant(
         a.sha256,
         a.node,
       );
+      if (a.kind === "kit" && a.id === "door-leaf.reference") {
+        if (a.frame !== "interior") throw Error("Authored leaf frame mismatch");
+        validateReferenceDoorLeaf(geom);
+      }
       if (
         geom.primitives.some(
           (p) =>

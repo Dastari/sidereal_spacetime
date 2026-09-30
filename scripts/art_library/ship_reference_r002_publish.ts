@@ -37,6 +37,7 @@ const sources = [
   "packages/render/src/prefab-ship/coplanar.ts",
   "packages/render/src/prefab-ship/surface-attributes.ts",
   "packages/render/src/prefab-ship/visual-variant.ts",
+  "packages/render/src/prefab-ship/doors.ts",
   "packages/render/src/prefab-ship/shadows.ts",
   "packages/render/src/prefab-ship-presentation.ts",
   "packages/render/src/construction-instance.ts",
@@ -126,6 +127,24 @@ for (const [id, row] of Object.entries<any>(kit.pieces)) {
 const normal = readFileSync(
   resolve(root, "assets/runtime/ship-visual/r002/panel-normal.png"),
 );
+const leaf = readFileSync(
+  resolve(root, "assets/runtime/ship-visual/r002/door-leaf.glb"),
+);
+const leafSource = JSON.parse(
+  readFileSync(
+    resolve(root, "assets/runtime/ship-visual/r002/door-leaf-source.json"),
+    "utf8",
+  ),
+);
+assets.push({
+  kind: "kit",
+  id: "door-leaf.reference",
+  url: "/assets/ship-visual/r002/door-leaf.glb",
+  sha256: hash(leaf),
+  bytes: leaf.length,
+  frame: "interior",
+  bounds: leafSource.bounds,
+});
 assets.push({
   kind: "normal",
   id: "panel",

@@ -101,7 +101,8 @@ export async function loadPrefabShipPresentation(
     doc,
     catalog,
     doc.theme,
-    view.metrics().visualRevision !== undefined,
+    view.metrics().visualRevision ?? false,
+    view.referenceDoorLeaf(),
   );
   // Ship logic wall buttons (wiki Systems/Ship Logic): lights follow `visible_ship_logic`.
   const panels = createLogicPanels(scene, view.root, doc, catalog);

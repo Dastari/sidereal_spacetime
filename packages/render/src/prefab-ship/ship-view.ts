@@ -58,7 +58,8 @@ import {
 } from "@sidereal/sim/ship-dresser";
 import { exteriorOnlyDress } from "@sidereal/sim/ship-exterior";
 import { setMeshRole, type MeshRole } from "../mesh-roles";
-import { withoutAirlockLeaves } from "./doors";
+import { withoutAirlockLeaves, createPrefabDoors } from "./doors";
+import { referencePlateDecals } from "@sidereal/content/ship-visual-r002";
 import { CONTACT_STRIP_OPACITY } from "../molded-plastic";
 import { meshBoxes, newBuilder, type GeometryBuilder } from "./box-mesher";
 import {
@@ -234,6 +235,8 @@ export interface PrefabShipView {
   setTheme(themeId: ShipThemeId): void;
   dispose(): void;
   metrics(): PrefabShipMetrics;
+  /** Exact verified authored leaf of the successfully activated candidate only. */
+  referenceDoorLeaf(): GlbGeometry | null;
   /** Meshes carrying emissive light (emit slots, plumes, light pools) for an optional glow layer. */
   emissiveMeshes(): Mesh[];
 }
@@ -516,7 +519,15 @@ export async function createPrefabShipView(
       buildLightPools(out);
       buildContactShadows(out);
       buildLabels(out, prefabOrigin(d));
-      out.decals = buildDecals(scene, frame, dressed, theme).map((h) => ({
+      const decalDressing = {
+        ...dressed,
+        decals: referencePlateDecals(
+          d,
+          dressed.decals,
+          variant?.manifest.revision,
+        ),
+      };
+      out.decals = buildDecals(scene, frame, decalDressing, theme).map((h) => ({
         ...h,
         tag: h.decal.view,
       }));
@@ -543,10 +554,29 @@ export async function createPrefabShipView(
         for (const entry of out.statics) entry.mesh.setEnabled(false);
         for (const light of out.lights) light.light.setEnabled(false);
         for (const decal of out.decals) decal.mesh.setEnabled(false);
-        await prepareCandidateMaterials(scene, [
-          ...out.instanced.map((e) => e.mesh),
-          ...out.statics.map((s) => s.mesh),
-        ]);
+        const leafPreparation =
+          variant?.manifest.revision === "r002" && options.externalDoorLeaves
+            ? createPrefabDoors(
+                scene,
+                frame,
+                d,
+                options.catalog,
+                theme,
+                "r002",
+                variant.kit.get("door-leaf.reference"),
+              )
+            : null;
+        for (const mesh of leafPreparation?.meshes() ?? [])
+          mesh.setEnabled(false);
+        try {
+          await prepareCandidateMaterials(scene, [
+            ...out.instanced.map((e) => e.mesh),
+            ...out.statics.map((s) => s.mesh),
+            ...(leafPreparation?.meshes() ?? []),
+          ]);
+        } finally {
+          leafPreparation?.dispose();
+        }
       }
       return out;
     } catch (error) {
@@ -1610,6 +1640,10 @@ export async function createPrefabShipView(
 
   const handle: PrefabShipView = {
     root,
+    referenceDoorLeaf: () =>
+      built?.variant?.manifest.revision === "r002"
+        ? (built.variant.kit.get("door-leaf.reference") ?? null)
+        : null,
     get dressed() {
       return built!.dressed;
     },

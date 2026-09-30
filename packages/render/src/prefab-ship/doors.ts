@@ -19,6 +19,9 @@ import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
+import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
+import "@babylonjs/core/Meshes/thinInstanceMesh";
+import { Constants } from "@babylonjs/core/Engines/constants";
 import type {
   ShipPrefabDocumentV1,
   ShipThemeId,
@@ -31,9 +34,11 @@ import {
 import type { PrefabComponentCatalog } from "@sidereal/content/ship-prefab";
 import { prefabEvaModel } from "@sidereal/sim/eva";
 import type { ShipKitSlot } from "@sidereal/content/ship-kit";
-import { slotMaterial } from "./materials";
+import { slotMaterial, slotOfMaterialName } from "./materials";
 import { setMeshRole } from "../mesh-roles";
 import type { GlbGeometry } from "./glb-library";
+import { referenceSurfaceMaterial } from "./reference-finish";
+import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 
 type P2 = [number, number];
 
@@ -346,14 +351,89 @@ interface DoorState {
   target: number;
 }
 
+/** Finite authored compatibility contract; checked before creating any runtime resource. */
+export function validateReferenceDoorLeaf(geometry: GlbGeometry): void {
+  const required: ShipKitSlot[] = [
+    "primary",
+    "secondary",
+    "trim",
+    "metal",
+    "emit_b",
+  ];
+  const slots = geometry.primitives.map((p) => slotOfMaterialName(p.material));
+  if (
+    slots.length !== required.length ||
+    new Set(slots).size !== required.length ||
+    required.some((s) => !slots.includes(s))
+  )
+    throw Error("Invalid authored leaf semantic primitives");
+  const low = [Infinity, Infinity, Infinity],
+    high = [-Infinity, -Infinity, -Infinity];
+  for (const p of geometry.primitives) {
+    if (
+      !p.positions.length ||
+      p.positions.length % 3 ||
+      p.normals.length !== p.positions.length ||
+      !p.uvs ||
+      p.uvs.length !== (p.positions.length / 3) * 2 ||
+      [...p.positions, ...p.normals, ...Array.from(p.uvs)].some(
+        (n) => !Number.isFinite(n),
+      ) ||
+      p.indices.length % 3 ||
+      [...p.indices].some((i) => i >= p.positions.length / 3)
+    )
+      throw Error("Invalid authored leaf geometry");
+    for (let i = 0; i < p.positions.length; i++) {
+      const axis = i % 3;
+      low[axis] = Math.min(low[axis], p.positions[i]);
+      high[axis] = Math.max(high[axis], p.positions[i]);
+    }
+  }
+  const bounds = [...low, ...high];
+  if (
+    bounds.some((v, i) => Math.abs(v - geometry.bounds[i]) > 0.00002) ||
+    [0, 1, 3, 4].some(
+      (i) => Math.abs(bounds[i] - (i < 3 ? -0.5 : 0.5)) > 0.00002,
+    ) ||
+    low[2] < -0.04551 ||
+    high[2] > 0.04551 ||
+    low[2] > -0.034 ||
+    high[2] < 0.034
+  )
+    throw Error("Authored leaf outside normalized envelope");
+}
+
 export function createPrefabDoors(
   scene: Scene,
   parent: TransformNode,
   doc: ShipPrefabDocumentV1,
   catalog: PrefabComponentCatalog,
   theme: ShipThemeId = doc.theme,
-  referenceStyle = false,
+  referenceStyle: boolean | string = false,
+  authoredLeaf?: GlbGeometry | null,
 ) {
+  if (referenceStyle === "r002") {
+    if (!authoredLeaf) throw Error("Authored r002 leaf is required");
+    validateReferenceDoorLeaf(authoredLeaf);
+  }
+  const authored =
+    referenceStyle === "r002" && authoredLeaf ? authoredLeaf : null;
+  const materialFor = (slot: ShipKitSlot) => {
+    const base = slotMaterial(scene, theme, slot);
+    return authored
+      ? referenceSurfaceMaterial(base as PBRMaterial, {
+          revision: "r002",
+          profile:
+            theme === "riftjack" || theme === "industrial"
+              ? "riftjack"
+              : theme === "aurelian" || theme === "crystalline"
+                ? "aurelian"
+                : "federation",
+          slot,
+          role: "wall",
+        })
+      : base;
+  };
   const doors: DoorState[] = prefabDoorSpecs(doc, catalog).map((spec) => ({
     spec,
     open: 0,
@@ -363,9 +443,22 @@ export function createPrefabDoors(
   const meshFor = (slot: ShipKitSlot) => {
     let m = meshes.get(slot);
     if (!m) {
-      m = CreateBox(`prefab-doors:${doc.id}:${slot}`, { size: 1 }, scene);
+      const primitive = authored?.primitives.find(
+        (p) => slotOfMaterialName(p.material) === slot,
+      );
+      if (primitive) {
+        m = new Mesh(`prefab-doors:${doc.id}:${slot}`, scene);
+        const data = new VertexData();
+        data.positions = primitive.positions;
+        data.normals = primitive.normals;
+        data.indices = primitive.indices;
+        data.uvs = primitive.uvs ? Float32Array.from(primitive.uvs) : null;
+        data.applyToMesh(m);
+        m.sideOrientation = Constants.MATERIAL_CounterClockWiseSideOrientation;
+      } else
+        m = CreateBox(`prefab-doors:${doc.id}:${slot}`, { size: 1 }, scene);
       m.parent = parent;
-      m.material = slotMaterial(scene, theme, slot);
+      m.material = materialFor(slot);
       m.isPickable = false;
       m.alwaysSelectAsActiveMesh = true;
       setMeshRole(m, "equipment");
@@ -395,7 +488,19 @@ export function createPrefabDoors(
       const cx = spec.center[0] + spec.normal[0] * offset;
       const cz = -(spec.center[1] + spec.normal[1] * offset);
       for (const side of [-1, 1]) {
-        for (const p of leafParts(spec, height, referenceStyle)) {
+        const parts = authored
+          ? authored.primitives.map((p): Part => ({
+              slot: slotOfMaterialName(p.material)!,
+              u: 0,
+              v: height / 2,
+              w: spec.airlock
+                ? AIRLOCK_LEAF_M
+                : Math.max(0.3, (spec.span - 2 * INTERIOR_JAMB_M) / 2),
+              h: height,
+              t: 1,
+            }))
+          : leafParts(spec, height, !!referenceStyle);
+        for (const p of parts) {
           const leafW = spec.airlock
             ? AIRLOCK_LEAF_M
             : Math.max(0.3, (spec.span - 2 * INTERIOR_JAMB_M) / 2);

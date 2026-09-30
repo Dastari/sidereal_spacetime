@@ -7,6 +7,7 @@ import {
 } from "@sidereal/content/ship-prefab";
 import { dressShip } from "./ship-dresser";
 import { polygonBoundarySample } from "./ship-visual-sampler";
+import { referencePlateDecals } from "@sidereal/content/ship-visual-r002";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
@@ -19,6 +20,113 @@ import {
 describe("versioned reference recipes", () => {
   const doc = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
   const catalog = defaultPrefabComponentCatalog();
+  it("shares smaller anchored wing markings while retaining all legacy and non-plate decals", () => {
+    const original = dressShip(doc, { catalog }).decals;
+    expect(referencePlateDecals(doc, original)).toBe(original);
+    expect(referencePlateDecals(doc, original, "r001")).toBe(original);
+    const selected = referencePlateDecals(doc, original, "r002");
+    let changed = 0;
+    selected.forEach((d, i) => {
+      const before = original[i];
+      if (d === before) return;
+      changed++;
+      expect(d.normal[2]).toBe(1);
+      expect(["number", "emblem"]).toContain(d.kind);
+      for (let axis = 0; axis < 3; axis++) {
+        const c = (q: typeof d) =>
+          q.corners.reduce((n, p) => n + p[axis] / 4, 0);
+        expect(c(d)).toBeCloseTo(c(before), 10);
+        const span = (q: typeof d) =>
+          Math.max(...q.corners.map((p) => p[axis])) -
+          Math.min(...q.corners.map((p) => p[axis]));
+        expect(span(d)).toBeCloseTo(span(before) * (axis === 2 ? 1 : 0.6), 10);
+      }
+    });
+    expect(changed).toBe(2);
+    expect(
+      original
+        .filter((d) => d.kind === "name")
+        .every((d) => selected.includes(d)),
+    ).toBe(true);
+  });
+  it("tucks pale slope cells behind quiet pressure edges and backs clipped local casings", () => {
+    for (const view of ["deck", "flight"] as const) {
+      const result = compileShipVisual(
+        doc,
+        catalog,
+        view,
+        "federation",
+        undefined,
+        "r002",
+      );
+      for (const l of result.layers.filter((l) =>
+        l.id.endsWith("sloped-roof-plate"),
+      )) {
+        const v = doc.volumes.find((v) => l.support === `volume:${v.id}`)!;
+        const poly = volumeGeometry(v).outline!.outer.map(
+          ([x, y]): [number, number] => [x * 16, y * 16],
+        );
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++)
+            expect(
+              polygonBoundarySample([x + 0.5, y + 0.5], poly).distance,
+            ).toBeGreaterThanOrEqual(2);
+      }
+      if (view !== "deck") continue;
+      const wells = result.layers.filter((l) =>
+        l.id.endsWith("functional-well"),
+      );
+      let open = 0;
+      for (const l of wells) {
+        const [x, y, z, X, Y, Z] = l.bounds;
+        for (let a = x; a < X; a++)
+          for (let b = y; b < Y; b++)
+            for (let c = z; c < Z; c++) {
+              if (result.cells.has(visualCellKey(a, b, c))) continue;
+              open++;
+              expect(
+                [
+                  [1, 0],
+                  [-1, 0],
+                  [0, 1],
+                  [0, -1],
+                ].some(([dx, dy]) =>
+                  [1, 2].some(
+                    (n) =>
+                      result.cells.get(visualCellKey(a + dx * n, b + dy * n, c))
+                        ?.role === "core",
+                  ),
+                ),
+              ).toBe(true);
+            }
+      }
+      expect(open).toBeGreaterThan(100);
+      const pressure = [...result.cells.values()].find(
+        (c) => c.role === "core" && c.family.startsWith("edge:partition:run:"),
+      )!;
+      expect(pressure).toBeDefined();
+      const key = visualCellKey(pressure.x, pressure.y, pressure.z);
+      const cut = compileShipVisual(
+        doc,
+        catalog,
+        view,
+        "federation",
+        new Set([key]),
+        "r002",
+      );
+      expect(cut.cells.has(key)).toBe(false);
+      expect(
+        [...cut.cells.values()].filter((c) => c.family === pressure.family)
+          .length,
+      ).toBe(
+        [...result.cells.values()].filter((c) => c.family === pressure.family)
+          .length - 1,
+      );
+      expect(result.layers.some((l) => l.id.endsWith("control-casing"))).toBe(
+        true,
+      );
+    }
+  });
   it("retains the delivered r001 profile and exact Wren deck volume", () => {
     expect(visualProfilesSha256()).toBe(
       "8c9a58bc361116c1ab663dcad5dd2b05c06fdf1cd7d9711339cdbc714b6649d6",
@@ -213,8 +321,12 @@ describe("versioned reference recipes", () => {
           ),
         ...(ship.mountTiles ?? []).map((t) => placeMountTile(t, geoms).rect),
       ];
-      const markings = dressShip(ship, { catalog })
-        .decals.filter((d) => d.normal[2] > 0.99)
+      const markings = referencePlateDecals(
+        ship,
+        dressShip(ship, { catalog }).decals,
+        "r002",
+      )
+        .filter((d) => d.normal[2] > 0.99)
         .map((d) => [
           Math.min(...d.corners.map((p) => p[0])),
           Math.min(...d.corners.map((p) => p[1])),

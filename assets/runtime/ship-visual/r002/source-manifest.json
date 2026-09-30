@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "b6240cc283abba20b7d3c9f4bce57d412b3aae33ab23c810dd6e0e6817784407",
+  "compilerSha256": "ea5b94d6a07f911d65a5c4be296e74eb3e720edd958379ba8e0a2c99a1d8d876",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -12,11 +12,11 @@
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "d5af33235271528fbe81d23f4ce0408a82f948c2161b9214b85710a18dfd766e"
+      "sha256": "b6889f35f1e174224edf06e2d3a567581a8c01650655ea8cd49aca9292a2970b"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "a324b320fdebdb7778b642e904aa7e72a54059f7d8bf44216081244920423129"
+      "sha256": "4f3c723ff86efa0a5800d2a34dbbee1c566a08aa057cd35c9beac642dbed35b7"
     },
     {
       "path": "packages/sim/src/ship-dresser.ts",
@@ -48,7 +48,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/ship-view.ts",
-      "sha256": "cf44bfdfacfeef002ea2220b6fd98b49506d42c14c74ba72d7af78fcc3ea6325"
+      "sha256": "f38e86a731fdf58cc38bf44e6498c886cfa2bbf8f2dcd4307022ab2ace0f41ea"
     },
     {
       "path": "packages/render/src/prefab-ship/batch.ts",
@@ -64,7 +64,11 @@
     },
     {
       "path": "packages/render/src/prefab-ship/visual-variant.ts",
-      "sha256": "1b5f17ece53616874f93f7ae81e4698e390f778c3000669d7f8f36b45b59ea71"
+      "sha256": "f0934b02b791e3f19e01846d87b47fe996015fd067d0da5884eea035afcafffc"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/doors.ts",
+      "sha256": "c32c7641318c777307579d9867267c83fc03956da725a14a8ba850f2582cad07"
     },
     {
       "path": "packages/render/src/prefab-ship/shadows.ts",
@@ -72,7 +76,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship-presentation.ts",
-      "sha256": "5f5df8030a1aae28d30cc16c12946d5cafdfc3335aea216f33f78167266acd00"
+      "sha256": "35d946819a0ad768ce37a7fbfcc38a4682f8b63c9b3efc08a98834fbaa280656"
     },
     {
       "path": "packages/render/src/construction-instance.ts",
@@ -84,7 +88,7 @@
     },
     {
       "path": "scripts/art_library/ship_reference_r002_art.py",
-      "sha256": "f9ed7f8f0ccbfb68e19fa7a189f68a24b4eb65180cfdd588175593b2210a0521"
+      "sha256": "5957a6a496a38716f718d6d2b4c20335a6721e2fb6d567907d5750970d39a977"
     },
     {
       "path": "scripts/art_library/ship_reference_r002_maps.py",

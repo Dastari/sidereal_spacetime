@@ -514,7 +514,57 @@ E.boxes_mesh=authored_mesh
 E.EXPORT_REVISION="r006"
 E.OBJECTS_REVISION="r003"
 
+def export_door_leaf():
+    """Editable normalized leaf; runtime only sizes/animates this authored machinery."""
+    bpy.ops.object.select_all(action="SELECT"); bpy.ops.object.delete(use_global=False)
+    mats=E.slot_materials(); bm=bmesh.new()
+    def part(slot,x0,z0,x1,z1,y0,y1,cut=0,bevel=0):
+        sub=bmesh.new()
+        if cut:
+            ring=[(x0+cut,z0),(x1-cut,z0),(x1,z0+cut),(x1,z1-cut),(x1-cut,z1),(x0+cut,z1),(x0,z1-cut),(x0,z0+cut)]
+            vs=[[sub.verts.new((x,y,z)) for x,z in ring] for y in (y0,y1)]
+            sub.faces.new(list(reversed(vs[0])));sub.faces.new(vs[1])
+            for i in range(8):sub.faces.new((vs[0][i],vs[0][(i+1)%8],vs[1][(i+1)%8],vs[1][i]))
+        else:
+            bmesh.ops.create_cube(sub,size=1)
+            for v in sub.verts:
+                v.co.x=v.co.x*(x1-x0)+(x0+x1)/2
+                v.co.y=v.co.y*(y1-y0)+(y0+y1)/2
+                v.co.z=v.co.z*(z1-z0)+(z0+z1)/2
+        bmesh.ops.recalc_face_normals(sub,faces=list(sub.faces))
+        if bevel:bmesh.ops.bevel(sub,geom=list(sub.edges),offset=bevel,segments=2,affect="EDGES",clamp_overlap=True)
+        for f in sub.faces:f.material_index=E.SI[slot]
+        temp=bpy.data.meshes.new("authored-leaf-part");sub.to_mesh(temp);sub.free();bm.from_mesh(temp);bpy.data.meshes.remove(temp)
+    part("secondary",-.5,-.5,.5,.5,-.035,.035,bevel=.006)
+    for sign in (-1,1):
+        def face(slot,x0,z0,x1,z1,inner,outer,cut=0,bevel=0):
+            a,b=sorted((sign*inner,sign*outer));part(slot,x0,z0,x1,z1,a,b,cut,bevel)
+        face("primary",-.39,-.24,.39,.34,.034,.041,cut=.065,bevel=.002)
+        face("trim",-.46,-.45,.46,-.33,.034,.044,cut=.035,bevel=.002)
+        face("secondary",-.32,.355,.28,.455,.034,.043,cut=.022,bevel=.002)
+        face("metal",.235,-.15,.275,.11,.035,.045,bevel=.002)
+        face("emit_b",-.22,.391,.14,.414,.042,.0455)
+        for x in (-.29,.27):face("metal",x,.372,x+.018,.389,.043,.045)
+    me=bpy.data.meshes.new("GEO-reference-door-leaf");bm.to_mesh(me);bm.free();me.update()
+    uv=me.uv_layers.new(name="authored-surface")
+    for f in me.polygons:
+        axis=max(range(3),key=lambda a:abs(f.normal[a]));u,v=(axis+1)%3,(axis+2)%3
+        for li in f.loop_indices:
+            p=me.vertices[me.loops[li].vertex_index].co;uv.data[li].uv=(p[u],p[v])
+    ob=bpy.data.objects.new("reference-door-leaf",me);bpy.context.collection.objects.link(ob)
+    for m in mats:me.materials.append(m)
+    ob["status"]="proposal";ob["revision"]="r002";ob["frame"]="normalized leaf x horizontal, glTF y vertical, z thickness; scale x/y only"
+    bpy.context.view_layer.objects.active=ob;ob.select_set(True)
+    out=E.ROOT/"assets/runtime/ship-visual/r002";out.mkdir(parents=True,exist_ok=True)
+    source=E.ROOT/"assets/source/ship-reference/r002/door-leaf.blend";source.parent.mkdir(parents=True,exist_ok=True)
+    bpy.ops.wm.save_as_mainfile(filepath=str(source),compress=True,check_existing=False)
+    bpy.ops.export_scene.gltf(filepath=str(out/"door-leaf.glb"),export_format="GLB",use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_animations=False,export_materials="EXPORT")
+    bounds=[min(v.co[a] for v in me.vertices) for a in range(3)]+[max(v.co[a] for v in me.vertices) for a in range(3)]
+    (out/"door-leaf-source.json").write_text(json.dumps({"status":"proposal","bounds":[bounds[0],bounds[2],-bounds[4],bounds[3],bounds[5],-bounds[1]],"source":str(source.relative_to(E.ROOT)),"normalization":"scale width/height; thickness remains authored"},indent=2)+"\n")
+
 if __name__=="__main__":
+    if "--door-leaf-only" in sys.argv:
+        export_door_leaf();sys.exit(0)
     E.main()
     args=E.args()
     manifest=Path(args.out)/"manifest.json"

@@ -23,7 +23,10 @@ import type { ShipKitSlot } from "@sidereal/content/ship-kit";
 import { polygonBoundarySample } from "./ship-visual-sampler";
 import { dressShip } from "./ship-dresser";
 
-import { SHIP_VISUAL_PROFILES_R002 } from "@sidereal/content/ship-visual-r002";
+import {
+  SHIP_VISUAL_PROFILES_R002,
+  referencePlateDecals,
+} from "@sidereal/content/ship-visual-r002";
 
 const mod = (n: number, d: number) => ((n % d) + d) % d;
 export function shipVisualLayersR002(
@@ -89,8 +92,12 @@ export function shipVisualLayersR002(
       .map((m) => placeMount(m, catalog.get(m.component), geoms, doc).rect),
     ...(doc.mountTiles ?? []).map((t) => placeMountTile(t, geoms).rect),
   ].map((r) => r.map((n) => n * 16));
-  const roofMarkings = dressShip(doc, { catalog })
-    .decals.filter((d) => d.normal[2] > 0.99)
+  const roofMarkings = referencePlateDecals(
+    doc,
+    dressShip(doc, { catalog }).decals,
+    "r002",
+  )
+    .filter((d) => d.normal[2] > 0.99)
     .map((d) => [
       Math.min(...d.corners.map((p) => p[0])) * 16,
       Math.min(...d.corners.map((p) => p[1])) * 16,
@@ -262,7 +269,7 @@ export function shipVisualLayersR002(
       const selected = candidates
         .sort((a, b) => b.score - a.score || a.bounds[0] - b.bounds[0])
         .filter((_, i) => i < 2);
-      if (deck) roofPatches.push(...selected);
+      roofPatches.push(...(deck ? selected : selected.slice(0, 1)));
       trayCassetteX.set(routeY, selected[0]?.bounds[0]);
     }
     for (let y = by; y < bY; y++)
@@ -636,7 +643,7 @@ export function shipVisualLayersR002(
                   family,
                 );
           }
-          // Chamfer-like skirt has three real lattice courses rather than one thin boundary line.
+          // One continuous quiet pressure return; stacked contrast courses made fine teeth dominant.
           if (distance < 3)
             column(
               `${family}:skirt-base`,
@@ -645,18 +652,7 @@ export function shipVisualLayersR002(
               x,
               y,
               lo,
-              Math.min(floor, lo + 2),
-              family,
-            );
-          if (distance >= 2 && distance < 3)
-            column(
-              `${family}:skirt-step`,
-              "frame",
-              "secondary",
-              x,
-              y,
-              lo + 2,
-              Math.min(floor, lo + 4),
+              floor,
               family,
             );
           if (distance >= 2 && deck && top > floor + 8) {
@@ -711,6 +707,44 @@ export function shipVisualLayersR002(
                   );
                 const z0 = floor + (inwardKind === 1 ? 7 : 5),
                   z1 = floor + 20;
+                if (phase >= left - 3 && phase < right + 3)
+                  column(
+                    `${family}:inner-casing-seat`,
+                    "void",
+                    "dark",
+                    x,
+                    y,
+                    z0 - 2,
+                    z1 + 2,
+                    family,
+                  );
+                if (phase >= left - 2 && phase < right + 2) {
+                  const cut = Math.max(
+                    0,
+                    2 - Math.min(phase - (left - 2), right + 1 - phase),
+                  );
+                  column(
+                    `${family}:inner-manufactured-casing`,
+                    "plate",
+                    "primary",
+                    x,
+                    y,
+                    z0 - 1 + cut,
+                    z1 + 1 - cut,
+                    family,
+                  );
+                  if (phase >= left && phase < right)
+                    column(
+                      `${family}:inner-casing-kicker`,
+                      "frame",
+                      "trim",
+                      x,
+                      y,
+                      z0 - 1,
+                      z0 + 1,
+                      family,
+                    );
+                }
                 if (phase >= left && phase < right) {
                   column(
                     `${family}:inner-service-surround`,
@@ -862,7 +896,7 @@ export function shipVisualLayersR002(
             column(
               `${family}:cap`,
               "frame",
-              "trim",
+              "secondary",
               x,
               y,
               Math.max(floor, top - 1),
@@ -889,15 +923,26 @@ export function shipVisualLayersR002(
             // A clipped analytic plate exists before rasterization. Its fine treads share one
             // continuous pigment/skin; flat-roof cards, wells and hatches never stamp the slope.
             column(
-              `${family}:sloped-roof-plate`,
-              "plate",
-              "primary",
+              `${family}:sloped-pressure-skin`,
+              "core",
+              "secondary",
               x,
               y,
               hi - 1,
-              hi + 1,
+              hi,
               family,
             );
+            if (distance >= 2)
+              column(
+                `${family}:sloped-roof-plate`,
+                "plate",
+                "primary",
+                x,
+                y,
+                hi,
+                hi + 1,
+                family,
+              );
             roofChart = undefined;
           } else {
             // A housed pressure tray, not independent cards on a thin sheet. Two broad
@@ -942,7 +987,7 @@ export function shipVisualLayersR002(
             column(
               `${family}:roof-subframe`,
               "frame",
-              "trim",
+              "secondary",
               x,
               y,
               hi - 3,
@@ -1355,13 +1400,46 @@ export function shipVisualLayersR002(
                 y0 + (side < 0 ? -1 + depth : 2 - depth),
                 Z,
               ];
+        const casing = (
+          name: string,
+          slot: ShipKitSlot,
+          side: number,
+          u: number,
+          U: number,
+          z: number,
+          Z: number,
+          depth = 0,
+        ) => {
+          u = Math.max(start + 1, u);
+          U = Math.min(end - 1, U);
+          // Source-clipped manufactured ends, sampled on the same global lattice.
+          // This is a local assembly footprint, not a repeating perimeter guard.
+          for (let q = Math.floor(u); q < Math.ceil(U); q++) {
+            const cut = Math.max(0, 2 - Math.min(q - u, U - 1 - q));
+            box(
+              `${id}:${name}`,
+              "plate",
+              slot,
+              surface(side, q, q + 1, z + cut, Z - cut, depth),
+              family,
+            );
+          }
+        };
         for (const side of [-1, 1]) {
           // Quiet continuous enclosure; a selected functional cavity has three local depth levels.
+          const insetPressureFace = !glazed && !jamb && width >= 24;
           box(
             `${id}:lower-enclosure`,
-            jamb ? "doorframe" : "plate",
+            jamb ? "doorframe" : insetPressureFace ? "core" : "plate",
             "primary",
-            surface(side, start + 1, end - 1, ft + 3, Z),
+            surface(
+              side,
+              start + 1,
+              end - 1,
+              ft + 3,
+              Z,
+              insetPressureFace ? 1 : 0,
+            ),
             family,
           );
           if (glazed || width < 24 || wallCap < ft + 20) continue;
@@ -1417,11 +1495,20 @@ export function shipVisualLayersR002(
             // Compact horizontal ventilation cassette, with two actual recessed louvers.
             const u = centre - halfWidth,
               U = centre + halfWidth;
+            casing(
+              "vent-casing",
+              "primary",
+              side,
+              u - 2,
+              U + 2,
+              ft + 4,
+              ft + 16,
+            );
             box(
-              `${id}:vent-surround`,
+              `${id}:vent-kicker`,
               "frame",
-              "metal",
-              surface(side, u, U, ft + 5, ft + 15),
+              "trim",
+              surface(side, u - 1, U + 1, ft + 4, ft + 6),
               family,
             );
             cavity(u + 1, U - 1, ft + 7, ft + 13);
@@ -1435,11 +1522,20 @@ export function shipVisualLayersR002(
               );
           } else if (kind === 1) {
             // Recessed control station with a compact status lens and guarded key cluster.
+            casing(
+              "control-casing",
+              "primary",
+              side,
+              centre - 8,
+              centre + 8,
+              ft + 8,
+              Math.min(Z, ft + 22),
+            );
             box(
-              `${id}:control-frame`,
+              `${id}:control-kicker`,
               "frame",
               "trim",
-              surface(side, centre - 7, centre + 7, ft + 10, ft + 22),
+              surface(side, centre - 7, centre + 7, ft + 8, ft + 10),
               family,
             );
             cavity(centre - 6, centre + 6, ft + 11, ft + 21);
@@ -1474,11 +1570,20 @@ export function shipVisualLayersR002(
               );
           } else {
             // Quiet storage/access bay with a bounded burgundy latch panel and a hinge side.
+            casing(
+              "access-casing",
+              "primary",
+              side,
+              centre - 9,
+              centre + 9,
+              ft + 4,
+              ft + 18,
+            );
             box(
-              `${id}:access-gasket`,
+              `${id}:access-kicker`,
               "frame",
               "trim",
-              surface(side, centre - 8, centre + 8, ft + 6, ft + 16),
+              surface(side, centre - 8, centre + 8, ft + 4, ft + 6),
               family,
             );
             cavity(centre - 7, centre + 7, ft + 7, ft + 15);
