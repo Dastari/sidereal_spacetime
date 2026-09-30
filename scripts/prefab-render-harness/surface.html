@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Opt-in ship surface foundation review</title>
+    <style>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: #111723;
+        color: #e1e8f3;
+        font: 14px system-ui;
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      #status {
+        position: absolute;
+        top: 12px;
+        left: 16px;
+        background: #111723dd;
+        padding: 8px;
+      }
+      #labels {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .label {
+        position: absolute;
+        text-align: center;
+        transform: translate(-50%, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="view"></canvas>
+    <div id="status">Loading exact renderer surface fixture…</div>
+    <div id="labels"></div>
+    <script type="module" src="./surface.ts"></script>
+  </body>
+</html>

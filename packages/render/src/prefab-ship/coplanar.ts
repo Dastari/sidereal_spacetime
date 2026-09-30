@@ -270,6 +270,9 @@ export interface CoplanarLayer {
   positions: number[];
   /** Per-vertex normals parallel to `positions` (copied for appended vertices). */
   normals?: number[];
+  uvs?: number[];
+  uvs2?: number[];
+  tangents?: number[];
   /** Index array shared by the mesh; this layer owns `[first, first + count)`. */
   indices: number[];
   first: number;
@@ -386,6 +389,14 @@ function resolvePass(
         L.normals[v * 3],
         L.normals[v * 3 + 1],
         L.normals[v * 3 + 2],
+      );
+      for (const channel of [L.uvs, L.uvs2])
+        channel?.push(channel[v * 2], channel[v * 2 + 1]);
+      L.tangents?.push(
+        L.tangents[v * 4],
+        L.tangents[v * 4 + 1],
+        L.tangents[v * 4 + 2],
+        L.tangents[v * 4 + 3],
       );
       L.indices[t.firstIndex + k] = base + k;
     }

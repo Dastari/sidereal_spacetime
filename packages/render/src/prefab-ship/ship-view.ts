@@ -92,6 +92,12 @@ import {
 } from "./frames";
 import { loadGlbGeometry, loadJsonOnce, type GlbGeometry } from "./glb-library";
 import { resolveCoplanarLayers } from "./coplanar";
+import { normalDetailMaterial, normalDetailSelectionOf } from "./normal-detail";
+import {
+  surfaceBatchLayoutKey,
+  validateSurfaceChannels,
+  type SurfaceChannels,
+} from "./surface-attributes";
 import {
   placeholderMaterial,
   plumeMaterial,
@@ -256,7 +262,7 @@ function makeMesh(
   scene: Scene,
   name: string,
   parent: TransformNode,
-  g: {
+  g: SurfaceChannels & {
     positions: ArrayLike<number>;
     normals: ArrayLike<number>;
     indices: ArrayLike<number>;
@@ -264,7 +270,10 @@ function makeMesh(
   colours?: number[],
 ): Mesh {
   const mesh = new Mesh(name, scene);
+  // Build asynchronously off-screen; apply() enables the completed coherent view.
+  mesh.setEnabled(false);
   const vd = new VertexData();
+  validateSurfaceChannels(g, g.positions.length / 3);
   vd.positions =
     g.positions instanceof Float32Array
       ? g.positions
@@ -275,6 +284,9 @@ function makeMesh(
       : Float32Array.from(g.normals);
   vd.indices =
     g.indices instanceof Uint32Array ? g.indices : Uint32Array.from(g.indices);
+  if (g.uvs) vd.uvs = Float32Array.from(g.uvs);
+  if (g.uvs2) vd.uvs2 = Float32Array.from(g.uvs2);
+  if (g.tangents) vd.tangents = Float32Array.from(g.tangents);
   if (colours) vd.colors = Float32Array.from(colours);
   vd.applyToMesh(mesh, false);
   // Prefab geometry (glTF GLBs, box-mesher polygons, merged batches) is wound counter-clockwise
@@ -428,6 +440,7 @@ export async function createPrefabShipView(
       roles: Map<MeshRole, number>;
       glb: number;
       ts: number;
+      material: ReturnType<typeof roleSlotMaterial>;
     };
     const groups = new Map<string, Group>();
     // Every appended placement primitive, per presentation, for the coplanar pass below.
@@ -455,10 +468,19 @@ export async function createPrefabShipView(
       geo: NonNullable<ReturnType<typeof meshGeometry>>,
       m: ArrayLike<number>,
       glb: boolean,
+      sourceMaterial: Mesh["material"],
     ) => {
-      const mat = roleSlotMaterial(scene, theme, slot, role).name;
+      const detail = normalDetailSelectionOf(sourceMaterial);
+      const material = normalDetailMaterial(
+        roleSlotMaterial(scene, theme, slot, role),
+        detail,
+        geo,
+      );
+      const mat = material.name;
       for (const view of views(tag)) {
-        const key = `${view}|${mat}`;
+        const key = detail
+          ? `${view}|${mat}|${surfaceBatchLayoutKey(geo, detail.coordinatesIndex)}`
+          : `${view}|${mat}`;
         let g = groups.get(key);
         if (!g)
           groups.set(
@@ -473,10 +495,13 @@ export async function createPrefabShipView(
               indices: [],
               glb: 0,
               ts: 0,
+              material,
             }),
           );
         const first = g.indices.length;
-        appendTransformed(g, geo.positions, geo.normals, geo.indices, m);
+        appendTransformed(g, geo.positions, geo.normals, geo.indices, m, geo, {
+          correctNormals: !!detail,
+        });
         chunks[view].push({
           group: g,
           first,
@@ -498,7 +523,15 @@ export async function createPrefabShipView(
         for (const tag of ["both", "flight", "deck"] as const) {
           const m = e.matrices[tag];
           for (let i = 0; i < m.length; i += 16)
-            add(tag, e.slot ?? "primary", role, geo, m.slice(i, i + 16), true);
+            add(
+              tag,
+              e.slot ?? "primary",
+              role,
+              geo,
+              m.slice(i, i + 16),
+              true,
+              e.mesh.material,
+            );
         }
       e.mesh.dispose();
     }
@@ -512,7 +545,16 @@ export async function createPrefabShipView(
       const geo = meshGeometry(st.mesh);
       const role = ((st.mesh.metadata as { role?: MeshRole } | null)?.role ??
         "hull") as MeshRole;
-      if (geo) add(st.tag, st.slot, role, geo, localToParent(st.mesh), false);
+      if (geo)
+        add(
+          st.tag,
+          st.slot,
+          role,
+          geo,
+          localToParent(st.mesh),
+          false,
+          st.mesh.material,
+        );
       st.mesh.dispose();
     }
     // Coplanar faces of different materials (trim flush with a body panel, a module flush with a
@@ -523,6 +565,9 @@ export async function createPrefabShipView(
         chunks[view].map((c) => ({
           positions: c.group.positions,
           normals: c.group.normals,
+          uvs: c.group.uvs,
+          uvs2: c.group.uvs2,
+          tangents: c.group.tangents,
           indices: c.group.indices,
           first: c.first,
           count: c.count,
@@ -537,9 +582,13 @@ export async function createPrefabShipView(
         scene,
         `${out.dressed.id}:batch:${g.key}`,
         frame,
-        g,
+        // Merged detail uses Babylon's derivative frame. Preserve authored tangents in
+        // cache/source data without enabling a partial or inconsistent tangent buffer.
+        { ...g, tangents: undefined },
       );
-      mesh.material = roleSlotMaterial(scene, theme, g.slot, role);
+      mesh.material = normalDetailSelectionOf(g.material)
+        ? g.material
+        : roleSlotMaterial(scene, theme, g.slot, role);
       setMeshRole(mesh, role);
       // Index ranges per source role (a batch merges every role of one material), so an
       // outline can cut one placed object's triangles out of the batch (prefab-ship-interaction).
@@ -1256,7 +1305,11 @@ export async function createPrefabShipView(
           e.mesh.material = roleSlotMaterial(scene, t, e.slot, roleOf(e.mesh));
       for (const s of built.statics) {
         if (s.kind === "generated" || s.kind === "standin")
-          s.mesh.material = roleSlotMaterial(scene, t, s.slot!, roleOf(s.mesh));
+          s.mesh.material = normalDetailMaterial(
+            roleSlotMaterial(scene, t, s.slot!, roleOf(s.mesh)),
+            normalDetailSelectionOf(s.mesh.material),
+            meshGeometry(s.mesh) ?? undefined,
+          );
         else if (s.kind === "plume") s.mesh.material = plumeMaterial(scene, t);
         else if (s.kind === "object-fill" || s.kind === "object-frame")
           s.mesh.material = placeholderMaterial(

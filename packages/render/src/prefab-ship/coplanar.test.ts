@@ -90,6 +90,29 @@ describe("coplanar overlap detection", () => {
 });
 
 describe("coplanar layer resolution", () => {
+  it("copies complete UV0, UV1 and tangent channels when displaced triangles gain vertices", () => {
+    const winner = layer(quad(0, 0, 1, 1, 0), 4);
+    winner.uvs = [0, 0, 1, 0, 1, 1, 0, 1];
+    winner.uvs2 = winner.uvs.map((v) => v + 0.25);
+    winner.tangents = [1, 0, 0, -1, 1, 0, 0, -1, 1, 0, 0, -1, 1, 0, 0, -1];
+    const sourceUv = [...winner.uvs],
+      sourceUv2 = [...winner.uvs2];
+    const originalIndices = [...winner.indices];
+    resolveCoplanarLayers([layer(quad(0, 0, 1, 1, 0), 0), winner]);
+    expect(winner.uvs.length).toBe((winner.positions.length / 3) * 2);
+    expect(winner.uvs2.length).toBe(winner.uvs.length);
+    expect(winner.tangents.length).toBe((winner.positions.length / 3) * 4);
+    winner.indices.forEach((v, i) => {
+      const original = originalIndices[i];
+      expect(winner.uvs!.slice(v * 2, v * 2 + 2)).toEqual(
+        sourceUv.slice(original * 2, original * 2 + 2),
+      );
+      expect(winner.uvs2!.slice(v * 2, v * 2 + 2)).toEqual(
+        sourceUv2.slice(original * 2, original * 2 + 2),
+      );
+      expect(winner.tangents!.slice(v * 4, v * 4 + 4)).toEqual([1, 0, 0, -1]);
+    });
+  });
   it("moves the higher-priority face one step in front and leaves no overlap", () => {
     const layers = [
       layer(quad(0, 0, 1, 1, 0), 0),
