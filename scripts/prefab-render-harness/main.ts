@@ -27,6 +27,7 @@ import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTextur
 import { HDRCubeTexture } from "@babylonjs/core/Materials/Textures/hdrCubeTexture";
 import { ImageProcessingConfiguration } from "@babylonjs/core/Materials/imageProcessingConfiguration";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
+import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
 import {
   SHIP_THEME_IDS,
@@ -35,6 +36,11 @@ import {
 } from "@sidereal/content/ship-prefab";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { createGraphicsSettings } from "@sidereal/render/graphics-settings";
+import {
+  applyShipGlowProfile,
+  createGlowOccluders,
+  SHIP_GLOW_PROFILE,
+} from "@sidereal/render/ship-glow-profile";
 import {
   createPrefabShipView,
   type PrefabShipView,
@@ -242,8 +248,8 @@ async function main() {
   let glowStart = 0;
   if (q.get("glow") !== "0") {
     const glow = new GlowLayer("glow", scene, {
-      mainTextureFixedSize: 1024,
-      blurKernelSize: 32,
+      mainTextureFixedSize: SHIP_GLOW_PROFILE.mainTextureFixedSize,
+      blurKernelSize: SHIP_GLOW_PROFILE.blurKernelSize,
     });
     glow.onBeforeRenderMainTextureObservable.add(
       () => (glowStart = engine._drawCalls.current),
@@ -251,9 +257,19 @@ async function main() {
     glow.onAfterComposeObservable.add(
       () => (glowDraws = engine._drawCalls.current - glowStart),
     );
-    glow.intensity = 0.7;
-    for (const v of views)
-      for (const m of v.emissiveMeshes()) glow.addIncludedOnlyMesh(m);
+    applyShipGlowProfile(glow);
+    const emitters = views.flatMap((v) => v.emissiveMeshes());
+    const emissive = new Set<AbstractMesh>(emitters);
+    for (const mesh of emitters) glow.addIncludedOnlyMesh(mesh);
+    const occluders = createGlowOccluders(glow);
+    occluders.set(
+      views.flatMap((v) =>
+        v.root
+          .getChildMeshes()
+          .filter((m) => !emissive.has(m) && m.isEnabled()),
+      ),
+    );
+    scene.onDisposeObservable.addOnce(() => occluders.dispose());
   }
 
   await scene.whenReadyAsync();
