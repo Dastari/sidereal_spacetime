@@ -1897,17 +1897,18 @@
       "frame": "top",
       "kitConvention": "top",
       "glb": "assets/runtime/ship-components/r006/radiator.sm.glb",
-      "sha256": "3984a0a4cf1c2c40a89a0f2944a05dfbae2a8dcb846aa13632916f99d42698eb",
-      "bytes": 27200,
-      "boxes": 16,
-      "triangles": 362,
-      "vertices": 224,
+      "sha256": "10a9e78a48cdede9a56ad7be50c3a66145a439b24d85728d715ec10f8a902ab1",
+      "bytes": 27976,
+      "boxes": 20,
+      "triangles": 340,
+      "vertices": 264,
       "materialSlotsUsed": [
+        "slot0_primary",
         "slot1_secondary",
         "slot2_accent",
         "slot3_trim",
         "slot4_metal",
-        "slot6_emit_a"
+        "slot5_dark"
       ],
       "boundsM": [
         [
@@ -1918,7 +1919,7 @@
         [
           0.5,
           0.5,
-          0.5625
+          0.3881
         ]
       ],
       "catalogEnvelopeM": [
@@ -1945,17 +1946,18 @@
       "frame": "top",
       "kitConvention": "top",
       "glb": "assets/runtime/ship-components/r006/radiator.md.glb",
-      "sha256": "ecaa622a523be324301aaae14e8eb010eff637de8eae68090b9831af45c9a0c1",
-      "bytes": 32076,
-      "boxes": 22,
-      "triangles": 432,
-      "vertices": 272,
+      "sha256": "c5a89cd81ddb094f3df4551e64c80270f429e3889d6fb92053776d4bc860bbe8",
+      "bytes": 32156,
+      "boxes": 20,
+      "triangles": 422,
+      "vertices": 288,
       "materialSlotsUsed": [
+        "slot0_primary",
         "slot1_secondary",
         "slot2_accent",
         "slot3_trim",
         "slot4_metal",
-        "slot6_emit_a"
+        "slot5_dark"
       ],
       "boundsM": [
         [
@@ -1966,7 +1968,7 @@
         [
           1.0,
           1.0,
-          0.875
+          0.6037
         ]
       ],
       "catalogEnvelopeM": [
@@ -1993,17 +1995,18 @@
       "frame": "top",
       "kitConvention": "top",
       "glb": "assets/runtime/ship-components/r006/radiator.lg.glb",
-      "sha256": "f87905bede0309690bf3cb3994320f868f8260306003c5b3955f2781bc1ce39a",
-      "bytes": 36444,
-      "boxes": 27,
-      "triangles": 494,
-      "vertices": 312,
+      "sha256": "6e2466512be34737f9c53da5480e300373cb84e35c1eac432b9d741e7de03663",
+      "bytes": 33588,
+      "boxes": 20,
+      "triangles": 442,
+      "vertices": 288,
       "materialSlotsUsed": [
+        "slot0_primary",
         "slot1_secondary",
         "slot2_accent",
         "slot3_trim",
         "slot4_metal",
-        "slot6_emit_a"
+        "slot5_dark"
       ],
       "boundsM": [
         [
@@ -2014,7 +2017,7 @@
         [
           1.5,
           1.5,
-          1.1875
+          0.8194
         ]
       ],
       "catalogEnvelopeM": [
@@ -2195,17 +2198,18 @@
       "frame": "interior",
       "kitConvention": "interior",
       "glb": "assets/runtime/ship-components/r006/heat-sink.sm.glb",
-      "sha256": "2a35018b89571d946bb09020f7091faec61f1442239e424543144a713cd26461",
-      "bytes": 27696,
-      "boxes": 18,
-      "triangles": 356,
-      "vertices": 236,
+      "sha256": "f6b880fed906530abd6467848364ed40756657b9f312ad17130671da9d2dc78a",
+      "bytes": 27344,
+      "boxes": 20,
+      "triangles": 330,
+      "vertices": 232,
       "materialSlotsUsed": [
+        "slot0_primary",
         "slot1_secondary",
+        "slot2_accent",
         "slot3_trim",
         "slot4_metal",
-        "slot5_dark",
-        "slot7_emit_b"
+        "slot5_dark"
       ],
       "boundsM": [
         [
@@ -2216,7 +2220,7 @@
         [
           0.375,
           0.4375,
-          1.0625
+          0.7331
         ]
       ],
       "catalogEnvelopeM": [
@@ -2243,17 +2247,18 @@
       "frame": "interior",
       "kitConvention": "interior",
       "glb": "assets/runtime/ship-components/r006/heat-sink.md.glb",
-      "sha256": "954750481badba80097dceda0bad33325235b6904bdc22cd32ccc1c49b84d343",
-      "bytes": 32588,
-      "boxes": 25,
-      "triangles": 426,
-      "vertices": 292,
+      "sha256": "c98a774d00b69b3bcdb8794380dbc9d9190354743f74c585ad6e0fd2ebe7c2b9",
+      "bytes": 33484,
+      "boxes": 20,
+      "triangles": 440,
+      "vertices": 288,
       "materialSlotsUsed": [
+        "slot0_primary",
         "slot1_secondary",
+        "slot2_accent",
         "slot3_trim",
         "slot4_metal",
-        "slot5_dark",
-        "slot7_emit_b"
+        "slot5_dark"
       ],
       "boundsM": [
         [
@@ -2264,7 +2269,7 @@
         [
           0.8125,
           0.4375,
-          1.25
+          0.8625
         ]
       ],
       "catalogEnvelopeM": [
@@ -6555,7 +6560,7 @@
   ],
   "source": {
     "blend": "assets/source/ship-reference/r002/components.blend",
-    "sha256": "c33dad699c8c1dc0452c60e8ce33b9db8117dbc813a01c4f8d75bf9577f0ad5b",
+    "sha256": "95946479d7096e809c2140d074e8134d4d0012fb2818e93cdc1a5e9b1a9eaaf8",
     "note": "editable Blender source saved by this export; GLBs are exported from it"
   },
   "referenceMesh": {

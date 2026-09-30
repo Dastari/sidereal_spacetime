@@ -306,10 +306,39 @@ def enclosed_weapon(original,kind):
     return p
 
 
+def enclosed_thermal(original):
+    """Lower protected thermal cassette: two readable fin banks inside molded manifolds."""
+    lo=[min(q[i] for q in original.boxes) for i in range(3)]
+    hi=[max(q[i+3] for q in original.boxes) for i in range(3)]
+    x,y,z=lo;X,Y,Z=hi;w=X-x;d=Y-y;h=Z-z
+    p=K.Piece("reference.r002.thermal",original.family,original.mount,original.size);b=p.b
+    b(x,y,z,X,Y,z+min(2,h*.18),"trim")
+    b(x+w*.10,y+d*.12,z+h*.18,X-w*.10,Y-d*.12,z+h*.27,"secondary")
+    # The actual recess floor is visible between six broad fins, never dozens of hot bars.
+    for side in (0,1):
+        a=x+w*(.13 if side==0 else .57);A=x+w*(.43 if side==0 else .87)
+        b(a,y+d*.18,z+h*.27,A,Y-d*.18,z+h*.30,"dark")
+        for k in range(3):
+            xx=a+(A-a)*k/3
+            b(xx,y+d*.20,z+h*.30,xx+(A-a)*.18,Y-d*.20,z+h*.54,"metal")
+    # Fused shoulder cheeks and front/rear header housings protect the cooling cores.
+    for a,A in ((x,x+w*.12),(X-w*.12,X)):
+        b(a,y+d*.08,z+h*.18,A,Y-d*.08,z+h*.63,"primary")
+        b(a,y+d*.16,z+h*.63,A,Y-d*.16,z+h*.69,"primary")
+    for a,A in ((y,y+d*.17),(Y-d*.17,Y)):
+        b(x+w*.10,a,z+h*.18,X-w*.10,A,z+h*.62,"primary")
+        b(x+w*.20,a,z+h*.62,X-w*.20,A,z+h*.67,"trim")
+    b(x+w*.46,y+d*.10,z+h*.27,x+w*.54,Y-d*.10,z+h*.64,"secondary")
+    b(x+w*.47,y+d*.18,z+h*.64,x+w*.53,y+d*.35,z+h*.66,"accent")
+    b(x+w*.46,y,z+h*.35,x+w*.54,y+d*.02,z+h*.40,"emit_b")
+    return p
+
+
 previous_r002_piece=E.build_piece
 def machinery_piece(component):
     p,conv,zc=previous_r002_piece(component)
     if component["kind"]=="reactor":p=enclosed_reactor(p)
+    if component["kind"] in ("radiator","heat-sink"):p=enclosed_thermal(p)
     if component["art"]["kitKey"].startswith("wpn."):p=enclosed_weapon(p,component["kind"])
     return p,conv,zc
 E.build_piece=machinery_piece
@@ -446,7 +475,7 @@ def authored_mesh(name,boxes,hidden=None):
             # Round only broad exposed pieces. Narrow ribs, voxel rows, keys and lenses stay sharp.
             if not smooth_vessel and box[6].split(".")[0] in ("primary","secondary","trim","accent") and min(dims)>=1.5 and max(dims)>=5:
                 edges=[e for e in sub.edges if len(e.link_faces)==2]
-                width=min(.025 if any(s in name for s in ("bunk","seat","navigation","sofa","medical-bed")) else .04 if any(s in name for s in ("reactor","cannon","point-defense","railgun","missile-pod")) else .015,min(dims)*E.T*.22)
+                width=min(.025 if any(s in name for s in ("bunk","seat","navigation","sofa","medical-bed")) else .04 if any(s in name for s in ("reactor","cannon","point-defense","railgun","missile-pod","radiator","heat-sink")) else .015,min(dims)*E.T*.22)
                 if edges:bmesh.ops.bevel(sub,geom=edges,offset=width,segments=2,affect="EDGES",clamp_overlap=True)
             if not smooth_barrel and not smooth_vessel:
                 for f in sub.faces:f.material_index=E.SI[box[6]]

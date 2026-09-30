@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "88383417c3cd849e6503353990b2db395e873c0ad500e0468d8b7ee065de0566",
+  "compilerSha256": "4d39dcc60bd19ef9c8cdc57c856271c168d711af6066da078d76bb860fe16520",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -72,7 +72,7 @@
     },
     {
       "path": "scripts/art_library/ship_reference_r002_art.py",
-      "sha256": "1f8d6d68cb9db022d921e597bbfdff55ee4403eb61b84fbd3a62b0efa3837d1f"
+      "sha256": "f9ed7f8f0ccbfb68e19fa7a189f68a24b4eb65180cfdd588175593b2210a0521"
     },
     {
       "path": "scripts/art_library/ship_reference_r002_maps.py",
