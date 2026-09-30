@@ -12,9 +12,16 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { LoadAssetContainerAsync } from "@babylonjs/core/Loading/sceneLoader";
 import "@babylonjs/loaders/glTF";
+import { sha256 } from "@noble/hashes/sha2.js";
+import { bytesToHex } from "@noble/hashes/utils.js";
 import { selectGlbNode } from "./glb-node";
+import { transformSurfaceFrame } from "./batch";
+import {
+  validateSurfaceChannels,
+  type SurfaceChannels,
+} from "./surface-attributes";
 
-export interface GlbPrimitive {
+export interface GlbPrimitive extends SurfaceChannels {
   /** glTF material name (slot name for kit pieces). */
   material: string;
   positions: Float32Array;
@@ -66,10 +73,34 @@ async function fetchGlb(url: string): Promise<Uint8Array | null> {
   }
 }
 
-function extract(mesh: Mesh): GlbPrimitive | null {
+export function extractGlbPrimitive(mesh: Mesh): GlbPrimitive | null {
   const data = VertexData.ExtractFromMesh(mesh, true, true);
   if (!data.positions || !data.indices || !data.positions.length) return null;
-  data.transform(mesh.computeWorldMatrix(true));
+  validateSurfaceChannels(
+    {
+      uvs: data.uvs ?? undefined,
+      uvs2: data.uvs2 ?? undefined,
+      tangents: data.tangents ?? undefined,
+    },
+    data.positions.length / 3,
+  );
+  const matrix = mesh.computeWorldMatrix(true);
+  // Babylon's VertexData.transform flips winding on reflection but leaves tangent w unchanged.
+  // Preserve the legacy normal path; compute correct authored tangent frames separately.
+  const tangents =
+    data.tangents && data.normals
+      ? Float32Array.from(data.tangents)
+      : undefined;
+  if (tangents && data.normals)
+    for (let i = 0; i < tangents.length / 4; i++) {
+      const frame = transformSurfaceFrame(
+        [data.normals[i * 3], data.normals[i * 3 + 1], data.normals[i * 3 + 2]],
+        tangents.subarray(i * 4, i * 4 + 4),
+        matrix,
+      );
+      tangents.set(frame.tangent!, i * 4);
+    }
+  data.transform(matrix);
   const positions = Float32Array.from(data.positions);
   const normals = data.normals
     ? Float32Array.from(data.normals)
@@ -94,6 +125,9 @@ function extract(mesh: Mesh): GlbPrimitive | null {
     positions,
     normals,
     indices: Uint32Array.from(data.indices),
+    ...(data.uvs ? { uvs: Float32Array.from(data.uvs) } : {}),
+    ...(data.uvs2 ? { uvs2: Float32Array.from(data.uvs2) } : {}),
+    ...(tangents ? { tangents } : {}),
     triangles: data.indices.length / 3,
     bounds: b,
   };
@@ -111,6 +145,15 @@ async function load(
   if (!pending) c.set(url, (pending = fetchGlb(url)));
   const bytes = await pending;
   if (!bytes) return null;
+  return extractBytes(scene, url, bytes, node);
+}
+
+async function extractBytes(
+  scene: Scene,
+  url: string,
+  bytes: Uint8Array,
+  node?: string,
+): Promise<GlbGeometry> {
   const container = await LoadAssetContainerAsync(
     node ? selectGlbNode(bytes, node) : bytes,
     scene,
@@ -121,7 +164,7 @@ async function load(
   try {
     const primitives = container.meshes
       .filter((m): m is Mesh => m instanceof Mesh && m.getTotalVertices() > 0)
-      .map(extract)
+      .map(extractGlbPrimitive)
       .filter((p): p is GlbPrimitive => !!p);
     if (!primitives.length)
       throw Error("GLB has no extractable indexed mesh primitives");
@@ -149,6 +192,41 @@ async function load(
   }
 }
 
+/** Candidate import uses these exact validated bytes without a second mutable URL fetch.
+ * Geometry identity includes the byte hash and selected node; caller retains URL provenance.
+ * Copies before verification so later mutation of a borrowed input cannot change the import. */
+export function loadVerifiedGlbGeometry(
+  scene: Scene,
+  url: string,
+  bytes: Uint8Array,
+  expectedSha256: string,
+  node?: string,
+): Promise<GlbGeometry> {
+  const owned = Uint8Array.from(bytes);
+  if (
+    !isGlb(owned) ||
+    !/^[a-f0-9]{64}$/.test(expectedSha256) ||
+    bytesToHex(sha256(owned)) !== expectedSha256
+  )
+    return Promise.reject(Error(`Candidate GLB hash/format mismatch: ${url}`));
+  const c = cache(scene);
+  const key = JSON.stringify([
+    "surface-attributes-v1",
+    url,
+    node ?? null,
+    expectedSha256,
+  ]);
+  let pending = c.get(key);
+  if (!pending) {
+    pending = extractBytes(scene, url, owned, node);
+    c.set(key, pending);
+  }
+  return pending.then((value) => {
+    if (!value) throw Error(`Candidate GLB unavailable: ${url}`);
+    return value;
+  });
+}
+
 /** Load (once per scene) the geometry of a GLB. Resolves null when the file is missing or not a GLB. */
 export function loadGlbGeometry(
   scene: Scene,
@@ -156,7 +234,7 @@ export function loadGlbGeometry(
   node?: string,
 ): Promise<GlbGeometry | null> {
   const c = cache(scene);
-  const key = node ? `${url}#${node}` : url;
+  const key = JSON.stringify(["surface-attributes-v1", url, node ?? null]);
   let p = c.get(key);
   if (!p) {
     p = load(scene, url, node).catch((e) => {
