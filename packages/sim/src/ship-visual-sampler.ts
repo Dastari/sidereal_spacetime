@@ -20,6 +20,12 @@ export interface VisualCell {
   normalSide?: ShipVisualLayer["normalSide"];
   /** Independent original exposed XY-side mask, frozen before damage removal. */
   normalSideFaces?: number;
+  facet?: ShipVisualLayer["facet"];
+  /** Original exposure only. New cuts are recomputed from current occupancy. */
+  facetFaces?: number;
+  /** Original exposures beside a candidate facet; unchanged neighbors keep their
+   * own shading, while newly exposed cut faces remain geometric hard. */
+  facetNeighbourFaces?: number;
   surfaceRole?: ShipVisualLayer["surfaceRole"];
 }
 export type VisualVolume = Map<string, VisualCell>;
@@ -114,6 +120,7 @@ export function sampleShipVisualLayers(
               ...(l.normalChart ? { normalChart: l.normalChart } : {}),
               ...(l.surfaceRole ? { surfaceRole: l.surfaceRole } : {}),
               ...(l.normalSide ? { normalSide: l.normalSide } : {}),
+              ...(l.facet ? { facet: l.facet } : {}),
             });
           if (cells.size > maxCells) throw Error("Visual volume exceeds limit");
         }
@@ -121,7 +128,44 @@ export function sampleShipVisualLayers(
   }
   // Capture original face ownership once. Synthetic removals retain this mask, so fresh
   // damage cuts never inherit intact slope shading. True patch/glass/void edges stay hard.
+  if (layers.some((l) => l.facet)) {
+    const adjacent = new Set<VisualCell>();
+    for (const c of cells.values())
+      if (c.facet) {
+        adjacent.add(c);
+        for (const n of VISUAL_NEIGHBOURS) {
+          const next = cells.get(
+            visualCellKey(c.x + n[0], c.y + n[1], c.z + n[2]),
+          );
+          if (next) adjacent.add(next);
+        }
+      }
+    for (const c of adjacent) {
+      let mask = 0;
+      for (let axis = 0; axis < 3; axis++)
+        for (const side of [-1, 1]) {
+          const p = [c.x, c.y, c.z];
+          p[axis] += side;
+          if (!cells.has(visualCellKey(...(p as [number, number, number]))))
+            mask |= 1 << (axis * 2 + (side > 0 ? 1 : 0));
+        }
+      c.facetNeighbourFaces = mask;
+    }
+  }
   for (const c of cells.values()) {
+    if (c.facet) {
+      const { a, d } = c.facet;
+      const q = a[0] * (c.x + 0.5) + a[1] * (c.y + 0.5) + a[2] * (c.z + 0.5);
+      if (q > d + 1e-9) throw Error("Facet centre outside retained halfspace");
+      let mask = 0;
+      for (let axis = 0; axis < 3; axis++)
+        for (const side of [-1, 1]) {
+          const bit = 1 << (axis * 2 + (side > 0 ? 1 : 0));
+          if (a[axis] * side > 0 && (c.facetNeighbourFaces ?? 0) & bit)
+            mask |= bit;
+        }
+      c.facetFaces = mask;
+    }
     if (c.normalSide) {
       let sideMask = 0;
       for (let axis = 0; axis < 2; axis++)

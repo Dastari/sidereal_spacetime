@@ -46,7 +46,7 @@ export function visualVolumeSha256(cells: VisualVolume): string {
       .sort((a, b) => a.z - b.z || a.y - b.y || a.x - b.x)
       .map(
         (c) =>
-          `${c.x},${c.y},${c.z}:${c.role}:${c.slot}:${c.family}:${c.normalHint?.join(",") ?? ""}${c.surfaceRole ? `:surface:${c.surfaceRole}` : ""}${c.normalChart ? `:chart:${c.normalChart}:${c.normalFaces ?? 0}` : ""}${c.normalSide ? `:side:${c.normalSide.id}:${c.normalSide.normal.join(",")}:${c.normalSide.faces}:${c.normalSideFaces ?? 0}` : ""}`,
+          `${c.x},${c.y},${c.z}:${c.role}:${c.slot}:${c.family}:${c.normalHint?.join(",") ?? ""}${c.surfaceRole ? `:surface:${c.surfaceRole}` : ""}${c.normalChart ? `:chart:${c.normalChart}:${c.normalFaces ?? 0}` : ""}${c.normalSide ? `:side:${c.normalSide.id}:${c.normalSide.normal.join(",")}:${c.normalSide.faces}:${c.normalSideFaces ?? 0}` : ""}${c.facet ? `:facet:${c.facet.id}:${c.facet.a.join(",")}:${c.facet.d}:${c.facetFaces ?? 0}` : ""}${c.facetNeighbourFaces !== undefined ? `:facet-neighbour:${c.facetNeighbourFaces}` : ""}`,
       )
       .join("\n"),
   );

@@ -17,7 +17,19 @@
     "slot9_primary.fabric",
     "slot10_secondary.fabric",
     "slot11_accent.fabric",
-    "slot12_accent.flora"
+    "slot12_accent.flora",
+    "slot13_metal.barrel",
+    "slot14_secondary.vessel",
+    "slot15_primary.receiver-cover",
+    "slot16_primary.thermal-cover",
+    "slot17_primary.furniture-cover",
+    "slot18_secondary.furniture-cover",
+    "slot19_primary.fabric.furniture-cover",
+    "slot20_secondary.fabric.furniture-cover",
+    "slot21_accent.fabric.furniture-cover",
+    "slot22_primary.mug-body",
+    "slot23_dark.mug-body",
+    "slot24_metal.mug-body"
   ],
   "generator": {
     "script": "scripts/art_library/ship_component_export.py",
@@ -153,10 +165,10 @@
         16
       ],
       "glb": "assets/runtime/ship-objects/r003/pale-studless.kitchen.standard.glb",
-      "sha256": "30c21b1b50ce53660fb428e9ed50cb06b940911eee3ea54512fead6ddda65949",
-      "bytes": 36380,
-      "triangles": 444,
-      "boxes": 47,
+      "sha256": "2f58dcc42eb02ed6d6f22325faa4a3dc44d1b0d532f576444c578501680364c6",
+      "bytes": 38484,
+      "triangles": 474,
+      "boxes": 52,
       "materialSlotsUsed": [
         "slot0_primary",
         "slot1_secondary",
@@ -187,17 +199,21 @@
         12
       ],
       "glb": "assets/runtime/ship-objects/r003/pale-studless.table.standard.glb",
-      "sha256": "25df92879c359acef8a0549b6fbda37ed96d7553536289c4a93a752168cccee6",
-      "bytes": 24760,
-      "triangles": 280,
-      "boxes": 22,
+      "sha256": "aa18a048b058a7d28dd34442c85f1aad6bbd365d090968fcdd8d83a40b7392c4",
+      "bytes": 68668,
+      "triangles": 862,
+      "boxes": 36,
       "materialSlotsUsed": [
-        "slot0_primary",
         "slot1_secondary",
         "slot3_trim",
         "slot4_metal",
         "slot5_dark",
-        "slot12_accent.flora"
+        "slot12_accent.flora",
+        "slot17_primary.furniture-cover",
+        "slot18_secondary.furniture-cover",
+        "slot22_primary.mug-body",
+        "slot23_dark.mug-body",
+        "slot24_metal.mug-body"
       ],
       "boundsM": [
         [
@@ -288,7 +304,7 @@
         20
       ],
       "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.crew-bunk.glb",
-      "sha256": "daa64779a986935374192eeb118ffd5939bf60ddfdd70f3c1f2dd1c81d3fa559",
+      "sha256": "595b9f51df36744855ef12dc7d3165f1c1978857b95847ae61879844a523d95f",
       "bytes": 54928,
       "triangles": 748,
       "boxes": 35,
@@ -358,19 +374,22 @@
         14
       ],
       "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.lounge-sofa.glb",
-      "sha256": "e0be792294e97afc8af54a2af45c612d2aa5f42f3ed19766bc6bc6bafb52fea3",
-      "bytes": 49680,
-      "triangles": 680,
-      "boxes": 29,
+      "sha256": "016666a8dc0cfcc1fd21b86242bdbf6d68615b7bebfddd68b61cf2b6dee1e176",
+      "bytes": 199964,
+      "triangles": 2824,
+      "boxes": 32,
       "materialSlotsUsed": [
         "slot0_primary",
         "slot1_secondary",
         "slot3_trim",
         "slot4_metal",
         "slot5_dark",
-        "slot9_primary.fabric",
         "slot10_secondary.fabric",
-        "slot11_accent.fabric"
+        "slot11_accent.fabric",
+        "slot17_primary.furniture-cover",
+        "slot19_primary.fabric.furniture-cover",
+        "slot20_secondary.fabric.furniture-cover",
+        "slot21_accent.fabric.furniture-cover"
       ],
       "boundsM": [
         [
@@ -393,10 +412,10 @@
         14
       ],
       "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.medical-bed.glb",
-      "sha256": "38ab0b95608e022d4d7372f070142e6a35f9ab22c28e1909e8a3d8b87c99164b",
-      "bytes": 32588,
-      "triangles": 384,
-      "boxes": 27,
+      "sha256": "cbfe308f9f16265a09b3d17712112bc5a6f672b4ad435a4881d4eb5d953e95e2",
+      "bytes": 101136,
+      "triangles": 1334,
+      "boxes": 33,
       "materialSlotsUsed": [
         "slot0_primary",
         "slot1_secondary",
@@ -404,8 +423,11 @@
         "slot4_metal",
         "slot5_dark",
         "slot6_emit_a",
+        "slot7_emit_b",
         "slot9_primary.fabric",
-        "slot11_accent.fabric"
+        "slot11_accent.fabric",
+        "slot17_primary.furniture-cover",
+        "slot19_primary.fabric.furniture-cover"
       ],
       "boundsM": [
         [
@@ -428,7 +450,7 @@
         20
       ],
       "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.pilot-seat.glb",
-      "sha256": "b2ac876625313cf04ab707db123af06033c87f1e5a229ab18ddd18629da6345b",
+      "sha256": "b6f119c9897ebe1e2e9da2ecf2a6e1c908e5528e4e6f0e7318beb34acdb84f0d",
       "bytes": 31600,
       "triangles": 416,
       "boxes": 21,
@@ -461,7 +483,7 @@
         36
       ],
       "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.reactor.glb",
-      "sha256": "e7d78e669d5346adca1100c42ca3d9b0e44d08df95a6d2dbfeda5cce6579ab1e",
+      "sha256": "1d3248c48127b618d458d72185e672f2e78c9cd6b1ed62bcdc65a66093218dd9",
       "bytes": 140312,
       "triangles": 1968,
       "boxes": 190,
@@ -525,12 +547,13 @@
   ],
   "source": {
     "blend": "assets/source/ship-reference/r002/objects.blend",
-    "sha256": "3630a488715c2e51740c59351f56ccc1915a5ec71dd858b921674764a1eb3e77",
+    "sha256": "359d7ad4215de26e1d11a28c7b08cc465997788d15402f826c19d74b6c30f9cb",
     "note": "editable Blender source saved by this export"
   },
   "referenceMesh": {
     "revision": "r002",
     "selectiveHousingChamferM": 0.015,
+    "machineryHousingChamferM": 0.04,
     "cushionChamferM": 0.025,
     "segments": 2,
     "engineBellSegments": 32,

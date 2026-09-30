@@ -30,6 +30,7 @@ const sources = [
   "packages/sim/src/ship-visual-sampler.ts",
   "packages/sim/src/ship-visual-compiler.ts",
   "packages/render/src/prefab-ship/sampled-structure.ts",
+  "packages/render/src/prefab-ship/sampled-facets.ts",
   "packages/render/src/prefab-ship/sampled-ao.ts",
   "packages/render/src/prefab-ship/normal-detail.ts",
   "packages/render/src/prefab-ship/ship-view.ts",

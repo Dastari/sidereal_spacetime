@@ -256,6 +256,18 @@ R.O.medical_bed=medical_bed
 R.O.table=table
 R.O.kitchen=kitchen
 
+# The predecessor's universal post-builder foot band would mask the new real
+# medbed service aperture. Retain its other finite additions and all other props.
+original_fitted_details=R.fitted_details
+def reference_fitted_details(piece,w,d,h,kind):
+    before=len(piece.boxes)
+    piece=original_fitted_details(piece,w,d,h,kind)
+    if kind=="shipyard.equipment.medical-bed":
+        blocked=(2,d-1.5,3,w-2,d,5,"trim")
+        piece.boxes=[q for i,q in enumerate(piece.boxes) if i<before or q!=blocked]
+    return piece
+R.fitted_details=reference_fitted_details
+
 
 def enclosed_reactor(original):
     """Compact pressure vessel and partial service shrouds inside the original fitting envelope."""

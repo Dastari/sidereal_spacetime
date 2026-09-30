@@ -7,8 +7,10 @@ import type {
 import {
   visualCellKey,
   type VisualVolume,
+  type VisualCell,
 } from "@sidereal/sim/ship-visual-compiler";
 import { sampledCornerLight } from "./sampled-ao";
+import { sampledFacetBoundary } from "./sampled-facets";
 
 export interface SampledGeometry {
   surfaceCharts: string[];
@@ -39,84 +41,98 @@ interface Plane {
   surfaceRole?: ShipVisualLayer["surfaceRole"];
   faces: Map<string, Face>;
 }
+function faceShading(c: VisualCell, axis: number, side: number) {
+  const bit = 1 << (axis * 2 + (side > 0 ? 1 : 0));
+  const sideFace = Boolean((c.normalSideFaces ?? 0) & bit),
+    shoulderFace = Boolean(c.normalChart && (c.normalFaces ?? 0) & bit);
+  const normalHint = shoulderFace
+    ? c.normalHint
+    : sideFace
+      ? c.normalSide!.normal
+      : c.normalChart
+        ? undefined
+        : c.normalHint;
+  const chartFace = Boolean((sideFace || shoulderFace) && normalHint);
+  const normal = [0, 0, 0];
+  normal[axis] = side;
+  if (chartFace && normalHint)
+    for (let a = 0; a < 3; a++) normal[a] = normalHint[a];
+  else if (axis < 2 && normalHint) {
+    const dot = side * normalHint[axis];
+    if (Math.abs(dot) > 0.3)
+      for (let a = 0; a < 3; a++)
+        normal[a] = normalHint[a] * (dot < 0 ? -1 : 1);
+  }
+  return { normalHint, chartFace, normal };
+}
 export function meshSampledStructure(
   cells: VisualVolume,
   options: { ambientOcclusion?: boolean } = {},
 ): SampledGeometry[] {
+  const facets = sampledFacetBoundary(cells);
+  const orderedCells = facets.special.size
+    ? [...cells.values()].sort((a, b) => a.z - b.z || a.y - b.y || a.x - b.x)
+    : cells.values();
   const planes = new Map<string, Plane>();
-  for (const c of cells.values())
-    for (let axis = 0; axis < 3; axis++)
-      for (const side of [-1, 1]) {
-        const p = [c.x, c.y, c.z],
-          n = [...p];
-        n[axis] += side;
-        if (cells.has(visualCellKey(n[0], n[1], n[2]))) continue;
-        const at = p[axis] + (side > 0 ? 1 : 0),
-          u = (axis + 1) % 3,
-          v = (axis + 2) % 3;
-        const sideFace = Boolean(
-          c.normalSideFaces &&
-          c.normalSideFaces & (1 << (axis * 2 + (side > 0 ? 1 : 0))),
-        );
-        const shoulderFace = Boolean(
-          c.normalChart &&
-          (c.normalFaces ?? 0) & (1 << (axis * 2 + (side > 0 ? 1 : 0))),
-        );
-        const normalHint = shoulderFace
-          ? c.normalHint
-          : sideFace
-            ? c.normalSide!.normal
-            : c.normalChart
-              ? undefined
-              : c.normalHint;
-        const key = `${axis}:${side}:${at}:${c.slot}:${c.role}:${c.surfaceRole ?? ""}`;
-        let plane = planes.get(key);
-        if (!plane)
-          planes.set(
-            key,
-            (plane = {
-              axis,
-              side,
-              at,
-              slot: c.slot,
-              role: c.role,
-              ...(c.surfaceRole ? { surfaceRole: c.surfaceRole } : {}),
-              faces: new Map(),
-            }),
-          );
-        plane.faces.set(`${p[u]},${p[v]}`, {
-          u: p[u],
-          v: p[v],
-          family: c.family,
-          normalHint,
-          ...((shoulderFace || sideFace) && normalHint
-            ? { chartFace: true }
-            : {}),
-          ...(options.ambientOcclusion
-            ? {
-                lights: [
-                  [0, 0],
-                  [1, 0],
-                  [1, 1],
-                  [0, 1],
-                ].map(([u, v]) =>
-                  c.role === "frame" ||
-                  normalHint !== undefined ||
-                  ["emit_a", "emit_b", "glass"].includes(c.slot)
-                    ? 1
-                    : sampledCornerLight(
-                        cells,
-                        [c.x, c.y, c.z],
-                        axis,
-                        side,
-                        u as 0 | 1,
-                        v as 0 | 1,
-                      ),
-                ),
-              }
-            : {}),
-        });
-      }
+  for (const c of orderedCells)
+    if (!facets.special.has(visualCellKey(c.x, c.y, c.z)))
+      for (let axis = 0; axis < 3; axis++)
+        for (const side of [-1, 1]) {
+          const p = [c.x, c.y, c.z],
+            n = [...p];
+          n[axis] += side;
+          if (cells.has(visualCellKey(n[0], n[1], n[2]))) continue;
+          const at = p[axis] + (side > 0 ? 1 : 0),
+            u = (axis + 1) % 3,
+            v = (axis + 2) % 3;
+          const shaded = faceShading(c, axis, side),
+            normalHint = shaded.normalHint;
+          const key = `${axis}:${side}:${at}:${c.slot}:${c.role}:${c.surfaceRole ?? ""}`;
+          let plane = planes.get(key);
+          if (!plane)
+            planes.set(
+              key,
+              (plane = {
+                axis,
+                side,
+                at,
+                slot: c.slot,
+                role: c.role,
+                ...(c.surfaceRole ? { surfaceRole: c.surfaceRole } : {}),
+                faces: new Map(),
+              }),
+            );
+          plane.faces.set(`${p[u]},${p[v]}`, {
+            u: p[u],
+            v: p[v],
+            family: c.family,
+            normalHint,
+            ...(shaded.chartFace ? { chartFace: true } : {}),
+            ...(options.ambientOcclusion
+              ? {
+                  lights: [
+                    [0, 0],
+                    [1, 0],
+                    [1, 1],
+                    [0, 1],
+                  ].map(([u, v]) =>
+                    c.role === "frame" ||
+                    normalHint !== undefined ||
+                    ["emit_a", "emit_b", "glass"].includes(c.slot)
+                      ? 1
+                      : sampledCornerLight(
+                          cells,
+                          [c.x, c.y, c.z],
+                          axis,
+                          side,
+                          u as 0 | 1,
+                          v as 0 | 1,
+                        ),
+                  ),
+                }
+              : {}),
+          });
+        }
   const groups = new Map<
     string,
     {
@@ -227,6 +243,58 @@ export function meshSampledStructure(
         g.indices.push(a, plane.side > 0 ? b : c, plane.side > 0 ? c : b);
       }
     }
+  }
+  for (const face of facets.polygons) {
+    const c = face.cell,
+      key = `${c.slot}:${c.role}:${c.surfaceRole ?? ""}`;
+    let g = groups.get(key);
+    if (!g)
+      groups.set(
+        key,
+        (g = {
+          charts: new Set(),
+          slot: c.slot,
+          role: c.role,
+          ...(c.surfaceRole ? { surfaceRole: c.surfaceRole } : {}),
+          positions: [],
+          normals: [],
+          uvs: [],
+          indices: [],
+          ...(options.ambientOcclusion ? { colors: [] } : {}),
+        }),
+      );
+    g.charts.add(face.plane ? `facet:${face.plane}` : "facet:hard-interface");
+    const base = g.positions.length / 3;
+    const axis = face.normal.findIndex((n) => n !== 0),
+      u = (axis + 1) % 3,
+      v = (axis + 2) % 3;
+    const shaded = face.unchangedRaw
+      ? faceShading(c, axis, face.normal[axis] > 0 ? 1 : -1)
+      : undefined;
+    for (const p of face.points) {
+      g.positions.push(...p.map((n) => n / 16));
+      g.normals.push(...(shaded?.normal ?? face.normal));
+      g.uvs.push(p[u] / 16, ((face.normal[axis] > 0 ? 1 : -1) * p[v]) / 16);
+      if (g.colors) {
+        const light =
+          face.plane ||
+          c.role === "frame" ||
+          shaded?.normalHint !== undefined ||
+          ["glass", "emit_a", "emit_b"].includes(c.slot)
+            ? 1
+            : sampledCornerLight(
+                cells,
+                [c.x, c.y, c.z],
+                axis,
+                face.normal[axis] > 0 ? 1 : -1,
+                p[u] > [c.x, c.y, c.z][u] ? 1 : 0,
+                p[v] > [c.x, c.y, c.z][v] ? 1 : 0,
+              );
+        g.colors.push(light, light, light, 1);
+      }
+    }
+    for (let i = 1; i < face.points.length - 1; i++)
+      g.indices.push(base, base + i, base + i + 1);
   }
   return [...groups.values()].map((g) => {
     const { colors, ...geometry } = g;

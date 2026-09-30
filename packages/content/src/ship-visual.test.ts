@@ -36,4 +36,44 @@ describe("candidate original side-plane ownership", () => {
         ]),
       ).toThrow("side ownership");
   });
+  it("accepts only bounded two-axis manufactured planes and rejects contact/optical ownership", () => {
+    const good = {
+      id: "case",
+      a: [1, -1, 0] as [number, number, number],
+      d: 1,
+    };
+    expect(() =>
+      validateShipVisualLayers([{ ...layer, facet: good }]),
+    ).not.toThrow();
+    for (const facet of [
+      { ...good, id: " " },
+      { ...good, a: [1, 1, 1] },
+      { ...good, a: [1, 0, 0] },
+      { ...good, a: [1, NaN, 0] },
+      { ...good, a: [2, 1, 0] },
+      { ...good, d: 0.5 },
+      { ...good, d: Infinity },
+      { ...good, d: 1000001 },
+    ])
+      expect(() =>
+        validateShipVisualLayers([
+          { ...layer, facet: facet as ShipVisualLayer["facet"] },
+        ]),
+      ).toThrow(/facet/);
+    for (const extra of [
+      { role: "floor" },
+      { role: "doorframe" },
+      { role: "service" },
+      { role: "void" },
+      { surfaceRole: "floor" },
+      { slot: "glass" },
+      { slot: "emit_a" },
+      { slot: "emit_b" },
+    ])
+      expect(() =>
+        validateShipVisualLayers([
+          { ...layer, ...extra, facet: good } as ShipVisualLayer,
+        ]),
+      ).toThrow(/facet/);
+  });
 });

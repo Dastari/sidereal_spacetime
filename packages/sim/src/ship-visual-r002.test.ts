@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
+import { bowGlass } from "@sidereal/content/bow-profiles";
+import { placedTilePolygon } from "@sidereal/content/construction-grammar";
 import { insidePolygon } from "@sidereal/content/construction-grammar";
 import {
+  deriveInterior,
   volumeGeometry,
   placeMount,
   placeMountTile,
@@ -15,6 +18,7 @@ import {
   visualProfilesSha256,
   visualVolumeSha256,
   visualCellKey,
+  removeShipVisualCells,
 } from "./ship-visual-compiler";
 
 describe("versioned reference recipes", () => {
@@ -127,10 +131,10 @@ describe("versioned reference recipes", () => {
       );
     }
   });
-  it("replaces exposed top and lower rim courses with real supported shoulder cross-sections", () => {
+  it("reconstructs actual diagonal owners and shallow five-cell trays with original guarded facets", () => {
     for (const ship of [doc, PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!])
       for (const view of ["deck", "flight"] as const) {
-        const result = compileShipVisual(
+        const r = compileShipVisual(
           ship,
           catalog,
           view,
@@ -138,88 +142,236 @@ describe("versioned reference recipes", () => {
           undefined,
           "r002",
         );
-        const shoulders = result.layers.filter((l) =>
-          l.id.endsWith(":molded-shoulder"),
-        );
-        const shoes = result.layers.filter((l) =>
-          l.id.endsWith(":molded-sill-shoulder"),
-        );
-        expect(shoulders.length).toBeGreaterThan(0);
-        expect(shoes.length).toBeGreaterThan(0);
-        let outer = 0,
-          exposedUpper = 0,
-          exposedLower = 0;
-        for (const l of [...shoulders, ...shoes]) {
-          const volume = ship.volumes.find(
-            (v) => l.support === `volume:${v.id}`,
-          )!;
-          const poly = volumeGeometry(volume).outline!.outer.map(
-            ([x, y]): [number, number] => [x * 16, y * 16],
+        const owned = [...r.cells.values()].filter((c) => c.facetFaces);
+        const interior = deriveInterior(ship, 0, catalog);
+        const geoms = ship.volumes.map(volumeGeometry);
+        const frameRects = ship.mounts
+          .filter((m) => m.attach === "edge")
+          .map(
+            (m) => placeMount(m, catalog.get(m.component), geoms, ship).rect,
           );
+        const opticalPolys = ship.volumes.flatMap((v) =>
+          v.tiles.filter(bowGlass).map(placedTilePolygon),
+        );
+        const opticalEdges = [
+          ...interior.exteriorSlopes.filter((e) => e.glass),
+          ...[...interior.exteriorWalls, ...interior.partitions].filter(
+            (e) =>
+              e.type === "window" ||
+              e.type === "wall.glazed" ||
+              e.variant === "glazed",
+          ),
+        ];
+        const apertureGuards = r.layers.filter(
+          (l) =>
+            l.role === "void" &&
+            (l.id.endsWith(":opening") || l.id.endsWith(":glass-aperture")),
+        );
+        // The independent sweep formula includes the full-open outer leaf edge,
+        // not just closed opening centres. Frame/opening/optical rings stay raw.
+        for (const c of r.cells.values()) {
+          if (!c.facet) continue;
+          const p = [(c.x + 0.5) / 16, (c.y + 0.5) / 16];
+          for (const d of interior.doors) {
+            const dx = d.b[0] - d.a[0],
+              dy = d.b[1] - d.a[1],
+              span = Math.hypot(dx, dy);
+            const X = p[0] - (d.a[0] + d.b[0]) / 2,
+              Y = p[1] - (d.a[1] + d.b[1]) / 2;
+            const w = Math.max(0.6, (span - 0.75) / 2);
+            const sweep = w / 2 + 0.005 + 0.95 * w + w / 2;
+            expect(
+              Math.abs((X * dx + Y * dy) / span) >
+                Math.max(span / 2, sweep) + 2 / 16 ||
+                Math.abs((-X * dy + Y * dx) / span) > 5 / 16 + 2 / 16,
+            ).toBe(true);
+          }
+          for (const b of frameRects)
+            expect(
+              p[0] < b[0] - 2 / 16 ||
+                p[0] > b[2] + 2 / 16 ||
+                p[1] < b[1] - 2 / 16 ||
+                p[1] > b[3] + 2 / 16,
+            ).toBe(true);
+          for (const poly of opticalPolys)
+            expect(
+              !insidePolygon(poly, p[0], p[1]) &&
+                polygonBoundarySample([p[0], p[1]], poly).distance > 2 / 16,
+            ).toBe(true);
+          for (const e of opticalEdges) {
+            const dx = e.b[0] - e.a[0],
+              dy = e.b[1] - e.a[1],
+              span = Math.hypot(dx, dy);
+            const u = ((p[0] - e.a[0]) * dx + (p[1] - e.a[1]) * dy) / span;
+            const v =
+              Math.abs(-(p[0] - e.a[0]) * dy + (p[1] - e.a[1]) * dx) / span;
+            expect(u < -2 / 16 || u > span + 2 / 16 || v > 0.25 + 2 / 16).toBe(
+              true,
+            );
+          }
+          for (const a of apertureGuards) {
+            expect(
+              c.x + 0.5 < a.bounds[0] - 2 ||
+                c.x + 0.5 > a.bounds[3] + 2 ||
+                c.y + 0.5 < a.bounds[1] - 2 ||
+                c.y + 0.5 > a.bounds[4] + 2,
+            ).toBe(true);
+          }
+        }
+        expect(owned.length).toBeGreaterThan(50);
+        expect(r.layers.some((l) => l.id.endsWith(":molded-shoulder"))).toBe(
+          false,
+        );
+        for (const c of owned) {
+          expect(c.role).not.toBe("floor");
+          expect(c.surfaceRole).not.toBe("floor");
+          expect(["glass", "emit_a", "emit_b"]).not.toContain(c.slot);
+          expect(c.facet!.a.filter((v) => v !== 0)).toHaveLength(2);
+          expect(
+            c.facet!.a.reduce(
+              (n, v, i) => n + v * ([c.x, c.y, c.z][i] + 0.5),
+              0,
+            ),
+          ).toBe(c.facet!.d);
+          const volume = ship.volumes.find(
+            (v) => c.family === `volume:${v.id}`,
+          )!;
+          const g = volumeGeometry(volume),
+            poly = g.outline!.outer.map(([x, y]): [number, number] => [
+              x * 16,
+              y * 16,
+            ]);
+          const boundary = polygonBoundarySample([c.x + 0.5, c.y + 0.5], poly);
+          expect(
+            Math.min(boundary.edgeT, 1 - boundary.edgeT) * boundary.edgeLength,
+          ).toBeGreaterThanOrEqual(3);
+          for (const h of g.outline!.holes ?? [])
+            expect(
+              polygonBoundarySample(
+                [c.x + 0.5, c.y + 0.5],
+                h.map(([x, y]): [number, number] => [x * 16, y * 16]),
+              ).distance,
+            ).toBeGreaterThan(2);
+        }
+        const tray = r.layers.filter((l) =>
+          l.id.endsWith(":shallow-pressure-tray"),
+        );
+        expect(tray.length).toBeGreaterThan(0);
+        expect(
+          owned.some((c) =>
+            ship.volumes.some(
+              (v) => v.height === "wing" && c.family === `volume:${v.id}`,
+            ),
+          ),
+        ).toBe(true);
+        for (const l of tray) {
           expect(l.role).toBe("core");
-          expect(l.normalHint![2]).toBeGreaterThan(0);
-          for (let y = l.bounds[1]; y < l.bounds[4]; y++)
-            for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
-              const d = polygonBoundarySample(
-                [x + 0.5, y + 0.5],
-                poly,
-              ).distance;
-              expect(d).toBeLessThan(4);
-              if (d < 1) outer++;
-              const top = result.cells.get(
-                visualCellKey(x, y, l.bounds[5] - 1),
-              );
-              if (
-                top &&
-                top.normalChart === l.normalChart &&
-                !result.cells.has(visualCellKey(x, y, top.z + 1))
-              ) {
-                expect(top.normalFaces! & (1 << 5)).not.toBe(0);
-                expect(top.role).toBe("core");
-                if (l.id.endsWith(":molded-shoulder")) exposedUpper++;
-                else exposedLower++;
-              }
-            }
+          expect(l.bounds[5] - l.bounds[2]).toBe(2);
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++)
+            for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+              for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+                expect(r.cells.get(visualCellKey(x, y, z))?.role).toBe("core");
         }
-        // This is the actual exposed outer row and shoe, not merely inboard layers.
-        expect(outer).toBeGreaterThan(50);
-        expect(exposedUpper).toBeGreaterThan(100);
-        expect(exposedLower).toBeGreaterThan(50);
-        const sides = [...result.cells.values()].filter(
-          (c) => c.normalSideFaces,
+        const armour = r.layers.filter((l) =>
+          l.id.endsWith(":shallow-offset-armor"),
         );
-        expect(sides.length).toBeGreaterThan(20);
-        for (const c of sides) {
-          expect(c.normalSide!.normal[2]).toBe(0);
-          expect(c.normalSideFaces! & ~c.normalSide!.faces).toBe(0);
-          for (let axis = 0; axis < 2; axis++)
-            for (const side of [-1, 1])
-              if (c.normalSideFaces! & (1 << (axis * 2 + (side > 0 ? 1 : 0)))) {
-                const p = [c.x, c.y, c.z];
-                p[axis] += side;
-                expect(result.cells.has(visualCellKey(p[0], p[1], p[2]))).toBe(
-                  false,
-                );
-              }
-        }
-        const cell = [...result.cells.values()].find(
-          (c) => c.normalChart?.includes(":shoulder:") && c.normalFaces! & 32,
-        )!;
-        const removed = visualCellKey(cell.x, cell.y, cell.z);
-        const cut = compileShipVisual(
-          ship,
-          catalog,
-          view,
-          "federation",
-          new Set([removed]),
-          "r002",
+        expect(armour.every((l) => l.bounds[5] - l.bounds[2] === 1)).toBe(true);
+        // Original face qualification remains immutable, while current removals are real.
+        const c = owned[0],
+          key = visualCellKey(c.x, c.y, c.z);
+        const cut = removeShipVisualCells(r.cells, new Set([key]));
+        expect(cut.has(key)).toBe(false);
+        const next = owned.find((p) => cut.has(visualCellKey(p.x, p.y, p.z)))!;
+        expect(cut.get(visualCellKey(next.x, next.y, next.z))?.facetFaces).toBe(
+          next.facetFaces,
         );
-        expect(cut.cells.has(removed)).toBe(false);
-        // A fresh underlying top is a real hard cut, never the intact shoulder normal.
-        const below = cut.cells.get(visualCellKey(cell.x, cell.y, cell.z - 1));
-        if (below?.normalChart) expect(below.normalFaces! & 32).toBe(0);
       }
   }, 20000);
+  it("reconstructs the actual picked old rim owners rather than preserving a nominal channel veto", () => {
+    const r = compileShipVisual(
+      doc,
+      catalog,
+      "deck",
+      "federation",
+      undefined,
+      "r002",
+    );
+    for (const [p, d, role] of [
+      [[68, -11, 25], 79, "frame"],
+      [[70, -9, 23], 79, "core"],
+      [[168, 9, 9], 159, "core"],
+    ] as const) {
+      const c = r.cells.get(visualCellKey(p[0], p[1], p[2]))!;
+      expect(c.role).toBe(role);
+      expect(c.slot).toBe("secondary");
+      expect(c.facet?.a).toEqual([1, -1, 0]);
+      expect(c.facet?.d).toBe(d);
+      expect(c.facetFaces).toBe(6);
+    }
+    // Exact whole wing thickness is18 cells; the5-cell finish package is atop it.
+    const support = r.cells.get(visualCellKey(70, -9, 10))!;
+    expect(support.role).toBe("core");
+    expect(support.family).toBe("volume:wing-s");
+    const oldRim = r.layers.filter((l) => l.id === "volume:hull:cassette-rim");
+    expect(
+      oldRim.every(
+        (l) =>
+          !(
+            168 >= l.bounds[0] &&
+            168 < l.bounds[3] &&
+            9 >= l.bounds[1] &&
+            9 < l.bounds[4] &&
+            9 >= l.bounds[2] &&
+            9 < l.bounds[5]
+          ),
+      ),
+    ).toBe(true);
+  });
+  it("selects backed floor covers outside real furniture and approaches without a universal grid", () => {
+    const ship = PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!;
+    const before = JSON.stringify(ship),
+      r = compileShipVisual(
+        ship,
+        catalog,
+        "deck",
+        "federation",
+        undefined,
+        "r002",
+      );
+    const interior = deriveInterior(ship, 0, catalog);
+    const coverCells = [];
+    for (const l of r.layers.filter((l) => l.id.includes(":floor-cover:")))
+      for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+        for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+          const c = r.cells.get(visualCellKey(x, y, l.bounds[2]));
+          if (c) coverCells.push(c);
+        }
+    expect(coverCells.length).toBeGreaterThan(200);
+    expect(r.layers.some((l) => l.id.endsWith(":floor-course"))).toBe(false);
+    let seats = 0;
+    for (const l of r.layers.filter((l) => l.id.includes(":floor-cover-seat:")))
+      for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+        for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+          if (r.cells.has(visualCellKey(x, y, l.bounds[2]))) continue;
+          seats++;
+          for (const z of [l.bounds[2] - 1, l.bounds[2] - 2])
+            expect(r.cells.has(visualCellKey(x, y, z))).toBe(true);
+          for (const o of interior.sockets)
+            expect(
+              (x + 0.5) / 16 < o.at[0] - 1 / 16 ||
+                (x + 0.5) / 16 > o.at[0] + o.size[0] + 1 / 16 ||
+                (y + 0.5) / 16 < o.at[1] - 1 / 16 ||
+                (y + 0.5) / 16 > o.at[1] + o.size[1] + 1 / 16,
+            ).toBe(true);
+        }
+    expect(seats).toBeGreaterThan(50);
+    expect(
+      coverCells.every(
+        (c) => !c.facet && (c.role === "floor" || c.role === "service"),
+      ),
+    ).toBe(true);
+    expect(JSON.stringify(ship)).toBe(before);
+  }, 15000);
   it("retains the delivered r001 profile and exact Wren deck volume", () => {
     expect(visualProfilesSha256()).toBe(
       "8c9a58bc361116c1ab663dcad5dd2b05c06fdf1cd7d9711339cdbc714b6649d6",
@@ -394,6 +546,86 @@ describe("versioned reference recipes", () => {
       compileShipVisual(doc, catalog, "deck", "federation", undefined, "r003"),
     ).toThrow("Unknown");
   });
+  it("joins unequal task-sized roof cases to the backing and leaves functional recesses visible", () => {
+    for (const id of ["fed.s.wren", "fed.m.crest"]) {
+      const ship = PREFAB_SHIPS.find((s) => s.id === id)!,
+        r = compileShipVisual(
+          ship,
+          catalog,
+          "flight",
+          "federation",
+          undefined,
+          "r002",
+        );
+      const geoms = ship.volumes.map(volumeGeometry);
+      const occupied = [
+        ...ship.mounts
+          .filter((m) => m.attach === "top")
+          .map(
+            (m) => placeMount(m, catalog.get(m.component), geoms, ship).rect,
+          ),
+        ...(ship.mountTiles ?? []).map((m) => placeMountTile(m, geoms).rect),
+      ];
+      const blocked = (x: number, y: number) =>
+        occupied.some(
+          (b) =>
+            (x + 0.5) / 16 >= b[0] &&
+            (x + 0.5) / 16 <= b[2] &&
+            (y + 0.5) / 16 >= b[1] &&
+            (y + 0.5) / 16 <= b[3],
+        );
+      const cases = r.layers.filter(
+        (l) => l.id.includes(":roof-task-case:") && l.support === "volume:hull",
+      );
+      expect(new Set(cases.map((l) => l.id)).size).toBeGreaterThanOrEqual(2);
+      let visible = 0;
+      const upperLevels = new Set<number>();
+      for (const l of cases)
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            const z = l.bounds[5] - 1,
+              cell = r.cells.get(visualCellKey(x, y, z));
+            if (
+              !cell ||
+              cell.role !== "plate" ||
+              r.cells.has(visualCellKey(x, y, z + 1)) ||
+              blocked(x, y)
+            )
+              continue;
+            visible++;
+            upperLevels.add(z);
+            expect(r.cells.has(visualCellKey(x, y, l.bounds[2] - 1))).toBe(
+              true,
+            );
+          }
+      expect(visible).toBeGreaterThan(1000);
+      expect(upperLevels.size).toBeGreaterThanOrEqual(2);
+      let open = 0;
+      for (const l of r.layers.filter(
+        (l) =>
+          l.support === "volume:hull" &&
+          l.id.endsWith(":roof-functional-pocket"),
+      ))
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            if (
+              r.cells.has(visualCellKey(x, y, l.bounds[2] + 1)) ||
+              blocked(x, y)
+            )
+              continue;
+            open++;
+            const backing = [l.bounds[2] - 1, l.bounds[2] - 2].find((z) =>
+              r.cells.has(visualCellKey(x, y, z)),
+            );
+            expect(backing).toBeDefined();
+            const cell = r.cells.get(visualCellKey(x, y, backing!))!;
+            const topCore = cell.role === "core" ? backing! : backing! - 1;
+            for (const z of [topCore, topCore - 1])
+              expect(r.cells.get(visualCellKey(x, y, z))?.role).toBe("core");
+          }
+      expect(open).toBeGreaterThan(100);
+    }
+  }, 15000);
   it("leaves two exposed backed roof service routes beside actual fittings and preserves marking fields", () => {
     for (const id of ["fed.s.wren", "fed.m.crest"]) {
       const ship = PREFAB_SHIPS.find((d) => d.id === id)!;

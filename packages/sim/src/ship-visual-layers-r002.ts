@@ -8,6 +8,7 @@ import {
 import { bowGlass, bowHeights } from "@sidereal/content/bow-profiles";
 import {
   deriveInterior,
+  deckApproachZones,
   volumeGeometry,
   placeMount,
   placeMountTile,
@@ -20,7 +21,11 @@ import {
   type ShipVisualView,
 } from "@sidereal/content/ship-visual";
 import type { ShipKitSlot } from "@sidereal/content/ship-kit";
-import { polygonBoundarySample } from "./ship-visual-sampler";
+import {
+  polygonBoundarySample,
+  sampleShipVisualLayers,
+  visualCellKey,
+} from "./ship-visual-sampler";
 import { dressShip } from "./ship-dresser";
 
 import {
@@ -51,6 +56,7 @@ export function shipVisualLayersR002(
   };
   let shellNormal: [number, number, number] | undefined;
   let sidePlane: ShipVisualLayer["normalSide"] | undefined;
+  let facetPlane: ShipVisualLayer["facet"] | undefined;
   let roofChart: { id: string; normal: [number, number, number] } | undefined;
   const column = (
     id: string,
@@ -64,6 +70,8 @@ export function shipVisualLayersR002(
   ) => {
     const before = layers.length;
     box(id, role, slot, [x, y, z0, x + 1, y + 1, z1], support);
+    if (facetPlane && layers.length > before && role !== "void")
+      layers[layers.length - 1].facet = facetPlane;
     if (sidePlane && layers.length > before && role !== "void")
       layers[layers.length - 1].normalSide = sidePlane;
     if (roofChart && layers.length > before) {
@@ -77,6 +85,90 @@ export function shipVisualLayersR002(
       layers[layers.length - 1].normalHint = shellNormal;
   };
   const interior = deriveInterior(doc, 0, catalog);
+  // One selected manufactured cover per utility/living room, not a deck-wide
+  // metre grid. Existing sockets and approaches own their exact plan clearances.
+  const approaches = deckApproachZones(
+    interior.doors,
+    interior.station?.at ?? null,
+    (x, y) =>
+      interior.floors.some(
+        (f) => Math.floor(x) === f.cell[0] && Math.floor(y) === f.cell[1],
+      ),
+  );
+  const occupiedFloorRects = [
+    ...interior.sockets.map((o) => [
+      o.at[0],
+      o.at[1],
+      o.at[0] + o.size[0],
+      o.at[1] + o.size[1],
+    ]),
+    ...approaches.map((a) => a.rect),
+  ];
+  const floorCovers: {
+    bounds: number[];
+    kind: "vent" | "access";
+    room: string;
+  }[] = [];
+  for (const room of doc.rooms) {
+    if (
+      ![
+        "engineering",
+        "workshop",
+        "cargo",
+        "galley",
+        "lounge",
+        "medbay",
+      ].includes(room.type)
+    )
+      continue;
+    const width =
+      room.type === "engineering" || room.type === "workshop" ? 24 : 20;
+    const depth = room.type === "cargo" ? 28 : 16;
+    const candidates: { bounds: number[]; score: number }[] = [];
+    const cx = (room.rect[0] + room.rect[2]) * 8,
+      cy = (room.rect[1] + room.rect[3]) * 8;
+    for (
+      let y = Math.ceil(room.rect[1] * 16 + 4);
+      y + depth < room.rect[3] * 16 - 4;
+      y += 4
+    )
+      for (
+        let x = Math.ceil(room.rect[0] * 16 + 4);
+        x + width < room.rect[2] * 16 - 4;
+        x += 4
+      ) {
+        const b = [x, y, x + width, y + depth];
+        if (
+          occupiedFloorRects.some(
+            (r) =>
+              b[0] / 16 < r[2] + 1 / 16 &&
+              b[2] / 16 > r[0] - 1 / 16 &&
+              b[1] / 16 < r[3] + 1 / 16 &&
+              b[3] / 16 > r[1] - 1 / 16,
+          )
+        )
+          continue;
+        candidates.push({
+          bounds: b,
+          score: Math.hypot(x + width / 2 - cx, y + depth / 2 - cy),
+        });
+      }
+    candidates.sort(
+      (a, b) =>
+        a.score - b.score ||
+        a.bounds[1] - b.bounds[1] ||
+        a.bounds[0] - b.bounds[0],
+    );
+    if (candidates[0])
+      floorCovers.push({
+        bounds: candidates[0].bounds,
+        kind:
+          room.type === "engineering" || room.type === "workshop"
+            ? "vent"
+            : "access",
+        room: room.id,
+      });
+  }
   const analyticCharts = new Map<string, [number, number, number]>();
   const assemblies = doc.volumes.map((volume) => ({
     volume,
@@ -89,6 +181,70 @@ export function shipVisualLayersR002(
   // Reuse the same transformed, catalog-qualified footprints as the actual dresser.
   // Raw mount.at is neither an anchor nor a tile-carried item's occupied rectangle.
   const geoms = assemblies.map((a) => a.geometry);
+  // Guard the complete frame and moving-leaf sweep, not a radius at its centre.
+  // The renderer slides each leaf .95 widths from its closed half-width centre;
+  // its outside edge therefore reaches 1.95w+.005. Two cells also cover the
+  // Chebyshev neighbour ring and the full cube footprint of any candidate facet.
+  const rawPaddingM = 2 / 16;
+  const doorGuards = interior.doors.map((d) => {
+    const dx = d.b[0] - d.a[0],
+      dy = d.b[1] - d.a[1];
+    const span = Math.hypot(dx, dy);
+    const leafWidth = Math.max(0.6, (span - 0.75) / 2);
+    return {
+      centre: [(d.a[0] + d.b[0]) / 2, (d.a[1] + d.b[1]) / 2] as Pt,
+      along: [dx / span, dy / span] as Pt,
+      halfSpan: Math.max(span / 2, 1.95 * leafWidth + 0.005) + rawPaddingM,
+      halfDepth: 5 / 16 + rawPaddingM,
+    };
+  });
+  const frameGuards = doc.mounts
+    .filter((m) => m.attach === "edge")
+    .map((m) => placeMount(m, catalog.get(m.component), geoms, doc).rect);
+  const opticalGuards = assemblies.flatMap((a) =>
+    a.tiles.filter(({ tile }) => bowGlass(tile)).map(({ poly }) => poly),
+  );
+  const opticalEdges = [
+    ...interior.exteriorSlopes.filter((e) => e.glass),
+    ...[...interior.exteriorWalls, ...interior.partitions].filter(
+      (e) =>
+        e.type === "window" ||
+        e.type === "wall.glazed" ||
+        e.variant === "glazed",
+    ),
+  ];
+  const protectedInterface = (p: Pt) =>
+    doorGuards.some((g) => {
+      const dx = p[0] - g.centre[0],
+        dy = p[1] - g.centre[1];
+      return (
+        Math.abs(dx * g.along[0] + dy * g.along[1]) <= g.halfSpan &&
+        Math.abs(-dx * g.along[1] + dy * g.along[0]) <= g.halfDepth
+      );
+    }) ||
+    frameGuards.some(
+      (r) =>
+        p[0] >= r[0] - rawPaddingM &&
+        p[0] <= r[2] + rawPaddingM &&
+        p[1] >= r[1] - rawPaddingM &&
+        p[1] <= r[3] + rawPaddingM,
+    ) ||
+    opticalEdges.some((e) => {
+      const dx = e.b[0] - e.a[0],
+        dy = e.b[1] - e.a[1],
+        span = Math.hypot(dx, dy);
+      const u = ((p[0] - e.a[0]) * dx + (p[1] - e.a[1]) * dy) / span;
+      const v = Math.abs(-(p[0] - e.a[0]) * dy + (p[1] - e.a[1]) * dx) / span;
+      return (
+        u >= -rawPaddingM && u <= span + rawPaddingM && v <= 0.25 + rawPaddingM
+      );
+    }) ||
+    opticalGuards.some(
+      (poly) =>
+        insidePolygon(poly, ...p) ||
+        polygonBoundarySample(p, poly).distance <= rawPaddingM,
+    );
+
   const roofObstacles = [
     ...doc.mounts
       .filter((m) => m.attach === "top")
@@ -198,6 +354,52 @@ export function shipVisualLayersR002(
     }
     const deck = G.heightClasses[volume.height].walkable;
     const family = `volume:${volume.id}`;
+    // Three distinct task assemblies, sized by real room footprints. Each is a
+    // joined tray/shoulder/skin cross-section; room walls and sockets do not move.
+    const roofCases: {
+      id: string;
+      bounds: number[];
+      kind: "utility" | "habitation" | "control";
+    }[] = [];
+    if (deck)
+      for (const kind of ["utility", "habitation", "control"] as const) {
+        const eligible = doc.rooms.filter((r) =>
+          kind === "utility"
+            ? r.type === "engineering" || r.type === "workshop"
+            : kind === "control"
+              ? r.type === "bridge"
+              : ["quarters", "lounge", "galley", "cargo", "medbay"].includes(
+                  r.type,
+                ),
+        );
+        eligible.sort(
+          (a, b) =>
+            (b.rect[2] - b.rect[0]) * (b.rect[3] - b.rect[1]) -
+              (a.rect[2] - a.rect[0]) * (a.rect[3] - a.rect[1]) ||
+            a.id.localeCompare(b.id),
+        );
+        const room = eligible.find(
+          (r) =>
+            (r.rect[2] - r.rect[0]) * 16 >= 24 &&
+            (r.rect[3] - r.rect[1]) * 16 >= 24 &&
+            insidePolygon(
+              poly,
+              (r.rect[0] + r.rect[2]) * 8,
+              (r.rect[1] + r.rect[3]) * 8,
+            ),
+        );
+        if (room)
+          roofCases.push({
+            id: room.id,
+            kind,
+            bounds: [
+              Math.max(bx + 5, Math.round(room.rect[0] * 16) + 4),
+              Math.max(by + 5, Math.round(room.rect[1] * 16) + 4),
+              Math.min(bX - 5, Math.round(room.rect[2] * 16) - 4),
+              Math.min(bY - 5, Math.round(room.rect[3] * 16) - 4),
+            ],
+          });
+      }
     const routeCandidates = [
       Math.round(by + (bY - by) * 0.25),
       Math.round(by + (bY - by) * 0.75),
@@ -318,13 +520,9 @@ export function shipVisualLayersR002(
           Math.max(lo + 1, floor),
           family,
         );
-        const floorPhase = mod(
-          x + (profile.offsetCourses && mod(Math.floor(y / 16), 2) ? 16 : 0),
-          32,
-        );
-        if (deck && view === "deck" && floorPhase > 0 && mod(y, 16) > 0)
+        if (deck && view === "deck") {
           column(
-            `${family}:floor-course`,
+            `${family}:floor-field`,
             "floor",
             "secondary",
             x,
@@ -333,42 +531,120 @@ export function shipVisualLayersR002(
             floor,
             family,
           );
-        if (deck && view === "deck" && !tile.bow) {
-          const room = doc.rooms.find(
-            (r) =>
-              world[0] >= r.rect[0] &&
-              world[0] < r.rect[2] &&
-              world[1] >= r.rect[1] &&
-              world[1] < r.rect[3],
-          );
-          const u = mod(x, 32),
-            v = mod(y, 16);
-          const service =
-            room?.type === "engineering" ||
-            (room?.type === "corridor" &&
-              Math.abs(world[1] - (room.rect[1] + room.rect[3]) / 2) < 0.25);
-          if (service && u >= 8 && u < 24 && v >= 3 && v < 13) {
-            column(
-              `${family}:floor-access`,
-              "void",
-              "dark",
-              x,
-              y,
-              floor - 1,
-              floor,
-              family,
+          if (!tile.bow) {
+            const room = doc.rooms.find(
+              (r) =>
+                world[0] >= r.rect[0] &&
+                world[0] < r.rect[2] &&
+                world[1] >= r.rect[1] &&
+                world[1] < r.rect[3],
             );
-            if (u === 8 || u === 23 || v === 3 || v === 12 || mod(x, 4) === 0)
-              column(
-                `${family}:floor-grille`,
-                "service",
-                "metal",
-                x,
-                y,
-                floor - 1,
-                floor,
-                family,
-              );
+            const cover = floorCovers.find(
+              (c) =>
+                x >= c.bounds[0] &&
+                x < c.bounds[2] &&
+                y >= c.bounds[1] &&
+                y < c.bounds[3],
+            );
+            if (cover) {
+              const [a, b, A, B] = cover.bounds;
+              const edge = Math.min(x - a, A - 1 - x, y - b, B - 1 - y);
+              // A clipped cover seat has one-cell recess; two retained keel cells
+              // below it remain continuous support. No visual facet touches contact faces.
+              const corner =
+                Math.min(x - a, A - 1 - x) + Math.min(y - b, B - 1 - y) < 2;
+              if (edge === 0 || corner)
+                column(
+                  `${family}:floor-cover-seat:${cover.room}`,
+                  "void",
+                  "dark",
+                  x,
+                  y,
+                  floor - 1,
+                  floor,
+                  family,
+                );
+              else {
+                column(
+                  `${family}:floor-cover:${cover.room}`,
+                  "floor",
+                  "secondary",
+                  x,
+                  y,
+                  floor - 1,
+                  floor,
+                  family,
+                );
+                if (
+                  cover.kind === "vent" &&
+                  x > a + 3 &&
+                  x < A - 4 &&
+                  y > b + 3 &&
+                  y < B - 4 &&
+                  mod(x - a, 5) < 2
+                )
+                  column(
+                    `${family}:floor-cover-fin:${cover.room}`,
+                    "service",
+                    "metal",
+                    x,
+                    y,
+                    floor - 1,
+                    floor,
+                    family,
+                  );
+                if (
+                  cover.kind === "access" &&
+                  x >= A - 5 &&
+                  x < A - 3 &&
+                  y >= b + 5 &&
+                  y < b + 9
+                )
+                  column(
+                    `${family}:floor-cover-latch:${cover.room}`,
+                    "service",
+                    "metal",
+                    x,
+                    y,
+                    floor - 1,
+                    floor,
+                    family,
+                  );
+              }
+            } else if (room?.type === "corridor") {
+              // Two deliberate circulation seams follow this room's long axis,
+              // rather than bordering every metre of an otherwise calm deck.
+              const horizontal =
+                room.rect[2] - room.rect[0] >= room.rect[3] - room.rect[1];
+              const q = horizontal ? y : x,
+                centre = Math.round(
+                  ((horizontal
+                    ? room.rect[1] + room.rect[3]
+                    : room.rect[0] + room.rect[2]) /
+                    2) *
+                    16,
+                );
+              if (
+                Math.abs(q - centre) === 5 &&
+                !approaches.some(
+                  (a) =>
+                    world[0] >= a.rect[0] &&
+                    world[0] <= a.rect[2] &&
+                    world[1] >= a.rect[1] &&
+                    world[1] <= a.rect[3],
+                )
+              )
+                column(
+                  `${family}:floor-circulation-seam`,
+                  "void",
+                  "dark",
+                  x,
+                  y,
+                  floor - 1,
+                  floor,
+                  family,
+                );
+            }
           }
         }
         // Three visible depth planes, backed by the same continuous sampled core.
@@ -521,7 +797,7 @@ export function shipVisualLayersR002(
                 z1,
                 family,
               );
-            if (distance < 1)
+            if (distance < 1 && !shellNormal)
               for (const [a, b] of [
                 [z0, z0 + 2],
                 [z1 - 2, z1],
@@ -582,7 +858,7 @@ export function shipVisualLayersR002(
                 z1,
                 family,
               );
-            if (distance < 1)
+            if (distance < 1 && !shellNormal)
               for (const [a, b] of [
                 [z0, z0 + 2],
                 [z1 - 2, z1],
@@ -681,7 +957,10 @@ export function shipVisualLayersR002(
                 top - 3,
                 family,
               );
-              if (shellNormal || (phase > 1 && phase < profile.course - 1))
+              if (
+                boundary.edgeT * boundary.edgeLength > 2 &&
+                (1 - boundary.edgeT) * boundary.edgeLength > 2
+              )
                 column(
                   `${family}:inner-lower-panel`,
                   "plate",
@@ -972,17 +1251,18 @@ export function shipVisualLayersR002(
               !marked;
             const joint = Math.round(bx + (bX - bx) * 0.58);
             const foreShoulder = x >= joint;
-            const fieldCourse = mod(
-              Math.floor(x / 32) + (y < (by + bY) / 2 ? 0 : 1),
-              3,
+            const enclosure = roofCases.find((c) =>
+              inRect(p[0], p[1], c.bounds),
             );
-            const fieldTop = marked
-              ? hi
-              : deck
-                ? hi + (fieldCourse === 1 ? 1 : 0)
-                : hi + (foreShoulder ? 1 : 0);
-            const fieldSeam =
-              deck && !marked && mod(x, fieldCourse === 2 ? 64 : 32) === 0;
+            const localX = enclosure
+              ? Math.min(x - enclosure.bounds[0], enclosure.bounds[2] - 1 - x)
+              : Infinity;
+            const localY = enclosure
+              ? Math.min(y - enclosure.bounds[1], enclosure.bounds[3] - 1 - y)
+              : Infinity;
+            const caseEdge = Math.min(localX, localY);
+            const shapedCase =
+              enclosure && localX + localY >= 4 && mountClear && !marked;
             const endInset = fromEnd < 4 ? 2 : 0;
             const shoulder = distance >= 2 + endInset && !serviceBelt;
             column(
@@ -1005,7 +1285,7 @@ export function shipVisualLayersR002(
                 x,
                 y,
                 hi - 3,
-                fieldSeam ? hi - 1 : fieldTop,
+                !deck && foreShoulder ? hi + 1 : hi - 1,
                 family,
               );
               if (
@@ -1023,6 +1303,39 @@ export function shipVisualLayersR002(
                   x,
                   y,
                   hi - 2,
+                  hi + 1,
+                  family,
+                );
+            }
+            if (deck && shoulder && shapedCase) {
+              // Broad clipped returns only at this real assembly boundary. The
+              // raised skin joins its lower pressure tray through two shoulder
+              // courses; the service route remains an actual contained recess.
+              column(
+                `${family}:roof-task-case:${enclosure.id}`,
+                "plate",
+                enclosure.kind === "utility" && caseEdge < 3
+                  ? "trim"
+                  : "primary",
+                x,
+                y,
+                hi - 2,
+                caseEdge < 1 ? hi - 1 : caseEdge < 3 ? hi : hi + 1,
+                family,
+              );
+              if (
+                caseEdge >= 3 &&
+                enclosure.kind === "control" &&
+                x < enclosure.bounds[0] + 7 &&
+                y < enclosure.bounds[1] + 18
+              )
+                column(
+                  `${family}:roof-control-access:${enclosure.id}`,
+                  "plate",
+                  "accent",
+                  x,
+                  y,
+                  hi,
                   hi + 1,
                   family,
                 );
@@ -1188,7 +1501,10 @@ export function shipVisualLayersR002(
             )
               continue;
             const hi = Math.ceil(bowHeights(tile, volume.height, world)[1]);
-            const rim = x < a + 2 || x >= A - 2 || y < b + 2 || y >= B - 2;
+            const edgeX = Math.min(x - a, A - 1 - x),
+              edgeY = Math.min(y - b, B - 1 - y);
+            if (edgeX + edgeY < 3) continue;
+            const rim = edgeX < 2 || edgeY < 2;
             column(
               `${family}:roof-functional-pocket`,
               "void",
@@ -1338,9 +1654,57 @@ export function shipVisualLayersR002(
       for (let y = l.bounds[1]; y < l.bounds[4]; y++)
         for (let x = l.bounds[0]; x < l.bounds[3]; x++)
           roofServiceFootprint.add(`${x},${y}`);
-    // Manufactured perimeter shoulder: a real source cross-section replaces the
-    // one-cell raised cap/sill stack. The core remains continuous inside/below it.
-    // Fine globally sampled steps belong to an intact sloping shoulder, not a rail.
+    // Emitted void names can be buried by later occupied subframes. Only actual
+    // surviving backed wells/function protect an edge from source reconstruction.
+    const beforeBoundary = sampleShipVisualLayers(
+      compactColumns(layers.filter((l) => l.support === family)),
+    );
+    const survivingService = new Set<string>();
+    const serviceColumns = new Map<string, ShipVisualLayer[]>();
+    for (const l of layers.filter(
+      (l) =>
+        l.support === family &&
+        [":roof-protected-channel", ":roof-functional-pocket"].some((s) =>
+          l.id.endsWith(s),
+        ),
+    ))
+      for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+        for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+          const key = `${x},${y}`;
+          serviceColumns.set(key, [...(serviceColumns.get(key) ?? []), l]);
+        }
+    for (const key of roofServiceFootprint) {
+      const [x, y] = key.split(",").map(Number);
+      if (
+        serviceColumns.get(key)?.some((l) => {
+          const bottom = l.bounds[2];
+          const open =
+            !beforeBoundary.has(visualCellKey(x, y, bottom)) &&
+            !beforeBoundary.has(visualCellKey(x, y, bottom + 1));
+          const functionPresent = [bottom, bottom + 1, bottom + 2].some(
+            (z) =>
+              beforeBoundary.get(visualCellKey(x, y, z))?.role === "service",
+          );
+          // A local pocket may overlap the existing one-cell-deeper service
+          // route. Check its actual floor, not the nominal overlay's bottom.
+          const sealedSupport = [bottom - 1, bottom - 2].some((z) => {
+            const c = beforeBoundary.get(visualCellKey(x, y, z));
+            if (!c || !["core", "frame", "roof", "plate"].includes(c.role))
+              return false;
+            const topCore = c.role === "core" ? z : z - 1;
+            return [topCore, topCore - 1].every(
+              (q) =>
+                beforeBoundary.get(visualCellKey(x, y, q))?.role === "core",
+            );
+          });
+          return (open && sealedSupport) || functionPresent;
+        })
+      )
+        survivingService.add(key);
+    }
+    // R13 reconstructs the actual old exposed owners, instead of dressing another
+    // sloping row over cassette-rim/subframe/pressure-tray. Tall and shallow sections
+    // are distinct; the nonwalkable five-cell tray never inherits the seven-cell gate.
     for (let y = by; y < bY; y++)
       for (let x = bx; x < bX; x++) {
         const p: Pt = [x + 0.5, y + 0.5];
@@ -1350,15 +1714,14 @@ export function shipVisualLayersR002(
         )
           continue;
         const boundary = polygonBoundarySample(p, poly);
-        if (boundary.distance >= 4 || roofServiceFootprint.has(`${x},${y}`))
-          continue;
+        if (boundary.distance >= 4) continue;
         const world: Pt = [p[0] / 16, p[1] / 16];
         const tile = tileCells
           .get(`${Math.floor(world[0])},${Math.floor(world[1])}`)
           ?.find((t) => insidePolygon(t.poly, ...world))?.tile;
-        if (!tile) continue;
-        const [rawLo, rawHi] = bowHeights(tile, volume.height, world);
-        const lo = Math.floor(rawLo),
+        if (!tile || bowGlass(tile)) continue;
+        const [rawLo, rawHi] = bowHeights(tile, volume.height, world),
+          lo = Math.floor(rawLo),
           hi = tile.bow ? Math.floor(rawHi) : Math.ceil(rawHi);
         const floor = tile.bow
           ? lo + G.bowProfiles.shellThicknessTexels[volume.height][0]
@@ -1367,134 +1730,217 @@ export function shipVisualLayersR002(
             : lo + 2;
         const top =
           view === "deck" && deck ? Math.min(hi, G.deck.shellCutTexels) : hi;
-        if (top - floor < 7) continue;
-        const slope = tileRoofCharts.get(tile);
-        // Cutaway caps are level; an intact flight roof can retain its analytic pitch.
-        const dx = view === "deck" && deck && top < hi ? 0 : (slope?.dx ?? 0);
-        const dy = view === "deck" && deck && top < hi ? 0 : (slope?.dy ?? 0);
         const endDistance =
           Math.min(boundary.edgeT, 1 - boundary.edgeT) * boundary.edgeLength;
-        const radialDrop = 4 - boundary.distance;
-        const endDrop = Math.max(0, 4 - endDistance * 0.5);
-        const shapedEnd = endDrop > radialDrop;
         const a = poly[boundary.edgeIndex],
           b = poly[(boundary.edgeIndex + 1) % poly.length];
-        const direction = boundary.edgeT < 0.5 ? 1 : -1;
-        // True assembly ends taper over eight cells. They own a different plane
-        // from the radial shoulder, so neither shading nor support crosses the join.
-        const nx =
-          (shapedEnd
-            ? (-(b[0] - a[0]) / boundary.edgeLength) * 0.5 * direction
-            : boundary.normalHint[0]) - dx;
-        const ny =
-          (shapedEnd
-            ? (-(b[1] - a[1]) / boundary.edgeLength) * 0.5 * direction
-            : boundary.normalHint[1]) - dy;
-        const length = Math.hypot(nx, ny, 1);
-        const id = `${family}:shoulder:${boundary.edgeIndex}:${shapedEnd ? direction : 0}:${nx.toFixed(6)}:${ny.toFixed(6)}`;
-        let normal = analyticCharts.get(id);
-        if (!normal) {
-          normal = [nx / length, ny / length, 1 / length];
-          analyticCharts.set(id, normal);
-        }
-        let sideFaces = 0;
-        // Only the original polygon exterior belongs to this XY plane. Apertures,
-        // actual segment ends and shaped end returns remain hard; later damage cannot add bits.
-        if (!shapedEnd && endDistance >= 1)
-          for (let axis = 0; axis < 2; axis++)
-            for (const side of [-1, 1]) {
-              const n: [number, number] = [...p];
-              n[axis] += side;
-              if (
-                boundary.normalHint[axis] * side > 0 &&
-                !insidePolygon(poly, ...n)
-              )
-                sideFaces |= 1 << (axis * 2 + (side > 0 ? 1 : 0));
-            }
-        sidePlane = sideFaces
-          ? {
-              id: `${family}:side:${boundary.edgeIndex}`,
-              normal: boundary.normalHint,
-              faces: sideFaces,
-            }
-          : undefined;
-        const shoulderTop = top - Math.ceil(Math.max(radialDrop, endDrop));
+        const dx = b[0] - a[0],
+          dy = b[1] - a[1];
+        let out: Pt = [boundary.normalHint[0], boundary.normalHint[1]];
+        if (
+          insidePolygon(
+            poly,
+            p[0] + out[0] * (boundary.distance + 2),
+            p[1] + out[1] * (boundary.distance + 2),
+          )
+        )
+          out = [-out[0], -out[1]];
+        const signed: [number, number, number] = [
+          Math.sign(out[0]),
+          Math.sign(out[1]),
+          0,
+        ];
+        const diagonal =
+          Math.abs(Math.abs(dx) - Math.abs(dy)) < 1e-6 && Math.abs(dx) > 1e-6;
+        const intercept = Math.round(signed[0] * a[0] + signed[1] * a[1]) - 1;
+        const q = signed[0] * p[0] + signed[1] * p[1];
+        // Chebyshev raw rings protect source holes, true segment ends and attached
+        // volume interfaces. Current damage subsequently recomputes exact shared faces.
+        const rawGuard =
+          endDistance < 3 ||
+          holes.some((h) => polygonBoundarySample(p, h).distance <= 2) ||
+          assemblies.some(
+            (other) =>
+              other.volume.id !== volume.id &&
+              [-1, 0, 1].some((X) =>
+                [-1, 0, 1].some((Y) =>
+                  insidePolygon(
+                    other.geometry.outline?.outer ?? [],
+                    world[0] + X / 16,
+                    world[1] + Y / 16,
+                  ),
+                ),
+              ),
+          ) ||
+          protectedInterface(world);
+        const plane = (d: number): ShipVisualLayer["facet"] =>
+          diagonal && !rawGuard && q === d
+            ? { id: `${family}:case:${boundary.edgeIndex}:${d}`, a: signed, d }
+            : undefined;
         shellNormal = undefined;
-        surfaceRole = deck ? "wall" : "hull";
-        // The whole exposed rim, including its outer row, owns this shoulder.
-        // The inboard course joins the full roof/wall; support below remains sealed.
-        column(
-          `${family}:shoulder-cut`,
-          "void",
-          "dark",
-          x,
-          y,
-          shoulderTop,
-          top + 1,
-          family,
-        );
-        roofChart = { id, normal };
-        column(
-          `${family}:molded-shoulder`,
-          "core",
-          // A shaped assembly end occurs at an actual polygon corner, never per step.
-          endDistance < 8 && boundary.distance >= 1 ? "trim" : "secondary",
-          x,
-          y,
-          Math.max(floor + 1, top - 7),
-          shoulderTop,
-          family,
-        );
+        sidePlane = undefined;
         roofChart = undefined;
-        // Replace the actual outer lower sill as well. A four-cell-deep molded
-        // shoe slopes into the retained pressure course; its sheltered seam is
-        // backed inboard, never an opening through the supporting wall/floor.
-        if (boundary.distance < 3) {
-          const rise = Math.max(1, (floor + 2 - lo - 1) / 4);
-          const sillTop = Math.min(
-            floor + 2,
-            lo + 1 + Math.floor(boundary.distance * rise),
-          );
+        surfaceRole = deck && view === "deck" ? "wall" : "hull";
+        facetPlane = undefined;
+        if (survivingService.has(`${x},${y}`)) {
+          // Keep actual well/bank geometry; only its original external pressure
+          // side uses the same manufactured plane. Aperture caps stay axis-hard.
+          const facet = plane(intercept);
+          if (facet)
+            for (let z = lo; z < top; z++) {
+              const c = beforeBoundary.get(visualCellKey(x, y, z));
+              if (
+                !c ||
+                !["core", "frame"].includes(c.role) ||
+                c.slot !== "secondary"
+              )
+                continue;
+              layers.push({
+                id: `${family}:retained-route-pressure-side`,
+                role: c.role,
+                slot: c.slot,
+                bounds: [x, y, z, x + 1, y + 1, z + 1],
+                support: family,
+                surfaceRole: c.surfaceRole,
+                facet,
+              });
+            }
+          continue;
+        }
+        if (!deck) {
+          if (hi - lo < 5) continue;
           column(
-            `${family}:sill-shoulder-cut`,
+            `${family}:shallow-case-clear`,
             "void",
             "dark",
             x,
             y,
-            sillTop,
-            Math.min(top - 4, floor + 4),
+            hi - 3,
+            hi + 2,
             family,
           );
-          const l = Math.hypot(
-            boundary.normalHint[0] * rise,
-            boundary.normalHint[1] * rise,
-            1,
-          );
-          const sid = `${family}:sill-shoulder:${boundary.edgeIndex}:${boundary.normalHint[0].toFixed(6)}:${boundary.normalHint[1].toFixed(6)}:${rise}`;
-          let sn = analyticCharts.get(sid);
-          if (!sn) {
-            sn = [
-              (boundary.normalHint[0] * rise) / l,
-              (boundary.normalHint[1] * rise) / l,
-              1 / l,
-            ];
-            analyticCharts.set(sid, sn);
-          }
-          roofChart = { id: sid, normal: sn };
+          facetPlane = plane(intercept);
           column(
-            `${family}:molded-sill-shoulder`,
+            `${family}:shallow-keel-support`,
             "core",
             "secondary",
             x,
             y,
             lo,
-            sillTop,
+            hi - 3,
             family,
           );
-          roofChart = undefined;
+          column(
+            `${family}:shallow-pressure-tray`,
+            "core",
+            "secondary",
+            x,
+            y,
+            hi - 5,
+            hi - 3,
+            family,
+          );
+          column(
+            `${family}:shallow-neutral-subframe`,
+            "frame",
+            "secondary",
+            x,
+            y,
+            hi - 3,
+            hi - 1,
+            family,
+          );
+          facetPlane = undefined;
+          if (boundary.distance >= 2) {
+            facetPlane = plane(intercept - 3);
+            column(
+              `${family}:shallow-offset-armor`,
+              "plate",
+              "primary",
+              x,
+              y,
+              hi - 1,
+              hi,
+              family,
+            );
+            facetPlane = undefined;
+          }
+          // Local overlap ends are finite manufacturing joints, not a repeated guard.
+          if (endDistance >= 3 && endDistance < 7 && boundary.distance >= 3)
+            column(
+              `${family}:shallow-case-end`,
+              "plate",
+              "primary",
+              x,
+              y,
+              hi - 1,
+              hi + 1,
+              family,
+            );
+        } else if (diagonal && top > floor + 3) {
+          // Old lower sill and exposed pressure backing share the same actual XY
+          // finish plane. The walkable floor/contact course itself remains raw.
+          facetPlane = plane(intercept);
+          column(
+            `${family}:diagonal-lower-support`,
+            "core",
+            "secondary",
+            x,
+            y,
+            lo,
+            Math.max(lo, floor - 1),
+            family,
+          );
+          facetPlane = undefined;
+          column(
+            `${family}:diagonal-contact-course`,
+            "core",
+            "secondary",
+            x,
+            y,
+            floor - 1,
+            floor,
+            family,
+          );
+          column(
+            `${family}:diagonal-case-clear`,
+            "void",
+            "dark",
+            x,
+            y,
+            floor,
+            top + 1,
+            family,
+          );
+          facetPlane = plane(intercept);
+          column(
+            `${family}:diagonal-pressure-case`,
+            "core",
+            "secondary",
+            x,
+            y,
+            floor,
+            top - 1,
+            family,
+          );
+          facetPlane = undefined;
+          if (boundary.distance >= 2) {
+            facetPlane = plane(intercept - 3);
+            column(
+              `${family}:diagonal-inset-lip`,
+              "core",
+              "primary",
+              x,
+              y,
+              top - 1,
+              top,
+              family,
+            );
+            facetPlane = undefined;
+          }
         }
-        sidePlane = undefined;
       }
+    facetPlane = undefined;
   }
   shellNormal = undefined;
   surfaceRole = "wall";
@@ -1610,8 +2056,8 @@ export function shipVisualLayersR002(
             "primary",
             surface(
               side,
-              start + 1,
-              end - 1,
+              start === 0 ? 1 : start,
+              end === span ? end - 1 : end,
               ft + 3,
               Z,
               insetPressureFace ? 1 : 0,
@@ -1970,7 +2416,31 @@ export function shipVisualLayersR002(
           : G.deck.interiorCutTexels + G.deck.floorTopTexels,
       ]);
   }
-  return compactColumns(layers);
+  // Final authored openings can be emitted after the outer case recipe. Keep
+  // their complete XY aperture/frame interface raw at every height; a descriptor
+  // frozen before those voids would otherwise qualify an aperture side as intact.
+  const apertureGuards = layers.filter(
+    (l) =>
+      l.role === "void" &&
+      (l.id.endsWith(":opening") || l.id.endsWith(":glass-aperture")),
+  );
+  return compactColumns(
+    layers.map((l) => {
+      if (
+        !l.facet ||
+        !apertureGuards.some(
+          (g) =>
+            l.bounds[0] < g.bounds[3] + 2 &&
+            l.bounds[3] > g.bounds[0] - 2 &&
+            l.bounds[1] < g.bounds[4] + 2 &&
+            l.bounds[4] > g.bounds[1] - 2,
+        )
+      )
+        return l;
+      const { facet: _facet, ...raw } = l;
+      return raw;
+    }),
+  );
 }
 
 /** Merge adjacent source columns before sampling, preserving volume/layer priority order. */
@@ -1982,7 +2452,7 @@ export function compactColumns(
     const [x, y, z, X, Y, Z] = l.bounds;
     const key =
       X - x === 1 && Y - y === 1
-        ? `${l.id}:${l.role}:${l.slot}:${l.surfaceRole}:${l.support}:${l.normalHint?.join(",")}:${l.normalChart ?? ""}:${l.normalSide ? `${l.normalSide.id}:${l.normalSide.normal.join(",")}:${l.normalSide.faces}` : ""}:${y}:${z}:${Z}`
+        ? `${l.id}:${l.role}:${l.slot}:${l.surfaceRole}:${l.support}:${l.normalHint?.join(",")}:${l.normalChart ?? ""}:${l.normalSide ? `${l.normalSide.id}:${l.normalSide.normal.join(",")}:${l.normalSide.faces}` : ""}${l.facet ? `:facet:${l.facet.id}:${l.facet.a.join(",")}:${l.facet.d}` : ""}:${y}:${z}:${Z}`
         : `unique:${groups.size}`;
     const g = groups.get(key);
     if (g) g.push(l);

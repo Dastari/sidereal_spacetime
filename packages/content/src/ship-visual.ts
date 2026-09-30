@@ -74,6 +74,9 @@ export interface ShipVisualLayer {
   /** Candidate original polygon side plane, independently qualified from an upper chart.
    * Eligible XY bits are authored against the original segment; sampling intersects intact exposure. */
   normalSide?: { id: string; normal: [number, number, number]; faces: number };
+  /** Candidate manufactured boundary, clipped inside each owned lattice cube.
+   * Exactly two signed active axes; no arbitrary slope or multi-plane bevel. */
+  facet?: { id: string; a: [number, number, number]; d: number };
   /** Optional candidate finish ownership; independent of support/layer roles and authority. */
   surfaceRole?: "floor" | "wall" | "roof" | "hull";
 }
@@ -244,6 +247,23 @@ export function validateShipVisualLayers(
         (l.normalSide.faces & ~15) !== 0)
     )
       throw Error("Invalid sampled side ownership");
+    if (
+      l.facet !== undefined &&
+      (!l.facet ||
+        typeof l.facet.id !== "string" ||
+        !l.facet.id.trim() ||
+        l.facet.id.length > 160 ||
+        !Array.isArray(l.facet.a) ||
+        l.facet.a.length !== 3 ||
+        !l.facet.a.every((v) => [-1, 0, 1].includes(v)) ||
+        l.facet.a.filter((v) => v !== 0).length !== 2 ||
+        !Number.isSafeInteger(l.facet.d) ||
+        Math.abs(l.facet.d) > 1000000 ||
+        !["core", "frame", "plate", "roof"].includes(l.role) ||
+        l.surfaceRole === "floor" ||
+        ["glass", "emit_a", "emit_b"].includes(l.slot))
+    )
+      throw Error("Invalid sampled manufactured facet");
     if (
       l.surfaceRole !== undefined &&
       !["floor", "wall", "roof", "hull"].includes(l.surfaceRole)
