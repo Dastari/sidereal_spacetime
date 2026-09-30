@@ -97,7 +97,7 @@
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.6.1",
+    "@sidereal/content": "0.6.2",
     "@sidereal/scripting": "0.1.0"
   }
 }

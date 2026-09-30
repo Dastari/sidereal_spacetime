@@ -188,7 +188,8 @@ export const SPACE_VISTAS: readonly SpaceVista[] = [
     description: "Open space and distant stars, without nebulae.",
     nebulaTint: [0, 0, 0],
     nebulaStrength: 0,
-    dust: 0,
+    // Nearby motion cues are independent of the hidden distant nebula.
+    dust: 0.28,
     seed: 17,
     bodies: [],
   },

@@ -4,12 +4,73 @@ import { Scene } from "@babylonjs/core/scene";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { createSpaceEnvironment, type SpaceBodyState } from "./index";
-import { planetRecipe } from "../../../content/src/environment";
+import { planetRecipe } from "@sidereal/content/environment";
 import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 afterEach(() => {
   vi.restoreAllMocks();
   vi.unstubAllGlobals();
+});
+it("deep space retains three-dimensional flight motion dust while its nebula stays hidden", async () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const camera = new FreeCamera(
+    "flight-motion-camera",
+    new Vector3(0, 150, 0),
+    scene,
+  );
+  camera.setTarget(Vector3.Zero());
+  vi.spyOn(SceneLoader, "ImportMeshAsync").mockResolvedValue({
+    meshes: [CreateBox("source", {}, scene)],
+    particleSystems: [],
+    skeletons: [],
+    animationGroups: [],
+    transformNodes: [],
+    geometries: [],
+    lights: [],
+    spriteManagers: [],
+  });
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => new Response("unavailable", { status: 404 })),
+  );
+  const environment = createSpaceEnvironment(scene);
+  await environment.ready;
+  const options = {
+    id: "deep-space",
+    x: 0,
+    y: 0,
+    dt: 0,
+    enabled: true,
+    reducedMotion: false,
+    dustParallax: true,
+    vx: 120,
+    vy: 0,
+    bodies: [],
+  };
+  environment.update(options);
+  const dust = scene.getMeshByName("volumetric-dust")!;
+  expect(dust.isEnabled()).toBe(true);
+  expect(dust.visibility).toBeGreaterThan(0);
+  expect(dust.metadata.instances).toBeGreaterThan(400);
+  expect(dust.metadata.depthLayers).toHaveLength(3);
+  expect(
+    new Set(dust.metadata.depthLayers.map((l: { height: number }) => l.height))
+      .size,
+  ).toBe(3);
+  expect(dust.metadata.streakRatio).toBeGreaterThan(1);
+  const previous = dust.metadata.snapshotRevision;
+  environment.update({ ...options, x: 0.25 });
+  expect(dust.metadata.snapshotRevision).toBeGreaterThan(previous);
+  environment.update({ ...options, reducedMotion: true });
+  expect(dust.metadata.streakRatio).toBe(1);
+  environment.update({ ...options, enabled: false });
+  expect(dust.isEnabled()).toBe(false);
+  environment.update(options);
+  expect(dust.isEnabled()).toBe(true);
+  environment.dispose();
+  scene.dispose();
+  engine.dispose();
 });
 it("disables out-of-range cached bodies and applies in-place recipe edits on re-entry", async () => {
   const engine = new NullEngine(),
