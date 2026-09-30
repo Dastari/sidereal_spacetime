@@ -84,6 +84,37 @@ describe("versioned reference recipes", () => {
             ).toBe(false);
         }
     }
+    // Attachment occlusion is resolved in assembled space, not a modulo recipe.
+    expect(
+      result.layers.some(
+        (l) => l.support === "volume:wing-s" && l.id.endsWith(":vent-recess"),
+      ),
+    ).toBe(true);
+    for (const l of result.layers.filter(
+      (l) => l.support === "volume:hull" && l.id.endsWith(":vent-recess"),
+    )) {
+      const [x, y, , , ,] = l.bounds;
+      // Both Wren wings cover the parent's lower side wall over the aft five metres.
+      if (x < 80) expect(y).toBeGreaterThan(3);
+    }
+    const roof = compileShipVisual(
+      doc,
+      catalog,
+      "flight",
+      "federation",
+      undefined,
+      "r002",
+    );
+    expect(
+      roof.layers
+        .filter((l) => l.id.endsWith(":roof"))
+        .every((l) => l.slot === "secondary"),
+    ).toBe(true);
+    const wells = roof.layers.filter((l) =>
+      l.id.endsWith(":roof-cassette-well"),
+    );
+    expect(wells.length).toBeGreaterThan(0);
+    expect(wells.every((l) => l.bounds[5] - l.bounds[2] === 3)).toBe(true);
     expect(result.cells.size).toBeGreaterThan(10000);
     expect(JSON.stringify(doc)).toBe(before);
     expect(() =>

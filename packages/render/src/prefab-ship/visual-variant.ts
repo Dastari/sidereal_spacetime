@@ -31,6 +31,7 @@ export interface VisualVariantSelection {
 }
 export interface VerifiedVisualVariant {
   manifest: ShipVisualManifest;
+  manifestSha256: string;
   profile: ShipVisualProfileId;
   components: Map<string, GlbGeometry>;
   objects: Map<string, GlbGeometry>;
@@ -69,6 +70,7 @@ export async function resolveVisualVariant(
   dressed: DressedShip,
   selection: VisualVariantSelection,
 ): Promise<VerifiedVisualVariant> {
+  selection = { ...selection }; // Retain the exact verified input across asynchronous preparation.
   if (
     !/^\/assets\/ship-visual\/r\d{3}\/manifest.json$/.test(selection.url) ||
     !/^([a-f0-9]{64})$/.test(selection.sha256) ||
@@ -232,6 +234,7 @@ export async function resolveVisualVariant(
       throw Error("Scene disposed before candidate activation");
     return {
       manifest,
+      manifestSha256: selection.sha256,
       profile: profileFor(doc),
       components,
       objects,

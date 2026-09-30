@@ -1,19 +1,25 @@
 /** Greedy exposed-face meshing in global ship-local cells. UV phase survives cuts and rebases. */
 import type { ShipKitSlot } from "@sidereal/content/ship-kit";
-import type { ShipVisualRole } from "@sidereal/content/ship-visual";
+import type {
+  ShipVisualRole,
+  ShipVisualLayer,
+} from "@sidereal/content/ship-visual";
 import {
   visualCellKey,
   type VisualVolume,
 } from "@sidereal/sim/ship-visual-compiler";
+import { sampledCornerLight } from "./sampled-ao";
 
 export interface SampledGeometry {
   surfaceCharts: string[];
   slot: ShipKitSlot;
   role: ShipVisualRole;
+  surfaceRole?: ShipVisualLayer["surfaceRole"];
   positions: Float32Array;
   normals: Float32Array;
   uvs: Float32Array;
   indices: Uint32Array;
+  colors?: Float32Array;
   triangles: number;
 }
 interface Face {
@@ -21,6 +27,7 @@ interface Face {
   v: number;
   family: string;
   normalHint?: readonly [number, number, number];
+  lights?: number[];
 }
 interface Plane {
   axis: number;
@@ -28,9 +35,13 @@ interface Plane {
   at: number;
   slot: ShipKitSlot;
   role: ShipVisualRole;
+  surfaceRole?: ShipVisualLayer["surfaceRole"];
   faces: Map<string, Face>;
 }
-export function meshSampledStructure(cells: VisualVolume): SampledGeometry[] {
+export function meshSampledStructure(
+  cells: VisualVolume,
+  options: { ambientOcclusion?: boolean } = {},
+): SampledGeometry[] {
   const planes = new Map<string, Plane>();
   for (const c of cells.values())
     for (let axis = 0; axis < 3; axis++)
@@ -42,7 +53,7 @@ export function meshSampledStructure(cells: VisualVolume): SampledGeometry[] {
         const at = p[axis] + (side > 0 ? 1 : 0),
           u = (axis + 1) % 3,
           v = (axis + 2) % 3;
-        const key = `${axis}:${side}:${at}:${c.slot}:${c.role}`;
+        const key = `${axis}:${side}:${at}:${c.slot}:${c.role}:${c.surfaceRole ?? ""}`;
         let plane = planes.get(key);
         if (!plane)
           planes.set(
@@ -53,6 +64,7 @@ export function meshSampledStructure(cells: VisualVolume): SampledGeometry[] {
               at,
               slot: c.slot,
               role: c.role,
+              ...(c.surfaceRole ? { surfaceRole: c.surfaceRole } : {}),
               faces: new Map(),
             }),
           );
@@ -61,6 +73,29 @@ export function meshSampledStructure(cells: VisualVolume): SampledGeometry[] {
           v: p[v],
           family: c.family,
           normalHint: c.normalHint,
+          ...(options.ambientOcclusion
+            ? {
+                lights: [
+                  [0, 0],
+                  [1, 0],
+                  [1, 1],
+                  [0, 1],
+                ].map(([u, v]) =>
+                  c.role === "frame" ||
+                  c.normalHint !== undefined ||
+                  ["emit_a", "emit_b", "glass"].includes(c.slot)
+                    ? 1
+                    : sampledCornerLight(
+                        cells,
+                        [c.x, c.y, c.z],
+                        axis,
+                        side,
+                        u as 0 | 1,
+                        v as 0 | 1,
+                      ),
+                ),
+              }
+            : {}),
         });
       }
   const groups = new Map<
@@ -69,14 +104,16 @@ export function meshSampledStructure(cells: VisualVolume): SampledGeometry[] {
       charts: Set<string>;
       slot: ShipKitSlot;
       role: ShipVisualRole;
+      surfaceRole?: ShipVisualLayer["surfaceRole"];
       positions: number[];
       normals: number[];
       uvs: number[];
       indices: number[];
+      colors?: number[];
     }
   >();
   for (const plane of planes.values()) {
-    const key = `${plane.slot}:${plane.role}`;
+    const key = `${plane.slot}:${plane.role}:${plane.surfaceRole ?? ""}`;
     let g = groups.get(key);
     if (!g)
       groups.set(
@@ -85,10 +122,12 @@ export function meshSampledStructure(cells: VisualVolume): SampledGeometry[] {
           charts: new Set(),
           slot: plane.slot,
           role: plane.role,
+          ...(plane.surfaceRole ? { surfaceRole: plane.surfaceRole } : {}),
           positions: [],
           normals: [],
           uvs: [],
           indices: [],
+          ...(options.ambientOcclusion ? { colors: [] } : {}),
         }),
       );
     g.charts.add(`axis:${plane.axis}:${plane.side}`);
@@ -100,11 +139,20 @@ export function meshSampledStructure(cells: VisualVolume): SampledGeometry[] {
       const same = (u: number, v: number) =>
         plane.faces.get(`${u},${v}`)?.family === f.family &&
         plane.faces.get(`${u},${v}`)?.normalHint?.join(",") ===
-          f.normalHint?.join(",");
+          f.normalHint?.join(",") &&
+        plane.faces.get(`${u},${v}`)?.lights?.join(",") === f.lights?.join(",");
       let width = 1;
-      while (same(f.u + width, f.v)) width++;
+      // A straight contact gradient is invariant along the seam. Merge that axis
+      // while retaining its two endpoint brightnesses; asymmetric corners stay local.
+      const mergeU =
+        !f.lights ||
+        (f.lights[0] === f.lights[1] && f.lights[3] === f.lights[2]);
+      const mergeV =
+        !f.lights ||
+        (f.lights[0] === f.lights[3] && f.lights[1] === f.lights[2]);
+      while (mergeU && same(f.u + width, f.v)) width++;
       let height = 1;
-      next: while (true) {
+      next: while (mergeV) {
         for (let u = 0; u < width; u++)
           if (!same(f.u + u, f.v + height)) break next;
         height++;
@@ -129,7 +177,7 @@ export function meshSampledStructure(cells: VisualVolume): SampledGeometry[] {
         [f.u + width, f.v + height],
         [f.u, f.v + height],
       ];
-      for (const [u, v] of corners) {
+      for (const [corner, [u, v]] of corners.entries()) {
         const p = [0, 0, 0];
         p[plane.axis] = plane.at;
         p[U] = u;
@@ -137,20 +185,36 @@ export function meshSampledStructure(cells: VisualVolume): SampledGeometry[] {
         g.positions.push(p[0] / 16, p[1] / 16, p[2] / 16);
         g.normals.push(...normal);
         g.uvs.push(u / 16, (plane.side * v) / 16);
+        if (g.colors) {
+          const light = f.lights![corner];
+          g.colors.push(light, light, light, 1);
+        }
       }
       // Geometry stays in the global prefab frame; ship-view applies its origin frame once.
-      if (plane.side > 0)
-        g.indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
-      else g.indices.push(base, base + 2, base + 1, base, base + 3, base + 2);
+      const brighterOtherDiagonal =
+        f.lights && f.lights[0] + f.lights[2] < f.lights[1] + f.lights[3];
+      const triangles = brighterOtherDiagonal
+        ? [0, 1, 3, 1, 2, 3]
+        : [0, 1, 2, 0, 2, 3];
+      for (let t = 0; t < triangles.length; t += 3) {
+        const a = base + triangles[t],
+          b = base + triangles[t + 1],
+          c = base + triangles[t + 2];
+        g.indices.push(a, plane.side > 0 ? b : c, plane.side > 0 ? c : b);
+      }
     }
   }
-  return [...groups.values()].map((g) => ({
-    ...g,
-    surfaceCharts: [...g.charts],
-    positions: Float32Array.from(g.positions),
-    normals: Float32Array.from(g.normals),
-    uvs: Float32Array.from(g.uvs),
-    indices: Uint32Array.from(g.indices),
-    triangles: g.indices.length / 3,
-  }));
+  return [...groups.values()].map((g) => {
+    const { colors, ...geometry } = g;
+    return {
+      ...geometry,
+      surfaceCharts: [...g.charts],
+      positions: Float32Array.from(g.positions),
+      normals: Float32Array.from(g.normals),
+      uvs: Float32Array.from(g.uvs),
+      indices: Uint32Array.from(g.indices),
+      triangles: g.indices.length / 3,
+      ...(colors ? { colors: Float32Array.from(colors) } : {}),
+    };
+  });
 }

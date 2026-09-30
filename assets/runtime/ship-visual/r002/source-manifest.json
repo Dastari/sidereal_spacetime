@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "94bc5febedd6d10a8e36924ce1fab4ac0a1700f910702f7a0dac5a5c13f49fd3",
+  "compilerSha256": "517956bad12538a672f175ecf305a479c230d90d4437923c046162a36a0a755d",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -8,7 +8,7 @@
     },
     {
       "path": "packages/content/src/ship-visual.ts",
-      "sha256": "b3738b3ca5e50652b926cb55768b39700e8b615d4f1fe0de2fa5749939c9e41f"
+      "sha256": "40cebd3d2d1a603c5ec596d6ac318c26d4873281af0aa11aa1441fdc9f20a608"
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
@@ -16,19 +16,23 @@
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "438dfe357fcc4067e03e19984217539bef7a6583acfc4e178d56ebd6b0c42a65"
+      "sha256": "bf46ff470fad7622fd3988da982dddc8993d4ee6b5df59bfc1b1a414e505e03e"
     },
     {
       "path": "packages/sim/src/ship-visual-sampler.ts",
-      "sha256": "8f29bfec8fd9a9133e58ab25ae46c12d3a4fe33c7a3603108e161cb58769b8b7"
+      "sha256": "f738f94be8f74a3973ffec7379a60397d4b09627d71484099bd1eb45b4b66383"
     },
     {
       "path": "packages/sim/src/ship-visual-compiler.ts",
-      "sha256": "c17801e7ee1f52aa76b219de7bd1f9683465788ab9956c44b6f4f5370da4d0ae"
+      "sha256": "732ed7a1afb39af94987b101b0db378ccab8b74448742d3fa49a3845e7286e1b"
     },
     {
       "path": "packages/render/src/prefab-ship/sampled-structure.ts",
-      "sha256": "89cf02c81a6818d5b9e7885b730b9510a6d614e5c55ea028714d5a8edbd3fe2d"
+      "sha256": "5ee12c60cce9cab7ce7f5a29ca68e5092c6745890d1eda77b81709c98a96d044"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/sampled-ao.ts",
+      "sha256": "2ce1be65fd4158072fe1e889504ee48a82179931081a0e174639bd01379c46f7"
     },
     {
       "path": "scripts/art_library/ship_reference_r002_art.py",
@@ -40,7 +44,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/reference-finish.ts",
-      "sha256": "d7570eabcdbb198a1e5223d6cc93e5cced3b27ea39c0a9b6fd9b3032db7a0f45"
+      "sha256": "276807dc7688cc4bee655954a80c3248170e6ad4f46e1a76ce2ec7487f6e1488"
     },
     {
       "path": "packages/render/src/prefab-ship/reference-instruments.ts",

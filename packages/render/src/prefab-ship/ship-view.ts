@@ -191,6 +191,8 @@ export interface PrefabShipViewOptions {
 export interface PrefabShipMetrics {
   /** Selected immutable proposal revision; absent is the legacy renderer. */
   visualRevision?: string;
+  visualManifestSha256?: string;
+  visualCompilerSha256?: string;
   /** Engine draw calls of the last rendered frame (whole scene, including post/glow passes). */
   drawCalls: number;
   /** Enabled thin instances (kit pieces and component GLB primitives). */
@@ -312,7 +314,7 @@ function makeMesh(
   if (g.uvs) vd.uvs = Float32Array.from(g.uvs);
   if (g.uvs2) vd.uvs2 = Float32Array.from(g.uvs2);
   if (g.tangents) vd.tangents = Float32Array.from(g.tangents);
-  if (colours) vd.colors = Float32Array.from(colours);
+  if (colours || g.colors) vd.colors = Float32Array.from(colours ?? g.colors!);
   vd.applyToMesh(mesh, false);
   // Prefab geometry (glTF GLBs, box-mesher polygons, merged batches) is wound counter-clockwise
   // seen from outside. A new Mesh in a right-handed scene defaults to clockwise front faces
@@ -466,6 +468,7 @@ export async function createPrefabShipView(
               options.visualReviewRemovedCells,
               variant!.manifest.revision,
             ).cells,
+            { ambientOcclusion: variant!.manifest.revision === "r002" },
           ),
         );
       } catch (error) {
@@ -701,6 +704,7 @@ export async function createPrefabShipView(
           uvs: c.group.uvs,
           uvs2: c.group.uvs2,
           tangents: c.group.tangents,
+          colors: c.group.colors,
           indices: c.group.indices,
           first: c.first,
           count: c.count,
@@ -918,13 +922,14 @@ export async function createPrefabShipView(
       for (const s of results[index]) {
         const tag = tags[index];
         const role: MeshRole =
-          s.role === "floor"
+          s.surfaceRole ??
+          (s.role === "floor"
             ? "floor"
             : s.role === "roof"
               ? "roof"
               : s.role === "doorframe"
                 ? "wall"
-                : "hull";
+                : "hull");
         const mesh = makeMesh(
           scene,
           `${out.dressed.id}:sampled:${tag}:${s.slot}:${s.role}`,
@@ -1679,7 +1684,13 @@ export async function createPrefabShipView(
           triangles += 2;
         }
       return {
-        visualRevision: b.variant?.manifest.revision,
+        ...(b.variant
+          ? {
+              visualRevision: b.variant.manifest.revision,
+              visualManifestSha256: b.variant.manifestSha256,
+              visualCompilerSha256: b.variant.manifest.compilerSha256,
+            }
+          : {}),
         drawCalls,
         instances,
         triangles,

@@ -139,6 +139,7 @@ export function meshGeometry(mesh: Mesh) {
     uvs: mesh.getVerticesData(VertexBuffer.UVKind) ?? undefined,
     uvs2: mesh.getVerticesData(VertexBuffer.UV2Kind) ?? undefined,
     tangents: mesh.getVerticesData(VertexBuffer.TangentKind) ?? undefined,
+    colors: mesh.getVerticesData(VertexBuffer.ColorKind) ?? undefined,
   };
 }
 

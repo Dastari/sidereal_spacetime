@@ -2,6 +2,7 @@
 import { readFileSync, writeFileSync, mkdirSync, readdirSync } from "node:fs";
 import { resolve } from "node:path";
 import { createHash } from "node:crypto";
+import { format } from "prettier";
 import { SHIP_VISUAL_FIXTURES } from "@sidereal/content/ship-visual-fixture";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { SHIP_KIT_SLOTS } from "@sidereal/content/ship-kit";
@@ -27,6 +28,7 @@ const sources = [
   "packages/sim/src/ship-visual-sampler.ts",
   "packages/sim/src/ship-visual-compiler.ts",
   "packages/render/src/prefab-ship/sampled-structure.ts",
+  "packages/render/src/prefab-ship/sampled-ao.ts",
   "scripts/art_library/ship_reference_r002_art.py",
   "scripts/art_library/ship_reference_r002_maps.py",
   "packages/render/src/prefab-ship/reference-finish.ts",
@@ -147,7 +149,10 @@ writeFileSync(
 );
 writeFileSync(
   resolve(root, "scripts/art_library/ship_reference_r002_revision.ts"),
-  `/** Generated exact proposal pin; no default renderer or live asset selection. */\nexport const SHIP_REFERENCE_VISUAL_R002 = ${JSON.stringify({ url: "/assets/ship-visual/r002/manifest.json", sha256: hash(json), compilerSha256 }, null, 2)} as const;\n`,
+  await format(
+    `/** Generated exact proposal pin; no default renderer or live asset selection. */\nexport const SHIP_REFERENCE_VISUAL_R002 = ${JSON.stringify({ url: "/assets/ship-visual/r002/manifest.json", sha256: hash(json), compilerSha256 }, null, 2)} as const;\n`,
+    { parser: "typescript" },
+  ),
 );
 writeFileSync(
   resolve(root, "assets/runtime/ship-visual/r002/source-manifest.json"),

@@ -46,7 +46,7 @@ export function visualVolumeSha256(cells: VisualVolume): string {
       .sort((a, b) => a.z - b.z || a.y - b.y || a.x - b.x)
       .map(
         (c) =>
-          `${c.x},${c.y},${c.z}:${c.role}:${c.slot}:${c.family}:${c.normalHint?.join(",") ?? ""}`,
+          `${c.x},${c.y},${c.z}:${c.role}:${c.slot}:${c.family}:${c.normalHint?.join(",") ?? ""}${c.surfaceRole ? `:surface:${c.surfaceRole}` : ""}`,
       )
       .join("\n"),
   );

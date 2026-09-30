@@ -3,6 +3,8 @@ export interface SurfaceChannels {
   uvs?: ArrayLike<number>;
   uvs2?: ArrayLike<number>;
   tangents?: ArrayLike<number>;
+  /** Optional ordinary-lit RGBA multiplier; absent authored detail remains neutral white. */
+  colors?: ArrayLike<number>;
   /** Sticky false after any source in a legacy batch lacks the channel. */
   uvsComplete?: boolean;
   uvs2Complete?: boolean;
@@ -17,6 +19,7 @@ export function validateSurfaceChannels(
     ["uvs", 2],
     ["uvs2", 2],
     ["tangents", 4],
+    ["colors", 4],
   ] as const) {
     const values = channels[name];
     if (!values) continue;
@@ -39,6 +42,7 @@ export interface MutableSurfaceChannels {
   uvs?: number[];
   uvs2?: number[];
   tangents?: number[];
+  colors?: number[];
   uvsComplete?: boolean;
   uvs2Complete?: boolean;
   tangentsComplete?: boolean;
@@ -53,6 +57,14 @@ export function appendSurfaceChannels(
   vertices: number,
 ): void {
   validateSurfaceChannels(source, vertices);
+  if (source.colors || target.colors) {
+    const output =
+      target.colors ?? (target.colors = Array(previousVertices * 4).fill(1));
+    if (source.colors)
+      for (let i = 0; i < source.colors.length; i++)
+        output.push(source.colors[i]);
+    else for (let i = 0; i < vertices * 4; i++) output.push(1);
+  }
   for (const [name, flag] of [
     ["uvs", "uvsComplete"],
     ["uvs2", "uvs2Complete"],

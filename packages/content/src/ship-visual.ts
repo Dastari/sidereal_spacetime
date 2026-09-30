@@ -69,6 +69,8 @@ export interface ShipVisualLayer {
   support?: string;
   /** Presentation shading on sampled sloped shell faces; silhouette/cell occupancy stays unchanged. */
   normalHint?: [number, number, number];
+  /** Optional candidate finish ownership; independent of support/layer roles and authority. */
+  surfaceRole?: "floor" | "wall" | "roof" | "hull";
 }
 export interface ShipVisualAsset {
   /** Authored part frame and measured glTF bounds; retained independently of gameplay envelopes. */
@@ -206,5 +208,10 @@ export function validateShipVisualLayers(
         Math.abs(Math.hypot(...l.normalHint) - 1) > 0.001)
     )
       throw Error("Invalid sampled presentation normal");
+    if (
+      l.surfaceRole !== undefined &&
+      !["floor", "wall", "roof", "hull"].includes(l.surfaceRole)
+    )
+      throw Error("Invalid sampled surface ownership");
   }
 }

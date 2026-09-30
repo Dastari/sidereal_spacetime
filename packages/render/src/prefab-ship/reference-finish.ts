@@ -19,15 +19,15 @@ export interface ReferenceFinishSelection {
 const PIGMENTS: Partial<
   Record<ShipKitSlot, readonly [number, number, number]>
 > = {
-  primary: [0.44, 0.445, 0.46],
-  secondary: [0.028, 0.03, 0.042],
-  trim: [0.055, 0.058, 0.078],
+  primary: [0.46, 0.445, 0.42],
+  secondary: [0.035, 0.033, 0.031],
+  trim: [0.09, 0.088, 0.082],
   accent: [0.2, 0.025, 0.04],
 };
 const FLOOR: Partial<Record<ShipKitSlot, readonly [number, number, number]>> = {
-  primary: [0.21, 0.22, 0.24],
-  secondary: [0.15, 0.16, 0.185],
-  trim: [0.24, 0.25, 0.27],
+  primary: [0.2, 0.195, 0.185],
+  secondary: [0.075, 0.073, 0.068],
+  trim: [0.24, 0.235, 0.22],
 };
 const pools = new WeakMap<Scene, Map<string, PBRMaterial>>();
 
@@ -46,7 +46,7 @@ export function referenceSurfaceMaterial(
       : selection.role === "floor"
         ? FLOOR[selection.slot]
         : selection.role === "wall" && selection.slot === "primary"
-          ? ([0.36, 0.37, 0.39] as const)
+          ? ([0.4, 0.39, 0.365] as const)
           : PIGMENTS[selection.slot];
   // Other candidate factions retain their pigments but carry the selection through theme replay.
   // Only these finite pigment/textile slots need an owned wrapper; optics/lights/metals stay shared.
@@ -63,11 +63,19 @@ export function referenceSurfaceMaterial(
       pools.delete(scene);
     });
   }
-  const key = `${base.uniqueId}:${selection.profile}:${selection.role}:${selection.slot}:${fabric}`;
+  // These roles have identical candidate pigments. Share their wrappers and material batch keys;
+  // each mesh retains its structural/equipment role independently of this pigment selection.
+  const pigmentRole =
+    selection.role === "floor"
+      ? "floor"
+      : selection.role === "wall" && selection.slot === "primary"
+        ? "wall"
+        : "general";
+  const key = `${base.uniqueId}:${selection.profile}:${pigmentRole}:${selection.slot}:${fabric}`;
   const cached = pool.get(key);
   if (cached) return cached;
   const material = base.clone(
-    `reference-r002:${base.name}:${selection.role}:${selection.profile}:${fabric ? "fabric" : "plastic"}`,
+    `reference-r002:${base.name}:${pigmentRole}:${selection.profile}:${fabric ? "fabric" : "plastic"}`,
   )!;
   // HDRCubeTexture.clone loses prefilter-on-load state. Retain the original studio resource;
   // dispose the transient clone so repeated ships do not retain an unused environment texture.
@@ -81,7 +89,7 @@ export function referenceSurfaceMaterial(
   material.metadata = {
     ...base.metadata,
     ...material.metadata,
-    shipReferenceFinish: Object.freeze({ ...selection }),
+    shipReferenceFinish: Object.freeze({ ...selection, role: pigmentRole }),
   };
   pool.set(key, material);
   return material;

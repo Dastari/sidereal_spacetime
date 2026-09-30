@@ -14,6 +14,7 @@ export interface VisualCell {
   slot: ShipKitSlot;
   family: string;
   normalHint?: readonly [number, number, number];
+  surfaceRole?: ShipVisualLayer["surfaceRole"];
 }
 export type VisualVolume = Map<string, VisualCell>;
 export const visualCellKey = (x: number, y: number, z: number): string =>
@@ -98,6 +99,7 @@ export function sampleShipVisualLayers(
               slot: l.slot,
               family: l.support ?? l.id,
               ...(l.normalHint ? { normalHint: l.normalHint } : {}),
+              ...(l.surfaceRole ? { surfaceRole: l.surfaceRole } : {}),
             });
           if (cells.size > maxCells) throw Error("Visual volume exceeds limit");
         }

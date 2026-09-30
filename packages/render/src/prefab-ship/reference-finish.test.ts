@@ -74,6 +74,16 @@ describe("reference candidate pigment isolation", () => {
     const candidate = referenceSurfaceMaterial(base, selection);
     expect(candidate).not.toBe(base);
     expect(referenceSurfaceMaterial(base, selection)).toBe(candidate);
+    for (const role of ["equipment", "roof", "object"]) {
+      expect(referenceSurfaceMaterial(base, { ...selection, role })).toBe(
+        candidate,
+      );
+    }
+    const wall = referenceSurfaceMaterial(base, { ...selection, role: "wall" });
+    expect(wall).not.toBe(candidate);
+    expect(wall.albedoColor.asArray()).not.toEqual(
+      candidate.albedoColor.asArray(),
+    );
     expect(base.albedoColor.asArray()).toEqual([0.6, 0.6, 0.63]);
     expect(candidate.albedoColor.asArray()).not.toEqual(
       base.albedoColor.asArray(),

@@ -31,6 +31,7 @@ export function shipVisualLayersR002(
 ): ShipVisualLayer[] {
   const profile = SHIP_VISUAL_PROFILES_R002[profileId],
     layers: ShipVisualLayer[] = [];
+  let surfaceRole: NonNullable<ShipVisualLayer["surfaceRole"]> = "hull";
   const box = (
     id: string,
     role: ShipVisualLayer["role"],
@@ -40,7 +41,7 @@ export function shipVisualLayersR002(
   ) => {
     const q = b.map(Math.round) as ShipVisualLayer["bounds"];
     if (q.some((n, i) => i < 3 && n >= q[i + 3])) return;
-    layers.push({ id, role, slot, bounds: q, support });
+    layers.push({ id, role, slot, bounds: q, support, surfaceRole });
   };
   let shellNormal: [number, number, number] | undefined;
   const column = (
@@ -63,6 +64,37 @@ export function shipVisualLayersR002(
       layers[layers.length - 1].normalHint = shellNormal;
   };
   const interior = deriveInterior(doc, 0, catalog);
+  const assemblies = doc.volumes.map((volume) => ({
+    volume,
+    geometry: volumeGeometry(volume),
+    tiles: volume.tiles.map((tile) => ({
+      tile,
+      poly: placedTilePolygon(tile),
+    })),
+  }));
+  // Rich bays belong to exposed assembled boundaries. Attached wings hide their parent
+  // shell, so assigning functions by global modulo alone puts equipment behind solid art.
+  const blockedByAttachment = (
+    volumeId: string,
+    point: Pt,
+    z0: number,
+    z1: number,
+  ) =>
+    assemblies.some(({ volume, geometry, tiles }) => {
+      if (
+        volume.id === volumeId ||
+        !geometry.outline ||
+        !insidePolygon(geometry.outline.outer, point[0], point[1]) ||
+        geometry.outline.holes.some((h) => insidePolygon(h, point[0], point[1]))
+      )
+        return false;
+      const t = tiles.find(({ poly }) =>
+        insidePolygon(poly, point[0], point[1]),
+      )?.tile;
+      if (!t) return false;
+      const [lo, hi] = bowHeights(t, volume.height, point);
+      return hi > z0 && lo < z1;
+    });
   for (const volume of doc.volumes) {
     const geom = volumeGeometry(volume);
     if (!geom.outline) continue;
@@ -127,6 +159,7 @@ export function shipVisualLayersR002(
             ? boundary.normalHint
             : undefined;
         // Continuous keel/floor and roof backings are sampled before courses, never carved by seams.
+        surfaceRole = deck ? "floor" : "hull";
         column(
           `${family}:keel`,
           deck ? "floor" : "core",
@@ -191,12 +224,58 @@ export function shipVisualLayersR002(
           }
         }
         // Three visible depth planes, backed by the same continuous sampled core.
+        surfaceRole = "hull";
         // Protective frame is proud; armor is one cell recessed; charcoal service backing
         // remains exposed between plates. Broad bays replace per-voxel vertical striping.
         const along = boundary.alongAxis === 0 ? x : y;
         const phase = mod(along, profile.course);
         const bay = Math.floor(along / profile.course);
-        const detailKind = mod(bay + (boundary.alongAxis === 0 ? 0 : 1), 4);
+        let outward: Pt = [boundary.normalHint[0], boundary.normalHint[1]];
+        if (
+          insidePolygon(
+            poly,
+            p[0] + outward[0] * (distance + 1),
+            p[1] + outward[1] * (distance + 1),
+          )
+        )
+          outward = [-outward[0], -outward[1]];
+        const outside: Pt = [
+          (p[0] + outward[0] * (distance + 3)) / 16,
+          (p[1] + outward[1] * (distance + 3)) / 16,
+        ];
+        const exposed =
+          distance < 4 &&
+          !blockedByAttachment(volume.id, outside, floor + 3, top - 2);
+        const centreAlong = (bay * profile.course + profile.course / 2) / 16;
+        const context: [number, number] = [
+          (p[0] - outward[0] * (distance + 8)) / 16,
+          (p[1] - outward[1] * (distance + 8)) / 16,
+        ];
+        context[boundary.alongAxis] = centreAlong;
+        const room = doc.rooms.find(
+          (r) =>
+            context[0] >= r.rect[0] &&
+            context[0] < r.rect[2] &&
+            context[1] >= r.rect[1] &&
+            context[1] < r.rect[3],
+        );
+        const nearInterface = interior.doors.some(
+          (d) =>
+            d.exterior &&
+            Math.hypot(
+              context[0] - (d.a[0] + d.b[0]) / 2,
+              context[1] - (d.a[1] + d.b[1]) / 2,
+            ) < 1.15,
+        );
+        const detailKind = !exposed
+          ? 3
+          : nearInterface
+            ? 2
+            : room?.type === "engineering" || room?.type === "workshop"
+              ? 0
+              : room
+                ? 1
+                : 0;
         const cassetteStart = Math.floor(profile.course / 2) - 8;
         const cassetteEnd = cassetteStart + 16;
         if (distance < 4) {
@@ -222,7 +301,7 @@ export function shipVisualLayersR002(
               column(
                 `${family}:protective-frame`,
                 "frame",
-                "trim",
+                shellNormal ? "primary" : "trim",
                 x,
                 y,
                 z0,
@@ -261,46 +340,65 @@ export function shipVisualLayersR002(
               high,
               family,
             );
-            // Selected horizontal service recesses, with actual core behind the opening.
-            if (
-              detailKind === 0 &&
-              phase > 9 &&
-              phase < Math.min(29, profile.course - 5) &&
-              top > floor + 22
-            ) {
+          }
+          if (
+            detailKind === 0 &&
+            phase >= cassetteStart &&
+            phase < cassetteEnd &&
+            top - floor >= 12
+          ) {
+            const z0 = floor + 3,
+              z1 = Math.min(top - 3, floor + 16);
+            if (distance < 3)
               column(
                 `${family}:vent-recess`,
                 "void",
                 "dark",
                 x,
                 y,
-                floor + 11,
-                floor + 18,
+                z0,
+                z1,
                 family,
               );
-              if (phase === 10 || phase === Math.min(28, profile.course - 6))
+            const cheek = phase < cassetteStart + 2 || phase >= cassetteEnd - 2;
+            if (distance < 1 && cheek)
+              column(
+                `${family}:vent-cheek`,
+                "frame",
+                "primary",
+                x,
+                y,
+                z0,
+                z1,
+                family,
+              );
+            if (distance < 1)
+              for (const [a, b] of [
+                [z0, z0 + 2],
+                [z1 - 2, z1],
+              ])
                 column(
-                  `${family}:vent-cheek`,
+                  `${family}:vent-rim`,
                   "frame",
-                  "metal",
+                  "primary",
                   x,
                   y,
-                  floor + 11,
-                  floor + 18,
+                  a,
+                  b,
                   family,
                 );
-              for (let z = floor + 12; z < floor + 18; z += 3)
+            if (distance >= 1 && distance < 2 && !cheek)
+              for (const z of [z0 + 3, z1 - 4])
                 column(
                   `${family}:vent-louvre`,
                   "service",
-                  "secondary",
+                  "metal",
                   x,
                   y,
                   z,
                   z + 1,
                   family,
                 );
-            }
           }
           // Purpose-built outer access cassette: proud guards, an open recessed face,
           // inset access lid and a handle. The backing is retained one full cell behind it.
@@ -308,10 +406,10 @@ export function shipVisualLayersR002(
             detailKind === 1 &&
             phase >= cassetteStart &&
             phase < cassetteEnd &&
-            top > floor + 24
+            top >= floor + 12
           ) {
-            const z0 = floor + 7,
-              z1 = Math.min(top - 6, floor + 23);
+            const z0 = floor + 3,
+              z1 = Math.min(top - 3, floor + 23);
             if (distance < 3)
               column(
                 `${family}:cassette-well`,
@@ -404,7 +502,7 @@ export function shipVisualLayersR002(
             column(
               `${family}:skirt-base`,
               "frame",
-              "trim",
+              "secondary",
               x,
               y,
               lo,
@@ -423,6 +521,7 @@ export function shipVisualLayersR002(
               family,
             );
           if (distance >= 3 && deck && top > floor + 8) {
+            surfaceRole = "wall";
             column(
               `${family}:inner-gasket`,
               "core",
@@ -433,7 +532,7 @@ export function shipVisualLayersR002(
               top - 3,
               family,
             );
-            if (phase > 3 && phase < profile.course - 3)
+            if (phase > 1 && phase < profile.course - 1)
               column(
                 `${family}:inner-lower-panel`,
                 "plate",
@@ -444,17 +543,7 @@ export function shipVisualLayersR002(
                 top - 3,
                 family,
               );
-            if (top > floor + 18)
-              column(
-                `${family}:inner-service-belt`,
-                "service",
-                "secondary",
-                x,
-                y,
-                floor + 15,
-                floor + 18,
-                family,
-              );
+
             if (
               detailKind === 1 &&
               phase >= 9 &&
@@ -488,11 +577,12 @@ export function shipVisualLayersR002(
                 family,
               );
           }
+          surfaceRole = "hull";
           if (distance >= 1 && distance < 3)
             column(
               `${family}:cap`,
               "frame",
-              "trim",
+              shellNormal ? "primary" : "trim",
               x,
               y,
               Math.max(floor, top - 2),
@@ -501,58 +591,55 @@ export function shipVisualLayersR002(
             );
         }
         if ((view === "flight" || !deck) && !bowGlass(tile)) {
-          column(`${family}:roof`, "roof", "dark", x, y, hi - 2, hi, family);
-          // Equipment-adjacent roof hardware is selected per broad manufacturer bay.
-          // Other bays remain quiet armor with a buried service belt, not repeated raised U bars.
-          const service = doc.mounts.some(
-            (m) => Math.hypot(world[0] - m.at[0], world[1] - m.at[1]) < 1.1,
+          surfaceRole = "roof";
+          column(
+            `${family}:roof`,
+            "roof",
+            "secondary",
+            x,
+            y,
+            hi - 2,
+            hi - 1,
+            family,
           );
+          // Nearly joined armor sits on one continuous subframe; only functional spine bays open.
           const u = mod(x, profile.course),
             v = mod(y, 32);
+          const bayCentre: Pt = [
+            (x - u + profile.course / 2) / 16,
+            (y - v + 16) / 16,
+          ];
+          const service = doc.mounts.some(
+            (m) =>
+              m.attach === "top" &&
+              Math.hypot(bayCentre[0] - m.at[0], bayCentre[1] - m.at[1]) < 1.4,
+          );
           const roofKind = mod(
             Math.floor(x / profile.course) + 2 * Math.floor(y / 32),
             5,
           );
-          if (
+          const spineCentre = Math.round((by + bY) / 2);
+          const spine =
+            Math.abs(y - spineCentre) < 6 && x > bx + 12 && x < bX - 24;
+          const spineBay =
+            x - u >= bx + 12 && x - u + profile.course <= bX - 24;
+          const serviceCassette =
             service &&
-            roofKind === 0 &&
-            u >= 9 &&
-            u < profile.course - 9 &&
-            v >= 7 &&
-            v < 25
-          ) {
-            const rim = u < 11 || u >= profile.course - 11 || v < 9 || v >= 23;
-            if (rim)
-              column(
-                `${family}:roof-cassette-rim`,
-                "frame",
-                "trim",
-                x,
-                y,
-                hi,
-                hi + 3,
-                family,
-              );
-            else if (mod(y, 4) === 0)
-              column(
-                `${family}:roof-cassette-fin`,
-                "service",
-                "metal",
-                x,
-                y,
-                hi,
-                hi + 1,
-                family,
-              );
-          } else if (
-            u >= 4 &&
-            u < profile.course - 4 &&
-            v >= 4 &&
-            v < 28 &&
-            roofKind !== 3
-          ) {
+            roofKind !== 4 &&
+            u >= 6 &&
+            u < profile.course - 6 &&
+            v >= 6 &&
+            v < 26;
+          const spineCassette =
+            spineBay &&
+            spine &&
+            roofKind !== 4 &&
+            u >= 6 &&
+            u < profile.course - 6;
+          const cassette = serviceCassette || spineCassette;
+          if (u >= 1 && u < profile.course - 1 && v >= 1 && v < 31 && !spine) {
             const plateSlot =
-              roofKind === 2 && u > profile.course * 0.65
+              roofKind === 2 && u > profile.course * 0.5 && v > 16
                 ? "accent"
                 : "primary";
             column(
@@ -561,39 +648,127 @@ export function shipVisualLayersR002(
               plateSlot,
               x,
               y,
+              hi - 1,
               hi,
-              hi + 2,
               family,
             );
-            // A second recessed course is visible around the large, chamfer-stepped armor lip.
-            if (u >= 6 && u < profile.course - 6 && v >= 6 && v < 26)
+            // Discrete plate ends are stepped by two cells; broad fields remain joined and quiet.
+            const clippedEnd = roofKind % 2 === 0 && u < 3 && v < 3;
+            if (
+              !clippedEnd &&
+              u >= 2 &&
+              u < profile.course - 2 &&
+              v >= 2 &&
+              v < 30
+            )
               column(
                 `${family}:roof-armor-field`,
                 "plate",
                 plateSlot,
                 x,
                 y,
-                hi + 2,
-                hi + 3,
+                hi,
+                hi + 1,
                 family,
               );
-          } else if (
-            roofKind === 3 &&
-            v > 11 &&
-            v < 18 &&
-            u > 6 &&
-            u < profile.course - 6
-          )
+          }
+          if (spine)
             column(
-              `${family}:roof-service-belt`,
+              `${family}:roof-service-spine`,
               "service",
               "secondary",
               x,
               y,
+              hi - 1,
               hi,
-              hi + 1,
               family,
             );
+          if (cassette) {
+            column(
+              `${family}:roof-cassette-well`,
+              "void",
+              "dark",
+              x,
+              y,
+              hi - 1,
+              hi + 2,
+              family,
+            );
+            const localV = serviceCassette ? v - 6 : y - (spineCentre - 6);
+            const maxV = serviceCassette ? 20 : 12;
+            const rim =
+              u < 8 ||
+              u >= profile.course - 8 ||
+              localV < 2 ||
+              localV >= maxV - 2;
+            if (rim)
+              column(
+                `${family}:roof-cassette-rim`,
+                "frame",
+                "trim",
+                x,
+                y,
+                hi - 1,
+                hi + 2,
+                family,
+              );
+            else if (
+              (localV >= 3 && localV < 5) ||
+              (localV >= maxV - 5 && localV < maxV - 3)
+            )
+              column(
+                `${family}:roof-cassette-fin`,
+                "service",
+                "metal",
+                x,
+                y,
+                hi - 1,
+                hi + 1,
+                family,
+              );
+          }
+          if (
+            roofKind === 3 &&
+            u >= 10 &&
+            u < profile.course - 10 &&
+            v >= 10 &&
+            v < 21 &&
+            !cassette &&
+            !spine
+          ) {
+            column(
+              `${family}:roof-access-gasket`,
+              "frame",
+              "secondary",
+              x,
+              y,
+              hi,
+              hi + 2,
+              family,
+            );
+            if (u >= 12 && u < profile.course - 12 && v >= 12 && v < 19)
+              column(
+                `${family}:roof-access-lid`,
+                "plate",
+                "accent",
+                x,
+                y,
+                hi,
+                hi + 1,
+                family,
+              );
+            if (u === profile.course - 13 && v >= 14 && v < 17)
+              column(
+                `${family}:roof-access-latch`,
+                "service",
+                "metal",
+                x,
+                y,
+                hi + 1,
+                hi + 2,
+                family,
+              );
+          }
         }
         // Bow sill and structural brow: real sampled bands around the optical roof aperture.
         if (
@@ -625,6 +800,7 @@ export function shipVisualLayersR002(
           );
         }
       }
+    surfaceRole = "hull";
     // Continuous pressure-skirt and sill segments. Sample the coherent molded source
     // on the global lattice; never decorate a diagonal with one large cube per step.
     for (let y = by - 2; y < bY + 2; y++)
@@ -664,7 +840,7 @@ export function shipVisualLayersR002(
         column(
           `${family}:continuous-sill`,
           "frame",
-          "trim",
+          "secondary",
           x,
           y,
           lo,
@@ -675,7 +851,7 @@ export function shipVisualLayersR002(
           column(
             `${family}:continuous-upper-guard`,
             "frame",
-            "trim",
+            shellNormal ? "primary" : "trim",
             x,
             y,
             Math.max(floor, top - 2),
@@ -686,6 +862,7 @@ export function shipVisualLayersR002(
         const along = boundary.alongAxis === 0 ? x : y;
         if (
           !inside &&
+          !shellNormal &&
           mod(along, profile.course) < 2 &&
           mod(Math.floor(along / profile.course), 3) !== 2
         )
@@ -702,6 +879,7 @@ export function shipVisualLayersR002(
       }
   }
   shellNormal = undefined;
+  surfaceRole = "wall";
   if (view === "deck") {
     const ft = G.deck.floorTopTexels,
       cap = G.deck.interiorCutTexels + ft;
@@ -750,42 +928,57 @@ export function shipVisualLayersR002(
           U: number,
           z: number,
           Z: number,
+          depth = 0,
         ): number[] =>
           vertical
             ? [
-                x0 + (side < 0 ? -2 : 1),
+                x0 + (side < 0 ? -2 + depth : 1 - depth),
                 y0 + u,
                 z,
-                x0 + (side < 0 ? -1 : 2),
+                x0 + (side < 0 ? -1 + depth : 2 - depth),
                 y0 + U,
                 Z,
               ]
             : [
                 x0 + u,
-                y0 + (side < 0 ? -2 : 1),
+                y0 + (side < 0 ? -2 + depth : 1 - depth),
                 z,
                 x0 + U,
-                y0 + (side < 0 ? -1 : 2),
+                y0 + (side < 0 ? -1 + depth : 2 - depth),
                 Z,
               ];
         for (const side of [-1, 1]) {
-          // Warm lower enclosure field, a separate buried belt and a continuous dark cap.
+          // Quiet continuous enclosure; a selected functional cavity has three local depth levels.
           box(
             `${id}:lower-enclosure`,
             jamb ? "doorframe" : "plate",
             "primary",
-            surface(side, start + 2, end - 2, ft + 5, Z),
+            surface(side, start + 1, end - 1, ft + 3, Z),
             family,
           );
           if (glazed || width < 12 || wallCap < ft + 20) continue;
-          box(
-            `${id}:horizontal-service`,
-            "service",
-            "secondary",
-            surface(side, start + 1, end - 1, ft + 16, ft + 20),
-            family,
-          );
           const centre = (start + end) / 2;
+          // Opposite faces never cut the same pressure-web cell. The back of a useful
+          // bay stays a quiet enclosure instead of repeating the same grille everywhere.
+          if (side !== (kind === 1 ? 1 : -1)) continue;
+          const cavity = (u: number, U: number, z: number, Z: number) => {
+            const well = surface(side, u, U, z, Z);
+            if (vertical) {
+              if (side < 0) well[3] += 1;
+              else well[0] -= 1;
+            } else {
+              if (side < 0) well[4] += 1;
+              else well[1] -= 1;
+            }
+            box(`${id}:functional-well`, "void", "dark", well, family);
+            box(
+              `${id}:functional-backing`,
+              "core",
+              "secondary",
+              surface(side, u, U, z, Z, 2),
+              family,
+            );
+          };
           if (kind === 0) {
             // Compact horizontal ventilation cassette, with two actual recessed louvers.
             const u = centre - Math.min(width / 3, 10),
@@ -797,19 +990,13 @@ export function shipVisualLayersR002(
               surface(side, u, U, ft + 7, ft + 13),
               family,
             );
-            box(
-              `${id}:vent-recess`,
-              "void",
-              "dark",
-              surface(side, u + 1, U - 1, ft + 8, ft + 12),
-              family,
-            );
+            cavity(u + 1, U - 1, ft + 8, ft + 12);
             for (const z of [ft + 8, ft + 10])
               box(
                 `${id}:vent-fin`,
                 "service",
                 "secondary",
-                surface(side, u + 1, U - 1, z, z + 1),
+                surface(side, u + 1, U - 1, z, z + 1, 1),
                 family,
               );
           } else if (kind === 1) {
@@ -821,25 +1008,26 @@ export function shipVisualLayersR002(
               surface(side, centre - 7, centre + 7, ft + 10, ft + 22),
               family,
             );
+            cavity(centre - 6, centre + 6, ft + 11, ft + 21);
             box(
               `${id}:control-face`,
               "service",
               "metal",
-              surface(side, centre - 5, centre + 5, ft + 12, ft + 20),
+              surface(side, centre - 5, centre + 5, ft + 12, ft + 20, 1),
               family,
             );
             box(
               `${id}:control-display`,
               "service",
               "dark",
-              surface(side, centre - 4, centre + 3, ft + 15, ft + 19),
+              surface(side, centre - 4, centre + 3, ft + 15, ft + 19, 1),
               family,
             );
             box(
               `${id}:control-lens`,
               "service",
               "emit_b",
-              surface(side, centre + 3, centre + 5, ft + 17, ft + 18),
+              surface(side, centre + 3, centre + 5, ft + 17, ft + 18, 1),
               family,
             );
             for (let u = centre - 4; u < centre + 3; u += 3)
@@ -853,10 +1041,18 @@ export function shipVisualLayersR002(
           } else {
             // Quiet storage/access bay with a bounded burgundy latch panel and a hinge side.
             box(
+              `${id}:access-gasket`,
+              "frame",
+              "trim",
+              surface(side, centre - 8, centre + 8, ft + 6, ft + 16),
+              family,
+            );
+            cavity(centre - 7, centre + 7, ft + 7, ft + 15);
+            box(
               `${id}:access-face`,
               "plate",
               "accent",
-              surface(side, centre - 7, centre + 7, ft + 7, ft + 15),
+              surface(side, centre - 7, centre + 7, ft + 7, ft + 15, 1),
               family,
             );
             box(
@@ -979,7 +1175,7 @@ export function compactColumns(
     const [x, y, z, X, Y, Z] = l.bounds;
     const key =
       X - x === 1 && Y - y === 1
-        ? `${l.id}:${l.role}:${l.slot}:${l.support}:${l.normalHint?.join(",")}:${y}:${z}:${Z}`
+        ? `${l.id}:${l.role}:${l.slot}:${l.surfaceRole}:${l.support}:${l.normalHint?.join(",")}:${y}:${z}:${Z}`
         : `unique:${groups.size}`;
     const g = groups.get(key);
     if (g) g.push(l);

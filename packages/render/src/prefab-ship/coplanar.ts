@@ -273,6 +273,7 @@ export interface CoplanarLayer {
   uvs?: number[];
   uvs2?: number[];
   tangents?: number[];
+  colors?: number[];
   /** Index array shared by the mesh; this layer owns `[first, first + count)`. */
   indices: number[];
   first: number;
@@ -397,6 +398,12 @@ function resolvePass(
         L.tangents[v * 4 + 1],
         L.tangents[v * 4 + 2],
         L.tangents[v * 4 + 3],
+      );
+      L.colors?.push(
+        L.colors[v * 4],
+        L.colors[v * 4 + 1],
+        L.colors[v * 4 + 2],
+        L.colors[v * 4 + 3],
       );
       L.indices[t.firstIndex + k] = base + k;
     }
