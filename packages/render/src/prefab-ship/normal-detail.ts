@@ -146,7 +146,7 @@ export function normalDetailMaterial(
   material.reflectionTexture = base.reflectionTexture;
   if (clonedReflection && clonedReflection !== base.reflectionTexture)
     clonedReflection.dispose();
-  if (selection.albedoUrl) {
+  if (base.albedoTexture || albedo) {
     const clonedAlbedo = material.albedoTexture;
     material.albedoTexture = base.albedoTexture ?? albedo ?? null;
     if (

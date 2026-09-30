@@ -77,7 +77,10 @@ it("retains authored colour maps and allocates no unused panel multiplier", () =
   const { s, base } = fixture();
   const authored = new Texture("", s);
   base.albedoTexture = authored;
+  const { albedoUrl: _url, albedoSha256: _sha, ...normalOnly } = selection;
+  const normal = normalDetailMaterial(base, normalOnly, channels);
   const detail = normalDetailMaterial(base, selection, channels);
+  expect(detail).toBe(normal);
   expect(detail.albedoTexture).toBe(authored);
   expect(base.albedoTexture).toBe(authored);
   expect(
