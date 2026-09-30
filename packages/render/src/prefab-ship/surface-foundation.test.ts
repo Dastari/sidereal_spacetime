@@ -7,6 +7,7 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import { Matrix, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
+import { CubeTexture } from "@babylonjs/core/Materials/Textures/cubeTexture";
 import { VoxelVolume, meshChunk, removeVoxels } from "../../../sim/src/voxels";
 import {
   appendTransformed,
@@ -356,6 +357,7 @@ it("pools finite detail identities while preserving base finish and independent 
   base.metallic = 0;
   base.clearCoat.isEnabled = true;
   base.clearCoat.intensity = 0.08;
+  base.reflectionTexture = new CubeTexture("", s);
   const detail = normalDetailMaterial(base, selection, { uvs });
   expect(normalDetailMaterial(base, selection, { uvs })).toBe(detail);
   const revision = normalDetailMaterial(
@@ -368,6 +370,7 @@ it("pools finite detail identities while preserving base finish and independent 
   expect(detail.roughness).toBe(base.roughness);
   expect(detail.metallic).toBe(base.metallic);
   expect(detail.clearCoat.intensity).toBe(base.clearCoat.intensity);
+  expect(detail.reflectionTexture).toBe(base.reflectionTexture);
   expect(base.bumpTexture).toBeNull();
   expect(detail.useParallax).toBe(false);
   expect(detail.useParallaxOcclusion).toBe(false);

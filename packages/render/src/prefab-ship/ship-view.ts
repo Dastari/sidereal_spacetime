@@ -565,6 +565,9 @@ export async function createPrefabShipView(
         chunks[view].map((c) => ({
           positions: c.group.positions,
           normals: c.group.normals,
+          uvs: c.group.uvs,
+          uvs2: c.group.uvs2,
+          tangents: c.group.tangents,
           indices: c.group.indices,
           first: c.first,
           count: c.count,

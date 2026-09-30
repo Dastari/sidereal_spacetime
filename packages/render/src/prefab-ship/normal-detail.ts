@@ -104,6 +104,12 @@ export function normalDetailMaterial(
   const material = base.clone(
     `ship-detail:${base.name}:${selection.profile}:${selection.family}:${selection.revision}:${texture.uniqueId}`,
   );
+  // Babylon HDRCubeTexture.clone does not retain prefilter-on-load state. Borrow
+  // the existing studio reflection resource so detail never changes plastic IBL.
+  const clonedReflection = material.reflectionTexture;
+  material.reflectionTexture = base.reflectionTexture;
+  if (clonedReflection && clonedReflection !== base.reflectionTexture)
+    clonedReflection.dispose();
   // Clone preserves the base plastic response, grading and finish metadata. Only normal detail differs.
   material.metadata = {
     ...base.metadata,
