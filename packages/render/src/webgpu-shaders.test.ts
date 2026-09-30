@@ -19,6 +19,7 @@ import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { CreateSphere } from "@babylonjs/core/Meshes/Builders/sphereBuilder";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { Material } from "@babylonjs/core/Materials/material";
+import type { ShaderMaterial } from "@babylonjs/core/Materials/shaderMaterial";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import type { PartAsset } from "@sidereal/content/assembly";
 import {
@@ -42,6 +43,7 @@ import { createNativeBasaltMaterial } from "./environment/native-volcanic-materi
 import { voxelPlanetMaterial } from "./environment/voxel-material";
 import { createStellarCorona } from "./environment/stellar-corona";
 import { createDistantStar } from "./environment/distant-star";
+import { createDistantStarfield } from "./environment/starfield";
 import { createPlanetAtmosphere } from "./environment/planet-atmosphere";
 import { createLavaSpill } from "./environment/planet-lava-spill";
 import { createOceanGlints } from "./environment/planet-sparkles";
@@ -188,6 +190,7 @@ void main(){gl_FragColor=plate(nebula,vUV);}`,
     createHolographicDisc(scene, { reflections: true, bloom: true });
     createStellarCorona(scene, "star");
     createDistantStar(scene, "distant");
+    createDistantStarfield(scene);
     createPlanetAtmosphere(scene, "planet", 1, Color3.White(), 1);
     createLavaSpill(scene, "lava", surface());
     createOceanGlints(scene, "ocean", surface(), 7);
@@ -197,6 +200,29 @@ void main(){gl_FragColor=plate(nebula,vUV);}`,
     expectClean(failures, "world shader materials");
     expect(modules).toBeGreaterThanOrEqual(16);
     scene.dispose();
+  });
+
+  it("sky and star backgrounds compile at reversed WebGPU depth", async () => {
+    const scene = sceneWithCamera();
+    harness.engine.useReverseDepthBuffer = true;
+    try {
+      const stars = createDistantStarfield(scene);
+      const sky = environmentMaterial(
+        scene,
+        "reverse-sky",
+        environmentShaders.skyFragment,
+      );
+      // Engine depth toggling does not invalidate cached shader effects. Give this
+      // alternate backend configuration its own variants, as a fresh engine would.
+      for (const material of [stars.mesh.material as ShaderMaterial, sky])
+        material.options.defines.push("#define TEST_REVERSED_BACKGROUND");
+      const { failures, modules } = await compileScene(scene);
+      expectClean(failures, "reversed-depth backgrounds");
+      expect(modules).toBeGreaterThanOrEqual(4);
+    } finally {
+      scene.dispose();
+      harness.engine.useReverseDepthBuffer = false;
+    }
   });
 
   it("material plugins on PBR and standard materials", async () => {

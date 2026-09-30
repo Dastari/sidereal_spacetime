@@ -12,12 +12,12 @@ import {
 } from "./space-background";
 import { validateSystemMap } from "./system-map";
 
-test("deep space is the default without authored nebula or bodies", () => {
+test("deep space retains motion dust without authored nebula or bodies", () => {
   expect(DEFAULT_SPACE_VISTA).toBe("deep-space");
   expect(spaceVista("missing").id).toBe("deep-space");
   expect(spaceVista("deep-space")).toMatchObject({
     nebulaStrength: 0,
-    dust: 0,
+    dust: 0.28,
     bodies: [],
   });
   expect(resolveSpaceBackground(undefined, { x: 0, y: 0, height: 0 })).toEqual([

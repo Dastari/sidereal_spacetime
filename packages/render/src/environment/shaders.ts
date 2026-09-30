@@ -1,3 +1,5 @@
+import { backgroundDepth } from "./starfield";
+
 // Keep world and view/projection uploads separate: Babylon camera-relative binding
 // can rebase these directly without inverting a combined astronomical WVP matrix.
 export const surfaceVertex = /* glsl */ `
@@ -7,6 +9,14 @@ uniform mat4 viewProjection; uniform mat4 world;
 varying vec3 vLocal; varying vec3 vWorld; varying vec3 vNormal; varying vec2 vUV;
 void main(){vLocal=position;vWorld=(world*vec4(position,1.)).xyz;vNormal=normalize(mat3(world)*normal);vUV=uv;gl_Position=viewProjection*vec4(vWorld,1.);}
 `;
+/** Camera-centred directional background, independent of near/far observation clips. */
+export const skyVertex = /* glsl */ `
+precision highp float;attribute vec3 position;
+uniform mat4 viewProjection;uniform mat4 world;varying vec3 vLocal;
+void main(){vLocal=position;gl_Position=viewProjection*world*vec4(position,1.);
+${backgroundDepth}
+}
+`;
 const noise = /* glsl */ `
 float hash31(vec3 p){p=fract(p*.1031);p+=dot(p,p.yzx+33.33);return fract((p.x+p.y)*p.z);}
 float noise3(vec3 p){vec3 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(mix(hash31(i),hash31(i+vec3(1,0,0)),f.x),mix(hash31(i+vec3(0,1,0)),hash31(i+vec3(1,1,0)),f.x),f.y),mix(mix(hash31(i+vec3(0,0,1)),hash31(i+vec3(1,0,1)),f.x),mix(hash31(i+vec3(0,1,1)),hash31(i+vec3(1,1,1)),f.x),f.y),f.z);}
@@ -14,7 +24,7 @@ float fbm(vec3 p){float f=0.,a=.5;for(int i=0;i<5;i++){f+=a*noise3(p);p=p*2.03+v
 `;
 export const skyFragment = /* glsl */ `
 precision highp float;varying vec3 vLocal;
-uniform sampler2D nebula;uniform sampler2D nebula2;uniform vec3 tint2;uniform float gasStrength;uniform float time;uniform vec3 tint;uniform float strength;uniform float seed;uniform float viewportHeight;
+uniform sampler2D nebula;uniform sampler2D nebula2;uniform vec3 tint2;uniform float gasStrength;uniform vec3 tint;uniform float seed;
 ${noise}
 // Returns the plate UV (xy) and its seam/pole weight (z). Sampling stays at the call site:
 // WebGPU GLSL (glslang) rejects sampler2D function parameters built from split texture/sampler.
@@ -30,8 +40,7 @@ vec3 skyPlate(vec3 p,vec3 core){
 void main(){
  // Both art projections are fixed world directions, never camera-relative plates.
  vec3 direction=normalize(vLocal);
- float starGrid=clamp(viewportHeight*2.6,1024.,4096.);
- vec3 cell=floor(direction*starGrid);vec3 p=normalize((cell+.5)/starGrid);
+ vec3 p=direction;
  vec3 rpgPlate=skyPlate(p,normalize(vec3(.74,-.58,.355)));
  vec3 downPlate=skyPlate(p,normalize(vec3(-.20,-.96,-.18)));
  vec4 rpg=vec4(texture2D(nebula,rpgPlate.xy).rgb,rpgPlate.z);
@@ -48,9 +57,6 @@ void main(){
  vec3 color=vec3(.005,.008,.028)+gas*.55*gasStrength+(image*tint+image2*tint2)*.65;
  // Small, deliberate palette steps retain the voxel/pixel character.
  color=floor(color*192.+.5)/192.;
- float star=hash31(cell+seed);float large=hash31(floor(direction*190.)+seed+3.);
- color+=step(mix(.99945,.9991,overhead),star)*mix(vec3(.27,.45,.7),vec3(.8,.68,.91),star)*(.94+.06*sin(time*.5+star*400.));
- color+=step(.99995,large)*vec3(.65,.5,.72);
  gl_FragColor=vec4(color,1.);
 }
 `;

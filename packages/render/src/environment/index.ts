@@ -19,6 +19,7 @@ import {
 } from "./body-visibility";
 import { createBodyVisualRevision } from "./body-visual-revision";
 import { createDustField } from "./dust-field";
+import { createDistantStarfield } from "./starfield";
 import { setMeshRole } from "../mesh-roles";
 import {
   loadNativeVolcanicKit,
@@ -62,16 +63,17 @@ import {
   planetRecipeForAppearance,
   planetEffects,
   type PlanetRecipe,
-} from "../../../content/src/environment";
+} from "@sidereal/content/environment";
 
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import "@babylonjs/core/Meshes/thinInstanceMesh";
 import { ShaderMaterial } from "@babylonjs/core/Materials/shaderMaterial";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
-import { spaceVista, SPACE_VISTAS } from "../../../content/src/environment";
+import { spaceVista, SPACE_VISTAS } from "@sidereal/content/environment";
 import {
   surfaceVertex,
+  skyVertex,
   skyFragment,
   planetFragment,
   ringFragment,
@@ -101,7 +103,10 @@ export function material(
   const mat = new ShaderMaterial(
     name,
     scene,
-    { vertexSource: surfaceVertex, fragmentSource },
+    {
+      vertexSource: fragmentSource === skyFragment ? skyVertex : surfaceVertex,
+      fragmentSource,
+    },
     {
       attributes: ["position", "normal", "uv"],
       uniforms: [
@@ -151,6 +156,7 @@ export function createSpaceEnvironment(scene: Scene) {
   const skyMat = material(scene, "directional-galaxy-material", skyFragment);
   skyMat.disableDepthWrite = true;
   sky.material = skyMat;
+  const starfield = createDistantStarfield(scene, root);
   const planetGlow = new GlowLayer("celestial-deposit-glow", scene, {
     blurKernelSize: 24,
     mainTextureRatio: 0.25,
@@ -698,6 +704,7 @@ export function createSpaceEnvironment(scene: Scene) {
       if (!options.reducedMotion) age += Math.min(options.dt, 0.1);
       const camera = scene.activeCamera?.globalPosition ?? Vector3.Zero();
       sky.position.copyFrom(camera);
+      starfield.update(camera);
       skyMat.setFloat("time", age);
       skyMat.setFloat("viewportHeight", scene.getEngine().getRenderHeight());
       const visible = new Set(options.bodies.map((b) => b.id));
@@ -867,6 +874,7 @@ export function createSpaceEnvironment(scene: Scene) {
       heroShadows.dispose();
       planetOccluders.dispose();
       planetGlow.dispose();
+      starfield.dispose();
       root.dispose(false, true);
       nebula.dispose();
       violet.dispose();
