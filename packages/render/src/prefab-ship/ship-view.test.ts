@@ -369,121 +369,143 @@ it("uses one candidate metal family for floor grilles and hull equipment without
   }
 });
 
-it("initial candidate batching merges floor and hull metal before apply and retains floor ranges through theme replay", async () => {
-  // CPU fixture: imports/texture upload readiness are isolated, while the real whole-Wren
-  // compiler, initial batch add/group/merge/apply and theme path execute unchanged.
-  const engine = new NullEngine();
-  engines.push(engine);
-  const scene = new Scene(engine);
-  vi.stubGlobal(
-    "fetch",
-    vi.fn(async () => ({ ok: false })),
-  );
-  vi.spyOn(console, "warn").mockImplementation(() => {});
-  const stub: object = new Proxy(() => stub, {
-    get: (_t, key) =>
-      key === "then" ? undefined : key === Symbol.toPrimitive ? () => 0 : stub,
-    apply: () => stub,
-  });
-  vi.stubGlobal(
-    "OffscreenCanvas",
-    class {
-      constructor(
-        public width: number,
-        public height: number,
-      ) {}
-      getContext() {
-        return stub;
-      }
-    },
-  );
-  const geom = (id: string): GlbGeometry => ({
-    url: `/fixture/${id}.glb`,
-    primitives: [],
-    triangles: 0,
-    bounds: [0, 0, 0, 1, 1, 1],
-  });
-  vi.spyOn(variantModule, "resolveVisualVariant").mockImplementation(
-    async (_scene, _doc, dressed) => ({
-      manifest: {
-        revision: "r002",
+it.each([false, true])(
+  "initial candidate batching preserves common metal and eligible albedo (synthetic cut=%s)",
+  async (syntheticCut) => {
+    // CPU fixture: imports/texture upload readiness are isolated, while the real whole-Wren
+    // compiler, initial batch add/group/merge/apply and theme path execute unchanged.
+    const engine = new NullEngine();
+    engines.push(engine);
+    const scene = new Scene(engine);
+    vi.stubGlobal(
+      "fetch",
+      vi.fn(async () => ({ ok: false })),
+    );
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const stub: object = new Proxy(() => stub, {
+      get: (_t, key) =>
+        key === "then"
+          ? undefined
+          : key === Symbol.toPrimitive
+            ? () => 0
+            : stub,
+      apply: () => stub,
+    });
+    vi.stubGlobal(
+      "OffscreenCanvas",
+      class {
+        constructor(
+          public width: number,
+          public height: number,
+        ) {}
+        getContext() {
+          return stub;
+        }
+      },
+    );
+    const geom = (id: string): GlbGeometry => ({
+      url: `/fixture/${id}.glb`,
+      primitives: [],
+      triangles: 0,
+      bounds: [0, 0, 0, 1, 1, 1],
+    });
+    vi.spyOn(variantModule, "resolveVisualVariant").mockImplementation(
+      async (_scene, _doc, dressed) => ({
+        manifest: {
+          revision: "r002",
+          compilerSha256: "a".repeat(64),
+        } as ShipVisualManifest,
+        manifestSha256: "b".repeat(64),
+        profile: "federation",
+        normalUrl: "fixture:normal",
+        normalSha256: "c".repeat(64),
+        albedoUrl: "fixture:albedo",
+        albedoSha256: "d".repeat(64),
+        components: new Map(
+          dressed.components.map((c) => [c.component, geom(c.component)]),
+        ),
+        objects: new Map(
+          dressed.objects.map((o) => [o.designId, geom(o.designId)]),
+        ),
+        kit: new Map(dressed.kit.map((k) => [k.piece, geom(k.piece)])),
+        release: () => {},
+      }),
+    );
+    vi.spyOn(variantModule, "prepareCandidateMaterials").mockResolvedValue();
+    const detailPool = new Map<string, PBRMaterial>();
+    vi.spyOn(detailModule, "normalDetailMaterial").mockImplementation(
+      (base, selection) => {
+        if (!selection?.enabled) return base;
+        const key = `${base.uniqueId}:${selection.profile}:${selection.revision}:${selection.albedoSha256 ?? ""}`;
+        let result = detailPool.get(key);
+        if (!result) {
+          result = base.clone(`cpu-detail:${base.name}`)!;
+          result.metadata = {
+            ...base.metadata,
+            shipNormalDetail: { ...selection },
+          };
+          detailPool.set(key, result);
+        }
+        return result;
+      },
+    );
+    scene.useRightHandedSystem = true;
+    const view = await createPrefabShipView(scene, prefabById("fed.s.wren")!, {
+      parent: new TransformNode("fixture-root", scene),
+      catalog: defaultPrefabComponentCatalog(),
+      batch: true,
+      visualReviewRemovedCells: syntheticCut ? new Set(["0,0,5"]) : undefined,
+      view: "deck",
+      visualVariant: {
+        url: "fixture:manifest",
+        sha256: "b".repeat(64),
         compilerSha256: "a".repeat(64),
-      } as ShipVisualManifest,
-      manifestSha256: "b".repeat(64),
-      profile: "federation",
-      normalUrl: "fixture:normal",
-      normalSha256: "c".repeat(64),
-      components: new Map(
-        dressed.components.map((c) => [c.component, geom(c.component)]),
-      ),
-      objects: new Map(
-        dressed.objects.map((o) => [o.designId, geom(o.designId)]),
-      ),
-      kit: new Map(dressed.kit.map((k) => [k.piece, geom(k.piece)])),
-      release: () => {},
-    }),
-  );
-  vi.spyOn(variantModule, "prepareCandidateMaterials").mockResolvedValue();
-  const detailPool = new Map<string, PBRMaterial>();
-  vi.spyOn(detailModule, "normalDetailMaterial").mockImplementation(
-    (base, selection) => {
-      if (!selection?.enabled) return base;
-      const key = `${base.uniqueId}:${selection.profile}:${selection.revision}`;
-      let result = detailPool.get(key);
-      if (!result) {
-        result = base.clone(`cpu-detail:${base.name}`)!;
-        result.metadata = {
-          ...base.metadata,
-          shipNormalDetail: { ...selection },
-        };
-        detailPool.set(key, result);
-      }
-      return result;
-    },
-  );
-  scene.useRightHandedSystem = true;
-  const view = await createPrefabShipView(scene, prefabById("fed.s.wren")!, {
-    parent: new TransformNode("fixture-root", scene),
-    catalog: defaultPrefabComponentCatalog(),
-    batch: true,
-    view: "deck",
-    visualVariant: {
-      url: "fixture:manifest",
-      sha256: "b".repeat(64),
-      compilerSha256: "a".repeat(64),
-    },
-  });
-  view.setView("deck");
-  expect(view.metrics().visualRevision).toBe("r002");
-  const metals = scene.meshes.filter(
-    (m) =>
-      m.isEnabled() &&
-      m.name.includes(":batch:") &&
-      m.material?.name === "cpu-detail:prefab-federation-metal",
-  );
-  expect(metals).toHaveLength(1);
-  expect(
-    scene.meshes.some(
+      },
+    });
+    view.setView("deck");
+    expect(view.metrics().visualRevision).toBe("r002");
+    const metals = scene.meshes.filter(
       (m) =>
         m.isEnabled() &&
         m.name.includes(":batch:") &&
-        m.material?.name.includes("floor-metal"),
-    ),
-  ).toBe(false);
-  const metal = metals[0],
-    roles = metal.metadata.roleRanges.map((r: { role: string }) => r.role);
-  expect(roles).toContain("floor");
-  expect(roles.some((role: string) => role === "hull" || role === "wall")).toBe(
-    true,
-  );
-  const original = metal.material;
-  view.setTheme("riftjack");
-  expect(metal.material?.name).toBe("cpu-detail:prefab-riftjack-metal");
-  expect(
-    metal.metadata.roleRanges.map((r: { role: string }) => r.role),
-  ).toEqual(roles);
-  view.setTheme("federation");
-  expect(metal.material).toBe(original);
-  view.dispose();
-  scene.dispose();
-});
+        m.material?.name === "cpu-detail:prefab-federation-metal",
+    );
+    expect(metals).toHaveLength(1);
+    expect(
+      scene.meshes.some(
+        (m) =>
+          m.isEnabled() &&
+          m.name.includes(":batch:") &&
+          m.material?.name.includes("floor-metal"),
+      ),
+    ).toBe(false);
+    const metal = metals[0],
+      roles = metal.metadata.roleRanges.map((r: { role: string }) => r.role);
+    expect(roles).toContain("floor");
+    expect(
+      roles.some((role: string) => role === "hull" || role === "wall"),
+    ).toBe(true);
+    expect(metal.material?.metadata.shipNormalDetail.albedoUrl).toBeUndefined();
+    const panel = scene.meshes.find(
+      (m) =>
+        m.isEnabled() &&
+        m.name.includes(":batch:") &&
+        m.material?.metadata.shipNormalDetail &&
+        m.material.metadata.shipReferenceFinish,
+    );
+    expect(panel).toBeDefined();
+    expect(panel!.material!.metadata.shipNormalDetail.albedoUrl).toBe(
+      syntheticCut ? undefined : "fixture:albedo",
+    );
+    const original = metal.material;
+    view.setTheme("riftjack");
+    expect(metal.material?.name).toBe("cpu-detail:prefab-riftjack-metal");
+    expect(
+      metal.metadata.roleRanges.map((r: { role: string }) => r.role),
+    ).toEqual(roles);
+    view.setTheme("federation");
+    expect(metal.material).toBe(original);
+    view.dispose();
+    scene.dispose();
+  },
+);

@@ -82,7 +82,7 @@ export interface ShipVisualAsset {
   url: string;
   sha256: string;
   bytes: number;
-  kind: "object" | "component" | "kit" | "kit-manifest" | "normal";
+  kind: "object" | "component" | "kit" | "kit-manifest" | "normal" | "albedo";
   id: string;
   node?: string;
 }
@@ -131,9 +131,14 @@ export function readShipVisualManifest(value: unknown): ShipVisualManifest {
   for (const a of m.assets) {
     if (
       !a ||
-      !["object", "component", "kit", "kit-manifest", "normal"].includes(
-        a.kind,
-      ) ||
+      ![
+        "object",
+        "component",
+        "kit",
+        "kit-manifest",
+        "normal",
+        "albedo",
+      ].includes(a.kind) ||
       !a.id ||
       !sha.test(a.sha256) ||
       !Number.isSafeInteger(a.bytes) ||
@@ -143,7 +148,7 @@ export function readShipVisualManifest(value: unknown): ShipVisualManifest {
     )
       throw Error("Invalid visual asset");
     if (
-      !["normal", "kit-manifest"].includes(a.kind) &&
+      !["normal", "albedo", "kit-manifest"].includes(a.kind) &&
       (!["face", "top", "interior", "edge"].includes(a.frame ?? "") ||
         !a.bounds ||
         a.bounds.length !== 6 ||

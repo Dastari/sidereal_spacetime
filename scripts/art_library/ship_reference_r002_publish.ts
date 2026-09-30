@@ -31,6 +31,7 @@ const sources = [
   "packages/sim/src/ship-visual-compiler.ts",
   "packages/render/src/prefab-ship/sampled-structure.ts",
   "packages/render/src/prefab-ship/sampled-ao.ts",
+  "packages/render/src/prefab-ship/normal-detail.ts",
   "packages/render/src/prefab-ship/ship-view.ts",
   "packages/render/src/prefab-ship/batch.ts",
   "packages/render/src/prefab-ship/coplanar.ts",
@@ -131,6 +132,16 @@ assets.push({
   url: "/assets/ship-visual/r002/panel-normal.png",
   sha256: hash(normal),
   bytes: normal.length,
+});
+const albedo = readFileSync(
+  resolve(root, "assets/runtime/ship-visual/r002/panel-albedo.png"),
+);
+assets.push({
+  kind: "albedo",
+  id: "panel",
+  url: "/assets/ship-visual/r002/panel-albedo.png",
+  sha256: hash(albedo),
+  bytes: albedo.length,
 });
 const manifest = readShipVisualManifest({
   schema: SHIP_VISUAL_SCHEMA,

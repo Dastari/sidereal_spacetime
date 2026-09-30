@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "c58da74e4a3d0d877bb408861402cb846fef89e0e076ba9d6a3e2f4c5f35ef67",
+  "compilerSha256": "b6240cc283abba20b7d3c9f4bce57d412b3aae33ab23c810dd6e0e6817784407",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -8,7 +8,7 @@
     },
     {
       "path": "packages/content/src/ship-visual.ts",
-      "sha256": "f4ef4f2923b818c81af61665ca8355214fa137984ff83e13e7e63eb4e3f318e9"
+      "sha256": "054fb19634e0f1d916ae02d512e933247a34ddee8077ba0c14671bb5e532bc93"
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
@@ -43,8 +43,12 @@
       "sha256": "2ce1be65fd4158072fe1e889504ee48a82179931081a0e174639bd01379c46f7"
     },
     {
+      "path": "packages/render/src/prefab-ship/normal-detail.ts",
+      "sha256": "62c212188ad2dcdbbd86f5d47289fc2476b43aed60f784cfdc4aaf642a95f639"
+    },
+    {
       "path": "packages/render/src/prefab-ship/ship-view.ts",
-      "sha256": "45f682d234c0804c16f486716c69c6c06bd55b6d9693e2552f61363a73ab114f"
+      "sha256": "cf44bfdfacfeef002ea2220b6fd98b49506d42c14c74ba72d7af78fcc3ea6325"
     },
     {
       "path": "packages/render/src/prefab-ship/batch.ts",
@@ -60,7 +64,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/visual-variant.ts",
-      "sha256": "721f600665ac5c7b3fb2460277814eb841af309741110f3714101ee49cfb3b21"
+      "sha256": "1b5f17ece53616874f93f7ae81e4698e390f778c3000669d7f8f36b45b59ea71"
     },
     {
       "path": "packages/render/src/prefab-ship/shadows.ts",
@@ -84,7 +88,7 @@
     },
     {
       "path": "scripts/art_library/ship_reference_r002_maps.py",
-      "sha256": "75a67789e53e2efd01b00f1c87b76e92949f59235601d4aa134e83aa6e9fb4bf"
+      "sha256": "c1032fd20a5245bb270dfd96d4a6ab8fe0eef687d3967ba9a0614d8822ab71bf"
     },
     {
       "path": "packages/render/src/prefab-ship/reference-finish.ts",

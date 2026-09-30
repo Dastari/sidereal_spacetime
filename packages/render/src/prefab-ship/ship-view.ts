@@ -935,6 +935,16 @@ export async function createPrefabShipView(
         revision: variant.manifest.revision,
         normalUrl: variant.normalUrl,
         normalSha256: variant.normalSha256,
+        ...(variant.manifest.revision === "r002" &&
+        variant.albedoUrl &&
+        variant.albedoSha256 &&
+        ["primary", "secondary", "trim", "accent"].includes(slot) &&
+        !/(?:^|\.)(?:fabric|flora)(?:\.|$)/.test(materialName ?? "") &&
+        !finished.metadata?.shipReferenceInstrument &&
+        !finished.albedoTexture &&
+        !options.visualReviewRemovedCells?.size
+          ? { albedoUrl: variant.albedoUrl, albedoSha256: variant.albedoSha256 }
+          : {}),
         strength: 0.32,
       },
       channels,

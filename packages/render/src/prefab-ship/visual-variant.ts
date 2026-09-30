@@ -38,6 +38,8 @@ export interface VerifiedVisualVariant {
   kit: Map<string, GlbGeometry>;
   normalUrl: string;
   normalSha256: string;
+  albedoUrl?: string;
+  albedoSha256?: string;
   release(): void;
 }
 const bytesSha = (bytes: Uint8Array) => bytesToHex(sha256(bytes));
@@ -96,6 +98,10 @@ export async function resolveVisualVariant(
     "normal:panel",
     "kit-manifest:native",
   ]);
+  const albedoAssets = manifest.assets.filter((a) => a.kind === "albedo");
+  if (albedoAssets.length > 1 || albedoAssets.some((a) => a.id !== "panel"))
+    throw Error("Visual revision has an unsupported albedo map");
+  if (albedoAssets.length) required.add("albedo:panel");
   const available = new Set(manifest.assets.map((a) => `${a.kind}:${a.id}`));
   if ([...required].some((key) => !available.has(key)))
     throw Error("Visual revision lacks required fitting/object/map art");
@@ -154,12 +160,14 @@ export async function resolveVisualVariant(
     objects = new Map<string, GlbGeometry>(),
     kit = new Map<string, GlbGeometry>();
   let normalUrl = "",
-    normalSha256 = "";
+    normalSha256 = "",
+    albedoUrl: string | undefined,
+    albedoSha256: string | undefined;
   try {
     for (const { a, bytes } of verified) {
       if (scene.isDisposed) throw Error("Scene disposed during visual import");
       if (a.kind === "kit-manifest") continue;
-      if (a.kind === "normal") {
+      if (a.kind === "normal" || a.kind === "albedo") {
         if (
           bytes.length < 24 ||
           bytes[0] !== 137 ||
@@ -167,13 +175,13 @@ export async function resolveVisualVariant(
           bytes[2] !== 78 ||
           bytes[3] !== 71
         )
-          throw Error("Candidate normal map is not PNG");
+          throw Error(`Candidate ${a.kind} map is not PNG`);
         const decoded = await createImageBitmap(
           new Blob([Uint8Array.from(bytes)], { type: "image/png" }),
         );
         if (decoded.width !== 256 || decoded.height !== 256) {
           decoded.close();
-          throw Error("Candidate normal map dimensions mismatch");
+          throw Error(`Candidate ${a.kind} map dimensions mismatch`);
         }
         decoded.close();
         if (scene.isDisposed)
@@ -187,14 +195,20 @@ export async function resolveVisualVariant(
             normalUrls.delete(scene);
           });
         }
-        normalUrl = urls.get(a.sha256) ?? "";
-        if (!normalUrl) {
-          normalUrl = URL.createObjectURL(
+        let url = urls.get(a.sha256) ?? "";
+        if (!url) {
+          url = URL.createObjectURL(
             new Blob([Uint8Array.from(bytes)], { type: "image/png" }),
           );
-          urls.set(a.sha256, normalUrl);
+          urls.set(a.sha256, url);
         }
-        normalSha256 = a.sha256;
+        if (a.kind === "normal") {
+          normalUrl = url;
+          normalSha256 = a.sha256;
+        } else {
+          albedoUrl = url;
+          albedoSha256 = a.sha256;
+        }
         continue;
       }
       const geom = await loadVerifiedGlbGeometry(
@@ -241,6 +255,7 @@ export async function resolveVisualVariant(
       kit,
       normalUrl,
       normalSha256,
+      ...(albedoUrl && albedoSha256 ? { albedoUrl, albedoSha256 } : {}),
       release: () => {},
     };
   } catch (error) {
@@ -287,6 +302,7 @@ export async function prepareCandidateMaterials(
   for (const mesh of meshes) {
     const material = mesh.material as PBRMaterial | null;
     if (material?.bumpTexture) maps.add(material.bumpTexture as Texture);
+    if (material?.albedoTexture) maps.add(material.albedoTexture as Texture);
     if (material?.metadata?.shipReferenceInstrument) {
       for (const texture of material.getActiveTextures())
         if (

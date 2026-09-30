@@ -33,6 +33,7 @@ const dressed = {
 function candidate(
   normal = new Uint8Array([137, 80, 78, 71, ...Array(20).fill(0)]),
   pieces: Record<string, { slots: string[] }> = {},
+  albedo?: Uint8Array,
 ) {
   const native = new TextEncoder().encode(
     JSON.stringify({
@@ -69,6 +70,17 @@ function candidate(
         sha256: hash(normal),
         bytes: normal.length,
       },
+      ...(albedo
+        ? [
+            {
+              kind: "albedo",
+              id: "panel",
+              url: "/assets/ship-visual/r001/albedo.png",
+              sha256: hash(albedo),
+              bytes: albedo.length,
+            },
+          ]
+        : []),
     ],
     decorativeEnvelope: { outward: 0.1875, upward: 0.1875, inward: 0 },
   };
@@ -83,7 +95,9 @@ function candidate(
               ? native
               : url.endsWith("manifest.json")
                 ? bytes
-                : normal,
+                : url.endsWith("albedo.png")
+                  ? albedo!
+                  : normal,
           ),
         ),
     ),
@@ -94,7 +108,10 @@ function candidate(
     compilerSha256: manifest.compilerSha256,
   };
 }
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.restoreAllMocks();
+  vi.unstubAllGlobals();
+});
 describe("whole visual candidate prerequisites", () => {
   it("rejects a hash-valid PNG header whose image cannot decode", async () => {
     const selection = candidate();
@@ -107,6 +124,53 @@ describe("whole visual candidate prerequisites", () => {
     await expect(
       resolveVisualVariant(scene, PREFAB_SHIPS[0], dressed, selection),
     ).rejects.toThrow("Invalid image decode");
+  });
+  it("rejects a declared hash-valid albedo map when its image decode fails", async () => {
+    const png = new Uint8Array([137, 80, 78, 71, ...Array(20).fill(0)]);
+    const selection = candidate(png, {}, new Uint8Array([...png, 1]));
+    const closing = vi.fn();
+    const decode = vi
+      .fn()
+      .mockResolvedValueOnce({ width: 256, height: 256, close: closing })
+      .mockRejectedValueOnce(Error("Invalid albedo decode"));
+    vi.stubGlobal("createImageBitmap", decode);
+    const engine = new NullEngine(),
+      nativeScene = new NativeScene(engine);
+    try {
+      await expect(
+        resolveVisualVariant(nativeScene, PREFAB_SHIPS[0], dressed, selection),
+      ).rejects.toThrow("Invalid albedo decode");
+      expect(decode).toHaveBeenCalledTimes(2);
+      expect(closing).toHaveBeenCalledOnce();
+      expect(fetch).toHaveBeenCalledTimes(4);
+    } finally {
+      nativeScene.dispose();
+      engine.dispose();
+    }
+  });
+  it("awaits an albedo upload before compiling hidden candidate materials", async () => {
+    const engine = new NullEngine(),
+      nativeScene = new NativeScene(engine);
+    const texture = new Texture(null, nativeScene);
+    let ready = false;
+    vi.spyOn(texture, "isReady").mockImplementation(() => ready);
+    const compile = vi.fn(async () => {});
+    const mesh = {
+      material: { albedoTexture: texture, forceCompilationAsync: compile },
+      hasThinInstances: false,
+    } as unknown as Mesh;
+    try {
+      const preparation = prepareCandidateMaterials(nativeScene, [mesh]);
+      await Promise.resolve();
+      expect(compile).not.toHaveBeenCalled();
+      ready = true;
+      texture.onLoadObservable.notifyObservers(texture);
+      await preparation;
+      expect(compile).toHaveBeenCalledOnce();
+    } finally {
+      nativeScene.dispose();
+      engine.dispose();
+    }
   });
   it("rejects an omitted required fitting before any candidate mesh import", async () => {
     const selection = candidate();
