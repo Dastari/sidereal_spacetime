@@ -163,6 +163,20 @@ export function shipVisualLayersR002(
     }
     const deck = G.heightClasses[volume.height].walkable;
     const family = `volume:${volume.id}`;
+    const trayCentreY = Math.round((by + bY) / 2);
+    const topMounts = doc.mounts.filter((m) => m.attach === "top");
+    const trayCassetteX = [0.32, 0.68, 0.18, 0.8]
+      .map((t) => Math.round(bx + (bX - bx) * t))
+      .find(
+        (at) =>
+          at >= bx + 8 &&
+          at + 12 < bX - 8 &&
+          topMounts.every(
+            (m) =>
+              Math.hypot((at + 6) / 16 - m.at[0], trayCentreY / 16 - m.at[1]) >
+              1.05,
+          ),
+      );
     for (let y = by; y < bY; y++)
       for (let x = bx; x < bX; x++) {
         const p: Pt = [x + 0.5, y + 0.5];
@@ -329,7 +343,7 @@ export function shipVisualLayersR002(
           const rib = mod(along, profile.rib) < 3;
           const low = floor + 4,
             high = Math.max(low + 1, top - 4);
-          if (distance < 1 && (rib || distance < 0.65)) {
+          if (!shellNormal && distance < 1 && (rib || distance < 0.65)) {
             for (const [z0, z1] of [
               [floor, low],
               [high, top],
@@ -546,7 +560,7 @@ export function shipVisualLayersR002(
               Math.min(floor, lo + 2),
               family,
             );
-          if (distance >= 1 && distance < 3)
+          if (distance >= 2 && distance < 3)
             column(
               `${family}:skirt-step`,
               "frame",
@@ -756,14 +770,14 @@ export function shipVisualLayersR002(
             }
           }
           surfaceRole = "hull";
-          if (distance >= 1 && distance < 3)
+          if (distance >= 2 && distance < 3)
             column(
               `${family}:cap`,
               "frame",
               "trim",
               x,
               y,
-              Math.max(floor, top - 2),
+              Math.max(floor, top - 1),
               top,
               family,
             );
@@ -798,149 +812,138 @@ export function shipVisualLayersR002(
             );
             roofChart = undefined;
           } else {
-            // Offset 1x2 / 2x2 m enclosure fields join an integrated service belt.
-            // Their cadence is global, while mount/pressure junctions choose real cavities.
-            const row = Math.floor(y / 32);
-            const offset = mod(row, 2) ? Math.floor(profile.course / 2) : 0;
-            const roofKind = mod(
-              Math.floor((x - offset) / (profile.course * 2)) + row,
-              4,
+            // A housed pressure tray, not independent cards on a thin sheet. Two broad
+            // shoulders overlap along a real assembly joint and protect one recessed service
+            // channel. Every pocket terminates before the source footprint ends/holes.
+            const centreY = trayCentreY;
+            const channelHalf = deck
+              ? Math.min(10, Math.floor((bY - by) * 0.12))
+              : 4;
+            const fromEnd = Math.min(x - bx, bX - 1 - x);
+            const mountClear = topMounts.every(
+              (m) => Math.hypot(world[0] - m.at[0], world[1] - m.at[1]) > 0.8,
             );
-            const plateWidth =
-              roofKind < 2 ? profile.course : Math.floor(profile.course / 2);
-            const u = mod(x - offset, plateWidth),
-              v = mod(y, 32);
-            const spineCentre = Math.round((by + bY) / 2),
-              spineHalf = deck ? 14 : 6;
-            const spine =
-              Math.abs(y - spineCentre) < spineHalf &&
-              x > bx + 6 &&
-              x < bX - 12;
-            const nearestMount = doc.mounts.find(
-              (m) =>
-                m.attach === "top" &&
-                Math.hypot(world[0] - m.at[0], world[1] - m.at[1]) < 0.95,
+            const channel =
+              Math.abs(y - centreY) < channelHalf && fromEnd >= 8 && mountClear;
+            const serviceBelt =
+              Math.abs(y - centreY) < channelHalf + 4 && fromEnd >= 6;
+            const joint = Math.round(bx + (bX - bx) * 0.58);
+            const foreShoulder = x >= joint;
+            const endInset = fromEnd < 4 ? 2 : 0;
+            const shoulder = distance >= 2 + endInset && !serviceBelt;
+            column(
+              `${family}:roof-pressure-tray`,
+              "core",
+              "secondary",
+              x,
+              y,
+              hi - 5,
+              hi - 3,
+              family,
             );
-            const equipmentBelt =
-              !!nearestMount && Math.abs(world[1] - nearestMount.at[1]) < 0.75;
-            const service = spine || equipmentBelt;
-            const serviceU = mod(x, profile.course);
-            const serviceBay =
-              x - serviceU >= bx + 6 &&
-              x - serviceU + profile.course <= bX - 12;
-            const cavity =
-              service &&
-              serviceBay &&
-              mod(Math.floor(x / profile.course), 3) !== 2 &&
-              serviceU >= 6 &&
-              serviceU < profile.course - 6 &&
-              Math.abs(y - spineCentre) < spineHalf - 3;
-            const redField =
-              roofKind === 2 && u > plateWidth * 0.25 && v >= 8 && v < 24;
-            if (service) {
+            column(
+              `${family}:roof-subframe`,
+              "frame",
+              "trim",
+              x,
+              y,
+              hi - 3,
+              hi - 1,
+              family,
+            );
+            if (shoulder) {
+              // Offset front/rear case ends have broad 2–3 cell shoulders. Only the
+              // genuine overlap joint gets a stepped lip, never each lattice-height tread.
               column(
-                `${family}:roof-service-spine`,
-                "service",
-                "trim",
-                x,
-                y,
-                hi - 1,
-                hi + 1,
-                family,
-              );
-            } else if (u >= 1 && u < plateWidth - 1 && v >= 1 && v < 31) {
-              const slot = redField ? "accent" : "primary";
-              column(
-                `${family}:roof-armor`,
+                `${family}:roof-housed-shoulder`,
                 "plate",
-                slot,
+                "primary",
                 x,
                 y,
-                hi - 1,
-                hi,
+                hi - 3,
+                hi + (foreShoulder ? 1 : 0),
                 family,
               );
-              // One course overlaps the subframe; selected corners step without an outline frill.
-              const steppedEnd = roofKind === 1 && u < 3 && v < 3;
-              if (
-                !steppedEnd &&
-                u >= 2 &&
-                u < plateWidth - 2 &&
-                v >= 2 &&
-                v < 30
-              )
+              if (x >= joint - 2 && x < joint + 2 && distance >= 4)
                 column(
-                  `${family}:roof-armor-field`,
+                  `${family}:roof-shoulder-overlap`,
                   "plate",
-                  slot,
+                  "primary",
                   x,
                   y,
-                  hi,
+                  hi - 2,
                   hi + 1,
                   family,
                 );
             }
-            if (cavity) {
+            if (channel) {
               column(
-                `${family}:roof-cassette-well`,
+                `${family}:roof-protected-channel`,
                 "void",
                 "dark",
                 x,
                 y,
-                hi - 1,
+                hi - 3,
                 hi + 2,
                 family,
               );
-              const localV = y - (spineCentre - spineHalf + 3),
-                height = 2 * spineHalf - 6;
-              const rim =
-                serviceU < 8 ||
-                serviceU >= profile.course - 8 ||
-                localV < 2 ||
-                localV >= height - 2;
-              if (rim)
+              // Continuous pressure floor remains below the 3-cell well. Two service
+              // sections have distinct functions, not an A/B/C/D wallpaper cadence.
+              const cassetteX = trayCassetteX ?? Number.NEGATIVE_INFINITY;
+              const cassette = x >= cassetteX && x < cassetteX + 12;
+              if (cassette) {
                 column(
-                  `${family}:roof-cassette-rim`,
-                  "frame",
+                  `${family}:roof-access-cassette`,
+                  "service",
+                  "accent",
+                  x,
+                  y,
+                  hi - 3,
+                  hi - 1,
+                  family,
+                );
+                if (
+                  x >= cassetteX + 8 &&
+                  x < cassetteX + 10 &&
+                  Math.abs(y - centreY) < 2
+                )
+                  column(
+                    `${family}:roof-access-latch`,
+                    "service",
+                    "metal",
+                    x,
+                    y,
+                    hi - 1,
+                    hi,
+                    family,
+                  );
+              } else if (
+                x > joint + 8 &&
+                x < bX - 10 &&
+                mod(x - joint, 6) < 2
+              ) {
+                column(
+                  `${family}:roof-cooling-louver`,
+                  "service",
                   "trim",
                   x,
                   y,
+                  hi - 3,
                   hi - 1,
-                  hi + 2,
                   family,
                 );
-              else if (localV === 4 || localV === height - 5)
-                column(
-                  `${family}:roof-cassette-fin`,
-                  "service",
-                  "metal",
-                  x,
-                  y,
-                  hi - 1,
-                  hi + 1,
-                  family,
-                );
-            }
-            // An access lid belongs to its enclosing plate course, with its handle one level proud.
-            if (
-              redField &&
-              !service &&
-              u >= 3 &&
-              u < plateWidth - 3 &&
-              v >= 10 &&
-              v < 22
-            ) {
-              if (u === plateWidth - 4 && v >= 14 && v < 18)
-                column(
-                  `${family}:roof-access-latch`,
-                  "service",
-                  "metal",
-                  x,
-                  y,
-                  hi + 1,
-                  hi + 2,
-                  family,
-                );
+              }
+            } else if (serviceBelt) {
+              column(
+                `${family}:roof-channel-guard`,
+                "frame",
+                "trim",
+                x,
+                y,
+                hi - 3,
+                hi,
+                family,
+              );
             }
           }
         }
@@ -1038,17 +1041,6 @@ export function shipVisualLayersR002(
           Math.max(lo + 1, floor),
           family,
         );
-        if (inside && boundary.distance < 1)
-          column(
-            `${family}:continuous-upper-guard`,
-            "frame",
-            "trim",
-            x,
-            y,
-            Math.max(floor, top - 2),
-            top,
-            family,
-          );
         // Occasional guard posts belong to real bay ends, not every exposed slope cell.
         const along = boundary.alongAxis === 0 ? x : y;
         if (
@@ -1115,7 +1107,7 @@ export function shipVisualLayersR002(
           Math.floor(start / profile.course) + idPhase,
           3,
         );
-        const Z = glazed ? ft + 11 : wallCap - 3;
+        const Z = glazed ? ft + 11 : wallCap - 1;
         const surface = (
           side: number,
           u: number,
@@ -1336,10 +1328,10 @@ export function shipVisualLayersR002(
         }
       }
       const kick = [...bounds];
-      kick[5] = ft + 4;
+      kick[5] = ft + 2;
       box(`${id}:kick`, "frame", "trim", kick, family);
       const capbox = [...bounds];
-      capbox[2] = wallCap - 2;
+      capbox[2] = wallCap - 1;
       if (vertical) {
         capbox[0] += 1;
         capbox[3] -= 1;
@@ -1348,6 +1340,19 @@ export function shipVisualLayersR002(
         capbox[4] -= 1;
       }
       box(`${id}:cap`, "frame", "trim", capbox, family);
+      for (const [u, U] of [
+        [0, Math.min(3, span)],
+        [Math.max(0, span - 3), span],
+      ])
+        box(
+          `${id}:shaped-end`,
+          "frame",
+          "trim",
+          vertical
+            ? [x0 - 2, y0 + u, ft + 2, x0 + 2, y0 + U, wallCap]
+            : [x0 + u, y0 - 2, ft + 2, x0 + U, y0 + 2, wallCap],
+          family,
+        );
       if (glazed) {
         const carve = [...bounds];
         carve[2] = ft + 13;

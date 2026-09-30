@@ -156,10 +156,32 @@ describe("versioned reference recipes", () => {
         .every((l) => l.slot === "secondary"),
     ).toBe(true);
     const wells = roof.layers.filter((l) =>
-      l.id.endsWith(":roof-cassette-well"),
+      l.id.endsWith(":roof-protected-channel"),
     );
     expect(wells.length).toBeGreaterThan(0);
-    expect(wells.every((l) => l.bounds[5] - l.bounds[2] === 3)).toBe(true);
+    // The well must actually remain open above an intact pressure tray after
+    // ordered compaction, including where a shoulder overlaps an assembly joint.
+    let recessed = 0;
+    for (const well of wells) {
+      const [x, y, z, X, Y] = well.bounds;
+      for (let a = x; a < X; a++)
+        for (let b = y; b < Y; b++) {
+          if (roof.cells.has(visualCellKey(a, b, z + 2))) continue;
+          recessed++;
+          expect(roof.cells.has(visualCellKey(a, b, z - 1))).toBe(true);
+        }
+    }
+    expect(recessed).toBeGreaterThan(100);
+    expect(
+      roof.layers.some(
+        (l) =>
+          l.support === "volume:wing-s" &&
+          l.id.endsWith(":roof-housed-shoulder"),
+      ),
+    ).toBe(true);
+    expect(
+      roof.layers.some((l) => l.id.endsWith(":continuous-upper-guard")),
+    ).toBe(false);
     expect(result.cells.size).toBeGreaterThan(10000);
     expect(JSON.stringify(doc)).toBe(before);
     expect(() =>

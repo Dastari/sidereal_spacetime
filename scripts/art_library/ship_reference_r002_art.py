@@ -260,26 +260,30 @@ def enclosed_weapon(original,kind):
     """One low pivot inside an armored receiver; payload keeps its original mounting axis."""
     lo=[min(q[i] for q in original.boxes) for i in range(3)]
     hi=[max(q[i+3] for q in original.boxes) for i in range(3)]
-    W=original.size[0];c=W/2;H=hi[2];zc=H*.57
+    W=original.size[0];c=W/2;H=hi[2];zc=H*.46
     p=K.Piece("reference.r002."+kind,original.family,original.mount,original.size);b=p.b
-    b(1,1,0,W-1,W-1,H*.11,"trim")
-    p.disc("z",c,c,max(2,round(W*.25)),H*.11,H*.23,"metal")
-    # Protective cheeks enclose the breech/pivot; no three-disc staircase pedestal.
+    b(1,1,0,W-1,W-1,H*.10,"trim")
+    p.disc("z",c,c,max(2,round(W*.25)),H*.10,H*.21,"metal")
+    # Compact dark breech remains visible between two stepped partial cheek shrouds.
+    # The front shoulder lowers toward the payload instead of a tall rectangular tower.
+    b(c-W*.28,c-W*.20,H*.21,c+W*.24,c+W*.20,H*.59,"secondary")
     for ya,yb in ((c-W*.30,c-W*.20),(c+W*.20,c+W*.30)):
-        b(c-W*.28,ya,H*.20,c+W*.24,yb,H*.72,"primary")
-        b(c-W*.18,ya,H*.29,c+W*.14,yb,H*.48,"accent")
-    b(c-W*.28,c-W*.20,H*.32,c+W*.24,c+W*.20,H*.76,"secondary")
-    b(c-W*.30,c-W*.23,H*.65,c+W*.17,c+W*.23,H*.80,"primary")
-    # Deep access panel and latch on the receiver's rear, with sparse local fasteners.
-    b(c-W*.32,c-W*.15,H*.40,c-W*.29,c+W*.15,H*.65,"trim")
-    b(c-W*.33,c-W*.10,H*.44,c-W*.32,c+W*.10,H*.61,"accent")
-    b(c-W*.34,c+W*.045,H*.47,c-W*.33,c+W*.075,H*.57,"metal")
+        b(c-W*.28,ya,H*.23,c-W*.04,yb,H*.63,"primary")
+        b(c-W*.04,ya,H*.23,c+W*.24,yb,H*.46,"primary")
+        b(c-W*.23,ya,H*.31,c-W*.11,yb,H*.46,"trim")
+        b(c-W*.21,ya,H*.34,c-W*.13,yb,H*.43,"accent")
+    b(c-W*.23,c-W*.15,H*.59,c-W*.04,c+W*.15,H*.65,"primary")
+    # Recessed receiver access, mechanical latch, and a protected exposed top saddle.
+    b(c-W*.32,c-W*.15,H*.28,c-W*.29,c+W*.15,H*.53,"trim")
+    b(c-W*.33,c-W*.10,H*.32,c-W*.32,c+W*.10,H*.49,"accent")
+    b(c-W*.34,c+W*.045,H*.35,c-W*.33,c+W*.075,H*.45,"metal")
+    b(c-W*.02,c-W*.13,H*.59,c+W*.17,c+W*.13,H*.61,"metal")
     front=max(c+W*.34,hi[0]-1);start=c+W*.22
     if "missile" in kind:
-        b(c-W*.24,c-W*.24,H*.36,c+W*.24,c+W*.24,H*.87,"primary")
+        b(c-W*.24,c-W*.24,H*.30,c+W*.24,c+W*.24,H*.64,"primary")
         for yy in (c-W*.12,c+W*.12):
-            b(c+W*.24,yy-W*.055,H*.50,c+W*.27,yy+W*.055,H*.70,"dark")
-            b(c+W*.27,yy-W*.025,H*.56,c+W*.28,yy+W*.025,H*.65,"metal")
+            b(c+W*.24,yy-W*.055,H*.38,c+W*.27,yy+W*.055,H*.56,"dark")
+            b(c+W*.27,yy-W*.025,H*.42,c+W*.28,yy+W*.025,H*.51,"metal")
     elif "railgun" in kind:
         bw=max(1,W*.095)
         b(start,c-bw,zc-bw,front,c+bw,zc+bw,"trim")
@@ -297,8 +301,8 @@ def enclosed_weapon(original,kind):
             b(start,yy-r*1.35,zz-r*1.35,start+(front-start)*.30,yy+r*1.35,zz+r*1.35,"secondary")
             b(start+(front-start)*.24,yy-r,zz-r,front,yy+r,zz+r,"metal.barrel")
     # Protected optic is attached to the receiver, never a glowing giant cap.
-    b(c-W*.10,c-W*.09,H*.80,c+W*.08,c+W*.09,min(H,H*.94),"trim")
-    b(c+W*.08,c-W*.05,H*.83,c+W*.09,c+W*.05,min(H,H*.90),"emit_a")
+    b(c-W*.10,c-W*.09,H*.65,c+W*.08,c+W*.09,H*.77,"trim")
+    b(c+W*.08,c-W*.05,H*.68,c+W*.09,c+W*.05,H*.73,"emit_a")
     return p
 
 
@@ -373,13 +377,13 @@ def engine_mesh(name,boxes):
     L=hi[1]-lo[1]
     # Y is negative outward, matching the existing published engine/nozzle frame.
     profiles=[(hi[1],r*.74,"trim"),(hi[1]-.07*L,r*.90,"trim"),
-              (hi[1]-.11*L,r*.80,"secondary"),(hi[1]-.59*L,r*.80,"secondary"),
+              (hi[1]-.11*L,r*.70,"secondary"),(hi[1]-.59*L,r*.70,"secondary"),
               (hi[1]-.63*L,r*.91,"trim"),(hi[1]-.70*L,r*.91,"trim"),
               (hi[1]-.74*L,r*.58,"metal"),(lo[1]+.18*L,r*.56,"metal"),
               (lo[1]+.06*L,r*.78,"metal"),(lo[1],r*.84,"trim"),
               (lo[1],r*.65,"metal"),(lo[1]+.17*L,r*.34,"dark"),
               (lo[1]+.19*L,r*.27,"dark"),(lo[1]+.195*L,0,"dark")]
-    verts,faces,slots=[],[],[];n=32
+    verts,faces,slots=[],[],[];n=8
     for y,radius,slot in profiles:
         for k in range(n):
             a=k*2*math.pi/n;verts.append((math.cos(a)*radius,y,math.sin(a)*radius))
@@ -391,27 +395,37 @@ def engine_mesh(name,boxes):
     # Tiny protected signal lenses on the aft shroud; no glowing circumference.
     me=bpy.data.meshes.new(name);me.from_pydata(verts,[],faces)
     me.polygons.foreach_set("material_index",slots)
-    me.polygons.foreach_set("use_smooth",[True]*len(faces))
+    me.polygons.foreach_set("use_smooth",[False]*len(faces))
     bm=bmesh.new();bm.from_mesh(me);bpy.data.meshes.remove(me)
     service=[]
-    for side in range(4):
-        # Four discrete protected housings leave the pressure vessel visible between them.
-        for radial0,radial1,ya,yb,width,slot in (
-            (.65,.95,.14,.58,.36,"primary"),
-            (.94,.965,.22,.48,.28,"dark"),
-            (.965,.98,.25,.45,.21,"accent"),
-            (.96,.99,.18,.21,.30,"trim"),
-            (.96,.99,.49,.53,.30,"trim"),
-        ):
-            x0,x1=-width*r,width*r;z0,z1=radial0*r,radial1*r
-            if side==1:x0,x1,z0,z1=z0,z1,x0,x1
-            elif side==2:z0,z1=-z1,-z0
-            elif side==3:x0,x1,z0,z1=-z1,-z0,x0,x1
-            service.append((x0/E.T,(hi[1]-yb*L)/E.T,z0/E.T,x1/E.T,(hi[1]-ya*L)/E.T,z1/E.T,slot))
+    def pod(side,x0,x1,radial0,radial1,ya,yb,slot):
+        z0,z1=radial0*r,radial1*r;x0*=r;x1*=r
+        if side==1:x0,x1,z0,z1=z0,z1,x0,x1
+        elif side==3:x0,x1,z0,z1=-z1,-z0,x0,x1
+        service.append((x0/E.T,(hi[1]-yb*L)/E.T,z0/E.T,x1/E.T,(hi[1]-ya*L)/E.T,z1/E.T,slot))
+    for side in (0,1,3):
+        # Front/rear armored case ends enclose an eight-sided dark vessel. Four
+        # broad rails frame a genuinely backed pocket; no opaque box hides its centre.
+        for ya,yb in ((.12,.33),(.47,.67)):
+            pod(side,-.46,.46,.70,.75,ya,yb,"secondary")
+            pod(side,-.46,-.29,.73,.99,ya,yb,"primary")
+            pod(side,.29,.46,.73,.99,ya,yb,"primary")
+            pod(side,-.29,.29,.73,.99,ya,ya+.035,"primary")
+            pod(side,-.29,.29,.73,.99,yb-.035,yb,"primary")
+            pod(side,-.27,.27,.75,.79,ya+.04,yb-.04,"trim")
+            for yy in (ya+.075,yb-.075):
+                pod(side,-.24,.24,.79,.84,yy,yy+.018,"metal")
+            if ya>.4:
+                pod(side,-.16,.16,.79,.82,ya+.06,yb-.06,"accent")
+        # Exposed central service band carries a protected feed and compact access
+        # coupling, retaining the pressure-vessel identity between the case ends.
+        pod(side,-.12,.12,.69,.83,.34,.46,"metal")
+        pod(side,-.19,.19,.79,.89,.375,.425,"trim")
+    pod(0,-.07,.07,.90,.97,.60,.625,"emit_b")
     for box in service:
         part=R.original_mesh(name,[box]);sub=bmesh.new();sub.from_mesh(part);bpy.data.meshes.remove(part)
         edges=[e for e in sub.edges if len(e.link_faces)==2]
-        if edges:bmesh.ops.bevel(sub,geom=edges,offset=min(.025,L*.008,r*.035),segments=2,affect="EDGES",clamp_overlap=True)
+        if edges:bmesh.ops.bevel(sub,geom=edges,offset=min(.04,L*.018,r*.065),segments=2,affect="EDGES",clamp_overlap=True)
         for f in sub.faces:f.material_index=E.SI[box[6]]
         temp=bpy.data.meshes.new("GEO-engine-service");sub.to_mesh(temp);sub.free();bm.from_mesh(temp);bpy.data.meshes.remove(temp)
     me=bpy.data.meshes.new(name);bm.to_mesh(me);bm.free()
