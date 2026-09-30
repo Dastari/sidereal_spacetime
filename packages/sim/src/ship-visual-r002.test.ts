@@ -185,6 +185,23 @@ describe("versioned reference recipes", () => {
         expect(outer).toBeGreaterThan(50);
         expect(exposedUpper).toBeGreaterThan(100);
         expect(exposedLower).toBeGreaterThan(50);
+        const sides = [...result.cells.values()].filter(
+          (c) => c.normalSideFaces,
+        );
+        expect(sides.length).toBeGreaterThan(20);
+        for (const c of sides) {
+          expect(c.normalSide!.normal[2]).toBe(0);
+          expect(c.normalSideFaces! & ~c.normalSide!.faces).toBe(0);
+          for (let axis = 0; axis < 2; axis++)
+            for (const side of [-1, 1])
+              if (c.normalSideFaces! & (1 << (axis * 2 + (side > 0 ? 1 : 0)))) {
+                const p = [c.x, c.y, c.z];
+                p[axis] += side;
+                expect(result.cells.has(visualCellKey(p[0], p[1], p[2]))).toBe(
+                  false,
+                );
+              }
+        }
         const cell = [...result.cells.values()].find(
           (c) => c.normalChart?.includes(":shoulder:") && c.normalFaces! & 32,
         )!;
@@ -486,5 +503,7 @@ describe("versioned reference recipes", () => {
           .every((l) => l.bounds[5] <= 25),
       ).toBe(true);
     }
-  });
+    // Four complete Wren/Crest deck/flight compiles exercise assembled visibility;
+    // CI contention may exceed Vitest's default 5s. Keep this workload locally bounded.
+  }, 20000);
 });

@@ -17,6 +17,9 @@ export interface VisualCell {
   normalChart?: string;
   /** Bit axis*2+(positive?1:0); only faces exposed in the intact sampled plate get its analytic normal. */
   normalFaces?: number;
+  normalSide?: ShipVisualLayer["normalSide"];
+  /** Independent original exposed XY-side mask, frozen before damage removal. */
+  normalSideFaces?: number;
   surfaceRole?: ShipVisualLayer["surfaceRole"];
 }
 export type VisualVolume = Map<string, VisualCell>;
@@ -110,6 +113,7 @@ export function sampleShipVisualLayers(
               ...(l.normalHint ? { normalHint: l.normalHint } : {}),
               ...(l.normalChart ? { normalChart: l.normalChart } : {}),
               ...(l.surfaceRole ? { surfaceRole: l.surfaceRole } : {}),
+              ...(l.normalSide ? { normalSide: l.normalSide } : {}),
             });
           if (cells.size > maxCells) throw Error("Visual volume exceeds limit");
         }
@@ -118,6 +122,22 @@ export function sampleShipVisualLayers(
   // Capture original face ownership once. Synthetic removals retain this mask, so fresh
   // damage cuts never inherit intact slope shading. True patch/glass/void edges stay hard.
   for (const c of cells.values()) {
+    if (c.normalSide) {
+      let sideMask = 0;
+      for (let axis = 0; axis < 2; axis++)
+        for (const side of [-1, 1]) {
+          const bit = 1 << (axis * 2 + (side > 0 ? 1 : 0));
+          const p = [c.x, c.y, c.z];
+          p[axis] += side;
+          if (
+            c.normalSide.faces & bit &&
+            c.normalSide.normal[axis] * side > 0 &&
+            !cells.has(visualCellKey(p[0], p[1], p[2]))
+          )
+            sideMask |= bit;
+        }
+      c.normalSideFaces = sideMask;
+    }
     if (!c.normalChart || !c.normalHint) continue;
     let mask = 0;
     for (let axis = 0; axis < 3; axis++)

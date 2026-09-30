@@ -352,6 +352,28 @@ for alias,base in (("metal.barrel","metal"),("secondary.vessel","secondary"),
     for theme in K.THEMES.values():theme[alias]=theme[base]
 
 
+# These two true shaped covers are not solid bounding boxes. Keep the default
+# rectangular exporter untouched: only this candidate runner changes their occlusion.
+NONRECT_COVER_SLOTS = frozenset(("primary.receiver-cover", "primary.thermal-cover"))
+original_hidden_faces = E.hidden_faces
+original_trim_buried_emissive = E.trim_buried_emissive
+
+def reference_hidden_faces(boxes):
+    if not any(b[6] in NONRECT_COVER_SLOTS for b in boxes):
+        return original_hidden_faces(boxes)
+    occupancy = [(*b[:6], "glass") if b[6] in NONRECT_COVER_SLOTS else b for b in boxes]
+    return original_hidden_faces(occupancy)
+
+def reference_trim_buried_emissive(boxes):
+    covers = [b for b in boxes if b[6] in NONRECT_COVER_SLOTS]
+    if not covers:
+        return original_trim_buried_emissive(boxes)
+    regular = [b for b in boxes if b[6] not in NONRECT_COVER_SLOTS]
+    return (original_trim_buried_emissive(regular) if regular else []) + covers
+
+E.hidden_faces = reference_hidden_faces
+E.trim_buried_emissive = reference_trim_buried_emissive
+
 def barrel_mesh(name,box):
     # Exporter has already converted kit-top +X into catalog +Y. Detect the
     # converted long axis rather than assuming the original author's coordinate frame.

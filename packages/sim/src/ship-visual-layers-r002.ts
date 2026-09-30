@@ -50,6 +50,7 @@ export function shipVisualLayersR002(
     layers.push({ id, role, slot, bounds: q, support, surfaceRole });
   };
   let shellNormal: [number, number, number] | undefined;
+  let sidePlane: ShipVisualLayer["normalSide"] | undefined;
   let roofChart: { id: string; normal: [number, number, number] } | undefined;
   const column = (
     id: string,
@@ -63,6 +64,8 @@ export function shipVisualLayersR002(
   ) => {
     const before = layers.length;
     box(id, role, slot, [x, y, z0, x + 1, y + 1, z1], support);
+    if (sidePlane && layers.length > before && role !== "void")
+      layers[layers.length - 1].normalSide = sidePlane;
     if (roofChart && layers.length > before) {
       layers[layers.length - 1].normalChart = roofChart.id;
       layers[layers.length - 1].normalHint = roofChart.normal;
@@ -1394,6 +1397,27 @@ export function shipVisualLayersR002(
           normal = [nx / length, ny / length, 1 / length];
           analyticCharts.set(id, normal);
         }
+        let sideFaces = 0;
+        // Only the original polygon exterior belongs to this XY plane. Apertures,
+        // actual segment ends and shaped end returns remain hard; later damage cannot add bits.
+        if (!shapedEnd && endDistance >= 1)
+          for (let axis = 0; axis < 2; axis++)
+            for (const side of [-1, 1]) {
+              const n: [number, number] = [...p];
+              n[axis] += side;
+              if (
+                boundary.normalHint[axis] * side > 0 &&
+                !insidePolygon(poly, ...n)
+              )
+                sideFaces |= 1 << (axis * 2 + (side > 0 ? 1 : 0));
+            }
+        sidePlane = sideFaces
+          ? {
+              id: `${family}:side:${boundary.edgeIndex}`,
+              normal: boundary.normalHint,
+              faces: sideFaces,
+            }
+          : undefined;
         const shoulderTop = top - Math.ceil(Math.max(radialDrop, endDrop));
         shellNormal = undefined;
         surfaceRole = deck ? "wall" : "hull";
@@ -1469,6 +1493,7 @@ export function shipVisualLayersR002(
           );
           roofChart = undefined;
         }
+        sidePlane = undefined;
       }
   }
   shellNormal = undefined;
@@ -1957,7 +1982,7 @@ export function compactColumns(
     const [x, y, z, X, Y, Z] = l.bounds;
     const key =
       X - x === 1 && Y - y === 1
-        ? `${l.id}:${l.role}:${l.slot}:${l.surfaceRole}:${l.support}:${l.normalHint?.join(",")}:${l.normalChart ?? ""}:${y}:${z}:${Z}`
+        ? `${l.id}:${l.role}:${l.slot}:${l.surfaceRole}:${l.support}:${l.normalHint?.join(",")}:${l.normalChart ?? ""}:${l.normalSide ? `${l.normalSide.id}:${l.normalSide.normal.join(",")}:${l.normalSide.faces}` : ""}:${y}:${z}:${Z}`
         : `unique:${groups.size}`;
     const g = groups.get(key);
     if (g) g.push(l);

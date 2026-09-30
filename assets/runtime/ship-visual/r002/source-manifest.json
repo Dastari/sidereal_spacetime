@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "5e783959d052467c5ed1a76789c1b1310ca00ebabd37923aeb626f26ed83232e",
+  "compilerSha256": "78ea23a9cf8b562808b771177bafe8e6c1a1c6a3f9cb96815dea73d33df9a3a7",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -8,7 +8,7 @@
     },
     {
       "path": "packages/content/src/ship-visual.ts",
-      "sha256": "054fb19634e0f1d916ae02d512e933247a34ddee8077ba0c14671bb5e532bc93"
+      "sha256": "fdd8e26fef391a06c5d844e5192356245f7f3dcbec7d51a0ac2968dc1f85530b"
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
@@ -16,7 +16,7 @@
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "29ce2bf648b2335700e5ee215b163912760e2ac2f9f60de653bed9260f5f3b9e"
+      "sha256": "da723a5ad661f3295c68115607625ae87df355bf09dd132fae5e609396914527"
     },
     {
       "path": "packages/sim/src/ship-dresser.ts",
@@ -28,15 +28,15 @@
     },
     {
       "path": "packages/sim/src/ship-visual-sampler.ts",
-      "sha256": "0151bdfa8e545b43d2052459055d0c5527e60f30bed1c43805f5b3718dba130c"
+      "sha256": "473af2fc91fa80e221f9e8215111407506c05b1011fc92caf54ed5428203e42e"
     },
     {
       "path": "packages/sim/src/ship-visual-compiler.ts",
-      "sha256": "63239b7c2dac248a00499ef0d51bf3f7d2f0263702655893c3954d82ae44d9ae"
+      "sha256": "1c8bd246c53e04f3294e8e64ccc4160c0f80ff3c19b9f2251da05c9c75fe261a"
     },
     {
       "path": "packages/render/src/prefab-ship/sampled-structure.ts",
-      "sha256": "505b5fa0893eac5b20f0fe68889ab4ddfd66f61d37d1acea51cf7ac944c7d774"
+      "sha256": "850d0492d98cf15d5a422604242c17650d7807033e34a25576c1ac92be32afde"
     },
     {
       "path": "packages/render/src/prefab-ship/sampled-ao.ts",
@@ -88,7 +88,7 @@
     },
     {
       "path": "scripts/art_library/ship_reference_r002_art.py",
-      "sha256": "479c7e941762a920bdeff0f4c764bfcee0e0d4206a5ce62d84aea4f005e46c5e"
+      "sha256": "daf8981c93f7aebccf01fb445f6ff19a55e9c7c6eb8bd4d025f50ebca6f09fbf"
     },
     {
       "path": "scripts/art_library/ship_reference_r002_maps.py",

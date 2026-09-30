@@ -508,4 +508,7 @@ it.each([false, true])(
     view.dispose();
     scene.dispose();
   },
+  // Real whole-ship compile, mesh, initial batching and theme replay share this
+  // fixture; retain assertions while bounding its CI-contended CPU workload.
+  15000,
 );

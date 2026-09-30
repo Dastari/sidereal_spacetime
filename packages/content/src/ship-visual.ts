@@ -71,6 +71,9 @@ export interface ShipVisualLayer {
   normalHint?: [number, number, number];
   /** Analytic intact plate chart. Sampling records its original exposed faces for cut-safe shading. */
   normalChart?: string;
+  /** Candidate original polygon side plane, independently qualified from an upper chart.
+   * Eligible XY bits are authored against the original segment; sampling intersects intact exposure. */
+  normalSide?: { id: string; normal: [number, number, number]; faces: number };
   /** Optional candidate finish ownership; independent of support/layer roles and authority. */
   surfaceRole?: "floor" | "wall" | "roof" | "hull";
 }
@@ -224,6 +227,23 @@ export function validateShipVisualLayers(
         l.normalHint[2] < 1 / 64)
     )
       throw Error("Invalid sampled normal chart");
+    if (
+      l.normalSide !== undefined &&
+      (!l.normalSide ||
+        typeof l.normalSide.id !== "string" ||
+        !l.normalSide.id.trim() ||
+        l.normalSide.id.length > 160 ||
+        !Array.isArray(l.normalSide.normal) ||
+        l.normalSide.normal.length !== 3 ||
+        !Array.from(l.normalSide.normal).every(Number.isFinite) ||
+        Math.abs(Math.hypot(...l.normalSide.normal) - 1) > 0.001 ||
+        l.normalSide.normal[2] !== 0 ||
+        !Number.isInteger(l.normalSide.faces) ||
+        l.normalSide.faces < 1 ||
+        l.normalSide.faces > 15 ||
+        (l.normalSide.faces & ~15) !== 0)
+    )
+      throw Error("Invalid sampled side ownership");
     if (
       l.surfaceRole !== undefined &&
       !["floor", "wall", "roof", "hull"].includes(l.surfaceRole)

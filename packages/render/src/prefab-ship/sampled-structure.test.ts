@@ -8,6 +8,98 @@ import type { ShipVisualLayer } from "@sidereal/content/ship-visual";
 import { meshSampledStructure } from "./sampled-structure";
 
 describe("sampled exposed surfaces", () => {
+  it("preserves separately qualified diagonal sides and shoulders, while new cuts and original end caps stay hard", () => {
+    const sideNormal: [number, number, number] = [
+      Math.SQRT1_2,
+      Math.SQRT1_2,
+      0,
+    ];
+    const shoulder: [number, number, number] = [
+      1 / Math.sqrt(6),
+      1 / Math.sqrt(6),
+      2 / Math.sqrt(6),
+    ];
+    const layers: ShipVisualLayer[] = [];
+    for (let x = 0; x < 7; x++)
+      for (let y = 0; y < 7 - x; y++) {
+        const exposed = x + y === 6 && x > 0 && y > 0;
+        layers.push({
+          id: `column:${x}:${y}`,
+          role: "core",
+          slot: "secondary",
+          bounds: [x, y, 0, x + 1, y + 1, 2 + Math.floor((6 - x - y) / 2)],
+          normalChart: "shoulder",
+          normalHint: shoulder,
+          ...(exposed
+            ? {
+                normalSide: {
+                  id: "original-diagonal",
+                  normal: sideNormal,
+                  faces: 10,
+                },
+              }
+            : {}),
+        });
+      }
+    const intact = sampleShipVisualLayers(layers);
+    const ordinary = sampleShipVisualLayers(
+      layers.map(({ normalSide, normalChart, normalHint, ...l }) => l),
+    );
+    expect([...intact.keys()]).toEqual([...ordinary.keys()]);
+    const inspect = (cells: typeof intact) =>
+      meshSampledStructure(cells, { ambientOcclusion: true }).flatMap((g) => {
+        const rows: { centre: number[]; normal: number[]; color: number[] }[] =
+          [];
+        for (let i = 0; i < g.indices.length; i += 3) {
+          const vs = Array.from(g.indices.slice(i, i + 3));
+          rows.push({
+            centre: [0, 1, 2].map(
+              (a) => vs.reduce((n, v) => n + g.positions[v * 3 + a], 0) / 3,
+            ),
+            normal: Array.from(g.normals.slice(vs[0] * 3, vs[0] * 3 + 3)),
+            color: Array.from(g.colors!.slice(vs[0] * 4, vs[0] * 4 + 4)),
+          });
+        }
+        return rows;
+      });
+    const faces = inspect(intact);
+    const sides = faces.filter(
+      (f) => f.normal[2] === 0 && f.normal[0] > 0.6 && f.normal[1] > 0.6,
+    );
+    expect(sides.length).toBeGreaterThan(0);
+    for (const f of sides) {
+      expect(f.normal).toEqual(sideNormal.map(Math.fround));
+      expect(f.color).toEqual([1, 1, 1, 1]);
+    }
+    expect(
+      faces.some((f) =>
+        f.normal.every((n, a) => n === Math.fround(shoulder[a])),
+      ),
+    ).toBe(true);
+    const ends = faces.filter((f) => f.centre[0] === 0);
+    expect(ends.length).toBeGreaterThan(0);
+    for (const f of ends) expect(f.normal).toEqual([-1, 0, 0]);
+    const damaged = removeShipVisualCells(
+      intact,
+      new Set([visualCellKey(4, 2, 0)]),
+    );
+    const cuts = inspect(damaged).filter(
+      (f) =>
+        f.centre[0] === 4 / 16 &&
+        f.centre[1] > 2 / 16 &&
+        f.centre[1] < 3 / 16 &&
+        f.centre[2] < 1 / 16,
+    );
+    expect(cuts.length).toBeGreaterThan(0);
+    for (const f of cuts) expect(f.normal).toEqual([1, 0, 0]);
+    expect(cuts.some((f) => f.color[0] < 1)).toBe(true);
+    expect(
+      meshSampledStructure(sampleShipVisualLayers(layers), {
+        ambientOcclusion: true,
+      }),
+    ).toEqual(meshSampledStructure(intact, { ambientOcclusion: true }));
+  });
+
   it("greedily merges a solid prism to six quads and retains global UV phase", () => {
     const cells = sampleShipVisualLayers([
       {
@@ -99,9 +191,24 @@ describe("sampled exposed surfaces", () => {
         bounds: [x, 0, 1, x + 1, 2, height],
         normalHint: normal,
         normalChart: "intact-plane",
+        // A deliberately overlapping descriptor proves the upper chart wins on
+        // its intact riser, rather than losing the positive-Z chamfer normal.
+        ...(x === 4
+          ? {
+              normalSide: {
+                id: "riser-side",
+                normal: [-1, 0, 0] as [number, number, number],
+                faces: 1,
+              },
+            }
+          : {}),
       });
     }
     const intact = sampleShipVisualLayers(layers);
+    expect(
+      intact.get(visualCellKey(4, 0, 2))!.normalFaces! &
+        intact.get(visualCellKey(4, 0, 2))!.normalSideFaces!,
+    ).toBe(1);
     const withoutCharts = sampleShipVisualLayers(
       layers.map(({ normalHint, normalChart, ...l }) => l),
     );

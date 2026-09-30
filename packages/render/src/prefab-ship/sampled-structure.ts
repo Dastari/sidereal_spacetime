@@ -54,11 +54,21 @@ export function meshSampledStructure(
         const at = p[axis] + (side > 0 ? 1 : 0),
           u = (axis + 1) % 3,
           v = (axis + 2) % 3;
-        const normalHint = c.normalChart
-          ? (c.normalFaces ?? 0) & (1 << (axis * 2 + (side > 0 ? 1 : 0)))
-            ? c.normalHint
-            : undefined
-          : c.normalHint;
+        const sideFace = Boolean(
+          c.normalSideFaces &&
+          c.normalSideFaces & (1 << (axis * 2 + (side > 0 ? 1 : 0))),
+        );
+        const shoulderFace = Boolean(
+          c.normalChart &&
+          (c.normalFaces ?? 0) & (1 << (axis * 2 + (side > 0 ? 1 : 0))),
+        );
+        const normalHint = shoulderFace
+          ? c.normalHint
+          : sideFace
+            ? c.normalSide!.normal
+            : c.normalChart
+              ? undefined
+              : c.normalHint;
         const key = `${axis}:${side}:${at}:${c.slot}:${c.role}:${c.surfaceRole ?? ""}`;
         let plane = planes.get(key);
         if (!plane)
@@ -79,7 +89,9 @@ export function meshSampledStructure(
           v: p[v],
           family: c.family,
           normalHint,
-          ...(c.normalChart && normalHint ? { chartFace: true } : {}),
+          ...((shoulderFace || sideFace) && normalHint
+            ? { chartFace: true }
+            : {}),
           ...(options.ambientOcclusion
             ? {
                 lights: [
