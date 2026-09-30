@@ -14,7 +14,7 @@ import {
   SHIP_VISUAL_FIXTURES,
   familyReviewCut,
 } from "@sidereal/content/ship-visual-fixture";
-import { SHIP_REFERENCE_VISUAL } from "@sidereal/content/ship-visual-revision";
+import { SHIP_REFERENCE_VISUAL } from "../art_library/ship_reference_revision";
 import { createPrefabDoors } from "../../packages/render/src/prefab-ship/doors";
 import { BOW_REVIEW_POD, BOW_HOSTS } from "./bow-fixtures";
 import { Engine } from "@babylonjs/core/Engines/engine";

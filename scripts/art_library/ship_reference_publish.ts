@@ -143,7 +143,7 @@ writeFileSync(
   json,
 );
 writeFileSync(
-  resolve(root, "packages/content/src/ship-visual-revision.ts"),
+  resolve(root, "scripts/art_library/ship_reference_revision.ts"),
   `/** Generated exact proposal pin; no default renderer or live asset selection. */\nexport const SHIP_REFERENCE_VISUAL = ${JSON.stringify({ url: "/assets/ship-visual/r001/manifest.json", sha256: hash(json), compilerSha256 }, null, 2)} as const;\n`,
 );
 writeFileSync(

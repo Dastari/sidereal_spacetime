@@ -11,7 +11,7 @@ import { BOW_HOSTS } from "./bow-fixtures";
  * Sets window.__prefabReady once the world has rendered a few frames; __prefabError on failure;
  * __prefabMetrics = [{ id, meshes, drawCalls }].
  */
-import { SHIP_REFERENCE_VISUAL } from "@sidereal/content/ship-visual-revision";
+import { SHIP_REFERENCE_VISUAL } from "../art_library/ship_reference_revision";
 import { createWorld, type SceneState } from "@sidereal/render";
 import type { Scene } from "@babylonjs/core/scene";
 import { SceneInstrumentation } from "@babylonjs/core/Instrumentation/sceneInstrumentation";

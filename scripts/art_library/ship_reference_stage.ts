@@ -10,7 +10,7 @@ import {
 } from "node:fs";
 import { dirname, relative, resolve, sep } from "node:path";
 import { readShipVisualManifest } from "@sidereal/content/ship-visual";
-import { SHIP_REFERENCE_VISUAL } from "@sidereal/content/ship-visual-revision";
+import { SHIP_REFERENCE_VISUAL } from "./ship_reference_revision";
 
 const root = resolve(import.meta.dirname, "../..");
 const destination = process.argv[2] && resolve(process.argv[2]);
