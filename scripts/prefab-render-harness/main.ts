@@ -14,6 +14,7 @@ import {
   SHIP_VISUAL_FIXTURES,
   familyReviewCut,
 } from "@sidereal/content/ship-visual-fixture";
+import { SHIP_REFERENCE_VISUAL_R002 } from "../art_library/ship_reference_r002_revision";
 import { SHIP_REFERENCE_VISUAL } from "../art_library/ship_reference_revision";
 import { createPrefabDoors } from "../../packages/render/src/prefab-ship/doors";
 import { BOW_REVIEW_POD, BOW_HOSTS } from "./bow-fixtures";
@@ -236,15 +237,19 @@ async function main() {
     const v = await createPrefabShipView(scene, doc, {
       catalog,
       visualVariant:
-        q.get("visual") === "reference-r001"
-          ? SHIP_REFERENCE_VISUAL
-          : undefined,
+        q.get("visual") === "reference-r002"
+          ? SHIP_REFERENCE_VISUAL_R002
+          : q.get("visual") === "reference-r001"
+            ? SHIP_REFERENCE_VISUAL
+            : undefined,
       visualReviewRemovedCells:
         q.get("damage") === "synthetic" ? familyReviewCut() : undefined,
       onVisualVariantError: (message) => {
         window.__prefabVisualError = message;
       },
-      externalDoorLeaves: q.get("visual") === "reference-r001",
+      externalDoorLeaves: ["reference-r001", "reference-r002"].includes(
+        q.get("visual") ?? "",
+      ),
       view,
       theme,
       parent: anchor,
@@ -254,7 +259,7 @@ async function main() {
       batch: q.get("batch") !== "0",
       roomLights: Number(q.get("lights") ?? 0),
     });
-    if (q.get("visual") === "reference-r001") {
+    if (["reference-r001", "reference-r002"].includes(q.get("visual") ?? "")) {
       const doors = createPrefabDoors(
         scene,
         v.root,

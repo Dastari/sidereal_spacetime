@@ -12,6 +12,8 @@ import {
   type ShipVisualView,
 } from "@sidereal/content/ship-visual";
 import { shipVisualLayers } from "./ship-visual-layers";
+import { shipVisualLayersR002 } from "./ship-visual-layers-r002";
+import { SHIP_VISUAL_PROFILES_R002 } from "@sidereal/content/ship-visual-r002";
 import {
   removeShipVisualCells,
   sampleShipVisualLayers,
@@ -29,8 +31,15 @@ export const visualSha256 = (text: string): string =>
   bytesToHex(sha256(new TextEncoder().encode(text)));
 export const visualPrefabSha256 = (doc: ShipPrefabDocumentV1): string =>
   visualSha256(canonicalShipPrefabJson(doc));
-export const visualProfilesSha256 = (): string =>
-  visualSha256(JSON.stringify(SHIP_VISUAL_PROFILES));
+export const visualProfilesSha256 = (revision = "r001"): string => {
+  if (revision !== "r001" && revision !== "r002")
+    throw Error("Unknown visual recipe revision");
+  return visualSha256(
+    JSON.stringify(
+      revision === "r002" ? SHIP_VISUAL_PROFILES_R002 : SHIP_VISUAL_PROFILES,
+    ),
+  );
+};
 export function visualVolumeSha256(cells: VisualVolume): string {
   return visualSha256(
     [...cells.values()]
@@ -48,8 +57,13 @@ export function compileShipVisual(
   view: ShipVisualView,
   profile: ShipVisualProfileId,
   removed?: ReadonlySet<string>,
+  revision = "r001",
 ) {
-  const layers = shipVisualLayers(doc, view, catalog, profile);
+  if (revision !== "r001" && revision !== "r002")
+    throw Error("Unknown visual recipe revision");
+  const layers = (
+    revision === "r002" ? shipVisualLayersR002 : shipVisualLayers
+  )(doc, view, catalog, profile);
   const intact = sampleShipVisualLayers(layers);
   const cells = removed?.size ? removeShipVisualCells(intact, removed) : intact;
   return { layers, cells, profile, view };

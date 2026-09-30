@@ -1,0 +1,50 @@
+{
+  "status": "proposal",
+  "compilerSha256": "94bc5febedd6d10a8e36924ce1fab4ac0a1700f910702f7a0dac5a5c13f49fd3",
+  "sources": [
+    {
+      "path": "packages/content/src/ship-visual-fixture.ts",
+      "sha256": "279958c4ef32ac0f4b01ad0314fdbdc346cf9bebad549e64b8e65840eb31aeaf"
+    },
+    {
+      "path": "packages/content/src/ship-visual.ts",
+      "sha256": "b3738b3ca5e50652b926cb55768b39700e8b615d4f1fe0de2fa5749939c9e41f"
+    },
+    {
+      "path": "packages/content/src/ship-visual-r002.ts",
+      "sha256": "d5af33235271528fbe81d23f4ce0408a82f948c2161b9214b85710a18dfd766e"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-layers-r002.ts",
+      "sha256": "438dfe357fcc4067e03e19984217539bef7a6583acfc4e178d56ebd6b0c42a65"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-sampler.ts",
+      "sha256": "8f29bfec8fd9a9133e58ab25ae46c12d3a4fe33c7a3603108e161cb58769b8b7"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-compiler.ts",
+      "sha256": "c17801e7ee1f52aa76b219de7bd1f9683465788ab9956c44b6f4f5370da4d0ae"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/sampled-structure.ts",
+      "sha256": "89cf02c81a6818d5b9e7885b730b9510a6d614e5c55ea028714d5a8edbd3fe2d"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_r002_art.py",
+      "sha256": "5ed981b285992c2d7f7f5c7bab4d98b838ce625d3f65a4b9c05799cdbc03299d"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_r002_maps.py",
+      "sha256": "211b12b192faa7bf2eed660f6ce31576f7ac9903762c75980a71e13471466120"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/reference-finish.ts",
+      "sha256": "d7570eabcdbb198a1e5223d6cc93e5cced3b27ea39c0a9b6fd9b3032db7a0f45"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/reference-instruments.ts",
+      "sha256": "6581932d4c335145234b93a1fc38f5396d38560f86dd3524d0414b2d1c3a8582"
+    }
+  ]
+}

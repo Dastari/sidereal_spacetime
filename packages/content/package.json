@@ -84,7 +84,8 @@
     "./item-presentation": "./src/item-presentation.ts",
     "./definition-references": "./src/definition-references.ts",
     "./ship-visual": "./src/ship-visual.ts",
-    "./ship-visual-fixture": "./src/ship-visual-fixture.ts"
+    "./ship-visual-fixture": "./src/ship-visual-fixture.ts",
+    "./ship-visual-r002": "./src/ship-visual-r002.ts"
   },
   "dependencies": {}
 }

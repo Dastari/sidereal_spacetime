@@ -11,6 +11,7 @@ import { BOW_HOSTS } from "./bow-fixtures";
  * Sets window.__prefabReady once the world has rendered a few frames; __prefabError on failure;
  * __prefabMetrics = [{ id, meshes, drawCalls }].
  */
+import { SHIP_REFERENCE_VISUAL_R002 } from "../art_library/ship_reference_r002_revision";
 import { SHIP_REFERENCE_VISUAL } from "../art_library/ship_reference_revision";
 import { createWorld, type SceneState } from "@sidereal/render";
 import type { Scene } from "@babylonjs/core/scene";
@@ -53,9 +54,11 @@ async function main() {
     (text) => (document.getElementById("hud")!.textContent = text),
     {
       prefabVisualVariant:
-        q.get("visual") === "reference-r001"
-          ? SHIP_REFERENCE_VISUAL
-          : undefined,
+        q.get("visual") === "reference-r002"
+          ? SHIP_REFERENCE_VISUAL_R002
+          : q.get("visual") === "reference-r001"
+            ? SHIP_REFERENCE_VISUAL
+            : undefined,
       construction: {
         instanceId: construction.layout.id,
         documentJson: JSON.stringify(construction),

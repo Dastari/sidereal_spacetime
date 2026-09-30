@@ -84,7 +84,7 @@ export async function resolveVisualVariant(
   );
   if (
     manifest.compilerSha256 !== selection.compilerSha256 ||
-    manifest.profilesSha256 !== visualProfilesSha256() ||
+    manifest.profilesSha256 !== visualProfilesSha256(manifest.revision) ||
     manifest.prefabs[doc.id] !== visualPrefabSha256(doc)
   )
     throw Error("Visual revision does not match compiler/profile/prefab pins");
@@ -284,6 +284,14 @@ export async function prepareCandidateMaterials(
   for (const mesh of meshes) {
     const material = mesh.material as PBRMaterial | null;
     if (material?.bumpTexture) maps.add(material.bumpTexture as Texture);
+    if (material?.metadata?.shipReferenceInstrument) {
+      for (const texture of material.getActiveTextures())
+        if (
+          texture === material.albedoTexture ||
+          texture === material.emissiveTexture
+        )
+          maps.add(texture as Texture);
+    }
   }
   await Promise.all(
     [...maps].map((texture) => {

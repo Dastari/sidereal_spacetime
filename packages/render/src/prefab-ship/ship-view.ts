@@ -108,6 +108,11 @@ import {
   slotOfMaterialName,
 } from "./materials";
 
+import {
+  referenceInstrumentMaterial,
+  referenceInstrumentSelectionOf,
+} from "./reference-instruments";
+import { referenceSurfaceMaterial } from "./reference-finish";
 import { compileShipVisual } from "@sidereal/sim/ship-visual-compiler";
 import { meshSampledStructure } from "./sampled-structure";
 import {
@@ -459,6 +464,7 @@ export async function createPrefabShipView(
               v,
               variant!.profile,
               options.visualReviewRemovedCells,
+              variant!.manifest.revision,
             ).cells,
           ),
         );
@@ -587,13 +593,16 @@ export async function createPrefabShipView(
       sourceCharts: readonly string[] = [],
     ) => {
       const detail = normalDetailSelectionOf(sourceMaterial);
-      const material = sourceMaterial?.metadata?.shipAuthoredPalette
-        ? (sourceMaterial as PBRMaterial)
-        : normalDetailMaterial(
-            roleSlotMaterial(scene, theme, slot, role),
-            detail,
-            geo,
-          );
+      const material =
+        sourceMaterial?.metadata?.shipAuthoredPalette ||
+        sourceMaterial?.metadata?.shipReferenceFinish ||
+        sourceMaterial?.metadata?.shipReferenceInstrument
+          ? (sourceMaterial as PBRMaterial)
+          : normalDetailMaterial(
+              roleSlotMaterial(scene, theme, slot, role),
+              detail,
+              geo,
+            );
       const mat = material.name;
       for (const view of views(tag)) {
         const key = detail
@@ -620,7 +629,10 @@ export async function createPrefabShipView(
         for (const chart of sourceCharts) g.surfaceCharts.add(chart);
         const first = g.indices.length;
         appendTransformed(g, geo.positions, geo.normals, geo.indices, m, geo, {
-          correctNormals: !!detail,
+          correctNormals:
+            !!detail ||
+            !!sourceMaterial?.metadata?.shipReferenceFinish ||
+            !!sourceMaterial?.metadata?.shipReferenceInstrument,
         });
         chunks[view].push({
           group: g,
@@ -709,7 +721,9 @@ export async function createPrefabShipView(
       );
       mesh.material =
         normalDetailSelectionOf(g.material) ||
-        g.material.metadata?.shipAuthoredPalette
+        g.material.metadata?.shipAuthoredPalette ||
+        g.material.metadata?.shipReferenceFinish ||
+        g.material.metadata?.shipReferenceInstrument
           ? g.material
           : roleSlotMaterial(scene, theme, g.slot, role);
       setMeshRole(mesh, role);
@@ -814,6 +828,18 @@ export async function createPrefabShipView(
         slot ?? "primary",
         finishRole,
       );
+      if (out.variant && slot) {
+        const id =
+          geom.url
+            .split("/")
+            .at(-1)
+            ?.replace(/\.glb$/, "") ?? "";
+        mesh.material = referenceInstrumentMaterial(
+          mesh.material as PBRMaterial,
+          { revision: out.variant.manifest.revision, id, slot },
+          p,
+        );
+      }
       if (
         out.variant &&
         slot &&
@@ -821,9 +847,18 @@ export async function createPrefabShipView(
       ) {
         mesh.material =
           slot === "accent" &&
-          geom.url.endsWith("shipyard.equipment.bridge-bank.glb")
+          (geom.url.endsWith("shipyard.equipment.bridge-bank.glb") ||
+            (out.variant.manifest.revision === "r002" &&
+              /(?:^|\.)flora(?:\.|$)/.test(p.material)))
             ? referenceFloraMaterial(scene, mesh.material as PBRMaterial)
-            : candidateMaterial(mesh.material as PBRMaterial, out.variant, p);
+            : candidateMaterial(
+                mesh.material as PBRMaterial,
+                out.variant,
+                p,
+                slot,
+                finishRole,
+                p.material,
+              );
       }
       setMeshRole(mesh, finishRole);
       out.instanced.push({
@@ -841,9 +876,24 @@ export async function createPrefabShipView(
     base: PBRMaterial,
     variant: VerifiedVisualVariant,
     channels: SurfaceChannels,
+    slot: ShipKitSlot,
+    role: string,
+    materialName?: string,
   ) {
+    const finished = referenceSurfaceMaterial(base, {
+      revision: variant.manifest.revision,
+      profile: variant.profile,
+      slot,
+      role,
+      materialName,
+    });
+    if (
+      variant.manifest.revision === "r002" &&
+      /(?:^|\.)fabric(?:\.|$)/.test(materialName ?? "")
+    )
+      return finished;
     return normalDetailMaterial(
-      base,
+      finished,
       {
         enabled: true,
         profile: variant.profile,
@@ -884,7 +934,7 @@ export async function createPrefabShipView(
         const base = roleSlotMaterial(scene, theme, s.slot, role);
         mesh.material = ["emit_a", "emit_b", "glass"].includes(s.slot)
           ? base
-          : candidateMaterial(base, out.variant!, s);
+          : candidateMaterial(base, out.variant!, s, s.slot, role);
         setMeshRole(mesh, role);
         mesh.metadata.shipSurfaceCharts = s.surfaceCharts;
         out.statics.push({
@@ -1520,32 +1570,44 @@ export async function createPrefabShipView(
     },
     update: (d) => rebuild(d),
     setTheme(t) {
+      if (t === theme) return;
       theme = t;
       if (!built) return;
+      const replay = (mesh: Mesh, slot: ShipKitSlot) => {
+        const previous = mesh.material;
+        const channels = meshGeometry(mesh) ?? undefined;
+        let material = roleSlotMaterial(scene, t, slot, roleOf(mesh));
+        if (previous?.metadata?.shipAuthoredPalette)
+          material = referenceFloraMaterial(scene, material);
+        const finish = previous?.metadata?.shipReferenceFinish;
+        if (finish)
+          material = referenceSurfaceMaterial(material, {
+            ...finish,
+            profile:
+              t === "riftjack" || t === "industrial"
+                ? "riftjack"
+                : t === "aurelian" || t === "crystalline"
+                  ? "aurelian"
+                  : "federation",
+          });
+        const instrument = referenceInstrumentSelectionOf(previous);
+        if (instrument)
+          material = referenceInstrumentMaterial(
+            material,
+            instrument,
+            channels ?? {},
+          );
+        return normalDetailMaterial(
+          material,
+          normalDetailSelectionOf(previous),
+          channels,
+        );
+      };
       for (const e of built.instanced)
-        if (e.slot)
-          e.mesh.material = e.mesh.material?.metadata?.shipAuthoredPalette
-            ? referenceFloraMaterial(
-                scene,
-                roleSlotMaterial(scene, t, e.slot, roleOf(e.mesh)),
-              )
-            : normalDetailMaterial(
-                roleSlotMaterial(scene, t, e.slot, roleOf(e.mesh)),
-                normalDetailSelectionOf(e.mesh.material),
-                meshGeometry(e.mesh) ?? undefined,
-              );
+        if (e.slot) e.mesh.material = replay(e.mesh, e.slot);
       for (const s of built.statics) {
         if (s.kind === "generated" || s.kind === "standin")
-          s.mesh.material = s.mesh.material?.metadata?.shipAuthoredPalette
-            ? referenceFloraMaterial(
-                scene,
-                roleSlotMaterial(scene, t, s.slot!, roleOf(s.mesh)),
-              )
-            : normalDetailMaterial(
-                roleSlotMaterial(scene, t, s.slot!, roleOf(s.mesh)),
-                normalDetailSelectionOf(s.mesh.material),
-                meshGeometry(s.mesh) ?? undefined,
-              );
+          s.mesh.material = replay(s.mesh, s.slot!);
         else if (s.kind === "plume") s.mesh.material = plumeMaterial(scene, t);
         else if (s.kind === "object-fill" || s.kind === "object-frame")
           s.mesh.material = placeholderMaterial(

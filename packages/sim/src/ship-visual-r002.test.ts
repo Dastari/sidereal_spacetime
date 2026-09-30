@@ -1,0 +1,93 @@
+import { describe, expect, it } from "vitest";
+import { insidePolygon } from "@sidereal/content/construction-grammar";
+import { volumeGeometry } from "@sidereal/content/ship-prefab";
+import { polygonBoundarySample } from "./ship-visual-sampler";
+import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
+import {
+  compileShipVisual,
+  visualProfilesSha256,
+  visualVolumeSha256,
+} from "./ship-visual-compiler";
+
+describe("versioned reference recipes", () => {
+  const doc = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
+  const catalog = defaultPrefabComponentCatalog();
+  it("retains the delivered r001 profile and exact Wren deck volume", () => {
+    expect(visualProfilesSha256()).toBe(
+      "8c9a58bc361116c1ab663dcad5dd2b05c06fdf1cd7d9711339cdbc714b6649d6",
+    );
+    expect(
+      visualVolumeSha256(
+        compileShipVisual(doc, catalog, "deck", "federation").cells,
+      ),
+    ).toBe("690ef71372e085b118277198c54b341305b20a60e3ceed3f79050d411bf58dab");
+    expect(visualProfilesSha256("r002")).not.toBe(visualProfilesSha256("r001"));
+    expect(() => visualProfilesSha256("r003")).toThrow("Unknown");
+  });
+  it("adds three functional wall bay recipes over pressure backing without changing authored placements", () => {
+    const before = JSON.stringify(doc);
+    const result = compileShipVisual(
+      doc,
+      catalog,
+      "deck",
+      "federation",
+      undefined,
+      "r002",
+    );
+    for (const suffix of [
+      "pressure-backing",
+      "inset-armor",
+      "vent-recess",
+      "control-display",
+      "access-handle",
+    ])
+      expect(result.layers.some((l) => l.id.endsWith(suffix))).toBe(true);
+    const guards = result.layers.filter((l) =>
+      l.id.endsWith(":continuous-sill"),
+    );
+    expect(guards.length).toBeGreaterThan(0);
+    for (const layer of guards) {
+      const volume = doc.volumes.find(
+        (v) => layer.support === `volume:${v.id}`,
+      )!;
+      const outline = volumeGeometry(volume).outline!;
+      const outer = outline.outer.map(([x, y]): [number, number] => [
+        x * 16,
+        y * 16,
+      ]);
+      for (let y = layer.bounds[1]; y < layer.bounds[4]; y++)
+        for (let x = layer.bounds[0]; x < layer.bounds[3]; x++) {
+          const p: [number, number] = [x + 0.5, y + 0.5];
+          if (insidePolygon(outer, p[0], p[1]))
+            expect(polygonBoundarySample(p, outer).distance).toBeLessThan(4);
+          else {
+            // The whole cell, including its corners, stays in the declared outer envelope.
+            for (const q of [
+              [x, y],
+              [x + 1, y],
+              [x + 1, y + 1],
+              [x, y + 1],
+            ] as [number, number][])
+              if (!insidePolygon(outer, q[0], q[1]))
+                expect(
+                  polygonBoundarySample(q, outer).distance,
+                ).toBeLessThanOrEqual(3);
+          }
+          for (const hole of outline.holes)
+            expect(
+              insidePolygon(
+                hole.map(([x, y]) => [x * 16, y * 16]),
+                p[0],
+                p[1],
+              ),
+            ).toBe(false);
+        }
+    }
+    expect(result.cells.size).toBeGreaterThan(10000);
+    expect(JSON.stringify(doc)).toBe(before);
+    expect(() =>
+      compileShipVisual(doc, catalog, "deck", "federation", undefined, "r003"),
+    ).toThrow("Unknown");
+  });
+});

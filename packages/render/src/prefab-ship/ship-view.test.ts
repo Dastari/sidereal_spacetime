@@ -10,6 +10,10 @@ import { Constants } from "@babylonjs/core/Engines/constants";
 import { prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { createPrefabShipView } from "./ship-view";
+import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
+import { referenceSurfaceMaterial } from "./reference-finish";
+import { roleSlotMaterial } from "./materials";
+import { referenceInstrumentMaterial } from "./reference-instruments";
 
 const engines: NullEngine[] = [];
 afterEach(() => {
@@ -180,4 +184,116 @@ it("pools red navigation lenses without recolouring the ship's amber emitter slo
   expect(roleSlotMaterial(scene, "federation", "primary", "effect")).toBe(
     slotMaterial(scene, "federation", "primary"),
   );
+});
+
+it("theme changes retain candidate finish and the exact instrument atlas", async () => {
+  vi.stubGlobal(
+    "fetch",
+    vi.fn(async () => ({ ok: false })),
+  );
+  const stub: object = new Proxy(() => stub, {
+    get: (_t, key) =>
+      key === "then" ? undefined : key === Symbol.toPrimitive ? () => 0 : stub,
+    apply: () => stub,
+  });
+  vi.stubGlobal(
+    "OffscreenCanvas",
+    class {
+      constructor(
+        public width: number,
+        public height: number,
+      ) {}
+      getContext() {
+        return stub;
+      }
+    },
+  );
+  const engine = new NullEngine();
+  engines.push(engine);
+  const scene = new Scene(engine);
+  scene.useRightHandedSystem = true;
+  const doc = prefabById("fed.s.wren")!;
+  const view = await createPrefabShipView(scene, doc, {
+    catalog: defaultPrefabComponentCatalog(),
+    view: "deck",
+    standinComponents: true,
+  });
+  const batches = view.root
+    .getChildMeshes()
+    .filter((m) => m.name.includes(":batch:")) as Mesh[];
+  expect(batches.length).toBeGreaterThan(1);
+  // Use actual view-owned batches to exercise its material replacement path.
+  const finishMesh = batches.find((m) =>
+      m.material?.name.endsWith("-primary"),
+    )!,
+    displayMesh = batches.find((m) => m !== finishMesh)!;
+  expect(finishMesh).toBeDefined();
+  finishMesh.material = referenceSurfaceMaterial(
+    finishMesh.material as PBRMaterial,
+    {
+      revision: "r002",
+      profile: "federation",
+      slot: "primary",
+      role: "wall",
+      materialName: "slot0_primary.fabric",
+    },
+  );
+  const count = displayMesh.getTotalVertices();
+  const uvs = Array.from({ length: count * 2 }, (_, i) => (i % 4 >= 2 ? 1 : 0));
+  displayMesh.setVerticesData(VertexBuffer.UVKind, uvs);
+  displayMesh.material = referenceInstrumentMaterial(
+    displayMesh.material as PBRMaterial,
+    {
+      revision: "r002",
+      id: "console.navigation.t1",
+      slot: "emit_a",
+    },
+    { uvs, uvsComplete: true },
+  );
+  const initialFinish = finishMesh.material,
+    initialDisplay = displayMesh.material;
+  const atlas = (initialDisplay as PBRMaterial).emissiveTexture;
+  view.setTheme(doc.theme);
+  expect(finishMesh.material).toBe(initialFinish);
+  expect(displayMesh.material).toBe(initialDisplay);
+  view.setTheme("riftjack");
+  expect(finishMesh.material?.metadata.shipReferenceFinish).toMatchObject({
+    revision: "r002",
+    profile: "riftjack",
+    role: "wall",
+  });
+  expect(displayMesh.material?.metadata.shipReferenceInstrument).toMatchObject({
+    revision: "r002",
+    id: "console.navigation.t1",
+  });
+  expect((displayMesh.material as PBRMaterial).emissiveTexture).toBe(atlas);
+  const role = finishMesh.metadata?.role ?? "hull";
+  expect((finishMesh.material as PBRMaterial).albedoColor.asArray()).toEqual(
+    roleSlotMaterial(scene, "riftjack", "primary", role).albedoColor.asArray(),
+  );
+  view.setTheme("aurelian");
+  expect(finishMesh.material?.metadata.shipReferenceFinish.profile).toBe(
+    "aurelian",
+  );
+  expect((finishMesh.material as PBRMaterial).albedoColor.asArray()).toEqual(
+    roleSlotMaterial(scene, "aurelian", "primary", role).albedoColor.asArray(),
+  );
+  expect((displayMesh.material as PBRMaterial).emissiveTexture).toBe(atlas);
+  for (const theme of ["industrial", "crystalline"] as const) {
+    view.setTheme(theme);
+    expect((finishMesh.material as PBRMaterial).albedoColor.asArray()).toEqual(
+      roleSlotMaterial(scene, theme, "primary", role).albedoColor.asArray(),
+    );
+    expect(finishMesh.material?.metadata.shipReferenceFinish.materialName).toBe(
+      "slot0_primary.fabric",
+    );
+    expect((finishMesh.material as PBRMaterial).roughness).toBe(
+      (initialFinish as PBRMaterial).roughness,
+    );
+    expect((displayMesh.material as PBRMaterial).emissiveTexture).toBe(atlas);
+  }
+  view.setTheme(doc.theme);
+  expect(finishMesh.material).toBe(initialFinish);
+  expect(displayMesh.material).toBe(initialDisplay);
+  view.dispose();
 });

@@ -1,0 +1,539 @@
+{
+  "schema": "sidereal.ship-object-art.v1",
+  "revision": "r003",
+  "status": "proposed art published to the runtime for review; not owner-approved",
+  "frame": "interior: origin at footprint centre on the floor, +X along the wall (w), +Y front (d), +Z up; glTF (x, y, z) -> (x, z, -y)",
+  "sizes": "construction-grammar.v1.json socket [designId, w, d, h] texels (1/16 m)",
+  "materialSlots": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b",
+    "slot8_glass",
+    "slot9_primary.fabric",
+    "slot10_secondary.fabric",
+    "slot11_accent.fabric",
+    "slot12_accent.flora"
+  ],
+  "generator": {
+    "script": "scripts/art_library/ship_component_export.py",
+    "sha256": "eb69d9ab7c7de1b086054385415513cbbcbca5284bb6856c21e81f4d80dec180",
+    "builders": "scripts/art_library/ship_object_art.py",
+    "buildersSha256": "ebf1badcd8872ab99998857fd82ee1a51fbb23acff9560848457e8898a6e6ad4",
+    "blender": "4.3.2"
+  },
+  "requiredObjectIds": [
+    "cargo.fluid.medium",
+    "cargo.standard.medium",
+    "pale-studless.console.standard",
+    "pale-studless.kitchen.standard",
+    "pale-studless.table.standard",
+    "shipyard.equipment.bridge-bank",
+    "shipyard.equipment.command-console",
+    "shipyard.equipment.crew-bunk",
+    "shipyard.equipment.hydroponics",
+    "shipyard.equipment.lounge-sofa",
+    "shipyard.equipment.medical-bed",
+    "shipyard.equipment.pilot-seat",
+    "shipyard.equipment.reactor",
+    "shipyard.equipment.wall-locker"
+  ],
+  "objects": [
+    {
+      "designId": "cargo.fluid.medium",
+      "sizeTexels": [
+        16,
+        16,
+        20
+      ],
+      "glb": "assets/runtime/ship-objects/r003/cargo.fluid.medium.glb",
+      "sha256": "80061797a39c86c03b15894c40cbf5d19a65c9fbdcf0152097214295fa3fe991",
+      "bytes": 63660,
+      "triangles": 878,
+      "boxes": 64,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot6_emit_a"
+      ],
+      "boundsM": [
+        [
+          -0.5,
+          -0.5,
+          0.0
+        ],
+        [
+          0.5,
+          0.5,
+          1.25
+        ]
+      ]
+    },
+    {
+      "designId": "cargo.standard.medium",
+      "sizeTexels": [
+        16,
+        16,
+        16
+      ],
+      "glb": "assets/runtime/ship-objects/r003/cargo.standard.medium.glb",
+      "sha256": "3d61091a700a3bfdffd1811c79d9ba97e877e02d3692f0976887b5762240b9e9",
+      "bytes": 35600,
+      "triangles": 472,
+      "boxes": 27,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot7_emit_b"
+      ],
+      "boundsM": [
+        [
+          -0.5,
+          -0.5,
+          0.0
+        ],
+        [
+          0.5,
+          0.5,
+          1.0
+        ]
+      ]
+    },
+    {
+      "designId": "pale-studless.console.standard",
+      "sizeTexels": [
+        24,
+        10,
+        16
+      ],
+      "glb": "assets/runtime/ship-objects/r003/pale-studless.console.standard.glb",
+      "sha256": "349f50b5c0fcd0b298bc920730de0d2c17a283d2d81c9b79527f0bf71962578c",
+      "bytes": 36192,
+      "triangles": 446,
+      "boxes": 36,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot6_emit_a",
+        "slot7_emit_b"
+      ],
+      "boundsM": [
+        [
+          -0.75,
+          -0.3125,
+          0.0
+        ],
+        [
+          0.75,
+          0.3125,
+          0.9375
+        ]
+      ]
+    },
+    {
+      "designId": "pale-studless.kitchen.standard",
+      "sizeTexels": [
+        12,
+        36,
+        16
+      ],
+      "glb": "assets/runtime/ship-objects/r003/pale-studless.kitchen.standard.glb",
+      "sha256": "30c21b1b50ce53660fb428e9ed50cb06b940911eee3ea54512fead6ddda65949",
+      "bytes": 36380,
+      "triangles": 444,
+      "boxes": 47,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot7_emit_b"
+      ],
+      "boundsM": [
+        [
+          -0.375,
+          -1.125,
+          0.0
+        ],
+        [
+          0.375,
+          1.125,
+          1.0
+        ]
+      ]
+    },
+    {
+      "designId": "pale-studless.table.standard",
+      "sizeTexels": [
+        24,
+        16,
+        12
+      ],
+      "glb": "assets/runtime/ship-objects/r003/pale-studless.table.standard.glb",
+      "sha256": "25df92879c359acef8a0549b6fbda37ed96d7553536289c4a93a752168cccee6",
+      "bytes": 24760,
+      "triangles": 280,
+      "boxes": 22,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot12_accent.flora"
+      ],
+      "boundsM": [
+        [
+          -0.75,
+          -0.5,
+          0.0
+        ],
+        [
+          0.75,
+          0.5,
+          0.75
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.bridge-bank",
+      "sizeTexels": [
+        32,
+        8,
+        18
+      ],
+      "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.bridge-bank.glb",
+      "sha256": "07af6a6943e333a388c59c772273237c3201850b3abaa66da27ca9444f9d789f",
+      "bytes": 69244,
+      "triangles": 956,
+      "boxes": 83,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot6_emit_a"
+      ],
+      "boundsM": [
+        [
+          -1.0,
+          -0.25,
+          0.0
+        ],
+        [
+          1.0,
+          0.25,
+          1.0625
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.command-console",
+      "sizeTexels": [
+        24,
+        10,
+        16
+      ],
+      "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.command-console.glb",
+      "sha256": "44a70e794c842109bcd0af1e8a33c99648fbf264ec2ddbecefd90d262a891ea4",
+      "bytes": 36208,
+      "triangles": 446,
+      "boxes": 36,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot6_emit_a",
+        "slot7_emit_b"
+      ],
+      "boundsM": [
+        [
+          -0.75,
+          -0.3125,
+          0.0
+        ],
+        [
+          0.75,
+          0.3125,
+          0.9375
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.crew-bunk",
+      "sizeTexels": [
+        32,
+        16,
+        20
+      ],
+      "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.crew-bunk.glb",
+      "sha256": "daa64779a986935374192eeb118ffd5939bf60ddfdd70f3c1f2dd1c81d3fa559",
+      "bytes": 54928,
+      "triangles": 748,
+      "boxes": 35,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot7_emit_b",
+        "slot9_primary.fabric",
+        "slot11_accent.fabric"
+      ],
+      "boundsM": [
+        [
+          -1.0,
+          -0.5,
+          0.0
+        ],
+        [
+          1.0,
+          0.5,
+          1.25
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.hydroponics",
+      "sizeTexels": [
+        44,
+        12,
+        12
+      ],
+      "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.hydroponics.glb",
+      "sha256": "5cbbc33b7f3404dcffe8d5ec0e4275aaf5da8bf6437b55e8b422b0a6d0e2ede0",
+      "bytes": 75268,
+      "triangles": 1122,
+      "boxes": 44,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot5_dark",
+        "slot7_emit_b",
+        "slot8_glass"
+      ],
+      "boundsM": [
+        [
+          -1.375,
+          -0.375,
+          0.0
+        ],
+        [
+          1.375,
+          0.375,
+          0.75
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.lounge-sofa",
+      "sizeTexels": [
+        40,
+        14,
+        14
+      ],
+      "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.lounge-sofa.glb",
+      "sha256": "e0be792294e97afc8af54a2af45c612d2aa5f42f3ed19766bc6bc6bafb52fea3",
+      "bytes": 49680,
+      "triangles": 680,
+      "boxes": 29,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot9_primary.fabric",
+        "slot10_secondary.fabric",
+        "slot11_accent.fabric"
+      ],
+      "boundsM": [
+        [
+          -1.25,
+          -0.4375,
+          0.0
+        ],
+        [
+          1.25,
+          0.4375,
+          0.8125
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.medical-bed",
+      "sizeTexels": [
+        30,
+        16,
+        14
+      ],
+      "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.medical-bed.glb",
+      "sha256": "38ab0b95608e022d4d7372f070142e6a35f9ab22c28e1909e8a3d8b87c99164b",
+      "bytes": 32588,
+      "triangles": 384,
+      "boxes": 27,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot6_emit_a",
+        "slot9_primary.fabric",
+        "slot11_accent.fabric"
+      ],
+      "boundsM": [
+        [
+          -0.9375,
+          -0.5,
+          0.0
+        ],
+        [
+          0.9375,
+          0.5,
+          0.875
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.pilot-seat",
+      "sizeTexels": [
+        10,
+        10,
+        20
+      ],
+      "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.pilot-seat.glb",
+      "sha256": "b2ac876625313cf04ab707db123af06033c87f1e5a229ab18ddd18629da6345b",
+      "bytes": 31600,
+      "triangles": 416,
+      "boxes": 21,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot10_secondary.fabric"
+      ],
+      "boundsM": [
+        [
+          -0.25,
+          -0.3125,
+          0.0
+        ],
+        [
+          0.25,
+          0.3125,
+          1.1875
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.reactor",
+      "sizeTexels": [
+        30,
+        30,
+        36
+      ],
+      "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.reactor.glb",
+      "sha256": "e7d78e669d5346adca1100c42ca3d9b0e44d08df95a6d2dbfeda5cce6579ab1e",
+      "bytes": 140312,
+      "triangles": 1968,
+      "boxes": 190,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot6_emit_a",
+        "slot7_emit_b"
+      ],
+      "boundsM": [
+        [
+          -0.9375,
+          -0.9375,
+          0.0
+        ],
+        [
+          0.9375,
+          0.9375,
+          2.0625
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.wall-locker",
+      "sizeTexels": [
+        12,
+        8,
+        32
+      ],
+      "glb": "assets/runtime/ship-objects/r003/shipyard.equipment.wall-locker.glb",
+      "sha256": "411ec59409cb59ebe27fcf8fa8614e32876dc8291c14e8f46f42382ebf3f6cfc",
+      "bytes": 17596,
+      "triangles": 178,
+      "boxes": 23,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot6_emit_a"
+      ],
+      "boundsM": [
+        [
+          -0.375,
+          -0.25,
+          0.0
+        ],
+        [
+          0.375,
+          0.25,
+          2.0
+        ]
+      ]
+    }
+  ],
+  "source": {
+    "blend": "assets/source/ship-reference/r002/objects.blend",
+    "sha256": "3630a488715c2e51740c59351f56ccc1915a5ec71dd858b921674764a1eb3e77",
+    "note": "editable Blender source saved by this export"
+  },
+  "referenceMesh": {
+    "revision": "r002",
+    "selectiveHousingChamferM": 0.015,
+    "cushionChamferM": 0.025,
+    "segments": 2,
+    "engineBellSegments": 32,
+    "previousArtifactsChanged": false
+  }
+}
