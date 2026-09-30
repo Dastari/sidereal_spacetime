@@ -19,6 +19,9 @@ export interface NormalDetailSelection {
    * This helper uses the hash for resource identity; it does not authenticate URLs. */
   normalUrl: string;
   normalSha256: string;
+  /** Optional verified linear grayscale multiplier for shallow manufactured detail. */
+  albedoUrl?: string;
+  albedoSha256?: string;
   strength?: number;
   coordinatesIndex?: 0 | 1;
 }
@@ -52,6 +55,10 @@ export function normalDetailMaterial(
     !selection.revision ||
     !selection.normalUrl ||
     !/^[a-f0-9]{64}$/.test(selection.normalSha256) ||
+    ((selection.albedoUrl !== undefined ||
+      selection.albedoSha256 !== undefined) &&
+      (!selection.albedoUrl ||
+        !/^[a-f0-9]{64}$/.test(selection.albedoSha256 ?? ""))) ||
     (coordinatesIndex !== 0 && coordinatesIndex !== 1) ||
     !Number.isFinite(selection.strength ?? 1) ||
     (selection.strength ?? 1) < 0 ||
@@ -78,12 +85,23 @@ export function normalDetailMaterial(
     coordinatesIndex,
     selection.strength ?? 1,
   ]);
+  // Authored colour maps remain authoritative. This tile only multiplies untextured panel palettes.
+  const albedoKey =
+    selection.albedoUrl && !base.albedoTexture
+      ? JSON.stringify([
+          "albedo",
+          selection.albedoUrl,
+          selection.albedoSha256,
+          coordinatesIndex,
+        ])
+      : undefined;
   const key = JSON.stringify([
     base.uniqueId,
     selection.profile,
     selection.family,
     selection.revision,
     textureKey,
+    ...(albedoKey ? [albedoKey] : []),
   ]);
   const cached = pool.materials.get(key);
   if (cached) return cached;
@@ -103,8 +121,24 @@ export function normalDetailMaterial(
     texture.wrapU = texture.wrapV = Texture.WRAP_ADDRESSMODE;
     pool.textures.set(textureKey, texture);
   }
+  let albedo = albedoKey ? pool.textures.get(albedoKey) : undefined;
+  if (albedoKey && !albedo) {
+    albedo = new Texture(
+      selection.albedoUrl!,
+      scene,
+      false,
+      false,
+      Texture.TRILINEAR_SAMPLINGMODE,
+    );
+    albedo.name = `ship-albedo:${selection.albedoSha256}:${coordinatesIndex}`;
+    albedo.gammaSpace = false;
+    albedo.coordinatesIndex = coordinatesIndex;
+    albedo.level = 1;
+    albedo.wrapU = albedo.wrapV = Texture.WRAP_ADDRESSMODE;
+    pool.textures.set(albedoKey, albedo);
+  }
   const material = base.clone(
-    `ship-detail:${base.name}:${selection.profile}:${selection.family}:${selection.revision}:${texture.uniqueId}`,
+    `ship-detail:${base.name}:${selection.profile}:${selection.family}:${selection.revision}:${texture.uniqueId}${albedo ? `:albedo:${albedo.uniqueId}` : ""}`,
   );
   // Babylon HDRCubeTexture.clone does not retain prefilter-on-load state. Borrow
   // the existing studio reflection resource so detail never changes plastic IBL.
@@ -112,7 +146,17 @@ export function normalDetailMaterial(
   material.reflectionTexture = base.reflectionTexture;
   if (clonedReflection && clonedReflection !== base.reflectionTexture)
     clonedReflection.dispose();
-  // Clone preserves the base plastic response, grading and finish metadata. Only normal detail differs.
+  if (selection.albedoUrl) {
+    const clonedAlbedo = material.albedoTexture;
+    material.albedoTexture = base.albedoTexture ?? albedo ?? null;
+    if (
+      clonedAlbedo &&
+      clonedAlbedo !== base.albedoTexture &&
+      clonedAlbedo !== albedo
+    )
+      clonedAlbedo.dispose();
+  }
+  // Clone preserves plastic response, palette and grading; detail changes only normal/optional multiplier.
   material.metadata = {
     ...base.metadata,
     shipNormalDetail: Object.freeze({ ...selection }),

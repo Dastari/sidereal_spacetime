@@ -50,13 +50,31 @@ def make_height():
     height[193:196, 38:82] = 112
     height[193:196, 91:115] = 112
 
-    # Slots and seating rings affect normals only, rather than painting black dots in albedo.
+    # Local slots and seating rings have relief; aligned restrained contrast is generated separately.
     for cx, cy in ((49, 45), (122, 45), (49, 103), (122, 103), (147, 170), (231, 198)):
         radius2 = (xx - cx) ** 2 + (yy - cy) ** 2
         height[(radius2 >= 16) & (radius2 < 36)] = 144
         height[radius2 < 16] = 104
         height[(radius2 < 9) & (abs(yy - cy) < 1)] = 88
     return height
+
+
+def make_albedo(height):
+    # Linear grayscale multiplier: broad shallow floors stay almost white. Only
+    # protected short grooves/fastener centres are dark; raised lips have no baked light.
+    shade = np.full(height.shape, 255, dtype=np.uint8)
+    shade[(height >= 108) & (height < 128)] = 245
+    shade[(height >= 92) & (height < 108)] = 194
+    shade[height < 92] = 166
+    # Widen short machining marks to 4px (~16mm), keeping their relief aligned.
+    for y in (62, 78):
+        shade[y:y + 4, 57:115] = 194
+    for y in (175, 185, 195):
+        shade[y:y + 4, 166:213] = 194
+    shade[193:197, 38:82] = 204
+    shade[193:197, 91:115] = 204
+    shade[height >= 128] = 255  # Neutral skin and raised seating lips never acquire baked darkness.
+    return shade
 
 
 def make_normal(height):
@@ -78,6 +96,7 @@ def main():
     rgba = np.dstack(((normal * .5 + .5) * 255, height)).astype(np.uint8)
     save_png(out / "panel-normal.png", rgba, 6)
     save_png(out / "panel-height.png", height.astype(np.uint8)[:, :, None], 0)
+    save_png(out / "panel-albedo.png", make_albedo(height)[:, :, None], 0)
 
 
 if __name__ == "__main__":
