@@ -1,0 +1,23 @@
+{
+  "status": "proposal",
+  "revision": "r017",
+  "bounds": [
+    -0.5,
+    -0.5,
+    -0.04540000110864639,
+    0.5,
+    0.5,
+    0.04540000110864639
+  ],
+  "source": "assets/source/ship-reference/r002/door-leaf-r017.blend",
+  "normalization": "scale width/height; thickness remains authored",
+  "continuousCoreHalfDepthM": 0.025,
+  "maximumPerFaceReliefM": 0.0204,
+  "semanticGroups": [
+    "primary",
+    "trim",
+    "dark",
+    "metal",
+    "emit_b"
+  ]
+}

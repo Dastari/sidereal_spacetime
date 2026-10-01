@@ -660,19 +660,73 @@ def export_door_leaf():
                 v.co.y=v.co.y*(y1-y0)+(y0+y1)/2
                 v.co.z=v.co.z*(z1-z0)+(z0+z1)/2
         bmesh.ops.recalc_face_normals(sub,faces=list(sub.faces))
-        if bevel:bmesh.ops.bevel(sub,geom=list(sub.edges),offset=bevel,segments=2,affect="EDGES",clamp_overlap=True)
+        if bevel:bmesh.ops.bevel(sub,geom=list(sub.edges),offset=bevel,segments=1,affect="EDGES",clamp_overlap=True)
         for f in sub.faces:f.material_index=E.SI[slot]
         temp=bpy.data.meshes.new("authored-leaf-part");sub.to_mesh(temp);sub.free();bm.from_mesh(temp);bpy.data.meshes.remove(temp)
-    part("secondary",-.5,-.5,.5,.5,-.035,.035,bevel=.006)
+    def ring(slot,sign,x0,z0,x1,z1,inner,outer,rim,cut):
+        """Closed casing with a genuine backed opening and a shallow face chamfer."""
+        sub=bmesh.new()
+        def loop(x,z,X,Z,c,y):
+            c=min(c,(X-x)/4,(Z-z)/4)
+            points=((x+c,z),(X-c,z),(X,z+c),(X,Z-c),
+                    (X-c,Z),(x+c,Z),(x,Z-c),(x,z+c))
+            return [sub.verts.new((a,sign*y,b)) for a,b in points]
+        inner_cut=max(.004,cut-rim*.65)
+        # The last two rings bevel the exposed lip, without a bevel operator
+        # adding hundreds of hidden triangles to every door instance.
+        outer_rings=[loop(x0,z0,x1,z1,cut,y) for y in (inner,outer-.0015)]
+        outer_rings.append(loop(x0+.0015,z0+.0015,x1-.0015,z1-.0015,
+                                max(.004,cut-.001),outer))
+        inner_rings=[loop(x0+rim,z0+rim,x1-rim,z1-rim,inner_cut,y)
+                     for y in (inner,outer-.0015)]
+        inner_rings.append(loop(x0+rim-.0015,z0+rim-.0015,
+                                x1-rim+.0015,z1-rim+.0015,inner_cut+.001,outer))
+        for level in range(2):
+            for i in range(8):
+                j=(i+1)%8
+                sub.faces.new((outer_rings[level][i],outer_rings[level][j],
+                               outer_rings[level+1][j],outer_rings[level+1][i]))
+                sub.faces.new((inner_rings[level][i],inner_rings[level+1][i],
+                               inner_rings[level+1][j],inner_rings[level][j]))
+        for level in (0,2):
+            for i in range(8):
+                j=(i+1)%8
+                sub.faces.new((outer_rings[level][i],inner_rings[level][i],
+                               inner_rings[level][j],outer_rings[level][j]))
+        bmesh.ops.recalc_face_normals(sub,faces=list(sub.faces))
+        for f in sub.faces:f.material_index=E.SI[slot]
+        temp=bpy.data.meshes.new("authored-leaf-casing")
+        sub.to_mesh(temp);sub.free();bm.from_mesh(temp);bpy.data.meshes.remove(temp)
+
+    # Five semantic groups, replacing the old secondary slab with dark backing.
+    # All apertures terminate on this continuous closed core; no through holes.
+    part("dark",-.5,-.5,.5,.5,-.025,.025,bevel=.003)
     for sign in (-1,1):
         def face(slot,x0,z0,x1,z1,inner,outer,cut=0,bevel=0):
             a,b=sorted((sign*inner,sign*outer));part(slot,x0,z0,x1,z1,a,b,cut,bevel)
-        face("primary",-.39,-.24,.39,.34,.034,.041,cut=.065,bevel=.002)
-        face("trim",-.46,-.45,.46,-.33,.034,.044,cut=.035,bevel=.002)
-        face("secondary",-.32,.355,.28,.455,.034,.043,cut=.022,bevel=.002)
-        face("metal",.235,-.15,.275,.11,.035,.045,bevel=.002)
-        face("emit_b",-.22,.391,.14,.414,.042,.0455)
-        for x in (-.29,.27):face("metal",x,.372,x+.018,.389,.043,.045)
+        # Quiet load-bearing edge shoulders surround two unequal machinery fields.
+        face("trim",-.5,-.48,-.455,.48,.024,.035)
+        face("trim",.455,-.48,.5,.48,.024,.035)
+        face("trim",-.455,.435,.455,.5,.024,.035,cut=.012)
+        face("trim",-.455,-.5,.455,-.435,.024,.035,cut=.012)
+        ring("primary",sign,-.43,-.055,.265,.405,.024,.041,.045,.055)
+        # Recessed upper service cover leaves a visible dark socket around it.
+        face("primary",-.353,.022,.13,.320,.026,.031,cut=.025)
+        face("metal",-.315,.051,-.08,.066,.031,.0325)
+        face("trim",-.315,.075,-.08,.095,.031,.033)
+        face("trim",-.315,.104,-.08,.123,.031,.033)
+        ring("primary",sign,-.265,-.410,.385,-.125,.024,.038,.035,.035)
+        face("primary",-.207,-.352,.296,-.184,.026,.030,cut=.016)
+        face("metal",.145,-.310,.266,-.294,.030,.0315)
+        # The runtime repeats this orientation on both leaves. A centred handle
+        # stays symmetric across the closed pair without changing their transforms.
+        face("trim",-.20,-.119,.20,-.061,.024,.035,cut=.008)
+        face("metal",-.13,-.105,.13,-.080,.033,.044,bevel=.0015)
+        # Offset sealed actuator/status column, separate from the hand grip.
+        ring("trim",sign,.315,-.055,.425,.355,.024,.035,.019,.012)
+        face("metal",.36,.012,.38,.228,.028,.032)
+        face("primary",.324,.267,.416,.337,.030,.041,cut=.010,bevel=.001)
+        face("emit_b",.343,.292,.394,.314,.041,.0454)
     me=bpy.data.meshes.new("GEO-reference-door-leaf");bm.to_mesh(me);bm.free();me.update()
     uv=me.uv_layers.new(name="authored-surface")
     for f in me.polygons:
@@ -681,14 +735,14 @@ def export_door_leaf():
             p=me.vertices[me.loops[li].vertex_index].co;uv.data[li].uv=(p[u],p[v])
     ob=bpy.data.objects.new("reference-door-leaf",me);bpy.context.collection.objects.link(ob)
     for m in mats:me.materials.append(m)
-    ob["status"]="proposal";ob["revision"]="r002";ob["frame"]="normalized leaf x horizontal, glTF y vertical, z thickness; scale x/y only"
+    ob["status"]="proposal";ob["revision"]="r017";ob["frame"]="normalized leaf x horizontal, glTF y vertical, z thickness; scale x/y only"
     bpy.context.view_layer.objects.active=ob;ob.select_set(True)
     out=E.ROOT/"assets/runtime/ship-visual/r002";out.mkdir(parents=True,exist_ok=True)
-    source=E.ROOT/"assets/source/ship-reference/r002/door-leaf.blend";source.parent.mkdir(parents=True,exist_ok=True)
+    source=E.ROOT/"assets/source/ship-reference/r002/door-leaf-r017.blend";source.parent.mkdir(parents=True,exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=str(source),compress=True,check_existing=False)
-    bpy.ops.export_scene.gltf(filepath=str(out/"door-leaf.glb"),export_format="GLB",use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_animations=False,export_materials="EXPORT")
+    bpy.ops.export_scene.gltf(filepath=str(out/"door-leaf-r017.glb"),export_format="GLB",use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_animations=False,export_materials="EXPORT")
     bounds=[min(v.co[a] for v in me.vertices) for a in range(3)]+[max(v.co[a] for v in me.vertices) for a in range(3)]
-    (out/"door-leaf-source.json").write_text(json.dumps({"status":"proposal","bounds":[bounds[0],bounds[2],-bounds[4],bounds[3],bounds[5],-bounds[1]],"source":str(source.relative_to(E.ROOT)),"normalization":"scale width/height; thickness remains authored"},indent=2)+"\n")
+    (out/"door-leaf-r017-source.json").write_text(json.dumps({"status":"proposal","revision":"r017","bounds":[bounds[0],bounds[2],-bounds[4],bounds[3],bounds[5],-bounds[1]],"source":str(source.relative_to(E.ROOT)),"normalization":"scale width/height; thickness remains authored","continuousCoreHalfDepthM":.025,"maximumPerFaceReliefM":.0204,"semanticGroups":["primary","trim","dark","metal","emit_b"]},indent=2)+"\n")
 
 if __name__=="__main__":
     if "--door-leaf-only" in sys.argv:
