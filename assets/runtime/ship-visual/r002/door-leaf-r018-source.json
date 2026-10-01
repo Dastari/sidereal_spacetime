@@ -1,0 +1,31 @@
+{
+  "status": "proposal",
+  "revision": "r018",
+  "bounds": [
+    -0.5,
+    -0.5,
+    -0.04540000110864639,
+    0.5,
+    0.5,
+    0.04540000110864639
+  ],
+  "source": "assets/source/ship-reference/r002/door-leaf-r018.blend",
+  "normalization": "scale width/height; thickness remains authored",
+  "continuousCoreHalfDepthM": 0.025,
+  "maximumPerFaceReliefM": 0.0204,
+  "coverEdgeGapNormalized": {
+    "x": 0.006,
+    "y": 0.004
+  },
+  "lipToCoverDepthM": {
+    "upper": 0.01,
+    "lower": 0.008
+  },
+  "semanticGroups": [
+    "primary",
+    "trim",
+    "dark",
+    "metal",
+    "emit_b"
+  ]
+}

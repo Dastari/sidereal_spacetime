@@ -705,18 +705,18 @@ def export_door_leaf():
         def face(slot,x0,z0,x1,z1,inner,outer,cut=0,bevel=0):
             a,b=sorted((sign*inner,sign*outer));part(slot,x0,z0,x1,z1,a,b,cut,bevel)
         # Quiet load-bearing edge shoulders surround two unequal machinery fields.
-        face("trim",-.5,-.48,-.455,.48,.024,.035)
-        face("trim",.455,-.48,.5,.48,.024,.035)
-        face("trim",-.455,.435,.455,.5,.024,.035,cut=.012)
-        face("trim",-.455,-.5,.455,-.435,.024,.035,cut=.012)
+        face("primary",-.5,-.48,-.455,.48,.024,.035)
+        face("primary",.455,-.48,.5,.48,.024,.035)
+        face("primary",-.455,.435,.455,.5,.024,.035,cut=.012)
+        face("primary",-.455,-.5,.455,-.435,.024,.035,cut=.012)
         ring("primary",sign,-.43,-.055,.265,.405,.024,.041,.045,.055)
         # Recessed upper service cover leaves a visible dark socket around it.
-        face("primary",-.353,.022,.13,.320,.026,.031,cut=.025)
+        face("primary",-.379,-.006,.214,.356,.026,.031,cut=.025)
         face("metal",-.315,.051,-.08,.066,.031,.0325)
         face("trim",-.315,.075,-.08,.095,.031,.033)
         face("trim",-.315,.104,-.08,.123,.031,.033)
         ring("primary",sign,-.265,-.410,.385,-.125,.024,.038,.035,.035)
-        face("primary",-.207,-.352,.296,-.184,.026,.030,cut=.016)
+        face("primary",-.224,-.371,.344,-.164,.026,.030,cut=.016)
         face("metal",.145,-.310,.266,-.294,.030,.0315)
         # The runtime repeats this orientation on both leaves. A centred handle
         # stays symmetric across the closed pair without changing their transforms.
@@ -735,14 +735,14 @@ def export_door_leaf():
             p=me.vertices[me.loops[li].vertex_index].co;uv.data[li].uv=(p[u],p[v])
     ob=bpy.data.objects.new("reference-door-leaf",me);bpy.context.collection.objects.link(ob)
     for m in mats:me.materials.append(m)
-    ob["status"]="proposal";ob["revision"]="r017";ob["frame"]="normalized leaf x horizontal, glTF y vertical, z thickness; scale x/y only"
+    ob["status"]="proposal";ob["revision"]="r018";ob["frame"]="normalized leaf x horizontal, glTF y vertical, z thickness; scale x/y only"
     bpy.context.view_layer.objects.active=ob;ob.select_set(True)
     out=E.ROOT/"assets/runtime/ship-visual/r002";out.mkdir(parents=True,exist_ok=True)
-    source=E.ROOT/"assets/source/ship-reference/r002/door-leaf-r017.blend";source.parent.mkdir(parents=True,exist_ok=True)
+    source=E.ROOT/"assets/source/ship-reference/r002/door-leaf-r018.blend";source.parent.mkdir(parents=True,exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=str(source),compress=True,check_existing=False)
-    bpy.ops.export_scene.gltf(filepath=str(out/"door-leaf-r017.glb"),export_format="GLB",use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_animations=False,export_materials="EXPORT")
+    bpy.ops.export_scene.gltf(filepath=str(out/"door-leaf-r018.glb"),export_format="GLB",use_selection=True,export_apply=True,export_extras=True,export_yup=True,export_cameras=False,export_lights=False,export_animations=False,export_materials="EXPORT")
     bounds=[min(v.co[a] for v in me.vertices) for a in range(3)]+[max(v.co[a] for v in me.vertices) for a in range(3)]
-    (out/"door-leaf-r017-source.json").write_text(json.dumps({"status":"proposal","revision":"r017","bounds":[bounds[0],bounds[2],-bounds[4],bounds[3],bounds[5],-bounds[1]],"source":str(source.relative_to(E.ROOT)),"normalization":"scale width/height; thickness remains authored","continuousCoreHalfDepthM":.025,"maximumPerFaceReliefM":.0204,"semanticGroups":["primary","trim","dark","metal","emit_b"]},indent=2)+"\n")
+    (out/"door-leaf-r018-source.json").write_text(json.dumps({"status":"proposal","revision":"r018","bounds":[bounds[0],bounds[2],-bounds[4],bounds[3],bounds[5],-bounds[1]],"source":str(source.relative_to(E.ROOT)),"normalization":"scale width/height; thickness remains authored","continuousCoreHalfDepthM":.025,"maximumPerFaceReliefM":.0204,"coverEdgeGapNormalized":{"x":.006,"y":.004},"lipToCoverDepthM":{"upper":.010,"lower":.008},"semanticGroups":["primary","trim","dark","metal","emit_b"]},indent=2)+"\n")
 
 if __name__=="__main__":
     if "--door-leaf-only" in sys.argv:
