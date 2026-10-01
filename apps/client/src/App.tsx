@@ -80,6 +80,7 @@ import type { SceneState } from "../../../packages/render/src";
 import {
   combatActionsFromView,
   crewmatesFromViews,
+  operatorRowsFromView,
   presentationLook,
 } from "./crewmates";
 import {
@@ -162,6 +163,11 @@ export default function App({
   const [loadedSceneKey, setLoadedSceneKey] = useState<string>();
   const [loadStage, setLoadStage] = useState("connecting");
   const [loadFailure, setLoadFailure] = useState<string>();
+  const [operatorLoad, setOperatorLoad] = useState<{
+    sceneKey: string;
+    blocked: boolean;
+    error: string | null;
+  }>();
   const loadingRef = useRef(true);
   // HUD-only reload label timing (see combat-status.ts).
   const reloadingUntil = useRef(0);
@@ -407,7 +413,12 @@ export default function App({
     gameShipAccess?.shipId,
     awaitingShip,
   ]);
-  loadingRef.current = loadedSceneKey !== sceneKey || status !== "ready";
+  const currentOperatorLoad =
+    operatorLoad?.sceneKey === sceneKey ? operatorLoad : undefined;
+  loadingRef.current =
+    loadedSceneKey !== sceneKey ||
+    status !== "ready" ||
+    !!currentOperatorLoad?.blocked;
   const authoredFlight = authoredFlightPresentation(
     actor,
     constructionVisit,
@@ -1469,6 +1480,9 @@ export default function App({
                 setModelStatus("Vessel unavailable");
               }
             },
+            onOperatorReadiness: (signal) => {
+              if (!disposed) setOperatorLoad({ sceneKey, ...signal });
+            },
           },
         );
       })
@@ -1695,6 +1709,10 @@ export default function App({
       sprinting: actor?.sprinting ?? false,
       dead: ownVitals?.state === "dead",
       // Other characters on this deck: two server views, never their inventory or health.
+      interiorOperators:
+        ready && c && actor?.connected
+          ? operatorRowsFromView(c.db.currentInteriorCrew.iter())
+          : [],
       crewmates:
         ready && c && actor?.connected
           ? crewmatesFromViews(
@@ -2150,10 +2168,16 @@ export default function App({
       </div>
       {loadingRef.current && (
         <GameLoadingScreen
-          stage={status === "ready" ? loadStage : "connecting"}
+          stage={
+            status === "ready"
+              ? currentOperatorLoad?.blocked
+                ? "equipment"
+                : loadStage
+              : "connecting"
+          }
           shipName={ship?.name ?? ""}
           awaitingShip={awaitingShip}
-          failure={loadFailure}
+          failure={loadFailure ?? currentOperatorLoad?.error ?? undefined}
           onSignOut={onSignOut}
         />
       )}

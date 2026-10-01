@@ -17,6 +17,10 @@ import {
 
 /** Game-side handle over the SHIPS-PREFABS dressed ship view. */
 export interface PrefabShipViewHandle {
+  /** Exact actually applied ship capability; unregistered/default views return null. */
+  navigationOperatorCapability(): ReturnType<
+    import("./prefab-ship/ship-view").PrefabShipView["navigationOperatorCapability"]
+  >;
   setInterior(interior: boolean): void;
   /** Animate door leaves (airlock outer door from the EVA cycle, interior doors on approach). */
   updateDoors(input: import("./prefab-ship/doors").DoorUpdate): void;
@@ -160,6 +164,7 @@ export async function loadPrefabShipPresentation(
       logMetrics();
     },
     metrics: () => view.metrics(),
+    navigationOperatorCapability: () => view.navigationOperatorCapability(),
     updateDoors: (input) => doors.update(input),
     updatePanels: (lights, nowMs) => panels.update(lights, nowMs),
     updateExhaust(actuators, nowMs) {

@@ -1,4 +1,8 @@
 import { registerLocalPbrLight } from "../pbr-light-budget";
+import { NAVIGATION_OPERATOR_ACTIVATIONS } from "@sidereal/content/navigation-operator-activation.generated";
+import type { NavigationOperatorRegistration } from "@sidereal/sim/navigation-operator-context";
+import type { OperatorActivatedCapability } from "../crew/operator-readiness";
+import { prefabToShipMetres } from "@sidereal/sim/prefab-construction";
 import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 /**
  * Babylon presentation of a prefab ship (docs/shipyard_player_builder_design.md §3.7, §6, §12).
@@ -108,12 +112,19 @@ import {
   slotOfMaterialName,
 } from "./materials";
 
-import { compileShipVisual } from "@sidereal/sim/ship-visual-compiler";
+import {
+  compileShipVisual,
+  visualPrefabSha256,
+} from "@sidereal/sim/ship-visual-compiler";
 import { meshSampledStructure } from "./sampled-structure";
 import {
   prepareCandidateMaterials,
   referenceFloraMaterial,
   resolveVisualVariant,
+  verifiedVariantIdentity,
+  retainedShipGeometryHash,
+  registeredActivatedNavigation,
+  type RetainedGeometryRecord,
   type VisualVariantSelection,
   type VerifiedVisualVariant,
 } from "./visual-variant";
@@ -217,6 +228,8 @@ export interface PrefabShipView {
   metrics(): PrefabShipMetrics;
   /** Meshes carrying emissive light (emit slots, plumes, light pools) for an optional glow layer. */
   emissiveMeshes(): Mesh[];
+  /** Truthful current activated capability; EMPTY/default/rejected artifacts never qualify. */
+  navigationOperatorCapability(): OperatorActivatedCapability | null;
 }
 
 /** Matrices per view tag for one instanced source. */
@@ -256,6 +269,9 @@ interface StaticEntry {
 }
 
 interface Built {
+  applied: boolean;
+  geometrySha256: string | null;
+  document: ShipPrefabDocumentV1;
   variant: VerifiedVisualVariant | null;
   dressed: DressedShip;
   instanced: InstancedEntry[];
@@ -471,6 +487,9 @@ export async function createPrefabShipView(
       }
     }
     const out: Built = {
+      applied: false,
+      geometrySha256: null,
+      document: d,
       variant,
       dressed,
       instanced: [],
@@ -527,6 +546,15 @@ export async function createPrefabShipView(
           ...out.statics.map((s) => s.mesh),
         ]);
       }
+      const registrations: readonly NavigationOperatorRegistration[] =
+        NAVIGATION_OPERATOR_ACTIVATIONS;
+      if (
+        registrations.length &&
+        variant &&
+        !options.exteriorOnly &&
+        !out.componentStandins
+      )
+        out.geometrySha256 = retainedGeometry(out);
       return out;
     } catch (error) {
       release(out);
@@ -538,6 +566,78 @@ export async function createPrefabShipView(
       }
       throw error;
     }
+  }
+
+  function retainedGeometry(b: Built): string | null {
+    if (!b.variant) return null;
+    const identity = verifiedVariantIdentity(b.variant);
+    if (!identity || identity.prefabSha256 !== visualPrefabSha256(b.document))
+      return null;
+    const records: RetainedGeometryRecord[] = [];
+    const add = (mesh: Mesh, semantic: string, matrices: ArrayLike<number>) => {
+      const positions = mesh.getVerticesData("position"),
+        normals = mesh.getVerticesData("normal"),
+        indices = mesh.getIndices();
+      if (!positions || !normals || !indices) return false;
+      records.push({
+        semantic,
+        positions,
+        normals,
+        indices,
+        uvs: mesh.getVerticesData("uv") ?? undefined,
+        uvs2: mesh.getVerticesData("uv2") ?? undefined,
+        colors: mesh.getVerticesData("color") ?? undefined,
+        matrices,
+      });
+      return true;
+    };
+    for (const e of b.instanced) {
+      const roles = e.mesh.metadata?.roleRanges ?? roleOf(e.mesh);
+      const matrices = [
+        ...e.matrices.both,
+        ...e.matrices.deck,
+        ...e.matrices.flight,
+      ];
+      if (
+        !add(
+          e.mesh,
+          JSON.stringify([
+            "instanced",
+            e.slot,
+            e.piece,
+            roles,
+            e.matrices.both.length,
+            e.matrices.deck.length,
+            e.matrices.flight.length,
+          ]),
+          matrices,
+        )
+      )
+        return null;
+    }
+    for (const e of b.statics) {
+      if (e.kind === "plume" || e.kind === "pool" || e.kind === "decal")
+        continue;
+      if (
+        !add(
+          e.mesh,
+          JSON.stringify([
+            "static",
+            e.kind,
+            e.tag,
+            e.slot,
+            e.mesh.metadata?.roleRanges ?? roleOf(e.mesh),
+          ]),
+          localToParent(e.mesh),
+        )
+      )
+        return null;
+    }
+    return retainedShipGeometryHash(records, {
+      prefab: identity.prefabSha256,
+      profile: b.variant.profile,
+      sources: identity.sources,
+    });
   }
 
   /**
@@ -1504,6 +1604,7 @@ export async function createPrefabShipView(
     built = next;
     applyFrame(frame, prefabOrigin(d));
     apply(next);
+    next.applied = true;
   }
 
   await rebuild(doc);
@@ -1512,6 +1613,45 @@ export async function createPrefabShipView(
     root,
     get dressed() {
       return built!.dressed;
+    },
+    navigationOperatorCapability() {
+      const registrations: readonly NavigationOperatorRegistration[] =
+        NAVIGATION_OPERATOR_ACTIVATIONS;
+      if (
+        !registrations.length ||
+        disposed ||
+        scene.isDisposed ||
+        !built?.applied ||
+        options.exteriorOnly ||
+        built.componentStandins
+      )
+        return null;
+      const b = built;
+      return registeredActivatedNavigation(registrations, b.variant, () => {
+        const mounts = b.dressed.components.filter(
+          (c) => c.component === "console.navigation.sm",
+        );
+        if (mounts.length !== 1) return null;
+        const mount = mounts[0];
+        if (
+          mount.placement.mount.attach !== "interior" ||
+          mount.placement.anchorZ !== 3 ||
+          !mount.placement.spec
+        )
+          return null;
+        const [stationX, stationY] = prefabToShipMetres(b.document)(
+          mount.placement.anchor,
+        );
+        return {
+          prefabId: b.dressed.id,
+          mountSourceId: mount.mount,
+          internalQuarterTurns: mount.placement.quarterTurns,
+          artQuarterTurns: artQuarterTurns(mount),
+          stationX,
+          stationY,
+          geometrySha256: b.geometrySha256,
+        };
+      });
     },
     setView(v) {
       if (v === view || options.exteriorOnly) return;

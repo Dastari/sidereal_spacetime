@@ -54,6 +54,9 @@ import {
 import { blendProgress } from "./animation";
 import {
   instantiateSharedCrewBody,
+  isVerifiedCrewSource,
+  verifiedCrewSourceBytes,
+  type VerifiedCrewSource,
   type CrewBodyAssets,
 } from "./crew-asset-cache";
 
@@ -134,7 +137,8 @@ export function voxelCrewVariant(appearance: CrewAppearance): VoxelCrewVariant {
 export async function createVoxelCrewVisual(
   scene: Scene,
   parent: TransformNode,
-  assetUrl: string | ArrayBufferView = VOXEL_CREW_ASSET_URL,
+  assetUrl:
+    string | ArrayBufferView | VerifiedCrewSource = VOXEL_CREW_ASSET_URL,
   options: {
     /** Face atlas; omitted = fetch the default atlas (browser); false = keep the GLB's baked face. */
     faceAtlas?: { atlas: FaceAtlas; image: FaceAtlasImage } | false;
@@ -148,9 +152,15 @@ export async function createVoxelCrewVisual(
   } = {},
 ) {
   const container: CrewBodyAssets =
-    options.shared && typeof assetUrl === "string"
+    options.shared &&
+    (typeof assetUrl === "string" || isVerifiedCrewSource(assetUrl))
       ? await instantiateSharedCrewBody(scene, assetUrl)
-      : await loadOwnedCrewBody(scene, assetUrl);
+      : await loadOwnedCrewBody(
+          scene,
+          isVerifiedCrewSource(assetUrl)
+            ? verifiedCrewSourceBytes(assetUrl)
+            : (assetUrl as string | ArrayBufferView),
+        );
   const root = new TransformNode("crew-placement", scene);
   root.parent = parent;
   const visual = new TransformNode("crew-model", scene);

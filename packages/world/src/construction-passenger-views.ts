@@ -130,6 +130,8 @@ export const interiorCrewProjection = t.row("InteriorCrew", {
   name: t.string(),
   shipId: t.string(),
   deckId: t.string(),
+  visitId: t.string(),
+  locationRevision: t.string(),
   localX: t.f64(),
   localY: t.f64(),
   standingElevationM: t.f64(),
@@ -189,9 +191,11 @@ export function currentInteriorCrew(ctx: Context) {
   if (!visible) return [];
   const { instance: i, deck: d } = visible;
   // EMPTY activation returns before any new source admission or pinned visual resolver.
-  let operatorSnapshot: () => string | undefined;
+  let operatorSnapshot: (
+    entry: NonNullable<typeof visible>["bodies"][number],
+  ) => string | undefined;
   try {
-    operatorSnapshot = currentNavigationOperatorSnapshots();
+    operatorSnapshot = currentNavigationOperatorSnapshots(ctx, visible);
   } catch {
     operatorSnapshot = () => undefined;
   }
@@ -212,7 +216,7 @@ export function currentInteriorCrew(ctx: Context) {
         : "none";
       let snapshot: string | undefined;
       try {
-        snapshot = operatorSnapshot();
+        snapshot = operatorSnapshot({ body, location });
       } catch {
         // A presentation helper failure never withdraws an already filtered body.
         snapshot = undefined;
@@ -222,6 +226,8 @@ export function currentInteriorCrew(ctx: Context) {
         name: body.name,
         shipId: body.shipId,
         deckId: d.id,
+        visitId: location.visitId,
+        locationRevision: location.revision.toString(),
         localX: body.localX,
         localY: body.localY,
         standingElevationM: support({

@@ -10,6 +10,15 @@ import { FreeCamera } from "@babylonjs/core/Cameras/freeCamera";
 import { createVoxelCrewVisual } from "./voxel-crew";
 import { sharedCrewContainer } from "./crew-asset-cache";
 import { createRemoteCrew, type RemoteCrewState } from "./remote-crew";
+import {
+  createOperatorReadiness,
+  type OperatorInteriorRow,
+  type OperatorActivatedCapability,
+} from "./operator-readiness";
+import type {
+  OperatorEnsembleRequest,
+  PreparedOperatorEnsemble,
+} from "./operator-ensemble";
 
 // The shared cache is keyed by URL; a data URL stands in for the served GLB.
 const bodyUrl =
@@ -134,6 +143,183 @@ const mate = (over: Partial<RemoteCrewState> = {}): RemoteCrewState => ({
   appearance: {},
   heldItem: null,
   ...over,
+});
+
+function operatorRow() {
+  const capability: OperatorActivatedCapability = {
+    profileId: "test-profile",
+    certificateSha256: "a".repeat(64),
+    proofSha256: "b".repeat(64),
+    manifestSha256: "c".repeat(64),
+    compilerSha256: "d".repeat(64),
+    geometrySha256: "e".repeat(64),
+    navigationSha256: "f".repeat(64),
+    mountSourceId: "helm",
+  };
+  const row: OperatorInteriorRow = {
+    characterId: mate().id,
+    shipId: "ship",
+    deckId: "deck",
+    visitId: "visit",
+    locationRevision: "10",
+    localX: 0,
+    localY: 3.5,
+    standingElevationM: 0.1875,
+    connected: true,
+    dead: false,
+    operatorPoseState: "occupied",
+  };
+  const packet = {
+    ...capability,
+    version: 1,
+    status: "supported",
+    characterId: row.characterId,
+    instanceId: row.shipId,
+    deckId: row.deckId,
+    visitId: row.visitId,
+    locationRevision: row.locationRevision,
+    instanceRevision: "1",
+    bindingRevision: "1",
+    mappingRevision: "1",
+    seatRevision: "1",
+    pose: "occupied",
+    dead: false,
+    connected: true,
+    acceptedX: row.localX,
+    acceptedY: row.localY,
+    standingElevationM: row.standingElevationM,
+    stationId: "station",
+    seatPlacedObjectId: "seat",
+    consolePlacedObjectId: "console",
+    appearance: {},
+    visuals: [],
+  };
+  row.operatorSnapshot = JSON.stringify(packet);
+  return { row, capability };
+}
+
+it("absent activated capability performs exactly the legacy marker path without plan or preparation calls", () => {
+  const s = scene(),
+    parent = new TransformNode("ship", s),
+    changed = vi.fn(),
+    resolve = vi.fn(),
+    prepare = vi.fn();
+  const legacy = createRemoteCrew(s, parent, { fullBodies: 0 }),
+    guarded = createRemoteCrew(s, parent, {
+      fullBodies: 0,
+      operator: {
+        readiness: createOperatorReadiness(changed),
+        capability: () => null,
+        resolve,
+        prepare,
+      },
+    });
+  const { row } = operatorRow();
+  legacy.sync([mate()]);
+  guarded.sync([mate()], undefined, [row]);
+  legacy.frame(true);
+  guarded.frame(true);
+  expect(guarded.diagnostics()).toEqual(legacy.diagnostics());
+  expect(resolve).not.toHaveBeenCalled();
+  expect(prepare).not.toHaveBeenCalled();
+  expect(changed).not.toHaveBeenCalled();
+  legacy.dispose();
+  guarded.dispose();
+});
+
+it("operator marker survives first preparation; coherent stationary ownership survives LOD, recovery and stale walking rows", async () => {
+  const s = scene(),
+    parent = new TransformNode("ship", s),
+    { row, capability } = operatorRow();
+  const body = await createVoxelCrewVisual(s, parent, bodyUrl, {
+    shared: true,
+    faceAtlas: false,
+  });
+  body.root.setEnabled(false);
+  const held = { dispose: vi.fn(), set: vi.fn(), itemId: null, phase: "empty" };
+  const outfit = { dispose: vi.fn(), apply: vi.fn(), armour: {} };
+  let finish!: (value: PreparedOperatorEnsemble) => void;
+  const prepare = vi.fn(
+    () =>
+      new Promise<PreparedOperatorEnsemble>((resolve) => (finish = resolve)),
+  );
+  const resolve = vi.fn(
+    async (_packet: unknown, associationKey: string, requestedKey: string) =>
+      ({ associationKey, requestedKey }) as OperatorEnsembleRequest,
+  );
+  const changed = vi.fn();
+  let now = 100;
+  const remote = createRemoteCrew(s, parent, {
+    fullBodies: 0,
+    now: () => now,
+    operator: {
+      readiness: createOperatorReadiness(changed),
+      capability: () => capability,
+      resolve,
+      prepare,
+    },
+  });
+  remote.sync([mate({ seated: true })], undefined, [row]);
+  for (let i = 0; i < 8; i++) await Promise.resolve();
+  remote.frame(true);
+  expect(remote.diagnostics()[0]).toMatchObject({
+    tier: "marker",
+    loaded: false,
+    enabled: true,
+  });
+  expect(changed.mock.lastCall?.[0]).toEqual({ blocked: true, error: null });
+  const request = await resolve.mock.results[0].value;
+  const dispose = vi.fn(() => {
+    held.dispose();
+    outfit.dispose();
+    body.dispose();
+  });
+  finish({
+    state: "verified-complete",
+    requestedKey: request.requestedKey,
+    associationKey: request.associationKey,
+    crew: body,
+    root: body.root,
+    held,
+    outfit,
+    prepareActivation: async () => undefined,
+    activate: () => body.root.setEnabled(true),
+    dispose,
+  } as unknown as PreparedOperatorEnsemble);
+  for (let i = 0; i < 8; i++) await Promise.resolve();
+  expect(remote.diagnostics()[0].tier).toBe("marker");
+  s.onBeforeAnimationsObservable.notifyObservers(s);
+  remote.frame(true);
+  expect(remote.diagnostics()[0]).toMatchObject({
+    tier: "full",
+    loaded: true,
+    enabled: true,
+  });
+  expect(body.root.position.asArray()).toEqual([0, 0.1875, -3.5]);
+  remote.sync([mate({ localX: 99, seated: false })], undefined, [
+    {
+      ...row,
+      locationRevision: "9",
+      localX: 99,
+      operatorSnapshot: undefined,
+      operatorPoseState: "none",
+    },
+  ]);
+  now += 100;
+  remote.frame(true);
+  expect(body.root.position.asArray()).toEqual([0, 0.1875, -3.5]);
+  expect(dispose).not.toHaveBeenCalled();
+  remote.sync([mate({ seated: true })], undefined, [
+    { ...row, operatorSnapshot: undefined, operatorPoseState: "recovering" },
+  ]);
+  remote.frame(true);
+  expect(dispose).not.toHaveBeenCalled();
+  expect(held.set).not.toHaveBeenCalled();
+  expect(outfit.apply).not.toHaveBeenCalled();
+  remote.sync([], undefined, []);
+  expect(dispose).toHaveBeenCalledTimes(1);
+  expect(changed.mock.lastCall?.[0]).toEqual({ blocked: false, error: null });
+  remote.dispose();
 });
 
 describe("remote crew", () => {

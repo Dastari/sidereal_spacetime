@@ -18,6 +18,10 @@ import {
 } from "@sidereal/content/crew-armor";
 import { setMeshRole } from "../mesh-roles";
 import { tagCrewPart } from "../molded-plastic";
+import {
+  verifiedCrewSourceBytes,
+  type VerifiedCrewSource,
+} from "./crew-asset-cache";
 
 /**
  * Presentation-only armour attachment for the voxel crew (CHAR-BODY contract): every armour GLB
@@ -87,11 +91,16 @@ export async function attachCrewArmor(
     colourway: string;
     /** Override for tests/previews (URL or GLB bytes); defaults to the content-addressed asset URL. */
     source?: string | ArrayBufferView;
+    /** Operator-only attested source and mandatory authored joint coverage. */
+    verifiedSource?: VerifiedCrewSource;
+    requiredJoints?: readonly string[];
   },
 ): Promise<CrewArmorAttachment> {
   const container = await SceneLoader.LoadAssetContainerAsync(
     "",
-    options.source ?? crewArmorAssetUrl(part),
+    options.verifiedSource
+      ? verifiedCrewSourceBytes(options.verifiedSource)
+      : (options.source ?? crewArmorAssetUrl(part)),
     scene,
     undefined,
     ".glb",
@@ -119,6 +128,18 @@ export async function attachCrewArmor(
       linkedBones.push(bone.name);
     }
   for (const node of container.rootNodes) node.parent = target.root;
+  if (
+    options.verifiedSource &&
+    (!meshes.length ||
+      !options.requiredJoints?.length ||
+      meshes.some((m) => !m.getIndices()?.length) ||
+      (options.requiredJoints ?? []).some(
+        (name) => !linkedBones.includes(name),
+      ))
+  ) {
+    container.dispose();
+    throw new Error("Operator armor fit unavailable");
+  }
   applyCrewArmorColourway(container.materials, options.colourway);
   // Armour, helmets and wardrobe gear are moulded parts (their suit slots are plates, not cloth).
   tagCrewPart(container.materials, "armour");

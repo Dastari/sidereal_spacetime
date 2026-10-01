@@ -71,6 +71,7 @@ const subscribed = () => [
   tables.ownConstructionSeat,
   tables.ownGameShipAccess,
   tables.ownConstructionLocation,
+  tables.currentInteriorCrew,
   tables.ownWorldAdmission,
   tables.ownAuthoredFlights,
   tables.ownAuthoredFlightFittings,
@@ -111,6 +112,149 @@ const c = DbConnection.builder()
   })
   .build();
 const actor = () => [...c.db.ownCharacters.iter()][0] as any;
+const crewProjectionChecks: { phase: string; pose: string; dead: boolean }[] =
+  [];
+async function expectCrewProjection(
+  conn: any,
+  phase: string,
+  requiredPose: "none" | "occupied" | null,
+  requiredDead: boolean,
+) {
+  const current = () => {
+    const body = [...conn.db.ownCharacters.iter()][0] as any;
+    const location = [...conn.db.ownConstructionLocation.iter()].find(
+      (row: any) => row.characterId === body?.id,
+    ) as any;
+    const row = [...conn.db.currentInteriorCrew.iter()].find(
+      (row: any) => row.characterId === body?.id,
+    ) as any;
+    const seat = [...conn.db.ownConstructionSeat.iter()].find(
+      (row: any) =>
+        row.characterId === body?.id &&
+        row.instanceId === location?.instanceId &&
+        row.deckId === location?.deckId,
+    ) as any;
+    const pilot = [...conn.db.ownAuthoredFlights.iter()].find(
+      (entry: any) =>
+        entry.shipId === location?.instanceId &&
+        entry.deckId === location?.deckId &&
+        entry.visitId === location?.visitId,
+    ) as any;
+    const vitals = [...conn.db.ownCharacterVitals.iter()][0] as any;
+    const dead = vitals?.state === "dead" || vitals?.state === "downed";
+    const seated =
+      !!seat ||
+      pilot?.seatState === "seated" ||
+      pilot?.seatState === "recovery-pending";
+    const pose = seated
+      ? pilot?.seatState === "recovery-pending" || dead || !body?.connected
+        ? "recovering"
+        : "occupied"
+      : "none";
+    return { body, location, row, seat, pilot, dead, pose };
+  };
+  const matches = () => {
+    const { body, location, row, dead, pose } = current();
+    return !!(
+      body &&
+      location &&
+      row &&
+      dead === requiredDead &&
+      (!requiredPose || pose === requiredPose) &&
+      row.shipId === location.instanceId &&
+      row.deckId === location.deckId &&
+      row.visitId === location.visitId &&
+      row.locationRevision === location.revision.toString() &&
+      row.localX === body.localX &&
+      row.localY === body.localY &&
+      row.standingElevationM === location.standingElevationM &&
+      row.connected === body.connected &&
+      row.dead === dead &&
+      row.operatorPoseState === pose
+    );
+  };
+  try {
+    await wait(matches, `coherent current crew projection (${phase})`);
+  } catch (error) {
+    const { body, location, row, seat, pilot, dead, pose } = current();
+    console.error(
+      JSON.stringify({
+        crewProjectionMismatch: phase,
+        required: { pose: requiredPose, dead: requiredDead },
+        present: {
+          body: !!body,
+          location: !!location,
+          publicRow: !!row,
+          couchSeat: !!seat,
+          pilot: !!pilot,
+        },
+        expected: {
+          pose,
+          dead,
+          connected: body?.connected,
+          localX: body?.localX,
+          localY: body?.localY,
+          standingElevationM: location?.standingElevationM,
+          locationRevision: location?.revision.toString(),
+          pilotSeatState: pilot?.seatState,
+        },
+        current: {
+          pose: row?.operatorPoseState,
+          dead: row?.dead,
+          connected: row?.connected,
+          localX: row?.localX,
+          localY: row?.localY,
+          standingElevationM: row?.standingElevationM,
+          locationRevision: row?.locationRevision,
+          snapshotAbsent: row?.operatorSnapshot == null,
+          sameInstance: !!row && row.shipId === location?.instanceId,
+          sameDeck: !!row && row.deckId === location?.deckId,
+          sameVisit: !!row && row.visitId === location?.visitId,
+        },
+      }),
+    );
+    throw error;
+  }
+  const { row, location, dead, pose } = current();
+  assert(
+    row.operatorSnapshot == null,
+    "EMPTY operator registration leaves snapshot absent",
+  );
+  assert(
+    [...conn.db.currentInteriorCrew.iter()].every(
+      (entry: any) =>
+        entry.shipId === location.instanceId &&
+        entry.deckId === location.deckId,
+    ),
+    "filtered crew rows remain within the current admitted instance/deck",
+  );
+  crewProjectionChecks.push({ phase, pose, dead });
+}
+async function expectUnadmittedCrewHidden() {
+  let applied = false;
+  const observer = DbConnection.builder()
+    .withUri(host)
+    .withDatabaseName(database)
+    .onConnect((conn: any) =>
+      conn
+        .subscriptionBuilder()
+        .onApplied(() => {
+          applied = true;
+        })
+        .subscribe([tables.currentInteriorCrew]),
+    )
+    .build();
+  try {
+    await wait(() => applied, "unadmitted observer filtered crew subscription");
+    assert.equal(
+      [...observer.db.currentInteriorCrew.iter()].length,
+      0,
+      "an unadmitted observer receives no occupied ship crew rows",
+    );
+  } finally {
+    observer.disconnect();
+  }
+}
 const flightOf = (shipId: string) =>
   [...c.db.ownAuthoredFlights.iter()].find(
     (f: any) => f.shipId === shipId,
@@ -210,6 +354,7 @@ try {
     instanceRow?.instanceId === shipId,
     "character located aboard the prefab instance",
   );
+  await expectCrewProjection(c, "installed-walking", "none", false);
   await wait(
     () => physicsOf(shipId)?.status === "ready",
     "prefab physical definition ready",
@@ -730,6 +875,22 @@ try {
     ) < 1e-3,
     "seated at the derived station",
   );
+  await expectCrewProjection(c, "accepted-helm-seat", "occupied", false);
+  await expectUnadmittedCrewHidden();
+  await c.reducers.leaveAuthoredPilot({});
+  await wait(
+    () => flightOf(shipId)?.seatState !== "seated",
+    "explicit pilot exit",
+  );
+  await expectCrewProjection(c, "accepted-exit", "none", false);
+  const reentry = flightOf(shipId);
+  await c.reducers.enterAuthoredPilot({
+    stationId: reentry.stationId,
+    expectedStationRevision: reentry.stationRevision,
+    operationId: crypto.randomUUID(),
+  });
+  await wait(() => flightOf(shipId)?.seatState === "seated", "pilot reentry");
+  await expectCrewProjection(c, "accepted-helm-reentry", "occupied", false);
 
   // Fly: forward burn changes velocity; release and turn produce rotation.
   const s0 = shipOf(shipId);
@@ -811,6 +972,7 @@ try {
     () => flightOf(shipId)?.seatState !== "seated",
     "death released the pilot seat",
   );
+  await expectCrewProjection(c, "helm-death", null, true);
   const helmWhileDead = await c.reducers
     .setIntent({
       sequence: nextSequence(c),
@@ -831,6 +993,7 @@ try {
     15000,
   );
   assert.equal(vitals().health, vitals().maxHealth);
+  await expectCrewProjection(c, "helm-respawn", "none", false);
   console.log(JSON.stringify({ helmDeath: { helmWhileDead } }));
 
   // Damage (2026-09-28): stand up and shoot the own ship's life support with the pistol until it
@@ -838,6 +1001,7 @@ try {
   // damage adapter and check that the ship loses thrust on the flight-dirty path.
   await c.reducers.leaveAuthoredPilot({}).catch(() => {});
   await wait(() => flightOf(shipId)?.seatState !== "seated", "left the seat");
+  await expectCrewProjection(c, "standing-after-helm-death", "none", false);
   assert.equal(vitals().health, vitals().maxHealth, "full health before");
   const TARGET = "mount:life";
   const targetObject = beam.objects.find((o) => o.id === TARGET);
@@ -1205,6 +1369,12 @@ try {
     assert.equal(vitalsAgain().state, "active", "respawned while offline");
     assert.equal(vitalsAgain().health, vitalsAgain().maxHealth);
     assert.equal(actorAgain().shipId, shipId);
+    await expectCrewProjection(
+      again,
+      "reconnected-after-offline-respawn",
+      "none",
+      false,
+    );
     const offlineGap = Math.hypot(
       actorAgain().localX - spawnPoint[0],
       actorAgain().localY - spawnPoint[1],
@@ -1240,6 +1410,15 @@ try {
   } finally {
     again.disconnect();
   }
+  console.log(
+    JSON.stringify({
+      currentInteriorCrew: {
+        checks: crewProjectionChecks,
+        unadmittedHidden: true,
+        registration: "EMPTY",
+      },
+    }),
+  );
   console.log("prefab smoke passed");
 } finally {
   c.disconnect();

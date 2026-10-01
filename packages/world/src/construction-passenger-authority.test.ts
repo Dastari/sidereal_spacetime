@@ -291,17 +291,40 @@ test("passenger projections stay empty without admission; owners still see their
     "deckId",
     "localX",
     "localY",
+    "locationRevision",
     "name",
     "operatorPoseState",
     "operatorSnapshot",
     "shipId",
     "sprinting",
     "standingElevationM",
+    "visitId",
   ]);
   expect(
     ownedGameShipAccess(f.ctx, "captain-ship", "captain-deck", 1_000_000n)
       .walkDeck,
   ).toBe(true);
+});
+
+test("NULL operator rows still carry only the body's same filtered accepted visit and exact integer revision", () => {
+  const f = fixture();
+  const location = f.db.constructionLocation.characterId.find("captain");
+  f.db.constructionLocation.characterId.update({
+    ...location,
+    visitId: "new-current-visit",
+    revision: 9007199254740993n,
+  });
+  const row = currentInteriorCrew(f.ctx)[0];
+  expect(row).toMatchObject({
+    characterId: "captain",
+    visitId: "new-current-visit",
+    locationRevision: "9007199254740993",
+    operatorSnapshot: undefined,
+  });
+  expect(JSON.stringify(row)).not.toContain("grantId");
+  expect(
+    currentInteriorCrew(f.pctx).some((body) => body.characterId === "captain"),
+  ).toBe(false);
 });
 
 test("coherent outer life/pose keeps a retained body and accepted recovery XY with NULL snapshot", () => {

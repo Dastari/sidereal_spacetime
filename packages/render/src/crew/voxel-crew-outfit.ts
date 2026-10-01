@@ -22,6 +22,18 @@ import {
   type createVoxelCrewVisual,
 } from "./voxel-crew";
 import { applyMoldedFinishToMeshes } from "../molded-plastic";
+import type { VerifiedCrewSource } from "./crew-asset-cache";
+
+export interface OperatorOutfitSources {
+  head: ReadonlyMap<string, VerifiedCrewSource>;
+  headAtlases: ReadonlyMap<string, VerifiedCrewSource>;
+  armor(
+    partId: string,
+    variant: string,
+  ):
+    | { source: VerifiedCrewSource; requiredJoints: readonly string[] }
+    | undefined;
+}
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 
@@ -82,7 +94,10 @@ export function voxelArmorLoadout(
 export function createVoxelCrewOutfit(
   scene: Scene,
   crew: VoxelCrew,
-  options: { onChange?: () => void } = {},
+  options: {
+    onChange?: () => void;
+    operatorSources?: OperatorOutfitSources;
+  } = {},
 ) {
   let disposed = false;
   let headKey = "";
@@ -93,6 +108,9 @@ export function createVoxelCrewOutfit(
     { key: string; revision: number; attachment?: CrewArmorAttachment }
   >();
   let pending = 0;
+  let requestedKey = "";
+  let requestError: string | null = null;
+  const inFlight = new Set<Promise<unknown>>();
   const changed = () => {
     if (disposed) return;
     const regions = new Set<VoxelCrewRegion>();
@@ -116,13 +134,21 @@ export function createVoxelCrewOutfit(
   };
   const track = <T>(promise: Promise<T>) => {
     pending++;
-    return promise.finally(() => {
+    const tracked = promise.finally(() => {
       pending--;
+      inFlight.delete(tracked);
     });
+    inFlight.add(tracked);
+    return tracked;
   };
 
   function apply(appearance: CrewAppearance) {
     if (disposed) return;
+    const nextKey = JSON.stringify(appearance);
+    if (nextKey !== requestedKey) {
+      requestedKey = nextKey;
+      requestError = null;
+    }
     const resolved = resolveCrewAppearance(appearance);
     const equipped = appearance.equippedComponents ?? {};
     // Head kit: the persisted look plus the equipped helmet / visor.
@@ -138,6 +164,8 @@ export function createVoxelCrewOutfit(
       void track(
         attachVoxelCrewHead(scene, crew, loadout, resolved.headArtRevision, {
           deferActivation: true,
+          verifiedSources: options.operatorSources?.head,
+          verifiedAtlases: options.operatorSources?.headAtlases,
         }),
       )
         .then((next) => {
@@ -153,6 +181,11 @@ export function createVoxelCrewOutfit(
           changed();
         })
         .catch((error) => {
+          if (options.operatorSources) {
+            if (!disposed && revision === headRevision)
+              requestError = "Operator head unavailable";
+            return;
+          }
           // The body's own head blank stays visible if the head kit cannot load.
           console.warn("voxel crew head kit unavailable", error);
         });
@@ -180,16 +213,21 @@ export function createVoxelCrewOutfit(
       };
       armour.set(slot, request);
       const part = crewArmorPart(want.part)!;
+      const verified = options.operatorSources?.armor(part.id, variant);
       void track(
-        attachCrewArmor(
-          scene,
-          { root: crew.model, joints: crew.joints },
-          part,
-          {
-            variant,
-            colourway: want.colourway,
-          },
-        ),
+        options.operatorSources && !verified
+          ? Promise.reject(new Error("Operator armor source unavailable"))
+          : attachCrewArmor(
+              scene,
+              { root: crew.model, joints: crew.joints },
+              part,
+              {
+                variant,
+                colourway: want.colourway,
+                verifiedSource: verified?.source,
+                requiredJoints: verified?.requiredJoints,
+              },
+            ),
       )
         .then((attachment) => {
           const entry = armour.get(slot);
@@ -201,15 +239,37 @@ export function createVoxelCrewOutfit(
           entry.attachment = attachment;
           changed();
         })
-        .catch((error) =>
-          console.warn(`voxel crew armour ${want.part} unavailable`, error),
-        );
+        .catch((error) => {
+          if (options.operatorSources) {
+            if (!disposed && armour.get(slot) === request)
+              requestError = "Operator armor unavailable";
+          } else
+            console.warn(`voxel crew armour ${want.part} unavailable`, error);
+        });
     }
     if (removed) changed();
   }
 
   return {
     apply,
+    /** Scoped ensemble awaits actual loader results; pending-zero alone is never completeness. */
+    async whenComplete() {
+      const key = requestedKey;
+      while (inFlight.size) {
+        await Promise.allSettled([...inFlight]);
+        // The existing attachment .then/.catch handlers must settle before this result is read.
+        await Promise.resolve();
+        await Promise.resolve();
+      }
+      if (disposed || key !== requestedKey)
+        throw new Error("Operator outfit request withdrawn");
+      if (requestError) throw new Error(requestError);
+      if (options.operatorSources && (!head || head.artError))
+        throw new Error("Operator head incomplete");
+    },
+    get status() {
+      return { requestedKey, pending, error: requestError };
+    },
     /** Loads still in flight (tests, first-frame readiness). */
     get pending() {
       return pending;
