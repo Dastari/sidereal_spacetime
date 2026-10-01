@@ -6,6 +6,7 @@
  * Detail bump (§12.3) is not implemented yet: the exported kit GLBs carry no UVs, so it needs a
  * triplanar material plugin rather than a plain bump texture.
  */
+import { setPbrLightBudget, GAME_PBR_LIGHT_LIMIT } from "../pbr-light-budget";
 import type { Scene } from "@babylonjs/core/scene";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
@@ -144,7 +145,7 @@ export function slotMaterial(
   if (found) return found as PBRMaterial;
   const t = SHIP_THEMES[theme].slots[slot];
   const m = new PBRMaterial(`prefab-${theme}-${slot}`, scene);
-  m.maxSimultaneousLights = 12; // up to 8 room lights plus scene key/fill lights
+  setPbrLightBudget(m, GAME_PBR_LIGHT_LIMIT);
   m.albedoColor = new Color3(...t.colour);
   // Pre-finish response (the theme table, metalness capped at the game's pre-#59 0.2 because the
   // space scene's IBL is dim), restored when the F3 debug window turns the plastic finish off.

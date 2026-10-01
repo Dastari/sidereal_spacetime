@@ -1,3 +1,4 @@
+import { createPbrLightBudget } from "./pbr-light-budget";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
 import { createFlightActiveSet } from "./flight-active-set";
@@ -345,6 +346,7 @@ async function buildWorld(
   );
   const backendPreference = backend;
   const scene = new Scene(engine);
+  const pbrLights = createPbrLightBudget(scene);
   // Review aid: `?slowmo=0.25` plays crew clips, draw/holster and weapon effects at that fraction
   // of real time (presentation only; the server clock is unaffected).
   const slowmo = Number(pageUrl?.searchParams.get("slowmo"));
@@ -1240,6 +1242,11 @@ async function buildWorld(
       ],
       { focus: camera.target },
     );
+    if (pbrLights.update(camera.target)) {
+      fastSnapshot?.invalidate();
+      flightActiveSet.invalidate();
+      antialiasing.resetHistory();
+    }
     const updateCpuMs = performance.now() - frameStarted;
     staticMaterials.prepare();
     const snapshotCandidate =
@@ -1566,6 +1573,7 @@ async function buildWorld(
       scene.onAfterAnimationsObservable.remove(combatObserver);
       groundItems.dispose();
       combatAim.dispose();
+      pbrLights.dispose();
       localLights.dispose();
       scene.onNewMeshAddedObservable.remove(temporalMeshObserver);
       scene.onBeforeRenderObservable.remove(temporalGeometryObserver);

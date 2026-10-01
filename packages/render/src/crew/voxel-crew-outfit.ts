@@ -1,3 +1,4 @@
+import { setPbrLightBudget, GAME_PBR_LIGHT_LIMIT } from "../pbr-light-budget";
 import type { Scene } from "@babylonjs/core/scene";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
 import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
@@ -30,11 +31,11 @@ type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
  *   helmets, rubber grips, real metal only on metal slots; see molded-plastic.ts);
  * - cap emission: authored `crew.emit` strength 6 blooms across the face and chest in game; the cap
  *   keeps it a small accent;
- * - raise the light budget: with Babylon's default of 4, a deck with several room lights drops the
- *   ship fill and key light and late-loaded parts (head kit, armour) render near black.
+ * - request the hardware-bounded crew light budget; game ordering protects key/fill/rim
+ *   before local room lamps for both existing and late-loaded parts.
  * Idempotent.
  */
-export const CREW_MAX_LIGHTS = 12;
+export const CREW_MAX_LIGHTS = GAME_PBR_LIGHT_LIMIT;
 export function toneCrewEmissive(meshes: readonly AbstractMesh[]) {
   applyMoldedFinishToMeshes(meshes);
   for (const mesh of meshes) {
@@ -45,8 +46,7 @@ export function toneCrewEmissive(meshes: readonly AbstractMesh[]) {
       if (!(m instanceof PBRMaterial)) continue;
       if (m.emissiveIntensity > CREW_EMISSIVE_INTENSITY)
         m.emissiveIntensity = CREW_EMISSIVE_INTENSITY;
-      if (m.maxSimultaneousLights < CREW_MAX_LIGHTS)
-        m.maxSimultaneousLights = CREW_MAX_LIGHTS;
+      setPbrLightBudget(m, CREW_MAX_LIGHTS);
     }
   }
 }

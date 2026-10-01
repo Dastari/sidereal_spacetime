@@ -105,6 +105,8 @@ export interface DressedShip {
   components: ComponentPlacement[];
   objects: (DerivedSocket & { view: DressView })[];
   lights: {
+    /** Stable authored room identity, retained for renderer light allocation. */
+    room: string;
     at: [number, number, number];
     colour: [number, number, number];
     intensity: number;
@@ -1488,6 +1490,7 @@ export function dressShip(
     for (const s of interior.exteriorSlopes) contacts.push([s.a, s.b]);
     for (const l of interior.lights)
       lights.push({
+        room: l.room,
         at: [l.at[0], l.at[1], 2.3],
         colour: l.colour,
         intensity: Math.min(1.5, 0.25 + l.area * 0.04),

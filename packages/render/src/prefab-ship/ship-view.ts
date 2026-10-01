@@ -1,3 +1,4 @@
+import { registerLocalPbrLight } from "../pbr-light-budget";
 import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 /**
  * Babylon presentation of a prefab ship (docs/shipyard_player_builder_design.md §3.7, §6, §12).
@@ -260,7 +261,7 @@ interface Built {
   instanced: InstancedEntry[];
   statics: StaticEntry[];
   decals: (DecalHandle & { tag: DressView })[];
-  lights: { light: PointLight; tag: DressView }[];
+  lights: { light: PointLight; tag: DressView; ownerId: string }[];
   textures: DynamicTexture[];
   materials: StandardMaterial[];
   componentGlbs: number;
@@ -405,6 +406,10 @@ export async function createPrefabShipView(
   const kitBase =
     options.kitBaseUrl ?? `/assets/ship-kit/${SHIP_KIT_REVISION}/`;
   const root = new TransformNode(`prefab-ship:${doc.id}`, scene);
+  // UUID when supplied by the placed-ship owner; otherwise a scene instance
+  // handle stable across this view's rebuilds, never a sorted lamp ordinal.
+  const lightOwner =
+    options.parent?.metadata?.shipId ?? `view:${root.uniqueId}`;
   if (options.parent) root.parent = options.parent;
   const frame = new TransformNode(`prefab-ship:${doc.id}:prefab-frame`, scene);
   frame.parent = root;
@@ -1431,9 +1436,9 @@ export async function createPrefabShipView(
     [...lights]
       .sort((a, b) => b.intensity - a.intensity)
       .slice(0, count)
-      .forEach((l, i) => {
+      .forEach((l) => {
         const light = new PointLight(
-          `${out.dressed.id}:room-light:${i}`,
+          `${out.dressed.id}:room-light:${l.room}`,
           new Vector3(l.at[0], l.at[1], l.at[2]),
           scene,
         );
@@ -1445,7 +1450,12 @@ export async function createPrefabShipView(
         light.falloffType = Light.FALLOFF_STANDARD;
         light.intensity = 1.0 + l.intensity * 0.8;
         light.range = 4.5 + l.intensity * 3;
-        out.lights.push({ light, tag: l.view });
+        light.shadowEnabled = false; // This room fixture owns no shadow generator.
+        out.lights.push({
+          light,
+          tag: l.view,
+          ownerId: `${lightOwner}:room:${l.room}`,
+        });
       });
   }
 
@@ -1466,7 +1476,11 @@ export async function createPrefabShipView(
     }
     for (const s of b.statics) s.mesh.setEnabled(shows(s.tag, view));
     for (const d of b.decals) d.mesh.setEnabled(shows(d.tag, view));
-    for (const l of b.lights) l.light.setEnabled(shows(l.tag, view));
+    for (const l of b.lights) {
+      registerLocalPbrLight(l.light, l.ownerId);
+      const enabled = shows(l.tag, view);
+      if (l.light.isEnabled(false) !== enabled) l.light.setEnabled(enabled);
+    }
   }
 
   function release(b: Built) {
