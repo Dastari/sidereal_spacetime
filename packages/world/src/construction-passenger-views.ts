@@ -3,6 +3,7 @@ import type world from "./index";
 import { acceptedPassengerAccess } from "./construction-passenger-access";
 import { ownedGameShipAccess } from "./game-ship-access-authority";
 import { createConstructionStandingSupport } from "./construction-standing-support";
+import { currentNavigationOperatorSnapshots } from "./navigation-operator-presentation";
 type Context = Pick<ViewCtx<InferSchema<typeof world>>, "db" | "sender">;
 function currentActor(ctx: Context) {
   let found;
@@ -129,11 +130,16 @@ export const interiorCrewProjection = t.row("InteriorCrew", {
   name: t.string(),
   shipId: t.string(),
   deckId: t.string(),
+  visitId: t.string(),
+  locationRevision: t.string(),
   localX: t.f64(),
   localY: t.f64(),
   standingElevationM: t.f64(),
   connected: t.bool(),
   sprinting: t.bool(),
+  dead: t.bool(),
+  operatorPoseState: t.string(),
+  operatorSnapshot: t.option(t.string()),
 });
 const support = createConstructionStandingSupport();
 /**
@@ -184,14 +190,44 @@ export function currentInteriorCrew(ctx: Context) {
   const visible = visibleInteriorBodies(ctx);
   if (!visible) return [];
   const { instance: i, deck: d } = visible;
+  // EMPTY activation returns before any new source admission or pinned visual resolver.
+  let operatorSnapshot: (
+    entry: NonNullable<typeof visible>["bodies"][number],
+  ) => string | undefined;
+  try {
+    operatorSnapshot = currentNavigationOperatorSnapshots(ctx, visible);
+  } catch {
+    operatorSnapshot = () => undefined;
+  }
   const out = [];
   for (const { body, location } of visible.bodies) {
     try {
+      const vitals = ctx.db.characterVitals.characterId.find(body.id);
+      const dead = vitals?.state === "dead" || vitals?.state === "downed";
+      const pilot = ctx.db.constructionPilotSeat.characterId.find(body.id);
+      const seated =
+        !!pilot ||
+        !!ctx.db.couchSeat.characterId.find(body.id) ||
+        ctx.db.station.shipId.find(body.shipId)?.occupantId === body.id;
+      const operatorPoseState = seated
+        ? pilot?.recoveryRequested || dead || !body.connected
+          ? "recovering"
+          : "occupied"
+        : "none";
+      let snapshot: string | undefined;
+      try {
+        snapshot = operatorSnapshot({ body, location });
+      } catch {
+        // A presentation helper failure never withdraws an already filtered body.
+        snapshot = undefined;
+      }
       out.push({
         characterId: body.id,
         name: body.name,
         shipId: body.shipId,
         deckId: d.id,
+        visitId: location.visitId,
+        locationRevision: location.revision.toString(),
         localX: body.localX,
         localY: body.localY,
         standingElevationM: support({
@@ -202,6 +238,9 @@ export function currentInteriorCrew(ctx: Context) {
         }),
         connected: body.connected,
         sprinting: body.sprinting,
+        dead,
+        operatorPoseState,
+        operatorSnapshot: snapshot,
       });
     } catch {
       return [];

@@ -23,6 +23,8 @@ import {
 import type { DressedShip } from "@sidereal/sim/ship-dresser";
 import { loadVerifiedGlbGeometry, type GlbGeometry } from "./glb-library";
 import { slotOfMaterialName } from "./materials";
+import type { NavigationOperatorRegistration } from "@sidereal/sim/navigation-operator-context";
+import type { OperatorActivatedCapability } from "../crew/operator-readiness";
 
 export interface VisualVariantSelection {
   url: string;
@@ -38,6 +40,177 @@ export interface VerifiedVisualVariant {
   normalUrl: string;
   normalSha256: string;
   release(): void;
+}
+interface ActivatedVariantIdentity {
+  manifestSha256: string;
+  compilerSha256: string;
+  prefabId: string;
+  prefabSha256: string;
+  navigationSha256: string | null;
+  navigationGeometry: GlbGeometry | null;
+  sources: readonly {
+    kind: string;
+    id: string;
+    sha256: string;
+    node: string | null;
+  }[];
+}
+const variantIdentities = new WeakMap<
+  VerifiedVisualVariant,
+  ActivatedVariantIdentity
+>();
+
+/** Actual resolver provenance; a structurally identical expected/fetched record cannot forge it. */
+export function verifiedVariantIdentity(variant: VerifiedVisualVariant) {
+  const identity = variantIdentities.get(variant);
+  if (
+    !identity ||
+    (identity.navigationGeometry &&
+      variant.components.get("console.navigation.sm") !==
+        identity.navigationGeometry)
+  )
+    return null;
+  return identity;
+}
+export interface RetainedGeometryRecord {
+  semantic: string;
+  positions: ArrayLike<number>;
+  normals: ArrayLike<number>;
+  indices: ArrayLike<number>;
+  uvs?: ArrayLike<number>;
+  uvs2?: ArrayLike<number>;
+  colors?: ArrayLike<number>;
+  matrices: ArrayLike<number>;
+}
+/** Versioned actual indexed geometry, independent of scene IDs and input record ordering. */
+export function retainedShipGeometryHash(
+  records: readonly RetainedGeometryRecord[],
+  sourceIdentity: unknown,
+): string | null {
+  if (!records.length || records.length > 4096) return null;
+  let values = 0;
+  const fingerprints: string[] = [];
+  for (const record of records) {
+    const { positions, normals, indices, matrices } = record;
+    if (
+      !positions.length ||
+      positions.length % 3 ||
+      normals.length !== positions.length ||
+      !indices.length ||
+      indices.length % 3 ||
+      !matrices.length ||
+      matrices.length % 16 ||
+      (record.uvs && record.uvs.length !== (positions.length / 3) * 2) ||
+      (record.uvs2 && record.uvs2.length !== (positions.length / 3) * 2) ||
+      (record.colors && record.colors.length !== (positions.length / 3) * 4)
+    )
+      return null;
+    const arrays = [
+      positions,
+      normals,
+      indices,
+      record.uvs ?? [],
+      record.uvs2 ?? [],
+      record.colors ?? [],
+      matrices,
+    ];
+    values += arrays.reduce((sum, array) => sum + array.length, 0);
+    if (
+      values > 20000000 ||
+      arrays.some((array) =>
+        Array.from(array).some((value) => !Number.isFinite(value)),
+      ) ||
+      Array.from(indices).some(
+        (index) =>
+          !Number.isInteger(index) ||
+          index < 0 ||
+          index >= positions.length / 3,
+      )
+    )
+      return null;
+    fingerprints.push(
+      bytesSha(
+        new TextEncoder().encode(
+          JSON.stringify([
+            record.semantic,
+            ...arrays.map((array) => Array.from(array)),
+          ]),
+        ),
+      ),
+    );
+  }
+  return bytesSha(
+    new TextEncoder().encode(
+      JSON.stringify([
+        "sidereal.navigation-retained-geometry.v1",
+        sourceIdentity,
+        fingerprints.sort(),
+      ]),
+    ),
+  );
+}
+
+/** Used only by a successfully applied live handle; EMPTY returns before reading geometry. */
+export function registeredActivatedNavigation(
+  registrations: readonly NavigationOperatorRegistration[],
+  variant: VerifiedVisualVariant | null,
+  readActual: () => {
+    prefabId: string;
+    mountSourceId: string;
+    internalQuarterTurns: number;
+    artQuarterTurns: number;
+    stationX: number;
+    stationY: number;
+    geometrySha256: string | null;
+  } | null,
+): OperatorActivatedCapability | null {
+  if (!registrations.length || registrations.length > 16 || !variant)
+    return null;
+  const identity = verifiedVariantIdentity(variant);
+  if (
+    !identity ||
+    variant.manifest.revision !== "r002" ||
+    !identity.navigationSha256 ||
+    !identity.navigationGeometry
+  )
+    return null;
+  const actual = readActual();
+  if (
+    !actual ||
+    !actual.geometrySha256 ||
+    actual.internalQuarterTurns !== 0 ||
+    actual.artQuarterTurns !== 2
+  )
+    return null;
+  const matches = registrations.filter(
+    (entry) =>
+      entry.prefabId === actual.prefabId &&
+      entry.prefabId === identity.prefabId &&
+      entry.manifestSha256 === identity.manifestSha256 &&
+      entry.compilerSha256 === identity.compilerSha256 &&
+      entry.navigationSha256 === identity.navigationSha256 &&
+      entry.geometrySha256 === actual.geometrySha256 &&
+      entry.mountSourceId === actual.mountSourceId &&
+      Number.isFinite(actual.stationX) &&
+      Number.isFinite(actual.stationY) &&
+      Math.abs(entry.stationX - actual.stationX) <= 1e-5 &&
+      Math.abs(entry.stationY - actual.stationY) <= 1e-5 &&
+      [entry.certificateSha256, entry.proofSha256, entry.geometrySha256].every(
+        (value) => /^[a-f0-9]{64}$/.test(value),
+      ),
+  );
+  if (matches.length !== 1) return null;
+  const entry = matches[0];
+  return Object.freeze({
+    profileId: entry.profileId,
+    certificateSha256: entry.certificateSha256,
+    proofSha256: entry.proofSha256,
+    manifestSha256: identity.manifestSha256,
+    compilerSha256: identity.compilerSha256,
+    geometrySha256: actual.geometrySha256,
+    navigationSha256: identity.navigationSha256,
+    mountSourceId: actual.mountSourceId,
+  });
 }
 const bytesSha = (bytes: Uint8Array) => bytesToHex(sha256(bytes));
 const normalUrls = new WeakMap<Scene, Map<string, string>>();
@@ -69,6 +242,9 @@ export async function resolveVisualVariant(
   dressed: DressedShip,
   selection: VisualVariantSelection,
 ): Promise<VerifiedVisualVariant> {
+  selection = { ...selection };
+  const expectedPrefabId = doc.id,
+    expectedPrefabSha256 = visualPrefabSha256(doc);
   if (
     !/^\/assets\/ship-visual\/r\d{3}\/manifest.json$/.test(selection.url) ||
     !/^([a-f0-9]{64})$/.test(selection.sha256) ||
@@ -85,7 +261,7 @@ export async function resolveVisualVariant(
   if (
     manifest.compilerSha256 !== selection.compilerSha256 ||
     manifest.profilesSha256 !== visualProfilesSha256() ||
-    manifest.prefabs[doc.id] !== visualPrefabSha256(doc)
+    manifest.prefabs[expectedPrefabId] !== expectedPrefabSha256
   )
     throw Error("Visual revision does not match compiler/profile/prefab pins");
   const required = new Set([
@@ -230,7 +406,7 @@ export async function resolveVisualVariant(
     // Scene pools borrow these immutable map URLs; view replacement must not revoke a shared texture.
     if (scene.isDisposed)
       throw Error("Scene disposed before candidate activation");
-    return {
+    const variant: VerifiedVisualVariant = {
       manifest,
       profile: profileFor(doc),
       components,
@@ -238,8 +414,39 @@ export async function resolveVisualVariant(
       kit,
       normalUrl,
       normalSha256,
-      release: () => {},
+      release: () => {
+        variantIdentities.delete(variant);
+      },
     };
+    const navigation = verified.find(
+      ({ a }) => a.kind === "component" && a.id === "console.navigation.sm",
+    );
+    variantIdentities.set(
+      variant,
+      Object.freeze({
+        manifestSha256: selection.sha256,
+        compilerSha256: manifest.compilerSha256,
+        prefabId: expectedPrefabId,
+        prefabSha256: expectedPrefabSha256,
+        navigationSha256: navigation?.a.sha256 ?? null,
+        navigationGeometry: components.get("console.navigation.sm") ?? null,
+        sources: Object.freeze(
+          verified
+            .map(({ a }) =>
+              Object.freeze({
+                kind: a.kind,
+                id: a.id,
+                sha256: a.sha256,
+                node: a.node ?? null,
+              }),
+            )
+            .sort((a, b) =>
+              `${a.kind}:${a.id}`.localeCompare(`${b.kind}:${b.id}`),
+            ),
+        ),
+      }),
+    );
+    return variant;
   } catch (error) {
     throw error;
   }

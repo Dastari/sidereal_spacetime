@@ -17,6 +17,10 @@ import {
 } from "../equipment/voxel-items";
 import type { createVoxelCrewVisual } from "./voxel-crew";
 import type { VoxelCrewAction } from "@sidereal/content/crew-voxel-bundle";
+import {
+  verifiedCrewSourceBytes,
+  type VerifiedCrewSource,
+} from "./crew-asset-cache";
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 export type HeldItemVisual = Awaited<ReturnType<typeof createVoxelItemVisual>>;
@@ -34,8 +38,55 @@ export function crewUsesSupportGrip(clips: readonly string[]) {
 }
 
 const armedClipsLoaded = new WeakMap<object, Promise<void>>();
+const verifiedArmedClipsLoaded = new WeakMap<
+  object,
+  Map<string, Promise<void>>
+>();
 /** Register CHAR-WEAPONS armed-actions.glb clips (`<class>.<clip>`) on a voxel crew once. */
-export function loadArmedClips(scene: Scene, crew: VoxelCrew) {
+export function loadArmedClips(
+  scene: Scene,
+  crew: VoxelCrew,
+  source?: VerifiedCrewSource,
+  requiredClips: readonly string[] = [],
+) {
+  if (source) {
+    let cache = verifiedArmedClipsLoaded.get(crew);
+    if (!cache) {
+      cache = new Map();
+      verifiedArmedClipsLoaded.set(crew, cache);
+    }
+    const key = JSON.stringify([
+      source.sha256,
+      source.variant,
+      [...requiredClips].sort(),
+    ]);
+    let verified = cache.get(key);
+    if (!verified) {
+      verified = SceneLoader.LoadAssetContainerAsync(
+        "",
+        verifiedCrewSourceBytes(source),
+        scene,
+        undefined,
+        ".glb",
+      ).then((armed) => {
+        try {
+          if (
+            !armed.animationGroups.length ||
+            requiredClips.some(
+              (name) =>
+                !armed.animationGroups.some((group) => group.name === name),
+            )
+          )
+            throw new Error("Operator armed clips unavailable");
+          crew.addClips(armed);
+        } finally {
+          armed.dispose();
+        }
+      });
+      cache.set(key, verified);
+    }
+    return verified;
+  }
   let promise = armedClipsLoaded.get(crew);
   if (!promise) {
     promise = SceneLoader.LoadAssetContainerAsync(
@@ -96,12 +147,23 @@ export function createVoxelHeldItem(
     instant?: () => boolean;
     /** Wall clock in ms (tests); the clips play in wall-clock time. */
     now?: () => number;
+    operatorSources?: {
+      item(id: string):
+        | {
+            source: VerifiedCrewSource;
+            requiredSockets: readonly import("@sidereal/content/crew-items").CrewItemSocketName[];
+          }
+        | undefined;
+      armedClips: VerifiedCrewSource;
+    };
   } = {},
 ) {
   let wanted: string | null = null;
   let held: Held | undefined;
   let loading = 0;
   let disposed = false;
+  let requestError: string | null = null;
+  const inFlight = new Set<Promise<void>>();
   const reduced = () => !!options.reducedMotion?.();
   const now = options.now ?? (() => performance.now());
   const hand = () => crew.socketNodes["socket.hand.R"];
@@ -142,19 +204,49 @@ export function createVoxelHeldItem(
     held.endS = info.frames / ARMED_FPS;
     crew.play(info.animation as VoxelCrewAction);
   };
-  const load = async () => {
+  const loadActual = async () => {
     if (disposed || held) return;
     const id = wanted;
     const generation = ++loading;
     if (!id) return;
     const item = crewItem(id);
     const cls = crewArmedClass(item);
-    const [visual] = await Promise.all([
-      createVoxelItemVisual(scene, hand(), id, {
-        localRotation: crewItemHandSocketRotation(),
-      }),
-      cls ? loadArmedClips(scene, crew) : undefined,
+    const descriptor = options.operatorSources?.item(id);
+    const results = await Promise.allSettled([
+      options.operatorSources && !descriptor
+        ? Promise.reject(new Error("Operator held source unavailable"))
+        : createVoxelItemVisual(scene, hand(), id, {
+            localRotation: crewItemHandSocketRotation(),
+            verifiedSource: descriptor?.source,
+            requiredSockets: descriptor?.requiredSockets,
+          }),
+      cls
+        ? loadArmedClips(
+            scene,
+            crew,
+            options.operatorSources?.armedClips,
+            options.operatorSources
+              ? ["draw", "holster", "reload"]
+                  .map(
+                    (action) =>
+                      crewArmedClipInfo(
+                        item,
+                        action as "draw" | "holster" | "reload",
+                      )?.animation,
+                  )
+                  .filter((name): name is string => !!name)
+              : [],
+          )
+        : undefined,
     ]);
+    const loaded = results[0];
+    if (loaded.status !== "fulfilled" || results[1].status === "rejected") {
+      if (loaded.status === "fulfilled") loaded.value.dispose();
+      if (!disposed && generation === loading && wanted === id)
+        requestError = "Operator held item unavailable";
+      return;
+    }
+    const visual = loaded.value;
     if (disposed || generation !== loading || wanted !== id || held) {
       visual.dispose();
       if (!disposed && !held) void load();
@@ -180,6 +272,17 @@ export function createVoxelHeldItem(
     }
     updateSupport();
     options.onChange?.();
+  };
+  const load = () => {
+    const generation = loading;
+    const key = wanted;
+    const promise = loadActual().catch(() => {
+      if (!disposed && loading === generation + 1 && wanted === key)
+        requestError = "Operator held item unavailable";
+    });
+    inFlight.add(promise);
+    void promise.finally(() => inFlight.delete(promise));
+    return promise;
   };
   const observer = scene.onBeforeRenderObservable.add(() => {
     step();
@@ -218,8 +321,25 @@ export function createVoxelHeldItem(
     set(itemId: string | null) {
       if (disposed || itemId === wanted) return;
       wanted = itemId;
+      requestError = null;
       if (held) startHolster();
       else void load();
+    },
+    get status() {
+      return {
+        requestedKey: wanted,
+        pending: inFlight.size,
+        error: requestError,
+      };
+    },
+    async whenComplete() {
+      const key = wanted;
+      while (inFlight.size) await Promise.all([...inFlight]);
+      if (disposed || key !== wanted)
+        throw new Error("Operator held request withdrawn");
+      if (requestError) throw new Error(requestError);
+      if (wanted && held?.item.id !== wanted)
+        throw new Error("Operator held item incomplete");
     },
     get itemId() {
       return held?.phase === "holstering" ? null : (held?.item.id ?? null);

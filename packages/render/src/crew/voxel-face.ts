@@ -5,6 +5,10 @@ import { Engine } from "@babylonjs/core/Engines/engine";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import {
+  verifiedCrewSourceBytes,
+  type VerifiedCrewSource,
+} from "./crew-asset-cache";
+import {
   FACE_DEFAULT_TINTS,
   composeFace,
   type FaceAtlas,
@@ -188,6 +192,44 @@ export function createVoxelFace(
 }
 
 /** Browser RGBA decode of a PNG (straight alpha, no colour conversion). */
+export async function loadVerifiedRgbaImage(
+  source: VerifiedCrewSource,
+): Promise<FaceAtlasImage> {
+  const bytes = verifiedCrewSourceBytes(source);
+  const bitmap = await createImageBitmap(
+    new Blob([Uint8Array.from(bytes).buffer], { type: "image/png" }),
+    {
+      premultiplyAlpha: "none",
+      colorSpaceConversion: "none",
+    },
+  );
+  try {
+    if (
+      !Number.isSafeInteger(bitmap.width) ||
+      !Number.isSafeInteger(bitmap.height) ||
+      bitmap.width <= 0 ||
+      bitmap.height <= 0 ||
+      bitmap.width > 8192 ||
+      bitmap.height > 8192
+    )
+      throw new Error("Operator face map dimensions unavailable");
+    const canvas = new OffscreenCanvas(bitmap.width, bitmap.height),
+      ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Operator face map decoder unavailable");
+    ctx.drawImage(bitmap, 0, 0);
+    const data = ctx.getImageData(0, 0, bitmap.width, bitmap.height).data;
+    if (data.length !== bitmap.width * bitmap.height * 4)
+      throw new Error("Operator face map pixels unavailable");
+    return {
+      width: bitmap.width,
+      height: bitmap.height,
+      data: new Uint8ClampedArray(data),
+    };
+  } finally {
+    bitmap.close();
+  }
+}
+
 export async function loadRgbaImage(url: string): Promise<FaceAtlasImage> {
   const blob = await (await fetch(url)).blob();
   const bitmap = await createImageBitmap(blob, {

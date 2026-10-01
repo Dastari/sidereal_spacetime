@@ -26,9 +26,13 @@ import {
 } from "../equipment/voxel-items";
 import { setMeshRole } from "../mesh-roles";
 import type { createVoxelCrewVisual } from "./voxel-crew";
-import { loadRgbaImage } from "./voxel-face";
+import { loadRgbaImage, loadVerifiedRgbaImage } from "./voxel-face";
 import { tagCrewPart } from "../molded-plastic";
 import { headArtSources } from "./head-art-revision";
+import {
+  verifiedCrewSourceBytes,
+  type VerifiedCrewSource,
+} from "./crew-asset-cache";
 
 type VoxelCrew = Awaited<ReturnType<typeof createVoxelCrewVisual>>;
 
@@ -170,12 +174,27 @@ export async function attachVoxelCrewHead(
   crew: VoxelCrew,
   loadout: HeadLoadout,
   artRevision?: string,
-  options: { deferActivation?: boolean } = {},
+  options: {
+    deferActivation?: boolean;
+    verifiedSources?: ReadonlyMap<string, VerifiedCrewSource>;
+    verifiedAtlases?: ReadonlyMap<string, VerifiedCrewSource>;
+  } = {},
 ) {
   const resolved = resolveHeadLoadout(loadout);
   const files = [...new Set(resolved.nodes.map((n) => n.file))];
   const wanted = new Set(resolved.nodes.map((n) => n.node));
-  let selected = await headArtSources(files, artRevision);
+  let selected = options.verifiedSources
+    ? {
+        sources: new Map(
+          files.map((file) => {
+            const source = options.verifiedSources!.get(file);
+            if (!source) throw new Error("Operator head source unavailable");
+            return [file, verifiedCrewSourceBytes(source)] as const;
+          }),
+        ),
+        error: undefined as string | undefined,
+      }
+    : await headArtSources(files, artRevision);
   let artError = selected.error;
   const load = async () => {
     const results = await Promise.allSettled(
@@ -202,13 +221,48 @@ export async function attachVoxelCrewHead(
   try {
     containers = await load();
   } catch (error) {
-    if (!artRevision || artRevision === "legacy" || artError) throw error;
+    if (
+      options.verifiedSources ||
+      !artRevision ||
+      artRevision === "legacy" ||
+      artError
+    )
+      throw error;
     artError = `character art renderer rejected candidate: ${String(error)}`;
     selected = await headArtSources(files, undefined);
     containers = await load();
   }
   if (artError) console.warn("character art review retained legacy", artError);
-  const space = headSpaceNode(scene, crew);
+  if (options.verifiedSources) {
+    const drawable = containers
+      .flatMap((container) => container.meshes)
+      .filter(
+        (mesh) => mesh.getTotalVertices() > 0 && !!mesh.getIndices()?.length,
+      );
+    for (const name of wanted) {
+      if (
+        !drawable.some((mesh) => {
+          for (
+            let node: import("@babylonjs/core/node").Node | null = mesh;
+            node;
+            node = node.parent
+          )
+            if (node.name === name) return true;
+          return false;
+        })
+      ) {
+        for (const container of containers) container.dispose();
+        throw new Error("Operator requested head geometry unavailable");
+      }
+    }
+  }
+  let space: TransformNode;
+  try {
+    space = headSpaceNode(scene, crew);
+  } catch (error) {
+    for (const container of containers) container.dispose();
+    throw error;
+  }
   space.setEnabled(false);
   try {
     for (const c of containers) {
@@ -255,9 +309,18 @@ export async function attachVoxelCrewHead(
         if (mesh.material?.name.replace(/\.\d+$/, "") === "crew.face")
           ensureFaceCanvasUVs(mesh, space);
       }
-    const atlas = faceMaterial
-      ? await loadRgbaImage(crewFaceAtlasUrl(resolved.face.variant))
-      : undefined;
+    let atlas: Awaited<ReturnType<typeof loadRgbaImage>> | undefined;
+    if (faceMaterial) {
+      if (options.verifiedSources) {
+        const descriptor = options.verifiedAtlases?.get(resolved.face.variant);
+        if (!descriptor)
+          throw new Error("Operator face map source unavailable");
+        atlas = await loadVerifiedRgbaImage(descriptor);
+      } else
+        atlas = await loadRgbaImage(crewFaceAtlasUrl(resolved.face.variant));
+    }
+    if (options.verifiedSources && (!faceMaterial || !atlas))
+      throw new Error("Operator face resource unavailable");
     let active = false;
     let disposed = false;
     const activate = () => {

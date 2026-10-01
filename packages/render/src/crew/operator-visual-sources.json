@@ -1,0 +1,792 @@
+{
+  "schema": "sidereal.navigation-operator-visual-sources.v1",
+  "selection": "current-legacy",
+  "sources": {
+    "/assets/crew/armor-v1/parts/armor.back.backpack-t0.glb": {
+      "kind": "armor",
+      "sha256": "9e97b3dba6e81c8766a4f2e6a80f01ce3411c7609aaaee4f4afb9e084395cdf2",
+      "byteLength": 58184,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.backpack-t0.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.backpack-t1.glb": {
+      "kind": "armor",
+      "sha256": "3bfe66689e39f15dd102c3af4d89257969b02b1810a7d0d85782a725ba3d20d2",
+      "byteLength": 74612,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.backpack-t1.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.backpack-t2.glb": {
+      "kind": "armor",
+      "sha256": "c3edf8d6cceab799b40eca6f78e320990f00f1c827b584b1762290e2e5c7ffa1",
+      "byteLength": 82176,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.backpack-t2.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.backpack-t3.glb": {
+      "kind": "armor",
+      "sha256": "4580790c62b5d924fc0d94574b86d4786f8f216da1330e46d4c74b3ebd7a6959",
+      "byteLength": 97320,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.backpack-t3.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.jetpack-heavy.glb": {
+      "kind": "armor",
+      "sha256": "805d49eb335d1c65160b0372bb174c156f3c7ead35052e57eb5420d10751ac67",
+      "byteLength": 97864,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.jetpack-heavy.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.jetpack-light.glb": {
+      "kind": "armor",
+      "sha256": "d1904e11b23f94787ab5b460b105edf72987008e0c0901bc89e0c3261c4ae179",
+      "byteLength": 90260,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.jetpack-light.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.medpack.glb": {
+      "kind": "armor",
+      "sha256": "dc82545a85b3d7d59e5afe698bdd54621e34627963fbb3bd766ffe99000e9d43",
+      "byteLength": 51988,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.medpack.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.oxygen-single.glb": {
+      "kind": "armor",
+      "sha256": "f2c62e3d0d602e5b06d4f5e8317cb3d08cb209ea303e0a635f67465a87c9e371",
+      "byteLength": 45664,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.oxygen-single.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.oxygen-twin.glb": {
+      "kind": "armor",
+      "sha256": "a197b0245a0e0de7e8d5e31b8e44157866007b8bb4d61609e30724784d2a1289",
+      "byteLength": 71084,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.oxygen-twin.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.radio.glb": {
+      "kind": "armor",
+      "sha256": "c112371a5b99a8d0f36205c0d46e30bac7e2480ae2b5dca48617e161a87fe2ae",
+      "byteLength": 50696,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.radio.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.recon-cloak.glb": {
+      "kind": "armor",
+      "sha256": "501ce5d5c5b73a32b70dfde0a31287ea1e803bf66b3a820e7e6ddd9eb0933ead",
+      "byteLength": 19136,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.recon-cloak.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.back.toolpack.glb": {
+      "kind": "armor",
+      "sha256": "409e441b8ed538f9a8aa0ac4bd8e11a0f552fbae30c176a145016e5627cd09b7",
+      "byteLength": 62604,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.back.toolpack.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.belt.heavy.glb": {
+      "kind": "armor",
+      "sha256": "dfa438cf80efc990c48935eba2205bf7745d69ed399574cb1f399e64f6a506fd",
+      "byteLength": 192652,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.belt.heavy.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.belt.holster.glb": {
+      "kind": "armor",
+      "sha256": "85d55d4b1b0fa90611e79dceb741147df6092fa47690f670c5afc5cedeac37de",
+      "byteLength": 182024,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.belt.holster.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.belt.medic.glb": {
+      "kind": "armor",
+      "sha256": "bf02b83cd99aed75d9e29d8ab2cbfb4afb7c742364910f8b9174920b46f02845",
+      "byteLength": 138540,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.belt.medic.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.belt.medical-satchel.glb": {
+      "kind": "armor",
+      "sha256": "c278b2cb369cf1f5b9804397f77d5a313681a8f90488f5f99df2559b840a1c1a",
+      "byteLength": 120440,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.belt.medical-satchel.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.belt.plain.glb": {
+      "kind": "armor",
+      "sha256": "6eb54cfc54d5f7d163cd0c3ef037f67c8d4abc6a6074a29cabeff030d31eb4e7",
+      "byteLength": 73608,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.belt.plain.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.belt.sash.glb": {
+      "kind": "armor",
+      "sha256": "e89227ea9bbef64debadd062cd56285975733f7250a07dc524281e9bff094081",
+      "byteLength": 80504,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.belt.sash.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.belt.standard.glb": {
+      "kind": "armor",
+      "sha256": "86908e234c805795f11cc9af51d84386fc00443bec152c171b24029807af5d42",
+      "byteLength": 182032,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.belt.standard.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.belt.tool.glb": {
+      "kind": "armor",
+      "sha256": "2af5eb564dfa070b02b63bceec6132c7a9d82ac0c9a09b9e73d37fa40e77b0fa",
+      "byteLength": 163948,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.belt.tool.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.belt.utility.glb": {
+      "kind": "armor",
+      "sha256": "acc0938e69dda1f932878fa5adf38c4fb8e5396e46b2a11f54c50fae2d1185ea",
+      "byteLength": 115832,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.belt.utility.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.boots.dress.glb": {
+      "kind": "armor",
+      "sha256": "9e9c90bb30212804157c60ca392e1cdb0c4b3790e2a26aa9f82952cc00d27ee7",
+      "byteLength": 85860,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.boots.dress.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.boots.flight.glb": {
+      "kind": "armor",
+      "sha256": "f085ece9f28bd5cf33626997170bf12c9f26268c6d3697fb57ad2f830e69114c",
+      "byteLength": 93448,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.boots.flight.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.boots.heavy.glb": {
+      "kind": "armor",
+      "sha256": "ff26fb6516e798432514c1305e9105ebacde3ba633418a08cace614de15cda30",
+      "byteLength": 123700,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.boots.heavy.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.boots.light.glb": {
+      "kind": "armor",
+      "sha256": "4ab5acb71c6aaf2af5d7dcc0771b7b509e77382bd974fbc21b751ce87fba7064",
+      "byteLength": 92324,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.boots.light.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.boots.sneaker.glb": {
+      "kind": "armor",
+      "sha256": "aaed039774aa742ed214cf1c308310e5474dfadd4bd2578971ae4184e24609a7",
+      "byteLength": 105360,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.boots.sneaker.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.boots.standard.glb": {
+      "kind": "armor",
+      "sha256": "a4394ccba453d18799876a6a882a834fdc9c0eb805078a22498a1e84c3510bf9",
+      "byteLength": 101008,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.boots.standard.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.coat.glb": {
+      "kind": "armor",
+      "sha256": "6f5fc4d4daeaa44f3066d8ce9665b7c146988bc2f75ce456f26a26d0006aebc1",
+      "byteLength": 212444,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.coat.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.engineer-rig.glb": {
+      "kind": "armor",
+      "sha256": "a9c5e2b4c71efc0116697d05045f446b43b28d95cb7d411546b492e2c669dc8d",
+      "byteLength": 133244,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.engineer-rig.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.flight.glb": {
+      "kind": "armor",
+      "sha256": "e8b59de8b8fccd15a5f9f91199f4c9bbe76991fc43b5c44be4a0b3e8ea697356",
+      "byteLength": 167860,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.flight.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.harness.glb": {
+      "kind": "armor",
+      "sha256": "d42ae3dc3effc81c0ae94be3d4887ef237b819c7cb1d4e452153db4805a05316",
+      "byteLength": 96656,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.harness.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.hazard.glb": {
+      "kind": "armor",
+      "sha256": "e26a893e65d1bca9d83ef66c3364a3fe27664447a9e1a099e769de6b3f63e472",
+      "byteLength": 286484,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.hazard.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.heavy.glb": {
+      "kind": "armor",
+      "sha256": "b087e87d46237cd2cb10a55fc4ccc07ceca5e3f9bea049a3dc1bce5ec74b469c",
+      "byteLength": 256708,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.heavy.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.jacket.glb": {
+      "kind": "armor",
+      "sha256": "719d19ea0c7f0169083151f249c372337cd6e8cb37ad5df0db627d1afbc24eb7",
+      "byteLength": 201164,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.jacket.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.labcoat.glb": {
+      "kind": "armor",
+      "sha256": "c1994b2420513f6e17ffceef29169d0a348ed59265fc45988fa421ac30536a27",
+      "byteLength": 200572,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.labcoat.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.mechanic-rig.glb": {
+      "kind": "armor",
+      "sha256": "6c4bf7759a98edde01d083119633eba458a013b09e5b1f7a2b888e74ea791304",
+      "byteLength": 175728,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.mechanic-rig.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.medic.glb": {
+      "kind": "armor",
+      "sha256": "845d0548edac4e4156cf2636c672a3199bf40a3fc66d6e8425ed7bc60b343039",
+      "byteLength": 246828,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.medic.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.overalls.glb": {
+      "kind": "armor",
+      "sha256": "b00f0d4f4834c1f47412d19b6d3aacd8a8e3f926ad3022f90c95574407ed5530",
+      "byteLength": 139176,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.overalls.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.plate.glb": {
+      "kind": "armor",
+      "sha256": "8a7e03b5300fcd8b91ecc2686b310d9cda27571cce01baa827a10c6be55dcee4",
+      "byteLength": 213716,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.plate.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.research.glb": {
+      "kind": "armor",
+      "sha256": "6c53fa3603a4708420765bbf33c493d58e9f4394a8d4de7488eb5901cd57af91",
+      "byteLength": 232192,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.research.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.tactical.glb": {
+      "kind": "armor",
+      "sha256": "4056e9124e09aa9514f826038acfc8c96bd6243ea910e57916b7aa1cd609201e",
+      "byteLength": 259264,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.tactical.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.uniform-command.glb": {
+      "kind": "armor",
+      "sha256": "f49d2628e8e65b5509358ef3881b80468b4cb453bc974e6b410d2052f492ba3b",
+      "byteLength": 30404,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.uniform-command.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.uniform-engineering.glb": {
+      "kind": "armor",
+      "sha256": "95885b19c58292461e85cd9a7f93b18478fc73a48b21e76846e0dc579b785e9e",
+      "byteLength": 44344,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.uniform-engineering.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.uniform-medical.glb": {
+      "kind": "armor",
+      "sha256": "2a54e9182073624513e8930f7e0192053521bf2ceba31cc2c1c9b13ab1c8c515",
+      "byteLength": 37376,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.uniform-medical.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.uniform-security.glb": {
+      "kind": "armor",
+      "sha256": "21c307fd9f85db5ccfb83c72efed2635f75294b44a0e4cbfa9665c7cd726275d",
+      "byteLength": 30416,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.uniform-security.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.chest.vest.glb": {
+      "kind": "armor",
+      "sha256": "264fadbdb0be70f2bac52f6388ca5b54b744a94be5d826e0e9e05e6637e27dcb",
+      "byteLength": 235396,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.chest.vest.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.gloves.fabric.glb": {
+      "kind": "armor",
+      "sha256": "af9c8da040b48b7bce347cd8a3876c88f849d63ee8b316953ccee371b9f1b16a",
+      "byteLength": 75968,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.gloves.fabric.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.gloves.heavy.glb": {
+      "kind": "armor",
+      "sha256": "96a867b6850101af7eb6825f254c510ffb09445a136b057d17ee01a339a3e99c",
+      "byteLength": 163328,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.gloves.heavy.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.gloves.light.glb": {
+      "kind": "armor",
+      "sha256": "6695aa54c26276331ffade494f44d03bb048b2e8d78815c0d917c8c8b8be5649",
+      "byteLength": 116176,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.gloves.light.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.gloves.standard.glb": {
+      "kind": "armor",
+      "sha256": "125e9715f279c91fe62643f70b31dab108e59c89c0d91c476c3e68c41c819d4a",
+      "byteLength": 146520,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.gloves.standard.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.gloves.work.glb": {
+      "kind": "armor",
+      "sha256": "8afd26a2f991a7fad2e8c5db4553d1433d6fe79a66fc9b430e474caf1e9f9e84",
+      "byteLength": 124888,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.gloves.work.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.legs.cargo.glb": {
+      "kind": "armor",
+      "sha256": "8e3e95c1bca653f6e32ecd723d86ec9e0091ad88d9ff6b7c6fa78f0dfbd47747",
+      "byteLength": 30476,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.legs.cargo.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.legs.heavy.glb": {
+      "kind": "armor",
+      "sha256": "25b5bee138703952786bd6fb29d7a75b5d47bc4f2cc3a286046b159864d28e99",
+      "byteLength": 92204,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.legs.heavy.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.legs.light.glb": {
+      "kind": "armor",
+      "sha256": "edaed52bbd297983ee44b0fc1a0407a4b640f9f8e57d32dad717f55f26675fdc",
+      "byteLength": 47896,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.legs.light.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.legs.standard.glb": {
+      "kind": "armor",
+      "sha256": "bd7c6c2d65b01ceb8e55c9a948aa568e9b60d0d03d6d9ffe41e7bff9ecbe180d",
+      "byteLength": 69508,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.legs.standard.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.shoulders.cloth.glb": {
+      "kind": "armor",
+      "sha256": "1fb966a12f941ae22dd2ce12778bf79aa8ea5b82629f17ba4d430d2b9a66d866",
+      "byteLength": 14232,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.shoulders.cloth.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.shoulders.epaulette.glb": {
+      "kind": "armor",
+      "sha256": "fca850d24f7e6d1ebe74d63a4c9712c58ec6987bc9ec9e24f4631794d4a9395c",
+      "byteLength": 30552,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.shoulders.epaulette.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.shoulders.flight.glb": {
+      "kind": "armor",
+      "sha256": "6f10f7386cff30984d4028ed8c38020fcf90e79b57d5c2c2e94e82f5a54ff41b",
+      "byteLength": 22916,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.shoulders.flight.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.shoulders.heavy.glb": {
+      "kind": "armor",
+      "sha256": "8ee94c068f9bd857a61178055c5efd4be78e96378483c861c3b81b57ed8a4952",
+      "byteLength": 59568,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.shoulders.heavy.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.shoulders.light.glb": {
+      "kind": "armor",
+      "sha256": "337f2d9d6e20bafc7c81ba01971a30dd01eece55e9e1f55599e5ed6c397efc7b",
+      "byteLength": 25656,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.shoulders.light.glb"
+    },
+    "/assets/crew/armor-v1/parts/armor.shoulders.standard.glb": {
+      "kind": "armor",
+      "sha256": "c0de15b0f9b06142f6367165133628e0e6b239b608f7449a7b07f93724f7f869",
+      "byteLength": 38132,
+      "variant": "sidereal.operator-current-v1:armor:/assets/crew/armor-v1/parts/armor.shoulders.standard.glb"
+    },
+    "/assets/crew/heads/v1/accessories.glb": {
+      "kind": "legacy-head",
+      "sha256": "425c399bb490c4c55da9ace4157498b67d3133b3d9e65f7888151eb5e69aa741",
+      "byteLength": 1682592,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/accessories.glb"
+    },
+    "/assets/crew/heads/v1/details.glb": {
+      "kind": "legacy-head",
+      "sha256": "c497e4b0ade5b32b2d0f66aa43893c0d60d105e61662b7243345e3dfe86214fd",
+      "byteLength": 95880,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/details.glb"
+    },
+    "/assets/crew/heads/v1/face/face-f_bright.png": {
+      "kind": "legacy-face-map",
+      "sha256": "c353a6b23f45ea44362860c33e5e090bfe22bc03e625c45e88ab259b63ef85b7",
+      "byteLength": 1897,
+      "variant": "sidereal.operator-current-v1:legacy-face-map:/assets/crew/heads/v1/face/face-f_bright.png"
+    },
+    "/assets/crew/heads/v1/face/face-f_classic.png": {
+      "kind": "legacy-face-map",
+      "sha256": "f17b94621d927ed01673fdeeb03198b703021b3f07d7868d8bdf7ddb374ae2d6",
+      "byteLength": 1813,
+      "variant": "sidereal.operator-current-v1:legacy-face-map:/assets/crew/heads/v1/face/face-f_classic.png"
+    },
+    "/assets/crew/heads/v1/face/face-f_sharp.png": {
+      "kind": "legacy-face-map",
+      "sha256": "bb29c263d05b5d3a37882fa1eda95358db776e09a16642419e9de76401ce8321",
+      "byteLength": 1798,
+      "variant": "sidereal.operator-current-v1:legacy-face-map:/assets/crew/heads/v1/face/face-f_sharp.png"
+    },
+    "/assets/crew/heads/v1/face/face-m_bold.png": {
+      "kind": "legacy-face-map",
+      "sha256": "5ec9ea5b0a9814988637e71470414b2d53094fc8cbda9f8f8a47d2f51bc0077d",
+      "byteLength": 1740,
+      "variant": "sidereal.operator-current-v1:legacy-face-map:/assets/crew/heads/v1/face/face-m_bold.png"
+    },
+    "/assets/crew/heads/v1/face/face-m_bright.png": {
+      "kind": "legacy-face-map",
+      "sha256": "f895f28d7ee2bd3b743418b91f123b89de7845a3e24509c080f55a176ff9c9a9",
+      "byteLength": 1828,
+      "variant": "sidereal.operator-current-v1:legacy-face-map:/assets/crew/heads/v1/face/face-m_bright.png"
+    },
+    "/assets/crew/heads/v1/face/face-m_classic.png": {
+      "kind": "legacy-face-map",
+      "sha256": "200c0ae8d74a35152a4a372cf26950d55e3e27ce52b7574f28b712b4b0b2da18",
+      "byteLength": 1784,
+      "variant": "sidereal.operator-current-v1:legacy-face-map:/assets/crew/heads/v1/face/face-m_classic.png"
+    },
+    "/assets/crew/heads/v1/facial-hair.glb": {
+      "kind": "legacy-head",
+      "sha256": "30faa4c6c991245f94a0401392b2f62c859088877623fcd6d4d1a8b411c39603",
+      "byteLength": 334760,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/facial-hair.glb"
+    },
+    "/assets/crew/heads/v1/hair/afro.glb": {
+      "kind": "legacy-head",
+      "sha256": "d10e2e451a6a0373673b3a897ca69dbe81d3e1f9c4b2935f7b8a570c4faf57e1",
+      "byteLength": 981756,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/afro.glb"
+    },
+    "/assets/crew/heads/v1/hair/blunt_bob.glb": {
+      "kind": "legacy-head",
+      "sha256": "0c01961e854b326307ae576518b3049ab889ca255fbf06e9bc906c0d8e3b75b4",
+      "byteLength": 1108220,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/blunt_bob.glb"
+    },
+    "/assets/crew/heads/v1/hair/broad_spikes.glb": {
+      "kind": "legacy-head",
+      "sha256": "36b9992dbe325879a368b7a7fb50f9f77ce05591ad87527e1adb148e0982e0d9",
+      "byteLength": 1305924,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/broad_spikes.glb"
+    },
+    "/assets/crew/heads/v1/hair/close_crop.glb": {
+      "kind": "legacy-head",
+      "sha256": "d0803cd1dda6d3e3b976d544f93ee98bcfd9635265e2d8a14a581fa79efd63f7",
+      "byteLength": 864120,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/close_crop.glb"
+    },
+    "/assets/crew/heads/v1/hair/curly_top.glb": {
+      "kind": "legacy-head",
+      "sha256": "9428a75b0c8f8c4688aaddf0d9ebdafa1ce69c6c5931e7fba8f2685743629320",
+      "byteLength": 598332,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/curly_top.glb"
+    },
+    "/assets/crew/heads/v1/hair/flat_top.glb": {
+      "kind": "legacy-head",
+      "sha256": "ab0cb74d6085a6241a385a9926c09785adebfdaf4cb0d1c1efcf9ff0d4f3b7e8",
+      "byteLength": 1090932,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/flat_top.glb"
+    },
+    "/assets/crew/heads/v1/hair/gathered_fringe.glb": {
+      "kind": "legacy-head",
+      "sha256": "d448efbb17de7abf13b05c4efbb59d2cac5cc3d68217441c55a59c84c666c890",
+      "byteLength": 1862744,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/gathered_fringe.glb"
+    },
+    "/assets/crew/heads/v1/hair/hanging_locks.glb": {
+      "kind": "legacy-head",
+      "sha256": "7f52728b4a5de3b835aaff724b14f8f5982385314758ed77e71e650f3dd9a32e",
+      "byteLength": 2131828,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/hanging_locks.glb"
+    },
+    "/assets/crew/heads/v1/hair/high_bun.glb": {
+      "kind": "legacy-head",
+      "sha256": "156dedf3c75180763e9d5e494df6292a0087684ac29972123c26d34d50d9153d",
+      "byteLength": 924480,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/high_bun.glb"
+    },
+    "/assets/crew/heads/v1/hair/layered_bob.glb": {
+      "kind": "legacy-head",
+      "sha256": "4cd20d145e6e5631fd73882fe7e1e09ddd1da243fbe35dcbd3fb17374e44dcdc",
+      "byteLength": 2339032,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/layered_bob.glb"
+    },
+    "/assets/crew/heads/v1/hair/long_bob.glb": {
+      "kind": "legacy-head",
+      "sha256": "c4567be34fa2795d96601f4ef8ac93f2cf8022bf901c0627816ed309f2f9d66e",
+      "byteLength": 1278004,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/long_bob.glb"
+    },
+    "/assets/crew/heads/v1/hair/long_gathered.glb": {
+      "kind": "legacy-head",
+      "sha256": "32caf9f63e4ed9807f1231cc4696dfc78020844100fa555aeadbafddba5cb4cf",
+      "byteLength": 1693432,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/long_gathered.glb"
+    },
+    "/assets/crew/heads/v1/hair/long_side_fringe.glb": {
+      "kind": "legacy-head",
+      "sha256": "c1f867693e6bddc825a397a537816ecdebcf12e7c1cbceaca7f122495695512b",
+      "byteLength": 1533108,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/long_side_fringe.glb"
+    },
+    "/assets/crew/heads/v1/hair/long_straight.glb": {
+      "kind": "legacy-head",
+      "sha256": "38d700fc2b5247b0f5e99fea029aa306747cae0a57fc7239cedb8347b8fb302d",
+      "byteLength": 1581828,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/long_straight.glb"
+    },
+    "/assets/crew/heads/v1/hair/messy_bun.glb": {
+      "kind": "legacy-head",
+      "sha256": "c9e3a8c2767b435d0bd20ae816ecdde1293cd0fb2ca1d507fb5ddb304736fe97",
+      "byteLength": 1030720,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/messy_bun.glb"
+    },
+    "/assets/crew/heads/v1/hair/mohawk.glb": {
+      "kind": "legacy-head",
+      "sha256": "c21598eb37daa324b20f624940c734429e274626c09bfbaaad4adb38e0f549c4",
+      "byteLength": 366188,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/mohawk.glb"
+    },
+    "/assets/crew/heads/v1/hair/pointed_quiff.glb": {
+      "kind": "legacy-head",
+      "sha256": "aeaff1044c724e6ba50582c98c7888f21b77fb73de4d6797feecc0ad1ee99801",
+      "byteLength": 746060,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/pointed_quiff.glb"
+    },
+    "/assets/crew/heads/v1/hair/pompadour.glb": {
+      "kind": "legacy-head",
+      "sha256": "0310749475758983461fe842a3f4bc6030ec3f2961c9fdb6b227a1197802723f",
+      "byteLength": 725324,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/pompadour.glb"
+    },
+    "/assets/crew/heads/v1/hair/short_spikes.glb": {
+      "kind": "legacy-head",
+      "sha256": "de0fea6a2bbfaab5de84599c181e0deb622f41e6ef0ea5a60ea80da17719efc3",
+      "byteLength": 1028192,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/short_spikes.glb"
+    },
+    "/assets/crew/heads/v1/hair/short_waves.glb": {
+      "kind": "legacy-head",
+      "sha256": "83eb69a0c4494879f12739ccbb823dd6f8316379dd342690bb4d942c5a1ab6c7",
+      "byteLength": 853092,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/short_waves.glb"
+    },
+    "/assets/crew/heads/v1/hair/side_bob.glb": {
+      "kind": "legacy-head",
+      "sha256": "184361c9d68d8bb944f0ead64282940ac061abf06340439e10a20d5d45fdd361",
+      "byteLength": 1123028,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/side_bob.glb"
+    },
+    "/assets/crew/heads/v1/hair/side_undercut.glb": {
+      "kind": "legacy-head",
+      "sha256": "4d611b03c5c859fea455d3b14ae34e37807a53beefe56e1f35e4d3d511d32096",
+      "byteLength": 1186808,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/side_undercut.glb"
+    },
+    "/assets/crew/heads/v1/hair/silver_bob.glb": {
+      "kind": "legacy-head",
+      "sha256": "c2be71bd88ba2fce8083288b9bcaca04961690c25942c20c4e7e4cfdb9bcd382",
+      "byteLength": 1714052,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/silver_bob.glb"
+    },
+    "/assets/crew/heads/v1/hair/spiked_quiff.glb": {
+      "kind": "legacy-head",
+      "sha256": "66461341a827af3cfcf08f29b96cf8e7a2ed190240656c93367820468ba949fc",
+      "byteLength": 964424,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/spiked_quiff.glb"
+    },
+    "/assets/crew/heads/v1/hair/straight_bob.glb": {
+      "kind": "legacy-head",
+      "sha256": "5736bed181088cb7102ee7535fa58e658bfb2211b8a208088951475dd7fb7e13",
+      "byteLength": 1232652,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/straight_bob.glb"
+    },
+    "/assets/crew/heads/v1/hair/swept_quiff.glb": {
+      "kind": "legacy-head",
+      "sha256": "024972e17c915720899b88aabc24865553e1a8d9eabd71f835a479f93b93988a",
+      "byteLength": 762320,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/swept_quiff.glb"
+    },
+    "/assets/crew/heads/v1/hair/tall_crest.glb": {
+      "kind": "legacy-head",
+      "sha256": "79bb5b0192738e7e98b7efeb8524b794f248dd311b56e30be449d472553130bb",
+      "byteLength": 682288,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/tall_crest.glb"
+    },
+    "/assets/crew/heads/v1/hair/topknot_sweep.glb": {
+      "kind": "legacy-head",
+      "sha256": "b5e6cf6a572035ba33107fbf2ef62775f4551b33d111075ba2733678e4693ed8",
+      "byteLength": 580636,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/hair/topknot_sweep.glb"
+    },
+    "/assets/crew/heads/v1/heads.glb": {
+      "kind": "legacy-head",
+      "sha256": "d075155bf24d50851403dbc2d43e1417e732029651be8fb7a73c911ac01449f9",
+      "byteLength": 162752,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/heads.glb"
+    },
+    "/assets/crew/heads/v1/helmets.glb": {
+      "kind": "legacy-head",
+      "sha256": "686ae1624f41a965354df6c7892daff9dc09c01e8d5d4f50cc951300e0047556",
+      "byteLength": 2398504,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/helmets.glb"
+    },
+    "/assets/crew/heads/v1/masks.glb": {
+      "kind": "legacy-head",
+      "sha256": "235b65c2e969e30fa15c67962ae290a1806f2c19fa46b4f898ad2d255c03a493",
+      "byteLength": 142688,
+      "variant": "sidereal.operator-current-v1:legacy-head:/assets/crew/heads/v1/masks.glb"
+    },
+    "/assets/crew/items/r001/armed-actions.glb": {
+      "kind": "armed-clips",
+      "sha256": "237e8fd88e325175487d837bef601684e5c86dd9d091650e0a430c4f0a4c27e8",
+      "byteLength": 1713800,
+      "variant": "sidereal.operator-current-v1:armed-clips:/assets/crew/items/r001/armed-actions.glb"
+    },
+    "/assets/crew/items/r001/baton.glb": {
+      "kind": "held-item",
+      "sha256": "ebd3d2acf58ef823552eb6a1549d617b9d694bee012062df7b44aef1a27c113f",
+      "byteLength": 51048,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/baton.glb"
+    },
+    "/assets/crew/items/r001/beam-rifle.glb": {
+      "kind": "held-item",
+      "sha256": "d2821b52a7dfdb11b611f887a9add589930b049eaaa658738008351b33c7a8b1",
+      "byteLength": 230308,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/beam-rifle.glb"
+    },
+    "/assets/crew/items/r001/cargo-box.glb": {
+      "kind": "held-item",
+      "sha256": "f2ed1313b14b9bdbea159b0583cb2dfd82b288fa61fce5beb06a985aba4de464",
+      "byteLength": 116696,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/cargo-box.glb"
+    },
+    "/assets/crew/items/r001/compact-carbine.glb": {
+      "kind": "held-item",
+      "sha256": "6a8637249f185f14432bee78bcc6f8924a3e6bb7d3748e7c14152484747f080f",
+      "byteLength": 287520,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/compact-carbine.glb"
+    },
+    "/assets/crew/items/r001/data-pad.glb": {
+      "kind": "held-item",
+      "sha256": "d87cf9ecadcac0ac48f27a4044387c51dc68d6824ee735b42018f8171722f51c",
+      "byteLength": 82716,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/data-pad.glb"
+    },
+    "/assets/crew/items/r001/drone.glb": {
+      "kind": "held-item",
+      "sha256": "08564e3bda999f711b01e96e9057f614dd1580fe4a68cd7fcaabeb1ec9361c77",
+      "byteLength": 75708,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/drone.glb"
+    },
+    "/assets/crew/items/r001/flashlight.glb": {
+      "kind": "held-item",
+      "sha256": "32bce6658460760c4b3f5cbcf2071f751e38add3c1918154f649502d876ed74b",
+      "byteLength": 52816,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/flashlight.glb"
+    },
+    "/assets/crew/items/r001/grapple.glb": {
+      "kind": "held-item",
+      "sha256": "b61fe2fc073213c86b5458d22551945343440201c5ef7e5c6bf5ae45a8f2e23f",
+      "byteLength": 84836,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/grapple.glb"
+    },
+    "/assets/crew/items/r001/grenade.glb": {
+      "kind": "held-item",
+      "sha256": "3c9590b36d1cc2c47bd9fb69b4c01799612ffba32ff798832e9a0e2ca9c760d7",
+      "byteLength": 117128,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/grenade.glb"
+    },
+    "/assets/crew/items/r001/heavy-gun.glb": {
+      "kind": "held-item",
+      "sha256": "e78453a2ae3f5dd6dcbd970bcb4c66f527197fb7a6027be40e3f988875ec50a9",
+      "byteLength": 281616,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/heavy-gun.glb"
+    },
+    "/assets/crew/items/r001/medgun.glb": {
+      "kind": "held-item",
+      "sha256": "cf25f13af6c1a021699c69d658c35c5e7f4266ff3bebbaf77956bb1de920ad24",
+      "byteLength": 196764,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/medgun.glb"
+    },
+    "/assets/crew/items/r001/medkit.glb": {
+      "kind": "held-item",
+      "sha256": "e8eb5bee2e5a8a5e4f288d6f9e6b659cfa30be2aa362bf850dfe87443ebb9284",
+      "byteLength": 102980,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/medkit.glb"
+    },
+    "/assets/crew/items/r001/mining-drill.glb": {
+      "kind": "held-item",
+      "sha256": "0d5f4836b42ff120a67b5c6d066ec684e19d7a12c2bca8fa99db438082e436cf",
+      "byteLength": 192300,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/mining-drill.glb"
+    },
+    "/assets/crew/items/r001/multi-tool.glb": {
+      "kind": "held-item",
+      "sha256": "4bd008eb15165ef78227e68ced54b08a205712f0b5118ade226ed73a6cc68897",
+      "byteLength": 156228,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/multi-tool.glb"
+    },
+    "/assets/crew/items/r001/pistol.glb": {
+      "kind": "held-item",
+      "sha256": "192a99a6e23c3824e46abb046832bc1180707a93b076d617b2b98d664cfab752",
+      "byteLength": 180160,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/pistol.glb"
+    },
+    "/assets/crew/items/r001/rail-rifle.glb": {
+      "kind": "held-item",
+      "sha256": "a96a9b976b7a49baf8d1b1c47c7f7bef5f008a594313ac2efab25bcf60aed25a",
+      "byteLength": 233908,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/rail-rifle.glb"
+    },
+    "/assets/crew/items/r001/repair-tool.glb": {
+      "kind": "held-item",
+      "sha256": "f79d9120f6526f61e72cb1a7443b1ab8caeafc9f83010820165f746105286645",
+      "byteLength": 153208,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/repair-tool.glb"
+    },
+    "/assets/crew/items/r001/rifle.glb": {
+      "kind": "held-item",
+      "sha256": "2d59edc08b3b45959b0df5cfabb2b2346edb75edc70e197cd50f20f08c3dc44c",
+      "byteLength": 289388,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/rifle.glb"
+    },
+    "/assets/crew/items/r001/sample-scanner.glb": {
+      "kind": "held-item",
+      "sha256": "cd722bb28ae319471ac7b5a9bd1b6ea0350e5670823252bd7364bb3b8e3ca48e",
+      "byteLength": 80268,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/sample-scanner.glb"
+    },
+    "/assets/crew/items/r001/scanner.glb": {
+      "kind": "held-item",
+      "sha256": "59a4f9622705402d68348ad6cdc341064cb21a5709a16f19b3a049c6af9eb3e2",
+      "byteLength": 136168,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/scanner.glb"
+    },
+    "/assets/crew/items/r001/shield-emitter.glb": {
+      "kind": "held-item",
+      "sha256": "611afab49b88ae014c4b7c258780053a60386ce1d6ff211e8bb870fd1dd66174",
+      "byteLength": 127056,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/shield-emitter.glb"
+    },
+    "/assets/crew/items/r001/shield-pack.glb": {
+      "kind": "held-item",
+      "sha256": "96200362080c733ef7c93ae787e7045ce2c9ba264e9b0062fb37f60994164c3a",
+      "byteLength": 124084,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/shield-pack.glb"
+    },
+    "/assets/crew/items/r001/shotgun.glb": {
+      "kind": "held-item",
+      "sha256": "4268f2ce62150d83251cbea93ef7b10995d165489e7369d3936f4fd3212bb908",
+      "byteLength": 287352,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/shotgun.glb"
+    },
+    "/assets/crew/items/r001/smg.glb": {
+      "kind": "held-item",
+      "sha256": "bd4c573160fce16342bf38b7e4f28b381371cbef532a187f9fb4d8884249ebc5",
+      "byteLength": 240084,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/smg.glb"
+    },
+    "/assets/crew/items/r001/stun-gun.glb": {
+      "kind": "held-item",
+      "sha256": "3dd0f2f671c1209db627c01cb430ba7960caa87078ce266200292bbccb8c28f0",
+      "byteLength": 159808,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/stun-gun.glb"
+    },
+    "/assets/crew/items/r001/utility-cutter.glb": {
+      "kind": "held-item",
+      "sha256": "c508bec6b7803e16a6bd1be5cd240d821a0428f0f2efaa6fca8a7e976a03a51f",
+      "byteLength": 129380,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/utility-cutter.glb"
+    },
+    "/assets/crew/items/r001/welder.glb": {
+      "kind": "held-item",
+      "sha256": "a22c5cfcff7a1c2e913d8cd4991213fefab3eb401a20a4a6adfc0e3544f2961e",
+      "byteLength": 146416,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/welder.glb"
+    },
+    "/assets/crew/items/r001/wrench.glb": {
+      "kind": "held-item",
+      "sha256": "bf9e7e9b676d5e1ef83743e8ff5a5ddbf6969ea5a817fa3abd9ed4c34598523c",
+      "byteLength": 65172,
+      "variant": "sidereal.operator-current-v1:held-item:/assets/crew/items/r001/wrench.glb"
+    },
+    "/assets/crew/voxel/r005/crew-body.glb": {
+      "kind": "body",
+      "sha256": "0d407c7fee07fbbd46974e422ae9d6c6469dfef3d8e32edeb968cfa570c32b57",
+      "byteLength": 2541092,
+      "variant": "sidereal.operator-current-v1:body:/assets/crew/voxel/r005/crew-body.glb"
+    }
+  }
+}

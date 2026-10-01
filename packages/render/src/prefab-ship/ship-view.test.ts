@@ -55,6 +55,7 @@ it("batched meshes follow a moving ship root", async () => {
   const batched = view.root
     .getChildMeshes()
     .filter((m) => m.name.includes(":batch:"));
+  expect(view.navigationOperatorCapability()).toBeNull();
   expect(batched.length).toBeGreaterThan(0);
   const before = batched.map((m) =>
     m.computeWorldMatrix(true).getTranslation(),

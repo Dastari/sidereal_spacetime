@@ -1,5 +1,9 @@
 import { itemDefinitionOf } from "@sidereal/content/item-presentation";
-import type { CombatActionState, RemoteCrewState } from "@sidereal/render";
+import type {
+  CombatActionState,
+  RemoteCrewState,
+  OperatorInteriorRow,
+} from "@sidereal/render";
 import type { CrewAppearance } from "@sidereal/render/crew/appearance";
 import { equipmentAppearance } from "./inventory";
 
@@ -14,6 +18,12 @@ export interface InteriorCrewRow {
   standingElevationM: number;
   connected: boolean;
   sprinting: boolean;
+  /** Additive coherent-row scaffold; ignored by legacy presentation while unregistered. */
+  visitId?: string;
+  locationRevision?: string;
+  dead?: boolean;
+  operatorPoseState?: string;
+  operatorSnapshot?: string;
 }
 /** `visible_crew_presentation` row: looks and pose of another body on the viewer's deck. */
 export interface CrewPresentationRow {
@@ -30,6 +40,38 @@ export interface CrewPresentationRow {
   shotX: number;
   shotY: number;
   shotStruck: boolean;
+}
+
+/** Preserve the single filtered row as a separate channel; never borrow the other appearance view. */
+export function operatorRowsFromView(
+  rows: Iterable<InteriorCrewRow>,
+): OperatorInteriorRow[] {
+  const out: OperatorInteriorRow[] = [];
+  for (const row of rows) {
+    if (
+      !row.visitId ||
+      !row.locationRevision ||
+      typeof row.dead !== "boolean" ||
+      !["occupied", "recovering", "none"].includes(row.operatorPoseState ?? "")
+    )
+      continue;
+    out.push({
+      characterId: row.characterId,
+      shipId: row.shipId,
+      deckId: row.deckId,
+      visitId: row.visitId,
+      locationRevision: row.locationRevision,
+      localX: row.localX,
+      localY: row.localY,
+      standingElevationM: row.standingElevationM,
+      connected: row.connected,
+      dead: row.dead,
+      operatorPoseState:
+        row.operatorPoseState as OperatorInteriorRow["operatorPoseState"],
+      operatorSnapshot: row.operatorSnapshot,
+    });
+  }
+  return out;
 }
 
 function parseObject(json: string): Record<string, unknown> {

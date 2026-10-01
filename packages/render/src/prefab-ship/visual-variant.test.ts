@@ -22,6 +22,8 @@ import {
   prepareCandidateMaterials,
   resolveVisualVariant,
   referenceFloraMaterial,
+  registeredActivatedNavigation,
+  retainedShipGeometryHash,
 } from "./visual-variant";
 const hash = (bytes: Uint8Array) => bytesToHex(sha256(bytes));
 const scene = { isDisposed: false } as Scene;
@@ -94,7 +96,65 @@ function candidate(
     compilerSha256: manifest.compilerSha256,
   };
 }
-afterEach(() => vi.unstubAllGlobals());
+afterEach(() => {
+  vi.unstubAllGlobals();
+  vi.restoreAllMocks();
+});
+describe("unregistered activated operator capability", () => {
+  it("EMPTY returns before geometry/context work and default/fabricated records have no verified provenance", () => {
+    const read = vi.fn(() => null);
+    expect(registeredActivatedNavigation([], null, read)).toBeNull();
+    expect(read).not.toHaveBeenCalled();
+    const registrations = [{ profileId: "fake" }] as unknown as Parameters<
+      typeof registeredActivatedNavigation
+    >[0];
+    expect(
+      registeredActivatedNavigation(
+        registrations,
+        {} as Parameters<typeof registeredActivatedNavigation>[1],
+        read,
+      ),
+    ).toBeNull();
+    expect(read).not.toHaveBeenCalled();
+  });
+  it("retained indexed geometry hash preserves semantic/placement/source differences without scene allocation order", () => {
+    const record = {
+      semantic: "structural:deck:plate",
+      positions: [0, 0, 0, 1, 0, 0, 0, 1, 0],
+      normals: [0, 0, 1, 0, 0, 1, 0, 0, 1],
+      indices: [0, 1, 2],
+      uvs: [0, 0, 1, 0, 0, 1],
+      matrices: [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1],
+    };
+    const other = { ...record, semantic: "equipment:both:metal" },
+      source = { nav: "a".repeat(64) };
+    const expected = retainedShipGeometryHash([record, other], source);
+    expect(expected).toMatch(/^[a-f0-9]{64}$/);
+    expect(retainedShipGeometryHash([other, record], source)).toBe(expected);
+    expect(
+      retainedShipGeometryHash(
+        [
+          { ...record, positions: [0.001, ...record.positions.slice(1)] },
+          other,
+        ],
+        source,
+      ),
+    ).not.toBe(expected);
+    expect(
+      retainedShipGeometryHash([record, other], { nav: "b".repeat(64) }),
+    ).not.toBe(expected);
+    expect(
+      retainedShipGeometryHash([{ ...record, indices: [0, 1, 99] }], source),
+    ).toBeNull();
+    expect(
+      retainedShipGeometryHash(
+        [{ ...record, normals: [NaN, ...record.normals.slice(1)] }],
+        source,
+      ),
+    ).toBeNull();
+    expect(retainedShipGeometryHash([], source)).toBeNull();
+  });
+});
 describe("whole visual candidate prerequisites", () => {
   it("rejects a hash-valid PNG header whose image cannot decode", async () => {
     const selection = candidate();

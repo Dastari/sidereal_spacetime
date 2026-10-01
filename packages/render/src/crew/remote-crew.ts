@@ -20,6 +20,14 @@ import { createVoxelCrewOutfit } from "./voxel-crew-outfit";
 import { createVoxelHeldItem, type VoxelHeldItem } from "./voxel-held-item";
 import { createRemoteCrewMotion } from "./remote-crew-motion";
 import {
+  createOperatorEnsembleOwner,
+  operatorProjection,
+  type OperatorInteriorRow,
+  type OperatorActivatedCapability,
+  type createOperatorReadiness,
+} from "./operator-readiness";
+import type { OperatorEnsembleRequest } from "./operator-ensemble";
+import {
   assignCrewTiers,
   CREW_LOD,
   type CrewLodTier,
@@ -92,6 +100,14 @@ interface Entry {
   evaBody?: ReturnType<typeof createEvaBodyPresentation>;
   lookApplied?: boolean;
   disposed: boolean;
+  legacyLoading?: boolean;
+  operator?: ReturnType<typeof createOperatorEnsembleOwner>;
+  operatorRow?: OperatorInteriorRow;
+  operatorBaseline?: {
+    crew?: VoxelCrew;
+    outfit?: ReturnType<typeof createVoxelCrewOutfit>;
+    held?: VoxelHeldItem;
+  };
 }
 
 /**
@@ -116,6 +132,20 @@ export function createRemoteCrew(
     onEffectMesh?: (mesh: Mesh) => void;
     /** Draw the plain green tracer per shot (off where the r001 weapon FX play instead). */
     tracers?: boolean;
+    /** Actual scene capability only; absent capability preserves the complete legacy path. */
+    operator?: {
+      readiness: ReturnType<typeof createOperatorReadiness>;
+      capability: () => OperatorActivatedCapability | null;
+      resolve: (
+        packet: Readonly<Record<string, unknown>>,
+        associationKey: string,
+        requestedKey: string,
+      ) => Promise<OperatorEnsembleRequest>;
+      configureMeshes?: (meshes: readonly AbstractMesh[]) => void;
+      prepare?: NonNullable<
+        Parameters<typeof createOperatorEnsembleOwner>[4]
+      >["prepare"];
+    };
   } = {},
 ) {
   const now = options.now ?? (() => performance.now());
@@ -235,6 +265,7 @@ export function createRemoteCrew(
   };
 
   const applyLook = (entry: Entry) => {
+    if (entry.operator?.stationary && entry.operator.ownsRequest) return;
     const crew = entry.crew;
     if (!crew || entry.disposed) return;
     const key = JSON.stringify(entry.state.appearance);
@@ -256,9 +287,11 @@ export function createRemoteCrew(
   /** Full tier: load the skinned body, outfit, held item and name label. */
   const promote = (entry: Entry) => {
     entry.tier = "full";
+    if (entry.operator?.stationary) return;
     entry.marker?.dispose();
     entry.marker = undefined;
     const token = ++entry.generation;
+    entry.legacyLoading = true;
     entry.label ??= makeLabel(entry.state.id);
     entry.labelKey = "";
     entry.label?.setEnabled(false);
@@ -273,6 +306,7 @@ export function createRemoteCrew(
       .then((crew) => {
         if (entry.disposed || disposed || token !== entry.generation)
           return crew.dispose();
+        entry.legacyLoading = false;
         crew.root.name = "remote-crew-" + entry.state.id;
         crew.root.setEnabled(false);
         entry.crew = crew;
@@ -286,12 +320,21 @@ export function createRemoteCrew(
         applyLook(entry);
         changed();
       })
-      .catch((error) => console.warn("remote crew body unavailable", error));
+      .catch((error) => {
+        if (token === entry.generation) entry.legacyLoading = false;
+        console.warn("remote crew body unavailable", error);
+      });
   };
 
   /** Release the full-detail body (skinned mesh, outfit, held item, label, EVA effects). */
   const releaseFull = (entry: Entry) => {
+    if (entry.operator) {
+      restoreOperator(entry);
+      entry.operator.withdraw();
+      entry.operator = undefined;
+    }
     entry.generation++;
+    entry.legacyLoading = false;
     entry.held?.dispose();
     entry.held = undefined;
     entry.outfit?.dispose();
@@ -312,12 +355,109 @@ export function createRemoteCrew(
 
   /** Marker tier: the body stays on screen as an instance of the shared low-poly body. */
   const demote = (entry: Entry) => {
+    if (entry.operator?.stationary) return;
     entry.tier = "marker";
     releaseFull(entry);
     entry.marker ??= markerOf(entry.state.id);
   };
 
-  const create = (state: RemoteCrewState, tier: CrewLodTier) => {
+  function restoreOperator(entry: Entry, row = entry.operatorRow) {
+    const previous = entry.operatorBaseline;
+    if (!previous) return;
+    entry.evaBody?.dispose();
+    entry.evaBody = undefined;
+    entry.crew = previous.crew;
+    entry.outfit = previous.outfit;
+    entry.held = previous.held;
+    entry.operatorBaseline = undefined;
+    if (entry.crew) {
+      if (row)
+        entry.crew.root.position.set(
+          row.localX,
+          row.standingElevationM,
+          -row.localY,
+        );
+      entry.crew.root.setEnabled(visible);
+      if (entry.label) {
+        entry.label.parent = entry.crew.root;
+        entry.label.position.set(0, 2.15, 0);
+      }
+    }
+    changed();
+  }
+  function syncOperator(entry: Entry, row: OperatorInteriorRow | undefined) {
+    const source = options.operator,
+      capability = source?.capability() ?? null;
+    const projection = row && operatorProjection(row, capability);
+    if (!source || !projection) {
+      if (entry.operator) {
+        restoreOperator(entry, row);
+        entry.operator.withdraw();
+        entry.operator = undefined;
+      }
+      return;
+    }
+    if (!entry.operator && projection.status !== "withdrawn") {
+      // In-flight legacy promotion must not remove a marker or overwrite the candidate ensemble.
+      entry.generation++;
+      entry.legacyLoading = false;
+      entry.marker ??= entry.crew ? undefined : markerOf(entry.state.id);
+      entry.operator = createOperatorEnsembleOwner(
+        scene,
+        group,
+        entry.state.id,
+        source.readiness,
+        {
+          prepare: source.prepare,
+          configureMeshes: source.configureMeshes,
+          onCommitted: (handle) => {
+            entry.operatorBaseline ??= {
+              crew: entry.crew,
+              outfit: entry.outfit,
+              held: entry.held,
+            };
+            entry.operatorBaseline.crew?.root.setEnabled(false);
+            entry.evaBody?.dispose();
+            entry.evaBody = undefined;
+            const current = entry.operatorRow;
+            if (!current)
+              throw new Error("Operator current accepted body unavailable");
+            handle.root.position.set(
+              current.localX,
+              current.standingElevationM,
+              -current.localY,
+            );
+            entry.crew = handle.crew;
+            entry.outfit = handle.outfit;
+            entry.held = handle.held;
+            entry.tier = "full";
+            // Marker ownership changes only after verified complete activation succeeds.
+            entry.marker?.dispose();
+            entry.marker = undefined;
+            // A later ensemble release must not dispose the crowd's independently owned label.
+            if (entry.label) entry.label.parent = group;
+            changed();
+          },
+          restoreAtAcceptedRecovery: (_handle, xy) =>
+            restoreOperator(entry, {
+              ...(entry.operatorRow ?? row),
+              localX: xy[0],
+              localY: xy[1],
+            }),
+        },
+      );
+    }
+    if (entry.operator?.syncProjection(row, capability, source.resolve))
+      entry.operatorRow = entry.operator.currentRow ?? undefined;
+    if (entry.operatorBaseline && !entry.operator?.committed)
+      restoreOperator(entry, row);
+  }
+
+  const create = (
+    state: RemoteCrewState,
+    tier: CrewLodTier,
+    row?: OperatorInteriorRow,
+  ) => {
     const entry: Entry = {
       state,
       motion: createRemoteCrewMotion(),
@@ -328,8 +468,11 @@ export function createRemoteCrew(
       disposed: false,
     };
     entries.set(state.id, entry);
-    if (tier === "full") promote(entry);
-    else demote(entry);
+    syncOperator(entry, row);
+    if (!entry.operator) {
+      if (tier === "full") promote(entry);
+      else demote(entry);
+    }
     return entry;
   };
 
@@ -377,7 +520,11 @@ export function createRemoteCrew(
   return {
     group,
     /** Replace the visible set (called whenever accepted rows change). */
-    sync(states: readonly RemoteCrewState[], local?: { x: number; y: number }) {
+    sync(
+      states: readonly RemoteCrewState[],
+      local?: { x: number; y: number },
+      operatorRows?: readonly OperatorInteriorRow[],
+    ) {
       if (disposed) return;
       const t = now();
       // Every delivered body is drawn; the nearest get the full tier (presentation-lod.ts).
@@ -395,13 +542,38 @@ export function createRemoteCrew(
       for (const state of states) {
         const tier = tiers.get(state.id)!;
         let entry = entries.get(state.id);
-        if (!entry) entry = create(state, tier);
+        if (!entry)
+          entry = create(
+            state,
+            tier,
+            operatorRows?.find((row) => row.characterId === state.id),
+          );
         else if (entry.tier !== tier) {
           if (tier === "full") promote(entry);
           else demote(entry);
         }
         entry.state = state;
-        entry.motion.push(t, state.localX, state.localY, state.elevation);
+        syncOperator(
+          entry,
+          operatorRows?.find((row) => row.characterId === state.id),
+        );
+        if (
+          entry.operator &&
+          !entry.crew &&
+          !entry.operator.stationary &&
+          entry.tier === "full" &&
+          !entry.legacyLoading
+        )
+          promote(entry);
+        const accepted = entry.operator?.stationary
+          ? entry.operator.currentRow
+          : undefined;
+        entry.motion.push(
+          t,
+          accepted?.localX ?? state.localX,
+          accepted?.localY ?? state.localY,
+          accepted?.standingElevationM ?? state.elevation,
+        );
         applyLook(entry);
         drawLabel(entry);
       }
@@ -415,7 +587,22 @@ export function createRemoteCrew(
       const dt = Math.min(0.1, Math.max(0, (t - (lastFrameAt ?? t)) / 1000));
       lastFrameAt = t;
       for (const entry of entries.values()) {
-        const { crew, state } = entry;
+        const { crew } = entry;
+        const accepted = entry.operator?.stationary
+          ? entry.operator.currentRow
+          : undefined;
+        const state = accepted
+          ? {
+              ...entry.state,
+              localX: accepted.localX,
+              localY: accepted.localY,
+              elevation: accepted.standingElevationM,
+              seated: true,
+              dead: accepted.dead,
+              connected: accepted.connected,
+              aimActive: false,
+            }
+          : entry.state;
         const pose = {
           seated: state.seated,
           dead: state.dead,
@@ -430,7 +617,17 @@ export function createRemoteCrew(
           // Marker tier: position and facing only; lying down when dead.
           marker.setEnabled(visible && entry.motion.ready);
           if (!visible || !entry.motion.ready) continue;
-          const d = entry.motion.sample(t, pose);
+          const sampled = entry.motion.sample(t, pose);
+          const d = accepted
+            ? {
+                ...sampled,
+                x: accepted.localX,
+                y: accepted.localY,
+                z: accepted.standingElevationM,
+                moving: false,
+                speed: 0,
+              }
+            : sampled;
           marker.position.set(
             d.x,
             d.z +
@@ -448,7 +645,17 @@ export function createRemoteCrew(
         crew.root.setEnabled(visible);
         entry.label?.setEnabled(visible);
         if (!visible) continue;
-        const d = entry.motion.sample(t, pose);
+        const sampled = entry.motion.sample(t, pose);
+        const d = accepted
+          ? {
+              ...sampled,
+              x: accepted.localX,
+              y: accepted.localY,
+              z: accepted.standingElevationM,
+              moving: false,
+              speed: 0,
+            }
+          : sampled;
         crew.setSeatContact(state.seated ? state.seatContact : undefined);
         crew.root.position.set(
           d.x,
@@ -456,6 +663,12 @@ export function createRemoteCrew(
           -d.y,
         );
         crew.root.rotation.y = d.yaw;
+        if (entry.operator?.committed && entry.label?.parent === group)
+          entry.label.position.set(
+            crew.root.position.x,
+            crew.root.position.y + 2.15,
+            crew.root.position.z,
+          );
         if (state.eva) {
           crew.root.position.y -= evaHipLiftCorrection(state.eva, (clip) =>
             crew.hasClip(clip),

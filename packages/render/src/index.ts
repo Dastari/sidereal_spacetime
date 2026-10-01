@@ -1,4 +1,15 @@
 import { createPbrLightBudget } from "./pbr-light-budget";
+import {
+  createOperatorReadiness,
+  createOperatorEnsembleOwner,
+  operatorProjection,
+  operatorRequestedLook,
+  verifiedOperatorResolver,
+  type OperatorReadinessSignal,
+  type OperatorInteriorRow,
+} from "./crew/operator-readiness";
+import { currentOperatorEnsemblePlan } from "./crew/operator-ensemble";
+export type { OperatorInteriorRow } from "./crew/operator-readiness";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
 import { createFlightActiveSet } from "./flight-active-set";
@@ -204,6 +215,8 @@ export type SceneState = {
   crewAppearance?: CrewAppearance;
   /** Other characters on this deck (server views only; never inventory or health). */
   crewmates?: readonly RemoteCrewState[];
+  /** Coherent public rows kept separate from legacy joined appearance/combat controller inputs. */
+  interiorOperators?: readonly OperatorInteriorRow[];
   /** Own character outside the ship (EVA): accepted pose in the own ship's frame (wiki `Systems/EVA`). */
   eva?: EvaSceneState | null;
   /** Other EVA bodies in view (`visible_eva_bodies`), in the own ship's frame. */
@@ -248,6 +261,8 @@ export interface WorldOptions {
   blocksCameraInput?: () => boolean;
   blocksObjectSelection?: () => boolean;
   onLoadError?: (message: string) => void;
+  /** Scene-owned late first/error state; independent of historical first scene readiness. */
+  onOperatorReadiness?: (signal: OperatorReadinessSignal) => void;
   onLoadStage?: (
     stage: "ship" | "environment" | "crew" | "equipment" | "finishing",
   ) => void;
@@ -346,6 +361,10 @@ async function buildWorld(
   );
   const backendPreference = backend;
   const scene = new Scene(engine);
+  const operatorReadiness = createOperatorReadiness(
+    options.onOperatorReadiness,
+  );
+  scene.onDisposeObservable.addOnce(() => operatorReadiness.dispose());
   const pbrLights = createPbrLightBudget(scene);
   // Review aid: `?slowmo=0.25` plays crew clips, draw/holster and weapon effects at that fraction
   // of real time (presentation only; the server clock is unaffected).
@@ -741,6 +760,106 @@ async function buildWorld(
   let temporalAppearance = "";
   const localLights = createLocalLightBudget();
   const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
+  let localOperatorOwner:
+    ReturnType<typeof createOperatorEnsembleOwner> | undefined;
+  let localOperatorBaseline:
+    | {
+        crew: NonNullable<typeof crew>;
+        outfit: typeof crewOutfit;
+        held: typeof heldItem;
+        avatar: TransformNode;
+      }
+    | undefined;
+  const resolveOperatorAssets = verifiedOperatorResolver(
+    scene,
+    async (packet, associationKey, requestedKey) =>
+      currentOperatorEnsemblePlan(
+        operatorRequestedLook(packet),
+        associationKey,
+        requestedKey,
+      ),
+  );
+  const configureOperatorMeshes = (meshes: readonly AbstractMesh[]) => {
+    toneCrewEmissive(meshes);
+    moldedLightRig(scene).include(meshes);
+    lighting.addActor([...meshes]);
+  };
+  const restoreLocalOperator = (row?: OperatorInteriorRow) => {
+    const previous = localOperatorBaseline;
+    if (!previous) return;
+    ownEva?.dispose();
+    ownEva = undefined;
+    crew = previous.crew;
+    crewOutfit = previous.outfit;
+    heldItem = previous.held;
+    avatar = previous.avatar;
+    localOperatorBaseline = undefined;
+    if (row)
+      avatar.position.set(row.localX, row.standingElevationM, -row.localY);
+    avatar.setEnabled(true);
+    ownEva = createEvaBodyPresentation(scene, crew, {
+      onMeshes: (meshes) =>
+        meshes.forEach((mesh) => glow.addIncludedOnlyMesh(mesh)),
+    });
+    refreshCrewPresentation();
+  };
+  const syncLocalOperator = (next: SceneState) => {
+    // No actual matched registration means no owner, plan resolution or equipment work.
+    const capability = prefabView?.navigationOperatorCapability() ?? null;
+    const row = next.interiorOperators?.find(
+      (value) => value.characterId === next.selfCharacterId,
+    );
+    const projection = row && operatorProjection(row, capability);
+    if (!projection) {
+      if (localOperatorOwner) {
+        restoreLocalOperator(row);
+        localOperatorOwner.withdraw();
+        localOperatorOwner = undefined;
+      }
+      return;
+    }
+    if (!localOperatorOwner && projection.status !== "withdrawn" && crew) {
+      localOperatorOwner = createOperatorEnsembleOwner(
+        scene,
+        shipRoot,
+        row.characterId,
+        operatorReadiness,
+        {
+          configureMeshes: configureOperatorMeshes,
+          onCommitted: (handle) => {
+            localOperatorBaseline ??= {
+              crew: crew!,
+              outfit: crewOutfit,
+              held: heldItem,
+              avatar,
+            };
+            localOperatorBaseline.avatar.setEnabled(false);
+            ownEva?.dispose();
+            ownEva = undefined;
+            handle.root.position.copyFrom(avatar.position);
+            handle.root.rotationQuaternion =
+              avatar.rotationQuaternion?.clone() ?? null;
+            handle.root.rotation.copyFrom(avatar.rotation);
+            crew = handle.crew;
+            crewOutfit = handle.outfit;
+            heldItem = handle.held;
+            avatar = handle.root;
+            refreshCrewPresentation();
+          },
+          restoreAtAcceptedRecovery: (_handle, xy) =>
+            restoreLocalOperator({
+              ...(localOperatorOwner?.currentRow ?? row),
+              localX: xy[0],
+              localY: xy[1],
+            }),
+        },
+      );
+    }
+    localOperatorOwner?.syncProjection(row, capability, resolveOperatorAssets);
+    // A changed visit releases the old ensemble without applying its former fitted frame.
+    if (localOperatorBaseline && !localOperatorOwner?.committed)
+      restoreLocalOperator(row);
+  };
   /** Last pointer position (client pixels) for the EVA facing. */
   let pointerClient: { x: number; y: number } | undefined;
   for (const mesh of combatAim.meshes) glow.addIncludedOnlyMesh(mesh);
@@ -753,6 +872,12 @@ async function buildWorld(
       onEffectMesh: (mesh) => glow.addIncludedOnlyMesh(mesh),
       // Shots of other bodies play the r001 weapon FX from visible_combat_actions.
       tracers: false,
+      operator: {
+        readiness: operatorReadiness,
+        capability: () => prefabView?.navigationOperatorCapability() ?? null,
+        resolve: resolveOperatorAssets,
+        configureMeshes: configureOperatorMeshes,
+      },
     });
   if (crewOutfit && crew && !assetFailure) {
     const voxel = crew as Awaited<ReturnType<typeof createVoxelCrewVisual>>;
@@ -1070,8 +1195,16 @@ async function buildWorld(
       avatar.rotation.y +=
         angleDelta(avatar.rotation.y, eva.localHeading) * Math.min(1, dt * 18);
     const cabinVisible = cabinIsVisible(state.interior, blend, !!focusedBodyId);
+    const operatorRow =
+      localOperatorOwner?.stationary && localOperatorOwner.ownsRequest
+        ? localOperatorOwner.currentRow
+        : null;
     updateConstructionDoors?.(state.constructionDoors ?? []);
     cabinVisibility.update(cabinVisible, state.objectLights ?? []);
+    if (localOperatorBaseline) {
+      localOperatorBaseline.avatar.setEnabled(false);
+      avatar.setEnabled(cabinVisible && debugFeatures.snapshot().characters);
+    }
     lighting.setCabinVisible(cabinVisible);
     groundItems.update(state.groundItems ?? [], cabinVisible);
     // The own body outside the ship is drawn in the (top-down) space view too.
@@ -1085,11 +1218,11 @@ async function buildWorld(
     if ((cabinVisible || eva) && debugFeatures.snapshot().characters)
       crew?.update({
         eva,
-        moving: walking,
-        combat: state.combat?.active ?? false,
-        seated: state.seated ?? false,
+        moving: operatorRow ? false : walking,
+        combat: operatorRow ? false : (state.combat?.active ?? false),
+        seated: operatorRow ? true : (state.seated ?? false),
         sprinting: state.sprinting ?? false,
-        dead: state.dead ?? false,
+        dead: operatorRow ? operatorRow.dead : (state.dead ?? false),
         reducedMotion: state.reducedMotion,
         shotSequence: state.combat?.shotSequence,
       });
@@ -1109,6 +1242,12 @@ async function buildWorld(
       const [x, y, z] = traversalFrame.acceptedPositionM;
       avatar.position.set(x, z, -y);
     }
+    if (operatorRow)
+      avatar.position.set(
+        operatorRow.localX,
+        operatorRow.standingElevationM,
+        -operatorRow.localY,
+      );
     // Native r002 deck datum; this offset is presentation, not simulation height.
     marker.position.copyFrom(avatar.position);
     marker.position.y += 0.02;
@@ -1282,6 +1421,9 @@ async function buildWorld(
   let disposed = false;
   function customizeCrew(next: CrewAppearance) {
     if (disposed || !crew) return;
+    // A complete ensemble owns its pinned appearance; replacement mutates a disabled stage only.
+    if (localOperatorOwner?.stationary && localOperatorOwner.ownsRequest)
+      return;
     const appearanceKey = JSON.stringify(next);
     if (appearanceKey !== temporalAppearance) {
       temporalAppearance = appearanceKey;
@@ -1516,10 +1658,15 @@ async function buildWorld(
         options.onLoadStage?.("finishing");
       }
       state = next;
-      remoteCrew?.sync(next.crewmates ?? [], {
-        x: next.localX,
-        y: next.localY,
-      });
+      syncLocalOperator(next);
+      remoteCrew?.sync(
+        next.crewmates ?? [],
+        {
+          x: next.localX,
+          y: next.localY,
+        },
+        next.interiorOperators,
+      );
       evaCrew?.sync(next.evaBodies ?? [], { x: next.localX, y: next.localY });
       objects.select(next.selectedObject);
       prefabPicker?.select(next.selectedObject);
@@ -1563,6 +1710,11 @@ async function buildWorld(
     dispose() {
       if (disposed) return;
       disposed = true;
+      if (localOperatorOwner) {
+        restoreLocalOperator();
+        localOperatorOwner.withdraw();
+        localOperatorOwner = undefined;
+      }
       remoteShips?.dispose();
       fastSnapshot?.dispose();
       flightActiveSet.dispose();

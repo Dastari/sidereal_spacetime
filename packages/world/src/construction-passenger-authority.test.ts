@@ -7,6 +7,7 @@ vi.mock("spacetimedb/server", () => ({
     u64: () => ({}),
     f64: () => ({}),
     bool: () => ({}),
+    option: () => ({}),
   },
 }));
 vi.mock("./auth", () => ({
@@ -48,6 +49,7 @@ import {
   currentInteriorCrew,
 } from "./construction-passenger-views";
 import { visibleCrewPresentation } from "./crew-presentation";
+import * as operatorPresentation from "./navigation-operator-presentation";
 import { acceptedPassengerAccess } from "./construction-passenger-access";
 import {
   ownedGameShipAccess,
@@ -285,19 +287,108 @@ test("passenger projections stay empty without admission; owners still see their
   expect(Object.keys(currentInteriorCrew(f.ctx)[0]).sort()).toEqual([
     "characterId",
     "connected",
+    "dead",
     "deckId",
     "localX",
     "localY",
+    "locationRevision",
     "name",
+    "operatorPoseState",
+    "operatorSnapshot",
     "shipId",
     "sprinting",
     "standingElevationM",
+    "visitId",
   ]);
   expect(
     ownedGameShipAccess(f.ctx, "captain-ship", "captain-deck", 1_000_000n)
       .walkDeck,
   ).toBe(true);
 });
+
+test("NULL operator rows still carry only the body's same filtered accepted visit and exact integer revision", () => {
+  const f = fixture();
+  const location = f.db.constructionLocation.characterId.find("captain");
+  f.db.constructionLocation.characterId.update({
+    ...location,
+    visitId: "new-current-visit",
+    revision: 9007199254740993n,
+  });
+  const row = currentInteriorCrew(f.ctx)[0];
+  expect(row).toMatchObject({
+    characterId: "captain",
+    visitId: "new-current-visit",
+    locationRevision: "9007199254740993",
+    operatorSnapshot: undefined,
+  });
+  expect(JSON.stringify(row)).not.toContain("grantId");
+  expect(
+    currentInteriorCrew(f.pctx).some((body) => body.characterId === "captain"),
+  ).toBe(false);
+});
+
+test("coherent outer life/pose keeps a retained body and accepted recovery XY with NULL snapshot", () => {
+  const f = fixture();
+  f.db.constructionPilotSeat.insert({
+    characterId: "captain",
+    recoveryRequested: false,
+  });
+  expect(currentInteriorCrew(f.ctx)[0]).toMatchObject({
+    characterId: "captain",
+    dead: false,
+    operatorPoseState: "occupied",
+    operatorSnapshot: undefined,
+    localX: 0,
+    localY: 0,
+  });
+  f.db.characterVitals.insert({ characterId: "captain", state: "dead" });
+  expect(currentInteriorCrew(f.ctx)[0]).toMatchObject({
+    dead: true,
+    operatorPoseState: "recovering",
+    localX: 0,
+    localY: 0,
+  });
+  f.db.constructionPilotSeat.characterId.delete("captain");
+  f.db.character.id.update({
+    ...f.db.character.id.find("captain"),
+    localX: 0.75,
+    localY: 1.25,
+  });
+  expect(currentInteriorCrew(f.ctx)[0]).toMatchObject({
+    dead: true,
+    operatorPoseState: "none",
+    operatorSnapshot: undefined,
+    localX: 0.75,
+    localY: 1.25,
+  });
+});
+
+test.each(["factory", "body"])(
+  "operator helper %s failure preserves the existing filtered body relation",
+  (where) => {
+    const f = fixture();
+    const spy = vi
+      .spyOn(operatorPresentation, "currentNavigationOperatorSnapshots")
+      .mockImplementation(() => {
+        if (where === "factory")
+          throw Error("unavailable registration adapter");
+        return () => {
+          throw Error("bad body visual snapshot");
+        };
+      });
+    try {
+      expect(currentInteriorCrew(f.ctx)).toHaveLength(1);
+      expect(currentInteriorCrew(f.ctx)[0]).toMatchObject({
+        characterId: "captain",
+        operatorSnapshot: undefined,
+        localX: 0,
+        localY: 0,
+      });
+    } finally {
+      spy.mockRestore();
+    }
+  },
+);
 
 // ------------------------------------------------------------ crew presentation (remote crew)
 /** Another character's retained body on the captain's deck (the placement boarding used to

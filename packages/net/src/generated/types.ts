@@ -1407,11 +1407,16 @@ export const InteriorCrew = __t.object("InteriorCrew", {
   name: __t.string(),
   shipId: __t.string(),
   deckId: __t.string(),
+  visitId: __t.string(),
+  locationRevision: __t.string(),
   localX: __t.f64(),
   localY: __t.f64(),
   standingElevationM: __t.f64(),
   connected: __t.bool(),
   sprinting: __t.bool(),
+  dead: __t.bool(),
+  operatorPoseState: __t.string(),
+  operatorSnapshot: __t.option(__t.string()),
 });
 export type InteriorCrew = __Infer<typeof InteriorCrew>;
 

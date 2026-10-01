@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   crewmatesFromViews,
+  operatorRowsFromView,
   type CrewPresentationRow,
   type InteriorCrewRow,
 } from "./crewmates";
@@ -38,6 +39,63 @@ const look = (
 });
 
 describe("crewmates from the two server views", () => {
+  it("keeps candidate coherent rows separate without inventing an epoch for older/default rows", () => {
+    expect(operatorRowsFromView([body("mate")])).toEqual([]);
+    const row = body("mate", {
+      visitId: "accepted-visit",
+      locationRevision: "9007199254740993",
+      dead: false,
+      operatorPoseState: "recovering",
+    });
+    expect(operatorRowsFromView([row])).toEqual([
+      {
+        characterId: "mate",
+        shipId: "ship",
+        deckId: "deck",
+        visitId: "accepted-visit",
+        locationRevision: "9007199254740993",
+        localX: 1,
+        localY: 2,
+        standingElevationM: 0.1875,
+        connected: true,
+        dead: false,
+        operatorPoseState: "recovering",
+        operatorSnapshot: undefined,
+      },
+    ]);
+    expect(crewmatesFromViews([row], [look("mate")], "self")).toEqual(
+      crewmatesFromViews([body("mate")], [look("mate")], "self"),
+    );
+  });
+  it("unregistered coherent fields leave all legacy render/controller inputs identical", () => {
+    const presentations = [
+      look("mate", {
+        seated: true,
+        dead: false,
+        aimActive: true,
+        shotSequence: 7n,
+      }),
+    ];
+    const legacy = crewmatesFromViews([body("mate")], presentations, "self");
+    const additive = crewmatesFromViews(
+      [
+        body("mate", {
+          dead: true,
+          operatorPoseState: "recovering",
+          operatorSnapshot: undefined,
+          visitId: "new-current-visit",
+          locationRevision: "9007199254740993",
+        }),
+      ],
+      presentations,
+      "self",
+    );
+    expect(additive).toEqual(legacy);
+    expect(additive[0].seated).toBe(true);
+    expect(additive[0].dead).toBe(false);
+    expect(additive[0].aimActive).toBe(true);
+    expect(additive[0].heldItem).toBe("compact-carbine");
+  });
   it("draws other bodies only, and only where both views agree on ship and deck", () => {
     const out = crewmatesFromViews(
       [body("self"), body("mate"), body("moving-deck"), body("no-look")],

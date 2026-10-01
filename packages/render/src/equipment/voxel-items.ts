@@ -22,6 +22,10 @@ import {
 } from "@sidereal/content/crew-items";
 import { setMeshRole } from "../mesh-roles";
 import { bindPoseEquipment } from "./pose-anchors";
+import {
+  verifiedCrewSourceBytes,
+  type VerifiedCrewSource,
+} from "../crew/crew-asset-cache";
 
 /** Materials exported by scripts/art_library/crew_items are named `slot:<slot>@<theme>`. */
 export function crewItemSlotFromMaterialName(
@@ -73,6 +77,9 @@ export interface VoxelItemVisualOptions {
   baseUrl?: string;
   /** Optional local rotation of the item root under `parent` (e.g. a socket whose axes differ). */
   localRotation?: Quaternion;
+  /** Qualified ensemble parses these exact attested bytes; the ordinary URL path is unchanged. */
+  verifiedSource?: VerifiedCrewSource;
+  requiredSockets?: readonly CrewItemSocketName[];
 }
 
 /**
@@ -89,12 +96,27 @@ export async function createVoxelItemVisual(
   const item = crewItem(itemId);
   const base = options.baseUrl ?? CREW_ITEM_CATALOG.assetBase;
   const container = await SceneLoader.LoadAssetContainerAsync(
-    base,
-    item.files[options.lod ?? "lod0"],
+    options.verifiedSource ? "" : base,
+    options.verifiedSource
+      ? verifiedCrewSourceBytes(options.verifiedSource)
+      : item.files[options.lod ?? "lod0"],
     scene,
     undefined,
     ".glb",
   );
+  if (
+    options.verifiedSource &&
+    (!options.requiredSockets?.includes("grip") ||
+      (item.twoHanded && !options.requiredSockets.includes("support")) ||
+      !container.meshes.some(
+        (mesh) => mesh.getTotalVertices() > 0 && !!mesh.getIndices()?.length,
+      ) ||
+      (options.requiredSockets ?? []).some((name) => !item.sockets[name]) ||
+      !(container.rootNodes[0] instanceof TransformNode))
+  ) {
+    container.dispose();
+    throw new Error("Operator held item geometry or socket unavailable");
+  }
   for (const material of container.materials)
     if (material instanceof PBRMaterial)
       setPbrLightBudget(material, GAME_PBR_LIGHT_LIMIT);

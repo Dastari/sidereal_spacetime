@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/sim",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "private": true,
   "type": "module",
   "exports": {
@@ -95,11 +95,12 @@
     "./ship-systems": "./src/ship-systems.ts",
     "./lifecycle-outbox": "./src/lifecycle-outbox.ts",
     "./prefab-ship-systems": "./src/prefab-ship-systems.ts",
-    "./ship-visual-compiler": "./src/ship-visual-compiler.ts"
+    "./ship-visual-compiler": "./src/ship-visual-compiler.ts",
+    "./navigation-operator-context": "./src/navigation-operator-context.ts"
   },
   "dependencies": {
     "@noble/hashes": "2.4.0",
-    "@sidereal/content": "0.6.3",
+    "@sidereal/content": "0.6.4",
     "@sidereal/scripting": "0.1.0"
   }
 }
