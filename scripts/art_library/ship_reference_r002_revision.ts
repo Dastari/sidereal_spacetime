@@ -1,7 +1,7 @@
 /** Generated exact proposal pin; no default renderer or live asset selection. */
 export const SHIP_REFERENCE_VISUAL_R002 = {
   url: "/assets/ship-visual/r002/manifest.json",
-  sha256: "f3c8e69f6488e41786d066968c04f0f3d5dbaef168bcf4b7056d88ce772b9fdd",
+  sha256: "8e121d37fb2f8fc0fbb02c35c7955e036abb9919a457b10481fee5598ec6f44a",
   compilerSha256:
-    "bcadfe72b10aefcbe596c857adcbe1efeb34d04fd9dfe8c60e72966034fbf8a0",
+    "50a2894b4f473c10aca7428d77189f7d0feae90f020633996be3ab81a2ab7771",
 } as const;

@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { bowGlass, bowHeights } from "@sidereal/content/bow-profiles";
 import { G, placedTilePolygon } from "@sidereal/content/construction-grammar";
 import { insidePolygon } from "@sidereal/content/construction-grammar";
@@ -9,11 +9,14 @@ import {
   placeMountTile,
 } from "@sidereal/content/ship-prefab";
 import { dressShip } from "./ship-dresser";
+import * as dresser from "./ship-dresser";
 import { polygonBoundarySample } from "./ship-visual-sampler";
 import {
   referencePlateDecals,
   SHIP_VISUAL_MACRO_PROFILES_R002,
+  REFERENCE_OPTICAL_INTERFACES_R002,
 } from "@sidereal/content/ship-visual-r002";
+import { referenceOpticalGuardBoxesR002 } from "./ship-visual-layers-r002";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
@@ -28,6 +31,375 @@ import {
 describe("versioned reference recipes", () => {
   const doc = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
   const catalog = defaultPrefabComponentCatalog();
+  it("retains the complete old optical RAW exclusion for a missing glass roof or uncertain actual placement", () => {
+    const roof = "bow.square.deck.s2.a0.roof";
+    const ship = PREFAB_SHIPS.find((s) =>
+      dressShip(s, { catalog }).kit.some((k) => k.piece === roof),
+    )!;
+    expect(REFERENCE_OPTICAL_INTERFACES_R002[roof].kind).toBe("optical");
+    const profile = SHIP_VISUAL_MACRO_PROFILES_R002.federation;
+    const original = profile.opticalInterfaces;
+    const oldRaw = (r: ReturnType<typeof compileShipVisual>) => {
+      const polygons = ship.volumes.flatMap((v) =>
+        v.tiles.filter(bowGlass).map(placedTilePolygon),
+      );
+      let checked = 0;
+      for (const c of r.cells.values())
+        if (
+          polygons.some(
+            (poly) =>
+              insidePolygon(poly, (c.x + 0.5) / 16, (c.y + 0.5) / 16) ||
+              polygonBoundarySample([(c.x + 0.5) / 16, (c.y + 0.5) / 16], poly)
+                .distance <=
+                2 / 16,
+          )
+        ) {
+          checked++;
+          expect(c.facet, `${c.x},${c.y},${c.z}`).toBeUndefined();
+        }
+      expect(checked).toBeGreaterThan(100);
+    };
+    try {
+      const missing = { ...original };
+      delete missing[roof];
+      profile.opticalInterfaces = missing;
+      expect(
+        referenceOpticalGuardBoxesR002(ship, "flight", catalog, missing)
+          .unknownVariant,
+      ).toBe(true);
+      oldRaw(
+        compileShipVisual(
+          ship,
+          catalog,
+          "flight",
+          "federation",
+          undefined,
+          "r002",
+        ),
+      );
+    } finally {
+      profile.opticalInterfaces = original;
+    }
+    const originalDress = dresser.dressShip;
+    const spy = vi.spyOn(dresser, "dressShip");
+    try {
+      for (const change of [
+        { x: NaN },
+        { z: Infinity },
+        { rotDeg: NaN },
+        { mirror: "uncertain" },
+      ]) {
+        spy.mockImplementation((s, o) => {
+          const dressed = originalDress(s, o);
+          dressed.kit = dressed.kit.map((k) =>
+            k.piece === roof ? ({ ...k, ...change } as typeof k) : k,
+          );
+          return dressed;
+        });
+        expect(
+          referenceOpticalGuardBoxesR002(ship, "flight", catalog)
+            .unknownVariant,
+        ).toBe(true);
+      }
+      oldRaw(
+        compileShipVisual(
+          ship,
+          catalog,
+          "flight",
+          "federation",
+          undefined,
+          "r002",
+        ),
+      );
+    } finally {
+      spy.mockRestore();
+    }
+  }, 15000);
+  it("guards separate original optical solids and retained glass in the actual transformed kit frame", () => {
+    for (const id of ["fed.s.wren", "fed.m.crest"]) {
+      const ship = PREFAB_SHIPS.find((s) => s.id === id)!;
+      for (const view of ["deck", "flight"] as const) {
+        const guards = referenceOpticalGuardBoxesR002(ship, view, catalog);
+        expect(guards.unknownVariant).toBe(false);
+        let retained = 0,
+          source = 0;
+        for (const placement of dressShip(ship, { catalog }).kit) {
+          if (placement.view !== "both" && placement.view !== view) continue;
+          const certificate =
+            REFERENCE_OPTICAL_INTERFACES_R002[placement.piece];
+          if (!certificate) continue;
+          if (placement.piece.endsWith(".cut")) {
+            expect(certificate.retainedGlassBounds).toHaveLength(0);
+          }
+          const angle = (placement.rotDeg * Math.PI) / 180;
+          for (const [kind, boxes] of [
+            ["source", certificate.sourceFrameBounds],
+            ["retained", certificate.retainedGlassBounds],
+          ] as const)
+            for (const b of boxes) {
+              kind === "source" ? source++ : retained++;
+              const corners: number[][] = [];
+              for (const x of [b[0], b[3]])
+                for (const y of [b[1], b[4]])
+                  for (const z of [b[2], b[5]]) {
+                    const X = placement.mirror ? -x : x;
+                    corners.push([
+                      placement.x + X * Math.cos(angle) - y * Math.sin(angle),
+                      placement.y + X * Math.sin(angle) + y * Math.cos(angle),
+                      placement.z + z,
+                    ]);
+                  }
+              // Independently enumerate every transformed source/GLB corner;
+              // the integer exclusion must contain it plus a full Cheb2 margin.
+              const expected = [
+                ...[0, 1, 2].map(
+                  (a) =>
+                    Math.floor(Math.min(...corners.map((p) => p[a])) * 16) - 2,
+                ),
+                ...[0, 1, 2].map(
+                  (a) =>
+                    Math.ceil(Math.max(...corners.map((p) => p[a])) * 16) + 2,
+                ),
+              ];
+              expect(
+                guards.bounds.some(
+                  (g) =>
+                    g.piece === placement.piece &&
+                    g.kind === kind &&
+                    g.bounds.join(",") === expected.join(","),
+                ),
+              ).toBe(true);
+            }
+        }
+        expect(source).toBeGreaterThan(0);
+        if (view === "flight") expect(retained).toBeGreaterThan(0);
+      }
+    }
+    const missing = { ...REFERENCE_OPTICAL_INTERFACES_R002 };
+    const placed = dressShip(doc, { catalog }).kit.find(
+      (k) =>
+        k.view !== "flight" &&
+        (k.piece.startsWith("canopy.") || /^bow\..*\.edge\d+$/.test(k.piece)) &&
+        missing[k.piece],
+    );
+    expect(placed).toBeDefined();
+    delete missing[placed!.piece];
+    expect(
+      referenceOpticalGuardBoxesR002(doc, "deck", catalog, missing)
+        .unknownVariant,
+    ).toBe(true);
+    expect(
+      referenceOpticalGuardBoxesR002(doc, "flight", catalog, {}).unknownVariant,
+    ).toBe(true);
+  });
+  it("keeps every deck attachment island continuously backed with a sealed hard cut top", () => {
+    let checked = 0,
+      exposedTops = 0;
+    for (const id of ["fed.s.wren", "fed.m.crest"]) {
+      const ship = PREFAB_SHIPS.find((s) => s.id === id)!;
+      const r = compileShipVisual(
+        ship,
+        catalog,
+        "deck",
+        "federation",
+        undefined,
+        "r002",
+      );
+      const lastLayerAt = (x: number, y: number, z: number) => {
+        for (let i = r.layers.length - 1; i >= 0; i--) {
+          const layer = r.layers[i];
+          const b = layer.bounds;
+          if (
+            x >= b[0] &&
+            x < b[3] &&
+            y >= b[1] &&
+            y < b[4] &&
+            z >= b[2] &&
+            z < b[5]
+          )
+            return layer;
+        }
+        return undefined;
+      };
+      const islands = r.layers.filter((l) =>
+        l.id.endsWith(":attachment-island-core"),
+      );
+      const supportBoxes = r.layers.filter(
+        (l) =>
+          l.role === "core" &&
+          (l.id.endsWith(":core") || l.id.endsWith(":attachment-island-core")),
+      );
+      const interior = deriveInterior(ship, 0, catalog);
+      const connected = new Map<string, Set<string>>();
+      const lowerSupport = (island: (typeof islands)[number]) => {
+        let found = connected.get(island.support!);
+        if (found) return found;
+        const core = r.layers.find(
+          (a) => a.support === island.support && a.id.endsWith(":core"),
+        )!;
+        const b = [
+          core.bounds[0] - 2,
+          core.bounds[1] - 2,
+          G.deck.floorTopTexels - 1,
+          core.bounds[3] + 2,
+          core.bounds[4] + 2,
+          G.deck.floorTopTexels + 23,
+        ];
+        const queue: number[][] = [];
+        found = new Set();
+        for (let y = b[1]; y < b[4]; y++)
+          for (let x = b[0]; x < b[3]; x++) {
+            const key = visualCellKey(x, y, b[2]);
+            if (
+              ["floor", "core", "frame", "doorframe"].includes(
+                r.cells.get(key)?.role ?? "",
+              )
+            ) {
+              found.add(key);
+              queue.push([x, y, b[2]]);
+            }
+          }
+        for (let i = 0; i < queue.length; i++) {
+          const p = queue[i];
+          for (const d of [
+            [1, 0, 0],
+            [-1, 0, 0],
+            [0, 1, 0],
+            [0, -1, 0],
+            [0, 0, 1],
+            [0, 0, -1],
+          ]) {
+            const n = p.map((v, a) => v + d[a]);
+            if (n.some((v, a) => v < b[a] || v >= b[a + 3])) continue;
+            const key = visualCellKey(n[0], n[1], n[2]);
+            if (
+              !found.has(key) &&
+              ["core", "frame", "doorframe"].includes(
+                r.cells.get(key)?.role ?? "",
+              )
+            ) {
+              found.add(key);
+              queue.push(n);
+            }
+          }
+        }
+        connected.set(island.support!, found);
+        return found;
+      };
+      for (const l of islands)
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            checked++;
+            for (let z = l.bounds[2]; z < l.bounds[5]; z++) {
+              const c = r.cells.get(visualCellKey(x, y, z));
+              const owner = lastLayerAt(x, y, z);
+              if (!c) {
+                // The final existing optical/door opening owns its real void;
+                // preserved header support must go around it, never fill it.
+                expect(owner?.role).toBe("void");
+                expect(owner?.id).toMatch(/:(?:opening|glass-aperture)$/);
+                continue;
+              }
+              // The exception is a real crossing of occupied support bands,
+              // not a family/name exemption: the other frame must adjoin its
+              // retained core at this exact Z and retain continuous solid below.
+              const postIntersection = interior.posts.some(
+                (p, i) =>
+                  c!.family === `post:${i}` &&
+                  x >= p[0] * 16 - 2 &&
+                  x < p[0] * 16 + 2 &&
+                  y >= p[1] * 16 - 2 &&
+                  y < p[1] * 16 + 2 &&
+                  z >= G.deck.floorTopTexels &&
+                  z < G.deck.floorTopTexels + 22,
+              );
+              const structuralIntersection =
+                c!.role === "frame" &&
+                c!.family !== l.support &&
+                owner?.role === "frame" &&
+                (postIntersection ||
+                  supportBoxes.some(
+                    (a) =>
+                      a.support === c!.family &&
+                      x >= a.bounds[0] - 1 &&
+                      x < a.bounds[3] + 1 &&
+                      y >= a.bounds[1] - 1 &&
+                      y < a.bounds[4] + 1 &&
+                      z >= a.bounds[2] &&
+                      z < a.bounds[5],
+                  )) &&
+                Array.from(
+                  { length: z - l.bounds[2] + 1 },
+                  (_, i) => l.bounds[2] + i,
+                ).every((q) => r.cells.has(visualCellKey(x, y, q)));
+              expect(
+                z < l.bounds[2] + 2
+                  ? ["core", "frame"].includes(c!.role)
+                  : c!.role === "core" || structuralIntersection,
+                `${id}:${x},${y},${z}:${c!.role}:${c!.family}:${owner?.id}`,
+              ).toBe(true);
+            }
+            const top = r.cells.get(visualCellKey(x, y, l.bounds[5] - 1))!;
+            if (!top) continue; // Explicit original aperture extends through this cut.
+            expect(
+              lowerSupport(l).has(visualCellKey(x, y, l.bounds[5] - 1)),
+              `${id}:connected-cap:${x},${y}`,
+            ).toBe(true);
+            const above = r.cells.get(visualCellKey(x, y, l.bounds[5]));
+            if (above) {
+              // A preserved outer wall/header can physically cover this island;
+              // do not trim that other assembly to manufacture an exposed cap.
+              expect(above.family).not.toBe(l.support);
+              expect(
+                ["core", "frame", "doorframe", "plate", "roof"].includes(
+                  above.role,
+                ),
+              ).toBe(true);
+              continue;
+            }
+            exposedTops++;
+            expect(top.facet).toBeUndefined();
+            expect(top.normalHint).toBeUndefined();
+            expect(top.normalSide).toBeUndefined();
+          }
+      // Both retained side courses meet the central support at every island;
+      // full doorway/glazed jamb source retains its old height independently.
+      for (const l of r.layers.filter((l) =>
+        l.id.endsWith(":attachment-island-return"),
+      ))
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++)
+            for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+              if (!r.cells.has(visualCellKey(x, y, z)))
+                expect(
+                  lastLayerAt(x, y, z)?.id,
+                  `${id}:return:${x},${y},${z}`,
+                ).toMatch(/:(?:opening|glass-aperture)$/);
+      for (const door of deriveInterior(ship, 0, catalog).doors.filter(
+        (d) => !d.exterior,
+      )) {
+        const dx = door.b[0] - door.a[0],
+          dy = door.b[1] - door.a[1],
+          span = Math.hypot(dx, dy);
+        for (const along of [0.1875, span - 0.1875]) {
+          const x = Math.floor((door.a[0] + (dx * along) / span) * 16),
+            y = Math.floor((door.a[1] + (dy * along) / span) * 16);
+          for (
+            let z = G.deck.floorTopTexels + 19;
+            z < G.deck.floorTopTexels + 22;
+            z++
+          ) {
+            const c = r.cells.get(visualCellKey(x, y, z));
+            expect(c, `${id}:${door.id}:${x},${y},${z}`).toBeDefined();
+            expect(["core", "frame", "doorframe"].includes(c!.role)).toBe(true);
+            expect(c!.facet).toBeUndefined();
+          }
+        }
+      }
+    }
+    expect(checked).toBeGreaterThan(20);
+    expect(exposedTops).toBeGreaterThan(20);
+  }, 15000);
   it("shares smaller anchored wing markings while retaining all legacy and non-plate decals", () => {
     const original = dressShip(doc, { catalog }).decals;
     expect(referencePlateDecals(doc, original)).toBe(original);
@@ -181,11 +553,12 @@ describe("versioned reference recipes", () => {
           .map(
             (m) => placeMount(m, catalog.get(m.component), geoms, ship).rect,
           );
-        const opticalPolys = ship.volumes.flatMap((v) =>
-          v.tiles.filter(bowGlass).map(placedTilePolygon),
+        const opticalBoxes = referenceOpticalGuardBoxesR002(
+          ship,
+          view,
+          catalog,
         );
         const opticalEdges = [
-          ...interior.exteriorSlopes.filter((e) => e.glass),
           ...[...interior.exteriorWalls, ...interior.partitions].filter(
             (e) =>
               e.type === "window" ||
@@ -224,11 +597,18 @@ describe("versioned reference recipes", () => {
                 p[1] < b[1] - 2 / 16 ||
                 p[1] > b[3] + 2 / 16,
             ).toBe(true);
-          for (const poly of opticalPolys)
-            expect(
-              !insidePolygon(poly, p[0], p[1]) &&
-                polygonBoundarySample([p[0], p[1]], poly).distance > 2 / 16,
-            ).toBe(true);
+          expect(
+            opticalBoxes.bounds.find(
+              (g) =>
+                c.x >= g.bounds[0] &&
+                c.x < g.bounds[3] &&
+                c.y >= g.bounds[1] &&
+                c.y < g.bounds[4] &&
+                c.z >= g.bounds[2] &&
+                c.z < g.bounds[5],
+            ),
+            `${ship.id}:${view}:${c.x},${c.y},${c.z}`,
+          ).toBeUndefined();
           for (const e of opticalEdges) {
             const dx = e.b[0] - e.a[0],
               dy = e.b[1] - e.a[1],
@@ -245,7 +625,9 @@ describe("versioned reference recipes", () => {
               c.x + 0.5 < a.bounds[0] - 2 ||
                 c.x + 0.5 > a.bounds[3] + 2 ||
                 c.y + 0.5 < a.bounds[1] - 2 ||
-                c.y + 0.5 > a.bounds[4] + 2,
+                c.y + 0.5 > a.bounds[4] + 2 ||
+                c.z + 0.5 < a.bounds[2] - 2 ||
+                c.z + 0.5 > a.bounds[5] + 2,
             ).toBe(true);
           }
         }
@@ -273,6 +655,14 @@ describe("versioned reference recipes", () => {
               y * 16,
             ]);
           const boundary = polygonBoundarySample([c.x + 0.5, c.y + 0.5], poly);
+          if (c.facet!.a[2] === 0) {
+            const edge = poly[boundary.edgeIndex];
+            // Common patch IDs are insufficient: every retained height/slot
+            // must use the FIRST occupied boundary row, not a parallel seat.
+            expect(c.facet!.d, `${ship.id}:${c.x},${c.y},${c.z}`).toBe(
+              Math.round(c.facet!.a[0] * edge[0] + c.facet!.a[1] * edge[1]) - 1,
+            );
+          }
           expect(
             Math.min(boundary.edgeT, 1 - boundary.edgeT) * boundary.edgeLength,
           ).toBeGreaterThanOrEqual(3);
@@ -369,9 +759,9 @@ describe("versioned reference recipes", () => {
         ).toBe(true);
       }
     }
-    // The actual old hull rim pick is now the open outer finish seat; pressure
-    // is not removed behind it. This is intentionally different occupancy.
-    expect(r.cells.has(visualCellKey(168, 9, 9))).toBe(false);
+    // The common FIRST outer casing retains this old diagonal pressure pick;
+    // seating it deeper would compound the permitted .044194m clip recession.
+    expect(r.cells.get(visualCellKey(168, 9, 9))?.role).toBe("core");
     expect(r.cells.get(visualCellKey(167, 9, 9))?.role).toBe("core");
     expect(r.cells.get(visualCellKey(166, 9, 9))?.role).toBe("core");
     // Exact whole wing thickness is18 cells; the5-cell finish package is atop it.
@@ -479,7 +869,7 @@ describe("versioned reference recipes", () => {
       expect(JSON.stringify(ship)).toBe(before);
     }
   }, 20000);
-  it("keeps Crest optical geometry raw while assigning only actual gasket courses dark pigment", () => {
+  it("protects Crest actual 3D optical interfaces without blanket raw geometry below them", () => {
     const crest = PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!;
     const r = compileShipVisual(
       crest,
@@ -489,20 +879,40 @@ describe("versioned reference recipes", () => {
       undefined,
       "r002",
     );
-    // These actual forward diagonal outer cells are the retained pressure-case,
-    // not the seated armor plane. Glazing forbids clipping here at every height.
-    for (const z of [9, 17, 25]) {
+    const guards = referenceOpticalGuardBoxesR002(crest, "deck", catalog);
+    const protectedAt = (z: number) =>
+      guards.bounds.some(
+        (g) =>
+          336 >= g.bounds[0] &&
+          336 < g.bounds[3] &&
+          17 >= g.bounds[1] &&
+          17 < g.bounds[4] &&
+          z >= g.bounds[2] &&
+          z < g.bounds[5],
+      );
+    // Exact old native ray column: opaque below-glass pressure is retained, and
+    // the original optical/frame union alone determines its raw/clipped rows.
+    let qualified = 0,
+      raw = 0;
+    for (const z of [9, 17, 25, 30]) {
       const c = r.cells.get(visualCellKey(336, 17, z))!;
       expect(c.role).toBe("core");
-      expect(c.slot).toBe("primary");
-      expect(c.facet).toBeUndefined();
+      if (protectedAt(z)) {
+        raw++;
+        expect(c.facet).toBeUndefined();
+      } else {
+        qualified++;
+        expect(c.facet?.d).toBe(319);
+      }
     }
+    expect(qualified).toBeGreaterThan(0);
+    expect(raw).toBeGreaterThan(0);
     // Authored regular canopy nose17 gives lower frame20..22, cut upper30..32.
     for (const z of [20, 21, 30]) {
       const c = r.cells.get(visualCellKey(336, 17, z))!;
       expect(c.role).toBe("core");
       expect(c.slot).toBe("secondary");
-      expect(c.facet).toBeUndefined();
+      if (protectedAt(z)) expect(c.facet).toBeUndefined();
     }
   }, 15000);
   it("renders the selected bridge cover on its real sloped bow contact plane", () => {
@@ -606,6 +1016,23 @@ describe("versioned reference recipes", () => {
       profile.wallTasks.bridge.width = original;
     }
     expect(visualProfilesSha256("r002")).toBe(before);
+    const cut = profile.partitionCut;
+    const certificate = Object.values(profile.opticalInterfaces).find(
+      (c) => c.sourceFrameBounds.length,
+    )!;
+    const bound = certificate.sourceFrameBounds[0][2];
+    try {
+      profile.partitionCut = cut - 1;
+      expect(visualProfilesSha256("r002")).not.toBe(before);
+      profile.partitionCut = cut;
+      certificate.sourceFrameBounds[0][2] = bound + 1 / 16;
+      expect(visualProfilesSha256("r002")).not.toBe(before);
+      expect(visualProfilesSha256("r001")).toBe(legacy);
+    } finally {
+      profile.partitionCut = cut;
+      certificate.sourceFrameBounds[0][2] = bound;
+    }
+    expect(visualProfilesSha256("r002")).toBe(before);
   });
   it("retains the delivered r001 profile and exact Wren deck volume", () => {
     expect(visualProfilesSha256()).toBe(
@@ -679,12 +1106,16 @@ describe("versioned reference recipes", () => {
     // Optical guard rings and real furniture can exclude a control assembly;
     // never force one through glazing to satisfy a profile-name count. The
     // complete current ships must expose actual eligible task purposes instead.
-    expect([...functions].sort()).toEqual([
-      "bridge",
-      "engineering",
-      "living",
-      "quarters",
-    ]);
+    expect(functions.has("bridge")).toBe(true);
+    expect(functions.has("engineering")).toBe(true);
+    expect(functions.has("quarters")).toBe(true);
+    // These distinct room purposes must own actual surviving open wells, rather
+    // than merely appearing in the finite profile table or emitted layer names.
+    expect(
+      ["medical", "workshop", "galley", "lounge", "cargo"].filter((k) =>
+        functions.has(k),
+      ).length,
+    ).toBeGreaterThanOrEqual(3);
   }, 15000);
   it("seats broad exposed armor behind real case returns and backs functional outer wells", () => {
     const kinds = new Set<string>();

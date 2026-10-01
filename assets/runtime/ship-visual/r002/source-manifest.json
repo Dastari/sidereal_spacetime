@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "bcadfe72b10aefcbe596c857adcbe1efeb34d04fd9dfe8c60e72966034fbf8a0",
+  "compilerSha256": "50a2894b4f473c10aca7428d77189f7d0feae90f020633996be3ab81a2ab7771",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -12,15 +12,15 @@
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "59871265911c15927e30fd89abc1457ddc8e83e6dbcea4f75727a3350b252e3c"
+      "sha256": "066ae3d4bed57b157352cc5cf3b221b6022af47e37966899eeb7e7d8462d2414"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "56a9db92f635d6da54e9389cdab19c8e0853c0c9bedb470409d3c157f11bbc4a"
+      "sha256": "e6c1c41a00a31c83dda741265b621443dff037af301feb71ce21fe6b6b04698a"
     },
     {
       "path": "packages/sim/src/ship-dresser.ts",
-      "sha256": "6a78913796d4e7e2ec64278c57a105a55cb0aec7984acd530eabac56de9354fb"
+      "sha256": "832acff10265c7778c5a726393ade99318cb9f3c1065eeeb6c722559578c8c14"
     },
     {
       "path": "packages/content/src/ship-prefab.ts",
@@ -52,7 +52,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/ship-view.ts",
-      "sha256": "f38e86a731fdf58cc38bf44e6498c886cfa2bbf8f2dcd4307022ab2ace0f41ea"
+      "sha256": "71993e6d845c940a53140600bda59eb50db576db1bed2a3796ebe784c9dad7a3"
     },
     {
       "path": "packages/render/src/prefab-ship/batch.ts",
@@ -84,15 +84,31 @@
     },
     {
       "path": "packages/render/src/construction-instance.ts",
-      "sha256": "1a00f227ea5b779c59bae0f8fde1dc65ab5db2939794ff6aad859b4c2880b863"
+      "sha256": "0185dce3c5585a215b684d817c3ca04fd449fabd577a2a0eb17aeeeb7d08b093"
     },
     {
       "path": "packages/render/src/index.ts",
-      "sha256": "0f1e0d61a3232cdce1bf82eef358d8c1139e43e6911a6064a95239ba85e03b4b"
+      "sha256": "bb5792dcdae00c75fb27b4630bbf48f0bba5bfef67a45eff64203a91c97e4dcb"
+    },
+    {
+      "path": "packages/render/src/pbr-light-budget.ts",
+      "sha256": "56f306537ebbb349c2bb066f69c7eb0deae681ae0d021ad82b314ea983f4dc56"
+    },
+    {
+      "path": "packages/render/src/local-light-budget.ts",
+      "sha256": "c6ed9b6597b159b0b0cc0432336b8a560e6be1776552110cdab2c8a2307494e7"
     },
     {
       "path": "scripts/art_library/ship_reference_r002_art.py",
       "sha256": "eebf60d8a1786e7eab56821562292f3ca02a1d8029bce0c4aef5af37c8b876e7"
+    },
+    {
+      "path": "scripts/art_library/ship_kit_modules.py",
+      "sha256": "b067ca505c3972b59f144a49760ed2675ec0756c6ad3d56db366a7c5ace0c725"
+    },
+    {
+      "path": "scripts/art_library/bow_modules.py",
+      "sha256": "be81023bb13ed93fe268e1b9b010b90750d6e87479f55a2d94a57c16e8abd232"
     },
     {
       "path": "scripts/art_library/ship_reference_r002_maps.py",

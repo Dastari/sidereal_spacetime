@@ -256,8 +256,8 @@ describe("supported manufactured facet union", () => {
   });
 });
 
-describe("actual seated signed45 finish exposure", () => {
-  it("emits the first visible primary armor/lip plane rather than a hidden descriptor row", () => {
+describe("actual common outer signed45 finish exposure", () => {
+  it("emits the first visible primary armor/lip plane across upper, body and lower height ranges", () => {
     for (const id of ["fed.s.wren", "fed.m.crest"]) {
       const doc = PREFAB_SHIPS.find((s) => s.id === id)!;
       const result = compileShipVisual(
@@ -296,7 +296,9 @@ describe("actual seated signed45 finish exposure", () => {
       expect(primary.length, id).toBeGreaterThan(10);
       const seen = new Set<string>();
       for (const f of primary) {
-        const key = `${f.cell.family}:${f.cell.facet!.d}`;
+        const minZ = Math.min(...f.points.map((p) => p[2])),
+          maxZ = Math.max(...f.points.map((p) => p[2]));
+        const key = `${f.cell.family}:${f.cell.facet!.d}:${minZ}:${maxZ}`;
         if (seen.has(key)) continue;
         seen.add(key);
         const centre = f.points[0].map((_, i) =>

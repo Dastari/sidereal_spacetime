@@ -1,5 +1,55 @@
 import { describe, expect, it } from "vitest";
 import { validateShipVisualLayers, type ShipVisualLayer } from "./ship-visual";
+import {
+  REFERENCE_OPTICAL_INTERFACES_R002,
+  SHIP_VISUAL_MACRO_PROFILES_R002,
+} from "./ship-visual-r002";
+
+describe("finite reference manufacturing inputs", () => {
+  it("keeps separate finite source/retained optical boxes and meaningful clipped room dimensions", () => {
+    for (const [id, spec] of Object.entries(
+      REFERENCE_OPTICAL_INTERFACES_R002,
+    )) {
+      expect(spec.assetSha256, id).toMatch(/^[0-9a-f]{64}$/);
+      if (spec.kind === "optical")
+        expect(
+          spec.sourceFrameBounds.length + spec.retainedGlassBounds.length,
+          id,
+        ).toBeGreaterThan(0);
+      else {
+        expect(spec.kind).toBe("non-optical");
+        expect(spec.sourceFrameBounds).toHaveLength(0);
+        expect(spec.retainedGlassBounds).toHaveLength(0);
+      }
+      for (const bounds of [
+        ...spec.sourceFrameBounds,
+        ...spec.retainedGlassBounds,
+      ]) {
+        expect(bounds).toHaveLength(6);
+        expect(bounds.every(Number.isFinite), id).toBe(true);
+        for (let a = 0; a < 3; a++)
+          expect(bounds[a], id).toBeLessThanOrEqual(bounds[a + 3]);
+      }
+      if (id.endsWith(".cut")) expect(spec.retainedGlassBounds).toHaveLength(0);
+    }
+    for (const profile of Object.values(SHIP_VISUAL_MACRO_PROFILES_R002)) {
+      expect(profile.partitionCut).toBeGreaterThanOrEqual(20);
+      expect(profile.partitionCut).toBeLessThanOrEqual(22);
+      expect(profile.opticalInterfaces).toBe(REFERENCE_OPTICAL_INTERFACES_R002);
+      for (const task of Object.values(profile.wallTasks)) {
+        expect(task.width).toBeGreaterThanOrEqual(13);
+        expect(task.height).toBeGreaterThanOrEqual(9);
+        expect(task.bottom).toBeGreaterThanOrEqual(2);
+      }
+      expect(profile.wallTasks.medical.form).not.toBe(
+        profile.wallTasks.workshop.form,
+      );
+      expect(profile.wallTasks.galley.form).not.toBe(
+        profile.wallTasks.cargo.form,
+      );
+    }
+  });
+});
 
 describe("candidate original side-plane ownership", () => {
   const layer: ShipVisualLayer = {

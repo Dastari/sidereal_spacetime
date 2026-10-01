@@ -5,6 +5,7 @@ import { createHash } from "node:crypto";
 import { format } from "prettier";
 import { SHIP_VISUAL_FIXTURES } from "@sidereal/content/ship-visual-fixture";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import { REFERENCE_OPTICAL_INTERFACES_R002 } from "@sidereal/content/ship-visual-r002";
 import { SHIP_KIT_SLOTS } from "@sidereal/content/ship-kit";
 import {
   SHIP_VISUAL_FRAME,
@@ -43,7 +44,11 @@ const sources = [
   "packages/render/src/prefab-ship-presentation.ts",
   "packages/render/src/construction-instance.ts",
   "packages/render/src/index.ts",
+  "packages/render/src/pbr-light-budget.ts",
+  "packages/render/src/local-light-budget.ts",
   "scripts/art_library/ship_reference_r002_art.py",
+  "scripts/art_library/ship_kit_modules.py",
+  "scripts/art_library/bow_modules.py",
   "scripts/art_library/ship_reference_r002_maps.py",
   "packages/render/src/prefab-ship/reference-finish.ts",
   "packages/render/src/prefab-ship/reference-instruments.ts",
@@ -95,6 +100,41 @@ const kitBytes = readFileSync(
   resolve(root, "assets/runtime/ship-kit/r002/manifest.json"),
 );
 const kit = JSON.parse(kitBytes.toString("utf8"));
+// A finite optical certificate is valid only for the retained bytes it actually
+// measured. A native-kit revision must never silently reuse old 3D exclusions.
+for (const [id, certificate] of Object.entries(
+  REFERENCE_OPTICAL_INTERFACES_R002,
+)) {
+  const piece = kit.pieces[id];
+  if (
+    !piece ||
+    hash(
+      readFileSync(resolve(root, "assets/runtime/ship-kit/r002", piece.file)),
+    ) !== certificate.assetSha256
+  )
+    throw Error(
+      `Retained optical certificate does not match native bytes: ${id}`,
+    );
+  const parts =
+    certificate.sourceFrameBounds.length +
+    certificate.retainedGlassBounds.length;
+  if (
+    (certificate.kind === "optical" && parts === 0) ||
+    (certificate.kind === "non-optical" && parts !== 0) ||
+    !["optical", "non-optical"].includes(certificate.kind)
+  )
+    throw Error(`Ambiguous optical/non-optical classification: ${id}`);
+  for (const bounds of [
+    ...certificate.sourceFrameBounds,
+    ...certificate.retainedGlassBounds,
+  ])
+    if (
+      bounds.length !== 6 ||
+      !bounds.every(Number.isFinite) ||
+      bounds.some((v, i) => i < 3 && v > bounds[i + 3])
+    )
+      throw Error(`Invalid optical certificate bounds: ${id}`);
+}
 assets.push({
   kind: "kit-manifest",
   id: "native",
