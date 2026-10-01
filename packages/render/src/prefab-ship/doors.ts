@@ -353,18 +353,13 @@ interface DoorState {
 
 /** Finite authored compatibility contract; checked before creating any runtime resource. */
 export function validateReferenceDoorLeaf(geometry: GlbGeometry): void {
-  const required: ShipKitSlot[] = [
-    "primary",
-    "secondary",
-    "trim",
-    "metal",
-    "emit_b",
-  ];
+  const required: ShipKitSlot[] = ["primary", "trim", "metal", "emit_b"];
   const slots = geometry.primitives.map((p) => slotOfMaterialName(p.material));
   if (
-    slots.length !== required.length ||
-    new Set(slots).size !== required.length ||
-    required.some((s) => !slots.includes(s))
+    slots.length !== required.length + 1 ||
+    new Set(slots).size !== required.length + 1 ||
+    required.some((s) => !slots.includes(s)) ||
+    slots.includes("secondary") === slots.includes("dark")
   )
     throw Error("Invalid authored leaf semantic primitives");
   const low = [Infinity, Infinity, Infinity],

@@ -16,7 +16,11 @@ import {
   SHIP_VISUAL_MACRO_PROFILES_R002,
   REFERENCE_OPTICAL_INTERFACES_R002,
 } from "@sidereal/content/ship-visual-r002";
-import { referenceOpticalGuardBoxesR002 } from "./ship-visual-layers-r002";
+import {
+  referenceOpticalGuardBoxesR002,
+  referenceOpticalMatingSolidsR002,
+  referenceOpticalMatingCubeR002,
+} from "./ship-visual-layers-r002";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
@@ -31,6 +35,391 @@ import {
 describe("versioned reference recipes", () => {
   const doc = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
   const catalog = defaultPrefabComponentCatalog();
+  it("uses complete convex SAT for mating pigment, including mirrored transforms and conservative malformed fallback", () => {
+    const profile = SHIP_VISUAL_MACRO_PROFILES_R002.federation;
+    const original = profile.opticalMatingPigments;
+    const piece = "bow.slope1.deck.s2.a0.edge1";
+    const pin = profile.opticalInterfaces[piece].assetSha256;
+    const originalDress = dresser.dressShip;
+    const spy = vi.spyOn(dresser, "dressShip");
+    let placement = { x: 0, y: 0, z: 0, rotDeg: 0, mirror: false };
+    spy.mockImplementation((s, o) => ({
+      ...originalDress(s, o),
+      kit: [{ piece, view: "both", ...placement }] as ReturnType<
+        typeof originalDress
+      >["kit"],
+    }));
+    const tetra = {
+      sourcePart: 0,
+      vertices: [
+        [0, 0, 0],
+        [2 / 16, 0, 0],
+        [0, 2 / 16, 0],
+        [0, 0, 2 / 16],
+      ] as [number, number, number][],
+      triangles: [
+        [0, 2, 1],
+        [0, 1, 3],
+        [0, 3, 2],
+        [1, 2, 3],
+      ] as [number, number, number][],
+    };
+    try {
+      profile.opticalMatingPigments = {
+        [piece]: { assetSha256: pin, parts: [tetra] },
+      };
+      let solids = referenceOpticalMatingSolidsR002(
+        doc,
+        "deck",
+        catalog,
+        "federation",
+      );
+      expect(solids).toHaveLength(1);
+      // Inside the broad AABB, but completely beyond the tetra's sloping face.
+      expect(referenceOpticalMatingCubeR002(1, 1, 1, solids)).toBe(false);
+      expect(referenceOpticalMatingCubeR002(0, 0, 0, solids)).toBe(true);
+      const small = {
+        ...tetra,
+        vertices: tetra.vertices.map(
+          (p) => p.map((n) => n * 0.05 + 0.2 / 16) as [number, number, number],
+        ),
+      };
+      profile.opticalMatingPigments = {
+        [piece]: { assetSha256: pin, parts: [small] },
+      };
+      solids = referenceOpticalMatingSolidsR002(
+        doc,
+        "deck",
+        catalog,
+        "federation",
+      );
+      // Neither cell centre nor ANY cube corner is inside this small solid, but
+      // the complete cube intersects it. Point-only attribution would miss it.
+      expect(referenceOpticalMatingCubeR002(0, 0, 0, solids)).toBe(true);
+      profile.opticalMatingPigments = original;
+      for (const mirror of [false, true])
+        for (const rotDeg of [0, 90, 17]) {
+          placement = { x: 1.23, y: -4.5, z: 0.2, rotDeg, mirror };
+          solids = referenceOpticalMatingSolidsR002(
+            doc,
+            "deck",
+            catalog,
+            "federation",
+          );
+          const vertices = original[piece].parts[0].vertices;
+          const centroid = [0, 1, 2].map(
+            (i) => vertices.reduce((a, p) => a + p[i], 0) / vertices.length,
+          );
+          const x = mirror ? -centroid[0] : centroid[0],
+            c = Math.cos((rotDeg * Math.PI) / 180),
+            s = Math.sin((rotDeg * Math.PI) / 180);
+          const world = [
+            placement.x + c * x - s * centroid[1],
+            placement.y + s * x + c * centroid[1],
+            placement.z + centroid[2],
+          ];
+          expect(
+            referenceOpticalMatingCubeR002(
+              ...(world.map((v) => Math.floor(v * 16)) as [
+                number,
+                number,
+                number,
+              ]),
+              solids,
+            ),
+          ).toBe(true);
+        }
+      placement = { x: 0, y: 0, z: 0, rotDeg: 0, mirror: false };
+      for (const bad of [
+        { assetSha256: "0".repeat(64), parts: [tetra] },
+        {
+          assetSha256: pin,
+          parts: [{ ...tetra, triangles: tetra.triangles.slice(1) }],
+        },
+        {
+          assetSha256: pin,
+          parts: [
+            { ...tetra, vertices: [[NaN, 0, 0], ...tetra.vertices.slice(1)] },
+          ],
+        },
+        {
+          assetSha256: pin,
+          parts: [
+            { ...tetra, triangles: [[0, 1, 99], ...tetra.triangles.slice(1)] },
+          ],
+        },
+        {
+          assetSha256: pin,
+          parts: [
+            {
+              ...tetra,
+              vertices: [...tetra.vertices, [2 / 16, 2 / 16, 2 / 16]],
+            },
+          ],
+        },
+      ]) {
+        profile.opticalMatingPigments = {
+          [piece]: bad as (typeof original)[string],
+        };
+        expect(
+          referenceOpticalMatingSolidsR002(
+            doc,
+            "deck",
+            catalog,
+            "federation",
+          ).filter((s) => !s.veto),
+        ).toHaveLength(0);
+      }
+      profile.opticalMatingPigments = original;
+      placement = { ...placement, rotDeg: NaN };
+      expect(
+        referenceOpticalMatingSolidsR002(
+          doc,
+          "deck",
+          catalog,
+          "federation",
+        ).filter((s) => !s.veto),
+      ).toHaveLength(0);
+      placement = {
+        ...placement,
+        rotDeg: 0,
+        mirror: "uncertain" as unknown as boolean,
+      };
+      expect(
+        referenceOpticalMatingSolidsR002(
+          doc,
+          "deck",
+          catalog,
+          "federation",
+        ).filter((s) => !s.veto),
+      ).toHaveLength(0);
+      placement = { x: 0, y: 0, z: 0, rotDeg: 0, mirror: false };
+      profile.opticalMatingPigments = {};
+      expect(
+        referenceOpticalMatingSolidsR002(
+          doc,
+          "deck",
+          catalog,
+          "federation",
+        ).filter((s) => !s.veto),
+      ).toHaveLength(0);
+    } finally {
+      profile.opticalMatingPigments = original;
+      spy.mockRestore();
+    }
+  });
+  it("vetoes shared cubes touching uncertain or malformed optical variants before neighboring certified pigment", () => {
+    const profile = SHIP_VISUAL_MACRO_PROFILES_R002.federation;
+    const originalDress = dresser.dressShip;
+    const spy = vi.spyOn(dresser, "dressShip");
+    const piece = "bow.slope1.deck.s2.a0.edge1";
+    let kit = [
+      { piece, view: "both", x: 0, y: 0, z: 0, rotDeg: 0, mirror: false },
+    ] as ReturnType<typeof originalDress>["kit"];
+    spy.mockImplementation((s, o) => ({ ...originalDress(s, o), kit }));
+    const original = profile.opticalMatingPigments;
+    const originalInterfaces = profile.opticalInterfaces;
+    try {
+      const qualified = referenceOpticalMatingSolidsR002(
+        doc,
+        "deck",
+        catalog,
+        "federation",
+      );
+      const v = original[piece].parts[0].vertices;
+      const cell = [0, 1, 2].map((i) =>
+        Math.floor((v.reduce((n, p) => n + p[i], 0) / v.length) * 16),
+      ) as [number, number, number];
+      expect(referenceOpticalMatingCubeR002(...cell, qualified)).toBe(true);
+      for (const uncertain of [
+        "canopy.corner45.deck",
+        "canopy.corner45.deck.cut",
+      ]) {
+        const b = profile.opticalInterfaces[uncertain].sourceFrameBounds[0];
+        // Place the ACTUAL uncertain source box centre on an actual qualifying
+        // neighbor cube. The complete cube must be vetoed, including touch.
+        kit = [
+          kit[0],
+          {
+            piece: uncertain,
+            view: "both",
+            x: (cell[0] + 0.5) / 16 - (b[0] + b[3]) / 2,
+            y: (cell[1] + 0.5) / 16 - (b[1] + b[4]) / 2,
+            z: (cell[2] + 0.5) / 16 - (b[2] + b[5]) / 2,
+            rotDeg: 0,
+            mirror: false,
+          },
+        ] as typeof kit;
+        const solids = referenceOpticalMatingSolidsR002(
+          doc,
+          "deck",
+          catalog,
+          "federation",
+        );
+        expect(solids.some((s) => !s.veto)).toBe(true);
+        expect(solids.some((s) => s.veto)).toBe(true);
+        expect(referenceOpticalMatingCubeR002(...cell, solids)).toBe(false);
+        const onlyVeto = solids.filter((s) => s.veto),
+          raw = qualified[0];
+        // A neighboring certified box sharing ONLY the excluded AABB boundary
+        // must also be vetoed; centre-only exclusion would incorrectly pass it.
+        const end = Math.ceil(onlyVeto[0].bounds[3] * 16);
+        const touching = {
+          ...onlyVeto[0],
+          bounds: [
+            end / 16,
+            cell[1] / 16,
+            cell[2] / 16,
+            (end + 1) / 16,
+            (cell[1] + 1) / 16,
+            (cell[2] + 1) / 16,
+          ],
+        };
+        const fakeQualified = {
+          ...raw,
+          bounds: [
+            (end - 1) / 16,
+            cell[1] / 16,
+            cell[2] / 16,
+            end / 16,
+            (cell[1] + 1) / 16,
+            (cell[2] + 1) / 16,
+          ],
+          axes: [],
+        };
+        expect(
+          referenceOpticalMatingCubeR002(end - 1, cell[1], cell[2], [
+            fakeQualified,
+            touching,
+          ]),
+        ).toBe(false);
+        kit = [kit[0]];
+      }
+      kit.push({
+        piece: "canopy.unknown",
+        view: "both",
+        x: 0,
+        y: 0,
+        z: 0,
+        rotDeg: 0,
+        mirror: false,
+      } as (typeof kit)[number]);
+      expect(
+        referenceOpticalMatingSolidsR002(doc, "deck", catalog, "federation"),
+      ).toEqual([]);
+      kit = [
+        kit[0],
+        {
+          ...kit[0],
+          piece: "canopy.corner45.deck",
+          mirror: "unknown" as unknown as boolean,
+        },
+      ];
+      expect(
+        referenceOpticalMatingSolidsR002(doc, "deck", catalog, "federation"),
+      ).toEqual([]);
+      // Known missing/hash-invalid solids become vetoes rather than simply
+      // disappearing and leaving their shared cubes open to another owner.
+      kit = [kit[0]];
+      profile.opticalMatingPigments = {};
+      const missing = referenceOpticalMatingSolidsR002(
+        doc,
+        "deck",
+        catalog,
+        "federation",
+      );
+      expect(missing.some((s) => s.veto)).toBe(true);
+      expect(
+        referenceOpticalMatingCubeR002(...cell, [...qualified, ...missing]),
+      ).toBe(false);
+      profile.opticalInterfaces = {
+        ...originalInterfaces,
+        [piece]: { ...originalInterfaces[piece], sourceFrameBounds: [] },
+      };
+      expect(
+        referenceOpticalMatingSolidsR002(doc, "deck", catalog, "federation"),
+      ).toEqual([]);
+    } finally {
+      profile.opticalMatingPigments = original;
+      profile.opticalInterfaces = originalInterfaces;
+      spy.mockRestore();
+    }
+  });
+  // Each assembly is independently bounded. Vitest executes these ordinary
+  // tests serially; no concurrent mutable-profile/global fixture is used.
+  for (const ship of [doc, PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!])
+    for (const view of ["deck", "flight"] as const)
+      it(`changes only actual final opaque mating pigment ${ship.id}/${view} while retaining all occupied roles and RAW exclusions`, () => {
+        const profile = SHIP_VISUAL_MACRO_PROFILES_R002.federation;
+        const original = profile.opticalMatingPigments;
+        let changedTotal = 0;
+        const current = compileShipVisual(
+          ship,
+          catalog,
+          view,
+          "federation",
+          undefined,
+          "r002",
+        );
+        let baseline: ReturnType<typeof compileShipVisual>;
+        try {
+          profile.opticalMatingPigments = {};
+          baseline = compileShipVisual(
+            ship,
+            catalog,
+            view,
+            "federation",
+            undefined,
+            "r002",
+          );
+        } finally {
+          profile.opticalMatingPigments = original;
+        }
+        const solids = referenceOpticalMatingSolidsR002(
+          ship,
+          view,
+          catalog,
+          "federation",
+        );
+        expect(current.cells.size).toBe(baseline.cells.size);
+        const mismatches: string[] = [];
+        const invalidPigments: string[] = [];
+        for (const [key, c] of current.cells) {
+          const old = baseline.cells.get(key);
+          if (!old) {
+            mismatches.push(key);
+            continue;
+          }
+          const { slot: oldSlot, ...before } = old,
+            { slot: newSlot, ...after } = c;
+          // Compare EVERY cell and metadata field, including exact RAW/facet
+          // ownership; collect errors rather than thousands of assertion calls.
+          if (JSON.stringify(after) !== JSON.stringify(before))
+            mismatches.push(key);
+          if (oldSlot === newSlot) continue;
+          changedTotal++;
+          if (
+            newSlot !== "trim" ||
+            !c.family.startsWith("volume:") ||
+            !["core", "frame", "plate"].includes(c.role) ||
+            c.facet !== undefined ||
+            c.surfaceRole === "floor" ||
+            !referenceOpticalMatingCubeR002(c.x, c.y, c.z, solids)
+          )
+            invalidPigments.push(key);
+        }
+        expect(
+          mismatches,
+          `${ship.id}/${view} geometry, core, RAW and shading metadata`,
+        ).toEqual([]);
+        expect(
+          invalidPigments,
+          `${ship.id}/${view} final source mating owners only`,
+        ).toEqual([]);
+        expect(changedTotal).toBeGreaterThan(
+          ship.id === "fed.s.wren" && view === "deck" ? 0 : 10,
+        );
+      }, 20000);
   it("retains the complete old optical RAW exclusion for a missing glass roof or uncertain actual placement", () => {
     const roof = "bow.square.deck.s2.a0.roof";
     const ship = PREFAB_SHIPS.find((s) =>
@@ -534,9 +923,9 @@ describe("versioned reference recipes", () => {
       );
     }
   }, 15000);
-  it("reconstructs actual diagonal owners and shallow five-cell trays with original guarded facets", () => {
-    for (const ship of [doc, PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!])
-      for (const view of ["deck", "flight"] as const) {
+  for (const ship of [doc, PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!])
+    for (const view of ["deck", "flight"] as const)
+      it(`reconstructs actual diagonal owners and shallow five-cell trays with original guarded facets ${ship.id}/${view}`, () => {
         const r = compileShipVisual(
           ship,
           catalog,
@@ -718,8 +1107,7 @@ describe("versioned reference recipes", () => {
         expect(cut.get(visualCellKey(next.x, next.y, next.z))?.facetFaces).toBe(
           next.facetFaces,
         );
-      }
-  }, 20000);
+      }, 20000);
   it("reconstructs the actual picked old rim owners rather than preserving a nominal channel veto", () => {
     const r = compileShipVisual(
       doc,
@@ -880,6 +1268,12 @@ describe("versioned reference recipes", () => {
       "r002",
     );
     const guards = referenceOpticalGuardBoxesR002(crest, "deck", catalog);
+    const solids = referenceOpticalMatingSolidsR002(
+      crest,
+      "deck",
+      catalog,
+      "federation",
+    );
     const protectedAt = (z: number) =>
       guards.bounds.some(
         (g) =>
@@ -911,7 +1305,11 @@ describe("versioned reference recipes", () => {
     for (const z of [20, 21, 30]) {
       const c = r.cells.get(visualCellKey(336, 17, z))!;
       expect(c.role).toBe("core");
-      expect(c.slot).toBe("secondary");
+      expect(c.slot).toBe(
+        protectedAt(z) && referenceOpticalMatingCubeR002(336, 17, z, solids)
+          ? "trim"
+          : "secondary",
+      );
       if (protectedAt(z)) expect(c.facet).toBeUndefined();
     }
   }, 15000);
@@ -1046,7 +1444,7 @@ describe("versioned reference recipes", () => {
     expect(visualProfilesSha256("r002")).not.toBe(visualProfilesSha256("r001"));
     expect(() => visualProfilesSha256("r003")).toThrow("Unknown");
   });
-  it("exposes room-specific inward perimeter assemblies over retained pressure cores", () => {
+  it("exposes globally selected room-purpose assemblies over retained two-course pressure cores", () => {
     const functions = new Set<string>();
     for (const ship of [
       doc,
@@ -1063,22 +1461,30 @@ describe("versioned reference recipes", () => {
         );
       let opened = 0;
       for (const l of r.layers.filter(
-        (l) => l.id.includes(":inward-task:") && l.id.endsWith(":well"),
+        (l) =>
+          l.id.includes(":room-task:") &&
+          (l.id.endsWith(":well") || l.id.endsWith(":functional-well")),
       )) {
-        const volume = ship.volumes.find(
-          (v) => l.support === `volume:${v.id}`,
+        const volume = ship.volumes.find((v) => l.support === `volume:${v.id}`);
+        const poly = volume?.id
+          ? volumeGeometry(volume).outline!.outer.map(
+              ([x, y]): [number, number] => [x * 16, y * 16],
+            )
+          : undefined;
+        const room = ship.rooms.find((room) =>
+          l.id.includes(`:room-task:${room.id}:`),
         )!;
-        const poly = volumeGeometry(volume).outline!.outer.map(
-          ([x, y]): [number, number] => [x * 16, y * 16],
-        );
+        const purpose = room.type === "medbay" ? "medical" : room.type;
         for (let y = l.bounds[1]; y < l.bounds[4]; y++)
           for (let x = l.bounds[0]; x < l.bounds[3]; x++)
             for (let z = l.bounds[2]; z < l.bounds[5]; z++) {
               if (r.cells.has(visualCellKey(x, y, z))) continue;
               opened++;
-              functions.add(l.id.split(":").at(-2)!);
-              const face = polygonBoundarySample([x + 0.5, y + 0.5], poly);
-              expect(face.distance).toBeGreaterThanOrEqual(3);
+              functions.add(purpose);
+              if (poly) {
+                const face = polygonBoundarySample([x + 0.5, y + 0.5], poly);
+                expect(face.distance).toBeGreaterThanOrEqual(3);
+              } else expect(l.support).toMatch(/^edge:partition:/);
               // The real cavity belongs to the inner facade: walk farther toward
               // the exterior and two continuous support cells precede open air.
               expect(
@@ -1106,6 +1512,8 @@ describe("versioned reference recipes", () => {
     // Optical guard rings and real furniture can exclude a control assembly;
     // never force one through glazing to satisfy a profile-name count. The
     // complete current ships must expose actual eligible task purposes instead.
+    // R17 selects one GLOBAL room group; its winning face may be a partition or
+    // the perimeter, so the backing gate measures both physical assemblies.
     expect(functions.has("bridge")).toBe(true);
     expect(functions.has("engineering")).toBe(true);
     expect(functions.has("quarters")).toBe(true);
@@ -1117,6 +1525,130 @@ describe("versioned reference recipes", () => {
       ).length,
     ).toBeGreaterThanOrEqual(3);
   }, 15000);
+  it("keeps joined roof-cluster apertures open above actual two-course pressure support", () => {
+    let opened = 0,
+      access = 0,
+      vent = 0;
+    for (const ship of [
+      doc,
+      PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!,
+    ]) {
+      const r = compileShipVisual(
+        ship,
+        catalog,
+        "flight",
+        "federation",
+        undefined,
+        "r002",
+      );
+      for (const l of r.layers.filter((l) =>
+        l.id.includes(":roof-cluster-well:"),
+      ))
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            expect(r.cells.has(visualCellKey(x, y, l.bounds[5] - 1))).toBe(
+              false,
+            );
+            opened++;
+            const backing = r.cells.get(visualCellKey(x, y, l.bounds[2] - 1));
+            expect(["core", "frame", "roof", "plate"]).toContain(backing?.role);
+            for (const z of [l.bounds[2] - 3, l.bounds[2] - 4])
+              expect(r.cells.get(visualCellKey(x, y, z))?.role).toBe("core");
+            const insert = r.cells.get(visualCellKey(x, y, l.bounds[2]));
+            if (insert?.slot === "accent") access++;
+            if (insert?.slot === "metal") vent++;
+          }
+    }
+    expect(opened).toBeGreaterThan(100);
+    expect(access).toBeGreaterThan(20);
+    expect(vent).toBeGreaterThan(20);
+  }, 20000);
+  it("selects one complete room-sized group globally and preserves its final cross-course owners", () => {
+    let groups = 0,
+      broadGroups = 0,
+      crossCourse = 0,
+      oppositeSides = 0;
+    for (const ship of [
+      doc,
+      PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!,
+    ]) {
+      const result = compileShipVisual(
+        ship,
+        catalog,
+        "deck",
+        "federation",
+        undefined,
+        "r002",
+      );
+      const byColumn = new Map<string, typeof result.layers>();
+      for (const l of result.layers)
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            const key = `${x},${y}`;
+            const list = byColumn.get(key) ?? [];
+            list.push(l);
+            byColumn.set(key, list);
+          }
+      for (const room of ship.rooms) {
+        const selected = result.layers.filter((l) =>
+          l.id.includes(`:room-task:${room.id}:`),
+        );
+        if (!selected.length) continue;
+        groups++;
+        expect(new Set(selected.map((l) => l.support)).size).toBe(1);
+        const xs = selected.flatMap((l) => [l.bounds[0], l.bounds[3]]);
+        const ys = selected.flatMap((l) => [l.bounds[1], l.bounds[4]]);
+        const width = Math.max(
+          Math.max(...xs) - Math.min(...xs),
+          Math.max(...ys) - Math.min(...ys),
+        );
+        if (width >= 32) broadGroups++;
+        const core = result.layers.find(
+          (l) => l.id.endsWith(":core") && l.support === selected[0].support,
+        );
+        if (core) {
+          const axis = core.bounds[3] - core.bounds[0] === 2 ? 0 : 1;
+          const alongAxis = axis === 0 ? 1 : 0;
+          const lo = Math.min(...selected.map((l) => l.bounds[alongAxis]));
+          const hi = Math.max(...selected.map((l) => l.bounds[alongAxis + 3]));
+          if (
+            Math.floor((lo - core.bounds[alongAxis]) / 32) !==
+            Math.floor((hi - 1 - core.bounds[alongAxis]) / 32)
+          )
+            crossCourse++;
+          if (selected.some((l) => l.bounds[axis + 3] <= core.bounds[axis]))
+            oppositeSides |= 1;
+          if (selected.some((l) => l.bounds[axis] >= core.bounds[axis + 3]))
+            oppositeSides |= 2;
+        }
+        const visited = new Set<string>();
+        for (const l of selected)
+          for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+            for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+              for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+                const cellKey = visualCellKey(x, y, z);
+                if (visited.has(cellKey)) continue;
+                visited.add(cellKey);
+                const relevant = (byColumn.get(`${x},${y}`) ?? []).filter(
+                  (a) => z >= a.bounds[2] && z < a.bounds[5],
+                );
+                const owner = relevant[relevant.length - 1];
+                expect(owner.id, cellKey).toContain(`:room-task:${room.id}:`);
+                const c = result.cells.get(cellKey);
+                if (owner.role === "void") expect(c, cellKey).toBeUndefined();
+                else {
+                  expect(c?.family, cellKey).toBe(owner.support);
+                  expect(c?.role, cellKey).toBe(owner.role);
+                  expect(c?.slot, cellKey).toBe(owner.slot);
+                }
+              }
+      }
+    }
+    expect(groups).toBeGreaterThanOrEqual(5);
+    expect(broadGroups).toBeGreaterThanOrEqual(3);
+    expect(crossCourse).toBeGreaterThan(0);
+    expect(oppositeSides).toBe(3);
+  }, 30000);
   it("seats broad exposed armor behind real case returns and backs functional outer wells", () => {
     const kinds = new Set<string>();
     let seats = 0,

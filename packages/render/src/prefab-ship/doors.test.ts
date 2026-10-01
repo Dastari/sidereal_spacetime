@@ -18,10 +18,10 @@ import { validateReferenceDoorLeaf } from "./doors";
 import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
 import { Constants } from "@babylonjs/core/Engines/constants";
 
-function authoredLeaf(): GlbGeometry {
+function authoredLeaf(file = "door-leaf.glb"): GlbGeometry {
   const bytes = readFileSync(
     new URL(
-      "../../../../assets/runtime/ship-visual/r002/door-leaf.glb",
+      `../../../../assets/runtime/ship-visual/r002/${file}`,
       import.meta.url,
     ),
   );
@@ -65,10 +65,23 @@ function authoredLeaf(): GlbGeometry {
       };
     },
   );
+  const bounds = [
+    Infinity,
+    Infinity,
+    Infinity,
+    -Infinity,
+    -Infinity,
+    -Infinity,
+  ];
+  for (const p of primitives)
+    for (let i = 0; i < p.positions.length; i++) {
+      bounds[i % 3] = Math.min(bounds[i % 3], p.positions[i]);
+      bounds[(i % 3) + 3] = Math.max(bounds[(i % 3) + 3], p.positions[i]);
+    }
   return {
-    url: "/assets/ship-visual/r002/door-leaf.glb",
+    url: `/assets/ship-visual/r002/${file}`,
     primitives,
-    bounds: [-0.5, -0.5, -0.0455, 0.5, 0.5, 0.0455],
+    bounds,
   } as GlbGeometry;
 }
 
@@ -76,133 +89,195 @@ const catalog = defaultPrefabComponentCatalog();
 const wren = prefabById("fed.s.wren")!;
 
 describe("prefab door specs", () => {
-  it("validates authored finite geometry before allocation and preserves legacy motion and authored normals", () => {
-    const engine = new NullEngine();
-    engine.getCaps().instancedArrays = true;
-    const scene = new Scene(engine);
-    const root = new TransformNode("root", scene);
-    const geom = authoredLeaf();
-    validateReferenceDoorLeaf(geom);
-    let front = 0,
-      back = 0;
-    for (const p of geom.primitives)
-      for (let t = 0; t < p.indices.length; t += 3) {
-        const ids = [
-          p.indices[t] * 3,
-          p.indices[t + 1] * 3,
-          p.indices[t + 2] * 3,
-        ];
-        const a = [0, 1, 2].map(
-          (i) => p.positions[ids[1] + i] - p.positions[ids[0] + i],
-        );
-        const b = [0, 1, 2].map(
-          (i) => p.positions[ids[2] + i] - p.positions[ids[0] + i],
-        );
-        const cross = [
-          a[1] * b[2] - a[2] * b[1],
-          a[2] * b[0] - a[0] * b[2],
-          a[0] * b[1] - a[1] * b[0],
-        ];
-        expect(
-          cross.reduce((n, v, i) => n + v * p.normals[ids[0] + i], 0),
-        ).toBeGreaterThanOrEqual(-1e-9);
-        if (p.normals[ids[0] + 2] > 0.9) front++;
-        if (p.normals[ids[0] + 2] < -0.9) back++;
-      }
-    expect(front).toBeGreaterThan(10);
-    expect(back).toBeGreaterThan(10);
-    const before = scene.meshes.length;
-    for (const bad of [
-      { ...geom, primitives: [...geom.primitives, geom.primitives[0]] },
-      { ...geom, bounds: [NaN, ...geom.bounds.slice(1)] } as GlbGeometry,
-      { ...geom, bounds: geom.bounds.slice(0, 5) } as GlbGeometry,
-      {
-        ...geom,
-        primitives: geom.primitives.map((p, i) =>
-          i ? p : { ...p, indices: new Uint32Array() },
-        ),
-      },
-      {
-        ...geom,
-        bounds: [-0.6, -0.5, -0.0455, 0.5, 0.5, 0.0455],
-      } as GlbGeometry,
-    ]) {
-      expect(() =>
-        createPrefabDoors(scene, root, wren, catalog, wren.theme, "r002", bad),
-      ).toThrow("leaf");
-      expect(scene.meshes.length).toBe(before);
-    }
-    const legacy = createPrefabDoors(
-      scene,
-      root,
-      wren,
-      catalog,
-      wren.theme,
-      true,
-    );
-    const oldString = createPrefabDoors(
-      scene,
-      root,
-      wren,
-      catalog,
-      wren.theme,
-      "r001",
-    );
-    expect(oldString.instances()).toBe(legacy.instances());
-    oldString.meshes().forEach((m, i) =>
-      expect(
-        m.thinInstanceGetWorldMatrices().map((m) => Array.from(m.m)),
-      ).toEqual(
-        legacy
-          .meshes()
-          [i].thinInstanceGetWorldMatrices()
-          .map((m) => Array.from(m.m)),
+  it("accepts the two authored core finishes and rejects missing, duplicate or ambiguous backing groups", () => {
+    const old = authoredLeaf();
+    const current = authoredLeaf("door-leaf-r017.glb");
+    expect(() => validateReferenceDoorLeaf(old)).not.toThrow();
+    expect(() => validateReferenceDoorLeaf(current)).not.toThrow();
+    const core = current.primitives.find((p) => p.material === "slot5_dark")!;
+    const altered = (material: string) => ({
+      ...current,
+      primitives: current.primitives.map((p) =>
+        p === core ? { ...p, material } : p,
       ),
-    );
-    const proposed = createPrefabDoors(
-      scene,
-      root,
-      wren,
-      catalog,
-      wren.theme,
-      "r002",
-      geom,
-    );
-    expect(proposed.meshes()).toHaveLength(5);
-    const mesh = proposed.meshes().find((m) => m.name.endsWith(":primary"))!;
-    expect(mesh.sideOrientation).toBe(
-      Constants.MATERIAL_CounterClockWiseSideOrientation,
-    );
-    expect(mesh.getVerticesData(VertexBuffer.NormalKind)).toEqual(
-      geom.primitives[0].normals,
-    );
-    expect(mesh.material?.metadata?.shipReferenceFinish).toMatchObject({
-      revision: "r002",
-      role: "wall",
     });
-    const previous = mesh
-      .thinInstanceGetWorldMatrices()
-      .map((m) => Array.from(m.m));
-    const logic = new Map(
-      prefabDoorSpecs(wren, catalog).map((d) => [d.id, true]),
-    );
-    for (const d of [legacy, oldString, proposed])
-      d.update({ nowMs: 1, dt: DOOR_TRAVEL_S / 2, actors: [], logic });
-    expect(proposed.doors()).toEqual(legacy.doors());
-    expect(oldString.doors()).toEqual(legacy.doors());
-    const next = mesh
-      .thinInstanceGetWorldMatrices()
-      .map((m) => Array.from(m.m));
-    next.forEach((m, i) => {
-      expect(m[13]).toBe(previous[i][13]);
-      expect(
-        Math.hypot(m[12] - previous[i][12], m[14] - previous[i][14]),
-      ).toBeCloseTo((i < 2 ? 0.6 : 0.625) * 0.95 * 0.5, 5);
-    });
-    for (const d of [legacy, oldString, proposed]) d.dispose();
-    scene.dispose();
-    engine.dispose();
+    for (const material of ["slot4_metal", "slot2_accent", "slot6_emit_a"])
+      expect(() => validateReferenceDoorLeaf(altered(material))).toThrow(
+        "Invalid authored leaf semantic primitives",
+      );
+    expect(() =>
+      validateReferenceDoorLeaf({
+        ...current,
+        primitives: [
+          ...current.primitives,
+          { ...core, material: "slot1_secondary" },
+        ],
+      }),
+    ).toThrow("Invalid authored leaf semantic primitives");
   });
+
+  it("retains geometry rejection for the new dark-core authored leaf", () => {
+    const current = authoredLeaf("door-leaf-r017.glb");
+    const malformed = {
+      ...current,
+      primitives: current.primitives.map((p, i) =>
+        i === 0 ? { ...p, normals: Float32Array.of(NaN) } : p,
+      ),
+    };
+    expect(() => validateReferenceDoorLeaf(malformed)).toThrow(
+      "Invalid authored leaf geometry",
+    );
+    const oversized = {
+      ...current,
+      primitives: current.primitives.map((p) => {
+        const positions = p.positions.slice();
+        for (let i = 2; i < positions.length; i += 3) positions[i] *= 2;
+        return { ...p, positions };
+      }),
+    };
+    expect(() => validateReferenceDoorLeaf(oversized)).toThrow(
+      "Authored leaf outside normalized envelope",
+    );
+  });
+
+  it.each(["door-leaf.glb", "door-leaf-r017.glb"])(
+    "validates %s before allocation and preserves legacy motion and authored normals",
+    (file) => {
+      const engine = new NullEngine();
+      engine.getCaps().instancedArrays = true;
+      const scene = new Scene(engine);
+      const root = new TransformNode("root", scene);
+      const geom = authoredLeaf(file);
+      validateReferenceDoorLeaf(geom);
+      let front = 0,
+        back = 0;
+      for (const p of geom.primitives)
+        for (let t = 0; t < p.indices.length; t += 3) {
+          const ids = [
+            p.indices[t] * 3,
+            p.indices[t + 1] * 3,
+            p.indices[t + 2] * 3,
+          ];
+          const a = [0, 1, 2].map(
+            (i) => p.positions[ids[1] + i] - p.positions[ids[0] + i],
+          );
+          const b = [0, 1, 2].map(
+            (i) => p.positions[ids[2] + i] - p.positions[ids[0] + i],
+          );
+          const cross = [
+            a[1] * b[2] - a[2] * b[1],
+            a[2] * b[0] - a[0] * b[2],
+            a[0] * b[1] - a[1] * b[0],
+          ];
+          expect(
+            cross.reduce((n, v, i) => n + v * p.normals[ids[0] + i], 0),
+          ).toBeGreaterThanOrEqual(-1e-9);
+          if (p.normals[ids[0] + 2] > 0.9) front++;
+          if (p.normals[ids[0] + 2] < -0.9) back++;
+        }
+      expect(front).toBeGreaterThan(10);
+      expect(back).toBeGreaterThan(10);
+      const before = scene.meshes.length;
+      for (const bad of [
+        { ...geom, primitives: [...geom.primitives, geom.primitives[0]] },
+        { ...geom, bounds: [NaN, ...geom.bounds.slice(1)] } as GlbGeometry,
+        { ...geom, bounds: geom.bounds.slice(0, 5) } as GlbGeometry,
+        {
+          ...geom,
+          primitives: geom.primitives.map((p, i) =>
+            i ? p : { ...p, indices: new Uint32Array() },
+          ),
+        },
+        {
+          ...geom,
+          bounds: [-0.6, -0.5, -0.0455, 0.5, 0.5, 0.0455],
+        } as GlbGeometry,
+      ]) {
+        expect(() =>
+          createPrefabDoors(
+            scene,
+            root,
+            wren,
+            catalog,
+            wren.theme,
+            "r002",
+            bad,
+          ),
+        ).toThrow("leaf");
+        expect(scene.meshes.length).toBe(before);
+      }
+      const legacy = createPrefabDoors(
+        scene,
+        root,
+        wren,
+        catalog,
+        wren.theme,
+        true,
+      );
+      const oldString = createPrefabDoors(
+        scene,
+        root,
+        wren,
+        catalog,
+        wren.theme,
+        "r001",
+      );
+      expect(oldString.instances()).toBe(legacy.instances());
+      oldString.meshes().forEach((m, i) =>
+        expect(
+          m.thinInstanceGetWorldMatrices().map((m) => Array.from(m.m)),
+        ).toEqual(
+          legacy
+            .meshes()
+            [i].thinInstanceGetWorldMatrices()
+            .map((m) => Array.from(m.m)),
+        ),
+      );
+      const proposed = createPrefabDoors(
+        scene,
+        root,
+        wren,
+        catalog,
+        wren.theme,
+        "r002",
+        geom,
+      );
+      expect(proposed.meshes()).toHaveLength(5);
+      const mesh = proposed.meshes().find((m) => m.name.endsWith(":primary"))!;
+      expect(mesh.sideOrientation).toBe(
+        Constants.MATERIAL_CounterClockWiseSideOrientation,
+      );
+      expect(mesh.getVerticesData(VertexBuffer.NormalKind)).toEqual(
+        geom.primitives[0].normals,
+      );
+      expect(mesh.material?.metadata?.shipReferenceFinish).toMatchObject({
+        revision: "r002",
+        role: "wall",
+      });
+      const previous = mesh
+        .thinInstanceGetWorldMatrices()
+        .map((m) => Array.from(m.m));
+      const logic = new Map(
+        prefabDoorSpecs(wren, catalog).map((d) => [d.id, true]),
+      );
+      for (const d of [legacy, oldString, proposed])
+        d.update({ nowMs: 1, dt: DOOR_TRAVEL_S / 2, actors: [], logic });
+      expect(proposed.doors()).toEqual(legacy.doors());
+      expect(oldString.doors()).toEqual(legacy.doors());
+      const next = mesh
+        .thinInstanceGetWorldMatrices()
+        .map((m) => Array.from(m.m));
+      next.forEach((m, i) => {
+        expect(m[13]).toBe(previous[i][13]);
+        expect(
+          Math.hypot(m[12] - previous[i][12], m[14] - previous[i][14]),
+        ).toBeCloseTo((i < 2 ? 0.6 : 0.625) * 0.95 * 0.5, 5);
+      });
+      for (const d of [legacy, oldString, proposed]) d.dispose();
+      scene.dispose();
+      engine.dispose();
+    },
+  );
   it("finds the Wren's exterior airlock at its EVA hatch and its interior doors", () => {
     const specs = prefabDoorSpecs(wren, catalog);
     const airlock = specs.find((d) => d.airlock)!;

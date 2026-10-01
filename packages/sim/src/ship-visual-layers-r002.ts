@@ -97,6 +97,244 @@ export function referenceOpticalGuardBoxesR002(
   return { bounds, unknownVariant };
 }
 
+type MatingPigmentSolid = {
+  piece: string;
+  sourcePart: number;
+  bounds: number[];
+  axes: { normal: number[]; min: number; max: number }[];
+  /** Conservative pigment-only fallback; never a geometry/RAW descriptor. */
+  veto?: true;
+};
+
+/** Exact finite convex-source attribution ONLY. No geometry/guard eligibility. */
+export function referenceOpticalMatingSolidsR002(
+  doc: ShipPrefabDocumentV1,
+  view: ShipVisualView,
+  catalog: PrefabComponentCatalog,
+  profileId: ShipVisualProfileId,
+): MatingPigmentSolid[] {
+  const macro = SHIP_VISUAL_MACRO_PROFILES_R002[profileId];
+  const solids: MatingPigmentSolid[] = [];
+  const cross = (a: number[], b: number[]) => [
+    a[1] * b[2] - a[2] * b[1],
+    a[2] * b[0] - a[0] * b[2],
+    a[0] * b[1] - a[1] * b[0],
+  ];
+  const sub = (a: number[], b: number[]) => a.map((n, i) => n - b[i]);
+  const dot = (a: number[], b: number[]) =>
+    a.reduce((n, x, i) => n + x * b[i], 0);
+  for (const k of dressShip(doc, { catalog }).kit) {
+    if (k.view !== "both" && k.view !== view) continue;
+    const original = macro.opticalInterfaces[k.piece];
+    if (!original && /^(?:bow\.|canopy\.)/.test(k.piece)) return [];
+    if (
+      ![k.x, k.y, k.z, k.rotDeg].every(Number.isFinite) ||
+      (k.mirror !== undefined && typeof k.mirror !== "boolean")
+    )
+      return [];
+    if (original?.kind !== "optical") continue;
+    const C = Math.cos((k.rotDeg * Math.PI) / 180),
+      S = Math.sin((k.rotDeg * Math.PI) / 180);
+    const transform = ([X, Y, Z]: readonly number[]) => {
+      const x = k.mirror ? -X : X;
+      return [k.x + C * x - S * Y, k.y + S * x + C * Y, k.z + Z];
+    };
+    const vetoPiece = () => {
+      // Bounds are deliberately conservative only for PIGMENT veto. The same
+      // certified neighbor must not repaint a cube touching an uncertain piece.
+      if (original.sourceFrameBounds.length === 0) return false;
+      for (const b of original.sourceFrameBounds) {
+        if (
+          b.length !== 6 ||
+          !b.every(Number.isFinite) ||
+          b.some((v, i) => i < 3 && v > b[i + 3])
+        )
+          return false;
+        const points: number[][] = [];
+        for (const X of [b[0], b[3]])
+          for (const Y of [b[1], b[4]])
+            for (const Z of [b[2], b[5]]) points.push(transform([X, Y, Z]));
+        if (points.some((p) => !p.every(Number.isFinite))) return false;
+        solids.push({
+          piece: k.piece,
+          sourcePart: -1,
+          veto: true,
+          axes: [],
+          bounds: [
+            ...[0, 1, 2].map((i) => Math.min(...points.map((p) => p[i]))),
+            ...[0, 1, 2].map((i) => Math.max(...points.map((p) => p[i]))),
+          ],
+        });
+      }
+      return true;
+    };
+    const spec = macro.opticalMatingPigments[k.piece];
+    if (
+      ["canopy.corner45.deck", "canopy.corner45.deck.cut"].includes(k.piece) ||
+      !spec ||
+      spec.assetSha256 !== original.assetSha256 ||
+      !Array.isArray(spec.parts) ||
+      spec.parts.length === 0
+    ) {
+      if (!vetoPiece()) return [];
+      continue;
+    }
+    const qualified: MatingPigmentSolid[] = [];
+    let uncertain = false;
+    for (const part of spec.parts) {
+      if (
+        !part ||
+        !Array.isArray(part.vertices) ||
+        !Array.isArray(part.triangles) ||
+        !Number.isSafeInteger(part.sourcePart) ||
+        part.sourcePart < 0 ||
+        part.vertices.length < 4 ||
+        part.triangles.length < 4 ||
+        part.vertices.some(
+          (p) =>
+            !Array.isArray(p) || p.length !== 3 || !p.every(Number.isFinite),
+        ) ||
+        part.triangles.some(
+          (t) =>
+            !Array.isArray(t) ||
+            t.length !== 3 ||
+            t.some(
+              (i) =>
+                !Number.isSafeInteger(i) || i < 0 || i >= part.vertices.length,
+            ),
+        )
+      ) {
+        uncertain = true;
+        break;
+      }
+      const points = part.vertices.map(transform);
+      if (points.some((p) => !p.every(Number.isFinite))) {
+        uncertain = true;
+        break;
+      }
+      const origin = points[0];
+      const normals: number[][] = [],
+        edgeAxes: number[][] = [];
+      const edges = new Map<string, number>();
+      let volume = 0;
+      for (const t of part.triangles) {
+        const [a, b, c] = t.map((i) => points[i]);
+        const ab = sub(b, a),
+          ac = sub(c, a),
+          n = cross(ab, ac);
+        const length = Math.hypot(...n);
+        if (!Number.isFinite(length) || length < 1e-12) {
+          uncertain = true;
+          break;
+        }
+        normals.push(n.map((v) => v / length));
+        volume +=
+          dot(sub(a, origin), cross(sub(b, origin), sub(c, origin))) / 6;
+        for (let i = 0; i < 3; i++) {
+          const u = t[i],
+            v = t[(i + 1) % 3],
+            key = `${u}:${v}`;
+          edges.set(key, (edges.get(key) ?? 0) + 1);
+          const edge = sub(points[v], points[u]);
+          for (const axis of [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+          ])
+            edgeAxes.push(cross(edge, axis));
+        }
+      }
+      if (
+        uncertain ||
+        !Number.isFinite(volume) ||
+        Math.abs(volume) < 1e-12 ||
+        [...edges].some(([e, n]) => {
+          const [a, b] = e.split(":");
+          return n !== 1 || edges.get(`${b}:${a}`) !== 1;
+        })
+      ) {
+        uncertain = true;
+        break;
+      }
+      const sign = Math.sign(volume);
+      if (
+        part.triangles.some((t, i) =>
+          points.some(
+            (p) => sign * dot(normals[i], sub(p, points[t[0]])) > 1e-8,
+          ),
+        )
+      ) {
+        uncertain = true;
+        break;
+      }
+      // All convex SAT axes: both solids' face normals and every edge cross.
+      // Extra tessellation diagonals are safe redundant axes, not missing axes.
+      const axes = new Map<string, MatingPigmentSolid["axes"][number]>();
+      for (const a of [
+        ...normals,
+        [1, 0, 0],
+        [0, 1, 0],
+        [0, 0, 1],
+        ...edgeAxes,
+      ]) {
+        const length = Math.hypot(...a);
+        if (length < 1e-12) continue;
+        const n = a.map((v) => v / length),
+          projections = points.map((p) => dot(n, p));
+        axes.set(n.join(","), {
+          normal: n,
+          min: Math.min(...projections),
+          max: Math.max(...projections),
+        });
+      }
+      qualified.push({
+        piece: k.piece,
+        sourcePart: part.sourcePart,
+        bounds: [
+          ...[0, 1, 2].map((i) => Math.min(...points.map((p) => p[i]))),
+          ...[0, 1, 2].map((i) => Math.max(...points.map((p) => p[i]))),
+        ],
+        axes: [...axes.values()],
+      });
+    }
+    // Never partially borrow another part after a malformed piece certificate.
+    if (!uncertain) solids.push(...qualified);
+    else if (!vetoPiece()) return [];
+  }
+  return solids;
+}
+
+/** Whole voxel cube, not its centre or corners. Mirroring does not affect SAT. */
+export function referenceOpticalMatingCubeR002(
+  x: number,
+  y: number,
+  z: number,
+  solids: readonly MatingPigmentSolid[],
+): boolean {
+  const low = [x / 16, y / 16, z / 16],
+    high = [(x + 1) / 16, (y + 1) / 16, (z + 1) / 16];
+  if (![...low, ...high].every(Number.isFinite)) return false;
+  const touchesBounds = (s: MatingPigmentSolid) =>
+    ![0, 1, 2].some(
+      (i) => high[i] < s.bounds[i] - 1e-9 || low[i] > s.bounds[i + 3] + 1e-9,
+    );
+  if (solids.some((s) => s.veto && touchesBounds(s))) return false;
+  return solids.some((s) => {
+    if (s.veto) return false;
+    if (
+      [0, 1, 2].some(
+        (i) => high[i] < s.bounds[i] - 1e-9 || low[i] > s.bounds[i + 3] + 1e-9,
+      )
+    )
+      return false;
+    return s.axes.every(({ normal: n, min, max }) => {
+      const a = n.reduce((v, q, i) => v + q * (q >= 0 ? low[i] : high[i]), 0);
+      const b = n.reduce((v, q, i) => v + q * (q >= 0 ? high[i] : low[i]), 0);
+      return b >= min - 1e-9 && a <= max + 1e-9;
+    });
+  });
+}
+
 const mod = (n: number, d: number) => ((n % d) + d) % d;
 export function shipVisualLayersR002(
   doc: ShipPrefabDocumentV1,
@@ -492,7 +730,7 @@ export function shipVisualLayersR002(
       u: number;
       U: number;
     }[] = [];
-    for (let q = 3; q < span - 3; q++) {
+    for (let q = 4; q < span - 4; q++) {
       const room = roomAt(q + 0.5);
       if (!room) continue;
       const last = runs[runs.length - 1];
@@ -535,6 +773,41 @@ export function shipVisualLayersR002(
     if (!wallTaskCache.has(key))
       wallTaskCache.set(key, wallTaskRuns(a, b, side));
     return wallTaskCache.get(key)!;
+  };
+
+  // R17 collects complete assemblies independently of envelope emission order.
+  // A room receives one main group across ALL perimeter and partition faces.
+  // Selection happens after generic walls/posts have their final ownership.
+  type PendingWallTask = {
+    room: ShipPrefabDocumentV1["rooms"][number];
+    key: keyof typeof macro.wallTasks;
+    u: number;
+    U: number;
+    face: string;
+    support: string;
+    layers: ShipVisualLayer[];
+  };
+  const pendingWallTasks = new Map<string, PendingWallTask>();
+  const deferWallTask = (
+    chosen: ReturnType<typeof wallTaskRuns>[number],
+    face: string,
+    support: string,
+    start: number,
+  ) => {
+    const taskLayers = layers.splice(start);
+    if (!taskLayers.length) return;
+    const id = `${chosen.room.id}:${face}`;
+    let pending = pendingWallTasks.get(id);
+    if (!pending) {
+      pending = { ...chosen, face, support, layers: [] };
+      pendingWallTasks.set(id, pending);
+    }
+    pending.layers.push(
+      ...taskLayers.map((l) => ({
+        ...l,
+        id: `${l.id.slice(0, l.id.lastIndexOf(":"))}:room-task:${chosen.room.id}:${l.id.slice(l.id.lastIndexOf(":") + 1)}`,
+      })),
+    );
   };
 
   const roofObstacles = [
@@ -648,6 +921,7 @@ export function shipVisualLayersR002(
     const family = `volume:${volume.id}`;
     // Joined housings take their purpose and occupied aperture from actual equipment,
     // not room rectangles. The visible shoulders join the same tray beside those apertures.
+    const pendingRoofClusterLayers: ShipVisualLayer[] = [];
     const roofFixtureBounds: {
       id: string;
       kind: "utility" | "control";
@@ -1067,6 +1341,38 @@ export function shipVisualLayersR002(
                     family,
                   );
               }
+            } else if (
+              interior.doors.some((d) => {
+                const dx = d.b[0] - d.a[0],
+                  dy = d.b[1] - d.a[1];
+                const length = Math.hypot(dx, dy);
+                if (!length) return false;
+                const along =
+                  ((world[0] - d.a[0]) * dx + (world[1] - d.a[1]) * dy) /
+                  length;
+                const across =
+                  Math.abs(
+                    (world[0] - d.a[0]) * dy - (world[1] - d.a[1]) * dx,
+                  ) / length;
+                return (
+                  along >= 0.375 && along < length - 0.375 && across < 1 / 16
+                );
+              })
+            ) {
+              // A flush protected threshold belongs to the existing opening,
+              // not a decorative grid. Contact height and floor occupancy stay exact.
+              surfaceRole = "hull";
+              column(
+                `${family}:floor-door-threshold`,
+                "floor",
+                "trim",
+                x,
+                y,
+                floor - 1,
+                floor,
+                family,
+              );
+              surfaceRole = "floor";
             } else if (room?.type === "corridor") {
               // Two deliberate circulation seams follow this room's long axis,
               // rather than bordering every metre of an otherwise calm deck.
@@ -1803,6 +2109,80 @@ export function shipVisualLayersR002(
                   family,
                 );
             }
+            if (
+              deck &&
+              shoulder &&
+              shapedCase &&
+              caseEdge >= 3 &&
+              !serviceBelt
+            ) {
+              const [a, b, A, B] = enclosure.bounds;
+              // One offset inset beside each real cluster. The long clear side is
+              // selected by the same footprint, so the opening joins its case and
+              // cannot cover the already-working equipment/service apertures.
+              const across = y - b;
+              const pocketWidth = Math.min(22, Math.floor((A - a) * 0.4));
+              const pocketLeft = a + (enclosure.kind === "utility" ? 4 : 7);
+              const pocket =
+                pocketWidth >= 12 &&
+                !shoulderFields.some((f) => inRect(p[0], p[1], f.bounds)) &&
+                x >= pocketLeft &&
+                x < pocketLeft + pocketWidth &&
+                across >= 4 &&
+                across < Math.min(15, B - b - 4);
+              if (pocket) {
+                const pocketStart = layers.length;
+                column(
+                  `${family}:roof-cluster-well:${enclosure.id}`,
+                  "void",
+                  "dark",
+                  x,
+                  y,
+                  hi - 1,
+                  hi + 1,
+                  family,
+                );
+                column(
+                  `${family}:roof-cluster-backing:${enclosure.id}`,
+                  "frame",
+                  "trim",
+                  x,
+                  y,
+                  hi - 2,
+                  hi - 1,
+                  family,
+                );
+                if (enclosure.kind === "utility" && mod(across - 4, 5) < 2)
+                  column(
+                    `${family}:roof-cluster-vent:${enclosure.id}`,
+                    "service",
+                    "metal",
+                    x,
+                    y,
+                    hi - 1,
+                    hi,
+                    family,
+                  );
+                else if (
+                  enclosure.kind !== "utility" &&
+                  x >= pocketLeft + 3 &&
+                  x < pocketLeft + pocketWidth - 3 &&
+                  across >= 6 &&
+                  across < Math.min(13, B - b - 6)
+                )
+                  column(
+                    `${family}:roof-cluster-access:${enclosure.id}`,
+                    "plate",
+                    "accent",
+                    x,
+                    y,
+                    hi - 1,
+                    hi,
+                    family,
+                  );
+                pendingRoofClusterLayers.push(...layers.splice(pocketStart));
+              }
+            }
             const field = shoulderFields.find((f) =>
               inRect(p[0], p[1], f.bounds),
             );
@@ -1987,6 +2367,10 @@ export function shipVisualLayersR002(
           );
         }
       }
+    // Final whole-cluster pocket overlay follows ALL generic casing heights.
+    // Otherwise compacting first appearances of unequal case courses can move a
+    // later occupied course over an earlier column's intended aperture.
+    layers.push(...pendingRoofClusterLayers);
     // Seal the continuous tray after facade voids too: an outboard route can share
     // columns with a side cassette, whose later compacted void must never pierce it.
     surfaceRole = "roof";
@@ -2596,13 +2980,14 @@ export function shipVisualLayersR002(
             ceiling = Math.min(top - 3, bottom + task.height);
           if (
             right - left < 12 ||
-            ceiling - bottom < 9 ||
+            ceiling - bottom < (task.insert === "control" ? 13 : 11) ||
             along < left ||
             along >= right
           ) {
             surfaceRole = oldSurface;
             return;
           }
+          const taskStart = layers.length;
           const cut = Math.max(
             0,
             macro.corner - Math.min(along - left, right - along),
@@ -2630,7 +3015,11 @@ export function shipVisualLayersR002(
             upper,
             family,
           );
-          if (along >= left + 2 && along < right - 2 && upper - lower > 6) {
+          if (
+            along >= left + 2 &&
+            along < right - 2 &&
+            upper - lower >= (task.insert === "control" ? 12 : 10)
+          ) {
             column(
               `${owned}:well`,
               "void",
@@ -2801,6 +3190,12 @@ export function shipVisualLayersR002(
             lower,
             lower + 2,
             family,
+          );
+          deferWallTask(
+            chosen,
+            `${family}:${boundary.edgeIndex}:inward`,
+            family,
+            taskStart,
           );
           surfaceRole = oldSurface;
         };
@@ -3046,7 +3441,7 @@ export function shipVisualLayersR002(
             `${id}:${name}-seat`,
             "void",
             "dark",
-            surface(side, u - 1, U + 1, z - 1, Z + 1),
+            surface(side, u - 1, U + 1, z - 1, Math.min(Z + 1, wallCap - 1)),
             family,
           );
           // This is a local assembly footprint, not a repeating perimeter guard.
@@ -3092,7 +3487,9 @@ export function shipVisualLayersR002(
           const task = macro.wallTasks[key];
           const bottom = ft + task.bottom,
             ceiling = Math.min(Z, bottom + task.height);
-          if (U - u < 13 || ceiling - bottom < 9) continue;
+          const minimumHeight = task.insert === "control" ? 13 : 11;
+          if (U - u < 13 || ceiling - bottom < minimumHeight) continue;
+          const taskStart = layers.length;
           casing(`task-${key}-casing`, "primary", side, u, U, bottom, ceiling);
           // One outer course of a four-course partition is a seat; BOTH central
           // pressure courses remain core. No claimed two-course cavity through it.
@@ -3270,6 +3667,7 @@ export function shipVisualLayersR002(
                 family,
               );
           }
+          deferWallTask(chosen, `${family}:${side}`, family, taskStart);
           if (jamb)
             box(
               `${id}:interface-lens`,
@@ -3430,6 +3828,67 @@ export function shipVisualLayersR002(
         `post:${i}`,
       );
   }
+  if (pendingWallTasks.size) {
+    const envelope = sampleShipVisualLayers(compactColumns(layers));
+    const eligible = new Map<string, PendingWallTask[]>();
+    for (const task of pendingWallTasks.values()) {
+      // A complete source group cannot repaint a jamb, cap, other wall, aperture
+      // or unsupported air. Keep the existing conservative fitting/head guards.
+      let safe = true;
+      for (const l of task.layers) {
+        for (let z = l.bounds[2]; safe && z < l.bounds[5]; z++)
+          for (let y = l.bounds[1]; safe && y < l.bounds[4]; y++)
+            for (let x = l.bounds[0]; safe && x < l.bounds[3]; x++) {
+              const old = envelope.get(visualCellKey(x, y, z));
+              if (
+                (!old && l.role !== "void") ||
+                (old &&
+                  (old.family !== task.support ||
+                    ["frame", "doorframe", "glass"].includes(old.role)))
+              )
+                safe = false;
+              // Removing or repainting pressure support as decorative hardware is
+              // forbidden. The explicit retained backing remains role-core.
+              if (old?.role === "core" && l.role !== "core") safe = false;
+            }
+        if (!safe) break;
+      }
+      if (!safe) continue;
+      const roomTasks = eligible.get(task.room.id) ?? [];
+      roomTasks.push(task);
+      eligible.set(task.room.id, roomTasks);
+    }
+    for (const tasks of eligible.values()) {
+      // Prefer a useful broad complete run, then its actual hardware area. Stable
+      // face identity breaks ties without depending on a presentation camera.
+      tasks.sort(
+        (a, b) =>
+          b.U - b.u - (a.U - a.u) ||
+          b.layers
+            .filter((l) => l.role === "service")
+            .reduce(
+              (n, l) =>
+                n +
+                (l.bounds[3] - l.bounds[0]) *
+                  (l.bounds[4] - l.bounds[1]) *
+                  (l.bounds[5] - l.bounds[2]),
+              0,
+            ) -
+            a.layers
+              .filter((l) => l.role === "service")
+              .reduce(
+                (n, l) =>
+                  n +
+                  (l.bounds[3] - l.bounds[0]) *
+                    (l.bounds[4] - l.bounds[1]) *
+                    (l.bounds[5] - l.bounds[2]),
+                0,
+              ) ||
+          a.face.localeCompare(b.face),
+      );
+      layers.push(...tasks[0].layers);
+    }
+  }
   // Preserve all published exterior apertures through the sampled shell; the authored frame owns them.
   for (const d of interior.doors.filter((d) => d.exterior)) {
     const dx = d.b[0] - d.a[0],
@@ -3469,14 +3928,52 @@ export function shipVisualLayersR002(
       l.role === "void" &&
       (l.id.endsWith(":opening") || l.id.endsWith(":glass-aperture")),
   );
+  const matingSolids = referenceOpticalMatingSolidsR002(
+    doc,
+    view,
+    catalog,
+    profileId,
+  );
+  const opticalFinishIds = [
+    ":diagonal-pressure-case",
+    ":diagonal-inset-lip",
+    ":continuous-sill",
+    ":cassette-rim",
+    ":pressure-backing",
+    ":inset-armor",
+  ];
+  // Restrict pigment to the FINAL intact opaque owner; an earlier backing or
+  // cover cannot repaint a later facade simply because its volume overlaps it.
+  const matingOwnerColumns = new Map<string, ShipVisualLayer[]>();
+  for (const l of layers)
+    if (
+      opticalFinishIds.some((id) => l.id.endsWith(id)) &&
+      l.support?.startsWith("volume:") &&
+      l.bounds[3] - l.bounds[0] === 1 &&
+      l.bounds[4] - l.bounds[1] === 1
+    )
+      matingOwnerColumns.set(`${l.bounds[0]},${l.bounds[1]}`, []);
+  for (const l of layers)
+    for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+      for (let x = l.bounds[0]; x < l.bounds[3]; x++)
+        matingOwnerColumns.get(`${x},${y}`)?.push(l);
+  const finalMatingOwner = (l: ShipVisualLayer, z: number) => {
+    const list = matingOwnerColumns.get(`${l.bounds[0]},${l.bounds[1]}`) ?? [];
+    for (let i = list.length - 1; i >= 0; i--)
+      if (z >= list[i].bounds[2] && z < list[i].bounds[5]) return list[i] === l;
+    return false;
+  };
   // Pigment is independent of the exact 3D optical geometry exclusion. Keep the
   // existing source-qualified lower/upper frame gasket courses dark, never the
   // complete opaque bow wall beneath/behind the retained optical art.
   const opticalPigments = layers.flatMap((l) => {
     const opaqueCase =
       l.id.endsWith(":diagonal-pressure-case") && l.slot === "secondary";
+    const matingOwner =
+      opticalFinishIds.some((id) => l.id.endsWith(id)) &&
+      ["core", "frame", "plate"].includes(l.role);
     if (
-      (!opaqueCase && !["primary", "trim"].includes(l.slot)) ||
+      (!opaqueCase && !matingOwner && !["primary", "trim"].includes(l.slot)) ||
       !l.support?.startsWith("volume:") ||
       l.bounds[3] - l.bounds[0] !== 1 ||
       l.bounds[4] - l.bounds[1] !== 1
@@ -3556,13 +4053,24 @@ export function shipVisualLayersR002(
       rows.push({
         ...l,
         bounds: [l.bounds[0], l.bounds[1], z, l.bounds[3], l.bounds[4], z + 1],
-        slot: bands.some(([lo, hi]) => z >= lo && z < hi)
-          ? "secondary"
-          : opaqueCase
-            ? z >= l.bounds[2] + 3 && z < l.bounds[5] - 3
-              ? "primary"
-              : "trim"
-            : l.slot,
+        slot:
+          matingOwner &&
+          finalMatingOwner(l, z) &&
+          opticalCellProtected(l.bounds[0], l.bounds[1], z) &&
+          referenceOpticalMatingCubeR002(
+            l.bounds[0],
+            l.bounds[1],
+            z,
+            matingSolids,
+          )
+            ? "trim"
+            : bands.some(([lo, hi]) => z >= lo && z < hi)
+              ? "secondary"
+              : opaqueCase
+                ? z >= l.bounds[2] + 3 && z < l.bounds[5] - 3
+                  ? "primary"
+                  : "trim"
+                : l.slot,
       });
     return rows;
   });

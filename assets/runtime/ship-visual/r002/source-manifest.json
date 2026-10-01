@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "50a2894b4f473c10aca7428d77189f7d0feae90f020633996be3ab81a2ab7771",
+  "compilerSha256": "397da09afbc6d26268e84a07f6b1663a1ed159702cf47286ecf6ee3429780a47",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -12,11 +12,11 @@
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "066ae3d4bed57b157352cc5cf3b221b6022af47e37966899eeb7e7d8462d2414"
+      "sha256": "d7d84ea9e8fc7c6b09d55aae0e0d96176a12528c7bd2aeb636ea95d4fad85492"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "e6c1c41a00a31c83dda741265b621443dff037af301feb71ce21fe6b6b04698a"
+      "sha256": "3ffbf69fe4e9c38d56556deeb18d3847dae007896fcecb8f3faf96c805710e26"
     },
     {
       "path": "packages/sim/src/ship-dresser.ts",
@@ -72,7 +72,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/doors.ts",
-      "sha256": "1b1f99edeeee4f694957cdb8d35de0df73085a71d0abbd320eeb91f8e2012601"
+      "sha256": "f44919e76be5c5c21003ca677148393d76d79aa3568f6d71cca03a34e17ee76f"
     },
     {
       "path": "packages/render/src/prefab-ship/shadows.ts",
@@ -100,7 +100,11 @@
     },
     {
       "path": "scripts/art_library/ship_reference_r002_art.py",
-      "sha256": "eebf60d8a1786e7eab56821562292f3ca02a1d8029bce0c4aef5af37c8b876e7"
+      "sha256": "a83a1bea57ad59e0a419a432683dc1b04e540a2018b47b031d40b41d4cc0b919"
+    },
+    {
+      "path": "assets/runtime/ship-visual/r002/door-leaf-r017-source.json",
+      "sha256": "1f00ebc8e79c4069b7fb66c9f12548d7221d24ce10eef4e71b436bae6f7d15ed"
     },
     {
       "path": "scripts/art_library/ship_kit_modules.py",

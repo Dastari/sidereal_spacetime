@@ -5,7 +5,11 @@ import { createHash } from "node:crypto";
 import { format } from "prettier";
 import { SHIP_VISUAL_FIXTURES } from "@sidereal/content/ship-visual-fixture";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
-import { REFERENCE_OPTICAL_INTERFACES_R002 } from "@sidereal/content/ship-visual-r002";
+import {
+  REFERENCE_OPTICAL_INTERFACES_R002,
+  REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
+  REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
+} from "@sidereal/content/ship-visual-r002";
 import { SHIP_KIT_SLOTS } from "@sidereal/content/ship-kit";
 import {
   SHIP_VISUAL_FRAME,
@@ -47,6 +51,7 @@ const sources = [
   "packages/render/src/pbr-light-budget.ts",
   "packages/render/src/local-light-budget.ts",
   "scripts/art_library/ship_reference_r002_art.py",
+  "assets/runtime/ship-visual/r002/door-leaf-r017-source.json",
   "scripts/art_library/ship_kit_modules.py",
   "scripts/art_library/bow_modules.py",
   "scripts/art_library/ship_reference_r002_maps.py",
@@ -142,6 +147,14 @@ assets.push({
   sha256: hash(kitBytes),
   bytes: kitBytes.length,
 });
+for (const [path, sha] of Object.entries(
+  REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
+))
+  if (hash(readFileSync(resolve(root, path))) !== sha)
+    throw Error(`Mating pigment source attribution mismatch: ${path}`);
+for (const [id, row] of Object.entries(REFERENCE_OPTICAL_MATING_PIGMENTS_R002))
+  if (row.assetSha256 !== REFERENCE_OPTICAL_INTERFACES_R002[id]?.assetSha256)
+    throw Error(`Mating pigment retained asset mismatch: ${id}`);
 const kitFiles = new Map<string, { bytes: Uint8Array; sha256: string }>();
 for (const [id, row] of Object.entries<any>(kit.pieces)) {
   if (!row.slots.includes("glass") && !id.startsWith("mount.")) continue;
@@ -169,18 +182,18 @@ const normal = readFileSync(
   resolve(root, "assets/runtime/ship-visual/r002/panel-normal.png"),
 );
 const leaf = readFileSync(
-  resolve(root, "assets/runtime/ship-visual/r002/door-leaf.glb"),
+  resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r017.glb"),
 );
 const leafSource = JSON.parse(
   readFileSync(
-    resolve(root, "assets/runtime/ship-visual/r002/door-leaf-source.json"),
+    resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r017-source.json"),
     "utf8",
   ),
 );
 assets.push({
   kind: "kit",
   id: "door-leaf.reference",
-  url: "/assets/ship-visual/r002/door-leaf.glb",
+  url: "/assets/ship-visual/r002/door-leaf-r017.glb",
   sha256: hash(leaf),
   bytes: leaf.length,
   frame: "interior",
