@@ -1,6 +1,7 @@
 import { registerLocalPbrLight } from "../pbr-light-budget";
 import { NAVIGATION_OPERATOR_ACTIVATIONS } from "@sidereal/content/navigation-operator-activation.generated";
 import type { NavigationOperatorRegistration } from "@sidereal/sim/navigation-operator-context";
+import type { OperatorContactPlacement } from "../crew/operator-contact";
 import type { OperatorActivatedCapability } from "../crew/operator-readiness";
 import { prefabToShipMetres } from "@sidereal/sim/prefab-construction";
 import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -231,6 +232,13 @@ export interface PrefabShipView {
   emissiveMeshes(): Mesh[];
   /** Truthful current activated capability; EMPTY/default/rejected artifacts never qualify. */
   navigationOperatorCapability(): OperatorActivatedCapability | null;
+  /** Raw loaded navigation GLB frame relative to the requested actor scene parent. */
+  navigationOperatorPlacement(
+    parent: TransformNode,
+    capability: OperatorActivatedCapability,
+    associationKey: string,
+    accepted: { localX: number; localY: number; standingElevationM: number },
+  ): OperatorContactPlacement | null;
 }
 
 /** Matrices per view tag for one instanced source. */
@@ -283,6 +291,7 @@ interface Built {
   materials: StandardMaterial[];
   componentGlbs: number;
   componentStandins: number;
+  navigationFrames?: Map<string, Matrix>;
 }
 
 const shows = (tag: DressView, view: PrefabShipPresentation) =>
@@ -1101,6 +1110,10 @@ export async function createPrefabShipView(
             place,
           );
           pushMatrix(matrices[c.view], m);
+          if (c.component === "console.navigation.sm") {
+            out.navigationFrames ??= new Map();
+            out.navigationFrames.set(c.mount, Matrix.FromArray(m));
+          }
           if (isMainEngine(c)) {
             // Nozzle exit: the GLB's outward extreme (component -Y is glTF +Z).
             const r =
@@ -1680,6 +1693,36 @@ export async function createPrefabShipView(
           geometrySha256: b.geometrySha256,
         };
       });
+    },
+    navigationOperatorPlacement(parent, expected, associationKey, accepted) {
+      const capability = handle.navigationOperatorCapability();
+      if (
+        !capability ||
+        !associationKey ||
+        parent.isDisposed() ||
+        !built?.applied ||
+        Object.keys(capability).some(
+          (key) =>
+            capability[key as keyof OperatorActivatedCapability] !==
+            expected[key as keyof OperatorActivatedCapability],
+        )
+      )
+        return null;
+      const placed = built.navigationFrames?.get(capability.mountSourceId);
+      if (!placed) return null;
+      // All factors are sampled synchronously. Only the resulting local frame survives async loads.
+      const navigationLocal = placed
+        .multiply(frame.computeWorldMatrix(true))
+        .multiply(parent.computeWorldMatrix(true).clone().invert());
+      return {
+        profileId: capability.profileId,
+        navigationSha256: capability.navigationSha256,
+        associationKey,
+        navigationLocal,
+        acceptedX: accepted.localX,
+        acceptedY: accepted.localY,
+        standingElevationM: accepted.standingElevationM,
+      };
     },
     setView(v) {
       if (v === view || options.exteriorOnly) return;

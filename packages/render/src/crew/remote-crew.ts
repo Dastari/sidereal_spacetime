@@ -26,7 +26,10 @@ import {
   type OperatorActivatedCapability,
   type createOperatorReadiness,
 } from "./operator-readiness";
-import type { OperatorEnsembleRequest } from "./operator-ensemble";
+import type {
+  OperatorEnsembleRequest,
+  PreparedOperatorEnsemble,
+} from "./operator-ensemble";
 import {
   assignCrewTiers,
   CREW_LOD,
@@ -103,10 +106,12 @@ interface Entry {
   legacyLoading?: boolean;
   operator?: ReturnType<typeof createOperatorEnsembleOwner>;
   operatorRow?: OperatorInteriorRow;
+  ordinary?: PreparedOperatorEnsemble;
   operatorBaseline?: {
     crew?: VoxelCrew;
     outfit?: ReturnType<typeof createVoxelCrewOutfit>;
     held?: VoxelHeldItem;
+    ordinary?: PreparedOperatorEnsemble;
   };
 }
 
@@ -136,6 +141,9 @@ export function createRemoteCrew(
     operator?: {
       readiness: ReturnType<typeof createOperatorReadiness>;
       capability: () => OperatorActivatedCapability | null;
+      contactPlacement?: NonNullable<
+        Parameters<typeof createOperatorEnsembleOwner>[4]
+      >["contactPlacement"];
       resolve: (
         packet: Readonly<Record<string, unknown>>,
         associationKey: string,
@@ -335,9 +343,9 @@ export function createRemoteCrew(
     }
     entry.generation++;
     entry.legacyLoading = false;
-    entry.held?.dispose();
+    if (!entry.ordinary) entry.held?.dispose();
     entry.held = undefined;
-    entry.outfit?.dispose();
+    if (!entry.ordinary) entry.outfit?.dispose();
     entry.outfit = undefined;
     const material = entry.label?.material;
     entry.label?.dispose();
@@ -346,7 +354,9 @@ export function createRemoteCrew(
     entry.evaBody?.dispose();
     entry.evaBody = undefined;
     const hadBody = !!entry.crew;
-    entry.crew?.dispose();
+    if (entry.ordinary) entry.ordinary.dispose();
+    else entry.crew?.dispose();
+    entry.ordinary = undefined;
     entry.crew = undefined;
     entry.appearanceKey = "";
     entry.lookApplied = false;
@@ -355,24 +365,45 @@ export function createRemoteCrew(
 
   /** Marker tier: the body stays on screen as an instance of the shared low-poly body. */
   const demote = (entry: Entry) => {
-    if (entry.operator?.stationary) return;
+    if (entry.operator && !entry.operator.mayDemote()) return;
     entry.tier = "marker";
     releaseFull(entry);
     entry.marker ??= markerOf(entry.state.id);
   };
 
-  function restoreOperator(entry: Entry, row = entry.operatorRow) {
+  function restoreOperator(
+    entry: Entry,
+    row = entry.operatorRow,
+    ordinary?: PreparedOperatorEnsemble,
+    adopt?: () => void,
+  ) {
     const previous = entry.operatorBaseline;
-    if (!previous) return;
+    if (!previous && !ordinary) return;
     entry.evaBody?.dispose();
     entry.evaBody = undefined;
-    entry.crew = previous.crew;
-    entry.outfit = previous.outfit;
-    entry.held = previous.held;
+    entry.crew = ordinary?.crew ?? previous?.crew;
+    entry.outfit = ordinary?.outfit ?? previous?.outfit;
+    entry.held = ordinary?.held ?? previous?.held;
+    entry.ordinary = ordinary ?? previous?.ordinary;
     entry.operatorBaseline = undefined;
+    adopt?.();
+    if (ordinary && previous) {
+      if (previous.ordinary) previous.ordinary.dispose();
+      else {
+        try {
+          previous.held?.dispose();
+        } finally {
+          try {
+            previous.outfit?.dispose();
+          } finally {
+            previous.crew?.dispose();
+          }
+        }
+      }
+    }
     if (entry.crew) {
       if (row)
-        entry.crew.root.position.set(
+        (entry.ordinary?.root ?? entry.crew.root).position.set(
           row.localX,
           row.standingElevationM,
           -row.localY,
@@ -410,23 +441,27 @@ export function createRemoteCrew(
         {
           prepare: source.prepare,
           configureMeshes: source.configureMeshes,
+          contactPlacement: source.contactPlacement,
           onCommitted: (handle) => {
             entry.operatorBaseline ??= {
               crew: entry.crew,
               outfit: entry.outfit,
               held: entry.held,
+              ordinary: entry.ordinary,
             };
+            entry.ordinary = undefined;
             entry.operatorBaseline.crew?.root.setEnabled(false);
             entry.evaBody?.dispose();
             entry.evaBody = undefined;
             const current = entry.operatorRow;
             if (!current)
               throw new Error("Operator current accepted body unavailable");
-            handle.root.position.set(
-              current.localX,
-              current.standingElevationM,
-              -current.localY,
-            );
+            if (!handle.contact)
+              handle.root.position.set(
+                current.localX,
+                current.standingElevationM,
+                -current.localY,
+              );
             entry.crew = handle.crew;
             entry.outfit = handle.outfit;
             entry.held = handle.held;
@@ -438,12 +473,17 @@ export function createRemoteCrew(
             if (entry.label) entry.label.parent = group;
             changed();
           },
-          restoreAtAcceptedRecovery: (_handle, xy) =>
-            restoreOperator(entry, {
-              ...(entry.operatorRow ?? row),
-              localX: xy[0],
-              localY: xy[1],
-            }),
+          restoreAtAcceptedRecovery: (handle, xy, adopt) =>
+            restoreOperator(
+              entry,
+              {
+                ...(entry.operator?.currentRow ?? row),
+                localX: xy[0],
+                localY: xy[1],
+              },
+              adopt ? handle : undefined,
+              adopt,
+            ),
         },
       );
     }
@@ -656,13 +696,17 @@ export function createRemoteCrew(
               speed: 0,
             }
           : sampled;
+        entry.operator?.committed?.contact?.setReducedMotion(reducedMotion);
         crew.setSeatContact(state.seated ? state.seatContact : undefined);
-        crew.root.position.set(
-          d.x,
-          d.z + (state.seated ? (state.seatContact?.lift ?? 0) : 0),
-          -d.y,
-        );
-        crew.root.rotation.y = d.yaw;
+        const placementRoot = entry.ordinary?.root ?? crew.root;
+        if (!entry.operator?.committed?.contact) {
+          placementRoot.position.set(
+            d.x,
+            d.z + (state.seated ? (state.seatContact?.lift ?? 0) : 0),
+            -d.y,
+          );
+          placementRoot.rotation.y = d.yaw;
+        }
         if (entry.operator?.committed && entry.label?.parent === group)
           entry.label.position.set(
             crew.root.position.x,
@@ -670,11 +714,11 @@ export function createRemoteCrew(
             crew.root.position.z,
           );
         if (state.eva) {
-          crew.root.position.y -= evaHipLiftCorrection(state.eva, (clip) =>
+          placementRoot.position.y -= evaHipLiftCorrection(state.eva, (clip) =>
             crew.hasClip(clip),
           );
           // Outside a ship: the accepted heading (or the aim) turns the body; zero-g clips play.
-          crew.root.rotation.y = state.aimActive
+          placementRoot.rotation.y = state.aimActive
             ? -state.aimAngle
             : state.eva.localHeading;
           entry.evaBody ??= createEvaBodyPresentation(scene, crew, {

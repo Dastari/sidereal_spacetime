@@ -21,6 +21,7 @@ export interface PrefabShipViewHandle {
   navigationOperatorCapability(): ReturnType<
     import("./prefab-ship/ship-view").PrefabShipView["navigationOperatorCapability"]
   >;
+  navigationOperatorPlacement: import("./prefab-ship/ship-view").PrefabShipView["navigationOperatorPlacement"];
   setInterior(interior: boolean): void;
   /** Animate door leaves (airlock outer door from the EVA cycle, interior doors on approach). */
   updateDoors(input: import("./prefab-ship/doors").DoorUpdate): void;
@@ -165,6 +166,8 @@ export async function loadPrefabShipPresentation(
     },
     metrics: () => view.metrics(),
     navigationOperatorCapability: () => view.navigationOperatorCapability(),
+    navigationOperatorPlacement: (...args) =>
+      view.navigationOperatorPlacement(...args),
     updateDoors: (input) => doors.update(input),
     updatePanels: (lights, nowMs) => panels.update(lights, nowMs),
     updateExhaust(actuators, nowMs) {

@@ -244,13 +244,46 @@ export async function createVoxelCrewVisual(
   let footIk = true;
   let footSettleS = 0;
   let seatSpineOriginal: Quaternion | undefined;
+  let operatorPose:
+    | {
+        token: symbol;
+        frozen?: Map<
+          TransformNode,
+          {
+            position: Vector3;
+            scaling: Vector3;
+            rotation: Vector3;
+            quaternion: Quaternion | null;
+          }
+        >;
+        complete?: Map<
+          TransformNode,
+          {
+            position: Vector3;
+            scaling: Vector3;
+            rotation: Vector3;
+            quaternion: Quaternion | null;
+          }
+        >;
+      }
+    | undefined;
   const seatResetObserver = scene.onBeforeAnimationsObservable.add(() => {
+    if (operatorPose?.frozen) return;
     const spine = joints.get("spine");
     if (spine && seatSpineOriginal)
       spine.rotationQuaternion = seatSpineOriginal;
     seatSpineOriginal = undefined;
   });
   const ikObserver = scene.onAfterAnimationsObservable.add(() => {
+    if (operatorPose?.frozen) {
+      for (const [node, saved] of operatorPose.frozen) {
+        node.position.copyFrom(saved.position);
+        node.scaling.copyFrom(saved.scaling);
+        node.rotation.copyFrom(saved.rotation);
+        node.rotationQuaternion = saved.quaternion?.clone() ?? null;
+      }
+      return;
+    }
     const m = lastMotion;
     if (m.seated && seatContact && !m.dead) {
       const spine = joints.get("spine");
@@ -423,6 +456,7 @@ export async function createVoxelCrewVisual(
     }
   };
   const blendObserver = scene.onBeforeRenderObservable.add(() => {
+    if (operatorPose?.frozen) return;
     if (blendElapsed >= blendDuration) return;
     // Keep pace with the clips, which advance by wall time: with the old 0.1 s cap, a slow frame
     // let a short hold clip (death) finish while still fading in and freeze the body in a partial
@@ -466,6 +500,7 @@ export async function createVoxelCrewVisual(
   );
 
   const customize = (next: CrewAppearance) => {
+    if (operatorPose) return;
     if (disposed) return;
     appearance = { ...appearance, ...next };
     const colors = voxelCrewSlotColors(appearance);
@@ -529,6 +564,7 @@ export async function createVoxelCrewVisual(
   };
   // face: the driving clip's expression track each frame, plus the blink timer
   const faceObserver = scene.onBeforeRenderObservable.add(() => {
+    if (operatorPose?.frozen) return;
     const dt = Math.min(0.1, scene.getEngine().getDeltaTime() / 1000);
     const driver =
       oneShot?.clip ??
@@ -559,7 +595,8 @@ export async function createVoxelCrewVisual(
 
   let override: Partial<VoxelCrewMotion> | undefined;
   let lastInput: VoxelCrewMotion = { moving: false, seated: false };
-  const update = (input: VoxelCrewMotion) => {
+  const update = (input: VoxelCrewMotion, owningToken?: symbol) => {
+    if (operatorPose && operatorPose.token !== owningToken) return;
     const motion = override ? { ...input, ...override } : input;
     lastInput = input;
     lastMotion = motion;
@@ -782,6 +819,7 @@ export async function createVoxelCrewVisual(
      * (the held item's support socket: same axes as socket.hand.L). null releases the hand.
      */
     setSupportTarget(target: TransformNode | null) {
+      if (operatorPose) return;
       supportTarget = target;
       if (!target) supportError = 0;
     },
@@ -789,10 +827,70 @@ export async function createVoxelCrewVisual(
     setSeatContact(
       contact: { lift: number; lean: number; footSupport: number } | undefined,
     ) {
+      if (operatorPose) return;
       seatContact = contact;
+    },
+    /** Only the independent qualified operator ensemble owns this reversible presentation token. */
+    claimOperatorPose(token: symbol) {
+      if (disposed || operatorPose)
+        throw new Error("Operator pose already owned");
+      supportTarget = null;
+      operatorPose = { token };
+      const capture = () =>
+        new Map(
+          [
+            ...new Set([
+              root,
+              ...joints.values(),
+              ...Object.values(socketNodes),
+            ]),
+          ].map((node) => [
+            node,
+            {
+              position: node.position.clone(),
+              scaling: node.scaling.clone(),
+              rotation: node.rotation.clone(),
+              quaternion: node.rotationQuaternion?.clone() ?? null,
+            },
+          ]),
+        );
+      return {
+        setReducedMotion(reducedMotion: boolean) {
+          if (operatorPose?.token === token && !operatorPose.frozen)
+            update(
+              {
+                ...lastInput,
+                moving: false,
+                seated: true,
+                dead: false,
+                combat: false,
+                reducedMotion,
+              },
+              token,
+            );
+        },
+        checkpoint() {
+          if (operatorPose?.token === token && !operatorPose.frozen)
+            operatorPose.complete = capture();
+        },
+        freeze() {
+          if (operatorPose?.token !== token || operatorPose.frozen) return;
+          operatorPose.frozen = operatorPose.complete ?? capture();
+          for (const group of new Set([...clips.values(), ...owned]))
+            group.pause();
+        },
+        get frozen() {
+          return operatorPose?.token === token && !!operatorPose.frozen;
+        },
+        release() {
+          if (operatorPose?.token !== token) return;
+          operatorPose = undefined;
+        },
+      };
     },
     /** Foot planting on the deck (default on; review harnesses compare with it off). */
     setFootIk(enabled: boolean) {
+      if (operatorPose) return;
       footIk = enabled;
     },
     /** Remaining planted-foot error (m) from the last solve. */
@@ -831,6 +929,7 @@ export async function createVoxelCrewVisual(
      * those states are authoritative). Merged over every incoming motion until cleared.
      */
     setMotionOverride(next: Partial<VoxelCrewMotion> | undefined) {
+      if (operatorPose) return;
       override = next;
       update(lastInput);
     },
@@ -839,6 +938,7 @@ export async function createVoxelCrewVisual(
      * retargeted onto this body's joints by bone name. Returns the registered clip names.
      */
     addClips(source: AssetContainer) {
+      if (operatorPose) return [];
       const names: string[] = [];
       for (const group of source.animationGroups) {
         const clone = group.clone(
@@ -857,10 +957,12 @@ export async function createVoxelCrewVisual(
     },
     /** Armed class ("rifle", "pistol", ...) whose `<class>.<clip>` clips drive idle/walk/run/aim/shoot; null = base set. */
     setArmedClass(cls: string | null) {
+      if (operatorPose) return;
       armedClass = cls;
       update(lastInput);
     },
     play(action: VoxelCrewAction) {
+      if (operatorPose) return;
       startOneShot(action, lastMotion);
     },
     /** The r002/r003 equipment pose controller targets the legacy 16-bone rig; not available here. */
@@ -871,6 +973,7 @@ export async function createVoxelCrewVisual(
     dispose() {
       if (disposed) return;
       disposed = true;
+      operatorPose = undefined;
       scene.onBeforeRenderObservable.remove(blendObserver);
       scene.onBeforeRenderObservable.remove(faceObserver);
       scene.onBeforeAnimationsObservable.remove(seatResetObserver);

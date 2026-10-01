@@ -8,7 +8,10 @@ import {
   type OperatorReadinessSignal,
   type OperatorInteriorRow,
 } from "./crew/operator-readiness";
-import { currentOperatorEnsemblePlan } from "./crew/operator-ensemble";
+import {
+  type PreparedOperatorEnsemble,
+  currentOperatorEnsemblePlan,
+} from "./crew/operator-ensemble";
 export type { OperatorInteriorRow } from "./crew/operator-readiness";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
@@ -762,12 +765,14 @@ async function buildWorld(
   const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
   let localOperatorOwner:
     ReturnType<typeof createOperatorEnsembleOwner> | undefined;
+  let localOrdinaryHandle: PreparedOperatorEnsemble | undefined;
   let localOperatorBaseline:
     | {
         crew: NonNullable<typeof crew>;
         outfit: typeof crewOutfit;
         held: typeof heldItem;
         avatar: TransformNode;
+        ordinary?: PreparedOperatorEnsemble;
       }
     | undefined;
   const resolveOperatorAssets = verifiedOperatorResolver(
@@ -784,16 +789,36 @@ async function buildWorld(
     moldedLightRig(scene).include(meshes);
     lighting.addActor([...meshes]);
   };
-  const restoreLocalOperator = (row?: OperatorInteriorRow) => {
+  const restoreLocalOperator = (
+    row?: OperatorInteriorRow,
+    ordinary?: PreparedOperatorEnsemble,
+    adopt?: () => void,
+  ) => {
     const previous = localOperatorBaseline;
-    if (!previous) return;
+    if (!previous && !ordinary) return;
     ownEva?.dispose();
     ownEva = undefined;
-    crew = previous.crew;
-    crewOutfit = previous.outfit;
-    heldItem = previous.held;
-    avatar = previous.avatar;
+    crew = ordinary?.crew ?? previous!.crew;
+    crewOutfit = ordinary?.outfit ?? previous!.outfit;
+    heldItem = ordinary?.held ?? previous!.held;
+    avatar = ordinary?.root ?? previous!.avatar;
+    localOrdinaryHandle = ordinary ?? previous?.ordinary;
     localOperatorBaseline = undefined;
+    adopt?.();
+    if (ordinary && previous) {
+      if (previous.ordinary) previous.ordinary.dispose();
+      else {
+        try {
+          previous.held?.dispose();
+        } finally {
+          try {
+            previous.outfit?.dispose();
+          } finally {
+            previous.crew.dispose();
+          }
+        }
+      }
+    }
     if (row)
       avatar.position.set(row.localX, row.standingElevationM, -row.localY);
     avatar.setEnabled(true);
@@ -826,32 +851,47 @@ async function buildWorld(
         operatorReadiness,
         {
           configureMeshes: configureOperatorMeshes,
+          contactPlacement: (current, actual, associationKey) =>
+            prefabView?.navigationOperatorPlacement(
+              shipRoot,
+              actual,
+              associationKey,
+              current,
+            ) ?? null,
           onCommitted: (handle) => {
             localOperatorBaseline ??= {
               crew: crew!,
               outfit: crewOutfit,
               held: heldItem,
               avatar,
+              ordinary: localOrdinaryHandle,
             };
+            localOrdinaryHandle = undefined;
             localOperatorBaseline.avatar.setEnabled(false);
             ownEva?.dispose();
             ownEva = undefined;
-            handle.root.position.copyFrom(avatar.position);
-            handle.root.rotationQuaternion =
-              avatar.rotationQuaternion?.clone() ?? null;
-            handle.root.rotation.copyFrom(avatar.rotation);
+            if (!handle.contact) {
+              handle.root.position.copyFrom(avatar.position);
+              handle.root.rotationQuaternion =
+                avatar.rotationQuaternion?.clone() ?? null;
+              handle.root.rotation.copyFrom(avatar.rotation);
+            }
             crew = handle.crew;
             crewOutfit = handle.outfit;
             heldItem = handle.held;
             avatar = handle.root;
             refreshCrewPresentation();
           },
-          restoreAtAcceptedRecovery: (_handle, xy) =>
-            restoreLocalOperator({
-              ...(localOperatorOwner?.currentRow ?? row),
-              localX: xy[0],
-              localY: xy[1],
-            }),
+          restoreAtAcceptedRecovery: (handle, xy, adopt) =>
+            restoreLocalOperator(
+              {
+                ...(localOperatorOwner?.currentRow ?? row),
+                localX: xy[0],
+                localY: xy[1],
+              },
+              adopt ? handle : undefined,
+              adopt,
+            ),
         },
       );
     }
@@ -877,6 +917,13 @@ async function buildWorld(
         capability: () => prefabView?.navigationOperatorCapability() ?? null,
         resolve: resolveOperatorAssets,
         configureMeshes: configureOperatorMeshes,
+        contactPlacement: (current, actual, associationKey) =>
+          prefabView?.navigationOperatorPlacement(
+            shipRoot,
+            actual,
+            associationKey,
+            current,
+          ) ?? null,
       },
     });
   if (crewOutfit && crew && !assetFailure) {
@@ -1179,21 +1226,26 @@ async function buildWorld(
       : walking
         ? Math.atan2(dx, dy)
         : undefined;
-    avatar.rotation.y = -posePlacementHeading({
-      currentHeading: -avatar.rotation.y,
-      travelHeading: movementHeading,
-      bound: false,
-      active: !!state.combat?.active,
-      sprinting: state.sprinting,
-    });
-    if (state.combat?.active && !state.seated)
-      avatar.rotation.y = -state.combat.angle;
-    if (state.seated) avatar.rotation.y = state.seatFacing ?? 0;
-    // EVA: the accepted body heading turns the body unless it aims (then it faces the aim). The
-    // server heading changes continuously at 20 Hz (rigid-body spin); ease between ticks.
-    if (eva && !state.combat?.active)
-      avatar.rotation.y +=
-        angleDelta(avatar.rotation.y, eva.localHeading) * Math.min(1, dt * 18);
+    const operatorContact = localOperatorOwner?.committed?.contact;
+    operatorContact?.setReducedMotion(!!state.reducedMotion);
+    if (!operatorContact) {
+      avatar.rotation.y = -posePlacementHeading({
+        currentHeading: -avatar.rotation.y,
+        travelHeading: movementHeading,
+        bound: false,
+        active: !!state.combat?.active,
+        sprinting: state.sprinting,
+      });
+      if (state.combat?.active && !state.seated)
+        avatar.rotation.y = -state.combat.angle;
+      if (state.seated) avatar.rotation.y = state.seatFacing ?? 0;
+      // EVA: the accepted body heading turns the body unless it aims (then it faces the aim). The
+      // server heading changes continuously at 20 Hz (rigid-body spin); ease between ticks.
+      if (eva && !state.combat?.active)
+        avatar.rotation.y +=
+          angleDelta(avatar.rotation.y, eva.localHeading) *
+          Math.min(1, dt * 18);
+    }
     const cabinVisible = cabinIsVisible(state.interior, blend, !!focusedBodyId);
     const operatorRow =
       localOperatorOwner?.stationary && localOperatorOwner.ownsRequest
@@ -1233,21 +1285,23 @@ async function buildWorld(
       reducedMotion: state.reducedMotion,
     });
     crew?.setSeatContact(state.seated ? state.seatContact : undefined);
-    avatar.position.set(
-      displayed.localX,
-      walkingElevation + (state.seated ? (state.seatContact?.lift ?? 0) : 0),
-      -displayed.localY,
-    );
-    if (traversalFrame?.acceptedPositionM) {
-      const [x, y, z] = traversalFrame.acceptedPositionM;
-      avatar.position.set(x, z, -y);
-    }
-    if (operatorRow)
+    if (!operatorContact) {
       avatar.position.set(
-        operatorRow.localX,
-        operatorRow.standingElevationM,
-        -operatorRow.localY,
+        displayed.localX,
+        walkingElevation + (state.seated ? (state.seatContact?.lift ?? 0) : 0),
+        -displayed.localY,
       );
+      if (traversalFrame?.acceptedPositionM) {
+        const [x, y, z] = traversalFrame.acceptedPositionM;
+        avatar.position.set(x, z, -y);
+      }
+      if (operatorRow)
+        avatar.position.set(
+          operatorRow.localX,
+          operatorRow.standingElevationM,
+          -operatorRow.localY,
+        );
+    }
     // Native r002 deck datum; this offset is presentation, not simulation height.
     marker.position.copyFrom(avatar.position);
     marker.position.y += 0.02;
@@ -1738,7 +1792,7 @@ async function buildWorld(
       impactFlash.dispose();
       combatFx?.dispose();
       fxPlayer?.dispose();
-      heldItem?.dispose();
+      if (!localOrdinaryHandle) heldItem?.dispose();
       up();
       observer.disconnect();
       window.removeEventListener("blur", up);
@@ -1755,8 +1809,11 @@ async function buildWorld(
       evaCrew = undefined;
       ownEva?.dispose();
       ownEva = undefined;
-      crewOutfit?.dispose();
-      crew?.dispose();
+      if (localOrdinaryHandle) localOrdinaryHandle.dispose();
+      else {
+        crewOutfit?.dispose();
+        crew?.dispose();
+      }
       localGlowOcclusion.dispose();
       flightEffects.dispose();
       environment.dispose();

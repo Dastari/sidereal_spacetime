@@ -1,4 +1,4 @@
-/** Pure ownership rules only. The real loader/readiness adapter is not installed yet. */
+/** Pure resource ownership rules; admission and actual readiness belong to the scene adapter. */
 export interface CompleteOperatorAssets {
   /** Supplied only by an adapter that verified every requested visual and material. */
   state: "verified-complete";
@@ -24,12 +24,20 @@ export interface OperatorAcceptedState {
   acceptedY: number;
 }
 
+export interface OperatorRecoveryReceipt {
+  readonly transferred: boolean;
+  assertCurrent(): void;
+  /** Mark a successful independently complete ordinary ownership transfer before callbacks/cleanup. */
+  transfer(): void;
+}
+
 /** No scene, global cache, inventory identity, Promise-based readiness or geometry mutation. */
 export function createOperatorAssetTransaction(
   options: {
     restoreAtAcceptedRecovery?: (
       handle: CompleteOperatorAssets,
       position: readonly [number, number],
+      receipt: OperatorRecoveryReceipt,
     ) => void;
   } = {},
 ) {
@@ -88,15 +96,64 @@ export function createOperatorAssetTransaction(
       // Invalidated/recovering resources remain visible. Restore only at coherent recovery XY.
       if (state.pose === "none" && committed) {
         const handle = committed;
-        committed = null;
-        committedGeneration = null;
+        const recoveryGeneration = generation;
+        const ownsRecovery = () =>
+          !withdrawn &&
+          generation === recoveryGeneration &&
+          accepted?.associationKey === state.associationKey &&
+          accepted.pose === "none" &&
+          accepted.dead === state.dead &&
+          accepted.connected === state.connected &&
+          accepted.acceptedX === state.acceptedX &&
+          accepted.acceptedY === state.acceptedY;
+        let transferred = false;
+        const receipt: OperatorRecoveryReceipt = {
+          get transferred() {
+            return transferred;
+          },
+          assertCurrent() {
+            if (!ownsRecovery() || (!transferred && committed !== handle))
+              throw Error("Operator recovery superseded");
+          },
+          transfer() {
+            this.assertCurrent();
+            if (transferred) return;
+            transferred = true;
+            committed = null;
+            committedGeneration = null;
+          },
+        };
         try {
-          options.restoreAtAcceptedRecovery?.(handle, [
-            state.acceptedX,
-            state.acceptedY,
-          ]);
+          options.restoreAtAcceptedRecovery?.(
+            handle,
+            [state.acceptedX, state.acceptedY],
+            receipt,
+          );
+          if (!transferred) receipt.transfer();
+        } catch (cause) {
+          if (ownsRecovery())
+            error = {
+              generation: recoveryGeneration,
+              message:
+                cause instanceof Error
+                  ? cause.message
+                  : "Crew equipment unavailable",
+            };
         } finally {
-          release(handle);
+          if (transferred) {
+            try {
+              release(handle);
+            } catch (cause) {
+              if (ownsRecovery())
+                error = {
+                  generation: recoveryGeneration,
+                  message:
+                    cause instanceof Error
+                      ? cause.message
+                      : "Crew equipment cleanup unavailable",
+                };
+            }
+          }
         }
       }
     },
@@ -227,9 +284,7 @@ export function createOperatorAssetTransaction(
       return !!wanted && !this.qualifiesCurrentRequest && !error;
     },
     get error() {
-      return error && error.generation === wanted?.generation
-        ? error.message
-        : null;
+      return error && error.generation === generation ? error.message : null;
     },
     /** Future scene adapter may feed this into the existing loading predicate. */
     get blocksLateFirstOrError() {

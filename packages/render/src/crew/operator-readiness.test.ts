@@ -1,6 +1,7 @@
 import { afterEach, expect, test, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
+import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import {
   createOperatorReadiness,
@@ -532,4 +533,479 @@ test("withdraw cancels a queued complete handle and stale failure cannot own ano
     blocked: true,
     error: "Crew equipment unavailable",
   });
+});
+
+test("physical recovery freezes stationary resources; none+dead activates the CURRENT separate ordinary body first", async () => {
+  const p = projected(),
+    { scene, parent } = fixture();
+  const projection = operatorProjection(p.row, p.capability)!;
+  const key = projection.requestedKey!,
+    associationKey = projection.state.associationKey;
+  const physical = complete(key),
+    ordinary = complete(key),
+    events: string[] = [],
+    freeze = vi.fn();
+  Object.assign(ordinary, {
+    associationKey,
+    root: new TransformNode("ordinary-complete", scene),
+    crew: { update: vi.fn() },
+  });
+  Object.assign(physical, {
+    associationKey,
+    contact: { freeze, failure: null },
+    ordinaryBaseline: ordinary,
+    releaseOrdinaryBaseline: (handle: PreparedOperatorEnsemble) => {
+      expect(handle).toBe(ordinary);
+      events.push("ordinary-transfer");
+      Object.assign(physical, { ordinaryBaseline: undefined });
+    },
+  });
+  ordinary.activate = vi.fn(() => events.push("ordinary-activate"));
+  physical.dispose = vi.fn(() => {
+    events.push("physical-dispose");
+    physical.ordinaryBaseline?.dispose();
+  });
+  const owner = createOperatorEnsembleOwner(
+    scene,
+    parent,
+    "actor",
+    createOperatorReadiness(),
+    {
+      prepare: vi.fn(async () => physical),
+      restoreAtAcceptedRecovery: (handle, xy, adopt) => {
+        expect(handle).toBe(ordinary);
+        adopt!();
+        events.push(`baseline-restore:${xy.join(",")}`);
+      },
+    },
+  );
+  const resolve = async () => ({ ...request(key), associationKey });
+  owner.syncProjection(p.row, p.capability, resolve);
+  await settle();
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  expect(owner.committed).toBe(physical);
+  owner.syncProjection(
+    {
+      ...p.row,
+      operatorSnapshot: undefined,
+      operatorPoseState: "recovering",
+      dead: true,
+      connected: false,
+    },
+    p.capability,
+    resolve,
+  );
+  expect(freeze).toHaveBeenCalledOnce();
+  expect(events).toEqual([]);
+  owner.syncProjection(
+    {
+      ...p.row,
+      operatorSnapshot: undefined,
+      operatorPoseState: "none",
+      dead: true,
+      connected: false,
+      localX: 1,
+      localY: 2,
+    },
+    p.capability,
+    resolve,
+  );
+  expect(events).toEqual([
+    "ordinary-activate",
+    "ordinary-transfer",
+    "baseline-restore:1,2",
+    "physical-dispose",
+  ]);
+  expect(ordinary.crew.update).toHaveBeenCalledWith({
+    moving: false,
+    seated: false,
+    dead: true,
+  });
+  expect(ordinary.root.position.asArray()).toEqual([1, 0.1875, -2]);
+  expect(owner.committed).toBeNull();
+  expect(ordinary.dispose).not.toHaveBeenCalled();
+  owner.withdraw();
+  expect(physical.dispose).toHaveBeenCalledOnce();
+});
+
+test("the current coherent placement is cloned before asynchronous source preparation crosses parent motion", async () => {
+  const p = projected(),
+    { scene, parent } = fixture();
+  const key = operatorProjection(p.row, p.capability)!.requestedKey!;
+  const associationKey = operatorProjection(p.row, p.capability)!.state
+    .associationKey;
+  const handle = complete(key);
+  Object.assign(handle, { associationKey });
+  const local = Matrix.Translation(0, p.row.standingElevationM, -p.row.localY);
+  const placement = {
+    profileId: p.capability.profileId,
+    navigationSha256: p.capability.navigationSha256,
+    associationKey,
+    navigationLocal: local,
+    acceptedX: 0,
+    acceptedY: 3.5,
+    standingElevationM: p.row.standingElevationM,
+  };
+  const prepare = vi.fn<
+    typeof import("./operator-ensemble").prepareOperatorEnsemble
+  >(async () => handle);
+  let resolve!: (request: OperatorEnsembleRequest) => void;
+  const owner = createOperatorEnsembleOwner(
+    scene,
+    parent,
+    "actor",
+    createOperatorReadiness(),
+    {
+      prepare,
+      contactPlacement: () => placement,
+    },
+  );
+  owner.syncProjection(
+    p.row,
+    p.capability,
+    () =>
+      new Promise((value) => {
+        resolve = value;
+      }),
+  );
+  await settle();
+  parent.position.set(50, 3, -10);
+  local.setTranslationFromFloats(99, 99, 99);
+  resolve({ ...request(key), associationKey });
+  await settle();
+  const captured = prepare.mock.calls[0]?.[5];
+  expect(captured?.navigationLocal.getTranslation().asArray()).toEqual([
+    0, 0.1875, -3.5,
+  ]);
+  expect(captured?.associationKey).toBe(associationKey);
+  owner.withdraw();
+});
+
+test("changed ordinary draw readiness retains the visible physical body until current-generation recovery rewarm succeeds", async () => {
+  const p = projected(),
+    { scene, parent } = fixture();
+  const projection = operatorProjection(p.row, p.capability)!,
+    key = projection.requestedKey!,
+    associationKey = projection.state.associationKey;
+  const physical = complete(key),
+    ordinary = complete(key),
+    changes = vi.fn(),
+    restore = vi.fn(),
+    freeze = vi.fn();
+  let ready = false;
+  const finish: (() => void)[] = [];
+  Object.assign(ordinary, {
+    associationKey,
+    root: new TransformNode("complete-ordinary", scene),
+    crew: { update: vi.fn() },
+    activationKey: () => "same-shader-configuration",
+    checkActivation: () => {
+      if (!ready) throw new Error("ordinary current draw not ready");
+    },
+    activate: vi.fn(() => {
+      if (!ready) throw new Error("ordinary current draw not ready");
+    }),
+    prepareActivation: vi.fn(
+      () =>
+        new Promise<void>((resolve) =>
+          finish.push(() => {
+            ready = true;
+            resolve();
+          }),
+        ),
+    ),
+  });
+  Object.assign(physical, {
+    associationKey,
+    contact: { freeze, failure: null },
+    ordinaryBaseline: ordinary,
+    releaseOrdinaryBaseline: () =>
+      Object.assign(physical, { ordinaryBaseline: undefined }),
+  });
+  const owner = createOperatorEnsembleOwner(
+    scene,
+    parent,
+    "actor",
+    createOperatorReadiness(changes),
+    {
+      prepare: vi.fn(async () => physical),
+      restoreAtAcceptedRecovery: (handle, xy, adopt) => {
+        adopt?.();
+        restore(handle, xy);
+      },
+    },
+  );
+  const resolve = async () => ({ ...request(key), associationKey });
+  owner.syncProjection(p.row, p.capability, resolve);
+  await settle();
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  const none = {
+    ...p.row,
+    operatorSnapshot: undefined,
+    operatorPoseState: "none" as const,
+    dead: true,
+    localX: 1,
+    localY: 2,
+  };
+  owner.syncProjection(none, p.capability, resolve);
+  owner.syncProjection(none, p.capability, resolve);
+  expect(owner.committed).toBe(physical);
+  expect(owner.stationary).toBe(false);
+  expect(owner.mayDemote()).toBe(false);
+  expect(physical.dispose).not.toHaveBeenCalled();
+  expect(freeze).toHaveBeenCalled();
+  expect(ordinary.prepareActivation).toHaveBeenCalledOnce();
+  expect(restore).not.toHaveBeenCalled();
+  expect(changes.mock.lastCall?.[0]).toEqual({
+    blocked: true,
+    error: "Crew equipment unavailable",
+  });
+  // A newer coherent recovery tuple owns the replacement attempt; the older callback cannot restore XY=1,2.
+  const newer = {
+    ...none,
+    localX: 3,
+    localY: 4,
+    locationRevision: "9007199254740994",
+  };
+  owner.syncProjection(newer, p.capability, resolve);
+  expect(ordinary.prepareActivation).toHaveBeenCalledTimes(2);
+  finish[0]();
+  await settle();
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  expect(restore).not.toHaveBeenCalled();
+  expect(owner.committed).toBe(physical);
+  finish[1]();
+  await settle();
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  expect(restore).toHaveBeenCalledExactlyOnceWith(ordinary, [3, 4]);
+  expect(ordinary.root.position.asArray()).toEqual([3, 0.1875, -4]);
+  expect(physical.dispose).toHaveBeenCalledOnce();
+  expect(ordinary.dispose).not.toHaveBeenCalled();
+  expect(changes.mock.lastCall?.[0]).toEqual({ blocked: false, error: null });
+  owner.withdraw();
+});
+
+test("an unadopted ordinary transfer stays actor-owned after callback failure and is disposed once on withdrawal", async () => {
+  const p = projected(),
+    { scene, parent } = fixture(),
+    projection = operatorProjection(p.row, p.capability)!;
+  const key = projection.requestedKey!,
+    associationKey = projection.state.associationKey;
+  const physical = complete(key),
+    ordinary = complete(key),
+    changes = vi.fn();
+  Object.assign(ordinary, {
+    associationKey,
+    root: new TransformNode("transferred-ordinary", scene),
+    crew: { update: vi.fn() },
+  });
+  ordinary.activate = vi.fn(() => ordinary.root.setEnabled(true));
+  Object.assign(physical, {
+    associationKey,
+    contact: { freeze: vi.fn(), failure: null },
+    ordinaryBaseline: ordinary,
+    releaseOrdinaryBaseline: () =>
+      Object.assign(physical, { ordinaryBaseline: undefined }),
+  });
+  physical.dispose = vi.fn(() => physical.ordinaryBaseline?.dispose());
+  const owner = createOperatorEnsembleOwner(
+    scene,
+    parent,
+    "actor",
+    createOperatorReadiness(changes),
+    {
+      prepare: vi.fn(async () => physical),
+      restoreAtAcceptedRecovery: () => {
+        throw new Error("callback before adoption");
+      },
+    },
+  );
+  const resolve = async () => ({ ...request(key), associationKey });
+  owner.syncProjection(p.row, p.capability, resolve);
+  await settle();
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  owner.syncProjection(
+    {
+      ...p.row,
+      operatorSnapshot: undefined,
+      operatorPoseState: "none",
+      localX: 1,
+      localY: 2,
+    },
+    p.capability,
+    resolve,
+  );
+  expect(owner.committed).toBeNull();
+  expect(owner.transferredOrdinary).toBe(ordinary);
+  expect(ordinary.root.isEnabled()).toBe(true);
+  expect(ordinary.dispose).not.toHaveBeenCalled();
+  expect(physical.dispose).toHaveBeenCalledOnce();
+  expect(changes.mock.lastCall?.[0]).toEqual({
+    blocked: true,
+    error: "Crew equipment unavailable",
+  });
+  owner.withdraw();
+  owner.withdraw();
+  expect(ordinary.dispose).toHaveBeenCalledOnce();
+});
+
+test("failed recovery rewarm can finish on actual readiness change with the SAME accepted tuple", async () => {
+  const p = projected(),
+    { scene, parent } = fixture(),
+    projection = operatorProjection(p.row, p.capability)!;
+  const key = projection.requestedKey!,
+    associationKey = projection.state.associationKey;
+  const physical = complete(key),
+    ordinary = complete(key),
+    restore = vi.fn();
+  let ready = false;
+  Object.assign(ordinary, {
+    associationKey,
+    root: new TransformNode("ordinary-current", scene),
+    crew: { update: vi.fn() },
+    activationKey: () => "unchanged-draw-key",
+    checkActivation: () => {
+      if (!ready) throw new Error("shader pending");
+    },
+    activate: vi.fn(() => {
+      if (!ready) throw new Error("shader pending");
+    }),
+    prepareActivation: vi.fn(async () => {
+      throw new Error("first compilation failed");
+    }),
+  });
+  Object.assign(physical, {
+    associationKey,
+    contact: { freeze: vi.fn(), failure: null },
+    ordinaryBaseline: ordinary,
+    releaseOrdinaryBaseline: () =>
+      Object.assign(physical, { ordinaryBaseline: undefined }),
+  });
+  const owner = createOperatorEnsembleOwner(
+    scene,
+    parent,
+    "actor",
+    createOperatorReadiness(),
+    {
+      prepare: vi.fn(async () => physical),
+      restoreAtAcceptedRecovery: (handle, xy, adopt) => {
+        adopt!();
+        restore(handle, xy);
+      },
+    },
+  );
+  const resolve = async () => ({ ...request(key), associationKey });
+  owner.syncProjection(p.row, p.capability, resolve);
+  await settle();
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  const none = {
+    ...p.row,
+    operatorSnapshot: undefined,
+    operatorPoseState: "none" as const,
+    localX: 1,
+    localY: 2,
+  };
+  owner.syncProjection(none, p.capability, resolve);
+  await settle();
+  expect(ordinary.prepareActivation).toHaveBeenCalledOnce();
+  expect(owner.committed).toBe(physical);
+  ready = true;
+  scene.onBeforeRenderObservable.notifyObservers(scene);
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  expect(restore).toHaveBeenCalledExactlyOnceWith(ordinary, [1, 2]);
+  expect(physical.dispose).toHaveBeenCalledOnce();
+  expect(ordinary.dispose).not.toHaveBeenCalled();
+  owner.withdraw();
+});
+
+test("ordinary adoption survives a later obsolete-baseline cleanup exception", async () => {
+  const p = projected(),
+    { scene, parent } = fixture(),
+    projection = operatorProjection(p.row, p.capability)!;
+  const key = projection.requestedKey!,
+    associationKey = projection.state.associationKey;
+  const physical = complete(key),
+    ordinary = complete(key),
+    changes = vi.fn();
+  Object.assign(ordinary, {
+    associationKey,
+    root: new TransformNode("adopted-ordinary", scene),
+    crew: { update: vi.fn() },
+  });
+  Object.assign(physical, {
+    associationKey,
+    contact: { freeze: vi.fn(), failure: null },
+    ordinaryBaseline: ordinary,
+    releaseOrdinaryBaseline: () =>
+      Object.assign(physical, { ordinaryBaseline: undefined }),
+  });
+  let actorOrdinary: PreparedOperatorEnsemble | null = null;
+  const owner = createOperatorEnsembleOwner(
+    scene,
+    parent,
+    "actor",
+    createOperatorReadiness(changes),
+    {
+      prepare: vi.fn(async () => physical),
+      restoreAtAcceptedRecovery: (handle, _xy, adopt) => {
+        actorOrdinary = handle;
+        adopt!();
+        throw new Error("obsolete baseline cleanup failed after adoption");
+      },
+    },
+  );
+  const resolve = async () => ({ ...request(key), associationKey });
+  owner.syncProjection(p.row, p.capability, resolve);
+  await settle();
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  const none = {
+    ...p.row,
+    operatorSnapshot: undefined,
+    operatorPoseState: "none" as const,
+    localX: 1,
+    localY: 2,
+  };
+  owner.syncProjection(none, p.capability, resolve);
+  expect(actorOrdinary).toBe(ordinary);
+  expect(owner.transferredOrdinary).toBeNull();
+  expect(physical.dispose).toHaveBeenCalledOnce();
+  expect(ordinary.dispose).not.toHaveBeenCalled();
+  expect(changes.mock.lastCall?.[0]).toEqual({
+    blocked: true,
+    error: "Crew equipment unavailable",
+  });
+  owner.syncProjection(none, p.capability, resolve);
+  expect(changes.mock.lastCall?.[0]).toEqual({ blocked: false, error: null });
+  owner.withdraw();
+  expect(ordinary.dispose).not.toHaveBeenCalled();
+  actorOrdinary!.dispose();
+  expect(ordinary.dispose).toHaveBeenCalledOnce();
+});
+
+test("filtered withdrawal clears its blocker even when physical disposal throws", async () => {
+  const { scene, parent } = fixture(),
+    changes = vi.fn(),
+    handle = complete("item");
+  handle.dispose = vi.fn(() => {
+    throw new Error("physical cleanup failed");
+  });
+  const owner = createOperatorEnsembleOwner(
+    scene,
+    parent,
+    "actor",
+    createOperatorReadiness(changes),
+    { prepare: vi.fn(async () => handle) },
+  );
+  owner.sync(state, request("item"));
+  await settle();
+  scene.onBeforeAnimationsObservable.notifyObservers(scene);
+  owner.sync(state, null, "unsupported");
+  expect(changes.mock.lastCall?.[0]).toEqual({
+    blocked: true,
+    error: "Crew equipment unavailable",
+  });
+  expect(() => owner.withdraw()).toThrow("physical cleanup failed");
+  expect(changes.mock.lastCall?.[0]).toEqual({ blocked: false, error: null });
+  owner.withdraw();
+  expect(handle.dispose).toHaveBeenCalledOnce();
 });

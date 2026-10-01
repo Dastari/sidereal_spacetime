@@ -25,7 +25,6 @@ import { loadVerifiedGlbGeometry, type GlbGeometry } from "./glb-library";
 import { slotOfMaterialName } from "./materials";
 import type { NavigationOperatorRegistration } from "@sidereal/sim/navigation-operator-context";
 import type { OperatorActivatedCapability } from "../crew/operator-readiness";
-import { validateReferenceDoorLeaf } from "./doors";
 import { referenceGlazingReplacements } from "./glazing-replacement";
 
 export interface VisualVariantSelection {

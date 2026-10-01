@@ -70,14 +70,24 @@ export function leanSeatSpine(
 
 /**
  * Move the chain so `effector` reaches `targetWorld` (position and orientation). The elbow keeps
- * its current bend plane (pole = current elbow offset), so animated arm character is preserved.
+ * its current bend plane by default. A verified operator hand may supply its measured root-space
+ * pole direction; ordinary support hands and feet never supply that override.
  * Returns the remaining effector error in metres (0 when reachable).
  */
 export function solveTwoBone(
   chain: TwoBoneChain,
   targetWorld: Matrix,
   matchRotation = true,
+  poleDirectionRoot?: Vector3,
 ): number {
+  if (
+    poleDirectionRoot &&
+    (!poleDirectionRoot.asArray().every(Number.isFinite) ||
+      poleDirectionRoot.lengthSquared() < 1e-8 ||
+      !Array.from(targetWorld.m).every(Number.isFinite) ||
+      Math.abs(targetWorld.determinant()) < 1e-8)
+  )
+    throw new Error("Operator hand contact unavailable");
   const rootInv = chain.root.computeWorldMatrix(true).clone().invert();
   const target = targetWorld.multiply(rootInv);
   // desired end transform = target * inverse(end->effector)
@@ -96,8 +106,10 @@ export function solveTwoBone(
   const dir = toT.normalizeToNew();
   const a = (l1 * l1 - l2 * l2 + dist * dist) / (2 * dist);
   const h = Math.sqrt(Math.max(0, l1 * l1 - a * a));
-  let pole = E.subtract(S);
+  let pole = poleDirectionRoot?.clone() ?? E.subtract(S);
   pole = pole.subtract(dir.scale(Vector3.Dot(pole, dir)));
+  if (poleDirectionRoot && pole.lengthSquared() < 1e-8)
+    throw new Error("Operator hand contact degenerate");
   if (pole.lengthSquared() < 1e-8)
     pole = new Vector3(0, 0, 1).subtract(dir.scale(dir.z));
   pole.normalize();

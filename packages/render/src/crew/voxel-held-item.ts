@@ -1,6 +1,6 @@
 import type { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
-import { Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { Matrix, Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
 import "@babylonjs/loaders/glTF";
 import {
@@ -164,15 +164,18 @@ export function createVoxelHeldItem(
   let disposed = false;
   let requestError: string | null = null;
   const inFlight = new Set<Promise<void>>();
+  let stationary: { token: symbol; generation: number } | undefined;
   const reduced = () => !!options.reducedMotion?.();
   const now = options.now ?? (() => performance.now());
   const hand = () => crew.socketNodes["socket.hand.R"];
   const toHand = (visual: HeldItemVisual) => {
+    if (stationary) return;
     visual.root.parent = hand();
     visual.root.rotationQuaternion = crewItemHandSocketRotation();
     visual.root.position.setAll(0);
   };
   const toHolster = (h: Held) => {
+    if (stationary) return;
     const holster = h.item.holster;
     const socket = holster && crew.socketNodes[holster.socket as never];
     if (!holster || !socket) return;
@@ -185,6 +188,7 @@ export function createVoxelHeldItem(
     h.cls ? crewArmedClipInfo(h.item, name) : null;
 
   const finishHolster = () => {
+    if (stationary) return;
     if (!held) return;
     crew.setSupportTarget(null);
     held.visual.dispose();
@@ -194,6 +198,7 @@ export function createVoxelHeldItem(
     void load();
   };
   const startHolster = () => {
+    if (stationary) return;
     if (!held || held.phase === "holstering") return;
     const info = clip(held, "holster");
     if (!info || reduced() || options.instant?.()) return finishHolster();
@@ -205,7 +210,7 @@ export function createVoxelHeldItem(
     crew.play(info.animation as VoxelCrewAction);
   };
   const loadActual = async () => {
-    if (disposed || held) return;
+    if (disposed || stationary || held) return;
     const id = wanted;
     const generation = ++loading;
     if (!id) return;
@@ -242,14 +247,20 @@ export function createVoxelHeldItem(
     const loaded = results[0];
     if (loaded.status !== "fulfilled" || results[1].status === "rejected") {
       if (loaded.status === "fulfilled") loaded.value.dispose();
-      if (!disposed && generation === loading && wanted === id)
+      if (!disposed && !stationary && generation === loading && wanted === id)
         requestError = "Operator held item unavailable";
       return;
     }
     const visual = loaded.value;
-    if (disposed || generation !== loading || wanted !== id || held) {
+    if (
+      disposed ||
+      stationary ||
+      generation !== loading ||
+      wanted !== id ||
+      held
+    ) {
       visual.dispose();
-      if (!disposed && !held) void load();
+      if (!disposed && !stationary && !held) void load();
       return;
     }
     held = {
@@ -277,7 +288,12 @@ export function createVoxelHeldItem(
     const generation = loading;
     const key = wanted;
     const promise = loadActual().catch(() => {
-      if (!disposed && loading === generation + 1 && wanted === key)
+      if (
+        !disposed &&
+        !stationary &&
+        loading === generation + 1 &&
+        wanted === key
+      )
         requestError = "Operator held item unavailable";
     });
     inFlight.add(promise);
@@ -291,6 +307,7 @@ export function createVoxelHeldItem(
   // The solver runs onAfterAnimations: select/release its target before that frame animates.
   const supportObserver = scene.onBeforeAnimationsObservable.add(updateSupport);
   function updateSupport() {
+    if (stationary) return;
     // Reload/draw/holster author the free hand reaching a magazine or holster. Keep those
     // choreographed tracks free; solve the foregrip in ready/aim/fire and locomotion poses.
     crew.setSupportTarget(
@@ -303,6 +320,7 @@ export function createVoxelHeldItem(
   }
   /** Advance the draw/holster transition to the current clock (also run once per render). */
   function step() {
+    if (stationary) return;
     if (!held || held.phase === "held") return;
     const t = (now() - held.startedMs) / 1000;
     if (held.phase === "drawing") {
@@ -319,7 +337,7 @@ export function createVoxelHeldItem(
     step,
     /** The r001 item that should be in hand (null = empty hand). */
     set(itemId: string | null) {
-      if (disposed || itemId === wanted) return;
+      if (disposed || stationary || itemId === wanted) return;
       wanted = itemId;
       requestError = null;
       if (held) startHolster();
@@ -350,17 +368,84 @@ export function createVoxelHeldItem(
     get visual() {
       return held?.visual;
     },
+    /** Same complete visible item, owned by the independent operator stage; never unequips it. */
+    claimOperatorStow(
+      token: symbol,
+      expectedItem: string | null,
+      parent: TransformNode,
+      local: Matrix,
+    ) {
+      if (
+        disposed ||
+        stationary ||
+        inFlight.size ||
+        requestError ||
+        wanted !== expectedItem ||
+        (expectedItem
+          ? held?.item.id !== expectedItem || held.phase !== "held"
+          : !!held) ||
+        !Array.from(local.m).every(Number.isFinite) ||
+        Math.abs(local.determinant()) < 1e-8
+      )
+        throw new Error("Operator item stow unavailable");
+      const visual = held?.visual;
+      const saved = visual && {
+        parent: visual.root.parent,
+        position: visual.root.position.clone(),
+        scaling: visual.root.scaling.clone(),
+        rotation: visual.root.rotation.clone(),
+        quaternion: visual.root.rotationQuaternion?.clone() ?? null,
+      };
+      const scale = new Vector3(),
+        rotation = new Quaternion(),
+        position = new Vector3();
+      if (!local.decompose(scale, rotation, position))
+        throw new Error("Operator item stow frame unavailable");
+      crew.setSupportTarget(null);
+      stationary = { token, generation: ++loading };
+      const generation = loading;
+      if (visual) {
+        visual.root.parent = parent;
+        visual.root.position.copyFrom(position);
+        visual.root.scaling.copyFrom(scale);
+        visual.root.rotationQuaternion = rotation;
+      }
+      return {
+        get active() {
+          return (
+            stationary?.token === token && stationary.generation === generation
+          );
+        },
+        release() {
+          if (
+            stationary?.token !== token ||
+            stationary.generation !== generation
+          )
+            return;
+          stationary = undefined;
+          if (visual && saved && !disposed) {
+            visual.root.parent = saved.parent;
+            visual.root.position.copyFrom(saved.position);
+            visual.root.scaling.copyFrom(saved.scaling);
+            visual.root.rotation.copyFrom(saved.rotation);
+            visual.root.rotationQuaternion = saved.quaternion;
+          }
+        },
+      };
+    },
     /** Muzzle (or emitter) of the held item in world space, while it is in the hand. */
     muzzle() {
-      if (!held || held.phase !== "held") return undefined;
+      if (stationary || !held || held.phase !== "held") return undefined;
       return held.visual.getMuzzleWorld();
     },
     /** Play the held item's part clip for an accepted action (slide, pump, barrel spin, cell). */
     playItem(action: "fire" | "reload" | "use") {
+      if (stationary) return;
       return held?.visual.play(action);
     },
     /** Armed reload clip with the item's reload part clip (magazine drop / cell swap). */
     reload() {
+      if (stationary) return false;
       if (!held || held.phase !== "held") return false;
       const info = held.cls ? crewArmedClipInfo(held.item, "reload") : null;
       if (info) crew.play(info.animation as VoxelCrewAction);
@@ -370,6 +455,8 @@ export function createVoxelHeldItem(
     dispose() {
       if (disposed) return;
       disposed = true;
+      stationary = undefined;
+      loading++;
       scene.onBeforeRenderObservable.remove(observer);
       scene.onBeforeAnimationsObservable.remove(supportObserver);
       crew.setSupportTarget(null);

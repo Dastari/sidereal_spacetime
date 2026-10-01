@@ -1,3 +1,4 @@
+import type { OperatorContactPlacement } from "./operator-contact";
 import type { Scene } from "@babylonjs/core/scene";
 import type { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -372,20 +373,69 @@ export function createOperatorEnsembleOwner(
   options: {
     prepare?: typeof prepareOperatorEnsemble;
     configureMeshes?: (meshes: readonly AbstractMesh[]) => void;
+    contactPlacement?: (
+      row: OperatorInteriorRow,
+      capability: OperatorActivatedCapability,
+      associationKey: string,
+    ) => OperatorContactPlacement | null;
     onCommitted?: (handle: PreparedOperatorEnsemble) => void;
     restoreAtAcceptedRecovery?: (
       handle: PreparedOperatorEnsemble,
       xy: readonly [number, number],
+      adoptOrdinary?: () => void,
     ) => void;
   } = {},
 ) {
   const signal = readiness.claim(actorId);
+  let transferredOrdinary: PreparedOperatorEnsemble | null = null;
+  let adoptionError = false;
+  const adoptOrdinary = (
+    ordinary: PreparedOperatorEnsemble,
+    xy: readonly [number, number],
+  ) => {
+    options.restoreAtAcceptedRecovery?.(ordinary, xy, () => {
+      if (transferredOrdinary === ordinary) transferredOrdinary = null;
+    });
+    if (transferredOrdinary === ordinary)
+      throw new Error("Ordinary ensemble ownership not adopted");
+    adoptionError = false;
+  };
   const transaction = createOperatorAssetTransaction({
-    restoreAtAcceptedRecovery: (handle, xy) =>
-      options.restoreAtAcceptedRecovery?.(
-        handle as PreparedOperatorEnsemble,
-        xy,
-      ),
+    restoreAtAcceptedRecovery: (handle, xy, receipt) => {
+      const physical = handle as PreparedOperatorEnsemble;
+      const ordinary = physical.ordinaryBaseline;
+      if (!ordinary) {
+        if (physical.contact)
+          throw new Error("Operator ordinary ensemble unavailable");
+        options.restoreAtAcceptedRecovery?.(physical, xy);
+        return;
+      }
+      if (!currentRow || currentRow.operatorPoseState !== "none")
+        throw new Error("Operator current recovery row unavailable");
+      ordinary.root.position.set(xy[0], currentRow.standingElevationM, -xy[1]);
+      ordinary.crew.update({
+        moving: false,
+        seated: false,
+        dead: currentRow.dead,
+      });
+      ordinary.activate();
+      // Activation may synchronously supersede this accepted row. Never transfer a stale ordinary body.
+      try {
+        receipt.assertCurrent();
+      } catch (error) {
+        if (!ordinary.root.isDisposed()) ordinary.root.setEnabled(false);
+        throw error;
+      }
+      physical.releaseOrdinaryBaseline!(ordinary);
+      transferredOrdinary = ordinary;
+      receipt.transfer();
+      try {
+        adoptOrdinary(ordinary, xy);
+      } catch (error) {
+        adoptionError = transferredOrdinary === ordinary;
+        throw error;
+      }
+    },
   });
   let generation = 0;
   let currentKey: string | null = null;
@@ -394,13 +444,52 @@ export function createOperatorEnsembleOwner(
     null;
   let currentRow: OperatorInteriorRow | null = null;
   let disposed = false;
+  let currentPlacement: OperatorContactPlacement | null = null;
+  let withdrawalKey: string | null = null;
+  let recoveryAttempt: {
+    key: string;
+    configurationKey: string;
+    cancel?: () => void;
+  } | null = null;
+  const cancelRecovery = () => {
+    recoveryAttempt?.cancel?.();
+    recoveryAttempt = null;
+  };
   const queued = new Map<PreparedOperatorEnsemble, () => void>();
   const publish = () =>
     signal.update(generation, {
       pending: transaction.pending,
-      hasComplete: !!transaction.committed,
-      error: !!transaction.error,
+      hasComplete: !!transaction.committed || !!transferredOrdinary,
+      error:
+        adoptionError ||
+        !!transaction.error ||
+        !!(transaction.committed as PreparedOperatorEnsemble | null)?.contact
+          ?.failure,
     });
+  const contactStatus = scene.onBeforeRenderObservable.add(() => {
+    if (disposed) return;
+    if (
+      currentKey &&
+      (transaction.committed as PreparedOperatorEnsemble | null)?.contact
+        ?.failure
+    )
+      publish();
+    const physical = transaction.committed as PreparedOperatorEnsemble | null;
+    if (
+      accepted?.pose === "none" &&
+      transaction.error &&
+      physical?.ordinaryBaseline &&
+      withdrawalKey &&
+      !recoveryAttempt?.cancel
+    ) {
+      try {
+        physical.ordinaryBaseline.checkActivation();
+        queueRecoveryTransfer(physical, withdrawalKey, generation);
+      } catch {
+        retryOrdinaryRecovery(withdrawalKey);
+      }
+    }
+  });
   const cancelQueued = () => {
     for (const [handle, cancel] of queued) {
       cancel();
@@ -445,6 +534,80 @@ export function createOperatorEnsembleOwner(
       scene.onBeforeAnimationsObservable.remove(observer),
     );
   };
+  const queueRecoveryTransfer = (
+    physical: PreparedOperatorEnsemble,
+    key: string,
+    epoch: number,
+  ) => {
+    if (
+      disposed ||
+      generation !== epoch ||
+      withdrawalKey !== key ||
+      transaction.committed !== physical ||
+      accepted?.pose !== "none" ||
+      recoveryAttempt?.cancel
+    )
+      return;
+    const attempt = recoveryAttempt ?? {
+      key,
+      configurationKey: physical.ordinaryBaseline?.activationKey() ?? "",
+    };
+    recoveryAttempt = attempt;
+    const observer = scene.onBeforeAnimationsObservable.addOnce(() => {
+      attempt.cancel = undefined;
+      if (
+        disposed ||
+        generation !== epoch ||
+        recoveryAttempt !== attempt ||
+        withdrawalKey !== key ||
+        transaction.committed !== physical ||
+        accepted?.pose !== "none"
+      )
+        return;
+      transaction.accept(accepted);
+      if (transaction.error) physical.contact?.freeze();
+      publish();
+    });
+    attempt.cancel = () => scene.onBeforeAnimationsObservable.remove(observer);
+  };
+  const retryOrdinaryRecovery = (key: string) => {
+    const physical = transaction.committed as PreparedOperatorEnsemble | null;
+    const ordinary = physical?.ordinaryBaseline;
+    if (!ordinary || accepted?.pose !== "none") return;
+    const configurationKey = ordinary.activationKey();
+    if (
+      recoveryAttempt?.key === key &&
+      recoveryAttempt.configurationKey === configurationKey
+    )
+      return;
+    cancelRecovery();
+    const attempt = { key, configurationKey } as {
+      key: string;
+      configurationKey: string;
+      cancel?: () => void;
+    };
+    recoveryAttempt = attempt;
+    const epoch = generation;
+    void ordinary
+      .prepareActivation()
+      .then(() => {
+        if (
+          disposed ||
+          generation !== epoch ||
+          recoveryAttempt !== attempt ||
+          withdrawalKey !== key ||
+          transaction.committed !== physical ||
+          accepted?.pose !== "none"
+        )
+          return;
+        queueRecoveryTransfer(physical!, key, epoch);
+      })
+      .catch(() => {
+        // Same-key flags may become ready later: the normal render check can retry a real ready draw.
+        if (!disposed && generation === epoch && recoveryAttempt === attempt)
+          publish();
+      });
+  };
   const begin = (
     state: OperatorAcceptedState,
     requestedKey: string | null,
@@ -452,21 +615,72 @@ export function createOperatorEnsembleOwner(
     unavailable: boolean,
   ) => {
     if (disposed) return;
+    if (
+      transferredOrdinary &&
+      accepted?.associationKey !== state.associationKey
+    ) {
+      transferredOrdinary.dispose();
+      transferredOrdinary = null;
+      adoptionError = false;
+    }
     accepted = { ...state };
+    if (transferredOrdinary && state.pose === "none" && currentRow) {
+      const ordinary = transferredOrdinary;
+      try {
+        ordinary.root.position.set(
+          state.acceptedX,
+          currentRow.standingElevationM,
+          -state.acceptedY,
+        );
+        ordinary.crew.update({
+          moving: false,
+          seated: false,
+          dead: currentRow.dead,
+        });
+        ordinary.activate();
+        adoptOrdinary(ordinary, [state.acceptedX, state.acceptedY]);
+      } catch {
+        adoptionError = transferredOrdinary === ordinary;
+      }
+    }
     transaction.accept(state);
+    if (
+      (transaction.error || state.pose !== "none") &&
+      (!requestedKey ||
+        unavailable ||
+        state.pose !== "occupied" ||
+        state.dead ||
+        !state.connected)
+    )
+      (
+        transaction.committed as PreparedOperatorEnsemble | null
+      )?.contact?.freeze();
     if (
       !requestedKey ||
       state.pose !== "occupied" ||
       state.dead ||
       !state.connected
     ) {
-      generation++;
+      const nextWithdrawal = operatorCanonical([state, currentRow]);
+      if (nextWithdrawal !== withdrawalKey) {
+        generation++;
+        cancelRecovery();
+      }
+      withdrawalKey = nextWithdrawal;
       currentKey = null;
-      transaction.invalidate();
+      if (!transaction.error) transaction.invalidate();
       cancelQueued();
-      signal.cancel(generation);
+      if (transaction.error || adoptionError) {
+        publish();
+        retryOrdinaryRecovery(nextWithdrawal);
+      } else {
+        cancelRecovery();
+        signal.cancel(generation);
+      }
       return;
     }
+    withdrawalKey = null;
+    cancelRecovery();
     const key = JSON.stringify([
       state.associationKey,
       requestedKey,
@@ -481,6 +695,10 @@ export function createOperatorEnsembleOwner(
     cancelQueued();
     const epoch = generation,
       associationKey = state.associationKey;
+    const placement = currentPlacement && {
+      ...currentPlacement,
+      navigationLocal: currentPlacement.navigationLocal.clone(),
+    };
     const ticket = transaction.request(requestedKey);
     if (unavailable || !resolve) {
       transaction.fail(ticket, "Crew equipment unavailable");
@@ -504,6 +722,7 @@ export function createOperatorEnsembleOwner(
           request,
           undefined,
           options.configureMeshes,
+          placement ?? undefined,
         );
         if (disposed || epoch !== generation) {
           handle.dispose();
@@ -570,6 +789,22 @@ export function createOperatorEnsembleOwner(
       // Revisions can reset on a genuinely new accepted visit; never compare unrelated visits.
       projectionEpoch = { associationKey: state.associationKey, revision };
       currentRow = { ...row };
+      currentPlacement =
+        status === "supported" && capability
+          ? (options.contactPlacement?.(
+              currentRow,
+              capability,
+              state.associationKey,
+            ) ?? null)
+          : null;
+      if (
+        options.contactPlacement &&
+        status === "supported" &&
+        !currentPlacement
+      ) {
+        begin(state, requestedKey, null, true);
+        return true;
+      }
       begin(
         state,
         requestedKey,
@@ -582,7 +817,7 @@ export function createOperatorEnsembleOwner(
     },
     /** Occupied/recovering resources, including future docked item, survive candidate LOD demotion. */
     mayDemote() {
-      return !transaction.committed || accepted?.pose === "none";
+      return !transaction.committed && !transferredOrdinary;
     },
     get committed() {
       return transaction.committed as PreparedOperatorEnsemble | null;
@@ -591,7 +826,12 @@ export function createOperatorEnsembleOwner(
       return !!accepted && accepted.pose !== "none";
     },
     get ownsRequest() {
-      return currentKey !== null || !!transaction.committed;
+      return (
+        currentKey !== null || !!transaction.committed || !!transferredOrdinary
+      );
+    },
+    get transferredOrdinary() {
+      return transferredOrdinary;
     },
     get currentRow() {
       return currentRow && { ...currentRow };
@@ -602,11 +842,25 @@ export function createOperatorEnsembleOwner(
     withdraw() {
       if (disposed) return;
       disposed = true;
+      scene.onBeforeRenderObservable.remove(contactStatus);
       generation++;
       currentRow = null;
-      cancelQueued();
-      transaction.withdraw();
-      signal.dispose();
+      cancelRecovery();
+      try {
+        cancelQueued();
+      } finally {
+        try {
+          transaction.withdraw();
+        } finally {
+          const ordinary = transferredOrdinary;
+          transferredOrdinary = null;
+          try {
+            ordinary?.dispose();
+          } finally {
+            signal.dispose();
+          }
+        }
+      }
     },
   };
 }
