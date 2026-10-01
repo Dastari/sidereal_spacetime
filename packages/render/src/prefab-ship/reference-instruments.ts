@@ -34,7 +34,8 @@ function instrumentKind(id: string): InstrumentKind | undefined {
     id.startsWith("console.navigation")
   )
     return "navigation";
-  if (id.startsWith("console.")) return "systems";
+  if (id.startsWith("console.") || id === "pale-studless.console.standard")
+    return "systems";
   return undefined;
 }
 

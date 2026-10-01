@@ -17,6 +17,7 @@ import {
   REFERENCE_OPTICAL_INTERFACES_R002,
 } from "@sidereal/content/ship-visual-r002";
 import {
+  referenceStaticWallFittingBoundsR002,
   referenceOpticalGuardBoxesR002,
   referenceOpticalMatingSolidsR002,
   referenceOpticalMatingCubeR002,
@@ -1563,7 +1564,7 @@ describe("versioned reference recipes", () => {
     expect(access).toBeGreaterThan(20);
     expect(vent).toBeGreaterThan(20);
   }, 20000);
-  it("selects one complete room-sized group globally and preserves its final cross-course owners", () => {
+  it("selects one complete PRIMARY room-sized group globally and preserves its final cross-course owners", () => {
     let groups = 0,
       broadGroups = 0,
       crossCourse = 0,
@@ -1649,6 +1650,226 @@ describe("versioned reference recipes", () => {
     expect(crossCourse).toBeGreaterThan(0);
     expect(oppositeSides).toBe(3);
   }, 30000);
+  it.each(["fed.s.wren", "fed.m.crest"])(
+    "attributes new mating pigment only to actual final exposed finish owners in %s",
+    (id) => {
+      const ship = PREFAB_SHIPS.find((s) => s.id === id)!,
+        profile = SHIP_VISUAL_MACRO_PROFILES_R002.federation;
+      const pins = profile.opticalMatingPigments;
+      let baseline: ReturnType<typeof compileShipVisual>;
+      try {
+        profile.opticalMatingPigments = {};
+        baseline = compileShipVisual(
+          ship,
+          catalog,
+          "deck",
+          "federation",
+          undefined,
+          "r002",
+        );
+      } finally {
+        profile.opticalMatingPigments = pins;
+      }
+      const current = compileShipVisual(
+        ship,
+        catalog,
+        "deck",
+        "federation",
+        undefined,
+        "r002",
+      );
+      const changed = [...current.cells.entries()].filter(
+        ([k, c]) => c.slot !== baseline.cells.get(k)?.slot,
+      );
+      expect(changed.length).toBeGreaterThan(0);
+      const cols = new Map<string, typeof current.layers>();
+      for (const [k] of changed) {
+        const [x, y] = k.split(",");
+        cols.set(`${x},${y}`, []);
+      }
+      for (const l of current.layers)
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++)
+            cols.get(`${x},${y}`)?.push(l);
+      for (const [k, c] of changed) {
+        const old = baseline.cells.get(k)!;
+        const { slot: oldSlot, ...before } = old,
+          { slot: newSlot, ...after } = c;
+        expect(after, k).toEqual(before);
+        expect(newSlot, k).toBe("trim");
+        expect(
+          [
+            [1, 0, 0],
+            [-1, 0, 0],
+            [0, 1, 0],
+            [0, -1, 0],
+            [0, 0, 1],
+            [0, 0, -1],
+          ].some(
+            ([x, y, z]) =>
+              !current.cells.has(visualCellKey(c.x + x, c.y + y, c.z + z)),
+          ),
+          k,
+        ).toBe(true);
+        const owner = (cols.get(`${c.x},${c.y}`) ?? [])
+          .filter((l) => c.z >= l.bounds[2] && c.z < l.bounds[5])
+          .at(-1)!;
+        expect(owner.id, k).toMatch(
+          /:diagonal-pressure-case$|:diagonal-inset-lip$|:continuous-sill$|:cassette-rim$|:pressure-backing$|:inset-armor$|:exposed-bay:.*:armor$/,
+        );
+        expect(owner.id, k).not.toMatch(
+          /two-sided-pressure-core|inner-service-backing|:hatch$|:cap$/,
+        );
+      }
+    },
+    20000,
+  );
+  it("matches static fitting wall bounds to the actual cardinal renderer frame and rejects uncertain qualification", () => {
+    const source = deriveInterior(
+      PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!,
+      0,
+      catalog,
+    ).sockets.find((o) => o.designId === "pale-studless.kitchen.standard")!;
+    expect(source).toBeDefined();
+    for (const facing of ["fore", "port", "aft", "starboard"] as const) {
+      const size: [number, number] =
+        facing === "fore" || facing === "aft" ? [0.75, 2.25] : [2.25, 0.75];
+      const socket = {
+        ...source,
+        at: [3, 5] as [number, number],
+        size,
+        facing,
+      };
+      const b = referenceStaticWallFittingBoundsR002(
+        socket,
+        G.deck.floorTopTexels,
+      )!;
+      expect(b).toBeDefined();
+      expect(b[0]).toBeCloseTo(3 - 2 / 16);
+      expect(b[1]).toBeCloseTo(5 - 2 / 16);
+      expect(b[3]).toBeCloseTo(3 + size[0] + 2 / 16);
+      expect(b[4]).toBeCloseTo(5 + size[1] + 2 / 16);
+      expect(b[2]).toBeCloseTo(G.deck.floorTopTexels / 16 - 2 / 16);
+      expect(b[5]).toBeCloseTo(G.deck.floorTopTexels / 16 + 1 + 2 / 16);
+    }
+    expect(
+      referenceStaticWallFittingBoundsR002(
+        { ...source, designId: "unknown" },
+        G.deck.floorTopTexels,
+      ),
+    ).toBeUndefined();
+    expect(
+      referenceStaticWallFittingBoundsR002(
+        { ...source, at: [NaN, 0] },
+        G.deck.floorTopTexels,
+      ),
+    ).toBeUndefined();
+    expect(
+      referenceStaticWallFittingBoundsR002(
+        { ...source, size: [0.1, 0.1] },
+        G.deck.floorTopTexels,
+      ),
+    ).toBeUndefined();
+    const certs = structuredClone(
+      SHIP_VISUAL_MACRO_PROFILES_R002.federation.staticWallFittings,
+    );
+    (certs["pale-studless.kitchen.standard"].bounds as unknown as number[])[0] =
+      NaN;
+    expect(
+      referenceStaticWallFittingBoundsR002(
+        source,
+        G.deck.floorTopTexels,
+        certs,
+      ),
+    ).toBeUndefined();
+  });
+  it.each(["fed.s.wren", "fed.m.crest"])(
+    "authors distinct secondary purpose hardware with final backed ownership in %s",
+    (id) => {
+      const ship = PREFAB_SHIPS.find((s) => s.id === id)!,
+        r = compileShipVisual(
+          ship,
+          catalog,
+          "deck",
+          "federation",
+          undefined,
+          "r002",
+        );
+      const groups = new Map<string, typeof r.layers>();
+      for (const l of r.layers.filter((l) =>
+        l.id.includes(":secondary-room-task:"),
+      )) {
+        const k = l.id.slice(0, l.id.lastIndexOf(":"));
+        groups.set(k, [...(groups.get(k) ?? []), l]);
+      }
+      expect(groups.size).toBeGreaterThan(0);
+      const byColumn = new Map<string, typeof r.layers>();
+      for (const l of r.layers)
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            const k = `${x},${y}`;
+            byColumn.set(k, [...(byColumn.get(k) ?? []), l]);
+          }
+      let wells = 0,
+        hardware = 0;
+      for (const [group, ls] of groups) {
+        expect(group).toMatch(
+          /cooling-distribution|tool-rail|power-status|oxygen-supply|load-securement|utility-duct|reading-storage|media-utility/,
+        );
+        expect(ls.some((l) => l.id.endsWith(":well"))).toBe(true);
+        expect(ls.some((l) => l.role === "service")).toBe(true);
+        expect(
+          ls.every(
+            (l) =>
+              l.bounds.every(Number.isInteger) &&
+              l.bounds.slice(0, 3).every((v, i) => v < l.bounds[i + 3]),
+          ),
+        ).toBe(true);
+        for (const l of ls)
+          for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+            for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+              for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+                const key = visualCellKey(x, y, z);
+                const owners = (byColumn.get(`${x},${y}`) ?? []).filter(
+                  (a) => z >= a.bounds[2] && z < a.bounds[5],
+                );
+                const owner = owners.at(-1)!;
+                expect(owner.id, key).toContain(group);
+                expect(
+                  owners.some((a) => a.id.includes(":room-task:")),
+                  key,
+                ).toBe(false);
+                const c = r.cells.get(key);
+                if (owner.role === "void") {
+                  expect(c, key).toBeUndefined();
+                  wells++;
+                  expect(
+                    [
+                      [1, 0],
+                      [-1, 0],
+                      [0, 1],
+                      [0, -1],
+                    ].some(([dx, dy]) =>
+                      [1, 2].every(
+                        (n) =>
+                          r.cells.get(visualCellKey(x + dx * n, y + dy * n, z))
+                            ?.role === "core",
+                      ),
+                    ),
+                    key,
+                  ).toBe(true);
+                } else {
+                  expect(c?.slot, key).toBe(owner.slot);
+                  expect(c?.role, key).toBe(owner.role);
+                  if (c?.role === "service") hardware++;
+                }
+              }
+      }
+      expect(wells).toBeGreaterThan(10);
+      expect(hardware).toBeGreaterThan(10);
+    },
+    20000,
+  );
   it("seats broad exposed armor behind real case returns and backs functional outer wells", () => {
     const kinds = new Set<string>();
     let seats = 0,

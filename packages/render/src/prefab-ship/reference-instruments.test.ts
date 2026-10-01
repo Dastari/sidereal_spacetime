@@ -1,4 +1,4 @@
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -74,5 +74,108 @@ describe("qualified reference instrument channels", () => {
     ).toThrow(/display UVs/);
     expect(scene.materials.length).toBe(count);
     expect(scene.textures.length).toBe(textures);
+  });
+  it("qualifies only the exact workshop console ID with the existing guarded systems path", () => {
+    const material = base(),
+      scene = material.getScene();
+    const textures = scene.textures.length,
+      materials = scene.materials.length;
+    expect(() =>
+      referenceInstrumentMaterial(
+        material,
+        {
+          revision: "r002",
+          id: "pale-studless.console.standard",
+          slot: "emit_a",
+        },
+        { uvs: [0, 0, 1, 0, 2, 1], uvsComplete: true },
+      ),
+    ).toThrow(/display UVs/);
+    for (const id of [
+      "pale-studless.console.standard.extra",
+      "pale-studless.console.other",
+    ])
+      expect(
+        referenceInstrumentMaterial(
+          material,
+          { revision: "r002", id, slot: "emit_a" },
+          {},
+        ),
+      ).toBe(material);
+    for (const revision of ["legacy", "r001"])
+      expect(
+        referenceInstrumentMaterial(
+          material,
+          { revision, id: "pale-studless.console.standard", slot: "emit_a" },
+          {},
+        ),
+      ).toBe(material);
+    expect(
+      referenceInstrumentMaterial(
+        material,
+        {
+          revision: "r002",
+          id: "pale-studless.console.standard",
+          slot: "emit_b",
+        },
+        {},
+      ),
+    ).toBe(material);
+    expect(scene.textures.length).toBe(textures);
+    expect(scene.materials.length).toBe(materials);
+  });
+  it("shares the existing systems atlas and material with the exact workshop ID", () => {
+    const material = base(),
+      scene = material.getScene();
+    const context = new Proxy(
+      {},
+      {
+        get: (_target, key) =>
+          key === "measureText" ? () => ({ width: 1 }) : () => undefined,
+        set: () => true,
+      },
+    );
+    const canvas = {
+      width: 1,
+      height: 1,
+      getContext: () => context,
+      remove: () => undefined,
+    };
+    const spy = vi
+      .spyOn(scene.getEngine(), "createCanvas")
+      .mockReturnValue(
+        canvas as unknown as ReturnType<
+          ReturnType<typeof scene.getEngine>["createCanvas"]
+        >,
+      );
+    try {
+      const channels = { uvs: [0, 0, 1, 0, 1, 1, 0, 1], uvsComplete: true };
+      const systems = referenceInstrumentMaterial(
+        material,
+        { revision: "r002", id: "console.workshop.t1", slot: "emit_a" },
+        channels,
+      );
+      const textures = scene.textures.length,
+        materials = scene.materials.length;
+      const workshop = referenceInstrumentMaterial(
+        material,
+        {
+          revision: "r002",
+          id: "pale-studless.console.standard",
+          slot: "emit_a",
+        },
+        channels,
+      );
+      expect(workshop).toBe(systems);
+      expect(workshop.emissiveTexture).toBe(systems.emissiveTexture);
+      expect(scene.textures.length).toBe(textures);
+      expect(scene.materials.length).toBe(materials);
+      expect(workshop.imageProcessingConfiguration).toBe(
+        material.imageProcessingConfiguration,
+      );
+      expect(workshop.reflectionTexture).toBe(material.reflectionTexture);
+    } finally {
+      spy.mockRestore();
+    }
   });
 });

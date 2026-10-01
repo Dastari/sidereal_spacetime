@@ -1701,6 +1701,25 @@ export const REFERENCE_OPTICAL_MATING_PIGMENTS_R002: Record<
   },
 };
 
+/** Measured authored Z-up bounds, before the renderer's cardinal placement.
+ * Only static non-operator designs may qualify free wall space above them. */
+export const REFERENCE_STATIC_WALL_FITTINGS_R002 = {
+  "pale-studless.kitchen.standard": {
+    assetSha256:
+      "2f58dcc42eb02ed6d6f22325faa4a3dc44d1b0d532f576444c578501680364c6",
+    bounds: [-0.375, -1.125, 0, 0.375, 1.125, 1] as const,
+    clearanceCells: 2,
+    artQuarterTurns: 0,
+  },
+  "pale-studless.table.standard": {
+    assetSha256:
+      "aa18a048b058a7d28dd34442c85f1aad6bbd365d090968fcdd8d83a40b7392c4",
+    bounds: [-0.75, -0.5, 0, 0.75, 0.5, 0.75] as const,
+    clearanceCells: 2,
+    artQuarterTurns: 0,
+  },
+};
+
 export interface ShipVisualMacroProfile {
   armorSection: number;
   corner: number;
@@ -1710,6 +1729,8 @@ export interface ShipVisualMacroProfile {
   accessWidth: number;
   roofShoulder: number;
   partitionCut: number;
+  secondaryWallTask: { width: number; height: number };
+  staticWallFittings: typeof REFERENCE_STATIC_WALL_FITTINGS_R002;
   opticalInterfaces: Record<string, ReferenceOpticalInterface>;
   opticalMatingPigments: typeof REFERENCE_OPTICAL_MATING_PIGMENTS_R002;
   opticalMatingSourceSha256: typeof REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002;
@@ -1752,6 +1773,8 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
     accessWidth: 15,
     roofShoulder: 3,
     partitionCut: 20,
+    secondaryWallTask: { width: 24, height: 13 },
+    staticWallFittings: REFERENCE_STATIC_WALL_FITTINGS_R002,
     opticalInterfaces: REFERENCE_OPTICAL_INTERFACES_R002,
     opticalMatingPigments: REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
     opticalMatingSourceSha256: REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
@@ -1812,6 +1835,8 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
     accessWidth: 16,
     roofShoulder: 3,
     partitionCut: 20,
+    secondaryWallTask: { width: 24, height: 13 },
+    staticWallFittings: REFERENCE_STATIC_WALL_FITTINGS_R002,
     opticalInterfaces: REFERENCE_OPTICAL_INTERFACES_R002,
     opticalMatingPigments: REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
     opticalMatingSourceSha256: REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
@@ -1872,6 +1897,8 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
     accessWidth: 17,
     roofShoulder: 3,
     partitionCut: 20,
+    secondaryWallTask: { width: 24, height: 13 },
+    staticWallFittings: REFERENCE_STATIC_WALL_FITTINGS_R002,
     opticalInterfaces: REFERENCE_OPTICAL_INTERFACES_R002,
     opticalMatingPigments: REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
     opticalMatingSourceSha256: REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,

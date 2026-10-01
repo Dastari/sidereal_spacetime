@@ -1,0 +1,172 @@
+{
+  "schema": "sidereal.ship-object-art.v1",
+  "revision": "equipment-r018",
+  "status": "isolated opt-in proposal; default art and navigation unchanged",
+  "frame": "interior: origin at footprint centre on the floor, +X along the wall (w), +Y front (d), +Z up; glTF (x, y, z) -> (x, z, -y)",
+  "sizes": "construction-grammar.v1.json socket [designId, w, d, h] texels (1/16 m)",
+  "materialSlots": [
+    "slot0_primary",
+    "slot1_secondary",
+    "slot2_accent",
+    "slot3_trim",
+    "slot4_metal",
+    "slot5_dark",
+    "slot6_emit_a",
+    "slot7_emit_b",
+    "slot8_glass",
+    "slot9_primary.fabric",
+    "slot10_secondary.fabric",
+    "slot11_accent.fabric",
+    "slot12_accent.flora",
+    "slot13_metal.barrel",
+    "slot14_secondary.vessel",
+    "slot15_primary.receiver-cover",
+    "slot16_primary.thermal-cover",
+    "slot17_primary.furniture-cover",
+    "slot18_secondary.furniture-cover",
+    "slot19_primary.fabric.furniture-cover",
+    "slot20_secondary.fabric.furniture-cover",
+    "slot21_accent.fabric.furniture-cover",
+    "slot22_primary.mug-body",
+    "slot23_dark.mug-body",
+    "slot24_metal.mug-body",
+    "slot25_primary.equipment-cover",
+    "slot26_primary.equipment-frame",
+    "slot27_secondary.equipment-cover",
+    "slot28_secondary.equipment-frame",
+    "slot29_trim.equipment-cover",
+    "slot30_trim.equipment-frame"
+  ],
+  "generator": {
+    "script": "scripts/art_library/ship_component_export.py",
+    "sha256": "eb69d9ab7c7de1b086054385415513cbbcbca5284bb6856c21e81f4d80dec180",
+    "builders": "scripts/art_library/ship_object_art.py",
+    "buildersSha256": "ebf1badcd8872ab99998857fd82ee1a51fbb23acff9560848457e8898a6e6ad4",
+    "blender": "4.3.2",
+    "candidateBuilder": "scripts/art_library/ship_reference_r018_equipment.py",
+    "candidateBuilderSha256": "314e3afaccdb2d4d62fdd6f5bbcdb971e5b2f72477dfdf652dcc1533d1260f72",
+    "housingHelperSha256": "f05fd738d4bc91a7978d344f8c5015358433fc58cb6840742688a94d1744eaad"
+  },
+  "requiredObjectIds": [
+    "shipyard.equipment.wall-locker",
+    "shipyard.equipment.bridge-bank",
+    "pale-studless.console.standard"
+  ],
+  "objects": [
+    {
+      "designId": "pale-studless.console.standard",
+      "sizeTexels": [
+        24,
+        10,
+        16
+      ],
+      "glb": "assets/runtime/ship-visual/r002/equipment-r018/pale-studless.console.standard.glb",
+      "sha256": "8be78d2fd219ae284a2b9267afe59067fbc99cdf66b2091a84c1622cae908c6d",
+      "bytes": 107484,
+      "triangles": 1100,
+      "boxes": 35,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot6_emit_a",
+        "slot7_emit_b",
+        "slot25_primary.equipment-cover",
+        "slot26_primary.equipment-frame",
+        "slot30_trim.equipment-frame"
+      ],
+      "boundsM": [
+        [
+          -0.75,
+          -0.3125,
+          0.0
+        ],
+        [
+          0.75,
+          0.3125,
+          0.9375
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.bridge-bank",
+      "sizeTexels": [
+        32,
+        8,
+        18
+      ],
+      "glb": "assets/runtime/ship-visual/r002/equipment-r018/shipyard.equipment.bridge-bank.glb",
+      "sha256": "f44e417cf4f23aa5ca689db5cf3797d7cbe86f2e66e563ebc4149186450f37b0",
+      "bytes": 110404,
+      "triangles": 1146,
+      "boxes": 40,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot1_secondary",
+        "slot2_accent",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot6_emit_a",
+        "slot7_emit_b",
+        "slot25_primary.equipment-cover",
+        "slot26_primary.equipment-frame"
+      ],
+      "boundsM": [
+        [
+          -1.0,
+          -0.25,
+          0.0
+        ],
+        [
+          1.0,
+          0.25,
+          1.0625
+        ]
+      ]
+    },
+    {
+      "designId": "shipyard.equipment.wall-locker",
+      "sizeTexels": [
+        12,
+        8,
+        32
+      ],
+      "glb": "assets/runtime/ship-visual/r002/equipment-r018/shipyard.equipment.wall-locker.glb",
+      "sha256": "c258e6cb35987afce6374a545a159977f1b07fc9341d0de739ec133c4207326c",
+      "bytes": 64212,
+      "triangles": 632,
+      "boxes": 13,
+      "materialSlotsUsed": [
+        "slot0_primary",
+        "slot3_trim",
+        "slot4_metal",
+        "slot5_dark",
+        "slot7_emit_b",
+        "slot25_primary.equipment-cover",
+        "slot26_primary.equipment-frame",
+        "slot27_secondary.equipment-cover"
+      ],
+      "boundsM": [
+        [
+          -0.375,
+          -0.25,
+          0.0
+        ],
+        [
+          0.375,
+          0.2062,
+          2.0
+        ]
+      ]
+    }
+  ],
+  "source": {
+    "blend": "assets/source/ship-reference/r002/equipment-r018/equipment.blend",
+    "sha256": "6d3a42c434c5b4a34f692fc5c10854a7ba3d6aea3e0db1a15cdec740eabb88c4",
+    "note": "editable Blender source saved by this export"
+  }
+}

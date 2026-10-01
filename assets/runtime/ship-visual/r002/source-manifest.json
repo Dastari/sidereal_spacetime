@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "397da09afbc6d26268e84a07f6b1663a1ed159702cf47286ecf6ee3429780a47",
+  "compilerSha256": "98da3c5d4ff124988856bcf6c3cbb641a8054bdc67e4af1928c93c9c2cbe8744",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -12,11 +12,11 @@
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "d7d84ea9e8fc7c6b09d55aae0e0d96176a12528c7bd2aeb636ea95d4fad85492"
+      "sha256": "bbfd0d7bf8e677bfaaf7bf55f0283ca1ed4bd93798645baa2f3f84b99358b043"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "3ffbf69fe4e9c38d56556deeb18d3847dae007896fcecb8f3faf96c805710e26"
+      "sha256": "2d3d7efd1b9d9ab9dc501105280c4c15708a14ce1dc8e7cc1c738560bd6b7b0b"
     },
     {
       "path": "packages/sim/src/ship-dresser.ts",
@@ -25,6 +25,10 @@
     {
       "path": "packages/content/src/ship-prefab.ts",
       "sha256": "d5c9fd0ca77bfe5fc726a78af0e92d1846b2f2f32f9e17114f5c8430b7db3d22"
+    },
+    {
+      "path": "packages/content/src/ship-furniture.ts",
+      "sha256": "acc109413b2c28ebaf5a6b452fcff2d777d31ab9f5401b8a550d2c86206aa7d2"
     },
     {
       "path": "packages/sim/src/ship-visual-sampler.ts",
@@ -100,11 +104,15 @@
     },
     {
       "path": "scripts/art_library/ship_reference_r002_art.py",
-      "sha256": "a83a1bea57ad59e0a419a432683dc1b04e540a2018b47b031d40b41d4cc0b919"
+      "sha256": "f05fd738d4bc91a7978d344f8c5015358433fc58cb6840742688a94d1744eaad"
     },
     {
-      "path": "assets/runtime/ship-visual/r002/door-leaf-r017-source.json",
-      "sha256": "1f00ebc8e79c4069b7fb66c9f12548d7221d24ce10eef4e71b436bae6f7d15ed"
+      "path": "assets/runtime/ship-visual/r002/door-leaf-r018-source.json",
+      "sha256": "636b939968c14b6f076ee6de698a419ccbd247aadc2ba6e732cb513a0081b53a"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_r018_equipment.py",
+      "sha256": "314e3afaccdb2d4d62fdd6f5bbcdb971e5b2f72477dfdf652dcc1533d1260f72"
     },
     {
       "path": "scripts/art_library/ship_kit_modules.py",
@@ -124,7 +132,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/reference-instruments.ts",
-      "sha256": "6581932d4c335145234b93a1fc38f5396d38560f86dd3524d0414b2d1c3a8582"
+      "sha256": "735640fc6945f57b1e301f2f7816aa00c43a1cff183ca84a4ad66932eb34764c"
     }
   ]
 }

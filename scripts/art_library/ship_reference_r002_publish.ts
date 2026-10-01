@@ -9,7 +9,9 @@ import {
   REFERENCE_OPTICAL_INTERFACES_R002,
   REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
   REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
+  REFERENCE_STATIC_WALL_FITTINGS_R002,
 } from "@sidereal/content/ship-visual-r002";
+import { interiorArtQuarterTurns } from "@sidereal/content/ship-furniture";
 import { SHIP_KIT_SLOTS } from "@sidereal/content/ship-kit";
 import {
   SHIP_VISUAL_FRAME,
@@ -32,6 +34,7 @@ const sources = [
   "packages/sim/src/ship-visual-layers-r002.ts",
   "packages/sim/src/ship-dresser.ts",
   "packages/content/src/ship-prefab.ts",
+  "packages/content/src/ship-furniture.ts",
   "packages/sim/src/ship-visual-sampler.ts",
   "packages/sim/src/ship-visual-compiler.ts",
   "packages/render/src/prefab-ship/sampled-structure.ts",
@@ -51,7 +54,8 @@ const sources = [
   "packages/render/src/pbr-light-budget.ts",
   "packages/render/src/local-light-budget.ts",
   "scripts/art_library/ship_reference_r002_art.py",
-  "assets/runtime/ship-visual/r002/door-leaf-r017-source.json",
+  "assets/runtime/ship-visual/r002/door-leaf-r018-source.json",
+  "scripts/art_library/ship_reference_r018_equipment.py",
   "scripts/art_library/ship_kit_modules.py",
   "scripts/art_library/bow_modules.py",
   "scripts/art_library/ship_reference_r002_maps.py",
@@ -99,6 +103,113 @@ for (const [kind, dir] of [
       bytes: bytes.length,
     });
   }
+}
+// Exactly three immutable, opt-in equipment replacements; never a broad
+// object revision switch or a default content registry update.
+const equipmentDir = "ship-visual/r002/equipment-r018";
+const equipmentMeta = JSON.parse(
+  readFileSync(
+    resolve(root, "assets/runtime", equipmentDir, "manifest.json"),
+    "utf8",
+  ),
+);
+const equipmentIds = [
+  "shipyard.equipment.wall-locker",
+  "shipyard.equipment.bridge-bank",
+  "pale-studless.console.standard",
+].sort();
+if (
+  JSON.stringify([...equipmentMeta.requiredObjectIds].sort()) !==
+    JSON.stringify(equipmentIds) ||
+  equipmentMeta.objects.length !== equipmentIds.length ||
+  equipmentMeta.generator.candidateBuilderSha256 !==
+    hash(
+      readFileSync(
+        resolve(root, "scripts/art_library/ship_reference_r018_equipment.py"),
+      ),
+    ) ||
+  equipmentMeta.generator.housingHelperSha256 !==
+    hash(
+      readFileSync(
+        resolve(root, "scripts/art_library/ship_reference_r002_art.py"),
+      ),
+    ) ||
+  equipmentMeta.generator.script !==
+    "scripts/art_library/ship_component_export.py" ||
+  equipmentMeta.generator.sha256 !==
+    hash(readFileSync(resolve(root, equipmentMeta.generator.script))) ||
+  equipmentMeta.generator.builders !==
+    "scripts/art_library/ship_object_art.py" ||
+  equipmentMeta.generator.buildersSha256 !==
+    hash(readFileSync(resolve(root, equipmentMeta.generator.builders))) ||
+  equipmentMeta.source.blend !==
+    "assets/source/ship-reference/r002/equipment-r018/equipment.blend" ||
+  equipmentMeta.source.sha256 !==
+    hash(readFileSync(resolve(root, equipmentMeta.source.blend)))
+)
+  throw Error(
+    "Equipment source/provenance does not match exact three-object proposal",
+  );
+for (const id of equipmentIds) {
+  const row = equipmentMeta.objects.find((r: any) => r.designId === id);
+  const index = assets.findIndex((a) => a.kind === "object" && a.id === id);
+  if (!row || index < 0) throw Error(`Missing candidate equipment ${id}`);
+  const bytes = readFileSync(
+    resolve(root, "assets/runtime", equipmentDir, `${id}.glb`),
+  );
+  const [lo, hi] = row.boundsM;
+  const bounds: [number, number, number, number, number, number] = [
+    lo[0],
+    lo[2],
+    -hi[1],
+    hi[0],
+    hi[2],
+    -lo[1],
+  ];
+  if (
+    hash(bytes) !== row.sha256 ||
+    bytes.length !== row.bytes ||
+    !bounds.every(Number.isFinite) ||
+    bounds.some((v, i) => i < 3 && v >= bounds[i + 3]) ||
+    bounds.some((v, i) =>
+      i < 3
+        ? v < assets[index].bounds[i] - 1e-4
+        : v > assets[index].bounds[i] + 1e-4,
+    )
+  )
+    throw Error(`Candidate equipment violates pinned source/envelope: ${id}`);
+  assets[index] = {
+    ...assets[index],
+    bounds,
+    url: `/assets/${equipmentDir}/${id}.glb`,
+    sha256: row.sha256,
+    bytes: row.bytes,
+  };
+}
+// Measured static certificates cannot qualify space using unrelated old heights.
+const objectMetadata = JSON.parse(
+  readFileSync(
+    resolve(root, "assets/runtime/ship-objects/r003/manifest.json"),
+    "utf8",
+  ),
+);
+for (const [id, certificate] of Object.entries(
+  REFERENCE_STATIC_WALL_FITTINGS_R002,
+)) {
+  const row = objectMetadata.objects.find((r: any) => r.designId === id);
+  const asset = assets.find((a) => a.kind === "object" && a.id === id);
+  if (
+    !row ||
+    !asset ||
+    asset.frame !== "interior" ||
+    asset.sha256 !== certificate.assetSha256 ||
+    certificate.artQuarterTurns !== interiorArtQuarterTurns(id) ||
+    JSON.stringify([...row.boundsM[0], ...row.boundsM[1]]) !==
+      JSON.stringify(certificate.bounds)
+  )
+    throw Error(
+      `Static fitting wall certificate mismatches actual selected geometry: ${id}`,
+    );
 }
 // Retained optical shell and mount art stays pinned to its published native source.
 const kitBytes = readFileSync(
@@ -182,18 +293,18 @@ const normal = readFileSync(
   resolve(root, "assets/runtime/ship-visual/r002/panel-normal.png"),
 );
 const leaf = readFileSync(
-  resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r017.glb"),
+  resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r018.glb"),
 );
 const leafSource = JSON.parse(
   readFileSync(
-    resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r017-source.json"),
+    resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r018-source.json"),
     "utf8",
   ),
 );
 assets.push({
   kind: "kit",
   id: "door-leaf.reference",
-  url: "/assets/ship-visual/r002/door-leaf-r017.glb",
+  url: "/assets/ship-visual/r002/door-leaf-r018.glb",
   sha256: hash(leaf),
   bytes: leaf.length,
   frame: "interior",

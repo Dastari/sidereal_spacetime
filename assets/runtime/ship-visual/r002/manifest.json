@@ -4,8 +4,8 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "397da09afbc6d26268e84a07f6b1663a1ed159702cf47286ecf6ee3429780a47",
-  "profilesSha256": "b844278d706d3a6cc02049eec5bae8fdd3e80517fca1b07e473f2e5bdfae52aa",
+  "compilerSha256": "98da3c5d4ff124988856bcf6c3cbb641a8054bdc67e4af1928c93c9c2cbe8744",
+  "profilesSha256": "e3555a342f78484835a7c07113041cf55c90a851168bd048b0c6bb1d0fdfad9a",
   "slots": [
     "primary",
     "secondary",
@@ -79,9 +79,9 @@
         0.9375,
         0.3125
       ],
-      "url": "/assets/ship-objects/r003/pale-studless.console.standard.glb",
-      "sha256": "349f50b5c0fcd0b298bc920730de0d2c17a283d2d81c9b79527f0bf71962578c",
-      "bytes": 36192
+      "url": "/assets/ship-visual/r002/equipment-r018/pale-studless.console.standard.glb",
+      "sha256": "8be78d2fd219ae284a2b9267afe59067fbc99cdf66b2091a84c1622cae908c6d",
+      "bytes": 107484
     },
     {
       "kind": "object",
@@ -127,9 +127,9 @@
         1.0625,
         0.25
       ],
-      "url": "/assets/ship-objects/r003/shipyard.equipment.bridge-bank.glb",
-      "sha256": "07af6a6943e333a388c59c772273237c3201850b3abaa66da27ca9444f9d789f",
-      "bytes": 69244
+      "url": "/assets/ship-visual/r002/equipment-r018/shipyard.equipment.bridge-bank.glb",
+      "sha256": "f44e417cf4f23aa5ca689db5cf3797d7cbe86f2e66e563ebc4149186450f37b0",
+      "bytes": 110404
     },
     {
       "kind": "object",
@@ -250,14 +250,14 @@
       "bounds": [
         -0.375,
         0,
-        -0.25,
+        -0.2062,
         0.375,
         2,
         0.25
       ],
-      "url": "/assets/ship-objects/r003/shipyard.equipment.wall-locker.glb",
-      "sha256": "411ec59409cb59ebe27fcf8fa8614e32876dc8291c14e8f46f42382ebf3f6cfc",
-      "bytes": 17596
+      "url": "/assets/ship-visual/r002/equipment-r018/shipyard.equipment.wall-locker.glb",
+      "sha256": "c258e6cb35987afce6374a545a159977f1b07fc9341d0de739ec133c4207326c",
+      "bytes": 64212
     },
     {
       "kind": "component",
@@ -48552,9 +48552,9 @@
     {
       "kind": "kit",
       "id": "door-leaf.reference",
-      "url": "/assets/ship-visual/r002/door-leaf-r017.glb",
-      "sha256": "c2cdc00ba5ef92069f339da22ad079b70d7b2c8d2194af033cb8cbed3246a35e",
-      "bytes": 93308,
+      "url": "/assets/ship-visual/r002/door-leaf-r018.glb",
+      "sha256": "cbbb1e925fb9179917074ba09a10b8a241805c1ade75bd2d291d767ba1dcd540",
+      "bytes": 93312,
       "frame": "interior",
       "bounds": [
         -0.5,
