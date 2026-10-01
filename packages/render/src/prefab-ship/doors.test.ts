@@ -140,7 +140,12 @@ describe("prefab door specs", () => {
     );
   });
 
-  it.each(["door-leaf.glb", "door-leaf-r017.glb", "door-leaf-r018.glb"])(
+  it.each([
+    "door-leaf.glb",
+    "door-leaf-r017.glb",
+    "door-leaf-r018.glb",
+    "door-leaf-r019.glb",
+  ])(
     "validates %s before allocation and preserves legacy motion and authored normals",
     (file) => {
       const engine = new NullEngine();

@@ -10,7 +10,11 @@ import {
 } from "@sidereal/content/ship-prefab";
 import { dressShip } from "./ship-dresser";
 import * as dresser from "./ship-dresser";
-import { polygonBoundarySample } from "./ship-visual-sampler";
+import {
+  polygonBoundarySample,
+  sampleShipVisualLayers,
+} from "./ship-visual-sampler";
+import type { ShipVisualLayer } from "@sidereal/content/ship-visual";
 import {
   referencePlateDecals,
   SHIP_VISUAL_MACRO_PROFILES_R002,
@@ -21,6 +25,7 @@ import {
   referenceOpticalGuardBoxesR002,
   referenceOpticalMatingSolidsR002,
   referenceOpticalMatingCubeR002,
+  compactColumns,
 } from "./ship-visual-layers-r002";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
@@ -32,6 +37,275 @@ import {
   removeShipVisualCells,
   type VisualCell,
 } from "./ship-visual-compiler";
+
+describe("candidate ordered column compaction", () => {
+  const column = (
+    x: number,
+    id = "case",
+    role: ShipVisualLayer["role"] = "core",
+  ): ShipVisualLayer => ({
+    id,
+    role,
+    slot: "secondary",
+    support: "pressure",
+    bounds: [x, 0, 0, x + 1, 1, 3],
+  });
+  const cells = (layers: ShipVisualLayer[]) =>
+    [...sampleShipVisualLayers(layers)].sort(([a], [b]) => a.localeCompare(b));
+  const exposed = (layers: ShipVisualLayer[]) => {
+    const volume = sampleShipVisualLayers(layers);
+    return [...volume.values()]
+      .flatMap((c) =>
+        [
+          [-1, 0, 0],
+          [1, 0, 0],
+          [0, -1, 0],
+          [0, 1, 0],
+          [0, 0, -1],
+          [0, 0, 1],
+        ]
+          .filter(
+            (n) =>
+              !volume.has(visualCellKey(c.x + n[0], c.y + n[1], c.z + n[2])),
+          )
+          .map((n) => ({ cell: c, face: n })),
+      )
+      .sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b)));
+  };
+  it("preserves reconstructed core after overlapping clears with reused IDs and split heights", () => {
+    const layers = [
+      column(0),
+      column(0, "clear", "void"),
+      column(1),
+      column(0),
+      {
+        ...column(1, "clear", "void"),
+        bounds: [1, 0, 1, 2, 1, 2] as ShipVisualLayer["bounds"],
+      },
+      {
+        ...column(1),
+        slot: "primary" as const,
+        bounds: [1, 0, 1, 2, 1, 2] as ShipVisualLayer["bounds"],
+      },
+    ];
+    const compacted = compactColumns(layers);
+    expect(cells(compacted)).toEqual(cells(layers));
+    expect(exposed(compacted)).toEqual(exposed(layers));
+    const intact = sampleShipVisualLayers(layers),
+      actual = sampleShipVisualLayers(compacted);
+    const removed = (volume: typeof actual) =>
+      [...removeShipVisualCells(volume, new Set(["0,0,1"]))].sort(([a], [b]) =>
+        a.localeCompare(b),
+      );
+    expect(removed(actual)).toEqual(removed(intact));
+  });
+  it("merges compatible adjacent columns across only spatially disjoint writes", () => {
+    const layers = [column(0), column(3, "independent", "void"), column(1)];
+    const compacted = compactColumns(layers);
+    expect(compacted).toHaveLength(2);
+    expect(compacted[0].bounds).toEqual([0, 0, 0, 2, 1, 3]);
+    expect(cells(compacted)).toEqual(cells(layers));
+  });
+  it("compacts interleaved revisits while preserving every column's entire write sequence", () => {
+    const layers = [
+      column(0),
+      column(1),
+      column(0, "clear", "void"),
+      column(1, "clear", "void"),
+      { ...column(0), slot: "primary" as const },
+      { ...column(1), slot: "primary" as const },
+    ];
+    const compacted = compactColumns(layers);
+    expect(compacted).toHaveLength(3);
+    expect(compacted.map((l) => [l.role, l.slot, l.bounds])).toEqual([
+      ["core", "secondary", [0, 0, 0, 2, 1, 3]],
+      ["void", "secondary", [0, 0, 0, 2, 1, 3]],
+      ["core", "primary", [0, 0, 0, 2, 1, 3]],
+    ]);
+    expect(cells(compacted)).toEqual(cells(layers));
+    expect(exposed(compacted)).toEqual(exposed(layers));
+  });
+  it("joins available compatible writes from unequal-length column stacks without crossing predecessors", () => {
+    const layers = [
+      column(0),
+      column(1),
+      column(2),
+      column(1, "intermediate", "plate"),
+      column(2, "intermediate", "plate"),
+      { ...column(0, "final"), slot: "primary" as const },
+      { ...column(1, "final"), slot: "primary" as const },
+      { ...column(2, "final"), slot: "primary" as const },
+    ];
+    const compacted = compactColumns(layers);
+    expect(compacted).toHaveLength(3);
+    expect(compacted.map((l) => [l.id, l.bounds])).toEqual([
+      ["case", [0, 0, 0, 3, 1, 3]],
+      ["intermediate", [1, 0, 0, 3, 1, 3]],
+      ["final", [0, 0, 0, 3, 1, 3]],
+    ]);
+    expect(cells(compacted)).toEqual(cells(layers));
+    expect(exposed(compacted)).toEqual(exposed(layers));
+  });
+  it("commutes disjoint Z writes with opposite column orders while retaining exact unions", () => {
+    const low = (x: number): ShipVisualLayer => ({
+      ...column(x, "lower"),
+      bounds: [x, 0, 0, x + 1, 1, 1],
+    });
+    const high = (x: number): ShipVisualLayer => ({
+      ...column(x, "upper"),
+      bounds: [x, 0, 2, x + 1, 1, 3],
+    });
+    const layers = [low(0), high(1), high(0), low(1)];
+    const compacted = compactColumns(layers);
+    expect(compacted).toHaveLength(2);
+    expect(compacted.map((l) => l.bounds).sort()).toEqual(
+      [
+        [0, 0, 0, 2, 1, 1],
+        [0, 0, 2, 2, 1, 3],
+      ].sort(),
+    );
+    expect(cells(compacted)).toEqual(cells(layers));
+    expect(exposed(compacted)).toEqual(exposed(layers));
+  });
+  it("retains every partial-height predecessor before a later full-height write", () => {
+    const layers = [
+      column(0),
+      {
+        ...column(0, "lower", "plate"),
+        bounds: [0, 0, 0, 1, 1, 1] as ShipVisualLayer["bounds"],
+      },
+      {
+        ...column(0, "upper", "void"),
+        bounds: [0, 0, 2, 1, 1, 3] as ShipVisualLayer["bounds"],
+      },
+      { ...column(0, "reconstructed"), slot: "primary" as const },
+    ];
+    const compacted = compactColumns(layers);
+    expect(compacted).toHaveLength(4);
+    expect(compacted.at(-1)?.id).toBe("reconstructed");
+    expect(cells(compacted)).toEqual(cells(layers));
+    expect(exposed(compacted)).toEqual(exposed(layers));
+  });
+  it("does not commute through a broad overlapping clear barrier", () => {
+    const layers = [
+      column(0),
+      {
+        ...column(0, "broad-clear", "void"),
+        bounds: [0, 0, 1, 2, 1, 2] as ShipVisualLayer["bounds"],
+      },
+      column(1),
+    ];
+    const compacted = compactColumns(layers);
+    expect(compacted).toHaveLength(3);
+    expect(compacted[1].id).toBe("broad-clear");
+    expect(cells(compacted)).toEqual(cells(layers));
+    expect(exposed(compacted)).toEqual(exposed(layers));
+  });
+  it("keeps newly unlocked identical children in a separate emitted operation", () => {
+    const layers = [column(0), column(1), column(0), column(1)];
+    const compacted = compactColumns(layers);
+    expect(compacted).toHaveLength(2);
+    expect(compacted.map((l) => l.bounds)).toEqual([
+      [0, 0, 0, 2, 1, 3],
+      [0, 0, 0, 2, 1, 3],
+    ]);
+    expect(cells(compacted)).toEqual(cells(layers));
+  });
+  it("ignores stale heap entries after an existing ready group grows", () => {
+    const layers = [
+      column(0, "a"),
+      column(1, "a"),
+      column(2, "b"),
+      column(0, "b"),
+      column(1, "b"),
+      column(3, "d"),
+    ];
+    const compacted = compactColumns(layers);
+    expect(compacted.map((l) => [l.id, l.bounds])).toEqual([
+      ["a", [0, 0, 0, 2, 1, 3]],
+      ["b", [0, 0, 0, 3, 1, 3]],
+      ["d", [3, 0, 0, 4, 1, 3]],
+    ]);
+    expect(cells(compacted)).toEqual(cells(layers));
+    expect(exposed(compacted)).toEqual(exposed(layers));
+  });
+  it("rejects before adding an over-budget semantic key", () => {
+    const layers = Array.from({ length: 100001 }, (_, i) =>
+      column(0, `key-${i}`),
+    );
+    expect(() => compactColumns(layers)).toThrow(
+      "Visual compaction semantic keys exceed limit",
+    );
+  });
+  it("counts broad barriers in the cumulative output ceiling", () => {
+    const barrier = {
+      ...column(0),
+      bounds: [0, 0, 0, 2, 1, 3] as ShipVisualLayer["bounds"],
+    };
+    expect(() =>
+      compactColumns(Array.from({ length: 100001 }, () => barrier)),
+    ).toThrow("Visual layer count exceeds limit");
+  });
+  it.each(["polygon", "holes", "band"] as const)(
+    "treats uncertain %s footprints as an ordering barrier",
+    (field) => {
+      const uncertain: ShipVisualLayer = {
+        ...column(3, "uncertain"),
+        ...(field === "polygon"
+          ? {
+              polygon: [
+                [3, 0],
+                [4, 0],
+                [4, 1],
+                [3, 1],
+              ] as [number, number][],
+            }
+          : field === "holes"
+            ? { holes: [] }
+            : { band: 1 }),
+      };
+      const layers = [column(0), uncertain, column(1)];
+      expect(compactColumns(layers)).toHaveLength(3);
+      expect(cells(compactColumns(layers))).toEqual(cells(layers));
+    },
+  );
+  it("does not merge different sampled chart, facet, surface or support qualifications", () => {
+    const variants: Partial<ShipVisualLayer>[] = [
+      { surfaceRole: "wall" },
+      { support: "other" },
+      { normalHint: [1, 0, 0] },
+      {
+        normalChart: "intact-face",
+        normalHint: [Math.SQRT1_2, 0, Math.SQRT1_2],
+      },
+      { normalSide: { id: "side", normal: [1, 0, 0], faces: 2 } },
+      { facet: { id: "plane", a: [1, 1, 0], d: 2 } },
+    ];
+    for (const metadata of variants) {
+      const layers = [column(0), { ...column(1), ...metadata }];
+      expect(compactColumns(layers)).toHaveLength(2);
+      expect(cells(compactColumns(layers))).toEqual(cells(layers));
+      expect(exposed(compactColumns(layers))).toEqual(exposed(layers));
+    }
+  });
+  it("retains both actual Wren pressure courses after split optical passes", () => {
+    const ship = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
+    const r = compileShipVisual(
+      ship,
+      defaultPrefabComponentCatalog(),
+      "deck",
+      "federation",
+      undefined,
+      "r002",
+    );
+    for (const y of [32, 79]) {
+      expect(r.cells.get(visualCellKey(191, y, 15))).toBeUndefined();
+      expect(r.cells.get(visualCellKey(190, y, 15))?.slot).toBe("primary");
+      for (const x of [189, 188])
+        expect(r.cells.get(visualCellKey(x, y, 15))?.role).toBe("core");
+    }
+  }, 20000);
+});
 
 describe("versioned reference recipes", () => {
   const doc = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
@@ -1252,6 +1526,34 @@ describe("versioned reference recipes", () => {
       expect(
         current.layers.some((l) => l.id.endsWith("floor-circulation-seam")),
       ).toBe(false);
+      const circulation = current.layers.filter((l) =>
+        l.id.includes(":floor-room-circulation:"),
+      );
+      expect(circulation.length).toBeGreaterThan(0);
+      const circulationRooms = [
+        ...new Set(circulation.map((l) => l.id.split(":").at(-1))),
+      ];
+      let circulationCells = 0;
+      for (const l of circulation)
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            const c = current.cells.get(visualCellKey(x, y, l.bounds[5] - 1));
+            expect(c?.role).toBe("floor");
+            expect(c?.facet).toBeUndefined();
+            expect(current.cells.has(visualCellKey(x, y, l.bounds[5]))).toBe(
+              false,
+            );
+            circulationCells++;
+          }
+      console.log(
+        JSON.stringify({
+          prefab: ship.id,
+          circulationLayers: circulation.length,
+          circulationCells,
+          circulationRooms,
+          completeContactPlanes: true,
+        }),
+      );
       expect(
         current.layers.some((l) => l.id.includes("floor-cover-binding")),
       ).toBe(true);
@@ -1596,6 +1898,11 @@ describe("versioned reference recipes", () => {
         );
         if (!selected.length) continue;
         groups++;
+        expect(
+          selected.some((l) => l.id.endsWith(":offset-storage-field")),
+        ).toBe(true);
+        expect(selected.some((l) => l.id.endsWith(":well"))).toBe(true);
+        expect(selected.some((l) => l.role === "service")).toBe(true);
         expect(new Set(selected.map((l) => l.support)).size).toBe(1);
         const xs = selected.flatMap((l) => [l.bounds[0], l.bounds[3]]);
         const ys = selected.flatMap((l) => [l.bounds[1], l.bounds[4]]);
@@ -1636,8 +1943,25 @@ describe("versioned reference recipes", () => {
                 const owner = relevant[relevant.length - 1];
                 expect(owner.id, cellKey).toContain(`:room-task:${room.id}:`);
                 const c = result.cells.get(cellKey);
-                if (owner.role === "void") expect(c, cellKey).toBeUndefined();
-                else {
+                if (owner.role === "void") {
+                  expect(c, cellKey).toBeUndefined();
+                  expect(
+                    [
+                      [1, 0],
+                      [-1, 0],
+                      [0, 1],
+                      [0, -1],
+                    ].some(([dx, dy]) =>
+                      [1, 2].every(
+                        (n) =>
+                          result.cells.get(
+                            visualCellKey(x + dx * n, y + dy * n, z),
+                          )?.role === "core",
+                      ),
+                    ),
+                    cellKey,
+                  ).toBe(true);
+                } else {
                   expect(c?.family, cellKey).toBe(owner.support);
                   expect(c?.role, cellKey).toBe(owner.role);
                   expect(c?.slot, cellKey).toBe(owner.slot);
@@ -1953,8 +2277,9 @@ describe("versioned reference recipes", () => {
     expect(kinds.has("vent")).toBe(true);
     expect(kinds.has("access")).toBe(true);
   }, 15000);
-  it("joins unequal task-sized roof cases to the backing and leaves functional recesses visible", () => {
-    for (const id of ["fed.s.wren", "fed.m.crest"]) {
+  it.each(["fed.s.wren", "fed.m.crest"])(
+    "joins unequal task-sized roof cases to the backing and leaves functional recesses visible in %s",
+    (id) => {
       const ship = PREFAB_SHIPS.find((s) => s.id === id)!,
         r = compileShipVisual(
           ship,
@@ -2031,10 +2356,12 @@ describe("versioned reference recipes", () => {
               expect(r.cells.get(visualCellKey(x, y, z))?.role).toBe("core");
           }
       expect(open).toBeGreaterThan(100);
-    }
-  }, 15000);
-  it("leaves two exposed backed roof service routes beside actual fittings and preserves marking fields", () => {
-    for (const id of ["fed.s.wren", "fed.m.crest"]) {
+    },
+    15000,
+  );
+  it.each(["fed.s.wren", "fed.m.crest"])(
+    "leaves two exposed backed roof service routes beside actual fittings and preserves marking fields in %s",
+    (id) => {
       const ship = PREFAB_SHIPS.find((d) => d.id === id)!;
       const geoms = ship.volumes.map(volumeGeometry);
       const roof = compileShipVisual(
@@ -2141,8 +2468,8 @@ describe("versioned reference recipes", () => {
           .filter((l) => l.id.startsWith("post:"))
           .every((l) => l.bounds[5] <= 25),
       ).toBe(true);
-    }
-    // Four complete Wren/Crest deck/flight compiles exercise assembled visibility;
-    // CI contention may exceed Vitest's default 5s. Keep this workload locally bounded.
-  }, 20000);
+      // Each bounded case retains its complete deck/flight assembly assertions.
+    },
+    20000,
+  );
 });

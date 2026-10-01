@@ -596,6 +596,41 @@ export function shipVisualLayersR002(
         room: room.id,
       });
   }
+  const roomCirculation = floorCovers.flatMap((cover) => {
+    const room = doc.rooms.find((r) => r.id === cover.room)!;
+    const centre: Pt = [
+      (cover.bounds[0] + cover.bounds[2]) / 2,
+      (cover.bounds[1] + cover.bounds[3]) / 2,
+    ];
+    const doors = interior.doors
+      .map((d) => [(d.a[0] + d.b[0]) * 8, (d.a[1] + d.b[1]) * 8] as Pt)
+      .filter(
+        (p) =>
+          p[0] >= room.rect[0] * 16 - 0.5 &&
+          p[0] <= room.rect[2] * 16 + 0.5 &&
+          p[1] >= room.rect[1] * 16 - 0.5 &&
+          p[1] <= room.rect[3] * 16 + 0.5,
+      )
+      .sort(
+        (a, b) =>
+          Math.hypot(a[0] - centre[0], a[1] - centre[1]) -
+          Math.hypot(b[0] - centre[0], b[1] - centre[1]),
+      );
+    if (!doors.length) return [];
+    const from = doors[0],
+      horizontal =
+        Math.abs(from[0] - centre[0]) >= Math.abs(from[1] - centre[1]);
+    const bend: Pt = horizontal ? [centre[0], from[1]] : [from[0], centre[1]];
+    return [
+      {
+        room: room.id,
+        segments: [
+          [from, bend],
+          [bend, centre],
+        ] as [Pt, Pt][],
+      },
+    ];
+  });
   const analyticCharts = new Map<string, [number, number, number]>();
   const assemblies = doc.volumes.map((volume) => ({
     volume,
@@ -853,6 +888,7 @@ export function shipVisualLayersR002(
       u: number;
       U: number;
       bottom: number;
+      runWidth: number;
     }[] = [];
     for (const room of doc.rooms) {
       const options = runs.filter(
@@ -880,6 +916,7 @@ export function shipVisualLayersR002(
         u,
         U: u + width,
         bottom: Math.max(run.bottom, macro.wallTasks[key].bottom),
+        runWidth: run.U - run.u,
       });
     }
     return selected;
@@ -901,6 +938,7 @@ export function shipVisualLayersR002(
     u: number;
     U: number;
     bottom: number;
+    runWidth: number;
     face: string;
     support: string;
     layers: ShipVisualLayer[];
@@ -1049,6 +1087,8 @@ export function shipVisualLayersR002(
       id: string;
       bounds: number[];
       kind: "utility" | "habitation" | "control";
+      fixtures: number[][];
+      broadSide: "low" | "high";
     }[] = [];
     if (deck) {
       const mounted = [
@@ -1099,6 +1139,8 @@ export function shipVisualLayersR002(
             .sort()
             .join("+")}`,
           kind,
+          fixtures: items.map((m) => [...m.bounds]),
+          broadSide: index === 2 ? "high" : "low",
           bounds: [
             Math.max(
               bx + 3,
@@ -1161,6 +1203,8 @@ export function shipVisualLayersR002(
         roofCases.push({
           id: "exposed-cover",
           kind: "habitation",
+          fixtures: [],
+          broadSide: "high",
           bounds: candidates[0].bounds,
         });
     }
@@ -1482,6 +1526,54 @@ export function shipVisualLayersR002(
               surfaceRole = "hull";
               column(
                 `${family}:floor-door-threshold`,
+                "floor",
+                "trim",
+                x,
+                y,
+                floor - 1,
+                floor,
+                family,
+              );
+              surfaceRole = "floor";
+            } else if (
+              room &&
+              room.type !== "corridor" &&
+              roomCirculation.some(
+                (route) =>
+                  route.room === room.id &&
+                  route.segments.some(([a, b]) => {
+                    const horizontal = a[1] === b[1],
+                      along = horizontal ? x + 0.5 : y + 0.5,
+                      across = horizontal ? y + 0.5 - a[1] : x + 0.5 - a[0];
+                    const start = Math.min(
+                        horizontal ? a[0] : a[1],
+                        horizontal ? b[0] : b[1],
+                      ),
+                      end = Math.max(
+                        horizontal ? a[0] : a[1],
+                        horizontal ? b[0] : b[1],
+                      );
+                    return (
+                      end - start >= 8 &&
+                      along >= start + 2 &&
+                      along < end - 2 &&
+                      Math.abs(Math.abs(across) - 5) <= 0.5
+                    );
+                  }),
+              ) &&
+              !occupiedFloorRects.some(
+                (r) =>
+                  world[0] >= r[0] - 1 / 16 &&
+                  world[0] <= r[2] + 1 / 16 &&
+                  world[1] >= r[1] - 1 / 16 &&
+                  world[1] <= r[3] + 1 / 16,
+              )
+            ) {
+              // Flush approach-to-service seams share the actual support plane.
+              // They terminate before equipment and never create contact pits.
+              surfaceRole = "hull";
+              column(
+                `${family}:floor-room-circulation:${room.id}`,
                 "floor",
                 "trim",
                 x,
@@ -2146,9 +2238,9 @@ export function shipVisualLayersR002(
             const caseEdge = Math.min(localX, localY);
             const shapedCase =
               enclosure && localX + localY >= 4 && mountClear && !marked;
-            // Unequal manufactured cheek/spine cross-sections join the same
-            // equipment-context case. A broad shoulder stands two courses above
-            // its contained service band; the third return is only at true ends.
+            // A machinery bay is a joined apron around real protected apertures,
+            // with one broad unequal cheek and a lower service side. It is not a
+            // rectangular raised card with a universal dark border/spine.
             const caseLongX = enclosure
               ? enclosure.bounds[2] - enclosure.bounds[0] >=
                 enclosure.bounds[3] - enclosure.bounds[1]
@@ -2163,14 +2255,47 @@ export function shipVisualLayersR002(
                 ? enclosure.bounds[3] - enclosure.bounds[1]
                 : enclosure.bounds[2] - enclosure.bounds[0]
               : 0;
-            const spineLow = Math.floor(
-              caseWidth * (enclosure?.kind === "utility" ? 0.27 : 0.39),
+            const alongCase = enclosure
+              ? caseLongX
+                ? x - enclosure.bounds[0]
+                : y - enclosure.bounds[1]
+              : 0;
+            const caseLength = enclosure
+              ? caseLongX
+                ? enclosure.bounds[2] - enclosure.bounds[0]
+                : enclosure.bounds[3] - enclosure.bounds[1]
+              : 0;
+            const apertureDistance = enclosure?.fixtures.length
+              ? Math.min(
+                  ...enclosure.fixtures.map(([a, b, A, B]) =>
+                    Math.max(a - p[0], p[0] - A, b - p[1], p[1] - B, 0),
+                  ),
+                )
+              : Infinity;
+            const cheekWidth = Math.max(
+              5,
+              Math.floor(
+                caseWidth * (enclosure?.kind === "utility" ? 0.36 : 0.48),
+              ),
             );
-            const spineHigh = Math.ceil(
-              caseWidth * (enclosure?.kind === "utility" ? 0.52 : 0.58),
-            );
-            const caseSpine = acrossCase >= spineLow && acrossCase < spineHigh;
-            const cheekCourse = acrossCase < spineLow ? hi + 1 : hi;
+            const broadCheek =
+              enclosure?.broadSide === "high"
+                ? acrossCase >= caseWidth - cheekWidth
+                : acrossCase < cheekWidth;
+            const caseEnd = Math.min(alongCase, caseLength - 1 - alongCase);
+            // A protective return joins the mount opening's retained exclusion
+            // boundary. Short unequal end returns join the lower case; no
+            // independent platform/continuous trim rail surrounds every bay.
+            const apertureReturn =
+              apertureDistance >= 2 && apertureDistance < 6;
+            const joinedReturn =
+              apertureReturn || (caseEnd >= 2 && caseEnd < 5 && broadCheek);
+            const caseSpine =
+              !broadCheek &&
+              !apertureReturn &&
+              acrossCase >= 3 &&
+              acrossCase < caseWidth - 3;
+            const cheekCourse = broadCheek && caseEnd >= 4 ? hi + 1 : hi;
 
             const endInset = fromEnd < 4 ? 2 : 0;
             const shoulder = distance >= 2 + endInset && !serviceBelt;
@@ -2223,16 +2348,16 @@ export function shipVisualLayersR002(
               column(
                 `${family}:roof-task-case:${enclosure.id}`,
                 "plate",
-                caseSpine || caseEdge < 2 ? "trim" : "primary",
+                caseSpine ? "trim" : "primary",
                 x,
                 y,
                 hi - 3,
-                caseEdge < 1
+                caseEdge < 1 || caseEnd < 2
                   ? hi - 1
-                  : caseSpine
-                    ? hi - 1
-                    : caseEdge < macro.roofShoulder
-                      ? hi
+                  : joinedReturn
+                    ? hi + 1
+                    : caseSpine
+                      ? hi - 1
                       : cheekCourse,
                 family,
               );
@@ -2265,15 +2390,21 @@ export function shipVisualLayersR002(
               // selected by the same footprint, so the opening joins its case and
               // cannot cover the already-working equipment/service apertures.
               const across = y - b;
-              const pocketWidth = Math.min(22, Math.floor((A - a) * 0.4));
-              const pocketLeft = a + (enclosure.kind === "utility" ? 4 : 7);
+              const pocketWidth = Math.min(28, Math.floor((A - a) * 0.48));
+              const pocketLeft = a + (enclosure.kind === "utility" ? 5 : 8);
+              const pocketBottom =
+                enclosure.broadSide === "low"
+                  ? Math.max(4, Math.floor((B - b) * 0.54))
+                  : 4;
+              const pocketTop = Math.min(B - b - 4, pocketBottom + 14);
               const pocket =
                 pocketWidth >= 12 &&
                 !shoulderFields.some((f) => inRect(p[0], p[1], f.bounds)) &&
                 x >= pocketLeft &&
                 x < pocketLeft + pocketWidth &&
-                across >= 4 &&
-                across < Math.min(15, B - b - 4);
+                across >= pocketBottom &&
+                across < pocketTop &&
+                !joinedReturn;
               if (pocket) {
                 const pocketStart = layers.length;
                 column(
@@ -2296,7 +2427,10 @@ export function shipVisualLayersR002(
                   hi - 1,
                   family,
                 );
-                if (enclosure.kind === "utility" && mod(across - 4, 5) < 2)
+                if (
+                  enclosure.kind === "utility" &&
+                  mod(across - pocketBottom, 6) < 2
+                )
                   column(
                     `${family}:roof-cluster-vent:${enclosure.id}`,
                     "service",
@@ -2311,8 +2445,8 @@ export function shipVisualLayersR002(
                   enclosure.kind !== "utility" &&
                   x >= pocketLeft + 3 &&
                   x < pocketLeft + pocketWidth - 3 &&
-                  across >= 6 &&
-                  across < Math.min(13, B - b - 6)
+                  across >= pocketBottom + 2 &&
+                  across < pocketTop - 2
                 )
                   column(
                     `${family}:roof-cluster-access:${enclosure.id}`,
@@ -4024,6 +4158,7 @@ export function shipVisualLayersR002(
           // Broad usable purpose faces remain preferred, then actual existing
           // equipment adjacency determines which face carries the main assembly.
           (b.U - b.u >= 32 ? 1 : 0) - (a.U - a.u >= 32 ? 1 : 0) ||
+          b.runWidth - a.runWidth ||
           contextDistance(a) - contextDistance(b) ||
           b.U - b.u - (a.U - a.u) ||
           b.layers
@@ -4049,6 +4184,187 @@ export function shipVisualLayersR002(
           a.face.localeCompare(b.face),
       );
       const main = tasks[0];
+      // Manufacture a complete unequal assembly inside the qualified finish
+      // footprint. Core courses stay intact; equipment depth comes from the
+      // existing authored modules, never an extra wall volume in the room.
+      const roomAssembly = (task: PendingWallTask) => {
+        const footprint = new Map<string, ShipVisualLayer>();
+        for (const l of task.layers)
+          for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+            for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+              for (let x = l.bounds[0]; x < l.bounds[3]; x++)
+                footprint.set(visualCellKey(x, y, z), l);
+        const bounds = [0, 1, 2]
+          .map((a) => Math.min(...task.layers.map((l) => l.bounds[a])))
+          .concat(
+            [0, 1, 2].map((a) =>
+              Math.max(...task.layers.map((l) => l.bounds[a + 3])),
+            ),
+          );
+        const axis = bounds[3] - bounds[0] >= bounds[4] - bounds[1] ? 0 : 1;
+        const width = bounds[axis + 3] - bounds[axis],
+          height = bounds[5] - bounds[2];
+        const split = Math.floor(
+          width *
+            (task.key === "quarters" ||
+            task.key === "living" ||
+            task.key === "lounge"
+              ? 0.7
+              : task.key === "galley"
+                ? 0.72
+                : 0.6),
+        );
+        const result: ShipVisualLayer[] = [];
+        for (const [key, template] of footprint) {
+          const [x, y, z] = key.split(",").map(Number),
+            old = envelope.get(key);
+          // The retained source core/backing is not an ornamental face.
+          if (!old || old.role === "core") {
+            result.push({
+              ...template,
+              bounds: [x, y, z, x + 1, y + 1, z + 1],
+            });
+            continue;
+          }
+          const u = (axis === 0 ? x : y) - bounds[axis],
+            v = z - bounds[2];
+          const edgeU = Math.min(u, width - 1 - u),
+            edgeV = Math.min(v, height - 1 - v);
+          const chosen: {
+            role: ShipVisualLayer["role"];
+            slot: ShipKitSlot;
+            part: string;
+          } = { role: "plate", slot: "primary", part: "joined-case" };
+          const use = (
+            name: string,
+            r: ShipVisualLayer["role"],
+            s: ShipKitSlot,
+          ) => {
+            chosen.part = name;
+            chosen.role = r;
+            chosen.slot = s;
+          };
+          if (edgeU + edgeV < 2) use("corner-seat", "void", "dark");
+          else if (v < 2) use("continuous-lower-binding", "frame", "trim");
+          else if (u === split || u === split + 1)
+            use("overlap-shoulder", "plate", "trim");
+          else {
+            const well = edgeU >= 3 && v >= 3 && v < height - 3 && u < split;
+            if (well) {
+              use("well", "void", "dark");
+              switch (task.key) {
+                case "engineering":
+                  if (v === 5 || v === height - 6)
+                    use("protected-cooling-bank", "service", "metal");
+                  if (u >= split - 7 && v >= 5 && v < height - 5)
+                    use("distribution-module", "plate", "accent");
+                  if (u === split - 4 && v >= 6 && v < height - 6)
+                    use("distribution-status", "service", "emit_b");
+                  break;
+                case "workshop":
+                  if (v === 4) use("continuous-tool-bank", "service", "metal");
+                  if ([5, 11, 17].includes(u) && v >= 5 && v <= 7)
+                    use("protected-tool-dock", "service", "metal");
+                  if (u >= split - 7 && v >= 8)
+                    use("bench-power-module", "plate", "trim");
+                  break;
+                case "medical":
+                  if ([5, 9].includes(u) && v >= 5 && v < height - 5)
+                    use("supply-manifold", "service", "metal");
+                  if (u >= split - 9 && v >= 6 && v < height - 5)
+                    use("medical-control-face", "plate", "trim");
+                  if (u >= split - 7 && v === height - 6)
+                    use("medical-status", "service", "emit_a");
+                  break;
+                case "galley":
+                  if (v === 4) use("counter-utility-rail", "service", "metal");
+                  if (u >= split - 10 && v >= 6 && v < height - 5)
+                    use("utility-access-face", "plate", "trim");
+                  if (u === split - 5 && v >= 7 && v < height - 6)
+                    use("utility-handle", "service", "metal");
+                  break;
+                case "cargo":
+                  if (v >= 5 && v < height - 4)
+                    use("load-storage-face", "plate", "trim");
+                  if ((u === 5 || u === split - 4) && v >= 5 && v < height - 4)
+                    use("load-restraint", "service", "metal");
+                  break;
+                case "bridge":
+                  if (u >= 5 && u < split - 4 && v >= 6 && v < height - 5)
+                    use("bridge-distribution", "plate", "trim");
+                  if (u >= 6 && u < split - 5 && v === height - 6)
+                    use("bridge-power-status", "service", "emit_a");
+                  if (v === 4) use("bridge-key-bank", "service", "metal");
+                  break;
+                default:
+                  if (v === 4) use("reading-utility-shelf", "service", "metal");
+                  if (u >= split - 8 && v >= 6 && v < height - 5)
+                    use("berth-utility-face", "plate", "trim");
+                  break;
+              }
+            } else if (
+              u > split + 2 &&
+              u < width - 3 &&
+              v >= 4 &&
+              v < height - 3
+            ) {
+              // The closed field is part of the same casing, rather than another
+              // ring-framed postcard. Only its bounded latch seat is recessed.
+              use("offset-storage-field", "plate", "primary");
+              if (u === width - 5 && v >= 6 && v < height - 6)
+                use("storage-latch", "service", "metal");
+              if (
+                task.key === "engineering" &&
+                u === width - 7 &&
+                v >= 6 &&
+                v < height - 6
+              )
+                use("protected-task-status", "service", "emit_a");
+            }
+            if (u >= 3 && u < split - 2 && v === height - 3)
+              use(
+                "contained-task-header",
+                "service",
+                task.key === "medical" || task.key === "bridge"
+                  ? "emit_a"
+                  : "emit_b",
+              );
+          }
+          // A well removes only the one finish course; its complete backing is
+          // independently checked on the final sampled assembly.
+          const { role, slot, part } = chosen;
+          if (
+            role === "void" &&
+            ![
+              [1, 0],
+              [-1, 0],
+              [0, 1],
+              [0, -1],
+            ].some(([dx, dy]) =>
+              [1, 2].every(
+                (n) =>
+                  envelope.get(visualCellKey(x + dx * n, y + dy * n, z))
+                    ?.role === "core",
+              ),
+            )
+          ) {
+            result.push({
+              ...template,
+              bounds: [x, y, z, x + 1, y + 1, z + 1],
+            });
+            continue;
+          }
+          result.push({
+            ...template,
+            id: `${task.support}:room-task:${task.room.id}:${part}`,
+            role,
+            slot,
+            bounds: [x, y, z, x + 1, y + 1, z + 1],
+          });
+        }
+        return result;
+      };
+      main.layers = roomAssembly(main);
       layers.push(...main.layers);
       // A second usable face carries a DIFFERENT task, not a scaled copy of
       // the room's main fixture. Its clipped enclosure stays in the qualified
@@ -4537,39 +4853,227 @@ export function shipVisualLayersR002(
   return [...finalLayers, ...overlays];
 }
 
-/** Merge adjacent source columns before sampling, preserving volume/layer priority order. */
+/** Exact box compaction with dependencies only between writes to the same XYZ cells. */
 export function compactColumns(
   layers: readonly ShipVisualLayer[],
 ): ShipVisualLayer[] {
-  const groups = new Map<string, ShipVisualLayer[]>();
+  const limits = {
+    nodes: 2000000,
+    edges: 4000000,
+    xyz: 4000000,
+    keys: 100000,
+    heap: 250000,
+    work: 64000000,
+    output: 100000,
+  };
+  type Node = {
+    layer: ShipVisualLayer;
+    key: string;
+    pending: number;
+    successors: number[];
+    emitted: boolean;
+  };
+  type Ready = { key: string; order: number; version: number; nodes: Node[] };
+  type Entry = { group: Ready; version: number; count: number };
+  const out: ShipVisualLayer[] = [];
+  let nodes: Node[] = [],
+    columns = new Map<string, Map<number, number>>(),
+    keys = new Map<string, string>();
+  const ready = new Map<string, Ready>(),
+    heap: Entry[] = [];
+  let edges = 0,
+    xyz = 0,
+    visits = 0,
+    order = 0;
+  const append = (layer: ShipVisualLayer) => {
+    if (out.length >= limits.output)
+      throw Error("Visual layer count exceeds limit");
+    out.push(layer);
+  };
+  const ahead = (a: Entry, b: Entry) =>
+    a.count > b.count || (a.count === b.count && a.group.order < b.group.order);
+  const siftDown = (start: number) => {
+    let i = start;
+    for (;;) {
+      let child = i * 2 + 1;
+      if (child >= heap.length) break;
+      if (child + 1 < heap.length && ahead(heap[child + 1], heap[child]))
+        child++;
+      if (!ahead(heap[child], heap[i])) break;
+      [heap[i], heap[child]] = [heap[child], heap[i]];
+      i = child;
+    }
+  };
+  const rebuild = () => {
+    // Release stale references before adding replacements; every active group
+    // gets exactly one current entry, including the update that triggered this.
+    heap.length = 0;
+    if (ready.size > limits.heap)
+      throw Error("Visual compaction heap exceeds limit");
+    for (const group of ready.values())
+      heap.push({ group, version: group.version, count: group.nodes.length });
+    for (let i = Math.floor(heap.length / 2) - 1; i >= 0; i--) siftDown(i);
+  };
+  const push = (group: Ready) => {
+    group.version++;
+    if (heap.length >= limits.heap) {
+      rebuild();
+      return;
+    }
+    heap.push({ group, version: group.version, count: group.nodes.length });
+    let i = heap.length - 1;
+    while (i > 0) {
+      const parent = Math.floor((i - 1) / 2);
+      if (!ahead(heap[i], heap[parent])) break;
+      [heap[i], heap[parent]] = [heap[parent], heap[i]];
+      i = parent;
+    }
+  };
+  const pop = () => {
+    const first = heap[0],
+      last = heap.pop()!;
+    if (heap.length) {
+      heap[0] = last;
+      siftDown(0);
+    }
+    return first;
+  };
+  const enqueue = (node: Node, changed?: Set<Ready>) => {
+    let group = ready.get(node.key);
+    if (!group) {
+      group = { key: node.key, order: order++, version: 0, nodes: [] };
+      ready.set(node.key, group);
+    }
+    group.nodes.push(node);
+    changed?.add(group);
+  };
+  const flush = () => {
+    if (!nodes.length) return;
+    for (const group of ready.values()) push(group);
+    let emitted = 0;
+    while (ready.size) {
+      let entry: Entry;
+      do {
+        if (!heap.length) throw Error("Visual compaction missing ready entry");
+        entry = pop();
+      } while (
+        ready.get(entry.group.key) !== entry.group ||
+        entry.version !== entry.group.version
+      );
+      const group = entry.group;
+      ready.delete(group.key);
+      // Freeze this batch before unlocking successors. A newly available child,
+      // even with the same key, belongs to a NEW group and a later operation.
+      const batch = group.nodes;
+      const writes = batch
+        .map((n) => n.layer)
+        .sort((a, b) => a.bounds[0] - b.bounds[0]);
+      let run = {
+        ...writes[0],
+        bounds: [...writes[0].bounds] as ShipVisualLayer["bounds"],
+      };
+      for (const l of writes.slice(1)) {
+        if (run.bounds[3] === l.bounds[0]) run.bounds[3] = l.bounds[3];
+        else {
+          append(run);
+          run = { ...l, bounds: [...l.bounds] as ShipVisualLayer["bounds"] };
+        }
+      }
+      append(run);
+      for (const node of batch) {
+        if (node.pending !== 0 || node.emitted)
+          throw Error("Visual compaction invalid node emission");
+        node.emitted = true;
+        emitted++;
+      }
+      const changed = new Set<Ready>();
+      for (const node of batch)
+        for (const index of node.successors) {
+          const successor = nodes[index];
+          if (successor.pending <= 0)
+            throw Error("Visual compaction duplicate dependency decrement");
+          if (--successor.pending === 0) enqueue(successor, changed);
+        }
+      for (const next of changed) push(next);
+    }
+    if (emitted !== nodes.length)
+      throw Error("Visual compaction node census differs");
+    nodes = [];
+    columns = new Map();
+    keys = new Map();
+    ready.clear();
+    heap.length = 0;
+    edges = 0;
+    xyz = 0;
+    order = 0;
+  };
   for (const l of layers) {
     const [x, y, z, X, Y, Z] = l.bounds;
-    const key =
-      X - x === 1 && Y - y === 1
-        ? `${l.id}:${l.role}:${l.slot}:${l.surfaceRole}:${l.support}:${l.normalHint?.join(",")}:${l.normalChart ?? ""}:${l.normalSide ? `${l.normalSide.id}:${l.normalSide.normal.join(",")}:${l.normalSide.faces}` : ""}${l.facet ? `:facet:${l.facet.id}:${l.facet.a.join(",")}:${l.facet.d}` : ""}:${y}:${z}:${Z}`
-        : `unique:${groups.size}`;
-    const g = groups.get(key);
-    if (g) g.push(l);
-    else groups.set(key, [l]);
-  }
-  const out: ShipVisualLayer[] = [];
-  for (const g of groups.values()) {
-    g.sort((a, b) => a.bounds[0] - b.bounds[0]);
-    let run = {
-      ...g[0],
-      bounds: [...g[0].bounds] as ShipVisualLayer["bounds"],
-    };
-    for (let i = 1; i < g.length; i++) {
-      if (run.bounds[3] === g[i].bounds[0]) run.bounds[3] = g[i].bounds[3];
-      else {
-        out.push(run);
-        run = {
-          ...g[i],
-          bounds: [...g[i].bounds] as ShipVisualLayer["bounds"],
-        };
-      }
+    if (
+      l.bounds.length !== 6 ||
+      !l.bounds.every((v) => Number.isSafeInteger(v) && Math.abs(v) <= 8192) ||
+      !(x < X && y < Y && z < Z) ||
+      X - x !== 1 ||
+      Y - y !== 1 ||
+      l.polygon !== undefined ||
+      l.holes !== undefined ||
+      l.band !== undefined
+    ) {
+      // Broad, uncertain and invalid footprints are absolute ordering barriers.
+      flush();
+      append({ ...l, bounds: [...l.bounds] as ShipVisualLayer["bounds"] });
+      continue;
     }
-    out.push(run);
+    if (nodes.length >= limits.nodes)
+      throw Error("Visual compaction nodes exceed limit");
+    const { bounds: _bounds, ...semantics } = l;
+    const signature = `${y}:${z}:${Z}:${JSON.stringify(semantics)}`;
+    let key = keys.get(signature);
+    if (key === undefined) {
+      if (keys.size >= limits.keys)
+        throw Error("Visual compaction semantic keys exceed limit");
+      key = signature;
+      keys.set(key, key);
+    }
+    const xy = `${x},${y}`;
+    let previous = columns.get(xy);
+    if (!previous) {
+      previous = new Map();
+      columns.set(xy, previous);
+    }
+    const predecessors = new Set<number>(),
+      index = nodes.length;
+    for (let h = z; h < Z; h++) {
+      if (visits >= limits.work)
+        throw Error("Visual compaction work exceeds sampling limit");
+      visits++;
+      const prior = previous.get(h);
+      if (prior !== undefined && !predecessors.has(prior)) {
+        if (edges + predecessors.size >= limits.edges)
+          throw Error("Visual compaction edges exceed limit");
+        predecessors.add(prior);
+      }
+      if (prior === undefined) {
+        if (xyz >= limits.xyz)
+          throw Error("Visual compaction XYZ entries exceed limit");
+        xyz++;
+      }
+      previous.set(h, index);
+    }
+    const node: Node = {
+      layer: l,
+      key,
+      pending: predecessors.size,
+      successors: [],
+      emitted: false,
+    };
+    nodes.push(node);
+    for (const prior of predecessors) {
+      nodes[prior].successors.push(index);
+      edges++;
+    }
+    if (node.pending === 0) enqueue(node);
   }
+  flush();
   return out;
 }

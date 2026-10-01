@@ -4,8 +4,8 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "98da3c5d4ff124988856bcf6c3cbb641a8054bdc67e4af1928c93c9c2cbe8744",
-  "profilesSha256": "e3555a342f78484835a7c07113041cf55c90a851168bd048b0c6bb1d0fdfad9a",
+  "compilerSha256": "e2963b880536be3a39a32b550445d3dbc5f0c3072f16060cc1f11407c1558037",
+  "profilesSha256": "3785ac3adda38f6b500fd59c38c681405da1400544101cbbeabe0d7501e3aa1d",
   "slots": [
     "primary",
     "secondary",
@@ -48552,9 +48552,9 @@
     {
       "kind": "kit",
       "id": "door-leaf.reference",
-      "url": "/assets/ship-visual/r002/door-leaf-r018.glb",
-      "sha256": "cbbb1e925fb9179917074ba09a10b8a241805c1ade75bd2d291d767ba1dcd540",
-      "bytes": 93312,
+      "url": "/assets/ship-visual/r002/door-leaf-r019.glb",
+      "sha256": "77369dfdac6e29fa3b6dc666e607287c5ab19897c13a474f24bdf879f62d0047",
+      "bytes": 63764,
       "frame": "interior",
       "bounds": [
         -0.5,

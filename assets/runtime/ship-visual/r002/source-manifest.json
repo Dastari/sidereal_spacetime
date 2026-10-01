@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "98da3c5d4ff124988856bcf6c3cbb641a8054bdc67e4af1928c93c9c2cbe8744",
+  "compilerSha256": "e2963b880536be3a39a32b550445d3dbc5f0c3072f16060cc1f11407c1558037",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -12,11 +12,11 @@
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "bbfd0d7bf8e677bfaaf7bf55f0283ca1ed4bd93798645baa2f3f84b99358b043"
+      "sha256": "91ece9b2f045c43f750e192bd16a3747232f5e6038355750101641786c01d40c"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "2d3d7efd1b9d9ab9dc501105280c4c15708a14ce1dc8e7cc1c738560bd6b7b0b"
+      "sha256": "0a5101d62dfb6422314e74fd439991839fede855238ec35d303f9a9beef68fd3"
     },
     {
       "path": "packages/sim/src/ship-dresser.ts",
@@ -104,15 +104,19 @@
     },
     {
       "path": "scripts/art_library/ship_reference_r002_art.py",
-      "sha256": "f05fd738d4bc91a7978d344f8c5015358433fc58cb6840742688a94d1744eaad"
+      "sha256": "aebf29e531bc0759e78affdfd67917265dfeb5cb742b804f599728d6843da735"
     },
     {
-      "path": "assets/runtime/ship-visual/r002/door-leaf-r018-source.json",
-      "sha256": "636b939968c14b6f076ee6de698a419ccbd247aadc2ba6e732cb513a0081b53a"
+      "path": "assets/runtime/ship-visual/r002/door-leaf-r019-source.json",
+      "sha256": "78f3b2cc6b797605069088a8f1df3cfb34147d3532688bee4f4e14a894bc2bc7"
     },
     {
       "path": "scripts/art_library/ship_reference_r018_equipment.py",
       "sha256": "314e3afaccdb2d4d62fdd6f5bbcdb971e5b2f72477dfdf652dcc1533d1260f72"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/equipment-r018/ship_reference_r002_art.py",
+      "sha256": "f05fd738d4bc91a7978d344f8c5015358433fc58cb6840742688a94d1744eaad"
     },
     {
       "path": "scripts/art_library/ship_kit_modules.py",

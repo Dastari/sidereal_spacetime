@@ -27,6 +27,10 @@ import {
 const root = resolve(import.meta.dirname, "../..");
 const hash = (bytes: Uint8Array | string) =>
   createHash("sha256").update(bytes).digest("hex");
+const equipmentHousingSource =
+  "assets/source/ship-reference/r002/equipment-r018/ship_reference_r002_art.py";
+const equipmentHousingSourceSha256 =
+  "f05fd738d4bc91a7978d344f8c5015358433fc58cb6840742688a94d1744eaad";
 const sources = [
   "packages/content/src/ship-visual-fixture.ts",
   "packages/content/src/ship-visual.ts",
@@ -54,8 +58,9 @@ const sources = [
   "packages/render/src/pbr-light-budget.ts",
   "packages/render/src/local-light-budget.ts",
   "scripts/art_library/ship_reference_r002_art.py",
-  "assets/runtime/ship-visual/r002/door-leaf-r018-source.json",
+  "assets/runtime/ship-visual/r002/door-leaf-r019-source.json",
   "scripts/art_library/ship_reference_r018_equipment.py",
+  equipmentHousingSource,
   "scripts/art_library/ship_kit_modules.py",
   "scripts/art_library/bow_modules.py",
   "scripts/art_library/ship_reference_r002_maps.py",
@@ -129,11 +134,9 @@ if (
       ),
     ) ||
   equipmentMeta.generator.housingHelperSha256 !==
-    hash(
-      readFileSync(
-        resolve(root, "scripts/art_library/ship_reference_r002_art.py"),
-      ),
-    ) ||
+    equipmentHousingSourceSha256 ||
+  hash(readFileSync(resolve(root, equipmentHousingSource))) !==
+    equipmentHousingSourceSha256 ||
   equipmentMeta.generator.script !==
     "scripts/art_library/ship_component_export.py" ||
   equipmentMeta.generator.sha256 !==
@@ -293,18 +296,18 @@ const normal = readFileSync(
   resolve(root, "assets/runtime/ship-visual/r002/panel-normal.png"),
 );
 const leaf = readFileSync(
-  resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r018.glb"),
+  resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r019.glb"),
 );
 const leafSource = JSON.parse(
   readFileSync(
-    resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r018-source.json"),
+    resolve(root, "assets/runtime/ship-visual/r002/door-leaf-r019-source.json"),
     "utf8",
   ),
 );
 assets.push({
   kind: "kit",
   id: "door-leaf.reference",
-  url: "/assets/ship-visual/r002/door-leaf-r018.glb",
+  url: "/assets/ship-visual/r002/door-leaf-r019.glb",
   sha256: hash(leaf),
   bytes: leaf.length,
   frame: "interior",
