@@ -51,6 +51,8 @@ const sources = [
   "packages/render/src/prefab-ship/frames.ts",
   "packages/render/package.json",
   "packages/render/src/prefab-ship/glazing-replacement.ts",
+  "packages/render/src/prefab-ship/deck-cutaway.ts",
+  "packages/render/src/prefab-ship/door-cutaway.ts",
   "packages/render/src/prefab-ship/batch.ts",
   "packages/render/src/prefab-ship/coplanar.ts",
   "packages/render/src/prefab-ship/surface-attributes.ts",
@@ -71,6 +73,7 @@ const sources = [
   "assets/runtime/ship-visual/r002/door-leaf-r019-source.json",
   "scripts/art_library/ship_reference_r018_equipment.py",
   "scripts/art_library/ship_reference_r021_equipment.py",
+  "scripts/art_library/ship_reference_r022_equipment.py",
   "scripts/art_library/ship_reference_art.py",
   "scripts/art_library/ship_component_export.py",
   "scripts/art_library/ship_component_art.py",
@@ -78,6 +81,8 @@ const sources = [
   "scripts/art_library/ship_kit_prototype.py",
   "assets/runtime/ship-visual/r002/equipment-r021/manifest.json",
   "assets/source/ship-reference/r002/equipment-r021/equipment.blend",
+  "assets/runtime/ship-visual/r002/equipment-r022/manifest.json",
+  "assets/source/ship-reference/r002/equipment-r022/equipment.blend",
   equipmentHousingSource,
   "scripts/art_library/ship_kit_modules.py",
   "scripts/art_library/bow_modules.py",
@@ -268,6 +273,77 @@ for (const id of equipmentIds) {
     bytes: row.bytes,
   };
 }
+// One separately reviewed near-lip bank replaces its R21 row only. Keep the
+// complete R21 gate above and every immutable earlier URL unchanged in place.
+const bankDir = "ship-visual/r002/equipment-r022";
+const bankManifestBytes = readFileSync(
+  resolve(root, "assets/runtime", bankDir, "manifest.json"),
+);
+const bankMeta = JSON.parse(bankManifestBytes.toString());
+const bankId = "shipyard.equipment.bridge-bank";
+const bankRow = bankMeta.objects?.[0];
+const bankIndex = assets.findIndex(
+  (a) => a.kind === "object" && a.id === bankId,
+);
+const bankBytes = readFileSync(
+  resolve(root, "assets/runtime", bankDir, `${bankId}.glb`),
+);
+if (
+  hash(bankManifestBytes) !==
+    "7a590c75d9bd7750e3f6dbfe7f7abd5d0be51352ab174a74455b167de5f16bc8" ||
+  bankMeta.revision !== "equipment-r022" ||
+  JSON.stringify(bankMeta.requiredObjectIds) !== JSON.stringify([bankId]) ||
+  bankMeta.objects.length !== 1 ||
+  bankRow?.designId !== bankId ||
+  bankMeta.generator.candidateBuilder !==
+    "scripts/art_library/ship_reference_r022_equipment.py" ||
+  bankMeta.generator.candidateBuilderSha256 !==
+    "6a081bb6e4011e5e656a906cc9069febfe719ca26553f90e14c06674f5955c50" ||
+  hash(readFileSync(resolve(root, bankMeta.generator.candidateBuilder))) !==
+    bankMeta.generator.candidateBuilderSha256 ||
+  bankMeta.generator.equipmentHelper !==
+    "scripts/art_library/ship_reference_r021_equipment.py" ||
+  bankMeta.generator.equipmentHelperSha256 !==
+    "8e007da11e4ed04263a304a23050997e9f27d8c0bee002439cd334e482b5f192" ||
+  hash(readFileSync(resolve(root, bankMeta.generator.equipmentHelper))) !==
+    bankMeta.generator.equipmentHelperSha256 ||
+  bankMeta.generator.housingHelperSha256 !== equipmentHousingSourceSha256 ||
+  bankMeta.generator.script !== equipmentMeta.generator.script ||
+  bankMeta.generator.sha256 !== equipmentMeta.generator.sha256 ||
+  bankMeta.generator.builders !== equipmentMeta.generator.builders ||
+  bankMeta.generator.buildersSha256 !==
+    equipmentMeta.generator.buildersSha256 ||
+  bankMeta.source.blend !==
+    "assets/source/ship-reference/r002/equipment-r022/equipment.blend" ||
+  bankMeta.source.sha256 !==
+    "2933dcbb09427b3dd44db33bed9ca599b013a2587dbb63bab15ad163f264fa87" ||
+  hash(readFileSync(resolve(root, bankMeta.source.blend))) !==
+    bankMeta.source.sha256 ||
+  bankIndex < 0 ||
+  assets[bankIndex].sha256 !==
+    "911a09cb7d0fa51a5743ba1d1619db3bd08aba815453129fd94c0c9ee20ca8bf" ||
+  bankRow.sha256 !==
+    "3fe2c57755da1c0da24c7ab73972573988fc72c4038126d2da1f02ead63b8beb" ||
+  hash(bankBytes) !== bankRow.sha256 ||
+  bankRow.bytes !== 76456 ||
+  bankBytes.length !== bankRow.bytes ||
+  bankRow.triangles !== 790 ||
+  JSON.stringify(bankRow.boundsM) !==
+    JSON.stringify([
+      [-1, -0.25, 0],
+      [1, 0.25, 1.0625],
+    ]) ||
+  JSON.stringify(bankRow.sizeTexels) !== JSON.stringify([32, 8, 18])
+)
+  throw Error(
+    "R22 bank does not match reviewed source, prior row or exact envelope",
+  );
+assets[bankIndex] = {
+  ...assets[bankIndex],
+  url: `/assets/${bankDir}/${bankId}.glb`,
+  sha256: bankRow.sha256,
+  bytes: bankRow.bytes,
+};
 // Measured static certificates cannot qualify space using unrelated old heights.
 const objectMetadata = JSON.parse(
   readFileSync(

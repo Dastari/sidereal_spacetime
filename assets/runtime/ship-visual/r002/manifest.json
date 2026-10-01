@@ -4,7 +4,7 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "4ff540f3faf83c88dbb055826f71990f952230fc658a8c27e3912258653c90f1",
+  "compilerSha256": "81c384606824d9a300a39f416d649c5537f827a17617bda635c3994ab0a628f7",
   "profilesSha256": "d2b8aacb54c19b32e2c58448fb0730fcc94815dfa72cc74e89d677d3bb94b818",
   "slots": [
     "primary",
@@ -127,9 +127,9 @@
         1.0625,
         0.25
       ],
-      "url": "/assets/ship-visual/r002/equipment-r021/shipyard.equipment.bridge-bank.glb",
-      "sha256": "911a09cb7d0fa51a5743ba1d1619db3bd08aba815453129fd94c0c9ee20ca8bf",
-      "bytes": 80148
+      "url": "/assets/ship-visual/r002/equipment-r022/shipyard.equipment.bridge-bank.glb",
+      "sha256": "3fe2c57755da1c0da24c7ab73972573988fc72c4038126d2da1f02ead63b8beb",
+      "bytes": 76456
     },
     {
       "kind": "object",

@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "4ff540f3faf83c88dbb055826f71990f952230fc658a8c27e3912258653c90f1",
+  "compilerSha256": "81c384606824d9a300a39f416d649c5537f827a17617bda635c3994ab0a628f7",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -64,7 +64,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/ship-view.ts",
-      "sha256": "8c49845e34a564475298ef8790ce3a7abc1fc5f0a29315c896566412f8f756ad"
+      "sha256": "7d81eafcb7cf1e6679b40763542c3993e78374550966ffe4348bc7951ffea9a4"
     },
     {
       "path": "packages/render/src/prefab-ship/frames.ts",
@@ -77,6 +77,14 @@
     {
       "path": "packages/render/src/prefab-ship/glazing-replacement.ts",
       "sha256": "361e6c5f73044924257350afed8947fab45d52a4089fe5c81a9860cf73815571"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/deck-cutaway.ts",
+      "sha256": "876d15e60b95878fe68534037e464015c0bc4eaf677ed2a9395cc7974fbf532c"
+    },
+    {
+      "path": "packages/render/src/prefab-ship/door-cutaway.ts",
+      "sha256": "56d14bbda0e66b73a2fd910dee9488649ed9e8aa8ebb1ba6d0261fea9684f450"
     },
     {
       "path": "packages/render/src/prefab-ship/batch.ts",
@@ -96,7 +104,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/doors.ts",
-      "sha256": "f44919e76be5c5c21003ca677148393d76d79aa3568f6d71cca03a34e17ee76f"
+      "sha256": "ae3339f3c83ef17fff9e4cd36835a56570fc862ef115e767ef609cc5987eb0d7"
     },
     {
       "path": "packages/render/src/prefab-ship/shadows.ts",
@@ -104,7 +112,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship-presentation.ts",
-      "sha256": "35d946819a0ad768ce37a7fbfcc38a4682f8b63c9b3efc08a98834fbaa280656"
+      "sha256": "fd97fa45bd37c63b7a5d4f7fbd8d93f4b5cec129a9889ef8a5cfc148543896d5"
     },
     {
       "path": "packages/render/src/construction-instance.ts",
@@ -159,6 +167,10 @@
       "sha256": "8e007da11e4ed04263a304a23050997e9f27d8c0bee002439cd334e482b5f192"
     },
     {
+      "path": "scripts/art_library/ship_reference_r022_equipment.py",
+      "sha256": "6a081bb6e4011e5e656a906cc9069febfe719ca26553f90e14c06674f5955c50"
+    },
+    {
       "path": "scripts/art_library/ship_reference_art.py",
       "sha256": "9f9979a08ae5e439806fddedafe47cc3bac4ac852d53f5819f8c64867c3d02cd"
     },
@@ -185,6 +197,14 @@
     {
       "path": "assets/source/ship-reference/r002/equipment-r021/equipment.blend",
       "sha256": "d23827cfe58c136028bef70573442b44e90ddee35644ada84fd54816088d768f"
+    },
+    {
+      "path": "assets/runtime/ship-visual/r002/equipment-r022/manifest.json",
+      "sha256": "7a590c75d9bd7750e3f6dbfe7f7abd5d0be51352ab174a74455b167de5f16bc8"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/equipment-r022/equipment.blend",
+      "sha256": "2933dcbb09427b3dd44db33bed9ca599b013a2587dbb63bab15ad163f264fa87"
     },
     {
       "path": "assets/source/ship-reference/r002/equipment-r018/ship_reference_r002_art.py",
