@@ -4,7 +4,7 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "81c384606824d9a300a39f416d649c5537f827a17617bda635c3994ab0a628f7",
+  "compilerSha256": "854d2319800e7fecd464d02226c7870bd3cfe744403ee526aa5da9c0333ff848",
   "profilesSha256": "d2b8aacb54c19b32e2c58448fb0730fcc94815dfa72cc74e89d677d3bb94b818",
   "slots": [
     "primary",

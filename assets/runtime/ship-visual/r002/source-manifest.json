@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "81c384606824d9a300a39f416d649c5537f827a17617bda635c3994ab0a628f7",
+  "compilerSha256": "854d2319800e7fecd464d02226c7870bd3cfe744403ee526aa5da9c0333ff848",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -64,7 +64,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/ship-view.ts",
-      "sha256": "7d81eafcb7cf1e6679b40763542c3993e78374550966ffe4348bc7951ffea9a4"
+      "sha256": "2e1f1a1d2b8537425e41b4c29dd70ad95ee0c85a959571d98ce4f024f5b976b4"
     },
     {
       "path": "packages/render/src/prefab-ship/frames.ts",
