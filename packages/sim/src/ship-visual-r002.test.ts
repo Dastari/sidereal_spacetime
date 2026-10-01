@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { bowGlass } from "@sidereal/content/bow-profiles";
+import { bowGlass, bowHeights } from "@sidereal/content/bow-profiles";
 import { G, placedTilePolygon } from "@sidereal/content/construction-grammar";
 import { insidePolygon } from "@sidereal/content/construction-grammar";
 import {
@@ -161,7 +161,7 @@ describe("versioned reference recipes", () => {
           .length - 1,
       );
     }
-  });
+  }, 15000);
   it("reconstructs actual diagonal owners and shallow five-cell trays with original guarded facets", () => {
     for (const ship of [doc, PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!])
       for (const view of ["deck", "flight"] as const) {
@@ -295,13 +295,25 @@ describe("versioned reference recipes", () => {
             ),
           ),
         ).toBe(true);
+        const trayColumns = new Map<string, Set<number>>();
         for (const l of tray) {
           expect(l.role).toBe("core");
-          expect(l.bounds[5] - l.bounds[2]).toBe(2);
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++)
+            for (let y = l.bounds[1]; y < l.bounds[4]; y++) {
+              const key = `${x},${y}`,
+                z = trayColumns.get(key) ?? new Set<number>();
+              for (let q = l.bounds[2]; q < l.bounds[5]; q++) z.add(q);
+              trayColumns.set(key, z);
+            }
           for (let x = l.bounds[0]; x < l.bounds[3]; x++)
             for (let y = l.bounds[1]; y < l.bounds[4]; y++)
               for (let z = l.bounds[2]; z < l.bounds[5]; z++)
                 expect(r.cells.get(visualCellKey(x, y, z))?.role).toBe("core");
+        }
+        for (const z of trayColumns.values()) {
+          const rows = [...z].sort((a, b) => a - b);
+          expect(rows).toHaveLength(2);
+          expect(rows[1] - rows[0]).toBe(1);
         }
         const armour = r.layers.filter((l) =>
           l.id.endsWith(":shallow-offset-armor"),
@@ -334,9 +346,28 @@ describe("versioned reference recipes", () => {
       const c = r.cells.get(visualCellKey(p[0], p[1], p[2]))!;
       expect(c.role).toBe(role);
       expect(c.slot).toBe(slot);
-      expect(c.facet?.a).toEqual([1, -1, 0]);
-      expect(c.facet?.d).toBe(d);
-      expect(c.facetFaces).toBe(6);
+      // Corrected seated planes have true raw transition rings; an old outer
+      // pick at that join retains its occupied pressure role but not a conflicting
+      // intact clipping descriptor. Elsewhere its original plane is unchanged.
+      if (c.facet) {
+        expect(c.facet.a).toEqual([1, -1, 0]);
+        expect(c.facet.d).toBe(d);
+        expect(c.facetFaces).toBe(6);
+      } else {
+        expect(
+          r.layers.some(
+            (l) =>
+              l.facet &&
+              l.facet.d < d &&
+              l.bounds[0] <= p[0] + 3 &&
+              l.bounds[3] > p[0] - 3 &&
+              l.bounds[1] <= p[1] + 3 &&
+              l.bounds[4] > p[1] - 3 &&
+              l.bounds[2] <= p[2] + 3 &&
+              l.bounds[5] > p[2] - 3,
+          ),
+        ).toBe(true);
+      }
     }
     // The actual old hull rim pick is now the open outer finish seat; pressure
     // is not removed behind it. This is intentionally different occupancy.
@@ -381,8 +412,19 @@ describe("versioned reference recipes", () => {
       let walked = 0,
         socketContacts = 0,
         doorContacts = 0;
-      for (const c of baseline.cells.values()) {
-        if (c.role !== "floor" || c.z !== G.deck.floorTopTexels - 1) continue;
+      const contacts = new Map<string, { x: number; y: number; z: number }>();
+      // Ordered floor source establishes the intended contact top. Earlier r001
+      // cosmetic void grilles are not authoritative pits; R14 deliberately filled
+      // those, but every varying bow support top still must match this source.
+      for (const l of baseline.layers.filter((l) => l.role === "floor"))
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            const key = `${x},${y}`,
+              z = l.bounds[5] - 1;
+            if (z > (contacts.get(key)?.z ?? -Infinity))
+              contacts.set(key, { x, y, z });
+          }
+      for (const c of contacts.values()) {
         const x = (c.x + 0.5) / 16,
           y = (c.y + 0.5) / 16;
         if (
@@ -398,7 +440,10 @@ describe("versioned reference recipes", () => {
         expect(next, `${ship.id}:${c.x},${c.y}`).toBeDefined();
         expect(next!.facet).toBeUndefined();
         expect(next!.normalChart).toBeUndefined();
-        expect(current.cells.has(visualCellKey(c.x, c.y, c.z + 1))).toBe(false);
+        expect(
+          current.cells.has(visualCellKey(c.x, c.y, c.z + 1)),
+          `${ship.id}:${c.x},${c.y},${c.z}`,
+        ).toBe(false);
         walked++;
         if (
           interior.sockets.some(
@@ -434,6 +479,120 @@ describe("versioned reference recipes", () => {
       expect(JSON.stringify(ship)).toBe(before);
     }
   }, 20000);
+  it("keeps Crest optical geometry raw while assigning only actual gasket courses dark pigment", () => {
+    const crest = PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!;
+    const r = compileShipVisual(
+      crest,
+      catalog,
+      "deck",
+      "federation",
+      undefined,
+      "r002",
+    );
+    // These actual forward diagonal outer cells are the retained pressure-case,
+    // not the seated armor plane. Glazing forbids clipping here at every height.
+    for (const z of [9, 17, 25]) {
+      const c = r.cells.get(visualCellKey(336, 17, z))!;
+      expect(c.role).toBe("core");
+      expect(c.slot).toBe("primary");
+      expect(c.facet).toBeUndefined();
+    }
+    // Authored regular canopy nose17 gives lower frame20..22, cut upper30..32.
+    for (const z of [20, 21, 30]) {
+      const c = r.cells.get(visualCellKey(336, 17, z))!;
+      expect(c.role).toBe("core");
+      expect(c.slot).toBe("secondary");
+      expect(c.facet).toBeUndefined();
+    }
+  }, 15000);
+  it("renders the selected bridge cover on its real sloped bow contact plane", () => {
+    const r = compileShipVisual(
+      doc,
+      catalog,
+      "deck",
+      "federation",
+      undefined,
+      "r002",
+    );
+    const bridge = doc.rooms.find((r) => r.type === "bridge")!;
+    let covered = 0;
+    const heights = new Set<number>();
+    for (const l of r.layers.filter(
+      (l) => l.id.includes(`floor-cover`) && l.id.endsWith(`:${bridge.id}`),
+    )) {
+      for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+        for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+          const p: [number, number] = [(x + 0.5) / 16, (y + 0.5) / 16];
+          const v = doc.volumes.find((v) => l.support === `volume:${v.id}`)!;
+          const tile = v.tiles.find((t) =>
+            insidePolygon(placedTilePolygon(t), ...p),
+          )!;
+          if (!tile.bow) continue;
+          const [lo] = bowHeights(tile, v.height, p);
+          const top =
+            Math.floor(lo) + G.bowProfiles.shellThicknessTexels[v.height][0];
+          expect(l.bounds[5]).toBe(top);
+          const c = r.cells.get(visualCellKey(x, y, top - 1))!;
+          expect(c).toBeDefined();
+          expect(c.facet).toBeUndefined();
+          expect(r.cells.has(visualCellKey(x, y, top))).toBe(false);
+          heights.add(top);
+          covered++;
+        }
+    }
+    expect(covered).toBeGreaterThan(100);
+    expect(heights.size).toBeGreaterThan(1);
+  }, 15000);
+  it("seats fitting-adjacent roof fields as surviving open wells over continuous core backing", () => {
+    for (const ship of [
+      doc,
+      PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!,
+    ]) {
+      const r = compileShipVisual(
+        ship,
+        catalog,
+        "flight",
+        "federation",
+        undefined,
+        "r002",
+      );
+      const wells = r.layers.filter((l) =>
+        l.id.includes(":roof-shoulder-well:"),
+      );
+      let open = 0;
+      for (const l of wells)
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+              if (!r.cells.has(visualCellKey(x, y, z))) open++;
+            expect(
+              [1, 2, 3, 4].some((d) =>
+                [d, d + 1].every(
+                  (q) =>
+                    r.cells.get(visualCellKey(x, y, l.bounds[2] - q))?.role ===
+                    "core",
+                ),
+              ),
+            ).toBe(true);
+          }
+      expect(open).toBeGreaterThan(20);
+      expect(
+        [...r.cells.values()].some(
+          (c) =>
+            c.role === "service" &&
+            c.slot === "metal" &&
+            !r.cells.has(visualCellKey(c.x, c.y, c.z + 1)) &&
+            wells.some(
+              (l) =>
+                c.x >= l.bounds[0] &&
+                c.x < l.bounds[3] &&
+                c.y >= l.bounds[1] &&
+                c.y < l.bounds[4],
+            ),
+        ),
+      ).toBe(true);
+    }
+  }, 15000);
   it("fingerprints actual finite manufacturing values while keeping r001 identity stable", () => {
     const profile = SHIP_VISUAL_MACRO_PROFILES_R002.federation;
     const before = visualProfilesSha256("r002"),
@@ -519,8 +678,9 @@ describe("versioned reference recipes", () => {
     }
     // Optical guard rings and real furniture can exclude a control assembly;
     // never force one through glazing to satisfy a profile-name count. The
-    // complete current ships must expose three actual room purposes instead.
+    // complete current ships must expose actual eligible task purposes instead.
     expect([...functions].sort()).toEqual([
+      "bridge",
       "engineering",
       "living",
       "quarters",

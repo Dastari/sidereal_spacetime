@@ -1,9 +1,12 @@
 import { describe, it, expect } from "vitest";
 import {
+  compileShipVisual,
   sampleShipVisualLayers,
   removeShipVisualCells,
   visualCellKey,
 } from "@sidereal/sim/ship-visual-compiler";
+import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import type { ShipVisualLayer } from "@sidereal/content/ship-visual";
 import { meshSampledStructure } from "./sampled-structure";
 import { sampledFacetBoundary } from "./sampled-facets";
@@ -251,4 +254,99 @@ describe("supported manufactured facet union", () => {
     for (const f of opticalTop)
       expect(f.colors.every((v) => v === 1)).toBe(true);
   });
+});
+
+describe("actual seated signed45 finish exposure", () => {
+  it("emits the first visible primary armor/lip plane rather than a hidden descriptor row", () => {
+    for (const id of ["fed.s.wren", "fed.m.crest"]) {
+      const doc = PREFAB_SHIPS.find((s) => s.id === id)!;
+      const result = compileShipVisual(
+        doc,
+        defaultPrefabComponentCatalog(),
+        "deck",
+        "federation",
+        undefined,
+        "r002",
+      );
+      const faces = sampledFacetBoundary(result.cells).polygons;
+      const allFaces: { slot: string; points: number[][]; normal: number[] }[] =
+        [];
+      for (const g of meshSampledStructure(result.cells))
+        for (let t = 0; t < g.indices.length; t += 3) {
+          const points = [...g.indices.slice(t, t + 3)].map((i) =>
+            [...g.positions.slice(i * 3, i * 3 + 3)].map((v) => v * 16),
+          );
+          const a = points[1].map((v, i) => v - points[0][i]),
+            b = points[2].map((v, i) => v - points[0][i]);
+          const n = [
+            a[1] * b[2] - a[2] * b[1],
+            a[2] * b[0] - a[0] * b[2],
+            a[0] * b[1] - a[1] * b[0],
+          ];
+          const length = Math.hypot(...n);
+          allFaces.push({
+            slot: g.slot,
+            points,
+            normal: n.map((v) => v / length),
+          });
+        }
+      const primary = faces.filter(
+        (f) => f.plane && f.cell.slot === "primary" && f.cell.facet!.a[2] === 0,
+      );
+      expect(primary.length, id).toBeGreaterThan(10);
+      const seen = new Set<string>();
+      for (const f of primary) {
+        const key = `${f.cell.family}:${f.cell.facet!.d}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const centre = f.points[0].map((_, i) =>
+          f.points.reduce((n, p) => n + p[i] / f.points.length, 0),
+        );
+        const origin = centre.map((v, i) => v + f.normal[i] * 8);
+        const direction = f.normal.map((v) => -v);
+        let nearest = Infinity;
+        let first: (typeof allFaces)[number] | undefined;
+        for (const other of allFaces) {
+          const denominator = other.normal.reduce(
+            (n, v, i) => n + v * direction[i],
+            0,
+          );
+          if (Math.abs(denominator) < 1e-8) continue;
+          const t =
+            other.normal.reduce(
+              (n, v, i) => n + v * (other.points[0][i] - origin[i]),
+              0,
+            ) / denominator;
+          if (t < -1e-8 || t >= nearest) continue;
+          const point = origin.map((v, i) => v + direction[i] * t);
+          const inside = other.points.every((p, i) => {
+            const q = other.points[(i + 1) % other.points.length];
+            const a = q.map((v, j) => v - p[j]),
+              b = point.map((v, j) => v - p[j]);
+            const cross = [
+              a[1] * b[2] - a[2] * b[1],
+              a[2] * b[0] - a[0] * b[2],
+              a[0] * b[1] - a[1] * b[0],
+            ];
+            return (
+              cross.reduce((n, v, j) => n + v * other.normal[j], 0) >= -1e-8
+            );
+          });
+          if (inside) {
+            nearest = t;
+            first = other;
+          }
+        }
+        expect(first?.slot, `${id}:${key}`).toBe("primary");
+        expect(nearest, `${id}:${key}`).toBeCloseTo(8, 8);
+        for (let axis = 0; axis < 3; axis++)
+          expect(first?.normal[axis]).toBeCloseTo(f.normal[axis], 8);
+        const hit = origin.map((v, i) => v + direction[i] * nearest);
+        expect(
+          f.cell.facet!.a.reduce((n, v, i) => n + v * hit[i], 0),
+        ).toBeCloseTo(f.cell.facet!.d, 8);
+      }
+      expect(seen.size).toBeGreaterThan(1);
+    }
+  }, 20000);
 });

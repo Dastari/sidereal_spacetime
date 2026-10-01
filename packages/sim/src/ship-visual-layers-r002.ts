@@ -106,6 +106,31 @@ export function shipVisualLayersR002(
     ]),
     ...approaches.map((a) => a.rect),
   ];
+  const supportedFloorPlan = new Set<string>();
+  for (const v of doc.volumes) {
+    if (!G.heightClasses[v.height].walkable) continue;
+    const holes = volumeGeometry(v).outline?.holes ?? [];
+    for (const t of v.tiles) {
+      const poly = placedTilePolygon(t);
+      for (
+        let y = Math.floor(Math.min(...poly.map((p) => p[1])) * 16);
+        y < Math.ceil(Math.max(...poly.map((p) => p[1])) * 16);
+        y++
+      )
+        for (
+          let x = Math.floor(Math.min(...poly.map((p) => p[0])) * 16);
+          x < Math.ceil(Math.max(...poly.map((p) => p[0])) * 16);
+          x++
+        ) {
+          const p: Pt = [(x + 0.5) / 16, (y + 0.5) / 16];
+          if (
+            insidePolygon(poly, ...p) &&
+            !holes.some((h) => insidePolygon(h, ...p))
+          )
+            supportedFloorPlan.add(`${x},${y}`);
+        }
+    }
+  }
   const floorCovers: {
     bounds: number[];
     kind: "vent" | "access";
@@ -141,6 +166,14 @@ export function shipVisualLayersR002(
         x += 4
       ) {
         const b = [x, y, x + width, y + depth];
+        let fullSupport = true;
+        for (let Y = b[1]; Y < b[3] && fullSupport; Y++)
+          for (let X = b[0]; X < b[2]; X++)
+            if (!supportedFloorPlan.has(`${X},${Y}`)) {
+              fullSupport = false;
+              break;
+            }
+        if (!fullSupport) continue;
         if (
           occupiedFloorRects.some(
             (r) =>
@@ -247,6 +280,95 @@ export function shipVisualLayersR002(
         insidePolygon(poly, ...p) ||
         polygonBoundarySample(p, poly).distance <= rawPaddingM,
     );
+
+  // Select a purpose on a whole usable wall run, after real assembly exclusions.
+  // Room centroids can fall in a doorway; they are a preference, never eligibility.
+  const wallTaskKey = (room: ShipPrefabDocumentV1["rooms"][number]) =>
+    ["engineering", "workshop"].includes(room.type)
+      ? ("engineering" as const)
+      : ["bridge", "cargo"].includes(room.type)
+        ? ("bridge" as const)
+        : room.type === "quarters"
+          ? ("quarters" as const)
+          : ("living" as const);
+  const wallTaskRuns = (a: Pt, b: Pt, side: Pt) => {
+    const dx = b[0] - a[0],
+      dy = b[1] - a[1],
+      span = Math.hypot(dx, dy);
+    const ux = dx / span,
+      uy = dy / span;
+    const roomAt = (q: number) => {
+      const face: Pt = [(a[0] + ux * q) / 16, (a[1] + uy * q) / 16];
+      const probe: Pt = [face[0] + side[0] * 0.35, face[1] + side[1] * 0.35];
+      if (
+        protectedInterface(face) ||
+        interior.sockets.some(
+          (o) =>
+            probe[0] >= o.at[0] - 1 / 16 &&
+            probe[0] <= o.at[0] + o.size[0] + 1 / 16 &&
+            probe[1] >= o.at[1] - 1 / 16 &&
+            probe[1] <= o.at[1] + o.size[1] + 1 / 16,
+        )
+      )
+        return undefined;
+      return doc.rooms.find(
+        (r) =>
+          r.type !== "corridor" &&
+          probe[0] >= r.rect[0] &&
+          probe[0] < r.rect[2] &&
+          probe[1] >= r.rect[1] &&
+          probe[1] < r.rect[3],
+      );
+    };
+    const runs: {
+      room: ShipPrefabDocumentV1["rooms"][number];
+      u: number;
+      U: number;
+    }[] = [];
+    for (let q = 3; q < span - 3; q++) {
+      const room = roomAt(q + 0.5);
+      if (!room) continue;
+      const last = runs[runs.length - 1];
+      if (last?.room.id === room.id && last.U === q) last.U++;
+      else runs.push({ room, u: q, U: q + 1 });
+    }
+    const selected: {
+      room: ShipPrefabDocumentV1["rooms"][number];
+      key: keyof typeof macro.wallTasks;
+      u: number;
+      U: number;
+    }[] = [];
+    for (const room of doc.rooms) {
+      const options = runs.filter(
+        (r) => r.room.id === room.id && r.U - r.u >= 13,
+      );
+      const centre =
+        ((room.rect[0] + room.rect[2]) * 8 - a[0]) * ux +
+        ((room.rect[1] + room.rect[3]) * 8 - a[1]) * uy;
+      options.sort(
+        (A, B) =>
+          Math.abs((A.u + A.U) / 2 - centre) -
+            Math.abs((B.u + B.U) / 2 - centre) || A.u - B.u,
+      );
+      if (!options.length) continue;
+      const run = options[0],
+        key = wallTaskKey(room);
+      const width = Math.min(macro.wallTasks[key].width, run.U - run.u);
+      const u = Math.max(
+        run.u,
+        Math.min(run.U - width, Math.round(centre - width / 2)),
+      );
+      selected.push({ room, key, u, U: u + width });
+    }
+    return selected;
+  };
+  const wallTaskCache = new Map<string, ReturnType<typeof wallTaskRuns>>();
+  const wallTasksFor = (id: string, a: Pt, b: Pt, side: Pt) => {
+    const key = `${id}:${side.join(",")}`;
+    if (!wallTaskCache.has(key))
+      wallTaskCache.set(key, wallTaskRuns(a, b, side));
+    return wallTaskCache.get(key)!;
+  };
 
   const roofObstacles = [
     ...doc.mounts
@@ -359,6 +481,11 @@ export function shipVisualLayersR002(
     const family = `volume:${volume.id}`;
     // Joined housings take their purpose and occupied aperture from actual equipment,
     // not room rectangles. The visible shoulders join the same tray beside those apertures.
+    const roofFixtureBounds: {
+      id: string;
+      kind: "utility" | "control";
+      bounds: number[];
+    }[] = [];
     const roofCases: {
       id: string;
       bounds: number[];
@@ -392,6 +519,7 @@ export function shipVisualLayersR002(
           (m.bounds[1] + m.bounds[3]) / 2,
         ),
       );
+      roofFixtureBounds.push(...mounted);
       for (const kind of ["utility", "control"] as const) {
         const items = mounted.filter((m) => m.kind === kind);
         if (!items.length) continue;
@@ -558,6 +686,68 @@ export function shipVisualLayersR002(
       );
       trayCassetteX.set(routeY, selected[0]?.bounds[0]);
     }
+    // Two unequal service fields belong beside actual equipment cases, on exposed
+    // shoulders. They do not tile the whole roof or replace the working routes.
+    const shoulderFields: {
+      id: string;
+      kind: "vent" | "access";
+      bounds: number[];
+    }[] = [];
+    if (deck)
+      for (const c of roofFixtureBounds) {
+        if (
+          shoulderFields.some(
+            (f) => f.kind === (c.kind === "utility" ? "vent" : "access"),
+          )
+        )
+          continue;
+        const vent = c.kind === "utility",
+          width = vent ? 20 : 14,
+          depth = vent ? 12 : 10;
+        const [a, b, A, B] = c.bounds;
+        const candidates = [
+          [a + 3, b - depth - 3, a + 3 + width, b - 3],
+          [A - width - 3, B + 3, A - 3, B + depth + 3],
+          [a - width - 3, b + 4, a - 3, b + 4 + depth],
+          [A + 3, B - depth - 4, A + width + 3, B - 4],
+        ];
+        for (const bounds of candidates) {
+          let clear = true;
+          for (let y = bounds[1]; y < bounds[3] && clear; y++)
+            for (let x = bounds[0]; x < bounds[2]; x++) {
+              const p: Pt = [x + 0.5, y + 0.5];
+              if (
+                !insidePolygon(poly, ...p) ||
+                polygonBoundarySample(p, poly).distance < 4 ||
+                holes.some((h) => insidePolygon(h, ...p)) ||
+                [
+                  ...roofObstacles,
+                  ...roofMarkings,
+                  ...shoulderFields.map((f) => f.bounds),
+                ].some((r) => inRect(...p, r, 2)) ||
+                routeYs.some((route) => Math.abs(y - route) < 8)
+              ) {
+                clear = false;
+                break;
+              }
+              const world: Pt = [p[0] / 16, p[1] / 16];
+              const tile = tileCells
+                .get(`${Math.floor(world[0])},${Math.floor(world[1])}`)
+                ?.find((t) => insidePolygon(t.poly, ...world))?.tile;
+              if (!tile || tile.bow) {
+                clear = false;
+                break;
+              }
+            }
+          if (!clear) continue;
+          shoulderFields.push({
+            id: c.id,
+            kind: vent ? "vent" : "access",
+            bounds,
+          });
+          break;
+        }
+      }
     for (let y = by; y < bY; y++)
       for (let x = bx; x < bX; x++) {
         const p: Pt = [x + 0.5, y + 0.5];
@@ -612,7 +802,7 @@ export function shipVisualLayersR002(
             floor,
             family,
           );
-          if (!tile.bow) {
+          {
             const room = doc.rooms.find(
               (r) =>
                 world[0] >= r.rect[0] &&
@@ -1427,6 +1617,88 @@ export function shipVisualLayersR002(
                   family,
                 );
             }
+            const field = shoulderFields.find((f) =>
+              inRect(p[0], p[1], f.bounds),
+            );
+            if (deck && field && shoulder && !serviceBelt) {
+              const [a, b, A, B] = field.bounds;
+              const edge = Math.min(x - a, A - 1 - x, y - b, B - 1 - y);
+              const corner =
+                Math.min(x - a, A - 1 - x) + Math.min(y - b, B - 1 - y);
+              if (corner >= 2) {
+                column(
+                  `${family}:roof-shoulder-enclosure:${field.id}`,
+                  "plate",
+                  "primary",
+                  x,
+                  y,
+                  hi - 2,
+                  hi + 1,
+                  family,
+                );
+                if (edge >= 2) {
+                  column(
+                    `${family}:roof-shoulder-well:${field.id}`,
+                    "void",
+                    "dark",
+                    x,
+                    y,
+                    hi - 1,
+                    hi + 1,
+                    family,
+                  );
+                  column(
+                    `${family}:roof-shoulder-backing:${field.id}`,
+                    "frame",
+                    "trim",
+                    x,
+                    y,
+                    hi - 2,
+                    hi - 1,
+                    family,
+                  );
+                  if (
+                    field.kind === "vent" &&
+                    x >= a + 4 &&
+                    x < A - 4 &&
+                    mod(y - b, 5) < 2
+                  )
+                    column(
+                      `${family}:roof-shoulder-louver:${field.id}`,
+                      "service",
+                      "metal",
+                      x,
+                      y,
+                      hi - 1,
+                      hi,
+                      family,
+                    );
+                  else if (field.kind === "access") {
+                    column(
+                      `${family}:roof-shoulder-access:${field.id}`,
+                      "plate",
+                      "trim",
+                      x,
+                      y,
+                      hi - 1,
+                      hi,
+                      family,
+                    );
+                    if (x >= A - 6 && x < A - 4 && y >= b + 4 && y < b + 6)
+                      column(
+                        `${family}:roof-shoulder-latch:${field.id}`,
+                        "service",
+                        "metal",
+                        x,
+                        y,
+                        hi,
+                        hi + 1,
+                        family,
+                      );
+                  }
+                }
+              }
+            }
             if (channel) {
               column(
                 `${family}:roof-protected-channel`,
@@ -1841,6 +2113,10 @@ export function shipVisualLayersR002(
           Math.abs(Math.abs(dx) - Math.abs(dy)) < 1e-6 && Math.abs(dx) > 1e-6;
         const intercept = Math.round(signed[0] * a[0] + signed[1] * a[1]) - 1;
         const q = signed[0] * p[0] + signed[1] * p[1];
+        // Centre rows are integer for signed45 edges. Qualify the FIRST occupied
+        // finish row at the actual inset, not a row hidden behind its visible face.
+        const finishRow = (setback: number) =>
+          intercept + 1 - Math.max(1, Math.ceil(setback * Math.SQRT2));
         // Chebyshev raw rings protect source holes, true segment ends and attached
         // volume interfaces. Current damage subsequently recomputes exact shared faces.
         const rawGuard =
@@ -1983,7 +2259,7 @@ export function shipVisualLayersR002(
               );
             else {
               const oldFacet = facetPlane;
-              facetPlane = plane(intercept - 2);
+              facetPlane = plane(finishRow(1));
               finish(`${owned}:armor`, "primary", low, high);
               facetPlane = oldFacet;
             }
@@ -2121,20 +2397,16 @@ export function shipVisualLayersR002(
             surfaceRole = oldSurface;
             return;
           }
-          const key = ["engineering", "workshop"].includes(room.type)
-            ? "engineering"
-            : ["bridge", "cargo"].includes(room.type)
-              ? "bridge"
-              : room.type === "quarters"
-                ? "quarters"
-                : "living";
+          const chosen = wallTasksFor(`${family}:${boundary.edgeIndex}`, a, b, [
+            -out[0],
+            -out[1],
+          ]).find((t) => t.room.id === room.id && along >= t.u && along < t.U);
+          if (!chosen) {
+            surfaceRole = oldSurface;
+            return;
+          }
+          const { key, u: left, U: right } = chosen;
           const task = macro.wallTasks[key];
-          const centre =
-            (((room.rect[0] + room.rect[2]) * 8 - a[0]) * dx +
-              ((room.rect[1] + room.rect[3]) * 8 - a[1]) * dy) /
-            boundary.edgeLength;
-          const left = Math.max(4, centre - task.width / 2),
-            right = Math.min(boundary.edgeLength - 4, centre + task.width / 2);
           const bottom = floor + task.bottom,
             ceiling = Math.min(top - 3, bottom + task.height);
           if (
@@ -2319,7 +2591,7 @@ export function shipVisualLayersR002(
           outerFinish(lo + 2, hi - 1);
           facetPlane = undefined;
           if (boundary.distance >= 2) {
-            facetPlane = plane(intercept - 3);
+            facetPlane = plane(finishRow(2));
             column(
               `${family}:shallow-offset-armor`,
               "plate",
@@ -2393,7 +2665,7 @@ export function shipVisualLayersR002(
           outerFinish(floor, top - 1);
           facetPlane = undefined;
           if (boundary.distance >= 2) {
-            facetPlane = plane(intercept - 3);
+            facetPlane = plane(finishRow(2));
             column(
               `${family}:diagonal-inset-lip`,
               "core",
@@ -2452,8 +2724,7 @@ export function shipVisualLayersR002(
       }
       box(`${id}:core`, "core", "secondary", core, family);
       for (let start = 0; start < span; start += profile.course) {
-        const end = Math.min(span, start + profile.course),
-          width = end - start;
+        const end = Math.min(span, start + profile.course);
         const Z = glazed ? ft + 11 : wallCap - 1;
         const surface = (
           side: number,
@@ -2490,8 +2761,8 @@ export function shipVisualLayersR002(
           Z: number,
           depth = 0,
         ) => {
-          u = Math.max(start + 1, u);
-          U = Math.min(end - 1, U);
+          u = Math.max(1, u);
+          U = Math.min(span - 1, U);
           // A recessed seat outside the clipped housing makes its shaped silhouette
           // visible. It removes only decor: the central role-core course remains.
           box(
@@ -2529,53 +2800,22 @@ export function shipVisualLayersR002(
             ),
             family,
           );
-          if (glazed || width < 24 || wallCap < ft + 20) continue;
-          const roomProbe: Pt = vertical
-            ? [x0 / 16 + side * 0.5, (y0 + start + width / 2) / 16]
-            : [(x0 + start + width / 2) / 16, y0 / 16 + side * 0.5];
-          const room = doc.rooms.find(
-            (r) =>
-              roomProbe[0] >= r.rect[0] &&
-              roomProbe[0] < r.rect[2] &&
-              roomProbe[1] >= r.rect[1] &&
-              roomProbe[1] < r.rect[3],
+          if (glazed || span < 13 || wallCap < ft + 20 || jamb) continue;
+          const choices = wallTasksFor(
+            family,
+            [ax, ay],
+            [bx, by],
+            vertical ? [side, 0] : [0, side],
           );
-          if (!room || jamb) continue;
-          const centre = vertical
-            ? (room.rect[1] + room.rect[3]) * 8 - y0
-            : (room.rect[0] + room.rect[2]) * 8 - x0;
-          if (centre < start || centre >= end) continue;
-          const key = ["engineering", "workshop"].includes(room.type)
-            ? "engineering"
-            : ["bridge", "cargo"].includes(room.type)
-              ? "bridge"
-              : room.type === "quarters"
-                ? "quarters"
-                : "living";
+          const chosen = choices.find(
+            (t) => (t.u + t.U) / 2 >= start && (t.u + t.U) / 2 < end,
+          );
+          if (!chosen) continue;
+          const { key, u, U } = chosen;
           const task = macro.wallTasks[key];
-          const half = Math.min(task.width / 2, (width - 4) / 2);
-          const u = Math.max(
-              start + 2,
-              Math.min(end - 2 - half * 2, centre - half),
-            ),
-            U = u + half * 2;
           const bottom = ft + task.bottom,
             ceiling = Math.min(Z, bottom + task.height);
-          if (U - u < 12 || ceiling - bottom < 9) continue;
-          const faceCentre: Pt = vertical
-            ? [x0 / 16, (y0 + (u + U) / 2) / 16]
-            : [(x0 + (u + U) / 2) / 16, y0 / 16];
-          // A whole task face must not straddle a door opening/travel prism.
-          if (
-            doorGuards.some((g) => {
-              const dx = faceCentre[0] - g.centre[0],
-                dy = faceCentre[1] - g.centre[1];
-              const along = Math.abs(dx * g.along[0] + dy * g.along[1]);
-              const normal = Math.abs(-dx * g.along[1] + dy * g.along[0]);
-              return normal < 0.2 && along < g.halfSpan + (U - u) / 32;
-            })
-          )
-            continue;
+          if (U - u < 13 || ceiling - bottom < 9) continue;
           casing(`task-${key}-casing`, "primary", side, u, U, bottom, ceiling);
           // One outer course of a four-course partition is a seat; BOTH central
           // pressure courses remain core. No claimed two-course cavity through it.
@@ -2835,35 +3075,153 @@ export function shipVisualLayersR002(
       l.role === "void" &&
       (l.id.endsWith(":opening") || l.id.endsWith(":glass-aperture")),
   );
+  // Optical RAW geometry guards remain all-height. Pigment is a different
+  // ownership question: only actual lower/upper frame courses are dark gaskets,
+  // never the complete opaque bow wall beneath/behind the retained optical art.
+  const opticalPigments = layers.flatMap((l) => {
+    const opaqueCase =
+      l.id.endsWith(":diagonal-pressure-case") && l.slot === "secondary";
+    if (
+      (!opaqueCase && !["primary", "trim"].includes(l.slot)) ||
+      !l.support?.startsWith("volume:") ||
+      l.bounds[3] - l.bounds[0] !== 1 ||
+      l.bounds[4] - l.bounds[1] !== 1
+    )
+      return [l];
+    const assembly = assemblies.find(
+      (a) => l.support === `volume:${a.volume.id}`,
+    );
+    if (!assembly) return [l];
+    const p: Pt = [(l.bounds[0] + 0.5) / 16, (l.bounds[1] + 0.5) / 16];
+    const glazedTile = assembly.tiles.find(
+      ({ tile, poly }) =>
+        bowGlass(tile) &&
+        insidePolygon(poly, ...p) &&
+        polygonBoundarySample(p, poly).distance <= rawPaddingM,
+    );
+    const edge = opticalEdges.find((e) => {
+      const dx = e.b[0] - e.a[0],
+        dy = e.b[1] - e.a[1],
+        length = Math.hypot(dx, dy);
+      const u = ((p[0] - e.a[0]) * dx + (p[1] - e.a[1]) * dy) / length;
+      const v = Math.abs(-(p[0] - e.a[0]) * dy + (p[1] - e.a[1]) * dx) / length;
+      return (
+        u >= -rawPaddingM &&
+        u <= length + rawPaddingM &&
+        v <= 0.25 + rawPaddingM
+      );
+    });
+    if (!glazedTile && !edge) return [l];
+    let bands: number[][];
+    if (glazedTile) {
+      const [lo, hi] = bowHeights(glazedTile.tile, assembly.volume.height, p);
+      const [lower, upper] =
+        G.bowProfiles.shellThicknessTexels[assembly.volume.height];
+      bands = [
+        [Math.floor(lo + lower) - 1, Math.floor(lo + lower) + 1],
+        [Math.floor(hi - upper) - 1, Math.floor(hi - upper) + 1],
+      ];
+    } else if (
+      edge &&
+      ("glass" in edge || ("type" in edge && edge.type === "canopy"))
+    ) {
+      const [z0, roof] = G.heightClasses[assembly.volume.height].z;
+      const base = G.heightClasses[assembly.volume.height].kinds.includes(
+        "hull",
+      )
+        ? Math.max(0, z0 - G.tierRule.skirtTexels)
+        : z0;
+      // Authored regular canopy source places the lower pressure-glass edge at
+      // nose+3 and the upper frame roof-4..roof. The cut variant's return is top-2..top.
+      const nose = Math.round(base + (roof - base) * 0.4);
+      const top =
+        view === "deck" && G.heightClasses[assembly.volume.height].walkable
+          ? Math.min(roof, G.deck.shellCutTexels)
+          : roof;
+      bands = [
+        [nose + 3, nose + 5],
+        [
+          top -
+            (view === "deck" && G.heightClasses[assembly.volume.height].walkable
+              ? 2
+              : 4),
+          top,
+        ],
+      ];
+    } else {
+      bands = [
+        [G.deck.floorTopTexels + 12, G.deck.floorTopTexels + 14],
+        [
+          G.deck.floorTopTexels + G.deck.interiorCutTexels - 4,
+          G.deck.floorTopTexels + G.deck.interiorCutTexels - 2,
+        ],
+      ];
+    }
+    const rows: ShipVisualLayer[] = [];
+    for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+      rows.push({
+        ...l,
+        bounds: [l.bounds[0], l.bounds[1], z, l.bounds[3], l.bounds[4], z + 1],
+        slot: bands.some(([lo, hi]) => z >= lo && z < hi)
+          ? "secondary"
+          : opaqueCase
+            ? z >= l.bounds[2] + 3 && z < l.bounds[5] - 3
+              ? "primary"
+              : "trim"
+            : l.slot,
+      });
+    return rows;
+  });
+  // Moving the descriptor to its actual visible row also moves its patch
+  // transition. Apply the EXISTING one-cell Chebyshev raw guard to current final
+  // ownership, including vertical armor/lip ends; never relax the union contract.
+  const finalOwnership = sampleShipVisualLayers(
+    compactColumns(opticalPigments),
+  );
+  const facetGuardCells = new Set<string>();
+  for (const c of finalOwnership.values()) {
+    if (!c.facet) continue;
+    for (let z = -1; z <= 1; z++)
+      for (let y = -1; y <= 1; y++)
+        for (let x = -1; x <= 1; x++) {
+          const n = finalOwnership.get(
+            visualCellKey(c.x + x, c.y + y, c.z + z),
+          );
+          if (
+            n?.facet &&
+            (n.facet.id !== c.facet.id ||
+              n.facet.d !== c.facet.d ||
+              n.facet.a.join(",") !== c.facet.a.join(","))
+          ) {
+            facetGuardCells.add(visualCellKey(c.x, c.y, c.z));
+            facetGuardCells.add(visualCellKey(n.x, n.y, n.z));
+          }
+        }
+  }
+  const guardedFinishes = opticalPigments.flatMap((l) => {
+    if (!l.facet) return [l];
+    const rows: ShipVisualLayer[] = [];
+    for (let z = l.bounds[2]; z < l.bounds[5]; z++) {
+      const row = {
+        ...l,
+        bounds: [
+          l.bounds[0],
+          l.bounds[1],
+          z,
+          l.bounds[3],
+          l.bounds[4],
+          z + 1,
+        ] as ShipVisualLayer["bounds"],
+      };
+      if (facetGuardCells.has(visualCellKey(l.bounds[0], l.bounds[1], z))) {
+        const { facet: _facet, ...raw } = row;
+        rows.push(raw);
+      } else rows.push(row);
+    }
+    return rows;
+  });
   return compactColumns(
-    layers.map((source) => {
-      let l = source;
-      if (
-        ["primary", "trim"].includes(l.slot) &&
-        l.support?.startsWith("volume:") &&
-        l.bounds[3] - l.bounds[0] === 1 &&
-        l.bounds[4] - l.bounds[1] === 1
-      ) {
-        const p: Pt = [(l.bounds[0] + 0.5) / 16, (l.bounds[1] + 0.5) / 16];
-        const ring =
-          opticalGuards.some(
-            (poly) => polygonBoundarySample(p, poly).distance <= rawPaddingM,
-          ) ||
-          opticalEdges.some((e) => {
-            const dx = e.b[0] - e.a[0],
-              dy = e.b[1] - e.a[1],
-              length = Math.hypot(dx, dy);
-            const u = ((p[0] - e.a[0]) * dx + (p[1] - e.a[1]) * dy) / length;
-            const v =
-              Math.abs(-(p[0] - e.a[0]) * dy + (p[1] - e.a[1]) * dx) / length;
-            return (
-              u >= -rawPaddingM &&
-              u <= length + rawPaddingM &&
-              v <= 0.25 + rawPaddingM
-            );
-          });
-        if (ring) l = { ...l, slot: "secondary" };
-      }
+    guardedFinishes.map((l) => {
       if (
         !l.facet ||
         !apertureGuards.some(
