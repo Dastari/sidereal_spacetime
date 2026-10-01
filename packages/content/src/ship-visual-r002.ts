@@ -1743,7 +1743,8 @@ export interface ShipVisualMacroProfile {
     | "workshop"
     | "galley"
     | "lounge"
-    | "cargo",
+    | "cargo"
+    | "airlock",
     {
       width: number;
       height: number;
@@ -1779,6 +1780,13 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
     opticalMatingPigments: REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
     opticalMatingSourceSha256: REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
     wallTasks: {
+      airlock: {
+        width: 40,
+        height: 16,
+        bottom: 3,
+        insert: "access",
+        form: "cargo",
+      },
       medical: {
         width: 40,
         height: 16,
@@ -1841,6 +1849,13 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
     opticalMatingPigments: REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
     opticalMatingSourceSha256: REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
     wallTasks: {
+      airlock: {
+        width: 40,
+        height: 16,
+        bottom: 3,
+        insert: "access",
+        form: "cargo",
+      },
       medical: {
         width: 40,
         height: 16,
@@ -1903,6 +1918,13 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
     opticalMatingPigments: REFERENCE_OPTICAL_MATING_PIGMENTS_R002,
     opticalMatingSourceSha256: REFERENCE_OPTICAL_MATING_SOURCE_SHA256_R002,
     wallTasks: {
+      airlock: {
+        width: 40,
+        height: 16,
+        bottom: 3,
+        insert: "access",
+        form: "cargo",
+      },
       medical: {
         width: 40,
         height: 16,
@@ -1951,3 +1973,34 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
     },
   },
 };
+
+/** Shared admission for sampled aperture emission and retained-kit pane retirement. */
+export function referenceCockpitApertureSourceAdmittedR002(
+  profileId: ShipVisualProfileId,
+): boolean {
+  if (profileId !== "federation") return false;
+  const interfaces =
+    SHIP_VISUAL_MACRO_PROFILES_R002[profileId]?.opticalInterfaces;
+  const validBounds = (bounds: unknown): boolean =>
+    Array.isArray(bounds) &&
+    bounds.length > 0 &&
+    bounds.every(
+      (b) =>
+        Array.isArray(b) &&
+        b.length === 6 &&
+        b.every(Number.isFinite) &&
+        [0, 1, 2].every((a) => b[a] <= b[a + 3]),
+    );
+  return ["bow.slope1.deck.s2.a1.edge1", "bow.slope1.deck.s2.a0.edge1"].every(
+    (piece) => {
+      const certificate = interfaces?.[piece];
+      return (
+        certificate?.kind === "optical" &&
+        certificate.assetSha256 ===
+          "26c419726567cf0712c41fec54d87e6d81b845be9d3f7d8f0359d82784e1bdbd" &&
+        validBounds(certificate.sourceFrameBounds) &&
+        validBounds(certificate.retainedGlassBounds)
+      );
+    },
+  );
+}

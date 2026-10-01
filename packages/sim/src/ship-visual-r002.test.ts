@@ -1,4 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
+import {
+  GLTF_TO_ZUP,
+  componentMatrix,
+  mountRotation,
+  multiply,
+  transformPoint,
+} from "@sidereal/render/prefab-ship/frames";
 import { bowGlass, bowHeights } from "@sidereal/content/bow-profiles";
 import { G, placedTilePolygon } from "@sidereal/content/construction-grammar";
 import { insidePolygon } from "@sidereal/content/construction-grammar";
@@ -17,10 +24,12 @@ import {
 import type { ShipVisualLayer } from "@sidereal/content/ship-visual";
 import {
   referencePlateDecals,
+  referenceCockpitApertureSourceAdmittedR002,
   SHIP_VISUAL_MACRO_PROFILES_R002,
   REFERENCE_OPTICAL_INTERFACES_R002,
 } from "@sidereal/content/ship-visual-r002";
 import {
+  referenceCockpitApertureR002,
   referenceStaticWallFittingBoundsR002,
   referenceOpticalGuardBoxesR002,
   referenceOpticalMatingSolidsR002,
@@ -28,6 +37,10 @@ import {
   compactColumns,
 } from "./ship-visual-layers-r002";
 import { PREFAB_SHIPS } from "@sidereal/content/prefabs";
+import {
+  createRetainedWallBoundaryR002,
+  RETAINED_WALL_INPUTS_R002,
+} from "./ship-visual-r002-retained-wall-boundary";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   compileShipVisual,
@@ -37,6 +50,99 @@ import {
   removeShipVisualCells,
   type VisualCell,
 } from "./ship-visual-compiler";
+
+describe("retained original guarded wall composition", () => {
+  const catalog = defaultPrefabComponentCatalog();
+  const ship = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
+  it("keeps original profile projection and airlock living selection independent of the new purpose", () => {
+    expect(
+      Object.keys(RETAINED_WALL_INPUTS_R002.federation.wallTasks),
+    ).toHaveLength(9);
+    expect(RETAINED_WALL_INPUTS_R002.federation.wallTasks).not.toHaveProperty(
+      "airlock",
+    );
+    expect(RETAINED_WALL_INPUTS_R002.aurelian.corner).toBe(3);
+    expect(RETAINED_WALL_INPUTS_R002.riftjack.course).toBe(40);
+    const room = {
+      ...ship.rooms[0],
+      id: "air",
+      type: "airlock" as const,
+      rect: [0, 0, 8, 2] as [number, number, number, number],
+    };
+    const doc = { ...ship, rooms: [room] },
+      interior = { ...deriveInterior(doc, 0, catalog), sockets: [] };
+    const helper = createRetainedWallBoundaryR002(
+      doc,
+      interior,
+      [],
+      "federation",
+      () => false,
+    );
+    const runs = helper.forFace("face", [0, 0], [128, 0], [0, 1]);
+    expect(runs).toHaveLength(1);
+    expect(runs[0].key).toBe("living");
+    expect(runs[0].U - runs[0].u).toBe(40);
+  });
+  it("finishes complete old main and secondary ranking before a protected-band projection", () => {
+    const room = {
+      ...ship.rooms[0],
+      id: "air",
+      type: "airlock" as const,
+      rect: [0, 0, 8, 2] as [number, number, number, number],
+    };
+    const doc = { ...ship, rooms: [room] },
+      interior = { ...deriveInterior(doc, 0, catalog), sockets: [] };
+    const helper = createRetainedWallBoundaryR002(
+      doc,
+      interior,
+      [],
+      "federation",
+      () => false,
+    );
+    const choice = helper.forFace("source", [0, 0], [128, 0], [0, 1])[0];
+    const template = (y: number): ShipVisualLayer => ({
+      id: "wall:task:case",
+      role: "plate",
+      slot: "primary",
+      support: "wall",
+      surfaceRole: "wall",
+      normalHint: [0, 1, 0],
+      bounds: [44, y, 6, 84, y + 1, 22],
+    });
+    const layers = [
+      template(0),
+      template(8),
+      ...[0, 8].map((y) => ({
+        id: "wall:core",
+        role: "core" as const,
+        slot: "secondary" as const,
+        support: "wall",
+        bounds: [44, y + 1, 6, 84, y + 3, 22] as ShipVisualLayer["bounds"],
+      })),
+    ];
+    // Reverse collection order: original global ranking still selects face aa,
+    // while the protected zz band receives its actual secondary recipe.
+    helper.collect(choice, "zz", "wall", [template(8)]);
+    helper.collect(choice, "aa", "wall", [template(0)]);
+    const out = helper.finish(sampleShipVisualLayers(layers));
+    const main = out.filter((l) => l.id.includes(":room-task:air:"));
+    const secondary = out.filter((l) =>
+      l.id.includes(":secondary-room-task:air:"),
+    );
+    expect(main.length).toBeGreaterThan(0);
+    expect(main.every((l) => l.bounds[1] === 0)).toBe(true);
+    expect(secondary.length).toBeGreaterThan(0);
+    expect(secondary.every((l) => l.bounds[1] === 8)).toBe(true);
+    expect(secondary.some((l) => l.role === "void")).toBe(true);
+    for (const l of [...main, ...secondary]) {
+      expect(l.support).toBe("wall");
+      expect(l.surfaceRole).toBe("wall");
+      expect(l.normalHint).toEqual([0, 1, 0]);
+      expect(l.bounds[3] - l.bounds[0]).toBe(1);
+      expect(l.bounds[5] - l.bounds[2]).toBe(1);
+    }
+  });
+});
 
 describe("candidate ordered column compaction", () => {
   const column = (
@@ -1117,8 +1223,12 @@ describe("versioned reference recipes", () => {
             ).toBeGreaterThanOrEqual(2);
       }
       if (view !== "deck") continue;
-      const wells = result.layers.filter((l) =>
-        l.id.endsWith("functional-well"),
+      const wells = result.layers.filter(
+        (l) =>
+          l.role === "void" &&
+          (l.id.includes(":room-task:") ||
+            l.id.includes(":secondary-room-task:")) &&
+          l.id.endsWith(":well"),
       );
       let open = 0;
       let pressure: VisualCell | undefined;
@@ -1392,36 +1502,48 @@ describe("versioned reference recipes", () => {
       undefined,
       "r002",
     );
-    for (const [p, d, role, slot] of [
-      [[68, -11, 25], 79, "frame", "trim"],
-      [[70, -9, 23], 79, "core", "trim"],
-    ] as const) {
-      const c = r.cells.get(visualCellKey(p[0], p[1], p[2]))!;
-      expect(c.role).toBe(role);
-      expect(c.slot).toBe(slot);
-      // Corrected seated planes have true raw transition rings; an old outer
-      // pick at that join retains its occupied pressure role but not a conflicting
-      // intact clipping descriptor. Elsewhere its original plane is unchanged.
-      if (c.facet) {
-        expect(c.facet.a).toEqual([1, -1, 0]);
-        expect(c.facet.d).toBe(d);
-        expect(c.facetFaces).toBe(6);
-      } else {
+    // The exact authored sequence seats the subframe first, then opens the
+    // protected route. Priority-preserving compaction must retain that void,
+    // rather than resurrecting the earlier frame at the historical picked cell.
+    const point = [68, -11, 25] as const;
+    const writes = r.layers.filter(
+      (l) =>
+        point.every(
+          (v, axis) => v >= l.bounds[axis] && v < l.bounds[axis + 3],
+        ) &&
+        (!l.polygon ||
+          (insidePolygon(l.polygon, point[0] + 0.5, point[1] + 0.5) &&
+            !l.holes?.some((hole) =>
+              insidePolygon(hole, point[0] + 0.5, point[1] + 0.5),
+            ) &&
+            (l.band === undefined ||
+              polygonBoundarySample([point[0] + 0.5, point[1] + 0.5], l.polygon)
+                .distance <= l.band))),
+    );
+    expect(
+      writes.some(
+        (l) => l.id === "volume:wing-s:roof-subframe" && l.role === "frame",
+      ),
+    ).toBe(true);
+    expect(writes.at(-1)?.id).toBe("volume:wing-s:roof-protected-channel");
+    expect(writes.at(-1)?.role).toBe("void");
+    expect(r.cells.has(visualCellKey(...point))).toBe(false);
+    const retained = r.cells.get(visualCellKey(70, -9, 23))!;
+    expect(retained.role).toBe("core");
+    expect(retained.slot).toBe("secondary");
+    expect(retained.family).toBe("volume:wing-s");
+    expect(retained.facet?.a).toEqual([1, -1, 0]);
+    expect(retained.facet?.d).toBe(79);
+    expect(retained.facetFaces).toBe(6);
+    for (const [dx, dy] of [
+      [-1, 0],
+      [0, 1],
+    ])
+      for (const depth of [1, 2])
         expect(
-          r.layers.some(
-            (l) =>
-              l.facet &&
-              l.facet.d < d &&
-              l.bounds[0] <= p[0] + 3 &&
-              l.bounds[3] > p[0] - 3 &&
-              l.bounds[1] <= p[1] + 3 &&
-              l.bounds[4] > p[1] - 3 &&
-              l.bounds[2] <= p[2] + 3 &&
-              l.bounds[5] > p[2] - 3,
-          ),
-        ).toBe(true);
-      }
-    }
+          r.cells.get(visualCellKey(70 + dx * depth, -9 + dy * depth, 23))
+            ?.role,
+        ).toBe("core");
     // The common FIRST outer casing retains this old diagonal pressure pick;
     // seating it deeper would compound the permitted .044194m clip recession.
     expect(r.cells.get(visualCellKey(168, 9, 9))?.role).toBe("core");
@@ -1654,11 +1776,10 @@ describe("versioned reference recipes", () => {
     expect(covered).toBeGreaterThan(100);
     expect(heights.size).toBeGreaterThan(1);
   }, 15000);
-  it("seats fitting-adjacent roof fields as surviving open wells over continuous core backing", () => {
-    for (const ship of [
-      doc,
-      PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!,
-    ]) {
+  it.each(["fed.s.wren", "fed.m.crest"])(
+    "seats fitting-adjacent roof fields as surviving open wells over continuous core backing in %s",
+    (id) => {
+      const ship = PREFAB_SHIPS.find((s) => s.id === id)!;
       const r = compileShipVisual(
         ship,
         catalog,
@@ -1702,8 +1823,9 @@ describe("versioned reference recipes", () => {
             ),
         ),
       ).toBe(true);
-    }
-  }, 15000);
+    },
+    15000,
+  );
   it("fingerprints actual finite manufacturing values while keeping r001 identity stable", () => {
     const profile = SHIP_VISUAL_MACRO_PROFILES_R002.federation;
     const before = visualProfilesSha256("r002"),
@@ -1855,7 +1977,7 @@ describe("versioned reference recipes", () => {
             opened++;
             const backing = r.cells.get(visualCellKey(x, y, l.bounds[2] - 1));
             expect(["core", "frame", "roof", "plate"]).toContain(backing?.role);
-            for (const z of [l.bounds[2] - 3, l.bounds[2] - 4])
+            for (const z of [l.bounds[2] - 1, l.bounds[2] - 2])
               expect(r.cells.get(visualCellKey(x, y, z))?.role).toBe("core");
             const insert = r.cells.get(visualCellKey(x, y, l.bounds[2]));
             if (insert?.slot === "accent") access++;
@@ -1866,114 +1988,149 @@ describe("versioned reference recipes", () => {
     expect(access).toBeGreaterThan(20);
     expect(vent).toBeGreaterThan(20);
   }, 20000);
-  it("selects one complete PRIMARY room-sized group globally and preserves its final cross-course owners", () => {
-    let groups = 0,
-      broadGroups = 0,
-      crossCourse = 0,
-      oppositeSides = 0;
-    for (const ship of [
-      doc,
-      PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!,
-    ]) {
-      const result = compileShipVisual(
-        ship,
-        catalog,
-        "deck",
-        "federation",
-        undefined,
-        "r002",
-      );
-      const byColumn = new Map<string, typeof result.layers>();
-      for (const l of result.layers)
-        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
-          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
-            const key = `${x},${y}`;
-            const list = byColumn.get(key) ?? [];
-            list.push(l);
-            byColumn.set(key, list);
+  it.each(["fed.s.wren", "fed.m.crest"])(
+    "fills complete admitted room runs with unequal purpose fields and final cross-course owners in %s",
+    (id) => {
+      let groups = 0,
+        broadGroups = 0,
+        crossCourse = 0,
+        oppositeSides = 0;
+      let completeAftRun = false;
+      const aftRoom = id === "fed.s.wren" ? "engine" : "eng";
+      const aftEnd = id === "fed.s.wren" ? 108 : 156;
+      const aftRun = `volume:hull:room-task:${aftRoom}:run:volume:hull:5:inward:4:${aftEnd}:3`;
+      for (const ship of [PREFAB_SHIPS.find((s) => s.id === id)!]) {
+        const result = compileShipVisual(
+          ship,
+          catalog,
+          "deck",
+          "federation",
+          undefined,
+          "r002",
+        );
+        const byColumn = new Map<string, typeof result.layers>();
+        for (const l of result.layers)
+          for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+            for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+              const key = `${x},${y}`;
+              const list = byColumn.get(key) ?? [];
+              list.push(l);
+              byColumn.set(key, list);
+            }
+        for (const room of ship.rooms) {
+          const selected = result.layers.filter((l) =>
+            l.id.includes(`:room-task:${room.id}:run:`),
+          );
+          if (!selected.length) continue;
+          expect(selected.some((l) => l.id.endsWith(":joined-case"))).toBe(
+            true,
+          );
+          expect(selected.some((l) => l.role === "service")).toBe(true);
+          // All complete usable faces are admitted; each keeps its own original
+          // support family. Different faces are not squeezed into one room badge.
+          expect(selected.every((l) => !!l.support)).toBe(true);
+          const runs = new Map<string, typeof selected>();
+          for (const l of selected) {
+            const key = l.id.slice(0, l.id.lastIndexOf(":"));
+            runs.set(key, [...(runs.get(key) ?? []), l]);
           }
-      for (const room of ship.rooms) {
-        const selected = result.layers.filter((l) =>
-          l.id.includes(`:room-task:${room.id}:`),
-        );
-        if (!selected.length) continue;
-        groups++;
-        expect(
-          selected.some((l) => l.id.endsWith(":offset-storage-field")),
-        ).toBe(true);
-        expect(selected.some((l) => l.id.endsWith(":well"))).toBe(true);
-        expect(selected.some((l) => l.role === "service")).toBe(true);
-        expect(new Set(selected.map((l) => l.support)).size).toBe(1);
-        const xs = selected.flatMap((l) => [l.bounds[0], l.bounds[3]]);
-        const ys = selected.flatMap((l) => [l.bounds[1], l.bounds[4]]);
-        const width = Math.max(
-          Math.max(...xs) - Math.min(...xs),
-          Math.max(...ys) - Math.min(...ys),
-        );
-        if (width >= 32) broadGroups++;
-        const core = result.layers.find(
-          (l) => l.id.endsWith(":core") && l.support === selected[0].support,
-        );
-        if (core) {
-          const axis = core.bounds[3] - core.bounds[0] === 2 ? 0 : 1;
-          const alongAxis = axis === 0 ? 1 : 0;
-          const lo = Math.min(...selected.map((l) => l.bounds[alongAxis]));
-          const hi = Math.max(...selected.map((l) => l.bounds[alongAxis + 3]));
-          if (
-            Math.floor((lo - core.bounds[alongAxis]) / 32) !==
-            Math.floor((hi - 1 - core.bounds[alongAxis]) / 32)
-          )
-            crossCourse++;
-          if (selected.some((l) => l.bounds[axis + 3] <= core.bounds[axis]))
-            oppositeSides |= 1;
-          if (selected.some((l) => l.bounds[axis] >= core.bounds[axis + 3]))
-            oppositeSides |= 2;
-        }
-        const visited = new Set<string>();
-        for (const l of selected)
-          for (let z = l.bounds[2]; z < l.bounds[5]; z++)
-            for (let y = l.bounds[1]; y < l.bounds[4]; y++)
-              for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
-                const cellKey = visualCellKey(x, y, z);
-                if (visited.has(cellKey)) continue;
-                visited.add(cellKey);
-                const relevant = (byColumn.get(`${x},${y}`) ?? []).filter(
-                  (a) => z >= a.bounds[2] && z < a.bounds[5],
-                );
-                const owner = relevant[relevant.length - 1];
-                expect(owner.id, cellKey).toContain(`:room-task:${room.id}:`);
-                const c = result.cells.get(cellKey);
-                if (owner.role === "void") {
-                  expect(c, cellKey).toBeUndefined();
+          for (const [run, ls] of runs) {
+            groups++;
+            expect(run).toContain(":run:");
+            const width = Math.max(
+              ...[0, 1].map(
+                (axis) =>
+                  Math.max(...ls.map((l) => l.bounds[axis + 3])) -
+                  Math.min(...ls.map((l) => l.bounds[axis])),
+              ),
+            );
+            if (width >= 64) broadGroups++;
+            if (run === aftRun) {
+              expect(width).toBe(aftEnd - 4);
+              const occupiedTaskKeys = new Set<string>();
+              for (const l of ls)
+                for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+                  for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+                    for (let x = l.bounds[0]; x < l.bounds[3]; x++)
+                      occupiedTaskKeys.add(visualCellKey(x, y, z));
+              for (let y = 4; y < aftEnd; y++)
+                for (let z = 6; z < 30; z++)
                   expect(
-                    [
-                      [1, 0],
-                      [-1, 0],
-                      [0, 1],
-                      [0, -1],
-                    ].some(([dx, dy]) =>
-                      [1, 2].every(
-                        (n) =>
-                          result.cells.get(
-                            visualCellKey(x + dx * n, y + dy * n, z),
-                          )?.role === "core",
-                      ),
-                    ),
-                    cellKey,
+                    occupiedTaskKeys.has(visualCellKey(3, y, z)),
+                    `${aftRun}:${y}:${z}`,
                   ).toBe(true);
-                } else {
-                  expect(c?.family, cellKey).toBe(owner.support);
-                  expect(c?.role, cellKey).toBe(owner.role);
-                  expect(c?.slot, cellKey).toBe(owner.slot);
+              completeAftRun = true;
+            }
+            const core = result.layers.find(
+              (l) => l.id.endsWith(":core") && l.support === ls[0].support,
+            );
+            if (core) {
+              const axis = core.bounds[3] - core.bounds[0] === 2 ? 0 : 1,
+                alongAxis = axis === 0 ? 1 : 0;
+              const lo = Math.min(...ls.map((l) => l.bounds[alongAxis])),
+                hi = Math.max(...ls.map((l) => l.bounds[alongAxis + 3]));
+              if (
+                Math.floor((lo - core.bounds[alongAxis]) / 32) !==
+                Math.floor((hi - 1 - core.bounds[alongAxis]) / 32)
+              )
+                crossCourse++;
+              if (ls.some((l) => l.bounds[axis + 3] <= core.bounds[axis]))
+                oppositeSides |= 1;
+              if (ls.some((l) => l.bounds[axis] >= core.bounds[axis + 3]))
+                oppositeSides |= 2;
+            }
+          }
+          const visited = new Set<string>();
+          for (const l of selected)
+            for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+              for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+                for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+                  const cellKey = visualCellKey(x, y, z);
+                  if (visited.has(cellKey)) continue;
+                  visited.add(cellKey);
+                  const relevant = (byColumn.get(`${x},${y}`) ?? []).filter(
+                    (a) => z >= a.bounds[2] && z < a.bounds[5],
+                  );
+                  const owner = relevant[relevant.length - 1];
+                  expect(owner.id, cellKey).toContain(`:room-task:${room.id}:`);
+                  const c = result.cells.get(cellKey);
+                  if (owner.role === "void") {
+                    expect(c, cellKey).toBeUndefined();
+                    expect(
+                      [
+                        [1, 0],
+                        [-1, 0],
+                        [0, 1],
+                        [0, -1],
+                      ].some(([dx, dy]) =>
+                        [1, 2].every(
+                          (n) =>
+                            result.cells.get(
+                              visualCellKey(x + dx * n, y + dy * n, z),
+                            )?.role === "core",
+                        ),
+                      ),
+                      cellKey,
+                    ).toBe(true);
+                  } else {
+                    expect(c?.family, cellKey).toBe(owner.support);
+                    expect(c?.role, cellKey).toBe(owner.role);
+                    expect(c?.slot, cellKey).toBe(owner.slot);
+                  }
                 }
-              }
+        }
       }
-    }
-    expect(groups).toBeGreaterThanOrEqual(5);
-    expect(broadGroups).toBeGreaterThanOrEqual(3);
-    expect(crossCourse).toBeGreaterThan(0);
-    expect(oppositeSides).toBe(3);
-  }, 30000);
+      expect(groups).toBeGreaterThanOrEqual(3);
+      expect(groups).toBe(id === "fed.s.wren" ? 7 : 21);
+      // Complete final census admits one long aft run; independent short faces
+      // remain covered by the final-owner/backing assertions above.
+      expect(broadGroups).toBe(1);
+      expect(completeAftRun).toBe(true);
+      expect(crossCourse).toBeGreaterThan(0);
+      expect(oppositeSides).toBe(3);
+    },
+    20000,
+  );
   it.each(["fed.s.wren", "fed.m.crest"])(
     "attributes new mating pigment only to actual final exposed finish owners in %s",
     (id) => {
@@ -2049,33 +2206,79 @@ describe("versioned reference recipes", () => {
     20000,
   );
   it("matches static fitting wall bounds to the actual cardinal renderer frame and rejects uncertain qualification", () => {
-    const source = deriveInterior(
+    const sockets = deriveInterior(
       PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!,
       0,
       catalog,
-    ).sockets.find((o) => o.designId === "pale-studless.kitchen.standard")!;
-    expect(source).toBeDefined();
-    for (const facing of ["fore", "port", "aft", "starboard"] as const) {
-      const size: [number, number] =
-        facing === "fore" || facing === "aft" ? [0.75, 2.25] : [2.25, 0.75];
-      const socket = {
-        ...source,
-        at: [3, 5] as [number, number],
-        size,
-        facing,
-      };
-      const b = referenceStaticWallFittingBoundsR002(
-        socket,
+    ).sockets;
+    const certsActual =
+      SHIP_VISUAL_MACRO_PROFILES_R002.federation.staticWallFittings;
+    for (const designId of [
+      "pale-studless.kitchen.standard",
+      "pale-studless.table.standard",
+    ] as const) {
+      const actual = sockets.find((o) => o.designId === designId)!;
+      const cert = certsActual[designId];
+      expect(actual).toBeDefined();
+      // Test each real, unmodified actual socket first. Its existing size is part
+      // of the source contract, not changed to make a rotated certificate fit.
+      const realBounds = referenceStaticWallFittingBoundsR002(
+        actual,
         G.deck.floorTopTexels,
-      )!;
-      expect(b).toBeDefined();
-      expect(b[0]).toBeCloseTo(3 - 2 / 16);
-      expect(b[1]).toBeCloseTo(5 - 2 / 16);
-      expect(b[3]).toBeCloseTo(3 + size[0] + 2 / 16);
-      expect(b[4]).toBeCloseTo(5 + size[1] + 2 / 16);
-      expect(b[2]).toBeCloseTo(G.deck.floorTopTexels / 16 - 2 / 16);
-      expect(b[5]).toBeCloseTo(G.deck.floorTopTexels / 16 + 1 + 2 / 16);
+      );
+      expect(realBounds, designId).toBeDefined();
+      for (const [quarter, facing] of (
+        ["fore", "port", "aft", "starboard"] as const
+      ).entries()) {
+        const width = cert.bounds[3] - cert.bounds[0],
+          depth = cert.bounds[4] - cert.bounds[1];
+        const size: [number, number] =
+          quarter % 2 ? [width, depth] : [depth, width];
+        const socket = { ...actual, size, facing };
+        const anchor: [number, number] = [
+          socket.at[0] + size[0] / 2,
+          socket.at[1] + size[1] / 2,
+        ];
+        const matrix = multiply(
+          multiply(GLTF_TO_ZUP, mountRotation("interior", "interior")),
+          componentMatrix(
+            anchor,
+            G.deck.floorTopTexels / 16,
+            quarter + cert.artQuarterTurns,
+          ),
+        );
+        const points: [number, number, number][] = [];
+        for (const x of [cert.bounds[0], cert.bounds[3]])
+          for (const y of [cert.bounds[1], cert.bounds[4]])
+            for (const z of [cert.bounds[2], cert.bounds[5]])
+              points.push(transformPoint(matrix, [x, z, -y]));
+        const expected = [0, 1, 2]
+          .map(
+            (i) =>
+              Math.min(...points.map((p) => p[i])) - cert.clearanceCells / 16,
+          )
+          .concat(
+            [0, 1, 2].map(
+              (i) =>
+                Math.max(...points.map((p) => p[i])) + cert.clearanceCells / 16,
+            ),
+          );
+        const bounds = referenceStaticWallFittingBoundsR002(
+          socket,
+          G.deck.floorTopTexels,
+        )!;
+        expect(bounds, `${designId}:${facing}`).toBeDefined();
+        for (let i = 0; i < 6; i++)
+          expect(bounds[i], `${designId}:${facing}:${i}`).toBeCloseTo(
+            expected[i],
+            10,
+          );
+        if (facing === actual.facing) expect(bounds).toEqual(realBounds);
+      }
     }
+    const source = sockets.find(
+      (o) => o.designId === "pale-studless.kitchen.standard",
+    )!;
     expect(
       referenceStaticWallFittingBoundsR002(
         { ...source, designId: "unknown" },
@@ -2108,7 +2311,7 @@ describe("versioned reference recipes", () => {
     ).toBeUndefined();
   });
   it.each(["fed.s.wren", "fed.m.crest"])(
-    "authors distinct secondary purpose hardware with final backed ownership in %s",
+    "authors distinct full-run purpose hardware with final backed ownership in %s",
     (id) => {
       const ship = PREFAB_SHIPS.find((s) => s.id === id)!,
         r = compileShipVisual(
@@ -2120,9 +2323,7 @@ describe("versioned reference recipes", () => {
           "r002",
         );
       const groups = new Map<string, typeof r.layers>();
-      for (const l of r.layers.filter((l) =>
-        l.id.includes(":secondary-room-task:"),
-      )) {
+      for (const l of r.layers.filter((l) => l.id.includes(":room-task:"))) {
         const k = l.id.slice(0, l.id.lastIndexOf(":"));
         groups.set(k, [...(groups.get(k) ?? []), l]);
       }
@@ -2137,10 +2338,7 @@ describe("versioned reference recipes", () => {
       let wells = 0,
         hardware = 0;
       for (const [group, ls] of groups) {
-        expect(group).toMatch(
-          /cooling-distribution|tool-rail|power-status|oxygen-supply|load-securement|utility-duct|reading-storage|media-utility/,
-        );
-        expect(ls.some((l) => l.id.endsWith(":well"))).toBe(true);
+        expect(group).toMatch(/:room-task:/);
         expect(ls.some((l) => l.role === "service")).toBe(true);
         expect(
           ls.every(
@@ -2159,10 +2357,7 @@ describe("versioned reference recipes", () => {
                 );
                 const owner = owners.at(-1)!;
                 expect(owner.id, key).toContain(group);
-                expect(
-                  owners.some((a) => a.id.includes(":room-task:")),
-                  key,
-                ).toBe(false);
+                expect(owner.support, key).toBe(l.support);
                 const c = r.cells.get(key);
                 if (owner.role === "void") {
                   expect(c, key).toBeUndefined();
@@ -2472,4 +2667,187 @@ describe("versioned reference recipes", () => {
     },
     20000,
   );
+});
+
+describe("finite V3 Wren cockpit aperture duties", () => {
+  it("keeps two raw face-connected pane courses and the exact retained upper contour in both views", () => {
+    const doc = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!;
+    const catalog = defaultPrefabComponentCatalog();
+    for (const view of ["deck", "flight"] as const) {
+      const writes = referenceCockpitApertureR002(
+        doc,
+        view,
+        catalog,
+        "federation",
+      );
+      expect(writes).toHaveLength(1000);
+      expect(
+        new Set(writes.map((l) => l.bounds.slice(0, 3).join(","))).size,
+      ).toBe(1000);
+      for (const [section, normal, coordinates] of [
+        ["south", [1, -1], [158, 159]],
+        ["north", [1, 1], [269, 270]],
+      ] as const) {
+        const selected = writes.filter((l) =>
+          l.id.startsWith(`candidate-D:${section}:`),
+        );
+        const pane = selected.filter((l) => l.role === "core"),
+          clear = selected.filter((l) => l.role === "void");
+        expect(selected).toHaveLength(500);
+        expect(pane).toHaveLength(198);
+        expect(clear).toHaveLength(302);
+        expect(
+          [
+            ...new Set(
+              pane.map(
+                (l) => normal[0] * l.bounds[0] + normal[1] * l.bounds[1],
+              ),
+            ),
+          ].sort(),
+        ).toEqual([...coordinates].sort());
+        expect(
+          pane.every(
+            (l) =>
+              l.slot === "glass" &&
+              l.surfaceRole === "hull" &&
+              !l.facet &&
+              !l.normalHint &&
+              !l.normalChart &&
+              !l.normalSide,
+          ),
+        ).toBe(true);
+        expect(
+          clear.every(
+            (l) =>
+              l.slot === "dark" &&
+              l.surfaceRole === (view === "flight" ? "hull" : "wall"),
+          ),
+        ).toBe(true);
+        expect(
+          selected.every(
+            (l) =>
+              l.support === "volume:hull" &&
+              [0, 1, 2].every((a) => l.bounds[a + 3] - l.bounds[a] === 1),
+          ),
+        ).toBe(true);
+        const keys = new Set(pane.map((l) => l.bounds.slice(0, 3).join(","))),
+          reached = new Set<string>(),
+          queue = [[...keys][0]];
+        let edges = 0;
+        for (const key of keys) {
+          const p = key.split(",").map(Number);
+          for (const n of [
+            [1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1],
+          ])
+            if (keys.has(p.map((v, a) => v + n[a]).join(","))) edges++;
+        }
+        while (queue.length) {
+          const key = queue.pop()!;
+          if (reached.has(key)) continue;
+          reached.add(key);
+          const p = key.split(",").map(Number);
+          for (const n of [
+            [1, 0, 0],
+            [-1, 0, 0],
+            [0, 1, 0],
+            [0, -1, 0],
+            [0, 0, 1],
+            [0, 0, -1],
+          ]) {
+            const next = p.map((v, a) => v + n[a]).join(",");
+            if (keys.has(next) && !reached.has(next)) queue.push(next);
+          }
+        }
+        expect(reached.size).toBe(198);
+        expect(edges).toBe(367);
+        // The accepted whole upper/end contour remains untouched, not seven isolated teeth.
+        expect(
+          selected.some(
+            (l) =>
+              l.bounds[2] >= 26 &&
+              (section === "south"
+                ? l.bounds[0] + l.bounds[1] - 160
+                : l.bounds[0] - l.bounds[1] - 49) >= 21,
+          ),
+        ).toBe(false);
+      }
+    }
+  });
+  it("keeps the entire old pair for unsupported profiles, source pins or moved occurrences", () => {
+    const doc = PREFAB_SHIPS.find((s) => s.id === "fed.s.wren")!,
+      catalog = defaultPrefabComponentCatalog();
+    expect(referenceCockpitApertureSourceAdmittedR002("federation")).toBe(true);
+    expect(referenceCockpitApertureSourceAdmittedR002("riftjack")).toBe(false);
+    expect(
+      referenceCockpitApertureR002(doc, "deck", catalog, "riftjack"),
+    ).toEqual([]);
+    expect(
+      referenceCockpitApertureR002(
+        PREFAB_SHIPS.find((s) => s.id === "fed.m.crest")!,
+        "deck",
+        catalog,
+        "federation",
+      ),
+    ).toEqual([]);
+    const certificate =
+        REFERENCE_OPTICAL_INTERFACES_R002["bow.slope1.deck.s2.a1.edge1"],
+      original = certificate.assetSha256;
+    try {
+      certificate.assetSha256 = "0".repeat(64);
+      expect(referenceCockpitApertureSourceAdmittedR002("federation")).toBe(
+        false,
+      );
+      expect(
+        referenceCockpitApertureR002(doc, "deck", catalog, "federation"),
+      ).toEqual([]);
+    } finally {
+      certificate.assetSha256 = original;
+    }
+    const macro = SHIP_VISUAL_MACRO_PROFILES_R002.federation,
+      oldInterfaces = macro.opticalInterfaces;
+    try {
+      macro.opticalInterfaces = { ...oldInterfaces };
+      delete macro.opticalInterfaces["bow.slope1.deck.s2.a1.edge1"];
+      expect(referenceCockpitApertureSourceAdmittedR002("federation")).toBe(
+        false,
+      );
+      expect(
+        referenceCockpitApertureR002(doc, "deck", catalog, "federation"),
+      ).toEqual([]);
+    } finally {
+      macro.opticalInterfaces = oldInterfaces;
+    }
+    const dressed = dressShip(doc, { catalog });
+    for (const mutate of [
+      (kit: typeof dressed.kit) =>
+        kit.map((k) =>
+          k.piece === "bow.slope1.deck.s2.a1.edge1"
+            ? { ...k, x: k.x + 1 / 16 }
+            : k,
+        ),
+      (kit: typeof dressed.kit) =>
+        kit.map((k) =>
+          k.piece === "bow.slope1.deck.s2.a1.edge1"
+            ? { ...k, mirror: true }
+            : k,
+        ),
+      (kit: typeof dressed.kit) => [
+        ...kit,
+        kit.find((k) => k.piece === "bow.slope1.deck.s2.a1.edge1")!,
+      ],
+    ]) {
+      const spy = vi
+        .spyOn(dresser, "dressShip")
+        .mockReturnValue({ ...dressed, kit: mutate(dressed.kit) });
+      try {
+        expect(
+          referenceCockpitApertureR002(doc, "flight", catalog, "federation"),
+        ).toEqual([]);
+      } finally {
+        spy.mockRestore();
+      }
+    }
+  });
 });

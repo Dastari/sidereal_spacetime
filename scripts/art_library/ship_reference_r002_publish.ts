@@ -36,6 +36,7 @@ const sources = [
   "packages/content/src/ship-visual.ts",
   "packages/content/src/ship-visual-r002.ts",
   "packages/sim/src/ship-visual-layers-r002.ts",
+  "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
   "packages/sim/src/ship-dresser.ts",
   "packages/content/src/ship-prefab.ts",
   "packages/content/src/ship-furniture.ts",
@@ -46,6 +47,9 @@ const sources = [
   "packages/render/src/prefab-ship/sampled-ao.ts",
   "packages/render/src/prefab-ship/normal-detail.ts",
   "packages/render/src/prefab-ship/ship-view.ts",
+  "packages/render/src/prefab-ship/frames.ts",
+  "packages/render/package.json",
+  "packages/render/src/prefab-ship/glazing-replacement.ts",
   "packages/render/src/prefab-ship/batch.ts",
   "packages/render/src/prefab-ship/coplanar.ts",
   "packages/render/src/prefab-ship/surface-attributes.ts",
@@ -58,6 +62,11 @@ const sources = [
   "packages/render/src/pbr-light-budget.ts",
   "packages/render/src/local-light-budget.ts",
   "scripts/art_library/ship_reference_r002_art.py",
+  "scripts/art_library/ship_reference_r020_reactor.py",
+  "assets/runtime/ship-visual/r002/equipment-r020/reactor.md-source.json",
+  "assets/runtime/ship-visual/r002/equipment-r020/reactor.lg-source.json",
+  "assets/source/ship-reference/r002/equipment-r020/reactor.md.blend",
+  "assets/source/ship-reference/r002/equipment-r020/reactor.lg.blend",
   "assets/runtime/ship-visual/r002/door-leaf-r019-source.json",
   "scripts/art_library/ship_reference_r018_equipment.py",
   equipmentHousingSource,
@@ -108,6 +117,67 @@ for (const [kind, dir] of [
       bytes: bytes.length,
     });
   }
+}
+// Exactly two independently reviewed mounted reactors. These rows replace
+// only named candidate components; every published default URL remains intact.
+const reactorBuilder = "scripts/art_library/ship_reference_r020_reactor.py";
+if (
+  hash(readFileSync(resolve(root, reactorBuilder))) !==
+  "fa11e00e317f3af8bc1700fc2300239fbea2a2e88537366b7ac1f627a8919abc"
+)
+  throw Error("Mounted reactor builder differs from reviewed source");
+const reactorPins = {
+  "reactor.md": {
+    sha256: "86707f363546a578323803ac4d0290f92ecab7988e93633f20da635c31c1c9fc",
+    bytes: 84884,
+    sourceSha256:
+      "0906eb055515937005a09831a385866dfdde15afc6cc1af827b278091904cde8",
+    metadataSha256:
+      "2d7af07a41e67d739f0fb56b64908b3f5c405018b6817e259225a8440fb6805d",
+  },
+  "reactor.lg": {
+    sha256: "a6c95612457ad95ad973ec4aafc6cb475776ade73a5c5968d4dbca1be65845c6",
+    bytes: 84908,
+    sourceSha256:
+      "e1fa4011ff479498b52833600b40de9503bb90030bf0daa1aa40c19a865a8d7a",
+    metadataSha256:
+      "0e765452c2ada9e1714e9bff88e45ed0916900046940442041b3b39ec00cc71e",
+  },
+} as const;
+for (const [id, pin] of Object.entries(reactorPins)) {
+  const dir = "ship-visual/r002/equipment-r020",
+    metadataPath = resolve(root, "assets/runtime", dir, `${id}-source.json`);
+  const metadataBytes = readFileSync(metadataPath),
+    meta = JSON.parse(metadataBytes.toString());
+  const index = assets.findIndex((a) => a.kind === "component" && a.id === id);
+  const bytes = readFileSync(resolve(root, "assets/runtime", dir, `${id}.glb`));
+  if (
+    index < 0 ||
+    meta.id !== id ||
+    meta.kind !== "component" ||
+    meta.frame !== assets[index].frame ||
+    meta.revision !== "r020" ||
+    meta.source !==
+      `assets/source/ship-reference/r002/equipment-r020/${id}.blend` ||
+    meta.url !== `/assets/${dir}/${id}.glb` ||
+    meta.oldAssetSha256 !== assets[index].sha256 ||
+    JSON.stringify(meta.bounds) !== JSON.stringify(assets[index].bounds) ||
+    hash(metadataBytes) !== pin.metadataSha256 ||
+    hash(bytes) !== pin.sha256 ||
+    bytes.length !== pin.bytes ||
+    meta.sha256 !== pin.sha256 ||
+    meta.bytes !== pin.bytes ||
+    meta.triangles !== 1044 ||
+    meta.emissiveAreaM2 !== 0 ||
+    hash(readFileSync(resolve(root, meta.source))) !== pin.sourceSha256
+  )
+    throw Error(`Mounted reactor exact source/old envelope mismatch: ${id}`);
+  assets[index] = {
+    ...assets[index],
+    url: meta.url,
+    sha256: pin.sha256,
+    bytes: pin.bytes,
+  };
 }
 // Exactly three immutable, opt-in equipment replacements; never a broad
 // object revision switch or a default content registry update.

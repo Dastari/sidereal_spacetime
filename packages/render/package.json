@@ -22,6 +22,7 @@
     "./debug-features": "./src/debug-features.ts",
     "./reviewed-native-preview": "./src/environment/reviewed-native-preview.ts",
     "./prefab-ship": "./src/prefab-ship/ship-view.ts",
+    "./prefab-ship/frames": "./src/prefab-ship/frames.ts",
     "./crew/armor-attach": "./src/crew/armor-attach.ts",
     "./prefab-ship/blueprint-svg": "./src/prefab-ship/blueprint-svg.ts",
     "./character-preview": "./src/character-preview.ts"

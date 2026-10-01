@@ -28,11 +28,13 @@ import {
   visualCellKey,
 } from "./ship-visual-sampler";
 import { dressShip } from "./ship-dresser";
+import { createRetainedWallBoundaryR002 } from "./ship-visual-r002-retained-wall-boundary";
 
 import {
   SHIP_VISUAL_PROFILES_R002,
   SHIP_VISUAL_MACRO_PROFILES_R002,
   referencePlateDecals,
+  referenceCockpitApertureSourceAdmittedR002,
   REFERENCE_OPTICAL_INTERFACES_R002,
 } from "@sidereal/content/ship-visual-r002";
 
@@ -133,7 +135,9 @@ export function referenceStaticWallFittingBoundsR002(
   const corners: number[][] = [];
   for (const x of [c.bounds[0], c.bounds[3]])
     for (const y of [c.bounds[1], c.bounds[4]])
-      corners.push([anchor[0] + C * x - S * y, anchor[1] + S * x + C * y]);
+      // Match componentMatrix's fixed COMPONENT_TO_PREFAB basis before the
+      // facing/art rotation: authored +Y becomes prefab +X, +X becomes -Y.
+      corners.push([anchor[0] + C * y + S * x, anchor[1] + S * y - C * x]);
   const size = [
     Math.max(...corners.map((p) => p[0])) -
       Math.min(...corners.map((p) => p[0])),
@@ -389,6 +393,106 @@ export function referenceOpticalMatingCubeR002(
       return b >= min - 1e-9 && a <= max + 1e-9;
     });
   });
+}
+
+/** The accepted V3 aperture duty mask, confined to two verified Wren occurrences.
+ * Glass occupies two raw normal courses; retained sill, eyebrow and true ends
+ * remain the original source. This is presentation, not authoritative pressure.
+ */
+export function referenceCockpitApertureR002(
+  doc: ShipPrefabDocumentV1,
+  view: ShipVisualView,
+  catalog: PrefabComponentCatalog,
+  profileId: ShipVisualProfileId,
+): ShipVisualLayer[] {
+  if (doc.id !== "fed.s.wren" || profileId !== "federation") return [];
+  const sections = [
+    {
+      id: "south",
+      piece: "bow.slope1.deck.s2.a1.edge1",
+      frame: [10, 1, 0, 270],
+      bounds: [158, -3, 178, 18],
+      start: [160, 0],
+      tangent: [1, 1],
+      normal: [1, -1],
+      offsets: [154, 160],
+      pane: 159,
+    },
+    {
+      id: "north",
+      piece: "bow.slope1.deck.s2.a0.edge1",
+      frame: [10, 6, 0, 0],
+      bounds: [158, 94, 178, 115],
+      start: [160, 112],
+      tangent: [1, -1],
+      normal: [1, 1],
+      offsets: [266, 271],
+      pane: 270,
+    },
+  ];
+  if (!referenceCockpitApertureSourceAdmittedR002(profileId)) return [];
+  const kit = dressShip(doc, { catalog }).kit;
+  // A missing, moved, mirrored, duplicated or uncertain source keeps BOTH old
+  // sections. Never combine a partial aperture with a retained pane occurrence.
+  for (const section of sections) {
+    const matches = kit.filter((k) => k.piece === section.piece);
+    if (
+      matches.length !== 1 ||
+      matches[0].view !== "both" ||
+      (matches[0].mirror ?? false) !== false ||
+      [matches[0].x, matches[0].y, matches[0].z, matches[0].rotDeg].some(
+        (v, i) => v !== section.frame[i],
+      )
+    )
+      return [];
+  }
+  // Exact original occupied footprint in the admitted V3 table. The wider
+  // guide prism also includes empty air; it must not author new VOID duties there.
+  const occupiedRows = [
+    [4, 163, 164],
+    [5, 162, 165],
+    [6, 161, 166],
+    [7, 162, 167],
+    [8, 163, 168],
+    [9, 164, 169],
+    [10, 165, 170],
+    [11, 166, 171],
+    [12, 167, 172],
+    [13, 168, 171],
+    [14, 169, 170],
+  ];
+  const result: ShipVisualLayer[] = [];
+  for (const section of sections) {
+    for (let y = section.bounds[1]; y < section.bounds[3]; y++)
+      for (let x = section.bounds[0]; x < section.bounds[2]; x++) {
+        const sourceY = section.id === "south" ? y : 111 - y;
+        const row = occupiedRows.find((r) => r[0] === sourceY);
+        if (!row || x < row[1] || x >= row[2]) continue;
+        const normal = section.normal[0] * x + section.normal[1] * y;
+        if (normal < section.offsets[0] || normal >= section.offsets[1])
+          continue;
+        const centre =
+          ((x + 0.5 - section.start[0]) * section.tangent[0] +
+            (y + 0.5 - section.start[1]) * section.tangent[1]) /
+          Math.SQRT2;
+        const lower = centre - 1 / Math.SQRT2,
+          upper = centre + 1 / Math.SQRT2;
+        if (lower < 4.5 || upper > 16 * Math.SQRT2 - 4.5) continue;
+        for (let z = 16; z < 28; z++) {
+          if (z >= 26 && lower >= 21 / Math.SQRT2 - 1e-10) continue;
+          const pane = normal === section.pane || normal === section.pane - 1;
+          result.push({
+            id: `candidate-D:${section.id}:${pane ? "proposed-raw-pane" : "proposed-clear-through-thickness"}`,
+            role: pane ? "core" : "void",
+            slot: pane ? "glass" : "dark",
+            support: "volume:hull",
+            bounds: [x, y, z, x + 1, y + 1, z + 1],
+            surfaceRole: pane || view === "flight" ? "hull" : "wall",
+          });
+        }
+      }
+  }
+  return result;
 }
 
 const mod = (n: number, d: number) => ((n % d) + d) % d;
@@ -789,6 +893,192 @@ export function shipVisualLayersR002(
     ),
   }));
 
+  // The conservative original interface/approach set applies to the WHOLE cube,
+  // including boundary contact. It is not a physical collision certificate.
+  const epsilon = 1e-10;
+  const wallCubeBounds = (x: number, y: number, z: number) => [
+    x / 16,
+    y / 16,
+    z / 16,
+    (x + 1) / 16,
+    (y + 1) / 16,
+    (z + 1) / 16,
+  ];
+  const wallAabbTouches = (cube: number[], bounds: number[]) =>
+    [0, 1, 2].every(
+      (a) =>
+        cube[a] <= bounds[a + 3] + epsilon &&
+        cube[a + 3] >= bounds[a] - epsilon,
+    );
+  const wallXyBounds = (r: number[], pad = 0) => [
+    r[0] - pad,
+    r[1] - pad,
+    -Infinity,
+    r[2] + pad,
+    r[3] + pad,
+    Infinity,
+  ];
+  const wallOrientedTouches = (
+    cube: number[],
+    centre: readonly number[],
+    along: readonly number[],
+    halfSpan: number,
+    halfDepth: number,
+  ) => {
+    const half = [(cube[3] - cube[0]) / 2, (cube[4] - cube[1]) / 2],
+      delta = [
+        (cube[0] + cube[3]) / 2 - centre[0],
+        (cube[1] + cube[4]) / 2 - centre[1],
+      ],
+      perp = [-along[1], along[0]];
+    return [[1, 0], [0, 1], along, perp].every(
+      (axis) =>
+        Math.abs(delta[0] * axis[0] + delta[1] * axis[1]) <=
+        half[0] * Math.abs(axis[0]) +
+          half[1] * Math.abs(axis[1]) +
+          halfSpan * Math.abs(along[0] * axis[0] + along[1] * axis[1]) +
+          halfDepth * Math.abs(perp[0] * axis[0] + perp[1] * axis[1]) +
+          epsilon,
+    );
+  };
+  const pointSegmentDistance = (
+    p: readonly number[],
+    a: readonly number[],
+    b: readonly number[],
+  ) => {
+    const dx = b[0] - a[0],
+      dy = b[1] - a[1],
+      length = dx * dx + dy * dy,
+      t = length
+        ? Math.max(
+            0,
+            Math.min(1, ((p[0] - a[0]) * dx + (p[1] - a[1]) * dy) / length),
+          )
+        : 0;
+    return Math.hypot(p[0] - a[0] - t * dx, p[1] - a[1] - t * dy);
+  };
+  const segmentsDistance = (
+    a: readonly number[],
+    b: readonly number[],
+    c: readonly number[],
+    d: readonly number[],
+  ) => {
+    const cross = (
+      p: readonly number[],
+      q: readonly number[],
+      r: readonly number[],
+    ) => (q[0] - p[0]) * (r[1] - p[1]) - (q[1] - p[1]) * (r[0] - p[0]);
+    const intersects =
+      Math.max(Math.min(a[0], b[0]), Math.min(c[0], d[0])) <=
+        Math.min(Math.max(a[0], b[0]), Math.max(c[0], d[0])) + epsilon &&
+      Math.max(Math.min(a[1], b[1]), Math.min(c[1], d[1])) <=
+        Math.min(Math.max(a[1], b[1]), Math.max(c[1], d[1])) + epsilon &&
+      cross(a, b, c) * cross(a, b, d) <= epsilon &&
+      cross(c, d, a) * cross(c, d, b) <= epsilon;
+    return intersects
+      ? 0
+      : Math.min(
+          pointSegmentDistance(a, c, d),
+          pointSegmentDistance(b, c, d),
+          pointSegmentDistance(c, a, b),
+          pointSegmentDistance(d, a, b),
+        );
+  };
+  const wallPolygonTouches = (
+    cube: number[],
+    poly: readonly Pt[],
+    pad: number,
+  ) => {
+    const ring = [
+      [cube[0], cube[1]],
+      [cube[3], cube[1]],
+      [cube[3], cube[4]],
+      [cube[0], cube[4]],
+    ];
+    if (
+      ring.some((p) => insidePolygon(poly, p[0], p[1])) ||
+      poly.some(
+        (p) =>
+          p[0] >= cube[0] - epsilon &&
+          p[0] <= cube[3] + epsilon &&
+          p[1] >= cube[1] - epsilon &&
+          p[1] <= cube[4] + epsilon,
+      )
+    )
+      return true;
+    return ring.some((p, i) =>
+      poly.some(
+        (q, j) =>
+          segmentsDistance(
+            p,
+            ring[(i + 1) % 4],
+            q,
+            poly[(j + 1) % poly.length],
+          ) <=
+          pad + epsilon,
+      ),
+    );
+  };
+
+  const protectedWallCache = new Map<string, boolean>();
+  const protectedWallCube = (x: number, y: number, z: number) => {
+    const key = visualCellKey(x, y, z),
+      cached = protectedWallCache.get(key);
+    if (cached !== undefined) return cached;
+    const cube = wallCubeBounds(x, y, z);
+    const protectedCell =
+      staticFittings.some((f) =>
+        wallAabbTouches(
+          cube,
+          f.bounds ??
+            wallXyBounds([
+              f.socket.at[0] - 1 / 16,
+              f.socket.at[1] - 1 / 16,
+              f.socket.at[0] + f.socket.size[0] + 1 / 16,
+              f.socket.at[1] + f.socket.size[1] + 1 / 16,
+            ]),
+        ),
+      ) ||
+      approaches.some((a) => wallAabbTouches(cube, wallXyBounds(a.rect))) ||
+      doorGuards.some((g) =>
+        wallOrientedTouches(cube, g.centre, g.along, g.halfSpan, g.halfDepth),
+      ) ||
+      frameGuards.some((r) =>
+        wallAabbTouches(cube, wallXyBounds(r, rawPaddingM)),
+      ) ||
+      opticalEdges.some((e) => {
+        const dx = e.b[0] - e.a[0],
+          dy = e.b[1] - e.a[1],
+          span = Math.hypot(dx, dy);
+        return wallOrientedTouches(
+          cube,
+          [(e.a[0] + e.b[0]) / 2, (e.a[1] + e.b[1]) / 2],
+          [dx / span, dy / span],
+          span / 2 + rawPaddingM,
+          0.25 + rawPaddingM,
+        );
+      }) ||
+      opticalGuards.some((poly) =>
+        wallPolygonTouches(cube, poly, rawPaddingM),
+      ) ||
+      opticalBoxes.bounds.some((g) =>
+        wallAabbTouches(
+          cube,
+          g.bounds.map((v) => v / 16),
+        ),
+      );
+    protectedWallCache.set(key, protectedCell);
+    return protectedCell;
+  };
+
+  const retainedWallBoundary = createRetainedWallBoundaryR002(
+    doc,
+    interior,
+    approaches,
+    profileId,
+    protectedInterface,
+  );
+
   // Select a purpose on a whole usable wall run, after real assembly exclusions.
   // Room centroids can fall in a doorway; they are a preference, never eligibility.
   const wallTaskKey = (
@@ -803,6 +1093,8 @@ export function shipVisualLayersR002(
         return "bridge";
       case "cargo":
         return "cargo";
+      case "airlock":
+        return "airlock";
       case "medbay":
         return "medical";
       case "quarters":
@@ -877,7 +1169,11 @@ export function shipVisualLayersR002(
       if (!candidate) continue;
       const { room, requiredBottom } = candidate;
       const last = runs[runs.length - 1];
-      if (last?.room.id === room.id && last.U === q) {
+      if (
+        last?.room.id === room.id &&
+        last.U === q &&
+        last.bottom === requiredBottom
+      ) {
         last.U++;
         last.bottom = Math.max(last.bottom, requiredBottom);
       } else runs.push({ room, u: q, U: q + 1, bottom: requiredBottom });
@@ -890,31 +1186,16 @@ export function shipVisualLayersR002(
       bottom: number;
       runWidth: number;
     }[] = [];
-    for (const room of doc.rooms) {
-      const options = runs.filter(
-        (r) => r.room.id === room.id && r.U - r.u >= 13,
-      );
-      const centre =
-        ((room.rect[0] + room.rect[2]) * 8 - a[0]) * ux +
-        ((room.rect[1] + room.rect[3]) * 8 - a[1]) * uy;
-      options.sort(
-        (A, B) =>
-          Math.abs((A.u + A.U) / 2 - centre) -
-            Math.abs((B.u + B.U) / 2 - centre) || A.u - B.u,
-      );
-      if (!options.length) continue;
-      const run = options[0],
-        key = wallTaskKey(room);
-      const width = Math.min(macro.wallTasks[key].width, run.U - run.u);
-      const u = Math.max(
-        run.u,
-        Math.min(run.U - width, Math.round(centre - width / 2)),
-      );
+    for (const run of runs) {
+      // Keep every whole admitted run, splitting at actual height-clearance
+      // changes. A room centre does not justify discarding most of a useful wall.
+      if (run.U - run.u < 16) continue;
+      const key = wallTaskKey(run.room);
       selected.push({
-        room,
+        room: run.room,
         key,
-        u,
-        U: u + width,
+        u: run.u,
+        U: run.U,
         bottom: Math.max(run.bottom, macro.wallTasks[key].bottom),
         runWidth: run.U - run.u,
       });
@@ -930,7 +1211,7 @@ export function shipVisualLayersR002(
   };
 
   // R17 collects complete assemblies independently of envelope emission order.
-  // A room receives one main group across ALL perimeter and partition faces.
+  // Complete admitted runs across all faces are allocated without corner overlap.
   // Selection happens after generic walls/posts have their final ownership.
   type PendingWallTask = {
     room: ShipPrefabDocumentV1["rooms"][number];
@@ -942,6 +1223,7 @@ export function shipVisualLayersR002(
     face: string;
     support: string;
     layers: ShipVisualLayer[];
+    geometry: { a: Pt; b: Pt; side: Pt };
   };
   const pendingWallTasks = new Map<string, PendingWallTask>();
   const deferWallTask = (
@@ -949,13 +1231,14 @@ export function shipVisualLayersR002(
     face: string,
     support: string,
     start: number,
+    geometry: { a: Pt; b: Pt; side: Pt },
   ) => {
     const taskLayers = layers.splice(start);
     if (!taskLayers.length) return;
-    const id = `${chosen.room.id}:${face}`;
+    const id = `${chosen.room.id}:${face}:${chosen.u}:${chosen.U}:${chosen.bottom}`;
     let pending = pendingWallTasks.get(id);
     if (!pending) {
-      pending = { ...chosen, face, support, layers: [] };
+      pending = { ...chosen, face, support, layers: [], geometry };
       pendingWallTasks.set(id, pending);
     }
     pending.layers.push(
@@ -1146,18 +1429,24 @@ export function shipVisualLayersR002(
               bx + 3,
               Math.floor(Math.min(...items.map((m) => m.bounds[0]))) - padX,
             ),
-            Math.max(
-              by + 3,
-              Math.floor(Math.min(...items.map((m) => m.bounds[1]))) - padLeft,
-            ),
+            index === 2
+              ? Math.max(
+                  by + 4,
+                  Math.floor(Math.min(...items.map((m) => m.bounds[1]))) -
+                    padLeft,
+                )
+              : by + 4,
             Math.min(
               bX - 3,
               Math.ceil(Math.max(...items.map((m) => m.bounds[2]))) + padX,
             ),
-            Math.min(
-              bY - 3,
-              Math.ceil(Math.max(...items.map((m) => m.bounds[3]))) + padRight,
-            ),
+            index === 1
+              ? Math.min(
+                  bY - 4,
+                  Math.ceil(Math.max(...items.map((m) => m.bounds[3]))) +
+                    padRight,
+                )
+              : bY - 4,
           ],
         });
       }
@@ -1361,6 +1650,103 @@ export function shipVisualLayersR002(
           break;
         }
       }
+    // Candidate limits terminate at actual supported flanks, not a percentage of
+    // the beam. Resolve shared cells by nearest real fixture before shaping any
+    // cover, then retain face-connected finish footprints rooted at that apron.
+    const admittedRoofCases = new Map<string, (typeof roofCases)[number]>();
+    const candidateRoofCases = new Map<string, (typeof roofCases)[number][]>();
+    const distanceToFixture = (
+      c: (typeof roofCases)[number],
+      x: number,
+      y: number,
+    ) =>
+      Math.min(
+        ...c.fixtures.map(([a, b, A, B]) =>
+          Math.max(a - x, x - A, b - y, y - B, 0),
+        ),
+      );
+    for (const c of roofCases) {
+      if (!c.fixtures.length) continue;
+      for (let y = c.bounds[1]; y < c.bounds[3]; y++)
+        for (let x = c.bounds[0]; x < c.bounds[2]; x++) {
+          const p: Pt = [x + 0.5, y + 0.5],
+            world: Pt = [p[0] / 16, p[1] / 16];
+          const tile = tileCells
+            .get(`${Math.floor(world[0])},${Math.floor(world[1])}`)
+            ?.find((t) => insidePolygon(t.poly, ...world))?.tile;
+          if (
+            !tile ||
+            tile.bow ||
+            !insidePolygon(poly, ...p) ||
+            holes.some((h) => insidePolygon(h, ...p)) ||
+            polygonBoundarySample(p, poly).distance < 4 ||
+            [
+              ...roofObstacles,
+              ...roofMarkings,
+              ...roofPatches.map((p) => p.bounds),
+              ...shoulderFields.map((f) => f.bounds),
+            ].some((r) => inRect(...p, r, 2)) ||
+            routeYs.some((y0) => Math.abs(y - y0) < 8)
+          )
+            continue;
+          const key = `${x},${y}`;
+          candidateRoofCases.set(key, [
+            ...(candidateRoofCases.get(key) ?? []),
+            c,
+          ]);
+        }
+    }
+    const winners = new Map<string, (typeof roofCases)[number]>();
+    for (const [key, cs] of candidateRoofCases) {
+      const [x, y] = key.split(",").map(Number);
+      winners.set(
+        key,
+        [...cs].sort(
+          (a, b) =>
+            distanceToFixture(a, x + 0.5, y + 0.5) -
+              distanceToFixture(b, x + 0.5, y + 0.5) ||
+            a.id.localeCompare(b.id),
+        )[0],
+      );
+    }
+    for (const c of roofCases) {
+      const remaining = new Set(
+        [...winners].filter(([, owner]) => owner === c).map(([key]) => key),
+      );
+      let component = 0;
+      while (remaining.size) {
+        const first = remaining.values().next().value!;
+        remaining.delete(first);
+        const keys = [first];
+        let head = 0,
+          hasOwnApron = false;
+        while (head < keys.length) {
+          const [x, y] = keys[head++].split(",").map(Number),
+            distance = distanceToFixture(c, x + 0.5, y + 0.5);
+          if (distance >= 2 && distance < 6) hasOwnApron = true;
+          for (const [dx, dy] of [
+            [1, 0],
+            [-1, 0],
+            [0, 1],
+            [0, -1],
+          ]) {
+            const key = `${x + dx},${y + dy}`;
+            if (remaining.delete(key)) keys.push(key);
+          }
+        }
+        if (!hasOwnApron) continue;
+        const points = keys.map((k) => k.split(",").map(Number));
+        const bounds = [
+          Math.min(...points.map((p) => p[0])),
+          Math.min(...points.map((p) => p[1])),
+          Math.max(...points.map((p) => p[0])) + 1,
+          Math.max(...points.map((p) => p[1])) + 1,
+        ];
+        if (bounds[2] - bounds[0] < 8 || bounds[3] - bounds[1] < 8) continue;
+        const body = { ...c, id: `${c.id}:body:${component++}`, bounds };
+        for (const key of keys) admittedRoofCases.set(key, body);
+      }
+    }
     for (let y = by; y < bY; y++)
       for (let x = bx; x < bX; x++) {
         const p: Pt = [x + 0.5, y + 0.5];
@@ -1453,13 +1839,13 @@ export function shipVisualLayersR002(
               } else {
                 const tooling =
                   cover.kind === "access" && x - a > 3 && x - a < 9;
-                // The generic protected binding borrows the existing hull trim
-                // finish; the walkable polymer field keeps its floor response.
-                if (tooling) surfaceRole = "hull";
+                // Flush manufactured access lids borrow the existing hull finish.
+                // Their occupied contact plane and FLOOR role remain unchanged.
+                surfaceRole = "hull";
                 column(
                   `${family}:floor-cover:${cover.room}`,
                   "floor",
-                  tooling ? "trim" : "secondary",
+                  tooling ? "trim" : "primary",
                   x,
                   y,
                   floor - 1,
@@ -1477,7 +1863,7 @@ export function shipVisualLayersR002(
                 )
                   column(
                     `${family}:floor-cover-fin:${cover.room}`,
-                    "service",
+                    "floor",
                     "metal",
                     x,
                     y,
@@ -1494,7 +1880,7 @@ export function shipVisualLayersR002(
                 )
                   column(
                     `${family}:floor-cover-latch:${cover.room}`,
-                    "service",
+                    "floor",
                     "metal",
                     x,
                     y,
@@ -2226,9 +2612,7 @@ export function shipVisualLayersR002(
               !marked;
             const joint = Math.round(bx + (bX - bx) * 0.58);
             const foreShoulder = x >= joint;
-            const enclosure = roofCases.find((c) =>
-              inRect(p[0], p[1], c.bounds),
-            );
+            const enclosure = admittedRoofCases.get(`${x},${y}`);
             const localX = enclosure
               ? Math.min(x - enclosure.bounds[0], enclosure.bounds[2] - 1 - x)
               : Infinity;
@@ -2283,19 +2667,27 @@ export function shipVisualLayersR002(
                 ? acrossCase >= caseWidth - cheekWidth
                 : acrossCase < cheekWidth;
             const caseEnd = Math.min(alongCase, caseLength - 1 - alongCase);
-            // A protective return joins the mount opening's retained exclusion
-            // boundary. Short unequal end returns join the lower case; no
-            // independent platform/continuous trim rail surrounds every bay.
+            // Mount returns stay inside the three admitted finish courses.
+            // Existing fore-shoulder/overlap local44 owners remain unchanged;
+            // this new task assembly does not add another elevated rail.
             const apertureReturn =
               apertureDistance >= 2 && apertureDistance < 6;
-            const joinedReturn =
-              apertureReturn || (caseEnd >= 2 && caseEnd < 5 && broadCheek);
+            const joinedReturn = apertureReturn;
             const caseSpine =
               !broadCheek &&
               !apertureReturn &&
               acrossCase >= 3 &&
               acrossCase < caseWidth - 3;
-            const cheekCourse = broadCheek && caseEnd >= 4 ? hi + 1 : hi;
+            const cheekCourse = hi;
+            // Three unequal positive bodies belong to the actual connected bay:
+            // protected mount return, broad case, and lower service shoulder.
+            // All broad covers stay in the existing three non-core courses.
+            const serviceCover = alongCase >= Math.floor(caseLength * 0.62);
+            const coverTop = caseSpine
+              ? serviceCover
+                ? hi - 1
+                : hi
+              : cheekCourse;
 
             const endInset = fromEnd < 4 ? 2 : 0;
             const shoulder = distance >= 2 + endInset && !serviceBelt;
@@ -2348,17 +2740,11 @@ export function shipVisualLayersR002(
               column(
                 `${family}:roof-task-case:${enclosure.id}`,
                 "plate",
-                caseSpine ? "trim" : "primary",
+                caseSpine && serviceCover ? "trim" : "primary",
                 x,
                 y,
                 hi - 3,
-                caseEdge < 1 || caseEnd < 2
-                  ? hi - 1
-                  : joinedReturn
-                    ? hi + 1
-                    : caseSpine
-                      ? hi - 1
-                      : cheekCourse,
+                caseEdge < 1 || caseEnd < 2 ? hi - 1 : coverTop,
                 family,
               );
               if (
@@ -2399,6 +2785,13 @@ export function shipVisualLayersR002(
               const pocketTop = Math.min(B - b - 4, pocketBottom + 14);
               const pocket =
                 pocketWidth >= 12 &&
+                [-3, -2, -1, 0, 1, 2, 3].every((dx) =>
+                  [-3, -2, -1, 0, 1, 2, 3].every(
+                    (dy) =>
+                      admittedRoofCases.get(`${x + dx},${y + dy}`) ===
+                      enclosure,
+                  ),
+                ) &&
                 !shoulderFields.some((f) => inRect(p[0], p[1], f.bounds)) &&
                 x >= pocketLeft &&
                 x < pocketLeft + pocketWidth &&
@@ -2413,20 +2806,12 @@ export function shipVisualLayersR002(
                   "dark",
                   x,
                   y,
-                  hi - 1,
+                  hi - 3,
                   hi + 1,
                   family,
                 );
-                column(
-                  `${family}:roof-cluster-backing:${enclosure.id}`,
-                  "frame",
-                  "trim",
-                  x,
-                  y,
-                  hi - 2,
-                  hi - 1,
-                  family,
-                );
+                // The existing two CORE courses [hi-5,hi-3) form the finite
+                // well floor. No invented extra finish bottom hides the depth.
                 if (
                   enclosure.kind === "utility" &&
                   mod(across - pocketBottom, 6) < 2
@@ -2437,8 +2822,8 @@ export function shipVisualLayersR002(
                     "metal",
                     x,
                     y,
-                    hi - 1,
-                    hi,
+                    hi - 3,
+                    hi - 2,
                     family,
                   );
                 else if (
@@ -2454,8 +2839,8 @@ export function shipVisualLayersR002(
                     "accent",
                     x,
                     y,
-                    hi - 1,
-                    hi,
+                    hi - 3,
+                    hi - 2,
                     family,
                   );
                 pendingRoofClusterLayers.push(...layers.splice(pocketStart));
@@ -3235,237 +3620,272 @@ export function shipVisualLayersR002(
             surfaceRole = oldSurface;
             return;
           }
-          const chosen = wallTasksFor(`${family}:${boundary.edgeIndex}`, a, b, [
-            -out[0],
-            -out[1],
-          ]).find((t) => t.room.id === room.id && along >= t.u && along < t.U);
-          if (!chosen) {
-            surfaceRole = oldSurface;
-            return;
-          }
-          const { key, u: left, U: right } = chosen;
-          const task = macro.wallTasks[key];
-          const bottom = floor + chosen.bottom,
-            ceiling = Math.min(top - 3, bottom + task.height);
-          if (
-            right - left < 12 ||
-            ceiling - bottom < (task.insert === "control" ? 13 : 11) ||
-            along < left ||
-            along >= right
-          ) {
-            surfaceRole = oldSurface;
-            return;
-          }
-          const taskStart = layers.length;
-          const cut = Math.max(
-            0,
-            macro.corner - Math.min(along - left, right - along),
-          );
-          const lower = bottom + Math.ceil(cut),
-            upper = ceiling - Math.ceil(cut);
-          const owned = `${family}:inward-task:${room.id}:${key}`;
-          column(
-            `${owned}:seat`,
-            "void",
-            "dark",
-            x,
-            y,
-            bottom,
-            ceiling,
-            family,
-          );
-          column(
-            `${owned}:clipped-casing`,
-            "plate",
-            "primary",
-            x,
-            y,
-            lower,
-            upper,
-            family,
-          );
-          if (
-            along >= left + 2 &&
-            along < right - 2 &&
-            upper - lower >= (task.insert === "control" ? 12 : 10)
-          ) {
+          const emitInwardTask = (
+            chosen: ReturnType<typeof wallTaskRuns>[number],
+            legacy: boolean,
+          ) => {
+            const { key, u: left, U: right } = chosen;
+            const task = legacy
+              ? retainedWallBoundary.inputs.wallTasks[
+                  key as keyof typeof retainedWallBoundary.inputs.wallTasks
+                ]
+              : macro.wallTasks[key];
+            const bottom = floor + chosen.bottom,
+              ceiling = legacy
+                ? Math.min(top - 3, bottom + task.height)
+                : top - 2;
+            if (
+              right - left < 12 ||
+              ceiling - bottom <
+                (legacy
+                  ? task.insert === "control"
+                    ? 13
+                    : 11
+                  : key === "medical" || key === "galley"
+                    ? 8
+                    : 11) ||
+              along < left ||
+              along >= right
+            ) {
+              return;
+            }
+            const taskStart = layers.length;
+            const cut = Math.max(
+              0,
+              (legacy ? retainedWallBoundary.inputs.corner : macro.corner) -
+                Math.min(along - left, right - along),
+            );
+            const lower = bottom + Math.ceil(cut),
+              upper = ceiling - Math.ceil(cut);
+            const owned = `${family}:inward-task:${room.id}:${key}`;
             column(
-              `${owned}:well`,
+              `${owned}:seat`,
               "void",
               "dark",
               x,
               y,
-              lower + 3,
-              upper - 3,
+              bottom,
+              ceiling,
               family,
             );
-            if (task.insert === "vent") {
-              for (const z of [lower + 4, upper - 5])
-                column(
-                  `${owned}:louver`,
-                  "service",
-                  "metal",
-                  x,
-                  y,
-                  z,
-                  z + 1,
-                  family,
-                );
-            } else if (task.insert === "control") {
-              if (along < right - 5)
-                column(
-                  `${owned}:keybank`,
-                  "service",
-                  "metal",
-                  x,
-                  y,
-                  lower + 3,
-                  lower + 5,
-                  family,
-                );
-            } else if (along < right - 5) {
+            column(
+              `${owned}:clipped-casing`,
+              "plate",
+              "primary",
+              x,
+              y,
+              lower,
+              upper,
+              family,
+            );
+            if (
+              along >= left + 2 &&
+              along < right - 2 &&
+              upper - lower >= (task.insert === "control" ? 12 : 10)
+            ) {
               column(
-                `${owned}:access`,
-                "plate",
-                key === "quarters" ? "accent" : "trim",
+                `${owned}:well`,
+                "void",
+                "dark",
                 x,
                 y,
-                lower + 4,
-                upper - 4,
+                lower + 3,
+                upper - 3,
                 family,
               );
-            }
-            if (along >= right - 4 && along < right - 3)
-              column(
-                `${owned}:task-lens`,
-                "service",
-                "emit_b",
-                x,
-                y,
-                lower + 5,
-                upper - 4,
-                family,
-              );
-            // Selected room assemblies share pressure support, but their visible
-            // hardware is not the same rectangular access lid in every room.
-            const split = left + Math.floor((right - left) * 0.65);
-            if (task.form === "relay" || task.form === "workbench") {
-              if (along >= split && along < split + 1)
-                column(
-                  `${owned}:split-binding`,
-                  "frame",
-                  "trim",
-                  x,
-                  y,
-                  lower + 3,
-                  upper - 3,
-                  family,
-                );
-              if (along >= split + 2 && along < right - 3)
-                for (let z = lower + 4; z < upper - 3; z += 3)
+              if (task.insert === "vent") {
+                for (const z of [lower + 4, upper - 5])
                   column(
-                    `${owned}:protected-relay`,
+                    `${owned}:louver`,
                     "service",
-                    task.form === "relay" ? "accent" : "metal",
+                    "metal",
                     x,
                     y,
                     z,
                     z + 1,
                     family,
                   );
-            } else if (task.form === "instrument") {
-              if (along >= left + 4 && along < left + (right - left) * 0.55)
+              } else if (task.insert === "control") {
+                if (along < right - 5)
+                  column(
+                    `${owned}:keybank`,
+                    "service",
+                    "metal",
+                    x,
+                    y,
+                    lower + 3,
+                    lower + 5,
+                    family,
+                  );
+              } else if (along < right - 5) {
                 column(
-                  `${owned}:medical-monitor`,
+                  `${owned}:access`,
+                  "plate",
+                  key === "quarters" ? "accent" : "trim",
+                  x,
+                  y,
+                  lower + 4,
+                  upper - 4,
+                  family,
+                );
+              }
+              if (along >= right - 4 && along < right - 3)
+                column(
+                  `${owned}:task-lens`,
                   "service",
-                  "emit_a",
+                  "emit_b",
                   x,
                   y,
-                  lower + 7,
-                  Math.min(upper - 3, lower + 9),
+                  lower + 5,
+                  upper - 4,
                   family,
                 );
-              if (along >= split && along < split + 1)
+              // Selected room assemblies share pressure support, but their visible
+              // hardware is not the same rectangular access lid in every room.
+              const split = left + Math.floor((right - left) * 0.65);
+              if (task.form === "relay" || task.form === "workbench") {
+                if (along >= split && along < split + 1)
+                  column(
+                    `${owned}:split-binding`,
+                    "frame",
+                    "trim",
+                    x,
+                    y,
+                    lower + 3,
+                    upper - 3,
+                    family,
+                  );
+                if (along >= split + 2 && along < right - 3)
+                  for (let z = lower + 4; z < upper - 3; z += 3)
+                    column(
+                      `${owned}:protected-relay`,
+                      "service",
+                      task.form === "relay" ? "accent" : "metal",
+                      x,
+                      y,
+                      z,
+                      z + 1,
+                      family,
+                    );
+              } else if (task.form === "instrument") {
+                if (along >= left + 4 && along < left + (right - left) * 0.55)
+                  column(
+                    `${owned}:medical-monitor`,
+                    "service",
+                    "emit_a",
+                    x,
+                    y,
+                    lower + 7,
+                    Math.min(upper - 3, lower + 9),
+                    family,
+                  );
+                if (along >= split && along < split + 1)
+                  column(
+                    `${owned}:storage-binding`,
+                    "frame",
+                    "primary",
+                    x,
+                    y,
+                    lower + 3,
+                    upper - 3,
+                    family,
+                  );
+              } else if (task.form === "backsplash" || task.form === "living") {
+                if (along >= left + 3 && along < right - 3) {
+                  column(
+                    `${owned}:utility-shelf`,
+                    "service",
+                    "metal",
+                    x,
+                    y,
+                    lower + 4,
+                    lower + 5,
+                    family,
+                  );
+                  column(
+                    `${owned}:warm-task-lens`,
+                    "service",
+                    "emit_b",
+                    x,
+                    y,
+                    upper - 4,
+                    upper - 3,
+                    family,
+                  );
+                }
+              } else if (
+                task.form === "cargo" &&
+                ((along >= left + 4 && along < left + 6) ||
+                  (along >= right - 6 && along < right - 4))
+              )
                 column(
-                  `${owned}:storage-binding`,
-                  "frame",
-                  "primary",
-                  x,
-                  y,
-                  lower + 3,
-                  upper - 3,
-                  family,
-                );
-            } else if (task.form === "backsplash" || task.form === "living") {
-              if (along >= left + 3 && along < right - 3) {
-                column(
-                  `${owned}:utility-shelf`,
+                  `${owned}:cargo-latch`,
                   "service",
                   "metal",
                   x,
                   y,
                   lower + 4,
-                  lower + 5,
-                  family,
-                );
-                column(
-                  `${owned}:warm-task-lens`,
-                  "service",
-                  "emit_b",
-                  x,
-                  y,
                   upper - 4,
-                  upper - 3,
                   family,
                 );
-              }
-            } else if (
-              task.form === "cargo" &&
-              ((along >= left + 4 && along < left + 6) ||
-                (along >= right - 6 && along < right - 4))
+            }
+            if (
+              task.insert === "control" &&
+              along >= left + 3 &&
+              along < right - 3
             )
               column(
-                `${owned}:cargo-latch`,
+                `${owned}:header`,
                 "service",
-                "metal",
+                "emit_a",
                 x,
                 y,
-                lower + 4,
-                upper - 4,
+                upper - 2,
+                upper - 1,
                 family,
               );
-          }
-          if (
-            task.insert === "control" &&
-            along >= left + 3 &&
-            along < right - 3
-          )
             column(
-              `${owned}:header`,
-              "service",
-              "emit_a",
+              `${owned}:lower-binding`,
+              "frame",
+              "trim",
               x,
               y,
-              upper - 2,
-              upper - 1,
+              lower,
+              lower + 2,
               family,
             );
-          column(
-            `${owned}:lower-binding`,
-            "frame",
-            "trim",
-            x,
-            y,
-            lower,
-            lower + 2,
-            family,
-          );
-          deferWallTask(
-            chosen,
-            `${family}:${boundary.edgeIndex}:inward`,
-            family,
-            taskStart,
-          );
+            if (legacy)
+              retainedWallBoundary.collect(
+                chosen as ReturnType<
+                  typeof retainedWallBoundary.forFace
+                >[number],
+                `${family}:${boundary.edgeIndex}:inward`,
+                family,
+                layers.splice(taskStart),
+              );
+            else
+              deferWallTask(
+                chosen,
+                `${family}:${boundary.edgeIndex}:inward`,
+                family,
+                taskStart,
+                { a, b, side: [-out[0], -out[1]] },
+              );
+          };
+          const selected = wallTasksFor(
+            `${family}:${boundary.edgeIndex}`,
+            a,
+            b,
+            [-out[0], -out[1]],
+          ).find((t) => t.room.id === room.id && along >= t.u && along < t.U);
+          if (selected) emitInwardTask(selected, false);
+          const original = retainedWallBoundary
+            .forFace(`${family}:${boundary.edgeIndex}`, a, b, [
+              -out[0],
+              -out[1],
+            ])
+            .find((t) => t.room.id === room.id && along >= t.u && along < t.U);
+          if (original) emitInwardTask(original, true);
           surfaceRole = oldSurface;
         };
         if (deck && boundary.distance >= 1 && boundary.distance < 3) {
@@ -3741,202 +4161,249 @@ export function shipVisualLayersR002(
             ),
             family,
           );
-          if (glazed || span < 13 || wallCap < ft + 20 || jamb) continue;
-          const choices = wallTasksFor(
-            family,
-            [ax, ay],
-            [bx, by],
-            vertical ? [side, 0] : [0, side],
-          );
-          const chosen = choices.find(
-            (t) => (t.u + t.U) / 2 >= start && (t.u + t.U) / 2 < end,
-          );
-          if (!chosen) continue;
-          const { key, u, U } = chosen;
-          const task = macro.wallTasks[key];
-          const bottom = ft + chosen.bottom,
-            ceiling = Math.min(Z, bottom + task.height);
-          const minimumHeight = task.insert === "control" ? 13 : 11;
-          if (U - u < 13 || ceiling - bottom < minimumHeight) continue;
-          const taskStart = layers.length;
-          casing(`task-${key}-casing`, "primary", side, u, U, bottom, ceiling);
-          // One outer course of a four-course partition is a seat; BOTH central
-          // pressure courses remain core. No claimed two-course cavity through it.
-          const well = surface(side, u + 2, U - 2, bottom + 3, ceiling - 3);
-          box(`${id}:functional-well`, "void", "dark", well, family);
-          box(
-            `${id}:functional-backing`,
-            "core",
-            "secondary",
-            surface(side, u + 2, U - 2, bottom + 3, ceiling - 3, 1),
-            family,
-          );
-          box(
-            `${id}:task-lower-binding`,
-            "frame",
-            "trim",
-            surface(side, u + 1, U - 1, bottom, bottom + 2),
-            family,
-          );
-          if (task.insert === "vent") {
-            for (const z of [bottom + 4, ceiling - 5])
+          const emitPartitionTask = (
+            chosen: ReturnType<typeof wallTaskRuns>[number],
+            legacy: boolean,
+          ) => {
+            const { key, u, U } = chosen;
+            const task = legacy
+              ? retainedWallBoundary.inputs.wallTasks[
+                  key as keyof typeof retainedWallBoundary.inputs.wallTasks
+                ]
+              : macro.wallTasks[key];
+            const bottom = ft + chosen.bottom,
+              ceiling = legacy ? Math.min(Z, bottom + task.height) : Z;
+            const minimumHeight = legacy
+              ? task.insert === "control"
+                ? 13
+                : 11
+              : key === "medical" || key === "galley"
+                ? 8
+                : 11;
+            if (U - u < 13 || ceiling - bottom < minimumHeight) return;
+            const taskStart = layers.length;
+            casing(
+              `task-${key}-casing`,
+              "primary",
+              side,
+              u,
+              U,
+              bottom,
+              ceiling,
+            );
+            // One outer course of a four-course partition is a seat; BOTH central
+            // pressure courses remain core. No claimed two-course cavity through it.
+            const well = surface(side, u + 2, U - 2, bottom + 3, ceiling - 3);
+            box(`${id}:functional-well`, "void", "dark", well, family);
+            box(
+              `${id}:functional-backing`,
+              "core",
+              "secondary",
+              surface(side, u + 2, U - 2, bottom + 3, ceiling - 3, 1),
+              family,
+            );
+            box(
+              `${id}:task-lower-binding`,
+              "frame",
+              "trim",
+              surface(side, u + 1, U - 1, bottom, bottom + 2),
+              family,
+            );
+            if (task.insert === "vent") {
+              for (const z of [bottom + 4, ceiling - 5])
+                box(
+                  `${id}:task-protected-louver`,
+                  "service",
+                  "metal",
+                  surface(side, u + 3, U - 3, z, z + 1),
+                  family,
+                );
               box(
-                `${id}:task-protected-louver`,
+                `${id}:task-amber-strip`,
                 "service",
-                "metal",
-                surface(side, u + 3, U - 3, z, z + 1),
+                "emit_b",
+                surface(side, U - 4, U - 3, bottom + 5, ceiling - 4),
                 family,
               );
-            box(
-              `${id}:task-amber-strip`,
-              "service",
-              "emit_b",
-              surface(side, U - 4, U - 3, bottom + 5, ceiling - 4),
-              family,
-            );
-          } else if (task.insert === "control") {
-            box(
-              `${id}:task-screen-backing`,
-              "core",
-              "dark",
-              surface(side, u + 3, U - 6, bottom + 7, ceiling - 3, 1),
-              family,
-            );
-            box(
-              `${id}:task-screen-housing`,
-              "service",
-              "trim",
-              surface(side, u + 2, U - 5, bottom + 6, bottom + 7),
-              family,
-            );
-            for (let q = u + 3; q < U - 6; q += 4)
+            } else if (task.insert === "control") {
               box(
-                `${id}:task-keybank`,
+                `${id}:task-screen-backing`,
+                "core",
+                "dark",
+                surface(side, u + 3, U - 6, bottom + 7, ceiling - 3, 1),
+                family,
+              );
+              box(
+                `${id}:task-screen-housing`,
+                "service",
+                "trim",
+                surface(side, u + 2, U - 5, bottom + 6, bottom + 7),
+                family,
+              );
+              for (let q = u + 3; q < U - 6; q += 4)
+                box(
+                  `${id}:task-keybank`,
+                  "service",
+                  "metal",
+                  surface(
+                    side,
+                    q,
+                    Math.min(q + 2, U - 6),
+                    bottom + 3,
+                    bottom + 5,
+                  ),
+                  family,
+                );
+              box(
+                `${id}:task-cyan-header`,
+                "service",
+                "emit_a",
+                surface(side, u + 3, U - 4, ceiling - 2, ceiling - 1),
+                family,
+              );
+              box(
+                `${id}:task-status-lens`,
+                "service",
+                "emit_b",
+                surface(side, U - 4, U - 3, bottom + 8, bottom + 10),
+                family,
+              );
+            } else {
+              const red = key === "quarters";
+              box(
+                `${id}:task-access-face`,
+                "plate",
+                red ? "accent" : "trim",
+                surface(side, u + 3, U - 5, bottom + 4, ceiling - 4),
+                family,
+              );
+              box(
+                `${id}:task-access-handle`,
                 "service",
                 "metal",
                 surface(
                   side,
-                  q,
-                  Math.min(q + 2, U - 6),
-                  bottom + 3,
-                  bottom + 5,
+                  U - 7,
+                  U - 5,
+                  bottom + 6,
+                  Math.min(ceiling - 4, bottom + 10),
                 ),
                 family,
               );
-            box(
-              `${id}:task-cyan-header`,
-              "service",
-              "emit_a",
-              surface(side, u + 3, U - 4, ceiling - 2, ceiling - 1),
-              family,
-            );
-            box(
-              `${id}:task-status-lens`,
-              "service",
-              "emit_b",
-              surface(side, U - 4, U - 3, bottom + 8, bottom + 10),
-              family,
-            );
-          } else {
-            const red = key === "quarters";
-            box(
-              `${id}:task-access-face`,
-              "plate",
-              red ? "accent" : "trim",
-              surface(side, u + 3, U - 5, bottom + 4, ceiling - 4),
-              family,
-            );
-            box(
-              `${id}:task-access-handle`,
-              "service",
-              "metal",
-              surface(
-                side,
-                U - 7,
-                U - 5,
-                bottom + 6,
-                Math.min(ceiling - 4, bottom + 10),
-              ),
-              family,
-            );
-            box(
-              `${id}:task-reading-lens`,
-              "service",
-              "emit_b",
-              surface(side, U - 4, U - 3, bottom + 5, ceiling - 3),
-              family,
-            );
-          }
-          if (task.form === "workbench" || task.form === "relay") {
-            const spine = u + Math.floor((U - u) * 0.65);
-            box(
-              `${id}:task-${task.form}-divider`,
-              "frame",
-              "trim",
-              surface(side, spine, spine + 1, bottom + 3, ceiling - 3),
-              family,
-            );
-            for (let z = bottom + 4; z < ceiling - 3; z += 3)
               box(
-                `${id}:task-${task.form}-control-bank`,
+                `${id}:task-reading-lens`,
                 "service",
-                task.form === "relay" ? "accent" : "metal",
-                surface(side, spine + 2, U - 3, z, z + 1),
+                "emit_b",
+                surface(side, U - 4, U - 3, bottom + 5, ceiling - 3),
                 family,
               );
-          } else if (task.form === "instrument") {
-            box(
-              `${id}:task-medical-monitor`,
-              "service",
-              "emit_a",
-              surface(
-                side,
-                u + 4,
-                u + Math.floor((U - u) * 0.55),
-                bottom + 9,
-                Math.min(ceiling - 3, bottom + 11),
-              ),
-              family,
-            );
-            box(
-              `${id}:task-medical-storage-seam`,
-              "frame",
-              "primary",
-              surface(
-                side,
-                u + Math.floor((U - u) * 0.6),
-                u + Math.floor((U - u) * 0.6) + 1,
-                bottom + 3,
-                ceiling - 3,
-              ),
-              family,
-            );
-          } else if (task.form === "backsplash" || task.form === "living") {
-            box(
-              `${id}:task-${task.form}-shelf`,
-              "service",
-              "metal",
-              surface(side, u + 3, U - 3, bottom + 4, bottom + 5),
-              family,
-            );
-            box(
-              `${id}:task-${task.form}-warm-header`,
-              "service",
-              "emit_b",
-              surface(side, u + 3, U - 3, ceiling - 3, ceiling - 2),
-              family,
-            );
-          } else if (task.form === "cargo") {
-            for (const q of [u + 4, U - 6])
+            }
+            if (task.form === "workbench" || task.form === "relay") {
+              const spine = u + Math.floor((U - u) * 0.65);
               box(
-                `${id}:task-cargo-latch`,
+                `${id}:task-${task.form}-divider`,
+                "frame",
+                "trim",
+                surface(side, spine, spine + 1, bottom + 3, ceiling - 3),
+                family,
+              );
+              for (let z = bottom + 4; z < ceiling - 3; z += 3)
+                box(
+                  `${id}:task-${task.form}-control-bank`,
+                  "service",
+                  task.form === "relay" ? "accent" : "metal",
+                  surface(side, spine + 2, U - 3, z, z + 1),
+                  family,
+                );
+            } else if (task.form === "instrument") {
+              box(
+                `${id}:task-medical-monitor`,
+                "service",
+                "emit_a",
+                surface(
+                  side,
+                  u + 4,
+                  u + Math.floor((U - u) * 0.55),
+                  bottom + 9,
+                  Math.min(ceiling - 3, bottom + 11),
+                ),
+                family,
+              );
+              box(
+                `${id}:task-medical-storage-seam`,
+                "frame",
+                "primary",
+                surface(
+                  side,
+                  u + Math.floor((U - u) * 0.6),
+                  u + Math.floor((U - u) * 0.6) + 1,
+                  bottom + 3,
+                  ceiling - 3,
+                ),
+                family,
+              );
+            } else if (task.form === "backsplash" || task.form === "living") {
+              box(
+                `${id}:task-${task.form}-shelf`,
                 "service",
                 "metal",
-                surface(side, q, q + 2, bottom + 4, ceiling - 4),
+                surface(side, u + 3, U - 3, bottom + 4, bottom + 5),
                 family,
               );
+              box(
+                `${id}:task-${task.form}-warm-header`,
+                "service",
+                "emit_b",
+                surface(side, u + 3, U - 3, ceiling - 3, ceiling - 2),
+                family,
+              );
+            } else if (task.form === "cargo") {
+              for (const q of [u + 4, U - 6])
+                box(
+                  `${id}:task-cargo-latch`,
+                  "service",
+                  "metal",
+                  surface(side, q, q + 2, bottom + 4, ceiling - 4),
+                  family,
+                );
+            }
+
+            if (legacy)
+              retainedWallBoundary.collect(
+                chosen as ReturnType<
+                  typeof retainedWallBoundary.forFace
+                >[number],
+                `${family}:${side}`,
+                family,
+                layers.splice(taskStart),
+              );
+            else
+              deferWallTask(chosen, `${family}:${side}`, family, taskStart, {
+                a: [ax, ay],
+                b: [bx, by],
+                side: vertical ? [side, 0] : [0, side],
+              });
+          };
+          if (!glazed && span >= 16 && !jamb)
+            for (const chosen of wallTasksFor(
+              family,
+              [ax, ay],
+              [bx, by],
+              vertical ? [side, 0] : [0, side],
+            ).filter((t) => (t.u + t.U) / 2 >= start && (t.u + t.U) / 2 < end))
+              emitPartitionTask(chosen, false);
+          if (!glazed && span >= 13 && wallCap >= ft + 20 && !jamb) {
+            const original = retainedWallBoundary
+              .forFace(
+                family,
+                [ax, ay],
+                [bx, by],
+                vertical ? [side, 0] : [0, side],
+              )
+              .find((t) => (t.u + t.U) / 2 >= start && (t.u + t.U) / 2 < end);
+            if (original) emitPartitionTask(original, true);
           }
-          deferWallTask(chosen, `${family}:${side}`, family, taskStart);
+          if (glazed || span < 16 || jamb) continue;
           if (jamb)
             box(
               `${id}:interface-lens`,
@@ -4097,467 +4564,351 @@ export function shipVisualLayersR002(
         `post:${i}`,
       );
   }
-  if (pendingWallTasks.size) {
+  if (pendingWallTasks.size || retainedWallBoundary.hasTasks()) {
     const envelope = sampleShipVisualLayers(compactColumns(layers));
-    const eligible = new Map<string, PendingWallTask[]>();
-    for (const task of pendingWallTasks.values()) {
-      // A complete source group cannot repaint a jamb, cap, other wall, aperture
-      // or unsupported air. Keep the existing conservative fitting/head guards.
-      let safe = true;
-      for (const l of task.layers) {
-        for (let z = l.bounds[2]; safe && z < l.bounds[5]; z++)
-          for (let y = l.bounds[1]; safe && y < l.bounds[4]; y++)
-            for (let x = l.bounds[0]; safe && x < l.bounds[3]; x++) {
-              const old = envelope.get(visualCellKey(x, y, z));
-              if (
-                (!old && l.role !== "void") ||
-                (old &&
-                  (old.family !== task.support ||
-                    ["frame", "doorframe", "glass"].includes(old.role)))
-              )
-                safe = false;
-              // Removing or repainting pressure support as decorative hardware is
-              // forbidden. The explicit retained backing remains role-core.
-              if (old?.role === "core" && l.role !== "core") safe = false;
+    // Finish original room-global selection BEFORE clipping its ordered writes.
+    // These are original wall primitives, including authored clears, not a
+    // sampled old-ship replay or a list of individually failed cells.
+    for (const l of retainedWallBoundary.finish(envelope)) {
+      for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+        for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+          let first = -1;
+          const flush = (end: number) => {
+            if (first >= 0) {
+              layers.push({ ...l, bounds: [x, y, first, x + 1, y + 1, end] });
+              first = -1;
             }
-        if (!safe) break;
-      }
-      if (!safe) continue;
-      const roomTasks = eligible.get(task.room.id) ?? [];
-      roomTasks.push(task);
-      eligible.set(task.room.id, roomTasks);
-    }
-    for (const tasks of eligible.values()) {
-      // Prefer a useful broad complete run, then its actual hardware area. Stable
-      // face identity breaks ties without depending on a presentation camera.
-      const contextDistance = (task: PendingWallTask) => {
-        const min = [0, 1].map((a) =>
-          Math.min(...task.layers.map((l) => l.bounds[a])),
-        );
-        const max = [0, 1].map((a) =>
-          Math.max(...task.layers.map((l) => l.bounds[a + 3])),
-        );
-        const centre = [(min[0] + max[0]) / 32, (min[1] + max[1]) / 32];
-        const context = interior.sockets.filter((o) => o.room === task.room.id);
-        const points = context.map((o) => [
-          o.at[0] + o.size[0] / 2,
-          o.at[1] + o.size[1] / 2,
-        ]);
-        if (task.room.type === "bridge" && interior.station)
-          points.push([...interior.station.at]);
-        return points.length
-          ? Math.min(
-              ...points.map((p) =>
-                Math.hypot(centre[0] - p[0], centre[1] - p[1]),
-              ),
-            )
-          : 0;
-      };
-      tasks.sort(
-        (a, b) =>
-          // Broad usable purpose faces remain preferred, then actual existing
-          // equipment adjacency determines which face carries the main assembly.
-          (b.U - b.u >= 32 ? 1 : 0) - (a.U - a.u >= 32 ? 1 : 0) ||
-          b.runWidth - a.runWidth ||
-          contextDistance(a) - contextDistance(b) ||
-          b.U - b.u - (a.U - a.u) ||
-          b.layers
-            .filter((l) => l.role === "service")
-            .reduce(
-              (n, l) =>
-                n +
-                (l.bounds[3] - l.bounds[0]) *
-                  (l.bounds[4] - l.bounds[1]) *
-                  (l.bounds[5] - l.bounds[2]),
-              0,
-            ) -
-            a.layers
-              .filter((l) => l.role === "service")
-              .reduce(
-                (n, l) =>
-                  n +
-                  (l.bounds[3] - l.bounds[0]) *
-                    (l.bounds[4] - l.bounds[1]) *
-                    (l.bounds[5] - l.bounds[2]),
-                0,
-              ) ||
-          a.face.localeCompare(b.face),
-      );
-      const main = tasks[0];
-      // Manufacture a complete unequal assembly inside the qualified finish
-      // footprint. Core courses stay intact; equipment depth comes from the
-      // existing authored modules, never an extra wall volume in the room.
-      const roomAssembly = (task: PendingWallTask) => {
-        const footprint = new Map<string, ShipVisualLayer>();
-        for (const l of task.layers)
-          for (let z = l.bounds[2]; z < l.bounds[5]; z++)
-            for (let y = l.bounds[1]; y < l.bounds[4]; y++)
-              for (let x = l.bounds[0]; x < l.bounds[3]; x++)
-                footprint.set(visualCellKey(x, y, z), l);
-        const bounds = [0, 1, 2]
-          .map((a) => Math.min(...task.layers.map((l) => l.bounds[a])))
-          .concat(
-            [0, 1, 2].map((a) =>
-              Math.max(...task.layers.map((l) => l.bounds[a + 3])),
-            ),
-          );
-        const axis = bounds[3] - bounds[0] >= bounds[4] - bounds[1] ? 0 : 1;
-        const width = bounds[axis + 3] - bounds[axis],
-          height = bounds[5] - bounds[2];
-        const split = Math.floor(
-          width *
-            (task.key === "quarters" ||
-            task.key === "living" ||
-            task.key === "lounge"
-              ? 0.7
-              : task.key === "galley"
-                ? 0.72
-                : 0.6),
-        );
-        const result: ShipVisualLayer[] = [];
-        for (const [key, template] of footprint) {
-          const [x, y, z] = key.split(",").map(Number),
-            old = envelope.get(key);
-          // The retained source core/backing is not an ornamental face.
-          if (!old || old.role === "core") {
-            result.push({
-              ...template,
-              bounds: [x, y, z, x + 1, y + 1, z + 1],
-            });
-            continue;
-          }
-          const u = (axis === 0 ? x : y) - bounds[axis],
-            v = z - bounds[2];
-          const edgeU = Math.min(u, width - 1 - u),
-            edgeV = Math.min(v, height - 1 - v);
-          const chosen: {
-            role: ShipVisualLayer["role"];
-            slot: ShipKitSlot;
-            part: string;
-          } = { role: "plate", slot: "primary", part: "joined-case" };
-          const use = (
-            name: string,
-            r: ShipVisualLayer["role"],
-            s: ShipKitSlot,
-          ) => {
-            chosen.part = name;
-            chosen.role = r;
-            chosen.slot = s;
           };
-          if (edgeU + edgeV < 2) use("corner-seat", "void", "dark");
-          else if (v < 2) use("continuous-lower-binding", "frame", "trim");
-          else if (u === split || u === split + 1)
-            use("overlap-shoulder", "plate", "trim");
-          else {
-            const well = edgeU >= 3 && v >= 3 && v < height - 3 && u < split;
-            if (well) {
-              use("well", "void", "dark");
-              switch (task.key) {
-                case "engineering":
-                  if (v === 5 || v === height - 6)
-                    use("protected-cooling-bank", "service", "metal");
-                  if (u >= split - 7 && v >= 5 && v < height - 5)
-                    use("distribution-module", "plate", "accent");
-                  if (u === split - 4 && v >= 6 && v < height - 6)
-                    use("distribution-status", "service", "emit_b");
-                  break;
-                case "workshop":
-                  if (v === 4) use("continuous-tool-bank", "service", "metal");
-                  if ([5, 11, 17].includes(u) && v >= 5 && v <= 7)
-                    use("protected-tool-dock", "service", "metal");
-                  if (u >= split - 7 && v >= 8)
-                    use("bench-power-module", "plate", "trim");
-                  break;
-                case "medical":
-                  if ([5, 9].includes(u) && v >= 5 && v < height - 5)
-                    use("supply-manifold", "service", "metal");
-                  if (u >= split - 9 && v >= 6 && v < height - 5)
-                    use("medical-control-face", "plate", "trim");
-                  if (u >= split - 7 && v === height - 6)
-                    use("medical-status", "service", "emit_a");
-                  break;
-                case "galley":
-                  if (v === 4) use("counter-utility-rail", "service", "metal");
-                  if (u >= split - 10 && v >= 6 && v < height - 5)
-                    use("utility-access-face", "plate", "trim");
-                  if (u === split - 5 && v >= 7 && v < height - 6)
-                    use("utility-handle", "service", "metal");
-                  break;
-                case "cargo":
-                  if (v >= 5 && v < height - 4)
-                    use("load-storage-face", "plate", "trim");
-                  if ((u === 5 || u === split - 4) && v >= 5 && v < height - 4)
-                    use("load-restraint", "service", "metal");
-                  break;
-                case "bridge":
-                  if (u >= 5 && u < split - 4 && v >= 6 && v < height - 5)
-                    use("bridge-distribution", "plate", "trim");
-                  if (u >= 6 && u < split - 5 && v === height - 6)
-                    use("bridge-power-status", "service", "emit_a");
-                  if (v === 4) use("bridge-key-bank", "service", "metal");
-                  break;
-                default:
-                  if (v === 4) use("reading-utility-shelf", "service", "metal");
-                  if (u >= split - 8 && v >= 6 && v < height - 5)
-                    use("berth-utility-face", "plate", "trim");
-                  break;
-              }
-            } else if (
-              u > split + 2 &&
-              u < width - 3 &&
-              v >= 4 &&
-              v < height - 3
-            ) {
-              // The closed field is part of the same casing, rather than another
-              // ring-framed postcard. Only its bounded latch seat is recessed.
-              use("offset-storage-field", "plate", "primary");
-              if (u === width - 5 && v >= 6 && v < height - 6)
-                use("storage-latch", "service", "metal");
-              if (
-                task.key === "engineering" &&
-                u === width - 7 &&
-                v >= 6 &&
-                v < height - 6
-              )
-                use("protected-task-status", "service", "emit_a");
-            }
-            if (u >= 3 && u < split - 2 && v === height - 3)
-              use(
-                "contained-task-header",
-                "service",
-                task.key === "medical" || task.key === "bridge"
-                  ? "emit_a"
-                  : "emit_b",
-              );
+          for (let z = l.bounds[2]; z < l.bounds[5]; z++) {
+            const contained =
+              !l.polygon ||
+              (insidePolygon(l.polygon, x + 0.5, y + 0.5) &&
+                !l.holes?.some((h) => insidePolygon(h, x + 0.5, y + 0.5)) &&
+                (l.band === undefined ||
+                  polygonBoundarySample([x + 0.5, y + 0.5], l.polygon)
+                    .distance <= l.band));
+            if (contained && protectedWallCube(x, y, z)) {
+              if (first < 0) first = z;
+            } else flush(z);
           }
-          // A well removes only the one finish course; its complete backing is
-          // independently checked on the final sampled assembly.
-          const { role, slot, part } = chosen;
-          if (
-            role === "void" &&
-            ![
-              [1, 0],
-              [-1, 0],
-              [0, 1],
-              [0, -1],
-            ].some(([dx, dy]) =>
-              [1, 2].every(
-                (n) =>
-                  envelope.get(visualCellKey(x + dx * n, y + dy * n, z))
-                    ?.role === "core",
-              ),
-            )
-          ) {
-            result.push({
-              ...template,
-              bounds: [x, y, z, x + 1, y + 1, z + 1],
-            });
-            continue;
-          }
-          result.push({
-            ...template,
-            id: `${task.support}:room-task:${task.room.id}:${part}`,
-            role,
-            slot,
-            bounds: [x, y, z, x + 1, y + 1, z + 1],
-          });
+          flush(l.bounds[5]);
         }
-        return result;
-      };
-      main.layers = roomAssembly(main);
-      layers.push(...main.layers);
-      // A second usable face carries a DIFFERENT task, not a scaled copy of
-      // the room's main fixture. Its clipped enclosure stays in the qualified
-      // finish footprint; all wells remain backed by the original core.
-      const mainKeys = new Set<string>();
-      for (const l of main.layers)
+    }
+    const allocated = new Set<string>();
+    const tasks: PendingWallTask[] = [];
+    for (const original of pendingWallTasks.values()) {
+      const { a, b } = original.geometry,
+        dx = b[0] - a[0],
+        dy = b[1] - a[1],
+        length = Math.hypot(dx, dy);
+      const tangent = [dx / length, dy / length],
+        axis = Math.abs(dx) >= Math.abs(dy) ? 0 : 1;
+      const templates = new Map<string, ShipVisualLayer>(),
+        columns = new Map<number, string[]>(),
+        blocked = new Set<number>();
+      for (const l of original.layers)
         for (let z = l.bounds[2]; z < l.bounds[5]; z++)
           for (let y = l.bounds[1]; y < l.bounds[4]; y++)
-            for (let x = l.bounds[0]; x < l.bounds[3]; x++)
-              mainKeys.add(visualCellKey(x, y, z));
-      for (const proposal of tasks.slice(1)) {
-        if (proposal.face === main.face) continue;
-        const bounds = [0, 1, 2]
-          .map((a) => Math.min(...proposal.layers.map((l) => l.bounds[a])))
-          .concat(
-            [0, 1, 2].map((a) =>
-              Math.max(...proposal.layers.map((l) => l.bounds[a + 3])),
-            ),
-          );
-        const axis = bounds[3] - bounds[0] >= bounds[4] - bounds[1] ? 0 : 1;
-        const width = Math.min(
-          macro.secondaryWallTask.width,
-          bounds[axis + 3] - bounds[axis],
-        );
-        const height = Math.min(
-          macro.secondaryWallTask.height,
-          bounds[5] - bounds[2],
-        );
-        if (width < 20 || height < 12) continue;
-        const u0 = Math.floor((bounds[axis] + bounds[axis + 3] - width) / 2),
-          z0 = bounds[2];
-        const footprint = new Map<string, ShipVisualLayer>();
-        for (const l of proposal.layers)
-          for (let z = l.bounds[2]; z < l.bounds[5]; z++)
-            for (let y = l.bounds[1]; y < l.bounds[4]; y++)
-              for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
-                const q = axis === 0 ? x : y;
-                if (q >= u0 && q < u0 + width && z >= z0 && z < z0 + height)
-                  footprint.set(visualCellKey(x, y, z), l);
+            for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+              const key = visualCellKey(x, y, z),
+                old = envelope.get(key);
+              if (old?.role === "core") continue;
+              // Complete end-seat cubes stop at the selected run; a one-cell casing
+              // margin is not permission to cross the next doorway or glazed course.
+              const q = [0, 1].flatMap((i) =>
+                [0, 1].map(
+                  (j) =>
+                    (x + i - a[0]) * tangent[0] + (y + j - a[1]) * tangent[1],
+                ),
+              );
+              if (
+                Math.min(...q) < original.u - epsilon ||
+                Math.max(...q) > original.U + epsilon
+              )
+                continue;
+              templates.set(key, {
+                ...l,
+                bounds: [x, y, z, x + 1, y + 1, z + 1],
+              });
+              const physical = axis === 0 ? x : y;
+              if (protectedWallCube(x, y, z)) blocked.add(physical);
+            }
+      for (const key of templates.keys()) {
+        const point = key.split(",").map(Number),
+          physical = point[axis];
+        if (blocked.has(physical)) continue;
+        const list = columns.get(physical) ?? [];
+        list.push(key);
+        columns.set(physical, list);
+      }
+      const ordered = [...columns.keys()].sort((a, b) => a - b);
+      for (let i = 0; i < ordered.length;) {
+        let j = i + 1;
+        while (j < ordered.length && ordered[j] === ordered[j - 1] + 1) j++;
+        const lower = ordered[i],
+          upper = ordered[j - 1] + 1;
+        if (upper - lower >= 16) {
+          const safeLayers = ordered
+            .slice(i, j)
+            .flatMap((q) => columns.get(q)!.map((key) => templates.get(key)!));
+          let u = Infinity,
+            U = -Infinity;
+          for (const l of safeLayers)
+            for (const x of [l.bounds[0], l.bounds[3]])
+              for (const y of [l.bounds[1], l.bounds[4]]) {
+                const q = (x - a[0]) * tangent[0] + (y - a[1]) * tangent[1];
+                u = Math.min(u, q);
+                U = Math.max(U, q);
               }
-        const purpose = (
-          {
-            engineering: "cooling-distribution",
-            workshop: "tool-rail",
-            bridge: "power-status",
-            medical: "oxygen-supply",
-            cargo: "load-securement",
-            galley: "utility-duct",
-            quarters: "reading-storage",
-            lounge: "media-utility",
-            living: "reading-storage",
-          } as const
-        )[proposal.key];
-        const companion: ShipVisualLayer[] = [];
-        for (const [cellKey, template] of footprint) {
-          const [x, y, z] = cellKey.split(",").map(Number);
-          const old = envelope.get(cellKey);
-          // A companion cannot turn structural backing into decorative fittings.
-          if (!old || old.role === "core") continue;
-          const u = (axis === 0 ? x : y) - u0,
-            v = z - z0;
-          if (Math.min(u, width - 1 - u) + Math.min(v, height - 1 - v) < 2)
-            continue;
-          let role: ShipVisualLayer["role"] = "plate",
-            slot: ShipKitSlot = "primary",
-            part = "clipped-case";
-          const well = u >= 2 && u < width - 2 && v >= 3 && v < height - 3;
+          tasks.push({ ...original, u, U, layers: safeLayers });
+        }
+        i = j;
+      }
+    }
+    tasks.sort(
+      (a, b) =>
+        a.room.id.localeCompare(b.room.id) ||
+        a.face.localeCompare(b.face) ||
+        a.u - b.u,
+    );
+    for (const task of tasks) {
+      const footprint = new Map<string, ShipVisualLayer>();
+      let safe = true;
+      for (const l of task.layers) {
+        for (let z = l.bounds[2]; z < l.bounds[5]; z++)
+          for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+            for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+              const key = visualCellKey(x, y, z),
+                old = envelope.get(key);
+              // Core/backing is retained verbatim; room machinery owns only the
+              // existing outer finish course. A seat never fills unsupported air.
+              if (old?.role === "core") continue;
+              if (!old) {
+                if (l.role !== "void") safe = false;
+                continue;
+              }
+              if (
+                old.family !== task.support ||
+                ["frame", "doorframe", "glass"].includes(old.role) ||
+                allocated.has(key)
+              ) {
+                safe = false;
+                continue;
+              }
+              footprint.set(key, l);
+            }
+      }
+      if (!safe || !footprint.size) continue;
+      const points = [...footprint.keys()].map((k) => k.split(",").map(Number));
+      const bounds = [0, 1, 2]
+        .map((a) => Math.min(...points.map((p) => p[a])))
+        .concat([0, 1, 2].map((a) => Math.max(...points.map((p) => p[a])) + 1));
+      const axis = bounds[3] - bounds[0] >= bounds[4] - bounds[1] ? 0 : 1;
+      const width = bounds[axis + 3] - bounds[axis],
+        height = bounds[5] - bounds[2];
+      const low = height < 11;
+      if (
+        width < 16 ||
+        height < (task.key === "medical" || task.key === "galley" ? 8 : 11)
+      )
+        continue;
+      // Unequal fields share one finite casing, its lower binding and a local
+      // header. Long admitted runs are never reclamped to a room-centre badge.
+      const joints =
+        width >= 64
+          ? [0, Math.floor(width * 0.47), Math.floor(width * 0.78), width]
+          : width >= 32
+            ? [0, Math.floor(width * 0.64), width]
+            : [0, width];
+      const out: ShipVisualLayer[] = [];
+      for (const [key, template] of footprint) {
+        const [x, y, z] = key.split(",").map(Number),
+          u = (axis === 0 ? x : y) - bounds[axis],
+          v = z - bounds[2];
+        const panel = Math.max(
+          0,
+          joints.findIndex((end, i) => i > 0 && u < end) - 1,
+        );
+        const left = joints[panel],
+          right = joints[panel + 1],
+          q = u - left,
+          W = right - left;
+        const edge = Math.min(u, width - 1 - u),
+          edgeV = Math.min(v, height - 1 - v);
+        let role: ShipVisualLayer["role"] = "plate",
+          slot: ShipKitSlot = "primary",
+          part = "joined-case";
+        const use = (
+          name: string,
+          r: ShipVisualLayer["role"],
+          s: ShipKitSlot,
+        ) => {
+          part = name;
+          role = r;
+          slot = s;
+        };
+        if (edge + edgeV < 2) use("corner-seat", "void", "dark");
+        else if (v < 2) use("continuous-lower-binding", "frame", "trim");
+        else if (joints.slice(1, -1).some((a) => u === a || u === a + 1))
+          use("overlap-shoulder", "plate", "trim");
+        else {
+          const well = q >= 3 && q < W - 3 && v >= 3 && v < height - 3;
           if (well) {
-            role = "void";
-            slot = "dark";
-            part = "well";
-          }
-          const item = (
-            name: string,
-            r: ShipVisualLayer["role"],
-            s: ShipKitSlot,
-          ) => {
-            part = name;
-            role = r;
-            slot = s;
-          };
-          if (well) {
-            const split = Math.floor(width * 0.62);
-            switch (proposal.key) {
+            // A broad calm storage field accompanies the functional aperture;
+            // dark exposed core is confined to the actual useful insert.
+            if (
+              panel === 0 ||
+              task.key === "workshop" ||
+              task.key === "airlock"
+            )
+              use("well", "void", "dark");
+            switch (task.key) {
               case "engineering":
-              case "galley":
-                if (u < split && (v === 4 || v === 7))
-                  item("broad-duct-louver", "service", "metal");
-                if (u >= split + 1 && v >= 4 && v < height - 4)
-                  item("distribution-face", "plate", "accent");
-                if (u === width - 4 && v >= 5 && v < height - 4)
-                  item("distribution-latch", "service", "metal");
+                if (panel === 0 && (v === 4 || v === height - 5))
+                  use("protected-cooling-bank", "service", "metal");
+                if (panel === 1) use("distribution-module", "plate", "trim");
+                if (panel === 1 && q >= W - 7 && q < W - 4)
+                  use("distribution-module-case", "plate", "accent");
+                if (panel === 1 && q === W - 5 && v >= 5 && v < height - 5)
+                  use("distribution-status", "service", "emit_b");
                 break;
               case "workshop":
-                if (v === 4) item("continuous-tool-rail", "service", "metal");
-                if (u < split && [4, 10, 16].includes(u) && v >= 5 && v <= 7)
-                  item("tool-dock", "service", "metal");
-                if (u >= split + 1 && v >= 5)
-                  item("tool-power-face", "plate", "trim");
+                if (v === 4) use("continuous-tool-bank", "service", "metal");
+                if (
+                  panel === 0 &&
+                  [5, 12, 20].includes(q) &&
+                  v >= 5 &&
+                  v < Math.min(9, height - 4)
+                )
+                  use("protected-tool-dock", "service", "metal");
+                if (panel > 0) use("bench-power-module", "plate", "trim");
                 break;
               case "medical":
-                if ([4, 8].includes(u) && v >= 4 && v < height - 4)
-                  item("supply-manifold", "service", "metal");
-                if (u >= split && v >= 4)
-                  item("medical-supply-face", "plate", "trim");
+                if (low) {
+                  if (q >= 3 && q < Math.max(4, W - 7))
+                    use("low-medical-utility", "plate", "trim");
+                  if (q >= W - 7 && q < W - 4)
+                    use("oxygen-supply-manifold", "service", "metal");
+                } else {
+                  if (
+                    panel === 0 &&
+                    [5, 9].includes(q) &&
+                    v >= 4 &&
+                    v < height - 4
+                  )
+                    use("supply-manifold", "service", "metal");
+                  if (panel > 0) use("medical-control-face", "plate", "trim");
+                }
+                break;
+              case "airlock":
+                if (panel === 0 && q >= 4 && q < W - 4)
+                  use("pressure-control-face", "plate", "trim");
+                if (panel > 0) use("sealed-load-storage", "plate", "primary");
+                if (q === W - 5 && v >= 4 && v < height - 4)
+                  use("pressure-control-handle", "service", "metal");
+                break;
+              case "galley":
+                if (v === 4) use("counter-utility-rail", "service", "metal");
+                if (panel === 0) use("backed-backsplash", "plate", "trim");
+                if (panel > 0 && q === W - 5)
+                  use("utility-handle", "service", "metal");
                 break;
               case "cargo":
-                item("load-locker-face", "plate", "accent");
-                if ((u === 4 || u === width - 5) && v >= 4)
-                  item("load-retaining-strap", "service", "metal");
+                use(
+                  "load-storage-face",
+                  "plate",
+                  panel === 0 ? "trim" : "primary",
+                );
+                if (q === 4 || q === W - 5)
+                  use("load-restraint", "service", "metal");
                 break;
-              default:
-                if (u >= split && v >= 4)
-                  item("local-utility-face", "plate", "trim");
-                if (u < split && v === 4)
-                  item("lower-reading-shelf", "service", "metal");
-                if (u === width - 5 && v >= 5 && v < height - 4)
-                  item("utility-handle", "service", "metal");
+              case "bridge":
+                if (panel === 0) use("bridge-distribution", "plate", "trim");
+                if (v === 4) use("bridge-key-bank", "service", "metal");
+                break;
+              case "quarters":
+              case "living":
+                if (v === 4) use("reading-utility-shelf", "service", "metal");
+                if (panel > 0) use("berth-storage-field", "plate", "primary");
+                break;
+              case "lounge":
+                if (panel === 0) use("media-utility-face", "plate", "trim");
+                if (v === 4) use("media-utility-shelf", "service", "metal");
                 break;
             }
           }
+          // One contained task header per functional field, not a continuous
+          // glowing rail around every room or a repeated per-cell light strip.
           if (
-            u >= 3 &&
-            u <
-              (proposal.key === "bridge"
-                ? width - 4
-                : Math.floor(width * 0.58)) &&
+            q >= 3 &&
+            q < Math.min(W - 3, Math.max(8, Math.floor(W * 0.6))) &&
             v === height - 3
           )
-            item(
-              "protected-task-header",
+            use(
+              "contained-task-header",
               "service",
-              proposal.key === "bridge" || proposal.key === "medical"
+              task.key === "medical" || task.key === "bridge"
                 ? "emit_a"
                 : "emit_b",
             );
-          companion.push({
-            ...template,
-            id: `${proposal.support}:secondary-room-task:${proposal.room.id}:${purpose}:${part}`,
-            role,
-            slot,
-            bounds: [x, y, z, x + 1, y + 1, z + 1],
-          });
+          if (panel > 0 && q === W - 4 && v >= 5 && v < height - 4)
+            use("storage-latch", "service", "metal");
         }
-        // Reject an incomplete or unsupported insert instead of preserving a
-        // count by filling air or stealing a pressure course.
         if (
-          !companion.some((l) => l.role === "void") ||
-          !companion.some((l) => l.role === "service")
-        )
-          continue;
-        let safe = true;
-        for (const l of companion) {
-          if (l.bounds.some((v, i) => i < 3 && v >= l.bounds[i + 3])) {
-            safe = false;
-            break;
-          }
-          for (let z = l.bounds[2]; safe && z < l.bounds[5]; z++)
-            for (let y = l.bounds[1]; safe && y < l.bounds[4]; y++)
-              for (let x = l.bounds[0]; safe && x < l.bounds[3]; x++) {
-                const key = visualCellKey(x, y, z),
-                  old = envelope.get(key);
-                if (
-                  mainKeys.has(key) ||
-                  (!old && l.role !== "void") ||
-                  (old &&
-                    (old.family !== proposal.support ||
-                      ["frame", "doorframe", "glass"].includes(old.role))) ||
-                  (old?.role === "core" && l.role !== "core")
-                )
-                  safe = false;
-                if (
-                  l.role === "void" &&
-                  ![
-                    [1, 0],
-                    [-1, 0],
-                    [0, 1],
-                    [0, -1],
-                  ].some(([dx, dy]) =>
-                    [1, 2].every(
-                      (n) =>
-                        envelope.get(visualCellKey(x + dx * n, y + dy * n, z))
-                          ?.role === "core",
-                    ),
-                  )
-                )
-                  safe = false;
-              }
-          if (!safe) break;
+          (role as ShipVisualLayer["role"]) === "void" &&
+          ![
+            [1, 0],
+            [-1, 0],
+            [0, 1],
+            [0, -1],
+          ].some(([dx, dy]) =>
+            [1, 2].every((n) => {
+              const c = envelope.get(visualCellKey(x + dx * n, y + dy * n, z));
+              return c?.role === "core" && c.family === task.support;
+            }),
+          )
+        ) {
+          role = "plate";
+          slot = "primary";
+          part = "retained-case";
         }
-        if (safe) {
-          layers.push(...companion);
-          break;
+        out.push({
+          ...template,
+          id: `${task.support}:room-task:${task.room.id}:run:${task.face}:${task.u}:${task.U}:${task.bottom}:${part}`,
+          role,
+          slot,
+          bounds: [x, y, z, x + 1, y + 1, z + 1],
+        });
+      }
+      if (!out.some((l) => l.role === "service")) continue;
+      for (const key of footprint.keys()) allocated.add(key);
+      // The complete authored field has disjoint per-cell writes. Compress only
+      // identical consecutive Z cells within each XY column; no authored write
+      // order, polygon, chart, facet or other sampled semantic is discarded.
+      const columns = new Map<string, ShipVisualLayer[]>();
+      for (const l of out) {
+        const k = `${l.bounds[0]},${l.bounds[1]}`;
+        const a = columns.get(k) ?? [];
+        a.push(l);
+        columns.set(k, a);
+      }
+      for (const column of columns.values()) {
+        column.sort((a, b) => a.bounds[2] - b.bounds[2]);
+        let last: ShipVisualLayer | undefined,
+          lastKey = "";
+        for (const l of column) {
+          const { bounds, ...semantics } = l,
+            k = JSON.stringify(semantics);
+          if (last && lastKey === k && last.bounds[5] === bounds[2])
+            last.bounds = [
+              ...last.bounds.slice(0, 5),
+              bounds[5],
+            ] as ShipVisualLayer["bounds"];
+          else {
+            last = { ...l, bounds: [...l.bounds] };
+            lastKey = k;
+            layers.push(last);
+          }
         }
       }
     }
@@ -4791,7 +5142,14 @@ export function shipVisualLayersR002(
       return raw;
     }),
   );
-  if (!matingSolids.some((s) => !s.veto)) return finalLayers;
+  const cockpitAperture = referenceCockpitApertureR002(
+    doc,
+    view,
+    catalog,
+    profileId,
+  );
+  if (!matingSolids.some((s) => !s.veto))
+    return [...finalLayers, ...cockpitAperture];
   // A pigment cannot change source-layer grouping priority. Resolve the complete
   // geometry FIRST and append only slot overlays for already occupied exposed
   // final owners; never compact these overlays back across earlier voids/cases.
@@ -4850,7 +5208,7 @@ export function shipVisualLayersR002(
       bounds: [c.x, c.y, c.z, c.x + 1, c.y + 1, c.z + 1],
     });
   }
-  return [...finalLayers, ...overlays];
+  return [...finalLayers, ...overlays, ...cockpitAperture];
 }
 
 /** Exact box compaction with dependencies only between writes to the same XYZ cells. */

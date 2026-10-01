@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import { expect, it } from "vitest";
 import { prefabById } from "@sidereal/content/prefabs";
 import type { ShipVisualManifest } from "@sidereal/content/ship-visual";
+import { SHIP_VISUAL_MACRO_PROFILES_R002 } from "@sidereal/content/ship-visual-r002";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { dressShip } from "@sidereal/sim/ship-dresser";
 import { exteriorOnlyDress } from "@sidereal/sim/ship-exterior";
@@ -154,5 +155,45 @@ it.each(["hash", "node", "url", "geometry", "triangles"])(
         f.geometry,
       ),
     ).toThrow(/source mismatch|geometry mismatch/);
+  },
+);
+
+it.each(["missing", "non-optical", "hash", "frame", "glass", "nonfinite"])(
+  "rejects the complete candidate when its effective aperture certificate is unavailable (%s)",
+  (defect) => {
+    const f = fixture();
+    const profile = SHIP_VISUAL_MACRO_PROFILES_R002.federation;
+    const original = profile.opticalInterfaces;
+    const id = "bow.slope1.deck.s2.a1.edge1";
+    const certificate = {
+      ...original[id],
+      sourceFrameBounds: original[id].sourceFrameBounds.map(
+        (b) => [...b] as typeof b,
+      ),
+      retainedGlassBounds: original[id].retainedGlassBounds.map(
+        (b) => [...b] as typeof b,
+      ),
+    };
+    const table: typeof original = { ...original, [id]: certificate };
+    if (defect === "missing") delete table[id];
+    if (defect === "non-optical") certificate.kind = "non-optical";
+    if (defect === "hash") certificate.assetSha256 = "0".repeat(64);
+    if (defect === "frame") certificate.sourceFrameBounds = [];
+    if (defect === "glass") certificate.retainedGlassBounds = [];
+    if (defect === "nonfinite") certificate.sourceFrameBounds[0][0] = NaN;
+    try {
+      profile.opticalInterfaces = table;
+      expect(() =>
+        referenceGlazingReplacements(
+          f.manifest,
+          "federation",
+          "fed.s.wren",
+          f.placements,
+          f.geometry,
+        ),
+      ).toThrow("aperture certificate mismatch");
+    } finally {
+      profile.opticalInterfaces = original;
+    }
   },
 );

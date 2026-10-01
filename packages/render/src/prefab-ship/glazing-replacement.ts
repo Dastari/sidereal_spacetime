@@ -4,6 +4,7 @@ import type {
   ShipVisualProfileId,
 } from "@sidereal/content/ship-visual";
 import type { KitPlacement } from "@sidereal/sim/ship-dresser";
+import { referenceCockpitApertureSourceAdmittedR002 } from "@sidereal/content/ship-visual-r002";
 import type { GlbGeometry } from "./glb-library";
 import { slotOfMaterialName } from "./materials";
 
@@ -58,6 +59,8 @@ export function referenceGlazingReplacements(
     prefabId !== "fed.s.wren"
   )
     return result;
+  if (!referenceCockpitApertureSourceAdmittedR002(profile))
+    throw Error("Candidate cockpit aperture certificate mismatch");
   for (const expected of occurrences) {
     const matching = placements.filter((k) => k.piece === expected.piece);
     const expectedKey = glazingOccurrenceKey(expected);
