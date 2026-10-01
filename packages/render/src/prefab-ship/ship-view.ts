@@ -289,7 +289,7 @@ interface StaticEntry {
     | "decal";
   /** Batched meshes: triangles that came from Blender GLBs vs TypeScript-generated geometry. */
   origin?: { glb: number; ts: number };
-  /** Cached sampled structure stays separate from invariant authored equipment when batching. */
+  /** Selects one complete cached deck composition; flight and independent effects stay shared. */
   cutSector?: DeckCutSector | "full";
 }
 
@@ -678,6 +678,12 @@ export async function createPrefabShipView(
       surfaceCharts: Set<string>;
       cutSector?: DeckCutSector | "full";
     };
+    // A complete cached deck state owns its invariant inputs too. Keeping them in a
+    // separate shared batch duplicates active material draws (and shadow/glow passes).
+    // The cache is finite; common props trade resident vertices for one draw per material.
+    const deckStates: readonly (DeckCutSector | "full")[] = out.cutCache
+      ? ["full", ...new Set(out.cutCache.states.map((s) => s.geometrySector))]
+      : [];
     const groups = new Map<string, Group>();
     // Every appended placement primitive, per presentation, for the coplanar pass below.
     const chunks: Record<
@@ -730,47 +736,65 @@ export async function createPrefabShipView(
             );
       const mat = material.name;
       for (const view of views(tag)) {
-        const key = detail
-          ? `${view}|${state ?? "shared"}|${mat}|${surfaceBatchLayoutKey(geo, detail.coordinatesIndex)}`
-          : `${view}|${state ?? "shared"}|${mat}`;
-        let g = groups.get(key);
-        if (!g)
-          groups.set(
-            key,
-            (g = {
+        const states =
+          view === "flight" || !deckStates.length
+            ? [undefined]
+            : state === undefined
+              ? deckStates
+              : [state];
+        for (const selectedState of states) {
+          const key = detail
+            ? `${view}|${selectedState ?? "shared"}|${mat}|${surfaceBatchLayoutKey(geo, detail.coordinatesIndex)}`
+            : `${view}|${selectedState ?? "shared"}|${mat}`;
+          let g = groups.get(key);
+          if (!g)
+            groups.set(
               key,
-              view,
-              slot,
-              roles: new Map(),
-              positions: [],
-              normals: [],
-              indices: [],
-              glb: 0,
-              ts: 0,
-              material,
-              surfaceCharts: new Set(),
-              ...(state !== undefined ? { cutSector: state } : {}),
-            }),
+              (g = {
+                key,
+                view,
+                slot,
+                roles: new Map(),
+                positions: [],
+                normals: [],
+                indices: [],
+                glb: 0,
+                ts: 0,
+                material,
+                surfaceCharts: new Set(),
+                ...(selectedState !== undefined
+                  ? { cutSector: selectedState }
+                  : {}),
+              }),
+            );
+          for (const chart of sourceCharts) g.surfaceCharts.add(chart);
+          const first = g.indices.length;
+          appendTransformed(
+            g,
+            geo.positions,
+            geo.normals,
+            geo.indices,
+            m,
+            geo,
+            {
+              correctNormals:
+                !!detail ||
+                !!sourceMaterial?.metadata?.shipReferenceFinish ||
+                !!sourceMaterial?.metadata?.shipReferenceInstrument,
+            },
           );
-        for (const chart of sourceCharts) g.surfaceCharts.add(chart);
-        const first = g.indices.length;
-        appendTransformed(g, geo.positions, geo.normals, geo.indices, m, geo, {
-          correctNormals:
-            !!detail ||
-            !!sourceMaterial?.metadata?.shipReferenceFinish ||
-            !!sourceMaterial?.metadata?.shipReferenceInstrument,
-        });
-        chunks[view].push({
-          group: g,
-          first,
-          count: geo.indices.length,
-          priority: coplanarPriority(role, slot),
-          role,
-        });
-        const tris = geo.indices.length / 3;
-        g.roles.set(role, (g.roles.get(role) ?? 0) + tris);
-        if (glb) g.glb += tris;
-        else g.ts += tris;
+          chunks[view].push({
+            group: g,
+            first,
+            count: geo.indices.length,
+            priority: coplanarPriority(role, slot),
+            role,
+          });
+          const tris = geo.indices.length / 3;
+          g.roles.set(role, (g.roles.get(role) ?? 0) + tris);
+          if (glb) g.glb += tris;
+          else g.ts += tris;
+        }
       }
     };
     for (const e of out.instanced) {
@@ -1086,8 +1110,9 @@ export async function createPrefabShipView(
   }
 
   function buildSampled(out: Built, results: SampledPresentation[]) {
-    // Identical floor/glass groups remain shared with authored props. Only changed wall
-    // surfaces get a finite state buffer, so four camera views do not multiply invariant geometry.
+    // Classify identical floor/glass groups as invariant inputs before batching.
+    // batchBuilt then copies them into each finite complete deck composition, alongside
+    // invariant equipment, to avoid extra active draws of the same material.
     const original = results.find((r) => r.cutSector === "full");
     const alternatives = results.filter((r) => typeof r.cutSector === "number");
     const sameArray = (a?: ArrayLike<number>, b?: ArrayLike<number>) =>
