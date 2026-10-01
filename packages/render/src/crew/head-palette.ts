@@ -8,9 +8,21 @@ import { GetMergedStore } from "@babylonjs/core/Misc/decorators.functions";
 import { characterComponent } from "@sidereal/content/character-components";
 import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
 import { CREW_ARMOR_COLOURWAYS } from "@sidereal/content/crew-armor";
-import type { SlotValues } from "@sidereal/content/crew-heads";
+import type {
+  ResolvedHeadNode,
+  SlotValues,
+} from "@sidereal/content/crew-heads";
 
 export const SEALED_HEAD_DIAGNOSTIC_REVISION = "sealed-r006-tactical";
+export const SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION =
+  "sealed-r006-tactical-outer-002";
+export function isTacticalTintedVisor(node: ResolvedHeadNode): boolean {
+  return (
+    node.role === "visor" &&
+    node.node === "visor.tactical.tinted" &&
+    node.slots.glass === "tinted"
+  );
+}
 const worn = new Set([
   "suit_primary",
   "suit_secondary",
@@ -88,6 +100,7 @@ export function equippedHelmetPalette(
 export function bindHeadWornPalette(
   meshes: readonly AbstractMesh[],
   slots: SlotValues,
+  options: { navyTacticalVisor?: boolean } = {},
 ): { dispose(): void } {
   const clones = new Map<Material, Material>();
   const assigned: Array<{ mesh: AbstractMesh; previous: Material }> = [];
@@ -104,18 +117,26 @@ export function bindHeadWornPalette(
     }
     const slot = /^crew\.([a-z_]+)/.exec(source.name)?.[1];
     const color = slot && slots[slot as keyof SlotValues];
+    const navyVisor = options.navyTacticalVisor && slot === "glass";
     if (
       !(source instanceof PBRMaterial) ||
       !slot ||
-      !worn.has(slot) ||
-      !color ||
-      !/^#[a-f0-9]{6}$/i.test(color)
+      (!navyVisor &&
+        (!worn.has(slot) || !color || !/^#[a-f0-9]{6}$/i.test(color)))
     )
       return source;
     const material = cloneWornMaterial(source);
     clones.set(source, material);
     material.metadata = { ...source.metadata, crewPart: "head" };
-    material.albedoColor = Color3.FromHexString(color).toLinearSpace();
+    material.albedoColor = Color3.FromHexString(
+      navyVisor ? "#122747" : color!,
+    ).toLinearSpace();
+    if (navyVisor) {
+      material.alpha = 0.94;
+      material.roughness = 0.18;
+      material.metallic = 0.12;
+      material.emissiveColor = Color3.Black();
+    }
     if (slot === "emit") material.emissiveColor = material.albedoColor.clone();
     return material;
   };

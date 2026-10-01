@@ -6,7 +6,15 @@ import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
-import { bindHeadWornPalette, equippedHelmetPalette } from "./head-palette";
+import {
+  bindHeadWornPalette,
+  equippedHelmetPalette,
+  isTacticalTintedVisor,
+} from "./head-palette";
+import {
+  DEFAULT_HEAD_LOADOUT,
+  resolveHeadLoadout,
+} from "@sidereal/content/crew-heads";
 
 const engines: NullEngine[] = [];
 const scene = () => {
@@ -132,4 +140,91 @@ test("palette emit owns its new emissive color and disposal does not replace a l
   mesh.material = later;
   owned.dispose();
   expect(mesh.material).toBe(later);
+});
+
+test("new tactical visor owns finite navy glass without changing a shared clear visor or personal slots", () => {
+  const s = scene();
+  const glass = new PBRMaterial("crew.glass", s);
+  const face = new PBRMaterial("crew.face", s);
+  const texture = new Texture(null, s);
+  glass.albedoTexture = texture;
+  glass.alpha = 0.3;
+  glass.roughness = 0.05;
+  glass.emissiveColor = new Color3(0.1, 0.3, 0.6);
+  glass.transparencyMode = PBRMaterial.PBRMATERIAL_ALPHABLEND;
+  const material = new MultiMaterial("visor-and-face", s);
+  material.subMaterials = [glass, face];
+  const selected = new Mesh("new-tinted-visor", s);
+  const secondActor = new Mesh("second-new-tinted-visor", s);
+  const other = new Mesh("legacy-clear-visor", s);
+  selected.material = secondActor.material = other.material = material;
+  const disposeTexture = vi.spyOn(texture, "dispose");
+  const binding = bindHeadWornPalette(
+    [selected],
+    {},
+    { navyTacticalVisor: true },
+  );
+  const secondBinding = bindHeadWornPalette(
+    [secondActor],
+    {},
+    { navyTacticalVisor: true },
+  );
+  const owned = selected.material as MultiMaterial;
+  const navy = owned.subMaterials[0] as PBRMaterial;
+  expect(navy).not.toBe(glass);
+  expect(navy.albedoColor).toEqual(
+    Color3.FromHexString("#122747").toLinearSpace(),
+  );
+  expect(navy.alpha).toBe(0.94);
+  expect(navy.roughness).toBe(0.18);
+  expect(navy.metallic).toBe(0.12);
+  expect(navy.emissiveColor).toEqual(Color3.Black());
+  const secondNavy = (secondActor.material as MultiMaterial)
+    .subMaterials[0] as PBRMaterial;
+  expect(secondNavy).not.toBe(navy);
+  navy.albedoColor.r = 0.5;
+  expect(secondNavy.albedoColor).toEqual(
+    Color3.FromHexString("#122747").toLinearSpace(),
+  );
+  expect(navy.transparencyMode).toBe(glass.transparencyMode);
+  expect(navy.albedoTexture).toBe(texture);
+  expect(owned.subMaterials[1]).toBe(face);
+  expect(other.material).toBe(material);
+  expect(glass.alpha).toBe(0.3);
+  expect(glass.roughness).toBe(0.05);
+  expect(glass.emissiveColor).toEqual(new Color3(0.1, 0.3, 0.6));
+  binding.dispose();
+  binding.dispose();
+  expect(selected.material).toBe(material);
+  expect(disposeTexture).not.toHaveBeenCalled();
+  expect(secondActor.material).not.toBe(material);
+  secondBinding.dispose();
+  expect(secondActor.material).toBe(material);
+  const ordinary = bindHeadWornPalette([other], { glass: "#122747" });
+  expect((other.material as MultiMaterial).subMaterials[0]).toBe(glass);
+  ordinary.dispose();
+});
+
+test("navy physical finish requires the actual resolved tactical tinted node and style", () => {
+  const resolved = resolveHeadLoadout({
+    ...DEFAULT_HEAD_LOADOUT,
+    helmet: "tactical",
+    visor: "tinted",
+  });
+  const selected = resolved.nodes.find((node) => node.role === "visor")!;
+  expect(isTacticalTintedVisor(selected)).toBe(true);
+  expect(isTacticalTintedVisor({ ...selected, role: "helmet" })).toBe(false);
+  expect(
+    isTacticalTintedVisor({ ...selected, node: "visor.tactical.clear" }),
+  ).toBe(false);
+  expect(
+    isTacticalTintedVisor({ ...selected, slots: { glass: "clear" } }),
+  ).toBe(false);
+  expect(
+    resolveHeadLoadout({
+      ...DEFAULT_HEAD_LOADOUT,
+      helmet: "tactical",
+      visor: "clear",
+    }).nodes.some(isTacticalTintedVisor),
+  ).toBe(false);
 });

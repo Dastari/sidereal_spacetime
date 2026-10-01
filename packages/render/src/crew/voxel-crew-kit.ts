@@ -30,7 +30,7 @@ import type { createVoxelCrewVisual } from "./voxel-crew";
 import { loadRgbaImage, loadVerifiedRgbaImage } from "./voxel-face";
 import { tagCrewPart } from "../molded-plastic";
 import { headArtSources } from "./head-art-revision";
-import { bindHeadWornPalette } from "./head-palette";
+import { bindHeadWornPalette, isTacticalTintedVisor } from "./head-palette";
 import {
   verifiedCrewSourceBytes,
   type VerifiedCrewSource,
@@ -182,6 +182,8 @@ export async function attachVoxelCrewHead(
     verifiedAtlases?: ReadonlyMap<string, VerifiedCrewSource>;
     /** Explicit new proposal only; independently owned worn slots, never person or uniform. */
     wornSlots?: SlotValues;
+    /** Exact new proposal's authored tactical tinted visor only. */
+    navyTacticalVisor?: boolean;
   } = {},
 ) {
   const resolved = resolveHeadLoadout(loadout);
@@ -269,6 +271,7 @@ export async function attachVoxelCrewHead(
   }
   space.setEnabled(false);
   let wornPalette: ReturnType<typeof bindHeadWornPalette> | undefined;
+  let visorPalette: ReturnType<typeof bindHeadWornPalette> | undefined;
   try {
     for (const c of containers) {
       c.addAllToScene();
@@ -323,6 +326,27 @@ export async function attachVoxelCrewHead(
           }),
         ),
         options.wornSlots,
+      );
+    }
+    if (
+      options.navyTacticalVisor &&
+      !artError &&
+      resolved.nodes.some(isTacticalTintedVisor)
+    ) {
+      visorPalette = bindHeadWornPalette(
+        containers.flatMap((container) =>
+          container.meshes.filter((mesh) => {
+            for (
+              let node: import("@babylonjs/core/node").Node | null = mesh;
+              node;
+              node = node.parent
+            )
+              if (node.name === "visor.tactical.tinted") return true;
+            return false;
+          }),
+        ),
+        {},
+        { navyTacticalVisor: true },
       );
     }
     // Two v1 head-kit export defects, repaired at load (see ensureFaceCanvasUVs /
@@ -383,6 +407,7 @@ export async function attachVoxelCrewHead(
       dispose() {
         if (disposed) return;
         disposed = true;
+        visorPalette?.dispose();
         wornPalette?.dispose();
         space.dispose();
         for (const c of containers) c.dispose();
@@ -390,6 +415,7 @@ export async function attachVoxelCrewHead(
       },
     };
   } catch (error) {
+    visorPalette?.dispose();
     wornPalette?.dispose();
     space.dispose();
     for (const c of containers) c.dispose();

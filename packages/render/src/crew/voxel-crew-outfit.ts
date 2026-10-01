@@ -20,6 +20,7 @@ import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 import {
   equippedHelmetPalette,
   SEALED_HEAD_DIAGNOSTIC_REVISION,
+  SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION,
 } from "./head-palette";
 import { resolveHeadLoadout } from "@sidereal/content/crew-heads";
 import {
@@ -164,7 +165,8 @@ export function createVoxelCrewOutfit(
     });
     const wornSlots =
       options.operatorSources &&
-      resolved.headArtRevision === SEALED_HEAD_DIAGNOSTIC_REVISION
+      (resolved.headArtRevision === SEALED_HEAD_DIAGNOSTIC_REVISION ||
+        resolved.headArtRevision === SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION)
         ? equippedHelmetPalette(
             equipped.helmet,
             resolveHeadLoadout(loadout).nodes.find(
@@ -182,6 +184,10 @@ export function createVoxelCrewOutfit(
           verifiedSources: options.operatorSources?.head,
           verifiedAtlases: options.operatorSources?.headAtlases,
           wornSlots,
+          navyTacticalVisor: Boolean(
+            options.operatorSources &&
+            resolved.headArtRevision === SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION,
+          ),
         }),
       )
         .then((next) => {
