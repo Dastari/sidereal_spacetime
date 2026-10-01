@@ -62,7 +62,6 @@ import {
   type DressedShip,
 } from "@sidereal/sim/ship-dresser";
 import { exteriorOnlyDress } from "@sidereal/sim/ship-exterior";
-import { glazingOccurrenceKey } from "./glazing-replacement";
 import { setMeshRole, type MeshRole } from "../mesh-roles";
 import { withoutAirlockLeaves } from "./doors";
 import { CONTACT_STRIP_OPACITY } from "../molded-plastic";
@@ -851,7 +850,6 @@ export async function createPrefabShipView(
       `${kitBase}manifest.json`,
     );
     const byPiece = new Map<string, Buckets>();
-    const glassByPiece = new Map<string, Buckets>();
     for (const k of out.dressed.kit) {
       let b = byPiece.get(k.piece);
       if (!b) byPiece.set(k.piece, (b = buckets()));
@@ -859,30 +857,13 @@ export async function createPrefabShipView(
         b[k.view],
         kitInstanceMatrix(k.x, k.y, k.z, k.rotDeg, k.mirror),
       );
-      // Retire only the admitted occurrence's glass before matrix grouping. Other
-      // slots and every other occurrence keep their complete original matrices.
-      if (!out.variant?.glazingReplacements?.has(glazingOccurrenceKey(k))) {
-        let glass = glassByPiece.get(k.piece);
-        if (!glass) glassByPiece.set(k.piece, (glass = buckets()));
-        pushMatrix(
-          glass[k.view],
-          kitInstanceMatrix(k.x, k.y, k.z, k.rotDeg, k.mirror),
-        );
-      }
     }
     await Promise.all(
       [...byPiece].map(async ([piece, matrices]) => {
         if (out.variant) {
           const geom = out.variant.kit.get(piece);
           if (geom)
-            addInstanced(
-              out,
-              geom,
-              piece,
-              matrices,
-              roleOfPiece(piece),
-              glassByPiece.get(piece) ?? buckets(),
-            );
+            addInstanced(out, geom, piece, matrices, roleOfPiece(piece));
           return;
         }
         const file =
@@ -913,7 +894,6 @@ export async function createPrefabShipView(
     piece: string | null,
     matrices: Buckets,
     role: MeshRole,
-    glassMatrices?: Buckets,
   ) {
     geom.primitives.forEach((p, i) => {
       if (
@@ -924,14 +904,6 @@ export async function createPrefabShipView(
       )
         return;
       const slot = slotOfMaterialName(p.material);
-      const primitiveMatrices =
-        slot === "glass" && glassMatrices ? glassMatrices : matrices;
-      if (
-        !primitiveMatrices.both.length &&
-        !primitiveMatrices.deck.length &&
-        !primitiveMatrices.flight.length
-      )
-        return;
       if (!slot)
         warnOnce(
           `material:${geom.url}:${p.material}`,
@@ -967,7 +939,7 @@ export async function createPrefabShipView(
         mesh,
         slot: slot ?? "primary",
         piece,
-        matrices: primitiveMatrices,
+        matrices,
         triangles: p.triangles,
         count: 0,
       });
