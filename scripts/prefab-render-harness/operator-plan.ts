@@ -15,6 +15,7 @@ import {
 import { verifiedCrewSourceBytes } from "../../packages/render/src/crew/crew-asset-cache";
 import { sha256 } from "@noble/hashes/sha2.js";
 import { bytesToHex } from "@noble/hashes/utils.js";
+import { SEALED_HEAD_DIAGNOSTIC_REVISION } from "../../packages/render/src/crew/head-palette";
 
 export function diagnosticOperatorAppearance(
   bodyType: "male" | "female",
@@ -53,7 +54,11 @@ export async function diagnosticOperatorPlan(
     "isolated-not-admitted",
     "isolated-current-request",
   );
-  if (headSelection === "legacy") return { plan };
+  if (
+    headSelection === "legacy" ||
+    headSelection === SEALED_HEAD_DIAGNOSTIC_REVISION
+  )
+    return { plan };
   if (headSelection !== HEAD_ART_CANDIDATE)
     throw new Error("Unknown isolated head selection");
   const base = `/assets/crew/heads/${HEAD_ART_CANDIDATE}/`;

@@ -5,6 +5,11 @@ import { crewWardrobeItem } from "@sidereal/content/crew-wardrobe";
 import { currentOperatorEnsemblePlan } from "../packages/render/src/crew/operator-ensemble";
 import { HEAD_ART_CANDIDATE } from "../packages/render/src/crew/head-art-revision";
 import { verifyCrewSource } from "../packages/render/src/crew/crew-asset-cache";
+import { SEALED_HEAD_DIAGNOSTIC_REVISION } from "../packages/render/src/crew/head-palette";
+import type { OperatorEnsembleRequest } from "../packages/render/src/crew/operator-ensemble";
+import { applySealedDiagnosticHead } from "./prefab-render-harness/operator-sealed-head";
+import { sha256 } from "@noble/hashes/sha2.js";
+import { bytesToHex } from "@noble/hashes/utils.js";
 import {
   diagnosticOperatorAppearance,
   diagnosticOperatorPlan,
@@ -94,4 +99,63 @@ test("bad candidate manifest and unknown selectors never fall back or silently s
   await expect(
     diagnosticOperatorPlan(appearance, null, "unregistered-heads"),
   ).rejects.toThrow("Unknown isolated head selection");
+});
+
+async function isolatedRequest(
+  tier: "marine" | "security",
+): Promise<OperatorEnsembleRequest> {
+  const bytes = new Uint8Array([1]);
+  const source = await verifyCrewSource(bytes, {
+    sha256: bytesToHex(sha256(bytes)),
+    byteLength: bytes.length,
+    variant: "test-owned-source",
+  });
+  return {
+    requestedKey: "actual-current-test",
+    associationKey: "isolated-no-admission",
+    appearance: diagnosticOperatorAppearance("female", tier, false),
+    bodySource: source,
+    requiredBodyNodes: [],
+    requiredBodyClips: [],
+    faceAtlas: false,
+    heldItem: "pistol",
+    outfitSources: {
+      head: new Map([["helmets", source]]),
+      headAtlases: new Map(),
+      armor: () => undefined,
+    },
+  };
+}
+
+test("sealed subset remains explicit: legacy does no proposal load and incomplete tactical selector retains verified legacy plan until attestation", async () => {
+  const fetch = vi.fn();
+  vi.stubGlobal("fetch", fetch);
+  const request = await isolatedRequest("marine");
+  expect(await applySealedDiagnosticHead(request, "legacy")).toBe(request);
+  const { plan } = await diagnosticOperatorPlan(
+    request.appearance,
+    "pistol",
+    SEALED_HEAD_DIAGNOSTIC_REVISION,
+  );
+  expect(plan.appearance.headArtRevision).toBe("legacy");
+  expect(fetch).not.toHaveBeenCalled();
+});
+
+test("early six-node proposal refuses a different helmet before fetching, and unverified manifest never replaces sources", async () => {
+  const fetch = vi.fn(async () => new Response("{}"));
+  vi.stubGlobal("fetch", fetch);
+  await expect(
+    applySealedDiagnosticHead(
+      await isolatedRequest("security"),
+      SEALED_HEAD_DIAGNOSTIC_REVISION,
+    ),
+  ).rejects.toThrow("requires the tactical");
+  expect(fetch).not.toHaveBeenCalled();
+  const request = await isolatedRequest("marine"),
+    oldHead = request.outfitSources.head;
+  await expect(
+    applySealedDiagnosticHead(request, SEALED_HEAD_DIAGNOSTIC_REVISION),
+  ).rejects.toThrow("manifest mismatch");
+  expect(request.outfitSources.head).toBe(oldHead);
+  expect(request.appearance.headArtRevision).toBeUndefined();
 });

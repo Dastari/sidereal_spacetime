@@ -18,6 +18,11 @@ import { attachCrewArmor, type CrewArmorAttachment } from "./armor-attach";
 import { attachVoxelCrewHead } from "./voxel-crew-kit";
 import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 import {
+  equippedHelmetPalette,
+  SEALED_HEAD_DIAGNOSTIC_REVISION,
+} from "./head-palette";
+import { resolveHeadLoadout } from "@sidereal/content/crew-heads";
+import {
   CREW_EMISSIVE_INTENSITY,
   type createVoxelCrewVisual,
 } from "./voxel-crew";
@@ -157,7 +162,17 @@ export function createVoxelCrewOutfit(
       bodyType: resolved.bodyType,
       equippedComponents: equipped,
     });
-    const key = JSON.stringify([loadout, resolved.headArtRevision]);
+    const wornSlots =
+      options.operatorSources &&
+      resolved.headArtRevision === SEALED_HEAD_DIAGNOSTIC_REVISION
+        ? equippedHelmetPalette(
+            equipped.helmet,
+            resolveHeadLoadout(loadout).nodes.find(
+              (node) => node.role === "helmet",
+            )?.slots,
+          )
+        : undefined;
+    const key = JSON.stringify([loadout, resolved.headArtRevision, wornSlots]);
     if (key !== headKey) {
       headKey = key;
       const revision = ++headRevision;
@@ -166,6 +181,7 @@ export function createVoxelCrewOutfit(
           deferActivation: true,
           verifiedSources: options.operatorSources?.head,
           verifiedAtlases: options.operatorSources?.headAtlases,
+          wornSlots,
         }),
       )
         .then((next) => {

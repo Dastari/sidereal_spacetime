@@ -168,4 +168,60 @@ describe("explicit character art revision", () => {
       }),
     ).toThrow(/active scene/);
   });
+  it("accepts actual indexed float UV bytes and rejects nonfinite, mismatched and overflowing channels", () => {
+    const oldPin = manifest().files["hair/close_crop"];
+    const original = readFileSync(ROOT + oldPin.path);
+    const end = 20 + original.readUInt32LE(12);
+    for (const defect of ["none", "nan", "count", "bounds", "shape"] as const) {
+      const doc = JSON.parse(original.subarray(20, end).toString());
+      const primitive = doc.meshes[0].primitives[0];
+      const count = doc.accessors[primitive.attributes.POSITION].count;
+      const originalBin = original.subarray(end + 8);
+      const uvBytes = Buffer.alloc(count * 8);
+      for (let i = 0; i < count; i++) {
+        uvBytes.writeFloatLE(0.25, i * 8);
+        uvBytes.writeFloatLE(0.75, i * 8 + 4);
+      }
+      if (defect === "nan") uvBytes.writeFloatLE(NaN, 0);
+      const bufferView = doc.bufferViews.length;
+      doc.bufferViews.push({
+        buffer: 0,
+        byteOffset: originalBin.length,
+        byteLength: uvBytes.length,
+      });
+      const accessor = doc.accessors.length;
+      doc.accessors.push({
+        bufferView,
+        componentType: 5126,
+        count: defect === "count" ? count - 1 : count,
+        type: defect === "shape" ? "SCALAR" : "VEC2",
+        byteOffset: defect === "bounds" ? uvBytes.length : 0,
+      });
+      primitive.attributes.TEXCOORD_0 = accessor;
+      doc.buffers[0].byteLength = originalBin.length + uvBytes.length;
+      const json = Buffer.from(JSON.stringify(doc));
+      const padded = Buffer.alloc(Math.ceil(json.length / 4) * 4, 32);
+      json.copy(padded);
+      const binHeader = Buffer.alloc(8);
+      binHeader.writeUInt32LE(doc.buffers[0].byteLength);
+      binHeader.writeUInt32LE(0x004e4942, 4);
+      const bytes = Buffer.concat([
+        original.subarray(0, 20),
+        padded,
+        binHeader,
+        originalBin,
+        uvBytes,
+      ]);
+      bytes.writeUInt32LE(bytes.length, 8);
+      bytes.writeUInt32LE(padded.length, 12);
+      const pin = {
+        ...oldPin,
+        bytes: bytes.length,
+        sha256: bytesToHex(sha256(bytes)),
+      };
+      if (defect === "none")
+        expect(validateHeadArtBytes(bytes, pin)).toBe(bytes);
+      else expect(() => validateHeadArtBytes(bytes, pin)).toThrow();
+    }
+  });
 });

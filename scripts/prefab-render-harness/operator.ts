@@ -24,6 +24,8 @@ import {
   diagnosticOperatorPlan,
   validateDiagnosticHeadSources,
 } from "./operator-plan";
+import { applySealedDiagnosticHead } from "./operator-sealed-head";
+import { verifiedCrewSourceBytes } from "../../packages/render/src/crew/crew-asset-cache";
 
 const q = new URLSearchParams(location.search);
 const bodyType = q.get("body") === "female" ? "female" : "male";
@@ -58,6 +60,7 @@ const state: {
   ready: boolean;
   error: string | null;
   frames: number;
+  headSources: Record<string, { sha256: string; bytes: number }>;
   handle?: PreparedOperatorEnsemble;
 } = {
   diagnostic: `isolated raw-GLB frame / ${partial ? "partial armor, no uniform" : "complete armor + Security uniform"} / heads=${headSelection} / no admitted context or production registration`,
@@ -68,6 +71,7 @@ const state: {
   ready: false,
   error: null,
   frames: 0,
+  headSources: {},
 };
 const diagnosticWindow = window as typeof window & {
   __operatorDiagnostic?: typeof state & {
@@ -190,8 +194,18 @@ void (async () => {
     item === "none" ? null : item,
     headSelection,
   );
-  const request = await verifyOperatorEnsemblePlan(scene, plan);
-  validateDiagnosticHeadSources(request, manifest);
+  const verifiedRequest = await verifyOperatorEnsemblePlan(scene, plan);
+  validateDiagnosticHeadSources(verifiedRequest, manifest);
+  const request = await applySealedDiagnosticHead(
+    verifiedRequest,
+    headSelection,
+  );
+  state.headSources = Object.fromEntries(
+    [...request.outfitSources.head].map(([key, source]) => {
+      const bytes = verifiedCrewSourceBytes(source);
+      return [key, { sha256: bytesToHex(sha256(bytes)), bytes: bytes.length }];
+    }),
+  );
   state.handle = await prepareOperatorEnsemble(
     scene,
     parent,
