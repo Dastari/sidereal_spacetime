@@ -118,6 +118,13 @@ import { referenceSurfaceMaterial } from "./reference-finish";
 import { compileShipVisual } from "@sidereal/sim/ship-visual-compiler";
 import { meshSampledStructure } from "./sampled-structure";
 import {
+  buildDeckCutCache,
+  selectDeckCutSector,
+  type DeckCutCache,
+  type DeckCutRuntime,
+  type DeckCutSector,
+} from "./deck-cutaway";
+import {
   prepareCandidateMaterials,
   referenceFloraMaterial,
   resolveVisualVariant,
@@ -207,6 +214,9 @@ export interface PrefabShipMetrics {
   visualRevision?: string;
   visualManifestSha256?: string;
   visualCompilerSha256?: string;
+  /** Actual selected display mask; null is the complete original geometry. */
+  deckCutSector?: DeckCutSector | null;
+  deckCutStates?: number;
   /** Engine draw calls of the last rendered frame (whole scene, including post/glow passes). */
   drawCalls: number;
   /** Enabled thin instances (kit pieces and component GLB primitives). */
@@ -238,6 +248,9 @@ export interface PrefabShipView {
   metrics(): PrefabShipMetrics;
   /** Exact verified authored leaf of the successfully activated candidate only. */
   referenceDoorLeaf(): GlbGeometry | null;
+  /** Same-frame main-camera selection; false admission restores the complete original deck. */
+  updateDeckCutaway(camera: Vector3 | null, admitted?: boolean): boolean;
+  deckCutDoors(): ReadonlySet<string>;
   /** Meshes carrying emissive light (emit slots, plumes, light pools) for an optional glow layer. */
   emissiveMeshes(): Mesh[];
 }
@@ -276,10 +289,13 @@ interface StaticEntry {
     | "decal";
   /** Batched meshes: triangles that came from Blender GLBs vs TypeScript-generated geometry. */
   origin?: { glb: number; ts: number };
+  /** Cached sampled structure stays separate from invariant authored equipment when batching. */
+  cutSector?: DeckCutSector | "full";
 }
 
 interface Built {
   variant: VerifiedVisualVariant | null;
+  cutCache: DeckCutRuntime | null;
   dressed: DressedShip;
   instanced: InstancedEntry[];
   statics: StaticEntry[];
@@ -289,6 +305,11 @@ interface Built {
   materials: StandardMaterial[];
   componentGlbs: number;
   componentStandins: number;
+}
+interface SampledPresentation {
+  tag: "deck" | "flight";
+  geometry: ReturnType<typeof meshSampledStructure>;
+  cutSector?: DeckCutSector | "full";
 }
 
 const shows = (tag: DressView, view: PrefabShipPresentation) =>
@@ -443,6 +464,7 @@ export async function createPrefabShipView(
   let built: Built | null = null;
   let generation = 0;
   let disposed = false;
+  let cutSector: DeckCutSector | null = null;
 
   async function build(
     d: ShipPrefabDocumentV1,
@@ -467,29 +489,59 @@ export async function createPrefabShipView(
         warnOnce(`visual:${options.visualVariant.sha256}:${d.id}`, message);
       }
     }
-    let sampled: ReturnType<typeof meshSampledStructure>[] | null = null;
+    let sampled: SampledPresentation[] | null = null;
+    let cutCache: DeckCutCache | null = null;
     if (variant) {
       try {
         sampled = (
           options.exteriorOnly
             ? (["flight"] as const)
             : (["deck", "flight"] as const)
-        ).map((v) =>
-          meshSampledStructure(
-            compileShipVisual(
+        ).map((v) => {
+          const cells = compileShipVisual(
+            d,
+            options.catalog,
+            v,
+            variant!.profile,
+            options.visualReviewRemovedCells,
+            variant!.manifest.revision,
+          ).cells;
+          if (
+            v === "deck" &&
+            options.externalDoorLeaves &&
+            !options.visualReviewRemovedCells?.size
+          )
+            cutCache = buildDeckCutCache(
               d,
               options.catalog,
-              v,
-              variant!.profile,
-              options.visualReviewRemovedCells,
+              dressed,
+              cells,
               variant!.manifest.revision,
-            ).cells,
-            { ambientOcclusion: variant!.manifest.revision === "r002" },
-          ),
-        );
+              variant!.profile,
+            );
+          return {
+            tag: v,
+            geometry: meshSampledStructure(cells, {
+              ambientOcclusion: variant!.manifest.revision === "r002",
+            }),
+            ...(v === "deck" && cutCache ? { cutSector: "full" as const } : {}),
+          };
+        });
+        if (cutCache)
+          for (const state of (cutCache as DeckCutCache).states.filter(
+            (s) => s.sector === s.geometrySector,
+          ))
+            sampled.push({
+              tag: "deck",
+              cutSector: state.geometrySector,
+              geometry: meshSampledStructure(state.cells, {
+                ambientOcclusion: true,
+              }),
+            });
       } catch (error) {
         variant.release();
         variant = null;
+        cutCache = null;
         const message = `Visual compiler rejected: ${String(error)}`;
         options.onVisualVariantError?.(message);
         warnOnce(`visual-compile:${d.id}`, message);
@@ -497,6 +549,14 @@ export async function createPrefabShipView(
     }
     const out: Built = {
       variant,
+      cutCache: cutCache
+        ? {
+            bounds: (cutCache as DeckCutCache).bounds,
+            states: (cutCache as DeckCutCache).states.map(
+              ({ cells: _cells, ...state }) => state,
+            ),
+          }
+        : null,
       dressed,
       instanced: [],
       statics: [],
@@ -567,6 +627,14 @@ export async function createPrefabShipView(
                 variant.kit.get("door-leaf.reference"),
               )
             : null;
+        leafPreparation?.setCutaway(
+          new Set(
+            leafPreparation
+              .doors()
+              .filter((d) => !d.airlock)
+              .map((d) => d.id),
+          ),
+        );
         for (const mesh of leafPreparation?.meshes() ?? [])
           mesh.setEnabled(false);
         try {
@@ -608,6 +676,7 @@ export async function createPrefabShipView(
       ts: number;
       material: ReturnType<typeof roleSlotMaterial>;
       surfaceCharts: Set<string>;
+      cutSector?: DeckCutSector | "full";
     };
     const groups = new Map<string, Group>();
     // Every appended placement primitive, per presentation, for the coplanar pass below.
@@ -637,6 +706,7 @@ export async function createPrefabShipView(
       glb: boolean,
       sourceMaterial: Mesh["material"],
       sourceCharts: readonly string[] = [],
+      state?: DeckCutSector | "full",
     ) => {
       const detail = normalDetailSelectionOf(sourceMaterial);
       const material =
@@ -661,8 +731,8 @@ export async function createPrefabShipView(
       const mat = material.name;
       for (const view of views(tag)) {
         const key = detail
-          ? `${view}|${mat}|${surfaceBatchLayoutKey(geo, detail.coordinatesIndex)}`
-          : `${view}|${mat}`;
+          ? `${view}|${state ?? "shared"}|${mat}|${surfaceBatchLayoutKey(geo, detail.coordinatesIndex)}`
+          : `${view}|${state ?? "shared"}|${mat}`;
         let g = groups.get(key);
         if (!g)
           groups.set(
@@ -679,6 +749,7 @@ export async function createPrefabShipView(
               ts: 0,
               material,
               surfaceCharts: new Set(),
+              ...(state !== undefined ? { cutSector: state } : {}),
             }),
           );
         for (const chart of sourceCharts) g.surfaceCharts.add(chart);
@@ -742,6 +813,7 @@ export async function createPrefabShipView(
           false,
           st.mesh.material,
           st.mesh.metadata?.shipSurfaceCharts,
+          st.cutSector,
         );
       st.mesh.dispose();
     }
@@ -749,21 +821,24 @@ export async function createPrefabShipView(
     // wall, a floor flush with a hull base) z-fight. Give each overlap one deterministic winner by
     // role, then slot, before the geometry is frozen into meshes.
     for (const view of ["flight", "deck"] as const)
-      resolveCoplanarLayers(
-        chunks[view].map((c) => ({
-          positions: c.group.positions,
-          normals: c.group.normals,
-          uvs: c.group.uvs,
-          uvs2: c.group.uvs2,
-          tangents: c.group.tangents,
-          colors: c.group.colors,
-          indices: c.group.indices,
-          first: c.first,
-          count: c.count,
-          priority: c.priority,
-          material: c.group.key,
-        })),
-      );
+      for (const state of [undefined, "full", 0, 1, 2, 3] as const)
+        resolveCoplanarLayers(
+          chunks[view]
+            .filter((c) => c.group.cutSector === state)
+            .map((c) => ({
+              positions: c.group.positions,
+              normals: c.group.normals,
+              uvs: c.group.uvs,
+              uvs2: c.group.uvs2,
+              tangents: c.group.tangents,
+              colors: c.group.colors,
+              indices: c.group.indices,
+              first: c.first,
+              count: c.count,
+              priority: c.priority,
+              material: c.group.key,
+            })),
+        );
     for (const g of groups.values()) {
       if (!g.indices.length) continue;
       const role = [...g.roles].sort((a, b) => b[1] - a[1])[0][0];
@@ -808,6 +883,7 @@ export async function createPrefabShipView(
         slot: g.slot,
         triangles: g.indices.length / 3,
         kind: "generated",
+        ...(g.cutSector !== undefined ? { cutSector: g.cutSector } : {}),
         origin: { glb: g.glb, ts: g.ts },
       });
     }
@@ -1009,16 +1085,50 @@ export async function createPrefabShipView(
     );
   }
 
-  function buildSampled(
-    out: Built,
-    results: ReturnType<typeof meshSampledStructure>[],
-  ) {
-    const tags = options.exteriorOnly
-      ? (["flight"] as const)
-      : (["deck", "flight"] as const);
-    for (let index = 0; index < results.length; index++)
-      for (const s of results[index]) {
-        const tag = tags[index];
+  function buildSampled(out: Built, results: SampledPresentation[]) {
+    // Identical floor/glass groups remain shared with authored props. Only changed wall
+    // surfaces get a finite state buffer, so four camera views do not multiply invariant geometry.
+    const original = results.find((r) => r.cutSector === "full");
+    const alternatives = results.filter((r) => typeof r.cutSector === "number");
+    const sameArray = (a?: ArrayLike<number>, b?: ArrayLike<number>) =>
+      a === b ||
+      (!!a &&
+        !!b &&
+        a.length === b.length &&
+        Array.from(a).every((v, i) => v === b[i]));
+    const sameGroup = (
+      a: SampledPresentation["geometry"][number],
+      b: SampledPresentation["geometry"][number],
+    ) =>
+      a.slot === b.slot &&
+      a.role === b.role &&
+      a.surfaceRole === b.surfaceRole &&
+      a.surfaceCharts.join("|") === b.surfaceCharts.join("|") &&
+      sameArray(a.positions, b.positions) &&
+      sameArray(a.normals, b.normals) &&
+      sameArray(a.indices, b.indices) &&
+      sameArray(a.uvs, b.uvs) &&
+      sameArray(a.colors, b.colors);
+    if (original && alternatives.length) {
+      const shared = original.geometry.filter((g) =>
+        alternatives.every((r) =>
+          r.geometry.some((other) => sameGroup(g, other)),
+        ),
+      );
+      if (shared.length) {
+        results.push({ tag: "deck", geometry: shared });
+        original.geometry = original.geometry.filter(
+          (g) => !shared.includes(g),
+        );
+        for (const r of alternatives)
+          r.geometry = r.geometry.filter(
+            (g) => !shared.some((s) => sameGroup(s, g)),
+          );
+      }
+    }
+    for (const result of results)
+      for (const s of result.geometry) {
+        const tag = result.tag;
         const role: MeshRole =
           s.surfaceRole ??
           (s.role === "floor"
@@ -1030,7 +1140,7 @@ export async function createPrefabShipView(
                 : "hull");
         const mesh = makeMesh(
           scene,
-          `${out.dressed.id}:sampled:${tag}:${s.slot}:${s.role}`,
+          `${out.dressed.id}:sampled:${tag}:${result.cutSector ?? "shared"}:${s.slot}:${s.role}`,
           frame,
           s,
         );
@@ -1051,6 +1161,9 @@ export async function createPrefabShipView(
           slot: s.slot,
           triangles: s.triangles,
           kind: "generated",
+          ...(result.cutSector !== undefined
+            ? { cutSector: result.cutSector }
+            : {}),
         });
       }
   }
@@ -1632,7 +1745,16 @@ export async function createPrefabShipView(
       e.mesh.thinInstanceRefreshBoundingInfo(false);
       e.mesh.setEnabled(true);
     }
-    for (const s of b.statics) s.mesh.setEnabled(shows(s.tag, view));
+    const geometrySector =
+      cutSector === null
+        ? "full"
+        : (b.cutCache?.states.find((s) => s.sector === cutSector)
+            ?.geometrySector ?? "full");
+    for (const s of b.statics)
+      s.mesh.setEnabled(
+        shows(s.tag, view) &&
+          (s.cutSector === undefined || s.cutSector === geometrySector),
+      );
     for (const d of b.decals) d.mesh.setEnabled(shows(d.tag, view));
     for (const l of b.lights) {
       registerLocalPbrLight(l.light, l.ownerId);
@@ -1660,6 +1782,7 @@ export async function createPrefabShipView(
     }
     if (built) release(built);
     built = next;
+    cutSector = null;
     applyFrame(frame, prefabOrigin(d));
     apply(next);
   }
@@ -1672,12 +1795,37 @@ export async function createPrefabShipView(
       built?.variant?.manifest.revision === "r002"
         ? (built.variant.kit.get("door-leaf.reference") ?? null)
         : null,
+    updateDeckCutaway(camera, admitted = true) {
+      const cache = built?.cutCache;
+      let next: DeckCutSector | null = null;
+      if (view === "deck" && cache && camera && admitted) {
+        const local = Vector3.TransformCoordinates(
+          camera,
+          frame.computeWorldMatrix(true).clone().invert(),
+        );
+        next = selectDeckCutSector(
+          cache,
+          [local.x, local.y, local.z],
+          cutSector,
+        );
+      }
+      if (next === cutSector) return false;
+      cutSector = next;
+      if (built) apply(built);
+      return true;
+    },
+    deckCutDoors: () =>
+      cutSector === null
+        ? new Set<string>()
+        : (built?.cutCache?.states.find((s) => s.sector === cutSector)?.doors ??
+          new Set<string>()),
     get dressed() {
       return built!.dressed;
     },
     setView(v) {
       if (v === view || options.exteriorOnly) return;
       view = v;
+      if (v === "flight") cutSector = null;
       if (built) apply(built);
     },
     update: (d) => rebuild(d),
@@ -1804,6 +1952,14 @@ export async function createPrefabShipView(
               visualRevision: b.variant.manifest.revision,
               visualManifestSha256: b.variant.manifestSha256,
               visualCompilerSha256: b.variant.manifest.compilerSha256,
+            }
+          : {}),
+        ...(b.cutCache
+          ? {
+              deckCutSector: cutSector,
+              deckCutStates: new Set(
+                b.cutCache.states.map((s) => s.geometrySector),
+              ).size,
             }
           : {}),
         drawCalls,

@@ -88,6 +88,87 @@ function authoredLeaf(file = "door-leaf.glb"): GlbGeometry {
 const catalog = defaultPrefabComponentCatalog();
 const wren = prefabById("fed.s.wren")!;
 
+it("cuts the real authored leaf without squeezing its retained shape, preserves the same stroke and restores full flight leaves", () => {
+  const engine = new NullEngine();
+  const scene = new Scene(engine);
+  const root = new TransformNode("cut-test", scene);
+  const full = createPrefabDoors(
+    scene,
+    root,
+    wren,
+    catalog,
+    wren.theme,
+    "r002",
+    authoredLeaf("door-leaf-r019.glb"),
+  );
+  const cut = createPrefabDoors(
+    scene,
+    root,
+    wren,
+    catalog,
+    wren.theme,
+    "r002",
+    authoredLeaf("door-leaf-r019.glb"),
+  );
+  const ids = new Set(
+    prefabDoorSpecs(wren, catalog)
+      .filter((d) => !d.exterior)
+      .map((d) => d.id),
+  );
+  expect(ids.size).toBeGreaterThan(0);
+  expect(cut.cutawaySupported()).toBe(true);
+  cut.setCutaway(ids);
+  const geometry = cut
+    .meshes()
+    .filter((m) => m.name.includes(":cut:") && m.isEnabled());
+  expect(geometry.length).toBeGreaterThan(0);
+  for (const mesh of geometry) {
+    const positions = mesh.getVerticesData(VertexBuffer.PositionKind)!;
+    const maxY = Math.max(...positions.filter((_, i) => i % 3 === 1));
+    expect(maxY).toBeCloseTo(-0.18, 6);
+    // The original height and vertical origin remain unchanged; local geometry is genuinely cut.
+    for (const matrix of mesh.thinInstanceGetWorldMatrices()) {
+      expect(matrix.m[5]).toBe(1.5625);
+      expect(matrix.m[13]).toBe(0.1875 + 1.5625 / 2);
+      expect(maxY * matrix.m[5] + matrix.m[13]).toBeCloseTo(0.6875, 6);
+    }
+  }
+  const logic = new Map([...ids].map((id) => [id, true]));
+  for (const view of [full, cut])
+    view.update({ nowMs: 1, dt: DOOR_TRAVEL_S / 2, actors: [], logic });
+  expect(cut.doors()).toEqual(full.doors());
+  for (const mesh of geometry) {
+    const source = full
+      .meshes()
+      .find((m) => m.name.endsWith(mesh.name.split(":").at(-1)!))!;
+    for (const matrix of mesh.thinInstanceGetWorldMatrices())
+      expect(
+        source.thinInstanceGetWorldMatrices().some((m) => m.equals(matrix)),
+      ).toBe(true);
+  }
+  cut.setCutaway(new Set());
+  expect(
+    cut
+      .meshes()
+      .filter((m) => m.isEnabled())
+      .map((m) => m.name.split(":").at(-1)),
+  ).toEqual(full.meshes().map((m) => m.name.split(":").at(-1)));
+  for (const view of [full, cut]) view.setView("flight");
+  expect(cut.doors()).toEqual(full.doors());
+  expect(
+    cut
+      .meshes()
+      .filter((m) => m.isEnabled())
+      .every((m) => m.name.includes(":full:")),
+  ).toBe(true);
+  full.dispose();
+  cut.dispose();
+  root.dispose();
+  expect(scene.meshes).toHaveLength(0);
+  scene.dispose();
+  engine.dispose();
+});
+
 describe("prefab door specs", () => {
   it("accepts the two authored core finishes and rejects missing, duplicate or ambiguous backing groups", () => {
     const old = authoredLeaf();

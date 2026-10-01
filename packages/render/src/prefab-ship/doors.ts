@@ -39,6 +39,8 @@ import { setMeshRole } from "../mesh-roles";
 import type { GlbGeometry } from "./glb-library";
 import { referenceSurfaceMaterial } from "./reference-finish";
 import type { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
+import { clipDoorLeaf } from "./door-cutaway";
+import { DECK_CUT_HEIGHT_M } from "./deck-cutaway";
 
 type P2 = [number, number];
 
@@ -416,6 +418,10 @@ export function createPrefabDoors(
   }
   const authored =
     referenceStyle === "r002" && authoredLeaf ? authoredLeaf : null;
+  const clipped = authored
+    ? clipDoorLeaf(authored, DECK_CUT_HEIGHT_M / DOOR_DECK_HEIGHT_M - 0.5)
+    : null;
+  const cutGeometry = clipped?.ok ? clipped.geometry : null;
   const materialFor = (slot: ShipKitSlot) => {
     const base = slotMaterial(scene, theme, slot);
     return authored
@@ -437,15 +443,17 @@ export function createPrefabDoors(
     open: 0,
     target: 0,
   }));
-  const meshes = new Map<ShipKitSlot, Mesh>();
-  const meshFor = (slot: ShipKitSlot) => {
-    let m = meshes.get(slot);
+  const meshes = new Map<string, Mesh>();
+  const meshFor = (slot: ShipKitSlot, cut = false) => {
+    const key = `${cut ? "cut" : "full"}:${slot}`;
+    let m = meshes.get(key);
     if (!m) {
-      const primitive = authored?.primitives.find(
+      const primitive = (cut ? cutGeometry : authored)?.primitives.find(
         (p) => slotOfMaterialName(p.material) === slot,
       );
+      if (cut && !primitive) return null;
       if (primitive) {
-        m = new Mesh(`prefab-doors:${doc.id}:${slot}`, scene);
+        m = new Mesh(`prefab-doors:${doc.id}:${key}`, scene);
         const data = new VertexData();
         data.positions = primitive.positions;
         data.normals = primitive.normals;
@@ -460,18 +468,27 @@ export function createPrefabDoors(
       m.isPickable = false;
       m.alwaysSelectAsActiveMesh = true;
       setMeshRole(m, "equipment");
-      meshes.set(slot, m);
+      meshes.set(key, m);
     }
     return m;
   };
   let view: View = "deck";
   let dirty = true;
+  let cutDoorIds: ReadonlySet<string> = new Set();
   /** Leaf parts drawn in the current view (thin instances). */
   let instances = 0;
   const rebuild = () => {
-    const matrices = new Map<ShipKitSlot, number[]>();
+    const matrices = new Map<
+      string,
+      { slot: ShipKitSlot; cut: boolean; values: number[] }
+    >();
     for (const d of doors) {
       const { spec } = d;
+      const cut =
+        view === "deck" &&
+        !spec.exterior &&
+        !!cutGeometry &&
+        cutDoorIds.has(spec.id);
       // Airlocks show in both views; other exterior doors and interior doors only in the cut-away.
       if (view === "flight" && !spec.airlock) continue;
       const height =
@@ -487,7 +504,7 @@ export function createPrefabDoors(
       const cz = -(spec.center[1] + spec.normal[1] * offset);
       for (const side of [-1, 1]) {
         const parts = authored
-          ? authored.primitives.map((p): Part => ({
+          ? (cut ? cutGeometry! : authored).primitives.map((p): Part => ({
               slot: slotOfMaterialName(p.material)!,
               u: 0,
               v: height / 2,
@@ -507,8 +524,10 @@ export function createPrefabDoors(
           const x = cx + X[0] * u;
           const z = cz + X[2] * u;
           const y = DOOR_FLOOR_M + p.v;
-          const list = matrices.get(p.slot) ?? [];
-          matrices.set(p.slot, list);
+          const key = `${cut ? "cut" : "full"}:${p.slot}`;
+          const bucket = matrices.get(key) ?? { slot: p.slot, cut, values: [] };
+          matrices.set(key, bucket);
+          const list = bucket.values;
           list.push(
             X[0] * p.w,
             X[1] * p.w,
@@ -530,12 +549,11 @@ export function createPrefabDoors(
         }
       }
     }
-    for (const slot of new Set<ShipKitSlot>([
-      ...meshes.keys(),
-      ...matrices.keys(),
-    ])) {
-      const list = matrices.get(slot);
-      const mesh = meshFor(slot);
+    for (const key of new Set<string>([...meshes.keys(), ...matrices.keys()])) {
+      const bucket = matrices.get(key);
+      const list = bucket?.values;
+      const mesh = bucket ? meshFor(bucket.slot, bucket.cut) : meshes.get(key);
+      if (!mesh) continue;
       if (!list?.length) {
         mesh.thinInstanceCount = 0;
         mesh.setEnabled(false);
@@ -544,7 +562,10 @@ export function createPrefabDoors(
       mesh.setEnabled(true);
       mesh.thinInstanceSetBuffer("matrix", new Float32Array(list), 16, false);
     }
-    instances = [...matrices.values()].reduce((n, l) => n + l.length / 16, 0);
+    instances = [...matrices.values()].reduce(
+      (n, l) => n + l.values.length / 16,
+      0,
+    );
     dirty = false;
   };
   rebuild();
@@ -557,6 +578,19 @@ export function createPrefabDoors(
       })),
     meshes: () => [...meshes.values()],
     instances: () => instances,
+    /** An unsupported real authored section rejects the complete wall/door display cut. */
+    cutawaySupported: () => !!cutGeometry,
+    setCutaway(ids: ReadonlySet<string>) {
+      const next = cutGeometry ? ids : new Set<string>();
+      if (
+        next.size === cutDoorIds.size &&
+        [...next].every((id) => cutDoorIds.has(id))
+      )
+        return;
+      cutDoorIds = new Set(next);
+      dirty = true;
+      rebuild();
+    },
     setView(next: View) {
       if (next === view) return;
       view = next;

@@ -131,7 +131,7 @@ export async function loadPrefabShipPresentation(
   const adapt = () => {
     const meshes = view.root.getChildMeshes();
     rig.include(meshes);
-    shadows?.sync(meshes);
+    shadows?.sync(meshes.filter((m) => m.isEnabled()));
     for (const mesh of meshes) {
       const m = mesh.material;
       // Interior-palette clones (materials.ts roleSlotMaterial) are named prefab-<theme>-<role>-<slot>.
@@ -140,13 +140,40 @@ export async function loadPrefabShipPresentation(
           ? GAME_INTERIOR_DIRECT
           : GAME_SHIP_DIRECT;
     }
-    const emissive = new Set<AbstractMesh>(view.emissiveMeshes());
+    const emissive = new Set<AbstractMesh>(
+      [...view.emissiveMeshes(), ...exhaust.meshes()].filter((m) =>
+        m.isEnabled(),
+      ),
+    );
+    for (const mesh of glowing)
+      if (!emissive.has(mesh)) {
+        glow.removeIncludedOnlyMesh(mesh as Mesh);
+        glowing.delete(mesh);
+      }
     for (const mesh of emissive)
       if (!glowing.has(mesh))
         (glowing.add(mesh), glow.addIncludedOnlyMesh(mesh as Mesh));
     occluders.set(meshes.filter((m) => !emissive.has(m) && m.isEnabled()));
   };
   adapt();
+  // The actual main-camera transform is settled here, before active geometry and shadow
+  // submission. Shadow/reflection cameras must never replace this camera's chosen display mask.
+  let mainCamera = scene.activeCamera;
+  const mainCameraObserver = scene.onBeforeRenderObservable.add(() => {
+    mainCamera = scene.activeCamera;
+  });
+  const cutObserver = scene.onBeforeCameraRenderObservable.add((camera) => {
+    if (camera !== mainCamera || camera !== scene.activeCamera) return;
+    if (
+      view.updateDeckCutaway(
+        interior ? camera.globalPosition : null,
+        doors.cutawaySupported(),
+      )
+    ) {
+      doors.setCutaway(view.deckCutDoors());
+      adapt();
+    }
+  });
   // Draw-cost evidence: one line per presentation after its first rendered frame.
   const logMetrics = () =>
     scene.onAfterRenderObservable.addOnce(() => {
@@ -160,13 +187,14 @@ export async function loadPrefabShipPresentation(
     setShadowGenerator(generator) {
       shadows?.dispose();
       shadows = createPrefabShadowBinding(generator);
-      shadows.sync(view.root.getChildMeshes());
+      shadows.sync(view.root.getChildMeshes().filter((m) => m.isEnabled()));
     },
     setInterior(next) {
       if (next === interior) return;
       interior = next;
       view.setView(next ? "deck" : "flight");
       doors.setView(next ? "deck" : "flight");
+      doors.setCutaway(view.deckCutDoors());
       panels.setView(next ? "deck" : "flight");
       adapt();
       logMetrics();
@@ -189,6 +217,8 @@ export async function loadPrefabShipPresentation(
     exhaust: () => exhaust.lit(),
     doors: () => doors.doors(),
     dispose() {
+      scene.onBeforeRenderObservable.remove(mainCameraObserver);
+      scene.onBeforeCameraRenderObservable.remove(cutObserver);
       shadows?.dispose();
       exhaust.dispose();
       panels.dispose();
