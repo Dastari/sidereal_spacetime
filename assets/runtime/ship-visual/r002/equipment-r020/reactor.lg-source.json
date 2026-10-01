@@ -1,0 +1,97 @@
+{
+  "id": "reactor.lg",
+  "status": "proposal",
+  "revision": "r020",
+  "kind": "component",
+  "frame": "interior",
+  "bounds": [
+    -1.75,
+    0.0,
+    -1.8125,
+    1.75,
+    2.9375,
+    1.75
+  ],
+  "source": "assets/source/ship-reference/r002/equipment-r020/reactor.lg.blend",
+  "url": "/assets/ship-visual/r002/equipment-r020/reactor.lg.glb",
+  "sha256": "a6c95612457ad95ad973ec4aafc6cb475776ade73a5c5968d4dbca1be65845c6",
+  "bytes": 84908,
+  "oldAssetSha256": "3994af1583c43abe0e2c043f517a3a0ce91ba4717814bd209fa3f11b3e36c741",
+  "semanticGroups": [
+    "primary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "secondary.vessel"
+  ],
+  "triangles": 1044,
+  "emissiveAreaM2": 0,
+  "front": "Blender +Y / glTF -Z",
+  "nearServiceSide": 1,
+  "actualPlacement": {
+    "anchor": [
+      2,
+      5
+    ],
+    "quarterTurns": 0
+  },
+  "frontBayDepthM": 0.35,
+  "sideBayDepthM": 0.375,
+  "baseContact": {
+    "z": 0,
+    "blenderBoundsXY": [
+      -1.7225,
+      -1.7225,
+      1.7225,
+      1.785
+    ],
+    "baseOuterBoundsXY": [
+      -1.75,
+      -1.75,
+      1.75,
+      1.8125
+    ]
+  },
+  "parts": [
+    "contact-base",
+    "closed-pressure-body",
+    "front-left-post",
+    "front-right-post",
+    "front-lower-joined-case",
+    "front-header",
+    "front-closed-backing",
+    "front-cooling-fin-0",
+    "front-cooling-fin-1",
+    "front-cooling-fin-2",
+    "unequal-control-cover",
+    "control-accent",
+    "control-binding",
+    "front-column-service-cover",
+    "front-column-service-mark",
+    "opposite-column-short-cover",
+    "lower-case-access-binding",
+    "side-rear-jamb",
+    "side-front-jamb",
+    "side-lower-return",
+    "side-header-return",
+    "side-closed-backing",
+    "side-cooling-fin-0",
+    "side-cooling-fin-1",
+    "side-upper-access-cassette",
+    "side-control-binding",
+    "side-kicker-clamp-0",
+    "side-kicker-clamp-1",
+    "broad-top-shoulder",
+    "offset-top-shoulder",
+    "rear-joined-service-spine",
+    "top-closed-backing",
+    "top-coarse-fin-0",
+    "top-coarse-fin-1",
+    "top-coarse-fin-2",
+    "top-offset-access-cover",
+    "top-forward-unequal-access",
+    "top-access-latch",
+    "top-spine-service-band"
+  ]
+}
