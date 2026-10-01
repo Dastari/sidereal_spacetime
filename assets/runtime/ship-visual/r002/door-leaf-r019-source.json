@@ -1,0 +1,45 @@
+{
+  "status": "proposal",
+  "revision": "r019",
+  "bounds": [
+    -0.5,
+    -0.5,
+    -0.04540000110864639,
+    0.5,
+    0.5,
+    0.04540000110864639
+  ],
+  "source": "assets/source/ship-reference/r002/door-leaf-r019.blend",
+  "normalization": "scale width/height; thickness remains authored",
+  "continuousCoreHalfDepthM": 0.025,
+  "maximumPerFaceReliefM": 0.0204,
+  "mainCaseNormalized": {
+    "bounds": [
+      -0.43,
+      -0.405,
+      0.29,
+      0.405
+    ],
+    "cut": 0.04,
+    "depthM": [
+      0.024,
+      0.035
+    ]
+  },
+  "actuatorSeparationNormalizedX": 0.025,
+  "gripFoundationDepthM": [
+    0.034,
+    0.038
+  ],
+  "metalGripDepthM": [
+    0.037,
+    0.044
+  ],
+  "semanticGroups": [
+    "primary",
+    "trim",
+    "dark",
+    "metal",
+    "emit_b"
+  ]
+}
