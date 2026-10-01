@@ -22,6 +22,7 @@ import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
 import { VertexData } from "@babylonjs/core/Meshes/mesh.vertexData";
 import "@babylonjs/core/Meshes/thinInstanceMesh";
 import { Constants } from "@babylonjs/core/Engines/constants";
+import { Matrix } from "@babylonjs/core/Maths/math.vector";
 import type {
   ShipPrefabDocumentV1,
   ShipThemeId,
@@ -472,16 +473,112 @@ export function createPrefabDoors(
     }
     return m;
   };
+  const partsFor = (
+    spec: PrefabDoorSpec,
+    height: number,
+    cut: boolean,
+  ): Part[] =>
+    authored
+      ? (cut ? cutGeometry! : authored).primitives.map((p): Part => ({
+          slot: slotOfMaterialName(p.material)!,
+          u: 0,
+          v: height / 2,
+          w: spec.airlock
+            ? AIRLOCK_LEAF_M
+            : Math.max(0.3, (spec.span - 2 * INTERIOR_JAMB_M) / 2),
+          h: height,
+          t: 1,
+        }))
+      : leafParts(spec, height, !!referenceStyle);
+  const recipes = new Map(
+    doors.map(({ spec }) => [
+      spec,
+      {
+        full: partsFor(spec, DOOR_DECK_HEIGHT_M, false),
+        cut:
+          cutGeometry && !spec.exterior
+            ? partsFor(spec, DOOR_DECK_HEIGHT_M, true)
+            : [],
+        flight: spec.airlock
+          ? partsFor(spec, AIRLOCK_FLIGHT_HEIGHT_M, false)
+          : [],
+      },
+    ]),
+  );
+  // Every possible bucket is prepared once, including inactive cut slots. A view
+  // or mask change can change counts, never allocate a mesh or grow a GPU buffer.
+  const capacities = new Map<
+    string,
+    { slot: ShipKitSlot; cut: boolean; count: number }
+  >();
+  for (const mode of ["full", "flight", "cut"] as const) {
+    const counts = new Map<
+      string,
+      { slot: ShipKitSlot; cut: boolean; count: number }
+    >();
+    for (const { spec } of doors)
+      for (const p of recipes.get(spec)![mode]) {
+        const key = `${mode === "cut" ? "cut" : "full"}:${p.slot}`;
+        const count = counts.get(key) ?? {
+          slot: p.slot,
+          cut: mode === "cut",
+          count: 0,
+        };
+        count.count += 2;
+        counts.set(key, count);
+      }
+    for (const [key, count] of counts) {
+      const previous = capacities.get(key);
+      if (!previous || count.count > previous.count) capacities.set(key, count);
+    }
+  }
+  const matrixBuckets = new Map<
+    string,
+    {
+      mesh: Mesh;
+      values: Float32Array;
+      poses: Matrix[];
+      worldCache: Matrix[];
+      capacity: number;
+      count: number;
+    }
+  >();
+  for (const [key, capacity] of capacities) {
+    const mesh = meshFor(capacity.slot, capacity.cut);
+    if (!mesh) throw Error("Prepared door slot has no geometry");
+    mesh.setEnabled(false);
+    const values = new Float32Array(capacity.count * 16);
+    for (let i = 0; i < capacity.count; i++) {
+      values[i * 16] =
+        values[i * 16 + 5] =
+        values[i * 16 + 10] =
+        values[i * 16 + 15] =
+          1;
+    }
+    mesh.thinInstanceSetBuffer("matrix", values, 16, false);
+    const worldCache = mesh.thinInstanceGetWorldMatrices();
+    // Babylon caches this public list, but bufferUpdated/count changes do not
+    // invalidate it. Keep distinct preowned poses and its active prefix coherent.
+    const poses = worldCache.slice();
+    worldCache.length = 0;
+    mesh.thinInstanceCount = 0;
+    matrixBuckets.set(key, {
+      mesh,
+      values,
+      poses,
+      worldCache,
+      capacity: capacity.count,
+      count: 0,
+    });
+  }
   let view: View = "deck";
   let dirty = true;
+  let disposed = false;
   let cutDoorIds: ReadonlySet<string> = new Set();
   /** Leaf parts drawn in the current view (thin instances). */
   let instances = 0;
   const rebuild = () => {
-    const matrices = new Map<
-      string,
-      { slot: ShipKitSlot; cut: boolean; values: number[] }
-    >();
+    for (const bucket of matrixBuckets.values()) bucket.count = 0;
     for (const d of doors) {
       const { spec } = d;
       const cut =
@@ -503,18 +600,9 @@ export function createPrefabDoors(
       const cx = spec.center[0] + spec.normal[0] * offset;
       const cz = -(spec.center[1] + spec.normal[1] * offset);
       for (const side of [-1, 1]) {
-        const parts = authored
-          ? (cut ? cutGeometry! : authored).primitives.map((p): Part => ({
-              slot: slotOfMaterialName(p.material)!,
-              u: 0,
-              v: height / 2,
-              w: spec.airlock
-                ? AIRLOCK_LEAF_M
-                : Math.max(0.3, (spec.span - 2 * INTERIOR_JAMB_M) / 2),
-              h: height,
-              t: 1,
-            }))
-          : leafParts(spec, height, !!referenceStyle);
+        const recipe = recipes.get(spec)!;
+        const parts =
+          view === "flight" ? recipe.flight : cut ? recipe.cut : recipe.full;
         for (const p of parts) {
           const leafW = spec.airlock
             ? AIRLOCK_LEAF_M
@@ -525,47 +613,55 @@ export function createPrefabDoors(
           const z = cz + X[2] * u;
           const y = DOOR_FLOOR_M + p.v;
           const key = `${cut ? "cut" : "full"}:${p.slot}`;
-          const bucket = matrices.get(key) ?? { slot: p.slot, cut, values: [] };
-          matrices.set(key, bucket);
+          const bucket = matrixBuckets.get(key)!;
+          if (bucket.count >= bucket.capacity)
+            throw Error("Door matrix capacity exceeded");
           const list = bucket.values;
-          list.push(
-            X[0] * p.w,
-            X[1] * p.w,
-            X[2] * p.w,
-            0,
-            0,
-            p.h,
-            0,
-            0,
-            Z[0] * p.t,
-            Z[1] * p.t,
-            Z[2] * p.t,
-            0,
-            x,
-            y,
-            z,
-            1,
-          );
+          const first = bucket.count++ * 16;
+          list[first + 0] = X[0] * p.w;
+          list[first + 1] = X[1] * p.w;
+          list[first + 2] = X[2] * p.w;
+          list[first + 3] = 0;
+          list[first + 4] = 0;
+          list[first + 5] = p.h;
+          list[first + 6] = 0;
+          list[first + 7] = 0;
+          list[first + 8] = Z[0] * p.t;
+          list[first + 9] = Z[1] * p.t;
+          list[first + 10] = Z[2] * p.t;
+          list[first + 11] = 0;
+          list[first + 12] = x;
+          list[first + 13] = y;
+          list[first + 14] = z;
+          list[first + 15] = 1;
         }
       }
     }
-    for (const key of new Set<string>([...meshes.keys(), ...matrices.keys()])) {
-      const bucket = matrices.get(key);
-      const list = bucket?.values;
-      const mesh = bucket ? meshFor(bucket.slot, bucket.cut) : meshes.get(key);
-      if (!mesh) continue;
-      if (!list?.length) {
-        mesh.thinInstanceCount = 0;
+    instances = 0;
+    for (const {
+      mesh,
+      values,
+      poses,
+      worldCache,
+      count,
+    } of matrixBuckets.values()) {
+      mesh.thinInstanceCount = count;
+      worldCache.length = count;
+      if (!count) {
         mesh.setEnabled(false);
+        // count0 uploads the whole capacity in Babylon and produces infinite
+        // bounds. Keep this disabled bucket ready for a later nonempty prefix.
         continue;
       }
+      for (let i = 0; i < count; i++) {
+        Matrix.FromArrayToRef(values, i * 16, poses[i]);
+        mesh.thinInstanceSetMatrixAt(i, poses[i], false);
+      }
+      mesh.thinInstanceBufferUpdated("matrix");
+      mesh.thinInstanceRefreshBoundingInfo(false);
       mesh.setEnabled(true);
-      mesh.thinInstanceSetBuffer("matrix", new Float32Array(list), 16, false);
+      instances += count;
     }
-    instances = [...matrices.values()].reduce(
-      (n, l) => n + l.values.length / 16,
-      0,
-    );
     dirty = false;
   };
   rebuild();
@@ -581,6 +677,7 @@ export function createPrefabDoors(
     /** An unsupported real authored section rejects the complete wall/door display cut. */
     cutawaySupported: () => !!cutGeometry,
     setCutaway(ids: ReadonlySet<string>) {
+      if (disposed) return;
       const next = cutGeometry ? ids : new Set<string>();
       if (
         next.size === cutDoorIds.size &&
@@ -592,12 +689,14 @@ export function createPrefabDoors(
       rebuild();
     },
     setView(next: View) {
+      if (disposed) return;
       if (next === view) return;
       view = next;
       dirty = true;
       rebuild();
     },
     update(input: DoorUpdate) {
+      if (disposed) return;
       const nowMicros = input.nowMs * 1000;
       for (const d of doors) {
         const { spec } = d;
@@ -631,8 +730,12 @@ export function createPrefabDoors(
       if (dirty) rebuild();
     },
     dispose() {
+      if (disposed) return;
+      disposed = true;
       for (const m of meshes.values()) m.dispose();
       meshes.clear();
+      matrixBuckets.clear();
+      instances = 0;
     },
   };
 }

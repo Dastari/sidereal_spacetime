@@ -1,4 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { createHash } from "node:crypto";
+import { Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -6,6 +8,11 @@ import { PREFAB_SHIPS, prefabById } from "@sidereal/content/prefabs";
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import {
   DOOR_TRAVEL_S,
+  DOOR_DECK_HEIGHT_M,
+  DOOR_FLOOR_M,
+  AIRLOCK_FLIGHT_HEIGHT_M,
+  AIRLOCK_LEAF_M,
+  AIRLOCK_LEAF_OFFSET_M,
   airlockOuterTarget,
   createPrefabDoors,
   prefabDoorSpecs,
@@ -17,6 +24,7 @@ import { readFileSync } from "node:fs";
 import { validateReferenceDoorLeaf } from "./doors";
 import { VertexBuffer } from "@babylonjs/core/Buffers/buffer";
 import { Constants } from "@babylonjs/core/Engines/constants";
+import type { Mesh } from "@babylonjs/core/Meshes/mesh";
 
 function authoredLeaf(file = "door-leaf.glb"): GlbGeometry {
   const bytes = readFileSync(
@@ -25,6 +33,10 @@ function authoredLeaf(file = "door-leaf.glb"): GlbGeometry {
       import.meta.url,
     ),
   );
+  if (file === "door-leaf-r019.glb")
+    expect(createHash("sha256").update(bytes).digest("hex")).toBe(
+      "77369dfdac6e29fa3b6dc666e607287c5ab19897c13a474f24bdf879f62d0047",
+    );
   const jsonLength = bytes.readUInt32LE(12),
     gltf = JSON.parse(bytes.subarray(20, 20 + jsonLength).toString());
   const bin = bytes.subarray(28 + jsonLength);
@@ -81,6 +93,10 @@ function authoredLeaf(file = "door-leaf.glb"): GlbGeometry {
   return {
     url: `/assets/ship-visual/r002/${file}`,
     primitives,
+    triangles: primitives.reduce(
+      (n: number, p: { triangles: number }) => n + p.triangles,
+      0,
+    ),
     bounds,
   } as GlbGeometry;
 }
@@ -152,7 +168,12 @@ it("cuts the real authored leaf without squeezing its retained shape, preserves 
       .meshes()
       .filter((m) => m.isEnabled())
       .map((m) => m.name.split(":").at(-1)),
-  ).toEqual(full.meshes().map((m) => m.name.split(":").at(-1)));
+  ).toEqual(
+    full
+      .meshes()
+      .filter((m) => m.isEnabled())
+      .map((m) => m.name.split(":").at(-1)),
+  );
   for (const view of [full, cut]) view.setView("flight");
   expect(cut.doors()).toEqual(full.doors());
   expect(
@@ -168,6 +189,395 @@ it("cuts the real authored leaf without squeezing its retained shape, preserves 
   scene.dispose();
   engine.dispose();
 });
+
+function assertDoorMatrixCache(mesh: Mesh) {
+  const worlds = mesh.thinInstanceGetWorldMatrices();
+  const cpu = mesh._thinInstanceDataStorage.matrixData!;
+  expect(worlds).toHaveLength(mesh.thinInstanceCount);
+  expect(new Set(worlds).size).toBe(mesh.thinInstanceCount);
+  for (let i = 0; i < worlds.length; i++)
+    expect(Array.from(worlds[i].m)).toEqual(
+      Array.from(cpu.subarray(i * 16, i * 16 + 16)),
+    );
+}
+
+function matrixBufferWitness(mesh: Mesh) {
+  return {
+    cpu: mesh._thinInstanceDataStorage.matrixData!,
+    gpu: mesh.getVertexBuffer("world0")!.getBuffer(),
+    attributes: Array.from({ length: 4 }, (_, i) =>
+      mesh.getVertexBuffer(`world${i}`)!,
+    ),
+  };
+}
+function assertDoorMatrixBuffer(
+  mesh: Mesh,
+  witness: ReturnType<typeof matrixBufferWitness>,
+) {
+  expect(mesh._thinInstanceDataStorage.matrixData).toBe(witness.cpu);
+  for (let i = 0; i < 4; i++) {
+    expect(mesh.getVertexBuffer(`world${i}`)).toBe(witness.attributes[i]);
+    expect(witness.attributes[i].getBuffer()).toBe(witness.gpu);
+  }
+}
+
+it("detects real buffer replacement and naive direct-update stale public matrices independently", () => {
+  const engine = new NullEngine(),
+    scene = new Scene(engine);
+  const root = new TransformNode("causal-buffer-witness", scene);
+  const source = authoredLeaf("door-leaf-r019.glb");
+  const allocation = createPrefabDoors(
+    scene,
+    root,
+    wren,
+    catalog,
+    wren.theme,
+    "r002",
+    source,
+  );
+  const stale = createPrefabDoors(
+    scene,
+    root,
+    wren,
+    catalog,
+    wren.theme,
+    "r002",
+    source,
+  );
+  try {
+    const mesh = allocation.meshes()[0],
+      witness = matrixBufferWitness(mesh);
+    assertDoorMatrixBuffer(mesh, witness);
+    // This is the installed API used by the original defect, even with the SAME CPU array.
+    mesh.thinInstanceSetBuffer("matrix", witness.cpu, 16, false);
+    expect(() => assertDoorMatrixBuffer(mesh, witness)).toThrow();
+    const other = stale.meshes()[0];
+    assertDoorMatrixCache(other);
+    const cpu = other._thinInstanceDataStorage.matrixData!;
+    cpu[12] += 0.25;
+    other.thinInstanceBufferUpdated("matrix");
+    // A naive array+upload-only fix leaves the getter's cached pose unchanged.
+    expect(() => assertDoorMatrixCache(other)).toThrow();
+  } finally {
+    allocation.dispose();
+    stale.dispose();
+    root.dispose();
+    scene.dispose();
+    engine.dispose();
+  }
+});
+
+it.each(["fed.s.wren", "fed.m.crest"])(
+  "reuses prepared door matrix buffers through masks, motion, view changes and independent generations (%s)",
+  (prefab) => {
+    const engine = new NullEngine();
+    const scene = new Scene(engine);
+    const root = new TransformNode("matrix-capacity", scene);
+    const doc = prefabById(prefab)!;
+    const source = authoredLeaf("door-leaf-r019.glb");
+    const specs = prefabDoorSpecs(doc, catalog);
+    const interior = specs.filter((d) => !d.exterior).map((d) => d.id);
+    const handle = createPrefabDoors(
+      scene,
+      root,
+      doc,
+      catalog,
+      doc.theme,
+      "r002",
+      source,
+    );
+    const peer = createPrefabDoors(
+      scene,
+      root,
+      doc,
+      catalog,
+      doc.theme,
+      "r002",
+      source,
+    );
+    const meshes = handle.meshes();
+    expect(handle.cutawaySupported()).toBe(true);
+    // Real clipped geometry has only primary/dark, prepared even while inactive.
+    expect(
+      meshes
+        .filter((m) => m.name.includes(":cut:"))
+        .map((m) => m.name.split(":").at(-1)),
+    ).toEqual(["primary", "dark"]);
+    const buffers = meshes.map((mesh) => ({
+      mesh,
+      cpu: mesh._thinInstanceDataStorage.matrixData!, // Read-only installed API identity witness.
+      gpu: mesh.getVertexBuffer("world0")!.getBuffer(),
+      attributes: Array.from({ length: 4 }, (_, i) =>
+        mesh.getVertexBuffer(`world${i}`)!,
+      ),
+      geometry: mesh.geometry,
+      indices: mesh.getIndices(),
+      positions: Array.from(mesh.getVerticesData(VertexBuffer.PositionKind)!),
+      normals: Array.from(mesh.getVerticesData(VertexBuffer.NormalKind)!),
+      uv: Array.from(mesh.getVerticesData(VertexBuffer.UVKind)!),
+    }));
+    for (const b of buffers) {
+      expect(b.cpu.length).toBeGreaterThan(0);
+      expect(b.cpu.length % 16).toBe(0);
+      expect(b.gpu).not.toBeNull();
+      expect(new Set(b.attributes.map((v) => v.getBuffer())).size).toBe(1);
+    }
+    const peerPrefix = peer
+      .meshes()
+      .map((m) => Array.from(m._thinInstanceDataStorage.matrixData!));
+    expect(
+      peer
+        .meshes()
+        .every((m) =>
+          buffers.every(
+            (b) => b.gpu !== m.getVertexBuffer("world0")!.getBuffer(),
+          ),
+        ),
+    ).toBe(true);
+    const preparedMeshes = [...scene.meshes],
+      preparedGeometries = [...scene.geometries];
+    const dynamicAlloc = vi.spyOn(engine, "createDynamicVertexBuffer");
+    const staticAlloc = vi.spyOn(engine, "createVertexBuffer");
+    const indexAlloc = vi.spyOn(engine, "createIndexBuffer");
+    const release = vi.spyOn(engine, "_releaseBuffer");
+    const upload = vi.spyOn(engine, "updateDynamicVertexBuffer");
+    const resetBuffer = meshes.map((m) => vi.spyOn(m, "thinInstanceSetBuffer"));
+    let view: "deck" | "flight" = "deck";
+    let mask = new Set<string>();
+    const assertState = (changed = true) => {
+      const opens = new Map(handle.doors().map((d) => [d.id, d.open]));
+      for (const b of buffers) {
+        const cut = b.mesh.name.includes(":cut:");
+        const expected = specs
+          .filter(
+            (spec) =>
+              (view === "deck" || spec.airlock) &&
+              cut === (view === "deck" && !spec.exterior && mask.has(spec.id)),
+          )
+          .flatMap((spec) =>
+            [-1, 1].map((side) => {
+              const height =
+                view === "flight" && spec.airlock
+                  ? AIRLOCK_FLIGHT_HEIGHT_M
+                  : DOOR_DECK_HEIGHT_M;
+              const width = spec.airlock
+                ? AIRLOCK_LEAF_M
+                : Math.max(0.3, (spec.span - 0.75) / 2);
+              const offset = spec.exterior ? AIRLOCK_LEAF_OFFSET_M : 0;
+              const u =
+                side * (width / 2 + 0.005 + opens.get(spec.id)! * width * 0.95);
+              const [ax, ay] = spec.along;
+              return Float32Array.from([
+                ax * width,
+                0,
+                -ay * width,
+                0,
+                0,
+                height,
+                0,
+                0,
+                ay,
+                0,
+                ax,
+                0,
+                spec.center[0] + spec.normal[0] * offset + ax * u,
+                DOOR_FLOOR_M + height / 2,
+                -(spec.center[1] + spec.normal[1] * offset) - ay * u,
+                1,
+              ]);
+            }),
+          );
+        const count = expected.length;
+        expect(b.mesh.thinInstanceCount).toBe(count);
+        expect(b.mesh.isEnabled()).toBe(count > 0);
+        assertDoorMatrixBuffer(b.mesh, b);
+        expect(b.mesh.geometry).toBe(b.geometry);
+        expect(b.mesh.getIndices()).toBe(b.indices);
+        assertDoorMatrixCache(b.mesh);
+        const worlds = b.mesh.thinInstanceGetWorldMatrices();
+        for (let i = 0; i < count; i++) {
+          expect(Array.from(b.cpu.subarray(i * 16, i * 16 + 16))).toEqual(
+            Array.from(expected[i]),
+          );
+        }
+        expect(
+          Array.from(b.mesh.getVerticesData(VertexBuffer.PositionKind)!),
+        ).toEqual(b.positions);
+        expect(
+          Array.from(b.mesh.getVerticesData(VertexBuffer.NormalKind)!),
+        ).toEqual(b.normals);
+        expect(
+          Array.from(b.mesh.getVerticesData(VertexBuffer.UVKind)!),
+        ).toEqual(b.uv);
+        const bounds = b.mesh.getBoundingInfo().boundingBox;
+        expect(
+          [...bounds.minimum.asArray(), ...bounds.maximum.asArray()].every(
+            Number.isFinite,
+          ),
+        ).toBe(true);
+        // Independently retain EVERY actual vertex. Aggregate outside Vitest's
+        // matcher machinery so a large authored ship does not run millions of assertions.
+        if (count) {
+          const sourcePoint = new Vector3(),
+            transformed = new Vector3();
+          const low = new Vector3(Infinity, Infinity, Infinity);
+          const high = new Vector3(-Infinity, -Infinity, -Infinity);
+          for (const matrix of worlds)
+            for (let i = 0; i < b.positions.length; i += 3) {
+              Vector3.FromArrayToRef(b.positions, i, sourcePoint);
+              Vector3.TransformCoordinatesToRef(
+                sourcePoint,
+                matrix,
+                transformed,
+              );
+              low.minimizeInPlace(transformed);
+              high.maximizeInPlace(transformed);
+            }
+          for (const axis of ["x", "y", "z"] as const) {
+            expect(low[axis]).toBeGreaterThanOrEqual(
+              bounds.minimum[axis] - 1e-6,
+            );
+            expect(high[axis]).toBeLessThanOrEqual(bounds.maximum[axis] + 1e-6);
+          }
+        }
+        const writes = upload.mock.calls.filter((call) => call[0] === b.gpu);
+        if (count) {
+          expect(writes).toHaveLength(changed ? 1 : 0);
+          for (const call of writes) {
+            expect(call[1]).toBe(b.cpu);
+            expect(call[2]).toBe(0);
+            expect(call[3]).toBe(count * 16 * Float32Array.BYTES_PER_ELEMENT);
+          }
+        } else expect(writes).toHaveLength(0);
+      }
+      expect(handle.instances()).toBe(
+        meshes.reduce((n, m) => n + m.thinInstanceCount, 0),
+      );
+      expect(scene.meshes).toEqual(preparedMeshes);
+      expect(scene.geometries).toEqual(preparedGeometries);
+      expect(dynamicAlloc).not.toHaveBeenCalled();
+      expect(staticAlloc).not.toHaveBeenCalled();
+      expect(indexAlloc).not.toHaveBeenCalled();
+      expect(release).not.toHaveBeenCalled();
+      for (const reset of resetBuffer) expect(reset).not.toHaveBeenCalled();
+      expect(
+        peer
+          .meshes()
+          .map((m) => Array.from(m._thinInstanceDataStorage.matrixData!)),
+      ).toEqual(peerPrefix);
+      upload.mockClear();
+    };
+    try {
+      assertState(false);
+      // Four distinct subsets plus all/none exercise mixed buckets and zero->nonzero.
+      for (const next of [
+        ...Array.from(
+          { length: 4 },
+          (_, sector) => new Set(interior.filter((_, i) => i % 4 === sector)),
+        ),
+        new Set(interior),
+        new Set<string>(),
+      ]) {
+        mask = next;
+        handle.setCutaway(mask);
+        assertState();
+        handle.setCutaway(mask);
+        expect(upload).not.toHaveBeenCalled();
+        const logic = new Map(specs.map((d) => [d.id, true]));
+        handle.update({ nowMs: 1, dt: DOOR_TRAVEL_S / 2, actors: [], logic });
+        assertState();
+        handle.update({ nowMs: 2, dt: DOOR_TRAVEL_S, actors: [], logic });
+        assertState();
+        handle.update({
+          nowMs: 3,
+          dt: DOOR_TRAVEL_S,
+          actors: [],
+          logic: new Map(specs.map((d) => [d.id, false])),
+        });
+        assertState();
+      }
+      view = "flight";
+      handle.setView(view);
+      assertState();
+      handle.update({
+        nowMs: 4,
+        dt: DOOR_TRAVEL_S / 2,
+        actors: [],
+        cyclingBodies: specs
+          .filter((d) => d.airlock)
+          .map((d) => ({ x: d.center[0], y: d.center[1] })),
+      });
+      assertState();
+      view = "deck";
+      handle.setView(view);
+      assertState();
+      handle.dispose();
+      expect(meshes.every((m) => m.isDisposed())).toBe(true);
+      for (const b of buffers)
+        expect(
+          release.mock.calls.filter((call) => call[0] === b.gpu),
+        ).toHaveLength(1);
+      for (const m of peer.meshes())
+        expect(
+          release.mock.calls.filter(
+            (call) => call[0] === m.getVertexBuffer("world0")!.getBuffer(),
+          ),
+        ).toHaveLength(0);
+      const peerData = peer
+        .meshes()
+        .map((m) => Array.from(m._thinInstanceDataStorage.matrixData!));
+      const replacement = createPrefabDoors(
+        scene,
+        root,
+        doc,
+        catalog,
+        doc.theme,
+        "r002",
+        source,
+      );
+      try {
+        expect(
+          replacement
+            .meshes()
+            .every((m) =>
+              buffers.every(
+                (b) => b.gpu !== m.getVertexBuffer("world0")!.getBuffer(),
+              ),
+            ),
+        ).toBe(true);
+        dynamicAlloc.mockClear();
+        staticAlloc.mockClear();
+        indexAlloc.mockClear();
+        release.mockClear();
+        handle.update({ nowMs: 10, dt: 1, actors: [] });
+        handle.setCutaway(new Set(interior));
+        handle.setView("flight");
+        handle.dispose();
+        expect(handle.meshes()).toHaveLength(0);
+        expect(handle.instances()).toBe(0);
+        expect(dynamicAlloc).not.toHaveBeenCalled();
+        expect(staticAlloc).not.toHaveBeenCalled();
+        expect(indexAlloc).not.toHaveBeenCalled();
+        expect(release).not.toHaveBeenCalled();
+        expect(
+          peer
+            .meshes()
+            .map((m) => Array.from(m._thinInstanceDataStorage.matrixData!)),
+        ).toEqual(peerData);
+        expect(replacement.meshes().some((m) => m.isEnabled())).toBe(true);
+      } finally {
+        replacement.dispose();
+      }
+    } finally {
+      handle.dispose();
+      peer.dispose();
+      vi.restoreAllMocks();
+      root.dispose();
+      scene.dispose();
+      engine.dispose();
+    }
+  },
+);
 
 describe("prefab door specs", () => {
   it("accepts the two authored core finishes and rejects missing, duplicate or ambiguous backing groups", () => {
@@ -328,7 +738,7 @@ describe("prefab door specs", () => {
         "r002",
         geom,
       );
-      expect(proposed.meshes()).toHaveLength(5);
+      expect(proposed.meshes().filter((m) => m.isEnabled())).toHaveLength(5);
       const mesh = proposed.meshes().find((m) => m.name.endsWith(":primary"))!;
       expect(mesh.sideOrientation).toBe(
         Constants.MATERIAL_CounterClockWiseSideOrientation,
