@@ -30,6 +30,7 @@ import { dressShip } from "./ship-dresser";
 
 import {
   SHIP_VISUAL_PROFILES_R002,
+  SHIP_VISUAL_MACRO_PROFILES_R002,
   referencePlateDecals,
 } from "@sidereal/content/ship-visual-r002";
 
@@ -41,6 +42,7 @@ export function shipVisualLayersR002(
   profileId: ShipVisualProfileId,
 ): ShipVisualLayer[] {
   const profile = SHIP_VISUAL_PROFILES_R002[profileId],
+    macro = SHIP_VISUAL_MACRO_PROFILES_R002[profileId],
     layers: ShipVisualLayer[] = [];
   let surfaceRole: NonNullable<ShipVisualLayer["surfaceRole"]> = "hull";
   const box = (
@@ -118,6 +120,7 @@ export function shipVisualLayersR002(
         "galley",
         "lounge",
         "medbay",
+        "bridge",
       ].includes(room.type)
     )
       continue;
@@ -354,52 +357,116 @@ export function shipVisualLayersR002(
     }
     const deck = G.heightClasses[volume.height].walkable;
     const family = `volume:${volume.id}`;
-    // Three distinct task assemblies, sized by real room footprints. Each is a
-    // joined tray/shoulder/skin cross-section; room walls and sockets do not move.
+    // Joined housings take their purpose and occupied aperture from actual equipment,
+    // not room rectangles. The visible shoulders join the same tray beside those apertures.
     const roofCases: {
       id: string;
       bounds: number[];
       kind: "utility" | "habitation" | "control";
     }[] = [];
-    if (deck)
-      for (const kind of ["utility", "habitation", "control"] as const) {
-        const eligible = doc.rooms.filter((r) =>
-          kind === "utility"
-            ? r.type === "engineering" || r.type === "workshop"
-            : kind === "control"
-              ? r.type === "bridge"
-              : ["quarters", "lounge", "galley", "cargo", "medbay"].includes(
-                  r.type,
-                ),
-        );
-        eligible.sort(
-          (a, b) =>
-            (b.rect[2] - b.rect[0]) * (b.rect[3] - b.rect[1]) -
-              (a.rect[2] - a.rect[0]) * (a.rect[3] - a.rect[1]) ||
-            a.id.localeCompare(b.id),
-        );
-        const room = eligible.find(
-          (r) =>
-            (r.rect[2] - r.rect[0]) * 16 >= 24 &&
-            (r.rect[3] - r.rect[1]) * 16 >= 24 &&
-            insidePolygon(
-              poly,
-              (r.rect[0] + r.rect[2]) * 8,
-              (r.rect[1] + r.rect[3]) * 8,
+    if (deck) {
+      const mounted = [
+        ...doc.mounts
+          .filter((m) => m.attach === "top")
+          .map((m) => ({
+            id: m.id,
+            kind: m.component.startsWith("radiator.")
+              ? ("utility" as const)
+              : ("control" as const),
+            bounds: placeMount(
+              m,
+              catalog.get(m.component),
+              geoms,
+              doc,
+            ).rect.map((n) => n * 16),
+          })),
+        ...(doc.mountTiles ?? []).map((m) => ({
+          id: m.id,
+          kind: "control" as const,
+          bounds: placeMountTile(m, geoms).rect.map((n) => n * 16),
+        })),
+      ].filter((m) =>
+        insidePolygon(
+          poly,
+          (m.bounds[0] + m.bounds[2]) / 2,
+          (m.bounds[1] + m.bounds[3]) / 2,
+        ),
+      );
+      for (const kind of ["utility", "control"] as const) {
+        const items = mounted.filter((m) => m.kind === kind);
+        if (!items.length) continue;
+        const pad = kind === "utility" ? 5 : 8;
+        roofCases.push({
+          id: `${kind}:${items
+            .map((m) => m.id)
+            .sort()
+            .join("+")}`,
+          kind,
+          bounds: [
+            Math.max(
+              bx + 3,
+              Math.floor(Math.min(...items.map((m) => m.bounds[0]))) - pad,
             ),
-        );
-        if (room)
-          roofCases.push({
-            id: room.id,
-            kind,
-            bounds: [
-              Math.max(bx + 5, Math.round(room.rect[0] * 16) + 4),
-              Math.max(by + 5, Math.round(room.rect[1] * 16) + 4),
-              Math.min(bX - 5, Math.round(room.rect[2] * 16) - 4),
-              Math.min(bY - 5, Math.round(room.rect[3] * 16) - 4),
-            ],
-          });
+            Math.max(
+              by + 3,
+              Math.floor(Math.min(...items.map((m) => m.bounds[1]))) - pad,
+            ),
+            Math.min(
+              bX - 3,
+              Math.ceil(Math.max(...items.map((m) => m.bounds[2]))) + pad,
+            ),
+            Math.min(
+              bY - 3,
+              Math.ceil(Math.max(...items.map((m) => m.bounds[3]))) + pad,
+            ),
+          ],
+        });
       }
+      // One deliberately unequal calm cover fills an exposed gap, retaining source markings.
+      const candidates: { bounds: number[]; score: number }[] = [];
+      for (let y = by + 5; y + 22 < bY - 5; y += 8)
+        for (let x = bx + 6; x + 34 < bX - 6; x += 8) {
+          const bounds = [x, y, x + 34, y + 22];
+          if (
+            [
+              ...roofObstacles,
+              ...roofMarkings,
+              ...roofCases.map((c) => c.bounds),
+            ].some(
+              (r) =>
+                bounds[0] < r[2] + 2 &&
+                bounds[2] > r[0] - 2 &&
+                bounds[1] < r[3] + 2 &&
+                bounds[3] > r[1] - 2,
+            )
+          )
+            continue;
+          if (
+            ![
+              [x, y],
+              [x + 34, y],
+              [x, y + 22],
+              [x + 34, y + 22],
+            ].every(
+              ([X, Y]) =>
+                insidePolygon(poly, X, Y) &&
+                !holes.some((h) => insidePolygon(h, X, Y)),
+            )
+          )
+            continue;
+          candidates.push({
+            bounds,
+            score: Math.abs(x - bx - (bX - bx) * 0.65),
+          });
+        }
+      candidates.sort((a, b) => a.score - b.score || a.bounds[1] - b.bounds[1]);
+      if (candidates[0])
+        roofCases.push({
+          id: "exposed-cover",
+          kind: "habitation",
+          bounds: candidates[0].bounds,
+        });
+    }
     const routeCandidates = [
       Math.round(by + (bY - by) * 0.25),
       Math.round(by + (bY - by) * 0.75),
@@ -467,14 +534,28 @@ export function shipVisualLayersR002(
         const vent = room?.type === "engineering" || room?.type === "workshop";
         candidates.push({
           bounds,
-          kind: vent ? "vent" : "access",
+          kind:
+            vent || roofPatches.some((p) => p.kind === "access")
+              ? "vent"
+              : "access",
           score: vent ? 3 : room ? 2 : 1,
         });
       }
       const selected = candidates
         .sort((a, b) => b.score - a.score || a.bounds[0] - b.bounds[0])
         .filter((_, i) => i < 2);
-      roofPatches.push(...(deck ? selected : selected.slice(0, 1)));
+      roofPatches.push(
+        ...(deck
+          ? selected.map((p, i) => ({
+              ...p,
+              kind:
+                p.kind === "access" &&
+                (i > 0 || roofPatches.some((q) => q.kind === "access"))
+                  ? ("vent" as const)
+                  : p.kind,
+            }))
+          : selected.slice(0, 1)),
+      );
       trayCassetteX.set(routeY, selected[0]?.bounds[0]);
     }
     for (let y = by; y < bY; y++)
@@ -549,22 +630,24 @@ export function shipVisualLayersR002(
             if (cover) {
               const [a, b, A, B] = cover.bounds;
               const edge = Math.min(x - a, A - 1 - x, y - b, B - 1 - y);
-              // A clipped cover seat has one-cell recess; two retained keel cells
-              // below it remain continuous support. No visual facet touches contact faces.
+              // Flush service-cover ownership changes the visible field, never the actual
+              // walking/contact top. The old decorative seam void was a false physical pit.
               const corner =
                 Math.min(x - a, A - 1 - x) + Math.min(y - b, B - 1 - y) < 2;
-              if (edge === 0 || corner)
+              if (edge === 0 || corner) {
+                surfaceRole = "hull";
                 column(
-                  `${family}:floor-cover-seat:${cover.room}`,
-                  "void",
-                  "dark",
+                  `${family}:floor-cover-binding:${cover.room}`,
+                  "floor",
+                  "trim",
                   x,
                   y,
                   floor - 1,
                   floor,
                   family,
                 );
-              else {
+                surfaceRole = "floor";
+              } else {
                 column(
                   `${family}:floor-cover:${cover.room}`,
                   "floor",
@@ -635,9 +718,9 @@ export function shipVisualLayersR002(
                 )
               )
                 column(
-                  `${family}:floor-circulation-seam`,
-                  "void",
-                  "dark",
+                  `${family}:floor-circulation-binding`,
+                  "floor",
+                  "secondary",
                   x,
                   y,
                   floor - 1,
@@ -1314,18 +1397,22 @@ export function shipVisualLayersR002(
               column(
                 `${family}:roof-task-case:${enclosure.id}`,
                 "plate",
-                enclosure.kind === "utility" && caseEdge < 3
-                  ? "trim"
-                  : "primary",
+                enclosure.kind === "habitation" || caseEdge < macro.roofShoulder
+                  ? "primary"
+                  : "trim",
                 x,
                 y,
                 hi - 2,
-                caseEdge < 1 ? hi - 1 : caseEdge < 3 ? hi : hi + 1,
+                caseEdge < 1
+                  ? hi - 1
+                  : caseEdge < macro.roofShoulder
+                    ? hi
+                    : hi + 1,
                 family,
               );
               if (
                 caseEdge >= 3 &&
-                enclosure.kind === "control" &&
+                enclosure.kind === "habitation" &&
                 x < enclosure.bounds[0] + 7 &&
                 y < enclosure.bounds[1] + 18
               )
@@ -1360,7 +1447,7 @@ export function shipVisualLayersR002(
                 column(
                   `${family}:roof-access-cassette`,
                   "service",
-                  "accent",
+                  "trim",
                   x,
                   y,
                   hi - 3,
@@ -1807,6 +1894,385 @@ export function shipVisualLayersR002(
             }
           continue;
         }
+        const outerFinish = (z0: number, z1: number) => {
+          if (
+            boundary.distance >= 2 ||
+            protectedInterface(world) ||
+            z1 - z0 < 5
+          )
+            return;
+          const along = boundary.edgeT * boundary.edgeLength;
+          const start =
+            Math.floor(along / macro.armorSection) * macro.armorSection;
+          const end = Math.min(boundary.edgeLength, start + macro.armorSection);
+          const centre = (start + end) / 2;
+          const probe: Pt = [
+            (a[0] + (dx * centre) / boundary.edgeLength - out[0] * 8) / 16,
+            (a[1] + (dy * centre) / boundary.edgeLength - out[1] * 8) / 16,
+          ];
+          const room = doc.rooms.find(
+            (r) =>
+              probe[0] >= r.rect[0] &&
+              probe[0] < r.rect[2] &&
+              probe[1] >= r.rect[1] &&
+              probe[1] < r.rect[3],
+          );
+          const outside: Pt = [
+            world[0] + (out[0] * 3) / 16,
+            world[1] + (out[1] * 3) / 16,
+          ];
+          const exposed = !blockedByAttachment(volume.id, outside, z0, z1);
+          const projectedRoom = room
+            ? (((room.rect[0] + room.rect[2]) * 8 - a[0]) * dx +
+                ((room.rect[1] + room.rect[3]) * 8 - a[1]) * dy) /
+              boundary.edgeLength
+            : Infinity;
+          const selected =
+            exposed && projectedRoom >= start && projectedRoom < end;
+          const kind =
+            selected && ["engineering", "workshop"].includes(room!.type)
+              ? "vent"
+              : selected &&
+                  ["bridge", "cargo", "quarters", "lounge", "galley"].includes(
+                    room!.type,
+                  )
+                ? "access"
+                : "armor";
+          const u = along - start;
+          const corner = Math.max(0, macro.corner - Math.min(u, end - along));
+          const low = z0 + macro.bindingHeight + Math.ceil(corner),
+            high = z1 - macro.bindingHeight - Math.ceil(corner);
+          const owned = `${family}:exposed-bay:${boundary.edgeIndex}:${start}:${kind}`;
+          const savedSurface = surfaceRole;
+          surfaceRole = "hull";
+          // Retain the support identity below the shallow top package. Visible
+          // armor pigment need not turn continuous pressure cells into decor.
+          const finish = (
+            name: string,
+            slot: ShipKitSlot,
+            low: number,
+            high: number,
+          ) => {
+            for (let z = low; z < high; z++)
+              column(
+                name,
+                !deck && z >= hi - 3 ? "frame" : "core",
+                slot,
+                x,
+                y,
+                z,
+                z + 1,
+                family,
+              );
+          };
+          finish(`${owned}:case`, "trim", z0, z1);
+          if (high > low) {
+            // A broad seated enclosure has a real one-course setback. Its two
+            // inner continuous pressure courses remain occupied behind it; only
+            // the existing outer finish course becomes the open seat.
+            if (boundary.distance < 1)
+              column(
+                `${owned}:armor-seat`,
+                "void",
+                "dark",
+                x,
+                y,
+                low,
+                deck ? high : Math.min(high, hi - 5),
+                family,
+              );
+            else {
+              const oldFacet = facetPlane;
+              facetPlane = plane(intercept - 2);
+              finish(`${owned}:armor`, "primary", low, high);
+              facetPlane = oldFacet;
+            }
+          }
+          if (kind === "armor" || high - low < 5) {
+            surfaceRole = savedSurface;
+            return;
+          }
+          const width = kind === "vent" ? macro.ventWidth : macro.accessWidth;
+          const left = Math.max(3, (end - start - width) * 0.32),
+            right = left + width;
+          const bottom = Math.max(low + 1, z0 + 5),
+            ceiling = Math.min(
+              high - 1,
+              bottom + macro.ventHeight,
+              deck ? high : hi - 5,
+            );
+          if (u < left || u >= right || ceiling <= bottom) {
+            surfaceRole = savedSurface;
+            return;
+          }
+          if (!deck || boundary.distance < 1)
+            column(
+              `${owned}:well`,
+              "void",
+              "dark",
+              x,
+              y,
+              bottom,
+              ceiling,
+              family,
+            );
+          // Every insert remains inside the original finish courses. Two deeper
+          // continuous role-core courses back the actual open well.
+          const savedFacet = facetPlane;
+          facetPlane = undefined;
+          if (
+            (deck ? boundary.distance < 1 : boundary.distance >= 1) &&
+            kind === "vent" &&
+            Math.floor(u - left) % 6 < 2
+          )
+            column(
+              `${owned}:louver`,
+              "service",
+              "metal",
+              x,
+              y,
+              bottom,
+              ceiling,
+              family,
+            );
+          else if (boundary.distance >= 1 && kind === "access") {
+            column(
+              `${owned}:hatch`,
+              deck ? "core" : "plate",
+              "accent",
+              x,
+              y,
+              bottom,
+              ceiling,
+              family,
+            );
+            if (!deck && u >= right - 4 && u < right - 2)
+              column(
+                `${owned}:latch`,
+                "service",
+                "metal",
+                x,
+                y,
+                bottom + 2,
+                Math.min(ceiling, bottom + 4),
+                family,
+              );
+          }
+          facetPlane = savedFacet;
+          surfaceRole = savedSurface;
+        };
+        const inwardFinish = () => {
+          if (
+            !deck ||
+            view !== "deck" ||
+            boundary.distance < 3 ||
+            protectedInterface(world) ||
+            endDistance < 3 ||
+            top - floor < 13
+          )
+            return;
+          const oldSurface = surfaceRole;
+          surfaceRole = "wall";
+          facetPlane = undefined;
+          const along = boundary.edgeT * boundary.edgeLength;
+          const probe: Pt = [
+            (p[0] - out[0] * 8) / 16,
+            (p[1] - out[1] * 8) / 16,
+          ];
+          const room = doc.rooms.find(
+            (r) =>
+              probe[0] >= r.rect[0] &&
+              probe[0] < r.rect[2] &&
+              probe[1] >= r.rect[1] &&
+              probe[1] < r.rect[3],
+          );
+          // The inward face owns one existing course, independent of the outer
+          // case reconstruction. Two pressure courses separate opposing seats.
+          column(
+            `${family}:inward-enclosure`,
+            "plate",
+            "primary",
+            x,
+            y,
+            floor + 3,
+            top - 2,
+            family,
+          );
+          column(
+            `${family}:inward-kicker`,
+            "frame",
+            "trim",
+            x,
+            y,
+            floor + 1,
+            floor + 3,
+            family,
+          );
+          if (
+            !room ||
+            occupiedFloorRects.some(
+              (r) =>
+                world[0] >= r[0] &&
+                world[0] <= r[2] &&
+                world[1] >= r[1] &&
+                world[1] <= r[3],
+            )
+          ) {
+            surfaceRole = oldSurface;
+            return;
+          }
+          const key = ["engineering", "workshop"].includes(room.type)
+            ? "engineering"
+            : ["bridge", "cargo"].includes(room.type)
+              ? "bridge"
+              : room.type === "quarters"
+                ? "quarters"
+                : "living";
+          const task = macro.wallTasks[key];
+          const centre =
+            (((room.rect[0] + room.rect[2]) * 8 - a[0]) * dx +
+              ((room.rect[1] + room.rect[3]) * 8 - a[1]) * dy) /
+            boundary.edgeLength;
+          const left = Math.max(4, centre - task.width / 2),
+            right = Math.min(boundary.edgeLength - 4, centre + task.width / 2);
+          const bottom = floor + task.bottom,
+            ceiling = Math.min(top - 3, bottom + task.height);
+          if (
+            right - left < 12 ||
+            ceiling - bottom < 9 ||
+            along < left ||
+            along >= right
+          ) {
+            surfaceRole = oldSurface;
+            return;
+          }
+          const cut = Math.max(
+            0,
+            macro.corner - Math.min(along - left, right - along),
+          );
+          const lower = bottom + Math.ceil(cut),
+            upper = ceiling - Math.ceil(cut);
+          const owned = `${family}:inward-task:${room.id}:${key}`;
+          column(
+            `${owned}:seat`,
+            "void",
+            "dark",
+            x,
+            y,
+            bottom,
+            ceiling,
+            family,
+          );
+          column(
+            `${owned}:clipped-casing`,
+            "plate",
+            "primary",
+            x,
+            y,
+            lower,
+            upper,
+            family,
+          );
+          if (along >= left + 2 && along < right - 2 && upper - lower > 6) {
+            column(
+              `${owned}:well`,
+              "void",
+              "dark",
+              x,
+              y,
+              lower + 3,
+              upper - 3,
+              family,
+            );
+            if (task.insert === "vent") {
+              for (const z of [lower + 4, upper - 5])
+                column(
+                  `${owned}:louver`,
+                  "service",
+                  "metal",
+                  x,
+                  y,
+                  z,
+                  z + 1,
+                  family,
+                );
+            } else if (task.insert === "control") {
+              if (along < right - 5)
+                column(
+                  `${owned}:keybank`,
+                  "service",
+                  "metal",
+                  x,
+                  y,
+                  lower + 3,
+                  lower + 5,
+                  family,
+                );
+            } else if (along < right - 5) {
+              column(
+                `${owned}:access`,
+                "plate",
+                key === "quarters" ? "accent" : "trim",
+                x,
+                y,
+                lower + 4,
+                upper - 4,
+                family,
+              );
+            }
+            if (along >= right - 4 && along < right - 3)
+              column(
+                `${owned}:task-lens`,
+                "service",
+                "emit_b",
+                x,
+                y,
+                lower + 5,
+                upper - 4,
+                family,
+              );
+          }
+          if (
+            task.insert === "control" &&
+            along >= left + 3 &&
+            along < right - 3
+          )
+            column(
+              `${owned}:header`,
+              "service",
+              "emit_a",
+              x,
+              y,
+              upper - 2,
+              upper - 1,
+              family,
+            );
+          column(
+            `${owned}:lower-binding`,
+            "frame",
+            "trim",
+            x,
+            y,
+            lower,
+            lower + 2,
+            family,
+          );
+          surfaceRole = oldSurface;
+        };
+        if (deck && boundary.distance >= 1 && boundary.distance < 3) {
+          // Reassert the two central pressure planes after the legacy decorative
+          // recipe. Each face then owns at most its one outer finish course.
+          column(
+            `${family}:two-sided-pressure-core`,
+            "core",
+            "secondary",
+            x,
+            y,
+            floor,
+            top - 1,
+            family,
+          );
+        }
         if (!deck) {
           if (hi - lo < 5) continue;
           column(
@@ -1843,13 +2309,14 @@ export function shipVisualLayersR002(
           column(
             `${family}:shallow-neutral-subframe`,
             "frame",
-            "secondary",
+            boundary.distance >= 2 ? "primary" : "trim",
             x,
             y,
             hi - 3,
             hi - 1,
             family,
           );
+          outerFinish(lo + 2, hi - 1);
           facetPlane = undefined;
           if (boundary.distance >= 2) {
             facetPlane = plane(intercept - 3);
@@ -1923,6 +2390,7 @@ export function shipVisualLayersR002(
             top - 1,
             family,
           );
+          outerFinish(floor, top - 1);
           facetPlane = undefined;
           if (boundary.distance >= 2) {
             facetPlane = plane(intercept - 3);
@@ -1932,13 +2400,16 @@ export function shipVisualLayersR002(
               "primary",
               x,
               y,
-              top - 1,
+              top - macro.bindingHeight,
               top,
               family,
             );
             facetPlane = undefined;
           }
+        } else if (top > floor + 3) {
+          outerFinish(floor, top - 1);
         }
+        inwardFinish();
       }
     facetPlane = undefined;
   }
@@ -1980,14 +2451,9 @@ export function shipVisualLayersR002(
         core[4] -= 1;
       }
       box(`${id}:core`, "core", "secondary", core, family);
-      const idPhase = [...id].reduce((n, c) => n + c.charCodeAt(0), 0);
       for (let start = 0; start < span; start += profile.course) {
         const end = Math.min(span, start + profile.course),
           width = end - start;
-        const fallbackKind = mod(
-          Math.floor(start / profile.course) + idPhase,
-          3,
-        );
         const Z = glazed ? ft + 11 : wallCap - 1;
         const surface = (
           side: number,
@@ -2049,10 +2515,9 @@ export function shipVisualLayersR002(
         };
         for (const side of [-1, 1]) {
           // Quiet continuous enclosure; a selected functional cavity has three local depth levels.
-          const insetPressureFace = !glazed && !jamb && width >= 24;
           box(
             `${id}:lower-enclosure`,
-            jamb ? "doorframe" : insetPressureFace ? "core" : "plate",
+            jamb ? "doorframe" : "plate",
             "primary",
             surface(
               side,
@@ -2060,12 +2525,11 @@ export function shipVisualLayersR002(
               end === span ? end - 1 : end,
               ft + 3,
               Z,
-              insetPressureFace ? 1 : 0,
+              0,
             ),
             family,
           );
           if (glazed || width < 24 || wallCap < ft + 20) continue;
-          const centre = start + width * (side < 0 ? 0.28 : 0.72);
           const roomProbe: Pt = vertical
             ? [x0 / 16 + side * 0.5, (y0 + start + width / 2) / 16]
             : [(x0 + start + width / 2) / 16, y0 / 16 + side * 0.5];
@@ -2076,203 +2540,150 @@ export function shipVisualLayersR002(
               roomProbe[1] >= r.rect[1] &&
               roomProbe[1] < r.rect[3],
           );
-          const nearDoor = interior.doors.some(
-            (d) =>
-              Math.hypot(
-                roomProbe[0] - (d.a[0] + d.b[0]) / 2,
-                roomProbe[1] - (d.a[1] + d.b[1]) / 2,
-              ) < 1.3,
-          );
-          const kind =
-            nearDoor || room?.type === "bridge"
-              ? 1
-              : room?.type === "engineering" || room?.type === "workshop"
-                ? 0
-                : room?.type === "quarters" ||
-                    room?.type === "lounge" ||
-                    room?.type === "cargo"
-                  ? 2
-                  : mod(fallbackKind + (side > 0 ? 1 : 0), 3);
-          // Selected functional assemblies, not equal-width frame wallpaper.
-          // Opposite faces use different half-bays; existing 4-cell wall envelope is retained.
+          if (!room || jamb) continue;
+          const centre = vertical
+            ? (room.rect[1] + room.rect[3]) * 8 - y0
+            : (room.rect[0] + room.rect[2]) * 8 - x0;
+          if (centre < start || centre >= end) continue;
+          const key = ["engineering", "workshop"].includes(room.type)
+            ? "engineering"
+            : ["bridge", "cargo"].includes(room.type)
+              ? "bridge"
+              : room.type === "quarters"
+                ? "quarters"
+                : "living";
+          const task = macro.wallTasks[key];
+          const half = Math.min(task.width / 2, (width - 4) / 2);
+          const u = Math.max(
+              start + 2,
+              Math.min(end - 2 - half * 2, centre - half),
+            ),
+            U = u + half * 2;
+          const bottom = ft + task.bottom,
+            ceiling = Math.min(Z, bottom + task.height);
+          if (U - u < 12 || ceiling - bottom < 9) continue;
+          const faceCentre: Pt = vertical
+            ? [x0 / 16, (y0 + (u + U) / 2) / 16]
+            : [(x0 + (u + U) / 2) / 16, y0 / 16];
+          // A whole task face must not straddle a door opening/travel prism.
           if (
-            !nearDoor &&
-            kind !== 0 &&
-            mod(Math.floor(start / profile.course) + idPhase, 2) !== 0
+            doorGuards.some((g) => {
+              const dx = faceCentre[0] - g.centre[0],
+                dy = faceCentre[1] - g.centre[1];
+              const along = Math.abs(dx * g.along[0] + dy * g.along[1]);
+              const normal = Math.abs(-dx * g.along[1] + dy * g.along[0]);
+              return normal < 0.2 && along < g.halfSpan + (U - u) / 32;
+            })
           )
             continue;
-          const halfWidth = Math.min(kind === 0 ? 9 : 7, width * 0.25);
-          const cavity = (u: number, U: number, z: number, Z: number) => {
-            const well = surface(side, u, U, z, Z);
-            if (vertical) {
-              if (side < 0) well[3] += 1;
-              else well[0] -= 1;
-            } else {
-              if (side < 0) well[4] += 1;
-              else well[1] -= 1;
-            }
-            box(`${id}:functional-well`, "void", "dark", well, family);
-            box(
-              `${id}:functional-backing`,
-              "core",
-              "secondary",
-              surface(side, u, U, z, Z, 2),
-              family,
-            );
-          };
-          if (kind === 0) {
-            // Compact horizontal ventilation cassette, with two actual recessed louvers.
-            const u = centre - halfWidth,
-              U = centre + halfWidth;
-            casing(
-              "vent-casing",
-              "primary",
-              side,
-              u - 2,
-              U + 2,
-              ft + 4,
-              ft + 16,
-            );
-            box(
-              `${id}:vent-kicker`,
-              "frame",
-              "trim",
-              surface(side, u - 1, U + 1, ft + 4, ft + 6),
-              family,
-            );
-            cavity(u + 1, U - 1, ft + 7, ft + 13);
-            for (const z of [ft + 8, ft + 11])
-              box(
-                `${id}:vent-fin`,
-                "service",
-                "secondary",
-                surface(side, u + 1, U - 1, z, z + 1, 1),
-                family,
-              );
-          } else if (kind === 1) {
-            // Recessed control station with a compact status lens and guarded key cluster.
-            casing(
-              "control-casing",
-              "primary",
-              side,
-              centre - 8,
-              centre + 8,
-              ft + 8,
-              Math.min(Z, ft + 22),
-            );
-            box(
-              `${id}:control-kicker`,
-              "frame",
-              "trim",
-              surface(side, centre - 7, centre + 7, ft + 8, ft + 10),
-              family,
-            );
-            cavity(centre - 6, centre + 6, ft + 11, ft + 21);
-            box(
-              `${id}:control-face`,
-              "service",
-              "metal",
-              surface(side, centre - 5, centre + 5, ft + 12, ft + 20, 1),
-              family,
-            );
-            box(
-              `${id}:control-display`,
-              "service",
-              "dark",
-              surface(side, centre - 4, centre + 3, ft + 15, ft + 19, 1),
-              family,
-            );
-            box(
-              `${id}:control-lens`,
-              "service",
-              "emit_b",
-              surface(side, centre + 3, centre + 5, ft + 17, ft + 18, 1),
-              family,
-            );
-            for (let u = centre - 4; u < centre + 3; u += 3)
-              box(
-                `${id}:control-key`,
-                "service",
-                "secondary",
-                surface(side, u, u + 2, ft + 12, ft + 13),
-                family,
-              );
-          } else {
-            // Quiet storage/access bay with a bounded burgundy latch panel and a hinge side.
-            casing(
-              "access-casing",
-              "primary",
-              side,
-              centre - 9,
-              centre + 9,
-              ft + 4,
-              ft + 18,
-            );
-            box(
-              `${id}:access-kicker`,
-              "frame",
-              "trim",
-              surface(side, centre - 8, centre + 8, ft + 4, ft + 6),
-              family,
-            );
-            cavity(centre - 7, centre + 7, ft + 7, ft + 15);
-            box(
-              `${id}:access-face`,
-              "plate",
-              "accent",
-              surface(side, centre - 7, centre + 7, ft + 7, ft + 15, 1),
-              family,
-            );
-            box(
-              `${id}:access-handle`,
-              "service",
-              "metal",
-              surface(side, centre + 3, centre + 5, ft + 9, ft + 13),
-              family,
-            );
-            for (const z of [ft + 8, ft + 13])
-              box(
-                `${id}:access-hinge`,
-                "service",
-                "trim",
-                surface(side, centre - 7, centre - 5, z, z + 1),
-                family,
-              );
-          }
-          const headerU = centre - halfWidth,
-            headerX = centre + halfWidth;
+          casing(`task-${key}-casing`, "primary", side, u, U, bottom, ceiling);
+          // One outer course of a four-course partition is a seat; BOTH central
+          // pressure courses remain core. No claimed two-course cavity through it.
+          const well = surface(side, u + 2, U - 2, bottom + 3, ceiling - 3);
+          box(`${id}:functional-well`, "void", "dark", well, family);
           box(
-            `${id}:task-header-housing`,
-            "service",
+            `${id}:functional-backing`,
+            "core",
             "secondary",
-            surface(side, headerU, headerX, ft + 15, ft + 18),
+            surface(side, u + 2, U - 2, bottom + 3, ceiling - 3, 1),
             family,
           );
-          if (kind === 1) {
-            box(
-              `${id}:task-cyan-header`,
-              "service",
-              "emit_a",
-              surface(side, headerU + 2, headerX - 2, ft + 16, ft + 17),
-              family,
-            );
-          } else {
+          box(
+            `${id}:task-lower-binding`,
+            "frame",
+            "trim",
+            surface(side, u + 1, U - 1, bottom, bottom + 2),
+            family,
+          );
+          if (task.insert === "vent") {
+            for (const z of [bottom + 4, ceiling - 5])
+              box(
+                `${id}:task-protected-louver`,
+                "service",
+                "metal",
+                surface(side, u + 3, U - 3, z, z + 1),
+                family,
+              );
             box(
               `${id}:task-amber-strip`,
               "service",
               "emit_b",
-              surface(side, headerX - 2, headerX - 1, ft + 8, ft + 13),
+              surface(side, U - 4, U - 3, bottom + 5, ceiling - 4),
+              family,
+            );
+          } else if (task.insert === "control") {
+            box(
+              `${id}:task-screen-backing`,
+              "core",
+              "dark",
+              surface(side, u + 3, U - 6, bottom + 7, ceiling - 3, 1),
+              family,
+            );
+            box(
+              `${id}:task-screen-housing`,
+              "service",
+              "trim",
+              surface(side, u + 2, U - 5, bottom + 6, bottom + 7),
+              family,
+            );
+            for (let q = u + 3; q < U - 6; q += 4)
+              box(
+                `${id}:task-keybank`,
+                "service",
+                "metal",
+                surface(
+                  side,
+                  q,
+                  Math.min(q + 2, U - 6),
+                  bottom + 3,
+                  bottom + 5,
+                ),
+                family,
+              );
+            box(
+              `${id}:task-cyan-header`,
+              "service",
+              "emit_a",
+              surface(side, u + 3, U - 4, ceiling - 2, ceiling - 1),
+              family,
+            );
+            box(
+              `${id}:task-status-lens`,
+              "service",
+              "emit_b",
+              surface(side, U - 4, U - 3, bottom + 8, bottom + 10),
+              family,
+            );
+          } else {
+            const red = key === "quarters";
+            box(
+              `${id}:task-access-face`,
+              "plate",
+              red ? "accent" : "trim",
+              surface(side, u + 3, U - 5, bottom + 4, ceiling - 4),
+              family,
+            );
+            box(
+              `${id}:task-access-handle`,
+              "service",
+              "metal",
+              surface(
+                side,
+                U - 7,
+                U - 5,
+                bottom + 6,
+                Math.min(ceiling - 4, bottom + 10),
+              ),
+              family,
+            );
+            box(
+              `${id}:task-reading-lens`,
+              "service",
+              "emit_b",
+              surface(side, U - 4, U - 3, bottom + 5, ceiling - 3),
               family,
             );
           }
-          for (const u of [headerU + 1, headerX - 2])
-            box(
-              `${id}:housing-fastener`,
-              "service",
-              "metal",
-              surface(side, u, u + 1, ft + 15, ft + 16),
-              family,
-            );
           if (jamb)
             box(
               `${id}:interface-lens`,
@@ -2425,7 +2836,34 @@ export function shipVisualLayersR002(
       (l.id.endsWith(":opening") || l.id.endsWith(":glass-aperture")),
   );
   return compactColumns(
-    layers.map((l) => {
+    layers.map((source) => {
+      let l = source;
+      if (
+        ["primary", "trim"].includes(l.slot) &&
+        l.support?.startsWith("volume:") &&
+        l.bounds[3] - l.bounds[0] === 1 &&
+        l.bounds[4] - l.bounds[1] === 1
+      ) {
+        const p: Pt = [(l.bounds[0] + 0.5) / 16, (l.bounds[1] + 0.5) / 16];
+        const ring =
+          opticalGuards.some(
+            (poly) => polygonBoundarySample(p, poly).distance <= rawPaddingM,
+          ) ||
+          opticalEdges.some((e) => {
+            const dx = e.b[0] - e.a[0],
+              dy = e.b[1] - e.a[1],
+              length = Math.hypot(dx, dy);
+            const u = ((p[0] - e.a[0]) * dx + (p[1] - e.a[1]) * dy) / length;
+            const v =
+              Math.abs(-(p[0] - e.a[0]) * dy + (p[1] - e.a[1]) * dx) / length;
+            return (
+              u >= -rawPaddingM &&
+              u <= length + rawPaddingM &&
+              v <= 0.25 + rawPaddingM
+            );
+          });
+        if (ring) l = { ...l, slot: "secondary" };
+      }
       if (
         !l.facet ||
         !apertureGuards.some(

@@ -13,7 +13,10 @@ import {
 } from "@sidereal/content/ship-visual";
 import { shipVisualLayers } from "./ship-visual-layers";
 import { shipVisualLayersR002 } from "./ship-visual-layers-r002";
-import { SHIP_VISUAL_PROFILES_R002 } from "@sidereal/content/ship-visual-r002";
+import {
+  SHIP_VISUAL_PROFILES_R002,
+  SHIP_VISUAL_MACRO_PROFILES_R002,
+} from "@sidereal/content/ship-visual-r002";
 import {
   removeShipVisualCells,
   sampleShipVisualLayers,
@@ -36,7 +39,12 @@ export const visualProfilesSha256 = (revision = "r001"): string => {
     throw Error("Unknown visual recipe revision");
   return visualSha256(
     JSON.stringify(
-      revision === "r002" ? SHIP_VISUAL_PROFILES_R002 : SHIP_VISUAL_PROFILES,
+      revision === "r002"
+        ? {
+            style: SHIP_VISUAL_PROFILES_R002,
+            manufacturing: SHIP_VISUAL_MACRO_PROFILES_R002,
+          }
+        : SHIP_VISUAL_PROFILES,
     ),
   );
 };

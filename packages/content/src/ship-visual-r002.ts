@@ -73,3 +73,74 @@ export const SHIP_VISUAL_PROFILES_R002: Record<
     nestedRibs: true,
   },
 };
+
+/** Finite manufacturing dimensions, in global lattice cells. These are presentation
+ * inputs, not equipment statistics. Their actual values enter the r002 profile hash. */
+export interface ShipVisualMacroProfile {
+  armorSection: number;
+  corner: number;
+  bindingHeight: number;
+  ventWidth: number;
+  ventHeight: number;
+  accessWidth: number;
+  roofShoulder: number;
+  wallTasks: Record<
+    "engineering" | "bridge" | "quarters" | "living",
+    {
+      width: number;
+      height: number;
+      bottom: number;
+      insert: "vent" | "control" | "access";
+    }
+  >;
+}
+export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
+  ShipVisualProfileId,
+  ShipVisualMacroProfile
+> = {
+  federation: {
+    armorSection: 32,
+    corner: 2,
+    bindingHeight: 3,
+    ventWidth: 13,
+    ventHeight: 8,
+    accessWidth: 15,
+    roofShoulder: 3,
+    wallTasks: {
+      engineering: { width: 21, height: 17, bottom: 3, insert: "vent" },
+      bridge: { width: 19, height: 16, bottom: 5, insert: "control" },
+      quarters: { width: 18, height: 15, bottom: 4, insert: "access" },
+      living: { width: 20, height: 13, bottom: 4, insert: "access" },
+    },
+  },
+  riftjack: {
+    armorSection: 36,
+    corner: 2,
+    bindingHeight: 3,
+    ventWidth: 14,
+    ventHeight: 8,
+    accessWidth: 16,
+    roofShoulder: 3,
+    wallTasks: {
+      engineering: { width: 22, height: 17, bottom: 3, insert: "vent" },
+      bridge: { width: 19, height: 16, bottom: 5, insert: "control" },
+      quarters: { width: 18, height: 14, bottom: 4, insert: "access" },
+      living: { width: 20, height: 13, bottom: 4, insert: "access" },
+    },
+  },
+  aurelian: {
+    armorSection: 40,
+    corner: 3,
+    bindingHeight: 3,
+    ventWidth: 14,
+    ventHeight: 9,
+    accessWidth: 17,
+    roofShoulder: 3,
+    wallTasks: {
+      engineering: { width: 21, height: 17, bottom: 3, insert: "vent" },
+      bridge: { width: 20, height: 16, bottom: 5, insert: "control" },
+      quarters: { width: 19, height: 15, bottom: 4, insert: "access" },
+      living: { width: 21, height: 13, bottom: 4, insert: "access" },
+    },
+  },
+};
