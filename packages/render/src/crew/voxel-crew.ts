@@ -1,3 +1,4 @@
+import { setPbrLightBudget, GAME_PBR_LIGHT_LIMIT } from "../pbr-light-budget";
 import { Scene } from "@babylonjs/core/scene";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import { SceneLoader } from "@babylonjs/core/Loading/sceneLoader";
@@ -460,7 +461,7 @@ export async function createVoxelCrewVisual(
     const colors = voxelCrewSlotColors(appearance);
     for (const material of container.materials) {
       if (!(material instanceof PBRMaterial)) continue;
-      material.maxSimultaneousLights = 12;
+      setPbrLightBudget(material, GAME_PBR_LIGHT_LIMIT);
       const slot = material.name.replace(/^crew\./, "").replace(/\.\d+$/, "");
       if (slot === "face") continue;
       const hex = colors[slot];

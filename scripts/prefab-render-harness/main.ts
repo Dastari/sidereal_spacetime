@@ -43,6 +43,10 @@ import {
 import { defaultPrefabComponentCatalog } from "@sidereal/content/ship-prefab-catalog";
 import { createGraphicsSettings } from "@sidereal/render/graphics-settings";
 import {
+  createPbrLightBudget,
+  protectPbrLight,
+} from "../../packages/render/src/pbr-light-budget";
+import {
   applyShipGlowProfile,
   createGlowOccluders,
   SHIP_GLOW_PROFILE,
@@ -197,6 +201,9 @@ async function main() {
   hemi.groundColor = new Color3(0.22, 0.12, 0.35);
   const key = new DirectionalLight("key", new Vector3(0.45, -1, 0.3), scene);
   key.intensity = 2.4;
+  protectPbrLight(key, 0);
+  protectPbrLight(hemi, 1);
+  const pbrLights = createPbrLightBudget(scene);
   const camera = new FreeCamera(
     "harness-camera",
     new Vector3(0, 30, 30),
@@ -311,13 +318,18 @@ async function main() {
     scene.onDisposeObservable.addOnce(() => occluders.dispose());
   }
 
+  const render = () => {
+    pbrLights.update(camera.getTarget());
+    scene.render();
+  };
+  pbrLights.update(camera.getTarget());
   await scene.whenReadyAsync();
   // Bounded evidence frames also work when the owned T3 tab is hidden.
   for (let i = 0; i < 3; i++) {
-    scene.render();
+    render();
     await new Promise((r) => setTimeout(r, 0));
   }
-  if (q.get("freeze") !== "1") engine.runRenderLoop(() => scene.render());
+  if (q.get("freeze") !== "1") engine.runRenderLoop(render);
 
   const labels = document.getElementById("labels")!;
   if (lineup) {

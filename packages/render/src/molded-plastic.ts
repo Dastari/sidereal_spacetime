@@ -10,6 +10,7 @@
  * never hand-tune a single mesh: they resolve a family from the slot name and apply it to the
  * shared (pooled) slot material, so batching per material is unchanged.
  */
+import { protectPbrLight } from "./pbr-light-budget";
 import type { Scene } from "@babylonjs/core/scene";
 import type { Material } from "@babylonjs/core/Materials/material";
 import type { AbstractMesh } from "@babylonjs/core/Meshes/abstractMesh";
@@ -641,6 +642,8 @@ export function moldedLightRig(scene: Scene): MoldedLightRig {
   rim.diffuse = new Color3(...MOLDED_LIGHTING.rim.colour);
   rim.specular = new Color3(...MOLDED_LIGHTING.rim.colour);
   rim.shadowEnabled = false;
+  protectPbrLight(fill, 2);
+  protectPbrLight(rim, 3);
   rim.setEnabled(finishEnabled);
   const lit: AbstractMesh[] = [];
   fill.includedOnlyMeshes = lit;

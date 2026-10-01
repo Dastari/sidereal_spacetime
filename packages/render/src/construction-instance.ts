@@ -1,3 +1,4 @@
+import { protectPbrLight } from "./pbr-light-budget";
 import { INSET_VISUAL_PARTS } from "./inset-visual-registry";
 import { createLayoutFloorSlabs } from "./layout-floor-slabs";
 import { CONSTRUCTION_INSET_VISUAL_PIN } from "@sidereal/content/construction-inset-visuals";
@@ -426,6 +427,8 @@ export function createConstructionLighting(
   );
   sun.position.set(18, 30, -18);
   sun.intensity = 2.1;
+  protectPbrLight(sun, 0);
+  protectPbrLight(fill, 1);
   const shadow = new ShadowGenerator(1024, sun);
   shadow.usePercentageCloserFiltering = true;
   shadow.bias = 0.0035;

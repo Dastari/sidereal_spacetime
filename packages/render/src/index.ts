@@ -1,3 +1,4 @@
+import { createPbrLightBudget } from "./pbr-light-budget";
 import type { SpaceRegion } from "@sidereal/sim/space-background";
 import { celestialObservationRadius } from "./environment/reviewed-star-catalog";
 import { createFlightActiveSet } from "./flight-active-set";
@@ -738,6 +739,7 @@ async function buildWorld(
   let temporalStateAt = performance.now();
   let temporalAppearance = "";
   const localLights = createLocalLightBudget();
+  const pbrLights = createPbrLightBudget(scene);
   const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
   /** Last pointer position (client pixels) for the EVA facing. */
   let pointerClient: { x: number; y: number } | undefined;
@@ -1240,6 +1242,11 @@ async function buildWorld(
       ],
       { focus: camera.target },
     );
+    if (pbrLights.update(camera.target)) {
+      fastSnapshot?.invalidate();
+      flightActiveSet.invalidate();
+      antialiasing.resetHistory();
+    }
     const updateCpuMs = performance.now() - frameStarted;
     staticMaterials.prepare();
     const snapshotCandidate =
@@ -1566,6 +1573,7 @@ async function buildWorld(
       scene.onAfterAnimationsObservable.remove(combatObserver);
       groundItems.dispose();
       combatAim.dispose();
+      pbrLights.dispose();
       localLights.dispose();
       scene.onNewMeshAddedObservable.remove(temporalMeshObserver);
       scene.onBeforeRenderObservable.remove(temporalGeometryObserver);

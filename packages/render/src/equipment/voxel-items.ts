@@ -1,3 +1,4 @@
+import { setPbrLightBudget, GAME_PBR_LIGHT_LIMIT } from "../pbr-light-budget";
 import { Color3 } from "@babylonjs/core/Maths/math.color";
 import { Matrix, Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
@@ -95,7 +96,8 @@ export async function createVoxelItemVisual(
     ".glb",
   );
   for (const material of container.materials)
-    if (material instanceof PBRMaterial) material.maxSimultaneousLights = 8;
+    if (material instanceof PBRMaterial)
+      setPbrLightBudget(material, GAME_PBR_LIGHT_LIMIT);
   applyCrewItemTheme(container.materials, item, options.theme);
   const root = new TransformNode(`crew-item-placement:${item.id}`, scene);
   root.parent = parent;
