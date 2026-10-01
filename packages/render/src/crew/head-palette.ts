@@ -16,6 +16,13 @@ import type {
 export const SEALED_HEAD_DIAGNOSTIC_REVISION = "sealed-r006-tactical";
 export const SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION =
   "sealed-r006-tactical-outer-002";
+const navyVisorMaterials = new WeakSet<PBRMaterial>();
+/** Physical style owns these two responses after the generic glass finish; only owned clones qualify. */
+export function restoreOwnedTacticalVisorFinish(material: PBRMaterial): void {
+  if (!navyVisorMaterials.has(material)) return;
+  material.roughness = 0.18;
+  material.metallic = 0.12;
+}
 export function isTacticalTintedVisor(node: ResolvedHeadNode): boolean {
   return (
     node.role === "visor" &&
@@ -132,9 +139,9 @@ export function bindHeadWornPalette(
       navyVisor ? "#122747" : color!,
     ).toLinearSpace();
     if (navyVisor) {
+      navyVisorMaterials.add(material);
       material.alpha = 0.94;
-      material.roughness = 0.18;
-      material.metallic = 0.12;
+      restoreOwnedTacticalVisorFinish(material);
       material.emissiveColor = Color3.Black();
     }
     if (slot === "emit") material.emissiveColor = material.albedoColor.clone();
@@ -144,7 +151,10 @@ export function bindHeadWornPalette(
     for (const { mesh, previous } of assigned.splice(0))
       if (!mesh.isDisposed() && mesh.material === clones.get(previous))
         mesh.material = previous;
-    for (const material of clones.values()) material.dispose(false, false);
+    for (const material of clones.values()) {
+      if (material instanceof PBRMaterial) navyVisorMaterials.delete(material);
+      material.dispose(false, false);
+    }
     clones.clear();
   };
   try {

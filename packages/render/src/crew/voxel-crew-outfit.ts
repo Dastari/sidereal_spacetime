@@ -19,6 +19,7 @@ import { attachVoxelCrewHead } from "./voxel-crew-kit";
 import { resolveCrewAppearance, type CrewAppearance } from "./appearance";
 import {
   equippedHelmetPalette,
+  restoreOwnedTacticalVisorFinish,
   SEALED_HEAD_DIAGNOSTIC_REVISION,
   SEALED_HEAD_OUTER_DIAGNOSTIC_REVISION,
 } from "./head-palette";
@@ -62,6 +63,7 @@ export function toneCrewEmissive(meshes: readonly AbstractMesh[]) {
       material instanceof MultiMaterial ? material.subMaterials : [material];
     for (const m of list) {
       if (!(m instanceof PBRMaterial)) continue;
+      restoreOwnedTacticalVisorFinish(m);
       if (m.emissiveIntensity > CREW_EMISSIVE_INTENSITY)
         m.emissiveIntensity = CREW_EMISSIVE_INTENSITY;
       setPbrLightBudget(m, CREW_MAX_LIGHTS);

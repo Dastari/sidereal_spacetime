@@ -15,6 +15,7 @@ import {
   DEFAULT_HEAD_LOADOUT,
   resolveHeadLoadout,
 } from "@sidereal/content/crew-heads";
+import { toneCrewEmissive } from "./voxel-crew-outfit";
 
 const engines: NullEngine[] = [];
 const scene = () => {
@@ -193,6 +194,18 @@ test("new tactical visor owns finite navy glass without changing a shared clear 
   expect(glass.alpha).toBe(0.3);
   expect(glass.roughness).toBe(0.05);
   expect(glass.emissiveColor).toEqual(new Color3(0.1, 0.3, 0.6));
+  toneCrewEmissive([selected, secondActor, other]);
+  toneCrewEmissive([selected, secondActor, other]);
+  expect(navy.roughness).toBe(0.18);
+  expect(navy.metallic).toBe(0.12);
+  expect(secondNavy.roughness).toBe(0.18);
+  expect(secondNavy.metallic).toBe(0.12);
+  // NullEngine has unknown GPU capabilities, so the existing light owner clamps to four.
+  expect(navy.maxSimultaneousLights).toBe(4);
+  expect(secondNavy.maxSimultaneousLights).toBe(4);
+  expect(glass.maxSimultaneousLights).toBe(4);
+  expect(glass.roughness).toBe(0.05);
+  expect(glass.metallic).toBe(0);
   binding.dispose();
   binding.dispose();
   expect(selected.material).toBe(material);
