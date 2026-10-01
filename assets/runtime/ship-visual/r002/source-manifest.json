@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "bae43138bd3dd647cc8bc008271ba91e28688bcefba1160deb78af860ca40f31",
+  "compilerSha256": "4ff540f3faf83c88dbb055826f71990f952230fc658a8c27e3912258653c90f1",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -16,11 +16,15 @@
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "8dc88af398f942a7b88f4a1c93373eb7e94605a71c614cc5d894013ba1f9776f"
+      "sha256": "cbcad86ac38a153d0b62cbf9d733ba1c51e3838c0c5221085a0d2cd5ec8bc021"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
       "sha256": "7f63509cc012316456d2a829a2d6d6a8c85dfd98a91acc33deeb12748f074656"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-r002-bow-frame.ts",
+      "sha256": "066bbb212a00b7c783467b19ab74ffa3d0fc62715329c1728e20408cfced4abf"
     },
     {
       "path": "packages/sim/src/ship-dresser.ts",
@@ -149,6 +153,38 @@
     {
       "path": "scripts/art_library/ship_reference_r018_equipment.py",
       "sha256": "314e3afaccdb2d4d62fdd6f5bbcdb971e5b2f72477dfdf652dcc1533d1260f72"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_r021_equipment.py",
+      "sha256": "8e007da11e4ed04263a304a23050997e9f27d8c0bee002439cd334e482b5f192"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_art.py",
+      "sha256": "9f9979a08ae5e439806fddedafe47cc3bac4ac852d53f5819f8c64867c3d02cd"
+    },
+    {
+      "path": "scripts/art_library/ship_component_export.py",
+      "sha256": "eb69d9ab7c7de1b086054385415513cbbcbca5284bb6856c21e81f4d80dec180"
+    },
+    {
+      "path": "scripts/art_library/ship_component_art.py",
+      "sha256": "b59bab0678d1d79f33c7f8f39a74887ba569d7be226f9bbe36df13e79efa0123"
+    },
+    {
+      "path": "scripts/art_library/ship_object_art.py",
+      "sha256": "ebf1badcd8872ab99998857fd82ee1a51fbb23acff9560848457e8898a6e6ad4"
+    },
+    {
+      "path": "scripts/art_library/ship_kit_prototype.py",
+      "sha256": "60fc91f153279a9b51ed06a5a5daf151bda4d15324868a0a9f95af0f23fd4ebb"
+    },
+    {
+      "path": "assets/runtime/ship-visual/r002/equipment-r021/manifest.json",
+      "sha256": "f54d38aa9887531a0a0bccf82eb5ef55cf7eff68c16b22d3bc34d69c82e32a89"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/equipment-r021/equipment.blend",
+      "sha256": "d23827cfe58c136028bef70573442b44e90ddee35644ada84fd54816088d768f"
     },
     {
       "path": "assets/source/ship-reference/r002/equipment-r018/ship_reference_r002_art.py",

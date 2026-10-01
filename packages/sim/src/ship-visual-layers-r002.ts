@@ -29,6 +29,7 @@ import {
 } from "./ship-visual-sampler";
 import { dressShip } from "./ship-dresser";
 import { createRetainedWallBoundaryR002 } from "./ship-visual-r002-retained-wall-boundary";
+import { referenceBowFrameR002 } from "./ship-visual-r002-bow-frame";
 
 import {
   SHIP_VISUAL_PROFILES_R002,
@@ -2621,7 +2622,7 @@ export function shipVisualLayersR002(
               : Infinity;
             const caseEdge = Math.min(localX, localY);
             const shapedCase =
-              enclosure && localX + localY >= 4 && mountClear && !marked;
+              enclosure && localX + localY >= 2 && mountClear && !marked;
             // A machinery bay is a joined apron around real protected apertures,
             // with one broad unequal cheek and a lower service side. It is not a
             // rectangular raised card with a universal dark border/spine.
@@ -2707,7 +2708,9 @@ export function shipVisualLayersR002(
               column(
                 `${family}:roof-housed-shoulder`,
                 "plate",
-                deck ? "trim" : "primary",
+                // The calm outer case is pale; trim belongs to its contained
+                // service side, not every walkable-height-class flight flank.
+                serviceBelt ? "trim" : "primary",
                 x,
                 y,
                 hi - 3,
@@ -2744,7 +2747,8 @@ export function shipVisualLayersR002(
                 x,
                 y,
                 hi - 3,
-                caseEdge < 1 || caseEnd < 2 ? hi - 1 : coverTop,
+                // Positive broad stepped returns join the body to its apron.
+                caseEdge < 2 || caseEnd < 3 ? hi - 1 : coverTop,
                 family,
               );
               if (
@@ -4754,86 +4758,93 @@ export function shipVisualLayersR002(
         else {
           const well = q >= 3 && q < W - 3 && v >= 3 && v < height - 3;
           if (well) {
-            // A broad calm storage field accompanies the functional aperture;
-            // dark exposed core is confined to the actual useful insert.
-            if (
-              panel === 0 ||
-              task.key === "workshop" ||
-              task.key === "airlock"
-            )
-              use("well", "void", "dark");
+            // Broad unequal case fronts occupy the field. The one-course
+            // recess is a contained service opening, not the entire first bay.
+            // Deep equipment openings belong to the existing authored hosts.
+            const serviceWidth = Math.min(W - 4, panel === 0 ? 18 : 11);
+            const serviceInset =
+              q >= 4 && q < serviceWidth && v >= 4 && v < height - 4;
             switch (task.key) {
               case "engineering":
-                if (panel === 0 && (v === 4 || v === height - 5))
-                  use("protected-cooling-bank", "service", "metal");
-                if (panel === 1) use("distribution-module", "plate", "trim");
+                if (panel === 0 && serviceInset) {
+                  use("well", "void", "dark");
+                  if (v === 4 || v === 7 || v === 10)
+                    use("protected-cooling-bank", "service", "metal");
+                }
+                if (panel === 1 && q >= W - 11 && q < W - 4)
+                  use("distribution-module", "plate", "trim");
                 if (panel === 1 && q >= W - 7 && q < W - 4)
                   use("distribution-module-case", "plate", "accent");
                 if (panel === 1 && q === W - 5 && v >= 5 && v < height - 5)
                   use("distribution-status", "service", "emit_b");
                 break;
               case "workshop":
-                if (v === 4) use("continuous-tool-bank", "service", "metal");
-                if (
-                  panel === 0 &&
-                  [5, 12, 20].includes(q) &&
-                  v >= 5 &&
-                  v < Math.min(9, height - 4)
-                )
-                  use("protected-tool-dock", "service", "metal");
-                if (panel > 0) use("bench-power-module", "plate", "trim");
+                if (panel === 0 && serviceInset) {
+                  use("well", "void", "dark");
+                  if (v === 4 || v === 8)
+                    use("continuous-tool-bank", "service", "metal");
+                  if (
+                    [5, 12].includes(q) &&
+                    v >= 5 &&
+                    v < Math.min(8, height - 4)
+                  )
+                    use("protected-tool-dock", "service", "metal");
+                }
+                if (panel > 0 && q >= W - 10 && q < W - 4)
+                  use("bench-power-module", "plate", "trim");
                 break;
               case "medical":
-                if (low) {
-                  if (q >= 3 && q < Math.max(4, W - 7))
-                    use("low-medical-utility", "plate", "trim");
-                  if (q >= W - 7 && q < W - 4)
-                    use("oxygen-supply-manifold", "service", "metal");
-                } else {
-                  if (
-                    panel === 0 &&
-                    [5, 9].includes(q) &&
-                    v >= 4 &&
-                    v < height - 4
-                  )
-                    use("supply-manifold", "service", "metal");
-                  if (panel > 0) use("medical-control-face", "plate", "trim");
-                }
+                if (q >= 4 && q < Math.min(W - 4, low ? 9 : 12))
+                  use(
+                    low ? "low-medical-utility" : "medical-control-face",
+                    "plate",
+                    "trim",
+                  );
+                if (q === 5 && v >= 4 && v < height - 4)
+                  use("oxygen-supply-manifold", "service", "metal");
                 break;
               case "airlock":
-                if (panel === 0 && q >= 4 && q < W - 4)
+                if (panel === 0 && serviceInset)
                   use("pressure-control-face", "plate", "trim");
-                if (panel > 0) use("sealed-load-storage", "plate", "primary");
                 if (q === W - 5 && v >= 4 && v < height - 4)
                   use("pressure-control-handle", "service", "metal");
                 break;
               case "galley":
                 if (v === 4) use("counter-utility-rail", "service", "metal");
-                if (panel === 0) use("backed-backsplash", "plate", "trim");
+                if (panel === 0 && q >= 4 && q < Math.min(W - 4, 14) && v < 7)
+                  use("backed-backsplash", "plate", "trim");
                 if (panel > 0 && q === W - 5)
                   use("utility-handle", "service", "metal");
                 break;
               case "cargo":
-                use(
-                  "load-storage-face",
-                  "plate",
-                  panel === 0 ? "trim" : "primary",
-                );
-                if (q === 4 || q === W - 5)
+                use("load-storage-face", "plate", "primary");
+                if ((q === 4 || q === W - 5) && v < height - 5)
                   use("load-restraint", "service", "metal");
                 break;
               case "bridge":
-                if (panel === 0) use("bridge-distribution", "plate", "trim");
-                if (v === 4) use("bridge-key-bank", "service", "metal");
+                if (panel === 0 && serviceInset)
+                  use("bridge-distribution", "plate", "trim");
+                if (panel === 0 && q >= 4 && q < serviceWidth && v === 4)
+                  use("bridge-key-bank", "service", "metal");
                 break;
               case "quarters":
               case "living":
-                if (v === 4) use("reading-utility-shelf", "service", "metal");
-                if (panel > 0) use("berth-storage-field", "plate", "primary");
+                if (panel === 0 && q >= 4 && q < Math.min(W - 4, 12) && v < 7) {
+                  use("well", "void", "dark");
+                  if (v === 4) use("reading-utility-shelf", "service", "metal");
+                }
                 break;
               case "lounge":
-                if (panel === 0) use("media-utility-face", "plate", "trim");
-                if (v === 4) use("media-utility-shelf", "service", "metal");
+                if (
+                  panel === 0 &&
+                  q >= 4 &&
+                  q < Math.min(W - 4, 16) &&
+                  v >= 5 &&
+                  v < 9
+                )
+                  use("media-utility-face", "plate", "trim");
+                if (panel === 0 && q >= 4 && q < Math.min(W - 4, 16) && v === 4)
+                  use("media-utility-shelf", "service", "metal");
                 break;
             }
           }
@@ -4841,7 +4852,7 @@ export function shipVisualLayersR002(
           // glowing rail around every room or a repeated per-cell light strip.
           if (
             q >= 3 &&
-            q < Math.min(W - 3, Math.max(8, Math.floor(W * 0.6))) &&
+            q < Math.min(W - 3, panel === 0 ? 10 : 7) &&
             v === height - 3
           )
             use(
@@ -5148,8 +5159,15 @@ export function shipVisualLayersR002(
     catalog,
     profileId,
   );
+  // Root's exact paired manufactured frame is a FINAL duty after both the
+  // accepted raw pane mask and every finish/pigment write. Unknown admission
+  // returns no replacement and retains the complete preceding candidate.
+  const finishBow = (ordered: ShipVisualLayer[]) => [
+    ...ordered,
+    ...referenceBowFrameR002(doc, view, catalog, profileId, ordered),
+  ];
   if (!matingSolids.some((s) => !s.veto))
-    return [...finalLayers, ...cockpitAperture];
+    return finishBow([...finalLayers, ...cockpitAperture]);
   // A pigment cannot change source-layer grouping priority. Resolve the complete
   // geometry FIRST and append only slot overlays for already occupied exposed
   // final owners; never compact these overlays back across earlier voids/cases.
@@ -5208,7 +5226,7 @@ export function shipVisualLayersR002(
       bounds: [c.x, c.y, c.z, c.x + 1, c.y + 1, c.z + 1],
     });
   }
-  return [...finalLayers, ...overlays, ...cockpitAperture];
+  return finishBow([...finalLayers, ...overlays, ...cockpitAperture]);
 }
 
 /** Exact box compaction with dependencies only between writes to the same XYZ cells. */

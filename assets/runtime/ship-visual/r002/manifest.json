@@ -4,7 +4,7 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "bae43138bd3dd647cc8bc008271ba91e28688bcefba1160deb78af860ca40f31",
+  "compilerSha256": "4ff540f3faf83c88dbb055826f71990f952230fc658a8c27e3912258653c90f1",
   "profilesSha256": "d2b8aacb54c19b32e2c58448fb0730fcc94815dfa72cc74e89d677d3bb94b818",
   "slots": [
     "primary",
@@ -79,9 +79,9 @@
         0.9375,
         0.3125
       ],
-      "url": "/assets/ship-visual/r002/equipment-r018/pale-studless.console.standard.glb",
-      "sha256": "8be78d2fd219ae284a2b9267afe59067fbc99cdf66b2091a84c1622cae908c6d",
-      "bytes": 107484
+      "url": "/assets/ship-visual/r002/equipment-r021/pale-studless.console.standard.glb",
+      "sha256": "dd8257e2a7fb8f173bc3fd2962c025b6645eae59e818216f911682befacf0eed",
+      "bytes": 75776
     },
     {
       "kind": "object",
@@ -127,9 +127,9 @@
         1.0625,
         0.25
       ],
-      "url": "/assets/ship-visual/r002/equipment-r018/shipyard.equipment.bridge-bank.glb",
-      "sha256": "f44e417cf4f23aa5ca689db5cf3797d7cbe86f2e66e563ebc4149186450f37b0",
-      "bytes": 110404
+      "url": "/assets/ship-visual/r002/equipment-r021/shipyard.equipment.bridge-bank.glb",
+      "sha256": "911a09cb7d0fa51a5743ba1d1619db3bd08aba815453129fd94c0c9ee20ca8bf",
+      "bytes": 80148
     },
     {
       "kind": "object",
@@ -255,9 +255,9 @@
         2,
         0.25
       ],
-      "url": "/assets/ship-visual/r002/equipment-r018/shipyard.equipment.wall-locker.glb",
-      "sha256": "c258e6cb35987afce6374a545a159977f1b07fc9341d0de739ec133c4207326c",
-      "bytes": 64212
+      "url": "/assets/ship-visual/r002/equipment-r021/shipyard.equipment.wall-locker.glb",
+      "sha256": "ea6d67457207377ce4164f680c14970a5dc4f4f050fb2f8fc10e5beffe2d2d96",
+      "bytes": 56948
     },
     {
       "kind": "component",

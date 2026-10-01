@@ -37,6 +37,7 @@ const sources = [
   "packages/content/src/ship-visual-r002.ts",
   "packages/sim/src/ship-visual-layers-r002.ts",
   "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
+  "packages/sim/src/ship-visual-r002-bow-frame.ts",
   "packages/sim/src/ship-dresser.ts",
   "packages/content/src/ship-prefab.ts",
   "packages/content/src/ship-furniture.ts",
@@ -69,6 +70,14 @@ const sources = [
   "assets/source/ship-reference/r002/equipment-r020/reactor.lg.blend",
   "assets/runtime/ship-visual/r002/door-leaf-r019-source.json",
   "scripts/art_library/ship_reference_r018_equipment.py",
+  "scripts/art_library/ship_reference_r021_equipment.py",
+  "scripts/art_library/ship_reference_art.py",
+  "scripts/art_library/ship_component_export.py",
+  "scripts/art_library/ship_component_art.py",
+  "scripts/art_library/ship_object_art.py",
+  "scripts/art_library/ship_kit_prototype.py",
+  "assets/runtime/ship-visual/r002/equipment-r021/manifest.json",
+  "assets/source/ship-reference/r002/equipment-r021/equipment.blend",
   equipmentHousingSource,
   "scripts/art_library/ship_kit_modules.py",
   "scripts/art_library/bow_modules.py",
@@ -181,7 +190,7 @@ for (const [id, pin] of Object.entries(reactorPins)) {
 }
 // Exactly three immutable, opt-in equipment replacements; never a broad
 // object revision switch or a default content registry update.
-const equipmentDir = "ship-visual/r002/equipment-r018";
+const equipmentDir = "ship-visual/r002/equipment-r021";
 const equipmentMeta = JSON.parse(
   readFileSync(
     resolve(root, "assets/runtime", equipmentDir, "manifest.json"),
@@ -200,7 +209,7 @@ if (
   equipmentMeta.generator.candidateBuilderSha256 !==
     hash(
       readFileSync(
-        resolve(root, "scripts/art_library/ship_reference_r018_equipment.py"),
+        resolve(root, "scripts/art_library/ship_reference_r021_equipment.py"),
       ),
     ) ||
   equipmentMeta.generator.housingHelperSha256 !==
@@ -216,7 +225,7 @@ if (
   equipmentMeta.generator.buildersSha256 !==
     hash(readFileSync(resolve(root, equipmentMeta.generator.builders))) ||
   equipmentMeta.source.blend !==
-    "assets/source/ship-reference/r002/equipment-r018/equipment.blend" ||
+    "assets/source/ship-reference/r002/equipment-r021/equipment.blend" ||
   equipmentMeta.source.sha256 !==
     hash(readFileSync(resolve(root, equipmentMeta.source.blend)))
 )
