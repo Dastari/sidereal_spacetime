@@ -1,6 +1,6 @@
 {
   "name": "@sidereal/net",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "private": true,
   "type": "module",
   "exports": {
@@ -12,7 +12,7 @@
     "./content-definitions": "./src/content-definitions.ts"
   },
   "dependencies": {
-    "@sidereal/sim": "0.4.4",
+    "@sidereal/sim": "0.4.5",
     "spacetimedb": "2.10.0"
   }
 }

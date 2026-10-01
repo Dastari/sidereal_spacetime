@@ -38,6 +38,33 @@ const look = (
 });
 
 describe("crewmates from the two server views", () => {
+  it("unregistered coherent fields leave all legacy render/controller inputs identical", () => {
+    const presentations = [
+      look("mate", {
+        seated: true,
+        dead: false,
+        aimActive: true,
+        shotSequence: 7n,
+      }),
+    ];
+    const legacy = crewmatesFromViews([body("mate")], presentations, "self");
+    const additive = crewmatesFromViews(
+      [
+        body("mate", {
+          dead: true,
+          operatorPoseState: "recovering",
+          operatorSnapshot: undefined,
+        }),
+      ],
+      presentations,
+      "self",
+    );
+    expect(additive).toEqual(legacy);
+    expect(additive[0].seated).toBe(true);
+    expect(additive[0].dead).toBe(false);
+    expect(additive[0].aimActive).toBe(true);
+    expect(additive[0].heldItem).toBe("compact-carbine");
+  });
   it("draws other bodies only, and only where both views agree on ship and deck", () => {
     const out = crewmatesFromViews(
       [body("self"), body("mate"), body("moving-deck"), body("no-look")],

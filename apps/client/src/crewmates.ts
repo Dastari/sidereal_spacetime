@@ -14,6 +14,10 @@ export interface InteriorCrewRow {
   standingElevationM: number;
   connected: boolean;
   sprinting: boolean;
+  /** Additive coherent-row scaffold; ignored by legacy presentation while unregistered. */
+  dead?: boolean;
+  operatorPoseState?: string;
+  operatorSnapshot?: string;
 }
 /** `visible_crew_presentation` row: looks and pose of another body on the viewer's deck. */
 export interface CrewPresentationRow {
