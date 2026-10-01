@@ -3,6 +3,7 @@ import { NullEngine } from "@babylonjs/core/Engines/nullEngine";
 import { Scene } from "@babylonjs/core/scene";
 import { PBRMaterial } from "@babylonjs/core/Materials/PBR/pbrMaterial";
 import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
+import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { MaterialDefines } from "@babylonjs/core/Materials/materialDefines";
 import type { Effect } from "@babylonjs/core/Materials/effect";
 import { CreateBox } from "@babylonjs/core/Meshes/Builders/boxBuilder";
@@ -70,6 +71,106 @@ function local(scene: Scene, id: string, x: number) {
   return light;
 }
 const focus = new Vector3(0, 0, 0);
+
+test("import completion cannot compile over-budget PBR before the first frame", () => {
+  const { scene, material, budget } = setup();
+  for (let i = 0; i < 13; i++) local(scene, `room-${i}`, i);
+  // This notification occurs during the base constructor, before PBR accessor
+  // storage is initialized. Installing a guard must not read that storage.
+  const late = new PBRMaterial("late-import", scene);
+  const ordinary = new StandardMaterial("marker", scene);
+  expect(
+    Object.getOwnPropertyDescriptor(late, "maxSimultaneousLights")?.set,
+  ).toBeTypeOf("function");
+  const dirty = vi.spyOn(
+    late as unknown as { _markAllSubMeshesAsLightsDirty(): void },
+    "_markAllSubMeshesAsLightsDirty",
+  );
+  // Literal Babylon 9.25 glTF completion loop, before budget.update/render.
+  for (const m of scene.materials) {
+    if ("maxSimultaneousLights" in m) {
+      const typed = m as PBRMaterial;
+      typed.maxSimultaneousLights = Math.max(
+        typed.maxSimultaneousLights,
+        scene.lights.length,
+      );
+    }
+  }
+  expect(material.maxSimultaneousLights).toBe(8);
+  expect(late.maxSimultaneousLights).toBe(8);
+  expect(ordinary.maxSimultaneousLights).toBe(13);
+  expect(dirty).toHaveBeenCalledTimes(1);
+  late.maxSimultaneousLights = 13;
+  expect(dirty).toHaveBeenCalledTimes(1);
+  late.maxSimultaneousLights = 0;
+  late.maxSimultaneousLights = 0;
+  expect(late.maxSimultaneousLights).toBe(0);
+  expect(dirty).toHaveBeenCalledTimes(2);
+  late.maxSimultaneousLights = 2;
+  expect(late.maxSimultaneousLights).toBe(2);
+  expect(budget.limit).toBe(8);
+});
+
+test("detached frozen import guards restore only their controller's instance accessors", () => {
+  const { scene, material, budget } = setup();
+  const late = new PBRMaterial("detached-source", scene);
+  scene.removeMaterial(late);
+  late.freeze();
+  late.maxSimultaneousLights = 20;
+  expect(late.maxSimultaneousLights).toBe(8);
+  expect(late.isFrozen).toBe(true);
+  const clone = late.clone("late-clone")!;
+  clone.maxSimultaneousLights = 20;
+  expect(clone.maxSimultaneousLights).toBe(8);
+  budget.dispose();
+  expect(Object.hasOwn(material, "maxSimultaneousLights")).toBe(false);
+  expect(Object.hasOwn(late, "maxSimultaneousLights")).toBe(false);
+  const replacement = createPbrLightBudget(scene);
+  late.maxSimultaneousLights = 18;
+  expect(late.maxSimultaneousLights).toBe(8);
+  expect(Object.hasOwn(late, "maxSimultaneousLights")).toBe(true);
+  const replacementSet = Object.getOwnPropertyDescriptor(
+    material,
+    "maxSimultaneousLights",
+  )?.set;
+  budget.dispose();
+  expect(
+    Object.getOwnPropertyDescriptor(material, "maxSimultaneousLights")?.set,
+  ).toBe(replacementSet);
+  material.maxSimultaneousLights = 18;
+  expect(material.maxSimultaneousLights).toBe(8);
+  clone.dispose();
+  replacement.dispose();
+  expect(Object.hasOwn(material, "maxSimultaneousLights")).toBe(false);
+  late.dispose();
+});
+
+test("constructor-time container imports are guarded without affecting other scenes", () => {
+  const { scene, budget } = setup();
+  const other = new Scene(scene.getEngine());
+  scenes.push(other);
+  scene._blockEntityCollection = true;
+  let detached: PBRMaterial;
+  try {
+    detached = new PBRMaterial("container-never-added", scene);
+  } finally {
+    scene._blockEntityCollection = false;
+  }
+  expect(scene.materials).not.toContain(detached!);
+  // No deferred callback, microtask, update or frame has run at this point.
+  detached!.maxSimultaneousLights = 13;
+  expect(detached!.maxSimultaneousLights).toBe(8);
+  const foreign = new PBRMaterial("foreign-scene", other);
+  foreign.maxSimultaneousLights = 13;
+  expect(foreign.maxSimultaneousLights).toBe(13);
+  expect(Object.hasOwn(foreign, "maxSimultaneousLights")).toBe(false);
+  budget.dispose();
+  const after = new PBRMaterial("after-disposal", scene);
+  after.maxSimultaneousLights = 13;
+  expect(after.maxSimultaneousLights).toBe(13);
+  expect(Object.hasOwn(after, "maxSimultaneousLights")).toBe(false);
+  detached!.dispose();
+});
 
 test("stock backend reservations constrain eight lights without changing caps", () => {
   expect(
@@ -247,6 +348,7 @@ test("a later cap raise invalidates the detached frozen source even with unchang
   scene.removeMesh(source);
   scene.removeMaterial(material);
   global(scene, 0);
+  material.maxSimultaneousLights = 2;
   budget.update(focus);
   const defines = new MaterialDefines();
   defines.markAsProcessed();

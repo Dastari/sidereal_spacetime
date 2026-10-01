@@ -346,6 +346,7 @@ async function buildWorld(
   );
   const backendPreference = backend;
   const scene = new Scene(engine);
+  const pbrLights = createPbrLightBudget(scene);
   // Review aid: `?slowmo=0.25` plays crew clips, draw/holster and weapon effects at that fraction
   // of real time (presentation only; the server clock is unaffected).
   const slowmo = Number(pageUrl?.searchParams.get("slowmo"));
@@ -739,7 +740,6 @@ async function buildWorld(
   let temporalStateAt = performance.now();
   let temporalAppearance = "";
   const localLights = createLocalLightBudget();
-  const pbrLights = createPbrLightBudget(scene);
   const combatAim = createCombatAim(scene, canvas, shipRoot, imported.meshes);
   /** Last pointer position (client pixels) for the EVA facing. */
   let pointerClient: { x: number; y: number } | undefined;

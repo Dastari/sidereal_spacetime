@@ -178,6 +178,7 @@ async function main() {
   });
   engine.setSize(width, height);
   const scene = new Scene(engine);
+  const pbrLights = createPbrLightBudget(scene);
   window.__prefabScene = scene;
   scene.useRightHandedSystem = true;
   scene.clearColor = new Color4(0.07, 0.04, 0.14, 1);
@@ -203,7 +204,6 @@ async function main() {
   key.intensity = 2.4;
   protectPbrLight(key, 0);
   protectPbrLight(hemi, 1);
-  const pbrLights = createPbrLightBudget(scene);
   const camera = new FreeCamera(
     "harness-camera",
     new Vector3(0, 30, 30),

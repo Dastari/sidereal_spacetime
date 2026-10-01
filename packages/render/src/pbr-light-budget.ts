@@ -4,7 +4,8 @@ import type { Light } from "@babylonjs/core/Lights/light";
 import { ShadowLight } from "@babylonjs/core/Lights/shadowLight";
 import { InstancedMesh } from "@babylonjs/core/Meshes/instancedMesh";
 import { PBRBaseMaterial } from "@babylonjs/core/Materials/PBR/pbrBaseMaterial";
-import type { Material } from "@babylonjs/core/Materials/material";
+import { Material } from "@babylonjs/core/Materials/material";
+import { MaterialPluginEvent } from "@babylonjs/core/Materials/materialPluginEvent";
 import { MultiMaterial } from "@babylonjs/core/Materials/multiMaterial";
 import { selectLocalLights, type LightBudgetPoint } from "./local-light-budget";
 
@@ -97,13 +98,17 @@ export function setPbrLightBudget(
   return limit;
 }
 
-type Registry = { protected: Map<Light, number>; locals: Map<Light, string> };
+type Registry = {
+  protected: Map<Light, number>;
+  locals: Map<Light, string>;
+  materials: Set<Material>;
+};
 const registries = new WeakMap<Scene, Registry>();
 const activeControllers = new WeakSet<Scene>();
 function registry(scene: Scene) {
   let r = registries.get(scene);
   if (!r) {
-    r = { protected: new Map(), locals: new Map() };
+    r = { protected: new Map(), locals: new Map(), materials: new Set() };
     registries.set(scene, r);
   }
   return r;
@@ -137,12 +142,98 @@ export function createPbrLightBudget(scene: Scene) {
   let previous: ReadonlySet<string> = new Set();
   let disposed = false;
   const limit = pbrLightLimit(pbrLightCapabilities(scene.getEngine()));
+  const guards = new Map<Material, () => void>();
+  const pendingCaps = new Set<BudgetPbrMaterial>();
+  const guard = (material: Material) => {
+    if (
+      material.getScene() !== scene ||
+      !(material instanceof PBRBaseMaterial) ||
+      guards.has(material)
+    )
+      return;
+    const own = Object.getOwnPropertyDescriptor(
+      material,
+      "maxSimultaneousLights",
+    );
+    let descriptor = own;
+    for (
+      let prototype = Object.getPrototypeOf(material);
+      !descriptor && prototype;
+      prototype = Object.getPrototypeOf(prototype)
+    )
+      descriptor = Object.getOwnPropertyDescriptor(
+        prototype,
+        "maxSimultaneousLights",
+      );
+    if (!descriptor?.get || !descriptor.set || own?.configurable === false)
+      return;
+    if (!r.materials.has(material)) {
+      r.materials.add(material);
+      material.onDisposeObservable.addOnce(() => r.materials.delete(material));
+    }
+    const stockGet = descriptor.get,
+      stockSet = descriptor.set;
+    // Material's Created event runs in the base constructor. Do not read the subclass
+    // accessor's uninitialized storage until a completed material is assigned.
+    const get = () => stockGet.call(material);
+    const set = (requested: number) => {
+      const bounded = Math.min(
+        limit,
+        Number.isFinite(requested) ? Math.max(0, Math.floor(requested)) : 4,
+      );
+      if (get() !== bounded) {
+        stockSet.call(material, bounded);
+        pendingCaps.add(material as BudgetPbrMaterial);
+      }
+    };
+    Object.defineProperty(material, "maxSimultaneousLights", {
+      configurable: true,
+      enumerable: descriptor.enumerable,
+      get,
+      set,
+    });
+    const restore = () => {
+      const current = Object.getOwnPropertyDescriptor(
+        material,
+        "maxSimultaneousLights",
+      );
+      if (current?.get === get && current.set === set) {
+        if (own) Object.defineProperty(material, "maxSimultaneousLights", own);
+        else Reflect.deleteProperty(material, "maxSimultaneousLights");
+      }
+      material.onDisposeObservable.remove(materialDisposal);
+      guards.delete(material);
+      pendingCaps.delete(material as BudgetPbrMaterial);
+    };
+    const materialDisposal = material.onDisposeObservable.addOnce(restore);
+    guards.set(material, restore);
+  };
+  // glTF's completion loop raises all scene materials before returning assets.
+  // Guard public assignments synchronously, before readiness can compile them.
+  // Scene's own added notification is deferred, and AssetContainer blocks it.
+  const createdMaterial = Material.OnEventObservable.add(
+    guard,
+    MaterialPluginEvent.Created,
+  );
+  const newMaterial = scene.onNewMaterialAddedObservable.add(guard);
+  const existing = new Set([...scene.materials, ...r.materials]);
+  for (const mesh of scene.meshes) {
+    if (mesh.material) existing.add(mesh.material);
+    if (mesh.material instanceof MultiMaterial)
+      for (const material of mesh.material.subMaterials)
+        if (material) existing.add(material);
+  }
+  for (const material of existing) {
+    guard(material);
+    if (isBudgetMaterial(material)) setPbrLightBudget(material);
+  }
   const owner = {
     limit,
     update(focus: LightBudgetPoint) {
       if (disposed || scene.isDisposed) return false;
-      let changed = false;
-      const clamped = new Set<BudgetPbrMaterial>();
+      const clamped = new Set(pendingCaps);
+      pendingCaps.clear();
+      let changed = clamped.size > 0;
       // AssetContainer prototypes can live outside scene.materials while their
       // placed instances still render. Include the real material references.
       const materials = new Set(scene.materials);
@@ -155,11 +246,14 @@ export function createPbrLightBudget(scene: Scene) {
       }
       for (const material of materials)
         if (isBudgetMaterial(material)) {
+          guard(material);
           const before = material.maxSimultaneousLights;
           setPbrLightBudget(material);
           if (before !== material.maxSimultaneousLights) clamped.add(material);
           changed ||= before !== material.maxSimultaneousLights;
         }
+      // Writes made by this fallback scan are already represented this frame.
+      pendingCaps.clear();
       for (const light of r.locals.keys())
         if (light.isDisposed()) r.locals.delete(light);
       for (const light of r.protected.keys())
@@ -252,6 +346,9 @@ export function createPbrLightBudget(scene: Scene) {
       disposed = true;
       previous = new Set();
       activeControllers.delete(scene);
+      scene.onNewMaterialAddedObservable.remove(newMaterial);
+      Material.OnEventObservable.remove(createdMaterial);
+      for (const restore of [...guards.values()]) restore();
       // Lights own their registration lifetime. Replacing a policy must not
       // erase still-live globals or another view's independently owned lamps.
       scene.onDisposeObservable.remove(disposal);
