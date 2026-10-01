@@ -12,7 +12,6 @@ import { sha256 } from "@noble/hashes/sha2.js";
 import { bytesToHex } from "@noble/hashes/utils.js";
 import "@babylonjs/loaders/glTF";
 import {
-  currentOperatorEnsemblePlan,
   verifyOperatorEnsemblePlan,
   prepareOperatorEnsemble,
   operatorDrawReady,
@@ -20,11 +19,18 @@ import {
 } from "../../packages/render/src/crew/operator-ensemble";
 import profiles from "../../packages/render/src/crew/operator-contact-profiles.json";
 import { moldedLightRig } from "../../packages/render/src/molded-plastic";
+import {
+  diagnosticOperatorAppearance,
+  diagnosticOperatorPlan,
+  validateDiagnosticHeadSources,
+} from "./operator-plan";
 
 const q = new URLSearchParams(location.search);
 const bodyType = q.get("body") === "female" ? "female" : "male";
 const tier = q.get("tier") === "2" ? "security" : "marine";
 const item = q.get("item") ?? "pistol";
+const partial = q.get("outfit") === "partial";
+const headSelection = q.get("head") ?? "legacy";
 const canvas = document.getElementById("view") as HTMLCanvasElement;
 const engine = new Engine(canvas, true);
 const scene = new Scene(engine);
@@ -54,8 +60,7 @@ const state: {
   frames: number;
   handle?: PreparedOperatorEnsemble;
 } = {
-  diagnostic:
-    "isolated raw-GLB frame / no admitted context or production registration",
+  diagnostic: `isolated raw-GLB frame / ${partial ? "partial armor, no uniform" : "complete armor + Security uniform"} / heads=${headSelection} / no admitted context or production registration`,
   navigationSha256: profiles.navigationSha256,
   bodyType,
   tier,
@@ -180,29 +185,13 @@ void (async () => {
   );
   navigation.addAllToScene();
   for (const node of navigation.rootNodes) node.parent = parent;
-  const plan = currentOperatorEnsemblePlan(
-    {
-      appearance: {
-        bodyType,
-        equippedComponents: {
-          chest: `${tier}-chest`,
-          shoulders: `${tier}-shoulders`,
-          gloves: `${tier}-gloves`,
-          boots: `${tier}-boots`,
-          back: `${tier}-back`,
-          belt: `${tier}-belt`,
-          helmet: tier === "security" ? "pilot-helmet" : "marine-helmet",
-          visor: tier === "security" ? "pilot-visor" : "marine-visor",
-        },
-        weapon: "none",
-        weaponFixture: false,
-      },
-      heldItem: item === "none" ? null : item,
-    },
-    "isolated-not-admitted",
-    "isolated-current-request",
+  const { plan, manifest } = await diagnosticOperatorPlan(
+    diagnosticOperatorAppearance(bodyType, tier, partial),
+    item === "none" ? null : item,
+    headSelection,
   );
   const request = await verifyOperatorEnsemblePlan(scene, plan);
+  validateDiagnosticHeadSources(request, manifest);
   state.handle = await prepareOperatorEnsemble(
     scene,
     parent,
