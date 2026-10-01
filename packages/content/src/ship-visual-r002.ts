@@ -1730,6 +1730,13 @@ export interface ShipVisualMacroProfile {
   roofShoulder: number;
   partitionCut: number;
   secondaryWallTask: { width: number; height: number };
+  /** Finite R23 Federation architecture; the original pressure/contact envelope remains. */
+  architecture?: {
+    wallFields: readonly [number, number, number];
+    floorCover: readonly [number, number];
+    roofStep: number;
+    roofThermalRibs: number;
+  };
   staticWallFittings: typeof REFERENCE_STATIC_WALL_FITTINGS_R002;
   opticalInterfaces: Record<string, ReferenceOpticalInterface>;
   opticalMatingPigments: typeof REFERENCE_OPTICAL_MATING_PIGMENTS_R002;
@@ -1775,6 +1782,12 @@ export const SHIP_VISUAL_MACRO_PROFILES_R002: Record<
     roofShoulder: 3,
     partitionCut: 20,
     secondaryWallTask: { width: 32, height: 14 },
+    architecture: {
+      wallFields: [48, 32, 24],
+      floorCover: [32, 24],
+      roofStep: 2,
+      roofThermalRibs: 4,
+    },
     staticWallFittings: REFERENCE_STATIC_WALL_FITTINGS_R002,
     opticalInterfaces: REFERENCE_OPTICAL_INTERFACES_R002,
     opticalMatingPigments: REFERENCE_OPTICAL_MATING_PIGMENTS_R002,

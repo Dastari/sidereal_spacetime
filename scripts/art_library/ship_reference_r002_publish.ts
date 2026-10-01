@@ -74,6 +74,7 @@ const sources = [
   "scripts/art_library/ship_reference_r018_equipment.py",
   "scripts/art_library/ship_reference_r021_equipment.py",
   "scripts/art_library/ship_reference_r022_equipment.py",
+  "scripts/art_library/ship_reference_r023_architecture.py",
   "scripts/art_library/ship_reference_art.py",
   "scripts/art_library/ship_component_export.py",
   "scripts/art_library/ship_component_art.py",
@@ -83,6 +84,8 @@ const sources = [
   "assets/source/ship-reference/r002/equipment-r021/equipment.blend",
   "assets/runtime/ship-visual/r002/equipment-r022/manifest.json",
   "assets/source/ship-reference/r002/equipment-r022/equipment.blend",
+  "assets/runtime/ship-visual/r002/equipment-r023/manifest.json",
+  "assets/source/ship-reference/r002/equipment-r023/equipment.blend",
   equipmentHousingSource,
   "scripts/art_library/ship_kit_modules.py",
   "scripts/art_library/bow_modules.py",
@@ -344,6 +347,102 @@ assets[bankIndex] = {
   sha256: bankRow.sha256,
   bytes: bankRow.bytes,
 };
+// Two independently indexed R23 host derivatives preserve the actual R21
+// envelopes/contact triangles. Retain the authentic earlier equipment gate and
+// the separately qualified R22 bank; no old URL is overwritten.
+const architectureDir = "ship-visual/r002/equipment-r023";
+const architectureManifest = readFileSync(
+  resolve(root, "assets/runtime", architectureDir, "manifest.json"),
+);
+const architectureMeta = JSON.parse(architectureManifest.toString());
+const architectureIds = [
+  "shipyard.equipment.wall-locker",
+  "pale-studless.console.standard",
+];
+if (
+  hash(architectureManifest) !==
+    "3b9dc40141a61afb0b152f1bd5d2490cb0e76e9e33c84422fc8f33e70b192d60" ||
+  architectureMeta.revision !== "equipment-r023" ||
+  JSON.stringify(architectureMeta.requiredObjectIds) !==
+    JSON.stringify(architectureIds) ||
+  architectureMeta.objects.length !== 2 ||
+  architectureMeta.generator.candidateBuilder !==
+    "scripts/art_library/ship_reference_r023_architecture.py" ||
+  architectureMeta.generator.candidateBuilderSha256 !==
+    "a273f5cdd53e18f4b72730223e6df1e25c8ab0d57cce38f8f8702558371574ed" ||
+  hash(
+    readFileSync(resolve(root, architectureMeta.generator.candidateBuilder)),
+  ) !== architectureMeta.generator.candidateBuilderSha256 ||
+  architectureMeta.generator.equipmentHelper !==
+    "scripts/art_library/ship_reference_r021_equipment.py" ||
+  architectureMeta.generator.equipmentHelperSha256 !==
+    equipmentMeta.generator.candidateBuilderSha256 ||
+  hash(
+    readFileSync(resolve(root, architectureMeta.generator.equipmentHelper)),
+  ) !== architectureMeta.generator.equipmentHelperSha256 ||
+  architectureMeta.generator.housingHelperSha256 !==
+    equipmentHousingSourceSha256 ||
+  architectureMeta.generator.script !== equipmentMeta.generator.script ||
+  architectureMeta.generator.sha256 !== equipmentMeta.generator.sha256 ||
+  architectureMeta.generator.builders !== equipmentMeta.generator.builders ||
+  architectureMeta.generator.buildersSha256 !==
+    equipmentMeta.generator.buildersSha256 ||
+  architectureMeta.source.blend !==
+    "assets/source/ship-reference/r002/equipment-r023/equipment.blend" ||
+  architectureMeta.source.sha256 !==
+    "eb31c053ea7d116d50d1bbb92f5f408d3a9511ce6e28708f2614e00b47c5a658" ||
+  hash(readFileSync(resolve(root, architectureMeta.source.blend))) !==
+    architectureMeta.source.sha256
+)
+  throw Error(
+    "R23 host source/provenance differs from the indexed two-host proof",
+  );
+const architecturePins = {
+  "shipyard.equipment.wall-locker": {
+    previous:
+      "ea6d67457207377ce4164f680c14970a5dc4f4f050fb2f8fc10e5beffe2d2d96",
+    sha256: "bd538dbde6ab8a2c189607ce6009019aca02252ce86203488f85944610a0f1f4",
+    bytes: 55388,
+    triangles: 536,
+  },
+  "pale-studless.console.standard": {
+    previous:
+      "dd8257e2a7fb8f173bc3fd2962c025b6645eae59e818216f911682befacf0eed",
+    sha256: "8d40cff92adc7cffe9307e87eeb7e88bfc72d799b3321de4ad141a46db1b9662",
+    bytes: 76420,
+    triangles: 762,
+  },
+};
+for (const [id, pin] of Object.entries(architecturePins)) {
+  const row = architectureMeta.objects.find((r: any) => r.designId === id);
+  const prior = equipmentMeta.objects.find((r: any) => r.designId === id);
+  const index = assets.findIndex((a) => a.kind === "object" && a.id === id);
+  const bytes = readFileSync(
+    resolve(root, "assets/runtime", architectureDir, `${id}.glb`),
+  );
+  if (
+    !row ||
+    !prior ||
+    index < 0 ||
+    assets[index].sha256 !== pin.previous ||
+    row.sha256 !== pin.sha256 ||
+    hash(bytes) !== pin.sha256 ||
+    row.bytes !== pin.bytes ||
+    bytes.length !== pin.bytes ||
+    row.triangles !== pin.triangles ||
+    JSON.stringify(row.boundsM) !== JSON.stringify(prior.boundsM) ||
+    JSON.stringify(row.sizeTexels) !== JSON.stringify(prior.sizeTexels)
+  )
+    throw Error(
+      `R23 host mismatches actual admitted row/contact envelope: ${id}`,
+    );
+  assets[index] = {
+    ...assets[index],
+    url: `/assets/${architectureDir}/${id}.glb`,
+    sha256: row.sha256,
+    bytes: row.bytes,
+  };
+}
 // Measured static certificates cannot qualify space using unrelated old heights.
 const objectMetadata = JSON.parse(
   readFileSync(

@@ -2047,6 +2047,16 @@ describe("versioned reference recipes", () => {
             if (width >= 64) broadGroups++;
             if (run === aftRun) {
               expect(width).toBe(aftEnd - 4);
+              // R23 cooling field is a broad complete opening in this actual
+              // continuous aft run, rather than a small service stripe.
+              const cooling = ls.filter((l) => l.id.endsWith(":well"));
+              expect(cooling.length).toBeGreaterThan(0);
+              const coolingAlong = [0, 1].map(
+                (axis) =>
+                  Math.max(...cooling.map((l) => l.bounds[axis + 3])) -
+                  Math.min(...cooling.map((l) => l.bounds[axis])),
+              );
+              expect(Math.max(...coolingAlong)).toBeGreaterThanOrEqual(32);
               const occupiedTaskKeys = new Set<string>();
               for (const l of ls)
                 for (let z = l.bounds[2]; z < l.bounds[5]; z++)
@@ -2505,6 +2515,18 @@ describe("versioned reference recipes", () => {
         (l) => l.id.includes(":roof-task-case:") && l.support === "volume:hull",
       );
       expect(new Set(cases.map((l) => l.id)).size).toBeGreaterThanOrEqual(2);
+      // Ordered compaction may split one positive body into vertical pieces.
+      // Measure its full SAME-owner column, not an upper fragment's endpoint.
+      const caseBases = new Map<string, number>();
+      for (const l of cases)
+        for (let y = l.bounds[1]; y < l.bounds[4]; y++)
+          for (let x = l.bounds[0]; x < l.bounds[3]; x++) {
+            const key = `${l.id}:${x},${y}`;
+            caseBases.set(
+              key,
+              Math.min(caseBases.get(key) ?? Infinity, l.bounds[2]),
+            );
+          }
       let visible = 0;
       const upperLevels = new Set<number>();
       for (const l of cases)
@@ -2521,12 +2543,21 @@ describe("versioned reference recipes", () => {
               continue;
             visible++;
             upperLevels.add(z);
-            expect(r.cells.has(visualCellKey(x, y, l.bounds[2] - 1))).toBe(
-              true,
-            );
+            const base = caseBases.get(`${l.id}:${x},${y}`)!;
+            for (const course of [base - 1, base - 2])
+              expect(r.cells.get(visualCellKey(x, y, course))?.role).toBe(
+                "core",
+              );
+            for (let course = base; course <= z; course++)
+              expect(r.cells.has(visualCellKey(x, y, course))).toBe(true);
           }
       expect(visible).toBeGreaterThan(1000);
       expect(upperLevels.size).toBeGreaterThanOrEqual(2);
+      // Actual occupied top cells must expose the promised two-cell step;
+      // different box endpoints or a recolor alone do not establish relief.
+      expect(
+        Math.max(...upperLevels) - Math.min(...upperLevels),
+      ).toBeGreaterThanOrEqual(2);
       let open = 0;
       for (const l of r.layers.filter(
         (l) =>

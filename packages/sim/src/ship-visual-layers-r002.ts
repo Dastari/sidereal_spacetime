@@ -611,12 +611,29 @@ export function shipVisualLayersR002(
       ].includes(room.type)
     )
       continue;
-    const width = ["bridge", "engineering", "workshop", "galley"].includes(
-      room.type,
-    )
+    const originalWidth = [
+      "bridge",
+      "engineering",
+      "workshop",
+      "galley",
+    ].includes(room.type)
       ? 24
       : 20;
-    const depth = room.type === "cargo" ? 28 : 16;
+    const width = macro.architecture
+      ? Math.min(
+          macro.architecture.floorCover[0],
+          Math.floor((room.rect[2] - room.rect[0]) * 16) - 10,
+        )
+      : originalWidth;
+    const depth = macro.architecture
+      ? Math.min(
+          room.type === "cargo" ? 28 : macro.architecture.floorCover[1],
+          Math.floor((room.rect[3] - room.rect[1]) * 16) - 10,
+        )
+      : room.type === "cargo"
+        ? 28
+        : 16;
+    if (width < 16 || depth < 16) continue;
     const candidates: { bounds: number[]; score: number }[] = [];
     const cx = (room.rect[0] + room.rect[2]) * 8,
       cy = (room.rect[1] + room.rect[3]) * 8;
@@ -1685,7 +1702,11 @@ export function shipVisualLayersR002(
               ...roofObstacles,
               ...roofMarkings,
               ...roofPatches.map((p) => p.bounds),
-              ...shoulderFields.map((f) => f.bounds),
+              // R23 replaces these decorative podiums with their connected
+              // fixture-owned case; operating apertures and routes stay excluded.
+              ...(macro.architecture
+                ? []
+                : shoulderFields.map((f) => f.bounds)),
             ].some((r) => inRect(...p, r, 2)) ||
             routeYs.some((y0) => Math.abs(y - y0) < 8)
           )
@@ -2736,7 +2757,43 @@ export function shipVisualLayersR002(
                   family,
                 );
             }
-            if (deck && shoulder && shapedCase) {
+            const architecturalCase =
+              !!macro.architecture && deck && shoulder && !!shapedCase;
+            if (architecturalCase) {
+              const start = layers.length;
+              // Retire the old visible finish, including its independent
+              // decorative podium cap. Original CORE [hi-5,hi-3) stays intact.
+              column(
+                `${family}:roof-architecture-retire:${enclosure.id}`,
+                "void",
+                "dark",
+                x,
+                y,
+                hi - 3,
+                hi + 1,
+                family,
+              );
+              const step = macro.architecture!.roofStep;
+              const lowShoulder = !broadCheek && !apertureReturn;
+              const connector = caseEdge < 3 || caseEnd < 5 || apertureReturn;
+              const upper = connector ? hi - 1 : lowShoulder ? hi - step : hi;
+              column(
+                `${family}:roof-task-case:${enclosure.id}`,
+                "plate",
+                lowShoulder ? "trim" : "primary",
+                x,
+                y,
+                hi - 3,
+                upper,
+                family,
+              );
+              // Whole supported footprint, one finite body: top occupied cells
+              // hi-1 / hi-2 / hi-3 form unequal cover, return and service planes.
+              // All final writes run after generic skins so no hidden taller cap
+              // survives on top of this deliberately lower positive shoulder.
+              pendingRoofClusterLayers.push(...layers.splice(start));
+            }
+            if (deck && shoulder && shapedCase && !architecturalCase) {
               // Broad clipped returns only at this real assembly boundary. The
               // raised skin joins its lower pressure tray through two shoulder
               // courses; the service route remains an actual contained recess.
@@ -2796,7 +2853,8 @@ export function shipVisualLayersR002(
                       enclosure,
                   ),
                 ) &&
-                !shoulderFields.some((f) => inRect(p[0], p[1], f.bounds)) &&
+                (architecturalCase ||
+                  !shoulderFields.some((f) => inRect(p[0], p[1], f.bounds))) &&
                 x >= pocketLeft &&
                 x < pocketLeft + pocketWidth &&
                 across >= pocketBottom &&
@@ -2811,14 +2869,24 @@ export function shipVisualLayersR002(
                   x,
                   y,
                   hi - 3,
-                  hi + 1,
+                  architecturalCase ? hi : hi + 1,
                   family,
                 );
                 // The existing two CORE courses [hi-5,hi-3) form the finite
                 // well floor. No invented extra finish bottom hides the depth.
                 if (
                   enclosure.kind === "utility" &&
-                  mod(across - pocketBottom, 6) < 2
+                  (architecturalCase
+                    ? Array.from(
+                        { length: macro.architecture!.roofThermalRibs },
+                        (_, i) =>
+                          pocketBottom +
+                          Math.floor(
+                            ((i + 0.5) * (pocketTop - pocketBottom)) /
+                              macro.architecture!.roofThermalRibs,
+                          ),
+                      ).some((at) => across >= at && across < at + 2)
+                    : mod(across - pocketBottom, 6) < 2)
                 )
                   column(
                     `${family}:roof-cluster-vent:${enclosure.id}`,
@@ -2853,7 +2921,13 @@ export function shipVisualLayersR002(
             const field = shoulderFields.find((f) =>
               inRect(p[0], p[1], f.bounds),
             );
-            if (deck && field && shoulder && !serviceBelt) {
+            if (
+              deck &&
+              field &&
+              shoulder &&
+              !serviceBelt &&
+              !architecturalCase
+            ) {
               const [a, b, A, B] = field.bounds;
               const edge = Math.min(x - a, A - 1 - x, y - b, B - 1 - y);
               const corner =
@@ -2975,6 +3049,7 @@ export function shipVisualLayersR002(
                     family,
                   );
               } else if (
+                !macro.architecture &&
                 x > joint + 8 &&
                 x < bX - 10 &&
                 mod(x - joint, 6) < 2
@@ -4718,9 +4793,23 @@ export function shipVisualLayersR002(
         continue;
       // Unequal fields share one finite casing, its lower binding and a local
       // header. Long admitted runs are never reclamped to a room-centre badge.
+      const fieldWidths = macro.architecture?.wallFields;
+      const fieldTotal = fieldWidths?.reduce((sum, n) => sum + n, 0) ?? 1;
       const joints =
         width >= 64
-          ? [0, Math.floor(width * 0.47), Math.floor(width * 0.78), width]
+          ? [
+              0,
+              Math.floor(
+                width * (fieldWidths ? fieldWidths[0] / fieldTotal : 0.47),
+              ),
+              Math.floor(
+                width *
+                  (fieldWidths
+                    ? (fieldWidths[0] + fieldWidths[1]) / fieldTotal
+                    : 0.78),
+              ),
+              width,
+            ]
           : width >= 32
             ? [0, Math.floor(width * 0.64), width]
             : [0, width];
@@ -4764,95 +4853,214 @@ export function shipVisualLayersR002(
             const serviceWidth = Math.min(W - 4, panel === 0 ? 18 : 11);
             const serviceInset =
               q >= 4 && q < serviceWidth && v >= 4 && v < height - 4;
-            switch (task.key) {
-              case "engineering":
-                if (panel === 0 && serviceInset) {
-                  use("well", "void", "dark");
-                  if (v === 4 || v === 7 || v === 10)
-                    use("protected-cooling-bank", "service", "metal");
-                }
-                if (panel === 1 && q >= W - 11 && q < W - 4)
-                  use("distribution-module", "plate", "trim");
-                if (panel === 1 && q >= W - 7 && q < W - 4)
-                  use("distribution-module-case", "plate", "accent");
-                if (panel === 1 && q === W - 5 && v >= 5 && v < height - 5)
-                  use("distribution-status", "service", "emit_b");
-                break;
-              case "workshop":
-                if (panel === 0 && serviceInset) {
-                  use("well", "void", "dark");
-                  if (v === 4 || v === 8)
-                    use("continuous-tool-bank", "service", "metal");
-                  if (
-                    [5, 12].includes(q) &&
-                    v >= 5 &&
-                    v < Math.min(8, height - 4)
-                  )
-                    use("protected-tool-dock", "service", "metal");
-                }
-                if (panel > 0 && q >= W - 10 && q < W - 4)
-                  use("bench-power-module", "plate", "trim");
-                break;
-              case "medical":
-                if (q >= 4 && q < Math.min(W - 4, low ? 9 : 12))
+            if (macro.architecture) {
+              // The complete useful field owns the existing finish course.
+              // Its real depth is ONE cell; deep cases are authored hosts.
+              const openField = q >= 3 && q < W - 3 && v >= 3 && v < height - 3;
+              const lowerBank = v >= 4 && v < 6;
+              const upperBank = v >= height - 8 && v < height - 6;
+              switch (task.key) {
+                case "engineering":
+                  if (panel === 0 && openField) {
+                    use("well", "void", "dark");
+                    if (lowerBank || upperBank)
+                      use("broad-cooling-bank", "service", "metal");
+                  } else if (panel === 1) {
+                    use("distribution-case", "plate", "trim");
+                    if (q >= 4 && q < Math.min(W - 4, 9))
+                      use("distribution-cassette", "plate", "primary");
+                    if (q >= W - 8 && q < W - 5 && v >= 5 && v < height - 5)
+                      use("contained-distribution-status", "service", "emit_b");
+                  } else if (panel > 1 && v < height - 6) {
+                    use("service-access-cover", "plate", "trim");
+                    if (q >= W - 7 && q < W - 5 && v >= 5 && v < 9)
+                      use("service-access-handle", "service", "metal");
+                  }
+                  break;
+                case "workshop":
+                  if (panel === 0 && openField) {
+                    use("well", "void", "dark");
+                    if (lowerBank) use("tool-power-bank", "service", "metal");
+                    if ((q >= 5 && q < 8) || (q >= W - 10 && q < W - 7))
+                      use("protected-tool-case", "plate", "trim");
+                  } else if (panel > 0) {
+                    use("workbench-distribution-cover", "plate", "trim");
+                    if (v >= 4 && v < 6)
+                      use("workbench-supply-return", "service", "metal");
+                  }
+                  break;
+                case "medical":
                   use(
-                    low ? "low-medical-utility" : "medical-control-face",
+                    low ? "low-medical-utility" : "medical-supply-face",
                     "plate",
                     "trim",
                   );
-                if (q === 5 && v >= 4 && v < height - 4)
-                  use("oxygen-supply-manifold", "service", "metal");
-                break;
-              case "airlock":
-                if (panel === 0 && serviceInset)
-                  use("pressure-control-face", "plate", "trim");
-                if (q === W - 5 && v >= 4 && v < height - 4)
-                  use("pressure-control-handle", "service", "metal");
-                break;
-              case "galley":
-                if (v === 4) use("counter-utility-rail", "service", "metal");
-                if (panel === 0 && q >= 4 && q < Math.min(W - 4, 14) && v < 7)
-                  use("backed-backsplash", "plate", "trim");
-                if (panel > 0 && q === W - 5)
-                  use("utility-handle", "service", "metal");
-                break;
-              case "cargo":
-                use("load-storage-face", "plate", "primary");
-                if ((q === 4 || q === W - 5) && v < height - 5)
-                  use("load-restraint", "service", "metal");
-                break;
-              case "bridge":
-                if (panel === 0 && serviceInset)
-                  use("bridge-distribution", "plate", "trim");
-                if (panel === 0 && q >= 4 && q < serviceWidth && v === 4)
-                  use("bridge-key-bank", "service", "metal");
-                break;
-              case "quarters":
-              case "living":
-                if (panel === 0 && q >= 4 && q < Math.min(W - 4, 12) && v < 7) {
-                  use("well", "void", "dark");
-                  if (v === 4) use("reading-utility-shelf", "service", "metal");
-                }
-                break;
-              case "lounge":
-                if (
-                  panel === 0 &&
-                  q >= 4 &&
-                  q < Math.min(W - 4, 16) &&
-                  v >= 5 &&
-                  v < 9
-                )
-                  use("media-utility-face", "plate", "trim");
-                if (panel === 0 && q >= 4 && q < Math.min(W - 4, 16) && v === 4)
-                  use("media-utility-shelf", "service", "metal");
-                break;
-            }
+                  if (q >= 4 && q < Math.min(W - 4, 12))
+                    use("medical-removable-cassette", "plate", "primary");
+                  if (q >= W - 8 && q < W - 6 && v >= 4 && v < height - 4)
+                    use("oxygen-supply-manifold", "service", "metal");
+                  break;
+                case "galley":
+                  if (panel === 0 && openField) {
+                    use("well", "void", "dark");
+                    if (lowerBank)
+                      use("counter-utility-bank", "service", "metal");
+                  } else if (panel > 0 && v < height - 5) {
+                    use("galley-storage-cover", "plate", "trim");
+                    if (q >= W - 7 && q < W - 5 && v >= 4 && v < 8)
+                      use("storage-pull", "service", "metal");
+                  }
+                  break;
+                case "quarters":
+                case "living":
+                  if (
+                    panel === 0 &&
+                    openField &&
+                    v < Math.floor(height * 0.58)
+                  ) {
+                    use("well", "void", "dark");
+                    if (lowerBank)
+                      use("reading-supply-bank", "service", "metal");
+                  } else if (q >= 4 && q < W - 4 && v < height - 5) {
+                    use("berth-storage-cover", "plate", "trim");
+                    if (q >= W - 7 && q < W - 5 && v >= 5 && v < 9)
+                      use("berth-storage-pull", "service", "metal");
+                  }
+                  break;
+                case "lounge":
+                  if (panel === 0 && openField) {
+                    use("media-service-face", "plate", "trim");
+                    if (q < Math.floor(W * 0.62) && v < height - 6)
+                      use("well", "void", "dark");
+                    if (lowerBank) use("media-supply-bank", "service", "metal");
+                  }
+                  break;
+                case "bridge":
+                  if (panel === 0 && openField) {
+                    use("bridge-distribution-cover", "plate", "trim");
+                    if (lowerBank)
+                      use("bridge-supply-bank", "service", "metal");
+                  } else if (panel > 0 && v < height - 5) {
+                    use("bridge-instrument-service-cover", "plate", "trim");
+                  }
+                  break;
+                case "cargo":
+                  if ((q >= 4 && q < 7) || (q >= W - 7 && q < W - 4))
+                    use("load-restraint-case", "plate", "trim");
+                  if (v >= 4 && v < 6)
+                    use("load-restraint-anchor", "service", "metal");
+                  break;
+                case "airlock":
+                  use("pressure-control-cover", "plate", "trim");
+                  if (q >= 4 && q < Math.min(W - 4, 11))
+                    use("pressure-cassette", "plate", "primary");
+                  if (q >= W - 7 && q < W - 5 && v >= 5 && v < height - 5)
+                    use("pressure-control-handle", "service", "metal");
+                  break;
+              }
+            } else
+              switch (task.key) {
+                case "engineering":
+                  if (panel === 0 && serviceInset) {
+                    use("well", "void", "dark");
+                    if (v === 4 || v === 7 || v === 10)
+                      use("protected-cooling-bank", "service", "metal");
+                  }
+                  if (panel === 1 && q >= W - 11 && q < W - 4)
+                    use("distribution-module", "plate", "trim");
+                  if (panel === 1 && q >= W - 7 && q < W - 4)
+                    use("distribution-module-case", "plate", "accent");
+                  if (panel === 1 && q === W - 5 && v >= 5 && v < height - 5)
+                    use("distribution-status", "service", "emit_b");
+                  break;
+                case "workshop":
+                  if (panel === 0 && serviceInset) {
+                    use("well", "void", "dark");
+                    if (v === 4 || v === 8)
+                      use("continuous-tool-bank", "service", "metal");
+                    if (
+                      [5, 12].includes(q) &&
+                      v >= 5 &&
+                      v < Math.min(8, height - 4)
+                    )
+                      use("protected-tool-dock", "service", "metal");
+                  }
+                  if (panel > 0 && q >= W - 10 && q < W - 4)
+                    use("bench-power-module", "plate", "trim");
+                  break;
+                case "medical":
+                  if (q >= 4 && q < Math.min(W - 4, low ? 9 : 12))
+                    use(
+                      low ? "low-medical-utility" : "medical-control-face",
+                      "plate",
+                      "trim",
+                    );
+                  if (q === 5 && v >= 4 && v < height - 4)
+                    use("oxygen-supply-manifold", "service", "metal");
+                  break;
+                case "airlock":
+                  if (panel === 0 && serviceInset)
+                    use("pressure-control-face", "plate", "trim");
+                  if (q === W - 5 && v >= 4 && v < height - 4)
+                    use("pressure-control-handle", "service", "metal");
+                  break;
+                case "galley":
+                  if (v === 4) use("counter-utility-rail", "service", "metal");
+                  if (panel === 0 && q >= 4 && q < Math.min(W - 4, 14) && v < 7)
+                    use("backed-backsplash", "plate", "trim");
+                  if (panel > 0 && q === W - 5)
+                    use("utility-handle", "service", "metal");
+                  break;
+                case "cargo":
+                  use("load-storage-face", "plate", "primary");
+                  if ((q === 4 || q === W - 5) && v < height - 5)
+                    use("load-restraint", "service", "metal");
+                  break;
+                case "bridge":
+                  if (panel === 0 && serviceInset)
+                    use("bridge-distribution", "plate", "trim");
+                  if (panel === 0 && q >= 4 && q < serviceWidth && v === 4)
+                    use("bridge-key-bank", "service", "metal");
+                  break;
+                case "quarters":
+                case "living":
+                  if (
+                    panel === 0 &&
+                    q >= 4 &&
+                    q < Math.min(W - 4, 12) &&
+                    v < 7
+                  ) {
+                    use("well", "void", "dark");
+                    if (v === 4)
+                      use("reading-utility-shelf", "service", "metal");
+                  }
+                  break;
+                case "lounge":
+                  if (
+                    panel === 0 &&
+                    q >= 4 &&
+                    q < Math.min(W - 4, 16) &&
+                    v >= 5 &&
+                    v < 9
+                  )
+                    use("media-utility-face", "plate", "trim");
+                  if (
+                    panel === 0 &&
+                    q >= 4 &&
+                    q < Math.min(W - 4, 16) &&
+                    v === 4
+                  )
+                    use("media-utility-shelf", "service", "metal");
+                  break;
+              }
           }
           // One contained task header per functional field, not a continuous
           // glowing rail around every room or a repeated per-cell light strip.
           if (
-            q >= 3 &&
-            q < Math.min(W - 3, panel === 0 ? 10 : 7) &&
+            q >= (macro.architecture ? 5 : 3) &&
+            q <
+              Math.min(W - 3, macro.architecture ? 20 : panel === 0 ? 10 : 7) &&
+            (!macro.architecture || panel === 0) &&
             v === height - 3
           )
             use(

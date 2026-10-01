@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "854d2319800e7fecd464d02226c7870bd3cfe744403ee526aa5da9c0333ff848",
+  "compilerSha256": "28126695bd42efc61cd3bad942d8870d5ba0e4f5fe5db5192b4257d587299967",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -12,11 +12,11 @@
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "ed0038dde552993425b9934ce1c92f7facc74759e2f518e9e6a699abd00e0ec8"
+      "sha256": "12e85f4a3410f174c7128b7df2b675314198ec43b03894160b47142739f9f471"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "cbcad86ac38a153d0b62cbf9d733ba1c51e3838c0c5221085a0d2cd5ec8bc021"
+      "sha256": "2b1e955431afaef7321a9983967aa78238e97bc82170180095fc06eee8f2a69b"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
@@ -104,7 +104,7 @@
     },
     {
       "path": "packages/render/src/prefab-ship/doors.ts",
-      "sha256": "ae3339f3c83ef17fff9e4cd36835a56570fc862ef115e767ef609cc5987eb0d7"
+      "sha256": "4dcab82642e6cdabbc6866c7ca28d3e116c38e1a145b4c88d4658ca166a44e63"
     },
     {
       "path": "packages/render/src/prefab-ship/shadows.ts",
@@ -171,6 +171,10 @@
       "sha256": "6a081bb6e4011e5e656a906cc9069febfe719ca26553f90e14c06674f5955c50"
     },
     {
+      "path": "scripts/art_library/ship_reference_r023_architecture.py",
+      "sha256": "a273f5cdd53e18f4b72730223e6df1e25c8ab0d57cce38f8f8702558371574ed"
+    },
+    {
       "path": "scripts/art_library/ship_reference_art.py",
       "sha256": "9f9979a08ae5e439806fddedafe47cc3bac4ac852d53f5819f8c64867c3d02cd"
     },
@@ -205,6 +209,14 @@
     {
       "path": "assets/source/ship-reference/r002/equipment-r022/equipment.blend",
       "sha256": "2933dcbb09427b3dd44db33bed9ca599b013a2587dbb63bab15ad163f264fa87"
+    },
+    {
+      "path": "assets/runtime/ship-visual/r002/equipment-r023/manifest.json",
+      "sha256": "3b9dc40141a61afb0b152f1bd5d2490cb0e76e9e33c84422fc8f33e70b192d60"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/equipment-r023/equipment.blend",
+      "sha256": "eb31c053ea7d116d50d1bbb92f5f408d3a9511ce6e28708f2614e00b47c5a658"
     },
     {
       "path": "assets/source/ship-reference/r002/equipment-r018/ship_reference_r002_art.py",

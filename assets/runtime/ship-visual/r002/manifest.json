@@ -4,8 +4,8 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "854d2319800e7fecd464d02226c7870bd3cfe744403ee526aa5da9c0333ff848",
-  "profilesSha256": "d2b8aacb54c19b32e2c58448fb0730fcc94815dfa72cc74e89d677d3bb94b818",
+  "compilerSha256": "28126695bd42efc61cd3bad942d8870d5ba0e4f5fe5db5192b4257d587299967",
+  "profilesSha256": "b808da9fc770bbee3509c5707df5a016e0522226549639443baaba20974d0115",
   "slots": [
     "primary",
     "secondary",
@@ -79,9 +79,9 @@
         0.9375,
         0.3125
       ],
-      "url": "/assets/ship-visual/r002/equipment-r021/pale-studless.console.standard.glb",
-      "sha256": "dd8257e2a7fb8f173bc3fd2962c025b6645eae59e818216f911682befacf0eed",
-      "bytes": 75776
+      "url": "/assets/ship-visual/r002/equipment-r023/pale-studless.console.standard.glb",
+      "sha256": "8d40cff92adc7cffe9307e87eeb7e88bfc72d799b3321de4ad141a46db1b9662",
+      "bytes": 76420
     },
     {
       "kind": "object",
@@ -255,9 +255,9 @@
         2,
         0.25
       ],
-      "url": "/assets/ship-visual/r002/equipment-r021/shipyard.equipment.wall-locker.glb",
-      "sha256": "ea6d67457207377ce4164f680c14970a5dc4f4f050fb2f8fc10e5beffe2d2d96",
-      "bytes": 56948
+      "url": "/assets/ship-visual/r002/equipment-r023/shipyard.equipment.wall-locker.glb",
+      "sha256": "bd538dbde6ab8a2c189607ce6009019aca02252ce86203488f85944610a0f1f4",
+      "bytes": 55388
     },
     {
       "kind": "component",
