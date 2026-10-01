@@ -25,6 +25,8 @@ import { loadVerifiedGlbGeometry, type GlbGeometry } from "./glb-library";
 import { slotOfMaterialName } from "./materials";
 import type { NavigationOperatorRegistration } from "@sidereal/sim/navigation-operator-context";
 import type { OperatorActivatedCapability } from "../crew/operator-readiness";
+import { validateReferenceDoorLeaf } from "./doors";
+import { referenceGlazingReplacements } from "./glazing-replacement";
 
 export interface VisualVariantSelection {
   url: string;
@@ -33,10 +35,13 @@ export interface VisualVariantSelection {
 }
 export interface VerifiedVisualVariant {
   manifest: ShipVisualManifest;
+  manifestSha256: string;
   profile: ShipVisualProfileId;
   components: Map<string, GlbGeometry>;
   objects: Map<string, GlbGeometry>;
   kit: Map<string, GlbGeometry>;
+  /** Exact verified occurrences whose old glass is replaced by sampled CORE/glass. */
+  glazingReplacements?: ReadonlySet<string>;
   normalUrl: string;
   normalSha256: string;
   release(): void;
@@ -406,12 +411,22 @@ export async function resolveVisualVariant(
     // Scene pools borrow these immutable map URLs; view replacement must not revoke a shared texture.
     if (scene.isDisposed)
       throw Error("Scene disposed before candidate activation");
+    const profile = profileFor(doc);
+    const glazingReplacements = referenceGlazingReplacements(
+      manifest,
+      profile,
+      doc.id,
+      dressed.kit,
+      kit,
+    );
     const variant: VerifiedVisualVariant = {
       manifest,
-      profile: profileFor(doc),
+      manifestSha256: selection.sha256,
+      profile,
       components,
       objects,
       kit,
+      glazingReplacements,
       normalUrl,
       normalSha256,
       release: () => {
