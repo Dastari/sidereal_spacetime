@@ -654,7 +654,22 @@ it.each(["plain", "synthetic", "camera"] as const)(
     ).toBe(false);
     const metal = metals[0],
       roles = metal.metadata.roleRanges.map((r: { role: string }) => r.role);
-    expect(roles).toContain("floor");
+    // The current recipe uses plastic floor plates. They must still participate
+    // in real initial batches with normal detail; they do not enter the metal pool.
+    const floors = scene.meshes.filter(
+      (m) =>
+        m.isEnabled() &&
+        m.name.includes(":batch:") &&
+        m.metadata.roleRanges.some((r: { role: string }) => r.role === "floor"),
+    );
+    expect(floors.length).toBeGreaterThan(0);
+    expect(
+      floors.every(
+        (m) =>
+          m.material !== metal.material &&
+          m.material?.metadata.shipNormalDetail.normalUrl === "fixture:normal",
+      ),
+    ).toBe(true);
     expect(
       roles.some((role: string) => role === "hull" || role === "wall"),
     ).toBe(true);
