@@ -21,7 +21,8 @@ import {
   type VisualCell,
 } from "./ship-visual-sampler";
 
-// Exact independent north/south source coordinates, slots and final writers.
+// Exact independent north/south coordinates and final writers. Slots retain
+// historical pigment provenance; optional finish color cannot gate geometry.
 const expected: Record<
   ShipVisualView,
   readonly (readonly [string, string, string])[]
@@ -386,6 +387,14 @@ const protectedCell = (c: VisualCell) =>
   c.role === "doorframe" ||
   c.slot === "emit_a" ||
   c.slot === "emit_b";
+const opaqueSlots = new Set([
+  "primary",
+  "secondary",
+  "trim",
+  "dark",
+  "metal",
+  "accent",
+]);
 const inLayer = (l: ShipVisualLayer, c: VisualCell) => {
   if ([c.x, c.y, c.z].some((v, i) => v < l.bounds[i] || v >= l.bounds[i + 3]))
     return false;
@@ -468,13 +477,13 @@ export function referenceBowTransitionR002(
       return [];
     additions.set(key, cloneCell(c, { ...c.facet, id: s.id }));
   }
-  for (const [key, slot, writer] of expected[view]) {
+  for (const [key, , writer] of expected[view]) {
     const c = cells.get(key);
     if (
       !c ||
       c.role !== "core" ||
       c.family !== "volume:hull" ||
-      c.slot !== slot ||
+      !opaqueSlots.has(c.slot) ||
       c.facet ||
       protectedCell(c)
     )
@@ -490,7 +499,7 @@ export function referenceBowTransitionR002(
         owner = finalLayers[i];
         break;
       }
-    if (owner?.id !== writer || owner.role !== "core" || owner.slot !== slot)
+    if (owner?.id !== writer || owner.role !== "core" || owner.slot !== c.slot)
       return [];
     for (const [dx, dy] of [
       [-1, 0],

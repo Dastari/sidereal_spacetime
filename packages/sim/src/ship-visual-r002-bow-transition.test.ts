@@ -43,6 +43,34 @@ describe("finite actual Wren outer pressure-case transition", () => {
       );
       expect(newlyClipped).toHaveLength(view === "deck" ? 136 : 193);
       expect(after.size).toBe(before.size);
+      // A legal opaque finish cannot change the admitted pressure-case shape.
+      // This catches the former frozen-color gate while exercising actual source
+      // owners, backing and optical exclusions in both integrated views.
+      const recolored = prior.map((l): ShipVisualLayer =>
+        ["core", "frame", "plate"].includes(l.role) &&
+        !["glass", "emit_a", "emit_b"].includes(l.slot)
+          ? { ...l, slot: "secondary" }
+          : l,
+      );
+      const recoloredAdded = referenceBowTransitionR002(
+        doc,
+        view,
+        catalog,
+        "federation",
+        recolored,
+        panes,
+      );
+      expect(recoloredAdded.length).toBe(added.length);
+      expect(
+        recoloredAdded.map(({ slot: _slot, ...geometry }) => geometry),
+      ).toEqual(added.map(({ slot: _slot, ...geometry }) => geometry));
+      const recoloredCells = sampleShipVisualLayers(recolored);
+      for (const l of recoloredAdded)
+        expect(l.slot).toBe(
+          recoloredCells.get(
+            visualCellKey(l.bounds[0], l.bounds[1], l.bounds[2]),
+          )?.slot,
+        );
       for (const l of newlyClipped) {
         const [x, y, z] = l.bounds;
         const old = before.get(visualCellKey(x, y, z))!;
