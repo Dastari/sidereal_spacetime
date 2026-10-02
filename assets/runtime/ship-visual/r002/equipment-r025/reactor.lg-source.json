@@ -1,0 +1,868 @@
+{
+  "id": "reactor.lg",
+  "status": "proposal",
+  "revision": "r025",
+  "kind": "component",
+  "frame": "interior",
+  "bounds": [
+    -1.75,
+    0.0,
+    -1.8125,
+    1.75,
+    2.9375,
+    1.75
+  ],
+  "source": "assets/source/ship-reference/r002/equipment-r025/reactor.lg.blend",
+  "url": "/assets/ship-visual/r002/equipment-r025/reactor.lg.glb",
+  "sha256": "fbc03973b688c3d07fb58d2698c1f9f9ed5204154a59b06c08930d00d6a73b69",
+  "bytes": 93348,
+  "oldAssetSha256": "3994af1583c43abe0e2c043f517a3a0ce91ba4717814bd209fa3f11b3e36c741",
+  "semanticGroups": [
+    "primary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "secondary.vessel"
+  ],
+  "triangles": 1168,
+  "emissiveAreaM2": 0,
+  "front": "Blender +Y / glTF -Z",
+  "nearServiceSide": 1,
+  "actualPlacement": {
+    "anchor": [
+      2,
+      5
+    ],
+    "quarterTurns": 0
+  },
+  "frontBayDepthM": 0.35,
+  "baseContact": {
+    "z": 0,
+    "blenderBoundsXY": [
+      -1.7225,
+      -1.7225,
+      1.7225,
+      1.785
+    ],
+    "baseOuterBoundsXY": [
+      -1.75,
+      -1.75,
+      1.75,
+      1.8125
+    ]
+  },
+  "immutableR020SourceSha256": "fa11e00e317f3af8bc1700fc2300239fbea2a2e88537366b7ac1f627a8919abc",
+  "serviceSides": [
+    -1,
+    1
+  ],
+  "authoredParts": [
+    {
+      "name": "contact-base",
+      "blenderBoundsM": [
+        -1.75,
+        -1.75,
+        0,
+        1.75,
+        1.8125,
+        0.125
+      ],
+      "slot": "trim",
+      "bevelM": 0.0275
+    },
+    {
+      "name": "closed-pressure-body",
+      "blenderBoundsM": [
+        -1.375,
+        -1.375,
+        0.12,
+        1.25,
+        1.4375,
+        2.5625
+      ],
+      "slot": "secondary.vessel",
+      "bevelM": 0.018
+    },
+    {
+      "name": "front-left-post",
+      "blenderBoundsM": [
+        -1.625,
+        1.4224999999999999,
+        0.12,
+        -1.1875,
+        1.7875,
+        2.75
+      ],
+      "slot": "primary",
+      "bevelM": 0.02
+    },
+    {
+      "name": "front-right-post",
+      "blenderBoundsM": [
+        1.125,
+        1.4224999999999999,
+        0.12,
+        1.625,
+        1.7875,
+        2.5
+      ],
+      "slot": "primary",
+      "bevelM": 0.02
+    },
+    {
+      "name": "front-lower-joined-case",
+      "blenderBoundsM": [
+        -1.625,
+        1.4224999999999999,
+        0.125,
+        1.625,
+        1.7875,
+        0.4375
+      ],
+      "slot": "primary",
+      "bevelM": 0.02
+    },
+    {
+      "name": "front-header",
+      "blenderBoundsM": [
+        -1.2025,
+        1.4224999999999999,
+        2.25,
+        1.14,
+        1.7875,
+        2.5
+      ],
+      "slot": "trim",
+      "bevelM": 0.015
+    },
+    {
+      "name": "front-closed-backing",
+      "blenderBoundsM": [
+        -1.1525,
+        1.4325,
+        0.48,
+        1.09,
+        1.4575,
+        2.2125
+      ],
+      "slot": "dark",
+      "bevelM": 0
+    },
+    {
+      "name": "front-cooling-fin-0",
+      "blenderBoundsM": [
+        -1.0875,
+        1.4525,
+        0.5625,
+        -1.0025,
+        1.5225,
+        2.0625
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "front-cooling-fin-1",
+      "blenderBoundsM": [
+        -0.6685416666666666,
+        1.4525,
+        0.625,
+        -0.5835416666666666,
+        1.5225,
+        2.0
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "front-cooling-fin-2",
+      "blenderBoundsM": [
+        -0.24958333333333327,
+        1.4525,
+        0.6875,
+        -0.16458333333333325,
+        1.5225,
+        1.9375
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "unequal-control-cover",
+      "blenderBoundsM": [
+        0.3318749999999999,
+        1.4495,
+        0.5625,
+        1.06,
+        1.5325,
+        2.0375
+      ],
+      "slot": "primary",
+      "bevelM": 0.015
+    },
+    {
+      "name": "control-accent",
+      "blenderBoundsM": [
+        0.3693749999999999,
+        1.5275,
+        0.7,
+        1.025,
+        1.5525,
+        0.875
+      ],
+      "slot": "accent",
+      "bevelM": 0
+    },
+    {
+      "name": "control-binding",
+      "blenderBoundsM": [
+        0.3693749999999999,
+        1.5315,
+        1.8075,
+        1.025,
+        1.5455,
+        1.8575
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "front-column-service-cover",
+      "blenderBoundsM": [
+        -1.575,
+        1.7625,
+        0.6875,
+        -1.2875,
+        1.8025,
+        2.0625
+      ],
+      "slot": "trim",
+      "bevelM": 0.012
+    },
+    {
+      "name": "front-column-service-mark",
+      "blenderBoundsM": [
+        -1.55,
+        1.8005,
+        0.9375,
+        -1.3125,
+        1.8075,
+        1.0
+      ],
+      "slot": "accent",
+      "bevelM": 0
+    },
+    {
+      "name": "opposite-column-short-cover",
+      "blenderBoundsM": [
+        1.2,
+        1.7625,
+        0.5625,
+        1.575,
+        1.8025,
+        0.875
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "lower-case-access-binding",
+      "blenderBoundsM": [
+        -1.1375,
+        1.7725,
+        0.2,
+        0.20937499999999992,
+        1.8025,
+        0.2625
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "left-rear-jamb",
+      "blenderBoundsM": [
+        -1.625,
+        -1.5625,
+        0.12,
+        -1.36,
+        -1.235,
+        2.6875
+      ],
+      "slot": "primary",
+      "bevelM": 0
+    },
+    {
+      "name": "left-front-jamb",
+      "blenderBoundsM": [
+        -1.625,
+        1.235,
+        0.12,
+        -1.36,
+        1.7875,
+        2.5
+      ],
+      "slot": "primary",
+      "bevelM": 0
+    },
+    {
+      "name": "left-lower-return",
+      "blenderBoundsM": [
+        -1.625,
+        -1.265,
+        0.12,
+        -1.36,
+        1.265,
+        0.5
+      ],
+      "slot": "trim",
+      "bevelM": 0
+    },
+    {
+      "name": "left-header-return",
+      "blenderBoundsM": [
+        -1.625,
+        -1.265,
+        2.1875,
+        -1.36,
+        1.265,
+        2.4375
+      ],
+      "slot": "trim",
+      "bevelM": 0
+    },
+    {
+      "name": "left-closed-backing",
+      "blenderBoundsM": [
+        -1.395,
+        -1.215,
+        0.535,
+        -1.37,
+        1.215,
+        2.1475
+      ],
+      "slot": "dark",
+      "bevelM": 0
+    },
+    {
+      "name": "left-lower-machinery-cassette",
+      "blenderBoundsM": [
+        -1.555,
+        -1.13,
+        0.57,
+        -1.36,
+        -0.47,
+        1.1
+      ],
+      "slot": "metal",
+      "bevelM": 0.015
+    },
+    {
+      "name": "left-upper-control-cassette",
+      "blenderBoundsM": [
+        -1.505,
+        0.57,
+        1.13,
+        -1.36,
+        1.19,
+        2.0625
+      ],
+      "slot": "primary",
+      "bevelM": 0.015
+    },
+    {
+      "name": "left-coarse-manifold-0",
+      "blenderBoundsM": [
+        -1.455,
+        -1.15,
+        1.14,
+        -1.36,
+        1.15,
+        1.21
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "left-coarse-manifold-1",
+      "blenderBoundsM": [
+        -1.455,
+        -1.15,
+        2.0175,
+        -1.36,
+        1.15,
+        2.0875
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "left-control-binding",
+      "blenderBoundsM": [
+        -1.517,
+        0.66,
+        1.2,
+        -1.5,
+        1.1,
+        1.2625
+      ],
+      "slot": "accent",
+      "bevelM": 0
+    },
+    {
+      "name": "left-lower-clamp-0",
+      "blenderBoundsM": [
+        -1.64,
+        -1.13,
+        0.25,
+        -1.36,
+        -1.005,
+        0.3125
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "left-lower-clamp-1",
+      "blenderBoundsM": [
+        -1.64,
+        -0.6499999999999999,
+        0.25,
+        -1.36,
+        -0.5249999999999999,
+        0.3125
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "right-rear-jamb",
+      "blenderBoundsM": [
+        1.235,
+        -1.5625,
+        0.12,
+        1.625,
+        -1.235,
+        2.6875
+      ],
+      "slot": "primary",
+      "bevelM": 0
+    },
+    {
+      "name": "right-front-jamb",
+      "blenderBoundsM": [
+        1.235,
+        1.235,
+        0.12,
+        1.625,
+        1.7875,
+        2.5
+      ],
+      "slot": "primary",
+      "bevelM": 0
+    },
+    {
+      "name": "right-lower-return",
+      "blenderBoundsM": [
+        1.235,
+        -1.265,
+        0.12,
+        1.625,
+        1.265,
+        0.5
+      ],
+      "slot": "trim",
+      "bevelM": 0
+    },
+    {
+      "name": "right-header-return",
+      "blenderBoundsM": [
+        1.235,
+        -1.265,
+        2.1875,
+        1.625,
+        1.265,
+        2.4375
+      ],
+      "slot": "trim",
+      "bevelM": 0
+    },
+    {
+      "name": "right-closed-backing",
+      "blenderBoundsM": [
+        1.245,
+        -1.215,
+        0.535,
+        1.27,
+        1.215,
+        2.1475
+      ],
+      "slot": "dark",
+      "bevelM": 0
+    },
+    {
+      "name": "right-lower-machinery-cassette",
+      "blenderBoundsM": [
+        1.235,
+        -1.13,
+        0.57,
+        1.43,
+        -0.47,
+        1.1
+      ],
+      "slot": "metal",
+      "bevelM": 0.015
+    },
+    {
+      "name": "right-upper-control-cassette",
+      "blenderBoundsM": [
+        1.235,
+        0.57,
+        1.13,
+        1.38,
+        1.19,
+        2.0625
+      ],
+      "slot": "primary",
+      "bevelM": 0.015
+    },
+    {
+      "name": "right-coarse-manifold-0",
+      "blenderBoundsM": [
+        1.235,
+        -1.15,
+        1.14,
+        1.33,
+        1.15,
+        1.21
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "right-coarse-manifold-1",
+      "blenderBoundsM": [
+        1.235,
+        -1.15,
+        2.0175,
+        1.33,
+        1.15,
+        2.0875
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "right-control-binding",
+      "blenderBoundsM": [
+        1.375,
+        0.66,
+        1.2,
+        1.392,
+        1.1,
+        1.2625
+      ],
+      "slot": "accent",
+      "bevelM": 0
+    },
+    {
+      "name": "right-lower-clamp-0",
+      "blenderBoundsM": [
+        1.235,
+        -1.13,
+        0.25,
+        1.64,
+        -1.005,
+        0.3125
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "right-lower-clamp-1",
+      "blenderBoundsM": [
+        1.235,
+        -0.6499999999999999,
+        0.25,
+        1.64,
+        -0.5249999999999999,
+        0.3125
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "broad-top-shoulder",
+      "blenderBoundsM": [
+        -1.625,
+        -1.5625,
+        2.5475,
+        -1.0625,
+        1.6875,
+        2.8125
+      ],
+      "slot": "primary",
+      "bevelM": 0.02
+    },
+    {
+      "name": "offset-top-shoulder",
+      "blenderBoundsM": [
+        1.0,
+        -1.3125,
+        2.5475,
+        1.625,
+        1.5,
+        2.6875
+      ],
+      "slot": "primary",
+      "bevelM": 0.02
+    },
+    {
+      "name": "rear-joined-service-spine",
+      "blenderBoundsM": [
+        -1.0775,
+        -1.405,
+        2.5475,
+        1.015,
+        -1.195,
+        2.9375
+      ],
+      "slot": "trim",
+      "bevelM": 0.018
+    },
+    {
+      "name": "top-closed-backing",
+      "blenderBoundsM": [
+        -1.0375,
+        -1.155,
+        2.5575,
+        0.975,
+        1.2375,
+        2.5875
+      ],
+      "slot": "dark",
+      "bevelM": 0
+    },
+    {
+      "name": "top-coarse-fin-0",
+      "blenderBoundsM": [
+        -0.9775,
+        -1.075,
+        2.5825,
+        0.21937499999999993,
+        -0.99,
+        2.6625
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "top-coarse-fin-1",
+      "blenderBoundsM": [
+        -0.9775,
+        -0.855,
+        2.5825,
+        0.21937499999999993,
+        -0.77,
+        2.6625
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "top-coarse-fin-2",
+      "blenderBoundsM": [
+        -0.9775,
+        -0.635,
+        2.5825,
+        0.21937499999999993,
+        -0.55,
+        2.6625
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "top-offset-access-cover",
+      "blenderBoundsM": [
+        0.29437499999999994,
+        -1.125,
+        2.5775,
+        0.925,
+        1.2175,
+        2.6525
+      ],
+      "slot": "accent",
+      "bevelM": 0.012
+    },
+    {
+      "name": "top-forward-unequal-access",
+      "blenderBoundsM": [
+        -1.0125,
+        -0.42500000000000004,
+        2.5775,
+        0.21937499999999993,
+        1.1975,
+        2.6925
+      ],
+      "slot": "primary",
+      "bevelM": 0.012
+    },
+    {
+      "name": "top-access-latch",
+      "blenderBoundsM": [
+        -0.9625,
+        1.0875,
+        2.6875,
+        0.16937499999999991,
+        1.1475,
+        2.7125
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    },
+    {
+      "name": "top-spine-service-band",
+      "blenderBoundsM": [
+        -1.0375,
+        -1.41,
+        2.7325,
+        0.1943749999999999,
+        -1.395,
+        2.795
+      ],
+      "slot": "metal",
+      "bevelM": 0
+    }
+  ],
+  "parts": [
+    "contact-base",
+    "closed-pressure-body",
+    "front-left-post",
+    "front-right-post",
+    "front-lower-joined-case",
+    "front-header",
+    "front-closed-backing",
+    "front-cooling-fin-0",
+    "front-cooling-fin-1",
+    "front-cooling-fin-2",
+    "unequal-control-cover",
+    "control-accent",
+    "control-binding",
+    "front-column-service-cover",
+    "front-column-service-mark",
+    "opposite-column-short-cover",
+    "lower-case-access-binding",
+    "left-rear-jamb",
+    "left-front-jamb",
+    "left-lower-return",
+    "left-header-return",
+    "left-closed-backing",
+    "left-lower-machinery-cassette",
+    "left-upper-control-cassette",
+    "left-coarse-manifold-0",
+    "left-coarse-manifold-1",
+    "left-control-binding",
+    "left-lower-clamp-0",
+    "left-lower-clamp-1",
+    "right-rear-jamb",
+    "right-front-jamb",
+    "right-lower-return",
+    "right-header-return",
+    "right-closed-backing",
+    "right-lower-machinery-cassette",
+    "right-upper-control-cassette",
+    "right-coarse-manifold-0",
+    "right-coarse-manifold-1",
+    "right-control-binding",
+    "right-lower-clamp-0",
+    "right-lower-clamp-1",
+    "broad-top-shoulder",
+    "offset-top-shoulder",
+    "rear-joined-service-spine",
+    "top-closed-backing",
+    "top-coarse-fin-0",
+    "top-coarse-fin-1",
+    "top-coarse-fin-2",
+    "top-offset-access-cover",
+    "top-forward-unequal-access",
+    "top-access-latch",
+    "top-spine-service-band"
+  ],
+  "actualSideWells": [
+    {
+      "side": -1,
+      "actualFrameToBodyDepthM": 0.25,
+      "backingDepthM": 0.23,
+      "firstHitChecks": [
+        {
+          "duty": "backing",
+          "actualFirstHitBlenderM": [
+            -1.3950001001358032,
+            0.0,
+            0.5450000166893005
+          ],
+          "slot": "dark",
+          "mouthRecessM": 0.23
+        },
+        {
+          "duty": "lower-machinery",
+          "actualFirstHitBlenderM": [
+            -1.5549999475479126,
+            -0.800000011920929,
+            0.800000011920929
+          ],
+          "slot": "metal",
+          "mouthRecessM": 0.07
+        },
+        {
+          "duty": "upper-control",
+          "actualFirstHitBlenderM": [
+            -1.5049998760223389,
+            0.8899999856948853,
+            1.596250057220459
+          ],
+          "slot": "primary",
+          "mouthRecessM": 0.12
+        }
+      ]
+    },
+    {
+      "side": 1,
+      "actualFrameToBodyDepthM": 0.375,
+      "backingDepthM": 0.355,
+      "firstHitChecks": [
+        {
+          "duty": "backing",
+          "actualFirstHitBlenderM": [
+            1.2699998617172241,
+            0.0,
+            0.5450000166893005
+          ],
+          "slot": "dark",
+          "mouthRecessM": 0.355
+        },
+        {
+          "duty": "lower-machinery",
+          "actualFirstHitBlenderM": [
+            1.4299999475479126,
+            -0.800000011920929,
+            0.800000011920929
+          ],
+          "slot": "metal",
+          "mouthRecessM": 0.195
+        },
+        {
+          "duty": "upper-control",
+          "actualFirstHitBlenderM": [
+            1.3799999952316284,
+            0.8899999856948853,
+            1.596250057220459
+          ],
+          "slot": "primary",
+          "mouthRecessM": 0.245
+        }
+      ]
+    }
+  ]
+}

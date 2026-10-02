@@ -1,0 +1,245 @@
+{
+  "designId": "shipyard.equipment.medical-equipment-bank-r025",
+  "status": "proposal; native art pending",
+  "revision": "r025",
+  "sizeTexels": [
+    20,
+    20,
+    32
+  ],
+  "triangles": 866,
+  "vertices": 2598,
+  "boxes": 21,
+  "boundsM": [
+    [
+      -0.625,
+      -0.625,
+      0.0
+    ],
+    [
+      0.625,
+      0.625,
+      2.0
+    ]
+  ],
+  "materialSlotsUsed": [
+    "primary",
+    "secondary",
+    "accent",
+    "trim",
+    "metal",
+    "dark",
+    "emit_a",
+    "emit_b",
+    "primary.equipment-frame",
+    "secondary.equipment-cover"
+  ],
+  "glb": "assets/runtime/ship-objects/reference-r025-clean/shipyard.equipment.medical-equipment-bank-r025.glb",
+  "url": "/assets/ship-objects/reference-r025-clean/shipyard.equipment.medical-equipment-bank-r025.glb",
+  "bytes": 97908,
+  "sha256": "c7eff904bf0c1ea1b7c0e24a3cd02f595710570adf10a592a31965dbfa0fe393",
+  "source": "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.medical-equipment-bank-r025.blend",
+  "sourceSha256": "fe635cf1dcea58764168a25dc15dacc17154a7ec2091410b9b96d8326f131e6d",
+  "generator": "scripts/art_library/ship_reference_r025_rooms_clean.py",
+  "generatorSha256": "a1ebc2ac2142fcad372caa9adfbf0be9a0b3006db34bcbb68384251a8f90d400",
+  "helperSha256": "314e3afaccdb2d4d62fdd6f5bbcdb971e5b2f72477dfdf652dcc1533d1260f72",
+  "semanticAuthoringSha256": "aebf29e531bc0759e78affdfd67917265dfeb5cb742b804f599728d6843da735",
+  "authoredBoxesTexels": [
+    [
+      0,
+      0,
+      0,
+      20,
+      20,
+      1,
+      "dark"
+    ],
+    [
+      0,
+      0,
+      0.75,
+      20,
+      2,
+      14,
+      "secondary"
+    ],
+    [
+      0,
+      1.5,
+      0.75,
+      20,
+      20,
+      13.5,
+      "primary.equipment-frame"
+    ],
+    [
+      1.5,
+      1.75,
+      2.5,
+      18.5,
+      8,
+      12,
+      "dark"
+    ],
+    [
+      2.5,
+      7.5,
+      3,
+      9,
+      14,
+      10.8,
+      "metal"
+    ],
+    [
+      10,
+      7.5,
+      4,
+      17.5,
+      12,
+      11.5,
+      "secondary.equipment-cover"
+    ],
+    [
+      11.5,
+      11.8,
+      6,
+      16,
+      12.4,
+      7.1,
+      "accent"
+    ],
+    [
+      0,
+      0,
+      13,
+      20,
+      20,
+      14,
+      "trim"
+    ],
+    [
+      0.5,
+      2,
+      13.875,
+      19.5,
+      19.5,
+      15,
+      "primary"
+    ],
+    [
+      2,
+      14,
+      14.875,
+      11,
+      18,
+      15.8,
+      "secondary"
+    ],
+    [
+      3,
+      15,
+      15.65,
+      4.5,
+      16.5,
+      16.2,
+      "metal"
+    ],
+    [
+      5.5,
+      15,
+      15.65,
+      7.0,
+      16.5,
+      16.2,
+      "metal"
+    ],
+    [
+      8,
+      15,
+      15.65,
+      9.5,
+      16.5,
+      16.2,
+      "metal"
+    ],
+    [
+      14,
+      3,
+      14,
+      16,
+      6,
+      32,
+      "metal"
+    ],
+    [
+      5,
+      4,
+      22,
+      20,
+      8,
+      31,
+      "primary.equipment-frame"
+    ],
+    [
+      6.5,
+      4.8,
+      23.5,
+      18.5,
+      7,
+      29.5,
+      "dark"
+    ],
+    [
+      7,
+      6.95,
+      24,
+      18,
+      7.15,
+      29,
+      "emit_a"
+    ],
+    [
+      2,
+      3,
+      14.875,
+      5,
+      8,
+      21,
+      "trim"
+    ],
+    [
+      2.5,
+      3.5,
+      20.875,
+      4.5,
+      7.5,
+      22.5,
+      "accent"
+    ],
+    [
+      17.5,
+      12,
+      3.5,
+      19.5,
+      19.9,
+      5.5,
+      "trim"
+    ],
+    [
+      17.6,
+      19.875,
+      4,
+      19.4,
+      20,
+      5,
+      "emit_b"
+    ]
+  ],
+  "immutablePreviousSourceSha256": "cadd4cffaa5cf8624bb814866c1e70bd4ee1f9283dff52e5c70eb78a9a206c71",
+  "normalPolicy": "actual loop triangles split, unchanged positions/UV/material; geometric flat",
+  "capabilities": {
+    "seat": false,
+    "storage": false,
+    "control": false
+  }
+}
