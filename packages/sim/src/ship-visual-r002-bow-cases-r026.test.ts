@@ -90,17 +90,59 @@ describe("actual four broad private Wren bow casings", () => {
     // True open two-course wells above original surface, with new backing;
     // both substantial metal components share a positive backing volume.
     for (const { bounds: b } of REFERENCE_BOW_CASE_BODIES_R026) {
-      const x = b[0] + 2,
-        y = b[1] + 3;
+      const north = b[1] > 50;
+      const x = b[0] + 3,
+        y = b[4] - 3 - (north ? 6 : 5);
       expect(after.get(visualCellKey(x, y, b[5] - 3))?.slot).toBe("dark");
       expect(before.has(visualCellKey(x, y, b[5] - 3))).toBe(false);
       for (const z of [b[5] - 2, b[5] - 1])
         expect(after.has(visualCellKey(x, y, z))).toBe(false);
-      for (const [index, xx] of [b[0] + 3, b[3] - 5].entries()) {
-        const yy = b[1] + 5 + index * 2;
+      for (const [index, xx] of [b[0] + 4, b[3] - 6].entries()) {
+        const yy = y + 1 + index * 3;
         expect(after.get(visualCellKey(xx, yy, b[5] - 3))?.slot).toBe("metal");
         expect(after.get(visualCellKey(xx, yy, b[5] - 1))).toBeUndefined();
+        const nextSlot = after.get(visualCellKey(xx, yy + 1, b[5] - 2))?.slot;
+        if (index === 0) expect(nextSlot).toBe("metal");
+        else expect(nextSlot).not.toBe("metal");
       }
+      // Count actual highest added cells, including the lowered outer shoulders.
+      // Closed casing dominates; openings and PRIMARY access remain minorities.
+      let closed = 0,
+        primary = 0,
+        open = 0;
+      const area = (b[3] - b[0]) * (b[4] - b[1]);
+      for (let yy = b[1]; yy < b[4]; yy++)
+        for (let xx = b[0]; xx < b[3]; xx++) {
+          const inPocket = xx >= x && xx < b[3] - 3 && yy >= y && yy < b[4] - 3;
+          const shoulder =
+            xx === b[0] || xx === b[3] - 1 || yy === b[1] || yy === b[4] - 1;
+          if (inPocket) {
+            open++;
+            expect(after.has(visualCellKey(xx, yy, b[5] - 1))).toBe(false);
+          } else {
+            closed++;
+            const top = after.get(
+              visualCellKey(xx, yy, b[5] - (shoulder ? 3 : 1)),
+            )!;
+            expect(top.family).toBe("volume:hull");
+            expect(top.role).toBe("plate");
+            if (top.slot === "primary") primary++;
+            if (shoulder)
+              expect(after.has(visualCellKey(xx, yy, b[5] - 1))).toBe(false);
+          }
+        }
+      expect(closed / area).toBeGreaterThan(0.8);
+      expect(open / area).toBeLessThan(0.2);
+      expect(primary / area).toBeLessThanOrEqual(1 / 3);
+      expect(primary / area).toBeGreaterThan(0.15);
+      const lidX = b[0] + 2,
+        lidY = b[1] + 2;
+      expect(after.get(visualCellKey(lidX, lidY, b[5] - 2))?.slot).toBe(
+        "primary",
+      );
+      expect(after.get(visualCellKey(lidX, lidY, b[5] - 3))?.slot).toBe(
+        "secondary",
+      );
     }
     const badGuards = {
       ...guards,

@@ -193,39 +193,55 @@ export function referenceBowCasesR026(
       ]);
       i = j;
     }
-    add("well-backing", "plate", "dark", [
-      b[0] + 2,
-      b[1] + 3,
-      b[5] - 3,
-      b[3] - 2,
+    // These are mostly closed cassette bodies, rather than four open trays.
+    // A lowered shoulder exposes a real two-course return around each cap.
+    for (const [edge, bounds] of [
+      ["left", [b[0], b[1], b[5] - 2, b[0] + 1, b[4], b[5]]],
+      ["right", [b[3] - 1, b[1], b[5] - 2, b[3], b[4], b[5]]],
+      ["front", [b[0] + 1, b[1], b[5] - 2, b[3] - 1, b[1] + 1, b[5]]],
+      ["rear", [b[0] + 1, b[4] - 1, b[5] - 2, b[3] - 1, b[4], b[5]]],
+    ] as const)
+      add(`shoulder-step:${edge}`, "void", "dark", [...bounds]);
+    const pocketLength = id.endsWith("north") ? 6 : 5;
+    const pocket = [
+      b[0] + 3,
+      b[4] - 3 - pocketLength,
+      b[3] - 3,
       b[4] - 3,
+    ] as const;
+    add("closed-access-lid", "plate", "primary", [
+      b[0] + 2,
+      b[1] + 2,
+      b[5] - 2,
+      b[3] - 2,
+      pocket[1] - 2,
+      b[5],
+    ]);
+    add("well-backing", "plate", "dark", [
+      pocket[0],
+      pocket[1],
+      b[5] - 3,
+      pocket[2],
+      pocket[3],
       b[5] - 2,
     ]);
     add("well", "void", "dark", [
-      b[0] + 2,
-      b[1] + 3,
+      pocket[0],
+      pocket[1],
       b[5] - 2,
-      b[3] - 2,
-      b[4] - 3,
+      pocket[2],
+      pocket[3],
       b[5],
     ]);
-    for (const [index, x] of [b[0] + 3, b[3] - 5].entries())
+    for (const [index, x] of [pocket[0] + 1, pocket[2] - 3].entries())
       add(`equipment:${index}`, "service", "metal", [
         x,
-        b[1] + 5 + index * 2,
+        pocket[1] + 1 + index * 3,
         b[5] - 3,
         x + 2,
-        b[4] - 5,
+        pocket[1] + 1 + index * 3 + (index === 0 ? 2 : 1),
         b[5] - 1,
       ]);
-    add("faceplate", "plate", "primary", [
-      b[0] + 2,
-      b[1] + 1,
-      b[5] - 1,
-      b[3] - 2,
-      b[1] + 2,
-      b[5],
-    ]);
     add("identification", "plate", "accent", [
       b[0] + 2,
       b[4] - 2,
