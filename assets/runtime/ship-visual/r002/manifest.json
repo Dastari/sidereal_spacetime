@@ -4,7 +4,7 @@
   "status": "proposal",
   "frame": "ship-local metres: +X fore, +Y port, +Z up",
   "lattice": 16,
-  "compilerSha256": "1ee9cdb693ad4b1c70cdc6eb62753baa8947bf5b851f53b9be03101c74868d72",
+  "compilerSha256": "0f651813a8aa0fbb3c362ef1f470b16c339ec234b4083da60a9686a12097b835",
   "profilesSha256": "d6831c62c2303941685931a7670cbab17ee9f279a4f2d5ea5887e0eec06603ee",
   "slots": [
     "primary",
@@ -2319,9 +2319,9 @@
         2,
         0.5
       ],
-      "url": "/assets/ship-objects/reference-r025-display/shipyard.equipment.workshop-bank-r025.glb",
-      "sha256": "048719587259668ff4cb6e3292e17691d6af7b446e4f7bb4919f4b004225f292",
-      "bytes": 124380
+      "url": "/assets/ship-objects/reference-r026-room-architecture-stepped/shipyard.equipment.workshop-bank-r025.glb",
+      "sha256": "18049ea0acf18c55187d1100238c20406cd35df77a63aba48901c9dbd7e68526",
+      "bytes": 123324
     },
     {
       "kind": "object",
@@ -2335,9 +2335,9 @@
         2,
         0.625
       ],
-      "url": "/assets/ship-objects/reference-r025-display/shipyard.equipment.medical-equipment-bank-r025.glb",
-      "sha256": "af530358121142a53a5508f639ebdc015d6d1fb5ea0abb4fc5fb0a63bce719d0",
-      "bytes": 97908
+      "url": "/assets/ship-objects/reference-r026-room-architecture-stepped/shipyard.equipment.medical-equipment-bank-r025.glb",
+      "sha256": "b4b421cb732ed7ca540230b66ecf9169361d2c62cc2667f2fbd64f92c7a80592",
+      "bytes": 94720
     },
     {
       "kind": "kit-manifest",
@@ -48614,7 +48614,176 @@
   ],
   "decorativeEnvelope": {
     "outward": 0.1875,
-    "upward": 0.1875,
+    "upward": 0.375,
     "inward": 0
+  },
+  "canopySourceR026": {
+    "kind": "crest-original-positive-canopy-source-r026",
+    "prefab": "fed.m.crest",
+    "prefabSha256": "6b0aa0b105174f7f2af341ac46c16ef6d5b8b7bd9a4de4e36f8abf290bdcebf9",
+    "tableSha256": "493f739ed76364a4e3ea9240215444bc5d45ca4d59a3de95ce1b5c133125604a",
+    "generatorSha256": "169628dc548801f14637fc37e672a31fcd4df6ea4e04fa6e56473390435f7c7d",
+    "tableCanonicalSha256": "4e1c028e02c8154ced67331238fc1899448315420ec08cc3bc4eed3c9438017f",
+    "originalSourceSha256": "b067ca505c3972b59f144a49760ed2675ec0756c6ad3d56db366a7c5ace0c725",
+    "grammarSha256": "33f5226a142fa4687ee552ef14ed9e977ad13ddd3e1eaaf78a58d6bdccf89ea0",
+    "opticalGuardSha256": "a06efd4ed9098e658537833276bbf693a02a6c680504aa1d175652a4e2a31a46",
+    "wholeCellBounds": [
+      319,
+      -18,
+      0,
+      410,
+      178,
+      43
+    ],
+    "sourceMemberCells": 83696,
+    "addedCells": 83056,
+    "omittedInwardEmptyCells": 42,
+    "placements": [
+      [
+        "canopy.slope1.deck",
+        20,
+        1,
+        0,
+        270
+      ],
+      [
+        "canopy.slope1.deck",
+        21,
+        2,
+        0,
+        270
+      ],
+      [
+        "canopy.slope1.deck",
+        22,
+        3,
+        0,
+        270
+      ],
+      [
+        "canopy.slope1.deck",
+        23,
+        4,
+        0,
+        270
+      ],
+      [
+        "canopy.slope1.deck",
+        23,
+        6,
+        0,
+        0
+      ],
+      [
+        "canopy.slope1.deck",
+        22,
+        7,
+        0,
+        0
+      ],
+      [
+        "canopy.slope1.deck",
+        21,
+        8,
+        0,
+        0
+      ],
+      [
+        "canopy.slope1.deck",
+        20,
+        9,
+        0,
+        0
+      ],
+      [
+        "canopy.corner45.deck",
+        24,
+        4,
+        0,
+        315
+      ],
+      [
+        "canopy.corner45.deck",
+        24,
+        6,
+        0,
+        0
+      ],
+      [
+        "canopy.straight.w1.deck",
+        24,
+        5,
+        0,
+        270
+      ],
+      [
+        "canopy.straight.w1.deck",
+        24,
+        6,
+        0,
+        270
+      ]
+    ],
+    "navCompanions": [
+      [
+        24,
+        5,
+        0,
+        270
+      ],
+      [
+        24,
+        6,
+        0,
+        270
+      ]
+    ],
+    "originalAssets": {
+      "canopy.slope1.deck": "dff525b82261e1be04452d7c0703b841fe26d4a039e37b1bbed4cec8c3438c1a",
+      "canopy.corner45.deck": "70e93b54c5e2da9884a47ba528bf910f06621cd9888bddffe09c57a466228502",
+      "canopy.straight.w1.deck": "53c1a1f5e469e5703228547bcf00d9bea7093b2df5ff2113c686c2cfa0213c6b",
+      "canopy.nav.deck": "71b613e304034ebf1b9a0091aa0dbf58b9e7b698c85c4d94287d0a9d4ea3bf7c"
+    },
+    "sourceSha256": "1ae78a325f672bf5851a845a68417f14404e58919dedb132f11aaa09a92b6495"
+  },
+  "bowCaseEnvelopeR026": {
+    "kind": "wren-four-broad-bow-cases-r026",
+    "prefab": "fed.s.wren",
+    "prefabSha256": "ecdb038c1b9333780c719aa3e19a8c677852c99cf4dab86421a2934aa60937e5",
+    "bodies": [
+      [
+        144,
+        8,
+        40,
+        158,
+        28,
+        46
+      ],
+      [
+        144,
+        80,
+        40,
+        158,
+        104,
+        46
+      ],
+      [
+        180,
+        34,
+        24,
+        190,
+        52,
+        30
+      ],
+      [
+        180,
+        56,
+        24,
+        190,
+        78,
+        30
+      ]
+    ],
+    "sourceSha256": "7f2829bace4023a3779b9ee4137ead6d25ad24e9903777acbd27531eaee93ddd"
   }
 }

@@ -1,6 +1,6 @@
 {
   "status": "proposal",
-  "compilerSha256": "1ee9cdb693ad4b1c70cdc6eb62753baa8947bf5b851f53b9be03101c74868d72",
+  "compilerSha256": "0f651813a8aa0fbb3c362ef1f470b16c339ec234b4083da60a9686a12097b835",
   "sources": [
     {
       "path": "packages/content/src/ship-visual-fixture.ts",
@@ -8,15 +8,15 @@
     },
     {
       "path": "packages/content/src/ship-visual.ts",
-      "sha256": "4fc31b48877989092f72422bde4b15adbfffc7772ad478f3045ffbd3b84cfa5c"
+      "sha256": "728064dbdf31691df96674bc77a29d5dd5bf64f5586418d5be6db9d7387defdf"
     },
     {
       "path": "packages/content/src/ship-visual-r002.ts",
-      "sha256": "21c06cd3bf557e3e05912434845a724856a0e1af35c3b42f028fd624aa1af2e1"
+      "sha256": "ba3bab4a1f9c40bbb9fa9680f0510e0b69f91301066f97ea1438753f0a351969"
     },
     {
       "path": "packages/sim/src/ship-visual-layers-r002.ts",
-      "sha256": "e0ac62b8428ef50e3d14318aad2fb21f60bc4bf11a50591faa2a16cf2000a2ea"
+      "sha256": "39756a538edd215878c38a60c4ef945748be06ce9ab62976a19b4dc09ade72a4"
     },
     {
       "path": "packages/sim/src/ship-visual-r002-retained-wall-boundary.ts",
@@ -28,7 +28,51 @@
     },
     {
       "path": "packages/sim/src/ship-visual-r002-bow-transition.ts",
-      "sha256": "d8f1786af1751f24ffd5f40dc2e12a49a179b03f5883926c64f4285f26c18a55"
+      "sha256": "cb65edbd2a4f47f04dd2347218d3aad6e3444f4e37b421a521196b51fe465fca"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-r002-bow-cases-r026.ts",
+      "sha256": "7f2829bace4023a3779b9ee4137ead6d25ad24e9903777acbd27531eaee93ddd"
+    },
+    {
+      "path": "packages/sim/src/ship-visual-r002-canopy-source-r026.ts",
+      "sha256": "1ae78a325f672bf5851a845a68417f14404e58919dedb132f11aaa09a92b6495"
+    },
+    {
+      "path": "packages/content/src/ship-canopy-source-r026.v1.json",
+      "sha256": "493f739ed76364a4e3ea9240215444bc5d45ca4d59a3de95ce1b5c133125604a"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_r026_canopy_source.py",
+      "sha256": "169628dc548801f14637fc37e672a31fcd4df6ea4e04fa6e56473390435f7c7d"
+    },
+    {
+      "path": "packages/content/src/construction-grammar.ts",
+      "sha256": "95adfd3bae928370eaf8a6424c856a25ced4cd43af96e2ac70994c7b1f4fea97"
+    },
+    {
+      "path": "packages/content/src/construction-grammar.v1.json",
+      "sha256": "33f5226a142fa4687ee552ef14ed9e977ad13ddd3e1eaaf78a58d6bdccf89ea0"
+    },
+    {
+      "path": "assets/runtime/ship-kit/r002/manifest.json",
+      "sha256": "f3f381fe72ac41e642602d7d1101f34ccc0e2fc49b06a6eb178cd69fa2f9d94b"
+    },
+    {
+      "path": "assets/runtime/ship-kit/r002/canopy.slope1.deck.glb",
+      "sha256": "dff525b82261e1be04452d7c0703b841fe26d4a039e37b1bbed4cec8c3438c1a"
+    },
+    {
+      "path": "assets/runtime/ship-kit/r002/canopy.corner45.deck.glb",
+      "sha256": "70e93b54c5e2da9884a47ba528bf910f06621cd9888bddffe09c57a466228502"
+    },
+    {
+      "path": "assets/runtime/ship-kit/r002/canopy.straight.w1.deck.glb",
+      "sha256": "53c1a1f5e469e5703228547bcf00d9bea7093b2df5ff2113c686c2cfa0213c6b"
+    },
+    {
+      "path": "assets/runtime/ship-kit/r002/canopy.nav.deck.glb",
+      "sha256": "71b613e304034ebf1b9a0091aa0dbf58b9e7b698c85c4d94287d0a9d4ea3bf7c"
     },
     {
       "path": "packages/sim/src/ship-dresser.ts",
@@ -40,7 +84,7 @@
     },
     {
       "path": "packages/content/src/ship-furniture.ts",
-      "sha256": "9e4502d6a5d16b4a4131450c47787599c18d8b83456ccbfa1d97ae3cad47f161"
+      "sha256": "de2b05905d6fb91bea42247c263a3008106e2c31fced403f2a02290eda0694b3"
     },
     {
       "path": "packages/content/src/ship-room-fixtures-r025.ts",
@@ -49,6 +93,18 @@
     {
       "path": "packages/content/src/ship-prefab-catalog.ts",
       "sha256": "8fc4384837460758137f3435e0f09259c3bd4adedd1107d229e358c060d381c6"
+    },
+    {
+      "path": "packages/content/src/ship-prefab-components.ts",
+      "sha256": "22f5ba8c1a4eafac271b13bf2b7b1ab9895a5abad08a07ab4aa9bd999ee740f6"
+    },
+    {
+      "path": "packages/content/src/ship-components-source.ts",
+      "sha256": "ef7c55297477f6cd23cdf6bc8d1e38d75ac1bde9af68b14df813a1ad12fd56f8"
+    },
+    {
+      "path": "packages/content/src/ship-components.v1.json",
+      "sha256": "b85f18272abb9fbcefbb3c4a0214c65fdd4f71df7633161598dfe6f4e7745d8b"
     },
     {
       "path": "packages/content/src/ship-reference-room-layout-r025.ts",
@@ -217,6 +273,26 @@
     {
       "path": "scripts/art_library/ship_reference_r025_rooms_display.py",
       "sha256": "4040c19cd8f2eda41b416a0f794fedf95f1b7ff52331c54748711202fb76b697"
+    },
+    {
+      "path": "scripts/art_library/ship_reference_r026_room_architecture_stepped.py",
+      "sha256": "41326ae03cc8219b10ee8137d4fd113dbafdb750b8c23b1ba65a9f224366f890"
+    },
+    {
+      "path": "assets/runtime/ship-objects/reference-r026-room-architecture-stepped/shipyard.equipment.workshop-bank-r025-source.json",
+      "sha256": "ed84a9fb2b29b27d7538e4440186eac3fe51f23fc401cb32e4995cb6aa592045"
+    },
+    {
+      "path": "assets/runtime/ship-objects/reference-r026-room-architecture-stepped/shipyard.equipment.medical-equipment-bank-r025-source.json",
+      "sha256": "a22e90046eae75f878d6fdefa45df7b0caed9301979c9ebdbff9132cd5f9f1a9"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/rooms-r026-room-architecture-stepped/shipyard.equipment.workshop-bank-r025.blend",
+      "sha256": "7fafb992425fa967f7125d25780a3c8c72d89a3b1d5b9e53dea1924683439084"
+    },
+    {
+      "path": "assets/source/ship-reference/r002/rooms-r026-room-architecture-stepped/shipyard.equipment.medical-equipment-bank-r025.blend",
+      "sha256": "eb9704c7affc8a09cddbc50e51085bf5f3224837399518f3752da858cf784624"
     },
     {
       "path": "assets/runtime/ship-objects/reference-r025-display/shipyard.equipment.workshop-bank-r025-source.json",
