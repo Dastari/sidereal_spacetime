@@ -117,6 +117,11 @@ const sources = [
   "assets/runtime/ship-objects/reference-r025-clean/shipyard.equipment.medical-equipment-bank-r025-source.json",
   "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.workshop-bank-r025.blend",
   "assets/source/ship-reference/r002/rooms-r025-clean/shipyard.equipment.medical-equipment-bank-r025.blend",
+  "scripts/art_library/ship_reference_r025_rooms_display.py",
+  "assets/runtime/ship-objects/reference-r025-display/shipyard.equipment.workshop-bank-r025-source.json",
+  "assets/runtime/ship-objects/reference-r025-display/shipyard.equipment.medical-equipment-bank-r025-source.json",
+  "assets/source/ship-reference/r002/rooms-r025-display/shipyard.equipment.workshop-bank-r025.blend",
+  "assets/source/ship-reference/r002/rooms-r025-display/shipyard.equipment.medical-equipment-bank-r025.blend",
   "assets/runtime/ship-visual/r002/equipment-r025/reactor.md-source.json",
   "assets/runtime/ship-visual/r002/equipment-r025/reactor.lg-source.json",
   "assets/source/ship-reference/r002/equipment-r025/reactor.md.blend",
@@ -679,6 +684,108 @@ if (roomCandidate) {
       sha256: pin.sha256,
       bytes: pin.bytes,
     });
+  }
+}
+
+// Retain the complete historical clean-geometry gate above. These two immutable
+// derivatives change only the authored display chart; no renderer UV projection.
+const roomDisplayBuilder =
+  "scripts/art_library/ship_reference_r025_rooms_display.py";
+const roomDisplayBuilderSha256 =
+  "4040c19cd8f2eda41b416a0f794fedf95f1b7ff52331c54748711202fb76b697";
+const roomDisplayPins = {
+  "shipyard.equipment.workshop-bank-r025": {
+    sha256: "048719587259668ff4cb6e3292e17691d6af7b446e4f7bb4919f4b004225f292",
+    metadataSha256:
+      "d486286d9634bf550c59cf23d2c63d5c0c5a54fd1232cd23dbbdfa4bd5847efb",
+    sourceSha256:
+      "65b648c7ce8b8a69a36328d27c031eb24a2d72c55b8d3d889b8ca4b460b75e64",
+    sourceXZBoundsM: [0.40625, 1.25, 1.375, 1.6875],
+  },
+  "shipyard.equipment.medical-equipment-bank-r025": {
+    sha256: "af530358121142a53a5508f639ebdc015d6d1fb5ea0abb4fc5fb0a63bce719d0",
+    metadataSha256:
+      "9dd9b79d2722d42457b6bae17fbdb8070d3ab91c4d56b7a2c6d27dd968ddaba4",
+    sourceSha256:
+      "9ed8fdac527ee6d81075608f1f691ce6e6bd3ef1d8a9c64cfb5fdc7eb61c5250",
+    sourceXZBoundsM: [-0.1875, 1.5, 0.5, 1.8125],
+  },
+} as const;
+if (roomCandidate) {
+  if (
+    hash(readFileSync(resolve(root, roomDisplayBuilder))) !==
+    roomDisplayBuilderSha256
+  )
+    throw Error(
+      "Finite room display source differs from qualified UV derivative",
+    );
+  for (const entry of REFERENCE_ROOM_FIXTURE_CATALOG_R025.entries) {
+    const id = entry.designId,
+      pin = roomDisplayPins[id],
+      previous = roomPins[id],
+      dir = "ship-objects/reference-r025-display",
+      index = assets.findIndex((a) => a.kind === "object" && a.id === id);
+    const metadataBytes = readFileSync(
+      resolve(root, "assets/runtime", dir, `${id}-source.json`),
+    );
+    const meta = JSON.parse(metadataBytes.toString());
+    const bytes = readFileSync(
+      resolve(root, "assets/runtime", dir, `${id}.glb`),
+    );
+    const oldMeta = JSON.parse(
+      readFileSync(
+        resolve(
+          root,
+          "assets/runtime/ship-objects/reference-r025-clean",
+          `${id}-source.json`,
+        ),
+        "utf8",
+      ),
+    );
+    if (
+      index < 0 ||
+      assets[index].sha256 !== previous.sha256 ||
+      hash(metadataBytes) !== pin.metadataSha256 ||
+      meta.designId !== id ||
+      meta.revision !== "r025" ||
+      meta.generator !== roomDisplayBuilder ||
+      meta.generatorSha256 !== roomDisplayBuilderSha256 ||
+      meta.immutableCleanSourceSha256 !== roomBuilderSha256 ||
+      meta.immutablePreviousSourceSha256 !== roomPreviousSha256 ||
+      meta.helperSha256 !== oldMeta.helperSha256 ||
+      meta.semanticAuthoringSha256 !== oldMeta.semanticAuthoringSha256 ||
+      meta.source !==
+        `assets/source/ship-reference/r002/rooms-r025-display/${id}.blend` ||
+      hash(readFileSync(resolve(root, meta.source))) !== pin.sourceSha256 ||
+      meta.sourceSha256 !== pin.sourceSha256 ||
+      meta.url !== `/assets/${dir}/${id}.glb` ||
+      meta.glb !== `assets/runtime/${dir}/${id}.glb` ||
+      hash(bytes) !== pin.sha256 ||
+      meta.sha256 !== pin.sha256 ||
+      bytes.length !== previous.bytes ||
+      meta.bytes !== previous.bytes ||
+      meta.triangles !== previous.triangles ||
+      meta.vertices !== oldMeta.vertices ||
+      JSON.stringify(meta.authoredBoxesTexels) !==
+        JSON.stringify(oldMeta.authoredBoxesTexels) ||
+      JSON.stringify(meta.sizeTexels) !== JSON.stringify(entry.texels) ||
+      JSON.stringify(meta.boundsM) !== JSON.stringify(oldMeta.boundsM) ||
+      JSON.stringify(meta.materialSlotsUsed) !==
+        JSON.stringify(oldMeta.materialSlotsUsed) ||
+      JSON.stringify(meta.capabilities) !==
+        JSON.stringify(oldMeta.capabilities) ||
+      meta.displayChart?.policy !==
+        "whole planar display X-to-U/Z-to-V; all other UVs unchanged" ||
+      meta.displayChart?.displayLoopCount !== 6 ||
+      JSON.stringify(meta.displayChart?.sourceXZBoundsM) !==
+        JSON.stringify(pin.sourceXZBoundsM)
+    )
+      throw Error(`Finite room display source/output mismatch: ${id}`);
+    assets[index] = {
+      ...assets[index],
+      url: meta.url,
+      sha256: pin.sha256,
+    };
   }
 }
 
